@@ -21,7 +21,7 @@ CREATE TABLE `glpi_plugin_tracker_errors` (
   `FK_entities` INT(11) NOT NULL DEFAULT '0',
   `first_pb_date` DATETIME DEFAULT NULL,
   `last_pb_date` DATETIME DEFAULT NULL,
-  `description` TEXT collate utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` TEXT collate utf8_unicode_ci,
   PRIMARY KEY(`ID`),
   UNIQUE KEY `ifaddr` (`ifaddr`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
