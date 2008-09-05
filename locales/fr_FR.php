@@ -83,7 +83,7 @@ $LANGTRACKER["functionalities"][31]="Activation de l'épuration";
 $LANGTRACKER["functionalities"][32]="Profondeur de nettoyage (en jours)";
 
 $LANGTRACKER["functionalities"][40]="Configuration";
-$LANGTRACKER["functionalities"][41]="Status du matériel actif";
+$LANGTRACKER["functionalities"][41]="Statut du matériel actif";
 $LANGTRACKER["functionalities"][42]="Commutateur";
 
 
