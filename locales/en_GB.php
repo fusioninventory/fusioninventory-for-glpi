@@ -132,12 +132,15 @@ $LANGTRACKER["prt_history"][22]="Counter";
 
 
 $LANGTRACKER["cpt_history"][0]="Sessions history";
-$LANGTRACKER["cpt_history"][1]="User";
-$LANGTRACKER["cpt_history"][2]="State";
-$LANGTRACKER["cpt_history"][2]="Date";
+$LANGTRACKER["cpt_history"][1]="Contact";
+$LANGTRACKER["cpt_history"][2]="Computer";
+$LANGTRACKER["cpt_history"][3]="User";
+$LANGTRACKER["cpt_history"][4]="State";
+$LANGTRACKER["cpt_history"][5]="Date";
 
 
 $LANGTRACKER["type"][1]="Computer";
 $LANGTRACKER["type"][2]="Switch";
 $LANGTRACKER["type"][3]="Printer";
+
 ?>

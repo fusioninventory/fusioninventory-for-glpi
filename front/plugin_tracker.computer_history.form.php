@@ -37,7 +37,15 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-checkRight("computer","r");
+if ( isset($_GET['type']) ) {
+	if ( $_GET['type'] == COMPUTER_TYPE )
+		checkRight("computer","r");
+	else // $_GET['type'] == COMPUTER_TYPE
+		checkRight("user","r");
+}
+else
+	plugin_tracker_noRight();
+
 plugin_tracker_checkRight("computers_history","r");
 
 $computer_history = new plugin_tracker_computers_history();

@@ -6,7 +6,7 @@ CREATE TABLE `glpi_plugin_tracker_computers_history` (
   `date` DATETIME DEFAULT NULL,
   `state` INT(1) NOT NULL DEFAULT '0',
   `username` VARCHAR(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `FK_users` VARCHAR(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `FK_users` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY(`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

@@ -78,48 +78,44 @@ function getIdFromUser($name) {
 			 "WHERE name = '".$name."';";
 	
 	if ( ($result = $DB->query($query)) ) {
-		if ( ($fields = $DB->fetch_row($result)) )
+		if ( ($fields = $DB->fetch_row($result)) && ($fields['0'] != NULL) )
 			return $fields['0'];
 	}
 	return false;
 }
 
-/* to get entity ID from a device */
-function getDeviceEntity($type, $ID) {
+function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 	global $DB;
-	
 	switch($type) {
 		
 		case COMPUTER_TYPE:
-			$query = "SELECT FK_entities FROM glpi_computers".
-					 "WHERE ID = '".$ID."';";
-			if ( $result = $DB->query($query) )
-				if ( $fields=$DB->fetch_row($result) ) {
-					return $fields['0'];
-				}
-			return false;
+			$table = "glpi_computers";
 			break;
 			
 		case NETWORKING_TYPE:
-			$query = "SELECT FK_entities FROM glpi_networking".
-					 "WHERE ID = '".$ID."';";
-			if ( $result = $DB->query($query) )
-				if ( $fields=$DB->fetch_row($result) ) {
-					return $fields['0'];
-				}
-			return false;
+			$table = "glpi_networking";
 			break;
 			
 		case PRINTER_TYPE:
-			$query = "SELECT FK_entities FROM glpi_printers".
-					 "WHERE ID = '".$ID."';";
-			if ( $result = $DB->query($query) )
-				if ( $fields=$DB->fetch_row($result) ) {
-					return $fields['0'];
-				}
-			return false;
+			$table = "glpi_printers";
+			break;
+			
+		case USER_TYPE:
+			$table = "glpi_users";
+			break;
+			
+		default:
+			return $return;
 			break;
 	}
+	
+	$query = "SELECT ".$field." FROM ".$table." ".
+			 "WHERE ID = '".$ID."';";
+	if ( $result = $DB->query($query) ) {
+		if ( ($fields=$DB->fetch_row($result)) && ($fields['0'] != NULL) )
+			return $fields['0'];
+	}
+	return $return;
 }
 
 ?>

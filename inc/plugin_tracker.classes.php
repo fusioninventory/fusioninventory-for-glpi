@@ -53,13 +53,18 @@ class plugin_tracker_computers_history extends CommonDBTM {
 		
 	}
 	
-	function countAllEntries($ID) {
+	function countEntries($type, $ID) {
 		global $DB;
 		
 		$num = 0;
 		$query = "SELECT count(DISTINCT ID) ".
-				 "FROM ".$this->table." ".
-				 "WHERE FK_computers = '".$ID."';";
+				 "FROM ".$this->table." ";
+		
+		if ( $type == COMPUTER_TYPE )
+			$query .= "WHERE FK_computers = '".$ID."';";
+		else // $type == USER_TYPE
+			$query .= "WHERE FK_users = '".$ID."';";
+
 		if ( $result_num=$DB->query($query) ) {
 			if ( $field = $DB->result($result_num,0,0) )
 				$num += $field;
@@ -68,29 +73,36 @@ class plugin_tracker_computers_history extends CommonDBTM {
 	}
 	
 	/* Gets history (and the number of entries) of one computer */
-	function getEntries($ID, $begin, $limit) {
+	function getEntries($type, $ID, $begin, $limit) {
 		global $DB;
 		
 		$datas=array();
-		$query = "SELECT * FROM ".$this->table." ".
-				 "WHERE FK_computers = '".$ID."' ";
-				 "LIMIT ".$begin.", ".$limit.";";
+		$query = "SELECT * FROM ".$this->table." ";
+		
+		if ( $type == COMPUTER_TYPE )
+			$query .= "WHERE FK_computers = '".$ID."' ";
+		else // $type == USER_TYPE
+			$query .= "WHERE FK_users = '".$ID."' ";
+			
+		$query .= "LIMIT ".$begin.", ".$limit.";";
 
 		if ( $result=$DB->query($query) ){
 			$i = 0;
 			while ( $data=$DB->fetch_assoc($result) ) {
+				$data["computer_name"] = plugin_tracker_getDeviceFieldFromId(COMPUTER_TYPE, $data["FK_computers"], "name", NULL);
+				$data["user_name"] = plugin_tracker_getDeviceFieldFromId(USER_TYPE, $data["FK_users"], "name", NULL);
 				$data['date'] = convDateTime($data['date']);
 				$datas["$i"] = $data;
-				$i++;
+				$i++;				
 			}
 			return $datas;
 		}
 		return false;
 	}
 	
-	function showForm($target, $ID) {
+	function showForm($type, $target, $ID) {
 			
-		GLOBAL $LANG, $LANGTRACKER;
+		GLOBAL $LANG, $LANGTRACKER, $INFOFORM_PAGES, $CFG_GLPI;
 		
 		if ( !plugin_tracker_haveRight("computers_history","r") )
 			return false;
@@ -99,7 +111,7 @@ class plugin_tracker_computers_history extends CommonDBTM {
 		if ( !isset($_GET['start']) )
 			$_GET['start'] = 0;
 		
-		$numrows = $this->countAllEntries($ID);
+		$numrows = $this->countEntries($type, $ID);
 		$parameters = "ID=".$_GET["ID"]."&onglet=".$_SESSION["glpi_onglet"];	
 		
 		echo "<br>";
@@ -111,19 +123,27 @@ class plugin_tracker_computers_history extends CommonDBTM {
 			$limit = $numrows;
 			
 		// Get history
-		if ( !($data = $this->getEntries($ID, $_GET['start'], $limit)) )
+		if ( !($data = $this->getEntries($type, $ID, $_GET['start'], $limit)) )
 			return false;
 
-		echo "<div align='center'><form method='post' name='computer_history_form' id='computer_history_form'  action=\"".$target."\">";
+		// for $_GET['type'] (useful to check rights)
+		if ( $type == COMPUTER_TYPE )
+			echo "<div align='center'><form method='post' name='computer_history_form' id='computer_history_form'  action=\"".$target."?type=".COMPUTER_TYPE."\">";
+		else // $type == USER_TYPE
+			echo "<div align='center'><form method='post' name='computer_history_form' id='computer_history_form'  action=\"".$target."?type=".USER_TYPE."\">";
 
-		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='4'>";
+		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='5'>";
 		echo $LANGTRACKER["cpt_history"][0]." :</th></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th></th>";
 		echo "<th>".$LANGTRACKER["cpt_history"][1]." :</th>";
-		echo "<th>".$LANGTRACKER["cpt_history"][2]." :</th>";
-		echo "<th>".$LANGTRACKER["cpt_history"][3]." :</th></tr>";
+		if ( $type == COMPUTER_TYPE )
+			echo "<th>".$LANGTRACKER["cpt_history"][3]." :</th>";
+		else // $type == USER_TYPE
+			echo "<th>".$LANGTRACKER["cpt_history"][2]." :</th>";
+		echo "<th>".$LANGTRACKER["cpt_history"][4]." :</th>";
+		echo "<th>".$LANGTRACKER["cpt_history"][5]." :</th></tr>";
 
 		for ($i=0; $i<$limit; $i++) {
 			echo "<tr class='tab_bg_1'>";
@@ -131,6 +151,22 @@ class plugin_tracker_computers_history extends CommonDBTM {
 			echo "<input type='checkbox' name='checked_$i' value='1'>";
 			echo "</td>";
 			echo "<td align='center'>".$data["$i"]['username']."</td>";
+			echo "<td align='center'>";
+			if ( $type == COMPUTER_TYPE ) {
+				echo "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[USER_TYPE]."?ID=".$data["$i"]["FK_users"]."\">";
+				echo $data["$i"]["user_name"];
+				if (empty($data["$i"]["user_name"]) || $CFG_GLPI["view_ID"])
+					echo " (".$data["$i"]['FK_users'].")";
+				echo "</a>";
+			}
+			else { // $type == USER_TYPE
+				echo "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[COMPUTER_TYPE]."?ID=".$data["$i"]["FK_computers"]."\">";
+				echo $data["$i"]["computer_name"];
+				if (empty($data["$i"]["computer_name"]) || $CFG_GLPI["view_ID"])
+					echo " (".$data["$i"]['FK_computers'].")";
+				echo "</a>";
+			}
+			echo "</td>";
 			echo "<td align='center'>".$data["$i"]['state']."</td>";
 			echo "<td align='center'>".$data["$i"]['date']."</td>";
 			echo "</td></tr>";
@@ -141,7 +177,7 @@ class plugin_tracker_computers_history extends CommonDBTM {
 			return false;
 			
 		echo "<input type='hidden' name='limit' value='".$limit."'>";
-		echo "<tr class='tab_bg_1'><td colspan='4'>";
+		echo "<tr class='tab_bg_1'><td colspan='5'>";
 		echo "<div align='center'><a onclick= \"if ( markAllRows('printer_history_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
 		echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
 		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";	
@@ -342,7 +378,7 @@ class plugin_tracker_errors extends CommonDBTM {
 		global $LANGTRACKER;
 		
 		$input['device_type'] = $device_type;
-		$input['FK_entities'] = getDeviceEntity($device_type, $input['device_id']);
+		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
 
 		$input['description'] = $LANGTRACKER["errors"][20]." : ";
 		$input['description'].= $LANGTRACKER["errors"][21];
@@ -365,7 +401,7 @@ class plugin_tracker_errors extends CommonDBTM {
 		global $LANGTRACKER;
 		
 		$input['device_type'] = $device_type;
-		$input['FK_entities'] = getDeviceEntity($device_type, $input['device_id']);
+		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
 		
 		$input['description'] = $LANGTRACKER["errors"][30];
 		
@@ -402,6 +438,126 @@ class plugin_tracker_errors extends CommonDBTM {
 			
 		else if ( $error_type == 'wire' )
 			$this->writeWireError($device_type, $input);
+	}
+
+	function countEntries($type, $ID) {
+		global $DB;
+		
+		$num = 0;
+		$query = "SELECT count(DISTINCT ID) ".
+				 "FROM ".$this->table." ";
+		
+		if ( $type == COMPUTER_TYPE )
+			$query .="WHERE device_type = '".COMPUTER_TYPE."' ";
+		else if ( $type == NETWORKING_TYPE )
+			$query .="WHERE device_type = '".NETWORKING_TYPE."' ";
+		else // $type == PRINTER_TYPE
+			$query .="WHERE device_type = '".PRINTER_TYPE."' ";
+			
+		$query .= "AND device_id = '".$ID."';";
+		
+		if ( $result_num=$DB->query($query) ) {
+			if ( $field = $DB->result($result_num,0,0) )
+				$num += $field;
+		}
+		return $num;
+	}
+
+	function getEntries($type, $ID, $begin, $limit) {
+		global $DB;
+		
+		$datas=array();
+		$query = "SELECT * FROM ".$this->table." ";
+		
+		if ( $type == COMPUTER_TYPE )
+			$query .= "WHERE device_type = '".COMPUTER_TYPE."' ";
+		else if ( $type == NETWORKING_TYPE )
+			$query .= "WHERE device_type = '".NETWORKING_TYPE."' ";
+		else // $type == PRINTER_TYPE
+			$query .= "WHERE device_type = '".PRINTER_TYPE."' ";
+			
+		$query .= "AND device_id = '".$ID."' ".
+				  "LIMIT ".$begin.", ".$limit.";";
+		
+		if ( $result=$DB->query($query) ){
+			$i = 0;
+			while ( $data=$DB->fetch_assoc($result) ) {
+				$data['first_pb_date'] = convDateTime($data['first_pb_date']);
+				$data['last_pb_date'] = convDateTime($data['last_pb_date']);
+				$datas["$i"] = $data;
+				$i++;
+			}
+			return $datas;
+		}
+		return false;
+	}
+	
+	function showForm($type, $target, $ID) {
+			
+		GLOBAL $LANG, $LANGTRACKER;
+		
+		if ( !plugin_tracker_haveRight("errors","r") )
+			return false;
+		
+		// preparing to display history
+		if ( !isset($_GET['start']) )
+			$_GET['start'] = 0;
+		
+		$numrows = $this->countEntries($type, $ID);
+		$parameters = "ID=".$_GET["ID"]."&onglet=".$_SESSION["glpi_onglet"];	
+		
+		echo "<br>";
+		printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
+
+		if ( $_SESSION["glpilist_limit"] < $numrows )
+			$limit = $_SESSION["glpilist_limit"];
+		else
+			$limit = $numrows;
+			
+		// Get history
+		if ( !($data = $this->getEntries($type, $ID, $_GET['start'], $limit)) )
+			return false;
+
+		// for $_GET['type'] (useful to check rights)
+		if ( $type == COMPUTER_TYPE )
+			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'  action=\"".$target."?type=".COMPUTER_TYPE."\">";
+		else if ( $type == NETWORKING_TYPE )
+			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'  action=\"".$target."?type=".NETWORKING_TYPE."\">";
+		else // $type == PRINTER_TYPE
+			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'  action=\"".$target."?type=".PRINTER_TYPE."\">";
+
+		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='5'>";
+		echo $LANGTRACKER["errors"][0]." :</th></tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<th></th>";
+		echo "<th>".$LANGTRACKER["errors"][1]." :</th>";
+		echo "<th>".$LANGTRACKER["errors"][2]." :</th>";
+		echo "<th>".$LANGTRACKER["errors"][3]." :</th>";
+		echo "<th>".$LANGTRACKER["errors"][4]." :</th></tr>";
+
+		for ($i=0; $i<$limit; $i++) {
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>";
+			echo "<input type='checkbox' name='checked_$i' value='1'>";
+			echo "</td>";
+			echo "<td align='center'>".$data["$i"]['ifaddr']."</td>";
+			echo "<td align='center'>".$data["$i"]['description']."</td>";
+			echo "<td align='center'>".$data["$i"]['first_pb_date']."</td>";
+			echo "<td align='center'>".$data["$i"]['last_pb_date']."</td>";
+			echo "</td></tr>";
+			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['ID']."'>";
+		}
+		
+		if ( !plugin_tracker_haveRight("errors","w") )
+			return false;
+			
+		echo "<input type='hidden' name='limit' value='".$limit."'>";
+		echo "<tr class='tab_bg_1'><td colspan='5'>";
+		echo "<div align='center'><a onclick= \"if ( markAllRows('errors_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
+		echo " - <a onclick= \"if ( unMarkAllRows('errors_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
+		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";	
+		echo "</table></form></div>";
 	}
 }
 
@@ -462,7 +618,7 @@ class plugin_tracker_printers_history extends CommonDBTM {
 
 		if ( $result = $DB->query($query) ) {
 			if ( $fields = $DB->fetch_assoc($result) ) {
-				$output['num_days'] = round((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24)+1);
+				$output['num_days'] = ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
 				$output['num_pages'] = $fields['max_pages'] - $fields['min_pages'];
 				$output['pages_per_day'] = round($output['num_pages'] / $output['num_days']);
 				return $output;

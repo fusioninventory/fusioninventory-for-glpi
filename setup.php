@@ -166,9 +166,14 @@ function plugin_tracker_giveItem($type,$field,$data,$num,$linkfield=""){
 			
 		case "glpi_plugin_tracker_errors.device_id":
 			$device_type = $data["ITEM_1"];
-			$out = "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES["$device_type"]."?ID=".$data["ITEM_$num"]."\">";
-			$out.= $data["ITEM_$num"];
-			$out.= "</a>";
+			$ID = $data["ITEM_$num"];
+			$name = plugin_tracker_getDeviceFieldFromId($device_type, $ID, "name", NULL);
+			
+			$out = "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES["$device_type"]."?ID=".$ID."\">";
+			$out .= $name;
+			if (empty($name) || $CFG_GLPI["view_ID"])
+				$out .= " ($ID)";
+			$out .= "</a>";
 			return $out;
 			break;
 
@@ -255,10 +260,14 @@ function plugin_get_headings_tracker($type,$withtemplate){
 			// Non template case
 			else {
 				if (plugin_tracker_haveRight("networking_info","r")) {
-					return array(
-							1 => $LANGTRACKER["title"][1]
-					 	   	);
+					$array = array(1 => $LANGTRACKER["title"][1]);
 				}
+
+				if (plugin_tracker_haveRight("errors","r"))	{
+					$array = array_merge($array, array(1 => $LANGTRACKER["title"][3]));
+				}	
+
+				return $array;
 			}
 			
 			break;
@@ -290,52 +299,56 @@ function plugin_headings_actions_tracker($type){
 	switch ($type){
 		case COMPUTER_TYPE :
 			
-				$array = array();
-				
-				if ( (plugin_tracker_haveRight("computers_history","r")) && (($config->isActivated('computers_history')) == true) ) {
-					$array = array(1 => "plugin_headings_tracker_computerHistory");
-				}
-				
-				if (plugin_tracker_haveRight("errors","r")) {
-					$array = array_merge($array, array(1 => "plugin_headings_tracker_computerErrors"));
-				}
-				
-				return $array;
+			$array = array();
+			
+			if ( (plugin_tracker_haveRight("computers_history","r")) && (($config->isActivated('computers_history')) == true) ) {
+				$array = array(1 => "plugin_headings_tracker_computerHistory");
+			}
+			
+			if (plugin_tracker_haveRight("errors","r")) {
+				$array = array_merge($array, array(1 => "plugin_headings_tracker_computerErrors"));
+			}
+			
+			return $array;
 
 			break;
 
 		case PRINTER_TYPE :
+		
+			$array = array();
 			
-				$array = array();
+			if (plugin_tracker_haveRight("printers_info","r")) {
+				$array = array(1 => "plugin_headings_tracker_printerInfo");
+			}
+						
+			if ( (plugin_tracker_haveRight("printers_history","r")) && (($config->isActivated('counters_statement')) == true) ) {
+				$array = array_merge($array, array(1 => "plugin_headings_tracker_printerHistory"));
+			}					
+			
+			if (plugin_tracker_haveRight("errors","r"))	{
+				$array = array_merge($array, array(1 => "plugin_headings_tracker_printerErrors"));
+			}
 				
-				if (plugin_tracker_haveRight("printers_info","r")) {
-					$array = array(1 => "plugin_headings_tracker_printerInfo");
-				}
-							
-				if ( (plugin_tracker_haveRight("printers_history","r")) && (($config->isActivated('counters_statement')) == true) ) {
-					$array = array_merge($array, array(1 => "plugin_headings_tracker_printerHistory"));
-				}					
-				
-				if (plugin_tracker_haveRight("errors","r"))	{
-					$array = array_merge($array, array(1 => "plugin_headings_tracker_printerErrors"));
-				}
-					
-				if ( (plugin_tracker_haveRight("printers_history","w"))  && (($config->isActivated('counters_statement')) == true) )	{
-					$array = array_merge($array, array(1 => "plugin_headings_tracker_printerCronConfig"));
-				}
-				
-				return $array;
+			if ( (plugin_tracker_haveRight("printers_history","w"))  && (($config->isActivated('counters_statement')) == true) )	{
+				$array = array_merge($array, array(1 => "plugin_headings_tracker_printerCronConfig"));
+			}
+			
+			return $array;
 
 			break;	
 			
 		case NETWORKING_TYPE :
 			
 			if (plugin_tracker_haveRight("networking_info","r")) {
-				return array(
-						1 => "plugin_headings_tracker_networkingInfo"
-						);
+				$array = array(1 => "plugin_headings_tracker_networkingInfo");
 			}
-
+			
+			if (plugin_tracker_haveRight("errors","r"))	{
+				$array = array_merge($array, array(1 => "plugin_headings_tracker_networkingErrors"));
+			}
+			
+			return $array;
+				
 			break;
 			
 		case USER_TYPE :
@@ -355,14 +368,13 @@ function plugin_headings_actions_tracker($type){
 function plugin_headings_tracker_computerHistory($type,$ID){
 
 	$computer_history = new plugin_tracker_computers_history();
-	$computer_history->showForm(GLPI_ROOT.'/plugins/tracker/front/plugin_tracker.computer_history.form.php', $_GET["ID"]);
+	$computer_history->showForm(COMPUTER_TYPE, GLPI_ROOT.'/plugins/tracker/front/plugin_tracker.computer_history.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_tracker_computerErrors($type,$ID){
 
-	echo "<div align='center'>";
-	echo "computerErrors : $ID";
-	echo "</div>";
+	$errors = new plugin_tracker_errors();
+	$errors->showForm(COMPUTER_TYPE, GLPI_ROOT.'/plugins/tracker/front/plugin_tracker.errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_tracker_printerInfo($type,$ID){
@@ -379,9 +391,8 @@ function plugin_headings_tracker_printerHistory($type,$ID){
 
 function plugin_headings_tracker_printerErrors($type,$ID){
 
-	echo "<div align='center'>";
-	echo "printerErrors : $ID";
-	echo "</div>";
+	$errors = new plugin_tracker_errors();
+	$errors->showForm(PRINTER_TYPE, GLPI_ROOT.'/plugins/tracker/front/plugin_tracker.errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_tracker_printerCronConfig($type,$ID){
@@ -396,11 +407,16 @@ function plugin_headings_tracker_networkingInfo($type,$ID){
 	$snmp->showForm(GLPI_ROOT.'/plugins/tracker/front/plugin_tracker.switch_info.form.php', $_GET["ID"]);
 }
 
+function plugin_headings_tracker_networkingErrors($type,$ID){
+
+	$errors = new plugin_tracker_errors();
+	$errors->showForm(NETWORKING_TYPE, GLPI_ROOT.'/plugins/tracker/front/plugin_tracker.errors.form.php', $_GET["ID"]);
+}
+
 function plugin_headings_tracker_userHistory($type,$ID){
-	
-	echo "<div align='center'>";
-	echo "userHistory : $ID";
-	echo "</div>";
+
+	$computer_history = new plugin_tracker_computers_history();
+	$computer_history->showForm(USER_TYPE, GLPI_ROOT.'/plugins/tracker/front/plugin_tracker.computer_history.form.php', $_GET["ID"]);
 }
 
 ?>
