@@ -61,6 +61,11 @@ $error["otherserial"] = (isset($_GET["Admisys"]) ? $_GET["Admisys"] : 0);
 // Get the computer username : contact
 $contact = (isset($_GET["User"]) ? $_GET["User"] : "");
 
+// Get the GLPI username : user
+if ( isset($_GET["GLPI_User"]) ) {
+	if ( !($user_id = getIdFromUser($_GET["GLPI_User"])) )
+		$user_id = -1;
+}
 
 /// Check and write error ///
 $computer_id = $errors->writeError(COMPUTER_TYPE, 'db', $error, $date);
@@ -70,7 +75,12 @@ $computer_id = $errors->writeError(COMPUTER_TYPE, 'db', $error, $date);
 if ( ($config->isActivated('computers_history')) && ($history['FK_computers'] = $computer_id) ) {
 	
 	//Get user : contact
-	$history["username"] = $contact;
+	if ( $contact != "")
+		$history["username"] = $contact;
+	
+	// Get FK_users : Id of the GLPI user
+	if ( $user_id != -1)
+		$history['FK_users'] = $user_id;
 	
 	// Get state of computer session : 0, 1 or 2, i.e. : Off, On or Connected
 	$history["state"] = (isset($_GET["State"]) ? $_GET["State"] : "");
@@ -88,10 +98,8 @@ if ( $config->isActivated('update_contact') ) {
 }
 
 if ( $config->isActivated('update_user') ) {
-	if ( isset($_GET["GLPI_User"]) ) {
-		if ( !($update['FK_users'] = getIdFromUser($_GET["GLPI_User"])) )
-			unset($update['FK_users']);
-	}
+	if ( $user_id != -1)
+		$update['FK_users'] = $user_id;
 }
 
 if ( (count($update)) != 0 ) {

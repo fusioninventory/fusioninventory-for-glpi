@@ -785,10 +785,9 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp {
 		echo "</td></tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='cifmac' value='1'>";
-//		echo "</td>";
+		echo "<td align='center'>";
+		echo "<input type='checkbox' name='cifmac' value='1'>";
+		echo "</td>";
 		echo "<td>".$LANG["device_iface"][2]."</td>";
 		echo "<td><input  type='text' name='ifmac' value='".$this->snmp['ifmac']."' size='20'></td></tr>";
 		

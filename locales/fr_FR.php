@@ -91,10 +91,10 @@ $LANGTRACKER["snmp"][0]="Informations SNMP du matériel";
 $LANGTRACKER["snmp"][1]="Général";
 $LANGTRACKER["snmp"][2]="Cablâge";
 
-$LANGTRACKER["snmp"][31]="Impossible de récupérer les infos SNMP : Ce n'est pas un switch !";
+$LANGTRACKER["snmp"][31]="Impossible de récupérer les infos SNMP : Ce n'est pas un commutateur !";
 $LANGTRACKER["snmp"][32]="Impossible de récupérer les infos SNMP : Matériel non actif !";
 $LANGTRACKER["snmp"][33]="Impossible de récupérer les infos SNMP : IP non précisée dans la base !";
-$LANGTRACKER["snmp"][34]="Le switch auquel est reliée la machine n'est pas renseigné !";
+$LANGTRACKER["snmp"][34]="Le commutateur auquel est reliée la machine n'est pas renseigné !";
 
 
 $LANGTRACKER["cron"][0]="Relevé automatique du compteur";
@@ -132,9 +132,11 @@ $LANGTRACKER["prt_history"][22]="Compteur";
 
 
 $LANGTRACKER["cpt_history"][0]="Historique des sessions";
-$LANGTRACKER["cpt_history"][1]="Utilisateur";
-$LANGTRACKER["cpt_history"][2]="Etat";
-$LANGTRACKER["cpt_history"][3]="Date";
+$LANGTRACKER["cpt_history"][1]="Contact";
+$LANGTRACKER["cpt_history"][2]="Ordinateur";
+$LANGTRACKER["cpt_history"][3]="Utilisateur";
+$LANGTRACKER["cpt_history"][4]="Etat";
+$LANGTRACKER["cpt_history"][5]="Date";
 
 
 $LANGTRACKER["type"][1]="Ordinateur";
