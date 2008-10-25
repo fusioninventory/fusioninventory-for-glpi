@@ -42,7 +42,6 @@ $LANGTRACKER["title"][2]="[Trk] Historique";
 $LANGTRACKER["title"][3]="[Trk] Erreurs";
 $LANGTRACKER["title"][4]="[Trk] Cron";
 
-
 $LANGTRACKER["profile"][0]="Gestion des droits";
 $LANGTRACKER["profile"][1]="$title"; //interface
 
@@ -90,6 +89,12 @@ $LANGTRACKER["functionalities"][42]="Commutateur";
 $LANGTRACKER["snmp"][0]="Informations SNMP du matériel";
 $LANGTRACKER["snmp"][1]="Général";
 $LANGTRACKER["snmp"][2]="Cablâge";
+$LANGTRACKER["snmp"][2]="Données SNMP";
+
+$LANGTRACKER["snmp"][11]="Informations supplémentaires";
+$LANGTRACKER["snmp"][12]="Uptime";
+$LANGTRACKER["snmp"][13]="Utilisation du CPU (en %)";
+$LANGTRACKER["snmp"][14]="Utilisation de la m�moire";
 
 $LANGTRACKER["snmp"][31]="Impossible de récupérer les infos SNMP : Ce n'est pas un commutateur !";
 $LANGTRACKER["snmp"][32]="Impossible de récupérer les infos SNMP : Matériel non actif !";
@@ -142,5 +147,23 @@ $LANGTRACKER["cpt_history"][5]="Date";
 $LANGTRACKER["type"][1]="Ordinateur";
 $LANGTRACKER["type"][2]="Commutateur";
 $LANGTRACKER["type"][3]="Imprimante";
+
+$LANGTRACKER["rules"][1]="Règles";
+
+$LANGTRACKER["model_info"][1]="Informations SNMP";
+$LANGTRACKER["model_info"][2]="Version SNMP";
+$LANGTRACKER["model_info"][3]="Authentification SNMP";
+$LANGTRACKER["model_info"][4]="Modèles SNMP";
+$LANGTRACKER["model_info"][5]="Gestion des MIB";
+$LANGTRACKER["model_info"][6]="Edition de modèle SNMP";
+
+$LANGTRACKER["mib"][1]="Label MIB";
+$LANGTRACKER["mib"][2]="Objet";
+$LANGTRACKER["mib"][3]="oid";
+$LANGTRACKER["mib"][4]="Ajouter un oid...";
+$LANGTRACKER["mib"][5]="Liste des oid";
+$LANGTRACKER["mib"][6]="Compteur de ports";
+$LANGTRACKER["mib"][7]="Port dynamique (.x)";
+$LANGTRACKER["mib"][8]="Liaison champs";
 
 ?>
