@@ -36,8 +36,9 @@
 if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
-
-abstract class plugin_tracker_snmp {
+// Modification by David
+// Remplacement de plugin_tracker_snmp en plugin_tracker_snmp2
+abstract class plugin_tracker_snmp2 {
 	
 	// fields of the result of a MySQL request
 	var $fields;
@@ -224,7 +225,7 @@ abstract class plugin_tracker_snmp {
 	
 	function showForm($target,$ID) {
 		
-		global $LANG, $LANGTRACKER;	
+		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;	
 		
 		if ( !plugin_tracker_haveRight($this->tracker_right,"r") )
 			return false;
@@ -241,6 +242,59 @@ abstract class plugin_tracker_snmp {
 
 		$this->getAll();
 		
+		$query = "
+		SELECT * 
+		FROM glpi_plugin_tracker_networking
+		WHERE FK_networking=".$ID." ";
+
+		$result = $DB->query($query);		
+		$data = $DB->fetch_assoc($result);
+		// Form networking informations
+		echo "<br>";
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		echo "<table class='tab_cadre' cellpadding='5' width='800'>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<th colspan='3'>";
+		echo $LANGTRACKER["snmp"][11];
+		echo "</th>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
+		echo "<td align='center'>";
+		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0);
+		echo "</td>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
+		echo "<td align='center'>";
+		echo "<input  type='text' name='cpu' value='".$data["cpu"]."' size='20'>";
+		echo "</td>";
+		echo "</tr>";	
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
+		echo "<td align='center'>";
+		echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
+		echo "</td>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='2'>";
+		echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "</table>";
+		
+		
+// ************ A FAIRE ******************************************************************************* //
+// ***************************************** METTRE TABLEAU DES PORTS ********************************* //
+// **************************************************************************************************** //	
+		
+		// Query/Import SNMP
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
@@ -907,7 +961,7 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp {
 				echo "<br>voici ip switch : ".$this->ip;
 				$state = $this->getPortState();
 				$port = $this->getPortgetPortLogicalNumber();
-				echo "<br>Voici l'état ".$state;
+				echo "<br>Voici l'Ã©tat ".$state;
 				echo "<br>Voici le port ".$port;
 			}
 			else
@@ -922,4 +976,476 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp {
 	}
 }*/
 
+// Modifications by David
+// Class for tracker_fullsync.php
+class plugin_tracker_snmp extends CommonDBTM
+{
+	function getNetworkList()
+	{
+		global $DB;
+		
+		$NetworksID = array();	
+		
+		$query = "SELECT active_device_state FROM glpi_plugin_tracker_config ";
+		
+		if ( ($result = $DB->query($query)) )
+		{
+			$device_state = mysql_result($result, 0, "active_device_state");
+		}
+
+		$query = "SELECT ID,ifaddr 
+		FROM glpi_networking 
+		WHERE deleted='0' 
+			AND state='1' ";
+			
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_assoc($result) )
+			{
+				$NetworksID[$data["ID"]] = $data["ifaddr"];
+			}
+		}
+
+		return $NetworksID;
+	
+	}
+
+
+
+	function UpdateNetworkBySNMP($ArrayListNetworking)
+	{
+		foreach ( $ArrayListNetworking as $IDNetworking=>$ifIP )
+		{
+			$updateNetwork = new plugin_tracker_snmp;
+			// Get SNMP model 
+			$IDModelInfos = $updateNetwork->GetSNMPModel($IDNetworking);
+			// ¤ Get oid
+			$ArrayOID = $updateNetwork->GetOID($IDModelInfos);
+			// ¤ Get oid ports Counter
+			$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking);
+			// ¤ Define oid and object name
+			$updateNetwork->DefineObject($ArrayOID);
+			// ¤ Get query SNMP on switch
+			$ArraySNMPResult = $updateNetwork->SNMPQuery($ArrayOID,$ifIP);
+			// ¤ Get query SNMP of switchs ports
+			$ArraySNMPResultPorts = $updateNetwork->SNMPQuery($ArrayOIDPorts,$ifIP);
+			// ¤ Get link OID fields
+			$ArrayLinks = $updateNetwork->GetLinkOidToFields($IDModelInfos);
+			// ¤ Update fields of switchs
+			$updateNetwork->UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking);
+			// ¤ Update ports fields of switchs
+			$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking);
+		} 
+	
+	}
+	
+	
+	
+	function GetSNMPModel($IDNetworking)
+	{
+	
+		global $DB;
+		
+		$query = "SELECT ID 
+		FROM glpi_plugin_tracker_model_infos 
+		WHERE FK_model_networking='".$IDNetworking."' ";
+		
+		if ( ($result = $DB->query($query)) )
+		{
+			return mysql_result($result, 0, "ID");
+		}	
+	
+	}
+	
+	
+	
+	function GetOID($IDModelInfos)
+	{
+		
+		global $DB;
+		
+		$oidList = array();		
+		
+		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
+			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
+		FROM glpi_plugin_tracker_mib_networking
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
+			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
+			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
+		
+		WHERE FK_model_infos=".$IDModelInfos." 
+			AND oid_port_dyn='0' ";
+		
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_assoc($result) )
+			{
+				$oidList[$data["objectname"]] = $data["oidname"];
+			}
+		}
+		
+		return $oidList;	
+	
+	}
+
+
+
+	function GetOIDPorts($IDModelInfos,$IP,$IDNetworking)
+	{
+		
+		global $DB;
+		
+		$oidList = array();		
+		
+		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
+			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
+		FROM glpi_plugin_tracker_mib_networking
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
+			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
+			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
+		
+		WHERE FK_model_infos=".$IDModelInfos."
+			AND oid_port_counter='1' ";
+		
+		if ( ($result = $DB->query($query)) )
+		{
+			$object = mysql_result($result, 0, "objectname");
+			$portcounter = mysql_result($result, 0, "oidname");
+		}
+
+		// Get query SNMP to have number of ports
+		$snmp_queries = new plugin_tracker_snmp;
+		$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP);
+
+		$portsnumber = $Arrayportsnumber[$object];
+
+		// We have the number of Ports
+		
+		// Add ports in DataBase if they don't exists
+	echo "Nombre de Ports : ".$portsnumber."\n";
+		for ($i = 1; $i <= $portsnumber; $i++)
+		{
+		
+			$query = "SELECT ID
+		
+			FROM glpi_networking_ports
+			
+			WHERE on_device='".$IDNetworking."'
+				AND logical_number='".$i."' ";
+				
+			if ( $result = $DB->query($query) ){
+				if ( $DB->numrows($result) == 0 ) {
+				
+					$queryInsert = "INSERT INTO glpi_networking_ports 
+						(on_device,device_type,logical_number)
+					
+					VALUES ('".$IDNetworking."','2','".$i."') ";
+					
+					$DB->query($query);
+					
+					$IDPort = mysql_insert_id();
+					
+					$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
+						(FK_networking_ports)
+					
+					VALUES ('".$IDPort."') ";
+					
+					$DB->query($queryInsert);
+				
+				}
+				else
+				{
+				
+					$queryTrackerPort = "SELECT ID
+				
+					FROM glpi_plugin_tracker_networking_ports
+					
+					WHERE FK_networking_ports='".mysql_result($result, 0, "ID")."' ";
+					
+					if ( $resultTrackerPort = $DB->query($queryTrackerPort) ){
+						if ( $DB->numrows($resultTrackerPort) == 0 ) {
+						
+							$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
+								(FK_networking_ports)
+							
+							VALUES ('".mysql_result($result, 0, "ID")."') ";
+							
+							$DB->query($queryInsert);
+						
+						}
+					}
+				
+				}
+			}
+		
+		}
+		
+		// Get oid list of ports
+		
+		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
+			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
+		FROM glpi_plugin_tracker_mib_networking
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
+			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
+			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
+		
+		WHERE FK_model_infos=".$IDModelInfos."
+			AND oid_port_dyn='1' ";
+		
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_assoc($result) )
+			{
+				for ($i=1;$i <= $portsnumber[$object]; $i++)
+				{
+					$oidList[$data["objectname"].".".$i] = $data["oidname"].".".$i;
+				}
+			}
+		}
+		// Debug
+		foreach($oidList as $object=>$oid)
+		{
+			echo "===========>".$object." => ".$oid."\n";
+		}
+		// Debug END		
+		return $oidList;
+		
+	}	
+	
+	
+	
+	function DefineObject($ArrayOID)
+	{
+		foreach($ArrayOID as $object=>$oid)
+		{
+			if(defined($object))
+			{
+				runkit_constant_remove($object);
+				define($object,$oid);
+			}
+			else
+			{
+				define($object,$oid);
+			}
+		}
+	}
+	
+	
+	
+	function SNMPQuery($ArrayOID,$IP)
+	{
+		
+		$ArraySNMP = array();
+		
+		foreach($ArrayOID as $object=>$oid)
+		{
+			$SNMPValue = snmpget($IP, "public",$oid);
+			//echo "\n\n****************".snmpget($IP, "public",$oid)."****************\n\n";
+			$ArraySNMPValues = explode(": ", $SNMPValue);
+			$ArraySNMP[$object] = $ArraySNMPValues[1];
+		}
+		
+		return $ArraySNMP;
+	}
+	
+	
+	
+	function GetLinkOidToFields($ID)
+	{
+
+		global $DB;
+		
+		$query = "SELECT FK_links_oid_fields, 
+			glpi_dropdown_plugin_tracker_mib_object.name AS name
+		FROM glpi_plugin_tracker_mib_networking
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
+			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
+		
+		WHERE FK_model_infos=".$IDModelInfos." ";
+		
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_assoc($result) )
+			{
+				$ObjectLink[$data["name"]] = $data["FK_links_oid_fields"];
+			}
+		}
+	
+		return $ObjectLink;
+		
+	}
+	
+	
+	
+	function UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking)
+	{
+	
+		global $DB;	
+	
+		foreach($ArraySNMPResult as $object=>$SNMPValue)
+		{
+		
+			$query = "SELECT *
+			FROM glpi_plugin_tracker_links_oid_fields
+			
+			WHERE ID=".$ArrayLinks[$object]." ";
+		
+			if ( $result=$DB->query($query) )
+			{
+				while ( $data=$DB->fetch_assoc($result) )
+				{
+					if ($data["dropdown"] != "")
+					{
+						// Search if value of SNMP Query is in dropdown, if not, we put it
+						// Wawax : si tu ajoutes le lieu manuellement tu mets un msg dans le message_after_redirect
+						// 
+						
+						
+						
+					}
+					
+					// Update fields
+					//$query_update = "UPDATE
+					if ($data["table"] == "glpi_networking")
+					{
+					
+						$Field = "ID";
+						
+					}
+					else
+					{
+						
+						$Field = "FK_networking";
+						
+					}
+
+					$queryUpdate = "UPDATE ".$data["table"]."
+					
+					SET ".$data["field"]."='".$SNMPValue."' 
+					
+					WHERE ".$Field."='".$IDNetworking."'";
+					
+					$DB->query($queryUpdate);
+				
+				}
+			}
+		
+		}
+	
+	}
+	
+	
+	
+	function UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking)
+	{
+	
+		global $DB;	
+		
+		$ArrayPortsList = array();
+		
+		$ArrayPortListTracker = array();
+		
+		$query = "SELECT ID, logical_number
+		
+		FROM glpi_networking_ports
+		
+		WHERE on_device='".$IDNetworking."'
+		
+		ORDER BY logical_number";
+		
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_assoc($result) )
+			{
+			
+				$ArrayPortsList[$data["logical_number"]] = $data["ID"];
+				
+				$queryPortsTracker = "SELECT ID
+				
+				FROM glpi_plugin_tracker_networking_ports
+				
+				WHERE FK_networking_ports='".$data["ID"]."' ";
+				
+				if ( $resultPortsTracker=$DB->query($queryPortsTracker) )
+				{
+					while ( $dataPortsTracker=$DB->fetch_assoc($resultPortsTracker) )
+					{
+					
+						$ArrayPortListTracker[$data["logical_number"]] = $dataPortsTracker["ID"];
+					
+					}
+				} 
+			
+			}
+		}
+		
+	
+		foreach($ArraySNMPResultPorts as $object=>$SNMPValue)
+		{
+			$ArrayObject = explode (".",$object);
+			$i = count($ArrayObject);
+			$i--;
+			$PortNumber = $ArrayObject[$i];
+			
+			$query = "SELECT *
+			
+			FROM glpi_plugin_tracker_links_oid_fields
+			
+			WHERE ID=".$ArrayLinks[$object]." ";
+			
+			if ( $result=$DB->query($query) )
+			{
+				while ( $data=$DB->fetch_assoc($result) )
+				{
+					if ($data["dropdown"] != "")
+					{
+					
+					
+					}
+					else
+					{
+						
+						if ($data["table"] == "glpi_networking_ports")
+						{
+						
+							$Field = $ArrayPortsList[$PortNumber];
+							
+						}
+						else
+						{
+							
+							$Field = $ArrayPortListTracker[$PortNumber];
+							
+						}						
+						
+						$queryUpdate = "UPDATE ".$data["table"]."
+					
+						SET ".$data["field"]."='".$SNMPValue."' 
+						
+						WHERE ID='".$Field."'";
+						
+						$DB->query($queryUpdate);
+					
+					}					
+				
+				}
+				
+			}
+		
+		}
+	
+	}
+	
+	
+}
 ?>
