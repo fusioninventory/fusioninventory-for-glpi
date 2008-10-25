@@ -189,6 +189,19 @@ function plugin_tracker_giveItem($type,$field,$data,$num,$linkfield=""){
 	}
 	return "";
 }
+// Define Dropdown tables to be manage in GLPI :
+function plugin_tracker_getDropdown(){
+        // Table => Name
+        global $LANGTRACKER;
+        if (isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1)
+                return array("glpi_dropdown_plugin_tracker_snmp_version"=>"SNMP version",
+                                                "glpi_dropdown_plugin_tracker_mib_oid"=>"OID MIB",
+                                                "glpi_dropdown_plugin_tracker_mib_object"=>"Objet MIB",
+                                                "glpi_dropdown_plugin_tracker_mib_label"=>"Label MIB");
+        else
+                return array();
+
+}
 
 /* Cron for cleaning and printing counters */
 function cron_plugin_tracker() {
