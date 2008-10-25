@@ -43,9 +43,11 @@ include_once ("inc/plugin_tracker.functions_auth.php");
 include_once ("inc/plugin_tracker.functions_db.php");
 include_once ("inc/plugin_tracker.functions_dropdown.php");
 include_once ("inc/plugin_tracker.functions_ifmac.php");
-include_once ("inc/plugin_tracker.functions_rights.php");
+//include_once ("inc/plugin_tracker.functions_rights.php");
 include_once ("inc/plugin_tracker.functions_setup.php");
 
 include_once ("inc/plugin_tracker.functions_cron.php");
+
+include_once ("inc/plugin_tracker.functions_display.php");
 
 ?>
