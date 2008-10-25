@@ -40,6 +40,8 @@ define('MIB_NAME','1.3.6.1.2.1.1.5.0'); // sysName.0
 define('MIB_CONTACT','1.3.6.1.2.1.1.4.0'); // sysContact.0
 define('MIB_LOCATION','1.3.6.1.2.1.1.6.0'); // sysLocation.0
 
+
+
 /*With prefix - General*/
 define('MIB_NETMASK_PREFIX','1.3.6.1.2.1.4.20.1.3'); // ipAdEntNetMask, suffix = ip
 

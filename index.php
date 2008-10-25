@@ -33,21 +33,14 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$NEEDED_ITEMS=array("search");
+if(!defined('GLPI_ROOT')){
+	define('GLPI_ROOT', '../..'); 
+}
+include (GLPI_ROOT."/inc/includes.php");
 
-define('GLPI_ROOT', '../..'); 
-include (GLPI_ROOT . "/inc/includes.php"); 
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
-commonHeader($LANGTRACKER["errors"][0],$_SERVER['PHP_SELF'],"plugins","tracker");
-
-plugin_tracker_checkRight("errors","r");
-	
-manageGetValuesInSearch(PLUGIN_TRACKER_ERROR_TYPE);
-
-searchForm(PLUGIN_TRACKER_ERROR_TYPE,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
-showList(PLUGIN_TRACKER_ERROR_TYPE,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
+glpi_header(GLPI_ROOT .
+		"/plugins/tracker/front/plugin_tracker.menu.php");
 commonFooter();
-
 ?>
