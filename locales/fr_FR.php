@@ -166,4 +166,18 @@ $LANGTRACKER["mib"][6]="Compteur de ports";
 $LANGTRACKER["mib"][7]="Port dynamique (.x)";
 $LANGTRACKER["mib"][8]="Liaison champs";
 
+$LANGTRACKER["processes"][0]="Informations sur l'exécution des scripts";
+$LANGTRACKER["processes"][1]="PID";
+$LANGTRACKER["processes"][2]="Statut";
+$LANGTRACKER["processes"][3]="Nombre de threads";
+$LANGTRACKER["processes"][4]="Date de début d'exécution";
+$LANGTRACKER["processes"][5]="Date de fin d'exécution";
+$LANGTRACKER["processes"][6]="Equipements réseau interrogés";
+$LANGTRACKER["processes"][7]="Imprimantes interrogées";
+$LANGTRACKER["processes"][8]="Ports interrogés";
+$LANGTRACKER["processes"][9]="Erreurs";
+$LANGTRACKER["processes"][10]="Durée d'exécution du script";
+$LANGTRACKER["processes"][11]="Champs ajoutés";
+$LANGTRACKER["processes"][12]="Erreurs d'oid";
+
 ?>
