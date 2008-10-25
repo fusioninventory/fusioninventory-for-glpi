@@ -611,7 +611,7 @@ class plugin_tracker_printer_snmp extends plugin_tracker_snmp {
 }
 
 
-class plugin_tracker_switch_snmp extends plugin_tracker_snmp {
+class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 	
 	// Number of switch ports
 	var $num_ports = 0;
