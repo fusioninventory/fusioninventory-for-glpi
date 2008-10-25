@@ -143,4 +143,5 @@ $LANGTRACKER["type"][1]="Computer";
 $LANGTRACKER["type"][2]="Switch";
 $LANGTRACKER["type"][3]="Printer";
 
+$LANGTRACKER["rules"][1]="Rules";
 ?>
