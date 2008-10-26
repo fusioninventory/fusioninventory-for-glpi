@@ -1205,7 +1205,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			while ( $data=$DB->fetch_assoc($result) )
 			{
-				for ($i=1;$i <= $portsnumber[$object]; $i++)
+				for ($i=1;$i <= $Arrayportsnumber[$object]; $i++)
 				{
 					$oidList[$data["objectname"].".".$i] = $data["oidname"].".".$i;
 				}
@@ -1249,7 +1249,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		foreach($ArrayOID as $object=>$oid)
 		{
 			$SNMPValue = snmpget($IP, "public",$oid);
-			//echo "\n\n****************".snmpget($IP, "public",$oid)."****************\n\n";
+			echo "****************".snmpget($IP, "public",$oid)."****************\n";
 			$ArraySNMPValues = explode(": ", $SNMPValue);
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
 		}
@@ -1271,7 +1271,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
 			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
 		
-		WHERE FK_model_infos=".$IDModelInfos." ";
+		WHERE FK_model_infos=".$ID." ";
 		
 		if ( $result=$DB->query($query) )
 		{
@@ -1328,12 +1328,17 @@ class plugin_tracker_snmp extends CommonDBTM
 						$Field = "FK_networking";
 						
 					}
+					
+					$SNMPValue = preg_replace('/^\"/', '',$SNMPValue);
+					$SNMPValue = preg_replace('/\"$/', '',$SNMPValue);
 
 					$queryUpdate = "UPDATE ".$data["table"]."
 					
 					SET ".$data["field"]."='".$SNMPValue."' 
 					
 					WHERE ".$Field."='".$IDNetworking."'";
+					
+					// update via :  $networking->update(array("serial"=>"tonnumero"));
 					
 					$DB->query($queryUpdate);
 				
@@ -1396,6 +1401,15 @@ class plugin_tracker_snmp extends CommonDBTM
 			$i = count($ArrayObject);
 			$i--;
 			$PortNumber = $ArrayObject[$i];
+			
+			$object = '';
+			
+			for ($j = 0; $j < $i;$j++)
+			{
+			
+				$object .= $ArrayObject[$j];
+
+			}
 			
 			$query = "SELECT *
 			
