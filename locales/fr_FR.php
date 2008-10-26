@@ -178,6 +178,6 @@ $LANGTRACKER["processes"][8]="Ports interrogés";
 $LANGTRACKER["processes"][9]="Erreurs";
 $LANGTRACKER["processes"][10]="Durée d'exécution du script";
 $LANGTRACKER["processes"][11]="Champs ajoutés";
-$LANGTRACKER["processes"][12]="Erreurs d'oid";
+$LANGTRACKER["processes"][12]="Erreurs SNMP";
 
 ?>
