@@ -1310,6 +1310,8 @@ class plugin_tracker_snmp extends CommonDBTM
 						// Wawax : si tu ajoutes le lieu manuellement tu mets un msg dans le message_after_redirect
 						// 
 						
+						// $ArrayDropdown = getDropdownArrayNames($data["table"],"%")
+
 						
 						
 					}
