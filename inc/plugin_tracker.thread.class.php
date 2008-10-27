@@ -97,6 +97,8 @@ class Threads extends CommonDBTM
 		
 		WHERE process_id='".$PID."' ";
 		
+		$DB->query($query);
+		
 	}
 	
 
