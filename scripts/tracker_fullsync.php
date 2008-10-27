@@ -80,11 +80,25 @@ $fields=array();
 
 $config = new plugin_tracker_snmp;
 
+//Get the script's process identifier
+if (isset($_GET["process_id"]))
+	$fields["process_id"] = $_GET["process_id"];
+
+// Add process into database
+
+$processes = new Threads;
+
+$processes->addProcess($fields["process_id"]);
+
+// SNMP is working
+
 $ArrayListNetworking = $config->getNetworkList();
 
 $config->UpdateNetworkBySNMP($ArrayListNetworking);
 
+// Update process into database
 
+$processes->updateProcess($fields["process_id"],"", "" , "", "");
 
 
 
@@ -95,30 +109,6 @@ $config->UpdateNetworkBySNMP($ArrayListNetworking);
 // ***********************************************************************//
 // ********************************* EXIT ********************************//
 // ***********************************************************************//
-exit();
-define('ifNumber','1.3.6.1.2.1.2.1.0');
-runkit_constant_remove('ifNumber');
-define('ifNumber','1.3.6.1.2.1.2.1.0');
-echo snmpget('192.168.1.191', 'public',"1.3.6.1.2.1.2.1.0");
-
-echo "\n";
-/* $result[0] = @snmpwalk('192.168.1.191', 'public', "1.3.6.1.2.1.2.1");
-if ($result[0] != false )
-{
-	$pos = strpos($result[0], " ");
-	$result[1] = substr($result[0], $pos+1);
-	// if "" into the string
-	$result[2] = str_replace('"', '', $result[1]);
-	echo $result[2];
-}
-else
-{
-	echo "false";
-}
-*/
-
-
-
 exit();
 //Get script configuration
 $config = new MassOCSImportConfig;

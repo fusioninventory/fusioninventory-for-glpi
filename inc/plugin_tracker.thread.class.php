@@ -67,6 +67,38 @@ class Threads extends CommonDBTM
 		echo "</table>";
 
 	}
+	
+	
+	
+	function addProcess($PID)
+	{
+	
+		global $DB;
+				
+		$query = "INSERT INTO glpi_plugin_tracker_processes
+			(start_time,process_id,status)
+			
+		VALUES('".date("Y-m-d H:i:s")."','".$PID."','1') ";
+		
+		$DB->query($query);
+
+	}
+	
+	
+	function updateProcess($PID, $NetworkQueries, $PrinterQueries, $portsQueries, $errors)
+	{
+	
+		global $DB;
+		
+		$query = "UPDATE glpi_plugin_tracker_processes
+		
+		SET end_time='".date("Y-m-d H:i:s")."', status='3', error_msg='".$errors."', network_queries='".$NetworkQueries."',
+			printer_queries='".$PrinterQueries."', ports_queries='".$PortsQueries."'
+		
+		WHERE process_id='".$PID."' ";
+		
+	}
+	
 
 }
 
