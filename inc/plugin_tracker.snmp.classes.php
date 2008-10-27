@@ -1000,7 +1000,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			
 		if ( $result=$DB->query($query) )
 		{
-			while ( $data=$DB->fetch_assoc($result) )
+			while ( $data=$DB->fetch_array($result) )
 			{
 				$NetworksID[$data["ID"]] = $data["ifaddr"];
 			}
@@ -1081,7 +1081,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		if ( $result=$DB->query($query) )
 		{
-			while ( $data=$DB->fetch_assoc($result) )
+			while ( $data=$DB->fetch_array($result) )
 			{
 				$oidList[$data["objectname"]] = $data["oidname"];
 			}
@@ -1203,7 +1203,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		if ( $result=$DB->query($query) )
 		{
-			while ( $data=$DB->fetch_assoc($result) )
+			while ( $data=$DB->fetch_array($result) )
 			{
 				for ($i=1;$i <= $Arrayportsnumber[$object]; $i++)
 				{
@@ -1249,7 +1249,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		foreach($ArrayOID as $object=>$oid)
 		{
 			$SNMPValue = snmpget($IP, "public",$oid);
-			echo "****************".snmpget($IP, "public",$oid)."****************\n";
+			echo "****************".$SNMPValue."****************\n";
 			$ArraySNMPValues = explode(": ", $SNMPValue);
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
 		}
@@ -1275,7 +1275,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		if ( $result=$DB->query($query) )
 		{
-			while ( $data=$DB->fetch_assoc($result) )
+			while ( $data=$DB->fetch_array($result) )
 			{
 				$ObjectLink[$data["name"]] = $data["FK_links_oid_fields"];
 			}
@@ -1302,7 +1302,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 			if ( $result=$DB->query($query) )
 			{
-				while ( $data=$DB->fetch_assoc($result) )
+				while ( $data=$DB->fetch_array($result) )
 				{
 					if ($data["dropdown"] != "")
 					{
@@ -1311,9 +1311,8 @@ class plugin_tracker_snmp extends CommonDBTM
 						// 
 						
 						// $ArrayDropdown = getDropdownArrayNames($data["table"],"%")
+						$SNMPValue = externalImportDropdown($data["dropdown"],$SNMPValue,0);
 
-						
-						
 					}
 					
 					// Update fields
@@ -1343,6 +1342,10 @@ class plugin_tracker_snmp extends CommonDBTM
 					// update via :  $networking->update(array("serial"=>"tonnumero"));
 					
 					$DB->query($queryUpdate);
+					
+					//<MoYo> cleanAllItemCache($item,$group)
+					//<MoYo> $item = ID
+					//<MoYo> group = GLPI_ + NETWORKING_TYPE
 				
 				}
 			}
@@ -1372,7 +1375,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		if ( $result=$DB->query($query) )
 		{
-			while ( $data=$DB->fetch_assoc($result) )
+			while ( $data=$DB->fetch_array($result) )
 			{
 			
 				$ArrayPortsList[$data["logical_number"]] = $data["ID"];
@@ -1421,11 +1424,12 @@ class plugin_tracker_snmp extends CommonDBTM
 			
 			if ( $result=$DB->query($query) )
 			{
-				while ( $data=$DB->fetch_assoc($result) )
+				while ( $data=$DB->fetch_array($result) )
 				{
 					if ($data["dropdown"] != "")
 					{
 					
+						$SNMPValue = externalImportDropdown($data["dropdown"],$SNMPValue,0);
 					
 					}
 					else
