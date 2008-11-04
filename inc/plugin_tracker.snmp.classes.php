@@ -996,7 +996,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		$query = "SELECT ID,ifaddr 
 		FROM glpi_networking 
 		WHERE deleted='0' 
-			AND state='1' ";
+			AND state='".$device_state."' ";
 			
 		if ( $result=$DB->query($query) )
 		{
@@ -1019,25 +1019,31 @@ class plugin_tracker_snmp extends CommonDBTM
 			$updateNetwork = new plugin_tracker_snmp;
 			// Get SNMP model 
 			$IDModelInfos = $updateNetwork->GetSNMPModel($IDNetworking);
-			// ** Get oid
-			$ArrayOID = $updateNetwork->GetOID($IDModelInfos);
-			// ** Get oid ports Counter
-			$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking);
-			// ** Define oid and object name
-			$updateNetwork->DefineObject($ArrayOID);
-			// ** Get query SNMP on switch
-			$ArraySNMPResult = $updateNetwork->SNMPQuery($ArrayOID,$ifIP);
-			// ** Get query SNMP of switchs ports
-			$ArraySNMPResultPorts = $updateNetwork->SNMPQuery($ArrayOIDPorts,$ifIP);
-			// ** Get link OID fields
-			$ArrayLinks = $updateNetwork->GetLinkOidToFields($IDModelInfos);
-			// ** Update fields of switchs
-			$updateNetwork->UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking);
-			// ** Update ports fields of switchs
-			$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking);
-			
-			// ** Get MAC adress of connected ports
-			$updateNetwork->GetMACtoPort($ifIP);
+			if ($IDModelInfos != "")
+			{
+				// ** Get oid
+				$ArrayOID = $updateNetwork->GetOID($IDModelInfos);
+				// ** Get oid ports Counter
+				$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking);
+				// ** Define oid and object name
+				$updateNetwork->DefineObject($ArrayOID);
+				// ** Get query SNMP on switch
+				$ArraySNMPResult = $updateNetwork->SNMPQuery($ArrayOID,$ifIP);
+				// ** Define oid and object name
+				$updateNetwork->DefineObject($ArrayOIDPorts);
+				// ** Get query SNMP of switchs ports
+				$ArraySNMPResultPorts = $updateNetwork->SNMPQuery($ArrayOIDPorts,$ifIP);
+exit();
+				// ** Get link OID fields
+				$ArrayLinks = $updateNetwork->GetLinkOidToFields($IDModelInfos);
+				// ** Update fields of switchs
+				$updateNetwork->UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking);
+				// ** Update ports fields of switchs
+				$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking);
+				
+				// ** Get MAC adress of connected ports
+				$updateNetwork->GetMACtoPort($ifIP);
+			}
 		} 
 	
 	}
@@ -1056,16 +1062,16 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 	
 		global $DB;
-		
-		$query = "SELECT ID 
-		FROM glpi_plugin_tracker_model_infos 
-		WHERE FK_model_networking='".$IDNetworking."' ";
+
+		$query = "SELECT FK_model_infos
+		FROM glpi_plugin_tracker_networking 
+		WHERE FK_networking='".$IDNetworking."' ";
 		
 		if ( ($result = $DB->query($query)) )
 		{
 			if ( $DB->numrows($result) != 0 )
 			{
-				return mysql_result($result, 0, "ID");
+				return mysql_result($result, 0, "FK_model_infos");
 			}
 		}	
 	
@@ -1148,8 +1154,11 @@ class plugin_tracker_snmp extends CommonDBTM
 
 		// Get query SNMP to have number of ports
 		$snmp_queries = new plugin_tracker_snmp;
-		if (!isset($portcounter))
+		if (isset($portcounter))
 		{
+
+			$snmp_queries->DefineObject(array($object=>$portcounter));
+		
 			$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP);
 
 			$portsnumber = $Arrayportsnumber[$object];
@@ -1158,6 +1167,8 @@ class plugin_tracker_snmp extends CommonDBTM
 			// We have the number of Ports
 			
 			// Add ports in DataBase if they don't exists
+	
+			$np=new Netport();
 	
 			for ($i = 1; $i <= $portsnumber; $i++)
 			{
@@ -1168,48 +1179,47 @@ class plugin_tracker_snmp extends CommonDBTM
 				
 				WHERE on_device='".$IDNetworking."'
 					AND logical_number='".$i."' ";
-					
+			
 				if ( $result = $DB->query($query) ){
+
 					if ( $DB->numrows($result) == 0 ) {
-					
-/* Preparation Fonction use
-$np=new Netport();
-
--> logical_number
--> name
--> iface
--> ifaddr
--> ifmac
--> netmask
--> gateway
--> subnet
--> netpoint
--> on_device = ID_switch
--> device_type = 2
--> add value="Ajouter"
-
-$np->add($ArrayADD);
+				
 
 
-End of preparation
-*/
+$np->fields["logical_number"] = $i;
+$np->fields["name"] = "Port ".$i;
+$np->fields["iface"] = "";
+$np->fields["ifaddr"] = "";
+$np->fields["ifmac"] = "";
+$np->fields["netmask"] = "";
+$np->fields["gateway"] = "";
+$np->fields["subnet"] = "";
+$np->fields["netpoint"] = "";
+$np->fields["on_device"] = $IDNetworking;
+$np->fields["device_type"] = "2";
+$np->fields["add"] = "Ajouter";
+
+echo "RETURN".$np->addToDB()."\n";
 
 
-						$queryInsert = "INSERT INTO glpi_networking_ports 
-							(on_device,device_type,logical_number)
+
+
+
+						//$queryInsert = "INSERT INTO glpi_networking_ports 
+						//	(on_device,device_type,logical_number)
 						
-						VALUES ('".$IDNetworking."','2','".$i."') ";
+						//VALUES ('".$IDNetworking."','2','".$i."') ";
 						
-						$DB->query($query);
+						//$DB->query($query);
 						
-						$IDPort = mysql_insert_id();
+						//$IDPort = mysql_insert_id();
 						
-						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-							(FK_networking_ports)
+						//$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
+						//	(FK_networking_ports)
 						
-						VALUES ('".$IDPort."') ";
+						//VALUES ('".$IDPort."') ";
 						
-						$DB->query($queryInsert);
+						//$DB->query($queryInsert);
 					
 					}
 					else
@@ -1289,6 +1299,8 @@ End of preparation
 	{
 		foreach($ArrayOID as $object=>$oid)
 		{
+echo "Objet : ".$object."\n";
+
 			if(defined($object))
 			{
 				runkit_constant_remove($object);
