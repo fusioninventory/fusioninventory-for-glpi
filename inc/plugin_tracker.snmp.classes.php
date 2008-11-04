@@ -961,7 +961,7 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 				echo "<br>voici ip switch : ".$this->ip;
 				$state = $this->getPortState();
 				$port = $this->getPortgetPortLogicalNumber();
-				echo "<br>Voici l'Ã©tat ".$state;
+				echo "<br>Voici l'ÃÂ©tat ".$state;
 				echo "<br>Voici le port ".$port;
 			}
 			else
@@ -1019,28 +1019,39 @@ class plugin_tracker_snmp extends CommonDBTM
 			$updateNetwork = new plugin_tracker_snmp;
 			// Get SNMP model 
 			$IDModelInfos = $updateNetwork->GetSNMPModel($IDNetworking);
-			// ¤ Get oid
+			// ** Get oid
 			$ArrayOID = $updateNetwork->GetOID($IDModelInfos);
-			// ¤ Get oid ports Counter
+			// ** Get oid ports Counter
 			$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking);
-			// ¤ Define oid and object name
+			// ** Define oid and object name
 			$updateNetwork->DefineObject($ArrayOID);
-			// ¤ Get query SNMP on switch
+			// ** Get query SNMP on switch
 			$ArraySNMPResult = $updateNetwork->SNMPQuery($ArrayOID,$ifIP);
-			// ¤ Get query SNMP of switchs ports
+			// ** Get query SNMP of switchs ports
 			$ArraySNMPResultPorts = $updateNetwork->SNMPQuery($ArrayOIDPorts,$ifIP);
-			// ¤ Get link OID fields
+			// ** Get link OID fields
 			$ArrayLinks = $updateNetwork->GetLinkOidToFields($IDModelInfos);
-			// ¤ Update fields of switchs
+			// ** Update fields of switchs
 			$updateNetwork->UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking);
-			// ¤ Update ports fields of switchs
+			// ** Update ports fields of switchs
 			$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking);
+			
+			// ** Get MAC adress of connected ports
+			$updateNetwork->GetMACtoPort($ifIP);
 		} 
 	
 	}
 	
 	
 	
+	/**
+	 * Get SNMP model of the network materiel 
+	 *
+	 * @param $IDNetworking ID of the network materiel
+	 *
+	 * @return ID of the SNMP model or nothing 
+	 *
+	**/
 	function GetSNMPModel($IDNetworking)
 	{
 	
@@ -1052,13 +1063,24 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		if ( ($result = $DB->query($query)) )
 		{
-			return mysql_result($result, 0, "ID");
+			if ( $DB->numrows($result) != 0 )
+			{
+				return mysql_result($result, 0, "ID");
+			}
 		}	
 	
 	}
 	
 	
 	
+	/**
+	 * Get OID list for the SNMP model (all but not the ports OID) 
+	 *
+	 * @param $IDModelInfos ID of the SNMP model
+	 *
+	 * @return array : array with object name and oid
+	 *
+	**/
 	function GetOID($IDModelInfos)
 	{
 		
@@ -1098,7 +1120,9 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		global $DB;
 		
-		$oidList = array();		
+		$oidList = array();
+		$object = "";
+		$portcounter = "";
 		
 		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
 			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
@@ -1115,77 +1139,107 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		if ( ($result = $DB->query($query)) )
 		{
-			$object = mysql_result($result, 0, "objectname");
-			$portcounter = mysql_result($result, 0, "oidname");
+			if ( $DB->numrows($result) != 0 )
+			{
+				$object = mysql_result($result, 0, "objectname");
+				$portcounter = mysql_result($result, 0, "oidname");
+			}
 		}
 
 		// Get query SNMP to have number of ports
 		$snmp_queries = new plugin_tracker_snmp;
-		$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP);
-
-		$portsnumber = $Arrayportsnumber[$object];
-
-		// We have the number of Ports
-		
-		// Add ports in DataBase if they don't exists
-	echo "Nombre de Ports : ".$portsnumber."\n";
-		for ($i = 1; $i <= $portsnumber; $i++)
+		if (!isset($portcounter))
 		{
-		
-			$query = "SELECT ID
-		
-			FROM glpi_networking_ports
+			$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP);
+
+			$portsnumber = $Arrayportsnumber[$object];
+
+
+			// We have the number of Ports
 			
-			WHERE on_device='".$IDNetworking."'
-				AND logical_number='".$i."' ";
+			// Add ports in DataBase if they don't exists
+	
+			for ($i = 1; $i <= $portsnumber; $i++)
+			{
+			
+				$query = "SELECT ID
+			
+				FROM glpi_networking_ports
 				
-			if ( $result = $DB->query($query) ){
-				if ( $DB->numrows($result) == 0 ) {
-				
-					$queryInsert = "INSERT INTO glpi_networking_ports 
-						(on_device,device_type,logical_number)
+				WHERE on_device='".$IDNetworking."'
+					AND logical_number='".$i."' ";
 					
-					VALUES ('".$IDNetworking."','2','".$i."') ";
+				if ( $result = $DB->query($query) ){
+					if ( $DB->numrows($result) == 0 ) {
 					
-					$DB->query($query);
-					
-					$IDPort = mysql_insert_id();
-					
-					$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-						(FK_networking_ports)
-					
-					VALUES ('".$IDPort."') ";
-					
-					$DB->query($queryInsert);
-				
-				}
-				else
-				{
-				
-					$queryTrackerPort = "SELECT ID
-				
-					FROM glpi_plugin_tracker_networking_ports
-					
-					WHERE FK_networking_ports='".mysql_result($result, 0, "ID")."' ";
-					
-					if ( $resultTrackerPort = $DB->query($queryTrackerPort) ){
-						if ( $DB->numrows($resultTrackerPort) == 0 ) {
+/* Preparation Fonction use
+$np=new Netport();
+
+-> logical_number
+-> name
+-> iface
+-> ifaddr
+-> ifmac
+-> netmask
+-> gateway
+-> subnet
+-> netpoint
+-> on_device = ID_switch
+-> device_type = 2
+-> add value="Ajouter"
+
+$np->add($ArrayADD);
+
+
+End of preparation
+*/
+
+
+						$queryInsert = "INSERT INTO glpi_networking_ports 
+							(on_device,device_type,logical_number)
 						
-							$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-								(FK_networking_ports)
-							
-							VALUES ('".mysql_result($result, 0, "ID")."') ";
-							
-							$DB->query($queryInsert);
+						VALUES ('".$IDNetworking."','2','".$i."') ";
 						
-						}
+						$DB->query($query);
+						
+						$IDPort = mysql_insert_id();
+						
+						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
+							(FK_networking_ports)
+						
+						VALUES ('".$IDPort."') ";
+						
+						$DB->query($queryInsert);
+					
 					}
-				
+					else
+					{
+					
+						$queryTrackerPort = "SELECT ID
+					
+						FROM glpi_plugin_tracker_networking_ports
+						
+						WHERE FK_networking_ports='".mysql_result($result, 0, "ID")."' ";
+						
+						if ( $resultTrackerPort = $DB->query($queryTrackerPort) ){
+							if ( $DB->numrows($resultTrackerPort) == 0 ) {
+							
+								$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
+									(FK_networking_ports)
+								
+								VALUES ('".mysql_result($result, 0, "ID")."') ";
+								
+								$DB->query($queryInsert);
+							
+							}
+						}
+					
+					}
 				}
+			
 			}
-		
+
 		}
-		
 		// Get oid list of ports
 		
 		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
@@ -1223,6 +1277,14 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 	
 	
+	/**
+	 * Define a global var
+	 *
+	 * @param $ArrayOID Array with ObjectName and OID
+	 *
+	 * @return nothing
+	 *
+	**/
 	function DefineObject($ArrayOID)
 	{
 		foreach($ArrayOID as $object=>$oid)
@@ -1241,6 +1303,15 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 	
 	
+	/**
+	 * Query OID by SNMP connection
+	 *
+	 * @param $ArrayOID List of Object and OID in an array to get values
+	 * @param $IP IP of the materiel we query
+	 *
+	 * @return array : array with object name and result of the query
+	 *
+	**/
 	function SNMPQuery($ArrayOID,$IP)
 	{
 		
@@ -1258,11 +1329,45 @@ class plugin_tracker_snmp extends CommonDBTM
 	}
 	
 	
+
+	/**
+	 * Query walk to get OID and values by SNMP connection where an Object have multi-lines
+	 *
+	 * @param $ArrayOID List of Object and OID in an array to get values
+	 * @param $IP IP of the materiel we query
+	 *
+	 * @return array : array with OID name and result of the query
+	 *
+	**/	
+	function SNMPQueryWalkAll($ArrayOID,$IP)
+	{
+		$ArraySNMP = array();
+		
+		foreach($ArrayOID as $object=>$oid)
+		{
+			$SNMPValue = snmprealwalk($IP, "public",$oid);
+
+			foreach($SNMPValue as $oidwalk=>$value)
+			{
+				$ArraySNMPValues = explode(": ", $value);
+				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
+
+			}
+			
+		}
+		
+		return $ArraySNMP;
+	
+	}
+	
+	
 	
 	function GetLinkOidToFields($ID)
 	{
 
 		global $DB;
+		
+		$ObjectLink = array();
 		
 		$query = "SELECT FK_links_oid_fields, 
 			glpi_dropdown_plugin_tracker_mib_object.name AS name
@@ -1465,7 +1570,78 @@ class plugin_tracker_snmp extends CommonDBTM
 		}
 	
 	}
+
 	
+	
+	function GetMACtoPort($IP)
+	{
+		$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
+		
+		$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
+		
+		$snmp_queries = new plugin_tracker_snmp;
+		
+		$snmp_queries->DefineObject($ArrayIPMACAdressePhysObject);
+		
+		$ArrayIPMACAdressePhys = $snmp_queries->SNMPQueryWalkAll($ArrayIPMACAdressePhysObject,$IP);
+		
+		$snmp_queries->DefineObject($ArrayMACAdressTableObject);
+		
+		$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP);
+		
+		$ArrayMACAdressTableVerif = array();
+		
+		foreach($ArrayMACAdressTable as $oid=>$value)
+		{
+		
+			echo $oid." => ".$value."\n";
+			$oidExplode = explode(".", $oid);
+			
+			$OIDBridgePortNumber = "1.3.6.1.2.1.17.4.3.1.2.0.".
+				$oidExplode[(count($oidExplode)-5)].".".
+				$oidExplode[(count($oidExplode)-4)].".".
+				$oidExplode[(count($oidExplode)-3)].".".
+				$oidExplode[(count($oidExplode)-2)].".".
+				$oidExplode[(count($oidExplode)-1)];
+				
+			$ArraySNMPBridgePortNumber = array("dot1dTpFdbPort" => $OIDBridgePortNumber);
+			
+			$snmp_queries->DefineObject($ArraySNMPBridgePortNumber);
+			
+			$ArrayBridgePortNumber = $snmp_queries->SNMPQuery($ArraySNMPBridgePortNumber,$IP);
+			
+			foreach($ArrayBridgePortNumber as $oidBridgePort=>$BridgePortNumber)
+			{
+				echo "BRIDGEPortNumber ".$BridgePortNumber."\n";
+				
+				$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => "1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
+		
+				$snmp_queries->DefineObject($ArrayBridgePortifIndexObject);
+		
+				$ArrayBridgePortifIndex = $snmp_queries->SNMPQuery($ArrayBridgePortifIndexObject,$IP);
+				
+				foreach($ArrayBridgePortifIndex as $oidBridgePortifIndex=>$BridgePortifIndex)
+				{
+					echo "BridgePortifIndex : ".$BridgePortifIndex."\n";
+				
+					$ArrayifNameObject = array("ifName" => "1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
+		
+					$snmp_queries->DefineObject($ArrayifNameObject);
+			
+					$ArrayifName = $snmp_queries->SNMPQuery($ArrayifNameObject,$IP);
+					
+					foreach($ArrayifName as $oidArrayifName=>$ifName)
+					{
+						echo "		ifName : ".$ifName."\n";
+					}
+				
+				}
+				
+			}
+
+		}
+		
+	}
 	
 }
 ?>
