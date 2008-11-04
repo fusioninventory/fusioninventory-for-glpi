@@ -1019,15 +1019,16 @@ class plugin_tracker_snmp extends CommonDBTM
 			$updateNetwork = new plugin_tracker_snmp;
 			// Get SNMP model 
 			$IDModelInfos = $updateNetwork->GetSNMPModel($IDNetworking);
-			if ($IDModelInfos != "")
+			if (($IDModelInfos != "") && ($IDNetworking != ""))
 			{
 				// ** Get oid
 				$ArrayOID = $updateNetwork->GetOID($IDModelInfos);
 				//**
 				$ArrayPortsName = $updateNetwork->GetPortsName($ifIP);
+				//**
+				$ArrayPortsID = $updateNetwork->GetPortsID($IDNetworking);
 				// ** Get oid ports Counter
 				$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking,$ArrayPortsName);
-				exit();
 				// ** Define oid and object name
 				$updateNetwork->DefineObject($ArrayOID);
 				// ** Get query SNMP on switch
@@ -1044,7 +1045,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking);
 				
 				// ** Get MAC adress of connected ports
-				$updateNetwork->GetMACtoPort($ifIP);
+				$updateNetwork->GetMACtoPort($ifIP,$ArrayPortsID,$IDNetworking);
 			}
 		} 
 	
@@ -1174,7 +1175,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			for ($i = 1; $i <= $portsnumber; $i++)
 			{
 			
-				$query = "SELECT ID
+				$query = "SELECT ID,name
 			
 				FROM glpi_networking_ports
 				
@@ -1186,12 +1187,6 @@ class plugin_tracker_snmp extends CommonDBTM
 					if ( $DB->numrows($result) == 0 )
 					{
 
-						$iport = $i;
-						for ($j=strlen($i);$j<$ports_num_char;$j++)
-						{
-							$iport = "0".$iport;
-						}
-						
 						$array["logical_number"] = $i;
 						$array["name"] = $ArrayPortsName[$i];
 						$array["iface"] = "";
@@ -1229,6 +1224,20 @@ class plugin_tracker_snmp extends CommonDBTM
 					else
 					{
 					
+						// Update if it's necessary
+						// $np->update
+						if (mysql_result($result, 0, "name") != $ArrayPortsName[$i])
+						{
+							
+							unset($array);
+							$array["name"] = $ArrayPortsName[$i];
+							$array["ID"] = mysql_result($result, 0, "ID");
+							$np->update($array);
+						
+						}
+
+					
+					/*
 						$queryTrackerPort = "SELECT ID
 					
 						FROM glpi_plugin_tracker_networking_ports
@@ -1247,7 +1256,7 @@ class plugin_tracker_snmp extends CommonDBTM
 							
 							}
 						}
-					
+						*/
 					}
 				}
 			
@@ -1295,7 +1304,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		$snmp_queries = new plugin_tracker_snmp;
 		
-		$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifDescr"=>".1.3.6.1.2.1.2.2.1.2"),$IP);
+		$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifName"=>"1.3.6.1.2.1.31.1.1.1.1"),$IP);
 	
 		$PortsName = array();
 	
@@ -1312,6 +1321,36 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 	
 	
+	function GetPortsID($IDNetworking)
+	{
+
+		global $DB;	
+	
+		$PortsID = array();
+		
+		$query = "SELECT ID,name
+			
+		FROM glpi_networking_ports
+		
+		WHERE on_device='".$IDNetworking."'
+		
+		ORDER BY logical_number ";
+
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+
+				$PortsID[$data["name"]] = $data["ID"];
+			
+			}
+		}
+	
+		return $PortsID;
+	}
+
+
+
 	/**
 	 * Define a global var
 	 *
@@ -1610,8 +1649,11 @@ echo "Objet : ".$object."\n";
 
 	
 	
-	function GetMACtoPort($IP)
+	function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking)
 	{
+
+		global $DB;	
+		
 		$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
 		
 		$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
@@ -1669,7 +1711,55 @@ echo "Objet : ".$object."\n";
 					
 					foreach($ArrayifName as $oidArrayifName=>$ifName)
 					{
-						echo "		ifName : ".$ifName."\n";
+						echo "		ifName : *".$ifName."*\n";
+
+						// Search portID of materiel wich we would connect to this port
+						$MacAddress = trim($value);
+						$MacAddress = str_replace(" ", ":", $MacAddress);
+						$MacAddress = strtolower($MacAddress);
+						$queryPortEnd = "SELECT * 
+						
+						FROM glpi_networking_ports
+						
+						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+							AND on_device!='".$IDNetworking."' ";
+
+						if ( $resultPortEnd=$DB->query($queryPortEnd) )
+						{
+							if ( $DB->numrows($resultPortEnd) != 0 )
+							{
+echo "QUERY : ".$queryPortEnd."\n";
+								$dport = mysql_result($resultPortEnd, 0, "ID");
+								echo "PORT : ".$dport."\n";
+								$sport = $ArrayPortsID[$ifName];
+								removeConnector($dport);
+								makeConnector($sport,$dport);
+								
+							}
+						}
+						
+					/*	
+						if (isset($_POST["dport"])&&count($_POST["dport"]))
+							foreach ($_POST["dport"] as $sport => $dport){
+								if($sport && $dport){
+									makeConnector($sport,$dport);
+								}
+							}
+					*/
+						/**
+						 * Wire the Ports
+						 *
+						 *@param $sport : source port ID
+						 *@param $dport : destination port ID
+						 *@param $dohistory : add event in the history
+						 *@param $addmsg : display HTML message on success
+						 * 
+						 *@return true on success 
+						**/
+						// makeConnector($sport, $dport, $dohistory=true, $addmsg=false)
+						
+						
+						
 					}
 				
 				}
