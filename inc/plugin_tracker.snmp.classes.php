@@ -1023,17 +1023,19 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				// ** Get oid
 				$ArrayOID = $updateNetwork->GetOID($IDModelInfos);
+				//**
+				$ArrayPortsName = $updateNetwork->GetPortsName($ifIP);
 				// ** Get oid ports Counter
-				$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking);
+				$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking,$ArrayPortsName);
+				exit();
 				// ** Define oid and object name
 				$updateNetwork->DefineObject($ArrayOID);
 				// ** Get query SNMP on switch
 				$ArraySNMPResult = $updateNetwork->SNMPQuery($ArrayOID,$ifIP);
 				// ** Define oid and object name
-				$updateNetwork->DefineObject($ArrayOIDPorts);
+				//$updateNetwork->DefineObject($ArrayOIDPorts);
 				// ** Get query SNMP of switchs ports
 				$ArraySNMPResultPorts = $updateNetwork->SNMPQuery($ArrayOIDPorts,$ifIP);
-exit();
 				// ** Get link OID fields
 				$ArrayLinks = $updateNetwork->GetLinkOidToFields($IDModelInfos);
 				// ** Update fields of switchs
@@ -1121,7 +1123,7 @@ exit();
 
 
 
-	function GetOIDPorts($IDModelInfos,$IP,$IDNetworking)
+	function GetOIDPorts($IDModelInfos,$IP,$IDNetworking,$ArrayPortsName)
 	{
 		
 		global $DB;
@@ -1163,13 +1165,12 @@ exit();
 
 			$portsnumber = $Arrayportsnumber[$object];
 
-
 			// We have the number of Ports
-			
+	
 			// Add ports in DataBase if they don't exists
 	
 			$np=new Netport();
-	
+
 			for ($i = 1; $i <= $portsnumber; $i++)
 			{
 			
@@ -1180,29 +1181,32 @@ exit();
 				WHERE on_device='".$IDNetworking."'
 					AND logical_number='".$i."' ";
 			
-				if ( $result = $DB->query($query) ){
+				if ( $result = $DB->query($query) )
+				{
+					if ( $DB->numrows($result) == 0 )
+					{
 
-					if ( $DB->numrows($result) == 0 ) {
-				
-
-
-$np->fields["logical_number"] = $i;
-$np->fields["name"] = "Port ".$i;
-$np->fields["iface"] = "";
-$np->fields["ifaddr"] = "";
-$np->fields["ifmac"] = "";
-$np->fields["netmask"] = "";
-$np->fields["gateway"] = "";
-$np->fields["subnet"] = "";
-$np->fields["netpoint"] = "";
-$np->fields["on_device"] = $IDNetworking;
-$np->fields["device_type"] = "2";
-$np->fields["add"] = "Ajouter";
-
-echo "RETURN".$np->addToDB()."\n";
-
-
-
+						$iport = $i;
+						for ($j=strlen($i);$j<$ports_num_char;$j++)
+						{
+							$iport = "0".$iport;
+						}
+						
+						$array["logical_number"] = $i;
+						$array["name"] = $ArrayPortsName[$i];
+						$array["iface"] = "";
+						$array["ifaddr"] = "";
+						$array["ifmac"] = "";
+						$array["netmask"] = "";
+						$array["gateway"] = "";
+						$array["subnet"] = "";
+						$array["netpoint"] = "";
+						$array["on_device"] = $IDNetworking;
+						$array["device_type"] = "2";
+						$array["add"] = "Ajouter";
+						
+						$np->add($array);
+						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
 
 
 						//$queryInsert = "INSERT INTO glpi_networking_ports 
@@ -1284,6 +1288,27 @@ echo "RETURN".$np->addToDB()."\n";
 		return $oidList;
 		
 	}	
+	
+	
+	
+	function GetPortsName($IP)
+	{
+		$snmp_queries = new plugin_tracker_snmp;
+		
+		$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifDescr"=>".1.3.6.1.2.1.2.2.1.2"),$IP);
+	
+		$PortsName = array();
+	
+		foreach($Arrayportsnames as $object=>$value)
+		{
+		
+			$PortsName[] = $value;
+		
+		}
+	
+		return $PortsName;
+	
+	}
 	
 	
 	
