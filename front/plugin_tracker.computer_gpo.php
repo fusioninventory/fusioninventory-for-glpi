@@ -62,10 +62,9 @@ $error["otherserial"] = (isset($_GET["Admisys"]) ? $_GET["Admisys"] : 0);
 $contact = (isset($_GET["User"]) ? $_GET["User"] : "");
 
 // Get the GLPI username : user
-if ( isset($_GET["GLPI_User"]) ) {
-	if ( !($user_id = getIdFromUser($_GET["GLPI_User"])) )
-		$user_id = -1;
-}
+
+if ($contact != '')
+	$user_id = getIdFromUser($contact);
 
 /// Check and write error ///
 $computer_id = $errors->writeError(COMPUTER_TYPE, 'db', $error, $date);

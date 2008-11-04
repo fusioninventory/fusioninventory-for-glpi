@@ -76,10 +76,9 @@ function getIdFromUser($name) {
 	$query = "SELECT ID ".
 			 "FROM glpi_users ".
 			 "WHERE name = '".$name."';";
-	
+
 	if ( ($result = $DB->query($query)) ) {
-		if ( ($fields = $DB->fetch_row($result)) && ($fields['0'] != NULL) )
-			return $fields['0'];
+		return $DB->result($result,0,"ID");
 	}
 	return false;
 }
