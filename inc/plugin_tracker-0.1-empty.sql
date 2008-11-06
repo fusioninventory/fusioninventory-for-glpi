@@ -212,6 +212,25 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_snmp_connection` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_processes`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_processes` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `thread_id` int(4) NOT NULL DEFAULT '0',
+  `start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `status` int(4) NOT NULL DEFAULT '0',
+  `error_msg` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `process_id` int(11) NOT NULL DEFAULT '0',
+  `network_queries` int(8) NOT NULL,
+  `printer_queries` int(8) NOT NULL,
+  `ports_queries` int(8) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `end_time` (`end_time`),
+  KEY `process_id` (`process_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5150','3','2','0');
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5150','4','3','0');
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5150','6','4','0');
