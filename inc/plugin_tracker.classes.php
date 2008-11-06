@@ -1150,6 +1150,25 @@ class plugin_tracker_Profile extends CommonDBTM {
 // ****************************************************************************************************** //
 class plugin_tracker_model_infos extends CommonDBTM
 {
+
+	function addentry($target,$ArrayPost)
+	{
+		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+		
+		$query = "INSERT INTO glpi_plugin_tracker_model_infos
+		(name, FK_model_networking, FK_firmware, FK_snmp_version, FK_snmp_connection)
+		VALUES ('".$ArrayPost["name"]."', '".$ArrayPost["FK_model_networking"]."', '".$ArrayPost["FK_firmware"]."', 
+		'".$ArrayPost["FK_snmp_version"]."','".$ArrayPost["FK_snmp_connection"]."')";
+		
+		$DB->query($query);
+		
+		echo "Ajouté avec succès<br/>";
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$ID."'><b>Retour</b></a>";
+		
+	}
+	
+	
+
 	function showForm($target,$ID,$table)
 	{
 		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
@@ -1212,13 +1231,18 @@ class plugin_tracker_model_infos extends CommonDBTM
 				
 				echo "<tr class='tab_bg_2'><td colspan='2'>";
 				echo "<input type='hidden' value='".$ID."'/>";
-				echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
-				if ($data["deleted"]=='0')
-					echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit'>";
-				else {
-					echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"".$LANG["buttons"][21]."\" class='submit'>";
-	
-					echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"".$LANG["buttons"][22]."\" class='submit'>";
+				if ($ID == "0"){
+					echo "<div align='center'><input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit' >";
+				
+				}else{
+					echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+					if ($data["deleted"]=='0')
+						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit'>";
+					else {
+						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"".$LANG["buttons"][21]."\" class='submit'>";
+		
+						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"".$LANG["buttons"][22]."\" class='submit'>";
+					}
 				}
 				echo "</td>";		
 				echo "</tr>";
