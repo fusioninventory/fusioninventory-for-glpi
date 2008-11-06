@@ -101,6 +101,16 @@ $LANGTRACKER["snmp"][32]="Impossible de récupérer les infos SNMP : Matériel n
 $LANGTRACKER["snmp"][33]="Impossible de récupérer les infos SNMP : IP non précisée dans la base !";
 $LANGTRACKER["snmp"][34]="Le commutateur auquel est reliée la machine n'est pas renseigné !";
 
+$LANGTRACKER["snmp"][41]="#";
+$LANGTRACKER["snmp"][42]="MTU";
+$LANGTRACKER["snmp"][43]="Vitesse";
+$LANGTRACKER["snmp"][44]="Statut Interne";
+$LANGTRACKER["snmp"][45]="Dernier changement";
+$LANGTRACKER["snmp"][46]="Nb d'octets recus";
+$LANGTRACKER["snmp"][47]="Nb d'erreurs en entrée";
+$LANGTRACKER["snmp"][48]="Nb d'octets envoyés";
+$LANGTRACKER["snmp"][49]="Nb d'erreurs en réception";
+$LANGTRACKER["snmp"][50]="Connexion";
 
 $LANGTRACKER["cron"][0]="Relevé automatique du compteur";
 $LANGTRACKER["cron"][1]="Activer le relevé";
