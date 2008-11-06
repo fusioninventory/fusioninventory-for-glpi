@@ -71,7 +71,7 @@ abstract class plugin_tracker_snmp2 {
 		$this->ID = -1;
 		$this->networking_ports_ID = -1;
 		$this->ip = "";
-		$this->community = "gerlandro";
+		$this->community = "public";
 		$this->snmp = array("name" => "", "contact" => "", "location" => "", "netmask" => "");
 		$this->glpi_right = "";
 		$this->tracker_right = "";
@@ -333,7 +333,7 @@ abstract class plugin_tracker_snmp2 {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<th>".$LANGTRACKER["snmp"][41]."</th>";
+		echo "<th>".$LANG["common"][16]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][42]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][43]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][44]."</th>";
@@ -1549,7 +1549,7 @@ echo "Objet : ".$object."\n";
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
-			$SNMPValue = snmpget($IP, "gerlandro",$oid);
+			$SNMPValue = snmpget($IP, "public",$oid);
 			echo "****************".$SNMPValue."****************\n";
 			$ArraySNMPValues = explode(": ", $SNMPValue);
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
@@ -1575,7 +1575,7 @@ echo "Objet : ".$object."\n";
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
-			$SNMPValue = snmprealwalk($IP, "gerlandro",$oid);
+			$SNMPValue = snmprealwalk($IP, "public",$oid);
 
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
