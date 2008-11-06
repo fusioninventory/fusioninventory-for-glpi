@@ -103,6 +103,8 @@ if ( $config->isActivated('update_user') ) {
 
 if ( (count($update)) != 0 ) {
 	$update['ID'] = $computer_id;
+	//Disable history when changing user
+	$computer->dohistory=false;
 	$computer->update($update);
 }
 

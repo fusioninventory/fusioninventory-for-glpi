@@ -37,5 +37,6 @@
 define('OFF','0');
 define('ON','1');
 define('CONNECTED','2');
+define('DISCONNECTED','3');
 
 ?>
