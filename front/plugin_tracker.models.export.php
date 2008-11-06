@@ -38,13 +38,22 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","models");
+//commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","models");
 
 plugin_tracker_checkRight("errors","r");
 
-plugin_tracker_export();
+$importexport = new plugin_tracker_importexport;
 
-commonFooter();
+header("Expires: 0");
+header("Cache-control: private");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Content-Description: File Transfer");
+header('Content-type: application/xml; charset="utf-8"',true);
+header("Content-disposition: attachment; filename=export.xml");
+
+echo $importexport->plugin_tracker_export($_GET["model"]);
+
+//commonFooter();
 
 
 
