@@ -68,7 +68,7 @@ function plugin_init_tracker() {
 			
 				if (plugin_tracker_haveRight("errors","r")) {
 					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.template_models.php?add=1';
+					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
 
 //					$PLUGIN_HOOKS['submenu_entry']['tracker']['printers'] = 'front/plugin_tracker.errors.form.php?device=printer';
 //					$PLUGIN_HOOKS['submenu_entry']['tracker']['computers'] = 'front/plugin_tracker.errors.form.php?device=computer';
