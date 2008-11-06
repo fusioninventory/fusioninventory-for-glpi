@@ -52,4 +52,5 @@ include_once ("inc/plugin_tracker.functions_display.php");
 
 include_once("inc/plugin_tracker.thread.class.php");
 
+include_once("inc/plugin_tracker.computerhistory.class.php");
 ?>
