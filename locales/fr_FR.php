@@ -94,7 +94,7 @@ $LANGTRACKER["snmp"][2]="Données SNMP";
 $LANGTRACKER["snmp"][11]="Informations supplémentaires";
 $LANGTRACKER["snmp"][12]="Uptime";
 $LANGTRACKER["snmp"][13]="Utilisation du CPU (en %)";
-$LANGTRACKER["snmp"][14]="Utilisation de la m�moire";
+$LANGTRACKER["snmp"][14]="Utilisation de la m�moire";
 
 $LANGTRACKER["snmp"][31]="Impossible de récupérer les infos SNMP : Ce n'est pas un commutateur !";
 $LANGTRACKER["snmp"][32]="Impossible de récupérer les infos SNMP : Matériel non actif !";
@@ -189,5 +189,10 @@ $LANGTRACKER["processes"][9]="Erreurs";
 $LANGTRACKER["processes"][10]="Durée d'exécution du script";
 $LANGTRACKER["processes"][11]="Champs ajoutés";
 $LANGTRACKER["processes"][12]="Erreurs SNMP";
+
+$LANGTRACKER["state"][0]="Démarrage de l'ordinateur";
+$LANGTRACKER["state"][1]="Arrêt de l'ordinateur";
+$LANGTRACKER["state"][2]="Connexion de l'utilisateur";
+$LANGTRACKER["state"][3]="Déconnexion de l'utilisateur";
 
 ?>
