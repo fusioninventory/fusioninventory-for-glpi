@@ -33,16 +33,77 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))
+{
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_importexport extends CommonDBTM {
+class plugin_tracker_importexport extends CommonDBTM
+{
 
-	function plugin_tracker_export() {
-		$this->table="glpi_plugin_tracker_errors";
-		$this->type=PLUGIN_TRACKER_ERROR_TYPE;
-		$this->entity_assign = true;
+	function plugin_tracker_export($ID_model)
+	{
+		global $DB;
+		
+		$query = "SELECT * 
+					
+		FROM glpi_plugin_tracker_model_infos
+		
+		WHERE ID='".$ID_model."' ";
+
+		if ( $result=$DB->query($query) )
+		{
+			if ( $DB->numrows($result) != 0 )
+			{
+				$model_name = mysql_result($result, 0, "name");
+				$model_FK_model_networking = mysql_result($result, 0, "FK_model_networking");
+				$model_FK_firmware = mysql_result($result, 0, "FK_firmware");
+				$model_FK_snmp_version = mysql_result($result, 0, "FK_snmp_version");
+				$model_FK_snmp_connection = mysql_result($result, 0, "FK_snmp_connection");
+			
+			}
+			else
+			{
+				exit();
+			}
+		}
+		
+		
+		
+		// Construction of XML file
+		$xml = "<model>\n";
+		$xml .= "	<name>".$model_name."</name>\n";
+		$xml .= "	<networkingmodel>".getDropdownName("glpi_dropdown_model_networking",$model_FK_model_networking)."</networkingmodel>\n";
+		$xml .= "	<firmware>".getDropdownName("glpi_dropdown_firmware",$model_FK_firmware)."</firmware>\n";
+		$xml .= "	<snmpversion>".getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$model_FK_snmp_version)."</snmpversion>\n";
+		$xml .= "	<authsnmp>".getDropdownName("glpi_plugin_tracker_snmp_connection",$model_FK_snmp_connection)."</authsnmp>\n";
+		$xml .= "	<oidlist>\n";
+
+		$query = "SELECT * 
+					
+		FROM glpi_plugin_tracker_mib_networking AS model_t
+
+		WHERE FK_model_infos='".$ID_model."' ";
+		
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+				$xml .= "		<oidobject>\n";
+				$xml .= "			<object>".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."</object>\n";		
+				$xml .= "			<oid>".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."</oid>\n";		
+				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
+				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
+				$xml .= "			<linkfield>".getDropdownName("glpi_plugin_tracker_links_oid_fields",$data["FK_links_oid_fields"])."</linkfield>\n";
+				$xml .= "		</oidobject>\n";
+			}
+		
+		}
+		
+		$xml .= "	</oidlist>\n";
+		$xml .= "</model>\n";
+		
+		return $xml;
 	}
 
 }
