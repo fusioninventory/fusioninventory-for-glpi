@@ -71,7 +71,7 @@ abstract class plugin_tracker_snmp2 {
 		$this->ID = -1;
 		$this->networking_ports_ID = -1;
 		$this->ip = "";
-		$this->community = "public";
+		$this->community = "gerlandro";
 		$this->snmp = array("name" => "", "contact" => "", "location" => "", "netmask" => "");
 		$this->glpi_right = "";
 		$this->tracker_right = "";
@@ -237,10 +237,10 @@ abstract class plugin_tracker_snmp2 {
 		$this->ID = $ID;
 		
 		// Checking errors and get IP (if exists)
-		if ( $this->getError() )
-			return false;
+	//	if ( $this->getError() )
+	//		return false;
 
-		$this->getAll();
+		// ** $this->getAll();
 		
 		$query = "
 		SELECT * 
@@ -293,9 +293,139 @@ abstract class plugin_tracker_snmp2 {
 // ************ A FAIRE ******************************************************************************* //
 // ***************************************** METTRE TABLEAU DES PORTS ********************************* //
 // **************************************************************************************************** //	
+	function ByteSize($bytes,$sizeoct=1024){
+		$size = $bytes / $sizeoct;
+		if($size < $sizeoct){
+			$size = number_format($size, 0);
+			$size .= ' K';
+		}else {
+			if($size / $sizeoct < $sizeoct) {
+				$size = number_format($size / $sizeoct, 0);
+				$size .= ' M';
+			} else if($size / $sizeoct / $sizeoct < $sizeoct) {
+				$size = number_format($size / $sizeoct / $sizeoct, 0);
+				$size .= ' G';
+			} else if($size / $sizeoct / $sizeoct / $sizeoct < $sizeoct) {
+				$size = number_format($size / $sizeoct / $sizeoct / $sizeoct, 0);
+				$size .= ' T';
+			}
+		}
+		return $size;
+	}
+		$query = "
+		SELECT * 
+		
+		FROM glpi_plugin_tracker_networking_ports
+
+		LEFT JOIN glpi_networking_ports
+		ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.ID 
+		WHERE glpi_networking_ports.on_device='".$ID."'
+		ORDER BY logical_number ";
+
+		echo "<br>";
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		echo "<table class='tab_cadre' cellpadding='5' width='1000'>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<th colspan='11'>";
+		echo "Tableau des ports";
+		echo "</th>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<th>".$LANGTRACKER["snmp"][41]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][42]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][43]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][44]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][45]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][46]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][47]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][48]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][49]."</th>";
+		echo "<th>".$LANG["networking"][15]."</th>";
+		echo "<th>".$LANGTRACKER["snmp"][50]."</th>";
+		echo "</tr>";
+		
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+			
+				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
+				echo "<td align='center'>".$data["ifmtu"]."</td>";
+				echo "<td align='center'>".ByteSize($data["ifspeed"],1000)."bps</td>";
+				echo "<td align='center'>".$data["ifinternalstatus"]."</td>";
+				echo "<td align='center'>".$data["iflastchange"]."</td>";
+				echo "<td align='center'>";
+				if ($data["ifinoctets"] == "0")
+				{
+					echo "-";
+
+				}
+				else
+				{
+					echo ByteSize($data["ifinoctets"],1000)."o";
+				}
+				echo "</td>";
+				
+				if ($data["ifinerrors"] == "0")
+				{
+					echo "<td align='center'>-";
+				}
+				else
+				{		
+					echo "<td align='center' class='tab_bg_1_2'>";
+					echo $data["ifinerrors"];
+				}
+				echo "</td>";
+				echo "<td align='center'>";
+				if ($data["ifinoctets"] == "0")
+				{
+					echo "-";
+				}
+				else
+				{		
+					echo ByteSize($data["ifoutoctets"],1000)."o";
+				}
+				echo "</td>";
+
+				if ($data["ifouterrors"] == "0")
+				{
+					echo "<td align='center'>-";
+				}
+				else
+				{	
+					echo "<td align='center' class='tab_bg_1_2'>";
+					echo $data["ifouterrors"];
+				}
+				echo "</td>";
+				
+				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["ifmac"]."</a></td>";
+				
+				echo "<td align='center'>";
+				if (ereg("up",$data["ifstatus"]))
+				{
+					echo "<img src='../pics/greenbutton.png'/>";
+				}
+				else
+				{
+					echo "<img src='../pics/redbutton.png'/>";
+				}
+				echo "</td>";
+				echo "</tr>";
+					
+			}
+		}
+
+
+		echo "</tr>";
+
+		echo "</table>";
+
 		
 		// Query/Import SNMP
-		echo "<br>";
+/*		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
 		echo $LANGTRACKER["snmp"][0]." :</th></tr>";
@@ -311,7 +441,7 @@ abstract class plugin_tracker_snmp2 {
 			echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 			echo "</table></div>";
 		}
-			
+			*/
 	}
 	
 	/* Useful to get the ID of a device into the table "glpi_networking_ports */
@@ -1027,8 +1157,10 @@ class plugin_tracker_snmp extends CommonDBTM
 				$ArrayPortsName = $updateNetwork->GetPortsName($ifIP);
 				//**
 				$ArrayPortsID = $updateNetwork->GetPortsID($IDNetworking);
+				// **
+				$ArrayPortsSNMPNumber = $updateNetwork->GetPortsSNMPNumber($ifIP);
 				// ** Get oid ports Counter
-				$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking,$ArrayPortsName);
+				$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking,$ArrayPortsName,$ArrayPortsSNMPNumber);
 				// ** Define oid and object name
 				$updateNetwork->DefineObject($ArrayOID);
 				// ** Get query SNMP on switch
@@ -1042,7 +1174,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				// ** Update fields of switchs
 				$updateNetwork->UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking);
 				// ** Update ports fields of switchs
-				$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking);
+				$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking,$ArrayPortsSNMPNumber);
 				
 				// ** Get MAC adress of connected ports
 				$updateNetwork->GetMACtoPort($ifIP,$ArrayPortsID,$IDNetworking);
@@ -1124,7 +1256,7 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
-	function GetOIDPorts($IDModelInfos,$IP,$IDNetworking,$ArrayPortsName)
+	function GetOIDPorts($IDModelInfos,$IP,$IDNetworking,$ArrayPortsName,$ArrayPortsSNMPNumber)
 	{
 		
 		global $DB;
@@ -1200,7 +1332,7 @@ class plugin_tracker_snmp extends CommonDBTM
 						$array["device_type"] = "2";
 						$array["add"] = "Ajouter";
 						
-						$np->add($array);
+						$IDPort = $np->add($array);
 						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
 
 
@@ -1213,12 +1345,12 @@ class plugin_tracker_snmp extends CommonDBTM
 						
 						//$IDPort = mysql_insert_id();
 						
-						//$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-						//	(FK_networking_ports)
+						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
+							(FK_networking_ports)
 						
-						//VALUES ('".$IDPort."') ";
+						VALUES ('".$IDPort."') ";
 						
-						//$DB->query($queryInsert);
+						$DB->query($queryInsert);
 					
 					}
 					else
@@ -1237,7 +1369,7 @@ class plugin_tracker_snmp extends CommonDBTM
 						}
 
 					
-					/*
+					
 						$queryTrackerPort = "SELECT ID
 					
 						FROM glpi_plugin_tracker_networking_ports
@@ -1256,7 +1388,7 @@ class plugin_tracker_snmp extends CommonDBTM
 							
 							}
 						}
-						*/
+						
 					}
 				}
 			
@@ -1284,7 +1416,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				for ($i=1;$i <= $Arrayportsnumber[$object]; $i++)
 				{
-					$oidList[$data["objectname"].".".$i] = $data["oidname"].".".$i;
+					$oidList[$data["objectname"].".".$ArrayPortsSNMPNumber[$i]] = $data["oidname"].".".$ArrayPortsSNMPNumber[$i];
 				}
 			}
 		}
@@ -1351,6 +1483,28 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
+	function GetPortsSNMPNumber($IP)
+	{
+		$snmp_queries = new plugin_tracker_snmp;
+		
+		$ArrayportsSNMPNumber = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifIndex"=>"1.3.6.1.2.1.2.2.1.1"),$IP);
+	
+		$PortsName = array();
+	
+		foreach($ArrayportsSNMPNumber as $object=>$value)
+		{
+		
+			$PortsSNMPNumber[] = $value;
+			echo "PORT SNMP NUMBER :".$value."\n";
+		
+		}
+	
+		return $PortsSNMPNumber;
+
+	}
+	
+	
+	
 	/**
 	 * Define a global var
 	 *
@@ -1395,7 +1549,7 @@ echo "Objet : ".$object."\n";
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
-			$SNMPValue = snmpget($IP, "public",$oid);
+			$SNMPValue = snmpget($IP, "gerlandro",$oid);
 			echo "****************".$SNMPValue."****************\n";
 			$ArraySNMPValues = explode(": ", $SNMPValue);
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
@@ -1421,7 +1575,7 @@ echo "Objet : ".$object."\n";
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
-			$SNMPValue = snmprealwalk($IP, "public",$oid);
+			$SNMPValue = snmprealwalk($IP, "gerlandro",$oid);
 
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
@@ -1537,7 +1691,7 @@ echo "Objet : ".$object."\n";
 	
 	
 	
-	function UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking)
+	function UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking,$ArrayPortsSNMPNumber)
 	{
 	
 		global $DB;	
@@ -1545,6 +1699,8 @@ echo "Objet : ".$object."\n";
 		$ArrayPortsList = array();
 		
 		$ArrayPortListTracker = array();
+		
+		$ArrayPortsSNMPNumber = array_flip($ArrayPortsSNMPNumber);
 		
 		$query = "SELECT ID, logical_number
 		
@@ -1571,7 +1727,6 @@ echo "Objet : ".$object."\n";
 				{
 					while ( $dataPortsTracker=$DB->fetch_assoc($resultPortsTracker) )
 					{
-					
 						$ArrayPortListTracker[$data["logical_number"]] = $dataPortsTracker["ID"];
 					
 					}
@@ -1580,13 +1735,13 @@ echo "Objet : ".$object."\n";
 			}
 		}
 		
-	
 		foreach($ArraySNMPResultPorts as $object=>$SNMPValue)
 		{
 			$ArrayObject = explode (".",$object);
 			$i = count($ArrayObject);
 			$i--;
 			$PortNumber = $ArrayObject[$i];
+
 			
 			$object = '';
 			
@@ -1619,13 +1774,13 @@ echo "Objet : ".$object."\n";
 						if ($data["table"] == "glpi_networking_ports")
 						{
 						
-							$Field = $ArrayPortsList[$PortNumber];
+							$Field = $ArrayPortsList[$ArrayPortsSNMPNumber[$PortNumber]];
 							
 						}
 						else
 						{
-							
-							$Field = $ArrayPortListTracker[$PortNumber];
+
+							$Field = $ArrayPortListTracker[$ArrayPortsSNMPNumber[$PortNumber]];
 							
 						}						
 						
@@ -1732,8 +1887,27 @@ echo "QUERY : ".$queryPortEnd."\n";
 								$dport = mysql_result($resultPortEnd, 0, "ID");
 								echo "PORT : ".$dport."\n";
 								$sport = $ArrayPortsID[$ifName];
-								removeConnector($dport);
-								makeConnector($sport,$dport);
+								
+								$queryVerif = "SELECT *
+								
+								FROM glpi_networking_wire 
+								
+								WHERE end1 = '$sport' 
+									AND end2 = '$dport' ";
+
+								if ($resultVerif=$DB->query($queryVerif)) {
+
+									if ( $DB->numrows($resultVerif) == 0 )
+									{
+									
+										removeConnector($dport);
+										makeConnector($sport,$dport);
+									
+									}
+								
+								}
+								
+								
 								
 							}
 						}
