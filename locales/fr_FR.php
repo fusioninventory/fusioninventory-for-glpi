@@ -166,6 +166,7 @@ $LANGTRACKER["model_info"][3]="Authentification SNMP";
 $LANGTRACKER["model_info"][4]="Modèles SNMP";
 $LANGTRACKER["model_info"][5]="Gestion des MIB";
 $LANGTRACKER["model_info"][6]="Edition de modèle SNMP";
+$LANGTRACKER["model_info"][7]="Création de modèle SNMP";
 
 $LANGTRACKER["mib"][1]="Label MIB";
 $LANGTRACKER["mib"][2]="Objet";
