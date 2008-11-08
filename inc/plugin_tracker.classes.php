@@ -1044,7 +1044,16 @@ class plugin_tracker_model_infos extends CommonDBTM
 				echo "<div align='center'><form method='post' name='' id=''  action=\"".$target."\">";
 		
 				echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
-				echo $LANGTRACKER["model_info"][6]." :</th></tr>";
+				if ($ID == "0")
+				{
+					echo $LANGTRACKER["model_info"][7];
+				}
+				else
+				{
+					echo $LANGTRACKER["model_info"][6];
+				}
+				
+				echo " :</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<td align='center'>".$LANG["common"][16]."</td>";
