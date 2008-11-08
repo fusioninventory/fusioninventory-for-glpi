@@ -57,7 +57,7 @@ function plugin_tracker_models_infos()
 	$number = $DB->numrows($result);
 	
 	if($number !="0"){
-		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
+		echo "<br>";
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
 		echo "<tr><th colspan='6'>".$LANGTRACKER["model_info"][4]." :</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
@@ -65,22 +65,28 @@ function plugin_tracker_models_infos()
 		echo "<th>".$LANG["networking"][49]."</th>";
 		echo "<th>".$LANGTRACKER["model_info"][2]."</th>";
 		echo "<th>".$LANGTRACKER["model_info"][3]."</th>";
+		echo "<th>".$LANG["buttons"][31]."</th>";
 		echo "</tr>";
 
 		while ($data=$DB->fetch_array($result)){
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$data["ID"]."'><b>".$data["name"]."</b></a></td>";
+			echo "<td align='center'><a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$data["ID"]."'><b>".$data["name"]."</b></a></td>";
 
 			echo "<td align='center'>".getDropdownName("glpi_dropdown_model_networking",$data["FK_model_networking"])."</td>";
 
 			echo "<td align='center'>".getDropdownName("glpi_dropdown_firmware",$data["FK_firmware"])."</td>";
 			echo "<td align='center'>".getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"])."</td>";
 			echo "<td align='center'>".getDropdownName("glpi_plugin_tracker_snmp_connection",$data["FK_snmp_connection"])."</td>";
+			echo "<td align='center'>
+			<form method='get' action='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
+			<input type='hidden' name='model' value='".$data["ID"]."' />
+			<input name='export' src='".GLPI_ROOT."/pics/right.png' title='Exporter' value='Exporter' type='image'>
+			</form></td>";
 			echo "</tr>";
 
 		}
-		echo "</table></div></form>";
+		echo "</table></div>";
 	}
 	else{
 
