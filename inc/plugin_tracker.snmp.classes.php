@@ -327,12 +327,13 @@ abstract class plugin_tracker_snmp2 {
 		echo "<table class='tab_cadre' cellpadding='5' width='1000'>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='11'>";
+		echo "<th colspan='12'>";
 		echo "Tableau des ports";
 		echo "</th>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
+		echo "<th></th>";
 		echo "<th>".$LANG["common"][16]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][42]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][43]."</th>";
@@ -352,6 +353,7 @@ abstract class plugin_tracker_snmp2 {
 			{
 			
 				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'><img src='".GLPI_ROOT."/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"]."\");' /></td>";
 				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
 				echo "<td align='center'>".$data["ifmtu"]."</td>";
 				echo "<td align='center'>".ByteSize($data["ifspeed"],1000)."bps</td>";
@@ -406,15 +408,23 @@ abstract class plugin_tracker_snmp2 {
 				echo "<td align='center'>";
 				if (ereg("up",$data["ifstatus"]))
 				{
-					echo "<img src='../pics/greenbutton.png'/>";
+					echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
 				}
 				else
 				{
-					echo "<img src='../pics/redbutton.png'/>";
+					echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
 				}
 				echo "</td>";
 				echo "</tr>";
-					
+				
+				
+				// Historique
+				
+				echo "
+				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
+					<td colspan='12'>Historique</td>
+				</tr>
+				";
 			}
 		}
 
