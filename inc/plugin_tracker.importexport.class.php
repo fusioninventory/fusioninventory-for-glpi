@@ -72,11 +72,11 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 		// Construction of XML file
 		$xml = "<model>\n";
-		$xml .= "	<name>".$model_name."</name>\n";
-		$xml .= "	<networkingmodel>".getDropdownName("glpi_dropdown_model_networking",$model_FK_model_networking)."</networkingmodel>\n";
-		$xml .= "	<firmware>".getDropdownName("glpi_dropdown_firmware",$model_FK_firmware)."</firmware>\n";
-		$xml .= "	<snmpversion>".getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$model_FK_snmp_version)."</snmpversion>\n";
-		$xml .= "	<authsnmp>".getDropdownName("glpi_plugin_tracker_snmp_connection",$model_FK_snmp_connection)."</authsnmp>\n";
+		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
+		$xml .= "	<networkingmodel><![CDATA[".getDropdownName("glpi_dropdown_model_networking",$model_FK_model_networking)."]]></networkingmodel>\n";
+		$xml .= "	<firmware><![CDATA[".getDropdownName("glpi_dropdown_firmware",$model_FK_firmware)."]]></firmware>\n";
+		$xml .= "	<snmpversion><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$model_FK_snmp_version)."]]></snmpversion>\n";
+		$xml .= "	<authsnmp><![CDATA[".getDropdownName("glpi_plugin_tracker_snmp_connection",$model_FK_snmp_connection)."]]></authsnmp>\n";
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
@@ -90,11 +90,11 @@ class plugin_tracker_importexport extends CommonDBTM
 			while ( $data=$DB->fetch_array($result) )
 			{
 				$xml .= "		<oidobject>\n";
-				$xml .= "			<object>".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."</object>\n";		
-				$xml .= "			<oid>".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."</oid>\n";		
-				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
-				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
-				$xml .= "			<linkfield>".getDropdownName("glpi_plugin_tracker_links_oid_fields",$data["FK_links_oid_fields"])."</linkfield>\n";
+				$xml .= "			<object><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."]]></object>\n";		
+				$xml .= "			<oid><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";		
+				$xml .= "			<portcounter><![CDATA[".$data["oid_port_counter"]."]]></portcounter>\n";
+				$xml .= "			<dynamicport><![CDATA[".$data["oid_port_dyn"]."]]></dynamicport>\n";
+				$xml .= "			<linkfield><![CDATA[".getDropdownName("glpi_plugin_tracker_links_oid_fields",$data["FK_links_oid_fields"])."]]></linkfield>\n";
 				$xml .= "		</oidobject>\n";
 			}
 		
@@ -104,6 +104,73 @@ class plugin_tracker_importexport extends CommonDBTM
 		$xml .= "</model>\n";
 		
 		return $xml;
+	}
+	
+	
+	
+	function showForm($target)
+	{
+		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+		
+		echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
+		
+		echo "<br>";
+		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
+		echo "Importation de modele :</th></tr>";
+		
+		echo "	<tr class='tab_bg_1'>";
+		echo "		<td align='center'></td>";
+		echo "		<td align='center'>";
+		echo "			<input type='file' name='importfile' value=''/>";
+		echo "			<input type='submit' value='".$LANG["buttons"][37]."'/>";
+		echo "		</td>";
+		echo "	</tr>";
+		echo "</table>";
+		
+		echo "</form>";
+		
+	}
+
+
+
+	function import($file)
+	{
+		global $DB;
+	
+		$xml = simplexml_load_file($_FILES['importfile']['tmp_name']);	
+	
+		// $xml = simplexml_load_file("http://127.0.0.1/export.xml");
+   	
+		echo $xml->name[0]."<br/>";
+		
+		echo $xml->networkingmodel[0]."<br/>";
+//			$FK_model_networking = externalImportDropdown("glpi_dropdown_model_networking",$xml->networkingmodel[0],0);
+		echo $xml->firmware[0]."<br/>";
+//			$FK_firmware = externalImportDropdown("glpi_dropdown_firmware",$xml->firmware[0],0);
+		echo $xml->snmpversion[0]."<br/>";
+		echo $xml->authsnmp[0]."<br/>";
+		
+		$i = -1;
+		foreach($xml->oidlist[0] as $num){
+			$i++;
+			echo "=====================<br/>";
+			$j = 0;
+			foreach($xml->oidlist->oidobject[$i] as $item){
+				$j++;
+				switch ($j)
+				{
+					case 1:
+//						$FK_mib_object = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_object",$item);
+						break;
+					case 2:
+//						$FK_mib_oid = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_oid",$item);
+						break;
+				}
+			   echo $item."<br/>";
+			}
+		}
+		$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.models.form.php?ID=1'>$xml->name[0]</a>";
+		displayMessageAfterRedirect();
 	}
 
 }
