@@ -43,16 +43,29 @@ $plugin_tracker_model_infos=new plugin_tracker_model_infos();
 
 $plugin_tracker_mib_networking=new plugin_tracker_mib_networking();
 
-if (isset($_GET["add"]))
-{
+$importexport = new plugin_tracker_importexport;
 
-	$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"],0,"glpi_plugin_tracker_model_infos");
-
-}
-elseif (isset($_POST["add"]))
+if (isset($_POST["add"]))
 {
 
 	$plugin_tracker_model_infos->addentry($_SERVER["PHP_SELF"],$_POST);
+
+}
+elseif (isset($_FILES['importfile']['tmp_name']))
+{
+
+	$importexport->import($_FILES);
+
+}
+
+
+
+if (isset($_GET["add"]))
+{
+
+	$importexport->showForm($_SERVER["PHP_SELF"]);
+
+	$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"],0,"glpi_plugin_tracker_model_infos");
 
 }
 elseif (isset($_POST["add_oid"]))
@@ -60,7 +73,7 @@ elseif (isset($_POST["add_oid"]))
 	$plugin_tracker_mib_networking->addentry($_SERVER["PHP_SELF"],$_POST["add_oid"]);
 
 }
-else
+elseif (isset($_GET["ID"]))
 {
 	plugin_tracker_checkRight("errors","r");
 
