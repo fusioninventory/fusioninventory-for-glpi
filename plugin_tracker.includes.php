@@ -39,6 +39,7 @@ include_once ("plugin_tracker.mibs.define.php");
 include_once ("inc/plugin_tracker.classes.php");
 include_once ("inc/plugin_tracker.snmp.classes.php");
 include_once ("inc/plugin_tracker.importexport.class.php");
+include_once ("inc/plugin_tracker.log.classes.php");
 
 include_once ("inc/plugin_tracker.functions_auth.php");
 include_once ("inc/plugin_tracker.functions_db.php");
