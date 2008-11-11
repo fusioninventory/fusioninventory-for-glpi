@@ -36,6 +36,21 @@
 include_once ("plugin_tracker.define.php");
 include_once ("plugin_tracker.mibs.define.php");
 
+
+// inc files 
+
+if ($handle = opendir(GLPI_ROOT.'/plugins/tracker/inc'))
+{
+	while (false !== ($file = readdir($handle)))
+	{
+		if (ereg(".php",$file))
+		{
+			include_once("inc/".$file);
+		}
+	}
+}
+closedir($handle);
+/*
 include_once ("inc/plugin_tracker.classes.php");
 include_once ("inc/plugin_tracker.snmp.classes.php");
 include_once ("inc/plugin_tracker.importexport.class.php");
@@ -55,4 +70,5 @@ include_once ("inc/plugin_tracker.functions_display.php");
 include_once("inc/plugin_tracker.thread.class.php");
 
 include_once("inc/plugin_tracker.computerhistory.class.php");
+*/
 ?>
