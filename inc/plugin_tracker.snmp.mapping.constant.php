@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
-global $LANG,$LANGTRACKER;
+global $LANG,$LANGTRACKER,$TRACKER_MAPPING;
 
 // ----------------------------------------------------------------------
 //NETWORK MAPPING MAPPING
