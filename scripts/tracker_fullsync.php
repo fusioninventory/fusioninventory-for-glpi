@@ -98,7 +98,7 @@ $config->UpdateNetworkBySNMP($ArrayListNetworking);
 
 // Update process into database
 
-$processes->updateProcess($fields["process_id"],"", "" , "", "");
+//$processes->updateProcess($fields["process_id"],"", "" , "", "");
 
 
 
