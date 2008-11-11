@@ -37,8 +37,6 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-include_once ("../inc/plugin_tracker.classes.php");
-
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 $plugin_tracker_model_infos=new plugin_tracker_model_infos();
