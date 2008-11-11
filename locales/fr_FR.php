@@ -196,4 +196,21 @@ $LANGTRACKER["state"][1]="Arrêt de l'ordinateur";
 $LANGTRACKER["state"][2]="Connexion de l'utilisateur";
 $LANGTRACKER["state"][3]="Déconnexion de l'utilisateur";
 
+
+$LANGTRACKER["mapping"][1]="reseaux > lieu";
+$LANGTRACKER["mapping"][2]="réseaux > firmware";
+$LANGTRACKER["mapping"][3]="réseaux > uptime";
+$LANGTRACKER["mapping"][4]="réseaux > port > mtu";
+$LANGTRACKER["mapping"][5]="réseaux > port > vitesse";
+$LANGTRACKER["mapping"][6]="réseaux > port > statut interne";
+$LANGTRACKER["mapping"][7]="réseaux > ports > Dernier changement";
+$LANGTRACKER["mapping"][8]="réseaux > port > nombre d'octets entrés";
+$LANGTRACKER["mapping"][9]="réseaux > port > nombre d'octets sortis";
+$LANGTRACKER["mapping"][10]="réseaux > port > nombre d'erreurs entrées";
+$LANGTRACKER["mapping"][11]="réseaux > port > nombre d'erreurs sorties";
+$LANGTRACKER["mapping"][12]="réseaux > utilisation du CPU";
+$LANGTRACKER["mapping"][13]="réseaux > numéro de série";
+$LANGTRACKER["mapping"][14]="réseaux > ports > statut de la connexion";
+
+
 ?>
