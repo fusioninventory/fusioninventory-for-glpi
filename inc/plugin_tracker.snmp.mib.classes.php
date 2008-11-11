@@ -54,8 +54,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 
 	function showForm($target,$ID)
 	{
-		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
-		
+		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING,$IMPORT_TYPES;
+	
 		if ( !plugin_tracker_haveRight("errors","r") )
 		{
 			return false;
@@ -114,7 +114,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					echo getDropdownName("glpi_plugin_tracker_links_oid_fields",$data["FK_links_oid_fields"]);
+					echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'] ;
 					echo "</td>";
 					
 					echo "</tr>";
@@ -145,7 +145,20 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				dropdownValue("glpi_plugin_tracker_links_oid_fields","links_oid_fields","",0);
+				echo "<select name='links_oid_fields' size='1'>";
+				//foreach ($IMPORT_TYPES as $type)
+				foreach ($TRACKER_MAPPING as $type=>$mapping43)
+				{
+					if (isset($TRACKER_MAPPING[$type]))
+					{
+						foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
+						{
+							echo "<option value='".$type."||".$name."'>".$TRACKER_MAPPING[$type][$name]["name"]."</option>";
+						}
+					}
+				}
+				echo "</select>";
+				// dropdownValue("glpi_plugin_tracker_links_oid_fields","links_oid_fields","",0);
 				echo "</td>";
 				
 				echo "</tr>";
@@ -164,10 +177,12 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	{
 		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 		
+		$explode = explode("||",$_POST["links_oid_fields"]);
+		
 		$query = "INSERT INTO glpi_plugin_tracker_mib_networking
-		(FK_model_infos, FK_mib_label, FK_mib_oid, FK_mib_object, oid_port_counter, oid_port_dyn, FK_links_oid_fields)
+		(FK_model_infos, FK_mib_label, FK_mib_oid, FK_mib_object, oid_port_counter, oid_port_dyn, mapping_type, mapping_name)
 		VALUES ('".$ID."', '".$_POST["mib_label"]."', '".$_POST["mib_oid"]."', '".$_POST["mib_object"]."', 
-		'".$_POST["port_counter_new"]."','".$_POST["port_dyn_new"]."','".$_POST["links_oid_fields"]."')";
+		'".$_POST["port_counter_new"]."','".$_POST["port_dyn_new"]."','".$explode[0]."','".$explode[1]."')";
 		
 		$DB->query($query);
 		
