@@ -31,8 +31,10 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-//$NEEDED_ITEMS=array("computer","printer","networking","monitor","software","peripheral","phone","tracking","document","user","enterprise","contract","infocom","group");
-define('GLPI_ROOT', '../../..'); 
+$NEEDED_ITEMS=array("setup","rulesengine");
+
+define('GLPI_ROOT', '../../..');
+
 include (GLPI_ROOT."/inc/includes.php");
 
 include_once ("../inc/plugin_tracker.classes.php");
