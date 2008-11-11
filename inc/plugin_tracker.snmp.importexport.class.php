@@ -58,7 +58,7 @@ class plugin_tracker_importexport extends CommonDBTM
 				$model_name = $DB->result($result, 0, "name");
 				$model_FK_model_networking = $DB->result($result, 0, "FK_model_networking");
 				$model_FK_firmware = $DB->result($result, 0, "FK_firmware");
-				$model_FK_snmp_version = $DB->resultt($result, 0, "FK_snmp_version");
+				$model_FK_snmp_version = $DB->result($result, 0, "FK_snmp_version");
 				$model_FK_snmp_connection = $DB->result($result, 0, "FK_snmp_connection");
 			
 			}
@@ -94,7 +94,8 @@ class plugin_tracker_importexport extends CommonDBTM
 				$xml .= "			<oid><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";		
 				$xml .= "			<portcounter><![CDATA[".$data["oid_port_counter"]."]]></portcounter>\n";
 				$xml .= "			<dynamicport><![CDATA[".$data["oid_port_dyn"]."]]></dynamicport>\n";
-				$xml .= "			<linkfield><![CDATA[".getDropdownName("glpi_plugin_tracker_links_oid_fields",$data["FK_links_oid_fields"])."]]></linkfield>\n";
+				$xml .= "			<mapping_type><![CDATA[".$data["mapping_type"]."]]></mapping_type>\n";
+				$xml .= " 			<mapping_name><![CDATA[".$data["mapping_name"]."]]></mapping_name>\n";
 				$xml .= "		</oidobject>\n";
 			}
 		
@@ -138,39 +139,79 @@ class plugin_tracker_importexport extends CommonDBTM
 		global $DB;
 
 		$xml = simplexml_load_file($_FILES['importfile']['tmp_name']);	
-	
-		// $xml = simplexml_load_file("http://127.0.0.1/export.xml");
-   	
-		echo $xml->name[0]."<br/>";
+
+		// Verify same model exist
+		$query = "SELECT ID ".
+				 "FROM glpi_plugin_tracker_model_infos ".
+				 "WHERE name='".$xml->name[0]."';";
+		$result = $DB->query($query);
 		
-		echo $xml->networkingmodel[0]."<br/>";
-			$FK_model_networking = externalImportDropdown("glpi_dropdown_model_networking",$xml->networkingmodel[0],0);
-		echo $xml->firmware[0]."<br/>";
-			$FK_firmware = externalImportDropdown("glpi_dropdown_firmware",$xml->firmware[0],0);
-		echo $xml->snmpversion[0]."<br/>";
-		echo $xml->authsnmp[0]."<br/>";
-		
-		$i = -1;
-		foreach($xml->oidlist[0] as $num){
-			$i++;
-			echo "=====================<br/>";
-			$j = 0;
-			foreach($xml->oidlist->oidobject[$i] as $item){
-				$j++;
-				switch ($j)
-				{
-					case 1:
-						$FK_mib_object = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_object",$item);
-						break;
-					case 2:
-						$FK_mib_oid = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_oid",$item);
-						break;
-				}
-			   echo $item."<br/>";
-			}
+		if ($DB->numrows($result) > 0)
+		{
+			$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Modèle déjà existant : import non effectué";
+			displayMessageAfterRedirect();
 		}
-		$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.models.form.php?ID=1'>".$xml->name[0]."</a>";
-		displayMessageAfterRedirect();
+		else
+		{
+
+//			echo $xml->name[0]."<br/>";
+			
+//			echo $xml->networkingmodel[0]."<br/>";
+				$FK_model_networking = externalImportDropdown("glpi_dropdown_model_networking",$xml->networkingmodel[0],0);
+//			echo $xml->firmware[0]."<br/>";
+				$FK_firmware = externalImportDropdown("glpi_dropdown_firmware",$xml->firmware[0],0);
+//			echo $xml->snmpversion[0]."<br/>";
+//			echo $xml->authsnmp[0]."<br/>";
+			
+			$query = "INSERT INTO glpi_plugin_tracker_model_infos
+			(name,FK_model_networking,FK_firmware,FK_snmp_version,FK_snmp_connection)
+			VALUES('".$xml->name[0]."','".$FK_model_networking."','".$FK_firmware."','".$xml->snmpversion[0]."', '".$xml->authsnmp[0]."' )";
+			
+			$DB->query($query);
+			$FK_model = $DB->insert_id();
+			
+			$i = -1;
+			foreach($xml->oidlist[0] as $num){
+				$i++;
+				$j = 0;
+				foreach($xml->oidlist->oidobject[$i] as $item){
+					$j++;
+					switch ($j)
+					{
+						case 1:
+							$FK_mib_object = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_object",$item);
+							break;
+						case 2:
+							$FK_mib_oid = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_oid",$item);
+							break;
+						case 3:
+							$oid_port_counter = $item;
+							break;
+						case 4:
+							$oid_port_dyn = $item;
+							break;
+						case 5:
+							$mapping_type = $item;
+							break;
+						case 6:
+							$mapping_name = $item;
+							break;
+					}
+				   //echo $item."<br/>";
+				}
+
+				$query = "INSERT INTO glpi_plugin_tracker_mib_networking
+				(FK_model_infos,FK_mib_oid,FK_mib_object,oid_port_counter,oid_port_dyn,mapping_type,mapping_name)
+				VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."','".$oid_port_counter."', '".$oid_port_dyn."',
+				 '".$mapping_type."', '".$mapping_name."')";
+				
+				$DB->query($query);
+		
+
+			}
+			$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+			displayMessageAfterRedirect();
+		}
 	}
 
 }
