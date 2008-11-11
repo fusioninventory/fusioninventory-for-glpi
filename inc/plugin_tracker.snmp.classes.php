@@ -227,6 +227,8 @@ abstract class plugin_tracker_snmp2 {
 		
 		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;	
 		
+		$history = new plugin_tracker_SNMP_log;
+		
 		if ( !plugin_tracker_haveRight($this->tracker_right,"r") )
 			return false;
 		if ( (plugin_tracker_haveRight($this->tracker_right,"w")) && (haveRight($this->glpi_right,"w")) )
@@ -293,25 +295,27 @@ abstract class plugin_tracker_snmp2 {
 // ************ A FAIRE ******************************************************************************* //
 // ***************************************** METTRE TABLEAU DES PORTS ********************************* //
 // **************************************************************************************************** //	
-	function ByteSize($bytes,$sizeoct=1024){
-		$size = $bytes / $sizeoct;
-		if($size < $sizeoct){
-			$size = number_format($size, 0);
-			$size .= ' K';
-		}else {
-			if($size / $sizeoct < $sizeoct) {
-				$size = number_format($size / $sizeoct, 0);
-				$size .= ' M';
-			} else if($size / $sizeoct / $sizeoct < $sizeoct) {
-				$size = number_format($size / $sizeoct / $sizeoct, 0);
-				$size .= ' G';
-			} else if($size / $sizeoct / $sizeoct / $sizeoct < $sizeoct) {
-				$size = number_format($size / $sizeoct / $sizeoct / $sizeoct, 0);
-				$size .= ' T';
+		function ByteSize($bytes,$sizeoct=1024){
+			$size = $bytes / $sizeoct;
+			if($size < $sizeoct){
+				$size = number_format($size, 0);
+				$size .= ' K';
+			}else {
+				if($size / $sizeoct < $sizeoct) {
+					$size = number_format($size / $sizeoct, 0);
+					$size .= ' M';
+				} else if($size / $sizeoct / $sizeoct < $sizeoct) {
+					$size = number_format($size / $sizeoct / $sizeoct, 0);
+					$size .= ' G';
+				} else if($size / $sizeoct / $sizeoct / $sizeoct < $sizeoct) {
+					$size = number_format($size / $sizeoct / $sizeoct / $sizeoct, 0);
+					$size .= ' T';
+				}
 			}
+			return $size;
 		}
-		return $size;
-	}
+		
+		
 		$query = "
 		SELECT * 
 		
@@ -321,6 +325,16 @@ abstract class plugin_tracker_snmp2 {
 		ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.ID 
 		WHERE glpi_networking_ports.on_device='".$ID."'
 		ORDER BY logical_number ";
+
+		echo "<script  type='text/javascript'>
+function close_array(id){
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\' onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+} 
+function appear_array(id){
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\' onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+}		
+		
+		</script>";
 
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
@@ -353,7 +367,7 @@ abstract class plugin_tracker_snmp2 {
 			{
 			
 				echo "<tr class='tab_bg_1'>";
-				echo "<td align='center'><img src='".GLPI_ROOT."/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"]."\");' /></td>";
+				echo "<td align='center' id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT."/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"]."\");close_array(".$data["ID"].");' /></td>";
 				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
 				echo "<td align='center'>".$data["ifmtu"]."</td>";
 				echo "<td align='center'>".ByteSize($data["ifspeed"],1000)."bps</td>";
@@ -422,14 +436,12 @@ abstract class plugin_tracker_snmp2 {
 				
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
-					<td colspan='12'>Historique</td>
+					<td colspan='12'>".$history->showHistory($data["ID"])."</td>
 				</tr>
 				";
 			}
 		}
 
-
-		echo "</tr>";
 
 		echo "</table>";
 
@@ -1130,7 +1142,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		if ( ($result = $DB->query($query)) )
 		{
-			$device_state = mysql_result($result, 0, "active_device_state");
+			$device_state = $DB->result($result, 0, "active_device_state");
 		}
 
 		$query = "SELECT ID,ifaddr 
@@ -1216,7 +1228,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ( $DB->numrows($result) != 0 )
 			{
-				return mysql_result($result, 0, "FK_model_infos");
+				return $DB->result($result, 0, "FK_model_infos");
 			}
 		}	
 	
@@ -1292,8 +1304,8 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ( $DB->numrows($result) != 0 )
 			{
-				$object = mysql_result($result, 0, "objectname");
-				$portcounter = mysql_result($result, 0, "oidname");
+				$object = $DB->result($result, 0, "objectname");
+				$portcounter = $DB->result($result, 0, "oidname");
 			}
 		}
 
@@ -1368,12 +1380,12 @@ class plugin_tracker_snmp extends CommonDBTM
 					
 						// Update if it's necessary
 						// $np->update
-						if (mysql_result($result, 0, "name") != $ArrayPortsName[$i])
+						if ($DB->result($result, 0, "name") != $ArrayPortsName[$i])
 						{
 							
 							unset($array);
 							$array["name"] = $ArrayPortsName[$i];
-							$array["ID"] = mysql_result($result, 0, "ID");
+							$array["ID"] = $DB->result($result, 0, "ID");
 							$np->update($array);
 						
 						}
@@ -1384,7 +1396,7 @@ class plugin_tracker_snmp extends CommonDBTM
 					
 						FROM glpi_plugin_tracker_networking_ports
 						
-						WHERE FK_networking_ports='".mysql_result($result, 0, "ID")."' ";
+						WHERE FK_networking_ports='".$DB->result($result, 0, "ID")."' ";
 						
 						if ( $resultTrackerPort = $DB->query($queryTrackerPort) ){
 							if ( $DB->numrows($resultTrackerPort) == 0 ) {
@@ -1392,7 +1404,7 @@ class plugin_tracker_snmp extends CommonDBTM
 								$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
 									(FK_networking_ports)
 								
-								VALUES ('".mysql_result($result, 0, "ID")."') ";
+								VALUES ('".$DB->result($result, 0, "ID")."') ";
 								
 								$DB->query($queryInsert);
 							
@@ -1817,7 +1829,9 @@ echo "Objet : ".$object."\n";
 	function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking)
 	{
 
-		global $DB;	
+		global $DB;
+		
+		$Tracker_Log = new plugin_tracker_SNMP_log;
 		
 		$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
 		
@@ -1894,9 +1908,9 @@ echo "Objet : ".$object."\n";
 							if ( $DB->numrows($resultPortEnd) != 0 )
 							{
 echo "QUERY : ".$queryPortEnd."\n";
-								$dport = mysql_result($resultPortEnd, 0, "ID");
+								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 								echo "PORT : ".$dport."\n";
-								$sport = $ArrayPortsID[$ifName];
+								$sport = $ArrayPortsID[$ifName]; // Networking_Port
 								
 								$queryVerif = "SELECT *
 								
@@ -1909,8 +1923,9 @@ echo "QUERY : ".$queryPortEnd."\n";
 
 									if ( $DB->numrows($resultVerif) == 0 )
 									{
-									
+										$Tracker_Log->addLogConnection("remove",$dport);
 										removeConnector($dport);
+										$Tracker_Log->addLogConnection("make",$dport,$sport);
 										makeConnector($sport,$dport);
 									
 									}
@@ -1930,17 +1945,6 @@ echo "QUERY : ".$queryPortEnd."\n";
 								}
 							}
 					*/
-						/**
-						 * Wire the Ports
-						 *
-						 *@param $sport : source port ID
-						 *@param $dport : destination port ID
-						 *@param $dohistory : add event in the history
-						 *@param $addmsg : display HTML message on success
-						 * 
-						 *@return true on success 
-						**/
-						// makeConnector($sport, $dport, $dohistory=true, $addmsg=false)
 						
 						
 						
