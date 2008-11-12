@@ -1128,84 +1128,37 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 	}
 }*/
 
+
+
+
+
+
+
+
+
+/*
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*****************************************************************************************************************
+*/
+
+
+
+
+
 // Modifications by David
 // Class for tracker_fullsync.php
 class plugin_tracker_snmp extends CommonDBTM
 {
-	function getNetworkList()
-	{
-		global $DB;
-		
-		$NetworksID = array();	
-		
-		$query = "SELECT active_device_state FROM glpi_plugin_tracker_config ";
-		
-		if ( ($result = $DB->query($query)) )
-		{
-			$device_state = $DB->result($result, 0, "active_device_state");
-		}
-
-		$query = "SELECT ID,ifaddr 
-		FROM glpi_networking 
-		WHERE deleted='0' 
-			AND state='".$device_state."' ";
-			
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-				$NetworksID[$data["ID"]] = $data["ifaddr"];
-			}
-		}
-
-		return $NetworksID;
-	
-	}
-
-
-
-	function UpdateNetworkBySNMP($ArrayListNetworking)
-	{
-		foreach ( $ArrayListNetworking as $IDNetworking=>$ifIP )
-		{
-			$updateNetwork = new plugin_tracker_snmp;
-			// Get SNMP model 
-			$IDModelInfos = $updateNetwork->GetSNMPModel($IDNetworking);
-			if (($IDModelInfos != "") && ($IDNetworking != ""))
-			{
-				// ** Get oid
-				$ArrayOID = $updateNetwork->GetOID($IDModelInfos);
-				//**
-				$ArrayPortsName = $updateNetwork->GetPortsName($ifIP);
-				//**
-				$ArrayPortsID = $updateNetwork->GetPortsID($IDNetworking);
-				// **
-				$ArrayPortsSNMPNumber = $updateNetwork->GetPortsSNMPNumber($ifIP);
-				// ** Get oid ports Counter
-				$ArrayOIDPorts = $updateNetwork->GetOIDPorts($IDModelInfos,$ifIP,$IDNetworking,$ArrayPortsName,$ArrayPortsSNMPNumber);
-				// ** Define oid and object name
-				$updateNetwork->DefineObject($ArrayOID);
-				// ** Get query SNMP on switch
-				$ArraySNMPResult = $updateNetwork->SNMPQuery($ArrayOID,$ifIP);
-				// ** Define oid and object name
-				//$updateNetwork->DefineObject($ArrayOIDPorts);
-				// ** Get query SNMP of switchs ports
-				$ArraySNMPResultPorts = $updateNetwork->SNMPQuery($ArrayOIDPorts,$ifIP);
-				// ** Get link OID fields
-				$ArrayLinks = $updateNetwork->GetLinkOidToFields($IDModelInfos);
-				// ** Update fields of switchs
-				$updateNetwork->UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking);
-				// ** Update ports fields of switchs
-				$updateNetwork->UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking,$ArrayPortsSNMPNumber);
-				
-				// ** Get MAC adress of connected ports
-				$updateNetwork->GetMACtoPort($ifIP,$ArrayPortsID,$IDNetworking);
-			}
-		} 
-	
-	}
-	
-	
 	
 	/**
 	 * Get SNMP model of the network materiel 
@@ -1560,18 +1513,39 @@ echo "Objet : ".$object."\n";
 	 *
 	 * @param $ArrayOID List of Object and OID in an array to get values
 	 * @param $IP IP of the materiel we query
+	 * @param $version : version of SNMP (1, 2c, 3)
+	 * @param $community community name for version 1 and 2c ('public' by default)
+	 * @param $sec_name for v3 : the "username" used for authentication to the system
+	 * @param $sec_level for v3 : the authentication scheme ('noAuthNoPriv', 'authNoPriv', or 'authPriv')
+	 * @param $auth_protocol for v3 : the encryption protocol used for authentication ('MD5' [default] or 'SHA')
+	 * @param $auth_passphrase for v3 : the encrypted key to use as the authentication challenge
+	 * @param $priv_protocol for v3 : the encryption protocol used for protecting the protocol data unit ('DES' [default], 'AES128', 'AES192', or 'AES256')
+	 * @param $priv_passphrase for v3 : the key to use for encrypting the protocol data unit
 	 *
 	 * @return array : array with object name and result of the query
 	 *
 	**/
-	function SNMPQuery($ArrayOID,$IP)
+	function SNMPQuery($ArrayOID,$IP,$version=1,$community="public",$sec_name,$sec_level,
+							$auth_protocol="MD5",$auth_passphrase,$priv_protocol="DES",$priv_passphrase)
 	{
 		
 		$ArraySNMP = array();
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
-			$SNMPValue = snmpget($IP, "public",$oid);
+			if ($version == "1")
+			{
+				$SNMPValue = snmpget($IP, $community,$oid);
+			}
+			else if ($version == "2c")
+			{
+				$SNMPValue = snmp2_get($IP, $community,$oid);
+			}
+			else if ($version == "3")
+			{
+				$SNMPValue = snmp3_get($IP, $sec_name,$sec_level,$auth_protocol,$auth_passphrase, $priv_protocol,$priv_passphrase,	$oid);
+			}
+			
 			echo "****************".$SNMPValue."****************\n";
 			$ArraySNMPValues = explode(": ", $SNMPValue);
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
@@ -1617,11 +1591,11 @@ echo "Objet : ".$object."\n";
 	function GetLinkOidToFields($ID)
 	{
 
-		global $DB;
+		global $DB,$TRACKER_MAPPING;
 		
 		$ObjectLink = array();
 		
-		$query = "SELECT FK_links_oid_fields, 
+		$query = "SELECT mapping_type, mapping_name, 
 			glpi_dropdown_plugin_tracker_mib_object.name AS name
 		FROM glpi_plugin_tracker_mib_networking
 		
@@ -1634,7 +1608,8 @@ echo "Objet : ".$object."\n";
 		{
 			while ( $data=$DB->fetch_array($result) )
 			{
-				$ObjectLink[$data["name"]] = $data["FK_links_oid_fields"];
+				//$ObjectLink[$data["name"]] = $data["FK_links_oid_fields"];
+				$ObjectLink[$data["name"]] = $data["mapping_type"]."|||".$data["mapping_name"];
 			}
 		}
 	
@@ -1831,8 +1806,6 @@ echo "Objet : ".$object."\n";
 
 		global $DB;
 		
-		$Tracker_Log = new plugin_tracker_SNMP_log;
-		
 		$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
 		
 		$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
@@ -1923,9 +1896,13 @@ echo "QUERY : ".$queryPortEnd."\n";
 
 									if ( $DB->numrows($resultVerif) == 0 )
 									{
-										$Tracker_Log->addLogConnection("remove",$dport);
+										$netwire=new Netwire;
+										addLogConnection("remove",$netwire->getOppositeContact($dport));
+										addLogConnection("remove",$dport);
 										removeConnector($dport);
-										$Tracker_Log->addLogConnection("make",$dport,$sport);
+										
+										addLogConnection("make",$dport);
+										addLogConnection("make",$sport);
 										makeConnector($sport,$dport);
 									
 									}
