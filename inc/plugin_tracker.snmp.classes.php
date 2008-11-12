@@ -227,7 +227,7 @@ abstract class plugin_tracker_snmp2 {
 		
 		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;	
 		
-		$history = new plugin_tracker_SNMP_log;
+		$history = new plugin_tracker_SNMP_history;
 		
 		if ( !plugin_tracker_haveRight($this->tracker_right,"r") )
 			return false;
@@ -436,7 +436,7 @@ function appear_array(id){
 				
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
-					<td colspan='12'>".$history->showHistory($data["ID"])."</td>
+					<td colspan='12'>".tracker_snmp_showHistory($data["ID"])."</td>
 				</tr>
 				";
 			}
@@ -1561,18 +1561,38 @@ echo "Objet : ".$object."\n";
 	 *
 	 * @param $ArrayOID List of Object and OID in an array to get values
 	 * @param $IP IP of the materiel we query
+	 * @param $version : version of SNMP (1, 2c, 3)
+	 * @param $community community name for version 1 and 2c ('public' by default)
+	 * @param $sec_name for v3 : the "username" used for authentication to the system
+	 * @param $sec_level for v3 : the authentication scheme ('noAuthNoPriv', 'authNoPriv', or 'authPriv')
+	 * @param $auth_protocol for v3 : the encryption protocol used for authentication ('MD5' [default] or 'SHA')
+	 * @param $auth_passphrase for v3 : the encrypted key to use as the authentication challenge
+	 * @param $priv_protocol for v3 : the encryption protocol used for protecting the protocol data unit ('DES' [default], 'AES128', 'AES192', or 'AES256')
+	 * @param $priv_passphrase for v3 : the key to use for encrypting the protocol data unit
 	 *
 	 * @return array : array with OID name and result of the query
 	 *
 	**/	
-	function SNMPQueryWalkAll($ArrayOID,$IP)
+	function SNMPQueryWalkAll($ArrayOID,$IP,$version=1,$community="public",$sec_name,$sec_level,
+							$auth_protocol="MD5",$auth_passphrase,$priv_protocol="DES",$priv_passphrase)
 	{
 		$ArraySNMP = array();
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
-			$SNMPValue = snmprealwalk($IP, "public",$oid);
-
+			if ($version == "1")
+			{
+				$SNMPValue = snmprealwalk($IP, $community,$oid);
+			}
+			else if ($version == "2c")
+			{
+				$SNMPValue = snmp2_real_walk($IP, $community,$oid);
+			}
+			else if ($version == "3")
+			{
+				$SNMPValue = snmp3_real_walk($IP, $sec_name,$sec_level,$auth_protocol,$auth_passphrase, $priv_protocol,$priv_passphrase,	$oid);
+			}
+			
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
 				$ArraySNMPValues = explode(": ", $value);
