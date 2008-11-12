@@ -74,7 +74,7 @@ function addLogConnection($status,$port)
 }
 
 
-function showHistory($ID_port)
+function tracker_snmp_showHistory($ID_port)
 {
 	global $DB,$LANG,$LANGTRACKER,$INFOFORM_PAGES,$CFG_GLPI;
 
