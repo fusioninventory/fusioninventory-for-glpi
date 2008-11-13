@@ -1,4 +1,5 @@
 <?php
+
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -31,65 +32,43 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$NEEDED_ITEMS=array("setup","rulesengine");
+$NEEDED_ITEMS = array (
+	"setup",
+	"rulesengine"
+);
 
 define('GLPI_ROOT', '../../..');
 
-include (GLPI_ROOT."/inc/includes.php");
+include (GLPI_ROOT . "/inc/includes.php");
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+plugin_tracker_checkRight("errors", "r");
 
-$plugin_tracker_model_infos=new plugin_tracker_model_infos();
+$plugin_tracker_model_infos = new plugin_tracker_model_infos();
 
-$plugin_tracker_mib_networking=new plugin_tracker_mib_networking();
+$plugin_tracker_mib_networking = new plugin_tracker_mib_networking();
 
 $importexport = new plugin_tracker_importexport;
 
-if (isset($_POST["add"]))
-{
-
-	$plugin_tracker_model_infos->addentry($_SERVER["PHP_SELF"],$_POST);
-
+if (isset ($_POST["add"])) {
+	$plugin_tracker_model_infos->add($_POST);
+	glpi_header($_SERVER['HTTP_REFERER']);
 }
-elseif (isset($_FILES['importfile']['tmp_name']))
-{
-
+elseif (isset ($_POST["update"])) {
+	$plugin_tracker_model_infos->update($_POST);
+	glpi_header($_SERVER['HTTP_REFERER']);
+}
+elseif (isset ($_FILES['importfile']['tmp_name'])) {
 	$importexport->import($_FILES);
-
+}
+if (isset ($_POST["add_oid"])) {
+	$plugin_tracker_mib_networking->add($_POST);
+	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
+commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker");
 
-
-if (isset($_GET["add"]))
-{
-
-	$importexport->showForm($_SERVER["PHP_SELF"]);
-
-	$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"],0,"glpi_plugin_tracker_model_infos");
-
-}
-elseif (isset($_POST["add_oid"]))
-{
-	$plugin_tracker_mib_networking->addentry($_SERVER["PHP_SELF"],$_POST["add_oid"]);
-
-}
-elseif (isset($_GET["ID"]))
-{
-	plugin_tracker_checkRight("errors","r");
-
-	if (!isset($_SESSION['glpi_tab'])) $_SESSION['glpi_tab']=1;
-	if (isset($_GET['onglet'])) {
-		$_SESSION['glpi_tab']=$_GET['onglet'];
-		//		glpi_header($_SERVER['HTTP_REFERER']);
-	}
-	
-	$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"],$_GET["ID"],"glpi_plugin_tracker_model_infos");
-
-	//$plugin_tracker_mib_networking->showAddMIB();
-	
-	$plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"],$_GET["ID"]);
-
-}
+$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"], $_GET["ID"]);
+$plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"], $_GET["ID"]);
 
 commonFooter();
 ?>
