@@ -211,6 +211,21 @@ $LANGTRACKER["mapping"][11]="réseaux > port > nombre d'erreurs sorties";
 $LANGTRACKER["mapping"][12]="réseaux > utilisation du CPU";
 $LANGTRACKER["mapping"][13]="réseaux > numéro de série";
 $LANGTRACKER["mapping"][14]="réseaux > ports > statut de la connexion";
+$LANGTRACKER["mapping"][15]="réseaux > ports > adresse MAC";
 
-
+$LANGTRACKER["mapping"][101]="";
+$LANGTRACKER["mapping"][102]="";
+$LANGTRACKER["mapping"][103]="";
+$LANGTRACKER["mapping"][104]="MTU";
+$LANGTRACKER["mapping"][105]="Vitesse";
+$LANGTRACKER["mapping"][106]="Statut Interne";
+$LANGTRACKER["mapping"][107]="Dernier changement";
+$LANGTRACKER["mapping"][108]="Nb d'octets recus";
+$LANGTRACKER["mapping"][109]="Nb d'octets envoyés";
+$LANGTRACKER["mapping"][110]="Nb d'erreurs en entrée";
+$LANGTRACKER["mapping"][111]="Nb d'erreurs en sortie";
+$LANGTRACKER["mapping"][112]="réseaux > utilisation du CPU";
+$LANGTRACKER["mapping"][113]="";
+$LANGTRACKER["mapping"][114]="Connexion";
+$LANGTRACKER["mapping"][115]="MAC interne";
 ?>
