@@ -126,4 +126,10 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifstatus']['name'] = $LANGTRACKER["mapping"][
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifstatus']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifstatus']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['table'] = 'glpi_plugin_tracker_networking_ports';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['field'] = 'ifmac';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['name'] = $LANGTRACKER["mapping"][15];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['dropdown'] = '';
+
 ?>
