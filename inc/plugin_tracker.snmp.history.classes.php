@@ -65,7 +65,14 @@ class plugin_tracker_SNMP_history extends CommonDBTM {
 			(FK_ports,new_value,new_device_type,new_device_ID,date_mod)
 			VALUES('".$array["FK_ports"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."')";
 	
+		}else if ($status == "field")
+		{
+			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
+			(FK_ports,field,old_value,new_value,date_mod)
+			VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."','".$array["old_value"]."','".$array["new_value"]."','".date("Y-m-d H:i:s")."')";
+	
 		}
+		
 		$DB->query($query);
 		
 		return mysql_insert_id();
