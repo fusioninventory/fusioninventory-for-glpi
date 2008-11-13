@@ -1394,7 +1394,10 @@ class plugin_tracker_snmp extends CommonDBTM
 				{
 					for ($i=1;$i <= count($ArrayPortsSNMPNumber); $i++)
 					{
-						$oidList[$data["objectname"].".".$ArrayPortsSNMPNumber[$i]] = $data["oidname"].".".$ArrayPortsSNMPNumber[$i];
+						if (isset($ArrayPortsSNMPNumber[$i]))
+						{
+							$oidList[$data["objectname"].".".$ArrayPortsSNMPNumber[$i]] = $data["oidname"].".".$ArrayPortsSNMPNumber[$i];
+						}
 					}
 				}
 			}
@@ -1539,139 +1542,7 @@ echo "Objet : ".$object."\n";
 
 	
 	
-	function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking)
-	{
 
-		global $DB;
-		
-		$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
-		
-		$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
-		
-		$snmp_queries = new plugin_tracker_snmp;
-		
-		$snmp_queries->DefineObject($ArrayIPMACAdressePhysObject);
-		
-		$ArrayIPMACAdressePhys = $snmp_queries->SNMPQueryWalkAll($ArrayIPMACAdressePhysObject,$IP);
-		
-		$snmp_queries->DefineObject($ArrayMACAdressTableObject);
-		
-		$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP);
-		
-		$ArrayMACAdressTableVerif = array();
-		
-		foreach($ArrayMACAdressTable as $oid=>$value)
-		{
-		
-			echo $oid." => ".$value."\n";
-			$oidExplode = explode(".", $oid);
-			
-			$OIDBridgePortNumber = "1.3.6.1.2.1.17.4.3.1.2.0.".
-				$oidExplode[(count($oidExplode)-5)].".".
-				$oidExplode[(count($oidExplode)-4)].".".
-				$oidExplode[(count($oidExplode)-3)].".".
-				$oidExplode[(count($oidExplode)-2)].".".
-				$oidExplode[(count($oidExplode)-1)];
-				
-			$ArraySNMPBridgePortNumber = array("dot1dTpFdbPort" => $OIDBridgePortNumber);
-			
-			$snmp_queries->DefineObject($ArraySNMPBridgePortNumber);
-			
-			$ArrayBridgePortNumber = $snmp_queries->SNMPQuery($ArraySNMPBridgePortNumber,$IP);
-			
-			foreach($ArrayBridgePortNumber as $oidBridgePort=>$BridgePortNumber)
-			{
-				echo "BRIDGEPortNumber ".$BridgePortNumber."\n";
-				
-				$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => "1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
-		
-				$snmp_queries->DefineObject($ArrayBridgePortifIndexObject);
-		
-				$ArrayBridgePortifIndex = $snmp_queries->SNMPQuery($ArrayBridgePortifIndexObject,$IP);
-				
-				foreach($ArrayBridgePortifIndex as $oidBridgePortifIndex=>$BridgePortifIndex)
-				{
-					echo "BridgePortifIndex : ".$BridgePortifIndex."\n";
-				
-					$ArrayifNameObject = array("ifName" => "1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
-		
-					$snmp_queries->DefineObject($ArrayifNameObject);
-			
-					$ArrayifName = $snmp_queries->SNMPQuery($ArrayifNameObject,$IP);
-					
-					foreach($ArrayifName as $oidArrayifName=>$ifName)
-					{
-						echo "		ifName : *".$ifName."*\n";
-
-						// Search portID of materiel wich we would connect to this port
-						$MacAddress = trim($value);
-						$MacAddress = str_replace(" ", ":", $MacAddress);
-						$MacAddress = strtolower($MacAddress);
-						$queryPortEnd = "SELECT * 
-						
-						FROM glpi_networking_ports
-						
-						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-							AND on_device!='".$IDNetworking."' ";
-
-						if ( $resultPortEnd=$DB->query($queryPortEnd) )
-						{
-							if ( $DB->numrows($resultPortEnd) != 0 )
-							{
-echo "QUERY : ".$queryPortEnd."\n";
-								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
-								echo "PORT : ".$dport."\n";
-								$sport = $ArrayPortsID[$ifName]; // Networking_Port
-								
-								$queryVerif = "SELECT *
-								
-								FROM glpi_networking_wire 
-								
-								WHERE end1 = '$sport' 
-									AND end2 = '$dport' ";
-
-								if ($resultVerif=$DB->query($queryVerif)) {
-
-									if ( $DB->numrows($resultVerif) == 0 )
-									{
-										$netwire=new Netwire;
-										addLogConnection("remove",$netwire->getOppositeContact($dport));
-										addLogConnection("remove",$dport);
-										removeConnector($dport);
-										
-										addLogConnection("make",$dport);
-										addLogConnection("make",$sport);
-										makeConnector($sport,$dport);
-									
-									}
-								
-								}
-								
-								
-								
-							}
-						}
-						
-					/*	
-						if (isset($_POST["dport"])&&count($_POST["dport"]))
-							foreach ($_POST["dport"] as $sport => $dport){
-								if($sport && $dport){
-									makeConnector($sport,$dport);
-								}
-							}
-					*/
-						
-						
-						
-					}
-				
-				}
-				
-			}
-
-		}
-		
-	}
 	
 }
 ?>
