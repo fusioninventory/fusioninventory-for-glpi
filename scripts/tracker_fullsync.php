@@ -53,9 +53,8 @@ $DBCONNECTION_REQUIRED=1;
 // MASS IMPORT for OCSNG
 define('GLPI_ROOT', '../../..');
 
-$NEEDED_ITEMS=array("mass_ocs_import","ocsng","computer","device","printer","networking","peripheral","monitor","software","infocom",
-	"phone","tracking","enterprise","reservation","setup","rulesengine","rule.ocs","group","registry","rule.softwarecategories", 
-	"rule.dictionnary.software", "rule.dictionnary.dropdown");
+$NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
+	"phone","tracking","enterprise","reservation","setup","group","registry");
 include (GLPI_ROOT . "/config/based_config.php");
 include (GLPI_ROOT . "/inc/includes.php");
 
@@ -92,9 +91,19 @@ $processes->addProcess($fields["process_id"]);
 
 // SNMP is working
 
-$ArrayListNetworking = $config->getNetworkList();
 
-$config->UpdateNetworkBySNMP($ArrayListNetworking);
+// Retrieve list of all networking to query SNMP
+	$ArrayListNetworking = getNetworkList();
+
+
+
+
+
+
+
+
+
+UpdateNetworkBySNMP($ArrayListNetworking);
 
 // Update process into database
 
