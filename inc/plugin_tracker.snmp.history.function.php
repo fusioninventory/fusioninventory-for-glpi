@@ -65,16 +65,17 @@ function addLogConnection($status,$port)
 	// Récupérer le type de matériel
 	$netport=new Netport;
 	$array["FK_ports"] = $port;
-	$netport->getFromDB($port);
+	$opposite_port = $nw->getOppositeContact($port);
+	$netport->getFromDB($opposite_port);
 	$array["device_type"] = $netport->fields["device_type"];
 	
 	// Récupérer l'adresse MAC
-	$netport->getFromDB($port);
+	$netport->getFromDB($opposite_port);
 	$array["value"] = $netport->fields["ifmac"];
 	
 	// Récupération de l'id du matériel
 	$array["device_ID"] = $netport->fields["on_device"];
-
+echo "HISTORY ".$array["FK_ports"]." - ".$array["device_type"]." - ".$array["value"]." - ".$array["device_ID"]."\n";
 	// Ajouter en DB
 	$history->insert_connection($status,$array);
 }
