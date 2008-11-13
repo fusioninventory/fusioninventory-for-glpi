@@ -38,12 +38,18 @@ if (!defined('GLPI_ROOT')){
 }
 
 
-function addLog()
+function tracker_snmp_addLog($port,$field,$old_value,$new_value)
 {
-	global $DB;
+	global $DB,$CFG_GLPI;
+	$history = new plugin_tracker_SNMP_history;
 	
+	$array["FK_ports"] = $port;
+	$array["field"] = $field;
+	$array["old_value"] = $old_value;
+	$array["new_value"] = $new_value;
 	
-
+	// Ajouter en DB
+	$history->insert_connection("field",$array);
 }
 
 
@@ -85,7 +91,7 @@ function tracker_snmp_showHistory($ID_port)
 	
 	WHERE FK_ports='".$ID_port."'
 	
-	ORDER BY date_mod
+	ORDER BY date_mod DESC
 	
 	LIMIT 0,30";		
 
