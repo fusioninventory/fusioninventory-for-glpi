@@ -317,7 +317,7 @@ abstract class plugin_tracker_snmp2 {
 		
 		
 		$query = "
-		SELECT * 
+		SELECT *,glpi_plugin_tracker_networking_ports.ifmac as ifmacinternal
 		
 		FROM glpi_plugin_tracker_networking_ports
 
@@ -338,10 +338,10 @@ function appear_array(id){
 
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
-		echo "<table class='tab_cadre' cellpadding='5' width='1000'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='12'>";
+		echo "<th colspan='13'>";
 		echo "Tableau des ports";
 		echo "</th>";
 		echo "</tr>";
@@ -357,6 +357,7 @@ function appear_array(id){
 		echo "<th>".$LANGTRACKER["snmp"][47]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][48]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][49]."</th>";
+		echo "<th>".$LANGTRACKER["mapping"][115]."</th>";
 		echo "<th>".$LANG["networking"][15]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][50]."</th>";
 		echo "</tr>";
@@ -416,6 +417,8 @@ function appear_array(id){
 					echo $data["ifouterrors"];
 				}
 				echo "</td>";
+				
+				echo "<td align='center'>".$data["ifmacinternal"]."</td>";
 				
 				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["ifmac"]."</a></td>";
 				
@@ -1438,7 +1441,31 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
-
+	function MAC_Rewriting($macadresse)
+	{
+		$macexplode = explode(":",$macadresse);
+		$assembledmac = "";
+		for($num = 0;$num < count($macexplode);$num++)
+		{
+			if ($num > 0)
+			{
+				$assembledmac .= ":";
+			}			
+			switch (strlen($macexplode[$num])) {
+			case 0:
+			    $assembledmac .= "00";
+			    break;
+			case 1:
+			    $assembledmac .= "0".$macexplode[$num];
+			    break;
+			case 2:
+			    $assembledmac .= $macexplode[$num];
+			    break;
+			}
+		
+		}
+		return $assembledmac;
+	}
 
 
 
