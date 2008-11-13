@@ -138,18 +138,9 @@ function UpdateNetworkBySNMP($ArrayListNetworking)
 
 			// ** Update ports fields of switchs
 			UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID);
-exit();
-
-
-
-
-
-
-
-
 			
 			// ** Get MAC adress of connected ports
-			$updateNetwork->GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking);
+			GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth);
 		}
 	} 
 
@@ -485,4 +476,137 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 	}
 }
 
+
+
+function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth)
+{
+
+	global $DB;
+	
+	$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
+	
+	$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
+	
+	$snmp_queries = new plugin_tracker_snmp;
+	
+	$snmp_queries->DefineObject($ArrayIPMACAdressePhysObject);
+	
+	$ArrayIPMACAdressePhys = $snmp_queries->SNMPQueryWalkAll($ArrayIPMACAdressePhysObject,$IP,$snmp_version,$snmp_auth);
+	
+	$snmp_queries->DefineObject($ArrayMACAdressTableObject);
+	
+	$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP,$snmp_version,$snmp_auth);
+	
+	$ArrayMACAdressTableVerif = array();
+	
+	foreach($ArrayMACAdressTable as $oid=>$value)
+	{
+	
+		echo $oid." => ".$value."\n";
+		$oidExplode = explode(".", $oid);
+		
+		$OIDBridgePortNumber = "1.3.6.1.2.1.17.4.3.1.2.0.".
+			$oidExplode[(count($oidExplode)-5)].".".
+			$oidExplode[(count($oidExplode)-4)].".".
+			$oidExplode[(count($oidExplode)-3)].".".
+			$oidExplode[(count($oidExplode)-2)].".".
+			$oidExplode[(count($oidExplode)-1)];
+			
+		$ArraySNMPBridgePortNumber = array("dot1dTpFdbPort" => $OIDBridgePortNumber);
+		
+		$snmp_queries->DefineObject($ArraySNMPBridgePortNumber);
+		
+		$ArrayBridgePortNumber = $snmp_queries->SNMPQuery($ArraySNMPBridgePortNumber,$IP,$snmp_version,$snmp_auth);
+		
+		foreach($ArrayBridgePortNumber as $oidBridgePort=>$BridgePortNumber)
+		{
+			echo "BRIDGEPortNumber ".$BridgePortNumber."\n";
+			
+			$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => "1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
+	
+			$snmp_queries->DefineObject($ArrayBridgePortifIndexObject);
+	
+			$ArrayBridgePortifIndex = $snmp_queries->SNMPQuery($ArrayBridgePortifIndexObject,$IP,$snmp_version,$snmp_auth);
+			
+			foreach($ArrayBridgePortifIndex as $oidBridgePortifIndex=>$BridgePortifIndex)
+			{
+				echo "BridgePortifIndex : ".$BridgePortifIndex."\n";
+			
+				$ArrayifNameObject = array("ifName" => "1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
+	
+				$snmp_queries->DefineObject($ArrayifNameObject);
+		
+				$ArrayifName = $snmp_queries->SNMPQuery($ArrayifNameObject,$IP,$snmp_version,$snmp_auth);
+				
+				foreach($ArrayifName as $oidArrayifName=>$ifName)
+				{
+					echo "		ifName : *".$ifName."*\n";
+
+					// Search portID of materiel wich we would connect to this port
+					$MacAddress = trim($value);
+					$MacAddress = str_replace(" ", ":", $MacAddress);
+					$MacAddress = strtolower($MacAddress);
+					$queryPortEnd = "SELECT * 
+					
+					FROM glpi_networking_ports
+					
+					WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+						AND on_device!='".$IDNetworking."' ";
+
+					if ( $resultPortEnd=$DB->query($queryPortEnd) )
+					{
+						if ( $DB->numrows($resultPortEnd) != 0 )
+						{
+							$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+							echo "PORT : ".$dport."\n";
+							$sport = $ArrayPortsID[$ifName]; // Networking_Port
+							
+							$queryVerif = "SELECT *
+							
+							FROM glpi_networking_wire 
+							
+							WHERE end1 = '$sport' 
+								AND end2 = '$dport' ";
+
+							if ($resultVerif=$DB->query($queryVerif)) {
+
+								if ( $DB->numrows($resultVerif) == 0 )
+								{
+									$netwire=new Netwire;
+									addLogConnection("remove",$netwire->getOppositeContact($dport));
+									addLogConnection("remove",$dport);
+									removeConnector($dport);
+
+									makeConnector($sport,$dport);
+									addLogConnection("make",$dport);
+									addLogConnection("make",$sport);								
+								}
+							
+							}
+							
+							
+							
+						}
+					}
+					
+				/*	
+					if (isset($_POST["dport"])&&count($_POST["dport"]))
+						foreach ($_POST["dport"] as $sport => $dport){
+							if($sport && $dport){
+								makeConnector($sport,$dport);
+							}
+						}
+				*/
+					
+					
+					
+				}
+			
+			}
+			
+		}
+
+	}
+	
+}
 ?>
