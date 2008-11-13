@@ -103,7 +103,7 @@ class plugin_tracker_config extends CommonDBTM {
 	
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][1]." :</th></tr>";
-			
+/*			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][10]." :</th></tr>";
 			
@@ -164,7 +164,7 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<td>";
 			echo "<input type='text' name='cleaning_days' value='".$this->getValue("cleaning_days")."' size='6'>";
 			echo "</td></tr>";
-			
+*/			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][40]." :</th></tr>";
 			
@@ -179,7 +179,23 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<td>";
 			dropdownValue("glpi_type_networking", "networking_switch_type", $this->getValue("networking_switch_type"));
 			echo "</td></tr>";
-*/						
+*/
+			echo "<tr class='tab_bg_1'>";
+			echo "<td>".$LANGTRACKER["functionalities"][43]."</td>";
+			echo "<td>";
+			echo "<select name='authsnmp'>";
+			echo "<option>-----</option>";
+			$selected = "";
+			if ($this->getValue("authsnmp") == "DB")
+				$selected = "selected";
+			echo "<option value='DB' ".$selected.">".$LANGTRACKER["functionalities"][44]."</option>";
+			$selected = "";
+			if ($this->getValue("authsnmp") == "file")
+				$selected = "selected";
+			echo "<option value='file' ".$selected.">".$LANGTRACKER["functionalities"][45]."</option>";
+			echo "</select>";
+			echo "</td></tr>";
+
 			echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 			echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";	
 			echo "</table></form></div>";
