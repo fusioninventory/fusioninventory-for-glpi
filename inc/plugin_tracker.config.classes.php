@@ -174,12 +174,12 @@ class plugin_tracker_config extends CommonDBTM {
 			dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
 			echo "</td></tr>";
 			
-			echo "<tr class='tab_bg_1'>";
+/*			echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANGTRACKER["functionalities"][42]."</td>";
 			echo "<td>";
 			dropdownValue("glpi_type_networking", "networking_switch_type", $this->getValue("networking_switch_type"));
 			echo "</td></tr>";
-						
+*/						
 			echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 			echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";	
 			echo "</table></form></div>";
