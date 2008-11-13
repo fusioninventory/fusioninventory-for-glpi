@@ -41,6 +41,11 @@ if (!defined('GLPI_ROOT')){
 
 class plugin_tracker_mib_networking extends CommonDBTM
 {
+	function plugin_tracker_mib_networking()
+	{
+		$this->table="glpi_plugin_tracker_mib_networking";
+	}
+	/*
 	function showAddMIB()
 	{
 		GLOBAL $CFG_GLPI,$LANGTRACKER;
@@ -50,24 +55,22 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		echo "<a href=''><b>".$LANGTRACKER["mib"][4]."</b></a></td></tr>";
 		echo "</table></div>";
 	
-	}
+	}*/
 
 	function showForm($target,$ID)
 	{
 		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING,$IMPORT_TYPES;
-	
+		
 		if ( !plugin_tracker_haveRight("errors","r") )
 		{
 			return false;
 		}
 		else
 		{
-			$query = "
-			SELECT glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
-			LEFT JOIN glpi_plugin_tracker_model_infos
-			ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
-			WHERE glpi_plugin_tracker_model_infos.ID=".$ID." ";
-
+			$query = "SELECT glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
+			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
+			WHERE glpi_plugin_tracker_model_infos.ID=".$ID;
+			
 			if ($result = $DB->query($query))
 			{
 				echo "<br>";
@@ -84,7 +87,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<th align='center' width='130'>".$LANGTRACKER["mib"][7]."</th>";
 				echo "<th align='center' width='130'>".$LANGTRACKER["mib"][8]."</th>";
 				echo "</tr>";
-				while ($data=$DB->fetch_assoc($result))
+				while ($data=$DB->fetch_array($result))
 				{
 					echo "<tr class='tab_bg_1'>";
 					echo "<td align='center'>";
@@ -125,47 +128,49 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_label","mib_label","",1);
+				dropdownValue("glpi_dropdown_plugin_tracker_mib_label","FK_mib_label",0,1);
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_object","mib_object","",1);
+				dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object",0,1);
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_oid","mib_oid","",1);
+				dropdownValue("glpi_dropdown_plugin_tracker_mib_oid","FK_mib_oid",0,1);
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				echo "<input name='port_counter_new' value='1' type='checkbox'>";
+				echo "<input name='oid_port_counter' value='0' type='checkbox'>";
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				echo "<input name='port_dyn_new' value='1' type='checkbox'>";
+				echo "<input name='oid_port_dyn' value='0' type='checkbox'>";
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				echo "<select name='links_oid_fields' size='1'>";
-				//foreach ($IMPORT_TYPES as $type)
+				//echo "<select name='links_oid_fields' size='1'>";
+				$types = array();
 				foreach ($TRACKER_MAPPING as $type=>$mapping43)
 				{
 					if (isset($TRACKER_MAPPING[$type]))
 					{
 						foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
 						{
-							echo "<option value='".$type."||".$name."'>".$TRACKER_MAPPING[$type][$name]["name"]."</option>";
+							$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+							//echo "<option value='".$type."||".$name."'>".$TRACKER_MAPPING[$type][$name]["name"]."</option>";
 						}
 					}
 				}
-				echo "</select>";
-				// dropdownValue("glpi_plugin_tracker_links_oid_fields","links_oid_fields","",0);
+				//echo "</select>";
+				dropdownArrayValues("links_oid_fields",$types);
+
 				echo "</td>";
 				
 				echo "</tr>";
 				
 				echo "<tr class='tab_bg_1'><td colspan='6' align='center'>";
-				echo "<input type='hidden' name='add_oid' value='".$ID."'/>";
-				echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
+				echo "<input type='hidden' name='FK_model_infos' value='".$ID."'/>";
+				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2]."\" class='submit' >";
 				echo "</td></tr>";	
 				
 				echo "</table></form></div>";	
@@ -173,6 +178,23 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		}
 	}
 
+	function prepareInputForUpdate($input)
+	{
+		$explode = explode("||",$input["links_oid_fields"]);
+		$input["mapping_type"] = $explode[0];
+		$input["mapping_name"] = $explode[1];
+		return $input;
+	}
+
+	function prepareInputForAdd($input)
+	{
+		$explode = explode("||",$input["links_oid_fields"]);
+		$input["mapping_type"] = $explode[0];
+		$input["mapping_name"] = $explode[1];
+		return $input;
+	}
+
+/*
 	function addentry($target,$ID)
 	{
 		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
@@ -188,8 +210,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		
 		echo "Ajouté avec succès<br/>";
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$ID."'><b>Retour</b></a>";
-		
 	}
+	*/
 }
 
 ?>
