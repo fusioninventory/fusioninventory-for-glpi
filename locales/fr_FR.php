@@ -84,6 +84,9 @@ $LANGTRACKER["functionalities"][32]="Profondeur de nettoyage (en jours)";
 $LANGTRACKER["functionalities"][40]="Configuration";
 $LANGTRACKER["functionalities"][41]="Statut du matériel actif";
 $LANGTRACKER["functionalities"][42]="Commutateur";
+$LANGTRACKER["functionalities"][43]="Authentification SNMP";
+$LANGTRACKER["functionalities"][44]="Base de données";
+$LANGTRACKER["functionalities"][45]="Fichiers";
 
 
 $LANGTRACKER["snmp"][0]="Informations SNMP du matériel";
