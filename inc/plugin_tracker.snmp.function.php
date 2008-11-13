@@ -591,62 +591,12 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth)
 								}
 							
 							}
-							
-							
-							
+
 						}
 						else
 						{
-							// Search MAC address in glpi_plugin_tracker_networking_ports
-							$queryPortEndNetwork = "SELECT * 
-							
-							FROM glpi_plugin_tracker_networking_ports
-							
-							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."') ";
-
-							if ( $resultPortEndNetwork=$DB->query($queryPortEndNetwork) )
-							{
-								if ( $DB->numrows($resultPortEndNetwork) != 0 )
-								{
-									$dport = $DB->result($resultPortEndNetwork, 0, "FK_networking_ports"); // Port of other materiel (Computer, printer...)
-									echo "PORT : ".$dport."\n";
-									$sport = $ArrayPortsID[$ifName]; // Networking_Port
-									
-									$queryVerif = "SELECT *
-									
-									FROM glpi_networking_wire 
-									
-									WHERE end1 IN ('$sport','$dport')
-										AND end2 IN ('$sport','$dport') ";
-		
-									if ($resultVerif=$DB->query($queryVerif)) {
-		
-										if ( $DB->numrows($resultVerif) == 0 )
-										{
-											$netwire=new Netwire;
-											addLogConnection("remove",$netwire->getOppositeContact($dport));
-											addLogConnection("remove",$dport);
-											removeConnector($dport);
-		
-											makeConnector($sport,$dport);
-											addLogConnection("make",$dport);
-											addLogConnection("make",$sport);								
-										}
-									}
-								
-								}
-								else
-								{
-									// Mac address unknow
-									echo "MAC unknow ".$MacAddress."\n";
-								
-								}
-							}
-									
-						
-						
-					
-						
+							// Mac address unknow
+							echo "MAC unknow ".$MacAddress."\n";
 						}
 					}
 					
