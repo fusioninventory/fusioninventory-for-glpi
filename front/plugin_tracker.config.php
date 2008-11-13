@@ -85,11 +85,6 @@ else {
 	echo "<a href=\"./plugin_tracker.functionalities.form.php\">".$LANGTRACKER["functionalities"][0]."</a>";
 	echo "</td></tr>";
 	
-	/* Rules */
-	echo "<tr class='tab_bg_1'><td align='center'>";
-	echo "<a href=\"./plugin_tracker.rules.form.php\">".$LANGTRACKER["rules"][1]."</a>";
-	echo "</td></tr>";	
-	
 	/* Instructions / FAQ */
 	echo "<tr class='tab_bg_1'><td align='center'>";
 	echo "<a href='http://glpi-project.org/wiki/doku.php?id=".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker_use' target='_blank'>".$LANGTRACKER["setup"][11]."&nbsp;</a>";
