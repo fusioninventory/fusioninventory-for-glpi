@@ -151,7 +151,7 @@ CREATE TABLE `glpi_plugin_tracker_networking_ports` (
   `FK_networking_ports` int(8) NOT NULL,
   `ifmtu` int(8) NOT NULL,
   `ifspeed` int(12) NOT NULL,
-  `ifinternalstatus` int(8) NOT NULL,
+  `ifinternalstatus` varchar(255) NOT NULL,
   `ifconnectionstatus` int(8) NOT NULL,
   `iflastchange` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ifinoctets` int(10) NOT NULL,
