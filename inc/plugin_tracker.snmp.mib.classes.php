@@ -117,7 +117,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'] ;
+					if (isset($TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name']))
+						echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'];
 					echo "</td>";
 					
 					echo "</tr>";
