@@ -236,7 +236,6 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 				}
 				else
 				{
-				echo "DEDE\n";
 					// Update if it's necessary
 					// $np->update
 					if ($DB->result($result, 0, "name") != $ArrayPort_LogicalNum_SNMPName[$i])
@@ -443,7 +442,12 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 			}						
 
 			// Detect if changes
-
+			if ($object_name == "ifPhysAddress")
+			{
+				$snmp_queries = new plugin_tracker_snmp;
+				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
+			}
+			
 			$update = 0;
 			$query_select = "SELECT ".$TRACKER_MAPPING[$object_type][$object_name]['field']."
 			FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
@@ -470,7 +474,10 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 				WHERE ID='".$Field."'";
 
 				$DB->query($queryUpdate);
-				tracker_snmp_addLog($ArrayDB_ID_FKNetPort[$Field],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
+				if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets'))
+				{
+					tracker_snmp_addLog($ArrayDB_ID_FKNetPort[$Field],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
+				}
 			}
 		}					
 	}
@@ -546,6 +553,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth)
 					$MacAddress = trim($value);
 					$MacAddress = str_replace(" ", ":", $MacAddress);
 					$MacAddress = strtolower($MacAddress);
+					$MacAddress = $snmp_queries->MAC_Rewriting($MacAddress);
 					$queryPortEnd = "SELECT * 
 					
 					FROM glpi_networking_ports
@@ -586,6 +594,59 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth)
 							
 							
 							
+						}
+						else
+						{
+							// Search MAC address in glpi_plugin_tracker_networking_ports
+							$queryPortEndNetwork = "SELECT * 
+							
+							FROM glpi_plugin_tracker_networking_ports
+							
+							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."') ";
+
+							if ( $resultPortEndNetwork=$DB->query($queryPortEndNetwork) )
+							{
+								if ( $DB->numrows($resultPortEndNetwork) != 0 )
+								{
+									$dport = $DB->result($resultPortEndNetwork, 0, "FK_networking_ports"); // Port of other materiel (Computer, printer...)
+									echo "PORT : ".$dport."\n";
+									$sport = $ArrayPortsID[$ifName]; // Networking_Port
+									
+									$queryVerif = "SELECT *
+									
+									FROM glpi_networking_wire 
+									
+									WHERE end1 IN ('$sport','$dport')
+										AND end2 IN ('$sport','$dport') ";
+		
+									if ($resultVerif=$DB->query($queryVerif)) {
+		
+										if ( $DB->numrows($resultVerif) == 0 )
+										{
+											$netwire=new Netwire;
+											addLogConnection("remove",$netwire->getOppositeContact($dport));
+											addLogConnection("remove",$dport);
+											removeConnector($dport);
+		
+											makeConnector($sport,$dport);
+											addLogConnection("make",$dport);
+											addLogConnection("make",$sport);								
+										}
+									}
+								
+								}
+								else
+								{
+									// Mac address unknow
+									echo "MAC unknow ".$MacAddress."\n";
+								
+								}
+							}
+									
+						
+						
+					
+						
 						}
 					}
 					
