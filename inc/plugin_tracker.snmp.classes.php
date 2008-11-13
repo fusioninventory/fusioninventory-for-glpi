@@ -1159,6 +1159,295 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 // Class for tracker_fullsync.php
 class plugin_tracker_snmp extends CommonDBTM
 {
+
+	/**
+	 * Query OID by SNMP connection
+	 *
+	 * @param $ArrayOID List of Object and OID in an array to get values
+	 * @param $IP IP of the materiel we query
+	 * @param $version : version of SNMP (1, 2c, 3)
+	 * @param $snmp_auth array of AUTH : 
+	 * 		community community name for version 1 and 2c ('public' by default)
+	 * 		sec_name for v3 : the "username" used for authentication to the system
+	 * 		sec_level for v3 : the authentication scheme ('noAuthNoPriv', 'authNoPriv', or 'authPriv')
+	 * 		auth_protocol for v3 : the encryption protocol used for authentication ('MD5' [default] or 'SHA')
+	 * 		auth_passphrase for v3 : the encrypted key to use as the authentication challenge
+	 * 		priv_protocol for v3 : the encryption protocol used for protecting the protocol data unit ('DES' [default], 'AES128', 'AES192', or 'AES256')
+	 * 		priv_passphrase for v3 : the key to use for encrypting the protocol data unit
+	 *
+	 * @return array : array with object name and result of the query
+	 *
+	**/
+	function SNMPQuery($ArrayOID,$IP,$version=1,$snmp_auth)
+	{
+		
+		$ArraySNMP = array();
+		
+		foreach($ArrayOID as $object=>$oid)
+		{
+			if ($version == "1")
+			{
+				$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid);
+			}
+			else if ($version == "2c")
+			{
+				$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid);
+			}
+			else if ($version == "3")
+			{
+				$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],	$oid);
+			}
+			
+			echo "****************".$SNMPValue."****************\n";
+			$ArraySNMPValues = explode(": ", $SNMPValue);
+			$ArraySNMP[$object] = $ArraySNMPValues[1];
+		}
+		return $ArraySNMP;
+	}
+	
+	
+
+	/**
+	 * Query walk to get OID and values by SNMP connection where an Object have multi-lines
+	 *
+	 * @param $ArrayOID List of Object and OID in an array to get values
+	 * @param $IP IP of the materiel we query
+	 * @param $version : version of SNMP (1, 2c, 3)
+	 * @param $snmp_auth array of AUTH : 
+	 * 		community community name for version 1 and 2c ('public' by default)
+	 * 		sec_name for v3 : the "username" used for authentication to the system
+	 * 		sec_level for v3 : the authentication scheme ('noAuthNoPriv', 'authNoPriv', or 'authPriv')
+	 * 		auth_protocol for v3 : the encryption protocol used for authentication ('MD5' [default] or 'SHA')
+	 * 		auth_passphrase for v3 : the encrypted key to use as the authentication challenge
+	 * 		priv_protocol for v3 : the encryption protocol used for protecting the protocol data unit ('DES' [default], 'AES128', 'AES192', or 'AES256')
+	 * 		priv_passphrase for v3 : the key to use for encrypting the protocol data unit
+	 *
+	 * @return array : array with OID name and result of the query
+	 *
+	**/	
+	function SNMPQueryWalkAll($ArrayOID,$IP,$version=1,$snmp_auth)
+	//$community="public",$sec_name,$sec_level,$auth_protocol="MD5",$auth_passphrase,$priv_protocol="DES",$priv_passphrase)
+	{
+		$ArraySNMP = array();
+		
+		foreach($ArrayOID as $object=>$oid)
+		{
+			if ($version == "1")
+			{
+				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid);
+			}
+			else if ($version == "2c")
+			{
+				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid);
+			}
+			else if ($version == "3")
+			{
+				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],	$oid);
+			}
+			
+			foreach($SNMPValue as $oidwalk=>$value)
+			{
+				$ArraySNMPValues = explode(": ", $value);
+				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
+			}
+		}
+		return $ArraySNMP;
+	}
+	
+
+
+	/**
+	 * Get SNMP port name of the network materiel and assign it to logical port number
+	 *
+	 * @param $IP IP address of network materiel
+	 * @param $snmp_version version of SNMP (1, 2c or 3)
+	 * @param $snmp_auth array with authentification of SNMP
+	 *
+	 * @return array with logical port number and port name 
+	 *
+	**/
+	function GetPortsName($IP,$snmp_version,$snmp_auth)
+	{
+		$snmp_queries = new plugin_tracker_snmp;
+		
+		$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifName"=>"1.3.6.1.2.1.31.1.1.1.1"),$IP,$snmp_version,$snmp_auth);
+	
+		$PortsName = array();
+	
+		foreach($Arrayportsnames as $object=>$value)
+		{
+		
+			$PortsName[] = $value;
+		
+		}
+	
+		return $PortsName;
+	
+	}
+
+
+
+	/**
+	 * Get SNMP port number of the network materiel and assign it to logical port number
+	 *
+	 * @param $IP IP address of network materiel
+	 * @param $snmp_version version of SNMP (1, 2c or 3)
+	 * @param $snmp_auth array with authentification of SNMP
+	 *
+	 * @return array with logical port number and SNMP port number 
+	 *
+	**/
+	function GetPortsSNMPNumber($IP,$snmp_version,$snmp_auth)
+	{
+		$snmp_queries = new plugin_tracker_snmp;
+		
+		$ArrayportsSNMPNumber = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifIndex"=>"1.3.6.1.2.1.2.2.1.1"),$IP,$snmp_version,$snmp_auth);
+	
+		$PortsName = array();
+	
+		foreach($ArrayportsSNMPNumber as $object=>$value)
+		{
+			$PortsSNMPNumber[] = $value;
+
+		}
+		return $PortsSNMPNumber;
+	}
+	
+
+
+	/**
+	 * Get port name and ID of the network materiel from DB
+	 *
+	 * @param $IDNetworking ID of the network materiel 
+	 *
+	 * @return array with port name and port ID 
+	 *
+	**/
+	function GetPortsID($IDNetworking)
+	{
+
+		global $DB;	
+	
+		$PortsID = array();
+		
+		$query = "SELECT ID,name
+			
+		FROM glpi_networking_ports
+		
+		WHERE on_device='".$IDNetworking."'
+		
+		ORDER BY logical_number ";
+
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+
+				$PortsID[$data["name"]] = $data["ID"];
+			
+			}
+		}
+		return $PortsID;
+	}
+	
+	
+	
+	/**
+	 * Get OID list for the SNMP model 
+	 *
+	 * @param $IDModelInfos ID of the SNMP model
+	 * @param $arg arg for where (ports, port_number or juste oid for materiel)
+	 * @param $name_dyn put object dynamic
+	 *
+	 * @return array : array with object name and oid
+	 *
+	**/
+	function GetOID($IDModelInfos,$arg,$name_dyn=0,$ArrayPortsSNMPNumber = "")
+	{
+		
+		global $DB;
+		
+		$oidList = array();		
+		
+		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
+			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
+		FROM glpi_plugin_tracker_mib_networking
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
+			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
+			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
+		
+		WHERE FK_model_infos=".$IDModelInfos." 
+			AND ".$arg." ";
+
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+				if ($name_dyn == "0")
+				{
+					$oidList[$data["objectname"]] = $data["oidname"];
+				}
+				else
+				{
+					for ($i=1;$i <= count($ArrayPortsSNMPNumber); $i++)
+					{
+						$oidList[$data["objectname"].".".$ArrayPortsSNMPNumber[$i]] = $data["oidname"].".".$ArrayPortsSNMPNumber[$i];
+					}
+				}
+			}
+		}
+		return $oidList;	
+	}
+
+
+
+	function GetLinkOidToFields($ID)
+	{
+
+		global $DB,$TRACKER_MAPPING;
+		
+		$ObjectLink = array();
+		
+		$query = "SELECT mapping_type, mapping_name, 
+			glpi_dropdown_plugin_tracker_mib_object.name AS name
+		FROM glpi_plugin_tracker_mib_networking
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
+			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
+		
+		WHERE FK_model_infos=".$ID." ";
+		
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+				//$ObjectLink[$data["name"]] = $data["FK_links_oid_fields"];
+				$ObjectLink[$data["name"]] = $data["mapping_type"]."||".$data["mapping_name"];
+			}
+		}
+	
+		return $ObjectLink;
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************** PAS VERIFIE **************************************** 
 	
 	/**
 	 * Get SNMP model of the network materiel 
@@ -1189,294 +1478,20 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 	
 	
-	/**
-	 * Get OID list for the SNMP model (all but not the ports OID) 
-	 *
-	 * @param $IDModelInfos ID of the SNMP model
-	 *
-	 * @return array : array with object name and oid
-	 *
-	**/
-	function GetOID($IDModelInfos)
-	{
-		
-		global $DB;
-		
-		$oidList = array();		
-		
-		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
-			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
-		FROM glpi_plugin_tracker_mib_networking
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
-			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
-			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
-		
-		WHERE FK_model_infos=".$IDModelInfos." 
-			AND oid_port_dyn='0' ";
-		
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-				$oidList[$data["objectname"]] = $data["oidname"];
-			}
-		}
-		
-		return $oidList;	
-	
-	}
 
 
 
-	function GetOIDPorts($IDModelInfos,$IP,$IDNetworking,$ArrayPortsName,$ArrayPortsSNMPNumber)
-	{
-		
-		global $DB;
-		
-		$oidList = array();
-		$object = "";
-		$portcounter = "";
-		
-		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
-			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
-		FROM glpi_plugin_tracker_mib_networking
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
-			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
-			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
-		
-		WHERE FK_model_infos=".$IDModelInfos."
-			AND oid_port_counter='1' ";
-		
-		if ( ($result = $DB->query($query)) )
-		{
-			if ( $DB->numrows($result) != 0 )
-			{
-				$object = $DB->result($result, 0, "objectname");
-				$portcounter = $DB->result($result, 0, "oidname");
-			}
-		}
 
-		// Get query SNMP to have number of ports
-		$snmp_queries = new plugin_tracker_snmp;
-		if (isset($portcounter))
-		{
-
-			$snmp_queries->DefineObject(array($object=>$portcounter));
-		
-			$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP);
-
-			$portsnumber = $Arrayportsnumber[$object];
-
-			// We have the number of Ports
-	
-			// Add ports in DataBase if they don't exists
-	
-			$np=new Netport();
-
-			for ($i = 1; $i <= $portsnumber; $i++)
-			{
-			
-				$query = "SELECT ID,name
-			
-				FROM glpi_networking_ports
-				
-				WHERE on_device='".$IDNetworking."'
-					AND logical_number='".$i."' ";
-			
-				if ( $result = $DB->query($query) )
-				{
-					if ( $DB->numrows($result) == 0 )
-					{
-
-						$array["logical_number"] = $i;
-						$array["name"] = $ArrayPortsName[$i];
-						$array["iface"] = "";
-						$array["ifaddr"] = "";
-						$array["ifmac"] = "";
-						$array["netmask"] = "";
-						$array["gateway"] = "";
-						$array["subnet"] = "";
-						$array["netpoint"] = "";
-						$array["on_device"] = $IDNetworking;
-						$array["device_type"] = "2";
-						$array["add"] = "Ajouter";
-						
-						$IDPort = $np->add($array);
-						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
-
-
-						//$queryInsert = "INSERT INTO glpi_networking_ports 
-						//	(on_device,device_type,logical_number)
-						
-						//VALUES ('".$IDNetworking."','2','".$i."') ";
-						
-						//$DB->query($query);
-						
-						//$IDPort = mysql_insert_id();
-						
-						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-							(FK_networking_ports)
-						
-						VALUES ('".$IDPort."') ";
-						
-						$DB->query($queryInsert);
-					
-					}
-					else
-					{
-					
-						// Update if it's necessary
-						// $np->update
-						if ($DB->result($result, 0, "name") != $ArrayPortsName[$i])
-						{
-							
-							unset($array);
-							$array["name"] = $ArrayPortsName[$i];
-							$array["ID"] = $DB->result($result, 0, "ID");
-							$np->update($array);
-						
-						}
-
-					
-					
-						$queryTrackerPort = "SELECT ID
-					
-						FROM glpi_plugin_tracker_networking_ports
-						
-						WHERE FK_networking_ports='".$DB->result($result, 0, "ID")."' ";
-						
-						if ( $resultTrackerPort = $DB->query($queryTrackerPort) ){
-							if ( $DB->numrows($resultTrackerPort) == 0 ) {
-							
-								$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-									(FK_networking_ports)
-								
-								VALUES ('".$DB->result($result, 0, "ID")."') ";
-								
-								$DB->query($queryInsert);
-							
-							}
-						}
-						
-					}
-				}
-			
-			}
-
-		}
-		// Get oid list of ports
-		
-		$query = "SELECT glpi_dropdown_plugin_tracker_mib_oid.name AS oidname, 
-			glpi_dropdown_plugin_tracker_mib_object.name AS objectname
-		FROM glpi_plugin_tracker_mib_networking
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
-			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
-			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
-		
-		WHERE FK_model_infos=".$IDModelInfos."
-			AND oid_port_dyn='1' ";
-		
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-				for ($i=1;$i <= $Arrayportsnumber[$object]; $i++)
-				{
-					$oidList[$data["objectname"].".".$ArrayPortsSNMPNumber[$i]] = $data["oidname"].".".$ArrayPortsSNMPNumber[$i];
-				}
-			}
-		}
-		// Debug
-		foreach($oidList as $object=>$oid)
-		{
-			echo "===========>".$object." => ".$oid."\n";
-		}
-		// Debug END		
-		return $oidList;
-		
-	}	
 	
 	
-	
-	function GetPortsName($IP)
-	{
-		$snmp_queries = new plugin_tracker_snmp;
-		
-		$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifName"=>"1.3.6.1.2.1.31.1.1.1.1"),$IP);
-	
-		$PortsName = array();
-	
-		foreach($Arrayportsnames as $object=>$value)
-		{
-		
-			$PortsName[] = $value;
-		
-		}
-	
-		return $PortsName;
-	
-	}
-	
-	
-	
-	function GetPortsID($IDNetworking)
-	{
 
-		global $DB;	
 	
-		$PortsID = array();
-		
-		$query = "SELECT ID,name
-			
-		FROM glpi_networking_ports
-		
-		WHERE on_device='".$IDNetworking."'
-		
-		ORDER BY logical_number ";
-
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-
-				$PortsID[$data["name"]] = $data["ID"];
-			
-			}
-		}
 	
-		return $PortsID;
-	}
 
 
 
-	function GetPortsSNMPNumber($IP)
-	{
-		$snmp_queries = new plugin_tracker_snmp;
-		
-		$ArrayportsSNMPNumber = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifIndex"=>"1.3.6.1.2.1.2.2.1.1"),$IP);
-	
-		$PortsName = array();
-	
-		foreach($ArrayportsSNMPNumber as $object=>$value)
-		{
-		
-			$PortsSNMPNumber[] = $value;
-			echo "PORT SNMP NUMBER :".$value."\n";
-		
-		}
-	
-		return $PortsSNMPNumber;
 
-	}
+
 	
 	
 	
@@ -1508,316 +1523,19 @@ echo "Objet : ".$object."\n";
 	
 	
 	
-	/**
-	 * Query OID by SNMP connection
-	 *
-	 * @param $ArrayOID List of Object and OID in an array to get values
-	 * @param $IP IP of the materiel we query
-	 * @param $version : version of SNMP (1, 2c, 3)
-	 * @param $community community name for version 1 and 2c ('public' by default)
-	 * @param $sec_name for v3 : the "username" used for authentication to the system
-	 * @param $sec_level for v3 : the authentication scheme ('noAuthNoPriv', 'authNoPriv', or 'authPriv')
-	 * @param $auth_protocol for v3 : the encryption protocol used for authentication ('MD5' [default] or 'SHA')
-	 * @param $auth_passphrase for v3 : the encrypted key to use as the authentication challenge
-	 * @param $priv_protocol for v3 : the encryption protocol used for protecting the protocol data unit ('DES' [default], 'AES128', 'AES192', or 'AES256')
-	 * @param $priv_passphrase for v3 : the key to use for encrypting the protocol data unit
-	 *
-	 * @return array : array with object name and result of the query
-	 *
-	**/
-	function SNMPQuery($ArrayOID,$IP,$version=1,$community="public",$sec_name,$sec_level,
-							$auth_protocol="MD5",$auth_passphrase,$priv_protocol="DES",$priv_passphrase)
-	{
-		
-		$ArraySNMP = array();
-		
-		foreach($ArrayOID as $object=>$oid)
-		{
-			if ($version == "1")
-			{
-				$SNMPValue = snmpget($IP, $community,$oid);
-			}
-			else if ($version == "2c")
-			{
-				$SNMPValue = snmp2_get($IP, $community,$oid);
-			}
-			else if ($version == "3")
-			{
-				$SNMPValue = snmp3_get($IP, $sec_name,$sec_level,$auth_protocol,$auth_passphrase, $priv_protocol,$priv_passphrase,	$oid);
-			}
-			
-			echo "****************".$SNMPValue."****************\n";
-			$ArraySNMPValues = explode(": ", $SNMPValue);
-			$ArraySNMP[$object] = $ArraySNMPValues[1];
-		}
-		
-		return $ArraySNMP;
-	}
+
+	
 	
 	
 
-	/**
-	 * Query walk to get OID and values by SNMP connection where an Object have multi-lines
-	 *
-	 * @param $ArrayOID List of Object and OID in an array to get values
-	 * @param $IP IP of the materiel we query
-	 * @param $version : version of SNMP (1, 2c, 3)
-	 * @param $community community name for version 1 and 2c ('public' by default)
-	 * @param $sec_name for v3 : the "username" used for authentication to the system
-	 * @param $sec_level for v3 : the authentication scheme ('noAuthNoPriv', 'authNoPriv', or 'authPriv')
-	 * @param $auth_protocol for v3 : the encryption protocol used for authentication ('MD5' [default] or 'SHA')
-	 * @param $auth_passphrase for v3 : the encrypted key to use as the authentication challenge
-	 * @param $priv_protocol for v3 : the encryption protocol used for protecting the protocol data unit ('DES' [default], 'AES128', 'AES192', or 'AES256')
-	 * @param $priv_passphrase for v3 : the key to use for encrypting the protocol data unit
-	 *
-	 * @return array : array with OID name and result of the query
-	 *
-	**/	
-	function SNMPQueryWalkAll($ArrayOID,$IP,$version=1,$community="public",$sec_name,$sec_level,
-							$auth_protocol="MD5",$auth_passphrase,$priv_protocol="DES",$priv_passphrase)
-	{
-		$ArraySNMP = array();
-		
-		foreach($ArrayOID as $object=>$oid)
-		{
-			if ($version == "1")
-			{
-				$SNMPValue = snmprealwalk($IP, $community,$oid);
-			}
-			else if ($version == "2c")
-			{
-				$SNMPValue = snmp2_real_walk($IP, $community,$oid);
-			}
-			else if ($version == "3")
-			{
-				$SNMPValue = snmp3_real_walk($IP, $sec_name,$sec_level,$auth_protocol,$auth_passphrase, $priv_protocol,$priv_passphrase,	$oid);
-			}
-			
-			foreach($SNMPValue as $oidwalk=>$value)
-			{
-				$ArraySNMPValues = explode(": ", $value);
-				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
+	
+	
+	
 
-			}
-			
-		}
-		
-		return $ArraySNMP;
-	
-	}
 	
 	
 	
-	function GetLinkOidToFields($ID)
-	{
 
-		global $DB,$TRACKER_MAPPING;
-		
-		$ObjectLink = array();
-		
-		$query = "SELECT mapping_type, mapping_name, 
-			glpi_dropdown_plugin_tracker_mib_object.name AS name
-		FROM glpi_plugin_tracker_mib_networking
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
-			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
-		
-		WHERE FK_model_infos=".$ID." ";
-		
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-				//$ObjectLink[$data["name"]] = $data["FK_links_oid_fields"];
-				$ObjectLink[$data["name"]] = $data["mapping_type"]."|||".$data["mapping_name"];
-			}
-		}
-	
-		return $ObjectLink;
-		
-	}
-	
-	
-	
-	function UpdateGLPINetworking($ArraySNMPResult,$ArrayLinks,$IDNetworking)
-	{
-	
-		global $DB;	
-	
-		foreach($ArraySNMPResult as $object=>$SNMPValue)
-		{
-		
-			$query = "SELECT *
-			FROM glpi_plugin_tracker_links_oid_fields
-			
-			WHERE ID=".$ArrayLinks[$object]." ";
-		
-			if ( $result=$DB->query($query) )
-			{
-				while ( $data=$DB->fetch_array($result) )
-				{
-					if ($data["dropdown"] != "")
-					{
-						// Search if value of SNMP Query is in dropdown, if not, we put it
-						// Wawax : si tu ajoutes le lieu manuellement tu mets un msg dans le message_after_redirect
-						// 
-						
-						// $ArrayDropdown = getDropdownArrayNames($data["table"],"%")
-						$SNMPValue = externalImportDropdown($data["dropdown"],$SNMPValue,0);
-
-					}
-					
-					// Update fields
-					//$query_update = "UPDATE
-					if ($data["table"] == "glpi_networking")
-					{
-					
-						$Field = "ID";
-						
-					}
-					else
-					{
-						
-						$Field = "FK_networking";
-						
-					}
-					
-					$SNMPValue = preg_replace('/^\"/', '',$SNMPValue);
-					$SNMPValue = preg_replace('/\"$/', '',$SNMPValue);
-
-					$queryUpdate = "UPDATE ".$data["table"]."
-					
-					SET ".$data["field"]."='".$SNMPValue."' 
-					
-					WHERE ".$Field."='".$IDNetworking."'";
-					
-					// update via :  $networking->update(array("serial"=>"tonnumero"));
-					
-					$DB->query($queryUpdate);
-					
-					//<MoYo> cleanAllItemCache($item,$group)
-					//<MoYo> $item = ID
-					//<MoYo> group = GLPI_ + NETWORKING_TYPE
-				
-				}
-			}
-		
-		}
-	
-	}
-	
-	
-	
-	function UpdateGLPINetworkingPorts($ArraySNMPResultPorts,$ArrayLinks,$IDNetworking,$ArrayPortsSNMPNumber)
-	{
-	
-		global $DB;	
-		
-		$ArrayPortsList = array();
-		
-		$ArrayPortListTracker = array();
-		
-		$ArrayPortsSNMPNumber = array_flip($ArrayPortsSNMPNumber);
-		
-		$query = "SELECT ID, logical_number
-		
-		FROM glpi_networking_ports
-		
-		WHERE on_device='".$IDNetworking."'
-		
-		ORDER BY logical_number";
-		
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-			
-				$ArrayPortsList[$data["logical_number"]] = $data["ID"];
-				
-				$queryPortsTracker = "SELECT ID
-				
-				FROM glpi_plugin_tracker_networking_ports
-				
-				WHERE FK_networking_ports='".$data["ID"]."' ";
-				
-				if ( $resultPortsTracker=$DB->query($queryPortsTracker) )
-				{
-					while ( $dataPortsTracker=$DB->fetch_assoc($resultPortsTracker) )
-					{
-						$ArrayPortListTracker[$data["logical_number"]] = $dataPortsTracker["ID"];
-					
-					}
-				} 
-			
-			}
-		}
-		
-		foreach($ArraySNMPResultPorts as $object=>$SNMPValue)
-		{
-			$ArrayObject = explode (".",$object);
-			$i = count($ArrayObject);
-			$i--;
-			$PortNumber = $ArrayObject[$i];
-
-			
-			$object = '';
-			
-			for ($j = 0; $j < $i;$j++)
-			{
-			
-				$object .= $ArrayObject[$j];
-
-			}
-			
-			$query = "SELECT *
-			
-			FROM glpi_plugin_tracker_links_oid_fields
-			
-			WHERE ID=".$ArrayLinks[$object]." ";
-			
-			if ( $result=$DB->query($query) )
-			{
-				while ( $data=$DB->fetch_array($result) )
-				{
-					if ($data["dropdown"] != "")
-					{
-					
-						$SNMPValue = externalImportDropdown($data["dropdown"],$SNMPValue,0);
-					
-					}
-					else
-					{
-						
-						if ($data["table"] == "glpi_networking_ports")
-						{
-						
-							$Field = $ArrayPortsList[$ArrayPortsSNMPNumber[$PortNumber]];
-							
-						}
-						else
-						{
-
-							$Field = $ArrayPortListTracker[$ArrayPortsSNMPNumber[$PortNumber]];
-							
-						}						
-						
-						$queryUpdate = "UPDATE ".$data["table"]."
-					
-						SET ".$data["field"]."='".$SNMPValue."' 
-						
-						WHERE ID='".$Field."'";
-						
-						$DB->query($queryUpdate);
-					
-					}					
-				
-				}
-				
-			}
-		
-		}
-	
-	}
 
 	
 	
