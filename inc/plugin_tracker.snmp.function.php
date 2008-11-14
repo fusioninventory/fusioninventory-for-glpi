@@ -164,7 +164,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking)
 function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth)
 {
 	
-	global $DB;
+	global $DB,$LANG;
 
 	$oidList = array();
 	$object = "";
@@ -324,7 +324,7 @@ echo "DEBUG ".$object."=>".$SNMPValue."\n";
 			// 
 			
 			// $ArrayDropdown = getDropdownArrayNames($data["table"],"%")
-			$SNMPValue = externalImportDropdown($TRACKER_MAPPING[$object_type][$object_name]['dropdown'],$SNMPValue,0);
+//$SNMPValue = externalImportDropdown($TRACKER_MAPPING[$object_type][$object_name]['dropdown'],$SNMPValue,0);
 			
 
 		}
