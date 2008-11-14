@@ -50,7 +50,6 @@ $plugin_tracker_mib_networking = new plugin_tracker_mib_networking();
 $importexport = new plugin_tracker_importexport;
 
 commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker");
-displayMessageAfterRedirect();
 if (isset ($_POST["add"])) {
 	$new_ID = $plugin_tracker_model_infos->add($_POST);
 	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.models.form.php?ID=".$new_ID."'>".$_POST["name"]."</a>";
