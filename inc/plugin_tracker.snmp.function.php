@@ -281,10 +281,10 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 	$oidList = $snmp_queries->GetOID($snmp_model_ID,"oid_port_dyn='1'",$Arrayportsnumber[$object],$ArrayPort_LogicalNum_SNMPNum);
 
 	// Debug
-	foreach($oidList as $object=>$oid)
+/*	foreach($oidList as $object=>$oid)
 	{
 		echo "===========>".$object." => ".$oid."\n";
-	}
+	}*/
 	// Debug END		
 	return $oidList;
 	
