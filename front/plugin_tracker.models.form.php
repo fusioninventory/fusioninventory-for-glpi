@@ -49,9 +49,14 @@ $plugin_tracker_mib_networking = new plugin_tracker_mib_networking();
 
 $importexport = new plugin_tracker_importexport;
 
+commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker");
+displayMessageAfterRedirect();
 if (isset ($_POST["add"])) {
-	$plugin_tracker_model_infos->add($_POST);
+	$new_ID = $plugin_tracker_model_infos->add($_POST);
+	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.models.form.php?ID=".$new_ID."'>".$_POST["name"]."</a>";
+	
 	glpi_header($_SERVER['HTTP_REFERER']);
+
 }
 elseif (isset ($_POST["update"])) {
 	$plugin_tracker_model_infos->update($_POST);
@@ -59,16 +64,24 @@ elseif (isset ($_POST["update"])) {
 }
 elseif (isset ($_FILES['importfile']['tmp_name'])) {
 	$importexport->import($_FILES);
+	glpi_header($_SERVER['HTTP_REFERER']);
 }
 if (isset ($_POST["add_oid"])) {
 	$plugin_tracker_mib_networking->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker");
 
-$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"], $_GET["ID"]);
-$plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"], $_GET["ID"]);
+
+$importexport->showForm($_SERVER["PHP_SELF"]);
+$ID = "";
+if (isset($_GET["ID"]))
+{
+	$ID = $_GET["ID"];
+}
+
+$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
+$plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
 
 commonFooter();
 ?>
