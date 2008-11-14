@@ -106,6 +106,19 @@ function UpdateNetworkBySNMP($ArrayListNetworking)
 			$snmp_auth["auth_passphrase"] = "";
 			$snmp_auth["priv_protocol"] = "";
 			$snmp_auth["priv_passphrase"] = "";
+			
+			
+			//V3 :
+/*			$snmp_version = "3";
+			$snmp_auth["community"] = "";
+			$snmp_auth["sec_name"] = "DavidAuthUser";
+			$snmp_auth["sec_level"] = "authNoPriv";
+			$snmp_auth["auth_protocol"] = "MD5";
+			$snmp_auth["auth_passphrase"] = "ciscopass";
+			$snmp_auth["priv_protocol"] = "";
+			$snmp_auth["priv_passphrase"] = "";
+*/			
+			 
 			// FIN DE A CODER
 
 			//**
