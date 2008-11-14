@@ -76,10 +76,11 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<br>";
 				echo "<div align='center'><form method='post' name='' id=''  action=\"".$target."\">";
 		
-				echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='6'>";
+				echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
 				echo $LANGTRACKER["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
+				echo "<th align='center'></th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
@@ -90,6 +91,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				while ($data=$DB->fetch_array($result))
 				{
 					echo "<tr class='tab_bg_1'>";
+					echo "<td align='center'>";
+					echo "<input name='item[".$data["ID"]."]' value='1' type='checkbox'>";
+					echo "</td>";
+	
 					echo "<td align='center'>";
 					echo getDropdownName("glpi_dropdown_plugin_tracker_mib_label",$data["FK_mib_label"]);
 					echo "</td>";
@@ -124,10 +129,14 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					echo "</tr>";
 				}
 				
+				
+				
 				// Ajout d'une dernière ligne pour ajouter nouveau OID
-				echo "<tr><th colspan='6'>".$LANGTRACKER["mib"][4]."</th></tr>";				
+				echo "<tr><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
 				
 				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'></td>";
+				
 				echo "<td align='center'>";
 				dropdownValue("glpi_dropdown_plugin_tracker_mib_label","FK_mib_label",0,1);
 				echo "</td>";
@@ -141,11 +150,13 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				echo "<input name='oid_port_counter' value='0' type='checkbox'>";
+				//echo "<input name='oid_port_counter' value='0' type='checkbox'>";
+				dropdownYesNo("oid_port_counter");	
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				echo "<input name='oid_port_dyn' value='0' type='checkbox'>";
+				//echo "<input name='oid_port_dyn' value='0' type='checkbox'>";
+				dropdownYesNo("oid_port_dyn");
 				echo "</td>";
 				
 				echo "<td align='center'>";
@@ -169,12 +180,12 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				
 				echo "</tr>";
 				
-				echo "<tr class='tab_bg_1'><td colspan='6' align='center'>";
+				echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
 				echo "<input type='hidden' name='FK_model_infos' value='".$ID."'/>";
 				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2]."\" class='submit' >";
 				echo "</td></tr>";	
 				
-				echo "</table></form></div>";	
+				echo "</table></form></div>";
 			}		
 		}
 	}
