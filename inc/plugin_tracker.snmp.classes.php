@@ -1445,7 +1445,8 @@ class plugin_tracker_snmp extends CommonDBTM
 		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
 			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
 		
-		WHERE FK_model_infos=".$ID." ";
+		WHERE FK_model_infos=".$ID." 
+			AND oid_port_counter='0' ";
 		
 		if ( $result=$DB->query($query) )
 		{
@@ -1558,7 +1559,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		foreach($ArrayOID as $object=>$oid)
 		{
-echo "Objet : ".$object."\n";
+//echo "Objet : ".$object."\n";
 
 			if(defined($object))
 			{
