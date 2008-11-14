@@ -136,7 +136,7 @@ class plugin_tracker_importexport extends CommonDBTM
 
 	function import($file)
 	{
-		global $DB;
+		global $DB,$LANGTRACKER;
 
 		$xml = simplexml_load_file($_FILES['importfile']['tmp_name']);	
 
@@ -148,8 +148,8 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 		if ($DB->numrows($result) > 0)
 		{
-			$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Modèle déjà existant : import non effectué";
-			displayMessageAfterRedirect();
+			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][8];
+			return false;
 		}
 		else
 		{
@@ -209,7 +209,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 
 			}
-			$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
 		}
 	}
 

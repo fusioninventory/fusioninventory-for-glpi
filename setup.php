@@ -43,7 +43,7 @@ function plugin_init_tracker() {
 	$config = new plugin_tracker_config();
 	
 	pluginNewType('tracker', "PLUGIN_TRACKER_ERROR_TYPE", 5150, "plugin_tracker_errors", "glpi_plugin_tracker_errors", "front/plugin_tracker.errors.form.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_MODEL", 5151, "glpi_plugin_tracker_model_infos", "glpi_plugin_tracker_model_infos", "front/plugin_tracker.models.form.php",$LANGTRACKER["model_info"][4]);
+	pluginNewType('tracker', "PLUGIN_TRACKER_MODEL", 5151, "plugin_tracker_model_infos", "glpi_plugin_tracker_model_infos", "front/plugin_tracker.models.form.php",$LANGTRACKER["model_info"][4]);
 
 	array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
