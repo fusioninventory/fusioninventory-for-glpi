@@ -157,7 +157,7 @@ class plugin_tracker_importexport extends CommonDBTM
 //			echo $xml->name[0]."<br/>";
 			
 //			echo $xml->networkingmodel[0]."<br/>";
-				$FK_model_networking = externalImportDropdown("glpi_dropdown_model_networking",$xml->networkingmodel[0],0);
+				$FK_model_networking = externalImportDropdown("glpi_dropdown_model_networking",$xml->networkingmodel[0],0,$external_params["manufacturer"]=1);
 //			echo $xml->firmware[0]."<br/>";
 				$FK_firmware = externalImportDropdown("glpi_dropdown_firmware",$xml->firmware[0],0);
 //			echo $xml->snmpversion[0]."<br/>";
@@ -210,7 +210,6 @@ class plugin_tracker_importexport extends CommonDBTM
 
 			}
 			$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
-			displayMessageAfterRedirect();
 		}
 	}
 
