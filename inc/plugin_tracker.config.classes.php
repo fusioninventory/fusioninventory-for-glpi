@@ -103,7 +103,7 @@ class plugin_tracker_config extends CommonDBTM {
 	
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][1]." :</th></tr>";
-/*			
+			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][10]." :</th></tr>";
 			
@@ -164,7 +164,7 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<td>";
 			echo "<input type='text' name='cleaning_days' value='".$this->getValue("cleaning_days")."' size='6'>";
 			echo "</td></tr>";
-*/			
+			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][40]." :</th></tr>";
 			
