@@ -94,7 +94,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking)
 		if (($snmp_model_ID != "") && ($IDNetworking != ""))
 		{
 			// ** Get oid
-			$Array_Object_oid = $updateNetwork->GetOID($snmp_model_ID,"oid_port_dyn='0'");
+			$Array_Object_oid = $updateNetwork->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0'");
 
 			// ** Get snmp version and authentification
 			// A CODER
@@ -197,8 +197,9 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 
 		$np=new Netport();
 
-		for ($i = 1; $i <= $portsnumber; $i++)
+		for ($i = 0; $i < $portsnumber; $i++)
 		{
+		echo "PORT ".$i."\n";
 		
 			$query = "SELECT ID,name
 		
@@ -315,7 +316,7 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 		$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
 		$object_type = $explode[0];
 		$object_name = $explode[1];
-
+echo "DEBUG ".$object."=>".$SNMPValue."\n";
 		if ($TRACKER_MAPPING[$object_type][$object_name]['dropdown'] != "")
 		{
 			// Search if value of SNMP Query is in dropdown, if not, we put it
