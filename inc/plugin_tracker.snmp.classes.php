@@ -238,6 +238,8 @@ abstract class plugin_tracker_snmp2 {
 		
 		$this->ID = $ID;
 		
+		$nw=new Netwire;
+		$CommonItem = new CommonItem;
 		// Checking errors and get IP (if exists)
 	//	if ( $this->getError() )
 	//		return false;
@@ -419,8 +421,28 @@ function appear_array(id){
 				echo "</td>";
 				
 				echo "<td align='center'>".$data["ifmacinternal"]."</td>";
+				// Mac address and link to device which are connected to this port
+				$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
+				if ($opposite_port != ""){
+					$query_device = "
+					SELECT * 
+					FROM glpi_networking_ports
+					WHERE ID=".$opposite_port." ";
+	
+					$result_device = $DB->query($query_device);		
+					$data_device = $DB->fetch_assoc($result_device);				
+					
+					$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
+					$link = $CommonItem->getLink(1);
+					$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$link);
+					echo "<td align='center'>".$link."</td>";
+				}
+				else
+				{
 				
-				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["ifmac"]."</a></td>";
+					echo "<td align='center'></td>";
+				
+				}
 				
 				echo "<td align='center'>";
 				if (ereg("up",$data["ifstatus"]))
@@ -1201,7 +1223,6 @@ class plugin_tracker_snmp extends CommonDBTM
 				$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],	$oid);
 			}
 			
-			echo "****************".$SNMPValue."****************\n";
 			$ArraySNMPValues = explode(": ", $SNMPValue);
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
 		}
