@@ -74,6 +74,7 @@ function plugin_tracker_changeprofile()
 }
 
 function plugin_tracker_haveRight($module,$right){
+
 	$matches=array(
 			""  => array("","r","w"), // ne doit pas arriver normalement
 			"r" => array("r","w"),
