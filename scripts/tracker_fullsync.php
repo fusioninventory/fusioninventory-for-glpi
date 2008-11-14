@@ -87,7 +87,7 @@ if (isset($_GET["process_id"]))
 
 $processes = new Threads;
 
-$processes->addProcess($fields["process_id"]);
+//$processes->addProcess($fields["process_id"]);
 
 // SNMP is working
 
