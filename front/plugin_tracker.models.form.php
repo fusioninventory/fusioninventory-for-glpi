@@ -34,7 +34,9 @@
 
 $NEEDED_ITEMS = array (
 	"setup",
-	"rulesengine"
+	"rulesengine",
+	"tracker",
+	"search"
 );
 
 define('GLPI_ROOT', '../../..');
@@ -81,6 +83,7 @@ if (isset($_GET["ID"]))
 
 $plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
 $plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
+
 
 commonFooter();
 ?>
