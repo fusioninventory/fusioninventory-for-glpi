@@ -75,7 +75,7 @@ function addLogConnection($status,$port)
 	
 	// Récupération de l'id du matériel
 	$array["device_ID"] = $netport->fields["on_device"];
-echo "HISTORY ".$array["FK_ports"]." - ".$array["device_type"]." - ".$array["value"]." - ".$array["device_ID"]."\n";
+	//echo "HISTORY ".$array["FK_ports"]." - ".$array["device_type"]." - ".$array["value"]." - ".$array["device_ID"]."\n";
 	// Ajouter en DB
 	$history->insert_connection($status,$array);
 }
