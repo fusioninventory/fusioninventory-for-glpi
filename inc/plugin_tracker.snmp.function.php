@@ -96,6 +96,9 @@ function UpdateNetworkBySNMP($ArrayListNetworking)
 			// ** Get oid
 			$Array_Object_oid = $updateNetwork->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0'");
 
+			// ** Get oid of PortName
+			$Array_Object_oid_ifName = $updateNetwork->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0' AND mapping_name='ifName'");
+
 			// ** Get snmp version and authentification
 			// A CODER
 			$snmp_version = "1";
@@ -109,7 +112,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking)
 			
 			
 			//V3 :
-/*			$snmp_version = "3";
+			$snmp_version = "3";
 			$snmp_auth["community"] = "";
 			$snmp_auth["sec_name"] = "DavidAuthUser";
 			$snmp_auth["sec_level"] = "authNoPriv";
@@ -117,12 +120,12 @@ function UpdateNetworkBySNMP($ArrayListNetworking)
 			$snmp_auth["auth_passphrase"] = "ciscopass";
 			$snmp_auth["priv_protocol"] = "";
 			$snmp_auth["priv_passphrase"] = "";
-*/			
+			
 			 
 			// FIN DE A CODER
 
 			//**
-			$ArrayPort_LogicalNum_SNMPName = $updateNetwork->GetPortsName($ifIP,$snmp_version,$snmp_auth);
+			$ArrayPort_LogicalNum_SNMPName = $updateNetwork->GetPortsName($ifIP,$snmp_version,$snmp_auth,$Array_Object_oid_ifName);
 
 			//**
 			$ArrayPortDB_Name_ID = $updateNetwork->GetPortsID($IDNetworking);
@@ -523,7 +526,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth)
 	foreach($ArrayMACAdressTable as $oid=>$value)
 	{
 	
-		echo $oid." => ".$value."\n";
+		echo "KOIN ".$oid." => ".$value."\n";
 		$oidExplode = explode(".", $oid);
 		
 		$OIDBridgePortNumber = "1.3.6.1.2.1.17.4.3.1.2.0.".
