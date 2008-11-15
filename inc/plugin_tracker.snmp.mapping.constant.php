@@ -132,4 +132,10 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['name'] = $LANGTRACKER["mappi
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['table'] = 'glpi_networking_ports';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['field'] = 'name';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['name'] = $LANGTRACKER["mapping"][16];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['dropdown'] = '';
+
 ?>
