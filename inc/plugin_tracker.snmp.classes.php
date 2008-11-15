@@ -1286,15 +1286,20 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @param $IP IP address of network materiel
 	 * @param $snmp_version version of SNMP (1, 2c or 3)
 	 * @param $snmp_auth array with authentification of SNMP
+	 * @param $ArrayOID List whith just Object and OID values
 	 *
 	 * @return array with logical port number and port name 
 	 *
 	**/
-	function GetPortsName($IP,$snmp_version,$snmp_auth)
+	function GetPortsName($IP,$snmp_version,$snmp_auth,$ArrayOID)
 	{
 		$snmp_queries = new plugin_tracker_snmp;
 		
-		$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifName"=>"1.3.6.1.2.1.31.1.1.1.1"),$IP,$snmp_version,$snmp_auth);
+		foreach($ArrayOID as $object=>$oid)
+		{
+			$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array($object=>$oid),$IP,$snmp_version,$snmp_auth);
+		}
+
 	
 		$PortsName = array();
 	
