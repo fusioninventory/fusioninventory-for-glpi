@@ -115,6 +115,14 @@ $LANGTRACKER["snmp"][48]="Nb d'octets envoyés";
 $LANGTRACKER["snmp"][49]="Nb d'erreurs en réception";
 $LANGTRACKER["snmp"][50]="Connexion";
 
+$LANGTRACKER["snmpauth"][1]="Communauté";
+$LANGTRACKER["snmpauth"][2]="Utilisateur";
+$LANGTRACKER["snmpauth"][3]="Schéma d'authentification";
+$LANGTRACKER["snmpauth"][4]="Protocol de cryptage pour authentification ";
+$LANGTRACKER["snmpauth"][5]="Mot de passe";
+$LANGTRACKER["snmpauth"][6]="Protocol de cryptage pour les données (écriture)";
+$LANGTRACKER["snmpauth"][7]="Mot de passe (écriture)";
+
 $LANGTRACKER["cron"][0]="Relevé automatique du compteur";
 $LANGTRACKER["cron"][1]="Activer le relevé";
 $LANGTRACKER["cron"][2]="";
@@ -218,6 +226,7 @@ $LANGTRACKER["mapping"][12]="réseaux > utilisation du CPU";
 $LANGTRACKER["mapping"][13]="réseaux > numéro de série";
 $LANGTRACKER["mapping"][14]="réseaux > ports > statut de la connexion";
 $LANGTRACKER["mapping"][15]="réseaux > ports > adresse MAC";
+$LANGTRACKER["mapping"][16]="réseaux > ports > nom";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
@@ -234,4 +243,5 @@ $LANGTRACKER["mapping"][112]="réseaux > utilisation du CPU";
 $LANGTRACKER["mapping"][113]="";
 $LANGTRACKER["mapping"][114]="Connexion";
 $LANGTRACKER["mapping"][115]="MAC interne";
+$LANGTRACKER["mapping"][116]="Nom";
 ?>
