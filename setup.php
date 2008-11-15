@@ -44,6 +44,7 @@ function plugin_init_tracker() {
 	
 	pluginNewType('tracker', "PLUGIN_TRACKER_ERROR_TYPE", 5150, "plugin_tracker_errors", "glpi_plugin_tracker_errors", "front/plugin_tracker.errors.form.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_MODEL", 5151, "plugin_tracker_model_infos", "glpi_plugin_tracker_model_infos", "front/plugin_tracker.models.form.php",$LANGTRACKER["model_info"][4]);
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AUTH", 5152, "glpi_plugin_tracker_snmp_connection", "glpi_plugin_tracker_snmp_connection", "front/plugin_tracker.snmp_auth.form.php",$LANGTRACKER["model_info"][3]);
 
 	array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
@@ -71,6 +72,7 @@ function plugin_init_tracker() {
 				if (plugin_tracker_haveRight("errors","r")) {
 					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
+					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
 
 //					$PLUGIN_HOOKS['submenu_entry']['tracker']['printers'] = 'front/plugin_tracker.errors.form.php?device=printer';
