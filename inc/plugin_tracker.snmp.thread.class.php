@@ -41,6 +41,7 @@ class Threads extends CommonDBTM
 
 		$minfreq = 9999;
 		$CommonItem = new CommonItem;
+		$Threads = new Threads;
 
 		$sql = 	"SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
 			"MIN(start_time) AS starting_date, MAX(end_time) AS ending_date, TIME_TO_SEC(MAX(end_time))-TIME_TO_SEC(MIN(start_time)) AS duree, " .
@@ -105,15 +106,15 @@ class Threads extends CommonDBTM
 						echo "<td align='center'><a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">".$thread["process_id"]."</a></td>";
 						echo "<td align='center'>";
 						
-						switch(getProcessStatus($thread["process_id"]))
+						switch($Threads->getProcessStatus($thread["process_id"]))
 						{
-							case STATE_FINISHED :
+							case 3 :
 								echo "<img src='../pics/export.png'>";
 								break;
-							case STATE_RUNNING :
+							case 2 :
 								echo "<img src='../pics/wait.png'>";
 								break;
-							case STATE_STARTED :
+							case 1 :
 								echo "<img src='../pics/ok2.png'>";
 								break;
 						}
@@ -128,7 +129,7 @@ class Threads extends CommonDBTM
 						echo "<td align='center'>".$thread["error_msg"]."</td>";
 						
 						echo "<td align='center'>";
-						if ($thread["status"] == STATE_FINISHED)
+						if ($thread["status"] == 3)
 							echo timestampToString($thread["duree"]);
 						else
 							echo "-----";	
@@ -253,6 +254,26 @@ class Threads extends CommonDBTM
 		$DB->query($query);
 
 	}	
+
+
+	function getProcessStatus($pid) {
+		global $DB;
+		$sql = "SELECT status FROM glpi_plugin_tracker_processes WHERE process_id=" . $pid;
+		$result = $DB->query($sql);
+		$status = 0;
+		$thread_number = 0;
+	
+		$thread_number = $DB->numrows($result);
+	
+		while ($thread = $DB->fetch_array($result)) {
+			$status += $thread["status"];
+		}
+	
+		if ($status < $thread_number * 3)
+			return 2;
+		else
+			return 3;
+	}
 
 }
 
