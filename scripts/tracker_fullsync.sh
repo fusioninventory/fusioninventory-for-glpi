@@ -21,8 +21,7 @@ logfilename="tracker_fullsync.log"
 
 
 # Predefined settings
-thread_nbr=2
-server_id=
+thread_nbr=1
 
 trap cleanup 1 2 3 6
 
@@ -33,7 +32,6 @@ echo "  $0 [--arg]"
 echo
 echo "Arguments:"
 echo "  --thread_nbr=num: number of threads to launch"
-echo "  --server_id=num: GLPI ID of the OCS server to synchronize from. Default is ALL the servers"
 echo "  --nolog: output to console"
 
 
@@ -58,9 +56,6 @@ read_argv()
     case "$valname" in
       thread_nbr)
       thread_nbr=$valcontent
-      ;;
-      server_id)
-      server_id=$valcontent
       ;;
       --nolog)
       logfilename=
@@ -138,8 +133,8 @@ cpt=0
 
 echo $(date) $0 started
 
-cmd="php -q -d -f tracker_fullsync.php --managedeleted=1"
-sh -c "$cmd"
+#cmd="php -q -d -f tracker_fullsync.php --managedeleted=1"
+#sh -c "$cmd"
   
 while [ $cpt -lt $thread_nbr ]; do 
   cpt=$(($cpt+1))

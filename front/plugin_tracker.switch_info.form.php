@@ -42,12 +42,19 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("networking","r");
 plugin_tracker_checkRight("networking_info","r");
 
-$switch_snmp = new plugin_tracker_switch_snmp();
+//$switch_snmp = new plugin_tracker_switch_snmp();
+
+$plugin_tracker_snmp = new plugin_tracker_snmp;
 
 if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	
-	plugin_tracker_checkRight("networking_info","w");
+//	plugin_tracker_checkRight("networking_info","w");
 	
+
+	$plugin_tracker_snmp->update_network_infos($_POST['ID'], $_POST['model_infos'], $_POST['auth_snmp']);
+
+
+/*
 	// if not checked
 	if (!isset($_POST['cname']))
 		unset($_POST['name']);
@@ -87,6 +94,9 @@ if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	unset($_POST['clocation']);
 	
 	$switch_snmp->update($_POST);
+	*/
+	
+	
 	
 }
 

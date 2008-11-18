@@ -138,4 +138,21 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['name'] = $LANGTRACKER["mapping"][16
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['field'] = 'model';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANGTRACKER["mapping"][17];
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['name'] = $LANGTRACKER["mapping"][18];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['name'] = $LANGTRACKER["mapping"][19];
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['dropdown'] = '';
 ?>

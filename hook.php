@@ -104,16 +104,6 @@ function plugin_tracker_getSearchOption(){
 	$sopt[PLUGIN_TRACKER_MODEL][4]['linkfield']='FK_firmware';
 	$sopt[PLUGIN_TRACKER_MODEL][4]['name']=$LANG["networking"][49];	
 
-	$sopt[PLUGIN_TRACKER_MODEL][5]['table']='glpi_dropdown_plugin_tracker_snmp_version';
-	$sopt[PLUGIN_TRACKER_MODEL][5]['field']='name';
-	$sopt[PLUGIN_TRACKER_MODEL][5]['linkfield']='FK_snmp_version';
-	$sopt[PLUGIN_TRACKER_MODEL][5]['name']=$LANGTRACKER["model_info"][2];	
-
-	$sopt[PLUGIN_TRACKER_MODEL][6]['table']='glpi_plugin_tracker_snmp_connection';
-	$sopt[PLUGIN_TRACKER_MODEL][6]['field']='name';
-	$sopt[PLUGIN_TRACKER_MODEL][6]['linkfield']='FK_snmp_connection';
-	$sopt[PLUGIN_TRACKER_MODEL][6]['name']=$LANGTRACKER["model_info"][3];	
-
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH]['common']=$LANGTRACKER["errors"][0];
 
@@ -127,40 +117,45 @@ function plugin_tracker_getSearchOption(){
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][2]['linkfield']='name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][2]['name']=$LANG["common"][16];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['table']='glpi_plugin_tracker_snmp_connection';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['field']='community';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['linkfield']='community';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['name']=$LANGTRACKER["snmpauth"][1];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['table']='glpi_dropdown_plugin_tracker_snmp_version';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['field']='name';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['linkfield']='FK_snmp_version';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['name']=$LANGTRACKER["model_info"][2];
 	
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['table']='glpi_plugin_tracker_snmp_connection';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['field']='sec_name';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['linkfield']='sec_name';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['name']=$LANGTRACKER["snmpauth"][2];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['field']='community';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['linkfield']='community';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['name']=$LANGTRACKER["snmpauth"][1];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['table']='glpi_dropdown_plugin_tracker_snmp_auth_sec_level';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['field']='name';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['linkfield']='sec_level';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['name']=$LANGTRACKER["snmpauth"][3];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['table']='glpi_plugin_tracker_snmp_connection';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['field']='sec_name';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['linkfield']='sec_name';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['name']=$LANGTRACKER["snmpauth"][2];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['table']='glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['table']='glpi_dropdown_plugin_tracker_snmp_auth_sec_level';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['field']='name';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['linkfield']='auth_protocol';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['name']=$LANGTRACKER["snmpauth"][4];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['linkfield']='sec_level';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['name']=$LANGTRACKER["snmpauth"][3];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['table']='glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['field']='name';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['linkfield']='auth_protocol';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['name']=$LANGTRACKER["snmpauth"][4];
 
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['table']='glpi_plugin_tracker_snmp_connection';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['field']='auth_passphrase';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['linkfield']='auth_passphrase';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['name']=$LANGTRACKER["snmpauth"][5];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['table']='glpi_plugin_tracker_snmp_connection';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['field']='auth_passphrase';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['linkfield']='auth_passphrase';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['name']=$LANGTRACKER["snmpauth"][5];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['table']='glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['field']='name';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['linkfield']='priv_protocol';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['name']=$LANGTRACKER["snmpauth"][6];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['table']='glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['field']='name';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['linkfield']='priv_protocol';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['name']=$LANGTRACKER["snmpauth"][6];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['table']='glpi_plugin_tracker_snmp_connection';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['field']='priv_passphrase';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['linkfield']='priv_passphrase';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['name']=$LANGTRACKER["snmpauth"][7];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['table']='glpi_plugin_tracker_snmp_connection';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['field']='priv_passphrase';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['linkfield']='priv_passphrase';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['name']=$LANGTRACKER["snmpauth"][7];
 
 
 
@@ -207,6 +202,14 @@ function plugin_tracker_giveItem($type,$field,$data,$num,$linkfield=""){
 			}
 			return $out;
 			break;
+		case "glpi_plugin_tracker_snmp_connection.name" :
+			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
+			$out .= $data["ITEM_$num"];
+			if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+				$out .= " (" . $data["ID"] . ")";
+			$out .= "</a>";
+			return $out;
+			break;		
 			
 		case "glpi_plugin_tracker_errors.device_id":
 			$device_type = $data["ITEM_1"];

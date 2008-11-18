@@ -156,48 +156,5 @@ function plugin_tracker_mib_management()
 
 }
 
-function plugin_tracker_snmp_connections()
-{
-	GLOBAL $DB,$CFG_GLPI, $LANG, $LANGTRACKER;
-	$query = "
-	SELECT * 
-	FROM glpi_plugin_tracker_snmp_connection 
-	ORDER BY name";
-	$result = $DB->query($query);
-	$number = $DB->numrows($result);
-	
-	if($number !="0"){
-		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
-		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='3'>".$LANGTRACKER["model_info"][3]." :</th></tr>";
-		echo "<tr><th>".$LANG["common"][16]."</th>";
-		echo "<th>".$LANG["login"][6]."</th>";
-		echo "<th>".$LANG["login"][7]."</th>";
-		echo "</tr>";
 
-		while ($data=$DB->fetch_array($result)){
-			
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'><a href=''><b>".$data["name"]."</b></a></td>";
-			echo "<td align='center'>".$data["login"]."</td>";
-			echo "<td align='center'>".$data["password"]."</td>";
-			echo "</tr>";
-
-		}
-		echo "</table></div></form>";
-	}
-	else{
-
-
-		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
-		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='3'>".$LANGTRACKER["model_info"][3].":</th></tr>";
-		echo "<tr><th>".$LANG["common"][16]."</th>";
-		echo "<th>".$LANG["login"][6]."</th>";
-		echo "<th>".$LANG["login"][7]."</th>";
-		echo "</tr>";
-		echo "</table></div></form>";
-	}
-
-}
 ?>
