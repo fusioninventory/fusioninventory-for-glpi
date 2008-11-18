@@ -204,6 +204,8 @@ $LANGTRACKER["processes"][9]="Erreurs";
 $LANGTRACKER["processes"][10]="Durée d'exécution du script";
 $LANGTRACKER["processes"][11]="Champs ajoutés";
 $LANGTRACKER["processes"][12]="Erreurs SNMP";
+$LANGTRACKER["processes"][13]="MAC inconnues";
+$LANGTRACKER["processes"][14]="Liste des adresse MAC inconnues";
 
 $LANGTRACKER["state"][0]="Démarrage de l'ordinateur";
 $LANGTRACKER["state"][1]="Arrêt de l'ordinateur";
@@ -227,6 +229,9 @@ $LANGTRACKER["mapping"][13]="réseaux > numéro de série";
 $LANGTRACKER["mapping"][14]="réseaux > ports > statut de la connexion";
 $LANGTRACKER["mapping"][15]="réseaux > ports > adresse MAC";
 $LANGTRACKER["mapping"][16]="réseaux > ports > nom";
+$LANGTRACKER["mapping"][17]="réseaux > modèle";
+$LANGTRACKER["mapping"][18]="réseaux > ports > type";
+$LANGTRACKER["mapping"][19]="réseaux > VLAN";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
@@ -244,4 +249,8 @@ $LANGTRACKER["mapping"][113]="";
 $LANGTRACKER["mapping"][114]="Connexion";
 $LANGTRACKER["mapping"][115]="MAC interne";
 $LANGTRACKER["mapping"][116]="Nom";
+$LANGTRACKER["mapping"][117]="Modèle";
+$LANGTRACKER["mapping"][118]="Type";
+$LANGTRACKER["mapping"][119]="VLAN";
+
 ?>

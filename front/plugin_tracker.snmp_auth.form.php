@@ -1,4 +1,5 @@
 <?php
+
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -31,31 +32,56 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../../..');
+$NEEDED_ITEMS = array (
+	"setup",
+	"rulesengine",
+	"tracker",
+	"search"
+);
+
+define('GLPI_ROOT', '../../..');
+
+include (GLPI_ROOT . "/inc/includes.php");
+
+plugin_tracker_checkRight("errors", "r");
+
+$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
+
+$query = "SELECT * FROM glpi_plugin_tracker_config";
+$result=$DB->query($query);
+
+if (isset ($_POST["add"])) {
+	if ($DB->result($result,0,"authsnmp") == "file")
+	{
+		$new_ID = $plugin_tracker_snmp_auth->add_xml();
+	}
+	else if ($DB->result($result,0,"authsnmp") == "DB")
+	{ 
+		$new_ID = $plugin_tracker_snmp_auth->add($_POST);
+	}
+	
+	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.snmp_auth.php?ID=".$new_ID."'>".$_POST["name"]."</a>";
+	
+	glpi_header($_SERVER['HTTP_REFERER']);
+
+}
+elseif (isset ($_POST["update"])) {
+	$plugin_tracker_snmp_auth->update($_POST);
+	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$NEEDED_ITEMS=array("tracker","search");
-include (GLPI_ROOT."/inc/includes.php");
-
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","models");
-/*
-plugin_tracker_checkRight("errors","r");
-*/
-echo plugin_tracker_models_infos();
-echo "<br/>";
 
 
-manageGetValuesInSearch(PLUGIN_TRACKER_MODEL);
+$ID = "";
+if (isset($_GET["ID"]))
+{
+	$ID = $_GET["ID"];
+}
 
-searchForm(PLUGIN_TRACKER_MODEL,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+$plugin_tracker_snmp_auth->showForm($_SERVER["PHP_SELF"], $ID);
 
-showList(PLUGIN_TRACKER_MODEL,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 
 commonFooter();
-
-
-
-
-
 ?>

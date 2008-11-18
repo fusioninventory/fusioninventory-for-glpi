@@ -35,23 +35,17 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker","search");
+$NEEDED_ITEMS=array("tracker","search","commonitem","networking");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","models");
-/*
-plugin_tracker_checkRight("errors","r");
-*/
-echo plugin_tracker_models_infos();
-echo "<br/>";
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 
-manageGetValuesInSearch(PLUGIN_TRACKER_MODEL);
+$Threads = new Threads;
 
-searchForm(PLUGIN_TRACKER_MODEL,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
-showList(PLUGIN_TRACKER_MODEL,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
+$Threads->showProcesses($_SERVER["PHP_SELF"],"unknow_mac");
+		
+		
 commonFooter();
 
 

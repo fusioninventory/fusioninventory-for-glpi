@@ -35,6 +35,8 @@
 ini_set("memory_limit","-1");
 ini_set("max_execution_time", "0");
 
+$xml_auth_rep = "";
+
 # Converts cli parameter to web parameter for compatibility
 if ($argv) {
 	for ($i=1;$i<count($argv);$i++)
@@ -54,7 +56,7 @@ $DBCONNECTION_REQUIRED=1;
 define('GLPI_ROOT', '../../..');
 
 $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
-	"phone","tracking","enterprise","reservation","setup","group","registry");
+	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine");
 include (GLPI_ROOT . "/config/based_config.php");
 include (GLPI_ROOT . "/inc/includes.php");
 
@@ -87,27 +89,22 @@ if (isset($_GET["process_id"]))
 
 $processes = new Threads;
 
-//$processes->addProcess($fields["process_id"]);
+$processes->addProcess($fields["process_id"]);
 
 // SNMP is working
 
-
+logInFile("tracker_snmp", ">>>>>> Starting Script <<<<<<\n\n");
+logInFile("tracker_snmp", "I) Get all devices \n\n");
 // Retrieve list of all networking to query SNMP
 	$ArrayListNetworking = getNetworkList();
 
 
-
-
-
-
-
-
-
-UpdateNetworkBySNMP($ArrayListNetworking);
+$processes_values = UpdateNetworkBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep);
 
 // Update process into database
+$processes->updateProcess($fields["process_id"],$processes_values["devices"], "" , $processes_values["ports"], "");
+// $NetworkQueries, $PrinterQueries, $portsQueries, $errors
 
-//$processes->updateProcess($fields["process_id"],"", "" , "", "");
 
 
 

@@ -35,26 +35,44 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker","search");
+$NEEDED_ITEMS=array("tracker","search","setup","rulesengine");
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 
 plugin_tracker_checkRight("errors","r");
 
+$query = "SELECT * FROM glpi_plugin_tracker_config";
+$result=$DB->query($query);
+
 // Forms for FILE
-//echo plugin_tracker_snmp_connections();
+if ($DB->result($result,0,"authsnmp") == "file")
+{
+	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+	
+	if (isset($_GET["ID"]))
+	{
+	
+	}
+	else
+	{
+		echo $plugin_tracker_snmp_auth->plugin_tracker_snmp_connections();
+	}
 
 
 
-// Forms for DB
+}
+else if ($DB->result($result,0,"authsnmp") == "DB")
+{
 
-manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_AUTH);
-
-searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
-showList(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
+	// Forms for DB
+	
+	manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_AUTH);
+	
+	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+	
+	showList(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+}
 
 commonFooter();
 

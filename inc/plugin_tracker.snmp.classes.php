@@ -253,9 +253,20 @@ abstract class plugin_tracker_snmp2 {
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
+		
+		// Add in database if not exist
+		if ($DB->numrows($result) == "0")
+		{
+			$query_add = "INSERT INTO glpi_plugin_tracker_networking
+			(FK_networking) VALUES('".$ID."') ";
+			
+			$DB->query($query_add);
+		}
+		
 		// Form networking informations
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+
 		echo "<table class='tab_cadre' cellpadding='5' width='800'>";
 		
 		echo "<tr class='tab_bg_1'>";
@@ -272,9 +283,29 @@ abstract class plugin_tracker_snmp2 {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["functionalities"][43]."</td>";
+		echo "<td align='center'>";
+		
+		$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
+		$result_conf=$DB->query($query_conf);
+		if ($DB->result($result_conf,0,"authsnmp") == "file")
+		{
+			$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+			echo $plugin_tracker_snmp_auth->selectbox($data["FK_snmp_connection"]);
+		}
+		else  if ($DB->result($result_conf,0,"authsnmp") == "DB")
+		{
+			dropdownValue("glpi_plugin_tracker_snmp_connection","auth_snmp",$data["FK_snmp_connection"],0);
+		}
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
 		echo "<td align='center'>";
-		echo "<input  type='text' name='cpu' value='".$data["cpu"]."' size='20'>";
+		//echo "<input  type='text' name='cpu' value='".$data["cpu"]."' size='20'>";
+		createProgressBar();
+		changeProgressBarPosition($data["cpu"],"100");
 		echo "</td>";
 		echo "</tr>";	
 
@@ -287,11 +318,13 @@ abstract class plugin_tracker_snmp2 {
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='2'>";
-		echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+		echo "<div align='center'>";
+		echo "<input type='hidden' name='ID' value='".$ID."'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
 		echo "</td>";
 		echo "</tr>";
 
-		echo "</table>";
+		echo "</table></form>";
 		
 		
 // ************ A FAIRE ******************************************************************************* //
@@ -339,7 +372,7 @@ function appear_array(id){
 		</script>";
 
 		echo "<br>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		echo "<div align='center'><!--<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">-->";
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -420,7 +453,7 @@ function appear_array(id){
 				}
 				echo "</td>";
 				
-				echo "<td align='center'>".$data["ifmacinternal"]."</td>";
+				echo "<td align='center'>".$data["ifmac"]."</td>";
 				// Mac address and link to device which are connected to this port
 				$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
 				if ($opposite_port != ""){
@@ -1212,6 +1245,9 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ($version == "1")
 			{
+				runkit_constant_remove($object);
+				define($object,$oid);
+
 				$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid);
 			}
 			else if ($version == "2c")
@@ -1222,8 +1258,10 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],	$oid);
 			}
-			
+			logInFile("tracker_snmp", "			SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue."\n\n");
 			$ArraySNMPValues = explode(": ", $SNMPValue);
+			if (!isset($ArraySNMPValues[1]))
+				$ArraySNMPValues[1] = "";
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
 		}
 		return $ArraySNMP;
@@ -1273,6 +1311,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				$ArraySNMPValues = explode(": ", $value);
 				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
+				logInFile("tracker_snmp", "			SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value."\n\n");
 			}
 		}
 		return $ArraySNMP;
@@ -1295,6 +1334,8 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		$snmp_queries = new plugin_tracker_snmp;
 		
+		$Arrayportsnames = array();
+		// logInFile("tracker_snmp", "						Function : GetPortsName(".$IP.",".$snmp_version.",".$snmp_auth.",".$ArrayOID.") \n\n");		
 		foreach($ArrayOID as $object=>$oid)
 		{
 			$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array($object=>$oid),$IP,$snmp_version,$snmp_auth);
@@ -1496,12 +1537,18 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
+	function update_network_infos($ID, $FK_model_infos, $FK_snmp_connection)
+	{
+		global $DB;
+		
+		$query = "UPDATE glpi_plugin_tracker_networking
+		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
+		WHERE FK_networking='".$ID."' ";
+	
+		$DB->query($query);
 
-
-
-
-
-
+	
+	}
 
 
 // **************************************** PAS VERIFIE **************************************** 
