@@ -158,9 +158,35 @@ function plugin_tracker_getSearchOption(){
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['name']=$LANGTRACKER["snmpauth"][7];
 
 
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW]['common']=$LANGTRACKER["errors"][0];
 
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['table']='glpi_plugin_tracker_processes_values';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['field']='ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['linkfield']='ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['name']=$LANG["common"][2];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['table']='glpi_plugin_tracker_processes_values';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['field']='FK_processes';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['linkfield']='FK_processes';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['name']=$LANGTRACKER["processes"][1];	
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['table']='glpi_networking';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['field']='ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['linkfield']='device_ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['name']=$LANG["common"][1];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['table']='glpi_networking_ports';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['field']='name';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['linkfield']='port';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['name']=$LANG["setup"][175];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['table']='glpi_plugin_tracker_processes_values';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['field']='unknow_mac';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['linkfield']='unknow_mac';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['name']=$LANG["networking"][15];
 	
 	
+
 	return $sopt;
 }
 

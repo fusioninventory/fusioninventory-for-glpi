@@ -45,6 +45,7 @@ function plugin_init_tracker() {
 	pluginNewType('tracker', "PLUGIN_TRACKER_ERROR_TYPE", 5150, "plugin_tracker_errors", "glpi_plugin_tracker_errors", "front/plugin_tracker.errors.form.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_MODEL", 5151, "plugin_tracker_model_infos", "glpi_plugin_tracker_model_infos", "front/plugin_tracker.models.form.php",$LANGTRACKER["model_info"][4]);
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AUTH", 5152, "glpi_plugin_tracker_snmp_connection", "glpi_plugin_tracker_snmp_connection", "front/plugin_tracker.snmp_auth.form.php",$LANGTRACKER["model_info"][3]);
+	pluginNewType('tracker', "PLUGIN_TRACKER_MAC_UNKNOW", 5153, "glpi_plugin_tracker_processes_values", "glpi_plugin_tracker_processes_values", "front/plugin_tracker.processes.unknow_mac.php", $LANGTRACKER["processes"][13]);
 
 	array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	

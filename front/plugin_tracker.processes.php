@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker");
+$NEEDED_ITEMS=array("tracker","search");
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
@@ -46,8 +46,6 @@ plugin_tracker_checkRight("errors","r");
 $Threads = new Threads;
 
 $Threads->showProcesses($_SERVER["PHP_SELF"]);
-
-
 
 commonFooter();
 
