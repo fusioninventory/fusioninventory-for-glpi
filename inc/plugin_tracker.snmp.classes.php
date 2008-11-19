@@ -407,7 +407,23 @@ function appear_array(id){
 				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
 				echo "<td align='center'>".$data["ifmtu"]."</td>";
 				echo "<td align='center'>".ByteSize($data["ifspeed"],1000)."bps</td>";
-				echo "<td align='center'>".$data["ifinternalstatus"]."</td>";
+				echo "<td align='center'>";			
+				if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifinternalstatus"]))
+				{
+					echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
+				}
+				else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifinternalstatus"]))
+				{
+					echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
+				}
+				else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifinternalstatus"]))
+				{
+					echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
+				}
+
+				echo "</td>";
+				
+				
 				echo "<td align='center'>".$data["iflastchange"]."</td>";
 				echo "<td align='center'>";
 				if ($data["ifinoctets"] == "0")
@@ -478,14 +494,23 @@ function appear_array(id){
 				}
 				
 				echo "<td align='center'>";
-				if (ereg("up",$data["ifstatus"]))
+				if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
 				{
 					echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
 				}
-				else
+				else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifstatus"]))
 				{
 					echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
 				}
+				else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifstatus"]))
+				{
+					echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
+				}
+				else if (ereg("dormant",$data["ifstatus"]) OR ereg("5",$data["ifstatus"]))
+				{
+					echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/orangebutton.png'/>";
+				}
+				
 				echo "</td>";
 				echo "</tr>";
 				
@@ -1262,6 +1287,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			$ArraySNMPValues = explode(": ", $SNMPValue);
 			if (!isset($ArraySNMPValues[1]))
 				$ArraySNMPValues[1] = "";
+			$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
 			$ArraySNMP[$object] = $ArraySNMPValues[1];
 		}
 		return $ArraySNMP;
@@ -1310,6 +1336,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
 				$ArraySNMPValues = explode(": ", $value);
+				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
 				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
 				logInFile("tracker_snmp", "			SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value."\n\n");
 			}
@@ -1511,6 +1538,23 @@ class plugin_tracker_snmp extends CommonDBTM
 
 	function MAC_Rewriting($macadresse)
 	{
+		// If MAC address without : (with space for separate)
+		$macadresse = trim($macadresse);
+		if ( substr_count($macadresse, ':') == "0"){
+			$macexplode = explode(" ",$macadresse);
+			$assembledmac = "";
+			for($num = 0;$num < count($macexplode);$num++)
+			{
+				if ($num > 0)
+				{
+					$assembledmac .= ":";
+				}			
+				$assembledmac .= $macexplode[$num];
+			}
+			$macadresse = $assembledmac;
+		}	
+
+		// Rewrite
 		$macexplode = explode(":",$macadresse);
 		$assembledmac = "";
 		for($num = 0;$num < count($macexplode);$num++)
