@@ -42,9 +42,6 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","
 /*
 plugin_tracker_checkRight("errors","r");
 */
-echo plugin_tracker_models_infos();
-echo "<br/>";
-
 
 manageGetValuesInSearch(PLUGIN_TRACKER_MODEL);
 
