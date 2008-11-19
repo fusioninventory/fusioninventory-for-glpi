@@ -46,64 +46,6 @@ function plugin_tracker_menu()
 
 }
 
-function plugin_tracker_models_infos()
-{
-	GLOBAL $DB,$CFG_GLPI, $LANG, $LANGTRACKER;
-	$query = "
-	SELECT * 
-	FROM glpi_plugin_tracker_model_infos 
-	ORDER BY name";
-	$result = $DB->query($query);
-	$number = $DB->numrows($result);
-	
-	if($number !="0"){
-		echo "<br>";
-		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='6'>".$LANGTRACKER["model_info"][4]." :</th></tr>";
-		echo "<tr><th>".$LANG["common"][16]."</th>";
-		echo "<th>".$LANG["common"][22]."</th>";
-		echo "<th>".$LANG["networking"][49]."</th>";
-		echo "<th>".$LANGTRACKER["model_info"][2]."</th>";
-		echo "<th>".$LANGTRACKER["model_info"][3]."</th>";
-		echo "<th>".$LANG["buttons"][31]."</th>";
-		echo "</tr>";
-
-		while ($data=$DB->fetch_array($result)){
-			
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'><a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$data["ID"]."'><b>".$data["name"]."</b></a></td>";
-
-			echo "<td align='center'>".getDropdownName("glpi_dropdown_model_networking",$data["FK_model_networking"])."</td>";
-
-			echo "<td align='center'>".getDropdownName("glpi_dropdown_firmware",$data["FK_firmware"])."</td>";
-			echo "<td align='center'>".getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"])."</td>";
-			echo "<td align='center'>".getDropdownName("glpi_plugin_tracker_snmp_connection",$data["FK_snmp_connection"])."</td>";
-			echo "<td align='center'>
-			<form method='get' action='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
-			<input type='hidden' name='model' value='".$data["ID"]."' />
-			<input name='export' src='".GLPI_ROOT."/pics/right.png' title='Exporter' value='Exporter' type='image'>
-			</form></td>";
-			echo "</tr>";
-
-		}
-		echo "</table></div>";
-	}
-	else{
-
-
-		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
-		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='5'>".$LANG["document"][21].":</th></tr>";
-		echo "<tr><th>".$LANG["common"][16]."</th>";
-		echo "<th width='100px'>".$LANG["document"][2]."</th>";
-		echo "<th>".$LANG["document"][33]."</th>";
-		echo "<th>".$LANG["document"][3]."</th>";
-		echo "<th>".$LANG["document"][4]."</th>";
-		echo "</tr>";
-		echo "</table></div></form>";
-	}
-
-}
 
 function plugin_tracker_mib_management()
 {
