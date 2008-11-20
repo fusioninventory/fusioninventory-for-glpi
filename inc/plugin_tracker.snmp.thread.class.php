@@ -103,7 +103,7 @@ class Threads extends CommonDBTM
 						//else	 echo "<td width='10'>&nbsp;</td>";
 						echo "<td width='10'>&nbsp;</td>";
 					
-						echo "<td align='center'><a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">".$thread["process_id"]."</a></td>";
+						echo "<td align='center'><!--<a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">".$thread["process_id"]."</a>--></td>";
 						echo "<td align='center'>";
 						
 						switch($Threads->getProcessStatus($thread["process_id"]))
