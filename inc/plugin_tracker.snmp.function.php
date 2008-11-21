@@ -509,39 +509,41 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 				echo $SNMPValue."\n";
 				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
 			}
-			
-			$update = 0;
-			$query_select = "SELECT ".$TRACKER_MAPPING[$object_type][$object_name]['field']."
-			FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-			WHERE ID='".$Field."'";
-			if ( $result_select=$DB->query($query_select) )
+			if ($Field != "")
 			{
-				while ( $data_select=$DB->fetch_assoc($result_select) )
+				$update = 0;
+				$query_select = "SELECT ".$TRACKER_MAPPING[$object_type][$object_name]['field']."
+				FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+				WHERE ID='".$Field."'";
+				if ( $result_select=$DB->query($query_select) )
 				{
-echo "ALERTE :".$object_name." : ".$SNMPValue." - ".$data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']]."\n";
-					if ($SNMPValue != $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']])
+					while ( $data_select=$DB->fetch_assoc($result_select) )
 					{
-						$update = 1;
-						$SNMPValue_old = $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']];
+	echo "ALERTE :".$object_name." : ".$SNMPValue." - ".$data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']]."\n";
+						if ($SNMPValue != $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']])
+						{
+							$update = 1;
+							$SNMPValue_old = $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']];
+						}
+					}
+				}		
+				
+				if ($update == "1")
+				{
+					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+				
+					SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
+					
+					WHERE ID='".$Field."'";
+	
+					$DB->query($queryUpdate);
+					if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets'))
+					{
+						tracker_snmp_addLog($ArrayDB_ID_FKNetPort[$Field],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
 					}
 				}
-			}		
-			
-			if ($update == "1")
-			{
-				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-			
-				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-				
-				WHERE ID='".$Field."'";
-
-				$DB->query($queryUpdate);
-				if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets'))
-				{
-					tracker_snmp_addLog($ArrayDB_ID_FKNetPort[$Field],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
-				}
 			}
-		}					
+		}				
 	}
 }
 
