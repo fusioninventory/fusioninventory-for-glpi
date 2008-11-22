@@ -186,8 +186,6 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 				$updateNetwork->DefineObject($Array_Object_oid_vtpVlanName);
 	
 				$Array_vlan = $updateNetwork->SNMPQueryWalkAll($Array_Object_oid_vtpVlanName,$ifIP,$snmp_version,$snmp_auth);
-				echo "TOTO\n";
-				var_dump($array_port_trunk);
 				foreach ($Array_vlan as $objectdyn=>$oiddyn)
 				{			
 					$explode = explode(".",$objectdyn);
@@ -230,7 +228,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 		$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP,$snmp_version,$snmp_auth);
 
 		$portsnumber = $Arrayportsnumber[$object];
-echo "PORTNUMBER : ".$portsnumber."\n";
+//echo "PORTNUMBER : ".$portsnumber."\n";
 		// We have the number of Ports
 
 		// Add ports in DataBase if they don't exists
@@ -245,12 +243,12 @@ echo "PORTNUMBER : ".$portsnumber."\n";
 
 		for ($i = 0; $i < $portsnumber; $i++)
 		{
-echo "PORT :".$i."\n";			
+//echo "PORT :".$i."\n";			
 			// Get type of port
 			
 			$snmp_queries->DefineObject(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]));
 			$array_ifType = $snmp_queries->SNMPQuery(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]),$IP,$snmp_version,$snmp_auth);
-echo "TYPEDEPORT :".$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]]." / OID:".$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]."\n";
+//echo "TYPEDEPORT :".$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]]." / OID:".$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]."\n";
 			if ((ereg("ethernetCsmacd",$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]])) OR ($array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]] == "6"))
 			{		
 			
@@ -523,7 +521,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 			if ($object_name == "ifPhysAddress")
 			{
 				$snmp_queries = new plugin_tracker_snmp;
-				echo $SNMPValue."\n";
+//				echo $SNMPValue."\n";
 				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
 			}
 			if ($Field != "")
@@ -536,7 +534,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 				{
 					while ( $data_select=$DB->fetch_assoc($result_select) )
 					{
-	echo "ALERTE :".$object_name." : ".$SNMPValue." - ".$data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']]."\n";
+//	echo "ALERTE :".$object_name." : ".$SNMPValue." - ".$data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']]."\n";
 						if ($SNMPValue != $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']])
 						{
 							$update = 1;
@@ -556,10 +554,6 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					$DB->query($queryUpdate);
 					if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets'))
 					{
-echo "1 :".$ArrayDB_ID_FKNetPort[$Field]."\n";
-echo "2 :".$TRACKER_MAPPING[$object_type][$object_name]['name']."\n";
-echo "3 :".$SNMPValue_old."\n";
-echo "4 :".$SNMPValue."\n";
 						tracker_snmp_addLog($ArrayDB_ID_FKNetPort[$Field],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
 					}
 				}
@@ -710,31 +704,16 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 							// Mac address unknow
 							if ($FK_process != "0")
 							{
-								echo "MAC UNKNOW > FK_process : ".$FK_process."\n";
-								echo "MAC UNKNOW > ArrayPortsID[$ifName] : ".$ArrayPortsID[$ifName]."\n";
-								echo "MAC UNKNOW > MacAddress : ".$MacAddress."\n";
+								//echo "MAC UNKNOW > FK_process : ".$FK_process."\n";
+								//echo "MAC UNKNOW > ArrayPortsID[$ifName] : ".$ArrayPortsID[$ifName]."\n";
+								//echo "MAC UNKNOW > MacAddress : ".$MacAddress."\n";
 								$processes->addProcessValues($FK_process,"unknow_mac",$ArrayPortsID[$ifName],$MacAddress);
 							}
 						}
 					}
-					
-				/*	
-					if (isset($_POST["dport"])&&count($_POST["dport"]))
-						foreach ($_POST["dport"] as $sport => $dport){
-							if($sport && $dport){
-								makeConnector($sport,$dport);
-							}
-						}
-				*/
-					
-					
-					
 				}
-			
 			}
-			
 		}
-
 	}
 	$snmp_auth["community"] = $community;
 	if ($vlan == "")
