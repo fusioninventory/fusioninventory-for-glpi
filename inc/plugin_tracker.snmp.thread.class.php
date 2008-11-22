@@ -166,7 +166,8 @@ class Threads extends CommonDBTM
 			echo "</th></tr>\n";
 		
 			$sql_mac = 	"SELECT *
-		   FROM glpi_plugin_tracker_processes_values 
+		   FROM glpi_plugin_tracker_processes_values
+		   WHERE unknow_mac!=''
 		   ORDER BY FK_processes DESC, date DESC";
 	     	$result_mac = $DB->query($sql_mac);
 			while ($thread_mac = $DB->fetch_array($result_mac))
