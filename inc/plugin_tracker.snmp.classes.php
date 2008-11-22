@@ -1655,7 +1655,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		foreach($ArrayOID as $object=>$oid)
 		{
-echo "Objet : ".$object."\n";
+//echo "Objet : ".$object."\n";
 			if (!ereg("IF-MIB::",$object))
 			{
 				if(defined($object))
