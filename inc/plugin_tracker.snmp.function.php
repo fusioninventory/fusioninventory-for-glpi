@@ -682,17 +682,19 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 								AND end2 IN ('$sport', '$dport') ";
 
 							if ($resultVerif=$DB->query($queryVerif)) {
-								if ( $DB->numrows($resultVerif) != 0 )
+								if ( $DB->numrows($resultVerif) == 0 )
 								{
 									$netwire=new Netwire;
-									addLogConnection("remove",$netwire->getOppositeContact($dport));
-									addLogConnection("remove",$dport);
-									removeConnector($dport);
-								
+									if ($netwire->getOppositeContact($dport) != "")
+									{
+										addLogConnection("remove",$netwire->getOppositeContact($dport));
+										addLogConnection("remove",$dport);
+										removeConnector($dport);
+									}
+									makeConnector($sport,$dport);
+									addLogConnection("make",$dport);
+									addLogConnection("make",$sport);								
 								}
-								makeConnector($sport,$dport);
-								addLogConnection("make",$dport);
-								addLogConnection("make",$sport);								
 							}
 
 						}
