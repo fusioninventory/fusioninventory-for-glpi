@@ -186,12 +186,12 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 				$updateNetwork->DefineObject($Array_Object_oid_vtpVlanName);
 	
 				$Array_vlan = $updateNetwork->SNMPQueryWalkAll($Array_Object_oid_vtpVlanName,$ifIP,$snmp_version,$snmp_auth);
-				foreach ($Array_vlan as $objectdyn=>$oiddyn)
+				foreach ($Array_vlan as $objectdyn=>$vlan_name)
 				{
 					$explode = explode(".",$objectdyn);
 					$ID_VLAN = $explode[(count($explode) - 1)];
 					logInFile("tracker_snmp", "		VLAN : ".$ID_VLAN."\n\n");
-					GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$ID_VLAN,$array_port_trunk);
+					GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$ID_VLAN,$array_port_trunk,$vlan_name);
 				}
 			}
 		}
@@ -564,7 +564,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 
 
 
-function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$vlan="",$array_port_trunk=array())
+function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$vlan="",$array_port_trunk=array(),$vlan_name="")
 {
 
 	global $DB;
@@ -692,7 +692,15 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 									}
 									makeConnector($sport,$dport);
 									addLogConnection("make",$dport);
-									addLogConnection("make",$sport);								
+									addLogConnection("make",$sport);
+									
+									if ($vlan != "")
+									{
+										$SNMPValue = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
+										
+										// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
+										// $vlan_name
+									}
 								}
 							}
 
