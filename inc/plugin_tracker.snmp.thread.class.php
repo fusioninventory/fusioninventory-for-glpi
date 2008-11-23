@@ -60,7 +60,10 @@ class Threads extends CommonDBTM
 			echo "class='actif'";
 		echo "><a href='plugin_tracker.processes.unknow_mac.php'>&nbsp;".$LANGTRACKER["processes"][13]."&nbsp;</a></li>\n";
 		echo "<li><a href=''>&nbsp;".$LANGTRACKER["processes"][11]."&nbsp;</a></li>\n";
-		echo "<li><a href=''>&nbsp;".$LANGTRACKER["processes"][12]."&nbsp;</a></li>\n";
+		echo "<li ";
+		if ($array_name == "errors")
+			echo "class='actif'";
+		echo "><a href='plugin_tracker.processes.errors.php'>&nbsp;".$LANGTRACKER["processes"][12]."&nbsp;</a></li>\n";
 		echo "<ul></div>\n";
 
 	   echo "<div align='center'>";
@@ -103,7 +106,7 @@ class Threads extends CommonDBTM
 						//else	 echo "<td width='10'>&nbsp;</td>";
 						echo "<td width='10'>&nbsp;</td>";
 					
-						echo "<td align='center'><!--<a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">".$thread["process_id"]."</a>--></td>";
+						echo "<td align='center'><!--<a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">-->".$thread["process_id"]."<!--</a>--></td>";
 						echo "<td align='center'>";
 						
 						switch($Threads->getProcessStatus($thread["process_id"]))
@@ -202,9 +205,54 @@ class Threads extends CommonDBTM
 				echo "</tr>";
 			
 			}
-		
 		}
+		else if ($array_name == "errors")
+		{
+			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][12] . "</th></tr>";
+			echo "<tr>"; 
+			echo"<th></th>";
+			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
+			echo"<th>".$LANG["common"][1]."</th>";
+			echo"<th>".$LANGTRACKER["processes"][12]."</th>";
+			echo"<th>".$LANG["common"][27]."</th>";
+			echo "</th></tr>\n";
 		
+			$sql_errors = 	"SELECT *
+		   FROM glpi_plugin_tracker_processes_values
+		   WHERE snmp_errors!=''
+		   ORDER BY FK_processes DESC, date DESC";
+	     	$result_errors = $DB->query($sql_errors);
+			while ($thread_errors = $DB->fetch_array($result_errors))
+			{
+				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'></td>";
+				echo "<td align='center'>".$thread_errors["FK_processes"]."</td>";
+				
+				
+				$query_port = "SELECT * FROM glpi_networking_ports 
+				WHERE ID='".$thread_errors["port"]."' ";
+				$result_port = $DB->query($query_port);
+				$port_name = "";
+				while ($thread_port = $DB->fetch_array($result_port))
+				{
+					$on_device = $thread_port["on_device"];
+					$device_type = $thread_port["device_type"];
+					$port_name = $thread_port["name"];
+				}
+				if (isset($on_device) AND isset($device_type))
+				{
+					$CommonItem->getFromDB($device_type,$on_device);
+					echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
+				}
+				else
+				{
+					echo "<td align='center'></td>";
+				}
+				echo "<td align='center'>".$thread_errors["snmp_errors"]."</td>";
+				echo "<td align='center'>".$thread_errors["date"]."</td>";
+				echo "</tr>";
+			}		
+		}
 		echo "</table>";
 
 	}
