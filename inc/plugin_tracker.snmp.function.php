@@ -456,14 +456,13 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 				while ( $dataPortsTracker=$DB->fetch_assoc($resultPortsTracker) )
 				{
 					$ArrayPortListTracker[$data["logical_number"]] = $dataPortsTracker["ID"];
-					$ArrayDB_ID_FKNetPort[$data["logical_number"]] = $dataPortsTracker["FK_networking_ports"];
-					
+					$ArrayDB_ID_FKNetPort[$dataPortsTracker["FK_networking_ports"]] = $data["logical_number"];
+
 				}
 			} 
-		
+
 		}
 	}
-	
 	foreach($ArraySNMPPort_Object_result as $object=>$SNMPValue)
 	{
 		$ArrayObject = explode (".",$object);
