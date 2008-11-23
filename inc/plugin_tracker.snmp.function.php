@@ -187,9 +187,10 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 	
 				$Array_vlan = $updateNetwork->SNMPQueryWalkAll($Array_Object_oid_vtpVlanName,$ifIP,$snmp_version,$snmp_auth);
 				foreach ($Array_vlan as $objectdyn=>$oiddyn)
-				{			
+				{
 					$explode = explode(".",$objectdyn);
 					$ID_VLAN = $explode[(count($explode) - 1)];
+					logInFile("tracker_snmp", "		VLAN : ".$ID_VLAN."\n\n");
 					GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$ID_VLAN,$array_port_trunk);
 				}
 			}
@@ -671,31 +672,27 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 						if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 						{
 							$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
-							//echo "PORT : ".$dport."\n";
 							$sport = $ArrayPortsID[$ifName]; // Networking_Port
 							
 							$queryVerif = "SELECT *
 							
 							FROM glpi_networking_wire 
 							
-							WHERE end1 = '$sport' 
-								AND end2 = '$dport' ";
+							WHERE end1 IN ('$sport', '$dport')
+								AND end2 IN ('$sport', '$dport') ";
 
 							if ($resultVerif=$DB->query($queryVerif)) {
-								if ( $DB->numrows($resultVerif) == 0 )
+								if ( $DB->numrows($resultVerif) != 0 )
 								{
-									
-								
 									$netwire=new Netwire;
 									addLogConnection("remove",$netwire->getOppositeContact($dport));
 									addLogConnection("remove",$dport);
 									removeConnector($dport);
-
-									makeConnector($sport,$dport);
-									addLogConnection("make",$dport);
-									addLogConnection("make",$sport);								
+								
 								}
-							
+								makeConnector($sport,$dport);
+								addLogConnection("make",$dport);
+								addLogConnection("make",$sport);								
 							}
 
 						}
