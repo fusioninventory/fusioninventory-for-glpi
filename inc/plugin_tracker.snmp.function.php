@@ -585,7 +585,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
 	
 	$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
-	
+
 	$snmp_queries = new plugin_tracker_snmp;
 	
 	// $snmp_version
@@ -652,12 +652,26 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 					$MacAddress = str_replace(" ", ":", $MacAddress);
 					$MacAddress = strtolower($MacAddress);
 					$MacAddress = $snmp_queries->MAC_Rewriting($MacAddress);
+					
+// A METTRE EN DYN !!!!!!!!
+$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => "1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
+
+$snmp_queries->DefineObject($arrayTRUNKmod);
+		
+$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
+						
+					
 					$queryPortEnd = "SELECT * 
 					
 					FROM glpi_networking_ports
 					
 					WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
 						AND on_device!='".$IDNetworking."' ";
+					
+					if ($Arraytrunktype[1] == "1")
+					{
+						$queryPortEnd .= " AND device_type='2' ";
+					}
 
 					if ( $resultPortEnd=$DB->query($queryPortEnd) )
 					{
