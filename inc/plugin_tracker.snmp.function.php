@@ -707,7 +707,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 									
 									if ($vlan != "")
 									{
-										$SNMPValue = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
+										$ID_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
 										
 										// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
 										// $vlan_name
