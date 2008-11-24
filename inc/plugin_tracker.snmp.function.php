@@ -603,6 +603,17 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	
 	$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP,$snmp_version,$snmp_auth);
 	
+// TEST
+$Arraytest = array("dot1dTpFdbStatus" => "1.3.6.1.2.1.17.4.3.1.3");
+$snmp_queries->DefineObject($Arraytest);
+$Arraytestvalues = $snmp_queries->SNMPQueryWalkAll($Arraytest,$IP,$snmp_version,$snmp_auth);
+foreach($Arraytestvalues as $oid=>$value)
+{
+	echo "dot1dTpFdbStatus : ".$oid."=>".$value."\n";
+
+}
+
+	
 	$ArrayMACAdressTableVerif = array();
 	
 	foreach($ArrayMACAdressTable as $oid=>$value)
@@ -661,17 +672,21 @@ $snmp_queries->DefineObject($arrayTRUNKmod);
 $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
 						
 					
-					$queryPortEnd = "SELECT * 
-					
-					FROM glpi_networking_ports
-					
-					WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-						AND on_device!='".$IDNetworking."' ";
-					
-					if ($Arraytrunktype[1] == "1")
+					if ($Arraytrunktype[1] == "2")
 					{
-						$queryPortEnd .= " AND device_type='2' ";
+						$queryPortEnd = "SELECT * 
+						
+						FROM glpi_networking_ports
+						
+						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+							AND on_device!='".$IDNetworking."' ";
 					}
+					else if ($Arraytrunktype[1] == "1") // It's a trunk port
+					{
+						$queryPortEnd = "";
+					
+					}
+
 
 					if ( $resultPortEnd=$DB->query($queryPortEnd) )
 					{
