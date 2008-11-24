@@ -552,9 +552,20 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					WHERE ID='".$Field."'";
 	
 					$DB->query($queryUpdate);
+					
+					if (($object_name == "ifinternalstatus") AND (($SNMPValue == "2") OR ($SNMPValue == "down(2)")))
+					{
+						
+						$netwire=new Netwire;
+						addLogConnection("remove",$netwire->getOppositeContact($Field));
+						addLogConnection("remove",$Field);
+						removeConnector($Field);
+						
+					}					
+					
 					if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets'))
 					{
-						tracker_snmp_addLog($ArrayDB_ID_FKNetPort[$Field],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
+						tracker_snmp_addLog($Field,$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
 					}
 				}
 			}
