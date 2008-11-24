@@ -482,9 +482,9 @@ function appear_array(id){
 					$data_device = $DB->fetch_assoc($result_device);				
 					
 					$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
-					$link = $CommonItem->getLink(1);
-					$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$link);
-					echo "<td align='center'>".$link."</td>";
+					$link1 = $CommonItem->getLink(1);
+					$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$link1);
+					echo "<td align='center'>".$link1."<br/>".$link."</td>";
 				}
 				else
 				{
