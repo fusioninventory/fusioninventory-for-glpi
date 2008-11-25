@@ -310,6 +310,7 @@ CREATE TABLE `glpi_plugin_tracker_snmp_history` (
   `new_value` varchar(255) NOT NULL,
   `new_device_type` int(11) NOT NULL,
   `new_device_ID` int(11) NOT NULL,
+  `FK_process` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_ports` (`FK_ports`,`date_mod`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
