@@ -666,8 +666,7 @@ $snmp_queries->DefineObject($arrayTRUNKmod);
 		
 $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
 						
-					
-					if (!isset($Arraytrunktype[1]) OR $Arraytrunktype[1] == "2")
+					if (!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex]) OR $Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2")
 					{
 						$queryPortEnd = "SELECT * 
 						
@@ -676,7 +675,7 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
 							AND on_device!='".$IDNetworking."' ";
 					}
-					else if ($Arraytrunktype[1] == "1") // It's a trunk port
+					else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 					{
 						$queryPortEnd = "";
 					}
