@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')){
 }
 
 
-function tracker_snmp_addLog($port,$field,$old_value,$new_value)
+function tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0)
 {
 	global $DB,$CFG_GLPI;
 	$history = new plugin_tracker_SNMP_history;
@@ -49,13 +49,13 @@ function tracker_snmp_addLog($port,$field,$old_value,$new_value)
 	$array["new_value"] = $new_value;
 	
 	// Ajouter en DB
-	$history->insert_connection("field",$array);
+	$history->insert_connection("field",$array,$FK_process);
 }
 
 
 	
 // $status = connection or disconnection	
-function addLogConnection($status,$port)
+function addLogConnection($status,$port,$FK_process=0)
 {
 	global $DB,$CFG_GLPI;
 	$CommonItem = new CommonItem;
@@ -77,7 +77,7 @@ function addLogConnection($status,$port)
 	$array["device_ID"] = $netport->fields["on_device"];
 	//echo "HISTORY ".$array["FK_ports"]." - ".$array["device_type"]." - ".$array["value"]." - ".$array["device_ID"]."\n";
 	// Ajouter en DB
-	$history->insert_connection($status,$array);
+	$history->insert_connection($status,$array,$FK_process);
 }
 
 
