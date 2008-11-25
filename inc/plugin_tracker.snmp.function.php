@@ -251,7 +251,6 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 			if ((ereg("ethernetCsmacd",$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]])) OR ($array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]] == "6"))
 			{		
 				// Increment number of port queried in process
-				// $FK_process
 				$query = "UPDATE glpi_plugin_tracker_processes SET ports_queries = ports_queries + 1
 				WHERE process_id='".$FK_process."' ";
 				$DB->query($query);
@@ -301,7 +300,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						VALUES ('".$IDPort."') ";
 						
 						$DB->query($queryInsert);
-						tracker_snmp_addLog($IDPort,"port creation","","");
+						tracker_snmp_addLog($IDPort,"port creation","","",$FK_process);
 					
 					}
 					else
@@ -336,7 +335,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 								VALUES ('".$DB->result($result, 0, "ID")."') ";
 	
 								$DB->query($queryInsert);
-								tracker_snmp_addLog($DB->result($result, 0, "ID"),"SNMP port creation","","");
+								tracker_snmp_addLog($DB->result($result, 0, "ID"),"SNMP port creation","","",$FK_process);
 							
 							}
 						}
@@ -727,13 +726,13 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 									$netwire=new Netwire;
 									if ($netwire->getOppositeContact($dport) != "")
 									{
-										addLogConnection("remove",$netwire->getOppositeContact($dport));
-										addLogConnection("remove",$dport);
+										addLogConnection("remove",$netwire->getOppositeContact($dport),$FK_process);
+										addLogConnection("remove",$dport,$FK_process);
 										removeConnector($dport);
 									}
 									makeConnector($sport,$dport);
-									addLogConnection("make",$dport);
-									addLogConnection("make",$sport);
+									addLogConnection("make",$dport,$FK_process);
+									addLogConnection("make",$sport,$FK_process);
 									
 									if ($vlan != "")
 									{
