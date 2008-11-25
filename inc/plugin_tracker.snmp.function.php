@@ -88,7 +88,6 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 {
 	// logInFile("tracker_snmp", "II) Foreach device\n\n ");
 	$processes_values["devices"] = 0;
-	$processes_values["ports"] = 0;
 	$processes_values["errors"] = 0;
 	
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
@@ -146,7 +145,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 	
 				// ** Get oid ports Counter
 				// logInFile("tracker_snmp", "		f) Get oid Port list\n\n");
-				$ArrayPort_Object_oid = tracker_snmp_GetOIDPorts($snmp_model_ID,$ifIP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType);
+				$ArrayPort_Object_oid = tracker_snmp_GetOIDPorts($snmp_model_ID,$ifIP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process);
 	
 				// ** Define oid and object name
 				//$updateNetwork->DefineObject($Array_Object_oid);
@@ -160,7 +159,6 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 				// ** Get query SNMP of switchs ports
 				// logInFile("tracker_snmp", "		h) Query SNMP Ports\n\n");
 				$ArraySNMPPort_Object_result = $updateNetwork->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
-				$processes_values["ports"] = $processes_values["ports"] + count($ArrayPort_LogicalNum_SNMPNum);
 	
 				// ** Get link OID fields
 				// logInFile("tracker_snmp", "		i) Get Relation between object and table for update\n\n");
@@ -175,7 +173,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 	
 				// ** Update ports fields of switchs
 				// logInFile("tracker_snmp", "		k) Update ports infos on DB\n\n");
-				UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID);
+				UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process);
 	
 				// ** Get MAC adress of connected ports
 				// logInFile("tracker_snmp", "		l) Get and update MAC and connections\n\n");
@@ -200,7 +198,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 }
 
 
-function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType)
+function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process=0)
 {
 	
 	global $DB,$LANG;
@@ -252,6 +250,12 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 //echo "TYPEDEPORT :".$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]]." / OID:".$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]."\n";
 			if ((ereg("ethernetCsmacd",$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]])) OR ($array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]] == "6"))
 			{		
+				// Increment number of port queried in process
+				// $FK_process
+				$query = "UPDATE glpi_plugin_tracker_processes SET ports_queries = ports_queries + 1
+				WHERE process_id='".$FK_process."' ";
+				$DB->query($query);
+				
 			
 				$query = "SELECT ID,name
 			
@@ -419,7 +423,7 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 
 
 
-function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID)
+function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process=0)
 {
 
 	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
@@ -557,15 +561,15 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					{
 						
 						$netwire=new Netwire;
-						addLogConnection("remove",$netwire->getOppositeContact($Field));
-						addLogConnection("remove",$Field);
+						addLogConnection("remove",$netwire->getOppositeContact($Field),$FK_process);
+						addLogConnection("remove",$Field,$FK_process);
 						removeConnector($Field);
 						
 					}					
 					
 					if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets'))
 					{
-						tracker_snmp_addLog($Field,$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue);
+						tracker_snmp_addLog($Field,$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue,$FK_process);
 					}
 				}
 			}
@@ -661,7 +665,7 @@ $snmp_queries->DefineObject($arrayTRUNKmod);
 $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
 						
 					
-					if ($Arraytrunktype[1] == "2")
+					if (!isset($Arraytrunktype[1]) OR $Arraytrunktype[1] == "2")
 					{
 						$queryPortEnd = "SELECT * 
 						
