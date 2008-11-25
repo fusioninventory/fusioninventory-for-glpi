@@ -483,7 +483,7 @@ function appear_array(id){
 					
 					$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
 					$link1 = $CommonItem->getLink(1);
-					$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$link1);
+					$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$CommonItem->getLink());
 					echo "<td align='center'>".$link1."<br/>".$link."</td>";
 				}
 				else
