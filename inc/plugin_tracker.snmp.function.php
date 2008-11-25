@@ -676,7 +676,11 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
 							AND on_device!='".$IDNetworking."' ";
 					}
-					else if (($Arraytrunktype[1] == "1") AND ($vlan != "")) // It's a trunk port
+					else if ($Arraytrunktype[1] == "1") // It's a trunk port
+					{
+						$queryPortEnd = "";
+					}
+/*					else if (($Arraytrunktype[1] == "1") AND ($vlan != "")) // It's a trunk port
 					{
 						$queryPortEnd = "";
 					}
@@ -688,7 +692,7 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 						
 						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
 							AND on_device!='".$IDNetworking."' ";
-					}
+					}*/
 
 
 					if ( $resultPortEnd=$DB->query($queryPortEnd) )
