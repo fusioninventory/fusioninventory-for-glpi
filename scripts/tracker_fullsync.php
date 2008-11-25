@@ -102,7 +102,7 @@ logInFile("tracker_snmp", "I) Get all devices \n\n");
 $processes_values = UpdateNetworkBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep);
 
 // Update process into database
-$processes->updateProcess($fields["process_id"],$processes_values["devices"], "" , $processes_values["ports"], $processes_values["errors"]);
+$processes->updateProcess($fields["process_id"],$processes_values["devices"], "" , $processes_values["errors"]);
 // $NetworkQueries, $PrinterQueries, $portsQueries, $errors
 
 
