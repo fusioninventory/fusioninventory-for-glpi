@@ -43,6 +43,7 @@ class Threads extends CommonDBTM
 		$CommonItem = new CommonItem;
 		$Threads = new Threads;
 
+
 		$sql = 	"SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
 			"MIN(start_time) AS starting_date, MAX(end_time) AS ending_date, TIME_TO_SEC(MAX(end_time))-TIME_TO_SEC(MIN(start_time)) AS duree, " .
 			"end_time >= DATE_ADD(NOW(), INTERVAL -" . $minfreq . " HOUR) AS DoStat, error_msg, network_queries, 
@@ -64,7 +65,13 @@ class Threads extends CommonDBTM
 		if ($array_name == "errors")
 			echo "class='actif'";
 		echo "><a href='plugin_tracker.processes.errors.php'>&nbsp;".$LANGTRACKER["processes"][12]."&nbsp;</a></li>\n";
-		echo "<ul></div>\n";
+		echo "<li ";
+		if ($array_name == "connection")
+			echo "class='actif'";
+		echo "><a href='plugin_tracker.processes.connection.php'>&nbsp;".$LANGTRACKER["snmp"][50]."&nbsp;</a></li>\n";
+
+		echo "<ul>\n";
+		echo "</div>\n";
 
 	   echo "<div align='center'>";
 		echo "<form name='processes' action=\"$target\" method=\"post\">";
@@ -252,6 +259,62 @@ class Threads extends CommonDBTM
 				echo "<td align='center'>".$thread_errors["date"]."</td>";
 				echo "</tr>";
 			}		
+		}else if ($array_name == "connection")
+		{
+			$Netwire = new Netwire;
+			echo "<tr><th colspan='12'>".$LANGTRACKER["snmp"][50]."</th></tr>";
+			echo "<tr>"; 
+			echo"<th></th>";
+			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
+			echo"<th>".$LANG["joblist"][0]."</th>";
+			echo"<th>".$LANG["common"][1]."</th>";
+			echo"<th>".$LANG["setup"][175]."</th>";
+			echo"<th>".$LANG["common"][27]."</th>";
+			echo "</th></tr>\n";
+		
+			$sql_connection = 	"SELECT *
+		   FROM glpi_plugin_tracker_snmp_history
+		   WHERE Field=''
+		   ORDER BY FK_process DESC, date_mod DESC";
+	     	$result_connection = $DB->query($sql_connection);
+			while ($thread_connection = $DB->fetch_array($result_connection))
+			{
+				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'></td>";
+				echo "<td align='center'>".$thread_connection["FK_process"]."</td>";
+				
+				if (($thread_connection["old_device_ID"] != "0") OR ($thread_connection["new_device_ID"] != "0"))
+				{
+					// Connections and disconnections
+					if ($thread_connection["old_device_ID"] != "0")
+					{
+						echo "<td align='center'>Déconnexion</td>";
+						$CommonItem->getFromDB($thread_connection["old_device_type"],$thread_connection["old_device_ID"]);
+						echo "<td align='center'>".$CommonItem->getLink(1)."</td>";						
+					}
+					else if ($thread_connection["new_device_ID"] != "0")
+					{
+						echo "<td align='center'>Connexion</td>";
+						$CommonItem->getFromDB($thread_connection["new_device_type"],$thread_connection["new_device_ID"]);
+						echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
+					}
+
+					$query_port = "SELECT * FROM glpi_networking_ports 
+					WHERE ID='".$thread_connection["FK_ports"]."' ";
+					$result_port = $DB->query($query_port);
+					$port_name = "";
+					while ($thread_port = $DB->fetch_array($result_port))
+					{
+						$port_name = $thread_port["name"];
+					}
+					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$thread_connection["FK_ports"]."'>".$port_name."</a></td>";
+
+					echo "<td align='center'>".$thread_connection["date_mod"]."</td>";
+	
+				}
+			}
+		
+		
 		}
 		echo "</table>";
 
