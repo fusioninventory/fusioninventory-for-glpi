@@ -450,5 +450,24 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	}
 
 
+
+	function GetSNMPAuth($IDNetworking)
+	{
+	
+		global $DB;
+
+		$query = "SELECT FK_snmp_connection
+		FROM glpi_plugin_tracker_networking 
+		WHERE FK_networking='".$IDNetworking."' ";
+		
+		if ( ($result = $DB->query($query)) )
+		{
+			if ( $DB->numrows($result) != 0 )
+			{
+				return $DB->result($result, 0, "FK_snmp_connection");
+			}
+		}	
+	
+	}
 }
 ?>

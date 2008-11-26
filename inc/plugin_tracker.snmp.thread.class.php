@@ -309,6 +309,53 @@ class Threads extends CommonDBTM
 					}
 					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$thread_connection["FK_ports"]."'>".$port_name."</a></td>";
 
+
+
+
+/*
+
+
+					$query_opposite = "SELECT ID FROM glpi_networking_ports ";
+					if ($thread_connection["old_device_ID"] != "0")
+					{
+						$query_opposite .= "WHERE ifmac='".$thread_connection["old_value"]."' ";
+					}
+					else if ($thread_connection["new_device_ID"] != "0")
+					{
+						$query_opposite .= "WHERE ifmac='".$thread_connection["new_value"]."' ";
+					}
+					$result_opposite = $DB->query($query_opposite);
+					while ($thread_opposite = $DB->fetch_array($result_opposite))
+					{
+						$opposite_port = $thread_connection["FK_ports"]."/".$thread_opposite["ID"];
+					}
+					//echo $opposite_port."<br/>";
+					$query_port = "SELECT * FROM glpi_networking_ports 
+					WHERE ID='".$opposite_port."' ";
+					$result_port = $DB->query($query_port);
+					$port_name = "";
+					$on_device = "";
+					$device_type = "";
+					while ($thread_port = $DB->fetch_array($result_port))
+					{
+						$port_name = $thread_port["name"];
+						$on_device = $thread_port["on_device"];
+						$device_type = $thread_port["device_type"];
+					}
+					$CommonItem->getFromDB($device_type,$on_device);
+					echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
+					
+					// old_value
+					
+					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$opposite_port."'>".$port_name."</a></td>";
+
+*/
+
+
+
+
+
+
 					echo "<td align='center'>".$thread_connection["date_mod"]."</td>";
 	
 				}

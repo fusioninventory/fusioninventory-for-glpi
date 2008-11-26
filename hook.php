@@ -189,9 +189,17 @@ function plugin_tracker_getSearchOption(){
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['field']='unknow_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['linkfield']='unknow_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['name']=$LANG["networking"][15];
-	
-	
 
+
+
+//	$sopt[NETWORKING_TYPE][5154]['table']='glpi_plugin_tracker_networking';
+//	$sopt[NETWORKING_TYPE][5154]['field']='FK_model_infos';
+
+	$sopt[NETWORKING_TYPE][5154]['table']='glpi_plugin_tracker_networking';	$sopt[NETWORKING_TYPE][5154]['field']='FK_networking';
+	$sopt[NETWORKING_TYPE][5154]['linkfield']='ID';
+	$sopt[NETWORKING_TYPE][5154]['name']=$LANGTRACKER["title"][0]." - Modele";
+
+	
 	return $sopt;
 }
 
@@ -262,6 +270,12 @@ function plugin_tracker_giveItem($type,$field,$data,$num,$linkfield=""){
 			
 		case "glpi_plugin_tracker_errors.last_pb_date":
 			$out = convDateTime($data["ITEM_$num"]);
+			return $out;
+			break;
+		case "glpi_plugin_tracker_networking.FK_networking":
+			$plugin_tracker_snmp = new plugin_tracker_snmp;
+			$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"]);
+			$out=getDropdownName("glpi_plugin_tracker_model_infos",$FK_model_DB, 0);
 			return $out;
 			break;
 	}
@@ -522,9 +536,50 @@ function plugin_headings_tracker_userHistory($type,$ID){
 }
 
 
+function plugin_tracker_MassiveActions($type) {
+	global $TRACKERGLANG;
+	switch ($type) {
+		case NETWORKING_TYPE :
+			return array (
+				"plugin_tracker_assign_model" => "Assigner modele SNMP"
+			);
+			break;
+	}
+	return array ();
+}
 
 
+function plugin_tracker_MassiveActionsDisplay($type, $action) {
+	global $LANG, $CFG_GLPI;
+	switch ($type) {
+		case NETWORKING_TYPE :
+			switch ($action) {
+				case "plugin_tracker_assign_model" :
+					dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
+					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+					break;
+			}
+			break;
+	
+	}
+	return "";
+}
 
 
+function plugin_tracker_MassiveActionsProcess($data) {
+	global $LANG;
 
+	switch ($data['action']) {
+		case "plugin_tracker_assign_model" :
+			if ($data['device_type'] == NETWORKING_TYPE) {
+				foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+						plugin_tracker_assign($key,NETWORKING_TYPE,"model",$data["snmp_model"]);
+					}
+
+				}
+			}
+			break;
+	}
+}
 ?>
