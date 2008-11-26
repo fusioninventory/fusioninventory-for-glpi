@@ -165,6 +165,7 @@ class Threads extends CommonDBTM
 		}	
 		else if ($array_name == "unknow_mac")
 		{
+		/*
 			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][14] . "</th></tr>";
 			echo "<tr>"; 
 			echo"<th></th>";
@@ -212,6 +213,7 @@ class Threads extends CommonDBTM
 				echo "</tr>";
 			
 			}
+			*/
 		}
 		else if ($array_name == "errors")
 		{
