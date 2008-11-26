@@ -44,13 +44,14 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 $Threads = new Threads;
 
 $Threads->showProcesses($_SERVER["PHP_SELF"],"unknow_mac");
-/*		
+		
 manageGetValuesInSearch(PLUGIN_TRACKER_MAC_UNKNOW);
 
-searchForm(PLUGIN_TRACKER_MAC_UNKNOW,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
+//searchForm(PLUGIN_TRACKER_MAC_UNKNOW,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+$_GET["contains"][0]=":";
+$_GET["field"][0]=5;
 showList(PLUGIN_TRACKER_MAC_UNKNOW,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-*/
+
 commonFooter();
 
 

@@ -166,22 +166,22 @@ function plugin_tracker_getSearchOption(){
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW]['common']=$LANGTRACKER["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['table']='glpi_plugin_tracker_processes_values';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['field']='ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['linkfield']='ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['name']=$LANG["common"][2];
-
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['field']='FK_processes';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['linkfield']='FK_processes';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['name']=$LANGTRACKER["processes"][1];
+	
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['table']='glpi_plugin_tracker_processes_values';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['field']='FK_processes';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['linkfield']='FK_processes';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['name']=$LANGTRACKER["processes"][1];	
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['field']='ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['linkfield']='ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['name']=$LANG["common"][2];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['table']='glpi_networking';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['field']='ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['linkfield']='device_ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['table']='glpi_plugin_tracker_processes_values';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['field']='port';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['linkfield']='port';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['name']=$LANG["common"][1];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['table']='glpi_networking_ports';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['field']='name';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['table']='glpi_plugin_tracker_processes_values';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['field']='port';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['linkfield']='port';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][4]['name']=$LANG["setup"][175];
 
@@ -190,6 +190,10 @@ function plugin_tracker_getSearchOption(){
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['linkfield']='unknow_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][5]['name']=$LANG["networking"][15];
 
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['table']='glpi_plugin_tracker_processes_values';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['field']='date';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['linkfield']='date';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['name']=$LANG["common"][27];
 
 
 //	$sopt[NETWORKING_TYPE][5154]['table']='glpi_plugin_tracker_networking';
@@ -208,7 +212,7 @@ function plugin_tracker_getSearchOption(){
 }
 
 function plugin_tracker_giveItem($type,$field,$data,$num,$linkfield=""){
-	global $CFG_GLPI, $INFOFORM_PAGES, $LANGTRACKER;
+	global $CFG_GLPI, $INFOFORM_PAGES, $LANGTRACKER,$DB;
 
 	switch ($field){
 		case "glpi_plugin_tracker_model_infos.name" :
@@ -293,6 +297,28 @@ function plugin_tracker_giveItem($type,$field,$data,$num,$linkfield=""){
 				return $out;
 				break;
 			}
+		case "glpi_plugin_tracker_processes_values.port":
+			switch($num)
+			{
+				case "2":
+					$Array_device = getUniqueObjectfieldsByportID($data["ID"]);
+					$CommonItem = new CommonItem;
+					$CommonItem->getFromDB($Array_device["device_type"],$Array_device["on_device"]);
+					$out = "<div align='center'>".$CommonItem->getLink(1)."</div>";
+					break;
+				case "3":
+					$query = "SELECT * FROM glpi_networking_ports 
+					WHERE ID='".$data["ID"]."' ";
+					if ($result=$DB->query($query))
+					{
+						$name = $DB->result($result,0,"name");
+					
+					}
+					$out = "<div align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ID"]."'>".$name."</a></td>";
+					break;
+			}				
+			return $out;
+			break;
 	}
 
 	if (($type == PLUGIN_TRACKER_MODEL) AND ($num == "5"))
