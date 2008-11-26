@@ -34,6 +34,12 @@
 class Threads extends CommonDBTM
 {
 
+	function __construct() {
+		$this->table = "glpi_plugin_tracker_processes_values";
+		$this->type = PLUGIN_TRACKER_MAC_UNKNOW;
+	}
+
+
 	function showProcesses($target,$array_name="")
 	{
 
