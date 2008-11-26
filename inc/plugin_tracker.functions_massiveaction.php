@@ -39,8 +39,6 @@ function plugin_tracker_assign($id, $source_type, $source_field, $source_value)
 {
 	global $DB;
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
-	// Get model
-//	$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($id);
 	
 	if ($source_field == "model")
 	{
@@ -48,7 +46,14 @@ function plugin_tracker_assign($id, $source_type, $source_field, $source_value)
 		$snmp_auth = new plugin_tracker_snmp_auth;
 		$FK_snmp_auth_DB = $snmp_auth->GetSNMPAuth($id);
 		$plugin_tracker_snmp->update_network_infos($id, $source_value, $FK_snmp_auth_DB);
-	}	
+	}
+	else if ($source_field == "auth")
+	{
+		// Get model
+		$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($id);
+		$plugin_tracker_snmp->update_network_infos($id, $FK_model_DB, $source_value);
+
+	}
 	
 }
 

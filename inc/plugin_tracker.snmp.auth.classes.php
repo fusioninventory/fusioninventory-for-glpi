@@ -393,6 +393,10 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 								$recup = 1;
 							}
 							break;
+						case 2:
+							if ($recup == "1")
+									$snmp_auth["Name"] = $item;
+							
 						case 3:
 							if ($recup == "1")
 									$snmp_auth["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
@@ -434,7 +438,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			$query = "SELECT * FROM glpi_plugin_tracker_snmp_connection
 			WHERE ID='".$ID_auth."' ";
 			$result=$DB->query($query);
-
+			$snmp_auth["Name"] = $DB->result($result,0,"name");
 			$snmp_auth["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$DB->result($result,0,"FK_snmp_version"));
 			$snmp_auth["community"] = $DB->result($result,0,"community");
 			$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
@@ -469,5 +473,9 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		}	
 	
 	}
+	
+	
+
+	
 }
 ?>
