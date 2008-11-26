@@ -92,7 +92,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				{
 					echo "<tr class='tab_bg_1'>";
 					echo "<td align='center'>";
-					echo "<input name='item[".$data["ID"]."]' value='1' type='checkbox'>";
+					echo "<input name='item_coche[]' value='".$data["ID"]."' type='checkbox'>";
 					echo "</td>";
 	
 					echo "<td align='center'>";
@@ -128,11 +128,14 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					
 					echo "</tr>";
 				}
-				
+				echo "<tr class='tab_bg_1'>
+					<td colspan='7'><input type='submit' name='delete_oid' value=\"".$LANG["buttons"][6]."\" class='submit' ></td>
+				</tr>";
+				echo "<tr><td colspan='7'></td></tr>";
 				
 				
 				// ********** Ajout d'une dernière ligne pour ajouter nouveau OID ********** //
-				echo "<tr><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
+				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<td align='center'></td>";
@@ -225,6 +228,22 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$ID."'><b>Retour</b></a>";
 	}
 	*/
+	
+
+	
+	function delete($item_coche)
+	{
+		global $DB;
+		
+		for ($i = 0; $i < count($item_coche); $i++)
+		{
+			$query = "DELETE FROM glpi_plugin_tracker_mib_networking WHERE id=".$item_coche[$i]." ";
+			$DB->query($query);
+		}
+
+	}
+
+
 }
 
 ?>

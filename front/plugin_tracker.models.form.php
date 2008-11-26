@@ -81,6 +81,12 @@ if (isset($_GET["ID"]))
 	$ID = $_GET["ID"];
 }
 
+if(!empty($_POST["item_coche"]))
+{
+	$plugin_tracker_mib_networking->delete($_POST["item_coche"]);
+	glpi_header($_SERVER['HTTP_REFERER']);
+}
+
 $plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
 $plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
 
