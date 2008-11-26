@@ -198,6 +198,10 @@ function plugin_tracker_getSearchOption(){
 	$sopt[NETWORKING_TYPE][5154]['table']='glpi_plugin_tracker_networking';	$sopt[NETWORKING_TYPE][5154]['field']='FK_networking';
 	$sopt[NETWORKING_TYPE][5154]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5154]['name']=$LANGTRACKER["title"][0]." - Modele";
+	
+	$sopt[NETWORKING_TYPE][5155]['table']='glpi_plugin_tracker_networking';	$sopt[NETWORKING_TYPE][5155]['field']='FK_networking';
+	$sopt[NETWORKING_TYPE][5155]['linkfield']='ID';
+	$sopt[NETWORKING_TYPE][5155]['name']=$LANGTRACKER["title"][0]." - Authentification SNMP";
 
 	
 	return $sopt;
@@ -273,11 +277,22 @@ function plugin_tracker_giveItem($type,$field,$data,$num,$linkfield=""){
 			return $out;
 			break;
 		case "glpi_plugin_tracker_networking.FK_networking":
-			$plugin_tracker_snmp = new plugin_tracker_snmp;
-			$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"]);
-			$out=getDropdownName("glpi_plugin_tracker_model_infos",$FK_model_DB, 0);
-			return $out;
-			break;
+			if ($num == "9")
+			{
+				$plugin_tracker_snmp = new plugin_tracker_snmp;
+				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"]);
+				$out="<div align='center'>".getDropdownName("glpi_plugin_tracker_model_infos",$FK_model_DB, 0)."</div>";
+				return $out;
+				break;
+			}
+			else if ($num == "10")
+			{
+				$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+				$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"],GLPI_ROOT."/plugins/tracker/scripts/");
+				$out="<div align='center'>".$FK_snmp_DB["Name"]."</div>";
+				return $out;
+				break;
+			}
 	}
 
 	if (($type == PLUGIN_TRACKER_MODEL) AND ($num == "5"))
@@ -541,7 +556,8 @@ function plugin_tracker_MassiveActions($type) {
 	switch ($type) {
 		case NETWORKING_TYPE :
 			return array (
-				"plugin_tracker_assign_model" => "Assigner modele SNMP"
+				"plugin_tracker_assign_model" => "Assigner modele SNMP",
+				"plugin_tracker_assign_auth" => "Assigner authentification SNMP"
 			);
 			break;
 	}
@@ -550,12 +566,27 @@ function plugin_tracker_MassiveActions($type) {
 
 
 function plugin_tracker_MassiveActionsDisplay($type, $action) {
-	global $LANG, $CFG_GLPI;
+	global $LANG, $CFG_GLPI, $DB;
 	switch ($type) {
 		case NETWORKING_TYPE :
 			switch ($action) {
 				case "plugin_tracker_assign_model" :
 					dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
+					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+					break;
+				case "plugin_tracker_assign_auth" :
+
+					$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
+					$result_conf=$DB->query($query_conf);
+					if ($DB->result($result_conf,0,"authsnmp") == "file")
+					{
+						$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+						echo $plugin_tracker_snmp_auth->selectbox();
+					}
+					else  if ($DB->result($result_conf,0,"authsnmp") == "DB")
+					{
+						dropdownValue("glpi_plugin_tracker_snmp_connection","auth_snmp","",0);
+					}
 					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
 					break;
 			}
@@ -575,6 +606,16 @@ function plugin_tracker_MassiveActionsProcess($data) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
 						plugin_tracker_assign($key,NETWORKING_TYPE,"model",$data["snmp_model"]);
+					}
+
+				}
+			}
+			break;
+		case "plugin_tracker_assign_auth" :
+			if ($data['device_type'] == NETWORKING_TYPE) {
+				foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+						plugin_tracker_assign($key,NETWORKING_TYPE,"auth",$data["auth_snmp"]);
 					}
 
 				}
