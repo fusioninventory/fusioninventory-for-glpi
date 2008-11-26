@@ -131,7 +131,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				
 				
 				
-				// Ajout d'une dernière ligne pour ajouter nouveau OID
+				// ********** Ajout d'une dernière ligne pour ajouter nouveau OID ********** //
 				echo "<tr><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
 				
 				echo "<tr class='tab_bg_1'>";
@@ -162,6 +162,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<td align='center'>";
 				//echo "<select name='links_oid_fields' size='1'>";
 				$types = array();
+				$types[] = "-----";
 				foreach ($TRACKER_MAPPING as $type=>$mapping43)
 				{
 					if (isset($TRACKER_MAPPING[$type]))
