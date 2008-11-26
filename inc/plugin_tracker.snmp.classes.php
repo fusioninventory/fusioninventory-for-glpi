@@ -285,18 +285,7 @@ abstract class plugin_tracker_snmp2 {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		
-		$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
-		$result_conf=$DB->query($query_conf);
-		if ($DB->result($result_conf,0,"authsnmp") == "file")
-		{
-			$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-			echo $plugin_tracker_snmp_auth->selectbox($data["FK_snmp_connection"]);
-		}
-		else  if ($DB->result($result_conf,0,"authsnmp") == "DB")
-		{
-			dropdownValue("glpi_plugin_tracker_snmp_connection","auth_snmp",$data["FK_snmp_connection"],0);
-		}
+		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
 		echo "</tr>";
 

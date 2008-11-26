@@ -575,18 +575,7 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
 					break;
 				case "plugin_tracker_assign_auth" :
-
-					$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
-					$result_conf=$DB->query($query_conf);
-					if ($DB->result($result_conf,0,"authsnmp") == "file")
-					{
-						$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-						echo $plugin_tracker_snmp_auth->selectbox();
-					}
-					else  if ($DB->result($result_conf,0,"authsnmp") == "DB")
-					{
-						dropdownValue("glpi_plugin_tracker_snmp_connection","auth_snmp","",0);
-					}
+					plugin_tracker_snmp_auth_dropdown();
 					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
 					break;
 			}
