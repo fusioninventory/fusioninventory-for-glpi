@@ -74,9 +74,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 			if ($result = $DB->query($query))
 			{
 				echo "<br>";
-				echo "<div align='center'><form method='post' name='' id=''  action=\"".$target."\">";
+				echo "<div align='center'><form method='post' name='odi_list' id='oid_list'  action=\"".$target."\">";
 		
-				echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
+				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
+				echo "<table class='tab_cadre_fixe'><tr><th colspan='7'>";
 				echo $LANGTRACKER["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
@@ -128,11 +129,27 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					
 					echo "</tr>";
 				}
+				echo "</table>";
+				
+				echo "<div align='center'>";
+				echo "<table class='tab_cadre_fixe'>";
+				echo "<tr>"; 
+				echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td><td align='center'><a onclick= \"if ( markAllRows('oid_list') ) return false;\" href='".$_SERVER['PHP_SELF']."?check=all'>".$LANG["buttons"][18]."</a></td>";
+				echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkAllRows('oid_list') ) return false;\" href='".$_SERVER['PHP_SELF']."?check=none'>".$LANG["buttons"][19]."</a>";
+				echo "</td><td align='left' colspan='6' width='80%'>"; 
+				echo "<input class='submit' type='submit' name='delete_oid' value='" . $LANG["buttons"][6] . "'>";
+				echo "</td>";
+				echo "</tr>";
+				echo "</table></div>";
+	
+	
+				echo "<table class='tab_cadre_fixe'>";
+				/*
 				echo "<tr class='tab_bg_1'>
 					<td colspan='7'><input type='submit' name='delete_oid' value=\"".$LANG["buttons"][6]."\" class='submit' ></td>
 				</tr>";
 				echo "<tr><td colspan='7'></td></tr>";
-				
+				*/
 				
 				// ********** Ajout d'une dernière ligne pour ajouter nouveau OID ********** //
 				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
