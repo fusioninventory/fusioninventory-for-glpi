@@ -131,7 +131,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 			{
 				// SNMP error (Query impossible)
 				$processes_values["errors"]++;
-				$processes->addProcessValues($FK_process,"snmp_errors","","SNMP Query impossible");
+				$processes->addProcessValues($FK_process,"snmp_errors","","SNMP Query impossible (".$IDNetworking.")");
 			}
 			else
 			{
@@ -227,7 +227,6 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 		$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP,$snmp_version,$snmp_auth);
 
 		$portsnumber = $Arrayportsnumber[$object];
-//echo "PORTNUMBER : ".$portsnumber."\n";
 		// We have the number of Ports
 
 		// Add ports in DataBase if they don't exists
@@ -242,12 +241,10 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 
 		for ($i = 0; $i < $portsnumber; $i++)
 		{
-//echo "PORT :".$i."\n";			
 			// Get type of port
 			
 			$snmp_queries->DefineObject(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]));
 			$array_ifType = $snmp_queries->SNMPQuery(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]),$IP,$snmp_version,$snmp_auth);
-//echo "TYPEDEPORT :".$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]]." / OID:".$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]."\n";
 			if ((ereg("ethernetCsmacd",$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]])) OR ($array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]] == "6"))
 			{		
 				// Increment number of port queried in process
@@ -283,16 +280,6 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						
 						$IDPort = $np->add($array);
 						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
-	
-	
-						//$queryInsert = "INSERT INTO glpi_networking_ports 
-						//	(on_device,device_type,logical_number)
-						
-						//VALUES ('".$IDNetworking."','2','".$i."') ";
-						
-						//$DB->query($query);
-						
-						//$IDPort = mysql_insert_id();
 						
 						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
 							(FK_networking_ports)
@@ -349,15 +336,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 	// Get oid list of ports
 
 	$oidList = $snmp_queries->GetOID($snmp_model_ID,"oid_port_dyn='1'",$Arrayportsnumber[$object],$ArrayPort_LogicalNum_SNMPNum);
-
-	// Debug
-/*	foreach($oidList as $object=>$oid)
-	{
-		echo "===========>".$object." => ".$oid."\n";
-	}*/
-	// Debug END		
 	return $oidList;
-	
 }	
 
 
@@ -526,7 +505,6 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 			if ($object_name == "ifPhysAddress")
 			{
 				$snmp_queries = new plugin_tracker_snmp;
-//				echo $SNMPValue."\n";
 				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
 			}
 			if (($Field != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['field'] != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['table'] != ""))
@@ -539,7 +517,6 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 				{
 					while ( $data_select=$DB->fetch_assoc($result_select) )
 					{
-//	echo "ALERTE :".$object_name." : ".$SNMPValue." - ".$data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']]."\n";
 						if ($SNMPValue != $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']])
 						{
 							$update = 1;
@@ -691,73 +668,75 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 							AND on_device!='".$IDNetworking."' ";
 					}
 
-
-					if ( $resultPortEnd=$DB->query($queryPortEnd) )
+					if (($queryPortEnd != ""))
 					{
-						$traitement = 1;
-						if ($vlan != "")
+						if ($resultPortEnd=$DB->query($queryPortEnd))
 						{
-							if (isset($array_port_trunk[$ArrayPortsID[$ifName]]) && $array_port_trunk[$ArrayPortsID[$ifName]] == "1")
+							$traitement = 1;
+							if ($vlan != "")
+							{
+								if (isset($array_port_trunk[$ArrayPortsID[$ifName]]) && $array_port_trunk[$ArrayPortsID[$ifName]] == "1")
+								{
+									$traitement = 0;
+								}
+							}
+							else
+							{
+								$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+							}						
+							
+							if (!isset($ArrayPortsID[$ifName]))
 							{
 								$traitement = 0;
 							}
-						}
-						else
-						{
-							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-						}						
-						
-						if (!isset($ArrayPortsID[$ifName]))
-						{
-							$traitement = 0;
-						}
-						
-						if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
-						{
-							$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
-							$sport = $ArrayPortsID[$ifName]; // Networking_Port
 							
-							$queryVerif = "SELECT *
-							
-							FROM glpi_networking_wire 
-							
-							WHERE end1 IN ('$sport', '$dport')
-								AND end2 IN ('$sport', '$dport') ";
-
-							if ($resultVerif=$DB->query($queryVerif)) {
-								if ( $DB->numrows($resultVerif) == 0 )
-								{
-									$netwire=new Netwire;
-									if ($netwire->getOppositeContact($dport) != "")
+							if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
+							{
+								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+								$sport = $ArrayPortsID[$ifName]; // Networking_Port
+								
+								$queryVerif = "SELECT *
+								
+								FROM glpi_networking_wire 
+								
+								WHERE end1 IN ('$sport', '$dport')
+									AND end2 IN ('$sport', '$dport') ";
+	
+								if ($resultVerif=$DB->query($queryVerif)) {
+									if ( $DB->numrows($resultVerif) == 0 )
 									{
-										addLogConnection("remove",$netwire->getOppositeContact($dport),$FK_process);
-										addLogConnection("remove",$dport,$FK_process);
-										removeConnector($dport);
-									}
-									makeConnector($sport,$dport);
-									addLogConnection("make",$dport,$FK_process);
-									addLogConnection("make",$sport,$FK_process);
-									
-									if ($vlan != "")
-									{
-										$ID_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
+										$netwire=new Netwire;
+										if ($netwire->getOppositeContact($dport) != "")
+										{
+											addLogConnection("remove",$netwire->getOppositeContact($dport),$FK_process);
+											addLogConnection("remove",$dport,$FK_process);
+											removeConnector($dport);
+										}
+										makeConnector($sport,$dport);
+										addLogConnection("make",$dport,$FK_process);
+										addLogConnection("make",$sport,$FK_process);
 										
-										// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
-										// $vlan_name
+										if ($vlan != "")
+										{
+											$ID_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
+											
+											// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
+											// $vlan_name
+										}
 									}
 								}
+	
 							}
-
-						}
-						else if ( $traitement == "1" )
-						{
-							// Mac address unknow
-							if ($FK_process != "0")
+							else if ( $traitement == "1" )
 							{
-								//echo "MAC UNKNOW > FK_process : ".$FK_process."\n";
-								//echo "MAC UNKNOW > ArrayPortsID[$ifName] : ".$ArrayPortsID[$ifName]."\n";
-								//echo "MAC UNKNOW > MacAddress : ".$MacAddress."\n";
-								$processes->addProcessValues($FK_process,"unknow_mac",$ArrayPortsID[$ifName],$MacAddress);
+								// Mac address unknow
+								if ($FK_process != "0")
+								{
+									//echo "MAC UNKNOW > FK_process : ".$FK_process."\n";
+									//echo "MAC UNKNOW > ArrayPortsID[$ifName] : ".$ArrayPortsID[$ifName]."\n";
+									//echo "MAC UNKNOW > MacAddress : ".$MacAddress."\n";
+									$processes->addProcessValues($FK_process,"unknow_mac",$ArrayPortsID[$ifName],$MacAddress);
+								}
 							}
 						}
 					}
