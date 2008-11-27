@@ -1257,27 +1257,30 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
-			if ($version == "1")
+			if ($oid[strlen($oid)-1] != ".")
 			{
-				runkit_constant_remove($object);
-				define($object,$oid);
-
-				$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,1000000,2);
+				if ($version == "1")
+				{
+					runkit_constant_remove($object);
+					define($object,$oid);
+	
+					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,1000000,2);
+				}
+				else if ($version == "2c")
+				{
+					$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,1000000,2);
+				}
+				else if ($version == "3")
+				{
+					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1000000,2);
+				}
+				logInFile("tracker_snmp", "			SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue."\n\n");
+				$ArraySNMPValues = explode(": ", $SNMPValue);
+				if (!isset($ArraySNMPValues[1]))
+					$ArraySNMPValues[1] = "";
+				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
+				$ArraySNMP[$object] = $ArraySNMPValues[1];
 			}
-			else if ($version == "2c")
-			{
-				$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,1000000,2);
-			}
-			else if ($version == "3")
-			{
-				$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1000000,2);
-			}
-			logInFile("tracker_snmp", "			SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue."\n\n");
-			$ArraySNMPValues = explode(": ", $SNMPValue);
-			if (!isset($ArraySNMPValues[1]))
-				$ArraySNMPValues[1] = "";
-			$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
-			$ArraySNMP[$object] = $ArraySNMPValues[1];
 		}
 		return $ArraySNMP;
 	}
