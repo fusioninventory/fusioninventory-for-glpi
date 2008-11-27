@@ -200,9 +200,9 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 
 function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process=0)
 {
-	
-	global $DB,$LANG;
 
+	global $DB,$LANG;
+ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
 	$oidList = array();
 	$object = "";
 	$portcounter = "";
@@ -724,10 +724,13 @@ echo "TRAITEMENT :".$traitement."\n";
 											addLogConnection("remove",$netwire->getOppositeContact($dport),$FK_process);
 											addLogConnection("remove",$dport,$FK_process);
 											removeConnector($dport);
+echo "REMOVE CONNECTOR :".$dport."\n";
 											removeConnector($sport);
+echo "REMOVE CONNECTOR :".$sport."\n";
 									//	}
 									
 										makeConnector($sport,$dport);
+echo "MAKE CONNECTOR :".$sport." - ".$dport."\n";
 										addLogConnection("make",$dport,$FK_process);
 										addLogConnection("make",$sport,$FK_process);
 										
@@ -754,6 +757,7 @@ echo "TRAITEMENT :".$traitement."\n";
 										$query_del = "DELETE FROM glpi_networking_wire 
 										WHERE ID='".$dataVerif2["ID"]."' ";
 										$DB->query($query_del);
+echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 									}
 									$queryVerif2 = "SELECT *
 									FROM glpi_networking_wire 
@@ -766,6 +770,7 @@ echo "TRAITEMENT :".$traitement."\n";
 										$query_del = "DELETE FROM glpi_networking_wire 
 										WHERE ID='".$dataVerif2["ID"]."' ";
 										$DB->query($query_del);
+echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 									}
 								}
 							}
