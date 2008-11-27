@@ -564,6 +564,8 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	
 	$processes = new Threads;
 	
+	$netwire=new Netwire;
+	
 	$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
 	
 	$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
@@ -702,6 +704,7 @@ echo "PASSAGE ... OK (2)\n";
 
 							if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 							{
+echo "TRAITEMENT :".$traitement."\n";
 								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 								$sport = $ArrayPortsID[$ifName]; // Networking_Port
 								$queryVerif = "SELECT *
@@ -711,8 +714,8 @@ echo "PASSAGE ... OK (2)\n";
 								WHERE end1 IN ('$sport', '$dport')
 									AND end2 IN ('$sport', '$dport') ";
 	
-								if ($resultVerif=$DB->query($queryVerif)) {
-									$netwire=new Netwire;
+								if ($resultVerif=$DB->query($queryVerif))
+								{
 									if ( $DB->numrows($resultVerif) == "0" )
 									{
 										//$netwire=new Netwire;
