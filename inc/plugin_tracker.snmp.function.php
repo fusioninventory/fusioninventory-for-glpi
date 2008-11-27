@@ -644,7 +644,8 @@ $arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => "1.3.
 $snmp_queries->DefineObject($arrayTRUNKmod);
 		
 $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
-						
+					
+					$queryPortEnd = "";	
 					if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
 					{
 						$queryPortEnd = "SELECT * 
@@ -732,10 +733,8 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 								// Mac address unknow
 								if ($FK_process != "0")
 								{
-									//echo "MAC UNKNOW > FK_process : ".$FK_process."\n";
-									//echo "MAC UNKNOW > ArrayPortsID[$ifName] : ".$ArrayPortsID[$ifName]."\n";
-									//echo "MAC UNKNOW > MacAddress : ".$MacAddress."\n";
-									$processes->addProcessValues($FK_process,"unknow_mac",$ArrayPortsID[$ifName],$MacAddress);
+									//$processes->addProcessValues($FK_process,"unknow_mac",$ArrayPortsID[$ifName],$MacAddress);
+									$processes->unknownMAC($FK_process,$ArrayPortsID[$ifName],$MacAddress);
 								}
 							}
 						}

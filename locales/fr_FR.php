@@ -206,6 +206,10 @@ $LANGTRACKER["processes"][11]="Champs ajoutés";
 $LANGTRACKER["processes"][12]="Erreurs SNMP";
 $LANGTRACKER["processes"][13]="MAC inconnues";
 $LANGTRACKER["processes"][14]="Liste des adresse MAC inconnues";
+$LANGTRACKER["processes"][15]="Premier PID";
+$LANGTRACKER["processes"][16]="Dernier PID";
+$LANGTRACKER["processes"][17]="Date de la première détection";
+$LANGTRACKER["processes"][18]="Date de la dernière détection";
 
 $LANGTRACKER["state"][0]="Démarrage de l'ordinateur";
 $LANGTRACKER["state"][1]="Arrêt de l'ordinateur";
