@@ -699,13 +699,11 @@ echo "PASSAGE ... OK (2)\n";
 							{
 								$traitement = 0;
 							}
-echo "TRAITEMENT :".$traitement."\n";
+
 							if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 							{
 								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 								$sport = $ArrayPortsID[$ifName]; // Networking_Port
-echo "PORT Switch : ".$sport."\n";
-echo "PORT OTHER : ".$dport."\n";
 								$queryVerif = "SELECT *
 								
 								FROM glpi_networking_wire 
@@ -714,27 +712,20 @@ echo "PORT OTHER : ".$dport."\n";
 									AND end2 IN ('$sport', '$dport') ";
 	
 								if ($resultVerif=$DB->query($queryVerif)) {
-echo "QUERY : ".$queryVerif."\n";
-echo "Result :".$DB->numrows($resultVerif)."\n";
+									$netwire=new Netwire;
 									if ( $DB->numrows($resultVerif) == "0" )
 									{
-										$netwire=new Netwire;
+										//$netwire=new Netwire;
 									//	if ($netwire->getOppositeContact($dport) != "")
 									//	{
-echo "HISTORY => REMOVE =>PORT :".$netwire->getOppositeContact($dport)."\n";
 											addLogConnection("remove",$netwire->getOppositeContact($dport),$FK_process);
-echo "HISTORY => REMOVE =>PORT :".$dport."\n";
 											addLogConnection("remove",$dport,$FK_process);
-echo "REMOVE CONNECTOR :".$dport."\n";
 											removeConnector($dport);
-echo "REMOVE CONNECTOR :".$sport."\n";
 											removeConnector($sport);
 									//	}
-echo "MAKE CONNECTOR :".$sport." - ".$dport."\n";
+									
 										makeConnector($sport,$dport);
-echo "HISTORY => MAKE =>PORT :".$dport."\n";
 										addLogConnection("make",$dport,$FK_process);
-echo "HISTORY => MAKE =>PORT :".$sport."\n";
 										addLogConnection("make",$sport,$FK_process);
 										
 										if ($vlan != "")
@@ -746,7 +737,34 @@ echo "HISTORY => MAKE =>PORT :".$sport."\n";
 										}
 									}
 								}
-	
+								// Remove all connections if it is
+								if ($netwire->getOppositeContact($dport) != "")
+								{
+									$queryVerif2 = "SELECT *
+									FROM glpi_networking_wire 
+									WHERE end1='".$netwire->getOppositeContact($dport)."'
+										AND end2!='$dport' ";
+									
+									$resultVerif2=$DB->query($queryVerif2);
+									while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
+									{
+										$query_del = "DELETE FROM glpi_networking_wire 
+										WHERE ID='".$dataVerif2["ID"]."' ";
+										$DB->query($query_del);
+									}
+									$queryVerif2 = "SELECT *
+									FROM glpi_networking_wire 
+									WHERE end1='$dport'
+										AND end2!='".$netwire->getOppositeContact($dport)."' ";
+									
+									$resultVerif2=$DB->query($queryVerif2);
+									while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
+									{
+										$query_del = "DELETE FROM glpi_networking_wire 
+										WHERE ID='".$dataVerif2["ID"]."' ";
+										$DB->query($query_del);
+									}
+								}
 							}
 							else if ( $traitement == "1" )
 							{
