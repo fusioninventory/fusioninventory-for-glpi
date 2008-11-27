@@ -257,7 +257,8 @@ CREATE TABLE `glpi_plugin_tracker_processes_values` (
   `snmp_errors` varchar(255) NOT NULL,
   `dropdown_add` varchar(255) NOT NULL,
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `unknow_mac` (`unknow_mac`,`FK_processes`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -315,6 +316,19 @@ CREATE TABLE `glpi_plugin_tracker_snmp_history` (
   KEY `FK_ports` (`FK_ports`,`date_mod`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_unknown_mac`;
+
+CREATE TABLE `glpi_plugin_tracker_unknown_mac` (
+	`ID` INT( 100 ) NOT NULL AUTO_INCREMENT,
+	`start_FK_processes` INT( 8 ) NOT NULL,
+	`end_FK_processes` INT( 8 ) NOT NULL,
+	`start_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`end_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`port` INT( 8 ) NOT NULL,
+	`unknow_mac` VARCHAR( 255 ) NOT NULL,
+	PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; 
 
 
 
