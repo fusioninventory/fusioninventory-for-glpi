@@ -402,17 +402,19 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 		
 		$SNMPValue = preg_replace('/^\"/', '',$SNMPValue);
 		$SNMPValue = preg_replace('/\"$/', '',$SNMPValue);
-
-		$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 		
-		SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-		
-		WHERE ".$Field."='".$IDNetworking."'";
-		
-		// update via :  $networking->update(array("serial"=>"tonnumero"));
-		
-		$DB->query($queryUpdate);
-		
+		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
+		{
+			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+			
+			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
+			
+			WHERE ".$Field."='".$IDNetworking."'";
+			
+			// update via :  $networking->update(array("serial"=>"tonnumero"));
+			
+			$DB->query($queryUpdate);
+		}
 		//<MoYo> cleanAllItemCache($item,$group)
 		//<MoYo> $item = ID
 		//<MoYo> group = GLPI_ + NETWORKING_TYPE
@@ -527,7 +529,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 //				echo $SNMPValue."\n";
 				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
 			}
-			if ($Field != "")
+			if (($Field != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['field'] != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['table'] != ""))
 			{
 				$update = 0;
 				$query_select = "SELECT ".$TRACKER_MAPPING[$object_type][$object_name]['field']."
