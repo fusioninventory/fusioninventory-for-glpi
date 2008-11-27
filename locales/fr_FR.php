@@ -37,8 +37,8 @@ $title="Tracker";
 $version="0.1";
 
 $LANGTRACKER["title"][0]="$title";
-$LANGTRACKER["title"][1]="[Trk] Infos";
-$LANGTRACKER["title"][2]="[Trk] Historique";
+$LANGTRACKER["title"][1]="Informations SNMP";
+$LANGTRACKER["title"][2]="Historique de connexion";
 $LANGTRACKER["title"][3]="[Trk] Erreurs";
 $LANGTRACKER["title"][4]="[Trk] Cron";
 
@@ -171,6 +171,9 @@ $LANGTRACKER["type"][3]="Imprimante";
 
 $LANGTRACKER["rules"][1]="Règles";
 
+$LANGTRACKER["massiveaction"][1]="Assigner un modèle SNMP";
+$LANGTRACKER["massiveaction"][2]="Assigner une authentification SNMP";
+
 $LANGTRACKER["model_info"][1]="Informations SNMP";
 $LANGTRACKER["model_info"][2]="Version SNMP";
 $LANGTRACKER["model_info"][3]="Authentification SNMP";
@@ -181,6 +184,7 @@ $LANGTRACKER["model_info"][7]="Création de modèle SNMP";
 $LANGTRACKER["model_info"][7]="Création de modèle SNMP";
 $LANGTRACKER["model_info"][8]="Modèle déjà existant : import non effectué";
 $LANGTRACKER["model_info"][9]="Import effectué avec succès";
+
 
 $LANGTRACKER["mib"][1]="Label MIB";
 $LANGTRACKER["mib"][2]="Objet";
