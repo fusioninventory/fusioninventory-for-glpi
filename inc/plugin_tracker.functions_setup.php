@@ -69,7 +69,7 @@ function plugin_tracker_uninstall() {
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_version`;";
 	$DB->query($query) or die($DB->error());
 
-	$query = "DROP TABLE `glpi_plugin_tracker_computers_history`;";
+	$query = "DROP TABLE `glpi_plugin_tracker_connection_history`;";
 	$DB->query($query) or die($DB->error());
 
 	$query = "DROP TABLE `glpi_plugin_tracker_config`;";

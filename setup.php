@@ -65,7 +65,7 @@ function plugin_init_tracker() {
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
 			if ( ($config->isActivated('counters_statement')) || ($config->isActivated('cleaning')) )
-				$PLUGIN_HOOKS['cron']['tracker'] = DAY_TIMESTAMP;
+				$PLUGIN_HOOKS['cron']['tracker'] = 2*HOUR_TIMESTAMP;
 			
 			if (isset($_SESSION["glpi_plugin_tracker_profile"])) {
 				

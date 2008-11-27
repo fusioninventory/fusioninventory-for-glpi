@@ -60,20 +60,4 @@ function plugin_tracker_cleaningHistory() {
 		return false;
 	
 }
-
-/*
-	$NEEDED_ITEMS = array("printer");
-	include (GLPI_ROOT."/inc/includes.php");
-	
-	$config = new plugin_tracker_config();
-	$printer = new plugin_tracker_printer_snmp();
-//	$printer_config = new glpi_plugin_tracker_printers_history_config();
-//	$printer_config->setAll();
-	// Get date
-	$date = date("Y-m-d H:i:s");
-
-	// if functionality activated
-	if ( $config->isActivated('counters_statement') )
-		$printer->cron($date);
-*/
 ?>

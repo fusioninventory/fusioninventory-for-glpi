@@ -76,9 +76,9 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_version` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_tracker_computers_history`;
+DROP TABLE IF EXISTS `glpi_plugin_tracker_connection_history`;
 
-CREATE TABLE `glpi_plugin_tracker_computers_history` (
+CREATE TABLE `glpi_plugin_tracker_connection_history` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_computers` int(11) NOT NULL DEFAULT '0',
   `date` datetime DEFAULT NULL,
@@ -330,6 +330,15 @@ CREATE TABLE `glpi_plugin_tracker_unknown_mac` (
 	PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; 
 
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_connection_stats`;
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_connection_stats` (
+  `ID` int(11) NOT NULL auto_increment,
+  `device_type` int(11) NOT NULL default '0',
+  `item_id` int(11) NOT NULL,
+  `checksum` timestamp NOT NULL default '0000-00-00 00:00:00' on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` VALUES ('','MD5','');
