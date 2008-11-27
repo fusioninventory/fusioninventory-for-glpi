@@ -202,7 +202,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 {
 
 	global $DB,$LANG;
-ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
+
 	$oidList = array();
 	$object = "";
 	$portcounter = "";
@@ -561,7 +561,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 {
 
 	global $DB;
-	
+ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
 	$processes = new Threads;
 	
 	$netwire=new Netwire;
