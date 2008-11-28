@@ -275,20 +275,18 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						$IDport = $np->insert_id();
 						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
 					}
-					
-					// Update if it's necessary		
-				
-					if ($DB->numrows($result) != "0" )
+					else
 					{
+						$IDport = $DB->result($result, 0, "ID");
 						if ($DB->result($result, 0, "name") != $ArrayPort_LogicalNum_SNMPName[$i])
 						{
 							unset($array);
 							$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
 							$array["ID"] = $DB->result($result, 0, "ID");
 							$np->update($array);
-							$IDport = $DB->result($result, 0, "ID");			
 						}
-					}					
+					}
+							
 					$queryTrackerPort = "SELECT ID
 					FROM glpi_plugin_tracker_networking_ports
 					WHERE FK_networking_ports='".$IDport."' ";
@@ -481,7 +479,8 @@ var_dump($ArrayPort_LogicalNum_SNMPNum);
 				$snmp_queries = new plugin_tracker_snmp;
 				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
 			}
-echo "PORTID :".$data["ID"]."\n";
+echo "PORTID :".$ArrayPort_LogicalNum_SNMPNum[$PortNumber]."\n";
+echo "OBJET :".$object_name."\n";
 echo "PORTlogical_number :".$data["logical_number"]."\n";
 echo "MACADRESSE :".$SNMPValue."\n";
 			if (($Field != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['field'] != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['table'] != ""))
