@@ -382,16 +382,13 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 	$ArrayPortsList = array();
 	
 	$ArrayPortListTracker = array();
-	
+var_dump($ArrayPort_LogicalNum_SNMPNum);
 	$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
 var_dump($ArrayPort_LogicalNum_SNMPNum);	
 	$query = "SELECT ID, logical_number
-	
 	FROM glpi_networking_ports
-	
 	WHERE on_device='".$IDNetworking."'
 		AND device_type='2'
-	
 	ORDER BY logical_number";
 	
 	if ( $result=$DB->query($query) )
@@ -412,7 +409,7 @@ var_dump($ArrayPort_LogicalNum_SNMPNum);
 				while ( $dataPortsTracker=$DB->fetch_assoc($resultPortsTracker) )
 				{
 					$ArrayPortListTracker[$data["logical_number"]] = $dataPortsTracker["ID"];
-					$ArrayDB_ID_FKNetPort[$dataPortsTracker["FK_networking_ports"]] = $data["logical_number"];
+					$ArrayDB_ID_FKNetPort[$data["ID"]] = $data["logical_number"];
 
 				}
 			} 
@@ -427,15 +424,13 @@ var_dump($ArrayPort_LogicalNum_SNMPNum);
 		$PortNumber = $ArrayObject[$i];
 
 		
-		$object = '';
+/*		$object = '';
 		
 		for ($j = 0; $j < $i;$j++)
 		{
-		
 			$object .= $ArrayObject[$j];
-
 		}
-
+*/
 		$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
 		$object_type = $explode[0];
 		$object_name = $explode[1];
@@ -479,7 +474,7 @@ var_dump($ArrayPort_LogicalNum_SNMPNum);
 				$snmp_queries = new plugin_tracker_snmp;
 				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
 			}
-echo "PORTID :".$ArrayPort_LogicalNum_SNMPNum[$PortNumber]."\n";
+echo "PORTID :".$PortNumber."\n";
 echo "OBJET :".$object_name."\n";
 echo "PORTlogical_number :".$data["logical_number"]."\n";
 echo "MACADRESSE :".$SNMPValue."\n";
