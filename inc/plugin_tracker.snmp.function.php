@@ -424,13 +424,13 @@ var_dump($ArrayPort_LogicalNum_SNMPNum);
 		$PortNumber = $ArrayObject[$i];
 
 		
-/*		$object = '';
+		$object = '';
 		
 		for ($j = 0; $j < $i;$j++)
 		{
 			$object .= $ArrayObject[$j];
 		}
-*/
+
 		$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
 		$object_type = $explode[0];
 		$object_name = $explode[1];
