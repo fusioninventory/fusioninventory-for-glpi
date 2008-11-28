@@ -237,14 +237,9 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 		// ** Add ports in DataBase if they don't exists
 		for ($i = 0; $i < $portsnumber; $i++)
 		{
-echo "var i :".$i."\n";
 			// Get type of port
 			$snmp_queries->DefineObject(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]));
-echo "OBJECT :";
-var_dump($snmp_queries);
 			$array_ifType = $snmp_queries->SNMPQuery(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]),$IP,$snmp_version,$snmp_auth);
-echo "TYPE :";
-var_dump($array_ifType);
 			if ((ereg("ethernetCsmacd",$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]])) OR ($array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]] == "6"))
 			{
 				// Increment number of port queried in process
@@ -262,6 +257,7 @@ var_dump($array_ifType);
 				{
 					if ( $DB->numrows($result) == 0 )
 					{
+						$array = array();
 						$array["logical_number"] = $i;
 						$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
 						$array["iface"] = "";
@@ -287,9 +283,9 @@ var_dump($array_ifType);
 						{
 							unset($array);
 							$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
+							$array["ID"] = $DB->result($result, 0, "ID");
 							$IDport = $DB->result($result, 0, "ID");
-							$np->update($array);
-						
+							$np->update($array);						
 						}
 					}					
 					$queryTrackerPort = "SELECT ID
@@ -389,12 +385,13 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 	$ArrayPortListTracker = array();
 	
 	$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
-	
+var_dump($ArrayPort_LogicalNum_SNMPNum);	
 	$query = "SELECT ID, logical_number
 	
 	FROM glpi_networking_ports
 	
 	WHERE on_device='".$IDNetworking."'
+		AND device_type='2'
 	
 	ORDER BY logical_number";
 	
@@ -483,6 +480,9 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 				$snmp_queries = new plugin_tracker_snmp;
 				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
 			}
+echo "PORTID :".$data["ID"]."\n";
+echo "PORTlogical_number :".$data["logical_number"]."\n";
+echo "MACADRESSE :".$SNMPValue."\n;"
 			if (($Field != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['field'] != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['table'] != ""))
 			{
 				$update = 0;
