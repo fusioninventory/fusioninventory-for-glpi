@@ -386,6 +386,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 	// Traitement of SNMP results to dispatch by ports
 	foreach ($ArraySNMPPort_Object_result as $object=>$SNMPValue)
 	{
+echo "Object :".$object."\n";
 		$ArrayObject = explode (".",$object);
 		$i = count($ArrayObject);
 		$i--;
@@ -412,7 +413,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 echo "LOGICAL DB:".$data["logical_number"]."\n";
 			// Get ifIndex (SNMP portNumber)
 			$ifIndex = $ArrayPort_LogicalNum_SNMPNum[$data["logical_number"]];
-		
+echo "iFIndex avant boucle : ".$ifIndex."\n";
 			foreach ($Array_OID[$ifIndex] as $object=>$SNMPValue)
 			{
 echo "ifIndex : ".$ifIndex." -> ".$object."=>".$SNMPValue."\n";
