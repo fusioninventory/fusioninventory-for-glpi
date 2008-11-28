@@ -482,7 +482,7 @@ var_dump($ArrayPort_LogicalNum_SNMPNum);
 			}
 echo "PORTID :".$data["ID"]."\n";
 echo "PORTlogical_number :".$data["logical_number"]."\n";
-echo "MACADRESSE :".$SNMPValue."\n;"
+echo "MACADRESSE :".$SNMPValue."\n";
 			if (($Field != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['field'] != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['table'] != ""))
 			{
 				$update = 0;
