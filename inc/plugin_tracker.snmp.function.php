@@ -456,13 +456,13 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 						$netwire=new Netwire;
 						addLogConnection("remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
 						addLogConnection("remove",$Field,$FK_process);
-						removeConnector($Field);
+						removeConnector($data["ID"]);
 						
 					}
 					// Add log if snmp value change			
 					if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets') AND ($SNMPValue_old != $SNMPValue ))
 					{
-						tracker_snmp_addLog($Field,$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue,$FK_process);
+						tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue,$FK_process);
 					}
 				}		
 				
