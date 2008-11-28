@@ -257,7 +257,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 				{
 					if ( $DB->numrows($result) == 0 )
 					{
-						$array = array();
+						unset($array);
 						$array["logical_number"] = $i;
 						$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
 						$array["iface"] = "";
@@ -271,7 +271,8 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						$array["device_type"] = "2";
 						$array["add"] = "Ajouter";
 						
-						$IDport = $np->add($array);
+						$np->add($array);
+						$IDport = $np->insert_id();
 						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
 					}
 					
@@ -284,8 +285,8 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 							unset($array);
 							$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
 							$array["ID"] = $DB->result($result, 0, "ID");
-							$IDport = $DB->result($result, 0, "ID");
-							$np->update($array);						
+							$np->update($array);
+							$IDport = $DB->result($result, 0, "ID");			
 						}
 					}					
 					$queryTrackerPort = "SELECT ID
