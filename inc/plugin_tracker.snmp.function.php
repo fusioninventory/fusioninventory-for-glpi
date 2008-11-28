@@ -257,7 +257,6 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 				{
 					if ( $DB->numrows($result) == 0 )
 					{
-	
 						$array["logical_number"] = $i;
 						$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
 						$array["iface"] = "";
@@ -271,58 +270,39 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						$array["device_type"] = "2";
 						$array["add"] = "Ajouter";
 						
-						$IDPort = $np->add($array);
+						$IDport = $np->add($array);
 						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
-						
-						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-							(FK_networking_ports)
-						
-						VALUES ('".$IDPort."') ";
-						
-						$DB->query($queryInsert);
-						tracker_snmp_addLog($IDPort,"port creation","","",$FK_process);
-					
 					}
-					else
+					
+					// Update if it's necessary		
+				
+					if ($DB->numrows($result) != "0" )
 					{
-						// Update if it's necessary
-						// $np->update
-						
 						if ($DB->result($result, 0, "name") != $ArrayPort_LogicalNum_SNMPName[$i])
 						{
-							
 							unset($array);
 							$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
-							$array["ID"] = $DB->result($result, 0, "ID");
+							$IDport = $DB->result($result, 0, "ID");
 							$np->update($array);
 						
 						}
-	
-					
-					
-						$queryTrackerPort = "SELECT ID
-						FROM glpi_plugin_tracker_networking_ports
-						WHERE FK_networking_ports='".$DB->result($result, 0, "ID")."' ";
-					
-						if ( $resultTrackerPort = $DB->query($queryTrackerPort) ){
-							if ( $DB->numrows($resultTrackerPort) == 0 ) {
-							
-								$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
-									(FK_networking_ports)
-								
-								VALUES ('".$DB->result($result, 0, "ID")."') ";
-	
-								$DB->query($queryInsert);
-								tracker_snmp_addLog($DB->result($result, 0, "ID"),"SNMP port creation","","",$FK_process);
-							
-							}
-						}
+					}					
+					$queryTrackerPort = "SELECT ID
+					FROM glpi_plugin_tracker_networking_ports
+					WHERE FK_networking_ports='".$IDport."' ";
+				
+					if ( $resultTrackerPort = $DB->query($queryTrackerPort) ){
+						if ( $DB->numrows($resultTrackerPort) == 0 ) {
 						
+							$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports 
+								(FK_networking_ports)
+							VALUES ('".$IDport."') ";
+							$DB->query($queryInsert);
+						}
 					}
 				}
 			}
 		}
-
 	}
 	// Get oid list of ports
 
