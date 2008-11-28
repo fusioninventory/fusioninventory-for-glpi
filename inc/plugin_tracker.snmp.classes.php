@@ -1481,7 +1481,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				}
 				else
 				{
-					for ($i=1;$i <= count($ArrayPortsSNMPNumber); $i++)
+					for ($i=0;$i <= count($ArrayPortsSNMPNumber); $i++)
 					{
 						if (isset($ArrayPortsSNMPNumber[$i]))
 						{
@@ -1585,6 +1585,9 @@ class plugin_tracker_snmp extends CommonDBTM
 
 	
 	}
+
+
+
 
 
 // **************************************** PAS VERIFIE **************************************** 
