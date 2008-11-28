@@ -148,7 +148,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 				//$updateNetwork->DefineObject($ArrayPort_Object_oid);
 				// ** Get query SNMP of switchs ports
 				$ArraySNMPPort_Object_result = $updateNetwork->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
-	
+var_dump($ArraySNMPPort_Object_result);
 				// ** Get link OID fields
 				$Array_Object_TypeNameConstant = $updateNetwork->GetLinkOidToFields($snmp_model_ID);
 	
