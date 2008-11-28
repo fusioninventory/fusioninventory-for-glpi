@@ -160,7 +160,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 	
 				// ** Update ports fields of switchs
 				UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process);
-	
+	exit();
 				// ** Get MAC adress of connected ports
 				$array_port_trunk = array();
 				$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process);
