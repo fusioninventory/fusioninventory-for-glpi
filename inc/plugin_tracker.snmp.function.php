@@ -134,7 +134,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 	
 				// **
 				$ArrayPort_LogicalNum_SNMPNum = $updateNetwork->GetPortsSNMPNumber($ifIP,$snmp_version,$snmp_auth);
-	
+
 				// ** Get oid ports Counter
 				$ArrayPort_Object_oid = tracker_snmp_GetOIDPorts($snmp_model_ID,$ifIP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process);
 	
@@ -147,8 +147,9 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 				// ** Define oid and object name
 				//$updateNetwork->DefineObject($ArrayPort_Object_oid);
 				// ** Get query SNMP of switchs ports
+
 				$ArraySNMPPort_Object_result = $updateNetwork->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
-var_dump($ArraySNMPPort_Object_result);
+
 				// ** Get link OID fields
 				$Array_Object_TypeNameConstant = $updateNetwork->GetLinkOidToFields($snmp_model_ID);
 	
@@ -160,7 +161,7 @@ var_dump($ArraySNMPPort_Object_result);
 	
 				// ** Update ports fields of switchs
 				UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process);
-	exit();
+
 				// ** Get MAC adress of connected ports
 				$array_port_trunk = array();
 				$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process);
@@ -271,8 +272,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						$array["device_type"] = "2";
 						$array["add"] = "Ajouter";
 						
-						$np->add($array);
-						$IDport = $np->insert_id();
+						$IDport = $np->add($array);
 						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
 					}
 					else
@@ -308,6 +308,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 
 	$oidList = $snmp_queries->GetOID($snmp_model_ID,"oid_port_dyn='1'",$Arrayportsnumber[$object],$ArrayPort_LogicalNum_SNMPNum);
 	return $oidList;
+
 }	
 
 
@@ -386,7 +387,6 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 	// Traitement of SNMP results to dispatch by ports
 	foreach ($ArraySNMPPort_Object_result as $object=>$SNMPValue)
 	{
-echo "Object :".$object."\n";
 		$ArrayObject = explode (".",$object);
 		$i = count($ArrayObject);
 		$i--;
@@ -410,13 +410,10 @@ echo "Object :".$object."\n";
 	{
 		while ($data=$DB->fetch_array($result))
 		{
-echo "LOGICAL DB:".$data["logical_number"]."\n";
 			// Get ifIndex (SNMP portNumber)
 			$ifIndex = $ArrayPort_LogicalNum_SNMPNum[$data["logical_number"]];
-echo "iFIndex avant boucle : ".$ifIndex."\n";
 			foreach ($Array_OID[$ifIndex] as $object=>$SNMPValue)
 			{
-echo "ifIndex : ".$ifIndex." -> ".$object."=>".$SNMPValue."\n";
 				// Get object constant in relation with object
 				$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
 				$object_type = $explode[0];
