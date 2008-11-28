@@ -409,6 +409,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 	{
 		while ($data=$DB->fetch_array($result))
 		{
+echo "LOGICAL DB:".$data["logical_number"]."\n";
 			// Get ifIndex (SNMP portNumber)
 			$ifIndex = $ArrayPort_LogicalNum_SNMPNum[$data["logical_number"]];
 		
