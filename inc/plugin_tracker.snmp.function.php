@@ -332,23 +332,16 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 			
 			// $ArrayDropdown = getDropdownArrayNames($data["table"],"%")
 			$SNMPValue = externalImportDropdown($TRACKER_MAPPING[$object_type][$object_name]['dropdown'],$SNMPValue,0);
-			
-
 		}
-		
 		// Update fields
 		//$query_update = "UPDATE
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_networking")
 		{
-		
 			$Field = "ID";
-			
 		}
 		else
 		{
-			
 			$Field = "FK_networking";
-			
 		}
 		
 		$SNMPValue = preg_replace('/^\"/', '',$SNMPValue);
@@ -357,13 +350,10 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
 		{
 			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-			
 			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-			
 			WHERE ".$Field."='".$IDNetworking."'";
 			
 			// update via :  $networking->update(array("serial"=>"tonnumero"));
-			
 			$DB->query($queryUpdate);
 		}
 		//<MoYo> cleanAllItemCache($item,$group)
