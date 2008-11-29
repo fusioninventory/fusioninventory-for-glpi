@@ -97,7 +97,7 @@ $LANGTRACKER["snmp"][2]="Données SNMP";
 $LANGTRACKER["snmp"][11]="Informations supplémentaires";
 $LANGTRACKER["snmp"][12]="Uptime";
 $LANGTRACKER["snmp"][13]="Utilisation du CPU (en %)";
-$LANGTRACKER["snmp"][14]="Utilisation de la m�moire";
+$LANGTRACKER["snmp"][14]="Utilisation de la mémoire (en %)";
 
 $LANGTRACKER["snmp"][31]="Impossible de récupérer les infos SNMP : Ce n'est pas un commutateur !";
 $LANGTRACKER["snmp"][32]="Impossible de récupérer les infos SNMP : Matériel non actif !";
@@ -241,6 +241,8 @@ $LANGTRACKER["mapping"][17]="réseaux > modèle";
 $LANGTRACKER["mapping"][18]="réseaux > ports > type";
 $LANGTRACKER["mapping"][19]="réseaux > VLAN";
 $LANGTRACKER["mapping"][20]="réseaux > nom";
+$LANGTRACKER["mapping"][21]="réseaux > mémoire totale";
+$LANGTRACKER["mapping"][22]="réseaux > mémoire libre";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
