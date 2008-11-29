@@ -60,6 +60,56 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['name'] = $LANGTRACKER["mapping"][3]
 $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['dropdown'] = '';
 
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['table'] = 'glpi_plugin_tracker_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['field'] = 'cpu';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['name'] = $LANGTRACKER["mapping"][12];
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['field'] = 'serial';
+$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['name'] = $LANGTRACKER["mapping"][13];
+$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['name']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['name']['field'] = 'name';
+$TRACKER_MAPPING[NETWORKING_TYPE]['name']['name'] = $LANGTRACKER["mapping"][20];
+$TRACKER_MAPPING[NETWORKING_TYPE]['name']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['name']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['field'] = 'ram';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['name'] = $LANGTRACKER["mapping"][21];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['table'] = 'glpi_plugin_tracker_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['field'] = 'memory';
+$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['name'] = $LANGTRACKER["mapping"][22];
+$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['name'] = $LANGTRACKER["mapping"][19];
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['field'] = 'model';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANGTRACKER["mapping"][17];
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
+
+
+
+
+
+
+// Networking Ports
+
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifmtu']['table'] = 'glpi_plugin_tracker_networking_ports';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifmtu']['field'] = 'ifmtu';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifmtu']['name'] = $LANGTRACKER["mapping"][4];
@@ -108,18 +158,6 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifouterrors']['name'] = $LANGTRACKER["mapping
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifouterrors']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifouterrors']['dropdown'] = '';
 
-$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['table'] = 'glpi_plugin_tracker_networking';
-$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['field'] = 'cpu';
-$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['name'] = $LANGTRACKER["mapping"][12];
-$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['type'] = 'text';
-$TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['dropdown'] = '';
-
-$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['table'] = 'glpi_networking';
-$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['field'] = 'serial';
-$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['name'] = $LANGTRACKER["mapping"][13];
-$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['type'] = 'text';
-$TRACKER_MAPPING[NETWORKING_TYPE]['serial']['dropdown'] = '';
-
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifstatus']['table'] = 'glpi_plugin_tracker_networking_ports';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifstatus']['field'] = 'ifstatus';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifstatus']['name'] = $LANGTRACKER["mapping"][14];
@@ -138,39 +176,11 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['name'] = $LANGTRACKER["mapping"][16
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['dropdown'] = '';
 
-$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'glpi_networking';
-$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['field'] = 'model';
-$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANGTRACKER["mapping"][17];
-$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
-$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
-
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['table'] = '';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['field'] = '';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['name'] = $LANGTRACKER["mapping"][18];
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['dropdown'] = '';
 
-$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['table'] = '';
-$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['field'] = '';
-$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['name'] = $LANGTRACKER["mapping"][19];
-$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['type'] = 'text';
-$TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['dropdown'] = '';
 
-$TRACKER_MAPPING[NETWORKING_TYPE]['name']['table'] = 'glpi_networking';
-$TRACKER_MAPPING[NETWORKING_TYPE]['name']['field'] = 'name';
-$TRACKER_MAPPING[NETWORKING_TYPE]['name']['name'] = $LANGTRACKER["mapping"][20];
-$TRACKER_MAPPING[NETWORKING_TYPE]['name']['type'] = 'text';
-$TRACKER_MAPPING[NETWORKING_TYPE]['name']['dropdown'] = '';
-
-$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['table'] = 'glpi_networking';
-$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['field'] = 'ram';
-$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['name'] = $LANGTRACKER["mapping"][21];
-$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['type'] = 'text';
-$TRACKER_MAPPING[NETWORKING_TYPE]['ram']['dropdown'] = '';
-
-$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['table'] = 'glpi_plugin_tracker_networking';
-$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['field'] = 'memory';
-$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['name'] = $LANGTRACKER["mapping"][22];
-$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['type'] = 'text';
-$TRACKER_MAPPING[NETWORKING_TYPE]['memory']['dropdown'] = '';
 ?>
