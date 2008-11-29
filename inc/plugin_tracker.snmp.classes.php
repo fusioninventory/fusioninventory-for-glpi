@@ -301,7 +301,24 @@ abstract class plugin_tracker_snmp2 {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
 		echo "<td align='center'>";
-		echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
+		//echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
+		$sysUpTime = $data["uptime"];
+		sscanf($sysUpTime, "(%d) %d:%d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
+		$uptime = ceil($uptime / 100);
+		$day=86400;
+		$days=floor($uptime/$day);
+		echo "<b>$days</b> ".$LANG["stats"][31]." ";
+		$utdelta=$uptime-($days*$day);
+		$hour=3600;
+		$hours=floor($utdelta/$hour);
+		echo "<b>$hours</b> ".$LANG["job"][21]." ";
+		$utdelta-=$hours*$hour;
+		$minute=60;
+		$minutes=floor($utdelta/$minute);
+		echo "<b>$minutes</b> ".$LANG["job"][22]." ";
+		$utdelta-=round($minutes*$minute,2);
+		echo " and <b>$utdelta</b> ".$LANG["stats"][34]." ";      
+     
 		echo "</td>";
 		echo "</tr>";
 		
@@ -1324,7 +1341,10 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,500000,1);
 			}
-
+			if (empty($SNMPValue))
+			{
+				break;
+			}
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
 				$ArraySNMPValues = explode(": ", $value);
