@@ -693,7 +693,7 @@ echo "INTERFACE :".$ifName."\n";
 echo "================================\n";
 					
 					$queryPortEnd = "";	
-					if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
+					if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR (empty($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
 					{
 echo "PASSAGE ... OK\n";
 						$queryPortEnd = "SELECT * 
