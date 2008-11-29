@@ -240,6 +240,7 @@ $LANGTRACKER["mapping"][16]="réseaux > ports > nom";
 $LANGTRACKER["mapping"][17]="réseaux > modèle";
 $LANGTRACKER["mapping"][18]="réseaux > ports > type";
 $LANGTRACKER["mapping"][19]="réseaux > VLAN";
+$LANGTRACKER["mapping"][20]="réseaux > nom";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
