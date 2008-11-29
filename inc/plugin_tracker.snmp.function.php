@@ -347,6 +347,11 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 		$SNMPValue = preg_replace('/^\"/', '',$SNMPValue);
 		$SNMPValue = preg_replace('/\"$/', '',$SNMPValue);
 		
+		if (($object_name == "ram") OR ($object_name == "memory"))
+		{
+			$SNMPValue = ($SNMPValue / 1024) / 1024 ;
+		}
+		
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
 		{
 			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
