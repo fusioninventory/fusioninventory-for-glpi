@@ -171,7 +171,7 @@ CREATE TABLE `glpi_plugin_tracker_networking` (
   `FK_networking` int(8) NOT NULL,
   `FK_model_infos` int(8) NOT NULL,
   `FK_snmp_connection` int(8) NOT NULL,
-  `uptime` int(8) NOT NULL,
+  `uptime` varchar(255) NOT NULL,
   `cpu` int(3) NOT NULL,
   `memory` int(8) NOT NULL,
   PRIMARY KEY (`ID`),
