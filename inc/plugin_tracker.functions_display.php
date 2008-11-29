@@ -99,4 +99,11 @@ function plugin_tracker_mib_management()
 }
 
 
+
+	function plugin_tracker_Bar ($pourcentage, $message="")
+	{
+		echo "<div class='doaction_cadre'><div  style='width: ".$pourcentage."%;' class='doaction_progress'>".
+     			"<div class='doaction_pourcent'>".$pourcentage."% ".$message."</div></div></div>";
+	}
+
 ?>

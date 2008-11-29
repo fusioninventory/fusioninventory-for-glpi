@@ -292,9 +292,7 @@ abstract class plugin_tracker_snmp2 {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
 		echo "<td align='center'>";
-		//echo "<input  type='text' name='cpu' value='".$data["cpu"]."' size='20'>";
-		createProgressBar();
-		changeProgressBarPosition($data["cpu"],"100");
+		plugin_tracker_Bar($data["cpu"]);
 		echo "</td>";
 		echo "</tr>";	
 
@@ -313,8 +311,7 @@ abstract class plugin_tracker_snmp2 {
 		}else {
 			$ram_pourcentage = (100 * ($data2["ram"] - $data["memory"])) / $data2["ram"];
 		}
-		createProgressBar(($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo");
-		changeProgressBarPosition($ram_pourcentage,"100");
+		plugin_tracker_Bar($ram_pourcentage,"<br/>(".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)"); 
 		echo "</td>";
 		echo "</tr>";	
 
