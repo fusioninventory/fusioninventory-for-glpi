@@ -299,6 +299,26 @@ abstract class plugin_tracker_snmp2 {
 		echo "</tr>";	
 
 		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["snmp"][14]."</td>";
+		echo "<td align='center'>";
+		$query2 = "
+		SELECT * 
+		FROM glpi_networking
+		WHERE ID=".$ID." ";
+		$result2 = $DB->query($query2);		
+		$data2 = $DB->fetch_assoc($result2);
+
+		if (empty($data2["ram"])){
+			$ram_pourcentage = 0;
+		}else {
+			$ram_pourcentage = (100 * ($data2["ram"] - $data["memory"])) / $data2["ram"];
+		}
+		createProgressBar(($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo");
+		changeProgressBarPosition($ram_pourcentage,"100");
+		echo "</td>";
+		echo "</tr>";	
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
 		echo "<td align='center'>";
 		//echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
