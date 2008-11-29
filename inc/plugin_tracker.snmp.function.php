@@ -633,6 +633,11 @@ ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
 	// Get by SNMP query the mac addresses and IP (ipNetToMediaPhysAddress)
 	$snmp_queries->DefineObject($ArrayIPMACAdressePhysObject);
 	$ArrayIPMACAdressePhys = $snmp_queries->SNMPQueryWalkAll($ArrayIPMACAdressePhysObject,$IP,$snmp_version,$snmp_auth);
+	if (empty($ArrayIPMACAdressePhys))
+	{
+	return;
+	}
+
 	// Get by SNMP query the mac addresses (dot1dTpFdbAddress)
 	$snmp_queries->DefineObject($ArrayMACAdressTableObject);
 	$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP,$snmp_version,$snmp_auth);
