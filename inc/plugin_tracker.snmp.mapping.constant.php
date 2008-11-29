@@ -155,4 +155,11 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['field'] = '';
 $TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['name'] = $LANGTRACKER["mapping"][19];
 $TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['field'] = 'name';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANGTRACKER["mapping"][20];
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = '';
+
 ?>
