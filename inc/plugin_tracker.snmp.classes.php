@@ -309,7 +309,7 @@ abstract class plugin_tracker_snmp2 {
 		if (empty($data2["ram"])){
 			$ram_pourcentage = 0;
 		}else {
-			$ram_pourcentage = (100 * ($data2["ram"] - $data["memory"])) / $data2["ram"];
+			$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
 		}
 		plugin_tracker_Bar($ram_pourcentage,"<br/>(".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)"); 
 		echo "</td>";
@@ -1298,15 +1298,15 @@ class plugin_tracker_snmp extends CommonDBTM
 					runkit_constant_remove($object);
 					define($object,$oid);
 	
-					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,500000,1);
+					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,700000,1);
 				}
 				else if ($version == "2c")
 				{
-					$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,500000,1);
+					$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,700000,1);
 				}
 				else if ($version == "3")
 				{
-					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,500000,1);
+					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,700000,1);
 				}
 				logInFile("tracker_snmp", "			SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue."\n\n");
 				$ArraySNMPValues = explode(": ", $SNMPValue);
@@ -1348,15 +1348,15 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ($version == "1")
 			{
-				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,500000,1);
+				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,700000,1);
 			}
 			else if ($version == "2c")
 			{
-				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,500000,1);
+				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,700000,1);
 			}
 			else if ($version == "3")
 			{
-				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,500000,1);
+				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,700000,1);
 			}
 			if (empty($SNMPValue))
 			{
@@ -1438,7 +1438,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		}
 		return $PortsSNMPNumber;
 	}
-	
+
 
 
 	/**
@@ -1624,6 +1624,108 @@ class plugin_tracker_snmp extends CommonDBTM
 	}
 
 
+	
+	function getPortIDfromDeviceIP($IP, $ifDescr)
+	{
+		global $DB;
+	
+		$query = "SELECT * FROM glpi_networking
+		WHERE ifaddr='".$IP."' ";
+		
+		$result = $DB->query($query);		
+		$data = $DB->fetch_assoc($result);
+		
+		$queryPort = "SELECT * FROM glpi_plugin_tracker_networking_ports
+		LEFT JOIN glpi_networking_ports
+		ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.ID
+		WHERE ifdescr='".$ifDescr."' 
+			AND glpi_networking_ports.on_device='".$data["ID"]."'
+			AND glpi_networking_ports.device_type='2' ";
+		$resultPort = $DB->query($queryPort);		
+		$dataPort = $DB->fetch_assoc($resultPort);
+
+		return($dataPort["FK_networking_ports"]);
+	}
+
+
+
+	function PortsConnection($source_port, $destination_port,$FK_process)
+	{
+		global $DB;
+		
+		$netwire = new Netwire;
+		
+		$queryVerif = "SELECT *
+		FROM glpi_networking_wire 
+		WHERE end1 IN ('$source_port', '$destination_port')
+			AND end2 IN ('$source_port', '$destination_port') ";
+
+		if ($resultVerif=$DB->query($queryVerif))
+		{
+			if ( $DB->numrows($resultVerif) == "0" )
+			{
+			echo "QUERY :".$queryVerif."\n";
+			
+				//$netwire=new Netwire;
+			//	if ($netwire->getOppositeContact($destination_port) != "")
+			//	{
+					addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
+					addLogConnection("remove",$destination_port,$FK_process);
+					removeConnector($destination_port);
+echo "REMOVE CONNECTOR :".$destination_port."\n";
+					removeConnector($source_port);
+echo "REMOVE CONNECTOR :".$source_port."\n";
+			//	}
+			
+				makeConnector($source_port,$destination_port);
+echo "MAKE CONNECTOR :".$source_port." - ".$destination_port."\n";
+				addLogConnection("make",$destination_port,$FK_process);
+				addLogConnection("make",$source_port,$FK_process);
+				
+				if ($vlan != "")
+				{
+					$ID_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
+					
+					// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
+					// $vlan_name
+				}
+			}
+		}
+		// Remove all connections if it is
+		if ($netwire->getOppositeContact($destination_port) != "")
+		{
+			$queryVerif2 = "SELECT *
+			FROM glpi_networking_wire 
+			WHERE end1='".$netwire->getOppositeContact($destination_port)."'
+				AND end2!='$destination_port' ";
+			
+			$resultVerif2=$DB->query($queryVerif2);
+			while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
+			{
+				$query_del = "DELETE FROM glpi_networking_wire 
+				WHERE ID='".$dataVerif2["ID"]."' ";
+				$DB->query($query_del);
+echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
+			}
+			$queryVerif2 = "SELECT *
+			FROM glpi_networking_wire 
+			WHERE end1='$destination_port'
+				AND end2!='".$netwire->getOppositeContact($destination_port)."' ";
+			
+			$resultVerif2=$DB->query($queryVerif2);
+			while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
+			{
+				$query_del = "DELETE FROM glpi_networking_wire 
+				WHERE ID='".$dataVerif2["ID"]."' ";
+				$DB->query($query_del);
+echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
+			}
+		}
+	
+	}
+
+
+
 
 
 
@@ -1655,24 +1757,8 @@ class plugin_tracker_snmp extends CommonDBTM
 		}	
 	
 	}
-	
-	
-	
 
 
-
-
-	
-	
-
-	
-	
-
-
-
-
-
-	
 	
 	
 	/**
@@ -1702,24 +1788,6 @@ class plugin_tracker_snmp extends CommonDBTM
 			}
 		}
 	}
-	
-	
-	
-
-	
-	
-	
-
-	
-	
-	
-
-	
-	
-	
-
-
-	
 	
 
 	

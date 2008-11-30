@@ -243,6 +243,7 @@ $LANGTRACKER["mapping"][19]="réseaux > VLAN";
 $LANGTRACKER["mapping"][20]="réseaux > nom";
 $LANGTRACKER["mapping"][21]="réseaux > mémoire totale";
 $LANGTRACKER["mapping"][22]="réseaux > mémoire libre";
+$LANGTRACKER["mapping"][23]="réseaux > port > description du port";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";

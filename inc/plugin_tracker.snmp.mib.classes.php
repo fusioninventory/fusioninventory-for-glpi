@@ -85,9 +85,9 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
-				echo "<th align='center' width='120'>".$LANGTRACKER["mib"][6]."</th>";
-				echo "<th align='center' width='130'>".$LANGTRACKER["mib"][7]."</th>";
-				echo "<th align='center' width='130'>".$LANGTRACKER["mib"][8]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
 				{
