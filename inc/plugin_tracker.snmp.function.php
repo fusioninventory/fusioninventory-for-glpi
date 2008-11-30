@@ -162,9 +162,11 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 				// ** Update ports fields of switchs
 				UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process);
 
+				$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process);
+
 				// ** Get MAC adress of connected ports
 				$array_port_trunk = array();
-				$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process);
+				$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex);
 	
 				// Foreach VLAN ID to GET MAC Adress on each VLAN
 				$updateNetwork->DefineObject($Array_Object_oid_vtpVlanName);
@@ -175,7 +177,7 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 					$explode = explode(".",$objectdyn);
 					$ID_VLAN = $explode[(count($explode) - 1)];
 					logInFile("tracker_snmp", "		VLAN : ".$ID_VLAN."\n\n");
-					GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$ID_VLAN,$array_port_trunk,$vlan_name);
+					GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex,$ID_VLAN,$array_port_trunk,$vlan_name);
 				}
 			}
 		}
@@ -349,7 +351,7 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 		
 		if (($object_name == "ram") OR ($object_name == "memory"))
 		{
-			$SNMPValue = ($SNMPValue / 1024) / 1024 ;
+			$SNMPValue = ceil(($SNMPValue / 1024) / 1024) ;
 		}
 		
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
@@ -607,7 +609,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 
 
 
-function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$vlan="",$array_port_trunk=array(),$vlan_name="")
+function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$Array_trunk_ifIndex,$vlan="",$array_port_trunk=array(),$vlan_name="")
 {
 	global $DB;
 ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
@@ -666,6 +668,9 @@ ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
 				if (($BridgePortifIndex == "") OR ($BridgePortifIndex == "No Such Instance currently exists at this OID"))
 					break;
 					
+				if ($Array_trunk_ifIndex[$BridgePortifIndex] == "1")
+					break;
+					
 				//echo "BridgePortifIndex : ".$BridgePortifIndex."\n";
 			
 				$ArrayifNameObject = array("ifName" => "1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
@@ -715,13 +720,14 @@ echo "PASSAGE ... FAILED\n";
 					}
 					else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 					{
-echo "PASSAGE ... OK (2)\n";
+echo "PASSAGE ... OK (2) => Refusé\n";
 						$queryPortEnd = "SELECT * 
 						
 						FROM glpi_networking_ports
 						
 						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
 							AND on_device!='".$IDNetworking."' ";
+						$queryPortEnd = "";
 					}
 
 					if (($queryPortEnd != ""))
@@ -751,72 +757,9 @@ echo "PASSAGE ... OK (2)\n";
 echo "TRAITEMENT :".$traitement."\n";
 								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 								$sport = $ArrayPortsID[$ifName]; // Networking_Port
-								$queryVerif = "SELECT *
 								
-								FROM glpi_networking_wire 
-								
-								WHERE end1 IN ('$sport', '$dport')
-									AND end2 IN ('$sport', '$dport') ";
-	
-								if ($resultVerif=$DB->query($queryVerif))
-								{
-									if ( $DB->numrows($resultVerif) == "0" )
-									{
-										//$netwire=new Netwire;
-									//	if ($netwire->getOppositeContact($dport) != "")
-									//	{
-											addLogConnection("remove",$netwire->getOppositeContact($dport),$FK_process);
-											addLogConnection("remove",$dport,$FK_process);
-											removeConnector($dport);
-echo "REMOVE CONNECTOR :".$dport."\n";
-											removeConnector($sport);
-echo "REMOVE CONNECTOR :".$sport."\n";
-									//	}
-									
-										makeConnector($sport,$dport);
-echo "MAKE CONNECTOR :".$sport." - ".$dport."\n";
-										addLogConnection("make",$dport,$FK_process);
-										addLogConnection("make",$sport,$FK_process);
-										
-										if ($vlan != "")
-										{
-											$ID_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
-											
-											// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
-											// $vlan_name
-										}
-									}
-								}
-								// Remove all connections if it is
-								if ($netwire->getOppositeContact($dport) != "")
-								{
-									$queryVerif2 = "SELECT *
-									FROM glpi_networking_wire 
-									WHERE end1='".$netwire->getOppositeContact($dport)."'
-										AND end2!='$dport' ";
-									
-									$resultVerif2=$DB->query($queryVerif2);
-									while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
-									{
-										$query_del = "DELETE FROM glpi_networking_wire 
-										WHERE ID='".$dataVerif2["ID"]."' ";
-										$DB->query($query_del);
-echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
-									}
-									$queryVerif2 = "SELECT *
-									FROM glpi_networking_wire 
-									WHERE end1='$dport'
-										AND end2!='".$netwire->getOppositeContact($dport)."' ";
-									
-									$resultVerif2=$DB->query($queryVerif2);
-									while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
-									{
-										$query_del = "DELETE FROM glpi_networking_wire 
-										WHERE ID='".$dataVerif2["ID"]."' ";
-										$DB->query($query_del);
-echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
-									}
-								}
+								// Connection between ports (wire table in DB)
+								$snmp_queries->PortsConnection($sport, $dport,$FK_process);
 							}
 							else if ( $traitement == "1" )
 							{
@@ -839,4 +782,69 @@ echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 		return $array_port_trunk;
 	}
 }
+
+
+/*
+ * @param $ArrayPort_LogicalNum_SNMPName : array logical port number => SNMP Port name
+ * @param $ArrayPort_LogicalNum_SNMPNum : array logical port number => SNMP port number (ifindex)
+*/
+function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process)
+{
+	global $DB;
+	
+	$snmp_queries = new plugin_tracker_snmp;
+
+	$Array_trunk_IP_hex = array("cdpCacheAddress" => "1.3.6.1.4.1.9.9.23.1.2.1.1.4");
+	$Array_trunk_ifDescr = array("cdpCacheDevicePort" => "1.3.6.1.4.1.9.9.23.1.2.1.1.7");
+	$Array_trunk_ifIndex = array();
+	
+	$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
+	
+	// Get by SNMP query the IP addresses of the switch connected ($Array_trunk_IP_hex)
+	$snmp_queries->DefineObject($Array_trunk_IP_hex);
+	$Array_trunk_IP_hex_result = $snmp_queries->SNMPQueryWalkAll($Array_trunk_IP_hex,$IP,$snmp_version,$snmp_auth);
+
+	// Get by SNMP query the Name of port (ifDescr)
+	$snmp_queries->DefineObject($Array_trunk_ifDescr);
+	$Array_trunk_ifDescr_result = $snmp_queries->SNMPQueryWalkAll($Array_trunk_ifDescr,$IP,$snmp_version,$snmp_auth);
+var_dump($Array_trunk_ifDescr_result);
+	foreach($Array_trunk_IP_hex_result AS $object=>$result)
+	{
+		$explode = explode(".", $object);
+		$ifIndex = $explode[(count($explode)-2)];
+		$end_Number = $explode[(count($explode)-1)];
+		
+		$Array_trunk_ifIndex[$ifIndex] = 1;
+		
+		// Convert IP hex to decimal
+		$Array_ip_switch_trunk = explode(" ",$result);
+		$ip_switch_trunk = "";
+		for($i = 0; $i < 4;$i++)
+		{
+		$ip_switch_trunk .= hexdec($Array_ip_switch_trunk[$i]);
+			if ($i < 3)
+				$ip_switch_trunk .= ".";
+		}
+
+		// Search port of switch connected on this port and connect it if not connected
+		
+		$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $Array_trunk_ifDescr_result["SNMPv2-SMI::enterprises.9.9.23.1.2.1.1.7.".$ifIndex.".".$end_Number]);
+
+		$query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+		LEFT JOIN glpi_networking
+		ON glpi_networking.ID = glpi_networking_ports.on_device
+		WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."' 
+			AND device_type='2' 
+			AND glpi_networking.ifaddr='".$IP."' ";
+		$result = $DB->query($query);		
+		$data = $DB->fetch_assoc($result);
+//echo "QUERY :".$query."\n";
+echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
+		if ((!empty($data["ID"])) AND (!empty($PortID)))
+			$snmp_queries->PortsConnection($data["ID"], $PortID,$FK_process);
+	}
+	return $Array_trunk_ifIndex;
+}
+
+
 ?>

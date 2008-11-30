@@ -182,5 +182,12 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['name'] = $LANGTRACKER["mapping"][18
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['table'] = 'glpi_plugin_tracker_networking_ports';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['field'] = 'ifdescr';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['name'] = $LANGTRACKER["mapping"][23];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['dropdown'] = '';
+
+
 
 ?>
