@@ -196,6 +196,7 @@ CREATE TABLE `glpi_plugin_tracker_networking_ports` (
   `ifouterrors` int(10) NOT NULL,
   `ifstatus` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `ifmac` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ifdescr` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
 
