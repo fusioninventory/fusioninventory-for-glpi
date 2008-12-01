@@ -352,7 +352,7 @@ function appear_array(id){
 		echo "<th>".$LANGTRACKER["snmp"][48]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][49]."</th>";
 		echo "<th>".$LANGTRACKER["mapping"][115]."</th>";
-		echo "<th>".$LANG["networking"][15]."</th>";
+		echo "<th>".$LANG["networking"][17]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][50]."</th>";
 		echo "</tr>";
 		
