@@ -270,7 +270,7 @@ abstract class plugin_tracker_snmp2 {
 		$minutes=floor($utdelta/$minute);
 		echo "<b>$minutes</b> ".$LANG["job"][22]." ";
 		$utdelta-=round($minutes*$minute,2);
-		echo " and <b>$utdelta</b> ".$LANG["stats"][34]." ";      
+		echo " ".strtolower($LANG["rulesengine"][42])." <b>$utdelta</b> ".$LANG["stats"][34]." ";      
      
 		echo "</td>";
 		echo "</tr>";
