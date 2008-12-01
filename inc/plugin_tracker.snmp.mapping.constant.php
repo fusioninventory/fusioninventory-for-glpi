@@ -188,6 +188,12 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['name'] = $LANGTRACKER["mapping"][2
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['portDuplex']['table'] = 'glpi_plugin_tracker_networking_ports';
+$TRACKER_MAPPING[NETWORKING_TYPE]['portDuplex']['field'] = 'portduplex';
+$TRACKER_MAPPING[NETWORKING_TYPE]['portDuplex']['name'] = $LANGTRACKER["mapping"][33];
+$TRACKER_MAPPING[NETWORKING_TYPE]['portDuplex']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['portDuplex']['dropdown'] = '';
+
 
 
 

@@ -253,6 +253,7 @@ $LANGTRACKER["mapping"][29]="imprimante > nombre de pages noir et blanc imprimé
 $LANGTRACKER["mapping"][30]="imprimante > nombre de pages couleur imprimées";
 $LANGTRACKER["mapping"][31]="imprimante > nombre de pages monochrome imprimées";
 $LANGTRACKER["mapping"][32]="imprimante > nombre de pages bichromie imprimées";
+$LANGTRACKER["mapping"][33]="réseaux > port > type de duplex";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
