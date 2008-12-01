@@ -77,65 +77,6 @@ abstract class plugin_tracker_snmp2 {
 		$this->tracker_right = "";
 	}
 	
-	/* to get a string object from a snmpget result (without "STRING: " prefix)
-	function snmpgetStringObject($object_id) {
-		$result[0] = @snmpget($this->ip, $this->community, $object_id);
-		if ($result[0] != false ) {
-			$result[1] = eregi_replace("STRING: ","",$result[0]);
-			// if "" into the string
-			$result[2] = str_replace('"', '', $result[1]);
-			return $result[2];
-		}
-		else
-			return "";
-	}
-	
-	/* to get an IP object from a snmpget result (without "IpAddress: " prefix)
-	function snmpgetIpObject($object_id) {
-		$result[0] = @snmpget($this->ip, $this->community, $object_id);
-		if ($result[0] != false ) {
-			$result[1] = eregi_replace("IpAddress: ","",$result[0]);
-			return $result[1];
-		}
-		else
-			return "";
-	}
-	
-	/* to get a counter object from a snmpget result (without "Counter32: " prefix)
-	function snmpgetCounterObject($object_id) {
-		$result[0] = @snmpget($this->ip, $this->community, $object_id);
-		if ($result[0] != false ) {
-			$result[1] = intval( eregi_replace("Counter32: ","",$result[0]) );
-			return $result[1];
-		}
-		else
-			return "";
-	}
-	
-	/* to get an integer object from a snmpget result (without "INTEGER: " prefix)
-	function snmpgetIntegerObject($object_id) {
-		$result[0] = @snmpget($this->ip, $this->community, $object_id);
-		if ($result[0] != false ) {
-			$result[1] = intval( eregi_replace("INTEGER: ","",$result[0]) );
-			return $result[1];
-		}
-		else
-			return "";
-	}
-
-	/* to get an hexadecimal string object from a snmpget result (without "Hex-STRING: " prefix)
-	function snmpgetHexStringObject($object_id) {
-		$result[0] = @snmpget($this->ip, $this->community, $object_id);
-		if ($result[0] != false ) {
-			$result[1] = eregi_replace("Hex-STRING: ","",$result[0]);
-			// if "" into the string
-			$result[2] = str_replace('"', '', $result[1]);
-			return $result[2];
-		}
-		else
-			return "";
-	}*/
-	
 	// to check if the device is working
 	function isActive() {
 		global $DB;
@@ -240,11 +181,6 @@ abstract class plugin_tracker_snmp2 {
 		
 		$nw=new Netwire;
 		$CommonItem = new CommonItem;
-		// Checking errors and get IP (if exists)
-	//	if ( $this->getError() )
-	//		return false;
-
-		// ** $this->getAll();
 		
 		$query = "
 		SELECT * 
@@ -350,7 +286,7 @@ abstract class plugin_tracker_snmp2 {
 		echo "</table></form>";
 		
 		
-// ************ A FAIRE ******************************************************************************* //
+// **************************************************************************************************** //
 // ***************************************** METTRE TABLEAU DES PORTS ********************************* //
 // **************************************************************************************************** //	
 		function ByteSize($bytes,$sizeoct=1024){
@@ -547,30 +483,18 @@ function appear_array(id){
 				";
 			}
 		}
-
-
 		echo "</table>";
-
-		
-		// Query/Import SNMP
-/*		echo "<br>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
-		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
-		echo $LANGTRACKER["snmp"][0]." :</th></tr>";
-		
-		$this->showFormContents();
-
-		if ( $canedit ) {
-			
-			echo "<tr class='tab_bg_1'><td colspan='3'>";
-			echo "<div align='center'><a onclick= \"if ( markAllRows('snmp_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
-			echo " - <a onclick= \"if ( unMarkAllRows('snmp_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
-			echo "<input type='hidden' name='ID' value='".$ID."'>";
-			echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
-			echo "</table></div>";
-		}
-			*/
 	}
+	
+	
+	function showFormPrinter($target,$ID)
+	{
+		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;	
+	
+	
+	
+	}
+	
 	
 	/* Useful to get the ID of a device into the table "glpi_networking_ports */
 	function getNetworkingPortsIDfromID() {
@@ -776,9 +700,6 @@ class plugin_tracker_printer_snmp extends plugin_tracker_snmp {
 		
 		echo "<tr class='tab_bg_1'>";
  		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='cmodel' value='1'>";
-//		echo "</td>";
 		echo "<td>".$LANG["common"][22]."</td>";
 		echo "<td><input  type='text' name='model' value='".$this->snmp['model']."' size='20'>";
 		echo " <img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('model'),'none')\" onmouseover=\"setdisplay(getElementById('model'),'block')\"><span class='over_link' id='model'>".$this->snmp['model']."</span>";
@@ -793,25 +714,16 @@ class plugin_tracker_printer_snmp extends plugin_tracker_snmp {
 				
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='cifmac' value='1'>";
-//		echo "</td>";
 		echo "<td>".$LANG["device_iface"][2]."</td>";
 		echo "<td><input  type='text' name='ifmac' value='".$this->snmp['ifmac']."' size='20'></td></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='cnetmask' value='1'>";
-//		echo "</td>";
 		echo "<td>".$LANG["networking"][60]."</td>";
 		echo "<td><input  type='text' name='netmask' value='".$this->snmp['netmask']."' size='20'></td></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='clocation' value='1'>";
-//		echo "</td>";
 		echo "<td>".$LANG["common"][15]."</td>";
 		echo "<td><input  type='text' name='location' value='".$this->snmp['location']."' size='20'></td></tr>";
 
@@ -1071,9 +983,7 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='cmodel' value='1'>";
-//		echo "</td>";
+
 		echo "<td>".$LANG["common"][22]."</td>";
 		echo "<td><input  type='text' name='model' value='".$this->snmp['model']."' size='20'>";
 		echo " <img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('model'),'none')\" onmouseover=\"setdisplay(getElementById('model'),'block')\"><span class='over_link' id='model'>".$this->snmp['model']."</span>";
@@ -1088,9 +998,7 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 		
 		echo "<tr class='tab_bg_1'>";
  		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='cfirmware' value='1'>";
-//		echo "</td>";
+
 		echo "<td>".$LANG["networking"][49]."</td>";
 		echo "<td><input  type='text' name='firmware' value='".$this->snmp['firmware']."' size='20'>";
 		echo " <img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('firmware'),'none')\" onmouseover=\"setdisplay(getElementById('firmware'),'block')\"><span class='over_link' id='firmware'>".$this->snmp['firmware']."</span>";
@@ -1105,9 +1013,7 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 		
 		echo "<tr class='tab_bg_1'>";
  		echo "<td>x</td>";
-//		echo "<td align='center'>";
-//		echo "<input type='checkbox' name='clocation' value='1'>";
-//		echo "</td>";
+
 		echo "<td>".$LANG["common"][15]."</td>";
 		echo "<td><input  type='text' name='location' value='".$this->snmp['location']."' size='20'></td></tr>";
 
@@ -1156,83 +1062,6 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 	}
 }
 
-/* Class for the cablage of a connected device */
-/*class plugin_tracker_netport_snmp extends plugin_tracker_snmp {
-	
-	// networking_ports ID of a connected device
-	var $connected_ID = -1;
-	// MAC address of a connected device
-	var $connected_ifmac = "";
-	
-	function plugin_tracker_netport_snmp() {
-		$this->connected_ID = -1;
-		$this->connected_ifmac = "";
-		$this->glpi_right = "networking";
-		$this->tracker_right = "networking_info";
-	}
-
-	// to get the ID of the switch where a device is connected to
-	function getSwitchIDfromConnectedDevice() {
-		global $DB;
-		$query = "SELECT end2 FROM glpi_networking_wire WHERE end1='".$this->connected_ID."';";
-		if ( $result=$DB->query($query) ) {
-			$this->fields = $DB->fetch_row($result);
-			// check if IP is in db
-			if ( ($this->fields['0']) != NULL ) {
-				$this->networking_ports_ID = $this->fields['0']; // networking_ports_ID of the switch port
-				$this->getIDfromNetworkingPortsID();
-				return $this->ID;
-			}
-			else
-				return false;
-		}
-	}
-	
-	// gets the IP of the switch from the Switch ID
-	function getIPfromID() {
-		$switch = new plugin_tracker_switch_snmp();
-		return $switch->getIPfromID();
-	}
-	
-	// to get the number of the port where a device is connected to
-	function getPortLogicalNumber() {
-		$dec_ifmac = plugin_tracker_ifmacToDecimal($this->connected_ifmac);
-		$mib_port = MIB_SWITCH_PORT_PREFIX.".".$dec_ifmac;
-		$this->snmp['port'] = $this->snmpgetObject($mib_port);
-		return $this->snmp['port'];
-	}
-	
-	// Gets the state of this port
-	function getPortState() {
-		$dec_ifmac = plugin_tracker_ifmacToDecimal($this->connected_ifmac);
-		$mib_state = MIB_SWITCH_STATE_PREFIX.".".$dec_ifmac;
-		$state = $this->snmpgetObject($mib_state);
-		return $state;
-	}
-	
-	function showFormContents($connected_ID, $connected_ifmac) {
-		global $LANGTRACKER;
-		$this->connected_ID = $connected_ID;
-		$this->connected_ifmac = $connected_ifmac;
-		if  ( $this->getSwitchIDfromConnectedDevice() ) {
-			if ( $this->getIPfromID() ) {
-				echo "<br>voici ip switch : ".$this->ip;
-				$state = $this->getPortState();
-				$port = $this->getPortgetPortLogicalNumber();
-				echo "<br>Voici l'ÃÂ©tat ".$state;
-				echo "<br>Voici le port ".$port;
-			}
-			else
-				echo "".$LANGTRACKER["snmp"][33]."";
-		}
-		else
-			echo "".$LANGTRACKER["snmp"][34]."";
-	}
-	
-	function update($input) {
-		
-	}
-}*/
 
 
 
@@ -1726,11 +1555,35 @@ echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 
 
 
+	/**
+	 * Define a global var
+	 *
+	 * @param $ArrayOID Array with ObjectName and OID
+	 *
+	 * @return nothing
+	 *
+	**/
+	function DefineObject($ArrayOID)
+	{
+		foreach($ArrayOID as $object=>$oid)
+		{
+			if (!ereg("IF-MIB::",$object))
+			{
+				if(defined($object))
+				{
+					runkit_constant_remove($object);
+					define($object,$oid);
+				}
+				else
+				{
+					define($object,$oid);
+				}
+			}
+		}
+	}
 
 
 
-// **************************************** PAS VERIFIE **************************************** 
-	
 	/**
 	 * Get SNMP model of the network materiel 
 	 *
@@ -1757,39 +1610,6 @@ echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 		}	
 	
 	}
-
-
-	
-	
-	/**
-	 * Define a global var
-	 *
-	 * @param $ArrayOID Array with ObjectName and OID
-	 *
-	 * @return nothing
-	 *
-	**/
-	function DefineObject($ArrayOID)
-	{
-		foreach($ArrayOID as $object=>$oid)
-		{
-//echo "Objet : ".$object."\n";
-			if (!ereg("IF-MIB::",$object))
-			{
-				if(defined($object))
-				{
-					runkit_constant_remove($object);
-					define($object,$oid);
-				}
-				else
-				{
-					define($object,$oid);
-				}
-			}
-		}
-	}
-	
-
 	
 }
 ?>

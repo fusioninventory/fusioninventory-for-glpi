@@ -315,7 +315,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 	}
 
 	if (($type == PLUGIN_TRACKER_MODEL) AND ($num == "5")) {
-		$out = "<div align='center'><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
+		$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
 					<input type='hidden' name='model' value='" . $data["ID"] . "' />
 					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
 					</form></div>";
@@ -548,8 +548,9 @@ function plugin_headings_tracker_computerErrors($type, $ID) {
 
 function plugin_headings_tracker_printerInfo($type, $ID) {
 
-	$snmp = new plugin_tracker_printer_snmp();
-	$snmp->showForm(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $_GET["ID"]);
+	//$snmp = new plugin_tracker_printer_snmp();
+	$snmp = new plugin_tracker_switch_snmp();
+	$snmp->showFormPrinter(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_tracker_printerHistory($type, $ID) {
