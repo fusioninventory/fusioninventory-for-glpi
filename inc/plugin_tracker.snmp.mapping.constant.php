@@ -190,4 +190,29 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['dropdown'] = '';
 
 
 
+
+$TRACKER_MAPPING[PRINTER_TYPE]['model']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['model']['field'] = 'model';
+$TRACKER_MAPPING[PRINTER_TYPE]['model']['name'] = $LANGTRACKER["mapping"][25];
+$TRACKER_MAPPING[PRINTER_TYPE]['model']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['model']['dropdown'] = 'glpi_dropdown_model_printers';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['serial']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['serial']['field'] = 'serial';
+$TRACKER_MAPPING[PRINTER_TYPE]['serial']['name'] = $LANGTRACKER["mapping"][27];
+$TRACKER_MAPPING[PRINTER_TYPE]['serial']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['serial']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['name']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['name']['field'] = 'name';
+$TRACKER_MAPPING[PRINTER_TYPE]['name']['name'] = $LANGTRACKER["mapping"][24];
+$TRACKER_MAPPING[PRINTER_TYPE]['name']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['name']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['memory']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['memory']['field'] = 'ramSize';
+$TRACKER_MAPPING[PRINTER_TYPE]['memory']['name'] = $LANGTRACKER["mapping"][26];
+$TRACKER_MAPPING[PRINTER_TYPE]['memory']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['memory']['dropdown'] = '';
+
 ?>

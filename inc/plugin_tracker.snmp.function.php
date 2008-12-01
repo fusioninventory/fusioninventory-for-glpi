@@ -668,7 +668,7 @@ ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
 				if (($BridgePortifIndex == "") OR ($BridgePortifIndex == "No Such Instance currently exists at this OID"))
 					break;
 					
-				if ($Array_trunk_ifIndex[$BridgePortifIndex] == "1")
+				if ((isset($Array_trunk_ifIndex[$BridgePortifIndex])) AND ($Array_trunk_ifIndex[$BridgePortifIndex] == "1"))
 					break;
 					
 				//echo "BridgePortifIndex : ".$BridgePortifIndex."\n";

@@ -75,8 +75,6 @@ class plugin_tracker_importexport extends CommonDBTM
 		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
 		$xml .= "	<networkingmodel><![CDATA[".getDropdownName("glpi_dropdown_model_networking",$model_FK_model_networking)."]]></networkingmodel>\n";
 		$xml .= "	<firmware><![CDATA[".getDropdownName("glpi_dropdown_firmware",$model_FK_firmware)."]]></firmware>\n";
-		$xml .= "	<snmpversion><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$model_FK_snmp_version)."]]></snmpversion>\n";
-		$xml .= "	<authsnmp><![CDATA[".getDropdownName("glpi_plugin_tracker_snmp_connection",$model_FK_snmp_connection)."]]></authsnmp>\n";
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
@@ -92,9 +90,9 @@ class plugin_tracker_importexport extends CommonDBTM
 				$xml .= "		<oidobject>\n";
 				$xml .= "			<object><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."]]></object>\n";		
 				$xml .= "			<oid><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";		
-				$xml .= "			<portcounter><![CDATA[".$data["oid_port_counter"]."]]></portcounter>\n";
-				$xml .= "			<dynamicport><![CDATA[".$data["oid_port_dyn"]."]]></dynamicport>\n";
-				$xml .= "			<mapping_type><![CDATA[".$data["mapping_type"]."]]></mapping_type>\n";
+				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
+				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
+				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
 				$xml .= " 			<mapping_name><![CDATA[".$data["mapping_name"]."]]></mapping_name>\n";
 				$xml .= "		</oidobject>\n";
 			}
