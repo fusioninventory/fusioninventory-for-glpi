@@ -1,53 +1,5 @@
 <snmp>
-	<incrementID>5</incrementID>
+	<incrementID>1</incrementID>
 	<auth>
-		<conf>
-			<Num>1</Num>
-			<Name><![CDATA[DEDE]]></Name>
-			<snmp_version>3</snmp_version>
-			<community><![CDATA[public]]></community>
-			<sec_name><![CDATA[user]]></sec_name>
-			<sec_level>2</sec_level>
-			<auth_protocol>1</auth_protocol>
-			<auth_passphrase><![CDATA[password]]></auth_passphrase>
-			<priv_protocol>1</priv_protocol>
-			<priv_passphrase><![CDATA[passhard]]></priv_passphrase>
-		</conf>
-		<conf>
-			<Num>2</Num>
-			<Name><![CDATA[DEDE2]]></Name>
-			<snmp_version>2</snmp_version>
-			<community><![CDATA[public]]></community>
-			<sec_name><![CDATA[]]></sec_name>
-			<sec_level>0</sec_level>
-			<auth_protocol>0</auth_protocol>
-			<auth_passphrase><![CDATA[]]></auth_passphrase>
-			<priv_protocol>0</priv_protocol>
-			<priv_passphrase><![CDATA[]]></priv_passphrase>
-		</conf>
-		<conf>
-			<Num>3</Num>
-			<Name><![CDATA[Equipe I - v3]]></Name>
-			<snmp_version>2</snmp_version>
-			<community><![CDATA[kara]]></community>
-			<sec_name><![CDATA[]]></sec_name>
-			<sec_level>0</sec_level>
-			<auth_protocol>0</auth_protocol>
-			<auth_passphrase><![CDATA[]]></auth_passphrase>
-			<priv_protocol>0</priv_protocol>
-			<priv_passphrase><![CDATA[]]></priv_passphrase>
-		</conf>
-		<conf>
-			<Num>4</Num>
-			<Name><![CDATA[gerlandro v2c]]></Name>
-			<snmp_version>2</snmp_version>
-			<community><![CDATA[gerlandro]]></community>
-			<sec_name><![CDATA[]]></sec_name>
-			<sec_level>0</sec_level>
-			<auth_protocol>0</auth_protocol>
-			<auth_passphrase><![CDATA[]]></auth_passphrase>
-			<priv_protocol>0</priv_protocol>
-			<priv_passphrase><![CDATA[]]></priv_passphrase>
-		</conf>
 	</auth>
 </snmp>
