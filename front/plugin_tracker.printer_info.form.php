@@ -86,6 +86,16 @@ if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	
 }
 
+if ( (isset($_POST['add'])) && (isset($_POST['ID'])) ) {
+	plugin_tracker_checkRight("printers_info","w");
+
+	$plugin_tracker_printers = new plugin_tracker_printers();
+
+	$_POST['FK_printers'] = $_POST['ID'];
+	$_POST['FK_cartridges'] = $_POST['tID'];
+	$plugin_tracker_printers->add($_POST);
+}
+
 glpi_header($_SERVER['HTTP_REFERER']);
 
 ?>
