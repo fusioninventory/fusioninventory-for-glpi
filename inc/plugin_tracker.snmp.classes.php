@@ -489,7 +489,7 @@ function appear_array(id){
 	
 	function showFormPrinter($target,$ID)
 	{
-		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;	
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
 	
 		$this->ID = $ID;
 		
@@ -544,8 +544,76 @@ function appear_array(id){
 		echo "</td>";
 		echo "</tr>";		
 		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='2'>";
+		echo "<div align='center'>";
+		echo "<input type='hidden' name='ID' value='".$ID."'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "</table></form>";
+
+
+
+		echo "<br/><div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+
+		echo "<table class='tab_cadre' cellpadding='5' width='800'>";		
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<th align='center' colspan='2'>";
+		echo $LANG["cartridges"][16];
+		echo "</th>";
+		echo "</tr>";
+
+		$query_cartridges = "
+		SELECT * 
+		FROM glpi_plugin_tracker_printers_cartridges
+		WHERE FK_printers=".$ID." ";
+		if ( $result_cartridges=$DB->query($query_cartridges) )
+		{
+			while ( $data_cartridges=$DB->fetch_array($result_cartridges) )
+			{
+				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'>";
+				echo $TRACKER_MAPPING[PRINTER_TYPE][$data_cartridges['object_name']]['name'];
+				echo " => ";
+				dropdownValue("glpi_cartridges_type","FK_cartridges",$data_cartridges['FK_cartridges'],0);
+				echo "</td>";
+				echo "<td align='center'>";
+				plugin_tracker_Bar($data_cartridges['state']); 
+				echo "</td>";
+				echo "</tr>";
+			}
+		}
+				
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+		echo "<select name='object_name'>";
+		foreach ($TRACKER_MAPPING[PRINTER_TYPE] AS $cartridges=>$value)
+		{
+			if (ereg("cartridges", $cartridges))
+			{
+				echo "<option value='".$cartridges."'>".$TRACKER_MAPPING[PRINTER_TYPE][$cartridges]['name']."</option>";
+			}
+		}
+		echo "</select>";
+		echo "</td>";
+		echo "<td align='center'>";
+		dropdownCompatibleCartridges($ID);
+		echo "</td>";
+		echo "</tr>";	
 			
-		echo "</table>";
+		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='2'>";
+		echo "<div align='center'>";
+		echo "<input type='hidden' name='ID' value='".$ID."'>";
+		echo "<input type='hidden' name='state' value='100'>";
+		echo "<input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit' >";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "</table></form>";
 		
 	
 	}
