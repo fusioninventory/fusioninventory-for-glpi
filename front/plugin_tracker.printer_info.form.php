@@ -42,12 +42,12 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("printer","r");
 plugin_tracker_checkRight("printers_info","r");
 
-$printer_snmp = new plugin_tracker_printer_snmp();
+
 
 if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	
 	plugin_tracker_checkRight("printers_info","w");
-	
+	$printer_snmp = new plugin_tracker_printer_snmp();
 	// if not checked => unset value
 	if (!isset($_POST['cname']))
 		unset($_POST['name']);
@@ -92,6 +92,7 @@ if ( (isset($_POST['add'])) && (isset($_POST['ID'])) ) {
 	$plugin_tracker_printers = new plugin_tracker_printers();
 
 	$_POST['FK_printers'] = $_POST['ID'];
+	unset($_POST['ID']);
 	$_POST['FK_cartridges'] = $_POST['tID'];
 	$plugin_tracker_printers->add($_POST);
 }
