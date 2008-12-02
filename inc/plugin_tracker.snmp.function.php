@@ -819,11 +819,14 @@ var_dump($Array_trunk_ifDescr_result);
 		// Convert IP hex to decimal
 		$Array_ip_switch_trunk = explode(" ",$result);
 		$ip_switch_trunk = "";
-		for($i = 0; $i < 4;$i++)
+		if (count($Array_ip_switch_trunk) > 2)
 		{
-		$ip_switch_trunk .= hexdec($Array_ip_switch_trunk[$i]);
-			if ($i < 3)
-				$ip_switch_trunk .= ".";
+			for($i = 0; $i < 4;$i++)
+			{
+			$ip_switch_trunk .= hexdec($Array_ip_switch_trunk[$i]);
+				if ($i < 3)
+					$ip_switch_trunk .= ".";
+			}
 		}
 
 		// Search port of switch connected on this port and connect it if not connected
