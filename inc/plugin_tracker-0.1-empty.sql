@@ -215,15 +215,37 @@ CREATE TABLE `glpi_plugin_tracker_printers_history` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_tracker_printers_history_config`;
+DROP TABLE IF EXISTS `glpi_plugin_tracker_printers`;
 
-CREATE TABLE `glpi_plugin_tracker_printers_history_config` (
+CREATE TABLE `glpi_plugin_tracker_printers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL,
-  `counter` int(1) NOT NULL DEFAULT '0',
+  `FK_model_infos` int(8) NOT NULL DEFAULT '0',
+  `FK_snmp_connection` int(8) NOT NULL,
+  `frequence_days` int(5) NOT NULL,
+  `cartridges01` int(11) NOT NULL,
+  `cartridges02` int(11) NOT NULL,
+  `cartridges03` int(11) NOT NULL,
+  `cartridges04` int(11) NOT NULL,
+  `cartridges05` int(11) NOT NULL,
+  `cartridges06` int(11) NOT NULL,
+  `cartridges07` int(11) NOT NULL,
+  `cartridges08` int(11) NOT NULL,
+  `cartridges09` int(11) NOT NULL,
+  `cartridges10` int(11) NOT NULL,
+  `cartridges11` int(11) NOT NULL,
+  `cartridges12` int(11) NOT NULL,
+  `cartridges13` int(11) NOT NULL,
+  `cartridges14` int(11) NOT NULL,
+  `cartridges15` int(11) NOT NULL,
+  `cartridges16` int(11) NOT NULL,
+  `cartridges17` int(11) NOT NULL,
+  `cartridges18` int(11) NOT NULL,
+  `cartridges19` int(11) NOT NULL,
+  `cartridges20` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `FK_printers` (`FK_printers`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
 
 
 
