@@ -827,8 +827,16 @@ var_dump($Array_trunk_ifDescr_result);
 		}
 
 		// Search port of switch connected on this port and connect it if not connected
+		$ifdescr_trunk = "";
+		foreach ($Array_trunk_ifDescr_result AS $oid=>$ifdescr)
+		{
+			if (ereg("9.9.23.1.2.1.1.7.".$ifIndex.".".$end_Number, $oid))
+			{
+				$ifdescr_trunk = $ifdescr;
+			}		
+		}
 		
-		$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $Array_trunk_ifDescr_result["SNMPv2-SMI::enterprises.9.9.23.1.2.1.1.7.".$ifIndex.".".$end_Number]);
+		$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $ifdescr_trunk);
 
 		$query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
 		LEFT JOIN glpi_networking
