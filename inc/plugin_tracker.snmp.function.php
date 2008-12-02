@@ -735,6 +735,8 @@ echo "PASSAGE ... OK (2) => Refusé\n";
 						if ($resultPortEnd=$DB->query($queryPortEnd))
 						{
 							$traitement = 1;
+var_dump($array_port_trunk);
+var_dump($ArrayPortsID);				
 							if ($vlan != "")
 							{
 								if (isset($array_port_trunk[$ArrayPortsID[$ifName]]) && $array_port_trunk[$ArrayPortsID[$ifName]] == "1")
