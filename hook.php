@@ -548,8 +548,7 @@ function plugin_headings_tracker_computerErrors($type, $ID) {
 
 function plugin_headings_tracker_printerInfo($type, $ID) {
 
-	//$snmp = new plugin_tracker_printer_snmp();
-	$snmp = new plugin_tracker_switch_snmp();
+	$snmp = new plugin_tracker_printers();
 	$snmp->showFormPrinter(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $_GET["ID"]);
 }
 

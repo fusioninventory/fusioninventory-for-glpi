@@ -142,7 +142,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</tr>";
 				echo "</table></div>";
 	
-	
+				echo "<br/>";
 				echo "<table class='tab_cadre_fixe'>";
 				/*
 				echo "<tr class='tab_bg_1'>
