@@ -221,4 +221,82 @@ $TRACKER_MAPPING[PRINTER_TYPE]['memory']['name'] = $LANGTRACKER["mapping"][26];
 $TRACKER_MAPPING[PRINTER_TYPE]['memory']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['memory']['dropdown'] = '';
 
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblack']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblack']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblack']['name'] = $LANGTRACKER["mapping"][34];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblack']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblack']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblackphoto']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblackphoto']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblackphoto']['name'] = $LANGTRACKER["mapping"][35];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblackphoto']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesblackphoto']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyan']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyan']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyan']['name'] = $LANGTRACKER["mapping"][36];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyan']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyan']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesyellow']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesyellow']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesyellow']['name'] = $LANGTRACKER["mapping"][37];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesyellow']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesyellow']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagenta']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagenta']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagenta']['name'] = $LANGTRACKER["mapping"][38];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagenta']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagenta']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyanlight']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyanlight']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyanlight']['name'] = $LANGTRACKER["mapping"][39];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyanlight']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgescyanlight']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagentalight']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagentalight']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagentalight']['name'] = $LANGTRACKER["mapping"][40];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagentalight']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmagentalight']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductor']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductor']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductor']['name'] = $LANGTRACKER["mapping"][41];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductor']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductor']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorblack']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorblack']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorblack']['name'] = $LANGTRACKER["mapping"][42];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorblack']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorblack']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcolor']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcolor']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcolor']['name'] = $LANGTRACKER["mapping"][43];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcolor']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcolor']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcyan']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcyan']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcyan']['name'] = $LANGTRACKER["mapping"][44];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcyan']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductorcyan']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductoryellow']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductoryellow']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductoryellow']['name'] = $LANGTRACKER["mapping"][45];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductoryellow']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductoryellow']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductormagenta']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductormagenta']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductormagenta']['name'] = $LANGTRACKER["mapping"][46];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductormagenta']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesphotoconductormagenta']['dropdown'] = '';
+
 ?>
