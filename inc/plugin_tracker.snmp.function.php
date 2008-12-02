@@ -452,7 +452,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					{
 						$netwire=new Netwire;
 						addLogConnection("remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
-						addLogConnection("remove",$Field,$FK_process);
+						addLogConnection("remove",$data["ID"],$FK_process);
 						removeConnector($data["ID"]);
 						
 					}
