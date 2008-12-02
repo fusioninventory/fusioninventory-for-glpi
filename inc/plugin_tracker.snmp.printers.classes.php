@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class plugin_tracker_printers extends CommonDBTM {
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_printers_cartridges";
-		$this->type = PLUGIN_TRACKER_MODEL;
+		//$this->type = PLUGIN_TRACKER_PRINTERS_CARTRIDGES;
 	}
 
 }

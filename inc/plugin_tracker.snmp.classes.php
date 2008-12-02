@@ -576,8 +576,8 @@ function appear_array(id){
 			{
 				echo "<tr class='tab_bg_1'>";
 				echo "<td align='center'>";
-				echo $TRACKER_MAPPING[PRINTER_TYPE][$data_cartridges['object_name']]['name'];
-				echo " => ";
+				echo $TRACKER_MAPPING[PRINTER_TYPE][$data_cartridges['object_name']]['shortname'];
+				echo " : ";
 				dropdownValue("glpi_cartridges_type","FK_cartridges",$data_cartridges['FK_cartridges'],0);
 				echo "</td>";
 				echo "<td align='center'>";
