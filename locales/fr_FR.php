@@ -76,6 +76,7 @@ $LANGTRACKER["functionalities"][20]="Imprimantes";
 $LANGTRACKER["functionalities"][21]="Relevé des compteurs Imprimantes";
 $LANGTRACKER["functionalities"][22]="Valeur par défaut";
 $LANGTRACKER["functionalities"][23]="Lorsque le relevé d'un compteur spécifique sera spécifié à défaut, c'est cette valeur qui sera prise en compte.";
+$LANGTRACKER["functionalities"][24]="Fréquence de relevé des compteurs";
 
 $LANGTRACKER["functionalities"][30]="Epuration des historiques";
 $LANGTRACKER["functionalities"][31]="Activation de l'épuration";
@@ -254,6 +255,19 @@ $LANGTRACKER["mapping"][30]="imprimante > nombre de pages couleur imprimées";
 $LANGTRACKER["mapping"][31]="imprimante > nombre de pages monochrome imprimées";
 $LANGTRACKER["mapping"][32]="imprimante > nombre de pages bichromie imprimées";
 $LANGTRACKER["mapping"][33]="réseaux > port > type de duplex";
+$LANGTRACKER["mapping"][34]="imprimante > cartouche noir";
+$LANGTRACKER["mapping"][35]="imprimante > cartouche noir photo";
+$LANGTRACKER["mapping"][36]="imprimante > cartouche cyan";
+$LANGTRACKER["mapping"][37]="imprimante > cartouche jaune";
+$LANGTRACKER["mapping"][38]="imprimante > cartouche magenta";
+$LANGTRACKER["mapping"][39]="imprimante > cartouche cyan clair";
+$LANGTRACKER["mapping"][40]="imprimante > cartouche magenta clair";
+$LANGTRACKER["mapping"][41]="imprimante > photoconducteur";
+$LANGTRACKER["mapping"][42]="imprimante > photoconducteur noir";
+$LANGTRACKER["mapping"][43]="imprimante > photoconducteur couleur";
+$LANGTRACKER["mapping"][44]="imprimante > photoconducteur cyan";
+$LANGTRACKER["mapping"][45]="imprimante > photoconducteur jaune";
+$LANGTRACKER["mapping"][46]="imprimante > photoconducteur magenta";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";

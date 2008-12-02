@@ -493,6 +493,23 @@ function appear_array(id){
 	
 		$this->ID = $ID;
 		
+		$query = "
+		SELECT * 
+		FROM glpi_plugin_tracker_printers
+		WHERE FK_printers=".$ID." ";
+
+		$result = $DB->query($query);		
+		$data = $DB->fetch_assoc($result);
+		
+		// Add in database if not exist
+		if ($DB->numrows($result) == "0")
+		{
+			$query_add = "INSERT INTO glpi_plugin_tracker_printers
+			(FK_printers) VALUES('".$ID."') ";
+			
+			$DB->query($query_add);
+		}
+		
 		// Form printer informations
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
@@ -501,17 +518,33 @@ function appear_array(id){
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
-		//echo $LANGTRACKER["snmp"][11];
+		echo $LANGTRACKER["snmp"][11];
 		echo "</th>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
 		echo "<td align='center'>";
-		//dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0);
+		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0);
+		echo "</td>";
+		echo "</tr>";
+	
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["functionalities"][43]."</td>";
+		echo "<td align='center'>";
+		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
 		echo "</tr>";
 		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["functionalities"][24]."</td>";
+		echo "<td align='center'>";
+		dropdownInteger("frequence_days",$data["frequence_days"], 1,100);
+		echo "&nbsp;&nbsp;".$LANG["stats"][31];
+		echo "</td>";
+		echo "</tr>";		
+		
+			
 		echo "</table>";
 		
 	
