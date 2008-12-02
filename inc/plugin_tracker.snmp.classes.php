@@ -491,7 +491,29 @@ function appear_array(id){
 	{
 		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;	
 	
-	
+		$this->ID = $ID;
+		
+		// Form printer informations
+		echo "<br>";
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+
+		echo "<table class='tab_cadre' cellpadding='5' width='800'>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<th colspan='3'>";
+		//echo $LANGTRACKER["snmp"][11];
+		echo "</th>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
+		echo "<td align='center'>";
+		//dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0);
+		echo "</td>";
+		echo "</tr>";
+		
+		echo "</table>";
+		
 	
 	}
 	

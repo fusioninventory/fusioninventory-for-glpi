@@ -99,21 +99,7 @@ class plugin_tracker_model_infos extends CommonDBTM {
 		dropdownValue("glpi_dropdown_firmware", "FK_firmware", $this->fields["FK_firmware"], 1, -1, "");
 		echo "</td>";
 		echo "</tr>";
-/*
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["model_info"][2] . "</td>";
-		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_version", "FK_snmp_version", $this->fields["FK_snmp_connection"], 1);
-		echo "</td>";
-		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["model_info"][3] . "</td>";
-		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_tracker_snmp_connection", "FK_snmp_connection", $this->fields["FK_snmp_connection"], 0);
-		echo "</td>";
-		echo "</tr>";
-*/
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
 		if ($ID=='') {
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
