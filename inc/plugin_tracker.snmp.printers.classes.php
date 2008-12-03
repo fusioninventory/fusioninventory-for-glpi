@@ -38,9 +38,16 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_printers extends CommonDBTM {
+class plugin_tracker_printers_cartridges extends CommonDBTM {
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_printers_cartridges";
+		//$this->type = PLUGIN_TRACKER_PRINTERS_CARTRIDGES;
+	}
+}
+
+class plugin_tracker_printers extends CommonDBTM {
+	function __construct() {
+		$this->table = "glpi_plugin_tracker_printers";
 		//$this->type = PLUGIN_TRACKER_PRINTERS_CARTRIDGES;
 	}
 
@@ -84,7 +91,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0);
+		dropdownValue("glpi_plugin_tracker_model_infos","FK_model_infos",$data["FK_model_infos"],0);
 		echo "</td>";
 		echo "</tr>";
 	
@@ -113,7 +120,7 @@ class plugin_tracker_printers extends CommonDBTM {
 
 		echo "</table></form>";
 
-
+		// ** FORM FOR CARTRIDGES
 
 		echo "<br/><div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
@@ -176,6 +183,19 @@ class plugin_tracker_printers extends CommonDBTM {
 		
 	
 	}
+
+
+
+	function update_printers_infos($ID, $FK_model_infos, $FK_snmp_connection)
+	{
+		global $DB;
+		
+		$query = "UPDATE glpi_plugin_tracker_printers
+		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
+		WHERE FK_printers='".$ID."' ";
 	
+		$DB->query($query);
+
+	}	
 }
 ?>
