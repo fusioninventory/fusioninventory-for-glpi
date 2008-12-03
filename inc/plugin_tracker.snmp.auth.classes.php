@@ -361,12 +361,32 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	}
 
 
-	function GetInfos($IDNetworking,$xml_auth_rep)
+
+	/**
+	 * Get SNMP version and authentification 
+	 *
+	 * @param $ID_Device ID of the device
+	 * @param $xml_auth_rep folder where as stocked authxml file (if the management is by FILE)
+	 * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
+	 *
+	 * @return $snmp_auth : array with auth informations && version
+	 *
+	**/
+	function GetInfos($ID_Device,$xml_auth_rep,$type)
 	{
 		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;
 
-		$query = "SELECT * FROM glpi_plugin_tracker_networking
-		WHERE FK_networking='".$IDNetworking."' ";
+		switch ($type)
+		{
+			case NETWORKING_TYPE :
+				$query = "SELECT * FROM glpi_plugin_tracker_networking
+				WHERE FK_networking='".$ID_Device."' ";
+				break;
+			case PRINTER_TYPE :
+				$query = "SELECT * FROM glpi_plugin_tracker_printers
+				WHERE FK_printers='".$ID_Device."' ";
+				break;
+		}		
 		$result=$DB->query($query);
 
 		$ID_auth = $DB->result($result,0,"FK_snmp_connection");
@@ -448,9 +468,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			$snmp_auth["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$DB->result($result,0,"priv_protocol"));
 			$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
 		}
-			
 		return $snmp_auth;
-	
 	}
 
 
