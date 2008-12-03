@@ -52,7 +52,7 @@ function plugin_tracker_snmp_auth_dropdown($selected="")
 	}
 	else  if ($DB->result($result_conf,0,"authsnmp") == "DB")
 	{
-		dropdownValue("glpi_plugin_tracker_snmp_connection","auth_snmp",$selected,0);
+		dropdownValue("glpi_plugin_tracker_snmp_connection","FK_snmp_connection",$selected,0);
 	}
 
 }
