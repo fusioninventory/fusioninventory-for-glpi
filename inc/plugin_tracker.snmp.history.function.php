@@ -66,6 +66,8 @@ function addLogConnection($status,$port,$FK_process=0)
 	$netport=new Netport;
 	$array["FK_ports"] = $port;
 	$opposite_port = $nw->getOppositeContact($port);
+	if ($opposite_port == "0")
+		return;
 	$netport->getFromDB($opposite_port);
 	$array["device_type"] = $netport->fields["device_type"];
 	
