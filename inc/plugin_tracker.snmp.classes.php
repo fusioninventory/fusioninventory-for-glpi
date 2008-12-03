@@ -1303,7 +1303,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * Get OID list for the SNMP model 
 	 *
 	 * @param $IDModelInfos ID of the SNMP model
-	 * @param $arg arg for where (ports, port_number or juste oid for materiel)
+	 * @param $arg arg for where (ports, port_number or juste oid for device)
 	 * @param $name_dyn put object dynamic
 	 *
 	 * @return array : array with object name and oid
@@ -1353,8 +1353,15 @@ class plugin_tracker_snmp extends CommonDBTM
 	}
 
 
-
-	function GetLinkOidToFields($ID)
+	/**
+	 * Get links between oid and fields 
+	 *
+	 * @param $ID_Model ID of the SNMP model
+	 *
+	 * @return array : array with object name and mapping_type||mapping_name
+	 *
+	**/
+	function GetLinkOidToFields($ID_Model)
 	{
 
 		global $DB,$TRACKER_MAPPING;
@@ -1368,7 +1375,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
 			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
 		
-		WHERE FK_model_infos=".$ID." 
+		WHERE FK_model_infos=".$ID_Model." 
 			AND oid_port_counter='0' ";
 		
 		if ( $result=$DB->query($query) )
@@ -1379,9 +1386,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				$ObjectLink[$data["name"]] = $data["mapping_type"]."||".$data["mapping_name"];
 			}
 		}
-	
 		return $ObjectLink;
-		
 	}
 
 
@@ -1577,21 +1582,32 @@ echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 
 
 	/**
-	 * Get SNMP model of the network materiel 
+	 * Get SNMP model of the device 
 	 *
-	 * @param $IDNetworking ID of the network materiel
+	 * @param $ID_Device ID of the device
+	 * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
 	 *
 	 * @return ID of the SNMP model or nothing 
 	 *
 	**/
-	function GetSNMPModel($IDNetworking)
+	function GetSNMPModel($ID_Device,$type)
 	{
 	
 		global $DB;
 
-		$query = "SELECT FK_model_infos
-		FROM glpi_plugin_tracker_networking 
-		WHERE FK_networking='".$IDNetworking."' ";
+		switch ($type)
+		{
+			case NETWORKING_TYPE :
+				$query = "SELECT FK_model_infos
+				FROM glpi_plugin_tracker_networking 
+				WHERE FK_networking='".$ID_Device."' ";
+				break;
+			case PRINTER_TYPE :
+				$query = "SELECT FK_model_infos
+				FROM glpi_plugin_tracker_printers 
+				WHERE FK_printers='".$ID_Device."' ";
+				break;
+		}
 		
 		if ( ($result = $DB->query($query)) )
 		{

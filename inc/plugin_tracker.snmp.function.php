@@ -39,12 +39,14 @@ if (!defined('GLPI_ROOT')){
 
 
 /**
- * Get all networking list ready for SNMP query  
+ * Get all DEVICE list ready for SNMP query  
+ *
+ * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
  *
  * @return array with ID => IP 
  *
 **/
-function getNetworkList()
+function plugin_tracker_getDeviceList($type)
 {
 	global $DB;
 	
@@ -57,10 +59,26 @@ function getNetworkList()
 		$device_state = $DB->result($result, 0, "active_device_state");
 	}
 
-	$query = "SELECT ID,ifaddr 
-	FROM glpi_networking 
+	switch ($type)
+	{
+		case NETWORKING_TYPE :
+			$table = "glpi_networking";
+			$join = "";
+			$whereand = "";
+			break;
+		case PRINTER_TYPE :
+			$table = "glpi_printers";
+			$join = "LEFT JOIN glpi_networking_ports
+				ON glpi_printers.ID = glpi_networking_ports.on_device";
+			$whereand = "AND glpi_networking_ports.device_type='".PRINTER_TYPE."' ";
+			break;
+	}
+
+	$query = "SELECT ".$table.".ID,ifaddr 
+	FROM ".$table." 
+	".$join."
 	WHERE deleted='0' 
-		AND state='".$device_state."' ";
+		AND state='".$device_state."' ".$whereand." ";
 		
 	if ( $result=$DB->query($query) )
 	{
@@ -79,12 +97,13 @@ function getNetworkList()
 /**
  * Get and update infos of networking and its ports  
  *
- * @param $ArrayListNetworking ID => IP of the network materiel
+ * @param $ArrayListDeviceNetworking ID => IP of the network materiel
+ * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
  *
  * @return nothing
  *
 **/
-function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
+function plugin_tracker_UpdateDeviceBySNMP($ArrayListDevice,$FK_process = 0,$xml_auth_rep,$type)
 {
 	$processes_values["devices"] = 0;
 	$processes_values["errors"] = 0;
@@ -92,92 +111,99 @@ function UpdateNetworkBySNMP($ArrayListNetworking,$FK_process = 0,$xml_auth_rep)
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 	$processes = new Threads;
 	
-	foreach ( $ArrayListNetworking as $IDNetworking=>$ifIP )
+	foreach ( $ArrayListDevice as $ID_Device=>$ifIP )
 	{
-		$updateNetwork = new plugin_tracker_snmp;
+		$plugin_tracker_snmp = new plugin_tracker_snmp;
 		
 		// Get SNMP model 
 		$snmp_model_ID = '';
-		$snmp_model_ID = $updateNetwork->GetSNMPModel($IDNetworking);
-		if (($snmp_model_ID != "") && ($IDNetworking != ""))
+		$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID_Device,$type);
+		if (($snmp_model_ID != "") && ($ID_Device != ""))
 		{
-			// ** Get oid
-			$Array_Object_oid = $updateNetwork->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0'");
+			switch ($type)
+			{
+				case NETWORKING_TYPE : 
+					// ** Get oid of PortName
+					$Array_Object_oid_ifName = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifName'");
+		
+					$Array_Object_oid_ifType = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifType'");
+		
+					// ** Get oid of vtpVlanName
+					$Array_Object_oid_vtpVlanName = $plugin_tracker_snmp->GetOID($snmp_model_ID,"mapping_name='vtpVlanName'");
+					break;
+			}
 
-			// ** Get oid of PortName
-			$Array_Object_oid_ifName = $updateNetwork->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifName'");
-
-			$Array_Object_oid_ifType = $updateNetwork->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifType'");
-
-			// ** Get oid of vtpVlanName
-			$Array_Object_oid_vtpVlanName = $updateNetwork->GetOID($snmp_model_ID,"mapping_name='vtpVlanName'");
+			// ** Get OIDs
+			$Array_Object_oid = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0'");
 
 			// ** Get snmp version and authentification
-			$snmp_auth = $plugin_tracker_snmp_auth->GetInfos($IDNetworking,$xml_auth_rep);
+			$snmp_auth = $plugin_tracker_snmp_auth->GetInfos($ID_Device,$xml_auth_rep,$type);
 			$snmp_version = $snmp_auth["snmp_version"];
 
 			// ** Get from SNMP, description of equipment
-			// .1.3.6.1.2.1.1.1.0 sysDescr
-			$updateNetwork->DefineObject(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"));
-			$Array_sysdescr = $updateNetwork->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ifIP,$snmp_version,$snmp_auth);
+			$plugin_tracker_snmp->DefineObject(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"));
+			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ifIP,$snmp_version,$snmp_auth);
 			if ($Array_sysdescr["sysDescr"] == "")
 			{
 				// SNMP error (Query impossible)
 				$processes_values["errors"]++;
-				$processes->addProcessValues($FK_process,"snmp_errors","","SNMP Query impossible (".$IDNetworking.")");
+				$processes->addProcessValues($FK_process,"snmp_errors","","SNMP Query impossible (".$ID_Device.") Type ".$type." ");
 			}
 			else
 			{
+				switch ($type)
+				{
+					case NETWORKING_TYPE :
+						//**
+						$ArrayPort_LogicalNum_SNMPName = $plugin_tracker_snmp->GetPortsName($ifIP,$snmp_version,$snmp_auth,$Array_Object_oid_ifName);
+			
+						// **
+						$ArrayPort_LogicalNum_SNMPNum = $plugin_tracker_snmp->GetPortsSNMPNumber($ifIP,$snmp_version,$snmp_auth);
+		
+						// ** Get oid ports Counter
+						$ArrayPort_Object_oid = tracker_snmp_GetOIDPorts($snmp_model_ID,$ifIP,$ID_Device,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process);
 	
-				//**
-				$ArrayPort_LogicalNum_SNMPName = $updateNetwork->GetPortsName($ifIP,$snmp_version,$snmp_auth,$Array_Object_oid_ifName);
-	
-				// **
-				$ArrayPort_LogicalNum_SNMPNum = $updateNetwork->GetPortsSNMPNumber($ifIP,$snmp_version,$snmp_auth);
-
-				// ** Get oid ports Counter
-				$ArrayPort_Object_oid = tracker_snmp_GetOIDPorts($snmp_model_ID,$ifIP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process);
-	
-				// ** Define oid and object name
-				//$updateNetwork->DefineObject($Array_Object_oid);
+						// ** Get query SNMP of switchs ports
+						$ArraySNMPPort_Object_result = $plugin_tracker_snmp->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
+						break;
+				}
 				// ** Get query SNMP on switch
-				$ArraySNMP_Object_result= $updateNetwork->SNMPQuery($Array_Object_oid,$ifIP,$snmp_version,$snmp_auth);
+				$ArraySNMP_Object_result= $plugin_tracker_snmp->SNMPQuery($Array_Object_oid,$ifIP,$snmp_version,$snmp_auth);
 				$processes_values["devices"]++;
 				
-				// ** Define oid and object name
-				//$updateNetwork->DefineObject($ArrayPort_Object_oid);
-				// ** Get query SNMP of switchs ports
-
-				$ArraySNMPPort_Object_result = $updateNetwork->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
-
 				// ** Get link OID fields
-				$Array_Object_TypeNameConstant = $updateNetwork->GetLinkOidToFields($snmp_model_ID);
+				$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID);
 	
 				// ** Update fields of switchs
-				tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$IDNetworking);
-	
-				//**
-				$ArrayPortDB_Name_ID = $updateNetwork->GetPortsID($IDNetworking);
-	
-				// ** Update ports fields of switchs
-				UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process);
+				tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type);
 
-				$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process);
-
-				// ** Get MAC adress of connected ports
-				$array_port_trunk = array();
-				$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex);
-	
-				// Foreach VLAN ID to GET MAC Adress on each VLAN
-				$updateNetwork->DefineObject($Array_Object_oid_vtpVlanName);
-	
-				$Array_vlan = $updateNetwork->SNMPQueryWalkAll($Array_Object_oid_vtpVlanName,$ifIP,$snmp_version,$snmp_auth);
-				foreach ($Array_vlan as $objectdyn=>$vlan_name)
+				switch ($type)
 				{
-					$explode = explode(".",$objectdyn);
-					$ID_VLAN = $explode[(count($explode) - 1)];
-					logInFile("tracker_snmp", "		VLAN : ".$ID_VLAN."\n\n");
-					GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex,$ID_VLAN,$array_port_trunk,$vlan_name);
+					case NETWORKING_TYPE :
+						//**
+						$ArrayPortDB_Name_ID = $plugin_tracker_snmp->GetPortsID($ID_Device);
+			
+						// ** Update ports fields of switchs
+						UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process);
+		
+						$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process);
+		
+						// ** Get MAC adress of connected ports
+						$array_port_trunk = array();
+						$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$ID_Device,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex);
+			
+						// Foreach VLAN ID to GET MAC Adress on each VLAN
+						$plugin_tracker_snmp->DefineObject($Array_Object_oid_vtpVlanName);
+			
+						$Array_vlan = $plugin_tracker_snmp->SNMPQueryWalkAll($Array_Object_oid_vtpVlanName,$ifIP,$snmp_version,$snmp_auth);
+						foreach ($Array_vlan as $objectdyn=>$vlan_name)
+						{
+							$explode = explode(".",$objectdyn);
+							$ID_VLAN = $explode[(count($explode) - 1)];
+							logInFile("tracker_snmp", "		VLAN : ".$ID_VLAN."\n\n");
+							GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$ID_Device,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex,$ID_VLAN,$array_port_trunk,$vlan_name);
+						}
+						break;
 				}
 			}
 		}
@@ -315,7 +341,18 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 
 
 
-function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$IDNetworking)
+/**
+ * Update devices with values get by SNMP 
+ *
+ * @param $ArraySNMP_Object_result : array with object name => value from SNMP query
+ * @param $Array_Object_TypeNameConstant : array with object name => constant in relation with fields to update 
+ * @param $IDNetworking : ID of device
+ * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
+ *
+ * @return $oidList : array with ports object name and oid
+ *
+**/
+function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type)
 {
 
 	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
@@ -328,22 +365,22 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 
 		if ($TRACKER_MAPPING[$object_type][$object_name]['dropdown'] != "")
 		{
-			// Search if value of SNMP Query is in dropdown, if not, we put it
-			// Wawax : si tu ajoutes le lieu manuellement tu mets un msg dans le message_after_redirect
-			// 
-			
-			// $ArrayDropdown = getDropdownArrayNames($data["table"],"%")
 			$SNMPValue = externalImportDropdown($TRACKER_MAPPING[$object_type][$object_name]['dropdown'],$SNMPValue,0);
 		}
 		// Update fields
-		//$query_update = "UPDATE
-		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_networking")
+		
+		switch ($type)
 		{
-			$Field = "ID";
-		}
-		else
-		{
-			$Field = "FK_networking";
+			case NETWORKING_TYPE :
+				$Field = "FK_networking";
+				if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_networking")
+					$Field = "ID";
+				break;
+			case PRINTER_TYPE :
+				$Field = "FK_printers";
+				if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_printers")
+					$Field = "ID";
+				break;
 		}
 		
 		$SNMPValue = preg_replace('/^\"/', '',$SNMPValue);
@@ -358,15 +395,10 @@ function tracker_snmp_UpdateGLPINetworking($ArraySNMP_Object_result,$Array_Objec
 		{
 			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-			WHERE ".$Field."='".$IDNetworking."'";
-			
-			// update via :  $networking->update(array("serial"=>"tonnumero"));
+			WHERE ".$Field."='".$ID_Device."'";
+echo "QUERY :".$queryUpdate."\n";	
 			$DB->query($queryUpdate);
 		}
-		//<MoYo> cleanAllItemCache($item,$group)
-		//<MoYo> $item = ID
-		//<MoYo> group = GLPI_ + NETWORKING_TYPE
-
 	}
 }
 
