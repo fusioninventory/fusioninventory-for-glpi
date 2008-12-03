@@ -466,145 +466,6 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 			}		
 		}
 	}
-
-
-// ** ANCIEN CODE ****************************************************************
-/*	$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
-	$query = "SELECT ID, logical_number
-	FROM glpi_networking_ports
-	WHERE on_device='".$IDNetworking."'
-		AND device_type='2'
-	ORDER BY logical_number";
-	
-	if ( $result=$DB->query($query) )
-	{
-		while ( $data=$DB->fetch_array($result) )
-		{
-		
-			$ArrayPortsList[$data["logical_number"]] = $data["ID"];
-			
-			$queryPortsTracker = "SELECT ID,FK_networking_ports
-			
-			FROM glpi_plugin_tracker_networking_ports
-			
-			WHERE FK_networking_ports='".$data["ID"]."' ";
-			
-			if ( $resultPortsTracker=$DB->query($queryPortsTracker) )
-			{
-				while ( $dataPortsTracker=$DB->fetch_assoc($resultPortsTracker) )
-				{
-					$ArrayPortListTracker[$data["logical_number"]] = $dataPortsTracker["ID"];
-					$ArrayDB_ID_FKNetPort[$data["ID"]] = $data["logical_number"];
-
-				}
-			} 
-
-		}
-	}
-	foreach($ArraySNMPPort_Object_result as $object=>$SNMPValue)
-	{
-		$ArrayObject = explode (".",$object);
-		$i = count($ArrayObject);
-		$i--;
-		$PortNumber = $ArrayObject[$i];
-
-		
-		$object = '';
-		
-		for ($j = 0; $j < $i;$j++)
-		{
-			$object .= $ArrayObject[$j];
-		}
-
-		$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
-		$object_type = $explode[0];
-		$object_name = $explode[1];
-
-		if ($TRACKER_MAPPING[$object_type][$object_name]['dropdown'] != "")
-		{
-		
-			$SNMPValue = externalImportDropdown($TRACKER_MAPPING[$object_type][$object_name]['dropdown'],$SNMPValue,0);
-		
-		}
-		else
-		{
-			
-			if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_networking_ports")
-			{
-				if (isset($ArrayPortListTracker[$ArrayPort_LogicalNum_SNMPNum[$PortNumber]]))
-				{
-					$Field = $ArrayPortsList[$ArrayPort_LogicalNum_SNMPNum[$PortNumber]];
-				}
-				else
-				{
-					$Field = "";
-				}				
-			}
-			else
-			{
-				if (isset($ArrayPortListTracker[$ArrayPort_LogicalNum_SNMPNum[$PortNumber]]))
-				{
-					$Field = $ArrayPortListTracker[$ArrayPort_LogicalNum_SNMPNum[$PortNumber]];
-				}
-				else
-				{
-					$Field = "";
-				}
-
-			}						
-
-			// Detect if changes
-			if ($object_name == "ifPhysAddress")
-			{
-				$snmp_queries = new plugin_tracker_snmp;
-				$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
-			}
-			if (($Field != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['field'] != "") AND ($TRACKER_MAPPING[$object_type][$object_name]['table'] != ""))
-			{
-				$update = 0;
-				$query_select = "SELECT ".$TRACKER_MAPPING[$object_type][$object_name]['field']."
-				FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-				WHERE ID='".$Field."'";
-				if ( $result_select=$DB->query($query_select) )
-				{
-					while ( $data_select=$DB->fetch_assoc($result_select) )
-					{
-						if ($SNMPValue != $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']])
-						{
-							$update = 1;
-							$SNMPValue_old = $data_select[$TRACKER_MAPPING[$object_type][$object_name]['field']];
-						}
-					}
-				}		
-				
-				if ($update == "1")
-				{
-					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-				
-					SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-					
-					WHERE ID='".$Field."'";
-	
-					$DB->query($queryUpdate);
-					
-					if (($object_name == "ifinternalstatus") AND (($SNMPValue == "2") OR ($SNMPValue == "down(2)")))
-					{
-						
-						$netwire=new Netwire;
-						addLogConnection("remove",$netwire->getOppositeContact($Field),$FK_process);
-						addLogConnection("remove",$Field,$FK_process);
-						removeConnector($Field);
-						
-					}					
-					
-					if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets'))
-					{
-						tracker_snmp_addLog($Field,$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue,$FK_process);
-					}
-				}
-			}
-		}				
-	}*/
 }
 
 
@@ -612,7 +473,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$Array_trunk_ifIndex,$vlan="",$array_port_trunk=array(),$vlan_name="")
 {
 	global $DB;
-ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
+//ECHO ">>>>>>>>>>>>>>>>>>>> NETWORKING <<<<<<<<<<<<<<<<<<<<<<<<<\n";
 	$processes = new Threads;
 	$netwire = new Netwire;
 	$snmp_queries = new plugin_tracker_snmp;
@@ -696,16 +557,16 @@ $snmp_queries->DefineObject($arrayTRUNKmod);
 		
 $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
 
-echo "VLAN :".$vlan."\n";
-echo "TRUNKSTATUS :".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex]."\n";
-echo "MACADRESS :".$MacAddress."\n";
-echo "INTERFACE :".$ifName."\n";
-echo "================================\n";
+//echo "VLAN :".$vlan."\n";
+//echo "TRUNKSTATUS :".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex]."\n";
+//echo "MACADRESS :".$MacAddress."\n";
+//echo "INTERFACE :".$ifName."\n";
+//echo "================================\n";
 					
 					$queryPortEnd = "";	
 					if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR (empty($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
 					{
-echo "PASSAGE ... OK\n";
+//echo "PASSAGE ... OK\n";
 						$queryPortEnd = "SELECT * 
 						
 						FROM glpi_networking_ports
@@ -715,12 +576,16 @@ echo "PASSAGE ... OK\n";
 					}
 					else if (($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") AND ($vlan != "")) // It's a trunk port
 					{
-echo "PASSAGE ... FAILED\n";
+//echo "PASSAGE ... FAILED\n";
 						$queryPortEnd = "";
+						if ($vlan == "")
+						{
+							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+						}
 					}
 					else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 					{
-echo "PASSAGE ... OK (2) => Refusé\n";
+//echo "PASSAGE ... OK (2) => Refusé\n";
 						$queryPortEnd = "SELECT * 
 						
 						FROM glpi_networking_ports
@@ -728,6 +593,10 @@ echo "PASSAGE ... OK (2) => Refusé\n";
 						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
 							AND on_device!='".$IDNetworking."' ";
 						$queryPortEnd = "";
+						if ($vlan == "")
+						{
+							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+						}
 					}
 
 					if (($queryPortEnd != ""))
@@ -735,8 +604,7 @@ echo "PASSAGE ... OK (2) => Refusé\n";
 						if ($resultPortEnd=$DB->query($queryPortEnd))
 						{
 							$traitement = 1;
-var_dump($array_port_trunk);
-var_dump($ArrayPortsID);				
+	
 							if ($vlan != "")
 							{
 								if (isset($array_port_trunk[$ArrayPortsID[$ifName]]) && $array_port_trunk[$ArrayPortsID[$ifName]] == "1")
@@ -744,10 +612,10 @@ var_dump($ArrayPortsID);
 									$traitement = 0;
 								}
 							}
-							else
-							{
-								$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-							}						
+							//else
+							//{
+							//	$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+							//}						
 							
 							if (!isset($ArrayPortsID[$ifName]))
 							{
@@ -756,7 +624,7 @@ var_dump($ArrayPortsID);
 
 							if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 							{
-echo "TRAITEMENT :".$traitement."\n";
+//echo "TRAITEMENT :".$traitement."\n";
 								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 								$sport = $ArrayPortsID[$ifName]; // Networking_Port
 								
@@ -809,7 +677,7 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 	// Get by SNMP query the Name of port (ifDescr)
 	$snmp_queries->DefineObject($Array_trunk_ifDescr);
 	$Array_trunk_ifDescr_result = $snmp_queries->SNMPQueryWalkAll($Array_trunk_ifDescr,$IP,$snmp_version,$snmp_auth);
-var_dump($Array_trunk_ifDescr_result);
+//var_dump($Array_trunk_ifDescr_result);
 	foreach($Array_trunk_IP_hex_result AS $object=>$result)
 	{
 		$explode = explode(".", $object);
@@ -852,7 +720,7 @@ var_dump($Array_trunk_ifDescr_result);
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
 //echo "QUERY :".$query."\n";
-echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
+//echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
 		if ((!empty($data["ID"])) AND (!empty($PortID)))
 			$snmp_queries->PortsConnection($data["ID"], $PortID,$FK_process);
 	}
