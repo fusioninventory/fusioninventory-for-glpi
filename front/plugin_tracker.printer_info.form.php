@@ -43,58 +43,33 @@ checkRight("printer","r");
 plugin_tracker_checkRight("printers_info","r");
 
 
-
 if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	
 	plugin_tracker_checkRight("printers_info","w");
-	$printer_snmp = new plugin_tracker_printer_snmp();
-	// if not checked => unset value
-	if (!isset($_POST['cname']))
-		unset($_POST['name']);
 	
-	if (!isset($_POST['cserial']))
-		unset($_POST['serial']);
-
-	if (!isset($_POST['cifmac']))
-		unset($_POST['ifmac']);
-		
-	if (!isset($_POST['cnetmask']))
-		unset($_POST['netmask']);
-		
-	if (!isset($_POST['ccontact']))
-		unset($_POST['contact']);
+	$plugin_tracker_printers = new plugin_tracker_printers();
 	
-	if (!isset($_POST['cinitial_pages']))
-		unset($_POST['initial_pages']);
-		
-	if (!isset($_POST['cmodel']))
-		unset($_POST['model']);
-		
-	if (!isset($_POST['clocation']))
-		unset($_POST['location']);
+	$_POST['FK_printers'] = $_POST['ID'];
+	unset($_POST['ID']);
 	
-	unset($_POST['cname']);
-	unset($_POST['cserial']);
-	unset($_POST['cifmac']);
-	unset($_POST['cnetmask']);
-	unset($_POST['ccontact']);
-	unset($_POST['cinitial_pages']);
-	unset($_POST['cmodel']);
-	unset($_POST['clocation']);
-	
-	$printer_snmp->update($_POST);
+	$query = "SELECT * FROM glpi_plugin_tracker_printers
+	WHERE FK_printers='".$_POST['FK_printers']."' ";
+	$result = $DB->query($query);		
+	$data = $DB->fetch_assoc($result);	
+	$_POST['ID'] = $data['ID'];
+	$plugin_tracker_printers->update($_POST);
 	
 }
 
 if ( (isset($_POST['add'])) && (isset($_POST['ID'])) ) {
 	plugin_tracker_checkRight("printers_info","w");
 
-	$plugin_tracker_printers = new plugin_tracker_printers();
+	$plugin_tracker_printers_cartridges = new plugin_tracker_printers_cartridges;
 
 	$_POST['FK_printers'] = $_POST['ID'];
 	unset($_POST['ID']);
 	$_POST['FK_cartridges'] = $_POST['tID'];
-	$plugin_tracker_printers->add($_POST);
+	$plugin_tracker_printers_cartridges->add($_POST);
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);
