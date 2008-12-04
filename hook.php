@@ -285,14 +285,14 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			if ($num == "9") {
 				$plugin_tracker_snmp = new plugin_tracker_snmp;
-				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"]);
+				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],NETWORKING_TYPE);
 				$out = "<div align='center'>" . getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0) . "</div>";
 				return $out;
 				break;
 			} else
 				if ($num == "10") {
 					$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-					$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"], GLPI_ROOT . "/plugins/tracker/scripts/");
+					$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"], GLPI_ROOT . "/plugins/tracker/scripts/",NETWORKING_TYPE);
 					$out = "<div align='center'>" . $FK_snmp_DB["Name"] . "</div>";
 					return $out;
 					break;
