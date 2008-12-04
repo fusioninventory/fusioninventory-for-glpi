@@ -50,29 +50,29 @@ function plugin_tracker_date ($number_dates,$frequence)
 			// Get Last Monday
 			if (gmdate("w", $today) == 0) $today -= (86400 * 6);
 			if (gmdate("w", $today) > 1) $today -= (86400 * (gmdate("w", $today) - 1));
-			$dates[] = strftime("%Y-%m-%d", $today);
-			for ($i = 1; $i < $number_dates; $i++)
+			for ($i = 0; $i < $number_dates; $i++)
 			{
-				$dates[] = strftime("%Y-%m-%d", ($today-((86400 * 7) *  $i)));
+				$dates[$i] = strftime("%Y-%m-%d", (($today - (86400 * 7 * ($number_dates - 1)))+(86400 * 7 *  $i)));
 			}
+			
 			break;
 		case "month":	
 			// ** For monthly stats
 			$month = (gmdate("n", $today));
 			$year = (gmdate("Y", $today));
-			$dates[] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, $month, $year));
-			for ($i = 1; $i < $number_dates; $i++)
+			$dates[($number_dates - 1)] = strftime("%Y-%m-%d", mktime(0, 0, 0, $month, 1, $year));
+			for ($i = 0; $i < ($number_dates - 1); $i++)
 			{
-				$dates[] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, ($month - $i), $year));
+				$dates[$i] = strftime("%Y-%m-%d", mktime(0, 0, 0, ($month - ($number_dates - 1) + $i), 1, $year));
 			}
 			break;
 		case "year":
 			// ** For yearly stats
 			$year = (gmdate("Y", $today));
-			$dates[] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, 1, $year));
-			for ($i = 1; $i < $number_dates; $i++)
+			$dates[($number_dates - 1)] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, 1, $year));
+			for ($i = 0; $i < ($number_dates - 1); $i++)
 			{
-				$dates[] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, 1, ($year - $i)));
+				$dates[$i] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, 1, ($year - ($number_dates - 1) + $i)));
 			}
 			break;
 	}

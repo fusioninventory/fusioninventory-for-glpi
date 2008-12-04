@@ -240,10 +240,8 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "</th>";
 		echo "</tr>";
 
-		$dates = plugin_tracker_date (9,$frequence);		
-		$query = "
-		SELECT * 
-		FROM glpi_plugin_tracker_printers_history
+		$dates = plugin_tracker_date (9,$frequence);
+		$query = "SELECT * FROM glpi_plugin_tracker_printers_history
 		WHERE FK_printers=".$ID."
 			AND date IN ('".$dates[0]." 00:00:00'";
 		for ($i = 1;$i < count($dates); $i++)
@@ -251,22 +249,37 @@ class plugin_tracker_printers extends CommonDBTM {
 			$query .= ",'".$dates[$i]." 00:00:00'";
 		}
 		$query .= ") 
-		ORDER BY date
+		ORDER BY date DESC
 		LIMIT 0,9";
+		$dates_ex = $dates;
 		$dates = array();
+		unset($total_page_counter);
 		$total_page_counter = array();
+		$i = 9;
 		if ( $result=$DB->query($query) )
 		{
 			while ( $data=$DB->fetch_array($result) )
 			{
-				$dates[] = $data['date'];
-				$total_page_counter[] = $data['pages_total'];
-				$black_white_page_counter[] = $data['pages_n_b'];
-				$color_page_counter[] = $data['pages_color'];
-				$rectoverso_page_counter[] = $data['pages_recto_verso'];
-				$scanned_page_counter[] = $data['scanned'];
+				$i--;
+				$dates[$i] = $data['date'];
+				$total_page_counter[$i] = $data['pages_total'];
+				$black_white_page_counter[$i] = $data['pages_n_b'];
+				$color_page_counter[$i] = $data['pages_color'];
+				$rectoverso_page_counter[$i] = $data['pages_recto_verso'];
+				$scanned_page_counter[$i] = $data['scanned'];
 			}
 		}
+		$count = 9 - (count($total_page_counter)) - 1 ;
+		for ($i = $count;$i >= 0;$i--)
+		{
+			$dates[$i] = $dates_ex[$i]." 00:00:00";
+			$total_page_counter[$i] = 0;
+			$black_white_page_counter[$i] = 0;
+			$color_page_counter[$i] = 0;
+			$rectoverso_page_counter[$i] = 0;
+			$scanned_page_counter[$i] = 0;
+		}
+	
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='3'>";
 			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
@@ -377,9 +390,10 @@ class plugin_tracker_printers extends CommonDBTM {
 			$td = "th";
 		echo "<tr class='tab_bg_1'>";
 		echo "<th>".$title."</th>";
-		foreach ($array AS $value)
+//		foreach ($array AS $value)
+		for ($i = 0; $i < count($array);$i++)
 		{
-			$explode = explode(" ", $value);
+			$explode = explode(" ", $array[$i]);
 			echo "<".$td." align='center'>".$explode[0]."</".$td.">";
 		}
 		echo "</tr>";
@@ -394,18 +408,17 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "<th>".$title."</th>";
 		$i = 1;
 		$ecart = array();
-		foreach ($array AS $value)
+		for ($i = 0; $i < count($array);$i++)
 		{
-			if ($i == 1)
+			if ($i == (count($array) - 1))
 			{
 				echo "<td align='center'></td>";
 			}
 			else
 			{
-				echo "<td align='center'>".($value - $array[($i-2)])."</td>";
-				$ecart[$arraydates[$i-1]] = ($value - $array[($i-2)]);
+				echo "<td align='center'>".($array[$i+1] - $array[($i)])."</td>";
+				$ecart[$arraydates[$i]] = ($array[$i+1] - $array[($i)]);
 			}
-			$i++;
 		}
 		echo "</tr>";
 		return $ecart;	
