@@ -360,4 +360,40 @@ $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesbeltcleaner']['name'] = $LANGTRACKER["
 $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesbeltcleaner']['shortname'] = $LANGTRACKER["mapping"][153];
 $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesbeltcleaner']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesbeltcleaner']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['field'] = 'pages_total';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['name'] = $LANGTRACKER["mapping"][28];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'] = $LANGTRACKER["mapping"][128];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['field'] = 'pages_n_b';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['name'] = $LANGTRACKER["mapping"][29];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'] = $LANGTRACKER["mapping"][129];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['field'] = 'pages_color';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['name'] = $LANGTRACKER["mapping"][30];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['shortname'] = $LANGTRACKER["mapping"][130];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['field'] = 'pages_recto_verso';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['name'] = $LANGTRACKER["mapping"][54];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['shortname'] = $LANGTRACKER["mapping"][154];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['field'] = 'scanned';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['name'] = $LANGTRACKER["mapping"][55];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'] = $LANGTRACKER["mapping"][155];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['dropdown'] = '';
+
 ?>

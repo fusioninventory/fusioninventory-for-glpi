@@ -249,11 +249,11 @@ $LANGTRACKER["mapping"][24]="imprimante > nom";
 $LANGTRACKER["mapping"][25]="imprimante > modèle";
 $LANGTRACKER["mapping"][26]="imprimante > mémoire totale";
 $LANGTRACKER["mapping"][27]="imprimante > numéro de série";
-$LANGTRACKER["mapping"][28]="imprimante > nombre total de pages imprimées";
-$LANGTRACKER["mapping"][29]="imprimante > nombre de pages noir et blanc imprimées";
-$LANGTRACKER["mapping"][30]="imprimante > nombre de pages couleur imprimées";
-$LANGTRACKER["mapping"][31]="imprimante > nombre de pages monochrome imprimées";
-$LANGTRACKER["mapping"][32]="imprimante > nombre de pages bichromie imprimées";
+$LANGTRACKER["mapping"][28]="imprimante > compteur > nombre total de pages imprimées";
+$LANGTRACKER["mapping"][29]="imprimante > compteur > nombre de pages noir et blanc imprimées";
+$LANGTRACKER["mapping"][30]="imprimante > compteur > nombre de pages couleur imprimées";
+$LANGTRACKER["mapping"][31]="imprimante > compteur > nombre de pages monochrome imprimées";
+$LANGTRACKER["mapping"][32]="imprimante > compteur > nombre de pages bichromie imprimées";
 $LANGTRACKER["mapping"][33]="réseaux > port > type de duplex";
 $LANGTRACKER["mapping"][34]="imprimante > consommables > cartouche noir";
 $LANGTRACKER["mapping"][35]="imprimante > consommables > cartouche noir photo";
@@ -275,6 +275,8 @@ $LANGTRACKER["mapping"][50]="imprimante > consommables > unité de transfert mag
 $LANGTRACKER["mapping"][51]="imprimante > consommables > bac récupérateur de déchet";
 $LANGTRACKER["mapping"][52]="imprimante > consommables > four";
 $LANGTRACKER["mapping"][53]="imprimante > consommables > module de nettoyage";
+$LANGTRACKER["mapping"][54]="imprimante > compteur > nombre de pages recto/verso imprimées";
+$LANGTRACKER["mapping"][55]="imprimante > compteur > nombre de pages scannées";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
@@ -295,7 +297,11 @@ $LANGTRACKER["mapping"][116]="Nom";
 $LANGTRACKER["mapping"][117]="Modèle";
 $LANGTRACKER["mapping"][118]="Type";
 $LANGTRACKER["mapping"][119]="VLAN";
-
+$LANGTRACKER["mapping"][128]="Nombre total de pages imprimées";
+$LANGTRACKER["mapping"][129]="Nombre de pages noir et blanc imprimées";
+$LANGTRACKER["mapping"][130]="Nombre de pages couleur imprimées";
+$LANGTRACKER["mapping"][131]="Nombre de pages monochrome imprimées";
+$LANGTRACKER["mapping"][132]="Nombre de pages bichromie imprimées";
 $LANGTRACKER["mapping"][134]="Cartouche noir";
 $LANGTRACKER["mapping"][135]="Cartouche noir photo";
 $LANGTRACKER["mapping"][136]="Cartouche cyan";
@@ -316,5 +322,8 @@ $LANGTRACKER["mapping"][150]="Unité de transfert magenta";
 $LANGTRACKER["mapping"][151]="Bac récupérateur de déchet";
 $LANGTRACKER["mapping"][152]="Four";
 $LANGTRACKER["mapping"][153]="Module de nettoyage";
+$LANGTRACKER["mapping"][154]="Nombre de pages recto/verso imprimées";
+$LANGTRACKER["mapping"][155]="Nombre de pages scannées";
 
+$LANGTRACKER["printer"][0]="pages";
 ?>
