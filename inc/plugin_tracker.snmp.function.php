@@ -391,12 +391,20 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 			$SNMPValue = ceil(($SNMPValue / 1024) / 1024) ;
 		}
 		
-		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
+		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges"){
+			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
+			WHERE ".$Field."='".$ID_Device."'
+				AND object_name='".$object_name."' ";
+	
+			$DB->query($queryUpdate);
+		
+		}elseif ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
 		{
 			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
 			WHERE ".$Field."='".$ID_Device."'";
-echo "QUERY :".$queryUpdate."\n";	
+
 			$DB->query($queryUpdate);
 		}
 	}
