@@ -251,7 +251,7 @@ class plugin_tracker_printers extends CommonDBTM {
 				else
 				{
 					echo "<td align='center'>".($value - $total_page_counter[$i])."</td>";
-					$ecart[$dates[$i]] = ($value - $total_page_counter[$i]);
+					$ecart[$dates[$i-1]] = ($value - $total_page_counter[$i]);
 				}
 				$i++;
 			}
@@ -449,7 +449,10 @@ class plugin_tracker_printers extends CommonDBTM {
 				}else if ($type=="day"){
 					echo "<td class='center'>".substr($key,8,2)."</td>";
 				}else if ($type=="week"){
-				
+				$val = explode(" ",$key);
+       		$date = explode("-",$val[0]);
+       		$time = explode(":",$val[1]);
+					echo "<td class='center'>".date('W',mktime($time[0],$time[1],$time[2],$date[1],$date[2],$date[0]))."</td>";
 				}
 			}
 			echo "</tr>";
