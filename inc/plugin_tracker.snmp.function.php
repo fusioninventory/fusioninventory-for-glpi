@@ -389,6 +389,8 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		if (($object_name == "ram") OR ($object_name == "memory"))
 		{
 			$SNMPValue = ceil(($SNMPValue / 1024) / 1024) ;
+			if ($object_type == PRINTER_TYPE)
+				$SNMPValue .= " MB";
 		}
 		
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges")
