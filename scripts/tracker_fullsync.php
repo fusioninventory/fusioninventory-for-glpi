@@ -99,7 +99,7 @@ logInFile("tracker_snmp", "I) Get all devices \n\n");
 // ** QUERY NETWORKING ** //
 // Retrieve list of all networking to query SNMP
 $ArrayListNetworking = plugin_tracker_getDeviceList(NETWORKING_TYPE);
-
+plugin_tracker_snmp_networking_ifaddr($ArrayListNetworking,$xml_auth_rep);
 $processes_values = plugin_tracker_UpdateDeviceBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
 
 // ** QUERY PRINTERS ** //

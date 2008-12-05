@@ -786,11 +786,11 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $ifdescr_trunk);
 
 		$query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-		LEFT JOIN glpi_networking
-		ON glpi_networking.ID = glpi_networking_ports.on_device
+		LEFT JOIN glpi_plugin_tracker_networking_ifaddr
+		ON glpi_plugin_tracker_networking_ifaddr.FK_networking = glpi_networking_ports.on_device
 		WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."' 
 			AND device_type='2' 
-			AND glpi_networking.ifaddr='".$IP."' ";
+			AND glpi_plugin_tracker_networking_ifaddr.ifaddr='".$IP."' ";
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
 //echo "QUERY :".$query."\n";
@@ -800,6 +800,79 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 	}
 	return $Array_trunk_ifIndex;
 }
+
+
+// * $ArrayListNetworking : array of device infos : ID => ifaddr 
+function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
+{
+	global $DB;
+
+	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+	$plugin_tracker_snmp = new plugin_tracker_snmp;
+
+	$ifaddr_add = array();
+	$ifaddr = array();
+
+	$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr";
+	if ( $result=$DB->query($query) )
+	{
+		while ( $data=$DB->fetch_array($result) )
+		{
+			$ifaddr[$data["ifaddr"]] = $data["FK_networking"];
+		}
+	}
+
+	$oid_ifaddr_switch = array("ipAdEntAddr" => "1.3.6.1.2.1.4.20.1.1");
+	
+	foreach ( $ArrayListDevice as $ID_Device=>$ifIP )
+	{
+		// Get SNMP model 
+		$snmp_model_ID = '';
+		$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID_Device,NETWORKING_TYPE);
+		if (($snmp_model_ID != "") && ($ID_Device != ""))
+		{
+			// ** Get snmp version and authentification
+			$snmp_auth = $plugin_tracker_snmp_auth->GetInfos($ID_Device,$xml_auth_rep,NETWORKING_TYPE);
+			$snmp_version = $snmp_auth["snmp_version"];
+			
+			$Array_Device_ifaddr = $plugin_tracker_snmp->SNMPQueryWalkAll($oid_ifaddr_switch,$ifIP,$snmp_version,$snmp_auth);
+
+			foreach ($Array_Device_ifaddr as $object=>$ifaddr_snmp)
+			{
+				if ($ifaddr[$ifaddr_snmp] == $ID_Device)
+				{
+					unset ($ifaddr[$ifaddr_snmp]);
+				}
+				else
+				{
+					$ifaddr_add[$ifaddr_snmp] = $ID_Device;
+				}
+			
+			}
+
+		}
+	}
+	foreach($ifaddr as $ifaddr_snmp=>$FK_networking)
+	{
+		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
+		WHERE FK_networking='".$FK_networking."'
+			AND ifaddr='".$ifaddr_snmp."' ";
+		$DB->query($query_delete);
+	}
+	foreach($ifaddr_add as $ifaddr_snmp=>$FK_networking)
+	{
+		$query_insert = "INSERT INTO glpi_plugin_tracker_networking_ifaddr
+		(FK_networking,ifaddr)
+		VALUES('".$FK_networking."','".$ifaddr_snmp."') ";
+		$DB->query($query_insert);
+	}
+	
+}
+
+
+
+
+
 
 
 ?>
