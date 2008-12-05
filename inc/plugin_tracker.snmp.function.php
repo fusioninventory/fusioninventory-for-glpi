@@ -796,7 +796,7 @@ echo "QUERY CDP :".$query."\n";
 		$data = $DB->fetch_assoc($result);
 var_dump($data);		
 //echo "QUERY :".$query."\n";
-//echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
+echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
 		if ((!empty($data["ID"])) AND (!empty($PortID)))
 			$snmp_queries->PortsConnection($data["ID"], $PortID,$FK_process);
 	}
