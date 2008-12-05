@@ -791,8 +791,10 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."' 
 			AND device_type='2' 
 			AND glpi_plugin_tracker_networking_ifaddr.ifaddr='".$IP."' ";
+echo "QUERY CDP :".$query."\n";
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
+var_dump($data);		
 //echo "QUERY :".$query."\n";
 //echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
 		if ((!empty($data["ID"])) AND (!empty($PortID)))
