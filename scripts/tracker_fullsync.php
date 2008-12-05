@@ -75,11 +75,16 @@ $linked_nbr= 0;
 $imported_nbr= 0;
 $failed_nbr= 0;
 $fields=array();
-
+$type='';
 
 //Get script configuration
 
 $config = new plugin_tracker_snmp;
+
+if (isset($_GET["type"]))
+{
+	$type=$_GET["type"];
+}
 
 //Get the script's process identifier
 if (isset($_GET["process_id"]))
@@ -97,17 +102,21 @@ logInFile("tracker_snmp", ">>>>>> Starting Script <<<<<<\n\n");
 logInFile("tracker_snmp", "I) Get all devices \n\n");
 
 // ** QUERY NETWORKING ** //
-// Retrieve list of all networking to query SNMP
-$ArrayListNetworking = plugin_tracker_getDeviceList(NETWORKING_TYPE);
-plugin_tracker_snmp_networking_ifaddr($ArrayListNetworking,$xml_auth_rep);
-$processes_values = plugin_tracker_UpdateDeviceBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
+if (($type == "networking_type") OR ($type == ""))
+{
+	// Retrieve list of all networking to query SNMP
+	$ArrayListNetworking = plugin_tracker_getDeviceList(NETWORKING_TYPE);
+	plugin_tracker_snmp_networking_ifaddr($ArrayListNetworking,$xml_auth_rep);
+	$processes_values = plugin_tracker_UpdateDeviceBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
+}
 
 // ** QUERY PRINTERS ** //
+if (($type == "printer_type") OR ($type == ""))
+{
+	$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
 
-$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
-
-$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
-
+	$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
+}
 
 // Update process into database
 $processes->updateProcess($fields["process_id"],$processes_values["devices"], "" , $processes_values["errors"]);
