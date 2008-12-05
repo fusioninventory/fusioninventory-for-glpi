@@ -180,6 +180,17 @@ CREATE TABLE `glpi_plugin_tracker_networking` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_networking_ifaddr`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_networking_ifaddr` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FK_networking` int(11) NOT NULL,
+  `ifaddr` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_networking_ports`;
 
 CREATE TABLE `glpi_plugin_tracker_networking_ports` (
