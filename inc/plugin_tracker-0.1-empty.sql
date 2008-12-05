@@ -208,10 +208,14 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_printers_history`;
 CREATE TABLE `glpi_plugin_tracker_printers_history` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL DEFAULT '0',
-  `date` datetime DEFAULT NULL,
-  `pages` int(11) NOT NULL DEFAULT '0',
+  `date` datetime DEFAULT '0000-00-00 00:00:00',
+  `pages_total` int(11) NOT NULL DEFAULT '0',
+  `pages_n_b` int(11) NOT NULL,
+  `pages_color` int(11) NOT NULL,
+  `pages_recto_verso` int(11) NOT NULL,
+  `scanned` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 

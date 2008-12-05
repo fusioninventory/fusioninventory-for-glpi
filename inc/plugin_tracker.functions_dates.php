@@ -43,7 +43,7 @@ function plugin_tracker_date ($number_dates,$frequence)
 			// Get days
 			for ($i = 0; $i < $number_dates; $i++)
 			{
-				$dates[] = strftime("%Y-%m-%d", ($today-(86400 * $i)));
+				$dates[] = strftime("%Y-%m-%d", ($today - (86400 * ($number_dates - 1))  + (86400 * $i)));
 			}
 			break;	
 		case "week":		
