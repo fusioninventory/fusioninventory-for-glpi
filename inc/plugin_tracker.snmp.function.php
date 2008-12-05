@@ -391,15 +391,47 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 			$SNMPValue = ceil(($SNMPValue / 1024) / 1024) ;
 		}
 		
-		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges"){
+		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges")
+		{
 			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
 			WHERE ".$Field."='".$ID_Device."'
 				AND object_name='".$object_name."' ";
 	
 			$DB->query($queryUpdate);
+		}
+		else if (ereg("pagecounter",$object_name))
+		{
+			// Detect if the script has wroten a line for the counter today (if yes, don't touch, else add line)
+			$today = strftime("%Y-%m-%d", time());
+			$query_line = "SELECT * FROM glpi_plugin_tracker_printers_history
+			WHERE date LIKE '".$today."%'
+				AND FK_printers='".$ID_Device."' ";
+			$result_line = $DB->query($query_line);
+			if ($DB->numrows($result_line) == "0")
+			{
+				$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+				(".$TRACKER_MAPPING[$object_type][$object_name]['field'].",".$Field.", date)
+				VALUES('".$SNMPValue."','".$ID_Device."', '".$today."') ";
+	
+				$DB->query($queryInsert);
+			}
+			else
+			{
+				$data_line = $DB->fetch_assoc($result_line);
+				if ($data_line[$TRACKER_MAPPING[$object_type][$object_name]['field']] == "0")
+				{
+					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+					SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
+					WHERE ".$Field."='".$ID_Device."'
+						AND date LIKE '".$today."%' ";			
+				
+					$DB->query($queryUpdate);
+				}
+			}
 		
-		}elseif ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
+		}
+		else if ($TRACKER_MAPPING[$object_type][$object_name]['table'] != "")
 		{
 			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 

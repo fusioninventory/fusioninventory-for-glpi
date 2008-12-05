@@ -247,7 +247,7 @@ abstract class plugin_tracker_snmp2 {
 		}else {
 			$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
 		}
-		plugin_tracker_Bar($ram_pourcentage,"<br/>(".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)"); 
+		plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)"); 
 		echo "</td>";
 		echo "</tr>";	
 
