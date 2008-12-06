@@ -5,7 +5,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_mib_label` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -16,7 +16,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_mib_object` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -27,7 +27,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_mib_oid` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -39,7 +39,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` (
   `name` varchar(255) NOT NULL,
   `comments` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -50,7 +50,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` (
   `name` varchar(255) NOT NULL,
   `comments` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -61,7 +61,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` (
   `name` varchar(255) NOT NULL,
   `comments` text NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -72,7 +72,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_version` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -86,7 +86,7 @@ CREATE TABLE `glpi_plugin_tracker_connection_history` (
   `username` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `FK_users` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -107,7 +107,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
   `authsnmp` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `active_device_state` (`active_device_state`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -124,7 +124,7 @@ CREATE TABLE `glpi_plugin_tracker_errors` (
   `description` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ifaddr` (`ifaddr`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -144,7 +144,7 @@ CREATE TABLE `glpi_plugin_tracker_mib_networking` (
   KEY `FK_model_infos` (`FK_model_infos`),
   KEY `FK_model_infos_2` (`FK_model_infos`,`oid_port_dyn`),
   KEY `FK_model_infos_3` (`FK_model_infos`,`oid_port_counter`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -160,7 +160,7 @@ CREATE TABLE `glpi_plugin_tracker_model_infos` (
   `deleted` int(1) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_model_networking` (`FK_model_networking`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -176,7 +176,7 @@ CREATE TABLE `glpi_plugin_tracker_networking` (
   `memory` int(8) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_networking` (`FK_networking`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_networking_ifaddr` (
   `FK_networking` int(11) NOT NULL,
   `ifaddr` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -210,7 +210,7 @@ CREATE TABLE `glpi_plugin_tracker_networking_ports` (
   `ifdescr` varchar(255) NOT NULL,
   `portduplex` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -226,7 +226,7 @@ CREATE TABLE `glpi_plugin_tracker_printers_history` (
   `pages_recto_verso` int(11) NOT NULL,
   `scanned` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -240,7 +240,7 @@ CREATE TABLE `glpi_plugin_tracker_printers` (
   `frequence_days` int(5) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `FK_printers` (`FK_printers`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_printers_cartridges` (
   `FK_cartridges` int(11) NOT NULL,
   `state` int(3) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -273,7 +273,7 @@ CREATE TABLE `glpi_plugin_tracker_processes` (
   PRIMARY KEY (`ID`),
   KEY `end_time` (`end_time`),
   KEY `process_id` (`process_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -291,7 +291,7 @@ CREATE TABLE `glpi_plugin_tracker_processes_values` (
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ID`),
   KEY `unknow_mac` (`unknow_mac`,`FK_processes`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -308,7 +308,7 @@ CREATE TABLE `glpi_plugin_tracker_profiles` (
   `networking_info` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `errors` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -327,7 +327,7 @@ CREATE TABLE `glpi_plugin_tracker_snmp_connection` (
   `priv_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `deleted` int(1) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_snmp_history`;
@@ -346,7 +346,7 @@ CREATE TABLE `glpi_plugin_tracker_snmp_history` (
   `FK_process` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_ports` (`FK_ports`,`date_mod`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_unknown_mac`;
@@ -360,7 +360,7 @@ CREATE TABLE `glpi_plugin_tracker_unknown_mac` (
 	`port` INT( 8 ) NOT NULL,
 	`unknow_mac` VARCHAR( 255 ) NOT NULL,
 	PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; 
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; 
 
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_connection_stats`;
@@ -370,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_connection_stats` (
   `item_id` int(11) NOT NULL,
   `checksum` timestamp NOT NULL default '0000-00-00 00:00:00' on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` VALUES ('','MD5','');
