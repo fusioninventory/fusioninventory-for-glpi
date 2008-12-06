@@ -62,8 +62,8 @@ function plugin_init_tracker() {
 		}
 	
 		$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
-		$PLUGIN_HOOKS['menu_entry']['tracker'] = true;	
-	
+		$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
+
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
 			if ( ($config->isActivated('counters_statement')) || ($config->isActivated('cleaning')) )
@@ -81,6 +81,8 @@ function plugin_init_tracker() {
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
 
+					$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
+	
 //					$PLUGIN_HOOKS['submenu_entry']['tracker']['printers'] = 'front/plugin_tracker.errors.form.php?device=printer';
 //					$PLUGIN_HOOKS['submenu_entry']['tracker']['computers'] = 'front/plugin_tracker.errors.form.php?device=computer';
 				}
