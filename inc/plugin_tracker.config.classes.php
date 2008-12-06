@@ -99,9 +99,27 @@ class plugin_tracker_config extends CommonDBTM {
 		GLOBAL $LANG, $LANGTRACKER;
 		
 		if (haveRight("config","w")) {
+			// tabs
+			echo "<div id='barre_onglets'>\n";
+			echo "<ul id='onglet'>\n";
+			
+			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][2]."&nbsp;</a></li>\n";
+			
+			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
+
+			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
+
+			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][4]."&nbsp;</a></li>\n";
+
+			echo "<ul>\n";
+			echo "</div>\n";
+
+
+
+
 			echo "<div align='center'><form method='post' name='functionalities_form' id='functionalities_form'  action=\"".$target."\">";
 	
-			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
+			echo "<table class='tab_cadre_fixe' cellpadding='5'><tr><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][1]." :</th></tr>";
 			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
