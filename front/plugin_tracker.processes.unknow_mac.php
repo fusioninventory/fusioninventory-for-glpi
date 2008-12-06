@@ -52,8 +52,4 @@ showList(PLUGIN_TRACKER_MAC_UNKNOW,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["co
 
 commonFooter();
 
-
-
-
-
 ?>

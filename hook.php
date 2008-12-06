@@ -215,7 +215,6 @@ function plugin_tracker_getSearchOption() {
 
 function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 	global $CFG_GLPI, $INFOFORM_PAGES, $LANGTRACKER, $DB;
-
 	switch ($field) {
 		case "glpi_plugin_tracker_model_infos.name" :
 			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
@@ -304,12 +303,13 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 			$out = "<div align='center'>" . $CommonItem->getLink(1);
 
 			$query = "SELECT * FROM glpi_networking_ports 
-						WHERE ID='" . $data["ITEM_$num"] . "' ";
-			if ($result = $DB->query($query)) {
-				$name = $DB->result($result, 0, "name");
+			WHERE ID='" . $data["ITEM_$num"] . "' ";
+			$result = $DB->query($query);
 
-			}
-			$out .= "<br/><a href='" . GLPI_ROOT . "/front/networking.port.php?ID=" . $data["ITEM_$num"] . "'>" . $name . "</a></td>";
+			if ($DB->numrows($result) != "0")
+				$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+
+			$out .= "</td>";
 			return $out;
 			break;
 	}
