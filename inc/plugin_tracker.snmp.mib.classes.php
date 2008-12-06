@@ -65,7 +65,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		{
 			return false;
 		}
-		else
+		else if ((isset($ID)) AND (!empty($ID)))
 		{
 			$query = "SELECT glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
 			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
