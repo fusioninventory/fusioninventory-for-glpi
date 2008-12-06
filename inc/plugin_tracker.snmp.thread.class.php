@@ -50,12 +50,12 @@ class Threads extends CommonDBTM
 		$Threads = new Threads;
 
 
-		$sql = 	"SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
+		$sql = "SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
 			"MIN(start_time) AS starting_date, MAX(end_time) AS ending_date, TIME_TO_SEC(MAX(end_time))-TIME_TO_SEC(MIN(start_time)) AS duree, " .
 			"end_time >= DATE_ADD(NOW(), INTERVAL -" . $minfreq . " HOUR) AS DoStat, error_msg, network_queries, 
 			printer_queries, ports_queries ".
 		      	"FROM glpi_plugin_tracker_processes GROUP BY process_id ORDER BY ID DESC";
-	     	$result = $DB->query($sql);
+	   $result = $DB->query($sql);
 
 		echo "<div id='barre_onglets'><ul id='onglet'>\n";
 		echo "<li ";
@@ -80,7 +80,7 @@ class Threads extends CommonDBTM
 		echo "</div>\n";
 
 	   echo "<div align='center'>";
-		echo "<form name='processes' action=\"$target\" method=\"post\">";
+//		echo "<form name='processes' action=\"$target\" method=\"post\">";
 
 		echo "<table class='tab_cadre_fixe' cellpadding='9'>";
 		
@@ -152,16 +152,6 @@ class Threads extends CommonDBTM
 						
 						echo "</td>";
 						
-						//echo "<td align='center'>"; 
-						//if ($thread["ocs_server_id"] != -1)
-						//{
-						//	$ocsConfig = getOcsConf($thread["ocs_server_id"]);
-						//	echo "<a href=\"".GLPI_ROOT."/front/ocsng.form.php?ID=".$ocsConfig["ID"]."\">".$ocsConfig["name"]."</a>";
-						//}
-						//else
-						//	echo $OCSMASSIMPORTLANG["config"][22];
-							
-						//echo "</td>";
 						echo "</tr>\n";
 					//}	
 				}
@@ -171,55 +161,7 @@ class Threads extends CommonDBTM
 		}	
 		else if ($array_name == "unknow_mac")
 		{
-		/*
-			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][14] . "</th></tr>";
-			echo "<tr>"; 
-			echo"<th></th>";
-			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
-			echo"<th>".$LANG["common"][1]."</th>";
-			echo"<th>".$LANG["setup"][175]."</th>";
-			echo"<th>".$LANG["networking"][15]."</th>";
-			echo"<th>".$LANG["common"][27]."</th>";
-			echo "</th></tr>\n";
-		
-			$sql_mac = 	"SELECT *
-		   FROM glpi_plugin_tracker_processes_values
-		   WHERE unknow_mac!=''
-		   ORDER BY FK_processes DESC, date DESC";
-	     	$result_mac = $DB->query($sql_mac);
-			while ($thread_mac = $DB->fetch_array($result_mac))
-			{
-				echo "<tr class='tab_bg_1'>";
-				echo "<td align='center'></td>";
-				echo "<td align='center'>".$thread_mac["FK_processes"]."</td>";
-				
-				
-				$query_port = "SELECT * FROM glpi_networking_ports 
-				WHERE ID='".$thread_mac["port"]."' ";
-				$result_port = $DB->query($query_port);
-				$port_name = "";
-				while ($thread_port = $DB->fetch_array($result_port))
-				{
-					$on_device = $thread_port["on_device"];
-					$device_type = $thread_port["device_type"];
-					$port_name = $thread_port["name"];
-				}
-				if (isset($on_device) AND isset($device_type))
-				{
-					$CommonItem->getFromDB($device_type,$on_device);
-					echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
-				}
-				else
-				{
-					echo "<td align='center'></td>";
-				}
-				echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$thread_mac["port"]."'>".$port_name."</a></td>";
-				echo "<td align='center'>".$thread_mac["unknow_mac"]."</td>";
-				echo "<td align='center'>".$thread_mac["date"]."</td>";
-				echo "</tr>";
-			
-			}
-			*/
+			// Search form in form file
 		}
 		else if ($array_name == "errors")
 		{
@@ -358,21 +300,12 @@ class Threads extends CommonDBTM
 					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$opposite_port."'>".$port_name."</a></td>";
 
 */
-
-
-
-
-
-
 					echo "<td align='center'>".$thread_connection["date_mod"]."</td>";
-	
 				}
 			}
-		
-		
 		}
 		echo "</table>";
-
+//		echo "</form>";
 	}
 	
 	
@@ -384,42 +317,31 @@ class Threads extends CommonDBTM
 				
 		$query = "INSERT INTO glpi_plugin_tracker_processes
 			(start_time,process_id,status)
-			
 		VALUES('".date("Y-m-d H:i:s")."','".$PID."','1') ";
-		
 		$DB->query($query);
-
 	}
 	
 	
 	function updateProcess($PID, $NetworkQueries, $PrinterQueries, $errors)
 	{
-	
 		global $DB;
 		
 		$query = "UPDATE glpi_plugin_tracker_processes
-		
 		SET end_time='".date("Y-m-d H:i:s")."', status='3', error_msg='".$errors."', network_queries='".$NetworkQueries."',
 			printer_queries='".$PrinterQueries."'
-		
 		WHERE process_id='".$PID."' ";
-		
 		$DB->query($query);
-	
 	}
 
 
 	function addProcessValues($PID, $field,$FK_port,$value)
 	{
-	
 		global $DB;
 		
 		$query = "INSERT INTO glpi_plugin_tracker_processes_values
 		(FK_processes,port,".$field.",date)
 		VALUES('".$PID."','".$FK_port."','".$value."','".date("Y-m-d H:i:s")."')";
-		
 		$DB->query($query);
-
 	}	
 
 
@@ -470,11 +392,9 @@ class Threads extends CommonDBTM
 				SET end_time='".date("Y-m-d H:i:s")."',end_FK_processes='".$PID."' 
 				WHERE ID='".$data["ID"]."' ";
 				$DB->query($query_upd);
-				
 			}
 		}
 	}
-
 }
 
 ?>
