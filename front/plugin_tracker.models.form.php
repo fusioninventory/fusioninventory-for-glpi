@@ -46,13 +46,13 @@ include (GLPI_ROOT . "/inc/includes.php");
 plugin_tracker_checkRight("errors", "r");
 
 $plugin_tracker_model_infos = new plugin_tracker_model_infos();
-
 $plugin_tracker_mib_networking = new plugin_tracker_mib_networking();
 
 $importexport = new plugin_tracker_importexport;
 
 commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","models");
-if (isset ($_POST["add"]) && isset($_POST["ID"])) {
+//if (isset ($_POST["add"]) && isset($_POST["ID"])) {
+if (isset ($_POST["add"])){
 	$plugin_tracker_model_infos->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }

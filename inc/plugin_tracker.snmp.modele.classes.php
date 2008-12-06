@@ -44,24 +44,6 @@ class plugin_tracker_model_infos extends CommonDBTM {
 		$this->type = PLUGIN_TRACKER_MODEL;
 	}
 
-	/*
-	function addentry($target,$ArrayPost)
-	{
-		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
-		
-		$query = "INSERT INTO glpi_plugin_tracker_model_infos
-		(name, FK_model_networking, FK_firmware, FK_snmp_version, FK_snmp_connection)
-		VALUES ('".$ArrayPost["name"]."', '".$ArrayPost["FK_model_networking"]."', '".$ArrayPost["FK_firmware"]."', 
-		'".$ArrayPost["FK_snmp_version"]."','".$ArrayPost["FK_snmp_connection"]."')";
-		
-		$DB->query($query);
-		
-		echo "Ajouté avec succès<br/>";
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$ID."'><b>Retour</b></a>";
-		
-	}
-	*/
-
 	function showForm($target, $ID = '') {
 		global $DB, $CFG_GLPI, $LANG, $LANGTRACKER;
 
