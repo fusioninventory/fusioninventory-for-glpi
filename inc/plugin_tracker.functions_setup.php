@@ -66,6 +66,15 @@ function plugin_tracker_uninstall() {
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_oid`;";
 	$DB->query($query) or die($DB->error());
 
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level`;";
+	$DB->query($query) or die($DB->error());
+
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_version`;";
 	$DB->query($query) or die($DB->error());
 
@@ -87,17 +96,25 @@ function plugin_tracker_uninstall() {
 	$query = "DROP TABLE `glpi_plugin_tracker_networking`;";
 	$DB->query($query) or die($DB->error());
 
+	$query = "DROP TABLE `glpi_plugin_tracker_networking_ifaddr`;";
+	$DB->query($query) or die($DB->error());
+
 	$query = "DROP TABLE `glpi_plugin_tracker_networking_ports`;";
 	$DB->query($query) or die($DB->error());
 
 	$query = "DROP TABLE `glpi_plugin_tracker_printers_history`;";
 	$DB->query($query) or die($DB->error());
 
-	$query = "DROP TABLE `glpi_plugin_tracker_printers_history_config`;";
+	$query = "DROP TABLE `glpi_plugin_tracker_printers`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_printers_cartridges`;";
 	$DB->query($query) or die($DB->error());
 
 	$query = "DROP TABLE `glpi_plugin_tracker_processes`;";
 	$DB->query($query) or die($DB->error());
+	
+	glpi_plugin_tracker_processes_values
 
 	$query = "DROP TABLE `glpi_plugin_tracker_profiles`;";
 	$DB->query($query) or die($DB->error());
@@ -106,6 +123,12 @@ function plugin_tracker_uninstall() {
 	$DB->query($query) or die($DB->error());
 
 	$query = "DROP TABLE `glpi_plugin_tracker_snmp_history`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_unknown_mac`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_connection_stats`;";
 	$DB->query($query) or die($DB->error());
 
 }
