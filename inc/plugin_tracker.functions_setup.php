@@ -114,7 +114,8 @@ function plugin_tracker_uninstall() {
 	$query = "DROP TABLE `glpi_plugin_tracker_processes`;";
 	$DB->query($query) or die($DB->error());
 	
-	glpi_plugin_tracker_processes_values
+	$query = "DROP TABLE `glpi_plugin_tracker_processes_values;";
+	$DB->query($query) or die($DB->error());
 
 	$query = "DROP TABLE `glpi_plugin_tracker_profiles`;";
 	$DB->query($query) or die($DB->error());
