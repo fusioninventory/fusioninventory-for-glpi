@@ -107,14 +107,14 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][10]." :</th></tr>";
 			
-			echo "<tr class='tab_bg_1'>";
+/*			echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANGTRACKER["functionalities"][11]." ";
 			echo "<img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('wire_control_info'),'none')\" onmouseover=\"setdisplay(getElementById('wire_control_info'),'block')\"><span class='over_link' id='wire_control_info'>".$LANGTRACKER["functionalities"][12]."</span>";
 			echo "</td>";
 			echo "<td>";
 			dropdownYesNo("wire_control", $this->isActivated('wire_control'));
 			echo "</td></tr>";
-			
+*/			
 			echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANGTRACKER["functionalities"][13]."</td>";
 			echo "<td>";
@@ -136,7 +136,7 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][20]." :</th></tr>";
 			
-			echo "<tr class='tab_bg_1'>";
+/*			echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANGTRACKER["functionalities"][21]."</td>";
 			echo "<td>";
 			dropdownYesNo("counters_statement", $this->isActivated('counters_statement'));
@@ -149,7 +149,7 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<td>";
 			dropdownYesNo("statement_default_value", $this->isActivated('statement_default_value'));
 			echo "</td></tr>";
-			
+*/			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][30]." :</th></tr>";
 			
