@@ -360,7 +360,7 @@ CREATE TABLE `glpi_plugin_tracker_unknown_mac` (
 	`port` INT( 8 ) NOT NULL,
 	`unknow_mac` VARCHAR( 255 ) NOT NULL,
 	PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci; 
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_connection_stats`;
