@@ -155,9 +155,7 @@ CREATE TABLE `glpi_plugin_tracker_model_infos` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `FK_model_networking` int(8) NOT NULL,
   `FK_firmware` int(8) NOT NULL,
-  `FK_snmp_version` int(8) NOT NULL,
-  `FK_snmp_connection` int(8) NOT NULL,
-  `deleted` int(1) NOT NULL,
+  `deleted` int(1) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_model_networking` (`FK_model_networking`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
