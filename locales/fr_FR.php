@@ -64,6 +64,9 @@ $LANGTRACKER["setup"][12]="FAQ";
 
 $LANGTRACKER["functionalities"][0]="Fonctionnalités";
 $LANGTRACKER["functionalities"][1]="Ajout / Suppression de fonctionnalités";
+$LANGTRACKER["functionalities"][2]="Configuration générale";
+$LANGTRACKER["functionalities"][3]="SNMP";
+$LANGTRACKER["functionalities"][4]="Connexion";
 
 $LANGTRACKER["functionalities"][10]="Connexions Ordinateurs";
 $LANGTRACKER["functionalities"][11]="Contrôle du câblage";
