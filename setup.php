@@ -40,8 +40,7 @@ function plugin_init_tracker() {
 	
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANGTRACKER,$LANG;
 
-	$config = new plugin_tracker_config();
-	
+
 	pluginNewType('tracker', "PLUGIN_TRACKER_ERROR_TYPE", 5150, "plugin_tracker_errors", "glpi_plugin_tracker_errors", "front/plugin_tracker.errors.form.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_MODEL", 5151, "plugin_tracker_model_infos", "glpi_plugin_tracker_model_infos", "front/plugin_tracker.models.form.php",$LANGTRACKER["model_info"][4]);
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AUTH", 5152, "glpi_plugin_tracker_snmp_connection", "glpi_plugin_tracker_snmp_connection", "front/plugin_tracker.snmp_auth.form.php",$LANGTRACKER["model_info"][3]);
@@ -66,9 +65,6 @@ function plugin_init_tracker() {
 
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
-			if ( ($config->isActivated('counters_statement')) || ($config->isActivated('cleaning')) )
-				$PLUGIN_HOOKS['cron']['tracker'] = 2*HOUR_TIMESTAMP;
-			
 			if (isset($_SESSION["glpi_plugin_tracker_profile"])) {
 				
 				// Tabs for each type

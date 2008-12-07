@@ -29,7 +29,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Nicolas SMOLYNIEC
+// Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -42,6 +42,7 @@ checkRight("config","w");
 commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"config","plugins","tracker");
 
 $config = new plugin_tracker_config();
+$config_snmp_printer = new plugin_tracker_config_snmp_printer();
 $print_config = new glpi_plugin_tracker_printers_history_config();
 
 if (isset($_POST['update'])) {
@@ -52,11 +53,11 @@ if (isset($_POST['update'])) {
 	$_POST['ID']=1;
 	
 	
-	$config->update($_POST);
+	$config_snmp_printer->update($_POST);
 }
 
-$config->showTabs("general"); // config is at ID = 1
-$config->showForm_general($_SERVER['PHP_SELF'],'1');
+$config->showTabs("smp-printer");
+$config_snmp_printer->showForm($_SERVER['PHP_SELF'],'1');
 commonFooter();
 
 ?>

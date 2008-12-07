@@ -49,29 +49,12 @@ class plugin_tracker_config extends CommonDBTM {
 		global $DB;
 		
 		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, computers_history, update_contact, update_user, wire_control, counters_statement, statement_default_value, cleaning, cleaning_days, active_device_state, networking_switch_type) ".
-				 "VALUES ('1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')";
+				 "(ID 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp) ".
+				 "VALUES ('1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'DB')";
 		
 		$DB->query($query);
 	}
 	
-/*	function updateConfig($input) {
-		global $DB;
-
-		$query = "UPDATE ".$this->table." ".
-				 "SET computers_history = '".$newconfig['computers_history']."', ".
-					 "contact_field = '".$newconfig['contact_field']."', ".
-					 "user_field = '".$newconfig['user_field']."', ".
-					 "wire_control = '".$newconfig['wire_control']."', ".
-					 "printing_counters = '".$newconfig['printing_counters']."', ".
-				     "cleaning_history = '".$newconfig['cleaning_history']."', ".
-				     "cleaning_frequency = '".$newconfig['cleaning_frequency']."' ".
-				 "WHERE ID = '1'";
-		
-		$DB->query($query);
-			
-	}
-*/
 	/* Function to get the value of a field */
 	function getValue($field) {
 		global $DB;
@@ -94,7 +77,7 @@ class plugin_tracker_config extends CommonDBTM {
 			return true;
 	}
 	
-	function showForm ($target,$ID) {
+	function showTabs ($type) {
 
 		GLOBAL $LANG, $LANGTRACKER;
 		
@@ -103,11 +86,20 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<div id='barre_onglets'>\n";
 			echo "<ul id='onglet'>\n";
 			
-			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][2]."&nbsp;</a></li>\n";
-			
-			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
+			echo "<li";
+			if ($type == "general")
+				echo " class='actif'";			
+			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANGTRACKER["functionalities"][2]."&nbsp;</a></li>\n";
 
-			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
+			echo "<li";
+			if ($type == "smp-networking")
+				echo " class='actif'";
+			echo "><a href='plugin_tracker.functionalities.form.snmp-networking.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
+
+			echo "<li";
+			if ($type == "smp-printer")
+				echo " class='actif'";
+			echo "><a href='plugin_tracker.functionalities.form.snmp-printers.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
 
 			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][4]."&nbsp;</a></li>\n";
 
@@ -117,7 +109,7 @@ class plugin_tracker_config extends CommonDBTM {
 
 
 
-			echo "<div align='center'><form method='post' name='functionalities_form' id='functionalities_form'  action=\"".$target."\">";
+			/*echo "<div align='center'><form method='post' name='functionalities_form' id='functionalities_form'  action=\"".$target."\">";
 	
 			echo "<table class='tab_cadre_fixe' cellpadding='5'><tr><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][1]." :</th></tr>";
@@ -133,7 +125,7 @@ class plugin_tracker_config extends CommonDBTM {
 			dropdownYesNo("wire_control", $this->isActivated('wire_control'));
 			echo "</td></tr>";
 */			
-			echo "<tr class='tab_bg_1'>";
+			/*echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANGTRACKER["functionalities"][13]."</td>";
 			echo "<td>";
 			dropdownYesNo("computers_history", $this->isActivated('computers_history'));
@@ -168,7 +160,7 @@ class plugin_tracker_config extends CommonDBTM {
 			dropdownYesNo("statement_default_value", $this->isActivated('statement_default_value'));
 			echo "</td></tr>";
 */			
-			echo "<tr class='tab_bg_1'><th colspan='2'>";
+			/*echo "<tr class='tab_bg_1'><th colspan='2'>";
 			echo $LANGTRACKER["functionalities"][30]." :</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
@@ -198,7 +190,7 @@ class plugin_tracker_config extends CommonDBTM {
 			dropdownValue("glpi_type_networking", "networking_switch_type", $this->getValue("networking_switch_type"));
 			echo "</td></tr>";
 */
-			echo "<tr class='tab_bg_1'>";
+			/*echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANGTRACKER["functionalities"][43]."</td>";
 			echo "<td>";
 			echo "<select name='authsnmp'>";
@@ -217,8 +209,273 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 			echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";	
 			echo "</table></form></div>";
+			*/
 		}
+	}
+	
+
+	
+	function showForm_general($target,$ID)
+	{
+		GLOBAL $LANG, $LANGTRACKER;
+		
+		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
+		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
+		
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANGTRACKER["functionalities"][1]." :";
+		echo "</th>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][10]."</td>";
+		echo "<td>";
+		dropdownYesNo("activation_history", $this->isActivated('activation_history'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][11]."</td>";
+		echo "<td>";
+		dropdownYesNo("activation_connection", $this->isActivated('activation_connection'));
+		echo "</td>";
+		echo "</tr>";		
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][12]."</td>";
+		echo "<td>";
+		dropdownYesNo("activation_snmp_networking", $this->isActivated('activation_snmp_networking'));
+		echo "</td>";
+		echo "</tr>";	
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][13]."</td>";
+		echo "<td>";
+		dropdownYesNo("activation_snmp_peripheral", $this->isActivated('activation_snmp_peripheral'));
+		echo "</td>";
+		echo "</tr>";	
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][14]."</td>";
+		echo "<td>";
+		dropdownYesNo("activation_snmp_phone", $this->isActivated('activation_snmp_phone'));
+		echo "</td>";
+		echo "</tr>";	
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][15]."</td>";
+		echo "<td>";
+		dropdownYesNo("activation_snmp_printer", $this->isActivated('activation_snmp_printer'));
+		echo "</td>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][16]."</td>";
+		echo "<td>";
+		echo "<select name='authsnmp'>";
+		echo "<option>-----</option>";
+		$selected = "";
+		if ($this->getValue("authsnmp") == "DB")
+			$selected = "selected";
+		echo "<option value='DB' ".$selected.">".$LANGTRACKER["functionalities"][17]."</option>";
+		$selected = "";
+		if ($this->getValue("authsnmp") == "file")
+			$selected = "selected";
+		echo "<option value='file' ".$selected.">".$LANGTRACKER["functionalities"][18]."</option>";
+		echo "</select>";
+		echo "</td></tr>";
+
+		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+		echo "</table></form>";		
 	}
 }
 
+
+
+class plugin_tracker_config_snmp_networking extends CommonDBTM {
+
+	function plugin_tracker_config_snmp_networking() {
+		$this->table="glpi_plugin_tracker_config_snmp_networking";
+		$this->type=-1;
+	}	
+
+
+	function initConfig() {
+		global $DB;
+		
+		$query = "INSERT INTO ".$this->table." ".
+				 "(ID, active_device_state, history_wire, history_ports_state, history_unknown_mac, history_snmp_errors, history_process) ".
+				 "VALUES ('1', '0', '0', '0', '0', '0', '0')";
+		
+		$DB->query($query);
+	}
+	
+
+	/* Function to get the value of a field */
+	function getValue($field) {
+		global $DB;
+
+		$query = "SELECT ".$field." FROM ".$this->table." ".
+				 "WHERE ID = '1'";
+		if ( $result = $DB->query($query) ) {
+			if ( $this->fields = $DB->fetch_row($result) )
+				return $this->fields['0'];
+		}
+		return false;
+	}
+
+	// Confirm if the functionality is activated, or not
+	function isActivated($functionality) {
+		
+		if ( !($this->getValue($functionality)) )
+			return false;
+		else
+			return true;
+	}
+
+
+	
+	function showForm($target,$ID)
+	{
+		GLOBAL $LANG, $LANGTRACKER;
+		
+		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
+		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
+		
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANGTRACKER["functionalities"][1]." :";
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][20]."</td>";
+		echo "<td>";
+		dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][21]."</td>";
+		echo "<td>";
+		dropdownInteger("history_wire", $this->getValue('history_wire'),0,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][22]."</td>";
+		echo "<td>";
+		dropdownInteger("history_ports_state", $this->getValue('history_ports_state'),0,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][23]."</td>";
+		echo "<td>";
+		dropdownInteger("history_unknown_mac", $this->getValue('history_unknown_mac'),0,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][24]."</td>";
+		echo "<td>";
+		dropdownInteger("history_snmp_errors", $this->getValue('history_snmp_errors'),0,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][25]."</td>";
+		echo "<td>";
+		dropdownInteger("history_process", $this->getValue('history_process'),0,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+		echo "</table></form>";	
+	}
+}
+
+
+
+class plugin_tracker_config_snmp_printer extends CommonDBTM {
+
+	function plugin_tracker_config_snmp_printer() {
+		$this->table="glpi_plugin_tracker_config_snmp_printer";
+		$this->type=-1;
+	}	
+
+
+	function initConfig() {
+		global $DB;
+		
+		$query = "INSERT INTO ".$this->table." ".
+				 "(ID, active_device_state, manage_cartridges) ".
+				 "VALUES ('1', '0', '0')";
+		
+		$DB->query($query);
+	}
+	
+
+	/* Function to get the value of a field */
+	function getValue($field) {
+		global $DB;
+
+		$query = "SELECT ".$field." FROM ".$this->table." ".
+				 "WHERE ID = '1'";
+		if ( $result = $DB->query($query) ) {
+			if ( $this->fields = $DB->fetch_row($result) )
+				return $this->fields['0'];
+		}
+		return false;
+	}
+
+	// Confirm if the functionality is activated, or not
+	function isActivated($functionality) {
+		
+		if ( !($this->getValue($functionality)) )
+			return false;
+		else
+			return true;
+	}
+
+
+	
+	function showForm($target,$ID)
+	{
+		GLOBAL $LANG, $LANGTRACKER;
+		
+		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
+		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
+		
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANGTRACKER["functionalities"][1]." :";
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][30]."</td>";
+		echo "<td>";
+		dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][14]."</td>";
+		echo "<td>";
+		dropdownYesNo("manage_cartridges", $this->isActivated('manage_cartridges'));
+		echo "</td>";
+		echo "</tr>";	
+
+		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+		echo "</table></form>";	
+	}
+}		
+		
+		
+		
 ?>

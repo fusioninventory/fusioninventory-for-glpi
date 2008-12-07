@@ -68,29 +68,39 @@ $LANGTRACKER["functionalities"][2]="Configuration générale";
 $LANGTRACKER["functionalities"][3]="SNMP";
 $LANGTRACKER["functionalities"][4]="Connexion";
 
-$LANGTRACKER["functionalities"][10]="Connexions Ordinateurs";
-$LANGTRACKER["functionalities"][11]="Contrôle du câblage";
-$LANGTRACKER["functionalities"][12]="Vérification du commutateur réseau et du port de connexion.";
-$LANGTRACKER["functionalities"][13]="Activation de l'historique";
-$LANGTRACKER["functionalities"][14]="Mise à jour du champ contact";
-$LANGTRACKER["functionalities"][15]="Mise à jour du champ utilisateur GLPI";
+$LANGTRACKER["functionalities"][10]="Activation de l'historique";
+$LANGTRACKER["functionalities"][11]="Activation du module connexion";
+$LANGTRACKER["functionalities"][12]="Activation du module SNMP réseaux";
+$LANGTRACKER["functionalities"][13]="Activation du module SNMP périphériques";
+$LANGTRACKER["functionalities"][14]="Activation du module SNMP téléphones";
+$LANGTRACKER["functionalities"][15]="Activation du module SNMP imprimantes";
+$LANGTRACKER["functionalities"][16]="Stockage de l'authentification SNMP";
+$LANGTRACKER["functionalities"][17]="Base de données";
+$LANGTRACKER["functionalities"][18]="Fichiers";
 
+$LANGTRACKER["functionalities"][20]="Statut du matériel actif";
+$LANGTRACKER["functionalities"][21]="Rétention de l'historique d'interconnexions entre matériels en jours (0 = désactivation)";
+$LANGTRACKER["functionalities"][22]="Rétention de l'historique de changement d'état des ports (0 = désactivation)";
+$LANGTRACKER["functionalities"][23]="Rétention de l'historique des adresses MAC inconnues (0 = désactivation)";
+$LANGTRACKER["functionalities"][24]="Rétention de l'historique des erreurs SNMP (0 = désactivation)";
+$LANGTRACKER["functionalities"][25]="Rétention de l'historique des processes des scripts (0 = désactivation)";
+
+
+/*
 $LANGTRACKER["functionalities"][20]="Imprimantes";
 $LANGTRACKER["functionalities"][21]="Relevé des compteurs Imprimantes";
 $LANGTRACKER["functionalities"][22]="Valeur par défaut";
 $LANGTRACKER["functionalities"][23]="Lorsque le relevé d'un compteur spécifique sera spécifié à défaut, c'est cette valeur qui sera prise en compte.";
-$LANGTRACKER["functionalities"][24]="Fréquence de relevé des compteurs";
 
-$LANGTRACKER["functionalities"][30]="Epuration des historiques";
-$LANGTRACKER["functionalities"][31]="Activation de l'épuration";
-$LANGTRACKER["functionalities"][32]="Profondeur de nettoyage (en jours)";
+*/
+$LANGTRACKER["functionalities"][30]="Gestion ds cartouches et du stock";
+$LANGTRACKER["functionalities"][36]="Fréquence de relevé des compteurs";
 
 $LANGTRACKER["functionalities"][40]="Configuration";
 $LANGTRACKER["functionalities"][41]="Statut du matériel actif";
 $LANGTRACKER["functionalities"][42]="Commutateur";
 $LANGTRACKER["functionalities"][43]="Authentification SNMP";
-$LANGTRACKER["functionalities"][44]="Base de données";
-$LANGTRACKER["functionalities"][45]="Fichiers";
+
 
 
 $LANGTRACKER["snmp"][0]="Informations SNMP du matériel";
