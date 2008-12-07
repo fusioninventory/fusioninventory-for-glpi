@@ -1455,7 +1455,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		global $DB;
 	
-		$query = "SELECT * FROM glpi_networking
+		$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr
 		WHERE ifaddr='".$IP."' ";
 		
 		$result = $DB->query($query);		
@@ -1465,7 +1465,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		LEFT JOIN glpi_networking_ports
 		ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.ID
 		WHERE ifdescr='".$ifDescr."' 
-			AND glpi_networking_ports.on_device='".$data["ID"]."'
+			AND glpi_networking_ports.on_device='".$data["FK_networking"]."'
 			AND glpi_networking_ports.device_type='2' ";
 		$resultPort = $DB->query($queryPort);		
 		$dataPort = $DB->fetch_assoc($resultPort);
