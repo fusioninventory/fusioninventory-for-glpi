@@ -391,12 +391,12 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 					);
 				}
 
-				if ((plugin_tracker_haveRight("printers_history", "r")) && (($config->isActivated('counters_statement')) == true)) {
+/*				if ((plugin_tracker_haveRight("printers_history", "r")) && (($config->isActivated('counters_statement')) == true)) {
 					$array = array_merge($array, array (
 						1 => $LANGTRACKER["title"][2]
 					));
 				}
-				/*
+*/				/*
 				if (plugin_tracker_haveRight("errors","r"))	{
 					$array = array_merge($array, array(1 => $LANGTRACKER["title"][3]));
 				}
@@ -484,21 +484,21 @@ function plugin_headings_actions_tracker($type) {
 				);
 			}
 
-			if ((plugin_tracker_haveRight("printers_history", "r")) && (($config->isActivated('counters_statement')) == true)) {
+/*			if ((plugin_tracker_haveRight("printers_history", "r")) && (($config->isActivated('counters_statement')) == true)) {
 				$array = array_merge($array, array (
 					1 => "plugin_headings_tracker_printerHistory"
 				));
-			}
+			}*/
 			/*
 			if (plugin_tracker_haveRight("errors","r"))	{
 				$array = array_merge($array, array(1 => "plugin_headings_tracker_printerErrors"));
 			}
 			*/
-			if ((plugin_tracker_haveRight("printers_history", "w")) && (($config->isActivated('counters_statement')) == true)) {
+/*			if ((plugin_tracker_haveRight("printers_history", "w")) && (($config->isActivated('counters_statement')) == true)) {
 				$array = array_merge($array, array (
 					1 => "plugin_headings_tracker_printerCronConfig"
 				));
-			}
+			}*/
 
 			return $array;
 
@@ -522,11 +522,11 @@ function plugin_headings_actions_tracker($type) {
 
 		case USER_TYPE :
 
-			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
+/*			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
 				return array (
 					1 => "plugin_headings_tracker_userHistory"
 				);
-			}
+			}*/
 
 			break;
 

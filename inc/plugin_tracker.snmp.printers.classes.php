@@ -59,6 +59,9 @@ class plugin_tracker_printers extends CommonDBTM {
 	
 		$this->ID = $ID;
 		
+		$plugin_tracker_printers = new plugin_tracker_printers;
+		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		
 		$query = "
 		SELECT * 
 		FROM glpi_plugin_tracker_printers
@@ -125,6 +128,20 @@ class plugin_tracker_printers extends CommonDBTM {
 
 		// ** FORM FOR CARTRIDGES
 
+		// get infos to get visible or not the counters
+			$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID,PRINTER_TYPE);
+			// ** Get link OID fields
+			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID); 
+			$mapping_name=array();
+			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
+			{
+				$explode = explode("||", $mapping_type_name);
+				if (ereg('cartridges',$explode[1]))
+				{
+					$mapping_name[$explode[1]] = "1";			
+				}
+			}
+
 		echo "<br/><div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='800'>";		
@@ -135,28 +152,23 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "</th>";
 		echo "</tr>";
 
-		$query_cartridges = "
-		SELECT * 
-		FROM glpi_plugin_tracker_printers_cartridges
-		WHERE FK_printers=".$ID." ";
-		if ( $result_cartridges=$DB->query($query_cartridges) )
+		ksort($mapping_name);
+		foreach ($mapping_name as $cartridge_name=>$val)
 		{
-			while ( $data_cartridges=$DB->fetch_array($result_cartridges) )
-			{
-				echo "<tr class='tab_bg_1'>";
-				echo "<td align='center'>";
-				echo $TRACKER_MAPPING[PRINTER_TYPE][$data_cartridges['object_name']]['shortname'];
-				echo " : ";
-				dropdownValue("glpi_cartridges_type","FK_cartridges",$data_cartridges['FK_cartridges'],0);
-				echo "</td>";
-				echo "<td align='center'>";
-				plugin_tracker_Bar($data_cartridges['state']); 
-				echo "</td>";
-				echo "</tr>";
-			}
+			$state = $plugin_tracker_printers->cartridges_state($ID, $cartridge_name);
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>";
+			echo $TRACKER_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
+			echo " : ";
+			dropdownValue("glpi_cartridges_type","FK_cartridges",$state['FK_cartridges'],0);
+			echo "</td>";
+			echo "<td align='center'>";
+			plugin_tracker_Bar($state['state']); 
+			echo "</td>";
+			echo "</tr>";
 		}
-				
-		echo "<tr class='tab_bg_1'>";
+
+/*		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
 		echo "<select name='object_name'>";
 		foreach ($TRACKER_MAPPING[PRINTER_TYPE] AS $cartridges=>$value)
@@ -181,7 +193,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "<input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit' >";
 		echo "</td>";
 		echo "</tr>";
-
+*/
 		echo "</table></form>";
 		
 	
@@ -624,5 +636,30 @@ class plugin_tracker_printers extends CommonDBTM {
 	}
 
 
+	
+	function cartridges_state($FK_printers, $object_name)
+	{
+		global $DB;
+		
+		$datas = array();
+		$query = "SELECT * FROM glpi_plugin_tracker_printers_cartridges
+		WHERE FK_printers='".$FK_printers."'
+			AND object_name='".$object_name."' ";
+		if ( $result=$DB->query($query) )
+		{
+			if ($DB->numrows($result) == "0")
+			{
+				$datas['FK_cartridges'] = "";
+				$datas['state'] = 100;
+			}
+			else
+			{
+				$data = $DB->fetch_assoc($result);
+				$datas['FK_cartridges'] = $data['FK_cartridges'];
+				$datas['state'] = $data['state'];
+			}
+		}
+		return $datas;
+	}
 }
 ?>
