@@ -50,9 +50,19 @@ function plugin_tracker_getDeviceList($type)
 {
 	global $DB;
 	
-	$NetworksID = array();	
+	$NetworksID = array();
+		
+	switch ($type)
+	{
+		case NETWORKING_TYPE :
+			$table = "glpi_plugin_tracker_config_snmp_networking";
+			break;
+		case PRINTER_TYPE :
+			$table = "glpi_plugin_tracker_config_snmp_printer";
+			break;
+	}
 	
-	$query = "SELECT active_device_state FROM glpi_plugin_tracker_config ";
+	$query = "SELECT active_device_state FROM ".$table." ";
 	
 	if ( ($result = $DB->query($query)) )
 	{
@@ -87,9 +97,7 @@ function plugin_tracker_getDeviceList($type)
 			$NetworksID[$data["ID"]] = $data["ifaddr"];
 		}
 	}
-
 	return $NetworksID;
-
 }
 	
 
@@ -767,7 +775,7 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		{
 			for($i = 0; $i < 4;$i++)
 			{
-			$ip_switch_trunk .= hexdec($Array_ip_switch_trunk[$i]);
+				$ip_switch_trunk .= hexdec($Array_ip_switch_trunk[$i]);
 				if ($i < 3)
 					$ip_switch_trunk .= ".";
 			}
@@ -849,9 +857,7 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 				{
 					$ifaddr_add[$ifaddr_snmp] = $ID_Device;
 				}
-			
 			}
-
 		}
 	}
 	foreach($ifaddr as $ifaddr_snmp=>$FK_networking)
@@ -868,13 +874,7 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 		VALUES('".$FK_networking."','".$ifaddr_snmp."') ";
 		$DB->query($query_insert);
 	}
-	
 }
-
-
-
-
-
 
 
 ?>
