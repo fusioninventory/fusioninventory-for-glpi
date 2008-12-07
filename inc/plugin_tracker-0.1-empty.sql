@@ -132,12 +132,12 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_mib_networking`;
 
 CREATE TABLE `glpi_plugin_tracker_mib_networking` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
-  `FK_model_infos` int(8) NOT NULL,
-  `FK_mib_label` int(8) NOT NULL,
-  `FK_mib_oid` int(8) NOT NULL,
-  `FK_mib_object` int(8) NOT NULL,
-  `oid_port_counter` int(1) NOT NULL,
-  `oid_port_dyn` int(1) NOT NULL,
+  `FK_model_infos` int(8) DEFAULT NULL,
+  `FK_mib_label` int(8) DEFAULT NULL,
+  `FK_mib_oid` int(8) DEFAULT NULL,
+  `FK_mib_object` int(8) DEFAULT NULL,
+  `oid_port_counter` int(1) DEFAULT NULL,
+  `oid_port_dyn` int(1) DEFAULT NULL,
   `mapping_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mapping_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`),
