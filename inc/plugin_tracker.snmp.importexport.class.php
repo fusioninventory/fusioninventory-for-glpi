@@ -58,9 +58,6 @@ class plugin_tracker_importexport extends CommonDBTM
 				$model_name = $DB->result($result, 0, "name");
 				$model_FK_model_networking = $DB->result($result, 0, "FK_model_networking");
 				$model_FK_firmware = $DB->result($result, 0, "FK_firmware");
-				$model_FK_snmp_version = $DB->result($result, 0, "FK_snmp_version");
-				$model_FK_snmp_connection = $DB->result($result, 0, "FK_snmp_connection");
-			
 			}
 			else
 			{
@@ -158,12 +155,10 @@ class plugin_tracker_importexport extends CommonDBTM
 				$FK_model_networking = externalImportDropdown("glpi_dropdown_model_networking",$xml->networkingmodel[0],0,$external_params["manufacturer"]=1);
 //			echo $xml->firmware[0]."<br/>";
 				$FK_firmware = externalImportDropdown("glpi_dropdown_firmware",$xml->firmware[0],0);
-//			echo $xml->snmpversion[0]."<br/>";
-//			echo $xml->authsnmp[0]."<br/>";
 			
 			$query = "INSERT INTO glpi_plugin_tracker_model_infos
-			(name,FK_model_networking,FK_firmware,FK_snmp_version,FK_snmp_connection)
-			VALUES('".$xml->name[0]."','".$FK_model_networking."','".$FK_firmware."','".$xml->snmpversion[0]."', '".$xml->authsnmp[0]."' )";
+			(name,FK_model_networking,FK_firmware)
+			VALUES('".$xml->name[0]."','".$FK_model_networking."','".$FK_firmware."')";
 			
 			$DB->query($query);
 			$FK_model = $DB->insert_id();
