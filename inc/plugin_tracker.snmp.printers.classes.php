@@ -103,7 +103,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANGTRACKER["functionalities"][24]."</td>";
+		echo "<td align='center'>".$LANGTRACKER["functionalities"][36]."</td>";
 		echo "<td align='center'>";
 		$dropdown[1] = $LANG["planning"][5];
 		$dropdown[7] = $LANG["planning"][6];
@@ -194,6 +194,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
 	
 		$plugin_tracker_printers = new plugin_tracker_printers;
+		$plugin_tracker_snmp = new plugin_tracker_snmp;
 	
 		$this->ID = $ID;
 		
@@ -220,6 +221,16 @@ class plugin_tracker_printers extends CommonDBTM {
 				$frequence = "year";
 				break;
 		} 
+		// get infos to get visible or not the counters
+			$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID,PRINTER_TYPE);
+			// ** Get link OID fields
+			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID); 
+			$mapping_name=array();
+			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
+			{
+				$explode = explode("||", $mapping_type_name);
+				$mapping_name[$explode[1]] = "1";			
+			}	
 		
 		// Form pages counter
 		echo "<br>";
@@ -230,13 +241,6 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
 		echo $LANG["cartridges"][39];
-		echo "</th>";
-		echo "</tr>";
-
-		// Total page counter
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANGTRACKER["mapping"][128];
 		echo "</th>";
 		echo "</tr>";
 
@@ -279,89 +283,111 @@ class plugin_tracker_printers extends CommonDBTM {
 			$rectoverso_page_counter[$i] = 0;
 			$scanned_page_counter[$i] = 0;
 		}
+
+		if ((isset($mapping_name['pagecountertotalpages']))  AND ($mapping_name['pagecountertotalpages'] == "1"))
+		{
+			// Total page counter
+			echo "<tr class='tab_bg_1'>";
+			echo "<th colspan='3'>";
+			echo $LANGTRACKER["mapping"][128];
+			echo "</th>";
+			echo "</tr>";
 	
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$total_page_counter);		
-			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$total_page_counter,$dates);
-			echo "</table>";
-		$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][128],$LANGTRACKER["printer"][0],1,$frequence);
-		echo "</td>";
-		echo "</tr>";
+			echo "<tr class='tab_bg_1'>";
+			echo "<td colspan='3'>";
+				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$total_page_counter);		
+				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$total_page_counter,$dates);
+				echo "</table>";
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][128],$LANGTRACKER["printer"][0],1,$frequence);
+			echo "</td>";
+			echo "</tr>";
+		}
 		
-		// ** Black & white page counter
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANGTRACKER["mapping"][129];
-		echo "</th>";
-		echo "</tr>";
+		if ((isset($mapping_name['pagecounterblackpages']))  AND ($mapping_name['pagecounterblackpages'] == "1"))
+		{
+			// ** Black & white page counter
+			echo "<tr class='tab_bg_1'>";
+			echo "<th colspan='3'>";
+			echo $LANGTRACKER["mapping"][129];
+			echo "</th>";
+			echo "</tr>";
+	
+			echo "<tr class='tab_bg_1'>";
+			echo "<td colspan='3'>";
+				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$black_white_page_counter);		
+				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$black_white_page_counter,$dates);
+				echo "</table>";
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][129],$LANGTRACKER["printer"][0],1,$frequence);
+			echo "</td>";
+			echo "</tr>";
+		}
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$black_white_page_counter);		
-			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$black_white_page_counter,$dates);
-			echo "</table>";
-		$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][129],$LANGTRACKER["printer"][0],1,$frequence);
-		echo "</td>";
-		echo "</tr>";
+		if ((isset($mapping_name['pagecountercolorpages']))  AND ($mapping_name['pagecountercolorpages'] == "1"))
+		{
+			// ** Color page counter
+			echo "<tr class='tab_bg_1'>";
+			echo "<th colspan='3'>";
+			echo $LANGTRACKER["mapping"][130];
+			echo "</th>";
+			echo "</tr>";
+	
+			echo "<tr class='tab_bg_1'>";
+			echo "<td colspan='3'>";
+				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$color_page_counter);		
+				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$color_page_counter,$dates);
+				echo "</table>";
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][130],$LANGTRACKER["printer"][0],1,$frequence);
+			echo "</td>";
+			echo "</tr>";
+		}
 
-		// ** Color page counter
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANGTRACKER["mapping"][130];
-		echo "</th>";
-		echo "</tr>";
+		if ((isset($mapping_name['pagecounterrectoversopages']))  AND ($mapping_name['pagecounterrectoversopages'] == "1"))
+		{
+			// ** Recto/Verso page counter
+			echo "<tr class='tab_bg_1'>";
+			echo "<th colspan='3'>";
+			echo $LANGTRACKER["mapping"][154];
+			echo "</th>";
+			echo "</tr>";
+	
+			echo "<tr class='tab_bg_1'>";
+			echo "<td colspan='3'>";
+				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$rectoverso_page_counter);		
+				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$rectoverso_page_counter,$dates);
+				echo "</table>";
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][154],$LANGTRACKER["printer"][0],1,$frequence);
+			echo "</td>";
+			echo "</tr>";
+		}
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$color_page_counter);		
-			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$color_page_counter,$dates);
-			echo "</table>";
-		$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][130],$LANGTRACKER["printer"][0],1,$frequence);
-		echo "</td>";
-		echo "</tr>";
+		if ((isset($mapping_name['pagecounterscannedpages']))  AND ($mapping_name['pagecounterscannedpages'] == "1"))
+		{
+			// ** Scanned page counter
+			echo "<tr class='tab_bg_1'>";
+			echo "<th colspan='3'>";
+			echo $LANGTRACKER["mapping"][155];
+			echo "</th>";
+			echo "</tr>";
 
-		// ** Recto/Verso page counter
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANGTRACKER["mapping"][154];
-		echo "</th>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$rectoverso_page_counter);		
-			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$rectoverso_page_counter,$dates);
-			echo "</table>";
-		$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][154],$LANGTRACKER["printer"][0],1,$frequence);
-		echo "</td>";
-		echo "</tr>";
-
-		// ** Scanned page counter
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANGTRACKER["mapping"][155];
-		echo "</th>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$scanned_page_counter);		
-			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$scanned_page_counter,$dates);
-			echo "</table>";
-		$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][155],$LANGTRACKER["printer"][0],1,$frequence);
-		echo "</td>";
-		echo "</tr>";
+			echo "<tr class='tab_bg_1'>";
+			echo "<td colspan='3'>";
+				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$scanned_page_counter);		
+				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$scanned_page_counter,$dates);
+				echo "</table>";
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][155],$LANGTRACKER["printer"][0],1,$frequence);
+			echo "</td>";
+			echo "</tr>";
+		}
 
 							
 		echo "</table>";
