@@ -94,19 +94,40 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_config`;
 
 CREATE TABLE `glpi_plugin_tracker_config` (
   `ID` int(1) NOT NULL AUTO_INCREMENT,
-  `computers_history` int(1) NOT NULL DEFAULT '0',
-  `update_contact` int(1) NOT NULL DEFAULT '0',
-  `update_user` int(1) NOT NULL DEFAULT '0',
-  `wire_control` int(1) NOT NULL DEFAULT '0',
-  `counters_statement` int(1) NOT NULL DEFAULT '0',
-  `statement_default_value` int(1) NOT NULL DEFAULT '0',
-  `cleaning` int(1) NOT NULL DEFAULT '0',
-  `cleaning_days` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `active_device_state` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `networking_switch_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `authsnmp` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`),
-  KEY `active_device_state` (`active_device_state`)
+  `activation_history` int(1) DEFAULT NULL,
+  `activation_connection` int(1) DEFAULT NULL,
+  `activation_snmp_networking` int(1) DEFAULT NULL,
+  `activation_snmp_peripheral` int(1) DEFAULT NULL,
+  `activation_snmp_phone` int(1) DEFAULT NULL,
+  `activation_snmp_printer` int(1) DEFAULT NULL,
+  `authsnmp` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_networking`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_config_snmp_networking` (
+  `ID` int(8) NOT NULL AUTO_INCREMENT,
+  `active_device_state` int(11) NOT NULL DEFAULT '0',
+  `history_wire` int(11) NOT NULL DEFAULT '0',
+  `history_ports_state` int(11) NOT NULL DEFAULT '0',
+  `history_unknown_mac` int(11) NOT NULL DEFAULT '0',
+  `history_snmp_errors` int(11) NOT NULL DEFAULT '0',
+  `history_process` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_printer`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_config_snmp_printer` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `active_device_state` int(1) NOT NULL DEFAULT '0',
+  `manage_cartridges` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
