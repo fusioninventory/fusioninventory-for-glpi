@@ -522,8 +522,14 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 					WHERE ".$ID_field."='".$data["ID"]."'";
 					$result_select=$DB->query($query_select);
-					$SNMPValue_old = $DB->result($result_select, 0, $TRACKER_MAPPING[$object_type][$object_name]['field']);
-					
+					if ($DB->numrows($result_select) != "0")
+					{
+						$SNMPValue_old = $DB->result($result_select, 0, $TRACKER_MAPPING[$object_type][$object_name]['field']);
+					}
+					else
+					{
+						$SNMPValue_old = "";
+					}					
 					// Update
 					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 					SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
@@ -799,12 +805,12 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."' 
 			AND device_type='2' 
 			AND glpi_plugin_tracker_networking_ifaddr.ifaddr='".$IP."' ";
-echo "QUERY CDP :".$query."\n";
+//echo "QUERY CDP :".$query."\n";
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
-var_dump($data);		
+//var_dump($data);		
 //echo "QUERY :".$query."\n";
-echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
+//echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
 		if ((!empty($data["ID"])) AND (!empty($PortID)))
 			$snmp_queries->PortsConnection($data["ID"], $PortID,$FK_process);
 	}
