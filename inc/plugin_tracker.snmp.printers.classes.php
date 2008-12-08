@@ -253,7 +253,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		ORDER BY date DESC
 		LIMIT 0,9";
 		$dates_ex = $dates;
-		$dates = array();
+/*		$dates = array();
 		unset($total_page_counter);
 		$total_page_counter = array();
 		$i = 9;
@@ -280,6 +280,30 @@ class plugin_tracker_printers extends CommonDBTM {
 			$rectoverso_page_counter[$i] = 0;
 			$scanned_page_counter[$i] = 0;
 		}
+*/
+		for ($i = 0;$i < count($dates);$i++)
+		{
+			$dates[$i] = $dates[$i]." 00:00:00";
+			$total_page_counter[$i] = 0;
+			$black_white_page_counter[$i] = 0;
+			$color_page_counter[$i] = 0;
+			$rectoverso_page_counter[$i] = 0;
+			$scanned_page_counter[$i] = 0;
+		}
+		$dates_flip = array_flip($dates);
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+				$dates[$dates_flip[$data['date']]] = $data['date'];
+				$total_page_counter[$dates_flip[$data['date']]] = $data['pages_total'];
+				$black_white_page_counter[$dates_flip[$data['date']]] = $data['pages_n_b'];
+				$color_page_counter[$dates_flip[$data['date']]] = $data['pages_color'];
+				$rectoverso_page_counter[$dates_flip[$data['date']]] = $data['pages_recto_verso'];
+				$scanned_page_counter[$dates_flip[$data['date']]] = $data['scanned'];
+			}
+		}
+		
 
 		if ((isset($mapping_name['pagecountertotalpages']))  AND ($mapping_name['pagecountertotalpages'] == "1"))
 		{
@@ -294,7 +318,7 @@ class plugin_tracker_printers extends CommonDBTM {
 			echo "<td colspan='3'>";
 				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
 				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$dates,1);
-				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$total_page_counter);		
+				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$total_page_counter);	
 				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$total_page_counter,$dates);
 				echo "</table>";
 			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][128],$LANGTRACKER["printer"][0],1,$frequence);
