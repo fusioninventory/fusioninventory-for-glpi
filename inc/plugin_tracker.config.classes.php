@@ -464,7 +464,7 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][14]."</td>";
+		echo "<td>".$LANGTRACKER["functionalities"][31]."</td>";
 		echo "<td>";
 		dropdownYesNo("manage_cartridges", $this->isActivated('manage_cartridges'));
 		echo "</td>";
