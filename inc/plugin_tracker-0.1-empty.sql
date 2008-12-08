@@ -392,17 +392,16 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_connection_stats` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` VALUES ('','MD5','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` VALUES ('','SHA','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` VALUES (1,'MD5','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` VALUES (2,'SHA','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES (3,'DES','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES (4,'AES128','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES (5,'AES192','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES (6,'AES256','');
 
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES ('','DES','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES ('','AES128','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES ('','AES192','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES ('','AES256','');
-
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES ('','noAuthNoPriv','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES ('','authNoPriv','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES ('','authPriv','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES (1,'noAuthNoPriv','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES (2,'authNoPriv','');
+INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES (3,'authPriv','');
 
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (1,'1','');
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (2,'2c','');
