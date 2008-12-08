@@ -1490,7 +1490,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ( $DB->numrows($resultVerif) == "0" )
 			{
-			echo "QUERY :".$queryVerif."\n";
+//echo "QUERY :".$queryVerif."\n";
 			
 				//$netwire=new Netwire;
 			//	if ($netwire->getOppositeContact($destination_port) != "")
@@ -1498,13 +1498,13 @@ class plugin_tracker_snmp extends CommonDBTM
 					addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
 					addLogConnection("remove",$destination_port,$FK_process);
 					removeConnector($destination_port);
-echo "REMOVE CONNECTOR :".$destination_port."\n";
+//echo "REMOVE CONNECTOR :".$destination_port."\n";
 					removeConnector($source_port);
-echo "REMOVE CONNECTOR :".$source_port."\n";
+//echo "REMOVE CONNECTOR :".$source_port."\n";
 			//	}
 			
 				makeConnector($source_port,$destination_port);
-echo "MAKE CONNECTOR :".$source_port." - ".$destination_port."\n";
+//echo "MAKE CONNECTOR :".$source_port." - ".$destination_port."\n";
 				addLogConnection("make",$destination_port,$FK_process);
 				addLogConnection("make",$source_port,$FK_process);
 				
@@ -1531,7 +1531,7 @@ echo "MAKE CONNECTOR :".$source_port." - ".$destination_port."\n";
 				$query_del = "DELETE FROM glpi_networking_wire 
 				WHERE ID='".$dataVerif2["ID"]."' ";
 				$DB->query($query_del);
-echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
+//echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 			}
 			$queryVerif2 = "SELECT *
 			FROM glpi_networking_wire 
@@ -1544,7 +1544,7 @@ echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 				$query_del = "DELETE FROM glpi_networking_wire 
 				WHERE ID='".$dataVerif2["ID"]."' ";
 				$DB->query($query_del);
-echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
+//echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 			}
 		}
 	
