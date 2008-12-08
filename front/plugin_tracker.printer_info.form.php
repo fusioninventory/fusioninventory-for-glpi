@@ -61,15 +61,26 @@ if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	
 }
 
-if ( (isset($_POST['add'])) && (isset($_POST['ID'])) ) {
+if ( (isset($_POST['update_cartridges'])) && (isset($_POST['ID'])) ) {
 	plugin_tracker_checkRight("printers_info","w");
 
 	$plugin_tracker_printers_cartridges = new plugin_tracker_printers_cartridges;
 
-	$_POST['FK_printers'] = $_POST['ID'];
-	unset($_POST['ID']);
-	$_POST['FK_cartridges'] = $_POST['tID'];
-	$plugin_tracker_printers_cartridges->add($_POST);
+	$query = "SELECT * FROM glpi_plugin_tracker_printers_cartridges
+	WHERE FK_printers='".$_POST['ID']."' 
+	AND object_name='".$_POST['object_name']."' ";
+	$result = $DB->query($query);		
+	if ($DB->numrows($result) == "0")
+	{
+		$_POST['FK_printers'] = $_POST['ID'];
+		unset($_POST['ID']);
+		$plugin_tracker_printers_cartridges->add($_POST);
+	}
+	else
+	{
+		$data = $DB->fetch_assoc($result);
+		$plugin_tracker_printers_cartridges->update($_POST);
+	}
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);

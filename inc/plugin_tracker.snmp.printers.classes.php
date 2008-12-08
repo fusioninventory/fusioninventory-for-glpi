@@ -60,8 +60,9 @@ class plugin_tracker_printers extends CommonDBTM {
 		$this->ID = $ID;
 		
 		$plugin_tracker_printers = new plugin_tracker_printers;
+		$config_snmp_printer = new plugin_tracker_config_snmp_printer;
 		$plugin_tracker_snmp = new plugin_tracker_snmp;
-		
+
 		$query = "
 		SELECT * 
 		FROM glpi_plugin_tracker_printers
@@ -142,12 +143,12 @@ class plugin_tracker_printers extends CommonDBTM {
 				}
 			}
 
-		echo "<br/><div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		echo "<br/><div align='center'>";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='800'>";		
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<th align='center' colspan='2'>";
+		echo "<th align='center' colspan='3'>";
 		echo $LANG["cartridges"][16];
 		echo "</th>";
 		echo "</tr>";
@@ -160,7 +161,17 @@ class plugin_tracker_printers extends CommonDBTM {
 			echo "<td align='center'>";
 			echo $TRACKER_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
 			echo " : ";
-			dropdownValue("glpi_cartridges_type","FK_cartridges",$state['FK_cartridges'],0);
+			echo "</td>";
+			echo "<td align='center'>";
+			if ($config_snmp_printer->getValue('manage_cartridges') == "1")
+			{
+				echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+				dropdownValue("glpi_cartridges_type","FK_cartridges",$state['FK_cartridges'],0);
+				echo "<input type='hidden' name='ID' value='".$ID."' />";
+				echo "<input type='hidden' name='object_name' value='".$cartridge_name."' />";
+				echo "<input name='update_cartridges' value='update_cartridges' src='".GLPI_ROOT."/pics/actualiser.png' class='calendrier' type='image'>";
+				echo "</form>";
+			}
 			echo "</td>";
 			echo "<td align='center'>";
 			plugin_tracker_Bar($state['state']); 
@@ -168,32 +179,6 @@ class plugin_tracker_printers extends CommonDBTM {
 			echo "</tr>";
 		}
 
-/*		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-		echo "<select name='object_name'>";
-		foreach ($TRACKER_MAPPING[PRINTER_TYPE] AS $cartridges=>$value)
-		{
-			if (ereg("cartridges", $cartridges))
-			{
-				echo "<option value='".$cartridges."'>".$TRACKER_MAPPING[PRINTER_TYPE][$cartridges]['name']."</option>";
-			}
-		}
-		echo "</select>";
-		echo "</td>";
-		echo "<td align='center'>";
-		dropdownCompatibleCartridges($ID);
-		echo "</td>";
-		echo "</tr>";	
-			
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='2'>";
-		echo "<div align='center'>";
-		echo "<input type='hidden' name='ID' value='".$ID."'>";
-		echo "<input type='hidden' name='state' value='100'>";
-		echo "<input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit' >";
-		echo "</td>";
-		echo "</tr>";
-*/
 		echo "</table></form>";
 		
 	

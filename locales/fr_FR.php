@@ -93,7 +93,8 @@ $LANGTRACKER["functionalities"][22]="Valeur par défaut";
 $LANGTRACKER["functionalities"][23]="Lorsque le relevé d'un compteur spécifique sera spécifié à défaut, c'est cette valeur qui sera prise en compte.";
 
 */
-$LANGTRACKER["functionalities"][30]="Gestion ds cartouches et du stock";
+$LANGTRACKER["functionalities"][30]="Statut du matériel actif";
+$LANGTRACKER["functionalities"][31]="Gestion des cartouches et du stock";
 $LANGTRACKER["functionalities"][36]="Fréquence de relevé des compteurs";
 
 $LANGTRACKER["functionalities"][40]="Configuration";
