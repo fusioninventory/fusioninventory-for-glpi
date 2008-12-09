@@ -365,8 +365,7 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 
 	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
 	
-	$printer_black_max = 0;
-	$printer_black_remain = 0;
+	$printer_cartridges_max_remain = array();
 
 	foreach($ArraySNMP_Object_result as $object=>$SNMPValue)
 	{
@@ -413,40 +412,47 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges")
 		{
-			if ($object_name == "cartridgesblackMAX")
+echo "OBJECT NAME :".$object_name."\n";
+			$object_name_clean = str_replace("MAX", "", $object_name);
+			$object_name_clean = str_replace("REMAIN", "", $object_name_clean);
+echo "OBJECT NAME CLEAN :".$object_name_clean."\n";
+			if (ereg("MAX",$object_name))
 			{
-				$printer_black_max = $SNMPValue;
+				$printer_cartridges_max_remain[$object_name_clean]["MAX"] = $SNMPValue;
 			}
-			if ($object_name == "cartridgesblackREMAIN")
+			if (ereg("REMAIN",$object_name))
 			{
-				$printer_black_remain = $SNMPValue;
+				$printer_cartridges_max_remain[$object_name_clean]["REMAIN"] = $SNMPValue;
 			}
-			if (($printer_black_max != "0") AND ($printer_black_remain != "0"))
+echo "MAX :".$printer_cartridges_max_remain[$object_name_clean]["MAX"]."\n";
+echo "REMAIN :".$printer_cartridges_max_remain[$object_name_clean]["REMAIN"]."\n";
+			if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"])) AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"])))
+//			if (($printer_black_max != "0") AND ($printer_black_remain != "0"))
 			{
-				$object_name0 = str_replace("MAX", "", $object_name);
-				$object_name0 = str_replace("REMAIN", "", $object_name0);
-				$pourcentage = ceil((100 * $printer_black_remain) / $printer_black_max);
+				$pourcentage = ceil((100 * $printer_cartridges_max_remain[$object_name_clean]["REMAIN"]) / $printer_cartridges_max_remain[$object_name_clean]["MAX"]);
 				// Test existance of row in MySQl
+echo "OBJECT_NAME :".$object_name." - ".$object_name_clean."\n";
 					$query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 					WHERE ".$Field."='".$ID_Device."'
-						AND object_name='".$object_name0."' ";
+						AND object_name='".$object_name_clean."' ";
 					$result_sel = $DB->query($query_sel);
 					if ($DB->numrows($query_sel) == "0")
 					{
 						$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 						(".$Field.",object_name)
-						VALUES('".$ID_Device."', '".$object_name0."') ";
+						VALUES('".$ID_Device."', '".$object_name_clean."') ";
 			
 						$DB->query($queryInsert);
+echo "INSERT :".$queryInsert."\n";
 					}
 				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$pourcentage."' 
 				WHERE ".$Field."='".$ID_Device."'
-					AND object_name='cartridgesblack' ";
+					AND object_name='".$object_name_clean."' ";
 
 				$DB->query($queryUpdate);
-				$printer_black_max = 0;
-				$printer_black_remain = 0;
+				unset($printer_cartridges_max_remain[$object_name_clean]["MAX"]);
+				unset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]);
 			}
 			else
 			{
