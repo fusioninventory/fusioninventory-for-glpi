@@ -458,15 +458,30 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			$query = "SELECT * FROM glpi_plugin_tracker_snmp_connection
 			WHERE ID='".$ID_auth."' ";
 			$result=$DB->query($query);
-			$snmp_auth["Name"] = $DB->result($result,0,"name");
-			$snmp_auth["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$DB->result($result,0,"FK_snmp_version"));
-			$snmp_auth["community"] = $DB->result($result,0,"community");
-			$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
-			$snmp_auth["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$DB->result($result,0,"sec_level"));
-			$snmp_auth["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$DB->result($result,0,"auth_protocol"));
-			$snmp_auth["auth_passphrase"] = $DB->result($result,0,"auth_passphrase");
-			$snmp_auth["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$DB->result($result,0,"priv_protocol"));
-			$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
+			if ($DB->numrows($result) == "0")
+			{
+				$snmp_auth["Name"] = "";
+				$snmp_auth["snmp_version"] = "";
+				$snmp_auth["community"] = "";
+				$snmp_auth["sec_name"] = "";
+				$snmp_auth["sec_level"] = "";
+				$snmp_auth["auth_protocol"] = "";
+				$snmp_auth["auth_passphrase"] = "";
+				$snmp_auth["priv_protocol"] = "";
+				$snmp_auth["priv_passphrase"] = "";
+			}
+			else
+			{
+				$snmp_auth["Name"] = $DB->result($result,0,"name");
+				$snmp_auth["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$DB->result($result,0,"FK_snmp_version"));
+				$snmp_auth["community"] = $DB->result($result,0,"community");
+				$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
+				$snmp_auth["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$DB->result($result,0,"sec_level"));
+				$snmp_auth["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$DB->result($result,0,"auth_protocol"));
+				$snmp_auth["auth_passphrase"] = $DB->result($result,0,"auth_passphrase");
+				$snmp_auth["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$DB->result($result,0,"priv_protocol"));
+				$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
+			}
 		}
 		return $snmp_auth;
 	}
