@@ -423,17 +423,19 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 			}
 			if (($printer_black_max != "0") AND ($printer_black_last != "0"))
 			{
+				$object_name0 = str_replace("MAX", "", $object_name);
+				$object_name0 = str_replace("LAST", "", $object_name0);
 				$pourcentage = ceil((100 * $printer_black_last) / $printer_black_max);
 				// Test existance of row in MySQl
 					$query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 					WHERE ".$Field."='".$ID_Device."'
-						AND object_name='cartridgesblack' ";
+						AND object_name='".$object_name0."' ";
 					$result_sel = $DB->query($query_sel);
 					if ($DB->numrows($query_sel) == "0")
 					{
 						$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 						(".$Field.",object_name)
-						VALUES('".$ID_Device."', 'cartridgesblack') ";
+						VALUES('".$ID_Device."', '".$object_name0."') ";
 			
 						$DB->query($queryInsert);
 					}
