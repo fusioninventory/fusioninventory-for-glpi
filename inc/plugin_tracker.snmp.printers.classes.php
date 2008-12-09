@@ -139,6 +139,8 @@ class plugin_tracker_printers extends CommonDBTM {
 				$explode = explode("||", $mapping_type_name);
 				if (ereg('cartridges',$explode[1]))
 				{
+					$explode[1] = str_replace ("MAX", "", $explode[1]);
+					$explode[1] = str_replace ("LAST", "", $explode[1]);
 					$mapping_name[$explode[1]] = "1";			
 				}
 			}

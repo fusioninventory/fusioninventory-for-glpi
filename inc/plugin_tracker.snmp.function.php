@@ -363,7 +363,10 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type)
 {
 
-	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
+	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
+	
+	$printer_black_max = 0;
+	$printer_black_last = 0;
 
 	foreach($ArraySNMP_Object_result as $object=>$SNMPValue)
 	{
@@ -403,12 +406,52 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges")
 		{
-			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-			WHERE ".$Field."='".$ID_Device."'
-				AND object_name='".$object_name."' ";
-	
-			$DB->query($queryUpdate);
+echo "OBJECTNAME :".$object_name."\n";
+			if ($object_name == "cartridgesblackMAX")
+			{
+				$printer_black_max = $SNMPValue;
+			}
+			if ($object_name == "cartridgesblackLAST")
+			{
+				$printer_black_last = $SNMPValue;
+			}
+echo "cartridgesblackMAX :".$printer_black_max."\n";
+echo "cartridgesblackLAST :".$printer_black_last."\n";
+			if (($printer_black_max != "0") AND ($printer_black_last != "0"))
+			{
+echo "GAGNE";
+				$pourcentage = ceil((100 * $printer_black_last) / $printer_black_max);
+				// Test existance of row in MySQl
+					$query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+					WHERE ".$Field."='".$ID_Device."'
+						AND object_name='cartridgesblack' ";
+					$result_sel = $DB->query($query_sel);
+					if ($DB->numrows($query_sel) == "0")
+					{
+						$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+						(".$Field.",object_name)
+						VALUES('".$ID_Device."', 'cartridgesblack') ";
+			
+						$DB->query($queryInsert);
+					}
+				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$pourcentage."' 
+				WHERE ".$Field."='".$ID_Device."'
+					AND object_name='cartridgesblack' ";
+echo "QUERY :".$queryUpdate."\n";		
+				echo $DB->query($queryUpdate);
+				$printer_black_max = 0;
+				$printer_black_last = 0;
+			}
+			else
+			{
+				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
+				WHERE ".$Field."='".$ID_Device."'
+					AND object_name='".$object_name."' ";
+		
+				$DB->query($queryUpdate);
+			}
 		}
 		else if (ereg("pagecounter",$object_name))
 		{

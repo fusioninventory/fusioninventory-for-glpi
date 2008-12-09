@@ -291,6 +291,11 @@ $LANGTRACKER["mapping"][52]="imprimante > consommables > four";
 $LANGTRACKER["mapping"][53]="imprimante > consommables > module de nettoyage";
 $LANGTRACKER["mapping"][54]="imprimante > compteur > nombre de pages recto/verso imprimées";
 $LANGTRACKER["mapping"][55]="imprimante > compteur > nombre de pages scannées";
+$LANGTRACKER["mapping"][56]="imprimante > lieu";
+$LANGTRACKER["mapping"][57]="imprimante > port > nom";
+$LANGTRACKER["mapping"][58]="imprimante > port > adresse MAC";
+$LANGTRACKER["mapping"][59]="imprimante > consommables > cartouche noir (encre max)";
+$LANGTRACKER["mapping"][60]="imprimante > consommables > cartouche noir (encre restant)";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";

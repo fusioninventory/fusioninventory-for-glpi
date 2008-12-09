@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_printers_cartridges` (
   `ID` int(100) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL,
   `object_name` varchar(255) NOT NULL,
-  `FK_cartridges` int(11) NOT NULL,
+  `FK_cartridges` int(11) NOT NULL DEFAULT '0',
   `state` int(3) NOT NULL DEFAULT '100',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
