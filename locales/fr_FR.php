@@ -79,11 +79,11 @@ $LANGTRACKER["functionalities"][17]="Base de données";
 $LANGTRACKER["functionalities"][18]="Fichiers";
 
 $LANGTRACKER["functionalities"][20]="Statut du matériel actif";
-$LANGTRACKER["functionalities"][21]="Rétention de l'historique d'interconnexions entre matériels en jours (0 = désactivation)";
-$LANGTRACKER["functionalities"][22]="Rétention de l'historique de changement d'état des ports (0 = désactivation)";
-$LANGTRACKER["functionalities"][23]="Rétention de l'historique des adresses MAC inconnues (0 = désactivation)";
-$LANGTRACKER["functionalities"][24]="Rétention de l'historique des erreurs SNMP (0 = désactivation)";
-$LANGTRACKER["functionalities"][25]="Rétention de l'historique des processes des scripts (0 = désactivation)";
+$LANGTRACKER["functionalities"][21]="Rétention de l'historique d'interconnexions entre matériels en jours (0 = infini)";
+$LANGTRACKER["functionalities"][22]="Rétention de l'historique de changement d'état des ports (0 = infini)";
+$LANGTRACKER["functionalities"][23]="Rétention de l'historique des adresses MAC inconnues (0 = infini)";
+$LANGTRACKER["functionalities"][24]="Rétention de l'historique des erreurs SNMP (0 = infini)";
+$LANGTRACKER["functionalities"][25]="Rétention de l'historique des processes des scripts (0 = infini)";
 
 
 /*
