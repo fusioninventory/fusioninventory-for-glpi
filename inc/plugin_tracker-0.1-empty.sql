@@ -255,8 +255,8 @@ CREATE TABLE `glpi_plugin_tracker_printers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL,
   `FK_model_infos` int(8) NOT NULL DEFAULT '0',
-  `FK_snmp_connection` int(8) NOT NULL,
-  `frequence_days` int(5) NOT NULL,
+  `FK_snmp_connection` int(8) NOT NULL DEFAULT '0',
+  `frequence_days` int(5) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `FK_printers` (`FK_printers`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
