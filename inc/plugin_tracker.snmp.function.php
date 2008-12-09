@@ -366,7 +366,7 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
 	
 	$printer_black_max = 0;
-	$printer_black_last = 0;
+	$printer_black_remain = 0;
 
 	foreach($ArraySNMP_Object_result as $object=>$SNMPValue)
 	{
@@ -417,15 +417,15 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 			{
 				$printer_black_max = $SNMPValue;
 			}
-			if ($object_name == "cartridgesblackLAST")
+			if ($object_name == "cartridgesblackREMAIN")
 			{
-				$printer_black_last = $SNMPValue;
+				$printer_black_remain = $SNMPValue;
 			}
-			if (($printer_black_max != "0") AND ($printer_black_last != "0"))
+			if (($printer_black_max != "0") AND ($printer_black_remain != "0"))
 			{
 				$object_name0 = str_replace("MAX", "", $object_name);
-				$object_name0 = str_replace("LAST", "", $object_name0);
-				$pourcentage = ceil((100 * $printer_black_last) / $printer_black_max);
+				$object_name0 = str_replace("REMAIN", "", $object_name0);
+				$pourcentage = ceil((100 * $printer_black_remain) / $printer_black_max);
 				// Test existance of row in MySQl
 					$query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 					WHERE ".$Field."='".$ID_Device."'
@@ -446,7 +446,7 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 
 				$DB->query($queryUpdate);
 				$printer_black_max = 0;
-				$printer_black_last = 0;
+				$printer_black_remain = 0;
 			}
 			else
 			{
