@@ -413,7 +413,6 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges")
 		{
-echo "OBJECTNAME :".$object_name."\n";
 			if ($object_name == "cartridgesblackMAX")
 			{
 				$printer_black_max = $SNMPValue;
@@ -422,11 +421,8 @@ echo "OBJECTNAME :".$object_name."\n";
 			{
 				$printer_black_last = $SNMPValue;
 			}
-echo "cartridgesblackMAX :".$printer_black_max."\n";
-echo "cartridgesblackLAST :".$printer_black_last."\n";
 			if (($printer_black_max != "0") AND ($printer_black_last != "0"))
 			{
-echo "GAGNE";
 				$pourcentage = ceil((100 * $printer_black_last) / $printer_black_max);
 				// Test existance of row in MySQl
 					$query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
@@ -445,8 +441,8 @@ echo "GAGNE";
 				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$pourcentage."' 
 				WHERE ".$Field."='".$ID_Device."'
 					AND object_name='cartridgesblack' ";
-echo "QUERY :".$queryUpdate."\n";		
-				echo $DB->query($queryUpdate);
+
+				$DB->query($queryUpdate);
 				$printer_black_max = 0;
 				$printer_black_last = 0;
 			}
