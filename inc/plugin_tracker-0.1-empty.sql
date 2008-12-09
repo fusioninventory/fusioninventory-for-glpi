@@ -188,11 +188,11 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_networking`;
 CREATE TABLE `glpi_plugin_tracker_networking` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `FK_networking` int(8) NOT NULL,
-  `FK_model_infos` int(8) NOT NULL,
-  `FK_snmp_connection` int(8) NOT NULL,
-  `uptime` varchar(255) NOT NULL,
-  `cpu` int(3) NOT NULL,
-  `memory` int(8) NOT NULL,
+  `FK_model_infos` int(8) NOT NULL DEFAULT '0',
+  `FK_snmp_connection` int(8) NOT NULL DEFAULT '0',
+  `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `cpu` int(3) NOT NULL DEFAULT '0',
+  `memory` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `FK_networking` (`FK_networking`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
