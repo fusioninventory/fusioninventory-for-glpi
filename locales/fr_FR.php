@@ -133,9 +133,9 @@ $LANGTRACKER["snmp"][50]="Connexion";
 $LANGTRACKER["snmpauth"][1]="Communauté";
 $LANGTRACKER["snmpauth"][2]="Utilisateur";
 $LANGTRACKER["snmpauth"][3]="Schéma d'authentification";
-$LANGTRACKER["snmpauth"][4]="Protocol de cryptage pour authentification ";
+$LANGTRACKER["snmpauth"][4]="Protocole de cryptage pour authentification ";
 $LANGTRACKER["snmpauth"][5]="Mot de passe";
-$LANGTRACKER["snmpauth"][6]="Protocol de cryptage pour les données (écriture)";
+$LANGTRACKER["snmpauth"][6]="Protocole de cryptage pour les données (écriture)";
 $LANGTRACKER["snmpauth"][7]="Mot de passe (écriture)";
 
 $LANGTRACKER["cron"][0]="Relevé automatique du compteur";
