@@ -1440,6 +1440,19 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		global $DB;
 		
+		$query = "SELECT * FROM glpi_plugin_tracker_networking
+		WHERE FK_networking='".$ID."' ";
+		$result = $DB->query($query);
+		if ($DB->numrows($result) == "0")
+		{
+			$queryInsert = "INSERT INTO glpi_plugin_tracker_networking
+			(FK_networking)
+			VALUES('".$ID."') ";
+
+			$DB->query($queryInsert);
+		}		
+		if (empty($FK_snmp_connection))
+			$FK_snmp_connection = 0;
 		$query = "UPDATE glpi_plugin_tracker_networking
 		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
 		WHERE FK_networking='".$ID."' ";
@@ -1452,7 +1465,20 @@ class plugin_tracker_snmp extends CommonDBTM
 	function update_printer_infos($ID, $FK_model_infos, $FK_snmp_connection)
 	{
 		global $DB;
-		
+
+		$query = "SELECT * FROM glpi_plugin_tracker_printers
+		WHERE FK_printers='".$ID."' ";
+		$result = $DB->query($query);
+		if ($DB->numrows($result) == "0")
+		{
+			$queryInsert = "INSERT INTO glpi_plugin_tracker_printers
+			(FK_printers)
+			VALUES('".$ID."') ";
+
+			$DB->query($queryInsert);
+		}
+		if (empty($FK_snmp_connection))
+			$FK_snmp_connection = 0;
 		$query = "UPDATE glpi_plugin_tracker_printers
 		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
 		WHERE FK_printers='".$ID."' ";
