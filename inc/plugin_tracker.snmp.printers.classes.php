@@ -490,6 +490,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<th>".$title."</th>";
 		$i = 1;
+		$j = 0;
 		$ecart = array();
 		for ($i = 0; $i < count($array);$i++)
 		{
@@ -499,8 +500,22 @@ class plugin_tracker_printers extends CommonDBTM {
 			}
 			else
 			{
-				echo "<td align='center'>".($array[$i+1] - $array[($i)])."</td>";
-				$ecart[$arraydates[$i]] = ($array[$i+1] - $array[($i)]);
+				if (($array[$i+1] - $array[($i)]) == "0")
+				{
+					echo "<td align='center'>".($array[$i+1] - $array[($i)])."</td>";
+					$ecart[$arraydates[$i]] = ($array[$i+1] - $array[($i)]);
+				}
+				else if ($j == "0")
+				{
+					echo "<td align='center'>0</td>";
+					$ecart[$arraydates[$i]] = 0;
+					$j = 1;
+				}
+				else
+				{
+					echo "<td align='center'>".($array[$i+1] - $array[($i)])."</td>";
+					$ecart[$arraydates[$i]] = ($array[$i+1] - $array[($i)]);
+				}
 			}
 		}
 		echo "</tr>";
