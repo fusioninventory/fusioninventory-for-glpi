@@ -182,9 +182,7 @@ abstract class plugin_tracker_snmp2 {
 		$nw=new Netwire;
 		$CommonItem = new CommonItem;
 		
-		$query = "
-		SELECT * 
-		FROM glpi_plugin_tracker_networking
+		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking=".$ID." ";
 
 		$result = $DB->query($query);		

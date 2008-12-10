@@ -90,23 +90,40 @@ class plugin_tracker_config extends CommonDBTM {
 			if ($type == "general")
 				echo " class='actif'";			
 			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANGTRACKER["functionalities"][2]."&nbsp;</a></li>\n";
-
-			echo "<li";
-			if ($type == "smp-networking")
-				echo " class='actif'";
-			echo "><a href='plugin_tracker.functionalities.form.snmp-networking.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
-
-			echo "<li";
-			if ($type == "smp-printer")
-				echo " class='actif'";
-			echo "><a href='plugin_tracker.functionalities.form.snmp-printers.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
-
-			echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][4]."&nbsp;</a></li>\n";
-
+			if ($this->getValue("activation_snmp_networking") == "1")
+			{
+				echo "<li";
+				if ($type == "smp-networking")
+					echo " class='actif'";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-networking.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
+			}
+			if ($this->getValue("activation_snmp_peripheral") == "1")
+			{
+				echo "<li";
+				if ($type == "smp-peripheral")
+					echo " class='actif'";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-peripheral.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][16]."&nbsp;</a></li>\n";
+			}
+			if ($this->getValue("activation_snmp_printer") == "1")
+			{
+				echo "<li";
+				if ($type == "smp-printer")
+					echo " class='actif'";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-printers.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
+			}
+			if ($this->getValue("activation_snmp_phone") == "1")
+			{
+				echo "<li";
+				if ($type == "smp-phone")
+					echo " class='actif'";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-phone.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][34]."&nbsp;</a></li>\n";
+			}
+			if ($this->getValue("activation_connection") == "1")
+			{
+				echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][4]."&nbsp;</a></li>\n";
+			}
 			echo "<ul>\n";
 			echo "</div>\n";
-
-
 
 
 			/*echo "<div align='center'><form method='post' name='functionalities_form' id='functionalities_form'  action=\"".$target."\">";
