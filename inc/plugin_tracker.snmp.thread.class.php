@@ -369,6 +369,29 @@ class Threads extends CommonDBTM
 	}
 
 
+
+	function lastProcess($type)
+	{
+		global $DB;
+		
+		$PID = "";
+		switch ($type)
+		{
+			case NETWORKING_TYPE:
+				$query = "SELECT * FROM glpi_plugin_tracker_processes
+				WHERE network_queries > 0 
+				ORDER BY ID DESC
+				LIMIT 0,1 ";
+				$result = $DB->query($query);
+				$data = $DB->fetch_assoc($result);
+				$PID = $data["process_id"];
+				break;
+		}
+		return $PID;
+	}
+	
+	
+	
 	function unknownMAC($PID,$FK_port,$macaddress)
 	{
 		global $DB;
@@ -397,6 +420,27 @@ class Threads extends CommonDBTM
 				$DB->query($query_upd);
 			}
 		}
+	}
+
+
+	
+	function getUnknownMacFromPIDandPort($PID,$FK_port)
+	{
+		global $DB;	
+		
+		$unknownMac = "";
+		$query = "SELECT unknow_mac FROM glpi_plugin_tracker_unknown_mac
+		WHERE (start_FK_processes<".$PID." OR start_FK_processes=".$PID.")
+			AND (end_FK_processes>".$PID." OR end_FK_processes=".$PID.")
+			AND port='".$FK_port."' 
+		LIMIT 0,1";
+	
+		$result = $DB->query($query);
+		while ($data = $DB->fetch_array($result))
+		{
+			$unknownMac = $data["unknow_mac"];
+		}
+		return $unknownMac;
 	}
 }
 
