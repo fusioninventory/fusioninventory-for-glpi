@@ -141,22 +141,23 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</td>";
 				echo "</tr>";
 				echo "</table></div>";
-	
+
+
+				// ********** Ajout d'un tableau pour ajouter nouveau OID ********** //
 				echo "<br/>";
 				echo "<table class='tab_cadre_fixe'>";
-				/*
-				echo "<tr class='tab_bg_1'>
-					<td colspan='7'><input type='submit' name='delete_oid' value=\"".$LANG["buttons"][6]."\" class='submit' ></td>
-				</tr>";
-				echo "<tr><td colspan='7'></td></tr>";
-				*/
 				
-				// ********** Ajout d'une dernière ligne pour ajouter nouveau OID ********** //
 				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
-				
+
 				echo "<tr class='tab_bg_1'>";
-				echo "<td align='center'></td>";
-				
+				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
+				echo "</tr>";
+
 				echo "<td align='center'>";
 				dropdownValue("glpi_dropdown_plugin_tracker_mib_label","FK_mib_label",0,1);
 				echo "</td>";
