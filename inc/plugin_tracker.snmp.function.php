@@ -412,10 +412,8 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		
 		if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_plugin_tracker_printers_cartridges")
 		{
-echo "OBJECT NAME :".$object_name."\n";
 			$object_name_clean = str_replace("MAX", "", $object_name);
 			$object_name_clean = str_replace("REMAIN", "", $object_name_clean);
-echo "OBJECT NAME CLEAN :".$object_name_clean."\n";
 			if (ereg("MAX",$object_name))
 			{
 				$printer_cartridges_max_remain[$object_name_clean]["MAX"] = $SNMPValue;
@@ -424,14 +422,10 @@ echo "OBJECT NAME CLEAN :".$object_name_clean."\n";
 			{
 				$printer_cartridges_max_remain[$object_name_clean]["REMAIN"] = $SNMPValue;
 			}
-echo "MAX :".$printer_cartridges_max_remain[$object_name_clean]["MAX"]."\n";
-echo "REMAIN :".$printer_cartridges_max_remain[$object_name_clean]["REMAIN"]."\n";
 			if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"])) AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"])))
-//			if (($printer_black_max != "0") AND ($printer_black_remain != "0"))
 			{
 				$pourcentage = ceil((100 * $printer_cartridges_max_remain[$object_name_clean]["REMAIN"]) / $printer_cartridges_max_remain[$object_name_clean]["MAX"]);
 				// Test existance of row in MySQl
-echo "OBJECT_NAME :".$object_name." - ".$object_name_clean."\n";
 					$query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 					WHERE ".$Field."='".$ID_Device."'
 						AND object_name='".$object_name_clean."' ";
@@ -443,7 +437,6 @@ echo "OBJECT_NAME :".$object_name." - ".$object_name_clean."\n";
 						VALUES('".$ID_Device."', '".$object_name_clean."') ";
 			
 						$DB->query($queryInsert);
-echo "INSERT :".$queryInsert."\n";
 					}
 				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$pourcentage."' 

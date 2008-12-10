@@ -254,21 +254,30 @@ abstract class plugin_tracker_snmp2 {
 		echo "<td align='center'>";
 		//echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
 		$sysUpTime = $data["uptime"];
-		sscanf($sysUpTime, "(%d) %d:%d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
-		$uptime = ceil($uptime / 100);
-		$day=86400;
-		$days=floor($uptime/$day);
-		echo "<b>$days</b> ".$LANG["stats"][31]." ";
-		$utdelta=$uptime-($days*$day);
-		$hour=3600;
-		$hours=floor($utdelta/$hour);
-		echo "<b>$hours</b> ".$LANG["job"][21]." ";
-		$utdelta-=$hours*$hour;
-		$minute=60;
-		$minutes=floor($utdelta/$minute);
-		echo "<b>$minutes</b> ".$LANG["job"][22]." ";
-		$utdelta-=round($minutes*$minute,2);
-		echo " ".strtolower($LANG["rulesengine"][42])." <b>$utdelta</b> ".$LANG["stats"][34]." ";      
+		if (ereg("days",$sysUpTime))
+		{
+				sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
+		}
+		else
+		{
+			sscanf($sysUpTime, "(%d) %d:%d:%d.%d",$uptime,$hour,$minute,$sec,$ticks);
+			$day = 0;
+		}
+
+//		$uptime = ceil($uptime / 100);
+//		$day=86400;
+//		$days=floor($uptime/$day);
+		echo "<b>$day</b> ".$LANG["stats"][31]." ";
+//		$utdelta=$uptime-($days*$day);
+//		$hour=3600;
+//		$hours=floor($utdelta/$hour);
+		echo "<b>$hour</b> ".$LANG["job"][21]." ";
+//		$utdelta-=$hours*$hour;
+//		$minute=60;
+//		$minutes=floor($utdelta/$minute);
+		echo "<b>$minute</b> ".$LANG["job"][22]." ";
+//		$utdelta-=round($minutes*$minute,2);
+		echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";      
      
 		echo "</td>";
 		echo "</tr>";
