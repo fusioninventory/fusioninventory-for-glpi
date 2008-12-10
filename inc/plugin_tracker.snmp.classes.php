@@ -258,6 +258,13 @@ abstract class plugin_tracker_snmp2 {
 		{
 				sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
 		}
+		else if($sysUpTime == "0")
+		{
+			$day = 0;
+			$hour = 0;
+			$minute = 0;
+			$sec = 0;
+		}
 		else
 		{
 			sscanf($sysUpTime, "(%d) %d:%d:%d.%d",$uptime,$hour,$minute,$sec,$ticks);
