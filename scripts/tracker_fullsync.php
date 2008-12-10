@@ -119,7 +119,7 @@ if (($type == "networking_type") OR ($type == ""))
 }
 
 // Update process into database
-$processes->updateProcess($fields["process_id"],$processes_values["devices"], "" , $processes_values["errors"]);
+$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
 // $NetworkQueries, $PrinterQueries, $portsQueries, $errors
 
 
