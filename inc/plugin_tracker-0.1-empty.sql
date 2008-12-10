@@ -344,7 +344,7 @@ CREATE TABLE `glpi_plugin_tracker_snmp_connection` (
   `auth_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `priv_protocol` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `priv_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `deleted` int(1) NOT NULL,
+  `deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
