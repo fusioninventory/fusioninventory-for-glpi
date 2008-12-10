@@ -477,6 +477,8 @@ class plugin_tracker_printers extends CommonDBTM {
 		for ($i = 0; $i < count($array);$i++)
 		{
 			$explode = explode(" ", $array[$i]);
+			if ($th == "1")
+				$explode[0] = convdate($explode[0]);
 			echo "<".$td." align='center'>".$explode[0]."</".$td.">";
 		}
 		echo "</tr>";
