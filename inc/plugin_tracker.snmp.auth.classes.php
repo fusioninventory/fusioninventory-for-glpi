@@ -388,9 +388,14 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 				break;
 		}		
 		$result=$DB->query($query);
-
-		$ID_auth = $DB->result($result,0,"FK_snmp_connection");
-		
+		if ($DB->numrows($result) > 0)
+		{
+			$ID_auth = $DB->result($result,0,"FK_snmp_connection");
+		}
+		else
+		{
+			return;
+		}
 		$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
 		$result_conf=$DB->query($query_conf);
 		if ($DB->result($result_conf,0,"authsnmp") == "file")
