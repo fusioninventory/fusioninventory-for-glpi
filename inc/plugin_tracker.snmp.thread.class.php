@@ -325,7 +325,10 @@ class Threads extends CommonDBTM
 	function updateProcess($PID, $NetworkQueries, $PrinterQueries, $errors)
 	{
 		global $DB;
-		
+		if (empty($NetworkQueries))
+			$NetworkQueries = 0;
+		if (empty($PrinterQueries))
+			$PrinterQueries = 0;
 		$query = "UPDATE glpi_plugin_tracker_processes
 		SET end_time='".date("Y-m-d H:i:s")."', status='3', error_msg='".$errors."', network_queries='".$NetworkQueries."',
 			printer_queries='".$PrinterQueries."'
