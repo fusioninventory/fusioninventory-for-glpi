@@ -95,8 +95,8 @@ class Threads extends CommonDBTM
 			echo"<th>".$LANGTRACKER["processes"][4]."</th>";
 			echo"<th>".$LANGTRACKER["processes"][5]."</th>";
 			echo"<th>".$LANGTRACKER["processes"][6]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][7]."</th>";
 			echo"<th>".$LANGTRACKER["processes"][8]."</th>";
+			echo"<th>".$LANGTRACKER["processes"][7]."</th>";
 			echo"<th>".$LANGTRACKER["processes"][9]."</th>";
 			echo"<th>".$LANGTRACKER["processes"][10]."</th>";		
 			echo "</th></tr>\n";
@@ -140,8 +140,8 @@ class Threads extends CommonDBTM
 						echo "<td align='center'>".convDateTime($thread["starting_date"])."</td>";
 						echo "<td align='center'>".convDateTime($thread["ending_date"])."</td>";
 						echo "<td align='center'>".$thread["network_queries"]."</td>";
-						echo "<td align='center'>".$thread["printer_queries"]."</td>";
 						echo "<td align='center'>".$thread["ports_queries"]."</td>";
+						echo "<td align='center'>".$thread["printer_queries"]."</td>";
 						echo "<td align='center'>".$thread["error_msg"]."</td>";
 						
 						echo "<td align='center'>";
