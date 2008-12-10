@@ -60,6 +60,10 @@ elseif (isset ($_POST["update"])) {
 	$plugin_tracker_model_infos->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
+elseif (isset ($_POST["delete"])) {
+	$plugin_tracker_model_infos->delete($_POST);
+	glpi_header("plugin_tracker.models.php");
+}
 elseif (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
 	$importexport->import($_FILES);
 	glpi_header($_SERVER['HTTP_REFERER']);
