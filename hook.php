@@ -598,6 +598,12 @@ function plugin_tracker_MassiveActions($type) {
 				"plugin_tracker_assign_auth" => $LANGTRACKER["massiveaction"][2]
 			);
 			break;
+		case PRINTER_TYPE :
+			return array (
+				"plugin_tracker_assign_model" => $LANGTRACKER["massiveaction"][1],
+				"plugin_tracker_assign_auth" => $LANGTRACKER["massiveaction"][2]
+			);
+			break;
 	}
 	return array ();
 }
@@ -617,7 +623,18 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 					break;
 			}
 			break;
-
+		case PRINTER_TYPE :
+			switch ($action) {
+				case "plugin_tracker_assign_model" :
+					dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
+					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+					break;
+				case "plugin_tracker_assign_auth" :
+					plugin_tracker_snmp_auth_dropdown();
+					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+					break;
+			}
+			break;
 	}
 	return "";
 }
@@ -635,12 +652,30 @@ function plugin_tracker_MassiveActionsProcess($data) {
 
 				}
 			}
+			else if($data['device_type'] == PRINTER_TYPE)
+			{
+				foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+						plugin_tracker_assign($key, PRINTER_TYPE, "model", $data["snmp_model"]);
+					}
+
+				}
+			}
 			break;
 		case "plugin_tracker_assign_auth" :
 			if ($data['device_type'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						plugin_tracker_assign($key, NETWORKING_TYPE, "auth", $data["auth_snmp"]);
+						plugin_tracker_assign($key, NETWORKING_TYPE, "auth", $data["FK_snmp_connection"]);
+					}
+
+				}
+			}
+			else if($data['device_type'] == PRINTER_TYPE)
+			{
+				foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+						plugin_tracker_assign($key, PRINTER_TYPE, "auth", $data["FK_snmp_connection"]);
 					}
 
 				}

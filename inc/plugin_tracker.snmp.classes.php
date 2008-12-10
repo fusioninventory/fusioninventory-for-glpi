@@ -1445,11 +1445,22 @@ class plugin_tracker_snmp extends CommonDBTM
 		WHERE FK_networking='".$ID."' ";
 	
 		$DB->query($query);
-
-	
 	}
+	
+	
 
-
+	function update_printer_infos($ID, $FK_model_infos, $FK_snmp_connection)
+	{
+		global $DB;
+		
+		$query = "UPDATE glpi_plugin_tracker_printers
+		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
+		WHERE FK_printers='".$ID."' ";
+	
+		$DB->query($query);
+	}
+	
+	
 	
 	function getPortIDfromDeviceIP($IP, $ifDescr)
 	{

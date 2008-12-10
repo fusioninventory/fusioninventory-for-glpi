@@ -493,14 +493,23 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 
 
 
-	function GetSNMPAuth($IDNetworking)
+	function GetSNMPAuth($IDNetworking,$type)
 	{
 	
 		global $DB;
-
-		$query = "SELECT FK_snmp_connection
-		FROM glpi_plugin_tracker_networking 
-		WHERE FK_networking='".$IDNetworking."' ";
+		switch ($type)
+		{
+			case NETWORKING_TYPE :
+				$query = "SELECT FK_snmp_connection
+				FROM glpi_plugin_tracker_networking 
+				WHERE FK_networking='".$IDNetworking."' ";
+				break;
+			case PRINTER_TYPE :
+				$query = "SELECT FK_snmp_connection
+				FROM glpi_plugin_tracker_printers 
+				WHERE FK_printers='".$IDNetworking."' ";
+				break;
+		}
 		
 		if ( ($result = $DB->query($query)) )
 		{
