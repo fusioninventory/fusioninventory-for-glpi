@@ -180,6 +180,7 @@ abstract class plugin_tracker_snmp2 {
 		$this->ID = $ID;
 		
 		$nw=new Netwire;
+		$processes = new Threads;
 		$CommonItem = new CommonItem;
 		
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
@@ -441,9 +442,9 @@ function appear_array(id){
 					echo $data["ifouterrors"];
 				}
 				echo "</td>";
-				
+				// ** internal mac
 				echo "<td align='center'>".$data["ifmac"]."</td>";
-				// Mac address and link to device which are connected to this port
+				// ** Mac address and link to device which are connected to this port
 				$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
 				if ($opposite_port != ""){
 					$query_device = "
@@ -461,11 +462,19 @@ function appear_array(id){
 				}
 				else
 				{
-				
-					echo "<td align='center'></td>";
-				
+					// Search in unknown mac address table
+					$PID = $processes->lastProcess(NETWORKING_TYPE);
+					$unknownMac = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
+					if (empty($unknownMac))
+					{
+						echo "<td align='center'></td>";
+					}
+					else
+					{
+						echo "<td align='center' class='tab_bg_1_2'>".$unknownMac."</td>";
+					}
 				}
-				
+				// ** Connection status
 				echo "<td align='center'>";
 				if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
 				{
@@ -1559,7 +1568,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				addLogConnection("make",$destination_port,$FK_process);
 				addLogConnection("make",$source_port,$FK_process);
 				
-				if ($vlan != "")
+				if ((isset($vlan)) AND (!empty($vlan)))
 				{
 					$ID_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
 					
