@@ -382,4 +382,10 @@ $LANGTRACKER["mapping"][154]="Nombre de pages recto/verso imprimées";
 $LANGTRACKER["mapping"][155]="Nombre de pages scannées";
 
 $LANGTRACKER["printer"][0]="pages";
+
+$LANGTRACKER["menu"][0]="Découverte de matériel réseau";
+
+$LANGTRACKER["buttons"][0]="Découvrir";
+
+$LANGTRACKER["discovery"][0]="Plage d'ip à scanner";
 ?>
