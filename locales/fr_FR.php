@@ -332,6 +332,7 @@ $LANGTRACKER["mapping"][93]="imprimante > consommables > four (encre max)";
 $LANGTRACKER["mapping"][94]="imprimante > consommables > four (encre restant)";
 $LANGTRACKER["mapping"][95]="imprimante > consommables > module de nettoyage (encre max)";
 $LANGTRACKER["mapping"][96]="imprimante > consommables > module de nettoyage (encre restant)";
+$LANGTRACKER["mapping"][97]="imprimante > port > type";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
