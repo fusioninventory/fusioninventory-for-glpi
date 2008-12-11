@@ -55,25 +55,25 @@ function plugin_tracker_discovery_startmenu($target)
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' rowspan='2'>".$LANGTRACKER["discovery"][0]."</td>";
 	echo "<td align='center'>";
-	dropdownInteger("ip1.1", "", 0, 254);
+	dropdownInteger("ip11", "", 0, 254);
 	echo " . ";
-	dropdownInteger("ip1.2", "", 0, 254);
+	dropdownInteger("ip12", "", 0, 254);
 	echo " . ";
-	dropdownInteger("ip1.3", "", 0, 254);
+	dropdownInteger("ip13", "", 0, 254);
 	echo " . ";
-	dropdownInteger("ip1.4", "", 0, 254);
+	dropdownInteger("ip14", "", 0, 254);
 	echo "</td>";
 	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center'>";
-	dropdownInteger("ip2.1", "", 0, 254);
+	dropdownInteger("ip21", "", 0, 254);
 	echo " . ";
-	dropdownInteger("ip2.2", "", 0, 254);
+	dropdownInteger("ip22", "", 0, 254);
 	echo " . ";
-	dropdownInteger("ip2.3", "", 0, 254);
+	dropdownInteger("ip23", "", 0, 254);
 	echo " . ";
-	dropdownInteger("ip2.4", "", 0, 254);
+	dropdownInteger("ip24", "", 0, 254);
 	echo "</td>";
 	echo "</tr>";	
 
@@ -88,6 +88,104 @@ function plugin_tracker_discovery_startmenu($target)
 
 }
 
+function plugin_tracker_discovery_scan($Array_IP,$target)
+{
+	// Load snmp auth
 
+	// Load oid's with device type
+	
+	// scan for each IP
+	ini_set("memory_limit","-1");
+	ini_set("max_execution_time", "0");
+	
+	// Test if port 161 is open
+		
+		//If port is open, test with oids to determine the device type
+
+	$i = 0;
+	$ip1 = $Array_IP["ip11"];
+	$ip2 = $Array_IP["ip12"];
+	$ip3 = $Array_IP["ip13"];
+	$ip4 = $Array_IP["ip14"];
+	while ($i != 1)
+	{
+		
+
+
+		if(fsockopen($ip1.".".$ip2.".".$ip3.".".$ip4, "161", $errnum, $errstr, 0.2))
+		{
+			// Try to determine device type
+		
+			echo $ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
+			
+		}
+		else
+		{
+			// Port is closed or device is inexistant	
+			echo "connexion impossible :".$ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
+		}
+		
+
+
+
+		// Increment for next IP
+		if (($ip1 == $Array_IP["ip21"]) 
+			AND ($ip2 == $Array_IP["ip22"])
+			AND ($ip3 == $Array_IP["ip23"]))
+		{
+			if ($ip4 == $Array_IP["ip24"])
+			{
+				break;
+			}
+		}
+		else if (($ip1 == $Array_IP["ip21"]) 
+			AND ($ip2 == $Array_IP["ip22"]))
+		{
+			if ($ip4 == "254")
+			{
+				$ip4 = -1;
+				$ip3++;
+			}
+		}
+		else if (($ip1 == $Array_IP["ip21"]))
+		{
+			if (($ip4 == "254") AND ($ip3 == "254"))
+			{
+				$ip4 = -1;
+				$ip3 = 0;
+				$ip2++;
+			}
+			else if ($ip4 == "254")
+			{
+				$ip4 = -1;
+				$ip3++;
+			}
+		}
+		else
+		{
+			if (($ip4 == "254") AND ($ip3 == "254") AND ($ip2 == "254"))
+			{
+				$ip4 = -1;
+				$ip3 = 0;
+				$ip2 = 0;
+				$ip1++;
+			}
+			else if (($ip4 == "254") AND ($ip3 == "254"))
+			{
+				$ip4 = -1;
+				$ip3 = 0;
+				$ip2++;
+			}
+			else if ($ip4 == "254")
+			{
+				$ip4 = -1;
+				$ip3++;
+			}
+				
+		}
+		$ip4++;
+	}
+
+}
 
 ?>
