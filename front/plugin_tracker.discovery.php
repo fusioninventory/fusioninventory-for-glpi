@@ -44,7 +44,7 @@ plugin_tracker_checkRight("errors","r");
 
 if (isset($_POST["discover"]))
 {
-
+	plugin_tracker_discovery_scan($_POST,$_SERVER["PHP_SELF"]);
 
 
 
