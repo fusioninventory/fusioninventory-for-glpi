@@ -42,6 +42,7 @@ function plugin_tracker_menu()
 	echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'><b>".$LANGTRACKER["model_info"][4]."</b></a></td></tr>";
 	echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'><b>".$LANGTRACKER["model_info"][3]."</b></a></td></tr>";
 	echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'><b>".$LANGTRACKER["processes"][0]."</b></a></td></tr>";
+	echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'><b>".$LANGTRACKER["menu"][0]."</b></a></td></tr>";
 	echo "</table></div>";
 
 }
