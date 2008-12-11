@@ -101,6 +101,9 @@ $processes->addProcess($fields["process_id"]);
 logInFile("tracker_snmp", ">>>>>> Starting Script <<<<<<\n\n");
 logInFile("tracker_snmp", "I) Get all devices \n\n");
 
+$processes_values = 0;
+$processes_values2 = 0;
+
 // ** QUERY PRINTERS ** //
 if (($type == "printer_type") OR ($type == ""))
 {

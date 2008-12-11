@@ -632,14 +632,19 @@ $TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['dropdown'] = '';
 
 $TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['table'] = 'glpi_networking_ports';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['field'] = 'ifmac';
-$TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['name'] = $LANGTRACKER["mapping"][57];
+$TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['name'] = $LANGTRACKER["mapping"][58];
 $TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['dropdown'] = '';
 
 $TRACKER_MAPPING[PRINTER_TYPE]['ifName']['table'] = 'glpi_networking_ports';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifName']['field'] = 'name';
-$TRACKER_MAPPING[PRINTER_TYPE]['ifName']['name'] = $LANGTRACKER["mapping"][58];
+$TRACKER_MAPPING[PRINTER_TYPE]['ifName']['name'] = $LANGTRACKER["mapping"][57];
 $TRACKER_MAPPING[PRINTER_TYPE]['ifName']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifName']['dropdown'] = '';
 
+$TRACKER_MAPPING[PRINTER_TYPE]['ifType']['table'] = '';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifType']['field'] = '';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifType']['name'] = $LANGTRACKER["mapping"][97];
+$TRACKER_MAPPING[PRINTER_TYPE]['ifType']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifType']['dropdown'] = '';
 ?>
