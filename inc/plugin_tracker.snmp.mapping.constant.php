@@ -651,16 +651,17 @@ $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['dropdown'] = '';
 
 // *************************** TYPE of Devices for discovery *************************** //
 
-$TRACKER_MAPPING['discovery'][PRINTER_TYPE]['object'] = 'prtGeneralConfigChanges';
-$TRACKER_MAPPING['discovery'][PRINTER_TYPE]['oid'] = '1.3.6.1.2.1.43.5.1.1.1.1';
+$TRACKER_MAPPING['discovery'][0]['object'] = 'prtGeneralConfigChanges';
+$TRACKER_MAPPING['discovery'][0]['oid'] = '1.3.6.1.2.1.43.5.1.1.1.1';
+$TRACKER_MAPPING['discovery'][0]['type'] = PRINTER_TYPE;
 
+$TRACKER_MAPPING['discovery'][1]['object'] = 'systemBridgeAdressEntry';
+$TRACKER_MAPPING['discovery'][1]['oid'] = '1.3.6.1.2.1.17.1.1.0';
+$TRACKER_MAPPING['discovery'][1]['type'] = NETWORKING_TYPE;
 
-
-
-
-
-
-
+$TRACKER_MAPPING['discovery'][2]['object'] = 'upsIdentManufacturer';
+$TRACKER_MAPPING['discovery'][2]['oid'] = '1.3.6.1.2.1.33.1.1.1.0';
+$TRACKER_MAPPING['discovery'][2]['type'] = PERIPHERAL_TYPE;
 
 
 
