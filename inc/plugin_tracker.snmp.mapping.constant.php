@@ -647,4 +647,22 @@ $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['field'] = '';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['name'] = $LANGTRACKER["mapping"][97];
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['dropdown'] = '';
+
+
+// *************************** TYPE of Devices for discovery *************************** //
+
+$TRACKER_MAPPING['discovery'][PRINTER_TYPE]['object'] = 'prtGeneralConfigChanges';
+$TRACKER_MAPPING['discovery'][PRINTER_TYPE]['oid'] = '1.3.6.1.2.1.43.5.1.1.1.1';
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
