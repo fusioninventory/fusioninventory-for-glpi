@@ -255,6 +255,10 @@ function plugin_tracker_discovery_scan_serial()
 			}
 		}
 	}
+	$query = "UPDATE glpi_plugin_tracker_discover_conf
+	SET getserialnumber='0'
+	WHERE ID='1' ";
+	$DB->query($query);
 }
 
 
