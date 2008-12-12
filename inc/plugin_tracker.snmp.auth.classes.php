@@ -584,4 +584,4 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 
 	
 }
-?>)
+?>
