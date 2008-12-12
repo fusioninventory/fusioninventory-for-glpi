@@ -123,7 +123,35 @@ if (($type == "networking_type") OR ($type == ""))
 
 // Update process into database
 $processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
-// $NetworkQueries, $PrinterQueries, $portsQueries, $errors
+
+
+// Discover function
+// get config if we can or not scan
+$conf = plugin_tracker_discovery_getConf();
+
+if ($conf['discover'] == "1")
+{
+	$explode = explode(".",$conf['ifaddr_start']);
+	$Array_IP['ip11'] = $explode[0];
+	$Array_IP['ip12'] = $explode[1];
+	$Array_IP['ip13'] = $explode[2];
+	$Array_IP['ip14'] = $explode[3];
+	$explode = explode(".",$conf['ifaddr_end']);
+	$Array_IP['ip21'] = $explode[0];
+	$Array_IP['ip22'] = $explode[1];
+	$Array_IP['ip23'] = $explode[2];
+	$Array_IP['ip24'] = $explode[3];
+
+	plugin_tracker_discovery_scan($Array_IP);
+}
+if ($conf['getserialnumber'] == "1")
+{
+
+}
+
+
+
+
 
 
 

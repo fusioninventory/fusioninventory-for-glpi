@@ -388,4 +388,6 @@ $LANGTRACKER["menu"][0]="Découverte de matériel réseau";
 $LANGTRACKER["buttons"][0]="Découvrir";
 
 $LANGTRACKER["discovery"][0]="Plage d'ip à scanner";
+$LANGTRACKER["discovery"][1]="Liste du matériel découvert";
+
 ?>

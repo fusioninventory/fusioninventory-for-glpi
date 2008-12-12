@@ -42,17 +42,10 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("errors","r");
 
-if (isset($_POST["discover"]))
-{
-	plugin_tracker_discovery_scan($_POST,$_SERVER["PHP_SELF"]);
+plugin_tracker_discovery_startmenu($_SERVER["PHP_SELF"]);
 
+plugin_tracker_discovery_display_array($_SERVER["PHP_SELF"]);
 
-
-}
-else
-{
-	plugin_tracker_discovery_startmenu($_SERVER["PHP_SELF"]);
-}
 commonFooter();
 
 ?>
