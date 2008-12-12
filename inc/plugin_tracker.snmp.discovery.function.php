@@ -95,19 +95,12 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 
 	// Load snmp auth
-	$snmp_version = $plugin_tracker_snmp_auth->GetInfos("all","",0);
-	// Load oid's with device type
-	
+	$snmp_auth = $plugin_tracker_snmp_auth->GetInfos("all","",0);
+
 	// scan for each IP
 	ini_set("memory_limit","-1");
 	ini_set("max_execution_time", "0");
-	
-	// Test if port 161 is open
-		
-		//If port is open, test with oids to determine the device type
-
-
-
+ini_set('error_reporting', E_NONE);	
 	$i = 0;
 	$ip1 = $Array_IP["ip11"];
 	$ip2 = $Array_IP["ip12"];
@@ -117,25 +110,17 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 	{
 	
 	
-	
-$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,"2c",array("community"=>"public"));
-if ($Array_sysdescr["sysDescr"] != ""){
-echo $ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
-var_dump($Array_sysdescr);
-}	
-/*		if(fsockopen($ip1.".".$ip2.".".$ip3.".".$ip4, "161", $errnum, $errstr, 2))
+		// Test if port 161 is open
+		foreach ($snmp_auth as $num=>$field)
 		{
-			// Try to determine device type
-			echo "<b>YOUPIIIIIIIIIIII</b>";
-			echo $ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
-			
+			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
+			if ($Array_sysdescr["sysDescr"] != ""){
+				echo $ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
+				var_dump($Array_sysdescr);
+				//Port is open, test with oids to determine the device type
+				break;
+			}	
 		}
-		else
-		{
-			// Port is closed or device is inexistant	
-			echo "connexion impossible :".$ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
-		}
-*/
 
 
 

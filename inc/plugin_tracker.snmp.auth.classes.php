@@ -399,6 +399,16 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 				return;
 			}
 		}
+		else
+		{
+			// Put Default community of devices
+			$snmp_auth[0]["Name"] = "Public-v1";
+			$snmp_auth[0]["snmp_version"] = "1";
+			$snmp_auth[0]["community"] = "public";
+			$snmp_auth[1]["Name"] = "Public-v2c";
+			$snmp_auth[1]["snmp_version"] = "2c";
+			$snmp_auth[1]["community"] = "public";
+		}
 		$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
 		$result_conf=$DB->query($query_conf);
 		if ($DB->result($result_conf,0,"authsnmp") == "file")
@@ -429,55 +439,55 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["Name"] = $item;
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["Name"] = $item;
+									$snmp_auth[($i+2)]["Name"] = $item;
 							break;
 						case 3:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
+									$snmp_auth[($i+2)]["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
 							break;
 						case 4:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["community"] = $item;
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["community"] = $item;
+									$snmp_auth[($i+2)]["community"] = $item;
 							break;
 						case 5:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["sec_name"] = $item;
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["sec_name"] = $item;
+									$snmp_auth[($i+2)]["sec_name"] = $item;
 							break;
 						case 6:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
+									$snmp_auth[($i+2)]["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
 							break;
 						case 7:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+									$snmp_auth[($i+2)]["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
 							break;
 						case 8:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["auth_passphrase"] = $item;
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["auth_passphrase"] = $item;
+									$snmp_auth[($i+2)]["auth_passphrase"] = $item;
 							break;
 						case 9:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+									$snmp_auth[($i+2)]["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
 							break;
 						case 10:
 							if (($recup == "1") AND ($ID_Device != "all"))
 									$snmp_auth["priv_passphrase"] = $item;
 							if ($ID_Device == "all")
-									$snmp_auth[$i]["priv_passphrase"] = $item;
+									$snmp_auth[($i+2)]["priv_passphrase"] = $item;
 							break;
 					}
 				}
@@ -521,7 +531,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			}
 			else if ($ID_Device == "all")
 			{
-				$i = 0;
+				$i = 2;
 				while ( $data=$DB->fetch_array($result) )
 				{
 					$snmp_auth[$i]["Name"] = $data["name"];
