@@ -91,6 +91,8 @@ function plugin_tracker_discovery_startmenu($target)
 function plugin_tracker_discovery_scan($Array_IP,$target)
 {
 
+	global $DB,$TRACKER_MAPPING;
+
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 
@@ -118,6 +120,17 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 				echo $ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
 				var_dump($Array_sysdescr);
 				//Port is open, test with oids to determine the device type
+				foreach ($TRACKER_MAPPING['discovery'] as $num_const=>$value_const)
+				{
+					$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
+					$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
+					if ($Array_sysdescr["sysDescr"] != ""){
+						echo "TYPE :".$TRACKER_MAPPING['discovery'][$num_const]['type']."<br/>";
+					}
+				
+				}
+				
+				
 				break;
 			}	
 		}
