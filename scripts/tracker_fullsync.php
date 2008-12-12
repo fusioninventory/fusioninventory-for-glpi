@@ -146,7 +146,7 @@ if (isset($conf['discover']) && ($conf['discover'] == "1"))
 }
 if ($conf['getserialnumber'] == "1")
 {
-
+	plugin_tracker_discovery_scan_serial();
 }
 
 
