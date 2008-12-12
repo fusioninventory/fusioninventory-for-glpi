@@ -132,6 +132,36 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_config_snmp_printer` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_discover`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discover` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ifaddr` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `descr` text,
+  `serialnumber` varchar(255) DEFAULT NULL,
+  `type` int(11) NOT NULL DEFAULT '0',
+  `FK_model_infos` int(11) NOT NULL DEFAULT '0',
+  `FK_snmp_connection` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_discover_conf`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discover_conf` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ifaddr_start` varchar(255) DEFAULT NULL,
+  `ifaddr_end` varchar(255) DEFAULT NULL,
+  `discover` int(11) NOT NULL DEFAULT '0',
+  `getserialnumber` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_errors`;
 
 CREATE TABLE `glpi_plugin_tracker_errors` (

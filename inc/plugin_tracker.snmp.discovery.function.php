@@ -88,7 +88,7 @@ function plugin_tracker_discovery_startmenu($target)
 
 }
 
-function plugin_tracker_discovery_scan($Array_IP,$target)
+function plugin_tracker_discovery_scan($Array_IP)
 {
 
 	global $DB,$TRACKER_MAPPING;
@@ -96,13 +96,13 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 
+	// Clear DB table
+	$query = "TRUNCATE TABLE `glpi_plugin_tracker_discover`";
+	$DB->query($query);
+
 	// Load snmp auth
 	$snmp_auth = $plugin_tracker_snmp_auth->GetInfos("all","",0);
-
-	// scan for each IP
-	ini_set("memory_limit","-1");
-	ini_set("max_execution_time", "0");
-
+var_dump($snmp_auth);
 	$i = 0;
 	$ip1 = $Array_IP["ip11"];
 	$ip2 = $Array_IP["ip12"];
@@ -110,26 +110,33 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 	$ip4 = $Array_IP["ip14"];
 	while ($i != 1)
 	{
-	
-	
 		// Test if port 161 is open
 		foreach ($snmp_auth as $num=>$field)
 		{
+			echo "IP :".$ip1.".".$ip2.".".$ip3.".".$ip4."\n";
 			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 			if ($Array_sysdescr["sysDescr"] != ""){
-				echo $ip1.".".$ip2.".".$ip3.".".$ip4."<br/>";
-				var_dump($Array_sysdescr);
+				$Array_Name = $plugin_tracker_snmp->SNMPQuery(array("sysName"=>".1.3.6.1.2.1.1.5.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 				//Port is open, test with oids to determine the device type
+				$device_type = 0;
 				foreach ($TRACKER_MAPPING['discovery'] as $num_const=>$value_const)
 				{
 					$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
 					$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 					if ($Array_type[$TRACKER_MAPPING['discovery'][$num_const]['object']] != ""){
 						echo "TYPE :".$TRACKER_MAPPING['discovery'][$num_const]['type']."<br/>";
+						$device_type = $TRACKER_MAPPING['discovery'][$num_const]['type'];
 					}
-				
 				}
-				
+				$query_ins = "INSERT INTO glpi_plugin_tracker_discover
+				(date,ifaddr,name,descr,type,FK_snmp_connection)
+				VALUES ('".strftime("%Y-%m-%d %H:%M:%S", time())."', 
+				'".$ip1.".".$ip2.".".$ip3.".".$ip4."',
+				'".$Array_Name["sysName"]."',
+				'".$Array_sysdescr["sysDescr"]."', 
+				'".$device_type."',
+				'".$snmp_auth[$num]["ID"]."' ) ";
+				$DB->query($query_ins);				
 				
 				break;
 			}	
@@ -145,7 +152,7 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 		{
 			if ($ip4 == $Array_IP["ip24"])
 			{
-				break;
+				$i = 1;
 			}
 		}
 		else if (($ip1 == $Array_IP["ip21"]) 
@@ -195,7 +202,96 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 		}
 		$ip4++;
 	}
+}
+
+
+function plugin_tracker_discovery_getConf()
+{
+	global $DB;
+	
+	$query = "SELECT * FROM glpi_plugin_tracker_discover_conf
+	LIMIT 0,1 ";
+
+	$result = $DB->query($query);		
+	$data = $DB->fetch_assoc($result);
+
+	return $data;	
+}
+	
+	
+
+function plugin_tracker_discovery_display_array($target)
+{
+	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
+
+	$CommonItem = new CommonItem;
+
+	echo "<br>";
+	echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+
+	echo "<table class='tab_cadre' cellpadding='5' width='90%'>";
+	
+	echo "<tr class='tab_bg_1'>";
+	echo "<th colspan='8'>";
+	echo $LANGTRACKER["discovery"][1];
+	echo "</th>";
+	echo "</tr>";
+	
+	echo "<tr class='tab_bg_1'>";
+	echo "<th>".$LANG["common"][27]."</th>";
+	echo "<th>".$LANG["networking"][14]."</th>";
+	echo "<th>".$LANG["common"][16]."</th>";
+	echo "<th>".$LANG["joblist"][6]."</th>";
+	echo "<th>".$LANG["common"][19]."</th>";
+	echo "<th>".$LANG["common"][17]."</th>";
+	echo "<th>".$LANGTRACKER["model_info"][4]."</th>";
+	echo "<th>".$LANGTRACKER["model_info"][3]."</th>";
+	echo "</tr>";
+
+	$types_numbers = array();
+	foreach ($TRACKER_MAPPING['discovery'] as $num_const=>$value_const)
+	{
+		$types_numbers[] = $TRACKER_MAPPING['discovery'][$num_const]['type'];
+	}
+
+	$query = "SELECT * FROM glpi_plugin_tracker_discover";
+	if ( $result=$DB->query($query) )
+	{
+		while ( $data=$DB->fetch_array($result) )
+		{
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>".convdate($data['date'])."</td>";
+			echo "<td align='center'>".$data['ifaddr']."</td>";
+			echo "<td align='center'>".$data['name']."</td>";
+			echo "<td align='center'>".$data['descr']."</td>";
+			echo "<td align='center'>".$data['serialnumber']."</td>";
+			if ($data['type'] == "0")
+			{
+				echo "<td align='center'>";
+				dropdownDeviceTypes("type", 1, $types_numbers);
+				echo "</td>";
+			}
+			else
+			{
+				$CommonItem->device_type = $data['type'];
+				echo "<td align='center'>".$CommonItem->getType()."</td>";
+			}
+			echo "<td align='center'>";
+			dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0);
+			echo "</td>";
+			echo "<td align='center'>";
+			plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
+			echo "</td>";
+			echo "</tr>";
+		}
+	}
+
+	echo "</table";
 
 }
+	
+	
+	
+
 
 ?>
