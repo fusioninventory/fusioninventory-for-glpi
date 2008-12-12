@@ -232,12 +232,13 @@ function plugin_tracker_discovery_display_array($target)
 	echo "<table class='tab_cadre' cellpadding='5' width='90%'>";
 	
 	echo "<tr class='tab_bg_1'>";
-	echo "<th colspan='8'>";
+	echo "<th colspan='9'>";
 	echo $LANGTRACKER["discovery"][1];
 	echo "</th>";
 	echo "</tr>";
 	
 	echo "<tr class='tab_bg_1'>";
+	echo "<th></th>";
 	echo "<th>".$LANG["common"][27]."</th>";
 	echo "<th>".$LANG["networking"][14]."</th>";
 	echo "<th>".$LANG["common"][16]."</th>";
@@ -260,6 +261,7 @@ function plugin_tracker_discovery_display_array($target)
 		while ( $data=$DB->fetch_array($result) )
 		{
 			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'><input type='checkbox' name='check[]' value='".$data['ID']."' /></td>";
 			echo "<td align='center'>".convdate($data['date'])."</td>";
 			echo "<td align='center'>".$data['ifaddr']."</td>";
 			echo "<td align='center'>".$data['name']."</td>";
@@ -268,16 +270,17 @@ function plugin_tracker_discovery_display_array($target)
 			if ($data['type'] == "0")
 			{
 				echo "<td align='center'>";
-				dropdownDeviceTypes("type", 1, $types_numbers);
+				dropdownDeviceTypes("type-".$data['ID'], 1, $types_numbers);
 				echo "</td>";
 			}
 			else
 			{
-				$CommonItem->device_type = $data['type'];
-				echo "<td align='center'>".$CommonItem->getType()."</td>";
+				echo "<td align='center'>";
+				dropdownDeviceTypes("type-".$data['ID'], $data['type'], $types_numbers);
+				echo "</td>";
 			}
 			echo "<td align='center'>";
-			dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0);
+			dropdownValue("glpi_plugin_tracker_model_infos","model_infos-".$data['ID'],$data["FK_model_infos"],0);
 			echo "</td>";
 			echo "<td align='center'>";
 			plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
@@ -286,12 +289,37 @@ function plugin_tracker_discovery_display_array($target)
 		}
 	}
 
-	echo "</table";
+	echo "<tr class='tab_bg_1'>";
+	echo "<td colspan='9'>";
+	echo "<div align='center'>";
+	echo "<input type='submit' name='import' value=\"".$LANG["buttons"][37]."\" class='submit' > ";
+	echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+	echo "</td>";
+	echo "</tr>";
+
+	echo "</table></form>";
+
 
 }
 	
 	
-	
+
+function plugin_tracker_discovery_update_devices($array, $target)
+{
+	global $DB;
+
+	foreach ($array as $key=>$value)
+	{
+		if (ereg("model_infos", $key))
+		{
+			$explode = explode ("-", $key);
+			$query = "UPDATE glpi_plugin_tracker_discover
+			SET FK_model_infos='".$value."',type='".$array['type-'.$explode[1]]."'
+			WHERE ID='".$explode[1]."' ";
+			$DB->query($query);
+		}
+	}
+}
 
 
 ?>

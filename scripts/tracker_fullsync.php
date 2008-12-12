@@ -129,7 +129,7 @@ $processes->updateProcess($fields["process_id"],$processes_values["devices"], $p
 // get config if we can or not scan
 $conf = plugin_tracker_discovery_getConf();
 
-if ($conf['discover'] == "1")
+if (isset($conf['discover']) && ($conf['discover'] == "1"))
 {
 	$explode = explode(".",$conf['ifaddr_start']);
 	$Array_IP['ip11'] = $explode[0];

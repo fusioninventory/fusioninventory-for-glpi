@@ -42,6 +42,12 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("errors","r");
 
+if((isset($_POST['update'])) AND (!empty($_POST['update'])))
+{
+	// Update DB
+	plugin_tracker_discovery_update_devices($_POST, $_SERVER["PHP_SELF"]);
+}
+
 plugin_tracker_discovery_startmenu($_SERVER["PHP_SELF"]);
 
 plugin_tracker_discovery_display_array($_SERVER["PHP_SELF"]);
