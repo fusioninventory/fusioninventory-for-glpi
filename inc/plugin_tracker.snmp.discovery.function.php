@@ -102,7 +102,7 @@ function plugin_tracker_discovery_scan($Array_IP)
 
 	// Load snmp auth
 	$snmp_auth = $plugin_tracker_snmp_auth->GetInfos("all","",0);
-var_dump($snmp_auth);
+
 	$i = 0;
 	$ip1 = $Array_IP["ip11"];
 	$ip2 = $Array_IP["ip12"];
@@ -202,7 +202,61 @@ var_dump($snmp_auth);
 		}
 		$ip4++;
 	}
+	$query = "UPDATE glpi_plugin_tracker_discover_conf
+	SET discover='0'
+	WHERE ID='1' ";
+	$DB->query($query);
 }
+
+
+
+function plugin_tracker_discovery_scan_serial()
+{
+	global $DB,$TRACKER_MAPPING;
+
+	$plugin_tracker_snmp = new plugin_tracker_snmp;
+	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+
+	// Load snmp auth
+	$snmp_auth = $plugin_tracker_snmp_auth->GetInfos("all","",0);
+
+	$query = "SELECT * FROM glpi_plugin_tracker_discover
+	WHERE FK_model_infos!='0' ";
+	if ( $result=$DB->query($query) )
+	{
+		while ( $data=$DB->fetch_array($result) )
+		{
+			$snmp_model_ID = $data['FK_model_infos'];
+			$Array_Object_oid_serialnumber = $plugin_tracker_snmp->GetOID($snmp_model_ID,"mapping_name='serial'");
+			foreach ($snmp_auth as $num=>$field)
+			{
+				if ($snmp_auth[$num]['ID'] == $data['FK_snmp_connection'])
+				{
+					$snmp_auth2["snmp_version"] = $snmp_auth[$num]["snmp_version"];
+					$snmp_auth2["community"] = $snmp_auth[$num]["community"];
+					$snmp_auth2["sec_name"] = $snmp_auth[$num]["sec_name"];
+					$snmp_auth2["sec_level"] = $snmp_auth[$num]["sec_level"];
+					$snmp_auth2["auth_protocol"] = $snmp_auth[$num]["auth_protocol"];
+					$snmp_auth2["auth_passphrase"] = $snmp_auth[$num]["auth_passphrase"];
+					$snmp_auth2["priv_protocol"] = $snmp_auth[$num]["priv_protocol"];
+					$snmp_auth2["priv_passphrase"] = $snmp_auth[$num]["priv_passphrase"];
+					$snmp_version = $snmp_auth[$num]["snmp_version"];
+					break;
+				}
+			}
+			$plugin_tracker_snmp->DefineObject($Array_Object_oid_serialnumber);
+			$Array_serialnumber = $plugin_tracker_snmp->SNMPQuery($Array_Object_oid_serialnumber,$data['ifaddr'],$snmp_version,$snmp_auth2);
+			foreach($Array_serialnumber as $object=>$serial)
+			{
+				$query_update = "UPDATE glpi_plugin_tracker_discover 
+				SET serialnumber='".$serial."' 
+				WHERE ID='".$data['ID']."' ";
+				$DB->query($query_update);
+			}
+		}
+	}
+}
+
 
 
 function plugin_tracker_discovery_getConf()
@@ -222,7 +276,7 @@ function plugin_tracker_discovery_getConf()
 
 function plugin_tracker_discovery_display_array($target)
 {
-	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
+	global $CFG_GLPI,$DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
 
 	$CommonItem = new CommonItem;
 
@@ -260,32 +314,48 @@ function plugin_tracker_discovery_display_array($target)
 	{
 		while ( $data=$DB->fetch_array($result) )
 		{
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'><input type='checkbox' name='check[]' value='".$data['ID']."' /></td>";
-			echo "<td align='center'>".convdate($data['date'])."</td>";
-			echo "<td align='center'>".$data['ifaddr']."</td>";
-			echo "<td align='center'>".$data['name']."</td>";
-			echo "<td align='center'>".$data['descr']."</td>";
-			echo "<td align='center'>".$data['serialnumber']."</td>";
-			if ($data['type'] == "0")
+			$affiche = 1;
+			if (($data['serialnumber']!= "") AND ($data['type'] != "0"))
 			{
-				echo "<td align='center'>";
-				dropdownDeviceTypes("type-".$data['ID'], 1, $types_numbers);
-				echo "</td>";
+				$query_serial = "SELECT * FROM ".$CFG_GLPI['template_tables'][$data['type']]."
+				WHERE serial='".$data['serialnumber']."' ";
+				if ( $result_serial = $DB->query($query_serial) )
+				{
+					if ( $DB->numrows($result_serial) == 0 )
+					{
+						$affiche = 0;
+					}
+				}
 			}
-			else
+			if ($affiche == "1")
 			{
+				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'><input type='checkbox' name='check[]' value='".$data['ID']."' /></td>";
+				echo "<td align='center'>".convdate($data['date'])."</td>";
+				echo "<td align='center'>".$data['ifaddr']."</td>";
+				echo "<td align='center'>".$data['name']."</td>";
+				echo "<td align='center'>".$data['descr']."</td>";
+				echo "<td align='center'>".$data['serialnumber']."</td>";
+				if ($data['type'] == "0")
+				{
+					echo "<td align='center'>";
+					dropdownDeviceTypes("type-".$data['ID'], 1, $types_numbers);
+					echo "</td>";
+				}
+				else
+				{
+					echo "<td align='center'>";
+					dropdownDeviceTypes("type-".$data['ID'], $data['type'], $types_numbers);
+					echo "</td>";
+				}
 				echo "<td align='center'>";
-				dropdownDeviceTypes("type-".$data['ID'], $data['type'], $types_numbers);
+				dropdownValue("glpi_plugin_tracker_model_infos","model_infos-".$data['ID'],$data["FK_model_infos"],0);
 				echo "</td>";
+				echo "<td align='center'>";
+				plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
+				echo "</td>";
+				echo "</tr>";
 			}
-			echo "<td align='center'>";
-			dropdownValue("glpi_plugin_tracker_model_infos","model_infos-".$data['ID'],$data["FK_model_infos"],0);
-			echo "</td>";
-			echo "<td align='center'>";
-			plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
-			echo "</td>";
-			echo "</tr>";
 		}
 	}
 
