@@ -100,7 +100,7 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 	// scan for each IP
 	ini_set("memory_limit","-1");
 	ini_set("max_execution_time", "0");
-ini_set('error_reporting', E_NONE);	
+
 	$i = 0;
 	$ip1 = $Array_IP["ip11"];
 	$ip2 = $Array_IP["ip12"];

@@ -1141,16 +1141,21 @@ class plugin_tracker_snmp extends CommonDBTM
 				{
 					runkit_constant_remove($object);
 					define($object,$oid);
-	
+					ob_start();
 					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,700000,1);
+					ob_end_clean();
 				}
 				else if ($version == "2c")
 				{
+					ob_start();
 					$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,700000,1);
+					ob_end_clean();
 				}
 				else if ($version == "3")
 				{
+					ob_start();
 					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,700000,1);
+					ob_end_clean();
 				}
 				logInFile("tracker_snmp", "			SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue."\n\n");
 				$ArraySNMPValues = explode(": ", $SNMPValue);
