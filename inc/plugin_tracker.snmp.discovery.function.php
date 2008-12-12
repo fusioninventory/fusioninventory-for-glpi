@@ -124,7 +124,7 @@ function plugin_tracker_discovery_scan($Array_IP,$target)
 				{
 					$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
 					$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
-					if ($Array_sysdescr["sysDescr"] != ""){
+					if ($Array_type[$TRACKER_MAPPING['discovery'][$num_const]['object']] != ""){
 						echo "TYPE :".$TRACKER_MAPPING['discovery'][$num_const]['type']."<br/>";
 					}
 				
