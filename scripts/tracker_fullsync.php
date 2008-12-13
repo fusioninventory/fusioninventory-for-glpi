@@ -129,7 +129,7 @@ $processes->updateProcess($fields["process_id"],$processes_values["devices"], $p
 // get config if we can or not scan
 $conf = plugin_tracker_discovery_getConf();
 
-if (isset($conf['discover']) && ($conf['discover'] == "1"))
+if (((isset($conf['discover'])) && ($conf['discover'] == "1") AND ($type == "")) OR ($type == "discovery"))
 {
 	$explode = explode(".",$conf['ifaddr_start']);
 	$Array_IP['ip11'] = $explode[0];
@@ -144,7 +144,8 @@ if (isset($conf['discover']) && ($conf['discover'] == "1"))
 
 	plugin_tracker_discovery_scan($Array_IP);
 }
-if ($conf['getserialnumber'] == "1")
+
+if (((isset($conf['getserialnumber'])) && ($conf['getserialnumber'] == "1") AND ($type == "")) OR ($type == "discovery_serial"))
 {
 	plugin_tracker_discovery_scan_serial();
 }

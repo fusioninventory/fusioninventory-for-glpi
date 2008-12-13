@@ -405,10 +405,22 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			$snmp_auth[0]["Name"] = "Public-v2c";
 			$snmp_auth[0]["snmp_version"] = "2c";
 			$snmp_auth[0]["community"] = "public";
+			$snmp_auth[0]["sec_name"] = "";
+			$snmp_auth[0]["sec_level"] = "";
+			$snmp_auth[0]["auth_protocol"] = "";
+			$snmp_auth[0]["auth_passphrase"] = "";
+			$snmp_auth[0]["priv_protocol"] = "";
+			$snmp_auth[0]["priv_passphrase"] = "";			
 			$snmp_auth[0]["ID"] = 0;
 			$snmp_auth[1]["Name"] = "Public-v1";
 			$snmp_auth[1]["snmp_version"] = "1";
 			$snmp_auth[1]["community"] = "public";
+			$snmp_auth[1]["sec_name"] = "";
+			$snmp_auth[1]["sec_level"] = "";
+			$snmp_auth[1]["auth_protocol"] = "";
+			$snmp_auth[1]["auth_passphrase"] = "";
+			$snmp_auth[1]["priv_protocol"] = "";
+			$snmp_auth[1]["priv_passphrase"] = "";		
 			$snmp_auth[1]["ID"] = 0;
 		}
 		$query_conf = "SELECT * FROM glpi_plugin_tracker_config";

@@ -35,7 +35,8 @@ echo "  --thread_nbr=num: number of threads to launch"
 echo "  --nolog: output to console"
 echo "  --networking_type: get SNMP only for networking devices (switchs)"
 echo "  --printer_type: get SNMP only for printer devices"
-
+echo "  --discovery: discover networking devices with IP range"
+echo "  --discovery_serial: get serial number from discovery devices by SNMP"
 
 
 }
@@ -69,6 +70,12 @@ read_argv()
       --printer_type)
       type="printer_type"
       ;;
+      --discovery)
+      type="discovery"
+      ;;
+      --discovery_serial)
+      type="discovery_serial"
+      ;; 
       *)
       usage
       exit 1
