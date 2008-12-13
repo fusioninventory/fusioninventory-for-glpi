@@ -448,4 +448,27 @@ function plugin_tracker_discovery_update_devices($array, $target)
 }
 
 
+
+function plugin_tracker_discovery_import($array_import)
+{
+	global $DB;
+
+	foreach ($array as $key=>$value)
+	{
+/*		if (ereg("model_infos", $key))
+		{
+			$explode = explode ("-", $key);
+			$query = "UPDATE glpi_plugin_tracker_discover
+			SET FK_model_infos='".$value."',type='".$array['type-'.$explode[1]]."'
+			WHERE ID='".$explode[1]."' ";
+			$DB->query($query);
+		}*/
+	}
+}
+
+
+
+
+
+
 ?>
