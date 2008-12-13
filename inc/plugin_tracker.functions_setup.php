@@ -131,6 +131,18 @@ function plugin_tracker_uninstall() {
 
 	$query = "DROP TABLE `glpi_plugin_tracker_connection_stats`;";
 	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_networking`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_printer`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_discover`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_discover_conf`;";
+	$DB->query($query) or die($DB->error());
 	
 	$query="DELETE FROM glpi_display WHERE type='".PLUGIN_TRACKER_ERROR_TYPE."' OR type='".PLUGIN_TRACKER_MODEL."' ;";
 	$DB->query($query) or die($DB->error());
