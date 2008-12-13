@@ -389,5 +389,8 @@ $LANGTRACKER["buttons"][0]="Découvrir";
 
 $LANGTRACKER["discovery"][0]="Plage d'ip à scanner";
 $LANGTRACKER["discovery"][1]="Liste du matériel découvert";
+$LANGTRACKER["discovery"][2]="Activation dans le script en automatique";
+$LANGTRACKER["discovery"][3]="Découverte";
+$LANGTRACKER["discovery"][4]="Numéros de série";
 
 ?>

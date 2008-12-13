@@ -41,6 +41,20 @@ function plugin_tracker_discovery_startmenu($target)
 {
 	global $LANG, $LANGTRACKER;	
 
+	$conf = plugin_tracker_discovery_getConf();
+	$ifaddr_start = $conf['ifaddr_start'];
+	$ifaddr_end = $conf['ifaddr_end'];
+	$explode = explode(".",$ifaddr_start);
+	$ifaddr_start_1 = $explode[0];
+	$ifaddr_start_2 = $explode[1];
+	$ifaddr_start_3 = $explode[2];
+	$ifaddr_start_4 = $explode[3];
+	$explode = explode(".",$ifaddr_end);
+	$ifaddr_end_1 = $explode[0];
+	$ifaddr_end_2 = $explode[1];
+	$ifaddr_end_3 = $explode[2];
+	$ifaddr_end_4 = $explode[3];	
+	
 	echo "<br>";
 	echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
@@ -55,32 +69,48 @@ function plugin_tracker_discovery_startmenu($target)
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' rowspan='2'>".$LANGTRACKER["discovery"][0]."</td>";
 	echo "<td align='center'>";
-	dropdownInteger("ip11", "", 0, 254);
+	dropdownInteger("ip11", $ifaddr_start_1, 0, 254);
 	echo " . ";
-	dropdownInteger("ip12", "", 0, 254);
+	dropdownInteger("ip12", $ifaddr_start_2, 0, 254);
 	echo " . ";
-	dropdownInteger("ip13", "", 0, 254);
+	dropdownInteger("ip13", $ifaddr_start_3, 0, 254);
 	echo " . ";
-	dropdownInteger("ip14", "", 0, 254);
+	dropdownInteger("ip14", $ifaddr_start_4, 0, 254);
 	echo "</td>";
 	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center'>";
-	dropdownInteger("ip21", "", 0, 254);
+	dropdownInteger("ip21", $ifaddr_end_1, 0, 254);
 	echo " . ";
-	dropdownInteger("ip22", "", 0, 254);
+	dropdownInteger("ip22", $ifaddr_end_2, 0, 254);
 	echo " . ";
-	dropdownInteger("ip23", "", 0, 254);
+	dropdownInteger("ip23", $ifaddr_end_3, 0, 254);
 	echo " . ";
-	dropdownInteger("ip24", "", 0, 254);
+	dropdownInteger("ip24", $ifaddr_end_4, 0, 254);
 	echo "</td>";
-	echo "</tr>";	
+	echo "</tr>";
+
+	echo "<tr class='tab_bg_1'>";
+	echo "<td align='center'>".$LANGTRACKER["discovery"][2]."</td>";
+	echo "<td align='center'>";
+	$values = array();
+	$values[''] = '------';
+	$values['discover'] = $LANGTRACKER["discovery"][3];
+	$values['getserialnumber'] = $LANGTRACKER["discovery"][4];
+	$selected = "";
+	if ($conf['discover'] == "1")
+		$selected = "discover";
+	if ($conf['getserialnumber'] == "1")
+		$selected = "getserialnumber";
+	dropdownArrayValues('activation', $values,$selected);
+	echo "</td>";
+	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
 	echo "<td colspan='2'>";
 	echo "<div align='center'>";
-	echo "<input type='submit' name='discover' value=\"".$LANGTRACKER["buttons"][0]."\" class='submit' >";
+	echo "<input type='submit' name='discover' value=\"".$LANG["buttons"][7]."\" class='submit' >";
 	echo "</td>";
 	echo "</tr>";
 
@@ -275,7 +305,29 @@ function plugin_tracker_discovery_getConf()
 
 	return $data;	
 }
+
+
+
+function plugin_tracker_discovery_update_conf($data)
+{
+	global $DB;
 	
+	$discover = 0;
+	$getserialnumber = 0;
+	if ($_POST['activation'] == "discover")
+		$discover = 1;
+	if ($_POST['activation'] == "getserialnumber")
+		$getserialnumber = 1;
+
+	$query = "UPDATE glpi_plugin_tracker_discover_conf
+	SET ifaddr_start='".$_POST['ip11'].".".$_POST['ip12'].".".$_POST['ip13'].".".$_POST['ip14']."',
+	ifaddr_end='".$_POST['ip21'].".".$_POST['ip22'].".".$_POST['ip23'].".".$_POST['ip24']."',
+	discover='".$discover."',getserialnumber='".$getserialnumber."'
+	WHERE ID='1' ";
+
+	$DB->query($query);	
+}
+
 	
 
 function plugin_tracker_discovery_display_array($target)
