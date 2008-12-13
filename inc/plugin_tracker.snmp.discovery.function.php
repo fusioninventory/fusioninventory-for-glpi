@@ -91,7 +91,7 @@ function plugin_tracker_discovery_startmenu($target)
 function plugin_tracker_discovery_scan($Array_IP)
 {
 
-	global $DB,$TRACKER_MAPPING;
+	global $DB,$TRACKER_MAPPING_DISCOVERY;
 
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
@@ -119,13 +119,13 @@ function plugin_tracker_discovery_scan($Array_IP)
 				$Array_Name = $plugin_tracker_snmp->SNMPQuery(array("sysName"=>".1.3.6.1.2.1.1.5.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 				//Port is open, test with oids to determine the device type
 				$device_type = 0;
-				foreach ($TRACKER_MAPPING['discovery'] as $num_const=>$value_const)
+				foreach ($TRACKER_MAPPING_DISCOVERY['discovery'] as $num_const=>$value_const)
 				{
-					$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
-					$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING['discovery'][$num_const]['object']=>$TRACKER_MAPPING['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
-					if ($Array_type[$TRACKER_MAPPING['discovery'][$num_const]['object']] != ""){
-						echo "TYPE :".$TRACKER_MAPPING['discovery'][$num_const]['type']."<br/>";
-						$device_type = $TRACKER_MAPPING['discovery'][$num_const]['type'];
+					$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
+					$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
+					if ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != ""){
+						echo "TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."<br/>";
+						$device_type = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
 					}
 				}
 				$query_ins = "INSERT INTO glpi_plugin_tracker_discover
@@ -212,7 +212,7 @@ function plugin_tracker_discovery_scan($Array_IP)
 
 function plugin_tracker_discovery_scan_serial()
 {
-	global $DB,$TRACKER_MAPPING;
+	global $DB,$TRACKER_MAPPING_DISCOVERY;
 
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
@@ -280,7 +280,7 @@ function plugin_tracker_discovery_getConf()
 
 function plugin_tracker_discovery_display_array($target)
 {
-	global $CFG_GLPI,$DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
+	global $CFG_GLPI,$DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING_DISCOVERY;
 
 	$CommonItem = new CommonItem;
 
@@ -308,9 +308,9 @@ function plugin_tracker_discovery_display_array($target)
 	echo "</tr>";
 
 	$types_numbers = array();
-	foreach ($TRACKER_MAPPING['discovery'] as $num_const=>$value_const)
+	foreach ($TRACKER_MAPPING_DISCOVERY['discovery'] as $num_const=>$value_const)
 	{
-		$types_numbers[] = $TRACKER_MAPPING['discovery'][$num_const]['type'];
+		$types_numbers[] = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
 	}
 
 	$query = "SELECT * FROM glpi_plugin_tracker_discover";
