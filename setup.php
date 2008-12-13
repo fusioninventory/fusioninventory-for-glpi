@@ -60,10 +60,10 @@ function plugin_init_tracker() {
 			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.config.php';
 		}
 	
-		$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
-		$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
-
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
+
+			$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
+			$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 
 			if (isset($_SESSION["glpi_plugin_tracker_profile"])) {
 				
