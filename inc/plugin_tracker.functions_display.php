@@ -101,10 +101,48 @@ function plugin_tracker_mib_management()
 
 
 
-	function plugin_tracker_Bar ($pourcentage, $message="")
+function plugin_tracker_Bar ($pourcentage, $message="")
+{
+	echo "<div class='doaction_cadre' style='height: 20px; '><div  style='width: ".$pourcentage."%;' class='doaction_progress'>".
+  			"<div class='doaction_pourcent' style='margin-top: 3px; '>".$pourcentage."% ".$message."</div></div></div> ";
+}
+	
+
+
+function plugin_tracker_phpextensions ()
+{
+	global $LANGTRACKER;
+	$snmp = 0;
+	$runkit = 0;
+	if (extension_loaded('snmp'))
 	{
-		echo "<div class='doaction_cadre' style='height: 20px; '><div  style='width: ".$pourcentage."%;' class='doaction_progress'>".
-     			"<div class='doaction_pourcent' style='margin-top: 3px; '>".$pourcentage."% ".$message."</div></div></div> ";
+		$snmp = 1;
 	}
+	if (extension_loaded('runkit'))
+	{
+		$runkit = 1;
+	}
+	if (($snmp == "0") OR ($runkit == "0"))
+	{
+		echo "<div align='center'>";
+		echo "<table class='tab_cadre' cellpadding='5'>";
+		echo "<tr><th>".$LANGTRACKER["setup"][13];
+		echo "</th></tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+		if ($snmp == "0")
+			echo $LANGTRACKER["setup"][14];
+		echo "<br/>";
+		if ($runkit == "0")
+			echo $LANGTRACKER["setup"][15];
+		echo "</td>";
+		echo "</tr>";
+		echo "</table><br/>";
+	
+	}
+}
+
+
 
 ?>

@@ -41,7 +41,7 @@ include (GLPI_ROOT."/inc/includes.php");
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("errors","r");
-
+plugin_tracker_phpextensions();
 echo plugin_tracker_menu();
 
 commonFooter();
