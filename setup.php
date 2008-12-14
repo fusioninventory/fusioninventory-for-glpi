@@ -93,7 +93,7 @@ function plugin_version_tracker(){
 	return array( 'name'    => 'Tracker',
 		'minGlpiVersion' => '0.71',
 		'maxGlpiVersion' => '0.71.9',
-		'version' => '1.0');
+		'version' => '1.0.0');
 }
 
 function plugin_tracker_haveTypeRight($type,$right){
