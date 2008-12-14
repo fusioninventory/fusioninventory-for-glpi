@@ -60,7 +60,9 @@ $LANGTRACKER["setup"][6]="Désinstaller le plugin $title $version";
 $LANGTRACKER["setup"][8]="Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
 $LANGTRACKER["setup"][11]="Mode d'emploi";
 $LANGTRACKER["setup"][12]="FAQ";
-
+$LANGTRACKER["setup"][13]="Vérification des modules PHP nécessaires";
+$LANGTRACKER["setup"][14]="L'extension snmp de PHP n'est pas chargée";
+$LANGTRACKER["setup"][15]="L'extension runkit de PHP/PECL n'est pas chargée";
 
 $LANGTRACKER["functionalities"][0]="Fonctionnalités";
 $LANGTRACKER["functionalities"][1]="Ajout / Suppression de fonctionnalités";
