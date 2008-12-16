@@ -394,5 +394,6 @@ $LANGTRACKER["discovery"][1]="Liste du matériel découvert";
 $LANGTRACKER["discovery"][2]="Activation dans le script en automatique";
 $LANGTRACKER["discovery"][3]="Découverte";
 $LANGTRACKER["discovery"][4]="Numéros de série";
+$LANGTRACKER["discovery"][5]="Nombre de matériels importés";
 
 ?>

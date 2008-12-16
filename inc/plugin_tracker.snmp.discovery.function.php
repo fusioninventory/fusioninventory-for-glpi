@@ -464,8 +464,8 @@ function plugin_tracker_discovery_update_devices($array, $target)
 
 function plugin_tracker_discovery_import($array_import)
 {
-	global $DB,$CFG_GLPI;
-
+	global $DB,$CFG_GLPI, $LANGTRACKER;
+	$Import = 0;
 	foreach ($array_import as $key=>$value)
 	{
 		if (ereg("check", $key))
@@ -494,7 +494,8 @@ function plugin_tracker_discovery_import($array_import)
 						unset($addPort);
 						$query_del = "DELETE FROM glpi_plugin_tracker_discover
 						WHERE ID='".$ID."' ";
-						$DB->query($query_del);	
+						$DB->query($query_del);
+						$Import++;
 						break;
 					case NETWORKING_TYPE :
 						$Netdevice = new Netdevice;
@@ -506,6 +507,7 @@ function plugin_tracker_discovery_import($array_import)
 						$query_del = "DELETE FROM glpi_plugin_tracker_discover
 						WHERE ID='".$ID."' ";
 						$DB->query($query_del);
+						$Import++;
 						break;
 					case PERIPHERAL_TYPE :
 						$Peripheral = new Peripheral;
@@ -523,10 +525,15 @@ function plugin_tracker_discovery_import($array_import)
 						$query_del = "DELETE FROM glpi_plugin_tracker_discover
 						WHERE ID='".$ID."' ";
 						$DB->query($query_del);
+						$Import++;
 						break;
 				}
 			}
 		}
+	}
+	if ($Import != "0")
+	{
+		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
 	}
 }
 
