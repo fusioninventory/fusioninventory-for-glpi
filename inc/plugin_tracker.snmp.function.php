@@ -573,24 +573,27 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 						$SNMPValue_old = "";
 					}					
 					// Update
-					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-					SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-					WHERE ".$ID_field."='".$data["ID"]."'";
-
-					$DB->query($queryUpdate);
-					// Delete port wire if port is internal disable
-					if (($object_name == "ifinternalstatus") AND (($SNMPValue == "2") OR ($SNMPValue == "down(2)")))
+					if ($SNMPValue != '')
 					{
-						$netwire=new Netwire;
-						addLogConnection("remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
-						addLogConnection("remove",$data["ID"],$FK_process);
-						removeConnector($data["ID"]);
-						
-					}
-					// Add log if snmp value change			
-					if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets') AND ($SNMPValue_old != $SNMPValue ))
-					{
-						tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue,$FK_process);
+						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+						SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
+						WHERE ".$ID_field."='".$data["ID"]."'";
+	
+						$DB->query($queryUpdate);
+						// Delete port wire if port is internal disable
+						if (($object_name == "ifinternalstatus") AND (($SNMPValue == "2") OR ($SNMPValue == "down(2)")))
+						{
+							$netwire=new Netwire;
+							addLogConnection("remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
+							addLogConnection("remove",$data["ID"],$FK_process);
+							removeConnector($data["ID"]);
+							
+						}
+						// Add log if snmp value change			
+						if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets') AND ($SNMPValue_old != $SNMPValue ))
+						{
+							tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue,$FK_process);
+						}
 					}
 				}		
 				
