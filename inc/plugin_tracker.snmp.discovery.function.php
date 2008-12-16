@@ -373,11 +373,24 @@ function plugin_tracker_discovery_display_array($target)
 			$affiche = 1;
 			if (($data['serialnumber']!= "") AND ($data['type'] != "0"))
 			{
-				$query_serial = "SELECT * FROM ".$CFG_GLPI['template_tables'][$data['type']]."
+			switch ($data['type'])
+			{
+				case PRINTER_TYPE :
+					$table = 'glpi_printers';
+					break;
+				case NETWORKING_TYPE :
+					$table = 'glpi_networking';
+					break;
+				case PERIPHERAL_TYPE :
+					$table = 'glpi_peripherals';
+					break;
+			}
+
+				$query_serial = "SELECT * FROM ".$table."
 				WHERE serial='".$data['serialnumber']."' ";
 				if ( $result_serial = $DB->query($query_serial) )
 				{
-					if ( $DB->numrows($result_serial) == 0 )
+					if ( $DB->numrows($result_serial) != 0 )
 					{
 						$affiche = 0;
 					}
@@ -451,18 +464,69 @@ function plugin_tracker_discovery_update_devices($array, $target)
 
 function plugin_tracker_discovery_import($array_import)
 {
-	global $DB;
+	global $DB,$CFG_GLPI;
 
-	foreach ($array as $key=>$value)
+	foreach ($array_import as $key=>$value)
 	{
-/*		if (ereg("model_infos", $key))
+		if (ereg("check", $key))
 		{
-			$explode = explode ("-", $key);
-			$query = "UPDATE glpi_plugin_tracker_discover
-			SET FK_model_infos='".$value."',type='".$array['type-'.$explode[1]]."'
-			WHERE ID='".$explode[1]."' ";
-			$DB->query($query);
-		}*/
+			foreach ($value as $key2=>$ID)
+			{
+				$query = "SELECT * FROM glpi_plugin_tracker_discover
+				WHERE ID='".$ID."' ";
+				$result = $DB->query($query);		
+				$data = $DB->fetch_assoc($result);
+
+				switch ($array_import['type-'.$ID])
+				{
+					case PRINTER_TYPE :
+						$Printer = new Printer;
+						$Netport = new Netport;
+						
+						$addArray['serial'] = $data['serialnumber'];
+						$addArray['name'] = $data['name'];
+						$newID = $Printer->add($addArray);
+						unset($addArray);
+						$addPort['on_device'] = $newID;
+						$addPort['device_type'] = PRINTER_TYPE;
+						$addPort['ifaddr'] = $data['ifaddr'];
+						$Netport->add($addPort);
+						unset($addPort);
+						$query_del = "DELETE FROM glpi_plugin_tracker_discover
+						WHERE ID='".$ID."' ";
+						$DB->query($query_del);	
+						break;
+					case NETWORKING_TYPE :
+						$Netdevice = new Netdevice;
+						$addArray['serial'] = $data['serialnumber'];
+						$addArray['name'] = $data['name'];
+						$addArray['ifaddr'] = $data['ifaddr'];
+						$ID_insert = $Netdevice->add($addArray);
+						unset($addArray);
+						$query_del = "DELETE FROM glpi_plugin_tracker_discover
+						WHERE ID='".$ID."' ";
+						$DB->query($query_del);
+						break;
+					case PERIPHERAL_TYPE :
+						$Peripheral = new Peripheral;
+						$Netport = new Netport;
+						
+						$addArray['serial'] = $data['serialnumber'];
+						$addArray['name'] = $data['name'];
+						$ID_insert = $Peripheral->add($addArray);
+						unset($addArray);
+						$addPort['on_device'] = $newID;
+						$addPort['device_type'] = PRINTER_TYPE;
+						$addPort['ifaddr'] = $data['ifaddr'];
+						$Netport->add($addPort);
+						unset($addPort);
+						$query_del = "DELETE FROM glpi_plugin_tracker_discover
+						WHERE ID='".$ID."' ";
+						$DB->query($query_del);
+						break;
+				}
+			}
+		}
 	}
 }
 
