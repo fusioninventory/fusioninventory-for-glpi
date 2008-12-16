@@ -492,6 +492,12 @@ function plugin_tracker_discovery_import($array_import)
 						$addPort['ifaddr'] = $data['ifaddr'];
 						$Netport->add($addPort);
 						unset($addPort);
+						// insert in tracker for scan
+						$query_ins = "INSERT INTO glpi_plugin_tracker_printers
+						(FK_printers,FK_model_infos,FK_snmp_connection)
+						VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
+						$DB->query($query_ins);
+						
 						$query_del = "DELETE FROM glpi_plugin_tracker_discover
 						WHERE ID='".$ID."' ";
 						$DB->query($query_del);
@@ -502,8 +508,14 @@ function plugin_tracker_discovery_import($array_import)
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
 						$addArray['ifaddr'] = $data['ifaddr'];
-						$ID_insert = $Netdevice->add($addArray);
+						$newID = $Netdevice->add($addArray);
 						unset($addArray);
+						// insert in tracker for scan
+						$query_ins = "INSERT INTO glpi_plugin_tracker_networking
+						(FK_networking,FK_model_infos,FK_snmp_connection)
+						VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
+						$DB->query($query_ins);
+						
 						$query_del = "DELETE FROM glpi_plugin_tracker_discover
 						WHERE ID='".$ID."' ";
 						$DB->query($query_del);
@@ -515,13 +527,15 @@ function plugin_tracker_discovery_import($array_import)
 						
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
-						$ID_insert = $Peripheral->add($addArray);
+						$newID = $Peripheral->add($addArray);
 						unset($addArray);
 						$addPort['on_device'] = $newID;
 						$addPort['device_type'] = PRINTER_TYPE;
 						$addPort['ifaddr'] = $data['ifaddr'];
 						$Netport->add($addPort);
 						unset($addPort);
+						// insert in tracker for scan
+						
 						$query_del = "DELETE FROM glpi_plugin_tracker_discover
 						WHERE ID='".$ID."' ";
 						$DB->query($query_del);
