@@ -665,5 +665,4 @@ $TRACKER_MAPPING_DISCOVERY['discovery'][2]['type'] = PERIPHERAL_TYPE;
 
 
 
-
 ?>
