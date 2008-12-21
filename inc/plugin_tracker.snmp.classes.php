@@ -1139,7 +1139,10 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				if ($version == "1")
 				{
-					runkit_constant_remove($object);
+					if (defined($object))
+					{
+						runkit_constant_remove($object);
+					}
 					define($object,$oid);
 					ob_start();
 					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,700000,1);

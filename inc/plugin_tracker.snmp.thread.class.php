@@ -454,6 +454,64 @@ class Threads extends CommonDBTM
 		}
 		return $unknownMac;
 	}
+	
+	
+	
+		var $pref ; // process reference
+	var $pipes; // stdio
+	var $buffer; // output buffer
+	
+	
+	function Create ($file) {
+		$t = new Threads;
+		$descriptor = array (0 => array ("pipe", "r"), 1 => array ("pipe", "w"), 2 => array ("pipe", "w"));
+		$t->pref = proc_open ("php -q $file ", $descriptor, $t->pipes);
+		echo $file;
+		stream_set_blocking ($t->pipes[1], 0);
+		return $t;
+	}
+	
+	
+	
+	function isActive () {
+		$this->buffer .= $this->listen();
+		$f = stream_get_meta_data ($this->pipes[1]);
+		return !$f["eof"];
+	}
+	
+	
+	
+	function close () {
+		$r = proc_close ($this->pref);
+		$this->pref = NULL;
+		return $r;
+	}
+	
+	
+	
+	function listen () {
+		$buffer = $this->buffer;
+		$this->buffer = "";
+		while ($r = fgets ($this->pipes[1], 1024)) {
+			$buffer .= $r;
+		}
+		
+		return $buffer;
+	}
+	
+	
+	
+	function getError () {
+		$buffer = "";
+		while ($r = fgets ($this->pipes[2], 1024)) {
+			$buffer .= $r;
+		}
+		return $buffer;
+	}
+	
+	
+	
+	
 }
 
 ?>

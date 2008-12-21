@@ -123,8 +123,10 @@ function plugin_tracker_discovery_scan($Array_IP)
 
 	global $DB,$TRACKER_MAPPING_DISCOVERY;
 
+	$Thread = new Threads;
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+	$conf = new plugin_tracker_config;
 
 	// Clear DB table
 	$query = "TRUNCATE TABLE `glpi_plugin_tracker_discover`";
@@ -138,8 +140,45 @@ function plugin_tracker_discovery_scan($Array_IP)
 	$ip2 = $Array_IP["ip12"];
 	$ip3 = $Array_IP["ip13"];
 	$ip4 = $Array_IP["ip14"];
+	$s = 0;
+	$nb_process_discovery = $conf->getValue('nb_process_discovery');
+	// Prepare processes
+	$while = 'while (';
+	for ($i = 1;$i <= $nb_process_discovery;$i++)
+	{
+		if ($i == $nb_process_discovery){
+			$while .= '$t['.$i.']->isActive()';
+		}else{
+			$while .= '$t['.$i.']->isActive() || ';
+		}
+	}
+	
+	$while .= ') {';
+	for ($i = 1;$i <= $nb_process_discovery;$i++)
+	{
+		$while .= 'echo $t['.$i.']->listen();';
+	}
+	$while .= '}';
+	
+	$close = '';
+	for ($i = 1;$i <= $nb_process_discovery;$i++)
+	{
+		$close .= 'echo $t['.$i.']->close();';
+	}	
+	// End processes
 	while ($i != 1)
 	{
+		$s++;
+		$t[$s] = $Thread->create("tracker_fullsync.php --discovery_process=1 --ip1=".$ip1." --ip2=".$ip2." --ip3=".$ip3." --ip4=".$ip4);
+
+		if ($nb_process_discovery == $s)
+		{
+			eval($while);
+			eval($close);
+			$s = 0;
+		}
+
+/*	
 		// Test if port 161 is open
 		foreach ($snmp_auth as $num=>$field)
 		{
@@ -171,7 +210,7 @@ function plugin_tracker_discovery_scan($Array_IP)
 				break;
 			}	
 		}
-
+*/
 
 
 
@@ -236,6 +275,51 @@ function plugin_tracker_discovery_scan($Array_IP)
 	SET discover='0'
 	WHERE ID='1' ";
 	$DB->query($query);
+}
+
+
+
+function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
+{
+
+	global $DB,$TRACKER_MAPPING_DISCOVERY;
+	
+	$plugin_tracker_snmp = new plugin_tracker_snmp;
+	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+
+	// Load snmp auth
+	$snmp_auth = $plugin_tracker_snmp_auth->GetInfos("all","",0);		
+
+	foreach ($snmp_auth as $num=>$field)
+	{
+		echo "IP :".$ip1.".".$ip2.".".$ip3.".".$ip4."\n";
+		$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
+		if ($Array_sysdescr["sysDescr"] != ""){
+			$Array_Name = $plugin_tracker_snmp->SNMPQuery(array("sysName"=>".1.3.6.1.2.1.1.5.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
+			//Port is open, test with oids to determine the device type
+			$device_type = 0;
+			foreach ($TRACKER_MAPPING_DISCOVERY['discovery'] as $num_const=>$value_const)
+			{
+				$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
+				$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
+				if ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != ""){
+					echo "TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."<br/>";
+					$device_type = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
+				}
+			}
+			$query_ins = "INSERT INTO glpi_plugin_tracker_discover
+			(date,ifaddr,name,descr,type,FK_snmp_connection)
+			VALUES ('".strftime("%Y-%m-%d %H:%M:%S", time())."', 
+			'".$ip1.".".$ip2.".".$ip3.".".$ip4."',
+			'".$Array_Name["sysName"]."',
+			'".$Array_sysdescr["sysDescr"]."', 
+			'".$device_type."',
+			'".$snmp_auth[$num]["ID"]."' ) ";
+			$DB->query($query_ins);				
+			
+			break;
+		}	
+	}
 }
 
 
