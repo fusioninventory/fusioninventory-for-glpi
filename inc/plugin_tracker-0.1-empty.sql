@@ -101,6 +101,8 @@ CREATE TABLE `glpi_plugin_tracker_config` (
   `activation_snmp_phone` int(1) DEFAULT NULL,
   `activation_snmp_printer` int(1) DEFAULT NULL,
   `authsnmp` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nb_process_query` int(11) NOT NULL DEFAULT '1',
+  `nb_process_discovery` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
