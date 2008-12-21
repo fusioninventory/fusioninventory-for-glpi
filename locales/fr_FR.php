@@ -104,7 +104,8 @@ $LANGTRACKER["functionalities"][41]="Statut du matériel actif";
 $LANGTRACKER["functionalities"][42]="Commutateur";
 $LANGTRACKER["functionalities"][43]="Authentification SNMP";
 
-
+$LANGTRACKER["functionalities"][50]="Nombre de process simultanés pour la découverte réseau";
+$LANGTRACKER["functionalities"][51]="Nombre de process simultanés pour l'interrogation SNMP";
 
 $LANGTRACKER["snmp"][0]="Informations SNMP du matériel";
 $LANGTRACKER["snmp"][1]="Général";

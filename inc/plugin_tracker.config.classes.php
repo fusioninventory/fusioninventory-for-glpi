@@ -303,6 +303,20 @@ class plugin_tracker_config extends CommonDBTM {
 		echo "</select>";
 		echo "</td></tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][50]."</td>";
+		echo "<td>";
+		dropdownInteger("nb_process_discovery", $this->getValue('nb_process_discovery'),1,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][51]."</td>";
+		echo "<td>";
+		dropdownInteger("nb_process_query", $this->getValue('nb_process_query'),1,100);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";		
