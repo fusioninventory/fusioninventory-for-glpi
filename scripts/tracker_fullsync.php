@@ -77,79 +77,86 @@ $failed_nbr= 0;
 $fields=array();
 $type='';
 
-//Get script configuration
-
-$config = new plugin_tracker_snmp;
-
-if (isset($_GET["type"]))
-{
-	$type=$_GET["type"];
+if(isset($_GET['discovery_process'])){
+	plugin_tracker_discovery_scan_process($_GET['ip1'],$_GET['ip2'],$_GET['ip3'],$_GET['ip4']);
 }
-
-//Get the script's process identifier
-if (isset($_GET["process_id"]))
-	$fields["process_id"] = $_GET["process_id"];
-
-// Add process into database
-
-$processes = new Threads;
-
-$processes->addProcess($fields["process_id"]);
-
-// SNMP is working
-
-logInFile("tracker_snmp", ">>>>>> Starting Script <<<<<<\n\n");
-logInFile("tracker_snmp", "I) Get all devices \n\n");
-
-$processes_values = 0;
-$processes_values2 = 0;
-
-// ** QUERY PRINTERS ** //
-if (($type == "printer_type") OR ($type == ""))
+else
 {
-	$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
-
-	$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
+	
+	
+	//Get script configuration
+	
+	$config = new plugin_tracker_snmp;
+	
+	if (isset($_GET["type"]))
+	{
+		$type=$_GET["type"];
+	}
+	
+	//Get the script's process identifier
+	if (isset($_GET["process_id"]))
+		$fields["process_id"] = $_GET["process_id"];
+	
+	// Add process into database
+	
+	$processes = new Threads;
+	
+	$processes->addProcess($fields["process_id"]);
+	
+	// SNMP is working
+	
+	logInFile("tracker_snmp", ">>>>>> Starting Script <<<<<<\n\n");
+	logInFile("tracker_snmp", "I) Get all devices \n\n");
+	
+	$processes_values = 0;
+	$processes_values2 = 0;
+	
+	// ** QUERY PRINTERS ** //
+	if (($type == "printer_type") OR ($type == ""))
+	{
+		$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
+	
+		$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
+	}
+	
+	// ** QUERY NETWORKING ** //
+	if (($type == "networking_type") OR ($type == ""))
+	{
+		// Retrieve list of all networking to query SNMP
+		$ArrayListNetworking = plugin_tracker_getDeviceList(NETWORKING_TYPE);
+		plugin_tracker_snmp_networking_ifaddr($ArrayListNetworking,$xml_auth_rep);
+		$processes_values = plugin_tracker_UpdateDeviceBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
+	}
+	
+	// Update process into database
+	$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
+	
+	
+	// Discover function
+	// get config if we can or not scan
+	$conf = plugin_tracker_discovery_getConf();
+	
+	if (((isset($conf['discover'])) && ($conf['discover'] == "1") AND ($type == "")) OR ($type == "discovery"))
+	{
+		$explode = explode(".",$conf['ifaddr_start']);
+		$Array_IP['ip11'] = $explode[0];
+		$Array_IP['ip12'] = $explode[1];
+		$Array_IP['ip13'] = $explode[2];
+		$Array_IP['ip14'] = $explode[3];
+		$explode = explode(".",$conf['ifaddr_end']);
+		$Array_IP['ip21'] = $explode[0];
+		$Array_IP['ip22'] = $explode[1];
+		$Array_IP['ip23'] = $explode[2];
+		$Array_IP['ip24'] = $explode[3];
+	
+		plugin_tracker_discovery_scan($Array_IP);
+	}
+	
+	if (((isset($conf['getserialnumber'])) && ($conf['getserialnumber'] == "1") AND ($type == "")) OR ($type == "discovery_serial"))
+	{
+		plugin_tracker_discovery_scan_serial();
+	}
 }
-
-// ** QUERY NETWORKING ** //
-if (($type == "networking_type") OR ($type == ""))
-{
-	// Retrieve list of all networking to query SNMP
-	$ArrayListNetworking = plugin_tracker_getDeviceList(NETWORKING_TYPE);
-	plugin_tracker_snmp_networking_ifaddr($ArrayListNetworking,$xml_auth_rep);
-	$processes_values = plugin_tracker_UpdateDeviceBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
-}
-
-// Update process into database
-$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
-
-
-// Discover function
-// get config if we can or not scan
-$conf = plugin_tracker_discovery_getConf();
-
-if (((isset($conf['discover'])) && ($conf['discover'] == "1") AND ($type == "")) OR ($type == "discovery"))
-{
-	$explode = explode(".",$conf['ifaddr_start']);
-	$Array_IP['ip11'] = $explode[0];
-	$Array_IP['ip12'] = $explode[1];
-	$Array_IP['ip13'] = $explode[2];
-	$Array_IP['ip14'] = $explode[3];
-	$explode = explode(".",$conf['ifaddr_end']);
-	$Array_IP['ip21'] = $explode[0];
-	$Array_IP['ip22'] = $explode[1];
-	$Array_IP['ip23'] = $explode[2];
-	$Array_IP['ip24'] = $explode[3];
-
-	plugin_tracker_discovery_scan($Array_IP);
-}
-
-if (((isset($conf['getserialnumber'])) && ($conf['getserialnumber'] == "1") AND ($type == "")) OR ($type == "discovery_serial"))
-{
-	plugin_tracker_discovery_scan_serial();
-}
-
 
 
 
