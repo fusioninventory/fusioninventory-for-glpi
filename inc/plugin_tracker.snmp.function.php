@@ -259,9 +259,9 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 			eval($close);
 			$s = 0;
 		}
-	
-	
+		$processes_values["devices"]++;	
 	}
+	return $processes_values;
 }
 
 
