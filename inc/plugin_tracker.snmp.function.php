@@ -447,13 +447,13 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						unset($array);
 						$array["logical_number"] = $i;
 						$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
-						$array["iface"] = "";
+						$array["iface"] = 0;
 						$array["ifaddr"] = "";
 						$array["ifmac"] = "";
 						$array["netmask"] = "";
 						$array["gateway"] = "";
 						$array["subnet"] = "";
-						$array["netpoint"] = "";
+						$array["netpoint"] = 0;
 						$array["on_device"] = $IDNetworking;
 						$array["device_type"] = "2";
 						$array["add"] = "Ajouter";
