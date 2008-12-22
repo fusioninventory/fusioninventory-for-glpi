@@ -80,6 +80,9 @@ $type='';
 if(isset($_GET['discovery_process'])){
 	plugin_tracker_discovery_scan_process($_GET['ip1'],$_GET['ip2'],$_GET['ip3'],$_GET['ip4']);
 }
+elseif(isset($_GET['update_device_process'])){
+	plugin_tracker_UpdateDeviceBySNMP_process(array($_GET['id']=>$_GET['ip']),$_GET['FK_process'],$xml_auth_rep,$_GET['type']);
+}
 else
 {
 	
@@ -125,7 +128,9 @@ else
 		// Retrieve list of all networking to query SNMP
 		$ArrayListNetworking = plugin_tracker_getDeviceList(NETWORKING_TYPE);
 		plugin_tracker_snmp_networking_ifaddr($ArrayListNetworking,$xml_auth_rep);
-		$processes_values = plugin_tracker_UpdateDeviceBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
+//		$processes_values = plugin_tracker_UpdateDeviceBySNMP($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
+		$processes_values = plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
+
 	}
 	
 	// Update process into database
