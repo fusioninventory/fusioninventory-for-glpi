@@ -214,6 +214,160 @@ function plugin_tracker_UpdateDeviceBySNMP($ArrayListDevice,$FK_process = 0,$xml
 
 
 
+function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_process = 0,$xml_auth_rep,$type)
+{
+	global $DB;
+	
+	$Thread = new Threads;
+	$conf = new plugin_tracker_config;
+	
+	$nb_process_query = $conf->getValue('nb_process_query');
+	// Prepare processes
+	$while = 'while (';
+	for ($i = 1;$i <= $nb_process_query;$i++)
+	{
+		if ($i == $nb_process_query){
+			$while .= '$t['.$i.']->isActive()';
+		}else{
+			$while .= '$t['.$i.']->isActive() || ';
+		}
+	}
+	
+	$while .= ') {';
+	for ($i = 1;$i <= $nb_process_query;$i++)
+	{
+		$while .= 'echo $t['.$i.']->listen();';
+	}
+	$while .= '}';
+	
+	$close = '';
+	for ($i = 1;$i <= $nb_process_query;$i++)
+	{
+		$close .= 'echo $t['.$i.']->close();';
+	}	
+	// End processes
+	
+	$s = 0;
+	foreach ( $ArrayListDevice as $ID_Device=>$ifIP )
+	{
+		$s++;
+		$t[$s] = $Thread->create("tracker_fullsync.php --update_device_process=1 --id=".$ID_Device." --ip=".$ifIP." --FK_process=".$FK_process." --type=".$type);
+
+		if ($nb_process_query == $s)
+		{
+			eval($while);
+			eval($close);
+			$s = 0;
+		}
+	
+	
+	}
+}
+
+
+
+function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,$xml_auth_rep,$type)
+{
+	$processes_values["devices"] = 0;
+	$processes_values["errors"] = 0;
+	
+	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+	$processes = new Threads;
+	
+	foreach ( $ArrayDevice as $ID_Device=>$ifIP )
+	{
+		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		
+		// Get SNMP model 
+		$snmp_model_ID = '';
+		$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID_Device,$type);
+		if (($snmp_model_ID != "") && ($ID_Device != ""))
+		{
+			// ** Get oid of PortName
+			$Array_Object_oid_ifName = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifName'");
+
+			$Array_Object_oid_ifType = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifType'");
+
+			// ** Get oid of vtpVlanName
+			$Array_Object_oid_vtpVlanName = $plugin_tracker_snmp->GetOID($snmp_model_ID,"mapping_name='vtpVlanName'");
+
+			// ** Get OIDs
+			$Array_Object_oid = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0'");
+
+			// ** Get snmp version and authentification
+			$snmp_auth = $plugin_tracker_snmp_auth->GetInfos($ID_Device,$xml_auth_rep,$type);
+			$snmp_version = $snmp_auth["snmp_version"];
+
+			// ** Get from SNMP, description of equipment
+			$plugin_tracker_snmp->DefineObject(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"));
+			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ifIP,$snmp_version,$snmp_auth);
+			if ($Array_sysdescr["sysDescr"] == "")
+			{
+				// SNMP error (Query impossible)
+				$processes_values["errors"]++;
+				$processes->addProcessValues($FK_process,"snmp_errors","","SNMP Query impossible (".$ID_Device.") Type ".$type." ");
+			}
+			else
+			{
+				//**
+				$ArrayPort_LogicalNum_SNMPName = $plugin_tracker_snmp->GetPortsName($ifIP,$snmp_version,$snmp_auth,$Array_Object_oid_ifName);
+	
+				// **
+				$ArrayPort_LogicalNum_SNMPNum = $plugin_tracker_snmp->GetPortsSNMPNumber($ifIP,$snmp_version,$snmp_auth);
+
+				// ** Get oid ports Counter
+				$ArrayPort_Object_oid = tracker_snmp_GetOIDPorts($snmp_model_ID,$ifIP,$ID_Device,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process,$type);
+
+				// ** Get query SNMP of switchs ports
+				if (!empty($ArrayPort_Object_oid))
+				$ArraySNMPPort_Object_result = $plugin_tracker_snmp->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
+
+				// ** Get query SNMP on switch
+				$ArraySNMP_Object_result= $plugin_tracker_snmp->SNMPQuery($Array_Object_oid,$ifIP,$snmp_version,$snmp_auth);
+				$processes_values["devices"]++;
+				
+				// ** Get link OID fields
+				$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID);
+	
+				// ** Update fields of switchs
+				tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type);
+
+				//**
+				$ArrayPortDB_Name_ID = $plugin_tracker_snmp->GetPortsID($ID_Device);
+	
+				// ** Update ports fields of switchs
+				if (!empty($ArrayPort_Object_oid))
+					UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process,$type);
+				$Array_trunk_ifIndex = array();
+				if ($type == NETWORKING_TYPE)	
+					$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process);
+
+				// ** Get MAC adress of connected ports
+				$array_port_trunk = array();
+				if (!empty($ArrayPort_Object_oid))
+					$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$ID_Device,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex);
+				if ($type ==  NETWORKING_TYPE)
+				{
+					// Foreach VLAN ID to GET MAC Adress on each VLAN
+					$plugin_tracker_snmp->DefineObject($Array_Object_oid_vtpVlanName);
+		
+					$Array_vlan = $plugin_tracker_snmp->SNMPQueryWalkAll($Array_Object_oid_vtpVlanName,$ifIP,$snmp_version,$snmp_auth);
+					foreach ($Array_vlan as $objectdyn=>$vlan_name)
+					{
+						$explode = explode(".",$objectdyn);
+						$ID_VLAN = $explode[(count($explode) - 1)];
+						logInFile("tracker_snmp", "		VLAN : ".$ID_VLAN."\n\n");
+						GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$ID_Device,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex,$ID_VLAN,$array_port_trunk,$vlan_name);
+					}
+				}
+
+			}
+		}
+	} 
+	return $processes_values;
+}
+
+
 /**
  * Get port OID list for the SNMP model && create ports in DB if they don't exists 
  *
