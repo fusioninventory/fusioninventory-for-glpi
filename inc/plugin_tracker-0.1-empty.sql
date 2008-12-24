@@ -108,6 +108,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
   `ID` int(1) NOT NULL AUTO_INCREMENT,
   `activation_history` int(1) DEFAULT NULL,
   `activation_connection` int(1) DEFAULT NULL,
+  `activation_snmp_computer` int(1) NOT NULL DEFAULT '0',
   `activation_snmp_networking` int(1) DEFAULT NULL,
   `activation_snmp_peripheral` int(1) DEFAULT NULL,
   `activation_snmp_phone` int(1) DEFAULT NULL,
