@@ -364,12 +364,12 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 
 				if (plugin_tracker_haveRight("printers_info", "r")) {
 					$array = array (
-						1 => $LANGTRACKER["title"][1]
+						2 => $LANGTRACKER["title"][1]
 					);
 				}
 				if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
 					$array = array (
-						2 => $LANGTRACKER["title"][2]
+						1 => $LANGTRACKER["title"][2]
 					);
 				}
 				/*
@@ -464,7 +464,11 @@ function plugin_headings_actions_tracker($type) {
 		case COMPUTER_TYPE :
 
 			$array = array ();
-
+			if (plugin_tracker_haveRight("printers_info", "r")) {
+				$array = array (
+					2 => "plugin_headings_tracker_computersInfo"
+				);
+			}
 			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
 				$array = array (
 					1 => "plugin_headings_tracker_computerHistory"
@@ -549,6 +553,11 @@ function plugin_headings_tracker_computerErrors($type, $ID) {
 
 	$errors = new plugin_tracker_errors();
 	$errors->showForm(COMPUTER_TYPE, GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.errors.form.php', $_GET["ID"]);
+}
+
+function plugin_headings_tracker_computerInfo($type, $ID) {
+//	$plugin_tracker_printers = new plugin_tracker_printers();
+//	$plugin_tracker_printers->showFormPrinter(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_tracker_printerInfo($type, $ID) {
