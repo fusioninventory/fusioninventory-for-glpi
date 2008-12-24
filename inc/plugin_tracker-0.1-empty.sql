@@ -90,6 +90,18 @@ CREATE TABLE `glpi_plugin_tracker_connection_history` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_computers`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_computers` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FK_computers` int(11) NOT NULL,
+  `FK_model_infos` int(8) NOT NULL DEFAULT '0',
+  `FK_snmp_connection` int(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config`;
 
 CREATE TABLE `glpi_plugin_tracker_config` (
