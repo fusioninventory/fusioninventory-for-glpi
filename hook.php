@@ -362,9 +362,14 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			else {
 				$array = array ();
 
+				if (plugin_tracker_haveRight("printers_info", "r")) {
+					$array = array (
+						1 => $LANGTRACKER["title"][1]
+					);
+				}
 				if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
 					$array = array (
-						1 => $LANGTRACKER["title"][2]
+						2 => $LANGTRACKER["title"][2]
 					);
 				}
 				/*
