@@ -375,8 +375,12 @@ function appear_array(id){
 		{
 			while ( $data=$DB->fetch_array($result) )
 			{
-			
-				echo "<tr class='tab_bg_1'>";
+				$background_img = "";
+				if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
+				{
+					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/connected_trunk.png\"); '";
+				}
+				echo "<tr class='tab_bg_1' height='40'".$background_img.">";
 				echo "<td align='center' id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT."/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"]."\");close_array(".$data["ID"].");' /></td>";
 				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
 				echo "<td align='center'>".$data["ifmtu"]."</td>";
