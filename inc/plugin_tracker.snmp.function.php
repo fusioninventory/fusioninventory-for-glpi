@@ -851,16 +851,17 @@ $snmp_queries->DefineObject($arrayTRUNKmod);
 		
 $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
 
-//echo "VLAN :".$vlan."\n";
-//echo "TRUNKSTATUS :".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex]."\n";
-//echo "MACADRESS :".$MacAddress."\n";
-//echo "INTERFACE :".$ifName."\n";
-//echo "================================\n";
+echo "================================\n";
+echo "VLAN :".$vlan."\n";
+echo "TRUNKSTATUS :".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex]."\n";
+echo "MACADRESS :".$MacAddress."\n";
+echo "INTERFACE :".$ifName."\n";
+
 					
 					$queryPortEnd = "";	
 					if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR (empty($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
 					{
-//echo "PASSAGE ... OK\n";
+echo "PASSAGE ... OK\n";
 						$queryPortEnd = "SELECT * 
 						
 						FROM glpi_networking_ports
@@ -870,7 +871,7 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 					}
 					else if (($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") AND ($vlan != "")) // It's a trunk port
 					{
-//echo "PASSAGE ... FAILED\n";
+echo "PASSAGE ... FAILED\n";
 						$queryPortEnd = "";
 						if ($vlan == "")
 						{
@@ -879,7 +880,7 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 					}
 					else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 					{
-//echo "PASSAGE ... OK (2) => Refusé\n";
+/* echo "PASSAGE ... OK (2) => Refusé\n";
 						$queryPortEnd = "SELECT * 
 						
 						FROM glpi_networking_ports
@@ -891,6 +892,14 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
 						{
 							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
 						}
+*/
+echo "PASSAGE ... OK (2) => Accepté\n";
+						$queryPortEnd = "SELECT * 
+						
+						FROM glpi_networking_ports
+						
+						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+							AND on_device!='".$IDNetworking."' ";
 					}
 
 					if (($queryPortEnd != ""))
