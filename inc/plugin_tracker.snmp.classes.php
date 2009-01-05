@@ -361,7 +361,7 @@ function appear_array(id){
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut" title="Sélectionnez les éléments à afficher par défaut" src="/glpi0712/pics/options_search.png" class="pointer" onclick="var w = window.open(\'/glpi0712/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\', \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
+		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut" title="Sélectionnez les éléments à afficher par défaut" src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer" onclick="var w = window.open(\''.GLPI_ROOT.'/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\', \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
 /*		echo "<th>".$LANGTRACKER["snmp"][42]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][43]."</th>";
