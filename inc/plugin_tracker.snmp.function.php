@@ -223,6 +223,7 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 	
 	$processes_values["devices"] = 0;
 	$nb_process_query = $conf->getValue('nb_process_query');
+
 	// Prepare processes
 	$while = 'while (';
 	for ($i = 1;$i <= $nb_process_query;$i++)
@@ -877,6 +878,30 @@ echo "PASSAGE ... FAILED\n";
 						{
 							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
 						}
+						
+						// Add port trunk
+						$query_trunk = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+							LEFT JOIN glpi_plugin_tracker_networking_ports
+							ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
+							WHERE device_type='2' 
+								AND on_device='".$IDNetworking."' 
+								AND name='".$ifName."' ";
+						$result_trunk=$DB->query($query_trunk);
+						while ($data_trunk=$DB->fetch_array($result_trunk))
+						{
+							if($data_trunk['trunk'] == "0")
+							{
+								$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+								SET trunk='1'
+								WHERE id='".$data_trunk['sid']."' ";
+								$DB->query($query_update);
+								tracker_snmp_addLog($data_trunk["FK_networking_ports"],"trunk","0","1",$FK_process);
+							}
+						}
+
+					}						
+						
+						
 					}
 					else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 					{
