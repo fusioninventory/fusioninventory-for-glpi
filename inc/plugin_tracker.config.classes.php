@@ -251,14 +251,14 @@ class plugin_tracker_config extends CommonDBTM {
 		dropdownYesNo("activation_history", $this->isActivated('activation_history'));
 		echo "</td>";
 		echo "</tr>";
-
+/* Disable for the moment SEE IT WALID
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][11]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_connection", $this->isActivated('activation_connection'));
 		echo "</td>";
 		echo "</tr>";		
-
+*/
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][12]."</td>";
 		echo "<td>";
