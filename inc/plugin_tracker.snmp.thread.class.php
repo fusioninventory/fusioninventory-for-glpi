@@ -67,7 +67,7 @@ class Threads extends CommonDBTM
 		if ($array_name == "unknow_mac")
 			echo "class='actif'";
 		echo "><a href='plugin_tracker.processes.unknow_mac.php'>&nbsp;".$LANGTRACKER["processes"][13]."&nbsp;</a></li>\n";
-		echo "<li><a href=''>&nbsp;".$LANGTRACKER["processes"][11]."&nbsp;</a></li>\n";
+//		echo "<li><a href=''>&nbsp;".$LANGTRACKER["processes"][11]."&nbsp;</a></li>\n";
 		echo "<li ";
 		if ($array_name == "errors")
 			echo "class='actif'";
