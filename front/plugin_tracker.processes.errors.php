@@ -40,6 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
+plugin_tracker_checkRight("snmp_scripts_infos","r");
 
 $Threads = new Threads;
 

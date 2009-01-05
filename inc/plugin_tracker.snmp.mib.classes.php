@@ -61,7 +61,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	{
 		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING,$IMPORT_TYPES;
 		
-		if ( !plugin_tracker_haveRight("errors","r") )
+		if ( !plugin_tracker_haveRight("snmp_models","r") )
 		{
 			return false;
 		}
@@ -252,6 +252,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	function delete($item_coche)
 	{
 		global $DB;
+		
+		plugin_tracker_checkRight("snmp_models","w");
 		
 		for ($i = 0; $i < count($item_coche); $i++)
 		{

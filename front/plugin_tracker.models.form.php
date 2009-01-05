@@ -43,7 +43,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-plugin_tracker_checkRight("errors", "r");
+plugin_tracker_checkRight("snmp_models","r");
 
 $plugin_tracker_model_infos = new plugin_tracker_model_infos();
 $plugin_tracker_mib_networking = new plugin_tracker_mib_networking();

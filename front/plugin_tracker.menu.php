@@ -40,7 +40,11 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
-plugin_tracker_checkRight("errors","r");
+plugin_tracker_checkRight("snmp_models","r");
+plugin_tracker_checkRight("snmp_authentification","r");
+plugin_tracker_checkRight("snmp_scripts_infos","r");
+plugin_tracker_checkRight("snmp_discovery","r");
+
 plugin_tracker_phpextensions();
 echo plugin_tracker_menu();
 

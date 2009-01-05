@@ -47,7 +47,7 @@ class plugin_tracker_model_infos extends CommonDBTM {
 	function showForm($target, $ID = '') {
 		global $DB, $CFG_GLPI, $LANG, $LANGTRACKER;
 
-		plugin_tracker_checkRight("errors", "r");
+		plugin_tracker_checkRight("snmp_models","r");
 
 		if ($ID!='')
 			$this->getFromDB($ID);

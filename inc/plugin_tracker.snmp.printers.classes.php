@@ -57,6 +57,8 @@ class plugin_tracker_printers extends CommonDBTM {
 	{
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
 	
+		plugin_tracker_checkRight("snmp_printers","r");
+	
 		$this->ID = $ID;
 		
 		$plugin_tracker_printers = new plugin_tracker_printers;
