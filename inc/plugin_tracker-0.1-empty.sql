@@ -456,6 +456,9 @@ INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (1,'1','');
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (2,'2c','');
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (3,'3','');
 
+INSERT INTO `glpi_plugin_tracker_snmp_connection` VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '0', '', '0', '', '0');
+INSERT INTO `glpi_plugin_tracker_snmp_connection` VALUES (2, 'Communauté Public v2c', '2', 'public', '', '0', '0', '', '0', '', '0');
+
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5150','3','2','0');
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5150','4','3','0');
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5150','6','4','0');
