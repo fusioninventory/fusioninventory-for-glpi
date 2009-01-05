@@ -1044,9 +1044,9 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		$end_Number = $explode[(count($explode)-1)];
 		
 		$Array_trunk_ifIndex[$ifIndex] = 1;
-echo "IFINDEX **** > ".$ifIndex."\n";
-echo "IFINDEX NUM Logic > ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."\n";
-echo "IFINDEX NAME Logic > ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]]."\n";
+//echo "IFINDEX **** > ".$ifIndex."\n";
+//echo "IFINDEX NUM Logic > ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."\n";
+//echo "IFINDEX NAME Logic > ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]]."\n";
 
 		// Convert IP hex to decimal
 		$Array_ip_switch_trunk = explode(" ",$result);
