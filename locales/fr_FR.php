@@ -52,6 +52,15 @@ $LANGTRACKER["profile"][13]="Infos Imprimantes";
 $LANGTRACKER["profile"][14]="Infos Réseau";
 $LANGTRACKER["profile"][15]="Erreurs courantes";
 
+$LANGTRACKER["profile"][16]="SNMP Réseaux";
+$LANGTRACKER["profile"][17]="SNMP Périphériques";
+$LANGTRACKER["profile"][18]="SNMP Imprimantes";
+$LANGTRACKER["profile"][19]="Modèles SNMP";
+$LANGTRACKER["profile"][20]="Authentification SNMP";
+$LANGTRACKER["profile"][21]="Infos scripts";
+$LANGTRACKER["profile"][22]="Découverte réseau";
+$LANGTRACKER["profile"][23]="Configuration générale";
+
 
 $LANGTRACKER["setup"][2]="Merci de vous placer sur l'entité racine (voir tous)";
 $LANGTRACKER["setup"][3]="Configuration du plugin ".$title;
