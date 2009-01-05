@@ -880,7 +880,7 @@ echo "PASSAGE ... FAILED\n";
 						}
 						
 						// Add port trunk
-						$query_trunk = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+/*						$query_trunk = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
 							LEFT JOIN glpi_plugin_tracker_networking_ports
 							ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
 							WHERE device_type='2' 
@@ -898,7 +898,7 @@ echo "PASSAGE ... FAILED\n";
 								tracker_snmp_addLog($data_trunk["FK_networking_ports"],"trunk","0","1",$FK_process);
 							}
 						}
-
+*/
 					}						
 					else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 					{
@@ -916,7 +916,7 @@ echo "PASSAGE ... OK (2) => Refusé\n";
 						}
 							
 						// Add port trunk
-						$query_trunk = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+/*						$query_trunk = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
 							LEFT JOIN glpi_plugin_tracker_networking_ports
 							ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
 							WHERE device_type='2' 
@@ -934,7 +934,7 @@ echo "PASSAGE ... OK (2) => Refusé\n";
 								tracker_snmp_addLog($data_trunk["FK_networking_ports"],"trunk","0","1",$FK_process);
 							}
 						}
-
+*/
 					}
 
 					if (($queryPortEnd != ""))
@@ -1005,9 +1005,30 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 	$Array_trunk_IP_hex = array("cdpCacheAddress" => "1.3.6.1.4.1.9.9.23.1.2.1.1.4");
 	$Array_trunk_ifDescr = array("cdpCacheDevicePort" => "1.3.6.1.4.1.9.9.23.1.2.1.1.7");
 	$Array_trunk_ifIndex = array();
-	
+
 	$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
+
+	// Get trunk port directly from oid
+	$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus" => "1.3.6.1.4.1.9.9.46.1.6.1.1.14");
+	$snmp_queries->DefineObject($arrayTRUNKmod);
+		
+	$Arraytrunktype = $snmp_queries->SNMPQueryWalkAll($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
 	
+	foreach($Arraytrunktype as $oidtrunkPort=>$ifIndex_by_snmp)
+	{
+
+		if ($ifIndex_by_snmp == "1")
+		{
+			$oidExplode = explode(".", $oidtrunkPort);
+			
+			$Array_trunk_ifIndex[$oidExplode[(count($oidExplode)-1)]] = 1;
+
+		}
+	}
+	
+	// Get trunk port from CDP
+
+
 	// Get by SNMP query the IP addresses of the switch connected ($Array_trunk_IP_hex)
 	$snmp_queries->DefineObject($Array_trunk_IP_hex);
 	$Array_trunk_IP_hex_result = $snmp_queries->SNMPQueryWalkAll($Array_trunk_IP_hex,$IP,$snmp_version,$snmp_auth);
