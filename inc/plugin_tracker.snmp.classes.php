@@ -376,7 +376,7 @@ function appear_array(id){
 			while ( $data=$DB->fetch_array($result) )
 			{
 				$background_img = "";
-				if ($data["trunk"] == "1")
+				if (($data["trunk"] == "1") AND (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"])))
 				{
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/port_trunk.png\"); '";
 				}
