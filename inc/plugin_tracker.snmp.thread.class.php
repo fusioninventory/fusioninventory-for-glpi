@@ -338,6 +338,7 @@ class Threads extends CommonDBTM
 	}
 
 
+
 	function addProcessValues($PID, $field,$FK_port,$value)
 	{
 		global $DB;
