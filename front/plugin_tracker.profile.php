@@ -77,9 +77,22 @@ else  if (isset($_POST["update"])){
 
 echo "<div align='center'><form method='post' name='massiveaction_form' id='massiveaction_form'  action=\"./plugin_tracker.profile.php\">";
 
-echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='8'>";
-echo $LANGTRACKER["profile"][10]." : </th></tr>";
-echo "<tr><th></th><th></th><th>".$LANG["Menu"][35]."</th><th>".$LANGTRACKER["profile"][11]."</th><th>".$LANGTRACKER["profile"][12]."</th><th>".$LANGTRACKER["profile"][13]."</th><th>".$LANGTRACKER["profile"][14]."</th><th>".$LANGTRACKER["profile"][15]."</th>";
+echo "<table class='tab_cadre' cellpadding='5'>";
+echo "<tr>";
+echo "	<th colspan='11'>".$LANGTRACKER["profile"][10]." : </th>";
+echo "</tr>";
+echo "<tr>";
+echo "	<th></th>";
+echo "	<th></th>";
+echo "	<th>".$LANG["Menu"][35]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][16]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][17]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][18]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][19]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][20]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][21]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][22]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][23]."</th>";
 
 $query0="SELECT * FROM glpi_plugin_tracker_profiles ORDER BY name";
 $result0=$DB->query($query0);
@@ -93,44 +106,65 @@ while ($data0=$DB->fetch_assoc($result0)){
 	echo "</td>";
 	echo "<td>".$data0['ID']."</td><td>".$data0['name']."</td>";
 	
-	if ($data0['computers_history']=='r')
+	if ($data0['snmp_networking']=='r')
 		echo "<td>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['computers_history']=='w')
+	elseif ($data0['snmp_networking']=='w')
 		echo "<td>".$LANG["profiles"][11]."</td>";
 	else
 		echo "<td>".$LANG["profiles"][12]."</td>";
 	
-	if ($data0['printers_history']=='r')
+	if ($data0['snmp_peripherals']=='r')
 		echo "<td>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['printers_history']=='w')
+	elseif ($data0['snmp_peripherals']=='w')
 		echo "<td>".$LANG["profiles"][11]."</td>";
 	else
 		echo "<td>".$LANG["profiles"][12]."</td>";
 
-	if ($data0['printers_info']=='r')
+	if ($data0['snmp_printers']=='r')
 		echo "<td>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['printers_info']=='w')
+	elseif ($data0['snmp_printers']=='w')
 		echo "<td>".$LANG["profiles"][11]."</td>";
 	else
 		echo "<td>".$LANG["profiles"][12]."</td>";
 	
-	if ($data0['networking_info']=='r')
+	if ($data0['snmp_models']=='r')
 		echo "<td>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['networking_info']=='w')
+	elseif ($data0['snmp_models']=='w')
 		echo "<td>".$LANG["profiles"][11]."</td>";
 	else
 		echo "<td>".$LANG["profiles"][12]."</td>";
 	
-	if ($data0['errors']=='r')
+	if ($data0['snmp_authentification']=='r')
 		echo "<td>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['errors']=='w')
+	elseif ($data0['snmp_authentification']=='w')
+		echo "<td>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td>".$LANG["profiles"][12]."</td>";
+	
+	if ($data0['snmp_scripts_infos']=='r')
+		echo "<td>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['snmp_scripts_infos']=='w')
+		echo "<td>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td>".$LANG["profiles"][12]."</td>";
+	
+	if ($data0['snmp_discovery']=='r')
+		echo "<td>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['snmp_discovery']=='w')
+		echo "<td>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td>".$LANG["profiles"][12]."</td>";
+	
+	if ($data0['general_config']=='r')
+		echo "<td>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['general_config']=='w')
 		echo "<td>".$LANG["profiles"][11]."</td>";
 	else
 		echo "<td>".$LANG["profiles"][12]."</td>";
 
 }
 
-echo "<tr class='tab_bg_1'><td colspan='8'>";
+echo "<tr class='tab_bg_1'><td colspan='11'>";
 echo "<div align='center'><a onclick= \"if ( markAllRows('massiveaction_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
 echo " - <a onclick= \"if ( unMarkAllRows('massiveaction_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
 echo "<input type='submit' name='delete_profile' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";	
