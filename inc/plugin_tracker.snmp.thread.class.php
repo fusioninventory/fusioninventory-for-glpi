@@ -46,6 +46,8 @@ class Threads extends CommonDBTM
 
 		global $DB,$LANG,$LANGTRACKER;
 
+		plugin_tracker_checkRight("snmp_scripts_infos","r");
+		
 		$minfreq = 9999;
 		$CommonItem = new CommonItem;
 		$Threads = new Threads;

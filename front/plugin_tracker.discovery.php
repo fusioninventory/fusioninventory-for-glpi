@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
-plugin_tracker_checkRight("errors","r");
+if(plugin_tracker_HaveRight("snmp_discovery","r"))
 
 if((isset($_POST['update'])) AND (!empty($_POST['update'])))
 {

@@ -107,7 +107,7 @@ class plugin_tracker_printers_history extends CommonDBTM {
 		
 		GLOBAL $LANG, $LANGTRACKER;
 		
-		if ( !plugin_tracker_haveRight("printers_history","r") )
+		if ( !plugin_tracker_haveRight("snmp_printers","r") )
 			return false;
 		
 		// display stats
@@ -169,7 +169,7 @@ class plugin_tracker_printers_history extends CommonDBTM {
 			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['ID']."'>";
 		}
 		
-		if ( !plugin_tracker_haveRight("printers_history","w") )
+		if ( !plugin_tracker_haveRight("snmp_printers","w") )
 			return false;
 			
 		echo "<input type='hidden' name='limit' value='".$limit."'>";
@@ -330,7 +330,7 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 	function showForm($target,$ID) {
 		global $LANG, $LANGTRACKER;
 		
-		if ( plugin_tracker_haveRight("printers_history","w") ) {
+		if ( plugin_tracker_haveRight("snmp_printers","w") ) {
 			echo "<br>";
 			echo "<div align='center'><form method='post' name='printer_history_config_form' id='printer_history_config_form'  action=\"".$target."\">";
 	

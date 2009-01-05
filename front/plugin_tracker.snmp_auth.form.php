@@ -43,7 +43,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-plugin_tracker_checkRight("errors", "r");
+plugin_tracker_checkRight("snmp_authentification","r");
 
 $plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 

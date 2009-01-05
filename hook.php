@@ -420,7 +420,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			else {
 				$array = array ();
 
-				if (plugin_tracker_haveRight("printers_info", "r")) {
+				if (plugin_tracker_haveRight("snmp_printers", "r")) {
 					$array = array (
 						1 => $LANGTRACKER["title"][1]
 					);
@@ -451,7 +451,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 				return array ();
 			// Non template case
 			else {
-				if (plugin_tracker_haveRight("networking_info", "r")) {
+				if (plugin_tracker_haveRight("snmp_networking", "r")) {
 					$array = array (
 						1 => $LANGTRACKER["title"][1]
 					);
@@ -517,7 +517,7 @@ function plugin_headings_actions_tracker($type) {
 
 			$array = array ();
 
-			if (plugin_tracker_haveRight("printers_info", "r")) {
+			if (plugin_tracker_haveRight("snmp_printers", "r")) {
 				$array = array (
 					1 => "plugin_headings_tracker_printerInfo"
 				);
@@ -545,7 +545,7 @@ function plugin_headings_actions_tracker($type) {
 
 		case NETWORKING_TYPE :
 
-			if (plugin_tracker_haveRight("networking_info", "r")) {
+			if (plugin_tracker_haveRight("snmp_networking", "r")) {
 				$array = array (
 					1 => "plugin_headings_tracker_networkingInfo"
 				);

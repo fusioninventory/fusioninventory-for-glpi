@@ -45,6 +45,8 @@ class plugin_tracker_importexport extends CommonDBTM
 	{
 		global $DB;
 		
+		plugin_tracker_checkRight("snmp_models","r");
+		
 		$query = "SELECT * 
 					
 		FROM glpi_plugin_tracker_model_infos
@@ -108,6 +110,8 @@ class plugin_tracker_importexport extends CommonDBTM
 	{
 		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 		
+		plugin_tracker_checkRight("snmp_models","r");
+		
 		echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 		
 		echo "<br>";
@@ -132,6 +136,8 @@ class plugin_tracker_importexport extends CommonDBTM
 	function import($file)
 	{
 		global $DB,$LANGTRACKER;
+
+		plugin_tracker_checkRight("snmp_models","w");
 
 		$xml = simplexml_load_file($_FILES['importfile']['tmp_name']);	
 

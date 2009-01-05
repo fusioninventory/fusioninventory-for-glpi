@@ -170,9 +170,9 @@ abstract class plugin_tracker_snmp2 {
 		
 		$history = new plugin_tracker_SNMP_history;
 		
-		if ( !plugin_tracker_haveRight($this->tracker_right,"r") )
+		if ( !plugin_tracker_haveRight("snmp_networking","r") )
 			return false;
-		if ( (plugin_tracker_haveRight($this->tracker_right,"w")) && (haveRight($this->glpi_right,"w")) )
+		if ( plugin_tracker_haveRight("snmp_networking","w") )
 			$canedit = true;
 		else
 			$canedit = false;
