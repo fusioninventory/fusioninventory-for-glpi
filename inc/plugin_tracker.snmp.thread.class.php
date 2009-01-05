@@ -398,39 +398,47 @@ class Threads extends CommonDBTM
 	{
 		global $DB;
 	
-		// Search if a line exist
-		$query = "SELECT *  FROM glpi_plugin_tracker_unknown_mac
-		WHERE unknow_mac='".$macaddress."'
-		ORDER BY end_time DESC
-		LIMIT 0,1";
-		$result = $DB->query($query);
-		if ($DB->numrows($result) == 0)
-		{
-			// Insert
-			$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
-				(start_FK_processes, start_time, port,unknow_mac,end_time,end_FK_processes)
-			VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".date("Y-m-d H:i:s")."','".$PID."')";
-			$DB->query($query_ins);
-		}
-		else
-		{
-			while ($data = $DB->fetch_array($result))
+		// Detect if mac adress is different of internal mac address of port
+		$query = "SELECT *  FROM glpi_networking_ports
+		WHERE ID='".$FK_port."'
+		 AND ifmac='".$macaddress."' "; 
+		$result = $DB->query($query);		
+		if (mysql_num_rows($result) == "0"){
+	
+			// Search if a line exist
+			$query = "SELECT *  FROM glpi_plugin_tracker_unknown_mac
+			WHERE unknow_mac='".$macaddress."'
+			ORDER BY end_time DESC
+			LIMIT 0,1";
+			$result = $DB->query($query);
+			if ($DB->numrows($result) == 0)
 			{
-				if ($data["port"] == $FK_port)
+				// Insert
+				$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
+					(start_FK_processes, start_time, port,unknow_mac,end_time,end_FK_processes)
+				VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".date("Y-m-d H:i:s")."','".$PID."')";
+				$DB->query($query_ins);
+			}
+			else
+			{
+				while ($data = $DB->fetch_array($result))
 				{
-					// Update
-					$query_upd = "UPDATE glpi_plugin_tracker_unknown_mac
-					SET end_time='".date("Y-m-d H:i:s")."',end_FK_processes='".$PID."' 
-					WHERE ID='".$data["ID"]."' ";
-					$DB->query($query_upd);
-				}
-				else
-				{
-					// Insert
-					$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
-						(start_FK_processes, start_time, port,unknow_mac,end_time,end_FK_processes)
-					VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".date("Y-m-d H:i:s")."','".$PID."')";
-					$DB->query($query_ins);
+					if ($data["port"] == $FK_port)
+					{
+						// Update
+						$query_upd = "UPDATE glpi_plugin_tracker_unknown_mac
+						SET end_time='".date("Y-m-d H:i:s")."',end_FK_processes='".$PID."' 
+						WHERE ID='".$data["ID"]."' ";
+						$DB->query($query_upd);
+					}
+					else
+					{
+						// Insert
+						$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
+							(start_FK_processes, start_time, port,unknow_mac,end_time,end_FK_processes)
+						VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".date("Y-m-d H:i:s")."','".$PID."')";
+						$DB->query($query_ins);
+					}
 				}
 			}
 		}
