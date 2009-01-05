@@ -132,6 +132,7 @@ $LANGTRACKER["snmp"][47]="Nb d'erreurs en entrée";
 $LANGTRACKER["snmp"][48]="Nb d'octets envoyés";
 $LANGTRACKER["snmp"][49]="Nb d'erreurs en réception";
 $LANGTRACKER["snmp"][50]="Connexion";
+$LANGTRACKER["snmp"][51]="Duplex";
 
 $LANGTRACKER["snmpauth"][1]="Communauté";
 $LANGTRACKER["snmpauth"][2]="Utilisateur";

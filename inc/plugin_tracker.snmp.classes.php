@@ -350,15 +350,20 @@ function appear_array(id){
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='13'>";
+		$query_array = "SELECT * FROM glpi_display
+		WHERE type='5157'
+			AND FK_users='0'
+		ORDER BY rank";
+		$result_array=$DB->query($query_array);
+		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
 		echo "Tableau des ports";
 		echo "</th>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<th></th>";
+		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut" title="Sélectionnez les éléments à afficher par défaut" src="/glpi0712/pics/options_search.png" class="pointer" onclick="var w = window.open(\'/glpi0712/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\', \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][42]."</th>";
+/*		echo "<th>".$LANGTRACKER["snmp"][42]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][43]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][44]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][45]."</th>";
@@ -369,7 +374,58 @@ function appear_array(id){
 		echo "<th>".$LANGTRACKER["mapping"][115]."</th>";
 		echo "<th>".$LANG["networking"][17]."</th>";
 		echo "<th>".$LANGTRACKER["snmp"][50]."</th>";
+		*/
+		$query_array = "SELECT * FROM glpi_display
+		WHERE type='5157'
+			AND FK_users='0'
+		ORDER BY rank";
+		$result_array=$DB->query($query_array);
+		while ( $data_array=$DB->fetch_array($result_array) )
+		{
+			echo "<th>";
+			switch ($data_array['num']) {
+				case 2 :
+					echo $LANGTRACKER["snmp"][42];
+					break;
+				case 3 :
+					echo $LANGTRACKER["snmp"][43];
+					break;
+				case 4 :
+					echo $LANGTRACKER["snmp"][44];
+					break;
+				case 5 :
+					echo $LANGTRACKER["snmp"][45];
+					break;
+				case 6 :
+					echo $LANGTRACKER["snmp"][46];
+					break;
+				case 7 :
+					echo $LANGTRACKER["snmp"][47];
+					break;
+				case 8 : 
+					echo $LANGTRACKER["snmp"][48];
+					break;
+				case 9 : 
+					echo $LANGTRACKER["snmp"][49];
+					break;
+				case 10 : 
+					echo $LANGTRACKER["snmp"][51];
+					break;
+				case 11 : 
+					echo $LANGTRACKER["mapping"][115];
+					break;
+				case 12 :
+					echo $LANG["networking"][17];
+					break;
+				case 13 :
+					echo $LANGTRACKER["snmp"][50];
+					break;
+			}
+			echo "</th>";
+		}			
 		echo "</tr>";
+		// Fin de l'entête du tableau
+		
 		
 		if ( $result=$DB->query($query) )
 		{
@@ -387,121 +443,154 @@ function appear_array(id){
 				echo "<tr class='tab_bg_1' height='40'".$background_img.">";
 				echo "<td align='center' id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT."/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"]."\");close_array(".$data["ID"].");' /></td>";
 				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
-				echo "<td align='center'>".$data["ifmtu"]."</td>";
-				echo "<td align='center'>".ByteSize($data["ifspeed"],1000)."bps</td>";
-				echo "<td align='center'>";			
-				if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifinternalstatus"]))
-				{
-					echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-				}
-				else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifinternalstatus"]))
-				{
-					echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-				}
-				else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifinternalstatus"]))
-				{
-					echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
-				}
-
-				echo "</td>";
 				
+				$query_array = "SELECT * FROM glpi_display
+				WHERE type='5157'
+					AND FK_users='0'
+				ORDER BY rank";
+				$result_array=$DB->query($query_array);
+				while ( $data_array=$DB->fetch_array($result_array) )
+				{
+					switch ($data_array['num']) {
+						case 2 :
+							echo "<td align='center'>".$data["ifmtu"]."</td>";
+							break;
+						case 3 :
+							echo "<td align='center'>".ByteSize($data["ifspeed"],1000)."bps</td>";
+							break;
+						case 4 :
+							echo "<td align='center'>";			
+							if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifinternalstatus"]))
+							{
+								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
+							}
+							else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifinternalstatus"]))
+							{
+								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
+							}
+							else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifinternalstatus"]))
+							{
+								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
+							}
+			
+							echo "</td>";
+							break;
+						case 5 :
+							echo "<td align='center'>".$data["iflastchange"]."</td>";
+							break;
+						case 6 :
+							echo "<td align='center'>";
+							if ($data["ifinoctets"] == "0")
+							{
+								echo "-";
+							}
+							else
+							{
+								echo ByteSize($data["ifinoctets"],1000)."o";
+							}
+							echo "</td>";
+							break;
+						case 7 :
+							if ($data["ifinerrors"] == "0")
+							{
+								echo "<td align='center'>-";
+							}
+							else
+							{		
+								echo "<td align='center' class='tab_bg_1_2'>";
+								echo $data["ifinerrors"];
+							}
+							echo "</td>";
+							break;
+						case 8 : 
+							echo "<td align='center'>";
+							if ($data["ifinoctets"] == "0")
+							{
+								echo "-";
+							}
+							else
+							{		
+								echo ByteSize($data["ifoutoctets"],1000)."o";
+							}
+							echo "</td>";
+							break;
+						case 9 : 
+							if ($data["ifouterrors"] == "0")
+							{
+								echo "<td align='center'>-";
+							}
+							else
+							{	
+								echo "<td align='center' class='tab_bg_1_2'>";
+								echo $data["ifouterrors"];
+							}
+							echo "</td>";
+							break;
+						case 10 : 
+							echo "<td align='center'>".$data["portduplex"]."</td>";
+							break;
+						case 11 : 
+							// ** internal mac
+							echo "<td align='center'>".$data["ifmac"]."</td>";
+							break;
+						case 12 :
+							// ** Mac address and link to device which are connected to this port
+							$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
+							if ($opposite_port != ""){
+								$query_device = "
+								SELECT * 
+								FROM glpi_networking_ports
+								WHERE ID=".$opposite_port." ";
 				
-				echo "<td align='center'>".$data["iflastchange"]."</td>";
-				echo "<td align='center'>";
-				if ($data["ifinoctets"] == "0")
-				{
-					echo "-";
-
-				}
-				else
-				{
-					echo ByteSize($data["ifinoctets"],1000)."o";
-				}
-				echo "</td>";
-				
-				if ($data["ifinerrors"] == "0")
-				{
-					echo "<td align='center'>-";
-				}
-				else
-				{		
-					echo "<td align='center' class='tab_bg_1_2'>";
-					echo $data["ifinerrors"];
-				}
-				echo "</td>";
-				echo "<td align='center'>";
-				if ($data["ifinoctets"] == "0")
-				{
-					echo "-";
-				}
-				else
-				{		
-					echo ByteSize($data["ifoutoctets"],1000)."o";
-				}
-				echo "</td>";
-
-				if ($data["ifouterrors"] == "0")
-				{
-					echo "<td align='center'>-";
-				}
-				else
-				{	
-					echo "<td align='center' class='tab_bg_1_2'>";
-					echo $data["ifouterrors"];
-				}
-				echo "</td>";
-				// ** internal mac
-				echo "<td align='center'>".$data["ifmac"]."</td>";
-				// ** Mac address and link to device which are connected to this port
-				$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
-				if ($opposite_port != ""){
-					$query_device = "
-					SELECT * 
-					FROM glpi_networking_ports
-					WHERE ID=".$opposite_port." ";
-	
-					$result_device = $DB->query($query_device);		
-					$data_device = $DB->fetch_assoc($result_device);				
-					
-					$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
-					$link1 = $CommonItem->getLink(1);
-					$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$CommonItem->getLink());
-					echo "<td align='center'>".$link1."<br/>".$link."</td>";
-				}
-				else
-				{
-					// Search in unknown mac address table
-					$PID = $processes->lastProcess(NETWORKING_TYPE);
-					$unknownMac = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
-					if (empty($unknownMac))
-					{
-						echo "<td align='center'></td>";
+								$result_device = $DB->query($query_device);		
+								$data_device = $DB->fetch_assoc($result_device);				
+								
+								$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
+								$link1 = $CommonItem->getLink(1);
+								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$CommonItem->getLink());
+								echo "<td align='center'>".$link1."<br/>".$link."</td>";
+							}
+							else
+							{
+								// Search in unknown mac address table
+								$PID = $processes->lastProcess(NETWORKING_TYPE);
+								$unknownMac = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
+								if (empty($unknownMac))
+								{
+									echo "<td align='center'></td>";
+								}
+								else
+								{
+									echo "<td align='center' class='tab_bg_1_2'>".$unknownMac."</td>";
+								}
+							}
+							break;
+						case 13 :
+							// ** Connection status
+							echo "<td align='center'>";
+							if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
+							{
+								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
+							}
+							else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifstatus"]))
+							{
+								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
+							}
+							else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifstatus"]))
+							{
+								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
+							}
+							else if (ereg("dormant",$data["ifstatus"]) OR ereg("5",$data["ifstatus"]))
+							{
+								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/orangebutton.png'/>";
+							}
+							
+							echo "</td>";
+							echo "</th>";
+							break;
 					}
-					else
-					{
-						echo "<td align='center' class='tab_bg_1_2'>".$unknownMac."</td>";
-					}
 				}
-				// ** Connection status
-				echo "<td align='center'>";
-				if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
-				{
-					echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-				}
-				else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifstatus"]))
-				{
-					echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-				}
-				else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifstatus"]))
-				{
-					echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
-				}
-				else if (ereg("dormant",$data["ifstatus"]) OR ereg("5",$data["ifstatus"]))
-				{
-					echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/orangebutton.png'/>";
-				}
-				
-				echo "</td>";
+
 				echo "</tr>";
 				
 				

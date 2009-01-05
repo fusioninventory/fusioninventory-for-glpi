@@ -47,6 +47,7 @@ function plugin_init_tracker() {
 	pluginNewType('tracker', "PLUGIN_TRACKER_MAC_UNKNOW", 5153, "Threads", "glpi_plugin_tracker_unknown_mac", "front/plugin_tracker.processes.unknow_mac.php", $LANGTRACKER["processes"][13]);
 
 	pluginNewType('tracker', "PLUGIN_TRACKER_PRINTERS_CARTRIDGES", 5156, "plugin_tracker_printers", "glpi_plugin_tracker_printers_cartridges", "front/plugin_tracker.printer_info.form.php",$LANG["cartridges"][0]);
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS", 5157, "plugin_tracker_snmp2", "glpi_networking_ports");
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	

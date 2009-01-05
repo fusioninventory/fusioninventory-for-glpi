@@ -197,6 +197,36 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][7]['linkfield'] = 'end_time';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][7]['name'] = $LANGTRACKER["processes"][18];
 
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS]['common'] = $LANGTRACKER["errors"][0];
+
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][1]['name'] = $LANG["common"][16];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][2]['name'] = $LANGTRACKER["snmp"][42];	
+
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][3]['name'] = $LANGTRACKER["snmp"][43];
+
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][4]['name'] = $LANGTRACKER["snmp"][44];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][5]['name'] = $LANGTRACKER["snmp"][45];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][6]['name'] = $LANGTRACKER["snmp"][46];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][7]['name'] = $LANGTRACKER["snmp"][47];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][8]['name'] = $LANGTRACKER["snmp"][48];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][9]['name'] = $LANGTRACKER["snmp"][49];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][10]['name'] = $LANGTRACKER["snmp"][51];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][11]['name'] = $LANGTRACKER["mapping"][115];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][12]['name'] = $LANG["networking"][17];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][13]['name'] = $LANGTRACKER["snmp"][50];
+
+	
+	
 	//	$sopt[NETWORKING_TYPE][5154]['table']='glpi_plugin_tracker_networking';
 	//	$sopt[NETWORKING_TYPE][5154]['field']='FK_model_infos';
 /*
