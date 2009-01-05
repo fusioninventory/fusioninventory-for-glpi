@@ -376,7 +376,11 @@ function appear_array(id){
 			while ( $data=$DB->fetch_array($result) )
 			{
 				$background_img = "";
-				if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
+				if ($data["trunk"] == "1")
+				{
+					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/port_trunk.png\"); '";
+				}
+				else if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
 				{
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/connected_trunk.png\"); '";
 				}
@@ -1252,19 +1256,14 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array($object=>$oid),$IP,$snmp_version,$snmp_auth);
 		}
-
 	
 		$PortsName = array();
 	
 		foreach($Arrayportsnames as $object=>$value)
 		{
-		
 			$PortsName[] = $value;
-		
 		}
-	
 		return $PortsName;
-	
 	}
 
 
