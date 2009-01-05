@@ -185,7 +185,7 @@ function plugin_tracker_UpdateDeviceBySNMP($ArrayListDevice,$FK_process = 0,$xml
 					UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process,$type);
 				$Array_trunk_ifIndex = array();
 				if ($type == NETWORKING_TYPE)	
-					$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process);
+					$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process,$ID_Device);
 
 				// ** Get MAC adress of connected ports
 				$array_port_trunk = array();
@@ -269,6 +269,7 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 
 function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,$xml_auth_rep,$type)
 {
+
 	$processes_values["devices"] = 0;
 	$processes_values["errors"] = 0;
 	
@@ -278,10 +279,11 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 	foreach ( $ArrayDevice as $ID_Device=>$ifIP )
 	{
 		$plugin_tracker_snmp = new plugin_tracker_snmp;
-		
+
 		// Get SNMP model 
 		$snmp_model_ID = '';
 		$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID_Device,$type);
+	
 		if (($snmp_model_ID != "") && ($ID_Device != ""))
 		{
 			// ** Get oid of PortName
@@ -340,8 +342,9 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 				if (!empty($ArrayPort_Object_oid))
 					UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process,$type);
 				$Array_trunk_ifIndex = array();
+
 				if ($type == NETWORKING_TYPE)	
-					$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process);
+					$Array_trunk_ifIndex = cdp_trunk($ifIP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process,$ID_Device);
 
 				// ** Get MAC adress of connected ports
 				$array_port_trunk = array();
@@ -949,10 +952,10 @@ $Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snm
  * @param $ArrayPort_LogicalNum_SNMPName : array logical port number => SNMP Port name
  * @param $ArrayPort_LogicalNum_SNMPNum : array logical port number => SNMP port number (ifindex)
 */
-function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process)
+function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process,$ID_Device)
 {
 	global $DB;
-	
+
 	$snmp_queries = new plugin_tracker_snmp;
 
 	$Array_trunk_IP_hex = array("cdpCacheAddress" => "1.3.6.1.4.1.9.9.23.1.2.1.1.4");
@@ -976,7 +979,10 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		$end_Number = $explode[(count($explode)-1)];
 		
 		$Array_trunk_ifIndex[$ifIndex] = 1;
-		
+echo "IFINDEX **** > ".$ifIndex."\n";
+echo "IFINDEX NUM Logic > ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."\n";
+echo "IFINDEX NAME Logic > ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]]."\n";
+
 		// Convert IP hex to decimal
 		$Array_ip_switch_trunk = explode(" ",$result);
 		$ip_switch_trunk = "";
@@ -1017,6 +1023,43 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		if ((!empty($data["ID"])) AND (!empty($PortID)))
 			$snmp_queries->PortsConnection($data["ID"], $PortID,$FK_process);
 	}
+	
+	// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
+	foreach($ArrayPort_LogicalNum_SNMPNum AS $ifIndex=>$logical_num)
+	{
+		$query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+			LEFT JOIN glpi_plugin_tracker_networking_ports
+			ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
+			WHERE device_type='2' 
+				AND on_device='".$ID_Device."' 
+				AND logical_number='".$logical_num."' ";
+		$result=$DB->query($query);
+		while ($data=$DB->fetch_array($result))
+		{
+			if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1"))
+			{
+				if ($data['trunk'] == "0")
+				{
+					$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+					SET trunk='1'
+					WHERE id='".$data['sid']."' ";
+					$DB->query($query_update);
+					tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$FK_process);
+				}
+			}
+			else if($data['trunk'] == "1")
+			{
+				$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+				SET trunk='0'
+				WHERE id='".$data['sid']."' ";
+				$DB->query($query_update);
+				tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$FK_process);
+			}
+			
+		}
+	}
+
+	
 	return $Array_trunk_ifIndex;
 }
 
