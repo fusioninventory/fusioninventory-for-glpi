@@ -56,7 +56,7 @@ function plugin_init_tracker() {
 
 	if (isset($_SESSION["glpiID"])){
 
-		if (haveRight("config","w")) {
+		if (haveRight("general_config","w")) {
 			// Config page
 			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.config.php';
 		}
@@ -72,17 +72,19 @@ function plugin_init_tracker() {
 				$PLUGIN_HOOKS['headings']['tracker'] = 'plugin_get_headings_tracker';
 				$PLUGIN_HOOKS['headings_action']['tracker'] = 'plugin_headings_actions_tracker';
 			
-				if (plugin_tracker_haveRight("errors","r")) {
+				
 					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
+					if (plugin_tracker_haveRight("snmp_models","w"))
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
+					if (plugin_tracker_haveRight("snmp_authentification","w"))
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
+					if (plugin_tracker_haveRight("snmp_models","w"))
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
 
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
 	
 //					$PLUGIN_HOOKS['submenu_entry']['tracker']['printers'] = 'front/plugin_tracker.errors.form.php?device=printer';
 //					$PLUGIN_HOOKS['submenu_entry']['tracker']['computers'] = 'front/plugin_tracker.errors.form.php?device=computer';
-				}
 			}
 		}
 	}
