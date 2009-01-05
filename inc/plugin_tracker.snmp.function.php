@@ -900,9 +900,6 @@ echo "PASSAGE ... FAILED\n";
 						}
 
 					}						
-						
-						
-					}
 					else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 					{
 echo "PASSAGE ... OK (2) => Refusé\n";
