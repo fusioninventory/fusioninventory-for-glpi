@@ -199,7 +199,7 @@ function plugin_tracker_getSearchOption() {
 
 	//	$sopt[NETWORKING_TYPE][5154]['table']='glpi_plugin_tracker_networking';
 	//	$sopt[NETWORKING_TYPE][5154]['field']='FK_model_infos';
-
+/*
 	$sopt[NETWORKING_TYPE][5154]['table'] = 'glpi_plugin_tracker_networking';
 	$sopt[NETWORKING_TYPE][5154]['field'] = 'FK_networking';
 	$sopt[NETWORKING_TYPE][5154]['linkfield'] = 'ID';
@@ -209,7 +209,7 @@ function plugin_tracker_getSearchOption() {
 	$sopt[NETWORKING_TYPE][5155]['field'] = 'FK_networking';
 	$sopt[NETWORKING_TYPE][5155]['linkfield'] = 'ID';
 	$sopt[NETWORKING_TYPE][5155]['name'] = $LANGTRACKER["title"][0] . " - Authentification SNMP";
-
+*/
 	return $sopt;
 }
 
