@@ -385,6 +385,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 	switch ($type) {
 
 		case COMPUTER_TYPE :
+			$array = array();
 			// template case
 			if ($withtemplate)
 				return array ();
@@ -413,6 +414,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			break;
 
 		case PRINTER_TYPE :
+			$array = array();
 			// template case
 			if ($withtemplate)
 				return array ();
@@ -420,53 +422,35 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			else {
 				$array = array ();
 
-				if (plugin_tracker_haveRight("snmp_printers", "r")) {
+				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($config->getValue("activation_snmp_printer") == "1")) {
 					$array = array (
 						1 => $LANGTRACKER["title"][1]
 					);
 				}
-
-/*				if ((plugin_tracker_haveRight("printers_history", "r")) && (($config->isActivated('counters_statement')) == true)) {
-					$array = array_merge($array, array (
-						1 => $LANGTRACKER["title"][2]
-					));
-				}
-*/				/*
-				if (plugin_tracker_haveRight("errors","r"))	{
-					$array = array_merge($array, array(1 => $LANGTRACKER["title"][3]));
-				}
-				
-				if ( (plugin_tracker_haveRight("printers_history","w"))  && (($config->isActivated('counters_statement')) == true) )	{
-					$array = array_merge($array, array(1 => $LANGTRACKER["title"][4]));
-				}
-				*/
 				return $array;
 			}
 
 			break;
 
 		case NETWORKING_TYPE :
+			$array = array();
 			// template case
 			if ($withtemplate)
 				return array ();
 			// Non template case
 			else {
-				if (plugin_tracker_haveRight("snmp_networking", "r")) {
+				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($config->getValue("activation_snmp_networking") == "1")) {
 					$array = array (
 						1 => $LANGTRACKER["title"][1]
 					);
 				}
-				/*
-				if (plugin_tracker_haveRight("errors","r"))	{
-					$array = array_merge($array, array(1 => $LANGTRACKER["title"][3]));
-				}	
-				*/
 				return $array;
 			}
 
 			break;
 
 		case USER_TYPE :
+			$array = array();
 			// template case
 			if ($withtemplate)
 				return array ();
