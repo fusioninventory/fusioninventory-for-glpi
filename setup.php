@@ -56,7 +56,7 @@ function plugin_init_tracker() {
 
 	if (isset($_SESSION["glpiID"])){
 
-		if (haveRight("general_config","w")) {
+		if (haveRight("config", "w") || haveRight("profile", "w")) {
 			// Config page
 			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.config.php';
 		}
@@ -72,7 +72,7 @@ function plugin_init_tracker() {
 				$PLUGIN_HOOKS['headings']['tracker'] = 'plugin_get_headings_tracker';
 				$PLUGIN_HOOKS['headings_action']['tracker'] = 'plugin_headings_actions_tracker';
 			
-				
+
 					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 					if (plugin_tracker_haveRight("snmp_models","w"))
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
@@ -82,9 +82,6 @@ function plugin_init_tracker() {
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
 
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
-	
-//					$PLUGIN_HOOKS['submenu_entry']['tracker']['printers'] = 'front/plugin_tracker.errors.form.php?device=printer';
-//					$PLUGIN_HOOKS['submenu_entry']['tracker']['computers'] = 'front/plugin_tracker.errors.form.php?device=computer';
 			}
 		}
 	}
@@ -94,7 +91,7 @@ function plugin_init_tracker() {
 function plugin_version_tracker(){
 
 	return array( 'name'    => 'Tracker',
-		'minGlpiVersion' => '0.71',
+		'minGlpiVersion' => '0.71.3',
 		'maxGlpiVersion' => '0.71.9',
 		'version' => '1.0.0');
 }
