@@ -40,7 +40,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("printer","r");
-plugin_tracker_checkRight("printers_info","r");
+plugin_tracker_checkRight("snmp_printers","r");
 
 
 if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
