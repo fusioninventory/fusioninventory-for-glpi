@@ -265,21 +265,22 @@ class plugin_tracker_config extends CommonDBTM {
 		dropdownYesNo("activation_snmp_networking", $this->isActivated('activation_snmp_networking'));
 		echo "</td>";
 		echo "</tr>";	
-
+/* Disable PERIPHERAL because not completely implemented
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][13]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_snmp_peripheral", $this->isActivated('activation_snmp_peripheral'));
 		echo "</td>";
-		echo "</tr>";	
-
+		echo "</tr>";
+*/
+/* Disable PHONE because not completely implemented
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][14]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_snmp_phone", $this->isActivated('activation_snmp_phone'));
 		echo "</td>";
 		echo "</tr>";	
-
+*/
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][15]."</td>";
 		echo "<td>";
