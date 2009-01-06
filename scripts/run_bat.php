@@ -167,7 +167,7 @@ else
 
 fwrite($log, date("r") . " " . $_SERVER["argv"][0] . " started\n");
 
-$cmd="php -q -d -f tracker_fullsync.php --ocs_server_id=$server_id --managedeleted=1";
+$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id";
 $out=array();
 $ret=0;
 exec($cmd, $out, $ret);
