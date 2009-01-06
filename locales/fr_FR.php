@@ -386,6 +386,7 @@ $LANGTRACKER["mapping"][152]="Four";
 $LANGTRACKER["mapping"][153]="Module de nettoyage";
 $LANGTRACKER["mapping"][154]="Nombre de pages recto/verso imprimées";
 $LANGTRACKER["mapping"][155]="Nombre de pages scannées";
+$LANGTRACKER["mapping"][156]="Kit de maintenance";
 
 $LANGTRACKER["printer"][0]="pages";
 
