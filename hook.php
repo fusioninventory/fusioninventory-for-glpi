@@ -105,7 +105,7 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_MODEL][5]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MODEL][5]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_MODEL][5]['linkfield'] = 'EXPORT';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['name'] = $LANG["buttons"][31];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH]['common'] = $LANGTRACKER["errors"][0];
@@ -344,7 +344,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 			break;
 	}
 
-	if (($type == PLUGIN_TRACKER_MODEL) AND ($num == "5")) {
+	if (($type == PLUGIN_TRACKER_MODEL) AND ($linkfield == "EXPORT")) {
 		$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
 					<input type='hidden' name='model' value='" . $data["ID"] . "' />
 					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
