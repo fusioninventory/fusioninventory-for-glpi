@@ -339,6 +339,7 @@ $LANGTRACKER["mapping"][96]="imprimante > consommables > module de nettoyage (en
 $LANGTRACKER["mapping"][97]="imprimante > port > type";
 $LANGTRACKER["mapping"][98]="imprimante > consommables > Kit de maintenance (max)";
 $LANGTRACKER["mapping"][99]="imprimante > consommables > Kit de maintenance (restant)";
+$LANGTRACKER["mapping"][400]="imprimante > consommables > Kit de maintenance (%)";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
