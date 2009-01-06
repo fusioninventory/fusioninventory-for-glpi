@@ -57,6 +57,9 @@ function plugin_tracker_uninstall() {
 	
 	global $DB;
 	
+	$query = "DROP TABLE `glpi_plugin_tracker_computers`;";
+	$DB->query($query) or die($DB->error());
+
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_label`;";
 	$DB->query($query) or die($DB->error());
 	
