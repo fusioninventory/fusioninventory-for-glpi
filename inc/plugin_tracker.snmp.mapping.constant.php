@@ -595,6 +595,18 @@ $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesbeltcleanerREMAIN']['name'] = $LANGTRA
 $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesbeltcleanerREMAIN']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesbeltcleanerREMAIN']['dropdown'] = '';
 
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitMAX']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitMAX']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitMAX']['name'] = $LANGTRACKER["mapping"][98];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitMAX']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitMAX']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['table'] = 'glpi_plugin_tracker_printers_cartridges';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['field'] = 'state';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['name'] = $LANGTRACKER["mapping"][99];
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['dropdown'] = '';
+
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['table'] = 'glpi_plugin_tracker_printers_history';
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['field'] = 'pages_total';
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['name'] = $LANGTRACKER["mapping"][28];

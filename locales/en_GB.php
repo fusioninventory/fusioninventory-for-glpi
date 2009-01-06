@@ -337,6 +337,8 @@ $LANGTRACKER["mapping"][94]="printer > consumables > four (remaining ink)";
 $LANGTRACKER["mapping"][95]="printer > consumables > cleaning module (max ink)";
 $LANGTRACKER["mapping"][96]="printer > consumables > cleaning module (remaining ink)";
 $LANGTRACKER["mapping"][97]="printer > port > type";
+$LANGTRACKER["mapping"][98]="printer > consumables > Maintenance kit (max)";
+$LANGTRACKER["mapping"][99]="printer > consumables > Maintenance kit (remaining)";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
