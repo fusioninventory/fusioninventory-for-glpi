@@ -31,7 +31,6 @@ echo "Usage:"
 echo "  $0 [--arg]"
 echo
 echo "Arguments:"
-echo "  --thread_nbr=num: number of threads to launch"
 echo "  --nolog: output to console"
 echo "  --networking_type: get SNMP only for networking devices (switchs)"
 echo "  --printer_type: get SNMP only for printer devices"
@@ -58,9 +57,6 @@ read_argv()
 
     [ -z $valname ] && usage
     case "$valname" in
-      thread_nbr)
-      thread_nbr=$valcontent
-      ;;
       --nolog)
       logfilename=
       ;;
@@ -154,7 +150,7 @@ echo $(date) $0 started
   
 while [ $cpt -lt $thread_nbr ]; do 
   cpt=$(($cpt+1))
-  cmd="php -q -d -f tracker_fullsync.php --thread_nbr=$thread_nbr --thread_id=$cpt --process_id=$PROCESS_ID --type=$type"
+  cmd="php -q -d -f tracker_fullsync.php --thread_id=$cpt --process_id=$PROCESS_ID --type=$type"
   sh -c "$cmd"&
   runningpid="$runningpid $!"
   sleep 1
