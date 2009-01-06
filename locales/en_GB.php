@@ -386,6 +386,7 @@ $LANGTRACKER["mapping"][152]="Four";
 $LANGTRACKER["mapping"][153]="Cleaning module";
 $LANGTRACKER["mapping"][154]="Number of printed duplex pages";
 $LANGTRACKER["mapping"][155]="Nomber of scanned pages";
+$LANGTRACKER["mapping"][156]="Maintenance kit";
 
 $LANGTRACKER["printer"][0]="pages";
 
