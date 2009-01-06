@@ -96,14 +96,6 @@ $LANGTRACKER["functionalities"][23]="Rétention de l'historique des adresses MAC
 $LANGTRACKER["functionalities"][24]="Rétention de l'historique des erreurs SNMP (0 = infini)";
 $LANGTRACKER["functionalities"][25]="Rétention de l'historique des processes des scripts (0 = infini)";
 
-
-/*
-$LANGTRACKER["functionalities"][20]="Imprimantes";
-$LANGTRACKER["functionalities"][21]="Relevé des compteurs Imprimantes";
-$LANGTRACKER["functionalities"][22]="Valeur par défaut";
-$LANGTRACKER["functionalities"][23]="Lorsque le relevé d'un compteur spécifique sera spécifié à défaut, c'est cette valeur qui sera prise en compte.";
-
-*/
 $LANGTRACKER["functionalities"][30]="Statut du matériel actif";
 $LANGTRACKER["functionalities"][31]="Gestion des cartouches et du stock";
 $LANGTRACKER["functionalities"][36]="Fréquence de relevé des compteurs";
@@ -208,7 +200,6 @@ $LANGTRACKER["model_info"][3]="Authentification SNMP";
 $LANGTRACKER["model_info"][4]="Modèles SNMP";
 $LANGTRACKER["model_info"][5]="Gestion des MIB";
 $LANGTRACKER["model_info"][6]="Edition de modèle SNMP";
-$LANGTRACKER["model_info"][7]="Création de modèle SNMP";
 $LANGTRACKER["model_info"][7]="Création de modèle SNMP";
 $LANGTRACKER["model_info"][8]="Modèle déjà existant : import non effectué";
 $LANGTRACKER["model_info"][9]="Import effectué avec succès";
@@ -358,7 +349,7 @@ $LANGTRACKER["mapping"][108]="Nb d'octets recus";
 $LANGTRACKER["mapping"][109]="Nb d'octets envoyés";
 $LANGTRACKER["mapping"][110]="Nb d'erreurs en entrée";
 $LANGTRACKER["mapping"][111]="Nb d'erreurs en sortie";
-$LANGTRACKER["mapping"][112]="réseaux > utilisation du CPU";
+$LANGTRACKER["mapping"][112]="Utilisation du CPU";
 $LANGTRACKER["mapping"][113]="";
 $LANGTRACKER["mapping"][114]="Connexion";
 $LANGTRACKER["mapping"][115]="MAC interne";
