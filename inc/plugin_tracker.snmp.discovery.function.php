@@ -426,7 +426,7 @@ function plugin_tracker_discovery_display_array($target)
 	echo "<table class='tab_cadre' cellpadding='5' width='90%'>";
 	
 	echo "<tr class='tab_bg_1'>";
-	echo "<th colspan='9'>";
+	echo "<th colspan='10'>";
 	echo $LANGTRACKER["discovery"][1];
 	echo "</th>";
 	echo "</tr>";
@@ -441,6 +441,7 @@ function plugin_tracker_discovery_display_array($target)
 	echo "<th>".$LANG["common"][17]."</th>";
 	echo "<th>".$LANGTRACKER["model_info"][4]."</th>";
 	echo "<th>".$LANGTRACKER["model_info"][3]."</th>";
+	echo "<th>".$LANG["entity"][0]."</th>";
 	echo "</tr>";
 
 	$types_numbers = array();
@@ -507,6 +508,9 @@ function plugin_tracker_discovery_display_array($target)
 				echo "<td align='center'>";
 				plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 				echo "</td>";
+				echo "<td>";
+				dropdownValue("glpi_entities","FK_entities",0,1,$_SESSION['glpiactiveentities']);
+				echo "</td>";
 				echo "</tr>";
 			}
 		}
@@ -567,6 +571,7 @@ function plugin_tracker_discovery_import($array_import)
 						$Printer = new Printer;
 						$Netport = new Netport;
 						
+						$addArray['FK_entities'] = $array_import['FK_entities'];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
 						$newID = $Printer->add($addArray);
@@ -589,6 +594,7 @@ function plugin_tracker_discovery_import($array_import)
 						break;
 					case NETWORKING_TYPE :
 						$Netdevice = new Netdevice;
+						$addArray['FK_entities'] = $array_import['FK_entities'];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
 						$addArray['ifaddr'] = $data['ifaddr'];
@@ -609,6 +615,7 @@ function plugin_tracker_discovery_import($array_import)
 						$Peripheral = new Peripheral;
 						$Netport = new Netport;
 						
+						$addArray['FK_entities'] = $array_import['FK_entities'];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
 						$newID = $Peripheral->add($addArray);
