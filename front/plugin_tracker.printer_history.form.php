@@ -38,13 +38,13 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("printer","r");
-plugin_tracker_checkRight("printers_history","r");
+plugin_tracker_checkRight("snmp_printers","r");
 
 $printer_history = new plugin_tracker_printers_history();
 
 if ( (isset($_POST['delete'])) ) {
 	
-	plugin_tracker_checkRight("printers_history","w");
+	plugin_tracker_checkRight("snmp_printers","w");
 	
 	if ( isset($_POST['limit']) ) {
 		for ($i=0; $i<$_POST['limit']; $i++) {

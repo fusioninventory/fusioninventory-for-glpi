@@ -38,7 +38,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("printer","r");
-plugin_tracker_checkRight("printers_history","w");
+plugin_tracker_checkRight("snmp_printers","w");
 
 $print_config = new glpi_plugin_tracker_printers_history_config();
 
