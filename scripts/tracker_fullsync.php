@@ -138,7 +138,7 @@ else
 		}
 	}
 	if (!isset($processes_values["errors"])){
-		$processes_values["errors"] = 0;
+		$processes_values["errors"] = "";
 	}
 	// Update process into database
 	$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
