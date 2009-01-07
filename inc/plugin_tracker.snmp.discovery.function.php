@@ -517,7 +517,7 @@ function plugin_tracker_discovery_display_array($target)
 	}
 
 	echo "<tr class='tab_bg_1'>";
-	echo "<td colspan='9'>";
+	echo "<td colspan='10'>";
 	echo "<div align='center'>";
 	echo "<input type='submit' name='import' value=\"".$LANG["buttons"][37]."\" class='submit' > ";
 	echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
