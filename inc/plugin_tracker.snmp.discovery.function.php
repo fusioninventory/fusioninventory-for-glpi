@@ -292,7 +292,7 @@ function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
 
 	foreach ($snmp_auth as $num=>$field)
 	{
-		echo "IP :".$ip1.".".$ip2.".".$ip3.".".$ip4."\n";
+//		echo "IP :".$ip1.".".$ip2.".".$ip3.".".$ip4."\n";
 		$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 		if ($Array_sysdescr["sysDescr"] != ""){
 			$Array_Name = $plugin_tracker_snmp->SNMPQuery(array("sysName"=>".1.3.6.1.2.1.1.5.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
@@ -303,7 +303,7 @@ function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
 				$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
 				$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 				if ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != ""){
-					echo "TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."<br/>";
+//					echo "TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."<br/>";
 					$device_type = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
 				}
 			}
