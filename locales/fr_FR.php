@@ -203,6 +203,7 @@ $LANGTRACKER["model_info"][6]="Edition de modèle SNMP";
 $LANGTRACKER["model_info"][7]="Création de modèle SNMP";
 $LANGTRACKER["model_info"][8]="Modèle déjà existant : import non effectué";
 $LANGTRACKER["model_info"][9]="Import effectué avec succès";
+$LANGTRACKER["model_info"][10]="Importation de modèle";
 
 
 $LANGTRACKER["mib"][1]="Label MIB";
