@@ -1232,6 +1232,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		
 		foreach($ArrayOID as $object=>$oid)
 		{
+			$SNMPValue = "";
 			if ($oid[strlen($oid)-1] != ".")
 			{
 				if ($version == "1")
