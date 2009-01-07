@@ -48,7 +48,7 @@ $plugin_tracker_snmp = new plugin_tracker_snmp;
 
 if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	
-	//	plugin_tracker_checkRight("networking_info","w");
+	plugin_tracker_checkRight("snmp_networking","w");
 
 	$plugin_tracker_snmp->update_network_infos($_POST['ID'], $_POST['model_infos'], $_POST['FK_snmp_connection']);
 }
