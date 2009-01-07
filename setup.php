@@ -74,12 +74,15 @@ function plugin_init_tracker() {
 			
 
 					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
-					if (plugin_tracker_haveRight("snmp_models","w"))
+					if (plugin_tracker_haveRight("snmp_models","w")){
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
-					if (plugin_tracker_haveRight("snmp_authentification","w"))
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
-					if (plugin_tracker_haveRight("snmp_models","w"))
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
+					}
+					if (plugin_tracker_haveRight("snmp_authentification","w")){
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.php';
+					}
+						
 
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
 			}
