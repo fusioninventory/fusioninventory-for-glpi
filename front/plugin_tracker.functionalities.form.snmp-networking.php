@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("config","w");
 
-commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"config","plugins","tracker");
+commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
 $config = new plugin_tracker_config();
 $config_snmp_networking = new plugin_tracker_config_snmp_networking();
