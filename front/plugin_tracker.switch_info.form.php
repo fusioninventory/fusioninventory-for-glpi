@@ -40,7 +40,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("networking","r");
-plugin_tracker_checkRight("networking_info","r");
+plugin_tracker_checkRight("snmp_networking","r");
 
 //$switch_snmp = new plugin_tracker_switch_snmp();
 
