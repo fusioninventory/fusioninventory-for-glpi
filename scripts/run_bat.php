@@ -56,12 +56,16 @@ function readargs () {
 				$log=STDOUT;
 				break;
 			case '--networking_type':
+				return '--networking_type';
 				break;
 			case '--printer_type':
+				return '--printer_type';
 				break;
 			case '--discovery':
+				return '--discovery';
 				break;
 			case '--discovery_serial':
+				return '--discovery';
 				break;
 			default: 
 				usage();
@@ -125,17 +129,17 @@ $thread_nbr=2;
 
 if (function_exists("sys_get_temp_dir")) {
 	# PHP > 5.2.x
-	$pidfile = sys_get_temp_dir()."/ocsng_fullsync.pid";	
+	$pidfile = sys_get_temp_dir()."/tracker_fullsync.pid";	
 }
 else if (DIRECTORY_SEPARATOR=='/') {
 	# Unix/Linux	
-	$pidfile = "/tmp/ocsng_fullsync.pid";
+	$pidfile = "/tmp/tracker_fullsync.pid";
 }
 else {
 	# Windows	
-	$pidfile = GLPI_LOG_DIR . "/ocsng_fullsync.pid";
+	$pidfile = GLPI_LOG_DIR . "/tracker_fullsync.pid";
 }
-$logfilename = GLPI_LOG_DIR."/ocsng_fullsync.log";
+$logfilename = GLPI_LOG_DIR."/tracker_fullsync.log";
 
 if (!is_writable(GLPI_LOCK_DIR)) {
 	echo "\tERROR : " .GLPI_LOCK_DIR. " not writable\n";
@@ -143,7 +147,8 @@ if (!is_writable(GLPI_LOCK_DIR)) {
 	exit (1);	
 }
 $log=fopen($logfilename, "at");
-readargs();
+$arg_sup = '';
+$arg_sup = readargs();
 
 exit_if_soft_lock();
 exit_if_already_running($pidfile);
@@ -167,7 +172,8 @@ else
 
 fwrite($log, date("r") . " " . $_SERVER["argv"][0] . " started\n");
 
-$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id";
+$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id ".$arg_sup;
+
 $out=array();
 $ret=0;
 exec($cmd, $out, $ret);
