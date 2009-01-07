@@ -345,10 +345,13 @@ class Threads extends CommonDBTM
 	{
 		global $DB;
 		
-		$query = "INSERT INTO glpi_plugin_tracker_processes_values
-		(FK_processes,port,".$field.",date)
-		VALUES('".$PID."','".$FK_port."','".$value."','".date("Y-m-d H:i:s")."')";
-		$DB->query($query);
+		if (!empty($FK_port))
+		{
+			$query = "INSERT INTO glpi_plugin_tracker_processes_values
+			(FK_processes,port,".$field.",date)
+			VALUES('".$PID."','".$FK_port."','".$value."','".date("Y-m-d H:i:s")."')";
+			$DB->query($query);
+		}
 	}	
 
 
