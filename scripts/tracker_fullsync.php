@@ -137,7 +137,9 @@ else
 			$processes_values = plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
 		}
 	}
-	
+	if (!isset($processes_values["errors"])){
+		$processes_values["errors"] = 0;
+	}
 	// Update process into database
 	$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
 	
