@@ -62,7 +62,7 @@ if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 }
 
 if ( (isset($_POST['update_cartridges'])) && (isset($_POST['ID'])) ) {
-	plugin_tracker_checkRight("printers_info","w");
+	plugin_tracker_checkRight("snmp_printers","w");
 
 	$plugin_tracker_printers_cartridges = new plugin_tracker_printers_cartridges;
 
