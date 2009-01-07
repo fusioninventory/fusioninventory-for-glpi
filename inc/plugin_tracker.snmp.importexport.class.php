@@ -116,7 +116,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 		echo "<br>";
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-		echo "Importation de modele :</th></tr>";
+		echo $LANGTRACKER["model_info"][10]." :</th></tr>";
 		
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'></td>";
