@@ -1262,6 +1262,13 @@ class plugin_tracker_snmp extends CommonDBTM
 				$ArraySNMPValues = explode(": ", $SNMPValue);
 				if (!isset($ArraySNMPValues[1]))
 					$ArraySNMPValues[1] = "";
+				if (count($ArraySNMPValues) > 2)
+				{
+					for ($i=2;$i < count($ArraySNMPValues);$i++)
+					{
+						$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
+					}			
+				}
 				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
 				$ArraySNMP[$object] = $ArraySNMPValues[1];
 			}
@@ -1315,6 +1322,15 @@ class plugin_tracker_snmp extends CommonDBTM
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
 				$ArraySNMPValues = explode(": ", $value);
+				if (!isset($ArraySNMPValues[1]))
+					$ArraySNMPValues[1] = "";
+				if (count($ArraySNMPValues) > 2)
+				{
+					for ($i=2;$i < count($ArraySNMPValues);$i++)
+					{
+						$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
+					}			
+				}
 				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
 				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
 				logInFile("tracker_snmp", "			SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value."\n\n");
