@@ -1388,7 +1388,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		$snmp_queries = new plugin_tracker_snmp;
 		
-		$ArrayportsSNMPNumber = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifIndex"=>"1.3.6.1.2.1.2.2.1.1"),$IP,$snmp_version,$snmp_auth);
+		$ArrayportsSNMPNumber = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifIndex"=>".1.3.6.1.2.1.2.2.1.1"),$IP,$snmp_version,$snmp_auth);
 	
 		$PortsName = array();
 	
