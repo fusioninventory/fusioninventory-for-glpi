@@ -773,8 +773,8 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	$netwire = new Netwire;
 	$snmp_queries = new plugin_tracker_snmp;
 
-	$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => "1.3.6.1.2.1.17.4.3.1.1");
-	$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => "1.3.6.1.2.1.4.22.1.2");
+	$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => ".1.3.6.1.2.1.17.4.3.1.1");
+	$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => ".1.3.6.1.2.1.4.22.1.2");
 	$ArrayMACAdressTableVerif = array();
 	
 	// $snmp_version
@@ -799,7 +799,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	{
 		$oidExplode = explode(".", $oid);
 		// Get by SNMP query the port number (dot1dTpFdbPort)
-		$OIDBridgePortNumber = "1.3.6.1.2.1.17.4.3.1.2.0.".
+		$OIDBridgePortNumber = ".1.3.6.1.2.1.17.4.3.1.2.0.".
 			$oidExplode[(count($oidExplode)-5)].".".
 			$oidExplode[(count($oidExplode)-4)].".".
 			$oidExplode[(count($oidExplode)-3)].".".
@@ -813,7 +813,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 		{
 			//echo "BRIDGEPortNumber ".$BridgePortNumber."\n";
 			
-			$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => "1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
+			$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => ".1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
 	
 			$snmp_queries->DefineObject($ArrayBridgePortifIndexObject);
 	
@@ -829,7 +829,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 					
 				//echo "BridgePortifIndex : ".$BridgePortifIndex."\n";
 			
-				$ArrayifNameObject = array("ifName" => "1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
+				$ArrayifNameObject = array("ifName" => ".1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
 	
 				$snmp_queries->DefineObject($ArrayifNameObject);
 		
@@ -846,7 +846,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 					$MacAddress = $snmp_queries->MAC_Rewriting($MacAddress);
 					
 // A METTRE EN DYN !!!!!!!!
-$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => "1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
+$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
 
 $snmp_queries->DefineObject($arrayTRUNKmod);
 		
@@ -1002,14 +1002,14 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 
 	$snmp_queries = new plugin_tracker_snmp;
 
-	$Array_trunk_IP_hex = array("cdpCacheAddress" => "1.3.6.1.4.1.9.9.23.1.2.1.1.4");
-	$Array_trunk_ifDescr = array("cdpCacheDevicePort" => "1.3.6.1.4.1.9.9.23.1.2.1.1.7");
+	$Array_trunk_IP_hex = array("cdpCacheAddress" => ".1.3.6.1.4.1.9.9.23.1.2.1.1.4");
+	$Array_trunk_ifDescr = array("cdpCacheDevicePort" => ".1.3.6.1.4.1.9.9.23.1.2.1.1.7");
 	$Array_trunk_ifIndex = array();
 
 	$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
 
 	// Get trunk port directly from oid
-	$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus" => "1.3.6.1.4.1.9.9.46.1.6.1.1.14");
+	$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus" => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14");
 	$snmp_queries->DefineObject($arrayTRUNKmod);
 		
 	$Arraytrunktype = $snmp_queries->SNMPQueryWalkAll($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
@@ -1149,7 +1149,7 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 		}
 	}
 
-	$oid_ifaddr_switch = array("ipAdEntAddr" => "1.3.6.1.2.1.4.20.1.1");
+	$oid_ifaddr_switch = array("ipAdEntAddr" => ".1.3.6.1.2.1.4.20.1.1");
 	
 	foreach ( $ArrayListDevice as $ID_Device=>$ifIP )
 	{
