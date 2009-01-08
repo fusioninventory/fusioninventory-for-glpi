@@ -584,7 +584,7 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 					WHERE ".$Field."='".$ID_Device."'
 						AND object_name='".$object_name_clean."' ";
 					$result_sel = $DB->query($query_sel);
-					if ($DB->numrows($query_sel) == "0")
+					if ($DB->numrows($result_sel) == "0")
 					{
 						$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 						(".$Field.",object_name)
