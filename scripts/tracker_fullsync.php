@@ -109,6 +109,16 @@ else
 	// SNMP is working
 	
 	logInFile("tracker_snmp", ">>>>>> Starting Script <<<<<<\n\n");
+	$OS = "";
+	if (isset($_SERVER["OSTYPE"]))
+	{
+		$OS = $_SERVER["OSTYPE"];
+	}
+	else if (isset($_SERVER["OS"]))
+	{
+		$OS = $_SERVER["OS"];
+	}
+	logInFile("tracker_snmp", "Operating System : ".$OS." \n\n");
 	logInFile("tracker_snmp", "I) Get all devices \n\n");
 	
 	$processes_values = 0;
