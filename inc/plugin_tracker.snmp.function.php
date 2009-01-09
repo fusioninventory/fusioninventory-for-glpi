@@ -799,11 +799,11 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	{
 		$oidExplode = explode(".", $oid);
 		// Get by SNMP query the port number (dot1dTpFdbPort)
-		if ((isset($oidExplode[(count($oidExplode)-5)]))
-			OR (isset($oidExplode[(count($oidExplode)-4)]))
-			OR (isset($oidExplode[(count($oidExplode)-3)]))
-			OR (isset($oidExplode[(count($oidExplode)-2)]))
-			OR (isset($oidExplode[(count($oidExplode)-1)]))
+		if ((!isset($oidExplode[(count($oidExplode)-5)]))
+			OR (!isset($oidExplode[(count($oidExplode)-4)]))
+			OR (!isset($oidExplode[(count($oidExplode)-3)]))
+			OR (!isset($oidExplode[(count($oidExplode)-2)]))
+			OR (!isset($oidExplode[(count($oidExplode)-1)]))
 			)
 		{
 			$OIDBridgePortNumber = ".1.3.6.1.2.1.17.4.3.1.2.0.".
