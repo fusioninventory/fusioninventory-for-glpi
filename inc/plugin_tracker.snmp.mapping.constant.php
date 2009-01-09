@@ -682,6 +682,8 @@ $TRACKER_MAPPING_DISCOVERY['discovery'][2]['object'] = 'upsIdentManufacturer';
 $TRACKER_MAPPING_DISCOVERY['discovery'][2]['oid'] = '.1.3.6.1.2.1.33.1.1.1.0';
 $TRACKER_MAPPING_DISCOVERY['discovery'][2]['type'] = PERIPHERAL_TYPE;
 
-
+$TRACKER_MAPPING_DISCOVERY['discovery'][3]['object'] = 'hrSWRunName';
+$TRACKER_MAPPING_DISCOVERY['discovery'][3]['oid'] = '.1.3.6.1.2.1.25.4.2.1.2.1';
+$TRACKER_MAPPING_DISCOVERY['discovery'][3]['type'] = COMPUTER_TYPE;
 
 ?>
