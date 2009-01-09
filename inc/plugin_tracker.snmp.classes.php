@@ -1259,7 +1259,7 @@ class plugin_tracker_snmp extends CommonDBTM
 					ob_end_clean();
 				}
 				logInFile("tracker_snmp", "			SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue."\n\n");
-				$ArraySNMPValues = explode(": ", $SNMPValue);
+/*				$ArraySNMPValues = explode(": ", $SNMPValue);
 				if (!isset($ArraySNMPValues[1]))
 					$ArraySNMPValues[1] = "";
 				if (count($ArraySNMPValues) > 2)
@@ -1271,6 +1271,40 @@ class plugin_tracker_snmp extends CommonDBTM
 				}
 				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
 				$ArraySNMP[$object] = $ArraySNMPValues[1];
+				*/
+				if ((ereg ("Hex: ", $SNMPValue)) 
+					OR (ereg ("Gauge32: ", $SNMPValue)) 
+					OR (ereg ("STRING: ", $SNMPValue))
+					OR (ereg ("Timeticks: ", $SNMPValue))
+					OR (ereg ("INTEGER: ", $SNMPValue))
+					OR (ereg ("Counter32: ", $SNMPValue))
+					OR (ereg ("Hex-STRING: ", $SNMPValue))
+					OR (ereg ("Network Address: ", $SNMPValue))
+					OR (ereg ("IpAddress: ", $SNMPValue))
+					)
+				{
+					$ArraySNMPValues = explode(": ", $SNMPValue);
+					if (!isset($ArraySNMPValues[1]))
+						$ArraySNMPValues[1] = "";
+					if (count($ArraySNMPValues) > 2)
+					{
+						for ($i=2;$i < count($ArraySNMPValues);$i++)
+						{
+							$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
+						}			
+					}
+					$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
+					$ArraySNMP[$object] = $ArraySNMPValues[1];
+				}
+				else if (ereg ("No Such Instance currently exists", $SNMPValue))
+				{
+					$ArraySNMP[$object] = "";
+				}
+				else
+				{
+					$ArraySNMP[$object] = trim($SNMPValue, '"');
+				}			
+				
 			}
 		}
 		return $ArraySNMP;
@@ -1321,7 +1355,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			}
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
-				$ArraySNMPValues = explode(": ", $value);
+/*				$ArraySNMPValues = explode(": ", $value);
 				if (!isset($ArraySNMPValues[1]))
 					$ArraySNMPValues[1] = "";
 				if (count($ArraySNMPValues) > 2)
@@ -1333,6 +1367,39 @@ class plugin_tracker_snmp extends CommonDBTM
 				}
 				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
 				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
+				*/
+				if ((ereg ("Hex: ", $value)) 
+					OR (ereg ("Gauge32: ", $value)) 
+					OR (ereg ("STRING: ", $value))
+					OR (ereg ("Timeticks: ", $value))
+					OR (ereg ("INTEGER: ", $value))
+					OR (ereg ("Counter32: ", $value))
+					OR (ereg ("Hex-STRING: ", $value))
+					OR (ereg ("Network Address: ", $value))
+					OR (ereg ("IpAddress: ", $value))
+					)
+				{
+					$ArraySNMPValues = explode(": ", $value);
+					if (!isset($ArraySNMPValues[1]))
+						$ArraySNMPValues[1] = "";
+					if (count($ArraySNMPValues) > 2)
+					{
+						for ($i=2;$i < count($ArraySNMPValues);$i++)
+						{
+							$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
+						}			
+					}
+					$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
+					$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
+				}
+				else if (ereg ("No Such Instance currently exists", $value))
+				{
+					$ArraySNMP[$oidwalk] = "";
+				}
+				else
+				{
+					$ArraySNMP[$oidwalk] = trim($value, '"');
+				}		
 				logInFile("tracker_snmp", "			SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value."\n\n");
 			}
 		}
