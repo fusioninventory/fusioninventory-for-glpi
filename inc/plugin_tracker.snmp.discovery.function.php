@@ -509,7 +509,7 @@ function plugin_tracker_discovery_display_array($target)
 				plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 				echo "</td>";
 				echo "<td>";
-				dropdownValue("glpi_entities","FK_entities",0,1,$_SESSION['glpiactiveentities']);
+				dropdownValue("glpi_entities","FK_entities-".$data['ID'],0,1,$_SESSION['glpiactiveentities']);
 				echo "</td>";
 				echo "</tr>";
 			}
@@ -519,8 +519,8 @@ function plugin_tracker_discovery_display_array($target)
 	echo "<tr class='tab_bg_1'>";
 	echo "<td colspan='10'>";
 	echo "<div align='center'>";
-	echo "<input type='submit' name='import' value=\"".$LANG["buttons"][37]."\" class='submit' > ";
-	echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+	echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' > ";
+	echo " <input type='submit' name='import' value=\"".$LANG["buttons"][37]."\" class='submit' >";
 	echo "</td>";
 	echo "</tr>";
 
@@ -571,7 +571,7 @@ function plugin_tracker_discovery_import($array_import)
 						$Printer = new Printer;
 						$Netport = new Netport;
 						
-						$addArray['FK_entities'] = $array_import['FK_entities'];
+						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
 						$newID = $Printer->add($addArray);
@@ -594,7 +594,7 @@ function plugin_tracker_discovery_import($array_import)
 						break;
 					case NETWORKING_TYPE :
 						$Netdevice = new Netdevice;
-						$addArray['FK_entities'] = $array_import['FK_entities'];
+						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
 						$addArray['ifaddr'] = $data['ifaddr'];
@@ -615,7 +615,7 @@ function plugin_tracker_discovery_import($array_import)
 						$Peripheral = new Peripheral;
 						$Netport = new Netport;
 						
-						$addArray['FK_entities'] = $array_import['FK_entities'];
+						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
 						$newID = $Peripheral->add($addArray);
