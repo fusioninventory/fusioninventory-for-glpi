@@ -168,21 +168,13 @@ else
 
 fwrite($log, date("r") . " " . $_SERVER["argv"][0] . " started\n");
 
-$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id ".$arg_sup;
+$cmd="php -q -d -f tracker_fullsync.php --process_id=$process_id ".$arg_sup;
 
 $out=array();
 $ret=0;
 exec($cmd, $out, $ret);
 foreach ($out as $line) fwrite ($log, $line."\n");
 
-
-# Windows - No fork, so Only one process :(
-$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id";
-$out=array();
-exec($cmd, $out, $ret);
-foreach ($out as $line) fwrite ($log, $line."\n");
-
-
-cleanup($pidfile);
+cleanup($pidfile);
 fwrite ($log, date("r") . " " . $_SERVER["argv"][0] . " ended\n\n");
 ?>
