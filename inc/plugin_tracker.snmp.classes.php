@@ -1298,7 +1298,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				}
 				else if (ereg ("No Such Instance currently exists", $SNMPValue))
 				{
-					$ArraySNMP[$object] = "";
+					$ArraySNMP[$object] = " ";
 				}
 				else
 				{
@@ -1394,7 +1394,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				}
 				else if (ereg ("No Such Instance currently exists", $value))
 				{
-					$ArraySNMP[$oidwalk] = "";
+					$ArraySNMP[$oidwalk] = " ";
 				}
 				else
 				{
