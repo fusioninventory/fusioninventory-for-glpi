@@ -95,10 +95,6 @@ function exit_if_already_running($pidfile)
   		//echo "Empty $pidfile\n";
   		return 1;  	
   	}
-  	if (@pcntl_getpriority($pid)===false) {
-  		//echo "Dead $pid\n";
-  		return 1;  	
-  	}
   	exit (1);
 }
 function cleanup ($pidfile) {
@@ -179,44 +175,13 @@ $ret=0;
 exec($cmd, $out, $ret);
 foreach ($out as $line) fwrite ($log, $line."\n");
 
-if (function_exists("pcntl_fork")) {
-	# Unix/Linux
-	$pids=array();
-	for ($i=0 ; $i<$thread_nbr ; ){
-		$i++;
-		$pid=pcntl_fork();
-		if ($pid == -1)
-			fwrite ($log, "Could not fork\n");
-		else if ($pid) {
-			fwrite ($log, "$pid Started\n");
-			$pids[$pid]=1;
-		}
-		else  {
-			$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id";
-			$out=array();
-			exec($cmd, $out, $ret);
-			foreach ($out as $line) fwrite ($log, $line."\n");
-			exit($ret);	
-		}
-	}
-	$status=0;
-	while (count($pids)) {
-		$pid=pcntl_wait($status);
-		if ($pid<0) {
-			fwrite ($log, "Cound not wait\n");
-			exit (1);
-		} else {
-			unset($pids[$pid]);
-			fwrite ($log, "$pid ended, waiting for " . count($pids) . " running thread\n");
-		}
-	}
-} else {
-	# Windows - No fork, so Only one process :(
-	$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id";
-	$out=array();
-	exec($cmd, $out, $ret);
-	foreach ($out as $line) fwrite ($log, $line."\n");
-}
+
+# Windows - No fork, so Only one process :(
+$cmd="php -q -d -f tracker_fullsync.php --thread_id=$i --process_id=$process_id";
+$out=array();
+exec($cmd, $out, $ret);
+foreach ($out as $line) fwrite ($log, $line."\n");
+
 
 cleanup($pidfile);
 fwrite ($log, date("r") . " " . $_SERVER["argv"][0] . " ended\n\n");
