@@ -15,7 +15,7 @@ IF NOT EXIST %plugin_glpi%\run_bat.php GOTO EXIT
 
 :RUN
 echo Lancement du script
-php %plugin_glpi%\run_bat.php
+php %plugin_glpi%\run_bat.php %1
 GOTO FIN
 
 :EXIT

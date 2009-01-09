@@ -1258,7 +1258,7 @@ class plugin_tracker_snmp extends CommonDBTM
 					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,700000,1);
 					ob_end_clean();
 				}
-				logInFile("tracker_snmp", "			SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue."\n\n");
+				logInFile("tracker_snmp", "			SNMP QUERY : [".$IP."] ".$object."(".$oid.") = ".$SNMPValue."\n\n");
 /*				$ArraySNMPValues = explode(": ", $SNMPValue);
 				if (!isset($ArraySNMPValues[1]))
 					$ArraySNMPValues[1] = "";
@@ -1400,7 +1400,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				{
 					$ArraySNMP[$oidwalk] = trim($value, '"');
 				}		
-				logInFile("tracker_snmp", "			SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value."\n\n");
+				logInFile("tracker_snmp", "			SNMP QUERY WALK : [".$IP."] ".$object."(".$oid.") = ".$oidwalk."=>".$value."\n\n");
 			}
 		}
 		return $ArraySNMP;

@@ -56,16 +56,16 @@ function readargs () {
 				$log=STDOUT;
 				break;
 			case '--networking_type':
-				return '--networking_type';
+				return '--type=networking_type';
 				break;
 			case '--printer_type':
-				return '--printer_type';
+				return '--type=printer_type';
 				break;
 			case '--discovery':
-				return '--discovery';
+				return '--type=discovery';
 				break;
 			case '--discovery_serial':
-				return '--discovery';
+				return '--type=discovery';
 				break;
 			default: 
 				usage();
