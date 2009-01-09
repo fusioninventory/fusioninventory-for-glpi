@@ -632,6 +632,28 @@ function plugin_tracker_discovery_import($array_import)
 						$DB->query($query_del);
 						$Import++;
 						break;
+					case COMPUTER_TYPE :
+						$Computer = new Computer;
+						$Netport = new Netport;
+						
+						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
+						$addArray['serial'] = $data['serialnumber'];
+						$addArray['name'] = $data['name'];
+						$newID = $Computer->add($addArray);
+						unset($addArray);
+						$addPort['on_device'] = $newID;
+						$addPort['device_type'] = COMPUTER_TYPE;
+						$addPort['ifaddr'] = $data['ifaddr'];
+						$Netport->add($addPort);
+						unset($addPort);
+						// insert in tracker for scan
+							// Net yet coded
+						
+						$query_del = "DELETE FROM glpi_plugin_tracker_discover
+						WHERE ID='".$ID."' ";
+						$DB->query($query_del);
+						$Import++;
+						break;
 				}
 			}
 		}
