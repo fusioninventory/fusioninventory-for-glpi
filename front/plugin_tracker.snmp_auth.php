@@ -42,8 +42,7 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","
 
 plugin_tracker_checkRight("snmp_authentification","r");
 
-$query = "SELECT * FROM glpi_plugin_tracker_config";
-$result=$DB->query($query);
+$config = new plugin_tracker_config();
 
 // Forms for FILE
 if ($DB->result($result,0,"authsnmp") == "file")
@@ -58,13 +57,10 @@ if ($DB->result($result,0,"authsnmp") == "file")
 	{
 		echo $plugin_tracker_snmp_auth->plugin_tracker_snmp_connections();
 	}
-
-
-
 }
-else if ($DB->result($result,0,"authsnmp") == "DB")
-{
 
+else if ($config->getValue("authsnmp") == "DB")
+{
 	// Forms for DB
 	
 	manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_AUTH);
@@ -75,9 +71,6 @@ else if ($DB->result($result,0,"authsnmp") == "DB")
 }
 
 commonFooter();
-
-
-
 
 
 ?>
