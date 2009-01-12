@@ -64,7 +64,9 @@ function plugin_init_tracker() {
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
 			$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
-			$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
+			
+			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r"))
+				$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 
 			if (isset($_SESSION["glpi_plugin_tracker_profile"])) {
 				
