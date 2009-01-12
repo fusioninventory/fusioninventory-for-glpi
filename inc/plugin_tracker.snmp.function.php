@@ -740,7 +740,7 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					if ($SNMPValue != '')
 					{
 						if ($SNMPValue == "[[empty]]"){
-							$SNMPValue == "";
+							$SNMPValue = "";
 						}
 						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 						SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
