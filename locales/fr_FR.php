@@ -247,7 +247,7 @@ $LANGTRACKER["mapping"][3]="réseaux > uptime";
 $LANGTRACKER["mapping"][4]="réseaux > port > mtu";
 $LANGTRACKER["mapping"][5]="réseaux > port > vitesse";
 $LANGTRACKER["mapping"][6]="réseaux > port > statut interne";
-$LANGTRACKER["mapping"][7]="réseaux > ports > Dernier changement";
+$LANGTRACKER["mapping"][7]="réseaux > port > Dernier changement";
 $LANGTRACKER["mapping"][8]="réseaux > port > nombre d'octets entrés";
 $LANGTRACKER["mapping"][9]="réseaux > port > nombre d'octets sortis";
 $LANGTRACKER["mapping"][10]="réseaux > port > nombre d'erreurs entrées";
@@ -258,7 +258,7 @@ $LANGTRACKER["mapping"][14]="réseaux > port > statut de la connexion";
 $LANGTRACKER["mapping"][15]="réseaux > port > adresse MAC";
 $LANGTRACKER["mapping"][16]="réseaux > port > nom";
 $LANGTRACKER["mapping"][17]="réseaux > modèle";
-$LANGTRACKER["mapping"][18]="réseaux > ports > type";
+$LANGTRACKER["mapping"][18]="réseaux > port > type";
 $LANGTRACKER["mapping"][19]="réseaux > VLAN";
 $LANGTRACKER["mapping"][20]="réseaux > nom";
 $LANGTRACKER["mapping"][21]="réseaux > mémoire totale";
@@ -341,6 +341,9 @@ $LANGTRACKER["mapping"][97]="imprimante > port > type";
 $LANGTRACKER["mapping"][98]="imprimante > consommables > Kit de maintenance (max)";
 $LANGTRACKER["mapping"][99]="imprimante > consommables > Kit de maintenance (restant)";
 $LANGTRACKER["mapping"][400]="imprimante > consommables > Kit de maintenance (%)";
+$LANGTRACKER["mapping"][401]="réseaux > CPU user";
+$LANGTRACKER["mapping"][402]="réseaux > CPU système";
+
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";

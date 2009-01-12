@@ -234,7 +234,11 @@ abstract class plugin_tracker_snmp2 {
 			$mapping_name[$explode[1]] = "1";			
 		}
 
-		if ((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
+		if (((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
+			OR (((isset($mapping_name['cpuuser']))  AND ($mapping_name['cpuuser'] == "1"))
+				AND ((isset($mapping_name['cpusystem']))  AND ($mapping_name['cpusystem'] == "1"))
+				)
+			)
 		{
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";

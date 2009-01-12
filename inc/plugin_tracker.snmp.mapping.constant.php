@@ -60,12 +60,23 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['name'] = $LANGTRACKER["mapping"][3]
 $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['dropdown'] = '';
 
-
 $TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['table'] = 'glpi_plugin_tracker_networking';
 $TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['field'] = 'cpu';
 $TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['name'] = $LANGTRACKER["mapping"][12];
 $TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['cpu']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpuuser']['table'] = 'glpi_plugin_tracker_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpuuser']['field'] = 'cpu';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpuuser']['name'] = $LANGTRACKER["mapping"][401];
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpuuser']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpuuser']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpusystem']['table'] = 'glpi_plugin_tracker_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpusystem']['field'] = 'cpu';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpusystem']['name'] = $LANGTRACKER["mapping"][402];
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpusystem']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cpusystem']['dropdown'] = '';
 
 $TRACKER_MAPPING[NETWORKING_TYPE]['serial']['table'] = 'glpi_networking';
 $TRACKER_MAPPING[NETWORKING_TYPE]['serial']['field'] = 'serial';
