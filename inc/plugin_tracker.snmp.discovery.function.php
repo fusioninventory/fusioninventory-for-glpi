@@ -170,12 +170,13 @@ function plugin_tracker_discovery_scan($Array_IP)
 	{
 		$s++;
 		$t[$s] = $Thread->create("tracker_fullsync.php --discovery_process=1 --ip1=".$ip1." --ip2=".$ip2." --ip3=".$ip3." --ip4=".$ip4);
-
+		$lance_eval = 0;
 		if ($nb_process_discovery == $s)
 		{
 			eval($while);
 			eval($close);
 			$s = 0;
+			$lance_eval = 1;
 		}
 
 /*	
@@ -270,6 +271,21 @@ function plugin_tracker_discovery_scan($Array_IP)
 				
 		}
 		$ip4++;
+		// In case when the last process list are not complete, we run while
+		if (($lance_eval == "0") AND ($i == "1"))
+		{
+			$s++;
+			for ($s;$s <= $nb_process_discovery ;$s++)
+			{
+				$while = str_replace("|| \$t[".$s."]->isActive()", "", $while);
+				$while = str_replace("echo \$t[".$s."]->listen();", "", $while);
+				$close = str_replace("echo \$t[".$s."]->close();", "", $close);
+			
+			}
+			eval($while);
+			eval($close);
+			$s = 0;
+		}
 	}
 	$query = "UPDATE glpi_plugin_tracker_discover_conf
 	SET discover='0'
