@@ -141,7 +141,7 @@ function tracker_snmp_showHistory($ID_port)
 					$text .= "<td align='center'>".$data["new_value"]."</td>";
 				}
 				$text .= "<td align='center' colspan='4'></td>";
-				$text .= "<td align='center'>".$data["date_mod"]."</td>";
+				$text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
 
 			}
 			else
@@ -153,7 +153,7 @@ function tracker_snmp_showHistory($ID_port)
 				$text .= "<td align='center'>".$data["old_value"]."</td>";
 				$text .= "<td align='center'>-></td>";
 				$text .= "<td align='center'>".$data["new_value"]."</td>";
-				$text .= "<td align='center'>".$data["date_mod"]."</td>";
+				$text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
 			
 			
 			}
