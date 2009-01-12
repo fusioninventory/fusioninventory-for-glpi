@@ -215,6 +215,8 @@ class Threads extends CommonDBTM
 		}else if ($array_name == "connection")
 		{
 			$Netwire = new Netwire;
+			$netport=new Netport;			
+			
 			echo "<tr><th colspan='12'>".$LANGTRACKER["snmp"][50]."</th></tr>";
 			echo "<tr>"; 
 			echo"<th></th>";
@@ -223,11 +225,14 @@ class Threads extends CommonDBTM
 			echo"<th>".$LANG["common"][1]."</th>";
 			echo"<th>".$LANG["setup"][175]."</th>";
 			echo"<th>".$LANG["common"][27]."</th>";
+			echo"<th>".$LANG["common"][1]."</th>";
+			echo"<th>".$LANG["setup"][175]."</th>";
 			echo "</th></tr>\n";
 		
-			$sql_connection = 	"SELECT *
+			$sql_connection = "SELECT *
 		   FROM glpi_plugin_tracker_snmp_history
 		   WHERE Field=''
+		   	OR Field='0'
 		   ORDER BY FK_process DESC, date_mod DESC";
 	     	$result_connection = $DB->query($sql_connection);
 			while ($thread_connection = $DB->fetch_array($result_connection))
@@ -241,27 +246,53 @@ class Threads extends CommonDBTM
 					// Connections and disconnections
 					if ($thread_connection["old_device_ID"] != "0")
 					{
-						echo "<td align='center'>Déconnexion</td>";
+						// disconnection
+						echo "<td align='center'>".$LANG["central"][6]."</td>";
 						$CommonItem->getFromDB($thread_connection["old_device_type"],$thread_connection["old_device_ID"]);
-						echo "<td align='center'>".$CommonItem->getLink(1)."</td>";						
+						echo "<td align='center'>".$CommonItem->getLink(1)."</td>";	
+						$queryPort = "SELECT * 
+						FROM glpi_networking_ports
+						WHERE ifmac='".$thread_connection['old_value']."' 
+						LIMIT 0,1";
+						$resultPort = $DB->query($queryPort);		
+						$dataPort = $DB->fetch_assoc($resultPort);
 					}
 					else if ($thread_connection["new_device_ID"] != "0")
 					{
-						echo "<td align='center'>Connexion</td>";
+						// connection
+						echo "<td align='center'>".$LANG["log"][55]."</td>";
 						$CommonItem->getFromDB($thread_connection["new_device_type"],$thread_connection["new_device_ID"]);
 						echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
+						$queryPort = "SELECT * 
+						FROM glpi_networking_ports
+						WHERE ifmac='".$thread_connection['new_value']."' 
+						LIMIT 0,1";
+						$resultPort = $DB->query($queryPort);		
+						$dataPort = $DB->fetch_assoc($resultPort);
 					}
+					// Search network card with mac address
+					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$dataPort['ID']."'>".$dataPort['name']."</a></td>";
+					echo "<td align='center'>".$thread_connection["date_mod"]."</td>";
 
 					$query_port = "SELECT * FROM glpi_networking_ports 
 					WHERE ID='".$thread_connection["FK_ports"]."' ";
 					$result_port = $DB->query($query_port);
 					$port_name = "";
+					$device_type = 0;
+					$on_device = 0;
 					while ($thread_port = $DB->fetch_array($result_port))
 					{
 						$port_name = $thread_port["name"];
+						$device_type = $thread_port["device_type"];
+						$on_device = $thread_port["on_device"];
+						
 					}
+					$CommonItem->getFromDB($device_type,$on_device);
+					echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
+					
+					//echo "<td></td>";
 					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$thread_connection["FK_ports"]."'>".$port_name."</a></td>";
-
+		
 
 
 
@@ -303,7 +334,7 @@ class Threads extends CommonDBTM
 					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$opposite_port."'>".$port_name."</a></td>";
 
 */
-					echo "<td align='center'>".$thread_connection["date_mod"]."</td>";
+
 				}
 			}
 		}
