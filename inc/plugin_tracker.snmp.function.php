@@ -263,6 +263,19 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 		}
 		$processes_values["devices"]++;	
 	}
+	if ($s > 0)
+	{
+		$s++;
+		for ($s;$s <= $nb_process_query ;$s++)
+		{
+			$while = str_replace("|| \$t[".$s."]->isActive()", "", $while);
+			$while = str_replace("echo \$t[".$s."]->listen();", "", $while);
+			$close = str_replace("echo \$t[".$s."]->close();", "", $close);
+		}
+		eval($while);
+		eval($close);
+		$s = 0;	
+	}
 	return $processes_values;
 }
 
