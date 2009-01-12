@@ -376,6 +376,8 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	{
 		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;
 
+		$config = new plugin_tracker_config();
+
 		if ($ID_Device != "all")
 		{
 			switch ($type)
@@ -423,9 +425,8 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			$snmp_auth[1]["priv_passphrase"] = "";		
 			$snmp_auth[1]["ID"] = 0;
 		}
-		$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
-		$result_conf=$DB->query($query_conf);
-		if ($DB->result($result_conf,0,"authsnmp") == "file")
+
+		if ($config->getValue("authsnmp") == "file")
 		{		
 	
 			$xml = simplexml_load_file($xml_auth_rep."auth.xml");
@@ -508,7 +509,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 				}
 			}	
 		}
-		else if ($DB->result($result_conf,0,"authsnmp") == "DB")
+		else if ($config->getValue("authsnmp") == "DB")
 		{
 			if ($ID_Device == "all")
 			{
@@ -549,8 +550,17 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 				$i = 2;
 				while ( $data=$DB->fetch_array($result) )
 				{
-					if (($snmp_auth[0]["snmp_version"] != getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
-					AND ($snmp_auth[0]["community"] != $data["community"]))
+					if (($snmp_auth[0]["snmp_version"] == getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
+					AND ($snmp_auth[0]["community"] == $data["community"]))
+					{
+						$snmp_auth[0]["ID"] = $data["ID"];
+					}
+					else if (($snmp_auth[1]["snmp_version"] == getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
+					AND ($snmp_auth[1]["community"] == $data["community"]))
+					{
+						$snmp_auth[1]["ID"] = $data["ID"];
+					}
+					else
 					{
 						$snmp_auth[$i]["ID"] = $data["ID"];
 						$snmp_auth[$i]["Name"] = $data["name"];
@@ -563,10 +573,6 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 						$snmp_auth[$i]["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$data["priv_protocol"]);
 						$snmp_auth[$i]["priv_passphrase"] = $data["priv_passphrase"];
 						$i++;
-					}
-					else
-					{
-						$snmp_auth[0]["ID"] = $data["ID"];
 					}
 				}
 			}
