@@ -565,6 +565,9 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		
 		$SNMPValue = preg_replace('/^\"/', '',$SNMPValue);
 		$SNMPValue = preg_replace('/\"$/', '',$SNMPValue);
+		if ($SNMPValue == "[[empty]]"){
+			$SNMPValue = "";
+		}
 		
 		if (($object_name == "ram") OR ($object_name == "memory"))
 		{
