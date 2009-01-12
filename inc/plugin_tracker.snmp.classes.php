@@ -1300,6 +1300,10 @@ class plugin_tracker_snmp extends CommonDBTM
 				{
 					$ArraySNMP[$object] = "";
 				}
+				else if (ereg ("No Such Object available on this agent at this OID", $SNMPValue))
+				{
+					$ArraySNMP[$object] = "";
+				}
 				else
 				{
 					$ArraySNMP[$object] = trim($SNMPValue, '"');
@@ -1396,6 +1400,10 @@ class plugin_tracker_snmp extends CommonDBTM
 				{
 					$ArraySNMP[$oidwalk] = "";
 				}
+				else if (ereg ("No Such Object available on this agent at this OID", $value))
+				{
+					$ArraySNMP[$oidwalk] = "";
+				}				
 				else
 				{
 					$ArraySNMP[$oidwalk] = trim($value, '"');
