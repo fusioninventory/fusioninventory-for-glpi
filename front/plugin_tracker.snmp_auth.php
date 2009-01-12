@@ -45,7 +45,7 @@ plugin_tracker_checkRight("snmp_authentification","r");
 $config = new plugin_tracker_config();
 
 // Forms for FILE
-if ($DB->result($result,0,"authsnmp") == "file")
+if ($config->getValue("authsnmp") == "file")
 {
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 	
