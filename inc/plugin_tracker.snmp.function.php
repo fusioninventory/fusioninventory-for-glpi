@@ -324,7 +324,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 
 				// ** Get query SNMP of switchs ports
 				if (!empty($ArrayPort_Object_oid))
-				$ArraySNMPPort_Object_result = $plugin_tracker_snmp->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
+					$ArraySNMPPort_Object_result = $plugin_tracker_snmp->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
 
 				// ** Get query SNMP on switch
 				$ArraySNMP_Object_result= $plugin_tracker_snmp->SNMPQuery($Array_Object_oid,$ifIP,$snmp_version,$snmp_auth);
