@@ -49,11 +49,7 @@ if ($config->getValue("authsnmp") == "file")
 {
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 	
-	if (isset($_GET["ID"]))
-	{
-	
-	}
-	else
+	if (!isset($_GET["ID"]))
 	{
 		echo $plugin_tracker_snmp_auth->plugin_tracker_snmp_connections();
 	}
