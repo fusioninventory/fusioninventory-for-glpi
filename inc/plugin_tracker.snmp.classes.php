@@ -182,6 +182,7 @@ abstract class plugin_tracker_snmp2 {
 		$nw=new Netwire;
 		$processes = new Threads;
 		$CommonItem = new CommonItem;
+		$plugin_tracker_snmp = new plugin_tracker_snmp;
 		
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking=".$ID." ";
@@ -224,71 +225,89 @@ abstract class plugin_tracker_snmp2 {
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
-		echo "<td align='center'>";
-		plugin_tracker_Bar($data["cpu"]);
-		echo "</td>";
-		echo "</tr>";	
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANGTRACKER["snmp"][14]."</td>";
-		echo "<td align='center'>";
-		$query2 = "
-		SELECT * 
-		FROM glpi_networking
-		WHERE ID=".$ID." ";
-		$result2 = $DB->query($query2);		
-		$data2 = $DB->fetch_assoc($result2);
-
-		if (empty($data2["ram"])){
-			$ram_pourcentage = 0;
-		}else {
-			$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
-		}
-		plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)"); 
-		echo "</td>";
-		echo "</tr>";	
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
-		echo "<td align='center'>";
-		//echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
-		$sysUpTime = $data["uptime"];
-		if (ereg("days",$sysUpTime))
+		// Get link field to detect if cpu, memory and uptime are get onthis network device
+		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($data["FK_model_infos"]);
+		$mapping_name=array();
+		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 		{
-				sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
-		}
-		else if($sysUpTime == "0")
-		{
-			$day = 0;
-			$hour = 0;
-			$minute = 0;
-			$sec = 0;
-		}
-		else
-		{
-			sscanf($sysUpTime, "(%d) %d:%d:%d.%d",$uptime,$hour,$minute,$sec,$ticks);
-			$day = 0;
+			$explode = explode("||", $mapping_type_name);
+			$mapping_name[$explode[1]] = "1";			
 		}
 
-//		$uptime = ceil($uptime / 100);
-//		$day=86400;
-//		$days=floor($uptime/$day);
-		echo "<b>$day</b> ".$LANG["stats"][31]." ";
-//		$utdelta=$uptime-($days*$day);
-//		$hour=3600;
-//		$hours=floor($utdelta/$hour);
-		echo "<b>$hour</b> ".$LANG["job"][21]." ";
-//		$utdelta-=$hours*$hour;
-//		$minute=60;
-//		$minutes=floor($utdelta/$minute);
-		echo "<b>$minute</b> ".$LANG["job"][22]." ";
-//		$utdelta-=round($minutes*$minute,2);
-		echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";      
-     
-		echo "</td>";
-		echo "</tr>";
+		if ((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
+		{
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
+			echo "<td align='center'>";
+			plugin_tracker_Bar($data["cpu"]);
+			echo "</td>";
+			echo "</tr>";	
+		}
+
+		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1"))
+		{
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>".$LANGTRACKER["snmp"][14]."</td>";
+			echo "<td align='center'>";
+			$query2 = "
+			SELECT * 
+			FROM glpi_networking
+			WHERE ID=".$ID." ";
+			$result2 = $DB->query($query2);		
+			$data2 = $DB->fetch_assoc($result2);
+	
+			if (empty($data2["ram"])){
+				$ram_pourcentage = 0;
+			}else {
+				$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
+			}
+			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)"); 
+			echo "</td>";
+			echo "</tr>";
+		}
+
+		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1"))
+		{
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
+			echo "<td align='center'>";
+			//echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
+			$sysUpTime = $data["uptime"];
+			if (ereg("days",$sysUpTime))
+			{
+					sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
+			}
+			else if($sysUpTime == "0")
+			{
+				$day = 0;
+				$hour = 0;
+				$minute = 0;
+				$sec = 0;
+			}
+			else
+			{
+				sscanf($sysUpTime, "(%d) %d:%d:%d.%d",$uptime,$hour,$minute,$sec,$ticks);
+				$day = 0;
+			}
+	
+	//		$uptime = ceil($uptime / 100);
+	//		$day=86400;
+	//		$days=floor($uptime/$day);
+			echo "<b>$day</b> ".$LANG["stats"][31]." ";
+	//		$utdelta=$uptime-($days*$day);
+	//		$hour=3600;
+	//		$hours=floor($utdelta/$hour);
+			echo "<b>$hour</b> ".$LANG["job"][21]." ";
+	//		$utdelta-=$hours*$hour;
+	//		$minute=60;
+	//		$minutes=floor($utdelta/$minute);
+			echo "<b>$minute</b> ".$LANG["job"][22]." ";
+	//		$utdelta-=round($minutes*$minute,2);
+			echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";      
+	     
+			echo "</td>";
+			echo "</tr>";
+		}
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='2'>";
