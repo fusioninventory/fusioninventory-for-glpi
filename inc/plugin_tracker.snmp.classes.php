@@ -1298,11 +1298,11 @@ class plugin_tracker_snmp extends CommonDBTM
 				}
 				else if (ereg ("No Such Instance currently exists", $SNMPValue))
 				{
-					$ArraySNMP[$object] = "";
+					$ArraySNMP[$object] = "[[empty]]";
 				}
 				else if (ereg ("No Such Object available on this agent at this OID", $SNMPValue))
 				{
-					$ArraySNMP[$object] = "";
+					$ArraySNMP[$object] = "[[empty]]";
 				}
 				else
 				{
@@ -1403,11 +1403,11 @@ class plugin_tracker_snmp extends CommonDBTM
 				}
 				else if (ereg ("No Such Instance currently exists", $value))
 				{
-					$ArraySNMP[$oidwalk] = "";
+					$ArraySNMP[$oidwalk] = "[[empty]]";
 				}
 				else if (ereg ("No Such Object available on this agent at this OID", $value))
 				{
-					$ArraySNMP[$oidwalk] = "";
+					$ArraySNMP[$oidwalk] = "[[empty]]";
 				}				
 				else
 				{
