@@ -73,6 +73,9 @@ class plugin_tracker_mib_networking extends CommonDBTM
 			
 			if ($result = $DB->query($query))
 			{
+				$object_used = array();
+				$linkoid_used = array();
+				
 				echo "<br>";
 				echo "<div align='center'><form method='post' name='odi_list' id='oid_list'  action=\"".$target."\">";
 		
@@ -101,6 +104,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					echo "</td>";
 					
 					echo "<td align='center'>";
+					$object_used[] = $data["FK_mib_object"];
 					echo getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"]);
 					echo "</td>";
 					
@@ -124,7 +128,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					
 					echo "<td align='center'>";
 					if (isset($TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name']))
+					{
 						echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'];
+						$linkoid_used[$data['mapping_type']."||".$data["mapping_name"]] = 1;
+					}
 					echo "</td>";
 					
 					echo "</tr>";
@@ -163,9 +170,9 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object",0,1);
+				dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object",0,1,-1,'',$object_used);
 				echo "</td>";
-				
+
 				echo "<td align='center'>";
 				dropdownValue("glpi_dropdown_plugin_tracker_mib_oid","FK_mib_oid",0,1);
 				echo "</td>";
@@ -191,12 +198,11 @@ class plugin_tracker_mib_networking extends CommonDBTM
 						foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
 						{
 							$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
-							//echo "<option value='".$type."||".$name."'>".$TRACKER_MAPPING[$type][$name]["name"]."</option>";
 						}
 					}
 				}
-				//echo "</select>";
-				dropdownArrayValues("links_oid_fields",$types);
+
+				dropdownArrayValues("links_oid_fields",$types,'',$linkoid_used);
 
 				echo "</td>";
 				
