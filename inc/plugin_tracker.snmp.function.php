@@ -837,7 +837,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	// Get by SNMP query the mac addresses (dot1dTpFdbAddress)
 	$snmp_queries->DefineObject($ArrayMACAdressTableObject);
 	$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP,$snmp_version,$snmp_auth);
-	
+
 	foreach($ArrayMACAdressTable as $oid=>$value)
 	{
 		$oidExplode = explode(".", $oid);
