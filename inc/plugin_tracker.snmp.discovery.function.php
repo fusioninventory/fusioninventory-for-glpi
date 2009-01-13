@@ -591,6 +591,12 @@ function plugin_tracker_discovery_import($array_import)
 						$Printer = new Printer;
 						$Netport = new Netport;
 						
+						// get status for scan in tracker
+						$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_printer";
+						$result_state = $DB->query($query_state);		
+						$data_state = $DB->fetch_assoc($result_state);						
+						
+						$addArray['state'] = $data_state['active_device_state'];
 						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
@@ -601,6 +607,7 @@ function plugin_tracker_discovery_import($array_import)
 						$addPort['ifaddr'] = $data['ifaddr'];
 						$Netport->add($addPort);
 						unset($addPort);
+
 						// insert in tracker for scan
 						$query_ins = "INSERT INTO glpi_plugin_tracker_printers
 						(FK_printers,FK_model_infos,FK_snmp_connection)
@@ -614,6 +621,13 @@ function plugin_tracker_discovery_import($array_import)
 						break;
 					case NETWORKING_TYPE :
 						$Netdevice = new Netdevice;
+						
+						// get status for scan in tracker
+						$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_networking";
+						$result_state = $DB->query($query_state);		
+						$data_state = $DB->fetch_assoc($result_state);						
+						
+						$addArray['state'] = $data_state['active_device_state'];
 						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
 						$addArray['serial'] = $data['serialnumber'];
 						$addArray['name'] = $data['name'];
