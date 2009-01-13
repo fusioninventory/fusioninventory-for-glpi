@@ -42,7 +42,7 @@ function plugin_tracker_install() {
 	
 	global $DB;
 
-	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-0.1-empty.sql";
+	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-1.0.0-empty.sql";
 	$DBf_handle = fopen($DB_file, "rt");
 	$sql_query = fread($DBf_handle, filesize($DB_file));
 	fclose($DBf_handle);
