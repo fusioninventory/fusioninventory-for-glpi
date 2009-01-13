@@ -536,13 +536,14 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
 	
 	$printer_cartridges_max_remain = array();
-
+	$cpu_values = array();
+	
 	foreach($ArraySNMP_Object_result as $object=>$SNMPValue)
 	{
 		$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
 		$object_type = $explode[0];
 		$object_name = $explode[1];
-		$cpu_values = array();
+		
 
 		if ($TRACKER_MAPPING[$object_type][$object_name]['dropdown'] != "")
 		{
@@ -665,15 +666,17 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		else if (($object_name == "cpuuser") OR ($object_name ==  "cpusystem"))
 		{
 			if ($object_name == "cpuuser")
-				$cpu_values['cpuuser'] == $SNMPValue;
+				$cpu_values['cpuuser'] = $SNMPValue;
 			if ($object_name ==  "cpusystem")
-				$cpu_values['cpusystem'] == $SNMPValue;
+				$cpu_values['cpusystem'] = $SNMPValue;
+
 			if ((isset($cpu_values['cpuuser'])) AND (isset($cpu_values['cpusystem'])))
 			{
+				echo "TOTO\n";
 				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".($cpu_values['cpuuser'] + $cpu_values['cpusystem'])."' 
 				WHERE ".$Field."='".$ID_Device."'";
-	
+
 				$DB->query($queryUpdate);
 				unset($cpu_values);
 			}
