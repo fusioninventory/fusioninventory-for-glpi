@@ -318,8 +318,11 @@ function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
 			{
 				$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
 				$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
-				if ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != ""){
-//					echo "\n TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."\n";
+				if (($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != "")
+					AND ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != "[[empty]]")
+					AND ($device_type == 0)
+					){
+					echo "\n TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."\n";
 					$device_type = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
 					
 				}
