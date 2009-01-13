@@ -573,7 +573,9 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		
 		if (($object_name == "ram") OR ($object_name == "memory"))
 		{
-			if (ereg("KBytes", $SNMPValue))
+			if ((ereg("KBytes", $SNMPValue))
+				OR (ereg("kB", $SNMPValue))
+				)
 			{
 				$SNMPValue = ceil($SNMPValue / 1024) ;
 			}
