@@ -533,7 +533,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type)
 {
 
-	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;
+	global $DB,$LANG,$CFG_GLPI,$LANGTRACKER,$TRACKER_MAPPING;
 	
 	$printer_cartridges_max_remain = array();
 	$cpu_values = array();
@@ -674,7 +674,6 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 
 			if ((isset($cpu_values['cpuuser'])) AND (isset($cpu_values['cpusystem'])))
 			{
-				echo "TOTO\n";
 				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".($cpu_values['cpuuser'] + $cpu_values['cpusystem'])."' 
 				WHERE ".$Field."='".$ID_Device."'";
@@ -688,11 +687,28 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		{
 			if (($TRACKER_MAPPING[$object_type][$object_name]['field'] == "cpu") AND ($SNMPValue == ""))
 				$SNMPValue = 0;
-			$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
-			SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
-			WHERE ".$Field."='".$ID_Device."'";
-
-			$DB->query($queryUpdate);
+			
+			if (ereg("glpi_plugin_tracker",$TRACKER_MAPPING[$object_type][$object_name]['table']))
+			{
+				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
+				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
+				WHERE ".$Field."='".$ID_Device."'";
+	
+				$DB->query($queryUpdate);
+			}
+			else
+			{
+				$commonitem = new commonitem;
+				$commonitem->setType($object_type,true);
+				echo "TYPE : ".$commonitem->getType()."\n";
+				echo "FIELD : ".$Field." => ".$ID_Device."\n";
+				echo "UPDATE : ".$TRACKER_MAPPING[$object_type][$object_name]['field']." => ".$SNMPValue."\n";
+				echo "TABLE : ".$TRACKER_MAPPING[$object_type][$object_name]['table']."\n";
+				echo "==================================\n";
+				$tableau[$Field] = $ID_Device;
+				$tableau[$TRACKER_MAPPING[$object_type][$object_name]['field']] = $SNMPValue;
+				$commonitem->obj->update($tableau);
+			}
 		}
 	}
 }

@@ -1260,11 +1260,22 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				if ($version == "1")
 				{
-					if (defined($object))
+					if (ereg("::",$object))
 					{
-						runkit_constant_remove($object);
+						if (defined(str_replace("::","",$object)))
+						{
+							runkit_constant_remove(str_replace("::","",$object));
+						}
+						define(str_replace("::","",$object),$oid);
 					}
-					define($object,$oid);
+					else
+					{
+						if (defined($object))
+						{
+							runkit_constant_remove($object);
+						}
+						define($object,$oid);
+					}
 					ob_start();
 					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,700000,1);
 					ob_end_clean();
@@ -1282,19 +1293,6 @@ class plugin_tracker_snmp extends CommonDBTM
 					ob_end_clean();
 				}
 				logInFile("tracker_snmp", "			SNMP QUERY : [".$IP."] ".$object."(".$oid.") = ".$SNMPValue."\n\n");
-/*				$ArraySNMPValues = explode(": ", $SNMPValue);
-				if (!isset($ArraySNMPValues[1]))
-					$ArraySNMPValues[1] = "";
-				if (count($ArraySNMPValues) > 2)
-				{
-					for ($i=2;$i < count($ArraySNMPValues);$i++)
-					{
-						$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
-					}			
-				}
-				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
-				$ArraySNMP[$object] = $ArraySNMPValues[1];
-				*/
 				if ((ereg ("Hex: ", $SNMPValue)) 
 					OR (ereg ("Gauge32: ", $SNMPValue)) 
 					OR (ereg ("STRING: ", $SNMPValue))
@@ -1366,11 +1364,22 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ($version == "1")
 			{
-				if (defined($object))
+				if (ereg("::",$object))
 				{
-					runkit_constant_remove($object);
+					if (defined(str_replace("::","",$object)))
+					{
+						runkit_constant_remove(str_replace("::","",$object));
+					}
+					define(str_replace("::","",$object),$oid);
 				}
-				define($object,$oid);
+				else
+				{
+					if (defined($object))
+					{
+						runkit_constant_remove($object);
+					}
+					define($object,$oid);
+				}
 				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,700000,1);
 			}
 			else if ($version == "2c")
