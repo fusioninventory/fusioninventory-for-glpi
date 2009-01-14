@@ -343,7 +343,10 @@ $LANGTRACKER["mapping"][99]="imprimante > consommables > Kit de maintenance (res
 $LANGTRACKER["mapping"][400]="imprimante > consommables > Kit de maintenance (%)";
 $LANGTRACKER["mapping"][401]="réseaux > CPU user";
 $LANGTRACKER["mapping"][402]="réseaux > CPU système";
-
+$LANGTRACKER["mapping"][403]="réseaux > contact";
+$LANGTRACKER["mapping"][404]="réseaux > description";
+$LANGTRACKER["mapping"][405]="imprimante > contact";
+$LANGTRACKER["mapping"][406]="imprimante > description";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";

@@ -54,6 +54,18 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['firmware']['name'] = $LANGTRACKER["mapping"][
 $TRACKER_MAPPING[NETWORKING_TYPE]['firmware']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['firmware']['dropdown'] = 'glpi_dropdown_firmware';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['contact']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['contact']['field'] = 'contact';
+$TRACKER_MAPPING[NETWORKING_TYPE]['contact']['name'] = $LANGTRACKER["mapping"][403];
+$TRACKER_MAPPING[NETWORKING_TYPE]['contact']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['contact']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['comments']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['comments']['field'] = 'comments';
+$TRACKER_MAPPING[NETWORKING_TYPE]['comments']['name'] = $LANGTRACKER["mapping"][404];
+$TRACKER_MAPPING[NETWORKING_TYPE]['comments']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['comments']['dropdown'] = '';
+
 $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['table'] = 'glpi_plugin_tracker_networking';
 $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['field'] = 'uptime';
 $TRACKER_MAPPING[NETWORKING_TYPE]['uptime']['name'] = $LANGTRACKER["mapping"][3];
@@ -207,6 +219,7 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['portDuplex']['dropdown'] = '';
 
 
 
+// Printers
 
 $TRACKER_MAPPING[PRINTER_TYPE]['model']['table'] = 'glpi_printers';
 $TRACKER_MAPPING[PRINTER_TYPE]['model']['field'] = 'model';
@@ -219,6 +232,18 @@ $TRACKER_MAPPING[PRINTER_TYPE]['serial']['field'] = 'serial';
 $TRACKER_MAPPING[PRINTER_TYPE]['serial']['name'] = $LANGTRACKER["mapping"][27];
 $TRACKER_MAPPING[PRINTER_TYPE]['serial']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['serial']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['contact']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['contact']['field'] = 'contact';
+$TRACKER_MAPPING[PRINTER_TYPE]['contact']['name'] = $LANGTRACKER["mapping"][405];
+$TRACKER_MAPPING[PRINTER_TYPE]['contact']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['contact']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['comments']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['comments']['field'] = 'comments';
+$TRACKER_MAPPING[PRINTER_TYPE]['comments']['name'] = $LANGTRACKER["mapping"][406];
+$TRACKER_MAPPING[PRINTER_TYPE]['comments']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['comments']['dropdown'] = '';
 
 $TRACKER_MAPPING[PRINTER_TYPE]['name']['table'] = 'glpi_printers';
 $TRACKER_MAPPING[PRINTER_TYPE]['name']['field'] = 'name';

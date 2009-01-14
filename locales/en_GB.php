@@ -341,6 +341,12 @@ $LANGTRACKER["mapping"][97]="printer > port > type";
 $LANGTRACKER["mapping"][98]="printer > consumables > Maintenance kit (max)";
 $LANGTRACKER["mapping"][99]="printer > consumables > Maintenance kit (remaining)";
 $LANGTRACKER["mapping"][400]="printer > consumables > Maintenance kit (%)";
+$LANGTRACKER["mapping"][401]="networking > CPU user";
+$LANGTRACKER["mapping"][402]="networking > CPU système";
+$LANGTRACKER["mapping"][403]="networking > contact";
+$LANGTRACKER["mapping"][404]="networking > comments";
+$LANGTRACKER["mapping"][405]="printer > contact";
+$LANGTRACKER["mapping"][406]="printer > comments";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
