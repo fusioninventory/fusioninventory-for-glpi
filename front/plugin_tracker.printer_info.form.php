@@ -83,6 +83,57 @@ if ( (isset($_POST['update_cartridges'])) && (isset($_POST['ID'])) ) {
 	}
 }
 
-glpi_header($_SERVER['HTTP_REFERER']);
+$arg = "";
+for ($i=1;$i <= 5;$i++)
+{
+	switch ($i) {
+		case 1:
+			$value = "datetotalpages";
+			break;
+		case 2:
+			$value = "dateblackpages";
+			break;
+		case 3:
+			$value = "datecolorpages";
+			break;
+		case 4:
+			$value = "daterectoversopages";
+			break;
+		case 5:
+			$value = "datescannedpages";
+			break;
+	}
+	if (isset($_POST[$value]))
+	{
+		if (ereg($value,$_SERVER['HTTP_REFERER']))
+		{
+			$explode = explode('&',$_SERVER['HTTP_REFERER']);
+			$reconstruct = $explode[0];
+			for ($i=1;$i < count($explode);$i++)
+			{
+				if (ereg($value,$explode[$i]))
+				{
+					if (ereg("0000-00-00",$_POST[$value]))
+					{
+						$explode[$i] = '';
+					}
+					else
+					{
+						$explode[$i] = $value.'='.$_POST[$value];
+					}
+				}
+				if (!empty($explode[$i]))
+					$reconstruct .= '&'.$explode[$i];	
+			}
+			$_SERVER['HTTP_REFERER'] = $reconstruct;
+		}
+		else
+		{
+			$arg .= "&".$value."=".$_POST[$value];
+		}
+	}
+}
+	
+glpi_header($_SERVER['HTTP_REFERER'].$arg);
 
 ?>

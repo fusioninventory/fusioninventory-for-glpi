@@ -33,9 +33,18 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_tracker_date ($number_dates,$frequence)
+function plugin_tracker_date ($number_dates,$frequence,$today='')
 {
-	$today = time();
+	if ($today == "")
+	{
+		$today = time();
+	}
+	else
+	{
+		$explode = explode("-",$today);
+		$today = mktime(0, 0, 0, $explode[1], $explode[2], $explode[0]);
+	}
+
 	// ** For weekly stats
 	switch ($frequence)
 	{
@@ -77,6 +86,20 @@ function plugin_tracker_date ($number_dates,$frequence)
 			break;
 	}
 	return $dates;
+}
+
+
+
+function plugin_tracker_printer_calendar ($getvalue,$field,$target)
+{
+	global $DB,$LANG;
+
+	echo "<div align='center'><form method='post' action='".$target."'>";
+	echo "<table class='tab_cadre'><tr class='tab_bg_2'><td align='right'>";
+	echo $LANG["search"][9]." :</td><td>";
+	showCalendarForm("form",$field,$getvalue);
+	echo "</td><td rowspan='2' align='center'><input type=\"submit\" class='button' name=\"submit\" Value=\"". $LANG["buttons"][7] ."\" /></td></tr>";
+	echo "</table></form></div>";	
 }
 
 ?>
