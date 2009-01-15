@@ -335,6 +335,7 @@ CREATE TABLE `glpi_plugin_tracker_processes` (
   `network_queries` int(8) NOT NULL DEFAULT '0',
   `printer_queries` int(8) NOT NULL DEFAULT '0',
   `ports_queries` int(8) NOT NULL DEFAULT '0',
+  `discovery_queries` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `end_time` (`end_time`),
   KEY `process_id` (`process_id`)

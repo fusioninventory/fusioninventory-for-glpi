@@ -95,7 +95,7 @@ elseif(isset($_GET['update_device_process'])){
 			$device_printer = $processes_values["devices"];
 			break;
 	}
-	$processes->updateProcess($_GET['FK_process'],$device_network, $device_printer , $processes_values["errors"]);
+	$processes->updateProcess($_GET['FK_process'],$device_network, $device_printer, 0, $processes_values["errors"]);
 }
 else
 {
@@ -147,7 +147,7 @@ else
 	
 			$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
 			
-			$processes->updateProcess($fields["process_id"],0, $processes_values2["devices"] , $processes_values2["errors"]);
+			$processes->updateProcess($fields["process_id"],0, $processes_values2["devices"], 0, $processes_values2["errors"]);
 		}
 	}
 	
@@ -164,16 +164,6 @@ else
 		}
 	}
 
-	if (!isset($processes_values["errors"]))
-	{
-		$processes_values["errors"] = '';
-	}
-
-	$processes_values["errors"] += $processes_values2["errors"];
-
-	// Update process into database
-//	$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
-	$processes->closeProcess($fields["process_id"]);
 	
 	// Discover function
 	// get config if we can or not scan
@@ -192,13 +182,15 @@ else
 		$Array_IP['ip23'] = $explode[2];
 		$Array_IP['ip24'] = $explode[3];
 	
-		plugin_tracker_discovery_scan($Array_IP);
+		plugin_tracker_discovery_scan($Array_IP,$fields["process_id"]);
 	}
 	
 	if (((isset($conf['getserialnumber'])) && ($conf['getserialnumber'] == "1") AND ($type == "")) OR ($type == "discovery_serial"))
 	{
 		plugin_tracker_discovery_scan_serial();
 	}
+
+	$processes->closeProcess($fields["process_id"]);
 }
 
 
