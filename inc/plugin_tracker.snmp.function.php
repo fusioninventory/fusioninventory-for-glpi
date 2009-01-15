@@ -339,7 +339,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 				if (!empty($ArrayPort_Object_oid))
 					$ArraySNMPPort_Object_result = $plugin_tracker_snmp->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
 
-				// ** Get query SNMP on switch
+				// ** Get query SNMP on device
 				$ArraySNMP_Object_result= $plugin_tracker_snmp->SNMPQuery($Array_Object_oid,$ifIP,$snmp_version,$snmp_auth);
 				$processes_values["devices"]++;
 				
@@ -381,7 +381,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 
 			}
 		}
-	} 
+	}
 	return $processes_values;
 }
 

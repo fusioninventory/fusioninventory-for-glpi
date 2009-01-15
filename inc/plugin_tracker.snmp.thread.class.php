@@ -335,14 +335,25 @@ class Threads extends CommonDBTM
 		if (empty($PrinterQueries))
 			$PrinterQueries = 0;
 		$query = "UPDATE glpi_plugin_tracker_processes
-		SET end_time='".date("Y-m-d H:i:s")."', status='3', error_msg='".$errors."', network_queries='".$NetworkQueries."',
-			printer_queries='".$PrinterQueries."'
+		SET error_msg='".$errors."', network_queries=network_queries + ".$NetworkQueries.",
+			printer_queries=printer_queries + ".$PrinterQueries."
 		WHERE process_id='".$PID."' ";
 		$DB->query($query);
 	}
 
 
 
+	function closeProcess($PID)
+	{
+		global $DB;
+		$query = "UPDATE glpi_plugin_tracker_processes
+		SET end_time='".date("Y-m-d H:i:s")."', status='3'
+		WHERE process_id='".$PID."' ";
+		$DB->query($query);
+	}
+	
+	
+	
 	function addProcessValues($PID, $field,$FK_port,$value)
 	{
 		global $DB;
