@@ -121,8 +121,8 @@ else
 	logInFile("tracker_snmp", "Operating System : ".$OS." \n\n");
 	logInFile("tracker_snmp", "I) Get all devices \n\n");
 	
-	$processes_values = 0;
-	$processes_values2 = 0;
+	$processes_values = array("devices"=>0,"errors"=>"");
+	$processes_values2 = array("devices"=>0,"errors"=>"");
 	
 	// ** QUERY PRINTERS ** //
 	if (($type == "printer_type") OR ($type == ""))
@@ -147,9 +147,15 @@ else
 			$processes_values = plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
 		}
 	}
-	if (!isset($processes_values["errors"])){
-		$processes_values["errors"] = "";
+
+	if (!isset($processes_values["errors"]))
+	{
+		$processes_values["errors"] = '';
 	}
+
+	$processes_values["devices"] += $processes_values2["devices"];
+	$processes_values["errors"] += $processes_values2["errors"];
+
 	// Update process into database
 	$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
 	
