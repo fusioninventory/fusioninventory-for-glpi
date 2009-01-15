@@ -67,21 +67,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		echo "<input type='text' name='name' value='" . $this->fields["name"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
-/*
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][22] . "</td>";
-		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_model_networking", "FK_model_networking", $this->fields["FK_model_networking"], 1);
-		echo "</td>";
-		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["networking"][49] . "</td>";
-		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_firmware", "FK_firmware", $this->fields["FK_firmware"], 1, -1, "");
-		echo "</td>";
-		echo "</tr>";
-*/
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANGTRACKER["model_info"][2] . "</td>";
 		echo "<td align='center'>";

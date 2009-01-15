@@ -96,7 +96,7 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MODEL][3]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][3]['field'] = 'device_type';
 	$sopt[PLUGIN_TRACKER_MODEL][3]['linkfield'] = 'device_type';
-	$sopt[PLUGIN_TRACKER_MODEL][3]['name'] = $LANG["common"][22];
+	$sopt[PLUGIN_TRACKER_MODEL][3]['name'] = $LANG["common"][17];
 
 	$sopt[PLUGIN_TRACKER_MODEL][5]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['field'] = 'ID';
@@ -239,7 +239,7 @@ function plugin_tracker_getSearchOption() {
 }
 
 function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
-	global $CFG_GLPI, $INFOFORM_PAGES, $LANGTRACKER, $DB;
+	global $CFG_GLPI, $LANG, $INFOFORM_PAGES, $LANGTRACKER, $DB;
 	switch ($field) {
 		case "glpi_plugin_tracker_model_infos.name" :
 			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
@@ -249,6 +249,29 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 			$out .= "</a>";
 			return $out;
 			break;
+		case "glpi_plugin_tracker_model_infos.device_type" :
+			$out = '<center> ';
+			switch ($data["ITEM_$num"])
+			{
+				case COMPUTER_TYPE:
+					$out .= $LANG["Menu"][0];
+					break;
+				case NETWORKING_TYPE:
+					$out .= $LANG["Menu"][1];
+					break;
+				case PRINTER_TYPE:
+					$out .= $LANG["Menu"][2];
+					break;	
+				case PERIPHERAL_TYPE:
+					$out .= $LANG["Menu"][16];
+					break;	
+				case PHONE_TYPE:
+					$out .= $LANG["Menu"][34];
+					break;	
+			}
+			$out .= '</center>';			
+			return $out;
+			break;		
 		case "glpi_dropdown_plugin_tracker_snmp_version.FK_snmp_version" :
 			$out = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version", $data["ITEM_$num"], 0);
 			return $out;
