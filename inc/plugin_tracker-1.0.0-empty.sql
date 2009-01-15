@@ -219,8 +219,7 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_model_infos`;
 CREATE TABLE `glpi_plugin_tracker_model_infos` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `FK_model_networking` int(8) NOT NULL,
-  `FK_firmware` int(8) NOT NULL,
+  `device_type` int(8) NOT NULL DEFAULT '0',
   `deleted` int(1) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_model_networking` (`FK_model_networking`)

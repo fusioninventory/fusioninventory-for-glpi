@@ -67,7 +67,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		}
 		else if ((isset($ID)) AND (!empty($ID)))
 		{
-			$query = "SELECT glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
+			$query = "SELECT glpi_plugin_tracker_model_infos.device_type,glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
 			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
 			WHERE glpi_plugin_tracker_model_infos.ID=".$ID;
 			
@@ -94,6 +94,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
 				{
+					$type_model = $data['device_type'];
 					echo "<tr class='tab_bg_1'>";
 					echo "<td align='center'>";
 					echo "<input name='item_coche[]' value='".$data["ID"]."' type='checkbox'>";
@@ -193,11 +194,14 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				$types[] = "-----";
 				foreach ($TRACKER_MAPPING as $type=>$mapping43)
 				{
-					if (isset($TRACKER_MAPPING[$type]))
+					if (($type_model == $type) OR ($type_model == "0"))
 					{
-						foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
+						if (isset($TRACKER_MAPPING[$type]))
 						{
-							$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+							foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
+							{
+								$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+							}
 						}
 					}
 				}

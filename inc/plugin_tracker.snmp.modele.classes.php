@@ -69,16 +69,26 @@ class plugin_tracker_model_infos extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][22] . "</td>";
+		echo "<td align='center'>".$LANG["common"][17]."</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_model_networking", "FK_model_networking", $this->fields["FK_model_networking"], 1);
-		echo "</td>";
-		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["networking"][49] . "</td>";
-		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_firmware", "FK_firmware", $this->fields["FK_firmware"], 1, -1, "");
+		$selected_value = $this->fields["device_type"];
+		echo "<select name='device_type'>\n";
+		if ($selected_value == "0"){$selected = 'selected';}else{$selected = '';}
+		echo "<option value='0' ".$selected.">-----</option>\n";
+		if ($selected_value == COMPUTER_TYPE){$selected = 'selected';}else{$selected = '';}
+		echo "<option value='".COMPUTER_TYPE."' ".$selected.">".$LANG["Menu"][0]."</option>\n";
+		if ($selected_value == NETWORKING_TYPE){$selected = 'selected';}else{$selected = '';}
+		echo "<option value='".NETWORKING_TYPE."' ".$selected.">".$LANG["Menu"][1]."</option>\n";
+		if ($selected_value == PRINTER_TYPE){$selected = 'selected';}else{$selected = '';}
+		echo "<option value='".PRINTER_TYPE."' ".$selected.">".$LANG["Menu"][2]."</option>\n";
+		if ($selected_value == PERIPHERAL_TYPE){$selected = 'selected';}else{$selected = '';}
+		echo "<option value='".PERIPHERAL_TYPE."' ".$selected.">".$LANG["Menu"][16]."</option>\n";
+		if ($selected_value == PHONE_TYPE){$selected = 'selected';}else{$selected = '';}
+		echo "<option value='".PHONE_TYPE."' ".$selected.">".$LANG["Menu"][34]."</option>\n";
+		echo "</select>";
+		
+		//dropdownValue("glpi_dropdown_model_networking", "FK_model_networking", $this->fields["FK_model_networking"], 1);
 		echo "</td>";
 		echo "</tr>";
 

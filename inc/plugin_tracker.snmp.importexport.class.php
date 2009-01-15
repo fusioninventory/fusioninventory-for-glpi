@@ -58,8 +58,7 @@ class plugin_tracker_importexport extends CommonDBTM
 			if ( $DB->numrows($result) != 0 )
 			{
 				$model_name = $DB->result($result, 0, "name");
-				$model_FK_model_networking = $DB->result($result, 0, "FK_model_networking");
-				$model_FK_firmware = $DB->result($result, 0, "FK_firmware");
+				$type = $DB->result($result, 0, "device_type");
 			}
 			else
 			{
@@ -72,8 +71,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		// Construction of XML file
 		$xml = "<model>\n";
 		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
-		$xml .= "	<networkingmodel><![CDATA[".getDropdownName("glpi_dropdown_model_networking",$model_FK_model_networking)."]]></networkingmodel>\n";
-		$xml .= "	<firmware><![CDATA[".getDropdownName("glpi_dropdown_firmware",$model_FK_firmware)."]]></firmware>\n";
+		$xml .= "	<type>".$type."</type>\n";
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
@@ -157,14 +155,10 @@ class plugin_tracker_importexport extends CommonDBTM
 
 //			echo $xml->name[0]."<br/>";
 			
-//			echo $xml->networkingmodel[0]."<br/>";
-				$FK_model_networking = externalImportDropdown("glpi_dropdown_model_networking",$xml->networkingmodel[0],0,$external_params["manufacturer"]=1);
-//			echo $xml->firmware[0]."<br/>";
-				$FK_firmware = externalImportDropdown("glpi_dropdown_firmware",$xml->firmware[0],0);
 			
 			$query = "INSERT INTO glpi_plugin_tracker_model_infos
 			(name,FK_model_networking,FK_firmware)
-			VALUES('".$xml->name[0]."','".$FK_model_networking."','".$FK_firmware."')";
+			VALUES('".$xml->name[0]."','".$xml->type[0]."')";
 			
 			$DB->query($query);
 			$FK_model = $DB->insert_id();
