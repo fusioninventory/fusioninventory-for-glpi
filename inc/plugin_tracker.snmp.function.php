@@ -297,8 +297,8 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 		// Get SNMP model 
 		$snmp_model_ID = '';
 		$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID_Device,$type);
-	
-		if (($snmp_model_ID != "") && ($ID_Device != ""))
+
+		if (($snmp_model_ID != "") && ($snmp_model_ID != 0) && ($ID_Device != ""))
 		{
 			// ** Get oid of PortName
 			$Array_Object_oid_ifName = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifName'");
@@ -380,6 +380,10 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 				}
 
 			}
+		}
+		else
+		{
+			$processes_values["errors"]++;
 		}
 	}
 	return $processes_values;
