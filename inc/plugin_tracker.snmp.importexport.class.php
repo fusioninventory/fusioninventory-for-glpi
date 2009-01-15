@@ -157,7 +157,7 @@ class plugin_tracker_importexport extends CommonDBTM
 			
 			
 			$query = "INSERT INTO glpi_plugin_tracker_model_infos
-			(name,FK_model_networking,FK_firmware)
+			(name,device_type)
 			VALUES('".$xml->name[0]."','".$xml->type[0]."')";
 			
 			$DB->query($query);
