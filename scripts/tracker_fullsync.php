@@ -81,7 +81,21 @@ if(isset($_GET['discovery_process'])){
 	plugin_tracker_discovery_scan_process($_GET['ip1'],$_GET['ip2'],$_GET['ip3'],$_GET['ip4']);
 }
 elseif(isset($_GET['update_device_process'])){
-	plugin_tracker_UpdateDeviceBySNMP_process(array($_GET['id']=>$_GET['ip']),$_GET['FK_process'],$xml_auth_rep,$_GET['type']);
+	$processes = new Threads;
+	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process(array($_GET['id']=>$_GET['ip']),$_GET['FK_process'],$xml_auth_rep,$_GET['type']);
+	$device_network = 0;
+	$device_printer = 0;
+	echo"TYPE : ".$_GET['type']."\n";
+	var_dump($processes_values);
+	switch ($_GET['type']) {
+		case NETWORKING_TYPE :
+			$device_network = $processes_values["devices"];
+			break;
+		case PRINTER_TYPE :
+			$device_printer = $processes_values["devices"];
+			break;
+	}
+	$processes->updateProcess($_GET['FK_process'],$device_network, $device_printer , $processes_values["errors"]);
 }
 else
 {
@@ -132,6 +146,8 @@ else
 			$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
 	
 			$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
+			
+			$processes->updateProcess($fields["process_id"],0, $processes_values2["devices"] , $processes_values2["errors"]);
 		}
 	}
 	
@@ -156,8 +172,8 @@ else
 	$processes_values["errors"] += $processes_values2["errors"];
 
 	// Update process into database
-	$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
-	
+//	$processes->updateProcess($fields["process_id"],$processes_values["devices"], $processes_values2["devices"] , $processes_values["errors"]);
+	$processes->closeProcess($fields["process_id"]);
 	
 	// Discover function
 	// get config if we can or not scan
