@@ -90,6 +90,11 @@ else {
 	echo "<a href='http://glpi-project.org/wiki/doku.php?id=".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker_use' target='_blank'>".$LANGTRACKER["setup"][11]."&nbsp;</a>";
 	echo "/&nbsp;<a href='http://glpi-project.org/wiki/doku.php?id=".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker_faq' target='_blank'>".$LANGTRACKER["setup"][12]." </a>";
 	echo "</td></tr>";
+
+	/* Models */
+	echo "<tr class='tab_bg_1'><td align='center'>";
+	echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANGTRACKER["profile"][19]."&nbsp;</a>";
+	echo "</td></tr>";
 	
 	/* Uninstall */
 	if ($_SESSION["glpiactive_entity"]==0){
