@@ -85,8 +85,7 @@ elseif(isset($_GET['update_device_process'])){
 	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process(array($_GET['id']=>$_GET['ip']),$_GET['FK_process'],$xml_auth_rep,$_GET['type']);
 	$device_network = 0;
 	$device_printer = 0;
-	echo"TYPE : ".$_GET['type']."\n";
-	var_dump($processes_values);
+
 	switch ($_GET['type']) {
 		case NETWORKING_TYPE :
 			$device_network = $processes_values["devices"];
@@ -135,8 +134,8 @@ else
 	logInFile("tracker_snmp", "Operating System : ".$OS." \n\n");
 	logInFile("tracker_snmp", "I) Get all devices \n\n");
 	
-	$processes_values = array("devices"=>0,"errors"=>"");
-	$processes_values2 = array("devices"=>0,"errors"=>"");
+	$processes_values = array("devices"=>0,"errors"=>0);
+	$processes_values2 = array("devices"=>0,"errors"=>0);
 	
 	// ** QUERY PRINTERS ** //
 	if (($type == "printer_type") OR ($type == ""))
@@ -146,7 +145,7 @@ else
 			$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
 	
 			$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
-			
+
 			$processes->updateProcess($fields["process_id"],0, $processes_values2["devices"], 0, $processes_values2["errors"]);
 		}
 	}
