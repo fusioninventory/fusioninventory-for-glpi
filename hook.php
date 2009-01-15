@@ -93,15 +93,10 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MODEL][2]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_MODEL][2]['name'] = $LANG["common"][16];
 
-	$sopt[PLUGIN_TRACKER_MODEL][3]['table'] = 'glpi_dropdown_model_networking';
-	$sopt[PLUGIN_TRACKER_MODEL][3]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_MODEL][3]['linkfield'] = 'FK_model_networking';
+	$sopt[PLUGIN_TRACKER_MODEL][3]['table'] = 'glpi_plugin_tracker_model_infos';
+	$sopt[PLUGIN_TRACKER_MODEL][3]['field'] = 'device_type';
+	$sopt[PLUGIN_TRACKER_MODEL][3]['linkfield'] = 'device_type';
 	$sopt[PLUGIN_TRACKER_MODEL][3]['name'] = $LANG["common"][22];
-
-	$sopt[PLUGIN_TRACKER_MODEL][4]['table'] = 'glpi_dropdown_firmware';
-	$sopt[PLUGIN_TRACKER_MODEL][4]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_MODEL][4]['linkfield'] = 'FK_firmware';
-	$sopt[PLUGIN_TRACKER_MODEL][4]['name'] = $LANG["networking"][49];
 
 	$sopt[PLUGIN_TRACKER_MODEL][5]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['field'] = 'ID';
@@ -254,12 +249,6 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 			$out .= "</a>";
 			return $out;
 			break;
-		case "glpi_plugin_tracker_model_infos.FK_model_networking" :
-			$out = getDropdownName("glpi_dropdown_networking", $data["ITEM_$num"], 0);
-			return $out;
-		case "glpi_plugin_tracker_model_infos.FK_firmware" :
-			$out = getDropdownName("glpi_dropdown_firmware", $data["ITEM_$num"], 0);
-			return $out;
 		case "glpi_dropdown_plugin_tracker_snmp_version.FK_snmp_version" :
 			$out = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version", $data["ITEM_$num"], 0);
 			return $out;
