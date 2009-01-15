@@ -1237,8 +1237,9 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 			foreach ($Array_Device_ifaddr as $object=>$ifaddr_snmp)
 			{
 				if ($ifaddr[$ifaddr_snmp] == $ID_Device)
-				{
-					unset ($ifaddr[$ifaddr_snmp]);
+				{	
+					if (isset($ifaddr[$ifaddr_snmp]))
+						unset ($ifaddr[$ifaddr_snmp]);
 				}
 				else
 				{
