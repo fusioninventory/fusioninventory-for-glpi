@@ -153,7 +153,6 @@ else
 		$processes_values["errors"] = '';
 	}
 
-	$processes_values["devices"] += $processes_values2["devices"];
 	$processes_values["errors"] += $processes_values2["errors"];
 
 	// Update process into database
