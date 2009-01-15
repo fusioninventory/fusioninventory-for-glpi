@@ -56,7 +56,7 @@ class Threads extends CommonDBTM
 		$sql = "SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
 			"MIN(start_time) AS starting_date, MAX(end_time) AS ending_date, TIME_TO_SEC(MAX(end_time))-TIME_TO_SEC(MIN(start_time)) AS duree, " .
 			"end_time >= DATE_ADD(NOW(), INTERVAL -" . $minfreq . " HOUR) AS DoStat, error_msg, network_queries, 
-			printer_queries, ports_queries ".
+			printer_queries, ports_queries, discovery_queries ".
 		      	"FROM glpi_plugin_tracker_processes GROUP BY process_id ORDER BY ID DESC";
 	   $result = $DB->query($sql);
 
@@ -91,17 +91,18 @@ class Threads extends CommonDBTM
 		{
 			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][0] . "</th></tr>";
 			echo "<tr>"; 
-			echo"<th></th>";
-			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][2]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][3]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][4]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][5]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][6]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][8]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][7]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][9]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][10]."</th>";		
+			echo "<th></th>";
+			echo "<th>".$LANGTRACKER["processes"][1]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][2]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][3]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][4]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][5]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][6]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][8]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][7]."</th>";
+			echo "<th>".$LANGTRACKER["discovery"][3]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][9]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][10]."</th>";		
 			echo "</th></tr>\n";
 		
 // VERIFIER
@@ -145,6 +146,7 @@ class Threads extends CommonDBTM
 						echo "<td align='center'>".$thread["network_queries"]."</td>";
 						echo "<td align='center'>".$thread["ports_queries"]."</td>";
 						echo "<td align='center'>".$thread["printer_queries"]."</td>";
+						echo "<td align='center'>".$thread["discovery_queries"]."</td>";
 						echo "<td align='center'>".$thread["error_msg"]."</td>";
 						
 						echo "<td align='center'>";
@@ -327,16 +329,13 @@ class Threads extends CommonDBTM
 	}
 	
 	
-	function updateProcess($PID, $NetworkQueries, $PrinterQueries, $errors)
+	function updateProcess($PID, $NetworkQueries=0, $PrinterQueries=0, $DiscoveryQueries=0, $errors)
 	{
 		global $DB;
-		if (empty($NetworkQueries))
-			$NetworkQueries = 0;
-		if (empty($PrinterQueries))
-			$PrinterQueries = 0;
 		$query = "UPDATE glpi_plugin_tracker_processes
 		SET error_msg='".$errors."', network_queries=network_queries + ".$NetworkQueries.",
-			printer_queries=printer_queries + ".$PrinterQueries."
+			printer_queries=printer_queries + ".$PrinterQueries.",
+			discovery_queries=discovery_queries + ".$DiscoveryQueries."
 		WHERE process_id='".$PID."' ";
 		$DB->query($query);
 	}

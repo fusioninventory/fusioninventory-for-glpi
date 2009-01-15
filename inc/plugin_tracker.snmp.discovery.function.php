@@ -118,7 +118,7 @@ function plugin_tracker_discovery_startmenu($target)
 
 }
 
-function plugin_tracker_discovery_scan($Array_IP)
+function plugin_tracker_discovery_scan($Array_IP,$PID)
 {
 
 	global $DB,$TRACKER_MAPPING_DISCOVERY;
@@ -175,6 +175,7 @@ function plugin_tracker_discovery_scan($Array_IP)
 		{
 			eval($while);
 			eval($close);
+			$Thread->updateProcess($PID,0, 0, $s, 0);
 			$s = 0;
 			$lance_eval = 1;
 		}
@@ -274,6 +275,7 @@ function plugin_tracker_discovery_scan($Array_IP)
 		// In case when the last process list are not complete, we run while
 		if (($lance_eval == "0") AND ($i == "1"))
 		{
+			$nb = $s;
 			$s++;
 			for ($s;$s <= $nb_process_discovery ;$s++)
 			{
@@ -284,6 +286,8 @@ function plugin_tracker_discovery_scan($Array_IP)
 			}
 			eval($while);
 			eval($close);
+			// Update processes
+			$Thread->updateProcess($PID,0, 0, $nb, 0);
 			$s = 0;
 		}
 	}
@@ -291,6 +295,7 @@ function plugin_tracker_discovery_scan($Array_IP)
 	SET discover='0'
 	WHERE ID='1' ";
 	$DB->query($query);
+	return $nb_process_discovery;
 }
 
 
