@@ -97,7 +97,16 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_tracker_model_infos","FK_model_infos",$data["FK_model_infos"],0);
+		$query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
+		WHERE device_type!=3 
+			AND device_type!=0";
+		$result_models=$DB->query($query_models);
+		$exclude_models = array();
+		while ( $data_models=$DB->fetch_array($result_models) )
+		{
+			$exclude_models[] = $data_models['ID'];		
+		}
+		dropdownValue("glpi_plugin_tracker_model_infos","FK_model_infos",$data["FK_model_infos"],0,-1,'',$exclude_models);
 		echo "</td>";
 		echo "</tr>";
 	
