@@ -117,7 +117,9 @@ class plugin_tracker_importexport extends CommonDBTM
 		echo $LANGTRACKER["model_info"][10]." :</th></tr>";
 		
 		echo "	<tr class='tab_bg_1'>";
-		echo "		<td align='center'></td>";
+		echo "		<td align='center'>";
+		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANGTRACKER["profile"][19]."&nbsp;</a>";
+		echo "</td>";
 		echo "		<td align='center'>";
 		echo "			<input type='file' name='importfile' value=''/>";
 		echo "			<input type='submit' value='".$LANG["buttons"][37]."'/>";
