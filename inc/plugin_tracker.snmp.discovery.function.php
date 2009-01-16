@@ -327,7 +327,7 @@ function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
 					AND ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != "[[empty]]")
 					AND ($device_type == 0)
 					){
-					echo "\n TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."\n";
+					//echo "\n TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."\n";
 					$device_type = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
 					
 				}

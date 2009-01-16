@@ -704,11 +704,7 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 			{
 				$commonitem = new commonitem;
 				$commonitem->setType($object_type,true);
-				echo "TYPE : ".$commonitem->getType()."\n";
-				echo "FIELD : ".$Field." => ".$ID_Device."\n";
-				echo "UPDATE : ".$TRACKER_MAPPING[$object_type][$object_name]['field']." => ".$SNMPValue."\n";
-				echo "TABLE : ".$TRACKER_MAPPING[$object_type][$object_name]['table']."\n";
-				echo "==================================\n";
+
 				$tableau[$Field] = $ID_Device;
 				$tableau[$TRACKER_MAPPING[$object_type][$object_name]['field']] = $SNMPValue;
 				$commonitem->obj->update($tableau);
