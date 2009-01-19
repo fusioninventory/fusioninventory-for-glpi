@@ -34,3 +34,22 @@
 
 Version 1.0.0:
 
+Requêtes SNMP : 
+ - découverte des équipement réseau avec une plage d'IP
+ - prise en charge des switchs, routeurs, imprimantes
+ - connection entre les ordinateurs / imprimantes sur les switchs (cisco seulement)
+ - gestion des adresses MAC inconnues
+ - gestion des cartouches et compteurs d'imprimantes
+ - gestion des versions SNMP v1, v2c, v3 (sauf pour les vlans des switchs)
+
+
+SNMP queries : 
+ - networking devices discovery with IP range.
+ - care switches, routers, printers
+ - connexions between computers / printers with swicthes (only cisco)
+ - management of unknown MAC addresses
+ - management of cartridges and printers counters
+ - management of SNMP versions v1, v2c, v3 (except for vlans of switches)
+
+
+
