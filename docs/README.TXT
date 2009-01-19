@@ -33,3 +33,22 @@
 // ----------------------------------------------------------------------
 
 Author : David DURIEUX
+
+1 - Presentation
+
+This plugin enables you get informations for networking devices by SNMP. 
+
+Compatibility 0.71.3
+PHP5 or higher is required !
+php5-SNMP (5.x version is good but 4.x version works) is required !
+php5-runkit (version 0.9) is required !
+
+2 - Installation
+
+Download the tarball of this plugin
+Uncompress it in the plugins directory of your glpi installation
+
+Once copied in the repertory, go the the "Configuration"->"Plugins"->"Tracker" menu, and install the plugin.
+Make rights for this plugin.
+Plugin is ready : it is in "Plugins"->"Tracker" menu.
+
