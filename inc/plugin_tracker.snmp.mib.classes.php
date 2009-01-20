@@ -67,6 +67,12 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		}
 		else if ((isset($ID)) AND (!empty($ID)))
 		{
+			$query = "SELECT device_type FROM glpi_plugin_tracker_model_infos
+			WHERE ID='".$ID."' ";
+			$result = $DB->query($query);		
+			$data = $DB->fetch_assoc($result);
+			$type_model = $data['device_type'];		
+		
 			$query = "SELECT glpi_plugin_tracker_model_infos.device_type,glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
 			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
 			WHERE glpi_plugin_tracker_model_infos.ID=".$ID;
@@ -94,7 +100,6 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
 				{
-					$type_model = $data['device_type'];
 					echo "<tr class='tab_bg_1'>";
 					echo "<td align='center'>";
 					echo "<input name='item_coche[]' value='".$data["ID"]."' type='checkbox'>";
