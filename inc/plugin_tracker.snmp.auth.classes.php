@@ -317,7 +317,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	{
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/tracker/scripts/auth.xml");
 		$i = -1;
-		$selectbox = "<select name='auth_snmp' size='1'>\n<option value='0'>-----</option>\n";
+		$selectbox = "<select name='FK_snmp_connection' size='1'>\n<option value='0'>-----</option>\n";
 		foreach($xml->auth[0] as $num)
 		{
 			$i++;
