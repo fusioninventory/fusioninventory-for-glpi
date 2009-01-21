@@ -94,12 +94,19 @@ function plugin_init_tracker() {
 
 // Name and Version of the plugin
 function plugin_version_tracker(){
-
 	return array( 'name'    => 'Tracker',
-		'minGlpiVersion' => '0.71.3',
-		'maxGlpiVersion' => '0.71.9',
-		'version' => '1.0.0');
+		'minGlpiVersion' => '0.72',
+		'version' => '1.1.0',
+		'author'=>'David DURIEUX',
+		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',);
 }
+
+// Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
+function plugin_tracker_check_config(){
+	return true;
+}
+
+
 
 function plugin_tracker_haveTypeRight($type,$right){
 	
