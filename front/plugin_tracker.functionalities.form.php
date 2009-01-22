@@ -50,8 +50,7 @@ if (isset($_POST['update'])) {
 		$_POST['cleaning_days'] = 0;
 		
 	$_POST['ID']=1;
-	
-	
+
 	$config->update($_POST);
 }
 
