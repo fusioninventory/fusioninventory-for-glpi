@@ -115,11 +115,8 @@ $prof=new plugin_tracker_Profile();
 
 		if (!haveRight("profile","r")) return false;
 		$canedit=haveRight("profile","w");
-
 		if ($ID){
 			$this->getFromDB($ID);
-		} else {
-			$this->getEmpty();
 		}
 
 		echo "<form action='".$target."' method='post'>";
