@@ -389,6 +389,22 @@ function cron_plugin_tracker() {
 	plugin_tracker_cleaningHistory();
 }
 
+// Define headings added by the plugin //
+function plugin_get_headings_tracker($type,$withtemplate){
+	global $LANG;
+	if (in_array($type,array(COMPUTER_TYPE,NETWORKING_TYPE,TRACKING_TYPE,PROFILE_TYPE))){
+		// template case
+		if ($withtemplate)
+			return array();
+		// Non template case
+		else 
+			return array(
+					1 => $LANG['plugin_tracker']["title"][1],
+					);
+	}else
+		return false;	
+}
+/*
 function plugin_get_headings_tracker($type, $withtemplate) {
 
 	global $LANG;
@@ -415,11 +431,6 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 						1 => $LANG['plugin_tracker']["title"][2]
 					);
 				}
-				/*
-				if (plugin_tracker_haveRight("errors","r")) {
-					$array = array_merge($array, array(1 => $LANG['plugin_tracker']["title"][3]));
-				}
-				*/
 				return $array;
 			}
 
@@ -476,10 +487,19 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			}
 
 			break;
-
+		case PROFILE_TYPE :
+			if ($withtemplate)
+				return array();
+			// Non template case
+			else 
+				return array(
+					1 => $LANG['plugin_tracker']["title"][0],
+					);			
+			break;
 	}
 	return false;
 }
+*/
 
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_tracker($type) {
@@ -500,11 +520,7 @@ function plugin_headings_actions_tracker($type) {
 					1 => "plugin_headings_tracker_computerHistory"
 				);
 			}
-			/*
-			if (plugin_tracker_haveRight("errors","r")) {
-				$array = array_merge($array, array(1 => "plugin_headings_tracker_computerErrors"));
-			}
-			*/
+
 			return $array;
 
 			break;
@@ -519,22 +535,6 @@ function plugin_headings_actions_tracker($type) {
 				);
 			}
 
-/*			if ((plugin_tracker_haveRight("printers_history", "r")) && (($config->isActivated('counters_statement')) == true)) {
-				$array = array_merge($array, array (
-					1 => "plugin_headings_tracker_printerHistory"
-				));
-			}*/
-			/*
-			if (plugin_tracker_haveRight("errors","r"))	{
-				$array = array_merge($array, array(1 => "plugin_headings_tracker_printerErrors"));
-			}
-			*/
-/*			if ((plugin_tracker_haveRight("printers_history", "w")) && (($config->isActivated('counters_statement')) == true)) {
-				$array = array_merge($array, array (
-					1 => "plugin_headings_tracker_printerCronConfig"
-				));
-			}*/
-
 			return $array;
 
 			break;
@@ -546,28 +546,24 @@ function plugin_headings_actions_tracker($type) {
 					1 => "plugin_headings_tracker_networkingInfo"
 				);
 			}
-			/*
-			if (plugin_tracker_haveRight("errors","r"))	{
-				$array = array_merge($array, array(1 => "plugin_headings_tracker_networkingErrors"));
-			}
-			*/
+
 			return $array;
 
 			break;
 
 		case USER_TYPE :
 
-/*			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-				return array (
-					1 => "plugin_headings_tracker_userHistory"
+			break;
+		case PROFILE_TYPE :
+			return array(
+				1 => "plugin_headings_tracker",
 				);
-			}*/
-
 			break;
 
 	}
 	return false;
 }
+
 
 function plugin_headings_tracker_computerHistory($type, $ID) {
 
@@ -628,6 +624,21 @@ function plugin_headings_tracker_userHistory($type, $ID) {
 	$computer_history = new plugin_tracker_computers_history();
 	$computer_history->showForm(USER_TYPE, GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.computer_history.form.php', $_GET["ID"]);
 }
+
+
+function plugin_headings_tracker($type,$ID,$withtemplate=0){
+	global $CFG_GLPI;
+
+	switch ($type){
+		case PROFILE_TYPE :
+			$prof=new plugin_tracker_Profile();	
+			if (!$prof->GetfromDB($ID))
+				plugin_tracker_createaccess($ID);				
+			$prof->showForm($CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.profile.php",$ID);		
+		break;
+	}
+}
+
 
 function plugin_tracker_MassiveActions($type) {
 	global $LANG;

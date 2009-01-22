@@ -56,7 +56,7 @@ class plugin_tracker_Profile extends CommonDBTM {
 	function showprofileForm($target,$ID){
 		global $LANG,$CFG_GLPI;
 
-		if (!haveRight("profile","r")) return false;
+/*		if (!haveRight("profile","r")) return false;
 
 		$onfocus="";
 		if ($ID){
@@ -69,12 +69,21 @@ class plugin_tracker_Profile extends CommonDBTM {
 		if (empty($this->fields["interface"])) $this->fields["interface"]="tracker";
 		if (empty($this->fields["name"])) $this->fields["name"]=$LANG["common"][0];
 
+*/
+		if (!haveRight("profile","r")) return false;
+		$canedit=haveRight("profile","w");
+		if ($ID){
+			$this->getFromDB($ID);
+		}
 
 		echo "<form name='form' method='post' action=\"$target\">";
 		echo "<div align='center'>";
-		echo "<table class='tab_cadre'><tr>";
-		echo "<th>".$LANG["common"][16].":</th>";
-		echo "<th><input type='text' name='name' value=\"".$this->fields["name"]."\" $onfocus></th>";
+//		echo "<table class='tab_cadre'><tr>";
+		echo "<table class='tab_cadre_fixe'>";
+//		echo "<th>".$LANG["common"][16].":</th>";
+//		echo "<th><input type='text' name='name' value=\"".$this->fields["name"]."\" $onfocus></th>";
+		echo "<tr><th colspan='2' align='center'><strong>TEST ".$this->fields["name"]."</strong></th></tr>";
+
 		echo "<th>".$LANG["profiles"][2].":</th>";
 		echo "<th><select name='interface' id='profile_interface'>";
 		echo "<option value='tracker' ".($this->fields["interface"]!="tracker"?"selected":"").">".$LANG['plugin_tracker']["profile"][1]."</option>";
@@ -101,7 +110,7 @@ $prof=new plugin_tracker_Profile();
 
 	}
 	
-	function showtrackerForm($ID){
+	function showForm($target,$ID){
 		global $LANG;
 
 		if (!haveRight("profile","r")) return false;
@@ -113,9 +122,10 @@ $prof=new plugin_tracker_Profile();
 			$this->getEmpty();
 		}
 
-		echo "<table class='tab_cadre'><tr>";
+		echo "<form action='".$target."' method='post'>";
+		echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$LANG['plugin_tracker']["profile"][0]."</strong></td></tr>";
+		echo "<tr><th colspan='2' align='center'><strong>".$LANG['plugin_tracker']["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
 
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$LANG['plugin_tracker']["profile"][16].":</td><td>";
@@ -160,18 +170,11 @@ $prof=new plugin_tracker_Profile();
 		
 		if ($canedit){
 			echo "<tr class='tab_bg_1'>";
-			if ($ID){
-				echo "<td  align='center'>";
-				echo "<input type='hidden' name='ID' value=$ID>";
-				echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit'>";
-				echo "</td><td  align='center'>";
-				echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit'>";
-			} else {
-				echo "<td colspan='2' align='center'>";
-				echo "<input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit'>";
-			}
+			echo "<td align='center' colspan='2'>";
+			echo "<input type='hidden' name='ID' value=$ID>";
+			echo "<input type='submit' name='update_user_profile' value=\"".$LANG["buttons"][7]."\" class='submit'>";
 			echo "</td></tr>";
-		}
+		}		
 		echo "</table>";
 
 	}
