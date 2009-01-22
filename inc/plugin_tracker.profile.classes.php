@@ -86,8 +86,12 @@ class plugin_tracker_Profile extends CommonDBTM {
 		$params=array('interface'=>'__VALUE__',
 				'ID'=>$ID,
 			);
-		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false);
-		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false,'profile_interface');
+//		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false);
+//		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false,'profile_interface');
+$prof=new plugin_tracker_Profile();
+
+	$prof->showtrackerForm($_POST["ID"]);
+
 		echo "<br>";
 
 		echo "<div align='center' id='profile_form'>";
