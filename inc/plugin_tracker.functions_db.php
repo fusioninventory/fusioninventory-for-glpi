@@ -117,4 +117,5 @@ function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 	return $return;
 }
 
+
 ?>

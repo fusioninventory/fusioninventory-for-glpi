@@ -68,12 +68,12 @@ function plugin_init_tracker() {
 			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r"))
 				$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 
-			if (isset($_SESSION["glpi_plugin_tracker_profile"])) {
-				
 				// Tabs for each type
 				$PLUGIN_HOOKS['headings']['tracker'] = 'plugin_get_headings_tracker';
 				$PLUGIN_HOOKS['headings_action']['tracker'] = 'plugin_headings_actions_tracker';
-			
+
+			if (isset($_SESSION["glpi_plugin_tracker_profile"])) {
+
 
 					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 					if (plugin_tracker_haveRight("snmp_models","w")){
