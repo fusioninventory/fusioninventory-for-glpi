@@ -35,16 +35,16 @@
 // ----------------------------------------------------------------------
 
 function plugin_tracker_getSearchOption() {
-	global $LANG, $LANGTRACKER;
+	global $LANG;
 	$sopt = array ();
 
 	// Part header
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE]['common'] = $LANGTRACKER["errors"][0];
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE]['common'] = $LANG['plugin_tracker']["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][1]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][1]['field'] = 'ifaddr';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][1]['linkfield'] = 'ifaddr';
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][1]['name'] = $LANGTRACKER["errors"][1];
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][1]['name'] = $LANG['plugin_tracker']["errors"][1];
 
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][2]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][2]['field'] = 'ID';
@@ -64,24 +64,24 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['field'] = 'description';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['linkfield'] = 'description';
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['name'] = $LANGTRACKER["errors"][2];
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['name'] = $LANG['plugin_tracker']["errors"][2];
 
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['field'] = 'first_pb_date';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['linkfield'] = 'first_pb_date';
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['name'] = $LANGTRACKER["errors"][3];
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['name'] = $LANG['plugin_tracker']["errors"][3];
 
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['field'] = 'last_pb_date';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['linkfield'] = 'last_pb_date';
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['name'] = $LANGTRACKER["errors"][4];
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['name'] = $LANG['plugin_tracker']["errors"][4];
 
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['field'] = 'completename';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['linkfield'] = 'FK_entities';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['name'] = $LANG["entity"][0];
 
-	$sopt[PLUGIN_TRACKER_MODEL]['common'] = $LANGTRACKER["errors"][0];
+	$sopt[PLUGIN_TRACKER_MODEL]['common'] = $LANG['plugin_tracker']["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_MODEL][1]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][1]['field'] = 'ID';
@@ -103,7 +103,7 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MODEL][5]['linkfield'] = 'EXPORT';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['name'] = $LANG["buttons"][31];
 
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH]['common'] = $LANGTRACKER["errors"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH]['common'] = $LANG['plugin_tracker']["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['table'] = 'glpi_plugin_tracker_snmp_connection';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['field'] = 'ID';
@@ -118,54 +118,54 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['table'] = 'glpi_dropdown_plugin_tracker_snmp_version';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['linkfield'] = 'FK_snmp_version';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['name'] = $LANGTRACKER["model_info"][2];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['name'] = $LANG['plugin_tracker']["model_info"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['table'] = 'glpi_plugin_tracker_snmp_connection';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['field'] = 'community';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['linkfield'] = 'community';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['name'] = $LANGTRACKER["snmpauth"][1];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][4]['name'] = $LANG['plugin_tracker']["snmpauth"][1];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['table'] = 'glpi_plugin_tracker_snmp_connection';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['field'] = 'sec_name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['linkfield'] = 'sec_name';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['name'] = $LANGTRACKER["snmpauth"][2];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['name'] = $LANG['plugin_tracker']["snmpauth"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['table'] = 'glpi_dropdown_plugin_tracker_snmp_auth_sec_level';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['linkfield'] = 'sec_level';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['name'] = $LANGTRACKER["snmpauth"][3];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['name'] = $LANG['plugin_tracker']["snmpauth"][3];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['table'] = 'glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['linkfield'] = 'auth_protocol';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['name'] = $LANGTRACKER["snmpauth"][4];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['name'] = $LANG['plugin_tracker']["snmpauth"][4];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['table'] = 'glpi_plugin_tracker_snmp_connection';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['field'] = 'auth_passphrase';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['linkfield'] = 'auth_passphrase';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['name'] = $LANGTRACKER["snmpauth"][5];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][8]['name'] = $LANG['plugin_tracker']["snmpauth"][5];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['table'] = 'glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['linkfield'] = 'priv_protocol';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['name'] = $LANGTRACKER["snmpauth"][6];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][9]['name'] = $LANG['plugin_tracker']["snmpauth"][6];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['table'] = 'glpi_plugin_tracker_snmp_connection';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['field'] = 'priv_passphrase';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['linkfield'] = 'priv_passphrase';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['name'] = $LANGTRACKER["snmpauth"][7];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['name'] = $LANG['plugin_tracker']["snmpauth"][7];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW]['common'] = $LANGTRACKER["errors"][0];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW]['common'] = $LANG['plugin_tracker']["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['table'] = 'glpi_plugin_tracker_unknown_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['field'] = 'start_FK_processes';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['linkfield'] = 'start_FK_processes';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['name'] = $LANGTRACKER["processes"][15];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][1]['name'] = $LANG['plugin_tracker']["processes"][15];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['table'] = 'glpi_plugin_tracker_unknown_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['field'] = 'end_FK_processes';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['linkfield'] = 'end_FK_processes';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['name'] = $LANGTRACKER["processes"][16];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][2]['name'] = $LANG['plugin_tracker']["processes"][16];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['table'] = 'glpi_plugin_tracker_unknown_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][3]['field'] = 'ID';
@@ -185,40 +185,40 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['table'] = 'glpi_plugin_tracker_unknown_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['field'] = 'start_time';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['linkfield'] = 'start_time';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['name'] = $LANGTRACKER["processes"][17];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][6]['name'] = $LANG['plugin_tracker']["processes"][17];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][7]['table'] = 'glpi_plugin_tracker_unknown_mac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][7]['field'] = 'end_time';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][7]['linkfield'] = 'end_time';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][7]['name'] = $LANGTRACKER["processes"][18];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOW][7]['name'] = $LANG['plugin_tracker']["processes"][18];
 
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS]['common'] = $LANGTRACKER["errors"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS]['common'] = $LANG['plugin_tracker']["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][1]['name'] = $LANG["common"][16];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][2]['name'] = $LANGTRACKER["snmp"][42];	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][2]['name'] = $LANG['plugin_tracker']["snmp"][42];	
 
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][3]['name'] = $LANGTRACKER["snmp"][43];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][3]['name'] = $LANG['plugin_tracker']["snmp"][43];
 
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][4]['name'] = $LANGTRACKER["snmp"][44];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][4]['name'] = $LANG['plugin_tracker']["snmp"][44];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][5]['name'] = $LANGTRACKER["snmp"][45];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][5]['name'] = $LANG['plugin_tracker']["snmp"][45];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][6]['name'] = $LANGTRACKER["snmp"][46];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][6]['name'] = $LANG['plugin_tracker']["snmp"][46];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][7]['name'] = $LANGTRACKER["snmp"][47];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][7]['name'] = $LANG['plugin_tracker']["snmp"][47];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][8]['name'] = $LANGTRACKER["snmp"][48];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][8]['name'] = $LANG['plugin_tracker']["snmp"][48];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][9]['name'] = $LANGTRACKER["snmp"][49];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][9]['name'] = $LANG['plugin_tracker']["snmp"][49];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][10]['name'] = $LANGTRACKER["snmp"][51];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][10]['name'] = $LANG['plugin_tracker']["snmp"][51];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][11]['name'] = $LANGTRACKER["mapping"][115];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][11]['name'] = $LANG['plugin_tracker']["mapping"][115];
 	
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][12]['name'] = $LANG["networking"][17];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][13]['name'] = $LANGTRACKER["snmp"][50];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][13]['name'] = $LANG['plugin_tracker']["snmp"][50];
 
 	
 	
@@ -228,18 +228,18 @@ function plugin_tracker_getSearchOption() {
 	$sopt[NETWORKING_TYPE][5154]['table'] = 'glpi_plugin_tracker_networking';
 	$sopt[NETWORKING_TYPE][5154]['field'] = 'FK_networking';
 	$sopt[NETWORKING_TYPE][5154]['linkfield'] = 'ID';
-	$sopt[NETWORKING_TYPE][5154]['name'] = $LANGTRACKER["title"][0] . " - Modele";
+	$sopt[NETWORKING_TYPE][5154]['name'] = $LANG['plugin_tracker']["title"][0] . " - Modele";
 
 	$sopt[NETWORKING_TYPE][5155]['table'] = 'glpi_plugin_tracker_networking';
 	$sopt[NETWORKING_TYPE][5155]['field'] = 'FK_networking';
 	$sopt[NETWORKING_TYPE][5155]['linkfield'] = 'ID';
-	$sopt[NETWORKING_TYPE][5155]['name'] = $LANGTRACKER["title"][0] . " - Authentification SNMP";
+	$sopt[NETWORKING_TYPE][5155]['name'] = $LANG['plugin_tracker']["title"][0] . " - Authentification SNMP";
 */
 	return $sopt;
 }
 
 function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
-	global $CFG_GLPI, $LANG, $INFOFORM_PAGES, $LANGTRACKER, $DB;
+	global $CFG_GLPI, $LANG, $INFOFORM_PAGES, $DB;
 	switch ($field) {
 		case "glpi_plugin_tracker_model_infos.name" :
 			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
@@ -281,13 +281,13 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 		case "glpi_plugin_tracker_errors.device_type" :
 			switch ($data["ITEM_$num"]) {
 				case COMPUTER_TYPE :
-					$out = $LANGTRACKER["type"][1];
+					$out = $LANG['plugin_tracker']["type"][1];
 					break;
 				case NETWORKING_TYPE :
-					$out = $LANGTRACKER["type"][2];
+					$out = $LANG['plugin_tracker']["type"][2];
 					break;
 				case PRINTER_TYPE :
-					$out = $LANGTRACKER["type"][3];
+					$out = $LANG['plugin_tracker']["type"][3];
 					break;
 			}
 			return $out;
@@ -370,7 +370,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "") {
 // Define Dropdown tables to be manage in GLPI :
 function plugin_tracker_getDropdown() {
 	// Table => Name
-	global $LANGTRACKER;
+	global $LANG;
 	if (isset ($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"] == 1)
 		return array (
 			"glpi_dropdown_plugin_tracker_snmp_version" => "SNMP version",
@@ -391,7 +391,7 @@ function cron_plugin_tracker() {
 
 function plugin_get_headings_tracker($type, $withtemplate) {
 
-	global $LANGTRACKER;
+	global $LANG;
 	$config = new plugin_tracker_config();
 
 	switch ($type) {
@@ -407,17 +407,17 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 
 				if (plugin_tracker_haveRight("printers_info", "r")) {
 					$array = array (
-						2 => $LANGTRACKER["title"][1]
+						2 => $LANG['plugin_tracker']["title"][1]
 					);
 				}
 				if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
 					$array = array (
-						1 => $LANGTRACKER["title"][2]
+						1 => $LANG['plugin_tracker']["title"][2]
 					);
 				}
 				/*
 				if (plugin_tracker_haveRight("errors","r")) {
-					$array = array_merge($array, array(1 => $LANGTRACKER["title"][3]));
+					$array = array_merge($array, array(1 => $LANG['plugin_tracker']["title"][3]));
 				}
 				*/
 				return $array;
@@ -436,7 +436,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 
 				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($config->getValue("activation_snmp_printer") == "1")) {
 					$array = array (
-						1 => $LANGTRACKER["title"][1]
+						1 => $LANG['plugin_tracker']["title"][1]
 					);
 				}
 				return $array;
@@ -453,7 +453,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			else {
 				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($config->getValue("activation_snmp_networking") == "1")) {
 					$array = array (
-						1 => $LANGTRACKER["title"][1]
+						1 => $LANG['plugin_tracker']["title"][1]
 					);
 				}
 				return $array;
@@ -470,7 +470,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			else {
 				if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
 					return array (
-						1 => $LANGTRACKER["title"][2]
+						1 => $LANG['plugin_tracker']["title"][2]
 					);
 				}
 			}
@@ -630,18 +630,18 @@ function plugin_headings_tracker_userHistory($type, $ID) {
 }
 
 function plugin_tracker_MassiveActions($type) {
-	global $LANGTRACKER;
+	global $LANG;
 	switch ($type) {
 		case NETWORKING_TYPE :
 			return array (
-				"plugin_tracker_assign_model" => $LANGTRACKER["massiveaction"][1],
-				"plugin_tracker_assign_auth" => $LANGTRACKER["massiveaction"][2]
+				"plugin_tracker_assign_model" => $LANG['plugin_tracker']["massiveaction"][1],
+				"plugin_tracker_assign_auth" => $LANG['plugin_tracker']["massiveaction"][2]
 			);
 			break;
 		case PRINTER_TYPE :
 			return array (
-				"plugin_tracker_assign_model" => $LANGTRACKER["massiveaction"][1],
-				"plugin_tracker_assign_auth" => $LANGTRACKER["massiveaction"][2]
+				"plugin_tracker_assign_model" => $LANG['plugin_tracker']["massiveaction"][1],
+				"plugin_tracker_assign_auth" => $LANG['plugin_tracker']["massiveaction"][2]
 			);
 			break;
 	}

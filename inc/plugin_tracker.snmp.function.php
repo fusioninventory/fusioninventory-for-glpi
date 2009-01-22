@@ -537,7 +537,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type)
 {
 
-	global $DB,$LANG,$CFG_GLPI,$LANGTRACKER,$TRACKER_MAPPING;
+	global $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 	
 	$printer_cartridges_max_remain = array();
 	$cpu_values = array();
@@ -717,7 +717,7 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 
 function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process=0,$type)
 {
-	global $DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
+	global $DB,$LANG,$TRACKER_MAPPING;	
 	
 	$ArrayPortsList = array();
 	$ArrayPortListTracker = array();

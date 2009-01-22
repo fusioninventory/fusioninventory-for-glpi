@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')){
 
 function plugin_tracker_discovery_startmenu($target)
 {
-	global $LANG, $LANGTRACKER;	
+	global $LANG;	
 
 	$conf = plugin_tracker_discovery_getConf();
 	$ifaddr_start = $conf['ifaddr_start'];
@@ -62,12 +62,12 @@ function plugin_tracker_discovery_startmenu($target)
 	
 	echo "<tr class='tab_bg_1'>";
 	echo "<th colspan='3'>";
-	echo $LANGTRACKER["menu"][0];
+	echo $LANG['plugin_tracker']["menu"][0];
 	echo "</th>";
 	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
-	echo "<td align='center' rowspan='2'>".$LANGTRACKER["discovery"][0]."</td>";
+	echo "<td align='center' rowspan='2'>".$LANG['plugin_tracker']["discovery"][0]."</td>";
 	echo "<td align='center'>";
 	dropdownInteger("ip11", $ifaddr_start_1, 0, 254);
 	echo " . ";
@@ -92,12 +92,12 @@ function plugin_tracker_discovery_startmenu($target)
 	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
-	echo "<td align='center'>".$LANGTRACKER["discovery"][2]."</td>";
+	echo "<td align='center'>".$LANG['plugin_tracker']["discovery"][2]."</td>";
 	echo "<td align='center'>";
 	$values = array();
 	$values[''] = '------';
-	$values['discover'] = $LANGTRACKER["discovery"][3];
-	$values['getserialnumber'] = $LANGTRACKER["discovery"][4];
+	$values['discover'] = $LANG['plugin_tracker']["discovery"][3];
+	$values['getserialnumber'] = $LANG['plugin_tracker']["discovery"][4];
 	$selected = "";
 	if ($conf['discover'] == "1")
 		$selected = "discover";
@@ -441,7 +441,7 @@ function plugin_tracker_discovery_update_conf($data)
 
 function plugin_tracker_discovery_display_array($target)
 {
-	global $CFG_GLPI,$DB,$LANG,$LANGTRACKER,$TRACKER_MAPPING_DISCOVERY;
+	global $CFG_GLPI,$DB,$LANG,$TRACKER_MAPPING_DISCOVERY;
 
 	$CommonItem = new CommonItem;
 
@@ -452,7 +452,7 @@ function plugin_tracker_discovery_display_array($target)
 	
 	echo "<tr class='tab_bg_1'>";
 	echo "<th colspan='10'>";
-	echo $LANGTRACKER["discovery"][1];
+	echo $LANG['plugin_tracker']["discovery"][1];
 	echo "</th>";
 	echo "</tr>";
 	
@@ -464,8 +464,8 @@ function plugin_tracker_discovery_display_array($target)
 	echo "<th>".$LANG["joblist"][6]."</th>";
 	echo "<th>".$LANG["common"][19]."</th>";
 	echo "<th>".$LANG["common"][17]."</th>";
-	echo "<th>".$LANGTRACKER["model_info"][4]."</th>";
-	echo "<th>".$LANGTRACKER["model_info"][3]."</th>";
+	echo "<th>".$LANG['plugin_tracker']["model_info"][4]."</th>";
+	echo "<th>".$LANG['plugin_tracker']["model_info"][3]."</th>";
 	echo "<th>".$LANG["entity"][0]."</th>";
 	echo "</tr>";
 
@@ -577,7 +577,7 @@ function plugin_tracker_discovery_update_devices($array, $target)
 
 function plugin_tracker_discovery_import($array_import)
 {
-	global $DB,$CFG_GLPI, $LANGTRACKER;
+	global $DB,$CFG_GLPI, $LANG;
 	$Import = 0;
 	foreach ($array_import as $key=>$value)
 	{
@@ -699,7 +699,7 @@ function plugin_tracker_discovery_import($array_import)
 	}
 	if ($Import != "0")
 	{
-		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
+		addMessageAfterRedirect($LANG['plugin_tracker']["discovery"][5]." : ".$Import );
 	}
 }
 
