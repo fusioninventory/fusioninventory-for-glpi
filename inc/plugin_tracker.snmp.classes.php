@@ -268,7 +268,7 @@ abstract class plugin_tracker_snmp2 {
 			WHERE ID=".$ID." ";
 			$result2 = $DB->query($query2);		
 			$data2 = $DB->fetch_assoc($result2);
-	
+
 			if (empty($data2["ram"])){
 				$ram_pourcentage = 0;
 			}else {
