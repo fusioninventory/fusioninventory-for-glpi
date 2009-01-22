@@ -121,7 +121,14 @@ function plugin_tracker_Bar ($pourcentage, $message="")
 								<table>
 									<tbody>
 										<tr>
-											<td bgcolor='red' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>
+											<td bgcolor='";
+		if ($pourcentage >= 80)
+			echo "red";
+		else if($pourcentage >= 60)
+			echo "orange";
+		else 
+			echo "green";
+		echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
