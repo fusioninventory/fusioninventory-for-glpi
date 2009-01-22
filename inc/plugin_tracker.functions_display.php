@@ -35,18 +35,18 @@
 
 function plugin_tracker_menu()
 {
-	GLOBAL $CFG_GLPI, $LANG, $LANGTRACKER;
+	GLOBAL $CFG_GLPI, $LANG;
 	echo "<br>";
 	echo "<div align='center'><table class='tab_cadre'>";
-	echo "<tr><th width='450'>".$LANGTRACKER["snmp"][2]."</th></tr>";
+	echo "<tr><th width='450'>".$LANG['plugin_tracker']["snmp"][2]."</th></tr>";
 	if(plugin_tracker_HaveRight("snmp_models","r"))
-		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'><b>".$LANGTRACKER["model_info"][4]."</b></a></td></tr>";
+		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'><b>".$LANG['plugin_tracker']["model_info"][4]."</b></a></td></tr>";
 	if(plugin_tracker_HaveRight("snmp_authentification","r"))
-		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'><b>".$LANGTRACKER["model_info"][3]."</b></a></td></tr>";
+		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'><b>".$LANG['plugin_tracker']["model_info"][3]."</b></a></td></tr>";
 	if(plugin_tracker_HaveRight("snmp_scripts_infos","r"))
-		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'><b>".$LANGTRACKER["processes"][0]."</b></a></td></tr>";
+		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'><b>".$LANG['plugin_tracker']["processes"][0]."</b></a></td></tr>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r"))
-		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'><b>".$LANGTRACKER["menu"][0]."</b></a></td></tr>";
+		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'><b>".$LANG['plugin_tracker']["menu"][0]."</b></a></td></tr>";
 	echo "</table></div>";
 
 }
@@ -54,7 +54,7 @@ function plugin_tracker_menu()
 
 function plugin_tracker_mib_management()
 {
-	GLOBAL $DB,$CFG_GLPI, $LANG, $LANGTRACKER;
+	GLOBAL $DB,$CFG_GLPI, $LANG;
 	$query = "
 	SELECT * 
 	FROM glpi_plugin_tracker_mib_networking 
@@ -65,11 +65,11 @@ function plugin_tracker_mib_management()
 	if($number !="0"){
 		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='4'>".$LANGTRACKER["model_info"][5]." :</th></tr>";
+		echo "<tr><th colspan='4'>".$LANG['plugin_tracker']["model_info"][5]." :</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
-		echo "<th>".$LANGTRACKER["mib"][1]."</th>";
-		echo "<th>".$LANGTRACKER["mib"][2]."</th>";
-		echo "<th>".$LANGTRACKER["mib"][3]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["mib"][1]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["mib"][2]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["mib"][3]."</th>";
 		echo "</tr>";
 
 		while ($data=$DB->fetch_array($result)){
@@ -93,7 +93,7 @@ function plugin_tracker_mib_management()
 
 		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='3'>".$LANGTRACKER["model_info"][5].":</th></tr>";
+		echo "<tr><th colspan='3'>".$LANG['plugin_tracker']["model_info"][5].":</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
 		echo "<th>".$LANG["login"][6]."</th>";
 		echo "<th>".$LANG["login"][7]."</th>";
@@ -115,7 +115,7 @@ function plugin_tracker_Bar ($pourcentage, $message="")
 
 function plugin_tracker_phpextensions ()
 {
-	global $LANGTRACKER;
+	global $LANG;
 	$snmp = 0;
 	$runkit = 0;
 	if (extension_loaded('snmp'))
@@ -130,16 +130,16 @@ function plugin_tracker_phpextensions ()
 	{
 		echo "<div align='center'>";
 		echo "<table class='tab_cadre' cellpadding='5'>";
-		echo "<tr><th>".$LANGTRACKER["setup"][13];
+		echo "<tr><th>".$LANG['plugin_tracker']["setup"][13];
 		echo "</th></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
 		if ($snmp == "0")
-			echo $LANGTRACKER["setup"][14];
+			echo $LANG['plugin_tracker']["setup"][14];
 		echo "<br/>";
 		if ($runkit == "0")
-			echo $LANGTRACKER["setup"][15];
+			echo $LANG['plugin_tracker']["setup"][15];
 		echo "</td>";
 		echo "</tr>";
 		echo "</table><br/>";

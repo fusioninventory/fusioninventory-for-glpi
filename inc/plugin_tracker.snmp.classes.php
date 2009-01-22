@@ -166,7 +166,7 @@ abstract class plugin_tracker_snmp2 {
 	
 	function showForm($target,$ID) {
 		
-		global $DB,$CFG_GLPI,$LANG, $LANGTRACKER;	
+		global $DB,$CFG_GLPI,$LANG;	
 		
 		$history = new plugin_tracker_SNMP_history;
 		
@@ -207,12 +207,12 @@ abstract class plugin_tracker_snmp2 {
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
-		echo $LANGTRACKER["snmp"][11];
+		echo $LANG['plugin_tracker']["snmp"][11];
 		echo "</th>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
+		echo "<td align='center'>".$LANG['plugin_tracker']["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
 		WHERE device_type!=2 
@@ -228,7 +228,7 @@ abstract class plugin_tracker_snmp2 {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANGTRACKER["functionalities"][43]."</td>";
+		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
 		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
@@ -250,7 +250,7 @@ abstract class plugin_tracker_snmp2 {
 			)
 		{
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
+			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][13]."</td>";
 			echo "<td align='center'>";
 			plugin_tracker_Bar($data["cpu"]);
 			echo "</td>";
@@ -260,7 +260,7 @@ abstract class plugin_tracker_snmp2 {
 		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1"))
 		{
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANGTRACKER["snmp"][14]."</td>";
+			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][14]."</td>";
 			echo "<td align='center'>";
 			$query2 = "
 			SELECT * 
@@ -282,7 +282,7 @@ abstract class plugin_tracker_snmp2 {
 		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1"))
 		{
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
+			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][12]."</td>";
 			echo "<td align='center'>";
 			//echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
 			$sysUpTime = $data["uptime"];
@@ -395,17 +395,17 @@ function appear_array(id){
 		echo "<tr class='tab_bg_1'>";
 		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut" title="Sélectionnez les éléments à afficher par défaut" src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer" onclick="var w = window.open(\''.GLPI_ROOT.'/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\', \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
-/*		echo "<th>".$LANGTRACKER["snmp"][42]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][43]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][44]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][45]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][46]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][47]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][48]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][49]."</th>";
-		echo "<th>".$LANGTRACKER["mapping"][115]."</th>";
+/*		echo "<th>".$LANG['plugin_tracker']["snmp"][42]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][43]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][44]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][45]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][46]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][47]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][48]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][49]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["mapping"][115]."</th>";
 		echo "<th>".$LANG["networking"][17]."</th>";
-		echo "<th>".$LANGTRACKER["snmp"][50]."</th>";
+		echo "<th>".$LANG['plugin_tracker']["snmp"][50]."</th>";
 		*/
 		$query_array = "SELECT * FROM glpi_display
 		WHERE type='5157'
@@ -417,40 +417,40 @@ function appear_array(id){
 			echo "<th>";
 			switch ($data_array['num']) {
 				case 2 :
-					echo $LANGTRACKER["snmp"][42];
+					echo $LANG['plugin_tracker']["snmp"][42];
 					break;
 				case 3 :
-					echo $LANGTRACKER["snmp"][43];
+					echo $LANG['plugin_tracker']["snmp"][43];
 					break;
 				case 4 :
-					echo $LANGTRACKER["snmp"][44];
+					echo $LANG['plugin_tracker']["snmp"][44];
 					break;
 				case 5 :
-					echo $LANGTRACKER["snmp"][45];
+					echo $LANG['plugin_tracker']["snmp"][45];
 					break;
 				case 6 :
-					echo $LANGTRACKER["snmp"][46];
+					echo $LANG['plugin_tracker']["snmp"][46];
 					break;
 				case 7 :
-					echo $LANGTRACKER["snmp"][47];
+					echo $LANG['plugin_tracker']["snmp"][47];
 					break;
 				case 8 : 
-					echo $LANGTRACKER["snmp"][48];
+					echo $LANG['plugin_tracker']["snmp"][48];
 					break;
 				case 9 : 
-					echo $LANGTRACKER["snmp"][49];
+					echo $LANG['plugin_tracker']["snmp"][49];
 					break;
 				case 10 : 
-					echo $LANGTRACKER["snmp"][51];
+					echo $LANG['plugin_tracker']["snmp"][51];
 					break;
 				case 11 : 
-					echo $LANGTRACKER["mapping"][115];
+					echo $LANG['plugin_tracker']["mapping"][115];
 					break;
 				case 12 :
 					echo $LANG["networking"][17];
 					break;
 				case 13 :
-					echo $LANGTRACKER["snmp"][50];
+					echo $LANG['plugin_tracker']["snmp"][50];
 					break;
 			}
 			echo "</th>";
@@ -701,17 +701,17 @@ class plugin_tracker_printer_snmp extends plugin_tracker_snmp {
 	}
 	
 	function getError() {
-		global $LANGTRACKER;
+		global $LANG;
 		
 		if ( !($error = $this->cantGetInfo()) )
 			return false; // no error
 		else {
 			switch($error) {
 				case 32:
-					echo "".$LANGTRACKER["snmp"][32]."";
+					echo "".$LANG['plugin_tracker']["snmp"][32]."";
 					break;
 				case 33:
-					echo "".$LANGTRACKER["snmp"][33]."";
+					echo "".$LANG['plugin_tracker']["snmp"][33]."";
 					break;	
 			}
 		return true;
@@ -830,10 +830,10 @@ class plugin_tracker_printer_snmp extends plugin_tracker_snmp {
 	
 	function showFormContents() {
 		
-		global $LANG, $LANGTRACKER;
+		global $LANG;
 		
 		echo "<tr class='tab_bg_1'><th colspan='3'>";
-		echo $LANGTRACKER["snmp"][1]." :</th></tr>";
+		echo $LANG['plugin_tracker']["snmp"][1]." :</th></tr>";
 			
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
@@ -886,7 +886,7 @@ class plugin_tracker_printer_snmp extends plugin_tracker_snmp {
 		echo "<td><input  type='text' name='initial_pages' value='".$this->snmp['counter']."' size='20'></td></tr>";
 		
 		echo "<tr class='tab_bg_1'><th colspan='3'>";
-		echo $LANGTRACKER["snmp"][2]." :</th></tr>";
+		echo $LANG['plugin_tracker']["snmp"][2]." :</th></tr>";
 		
 	}
 	
@@ -980,20 +980,20 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 	}
 	
 	function getError() {
-		global $LANGTRACKER;
+		global $LANG;
 		
 		if ( !($error = $this->cantGetInfo()) )
 			return false; // no error
 		else {
 			switch($error) {
 				case 31:
-					echo "".$LANGTRACKER["snmp"][31]."";
+					echo "".$LANG['plugin_tracker']["snmp"][31]."";
 					break;
 				case 32:
-					echo "".$LANGTRACKER["snmp"][32]."";
+					echo "".$LANG['plugin_tracker']["snmp"][32]."";
 					break;
 				case 33:
-					echo "".$LANGTRACKER["snmp"][33]."";
+					echo "".$LANG['plugin_tracker']["snmp"][33]."";
 					break;	
 			}
 		return true;
@@ -1116,7 +1116,7 @@ class plugin_tracker_switch_snmp extends plugin_tracker_snmp2 {
 	
 	function showFormContents() {
 		
-		global $LANG, $LANGTRACKER;
+		global $LANG;
 			
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";

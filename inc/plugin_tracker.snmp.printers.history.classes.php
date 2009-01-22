@@ -105,7 +105,7 @@ class plugin_tracker_printers_history extends CommonDBTM {
 	
 	function showForm($target, $ID) {
 		
-		GLOBAL $LANG, $LANGTRACKER;
+		GLOBAL $LANG;
 		
 		if ( !plugin_tracker_haveRight("snmp_printers","r") )
 			return false;
@@ -115,14 +115,14 @@ class plugin_tracker_printers_history extends CommonDBTM {
 				
 			echo "<br><div align = 'center'>";
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-			echo $LANGTRACKER["prt_history"][10]." ".$stats["num_days"]." ".$LANGTRACKER["prt_history"][11]."</th></tr>";
+			echo $LANG['plugin_tracker']["prt_history"][10]." ".$stats["num_days"]." ".$LANG['plugin_tracker']["prt_history"][11]."</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["prt_history"][12]." : </td>";
+			echo "<td>".$LANG['plugin_tracker']["prt_history"][12]." : </td>";
 			echo "<td>".$stats["num_pages"]."</td></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["prt_history"][13]." : </td>";
+			echo "<td>".$LANG['plugin_tracker']["prt_history"][13]." : </td>";
 			echo "<td>".$stats["pages_per_day"]."</td></tr>";
 			
 			echo "</table></div>";
@@ -151,12 +151,12 @@ class plugin_tracker_printers_history extends CommonDBTM {
 		echo "<div align='center'><form method='post' name='printer_history_form' id='printer_history_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
-		echo $LANGTRACKER["prt_history"][20]." :</th></tr>";
+		echo $LANG['plugin_tracker']["prt_history"][20]." :</th></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th></th>";
-		echo "<th>".$LANGTRACKER["prt_history"][21]." :</th>";
-		echo "<th>".$LANGTRACKER["prt_history"][22]." :</th></tr>";
+		echo "<th>".$LANG['plugin_tracker']["prt_history"][21]." :</th>";
+		echo "<th>".$LANG['plugin_tracker']["prt_history"][22]." :</th></tr>";
 
 		for ($i=0; $i<$limit; $i++) {
 			echo "<tr class='tab_bg_1'>";
@@ -328,17 +328,17 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 	}
 	
 	function showForm($target,$ID) {
-		global $LANG, $LANGTRACKER;
+		global $LANG;
 		
 		if ( plugin_tracker_haveRight("snmp_printers","w") ) {
 			echo "<br>";
 			echo "<div align='center'><form method='post' name='printer_history_config_form' id='printer_history_config_form'  action=\"".$target."\">";
 	
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-			echo $LANGTRACKER["cron"][0]." :</th></tr>";
+			echo $LANG['plugin_tracker']["cron"][0]." :</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["cron"][1]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["cron"][1]."</td>";
 			echo "<td align='center'>";
 			plugin_tracker_dropdownDefaultYesNo("counter", $this->getCounterValue($ID));
 			echo "</td>";

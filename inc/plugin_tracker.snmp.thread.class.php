@@ -44,7 +44,7 @@ class Threads extends CommonDBTM
 	function showProcesses($target,$array_name="")
 	{
 
-		global $DB,$LANG,$LANGTRACKER;
+		global $DB,$LANG;
 
 		plugin_tracker_checkRight("snmp_scripts_infos","r");
 		
@@ -64,20 +64,20 @@ class Threads extends CommonDBTM
 		echo "<li ";
 		if ($array_name == "")
 			echo "class='actif'";
-		echo "><a href='plugin_tracker.processes.php'>&nbsp;".$LANGTRACKER["processes"][0]."&nbsp;</a></li>\n";
+		echo "><a href='plugin_tracker.processes.php'>&nbsp;".$LANG['plugin_tracker']["processes"][0]."&nbsp;</a></li>\n";
 		echo "<li ";
 		if ($array_name == "unknow_mac")
 			echo "class='actif'";
-		echo "><a href='plugin_tracker.processes.unknow_mac.php'>&nbsp;".$LANGTRACKER["processes"][13]."&nbsp;</a></li>\n";
-//		echo "<li><a href=''>&nbsp;".$LANGTRACKER["processes"][11]."&nbsp;</a></li>\n";
+		echo "><a href='plugin_tracker.processes.unknow_mac.php'>&nbsp;".$LANG['plugin_tracker']["processes"][13]."&nbsp;</a></li>\n";
+//		echo "<li><a href=''>&nbsp;".$LANG['plugin_tracker']["processes"][11]."&nbsp;</a></li>\n";
 		echo "<li ";
 		if ($array_name == "errors")
 			echo "class='actif'";
-		echo "><a href='plugin_tracker.processes.errors.php'>&nbsp;".$LANGTRACKER["processes"][12]."&nbsp;</a></li>\n";
+		echo "><a href='plugin_tracker.processes.errors.php'>&nbsp;".$LANG['plugin_tracker']["processes"][12]."&nbsp;</a></li>\n";
 		echo "<li ";
 		if ($array_name == "connection")
 			echo "class='actif'";
-		echo "><a href='plugin_tracker.processes.connection.php'>&nbsp;".$LANGTRACKER["snmp"][50]."&nbsp;</a></li>\n";
+		echo "><a href='plugin_tracker.processes.connection.php'>&nbsp;".$LANG['plugin_tracker']["snmp"][50]."&nbsp;</a></li>\n";
 
 		echo "<ul>\n";
 		echo "</div>\n";
@@ -89,20 +89,20 @@ class Threads extends CommonDBTM
 		
 		if ($array_name == "")
 		{
-			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][0] . "</th></tr>";
+			echo "<tr><th colspan='12'>" . $LANG['plugin_tracker']["processes"][0] . "</th></tr>";
 			echo "<tr>"; 
 			echo "<th></th>";
-			echo "<th>".$LANGTRACKER["processes"][1]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][2]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][3]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][4]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][5]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][6]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][8]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][7]."</th>";
-			echo "<th>".$LANGTRACKER["discovery"][3]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][9]."</th>";
-			echo "<th>".$LANGTRACKER["processes"][10]."</th>";		
+			echo "<th>".$LANG['plugin_tracker']["processes"][1]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][2]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][3]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][4]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][5]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][6]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][8]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][7]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["discovery"][3]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][9]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["processes"][10]."</th>";		
 			echo "</th></tr>\n";
 		
 // VERIFIER
@@ -170,12 +170,12 @@ class Threads extends CommonDBTM
 		}
 		else if ($array_name == "errors")
 		{
-			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][12] . "</th></tr>";
+			echo "<tr><th colspan='12'>" . $LANG['plugin_tracker']["processes"][12] . "</th></tr>";
 			echo "<tr>"; 
 			echo"<th></th>";
-			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
+			echo"<th>".$LANG['plugin_tracker']["processes"][1]."</th>";
 			echo"<th>".$LANG["common"][1]."</th>";
-			echo"<th>".$LANGTRACKER["processes"][12]."</th>";
+			echo"<th>".$LANG['plugin_tracker']["processes"][12]."</th>";
 			echo"<th>".$LANG["common"][27]."</th>";
 			echo "</th></tr>\n";
 		
@@ -219,10 +219,10 @@ class Threads extends CommonDBTM
 			$Netwire = new Netwire;
 			$netport=new Netport;			
 			
-			echo "<tr><th colspan='12'>".$LANGTRACKER["snmp"][50]."</th></tr>";
+			echo "<tr><th colspan='12'>".$LANG['plugin_tracker']["snmp"][50]."</th></tr>";
 			echo "<tr>"; 
 			echo"<th></th>";
-			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
+			echo"<th>".$LANG['plugin_tracker']["processes"][1]."</th>";
 			echo"<th>".$LANG["joblist"][0]."</th>";
 			echo"<th>".$LANG["common"][1]."</th>";
 			echo"<th>".$LANG["setup"][175]."</th>";

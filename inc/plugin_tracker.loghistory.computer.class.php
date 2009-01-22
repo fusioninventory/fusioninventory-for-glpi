@@ -106,7 +106,7 @@ class plugin_tracker_computers_history extends CommonDBTM {
 	
 	function showForm($type, $target, $ID) {
 			
-		global $LANG, $LANGTRACKER, $INFOFORM_PAGES, $CFG_GLPI;
+		global $LANG, $INFOFORM_PAGES, $CFG_GLPI;
 		
 		if ( !plugin_tracker_haveRight("computers_history","r") )
 			return false;
@@ -137,24 +137,24 @@ class plugin_tracker_computers_history extends CommonDBTM {
 			echo "<div align='center'><form method='post' name='computer_history_form' id='computer_history_form'  action=\"".$target."?type=".USER_TYPE."\">";
 
 		echo "<table class='tab_cadre_fixe' cellpadding='5'><tr><th colspan='5'>";
-		echo $LANGTRACKER["cpt_history"][0]." :</th></tr>";
+		echo $LANG['plugin_tracker']["cpt_history"][0]." :</th></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th></th>";
-		echo "<th>".$LANGTRACKER["cpt_history"][4]." :</th>";
-		echo "<th>".$LANGTRACKER["cpt_history"][1]." :</th>";
+		echo "<th>".$LANG['plugin_tracker']["cpt_history"][4]." :</th>";
+		echo "<th>".$LANG['plugin_tracker']["cpt_history"][1]." :</th>";
 		if ( $type == COMPUTER_TYPE )
-			echo "<th>".$LANGTRACKER["cpt_history"][3]." :</th>";
+			echo "<th>".$LANG['plugin_tracker']["cpt_history"][3]." :</th>";
 		else // $type == USER_TYPE
-			echo "<th>".$LANGTRACKER["cpt_history"][2]." :</th>";
-		echo "<th>".$LANGTRACKER["cpt_history"][5]." :</th></tr>";
+			echo "<th>".$LANG['plugin_tracker']["cpt_history"][2]." :</th>";
+		echo "<th>".$LANG['plugin_tracker']["cpt_history"][5]." :</th></tr>";
 
 		for ($i=0; $i<$limit; $i++) {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>";
 			echo "<input type='checkbox' name='checked_$i' value='1'>";
 			echo "</td>";
-			echo "<td align='center'>".$LANGTRACKER["state"][$data["$i"]['state']]."</td>";
+			echo "<td align='center'>".$LANG['plugin_tracker']["state"][$data["$i"]['state']]."</td>";
 			echo "<td align='center'>".$data["$i"]['username']."</td>";
 			echo "<td align='center'>";
 			if ( $type == COMPUTER_TYPE ) {

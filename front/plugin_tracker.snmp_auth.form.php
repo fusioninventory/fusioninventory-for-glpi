@@ -47,7 +47,7 @@ plugin_tracker_checkRight("snmp_authentification","r");
 
 $plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
+commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 
 $query = "SELECT * FROM glpi_plugin_tracker_config";
 $result=$DB->query($query);

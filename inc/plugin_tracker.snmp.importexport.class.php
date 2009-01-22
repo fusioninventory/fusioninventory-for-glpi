@@ -106,7 +106,7 @@ class plugin_tracker_importexport extends CommonDBTM
 	
 	function showForm($target)
 	{
-		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+		GLOBAL $DB,$CFG_GLPI,$LANG;
 		
 		plugin_tracker_checkRight("snmp_models","r");
 		
@@ -114,11 +114,11 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 		echo "<br>";
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-		echo $LANGTRACKER["model_info"][10]." :</th></tr>";
+		echo $LANG['plugin_tracker']["model_info"][10]." :</th></tr>";
 		
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'>";
-		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANGTRACKER["profile"][19]."&nbsp;</a>";
+		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANG['plugin_tracker']["profile"][19]."&nbsp;</a>";
 		echo "</td>";
 		echo "		<td align='center'>";
 		echo "			<input type='file' name='importfile' value=''/>";
@@ -135,7 +135,7 @@ class plugin_tracker_importexport extends CommonDBTM
 
 	function import($file)
 	{
-		global $DB,$LANGTRACKER;
+		global $DB,$LANG;
 
 		plugin_tracker_checkRight("snmp_models","w");
 
@@ -149,7 +149,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 		if ($DB->numrows($result) > 0)
 		{
-			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][8];
+			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][8];
 			return false;
 		}
 		else
@@ -204,7 +204,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 
 			}
-			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
 		}
 	}
 

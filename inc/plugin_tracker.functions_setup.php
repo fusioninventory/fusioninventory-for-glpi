@@ -50,6 +50,7 @@ function plugin_tracker_install() {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
 		$DB->query($sql_line)/* or die($DB->error())*/;
 	}
+   return true;
 }
 
 // Uninstallation function

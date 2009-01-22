@@ -44,32 +44,12 @@ if ($handle = opendir(GLPI_ROOT.'/plugins/tracker/inc'))
 {
 	while (false !== ($file = readdir($handle)))
 	{
-		if (ereg(".php",$file))
+		if ((ereg(".php",$file)) AND (!ereg("constant.php",$file)))
 		{
 			include_once("inc/".$file);
 		}
 	}
 }
 closedir($handle);
-/*
-include_once ("inc/plugin_tracker.classes.php");
-include_once ("inc/plugin_tracker.snmp.classes.php");
-include_once ("inc/plugin_tracker.importexport.class.php");
-include_once ("inc/plugin_tracker.log.classes.php");
 
-include_once ("inc/plugin_tracker.functions_auth.php");
-include_once ("inc/plugin_tracker.functions_db.php");
-include_once ("inc/plugin_tracker.functions_dropdown.php");
-include_once ("inc/plugin_tracker.functions_ifmac.php");
-//include_once ("inc/plugin_tracker.functions_rights.php");
-include_once ("inc/plugin_tracker.functions_setup.php");
-
-include_once ("inc/plugin_tracker.functions_cron.php");
-
-include_once ("inc/plugin_tracker.functions_display.php");
-
-include_once("inc/plugin_tracker.thread.class.php");
-
-include_once("inc/plugin_tracker.computerhistory.class.php");
-*/
 ?>
