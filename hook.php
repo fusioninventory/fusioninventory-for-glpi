@@ -392,7 +392,33 @@ function cron_plugin_tracker() {
 // Define headings added by the plugin //
 function plugin_get_headings_tracker($type,$withtemplate){
 	global $LANG;
-	if (in_array($type,array(COMPUTER_TYPE,NETWORKING_TYPE,TRACKING_TYPE,PROFILE_TYPE))){
+	$config = new plugin_tracker_config();	
+
+	if (in_array($type,array(NETWORKING_TYPE))){
+		// template case
+		if ($withtemplate)
+			return array();
+		// Non template case
+		else {
+			if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($config->getValue("activation_snmp_networking") == "1")) {
+				return array(
+					1 => $LANG['plugin_tracker']["title"][1]
+				);
+			}
+		}
+	}else if (in_array($type,array(PRINTER_TYPE))){
+		// template case
+		if ($withtemplate)
+			return array();
+		// Non template case
+		else {
+				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($config->getValue("activation_snmp_printer") == "1")) {
+				return array(
+					1 => $LANG['plugin_tracker']["title"][1]
+				);
+			}
+		}
+	}else	if (in_array($type,array(TRACKING_TYPE,PROFILE_TYPE))){
 		// template case
 		if ($withtemplate)
 			return array();
@@ -436,42 +462,6 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 
 			break;
 
-		case PRINTER_TYPE :
-			$array = array();
-			// template case
-			if ($withtemplate)
-				return array ();
-			// Non template case
-			else {
-				$array = array ();
-
-				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($config->getValue("activation_snmp_printer") == "1")) {
-					$array = array (
-						1 => $LANG['plugin_tracker']["title"][1]
-					);
-				}
-				return $array;
-			}
-
-			break;
-
-		case NETWORKING_TYPE :
-			$array = array();
-			// template case
-			if ($withtemplate)
-				return array ();
-			// Non template case
-			else {
-				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($config->getValue("activation_snmp_networking") == "1")) {
-					$array = array (
-						1 => $LANG['plugin_tracker']["title"][1]
-					);
-				}
-				return $array;
-			}
-
-			break;
-
 		case USER_TYPE :
 			$array = array();
 			// template case
@@ -487,15 +477,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 			}
 
 			break;
-		case PROFILE_TYPE :
-			if ($withtemplate)
-				return array();
-			// Non template case
-			else 
-				return array(
-					1 => $LANG['plugin_tracker']["title"][0],
-					);			
-			break;
+
 	}
 	return false;
 }
