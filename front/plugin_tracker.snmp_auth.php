@@ -59,11 +59,16 @@ else if ($config->getValue("authsnmp") == "DB")
 {
 	// Forms for DB
 	
+	$_GET['target']="plugin_tracker.snmp_auth.php";
+	
 	manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_AUTH);
 	
 	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
 	
 	showList(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
+}else{
+
+	echo $LANG['plugin_tracker']["functionalities"][19];
 }
 
 commonFooter();

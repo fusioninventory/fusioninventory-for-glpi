@@ -44,6 +44,8 @@ plugin_tracker_checkRight("snmp_models","r");
 
 manageGetValuesInSearch(PLUGIN_TRACKER_MODEL);
 
+$_GET['target']="plugin_tracker.models.php";
+
 searchForm(PLUGIN_TRACKER_MODEL,$_GET);
 
 showList(PLUGIN_TRACKER_MODEL,$_GET);
