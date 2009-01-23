@@ -88,7 +88,7 @@ $LANG['plugin_tracker']["functionalities"][15]="Activation du module SNMP imprim
 $LANG['plugin_tracker']["functionalities"][16]="Stockage de l'authentification SNMP";
 $LANG['plugin_tracker']["functionalities"][17]="Base de données";
 $LANG['plugin_tracker']["functionalities"][18]="Fichiers";
-
+$LANG['plugin_tracker']["functionalities"][19]="Veuillez configurer le stockage de l'authentification SNMP dans la configuration du plugin";
 $LANG['plugin_tracker']["functionalities"][20]="Statut du matériel actif";
 $LANG['plugin_tracker']["functionalities"][21]="Rétention de l'historique d'interconnexions entre matériels en jours (0 = infini)";
 $LANG['plugin_tracker']["functionalities"][22]="Rétention de l'historique de changement d'état des ports (0 = infini)";

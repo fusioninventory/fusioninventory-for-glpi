@@ -88,7 +88,7 @@ $LANG['plugin_tracker']["functionalities"][15]="SNMP printers module activation"
 $LANG['plugin_tracker']["functionalities"][16]="SNMP authentification";
 $LANG['plugin_tracker']["functionalities"][17]="Database";
 $LANG['plugin_tracker']["functionalities"][18]="Files";
-
+$LANG['plugin_tracker']["functionalities"][19]="Please configure the SNMP authentification in the setup of the plugin";
 $LANG['plugin_tracker']["functionalities"][20]="Status of active devices";
 $LANG['plugin_tracker']["functionalities"][21]="Retention of the historical interconnections between material in days (0 = infinity)";
 $LANG['plugin_tracker']["functionalities"][22]="Retention of the historic changes to the state of ports (0 = infinity)";
