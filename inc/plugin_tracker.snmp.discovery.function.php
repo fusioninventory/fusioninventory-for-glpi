@@ -44,11 +44,13 @@ function plugin_tracker_discovery_startmenu($target)
 	$conf = plugin_tracker_discovery_getConf();
 	$ifaddr_start = $conf['ifaddr_start'];
 	$ifaddr_end = $conf['ifaddr_end'];
+	if(!$ifaddr_start) $ifaddr_start="0.0.0.0";
 	$explode = explode(".",$ifaddr_start);
 	$ifaddr_start_1 = $explode[0];
 	$ifaddr_start_2 = $explode[1];
 	$ifaddr_start_3 = $explode[2];
 	$ifaddr_start_4 = $explode[3];
+	if(!$ifaddr_end) $ifaddr_end="0.0.0.0";
 	$explode = explode(".",$ifaddr_end);
 	$ifaddr_end_1 = $explode[0];
 	$ifaddr_end_2 = $explode[1];
