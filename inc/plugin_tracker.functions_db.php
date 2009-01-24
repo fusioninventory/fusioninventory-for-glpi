@@ -44,7 +44,7 @@ function plugin_tracker_createfirstaccess($ID){
 	$plugin_tracker_Profile=new plugin_tracker_Profile();
 	if (!$plugin_tracker_Profile->GetfromDB($ID)){
 		
-		$Profile=new Profile();
+		$Profile=new plugin_tracker_Profile();
 		$Profile->GetfromDB($ID);
 		$name=$Profile->fields["name"];
 

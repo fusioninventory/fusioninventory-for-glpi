@@ -50,6 +50,18 @@ function plugin_tracker_install() {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
 		$DB->query($sql_line)/* or die($DB->error())*/;
 	}
+
+	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+	plugin_tracker_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
+	$config = new plugin_tracker_config();
+	$config->initConfig();
+	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
+	$config_snmp_networking->initConfig();
+	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
+	$config_snmp_printer->initConfig();
+	$discovery = new plugin_tracker_discovery;
+	$discovery->initConfig();
+	plugin_tracker_initSession();
    return true;
 }
 
