@@ -238,6 +238,18 @@ function plugin_tracker_getSearchOption() {
 	return $sopt;
 }
 
+<<<<<<< .mine
+function plugin_tracker_giveItem($type,$ID,$data,$num){
+	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LINK_ID_TABLE,$LANG,$SEARCH_OPTION;
+
+	$table=$SEARCH_OPTION[$type][$ID]["table"];
+	$field=$SEARCH_OPTION[$type][$ID]["field"];
+	$linkfield=$SEARCH_OPTION[$type][$ID]["linkfield"];
+
+	switch ($table.'.'.$field){
+
+
+=======
 function plugin_tracker_giveItem($type,$ID,$data,$num){
 	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LINK_ID_TABLE,$LANG,$SEARCH_OPTION;
 	
@@ -245,6 +257,7 @@ function plugin_tracker_giveItem($type,$ID,$data,$num){
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 
 	switch ($table.'.'.$field){
+>>>>>>> .r8653
 		case "glpi_plugin_tracker_model_infos.name" :
 			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
 			$out .= $data["ITEM_$num"];
