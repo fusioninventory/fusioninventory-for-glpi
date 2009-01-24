@@ -63,20 +63,12 @@ else if ($config->getValue("authsnmp") == "DB")
 	
 	manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_AUTH);
 	
-<<<<<<< .mine
-//	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-//	showList(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
 	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
-	showList(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
-=======
-	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
-	
 	showList(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
 }else{
 
 	echo $LANG['plugin_tracker']["functionalities"][19];
->>>>>>> .r8653
+
 }
 
 commonFooter();
