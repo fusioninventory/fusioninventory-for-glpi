@@ -46,9 +46,14 @@ manageGetValuesInSearch(PLUGIN_TRACKER_MODEL);
 
 $_GET['target']="plugin_tracker.models.php";
 
+<<<<<<< .mine
+searchForm(PLUGIN_TRACKER_MODEL,$_GET);
+showList(PLUGIN_TRACKER_MODEL,$_GET);
+=======
 searchForm(PLUGIN_TRACKER_MODEL,$_GET);
 
 showList(PLUGIN_TRACKER_MODEL,$_GET);
+>>>>>>> .r8653
 
 commonFooter();
 
