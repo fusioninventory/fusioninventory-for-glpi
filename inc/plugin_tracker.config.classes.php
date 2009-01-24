@@ -49,8 +49,8 @@ class plugin_tracker_config extends CommonDBTM {
 		global $DB;
 		
 		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp) ".
-				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB')";
+				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp, logs) ".
+				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB','0')";
 		
 		$DB->query($query);
 	}
@@ -291,17 +291,10 @@ class plugin_tracker_config extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_tracker']["functionalities"][16]."</td>";
 		echo "<td>";
-		echo "<select name='authsnmp'>";
-		echo "<option>-----</option>";
-		$selected = "";
-		if ($this->getValue("authsnmp") == "DB")
-			$selected = "selected";
-		echo "<option value='DB' ".$selected.">".$LANG['plugin_tracker']["functionalities"][17]."</option>";
-		$selected = "";
-		if ($this->getValue("authsnmp") == "file")
-			$selected = "selected";
-		echo "<option value='file' ".$selected.">".$LANG['plugin_tracker']["functionalities"][18]."</option>";
-		echo "</select>";
+		unset($ArrayValues);
+		$ArrayValues['DB']= $LANG['plugin_tracker']["functionalities"][17];
+		$ArrayValues['file']= $LANG['plugin_tracker']["functionalities"][18];
+		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));
 		echo "</td></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -315,6 +308,17 @@ class plugin_tracker_config extends CommonDBTM {
 		echo "<td>".$LANG['plugin_tracker']["functionalities"][51]."</td>";
 		echo "<td>";
 		dropdownInteger("nb_process_query", $this->getValue('nb_process_query'),1,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][52]."</td>";
+		echo "<td>";
+		unset($ArrayValues);
+		$ArrayValues[]= $LANG["choice"][0];
+		$ArrayValues[]= $LANG["choice"][1];
+		$ArrayValues[]= $LANG["setup"][137];
+		dropdownArrayValues('logs', $ArrayValues,$this->getValue('logs'));
 		echo "</td>";
 		echo "</tr>";
 

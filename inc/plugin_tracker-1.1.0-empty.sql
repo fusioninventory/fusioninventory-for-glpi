@@ -116,6 +116,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
   `authsnmp` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `nb_process_query` int(11) NOT NULL DEFAULT '1',
   `nb_process_discovery` int(11) NOT NULL DEFAULT '1',
+  `logs` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
