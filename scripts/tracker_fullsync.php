@@ -145,9 +145,11 @@ else
 		{
 			$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
 	
-			$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
+//			$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
 
-			$processes->updateProcess($fields["process_id"],0, $processes_values2["devices"], 0, $processes_values2["errors"]);
+//			$processes->updateProcess($fields["process_id"],0, $processes_values2["devices"], 0, $processes_values2["errors"]);
+			$processes_values = plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
+
 		}
 	}
 	
