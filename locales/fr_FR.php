@@ -107,6 +107,7 @@ $LANG['plugin_tracker']["functionalities"][43]="Authentification SNMP";
 
 $LANG['plugin_tracker']["functionalities"][50]="Nombre de process simultanés pour la découverte réseau";
 $LANG['plugin_tracker']["functionalities"][51]="Nombre de process simultanés pour l'interrogation SNMP";
+$LANG['plugin_tracker']["functionalities"][52]="Activation des journaux";
 
 $LANG['plugin_tracker']["snmp"][0]="Informations SNMP du matériel";
 $LANG['plugin_tracker']["snmp"][1]="Général";
