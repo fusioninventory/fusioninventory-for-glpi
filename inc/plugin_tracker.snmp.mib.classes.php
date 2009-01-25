@@ -59,6 +59,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 
 	function showForm($target,$ID)
 	{
+		include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+
 		GLOBAL $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
 		
 		if ( !plugin_tracker_haveRight("snmp_models","r") )

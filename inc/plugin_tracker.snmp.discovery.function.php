@@ -443,6 +443,8 @@ function plugin_tracker_discovery_update_conf($data)
 
 function plugin_tracker_discovery_display_array($target)
 {
+	include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+
 	global $CFG_GLPI,$DB,$LANG,$TRACKER_MAPPING_DISCOVERY;
 
 	$CommonItem = new CommonItem;
