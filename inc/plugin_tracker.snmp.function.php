@@ -396,6 +396,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 							$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
 							$array["ID"] = $DB->result($result, 0, "ID");
 							$np->update($array);
+							$logs->write("tracker_fullsync","Update port in DB (glpi_networking_ports) : ID".$DB->result($result, 0, "ID")." & name ".$ArrayPort_LogicalNum_SNMPName[$i],$IP,1);
 						}
 					}
 							
