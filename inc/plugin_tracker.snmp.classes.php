@@ -1259,7 +1259,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	**/
 	function SNMPQuery($ArrayOID,$IP,$version=1,$snmp_auth)
 	{
-		
+		$logs = new plugin_tracker_logs;
 		$ArraySNMP = array();
 		
 		foreach($ArrayOID as $object=>$oid)
@@ -1301,7 +1301,7 @@ class plugin_tracker_snmp extends CommonDBTM
 					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,700000,1);
 					ob_end_clean();
 				}
-				logInFile("tracker_snmp", "			SNMP QUERY : [".$IP."] ".$object."(".$oid.") = ".$SNMPValue."\n\n");
+				$logs->write("tracker_snmp","SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue ,$IP);
 				if ((ereg ("Hex: ", $SNMPValue)) 
 					OR (ereg ("Gauge32: ", $SNMPValue)) 
 					OR (ereg ("STRING: ", $SNMPValue))
@@ -1367,6 +1367,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	function SNMPQueryWalkAll($ArrayOID,$IP,$version=1,$snmp_auth)
 	//$community="public",$sec_name,$sec_level,$auth_protocol="MD5",$auth_passphrase,$priv_protocol="DES",$priv_passphrase)
 	{
+		$logs = new plugin_tracker_logs;
 		$ArraySNMP = array();
 		
 		foreach($ArrayOID as $object=>$oid)
@@ -1405,19 +1406,6 @@ class plugin_tracker_snmp extends CommonDBTM
 			}
 			foreach($SNMPValue as $oidwalk=>$value)
 			{
-/*				$ArraySNMPValues = explode(": ", $value);
-				if (!isset($ArraySNMPValues[1]))
-					$ArraySNMPValues[1] = "";
-				if (count($ArraySNMPValues) > 2)
-				{
-					for ($i=2;$i < count($ArraySNMPValues);$i++)
-					{
-						$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
-					}			
-				}
-				$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
-				$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
-				*/
 				if ((ereg ("Hex: ", $value)) 
 					OR (ereg ("Gauge32: ", $value)) 
 					OR (ereg ("STRING: ", $value))
@@ -1453,8 +1441,8 @@ class plugin_tracker_snmp extends CommonDBTM
 				else
 				{
 					$ArraySNMP[$oidwalk] = trim($value, '"');
-				}		
-				logInFile("tracker_snmp", "			SNMP QUERY WALK : [".$IP."] ".$object."(".$oid.") = ".$oidwalk."=>".$value."\n\n");
+				}
+				$logs->write("tracker_snmp","SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value ,$IP);
 			}
 		}
 		return $ArraySNMP;
