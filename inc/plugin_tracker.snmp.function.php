@@ -306,7 +306,6 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 **/
 function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$snmp_version,$snmp_auth,$Array_Object_oid_ifType,$FK_process=0,$type)
 {
-
 	global $DB,$LANG;
 
 	$oidList = array();
@@ -316,7 +315,9 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 
 	$snmp_queries = new plugin_tracker_snmp;
 	$np=new Netport();
+	$logs = new plugin_tracker_logs;
 
+	$logs->write("tracker_fullsync",">>>>>>>>>> Get ports OID list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$IP,1);
 	// Get object => oid of port computer (generaly ifNumber) from SNMP model
 	$return = $snmp_queries->GetOID($snmp_model_ID,"oid_port_counter='1'");	
 	foreach ($return as $key=>$value)
@@ -324,12 +325,15 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 		$object = $key;
 		$portcounter = $value;
 	}
+	$logs->write("tracker_fullsync","oid port counter : ".$object." = ".$portcounter,$IP,1);
+
 	// Get object => oid of type of port (generaly ifType) from SNMP model
 	foreach ($Array_Object_oid_ifType as $key=>$value)
 	{
 		$object_ifType = $key;
 		$oid_ifType = $value;
 	}
+	$logs->write("tracker_fullsync","type of port : ".$object_ifType." = ".$oid_ifType,$IP,1);
 
 	// Get query SNMP to have number of ports
 	if ((isset($portcounter)) AND (!empty($portcounter)))

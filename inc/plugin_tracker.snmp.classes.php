@@ -1464,9 +1464,10 @@ class plugin_tracker_snmp extends CommonDBTM
 	function GetPortsName($IP,$snmp_version,$snmp_auth,$ArrayOID)
 	{
 		$snmp_queries = new plugin_tracker_snmp;
+		$logs = new plugin_tracker_logs;
 		
 		$Arrayportsnames = array();
-		// logInFile("tracker_snmp", "						Function : GetPortsName(".$IP.",".$snmp_version.",".$snmp_auth.",".$ArrayOID.") \n\n");		
+		$logs->write("tracker_fullsync",">>>>>>>>>> Get network ports name <<<<<<<<<<",$IP,1);
 		foreach($ArrayOID as $object=>$oid)
 		{
 			$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array($object=>$oid),$IP,$snmp_version,$snmp_auth);
@@ -1476,6 +1477,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 		foreach($Arrayportsnames as $object=>$value)
 		{
+			$logs->write("tracker_fullsync",$object." = ".$value,$IP,1);
 			$PortsName[] = $value;
 		}
 		return $PortsName;
@@ -1496,15 +1498,17 @@ class plugin_tracker_snmp extends CommonDBTM
 	function GetPortsSNMPNumber($IP,$snmp_version,$snmp_auth)
 	{
 		$snmp_queries = new plugin_tracker_snmp;
-		
+		$logs = new plugin_tracker_logs;
+
+		$logs->write("tracker_fullsync",">>>>>>>>>> Get network ports number with logical number <<<<<<<<<<",$IP,1);
 		$ArrayportsSNMPNumber = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifIndex"=>".1.3.6.1.2.1.2.2.1.1"),$IP,$snmp_version,$snmp_auth);
 	
 		$PortsName = array();
-	
+		$i=0;
 		foreach($ArrayportsSNMPNumber as $object=>$value)
 		{
 			$PortsSNMPNumber[] = $value;
-
+			$logs->write("tracker_fullsync",$object." = ".$value."(N° logic : ".$i++.")",$IP,1);
 		}
 		return $PortsSNMPNumber;
 	}
