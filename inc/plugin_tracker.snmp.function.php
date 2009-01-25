@@ -175,7 +175,7 @@ function plugin_tracker_UpdateDeviceBySNMP($ArrayListDevice,$FK_process = 0,$xml
 				$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID);
 	
 				// ** Update fields of switchs
-				tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type);
+				tracker_snmp_UpdateGLPIDevice($ifIP,$ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type);
 
 				//**
 				$ArrayPortDB_Name_ID = $plugin_tracker_snmp->GetPortsID($ID_Device);
@@ -288,6 +288,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 	
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 	$processes = new Threads;
+	$logs = new plugin_tracker_logs;
 	
 	foreach ( $ArrayDevice as $ID_Device=>$ifIP )
 	{
@@ -346,7 +347,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 				$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID);
 	
 				// ** Update fields of switchs
-				tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type);
+				tracker_snmp_UpdateGLPIDevice($ifIP,$ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type);
 
 				//**
 				$ArrayPortDB_Name_ID = $plugin_tracker_snmp->GetPortsID($ID_Device);
@@ -532,14 +533,18 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
  * @return $oidList : array with ports object name and oid
  *
 **/
-function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type)
+function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type)
 {
 
 	global $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
-	
+
+	$logs = new plugin_tracker_logs;
+
 	$printer_cartridges_max_remain = array();
 	$cpu_values = array();
 	
+	$logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$IP,1);
+
 	foreach($ArraySNMP_Object_result as $object=>$SNMPValue)
 	{
 		$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
@@ -572,7 +577,7 @@ function tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_Ty
 		if ($SNMPValue == "[[empty]]"){
 			$SNMPValue = "";
 		}
-		
+		$logs->write("tracker_fullsync","Type(".$object_type.") : ".$object_name." = ".$SNMPValue,$IP,1);
 		if (($object_name == "ram") OR ($object_name == "memory"))
 		{
 			if ((ereg("KBytes", $SNMPValue))
@@ -907,8 +912,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 					
 					foreach($ArrayifName as $oidArrayifName=>$ifName)
 					{
-						$logs->write("tracker_fullsync","    *********",$IP,1);
-						$logs->write("tracker_fullsync","Interface = ".$ifName,$IP,1);
+						$logs->write("tracker_fullsync","** Interface = ".$ifName,$IP,1);
 	
 						// Search portID of materiel wich we would connect to this port
 						$MacAddress = trim($value);
@@ -1029,6 +1033,9 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 	global $DB;
 
 	$snmp_queries = new plugin_tracker_snmp;
+	$logs = new plugin_tracker_logs;
+		
+	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get cdp trunk ports <<<<<<<<<<",$IP,1);
 
 	$Array_trunk_IP_hex = array("cdpCacheAddress" => ".1.3.6.1.4.1.9.9.23.1.2.1.1.4");
 	$Array_trunk_ifDescr = array("cdpCacheDevicePort" => ".1.3.6.1.4.1.9.9.23.1.2.1.1.7");
@@ -1072,9 +1079,9 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		$end_Number = $explode[(count($explode)-1)];
 		
 		$Array_trunk_ifIndex[$ifIndex] = 1;
-//echo "IFINDEX **** > ".$ifIndex."\n";
-//echo "IFINDEX NUM Logic > ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."\n";
-//echo "IFINDEX NAME Logic > ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]]."\n";
+		$logs->write("tracker_fullsync","ifIndex = ".$ifIndex,$IP,1);
+		$logs->write("tracker_fullsync","ifIndex num logic = ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex],$IP,1);
+		$logs->write("tracker_fullsync","ifIndex name logic = ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]],$IP,1);
 
 		// Convert IP hex to decimal
 		$Array_ip_switch_trunk = explode(" ",$result);
