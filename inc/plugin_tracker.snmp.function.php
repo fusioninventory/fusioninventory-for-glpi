@@ -385,6 +385,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						
 						$IDport = $np->add($array);
 						logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
+						$logs->write("tracker_fullsync","Add port in DB (glpi_networking_ports) : ".$ArrayPort_LogicalNum_SNMPName[$i]." on device ".$IDNetworking,$IP,1);
 					}
 					else
 					{
@@ -409,6 +410,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 								(FK_networking_ports)
 							VALUES ('".$IDport."') ";
 							$DB->query($queryInsert);
+							$logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID".$IDport,$IP,1);
 						}
 					}
 				}
