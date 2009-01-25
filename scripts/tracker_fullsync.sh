@@ -83,7 +83,7 @@ read_argv()
 
 cleanup()
 {
-  echo "cleaning up."
+  #echo "cleaning up."
   #  echo "kill pids: $runningpid"
   for pid in $runningpid; do kill $pid 2>/dev/null; done
   rm -f $pidfile

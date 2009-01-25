@@ -495,7 +495,6 @@ class Threads extends CommonDBTM
 		$t = new Threads;
 		$descriptor = array (0 => array ("pipe", "r"), 1 => array ("pipe", "w"), 2 => array ("pipe", "w"));
 		$t->pref = proc_open ("php -q $file ", $descriptor, $t->pipes);
-		echo $file."\n";
 		stream_set_blocking ($t->pipes[1], 0);
 		return $t;
 	}
