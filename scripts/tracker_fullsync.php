@@ -78,6 +78,8 @@ $failed_nbr= 0;
 $fields=array();
 $type='';
 
+$logs = new plugin_tracker_logs;
+
 if(isset($_GET['discovery_process'])){
 	plugin_tracker_discovery_scan_process($_GET['ip1'],$_GET['ip2'],$_GET['ip3'],$_GET['ip4']);
 }
@@ -121,8 +123,8 @@ else
 	$processes->addProcess($fields["process_id"]);
 	
 	// SNMP is working
-	
-	logInFile("tracker_snmp", ">>>>>> Starting Script <<<<<<\n\n");
+	$logs->write("tracker_snmp",">>>>>>>>>> Starting Script <<<<<<<<<<",'');
+
 	$OS = "";
 	if (isset($_SERVER["OSTYPE"]))
 	{
@@ -132,8 +134,7 @@ else
 	{
 		$OS = $_SERVER["OS"];
 	}
-	logInFile("tracker_snmp", "Operating System : ".$OS." \n\n");
-	logInFile("tracker_snmp", "I) Get all devices \n\n");
+	$logs->write("tracker_snmp","Operating System = ".$OS,'');
 	
 	$processes_values = array("devices"=>0,"errors"=>0);
 	$processes_values2 = array("devices"=>0,"errors"=>0);
