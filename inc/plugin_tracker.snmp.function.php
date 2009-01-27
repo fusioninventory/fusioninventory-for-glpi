@@ -817,7 +817,9 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
 			
 	$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
-	
+	if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "[[empty]]")
+		$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] = "";
+		
 	$logs->write("tracker_fullsync","Vlan = ".$vlan,$IP,1);
 	$logs->write("tracker_fullsync","TrunkStatus = ".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex],$IP,1);
 	$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$IP,1);
