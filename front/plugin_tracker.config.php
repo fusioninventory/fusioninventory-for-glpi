@@ -41,30 +41,10 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 checkRight("profile","w");
 
-if(!isset($_SESSION["glpi_plugin_tracker_installed"]) || $_SESSION["glpi_plugin_tracker_installed"]!=1) {
+useplugin('tracker');
 
-	commonHeader($LANG['plugin_tracker']["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
-	plugin_tracker_phpextensions();
-	if ($_SESSION["glpiactive_entity"]==0){
-	
-		if(!TableExists("glpi_plugin_tracker_errors")) {
-		
-			/* Install */
-			echo "<div align='center'>";
-			echo "<table class='tab_cadre' cellpadding='5'>";
-			echo "<tr><th>".$LANG['plugin_tracker']["setup"][3];
-			echo "</th></tr>";
-			echo "<tr class='tab_bg_1'><td>";
-			echo "<a href='plugin_tracker.install.php'>".$LANG['plugin_tracker']["setup"][4]."</a></td></tr>";
-			echo "</table></div>";
-		}
-		
-	}else{
-		echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>"; 
-		echo "<b>".$LANG['plugin_tracker']["setup"][2]."</b></div>"; 
-	}
-}
-else {
+$plugin = new Plugin();
+if ($plugin->isInstalled("tracker") && $plugin->isActivated("tracker")) {
 	
 	commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 	plugin_tracker_phpextensions();	
@@ -93,6 +73,10 @@ else {
 		
 	echo "</div>";	
 		
+}else{
+	commonHeader($LANG["common"][12],$_SERVER['PHP_SELF'],"config","plugins");
+	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";
+	echo "<b>Please activate the plugin</b></div>";
 }
 
 commonFooter();
