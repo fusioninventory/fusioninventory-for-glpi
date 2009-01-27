@@ -39,12 +39,12 @@ if (!defined('GLPI_ROOT')){
 
 function plugin_tracker_createfirstaccess($ID){
 
-	GLOBAL $DB;
+	global $DB;
 	
 	$plugin_tracker_Profile=new plugin_tracker_Profile();
 	if (!$plugin_tracker_Profile->GetfromDB($ID)){
 		
-		$Profile=new plugin_tracker_Profile();
+		$Profile=new Profile();
 		$Profile->GetfromDB($ID);
 		$name=$Profile->fields["name"];
 
