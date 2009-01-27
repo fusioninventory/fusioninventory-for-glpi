@@ -89,14 +89,6 @@ else {
 	echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANG['plugin_tracker']["profile"][19]."&nbsp;</a>";
 	echo "</td></tr>";
 	
-	/* Uninstall */
-	if ($_SESSION["glpiactive_entity"]==0){
-		echo "<tr class='tab_bg_1'><td align='center'>";
-		echo "<a href='plugin_tracker.uninstall.php'>".$LANG['plugin_tracker']["setup"][6]."</a>";
-		echo " <img src='".$CFG_GLPI["root_doc"]."/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('comments'),'none')\" onmouseover=\"setdisplay(getElementById('comments'),'block')\">";
-		echo "<span class='over_link' id='comments'>".$LANG['plugin_tracker']["setup"][8]."</span>";
-		echo "</td></tr>";
-	}
 	echo "</table>";
 		
 	echo "</div>";	
