@@ -121,6 +121,8 @@ function plugin_tracker_install(){
 	}elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs")) {
 		plugin_tracker_update("1.1.0");
 	}
+
+	return true;
 }
 
 
