@@ -38,11 +38,11 @@ if (!defined('GLPI_ROOT')){
 }
 
 // Installation function
-function plugin_tracker_install() {
+function plugin_tracker_installing($version) {
 	
 	global $DB;
 
-	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-1.0.0-empty.sql";
+	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-empty.sql";
 	$DBf_handle = fopen($DB_file, "rt");
 	$sql_query = fread($DBf_handle, filesize($DB_file));
 	fclose($DBf_handle);
@@ -64,6 +64,22 @@ function plugin_tracker_install() {
 	plugin_tracker_initSession();
    return true;
 }
+
+
+function plugin_tracker_update($version) {
+	
+	GLOBAL $DB;
+	
+	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql";
+	$DBf_handle = fopen($DB_file, "rt");
+	$sql_query = fread($DBf_handle, filesize($DB_file));
+	fclose($DBf_handle);
+	foreach ( explode(";\n", "$sql_query") as $sql_line) {
+		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+		$DB->query($sql_line);
+	}
+}
+
 
 // Uninstallation function
 function plugin_tracker_uninstall() {
