@@ -837,23 +837,13 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 						{
 							$logs->write("tracker_fullsync","Mac address FAILED(1)",$IP,1);
 							$queryPortEnd = "";
-					
+							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
 						}						
 						else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 						{
 							$logs->write("tracker_fullsync","Mac address FAILED(2)",$IP,1);
-							$queryPortEnd = "SELECT * 
-							
-							FROM glpi_networking_ports
-							
-							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$IDNetworking."' ";
 							$queryPortEnd = "";
-							if ($vlan == "")
-							{
-								$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-							}
-								
+							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
 						}
 	
 						if (($queryPortEnd != ""))
