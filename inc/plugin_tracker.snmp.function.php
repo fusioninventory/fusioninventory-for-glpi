@@ -214,7 +214,6 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 			$snmp_version = $snmp_auth["snmp_version"];
 
 			// ** Get from SNMP, description of equipment
-			$plugin_tracker_snmp->DefineObject(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"));
 			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ifIP,$snmp_version,$snmp_auth);
 			if ($Array_sysdescr["sysDescr"] == "")
 			{
@@ -261,12 +260,10 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 				// ** Get MAC adress of connected ports
 				$array_port_trunk = array();
 				if (!empty($ArrayPort_Object_oid))
-					$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$ID_Device,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex);
+					$array_port_trunk = GetMACtoPort($ifIP,$ArrayPortDB_Name_ID,$ID_Device,$snmp_version,$snmp_auth,$FK_process,$Array_trunk_ifIndex,"");
 				if ($type ==  NETWORKING_TYPE)
 				{
 					// Foreach VLAN ID to GET MAC Adress on each VLAN
-					$plugin_tracker_snmp->DefineObject($Array_Object_oid_vtpVlanName);
-		
 					$Array_vlan = $plugin_tracker_snmp->SNMPQueryWalkAll($Array_Object_oid_vtpVlanName,$ifIP,$snmp_version,$snmp_auth);
 					foreach ($Array_vlan as $objectdyn=>$vlan_name)
 					{
@@ -338,7 +335,6 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 	// Get query SNMP to have number of ports
 	if ((isset($portcounter)) AND (!empty($portcounter)))
 	{
-		$snmp_queries->DefineObject(array($object=>$portcounter));
 		$Arrayportsnumber = $snmp_queries->SNMPQuery(array($object=>$portcounter),$IP,$snmp_version,$snmp_auth);
 		// Get Number of port from SNMP query
 		$portsnumber = $Arrayportsnumber[$object];
@@ -347,7 +343,6 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 		for ($i = 0; $i < $portsnumber; $i++)
 		{
 			// Get type of port
-			$snmp_queries->DefineObject(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]));
 			$array_ifType = $snmp_queries->SNMPQuery(array($object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]=>$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]),$IP,$snmp_version,$snmp_auth);
 			if ((ereg("ethernetCsmacd",$array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]])) 
 				OR ($array_ifType[$object_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]] == "6")
@@ -742,7 +737,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	$netwire = new Netwire;
 	$snmp_queries = new plugin_tracker_snmp;
 
-	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port <<<<<<<<<<",$IP,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan_name."(".$vlan.")] <<<<<<<<<<",$IP,1);
 
 	$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => ".1.3.6.1.2.1.17.4.3.1.1");
 	$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => ".1.3.6.1.2.1.4.22.1.2");
@@ -755,7 +750,6 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 		$snmp_auth["community"] = $snmp_auth["community"]."@".$vlan;
 	}
 	// Get by SNMP query the mac addresses and IP (ipNetToMediaPhysAddress)
-	$snmp_queries->DefineObject($ArrayIPMACAdressePhysObject);
 	$ArrayIPMACAdressePhys = $snmp_queries->SNMPQueryWalkAll($ArrayIPMACAdressePhysObject,$IP,$snmp_version,$snmp_auth);
 	if (empty($ArrayIPMACAdressePhys))
 	{
@@ -763,7 +757,6 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	}
 
 	// Get by SNMP query the mac addresses (dot1dTpFdbAddress)
-	$snmp_queries->DefineObject($ArrayMACAdressTableObject);
 	$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP,$snmp_version,$snmp_auth);
 
 	foreach($ArrayMACAdressTable as $oid=>$value)
@@ -785,7 +778,6 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 				$oidExplode[(count($oidExplode)-2)].".".
 				$oidExplode[(count($oidExplode)-1)];
 			$ArraySNMPBridgePortNumber = array("dot1dTpFdbPort" => $OIDBridgePortNumber);
-			$snmp_queries->DefineObject($ArraySNMPBridgePortNumber);
 			$ArrayBridgePortNumber = $snmp_queries->SNMPQuery($ArraySNMPBridgePortNumber,$IP,$snmp_version,$snmp_auth);
 			
 			foreach($ArrayBridgePortNumber as $oidBridgePort=>$BridgePortNumber)
@@ -794,8 +786,6 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 				$logs->write("tracker_fullsync","BRIDGEPortNumber = ".$BridgePortNumber,$IP,1);
 				
 				$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => ".1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
-		
-				$snmp_queries->DefineObject($ArrayBridgePortifIndexObject);
 		
 				$ArrayBridgePortifIndex = $snmp_queries->SNMPQuery($ArrayBridgePortifIndexObject,$IP,$snmp_version,$snmp_auth);
 				
@@ -810,8 +800,6 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 					$logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$IP,1);
 				
 					$ArrayifNameObject = array("ifName" => ".1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
-		
-					$snmp_queries->DefineObject($ArrayifNameObject);
 			
 					$ArrayifName = $snmp_queries->SNMPQuery($ArrayifNameObject,$IP,$snmp_version,$snmp_auth);
 					
@@ -827,8 +815,6 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 						
 	// A METTRE EN DYN !!!!!!!!
 	$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
-	
-	$snmp_queries->DefineObject($arrayTRUNKmod);
 			
 	$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
 	
@@ -851,10 +837,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 						{
 							$logs->write("tracker_fullsync","Mac address FAILED(1)",$IP,1);
 							$queryPortEnd = "";
-							if ($vlan == "")
-							{
-								$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-							}
+					
 						}						
 						else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
 						{
@@ -950,18 +933,17 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 
 	// Get trunk port directly from oid
 	$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus" => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14");
-	$snmp_queries->DefineObject($arrayTRUNKmod);
 		
 	$Arraytrunktype = $snmp_queries->SNMPQueryWalkAll($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
-	
+
 	foreach($Arraytrunktype as $oidtrunkPort=>$ifIndex_by_snmp)
 	{
-
 		if ($ifIndex_by_snmp == "1")
 		{
 			$oidExplode = explode(".", $oidtrunkPort);
 			
 			$Array_trunk_ifIndex[$oidExplode[(count($oidExplode)-1)]] = 1;
+			$logs->write("tracker_fullsync","Trunk = ".$oidExplode[(count($oidExplode)-1)],$IP,1);
 
 		}
 	}
@@ -970,13 +952,10 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 
 
 	// Get by SNMP query the IP addresses of the switch connected ($Array_trunk_IP_hex)
-	$snmp_queries->DefineObject($Array_trunk_IP_hex);
 	$Array_trunk_IP_hex_result = $snmp_queries->SNMPQueryWalkAll($Array_trunk_IP_hex,$IP,$snmp_version,$snmp_auth);
 
 	// Get by SNMP query the Name of port (ifDescr)
-	$snmp_queries->DefineObject($Array_trunk_ifDescr);
 	$Array_trunk_ifDescr_result = $snmp_queries->SNMPQueryWalkAll($Array_trunk_ifDescr,$IP,$snmp_version,$snmp_auth);
-//var_dump($Array_trunk_ifDescr_result);
 	foreach($Array_trunk_IP_hex_result AS $object=>$result)
 	{
 		$explode = explode(".", $object);

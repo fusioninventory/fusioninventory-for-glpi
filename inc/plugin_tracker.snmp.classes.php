@@ -183,6 +183,9 @@ abstract class plugin_tracker_snmp2 {
 		$processes = new Threads;
 		$CommonItem = new CommonItem;
 		$plugin_tracker_snmp = new plugin_tracker_snmp;
+
+		echo "<script type='text/javascript' src='/glpi072/lib/extjs/adapter/prototype/prototype.js'></script>";
+		echo "<script type='text/javascript' src='/glpi072/lib/extjs/adapter/prototype/effects.js'></script>";
 		
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking=".$ID." ";
@@ -1390,15 +1393,15 @@ class plugin_tracker_snmp extends CommonDBTM
 					}
 					define($object,$oid);
 				}
-				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,700000,1);
+				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,1000000,1);
 			}
 			else if ($version == "2c")
 			{
-				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,700000,1);
+				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,1000000,1);
 			}
 			else if ($version == "3")
 			{
-				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,700000,1);
+				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1000000,1);
 			}
 			if (empty($SNMPValue))
 			{
