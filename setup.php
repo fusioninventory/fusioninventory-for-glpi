@@ -111,6 +111,18 @@ function plugin_tracker_check_prerequisites(){
 	}
 }
 
+function plugin_tracker_install(){
+	global $DB, $LANG, $CFG_GLPI;
+	
+	include_once (GLPI_ROOT."/inc/profile.class.php");
+	
+	if(!TableExists("glpi_plugin_tracker_config")) {
+		plugin_tracker_installing("1.1.0");
+	}elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs")) {
+		plugin_tracker_update("1.1.0");
+	}
+}
+
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
 function plugin_tracker_check_config(){
