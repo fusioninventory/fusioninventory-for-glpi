@@ -178,7 +178,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object",0,1,-1,'',$object_used);
+				dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object",0,1,-1,'');
 				echo "</td>";
 
 				echo "<td align='center'>";

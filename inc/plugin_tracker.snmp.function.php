@@ -375,7 +375,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 						$array["subnet"] = "";
 						$array["netpoint"] = 0;
 						$array["on_device"] = $IDNetworking;
-						$array["device_type"] = "2";
+						$array["device_type"] = $type;
 						$array["add"] = "Ajouter";
 						
 						$IDport = $np->add($array);
@@ -668,8 +668,16 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					$SNMPValue = externalImportDropdown($TRACKER_MAPPING[$object_type][$object_name]['dropdown'],$SNMPValue,0);
 				}
 				// Rewriting MacAdress
-				if ($object_name == "ifPhysAddress")
-					$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
+				if ($object_name == "ifPhysAddress"){
+					if ($SNMPValue == "")
+					{
+						$SNMPValue = "[[empty]]";
+					}
+					else
+					{
+						$SNMPValue = $snmp_queries->MAC_Rewriting($SNMPValue);
+					}
+				}
 
 				if ($TRACKER_MAPPING[$object_type][$object_name]['table'] == "glpi_networking_ports")
 				{
