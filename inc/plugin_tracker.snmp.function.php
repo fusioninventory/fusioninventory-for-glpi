@@ -445,6 +445,18 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
 	
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$IP,1);
 
+	// Update 'last_tracker_update' field 
+	$query = "UPDATE ";
+	if ($type == NETWORKING_TYPE) 
+		$query .= "glpi_plugin_tracker_networking 
+		SET last_tracker_update='".date("Y-m-d H:i:s")."' 
+		WHERE FK_networking='".$ID_Device."' ";
+	if ($type == PRINTER_TYPE) 
+		$query .= "glpi_plugin_tracker_printers 
+		SET last_tracker_update='".date("Y-m-d H:i:s")."' 
+		WHERE FK_printers='".$ID_Device."' ";
+	$DB->query($query);
+
 	foreach($ArraySNMP_Object_result as $object=>$SNMPValue)
 	{
 		$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
