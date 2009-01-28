@@ -863,17 +863,17 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 						$MacAddress = strtolower($MacAddress);
 						$MacAddress = $snmp_queries->MAC_Rewriting($MacAddress);
 						
-	// A METTRE EN DYN !!!!!!!!
-	$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
-			
-	$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
-	if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "[[empty]]")
-		$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] = "";
-		
-	$logs->write("tracker_fullsync","Vlan = ".$vlan,$IP,1);
-	$logs->write("tracker_fullsync","TrunkStatus = ".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex],$IP,1);
-	$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$IP,1);
-						
+						// Verify Trunk
+						$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
+								
+						$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
+						if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "[[empty]]")
+							$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] = "";
+							
+						$logs->write("tracker_fullsync","Vlan = ".$vlan,$IP,1);
+						$logs->write("tracker_fullsync","TrunkStatus = ".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex],$IP,1);
+						$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$IP,1);
+											
 						$queryPortEnd = "";	
 						if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR (empty($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
 						{
@@ -911,10 +911,6 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 										$traitement = 0;
 									}
 								}
-								//else
-								//{
-								//	$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-								//}						
 								
 								if (!isset($ArrayPortsID[$ifName]))
 								{
@@ -923,7 +919,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 	
 								if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 								{
-	//echo "TRAITEMENT :".$traitement."\n";
+
 									$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 									$sport = $ArrayPortsID[$ifName]; // Networking_Port
 									
