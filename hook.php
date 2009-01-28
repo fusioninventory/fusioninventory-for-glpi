@@ -597,7 +597,7 @@ function plugin_headings_tracker_printerCronConfig($type, $ID) {
 
 function plugin_headings_tracker_networkingInfo($type, $ID) {
 
-	$snmp = new plugin_tracker_snmp2();
+	$snmp = new plugin_tracker_networking();
 	$snmp->showForm(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.switch_info.form.php', $ID);
 }
 

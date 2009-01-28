@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_snmp2 {
+class plugin_tracker_networking extends CommonDBTM {
 	
 	// fields of the result of a MySQL request
 	var $fields;
