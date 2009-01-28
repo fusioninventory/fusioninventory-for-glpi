@@ -220,21 +220,6 @@ function plugin_tracker_getSearchOption() {
 	
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][13]['name'] = $LANG['plugin_tracker']["snmp"][50];
 
-	
-	
-	//	$sopt[NETWORKING_TYPE][5154]['table']='glpi_plugin_tracker_networking';
-	//	$sopt[NETWORKING_TYPE][5154]['field']='FK_model_infos';
-/*
-	$sopt[NETWORKING_TYPE][5154]['table'] = 'glpi_plugin_tracker_networking';
-	$sopt[NETWORKING_TYPE][5154]['field'] = 'FK_networking';
-	$sopt[NETWORKING_TYPE][5154]['linkfield'] = 'ID';
-	$sopt[NETWORKING_TYPE][5154]['name'] = $LANG['plugin_tracker']["title"][0] . " - Modele";
-
-	$sopt[NETWORKING_TYPE][5155]['table'] = 'glpi_plugin_tracker_networking';
-	$sopt[NETWORKING_TYPE][5155]['field'] = 'FK_networking';
-	$sopt[NETWORKING_TYPE][5155]['linkfield'] = 'ID';
-	$sopt[NETWORKING_TYPE][5155]['name'] = $LANG['plugin_tracker']["title"][0] . " - Authentification SNMP";
-*/
 	return $sopt;
 }
 
