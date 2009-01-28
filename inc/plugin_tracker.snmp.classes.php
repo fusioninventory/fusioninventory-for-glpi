@@ -1289,59 +1289,66 @@ class plugin_tracker_snmp extends CommonDBTM
 						define($object,$oid);
 					}
 					ob_start();
-					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,700000,1);
+					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,1500000,1);
 					ob_end_clean();
 				}
 				else if ($version == "2c")
 				{
 					ob_start();
-					$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,700000,1);
+					$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,1500000,1);
 					ob_end_clean();
 				}
 				else if ($version == "3")
 				{
 					ob_start();
-					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,700000,1);
+					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1500000,1);
 					ob_end_clean();
 				}
-				$logs->write("tracker_snmp","SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue ,$IP);
-				if ((ereg ("Hex: ", $SNMPValue)) 
-					OR (ereg ("Gauge32: ", $SNMPValue)) 
-					OR (ereg ("STRING: ", $SNMPValue))
-					OR (ereg ("Timeticks: ", $SNMPValue))
-					OR (ereg ("INTEGER: ", $SNMPValue))
-					OR (ereg ("Counter32: ", $SNMPValue))
-					OR (ereg ("Hex-STRING: ", $SNMPValue))
-					OR (ereg ("Network Address: ", $SNMPValue))
-					OR (ereg ("IpAddress: ", $SNMPValue))
-					)
+				if($SNMPValue == false)
 				{
-					$ArraySNMPValues = explode(": ", $SNMPValue);
-					if (!isset($ArraySNMPValues[1]))
-						$ArraySNMPValues[1] = "";
-					if (count($ArraySNMPValues) > 2)
-					{
-						for ($i=2;$i < count($ArraySNMPValues);$i++)
-						{
-							$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
-						}			
-					}
-					$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
-					$ArraySNMP[$object] = $ArraySNMPValues[1];
-				}
-				else if (ereg ("No Such Instance currently exists", $SNMPValue))
-				{
-					$ArraySNMP[$object] = "[[empty]]";
-				}
-				else if (ereg ("No Such Object available on this agent at this OID", $SNMPValue))
-				{
-					$ArraySNMP[$object] = "[[empty]]";
+					$logs->write("tracker_snmp","SNMP QUERY : ".$object."(".$oid.") = Timeout" ,$IP);
 				}
 				else
 				{
-					$ArraySNMP[$object] = trim($SNMPValue, '"');
-				}			
-				
+					$logs->write("tracker_snmp","SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue ,$IP);
+					if ((ereg ("Hex: ", $SNMPValue)) 
+						OR (ereg ("Gauge32: ", $SNMPValue)) 
+						OR (ereg ("STRING: ", $SNMPValue))
+						OR (ereg ("Timeticks: ", $SNMPValue))
+						OR (ereg ("INTEGER: ", $SNMPValue))
+						OR (ereg ("Counter32: ", $SNMPValue))
+						OR (ereg ("Hex-STRING: ", $SNMPValue))
+						OR (ereg ("Network Address: ", $SNMPValue))
+						OR (ereg ("IpAddress: ", $SNMPValue))
+						OR (ereg ("Wrong Type (should be Gauge32 or Unsigned32): ", $SNMPValue))
+						)
+					{
+						$ArraySNMPValues = explode(": ", $SNMPValue);
+						if (!isset($ArraySNMPValues[1]))
+							$ArraySNMPValues[1] = "";
+						if (count($ArraySNMPValues) > 2)
+						{
+							for ($i=2;$i < count($ArraySNMPValues);$i++)
+							{
+								$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
+							}			
+						}
+						$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
+						$ArraySNMP[$object] = $ArraySNMPValues[1];
+					}
+					else if (ereg ("No Such Instance currently exists", $SNMPValue))
+					{
+						$ArraySNMP[$object] = "[[empty]]";
+					}
+					else if (ereg ("No Such Object available on this agent at this OID", $SNMPValue))
+					{
+						$ArraySNMP[$object] = "[[empty]]";
+					}
+					else
+					{
+						$ArraySNMP[$object] = trim($SNMPValue, '"');
+					}			
+				}
 			}
 		}
 		return $ArraySNMP;
@@ -1393,59 +1400,67 @@ class plugin_tracker_snmp extends CommonDBTM
 					}
 					define($object,$oid);
 				}
-				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,1000000,1);
+				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,1500000,1);
 			}
 			else if ($version == "2c")
 			{
-				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,1000000,1);
+				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,1500000,1);
 			}
 			else if ($version == "3")
 			{
-				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1000000,1);
+				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1500000,1);
 			}
 			if (empty($SNMPValue))
 			{
 				break;
 			}
-			foreach($SNMPValue as $oidwalk=>$value)
+			if($SNMPValue == false)
 			{
-				if ((ereg ("Hex: ", $value)) 
-					OR (ereg ("Gauge32: ", $value)) 
-					OR (ereg ("STRING: ", $value))
-					OR (ereg ("Timeticks: ", $value))
-					OR (ereg ("INTEGER: ", $value))
-					OR (ereg ("Counter32: ", $value))
-					OR (ereg ("Hex-STRING: ", $value))
-					OR (ereg ("Network Address: ", $value))
-					OR (ereg ("IpAddress: ", $value))
-					)
+				$logs->write("tracker_snmp","SNMP QUERY WALK : ".$object."(".$oid.") = Timeout" ,$IP);
+			}
+			else
+			{
+				foreach($SNMPValue as $oidwalk=>$value)
 				{
-					$ArraySNMPValues = explode(": ", $value);
-					if (!isset($ArraySNMPValues[1]))
-						$ArraySNMPValues[1] = "";
-					if (count($ArraySNMPValues) > 2)
+					if ((ereg ("Hex: ", $value)) 
+						OR (ereg ("Gauge32: ", $value)) 
+						OR (ereg ("STRING: ", $value))
+						OR (ereg ("Timeticks: ", $value))
+						OR (ereg ("INTEGER: ", $value))
+						OR (ereg ("Counter32: ", $value))
+						OR (ereg ("Hex-STRING: ", $value))
+						OR (ereg ("Network Address: ", $value))
+						OR (ereg ("IpAddress: ", $value))
+						OR (ereg ("Wrong Type (should be Gauge32 or Unsigned32): ", $value))
+						)
 					{
-						for ($i=2;$i < count($ArraySNMPValues);$i++)
+						$ArraySNMPValues = explode(": ", $value);
+						if (!isset($ArraySNMPValues[1]))
+							$ArraySNMPValues[1] = "";
+						if (count($ArraySNMPValues) > 2)
 						{
-							$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
-						}			
+							for ($i=2;$i < count($ArraySNMPValues);$i++)
+							{
+								$ArraySNMPValues[1] .= ": ".$ArraySNMPValues[$i];
+							}			
+						}
+						$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
+						$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
 					}
-					$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
-					$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
+					else if (ereg ("No Such Instance currently exists", $value))
+					{
+						$ArraySNMP[$oidwalk] = "[[empty]]";
+					}
+					else if (ereg ("No Such Object available on this agent at this OID", $value))
+					{
+						$ArraySNMP[$oidwalk] = "[[empty]]";
+					}				
+					else
+					{
+						$ArraySNMP[$oidwalk] = trim($value, '"');
+					}
+					$logs->write("tracker_snmp","SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value ,$IP);
 				}
-				else if (ereg ("No Such Instance currently exists", $value))
-				{
-					$ArraySNMP[$oidwalk] = "[[empty]]";
-				}
-				else if (ereg ("No Such Object available on this agent at this OID", $value))
-				{
-					$ArraySNMP[$oidwalk] = "[[empty]]";
-				}				
-				else
-				{
-					$ArraySNMP[$oidwalk] = trim($value, '"');
-				}
-				$logs->write("tracker_snmp","SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value ,$IP);
 			}
 		}
 		return $ArraySNMP;
