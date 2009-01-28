@@ -425,6 +425,7 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 /**
  * Update devices with values get by SNMP 
  *
+ * @param $IP : ip of the device
  * @param $ArraySNMP_Object_result : array with object name => value from SNMP query
  * @param $Array_Object_TypeNameConstant : array with object name => constant in relation with fields to update 
  * @param $IDNetworking : ID of device
@@ -630,6 +631,18 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
 
 
 
+/**
+ * Update Networking ports from devices SNMP queries 
+ *
+ * @param $ArraySNMPPort_Object_result : result of ports SNMP queries, array with object name => value from SNMP query
+ * @param $Array_Object_TypeNameConstant : array with object name => constant in relation with fields to update 
+ * @param $IDNetworking : ID of device
+ * @param $ArrayPort_LogicalNum_SNMPNum : array logical port number => SNMP port number (ifindex)
+ * @param $ArrayPortDB_Name_ID : Nothing (don't used)
+ * @param $FK_process : PID of the process (script run by console)
+ * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
+ *
+**/
 function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process=0,$type)
 {
 	global $DB,$LANG,$TRACKER_MAPPING;	
@@ -749,6 +762,23 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 
 
 
+/**
+ * Associate a MAC address of a device to switch port 
+ *
+ * @param $IP : ip of the device
+ * @param $ArrayPortsID : array with port name and port ID (from DB)
+ * @param $IDNetworking : ID of device
+ * @param $snmp_version : version of SNMP (1, 2c or 3)
+ * @param $snmp_auth : array with snmp authentification parameters
+ * @param $FK_process : PID of the process (script run by console)
+ * @param $Array_trunk_ifIndex : array with SNMP port ID => 1 (from CDP)
+ * @param $vlan : VLAN number
+ * @param $array_port_trunk : array with SNMP port ID => 1 (from trunk oid)
+ * @param $vlan_name : VLAN name
+ *
+ * @return $array_port_trunk : array with SNMP port ID => 1 (from trunk oid)
+ *
+**/
 function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$Array_trunk_ifIndex,$vlan="",$array_port_trunk=array(),$vlan_name="")
 {
 	global $DB;
