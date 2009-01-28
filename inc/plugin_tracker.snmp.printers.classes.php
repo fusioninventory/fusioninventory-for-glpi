@@ -259,78 +259,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		echo $LANG["cartridges"][39];
 		echo "</th>";
 		echo "</tr>";
-/*
-		$dates = plugin_tracker_date (9,$frequence);
-		$query = "SELECT * FROM glpi_plugin_tracker_printers_history
-		WHERE FK_printers=".$ID."
-			AND date IN ('".$dates[0]." 00:00:00'";
-		for ($i = 1;$i < count($dates); $i++)
-		{
-			$query .= ",'".$dates[$i]." 00:00:00'";
-		}
-		$query .= ") 
-		ORDER BY date DESC
-		LIMIT 0,9";
-		$dates_ex = $dates;
 
-		for ($i = 0;$i < count($dates);$i++)
-		{
-			$dates[$i] = $dates[$i]." 00:00:00";
-			$total_page_counter[$i] = 0;
-			$black_white_page_counter[$i] = 0;
-			$color_page_counter[$i] = 0;
-			$rectoverso_page_counter[$i] = 0;
-			$scanned_page_counter[$i] = 0;
-		}
-		$dates_flip = array_flip($dates);
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-				$dates[$dates_flip[$data['date']]] = $data['date'];
-				$total_page_counter[$dates_flip[$data['date']]] = $data['pages_total'];
-				$black_white_page_counter[$dates_flip[$data['date']]] = $data['pages_n_b'];
-				$color_page_counter[$dates_flip[$data['date']]] = $data['pages_color'];
-				$rectoverso_page_counter[$dates_flip[$data['date']]] = $data['pages_recto_verso'];
-				$scanned_page_counter[$dates_flip[$data['date']]] = $data['scanned'];
-			}
-		}
-		
-		// Put counter if there is a blank in a day
-		$last_total_page_counter = 0;
-		$last_black_white_page_counter = 0;
-		$last_color_page_counter = 0;
-		$last_rectoverso_page_counter = 0;
-		$last_scanned_page_counter = 0;
-		for ($i = 0;$i < count($dates);$i++)
-		{
-			if ($total_page_counter[$i] == "0"){
-				$total_page_counter[$i] = $last_total_page_counter;
-			}else{
-				$last_total_page_counter = $total_page_counter[$i];
-			}
-			if ($black_white_page_counter[$i] == "0"){
-				$black_white_page_counter[$i] = $last_black_white_page_counter;
-			}else{
-				$last_black_white_page_counter = $black_white_page_counter[$i];
-			}
-			if ($color_page_counter[$i] == "0"){
-				$color_page_counter[$i] = $last_color_page_counter;
-			}else{
-				$last_color_page_counter = $color_page_counter[$i];
-			}
-			if ($rectoverso_page_counter[$i] == "0"){
-				$rectoverso_page_counter[$i] = $last_rectoverso_page_counter;
-			}else{
-				$last_rectoverso_page_counter = $rectoverso_page_counter[$i];
-			}
-			if ($scanned_page_counter[$i] == "0"){
-				$scanned_page_counter[$i] = $last_scanned_page_counter;
-			}else{
-				$last_scanned_page_counter = $scanned_page_counter[$i];
-			}		
-		}
-		*/
 		if ((isset($mapping_name['pagecountertotalpages']))  AND ($mapping_name['pagecountertotalpages'] == "1"))
 		{
 			// Total page counter
