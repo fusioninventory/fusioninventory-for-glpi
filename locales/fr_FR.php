@@ -135,6 +135,7 @@ $LANG['plugin_tracker']["snmp"][48]="Nb d'octets envoyés";
 $LANG['plugin_tracker']["snmp"][49]="Nb d'erreurs en réception";
 $LANG['plugin_tracker']["snmp"][50]="Connexion";
 $LANG['plugin_tracker']["snmp"][51]="Duplex";
+$LANG['plugin_tracker']["snmp"][52]="Date dernier inventaire TRACKER";
 
 $LANG['plugin_tracker']["snmpauth"][1]="Communauté";
 $LANG['plugin_tracker']["snmpauth"][2]="Utilisateur";

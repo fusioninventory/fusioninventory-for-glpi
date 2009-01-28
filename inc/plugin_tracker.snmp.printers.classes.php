@@ -116,7 +116,13 @@ class plugin_tracker_printers extends CommonDBTM {
 		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
 		echo "</tr>";
-		
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center' colspan='2' height='30'>";
+		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][36]."</td>";
 		echo "<td align='center'>";

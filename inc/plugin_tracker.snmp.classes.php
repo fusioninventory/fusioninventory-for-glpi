@@ -237,6 +237,12 @@ abstract class plugin_tracker_snmp2 {
 		echo "</td>";
 		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center' colspan='2' height='30'>";
+		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
+		echo "</td>";
+		echo "</tr>";
+
 		// Get link field to detect if cpu, memory and uptime are get onthis network device
 		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($data["FK_model_infos"]);
 		$mapping_name=array();
@@ -287,7 +293,6 @@ abstract class plugin_tracker_snmp2 {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][12]."</td>";
 			echo "<td align='center'>";
-			//echo "<input  type='text' name='uptime' value='".$data["uptime"]."' size='20'>";
 			$sysUpTime = $data["uptime"];
 			if (ereg("days",$sysUpTime))
 			{
@@ -306,19 +311,9 @@ abstract class plugin_tracker_snmp2 {
 				$day = 0;
 			}
 	
-	//		$uptime = ceil($uptime / 100);
-	//		$day=86400;
-	//		$days=floor($uptime/$day);
 			echo "<b>$day</b> ".$LANG["stats"][31]." ";
-	//		$utdelta=$uptime-($days*$day);
-	//		$hour=3600;
-	//		$hours=floor($utdelta/$hour);
 			echo "<b>$hour</b> ".$LANG["job"][21]." ";
-	//		$utdelta-=$hours*$hour;
-	//		$minute=60;
-	//		$minutes=floor($utdelta/$minute);
 			echo "<b>$minute</b> ".$LANG["job"][22]." ";
-	//		$utdelta-=round($minutes*$minute,2);
 			echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";      
 	     
 			echo "</td>";

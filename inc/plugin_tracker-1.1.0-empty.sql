@@ -237,6 +237,7 @@ CREATE TABLE `glpi_plugin_tracker_networking` (
   `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `cpu` int(3) NOT NULL DEFAULT '0',
   `memory` int(8) NOT NULL DEFAULT '0',
+  `last_tracker_update` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_networking` (`FK_networking`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -302,6 +303,7 @@ CREATE TABLE `glpi_plugin_tracker_printers` (
   `FK_model_infos` int(8) NOT NULL DEFAULT '0',
   `FK_snmp_connection` int(8) NOT NULL DEFAULT '0',
   `frequence_days` int(5) NOT NULL DEFAULT '1',
+  `last_tracker_update` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `FK_printers` (`FK_printers`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
