@@ -37,7 +37,8 @@ if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_networking extends CommonDBTM {
+class plugin_tracker_networking extends CommonDBTM
+{
 	
 	// fields of the result of a MySQL request
 	var $fields;
@@ -377,18 +378,7 @@ function appear_array(id){
 		echo "<tr class='tab_bg_1'>";
 		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut" title="Sélectionnez les éléments à afficher par défaut" src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer" onclick="var w = window.open(\''.GLPI_ROOT.'/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\', \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
-/*		echo "<th>".$LANG['plugin_tracker']["snmp"][42]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][43]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][44]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][45]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][46]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][47]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][48]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][49]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["mapping"][115]."</th>";
-		echo "<th>".$LANG["networking"][17]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["snmp"][50]."</th>";
-		*/
+
 		$query_array = "SELECT * FROM glpi_display
 		WHERE type='5157'
 			AND FK_users='0'
@@ -612,7 +602,7 @@ function appear_array(id){
 				
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
-					<td colspan='12'>".tracker_snmp_showHistory($data["ID"])."</td>
+					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".tracker_snmp_showHistory($data["ID"])."</td>
 				</tr>
 				";
 			}
@@ -657,3 +647,5 @@ function appear_array(id){
 		}
 	}
 }
+
+?>
