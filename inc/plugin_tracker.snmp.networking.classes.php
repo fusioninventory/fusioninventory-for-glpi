@@ -280,9 +280,7 @@ class plugin_tracker_networking extends CommonDBTM
 			echo "<td align='center'>";
 			$sysUpTime = $data["uptime"];
 			if (ereg("days",$sysUpTime))
-			{
-					sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
-			}
+				sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
 			else if($sysUpTime == "0")
 			{
 				$day = 0;
@@ -437,13 +435,10 @@ function appear_array(id){
 			{
 				$background_img = "";
 				if (($data["trunk"] == "1") AND (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"])))
-				{
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/port_trunk.png\"); '";
-				}
 				else if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
-				{
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/connected_trunk.png\"); '";
-				}
+
 				echo "<tr class='tab_bg_1' height='40'".$background_img.">";
 				echo "<td align='center' id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT."/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"]."\");close_array(".$data["ID"].");' /></td>";
 				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
@@ -465,17 +460,11 @@ function appear_array(id){
 						case 4 :
 							echo "<td align='center'>";			
 							if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifinternalstatus"]))
-							{
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-							}
 							else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifinternalstatus"]))
-							{
 								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-							}
 							else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifinternalstatus"]))
-							{
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
-							}
 			
 							echo "</td>";
 							break;
@@ -485,20 +474,15 @@ function appear_array(id){
 						case 6 :
 							echo "<td align='center'>";
 							if ($data["ifinoctets"] == "0")
-							{
 								echo "-";
-							}
 							else
-							{
 								echo ByteSize($data["ifinoctets"],1000)."o";
-							}
+
 							echo "</td>";
 							break;
 						case 7 :
 							if ($data["ifinerrors"] == "0")
-							{
 								echo "<td align='center'>-";
-							}
 							else
 							{		
 								echo "<td align='center' class='tab_bg_1_2'>";
@@ -509,20 +493,15 @@ function appear_array(id){
 						case 8 : 
 							echo "<td align='center'>";
 							if ($data["ifinoctets"] == "0")
-							{
 								echo "-";
-							}
 							else
-							{		
 								echo ByteSize($data["ifoutoctets"],1000)."o";
-							}
+
 							echo "</td>";
 							break;
 						case 9 : 
 							if ($data["ifouterrors"] == "0")
-							{
 								echo "<td align='center'>-";
-							}
 							else
 							{	
 								echo "<td align='center' class='tab_bg_1_2'>";
@@ -560,34 +539,23 @@ function appear_array(id){
 								$PID = $processes->lastProcess(NETWORKING_TYPE);
 								$unknownMac = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
 								if (empty($unknownMac))
-								{
 									echo "<td align='center'></td>";
-								}
 								else
-								{
 									echo "<td align='center' class='tab_bg_1_2'>".$unknownMac."</td>";
-								}
+
 							}
 							break;
 						case 13 :
 							// ** Connection status
 							echo "<td align='center'>";
 							if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
-							{
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-							}
 							else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifstatus"]))
-							{
 								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-							}
 							else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifstatus"]))
-							{
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
-							}
 							else if (ereg("dormant",$data["ifstatus"]) OR ereg("5",$data["ifstatus"]))
-							{
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/orangebutton.png'/>";
-							}
 							
 							echo "</td>";
 							echo "</th>";

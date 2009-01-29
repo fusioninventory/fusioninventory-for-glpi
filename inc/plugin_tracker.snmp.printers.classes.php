@@ -679,7 +679,7 @@ class plugin_tracker_printers extends CommonDBTM {
 	{
 		global $DB;	
 		
-		$dates = plugin_tracker_date (9,$frequence,$date_end);
+		$dates = plugin_tracker_date(9,$frequence,$date_end);
 		$query = "SELECT * FROM glpi_plugin_tracker_printers_history
 		WHERE FK_printers=".$id."
 			AND date IN ('".$dates[0]." 00:00:00'";

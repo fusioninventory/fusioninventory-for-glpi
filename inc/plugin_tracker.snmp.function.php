@@ -251,7 +251,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 	
 				// ** Update ports fields of switchs
 				if (!empty($ArrayPort_Object_oid))
-					UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process,$type);
+					UpdateGLPINetworkingPorts($ifIP,$ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process,$type);
 				$Array_trunk_ifIndex = array();
 
 				if ($type == NETWORKING_TYPE)	
@@ -634,6 +634,7 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
 /**
  * Update Networking ports from devices SNMP queries 
  *
+ * @param $IP : ip of the device
  * @param $ArraySNMPPort_Object_result : result of ports SNMP queries, array with object name => value from SNMP query
  * @param $Array_Object_TypeNameConstant : array with object name => constant in relation with fields to update 
  * @param $IDNetworking : ID of device
@@ -643,7 +644,7 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
  * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
  *
 **/
-function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process=0,$type)
+function UpdateGLPINetworkingPorts($IP,$ArraySNMPPort_Object_result,$Array_Object_TypeNameConstant,$IDNetworking,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID,$FK_process=0,$type)
 {
 	global $DB,$LANG,$TRACKER_MAPPING;	
 	
@@ -651,6 +652,9 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 	$ArrayPortListTracker = array();
 	
 	$snmp_queries = new plugin_tracker_snmp;
+	$logs = new plugin_tracker_logs;
+
+	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$IP,1);
 
 	// Traitement of SNMP results to dispatch by ports
 	foreach ($ArraySNMPPort_Object_result as $object=>$SNMPValue)
@@ -720,19 +724,16 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 					WHERE ".$ID_field."='".$data["ID"]."'";
 					$result_select=$DB->query($query_select);
 					if ($DB->numrows($result_select) != "0")
-					{
 						$SNMPValue_old = $DB->result($result_select, 0, $TRACKER_MAPPING[$object_type][$object_name]['field']);
-					}
 					else
-					{
 						$SNMPValue_old = "";
-					}					
+			
 					// Update
 					if ($SNMPValue != '')
 					{
-						if ($SNMPValue == "[[empty]]"){
+						if ($SNMPValue == "[[empty]]")
 							$SNMPValue = "";
-						}
+
 						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 						SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
 						WHERE ".$ID_field."='".$data["ID"]."'";
@@ -749,9 +750,8 @@ function UpdateGLPINetworkingPorts($ArraySNMPPort_Object_result,$Array_Object_Ty
 						}
 						// Add log if snmp value change			
 						if (($object_name != 'ifinoctets') AND ($object_name != 'ifoutoctets') AND ($SNMPValue_old != $SNMPValue ))
-						{
 							tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$object_type][$object_name]['name'],$SNMPValue_old,$SNMPValue,$FK_process);
-						}
+
 					}
 				}		
 				
