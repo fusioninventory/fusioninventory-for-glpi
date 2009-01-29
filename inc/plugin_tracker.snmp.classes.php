@@ -73,17 +73,15 @@ class plugin_tracker_snmp extends CommonDBTM
 					if (ereg("::",$object))
 					{
 						if (defined(str_replace("::","",$object)))
-						{
 							runkit_constant_remove(str_replace("::","",$object));
-						}
+
 						define(str_replace("::","",$object),$oid);
 					}
 					else
 					{
 						if (defined($object))
-						{
 							runkit_constant_remove($object);
-						}
+
 						define($object,$oid);
 					}
 					ob_start();
@@ -103,9 +101,7 @@ class plugin_tracker_snmp extends CommonDBTM
 					ob_end_clean();
 				}
 				if($SNMPValue == false)
-				{
 					$logs->write("tracker_snmp","SNMP QUERY : ".$object."(".$oid.") = Timeout" ,$IP);
-				}
 				else
 				{
 					$logs->write("tracker_snmp","SNMP QUERY : ".$object."(".$oid.") = ".$SNMPValue ,$IP);
@@ -135,17 +131,11 @@ class plugin_tracker_snmp extends CommonDBTM
 						$ArraySNMP[$object] = $ArraySNMPValues[1];
 					}
 					else if (ereg ("No Such Instance currently exists", $SNMPValue))
-					{
 						$ArraySNMP[$object] = "[[empty]]";
-					}
 					else if (ereg ("No Such Object available on this agent at this OID", $SNMPValue))
-					{
 						$ArraySNMP[$object] = "[[empty]]";
-					}
 					else
-					{
 						$ArraySNMP[$object] = trim($SNMPValue, '"');
-					}			
 				}
 			}
 		}
@@ -185,37 +175,29 @@ class plugin_tracker_snmp extends CommonDBTM
 				if (ereg("::",$object))
 				{
 					if (defined(str_replace("::","",$object)))
-					{
 						runkit_constant_remove(str_replace("::","",$object));
-					}
+
 					define(str_replace("::","",$object),$oid);
 				}
 				else
 				{
 					if (defined($object))
-					{
 						runkit_constant_remove($object);
-					}
+
 					define($object,$oid);
 				}
 				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,1500000,1);
 			}
 			else if ($version == "2c")
-			{
 				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,1500000,1);
-			}
 			else if ($version == "3")
-			{
 				$SNMPValue = snmp3_real_walk($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1500000,1);
-			}
+
 			if (empty($SNMPValue))
-			{
 				break;
-			}
+
 			if($SNMPValue == false)
-			{
 				$logs->write("tracker_snmp","SNMP QUERY WALK : ".$object."(".$oid.") = Timeout" ,$IP);
-			}
 			else
 			{
 				foreach($SNMPValue as $oidwalk=>$value)
@@ -246,17 +228,12 @@ class plugin_tracker_snmp extends CommonDBTM
 						$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
 					}
 					else if (ereg ("No Such Instance currently exists", $value))
-					{
 						$ArraySNMP[$oidwalk] = "[[empty]]";
-					}
 					else if (ereg ("No Such Object available on this agent at this OID", $value))
-					{
 						$ArraySNMP[$oidwalk] = "[[empty]]";
-					}				
 					else
-					{
 						$ArraySNMP[$oidwalk] = trim($value, '"');
-					}
+
 					$logs->write("tracker_snmp","SNMP QUERY WALK : ".$object."(".$oid.") = ".$oidwalk."=>".$value ,$IP);
 				}
 			}
@@ -347,20 +324,15 @@ class plugin_tracker_snmp extends CommonDBTM
 		$PortsID = array();
 		
 		$query = "SELECT ID,name
-			
 		FROM glpi_networking_ports
-		
 		WHERE on_device='".$IDNetworking."'
-		
 		ORDER BY logical_number ";
 
 		if ( $result=$DB->query($query) )
 		{
 			while ( $data=$DB->fetch_array($result) )
 			{
-
 				$PortsID[$data["name"]] = $data["ID"];
-			
 			}
 		}
 		return $PortsID;
@@ -411,9 +383,8 @@ class plugin_tracker_snmp extends CommonDBTM
 					for ($i=0;$i < count($ArrayPortsSNMPNumber); $i++)
 					{
 						if (isset($ArrayPortsSNMPNumber[$i]))
-						{
 							$oidList[$data["objectname"].".".$ArrayPortsSNMPNumber[$i]] = $data["oidname"].".".$ArrayPortsSNMPNumber[$i];
-						}
+
 					}
 				}
 			}
@@ -470,9 +441,8 @@ class plugin_tracker_snmp extends CommonDBTM
 			for($num = 0;$num < count($macexplode);$num++)
 			{
 				if ($num > 0)
-				{
 					$assembledmac .= ":";
-				}			
+	
 				$assembledmac .= $macexplode[$num];
 			}
 			$macadresse = $assembledmac;
@@ -484,9 +454,8 @@ class plugin_tracker_snmp extends CommonDBTM
 		for($num = 0;$num < count($macexplode);$num++)
 		{
 			if ($num > 0)
-			{
 				$assembledmac .= ":";
-			}			
+		
 			switch (strlen($macexplode[$num])) {
 			case 0:
 			    $assembledmac .= "00";
@@ -678,9 +647,8 @@ class plugin_tracker_snmp extends CommonDBTM
 					define($object,$oid);
 				}
 				else
-				{
 					define($object,$oid);
-				}
+
 			}
 		}
 	}
@@ -718,9 +686,8 @@ class plugin_tracker_snmp extends CommonDBTM
 		if ( ($result = $DB->query($query)) )
 		{
 			if ( $DB->numrows($result) != 0 )
-			{
 				return $DB->result($result, 0, "FK_model_infos");
-			}
+
 		}	
 	
 	}
