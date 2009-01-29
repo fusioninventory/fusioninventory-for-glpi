@@ -76,6 +76,20 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_version` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_agents`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents` (
+  `ID` int(8) NOT NULL AUTO_INCREMENT,
+  `ifaddr_start` varchar(255) DEFAULT NULL,
+  `ifaddr_end` varchar(255) DEFAULT NULL,
+  `last_agent_update` datetime DEFAULT NULL,
+  `tracker_agent_version` varchar(255) DEFAULT NULL,
+  `lock` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_connection_history`;
 
 CREATE TABLE `glpi_plugin_tracker_connection_history` (
