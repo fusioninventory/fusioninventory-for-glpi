@@ -33,9 +33,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
+
 
 function plugin_tracker_discovery_startmenu($target)
 {
@@ -44,13 +44,15 @@ function plugin_tracker_discovery_startmenu($target)
 	$conf = plugin_tracker_discovery_getConf();
 	$ifaddr_start = $conf['ifaddr_start'];
 	$ifaddr_end = $conf['ifaddr_end'];
-	if(!$ifaddr_start) $ifaddr_start="0.0.0.0";
+	if(!$ifaddr_start)
+		$ifaddr_start="0.0.0.0";
 	$explode = explode(".",$ifaddr_start);
 	$ifaddr_start_1 = $explode[0];
 	$ifaddr_start_2 = $explode[1];
 	$ifaddr_start_3 = $explode[2];
 	$ifaddr_start_4 = $explode[3];
-	if(!$ifaddr_end) $ifaddr_end="0.0.0.0";
+	if(!$ifaddr_end)
+		$ifaddr_end="0.0.0.0";
 	$explode = explode(".",$ifaddr_end);
 	$ifaddr_end_1 = $explode[0];
 	$ifaddr_end_2 = $explode[1];
@@ -148,11 +150,10 @@ function plugin_tracker_discovery_scan($Array_IP,$PID)
 	$while = 'while (';
 	for ($i = 1;$i <= $nb_process_discovery;$i++)
 	{
-		if ($i == $nb_process_discovery){
+		if ($i == $nb_process_discovery)
 			$while .= '$t['.$i.']->isActive()';
-		}else{
+		else
 			$while .= '$t['.$i.']->isActive() || ';
-		}
 	}
 	
 	$while .= ') {';
@@ -182,51 +183,13 @@ function plugin_tracker_discovery_scan($Array_IP,$PID)
 			$lance_eval = 1;
 		}
 
-/*	
-		// Test if port 161 is open
-		foreach ($snmp_auth as $num=>$field)
-		{
-			echo "IP :".$ip1.".".$ip2.".".$ip3.".".$ip4."\n";
-			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
-			if ($Array_sysdescr["sysDescr"] != ""){
-				$Array_Name = $plugin_tracker_snmp->SNMPQuery(array("sysName"=>".1.3.6.1.2.1.1.5.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
-				//Port is open, test with oids to determine the device type
-				$device_type = 0;
-				foreach ($TRACKER_MAPPING_DISCOVERY['discovery'] as $num_const=>$value_const)
-				{
-					$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
-					$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
-					if ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != ""){
-						echo "TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."<br/>";
-						$device_type = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
-					}
-				}
-				$query_ins = "INSERT INTO glpi_plugin_tracker_discover
-				(date,ifaddr,name,descr,type,FK_snmp_connection)
-				VALUES ('".strftime("%Y-%m-%d %H:%M:%S", time())."', 
-				'".$ip1.".".$ip2.".".$ip3.".".$ip4."',
-				'".$Array_Name["sysName"]."',
-				'".$Array_sysdescr["sysDescr"]."', 
-				'".$device_type."',
-				'".$snmp_auth[$num]["ID"]."' ) ";
-				$DB->query($query_ins);				
-				
-				break;
-			}	
-		}
-*/
-
-
-
 		// Increment for next IP
 		if (($ip1 == $Array_IP["ip21"]) 
 			AND ($ip2 == $Array_IP["ip22"])
 			AND ($ip3 == $Array_IP["ip23"]))
 		{
 			if ($ip4 == $Array_IP["ip24"])
-			{
 				$i = 1;
-			}
 		}
 		else if (($ip1 == $Array_IP["ip21"]) 
 			AND ($ip2 == $Array_IP["ip22"]))
@@ -315,7 +278,6 @@ function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
 
 	foreach ($snmp_auth as $num=>$field)
 	{
-//		echo "IP :".$ip1.".".$ip2.".".$ip3.".".$ip4."\n";
 		$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 		if ($Array_sysdescr["sysDescr"] != ""){
 			$Array_Name = $plugin_tracker_snmp->SNMPQuery(array("sysName"=>".1.3.6.1.2.1.1.5.0"),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
@@ -327,11 +289,9 @@ function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
 				$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 				if (($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != "")
 					AND ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != "[[empty]]")
-					AND ($device_type == 0)
-					){
-					//echo "\n TYPE :".$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type']."\n";
+					AND ($device_type == 0))
+				{
 					$device_type = $TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['type'];
-					
 				}
 			}
 			$query_ins = "INSERT INTO glpi_plugin_tracker_discover
@@ -505,9 +465,7 @@ function plugin_tracker_discovery_display_array($target)
 				if ( $result_serial = $DB->query($query_serial) )
 				{
 					if ( $DB->numrows($result_serial) != 0 )
-					{
 						$affiche = 0;
-					}
 				}
 			}
 			if ($affiche == "1")
@@ -702,9 +660,8 @@ function plugin_tracker_discovery_import($array_import)
 		}
 	}
 	if ($Import != "0")
-	{
 		addMessageAfterRedirect($LANG['plugin_tracker']["discovery"][5]." : ".$Import );
-	}
+
 }
 
 

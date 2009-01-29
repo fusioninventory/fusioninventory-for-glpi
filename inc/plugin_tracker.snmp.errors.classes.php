@@ -33,15 +33,15 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
 
 
+class plugin_tracker_errors extends CommonDBTM
+{
 
-class plugin_tracker_errors extends CommonDBTM {
-
-	function plugin_tracker_errors() {
+	function plugin_tracker_errors()
+	{
 		$this->table="glpi_plugin_tracker_errors";
 		$this->type=PLUGIN_TRACKER_ERROR_TYPE;
 		$this->entity_assign = true;
@@ -79,11 +79,12 @@ class plugin_tracker_errors extends CommonDBTM {
 	 * 
 	 * => Puts ID and description into $this->fields
 	 */
-	function getIDandNewDescrFromDevice($device_type, $identifiant, $error_type, $new_error) {
+	function getIDandNewDescrFromDevice($device_type, $identifiant, $error_type, $new_error)
+	{
 			
 		global $LANG;
 
-		if ( !($this->getIDandDescrFromDevice($device_type, $identifiant)) )
+		if (!($this->getIDandDescrFromDevice($device_type, $identifiant)))
 				return false;
 
 		// string to be checked if already exists into description
@@ -99,8 +100,10 @@ class plugin_tracker_errors extends CommonDBTM {
 		$i = 0;
 		$find = false;
 		
-		while ( ($i<$num) && ($find == false) ) {
-			if ( strstr($description["$i"], $string) ) {
+		while (($i<$num) && ($find == false))
+		{
+			if (strstr($description["$i"], $string))
+			{
 				$description["$i"] = " ".$new_error;
 				$find = true;
 			}

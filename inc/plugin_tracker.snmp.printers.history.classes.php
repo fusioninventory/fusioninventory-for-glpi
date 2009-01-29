@@ -79,12 +79,10 @@ class plugin_tracker_printers_history extends CommonDBTM {
 		return false;
 	}
 	
-/*	function cleanHistory($date, $dept) {
-		
-	}*/
+
 	
-	function stats($ID) {
-		
+	function stats($ID)
+	{
 		global $DB;
 		
 		$query = "SELECT MIN(date) AS min_date, MIN(pages) AS min_pages, ".
@@ -92,8 +90,10 @@ class plugin_tracker_printers_history extends CommonDBTM {
 				 "FROM ".$this->table." ".
 				 "WHERE FK_printers = '".$ID."';";
 
-		if ( $result = $DB->query($query) ) {
-			if ( $fields = $DB->fetch_assoc($result) ) {
+		if ( $result = $DB->query($query))
+		{
+			if ($fields = $DB->fetch_assoc($result))
+			{
 				$output['num_days'] = ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
 				$output['num_pages'] = $fields['max_pages'] - $fields['min_pages'];
 				$output['pages_per_day'] = round($output['num_pages'] / $output['num_days']);
@@ -103,9 +103,9 @@ class plugin_tracker_printers_history extends CommonDBTM {
 		return false;
 	}
 	
-	function showForm($target, $ID) {
-		
-		GLOBAL $LANG;
+	function showForm($target, $ID)
+	{
+		global $LANG;
 		
 		if ( !plugin_tracker_haveRight("snmp_printers","r") )
 			return false;
@@ -200,8 +200,9 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 
 		$query = "SELECT counter FROM ".$this->table." ".
 				 "WHERE FK_printers = '".$ID."';";
-		if ( $result = $DB->query($query) ) {
-			if ( $this->fields = $DB->fetch_row($result) )
+		if ($result = $DB->query($query))
+		{
+			if ($this->fields = $DB->fetch_row($result))
 				return $this->fields['0'];
 			else
 				return -1;
@@ -215,12 +216,15 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 	 * @param $ID : ID of the printer (equiv to FK_printers into table)
 	 * @return true if get an entry, otherwise false
 	 */
-	function getDataFromPrinterId($ID) {
+	function getDataFromPrinterId($ID)
+	{
 		global $DB;
 		$query = "SELECT ID, counter FROM ".$this->table." ".
 				 "WHERE FK_printers = '".$ID."';";
-		if ( $result = $DB->query($query) ){
-			if ( $DB->numrows($result) == 1 ) {
+		if ($result = $DB->query($query))
+		{
+			if ($DB->numrows($result) == 1)
+			{
 				$this->fields = $DB->fetch_assoc($result);
 				return true;
 			}
@@ -232,14 +236,17 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 	 * set cron to 1 for all printers -- not used
 	 *
 	 */
-	function setAll() {
+	function setAll()
+	{
 		global $DB;
 		$query= "SELECT ID ".
 				"FROM glpi_printers ".
 				"WHERE 1;";
-		if ( $result=$DB->query($query) ) {
+		if ($result=$DB->query($query))
+		{
 			$end = $DB->numrows($result);
-			if ( ($end = $DB->numrows($result)) > 0 ) {
+			if (($end = $DB->numrows($result)) > 0)
+			{
 				$fields = $DB->fetch_row($result);
 				$input['counter'] = 1;
 				for ($i=0; $i<$end; $i++) {
@@ -255,7 +262,8 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 	 * set cron to 0 for all printers -- not used
 	 *
 	 */
-	function unsetAll() {
+	function unsetAll()
+	{
 		global $DB;
 		$query = "UPDATE ".$this->table." ".
 				 "SET counter='0' ".
@@ -270,7 +278,8 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 	 * - $datas['number'] for the number of activated printers
 	 * - $datas['$i'] : contains the activated printers ID
 	 */
-	function getAllActivated() {
+	function getAllActivated()
+	{
 
 		global $DB;
 		
@@ -280,14 +289,14 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 		$datas=array();
 		
 		// if statement is not active by default, get exceptions
-		if ( !$statement ) {
-			
+		if ( !$statement )
+		{
 			$query = "SELECT FK_printers FROM ".$this->table." ".
 					 "WHERE counter = '1';";
 		}
 		// if statement is active by default, get all without the exceptions
-		else {
-			
+		else
+		{
 			$query= "SELECT glpi_printers.ID ".
 					"FROM glpi_printers ".
 					"LEFT JOIN ".$this->table." ".
@@ -327,7 +336,8 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 		}
 	}
 	
-	function showForm($target,$ID) {
+	function showForm($target,$ID)
+	{
 		global $LANG;
 		
 		if ( plugin_tracker_haveRight("snmp_printers","w") ) {

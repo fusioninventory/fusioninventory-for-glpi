@@ -34,9 +34,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
+
 
 function plugin_tracker_snmp_auth_dropdown($selected="")
 {
@@ -47,13 +47,9 @@ function plugin_tracker_snmp_auth_dropdown($selected="")
 	$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
 	$result_conf=$DB->query($query_conf);
 	if ($DB->result($result_conf,0,"authsnmp") == "file")
-	{
 		echo $plugin_tracker_snmp_auth->selectbox($selected);
-	}
 	else  if ($DB->result($result_conf,0,"authsnmp") == "DB")
-	{
 		dropdownValue("glpi_plugin_tracker_snmp_connection","FK_snmp_connection",$selected,0);
-	}
 
 }
 

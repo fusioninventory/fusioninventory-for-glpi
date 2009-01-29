@@ -105,64 +105,48 @@ class Threads extends CommonDBTM
 			echo "<th>".$LANG['plugin_tracker']["processes"][10]."</th>";		
 			echo "</th></tr>\n";
 		
-// VERIFIER
-
 			if ($DB->numrows($result)) {
 				while ($thread = $DB->fetch_array($result)){
-					//if ($config->fields["display_empty"] || $thread["status"] != STATE_FINISHED || (!$config->fields["display_empty"] && $thread["total_machines"] > 0 && $thread["status"] == STATE_FINISHED))
-					//{
-						echo "<tr class='tab_bg_1'>"; 
-						
-						//if ($canedit){
-						//	echo "<td width='10'>";
-						//	$sel="";
-						//	if (isset($_GET["select"])&&$_GET["select"]=="all") $sel="checked";
-						//	echo "<input type='checkbox' name='item[".$thread["process_id"]."]' value='1' $sel>";
-						//	echo "</td>";
-						//}
-						//else	 echo "<td width='10'>&nbsp;</td>";
-						echo "<td width='10'>&nbsp;</td>";
+
+					echo "<tr class='tab_bg_1'>"; 
+					echo "<td width='10'>&nbsp;</td>";
+					echo "<td align='center'><!--<a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">-->".$thread["process_id"]."<!--</a>--></td>";
+					echo "<td align='center'>";
 					
-						echo "<td align='center'><!--<a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">-->".$thread["process_id"]."<!--</a>--></td>";
-						echo "<td align='center'>";
+					switch($Threads->getProcessStatus($thread["process_id"]))
+					{
+						case 3 :
+							echo "<img src='../pics/export.png'>";
+							break;
+						case 2 :
+							echo "<img src='../pics/wait.png'>";
+							break;
+						case 1 :
+							echo "<img src='../pics/ok2.png'>";
+							break;
+					}
 						
-						switch($Threads->getProcessStatus($thread["process_id"]))
-						{
-							case 3 :
-								echo "<img src='../pics/export.png'>";
-								break;
-							case 2 :
-								echo "<img src='../pics/wait.png'>";
-								break;
-							case 1 :
-								echo "<img src='../pics/ok2.png'>";
-								break;
-						}
-							
-						echo "</td>";
-						echo "<td align='center'>".$thread["threads_number"]."</td>";
-						echo "<td align='center'>".convDateTime($thread["starting_date"])."</td>";
-						echo "<td align='center'>".convDateTime($thread["ending_date"])."</td>";
-						echo "<td align='center'>".$thread["network_queries"]."</td>";
-						echo "<td align='center'>".$thread["ports_queries"]."</td>";
-						echo "<td align='center'>".$thread["printer_queries"]."</td>";
-						echo "<td align='center'>".$thread["discovery_queries"]."</td>";
-						echo "<td align='center'>".$thread["error_msg"]."</td>";
-						
-						echo "<td align='center'>";
-						if ($thread["status"] == 3)
-							echo timestampToString($thread["duree"]);
-						else
-							echo "-----";	
-						
-						echo "</td>";
-						
-						echo "</tr>\n";
-					//}	
+					echo "</td>";
+					echo "<td align='center'>".$thread["threads_number"]."</td>";
+					echo "<td align='center'>".convDateTime($thread["starting_date"])."</td>";
+					echo "<td align='center'>".convDateTime($thread["ending_date"])."</td>";
+					echo "<td align='center'>".$thread["network_queries"]."</td>";
+					echo "<td align='center'>".$thread["ports_queries"]."</td>";
+					echo "<td align='center'>".$thread["printer_queries"]."</td>";
+					echo "<td align='center'>".$thread["discovery_queries"]."</td>";
+					echo "<td align='center'>".$thread["error_msg"]."</td>";
+					
+					echo "<td align='center'>";
+					if ($thread["status"] == 3)
+						echo timestampToString($thread["duree"]);
+					else
+						echo "-----";	
+					
+					echo "</td>";
+					echo "</tr>\n";
 				}
 			}
 
-// FIN DES CHOSES A VERIFIER
 		}	
 		else if ($array_name == "unknow_mac")
 		{
@@ -207,14 +191,14 @@ class Threads extends CommonDBTM
 					echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
 				}
 				else
-				{
 					echo "<td align='center'></td>";
-				}
+
 				echo "<td align='center'>".$thread_errors["snmp_errors"]."</td>";
 				echo "<td align='center'>".$thread_errors["date"]."</td>";
 				echo "</tr>";
 			}		
-		}else if ($array_name == "connection")
+		}
+		else if ($array_name == "connection")
 		{
 			$Netwire = new Netwire;
 			$netport=new Netport;			
@@ -312,7 +296,6 @@ class Threads extends CommonDBTM
 			}
 		}
 		echo "</table>";
-//		echo "</form>";
 	}
 	
 	
@@ -486,7 +469,7 @@ class Threads extends CommonDBTM
 	
 	
 	
-		var $pref ; // process reference
+	var $pref ; // process reference
 	var $pipes; // stdio
 	var $buffer; // output buffer
 	
@@ -536,9 +519,7 @@ class Threads extends CommonDBTM
 		}
 		return $buffer;
 	}
-	
-	
-	
+
 	
 }
 

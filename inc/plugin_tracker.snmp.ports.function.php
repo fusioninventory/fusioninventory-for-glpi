@@ -31,9 +31,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	define('GLPI_ROOT', '../../..');
-}
+
 
 function getUniqueObjectfieldsByportID($id)
 {

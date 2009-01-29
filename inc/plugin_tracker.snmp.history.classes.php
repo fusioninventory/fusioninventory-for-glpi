@@ -33,12 +33,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
-// Modification by David
-// Remplacement de plugin_tracker_snmp en plugin_tracker_snmp2
-class plugin_tracker_SNMP_history extends CommonDBTM {
+
+
+
+class plugin_tracker_SNMP_history extends CommonDBTM
+{
 
 	/**
 	 * Insert port history with connection and disconnection
@@ -72,9 +73,7 @@ class plugin_tracker_SNMP_history extends CommonDBTM {
 			VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."','".$array["old_value"]."','".$array["new_value"]."','".date("Y-m-d H:i:s")."','".$FK_process."')";
 	
 		}
-		
 		$DB->query($query);
-		
 		return mysql_insert_id();
 	}
 
@@ -108,12 +107,8 @@ class plugin_tracker_SNMP_history extends CommonDBTM {
 			VALUES('".$array["FK_ports"]."','".$array["field"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."')";
 	
 		}
-	
 		$DB->query($query);
-		
 		return mysql_insert_id();
-	
 	}
-
 }
 ?>

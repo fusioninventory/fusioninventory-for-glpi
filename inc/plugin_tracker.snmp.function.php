@@ -466,9 +466,8 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
 		
 
 		if ($TRACKER_MAPPING[$object_type][$object_name]['dropdown'] != "")
-		{
 			$SNMPValue = externalImportDropdown($TRACKER_MAPPING[$object_type][$object_name]['dropdown'],$SNMPValue,0);
-		}
+
 		// Update fields
 		
 		switch ($type)
@@ -493,16 +492,11 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
 		$logs->write("tracker_fullsync","Type(".$object_type.") : ".$object_name." = ".$SNMPValue,$IP,1);
 		if (($object_name == "ram") OR ($object_name == "memory"))
 		{
-			if ((ereg("KBytes", $SNMPValue))
-				OR (ereg("kB", $SNMPValue))
-				)
-			{
+			if ((ereg("KBytes", $SNMPValue))	OR (ereg("kB", $SNMPValue)))
 				$SNMPValue = ceil($SNMPValue / 1024) ;
-			}
 			else
-			{
 				$SNMPValue = ceil(($SNMPValue / 1024) / 1024) ;
-			}
+
 			if ($object_type == PRINTER_TYPE)
 				$SNMPValue .= " MB";
 		}
@@ -512,13 +506,9 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
 			$object_name_clean = str_replace("MAX", "", $object_name);
 			$object_name_clean = str_replace("REMAIN", "", $object_name_clean);
 			if (ereg("MAX",$object_name))
-			{
 				$printer_cartridges_max_remain[$object_name_clean]["MAX"] = $SNMPValue;
-			}
 			if (ereg("REMAIN",$object_name))
-			{
 				$printer_cartridges_max_remain[$object_name_clean]["REMAIN"] = $SNMPValue;
-			}
 			if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"])) AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"])))
 			{
 				$pourcentage = ceil((100 * $printer_cartridges_max_remain[$object_name_clean]["REMAIN"]) / $printer_cartridges_max_remain[$object_name_clean]["MAX"]);
@@ -907,15 +897,12 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 								if ($vlan != "")
 								{
 									if (isset($array_port_trunk[$ArrayPortsID[$ifName]]) && $array_port_trunk[$ArrayPortsID[$ifName]] == "1")
-									{
 										$traitement = 0;
-									}
+
 								}
 								
 								if (!isset($ArrayPortsID[$ifName]))
-								{
 									$traitement = 0;
-								}
 	
 								if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 								{
@@ -930,10 +917,8 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 								{
 									// Mac address unknow
 									if ($FK_process != "0")
-									{
-										//$processes->addProcessValues($FK_process,"unknow_mac",$ArrayPortsID[$ifName],$MacAddress);
 										$processes->unknownMAC($FK_process,$ArrayPortsID[$ifName],$MacAddress);
-									}
+
 								}
 							}
 						}
@@ -1023,9 +1008,8 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		foreach ($Array_trunk_ifDescr_result AS $oid=>$ifdescr)
 		{
 			if (ereg("9.9.23.1.2.1.1.7.".$ifIndex.".".$end_Number, $oid))
-			{
 				$ifdescr_trunk = $ifdescr;
-			}		
+	
 		}
 		
 		$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $ifdescr_trunk);
@@ -1129,9 +1113,8 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 						unset ($ifaddr[$ifaddr_snmp]);
 				}
 				else
-				{
 					$ifaddr_add[$ifaddr_snmp] = $ID_Device;
-				}
+
 			}
 		}
 	}
