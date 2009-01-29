@@ -33,10 +33,8 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
-
 
 
 class plugin_tracker_mib_networking extends CommonDBTM
@@ -45,17 +43,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	{
 		$this->table="glpi_plugin_tracker_mib_networking";
 	}
-	/*
-	function showAddMIB()
-	{
-		GLOBAL $CFG_GLPI,$LANGTRACKER;
-		echo "<br>";
-		echo "<div align='center'>";
-		echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><td class='tab_bg_2' align='center'>";
-		echo "<a href=''><b>".$LANG['plugin_tracker']["mib"][4]."</b></a></td></tr>";
-		echo "</table></div>";
-	
-	}*/
+
+
 
 	function showForm($target,$ID)
 	{
@@ -63,10 +52,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 
 		GLOBAL $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
 		
-		if ( !plugin_tracker_haveRight("snmp_models","r") )
-		{
+		if (!plugin_tracker_haveRight("snmp_models","r"))
 			return false;
-		}
 		else if ((isset($ID)) AND (!empty($ID)))
 		{
 			$query = "SELECT device_type FROM glpi_plugin_tracker_model_infos
@@ -122,16 +109,14 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					
 					echo "<td align='center'>";
 					if ($data["oid_port_counter"] == "1")
-					{
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-					}
+
 					echo "</td>";
 					
 					echo "<td align='center'>";
 					if ($data["oid_port_dyn"] == "1")
-					{
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-					}
+
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -245,24 +230,6 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		return $input;
 	}
 
-/*
-	function addentry($target,$ID)
-	{
-		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
-		
-		$explode = explode("||",$_POST["links_oid_fields"]);
-		
-		$query = "INSERT INTO glpi_plugin_tracker_mib_networking
-		(FK_model_infos, FK_mib_label, FK_mib_oid, FK_mib_object, oid_port_counter, oid_port_dyn, mapping_type, mapping_name)
-		VALUES ('".$ID."', '".$_POST["mib_label"]."', '".$_POST["mib_oid"]."', '".$_POST["mib_object"]."', 
-		'".$_POST["port_counter_new"]."','".$_POST["port_dyn_new"]."','".$explode[0]."','".$explode[1]."')";
-		
-		$DB->query($query);
-		
-		echo "Ajouté avec succès<br/>";
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.form.php?ID=".$ID."'><b>Retour</b></a>";
-	}
-	*/
 	
 
 	
@@ -277,9 +244,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 			$query = "DELETE FROM glpi_plugin_tracker_mib_networking WHERE id=".$item_coche[$i]." ";
 			$DB->query($query);
 		}
-
 	}
-
 
 }
 

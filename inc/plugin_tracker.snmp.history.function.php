@@ -33,9 +33,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
+
 
 
 function tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0)
@@ -77,7 +77,6 @@ function addLogConnection($status,$port,$FK_process=0)
 	
 	// Récupération de l'id du matériel
 	$array["device_ID"] = $netport->fields["on_device"];
-	//echo "HISTORY ".$array["FK_ports"]." - ".$array["device_type"]." - ".$array["value"]." - ".$array["device_ID"]."\n";
 	// Ajouter en DB
 	$history->insert_connection($status,$array,$FK_process);
 }
@@ -89,13 +88,9 @@ function tracker_snmp_showHistory($ID_port)
 
 	$CommonItem = new CommonItem;
 
-	$query = "
-	SELECT * FROM glpi_plugin_tracker_snmp_history
-	
+	$query = "SELECT * FROM glpi_plugin_tracker_snmp_history
 	WHERE FK_ports='".$ID_port."'
-	
 	ORDER BY date_mod DESC
-	
 	LIMIT 0,30";		
 
 	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -146,7 +141,6 @@ function tracker_snmp_showHistory($ID_port)
 			}
 			else
 			{
-			
 				// Changes values
 				$text .= "<td align='center' colspan='3'></td>";
 				$text .= "<td align='center'>".$data["Field"]."</td>";
@@ -154,17 +148,11 @@ function tracker_snmp_showHistory($ID_port)
 				$text .= "<td align='center'>-></td>";
 				$text .= "<td align='center'>".$data["new_value"]."</td>";
 				$text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
-			
-			
 			}
-			
 			$text .= "</tr>";
 		}
-		
 	}
-
 	$text .= "</table>";
-
 	return $text;
 }
 

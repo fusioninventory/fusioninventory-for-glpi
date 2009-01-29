@@ -56,10 +56,9 @@ function plugin_init_tracker() {
 
 	if (isset($_SESSION["glpiID"])){
 
-		if (haveRight("config", "w") || haveRight("profile", "w")) {
-			// Config page
+		if (haveRight("config", "w") || haveRight("profile", "w")) // Config page
 			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.config.php';
-		}
+
 	
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
@@ -85,7 +84,6 @@ function plugin_init_tracker() {
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.php';
 					}
 						
-
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
 			}
 		}
@@ -93,7 +91,8 @@ function plugin_init_tracker() {
 }
 
 // Name and Version of the plugin
-function plugin_version_tracker(){
+function plugin_version_tracker()
+{
 	return array( 'name'    => 'Tracker',
 		'minGlpiVersion' => '0.72',
 		'version' => '1.1.0',
@@ -103,38 +102,39 @@ function plugin_version_tracker(){
 
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
-function plugin_tracker_check_prerequisites(){
-	if (GLPI_VERSION>=0.72){
+function plugin_tracker_check_prerequisites()
+{
+	if (GLPI_VERSION>=0.72)
 		return true;
-	} else {
+	else
 		echo "GLPI version not compatible need 0.72";
-	}
 }
 
-function plugin_tracker_install(){
+function plugin_tracker_install()
+{
 	global $DB, $LANG, $CFG_GLPI;
 	
 	include_once (GLPI_ROOT."/inc/profile.class.php");
 	
-	if(!TableExists("glpi_plugin_tracker_config")) {
+	if(!TableExists("glpi_plugin_tracker_config"))
 		plugin_tracker_installing("1.1.0");
-	}elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs")) {
+	elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs"))
 		plugin_tracker_update("1.1.0");
-	}
 
 	return true;
 }
 
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
-function plugin_tracker_check_config(){
+function plugin_tracker_check_config()
+{
 	return true;
 }
 
 
 
-function plugin_tracker_haveTypeRight($type,$right){
-	
+function plugin_tracker_haveTypeRight($type,$right)
+{
 	switch ($type){
 		case PLUGIN_TRACKER_ERROR_TYPE :
 			return plugin_tracker_haveRight("errors",$right);

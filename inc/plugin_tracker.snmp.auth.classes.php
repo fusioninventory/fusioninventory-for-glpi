@@ -34,9 +34,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
+
 
 class plugin_tracker_snmp_auth extends CommonDBTM {
 	function __construct() {
@@ -125,17 +125,16 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
-		if ($ID=='') {
+		if ($ID=='')
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-
-		} else {
+		else
+		{
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
 			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
 			if (!$this->fields["deleted"])
 				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
 			else {
 				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" . $LANG["buttons"][21] . "\" class='submit'>";
-
 				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" . $LANG["buttons"][22] . "\" class='submit'>";
 			}
 		}
@@ -223,9 +222,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			echo "<td align='center'>".$priv_protocol[$key]."</td>";
 			echo "<td align='center'>".$priv_passphrase[$key]."</td>";
 			echo "</tr>";
-		
-		
-		
+
 		}
 		echo "</table></div></form>";
 	}
@@ -379,13 +376,9 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			}		
 			$result=$DB->query($query);
 			if ($DB->numrows($result) > 0)
-			{
 				$ID_auth = $DB->result($result,0,"FK_snmp_connection");
-			}
 			else
-			{
 				return;
-			}
 		}
 		else
 		{
@@ -414,7 +407,6 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 
 		if ($config->getValue("authsnmp") == "file")
 		{		
-	
 			$xml = simplexml_load_file($xml_auth_rep."auth.xml");
 		
 			$i=-1;
@@ -433,9 +425,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 								$snmp_auth[($i+2)]["ID"] = $item;
 							}
 							else if ($item == $ID_auth)
-							{
 								$recup = 1;
-							}
 							break;
 						case 2:
 							if (($recup == "1") AND ($ID_Device != "all"))
@@ -498,9 +488,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		else if ($config->getValue("authsnmp") == "DB")
 		{
 			if ($ID_Device == "all")
-			{
 				$query = "SELECT * FROM glpi_plugin_tracker_snmp_connection";
-			}
 			else
 			{
 				$query = "SELECT * FROM glpi_plugin_tracker_snmp_connection
@@ -538,14 +526,10 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 				{
 					if (($snmp_auth[0]["snmp_version"] == getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
 					AND ($snmp_auth[0]["community"] == $data["community"]))
-					{
 						$snmp_auth[0]["ID"] = $data["ID"];
-					}
 					else if (($snmp_auth[1]["snmp_version"] == getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
 					AND ($snmp_auth[1]["community"] == $data["community"]))
-					{
 						$snmp_auth[1]["ID"] = $data["ID"];
-					}
 					else
 					{
 						$snmp_auth[$i]["ID"] = $data["ID"];
@@ -589,15 +573,9 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		if ( ($result = $DB->query($query)) )
 		{
 			if ( $DB->numrows($result) != 0 )
-			{
 				return $DB->result($result, 0, "FK_snmp_connection");
-			}
 		}	
-	
 	}
-	
-	
 
-	
 }
 ?>

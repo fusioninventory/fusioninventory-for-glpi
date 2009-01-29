@@ -34,19 +34,23 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
 
-class plugin_tracker_printers_cartridges extends CommonDBTM {
-	function __construct() {
+
+class plugin_tracker_printers_cartridges extends CommonDBTM
+{
+	function __construct()
+	{
 		$this->table = "glpi_plugin_tracker_printers_cartridges";
 		//$this->type = PLUGIN_TRACKER_PRINTERS_CARTRIDGES;
 	}
 }
 
-class plugin_tracker_printers extends CommonDBTM {
-	function __construct() {
+class plugin_tracker_printers extends CommonDBTM
+{
+	function __construct()
+	{
 		$this->table = "glpi_plugin_tracker_printers";
 		//$this->type = PLUGIN_TRACKER_PRINTERS_CARTRIDGES;
 	}
@@ -199,8 +203,6 @@ class plugin_tracker_printers extends CommonDBTM {
 		}
 
 		echo "</table></form>";
-		
-	
 	}
 
 
@@ -399,10 +401,8 @@ class plugin_tracker_printers extends CommonDBTM {
 			echo "</td>";
 			echo "</tr>";
 		}
-
-							
+				
 		echo "</table>";
-		
 	}
 			
 		
@@ -451,9 +451,7 @@ class plugin_tracker_printers extends CommonDBTM {
 		for ($i = 0; $i < count($array);$i++)
 		{
 			if ($i == (count($array) - 1))
-			{
 				echo "<td align='center'></td>";
-			}
 			else
 			{
 				if (($array[$i+1] - $array[($i)]) == "0")
@@ -461,7 +459,6 @@ class plugin_tracker_printers extends CommonDBTM {
 					echo "<td align='center'>".($array[$i+1] - $array[($i)])."</td>";
 					$ecart[$arraydates[$i]] = ($array[$i+1] - $array[($i)]);
 				}
-
 				else
 				{
 					echo "<td align='center'>".($array[$i+1] - $array[($i)])."</td>";
@@ -484,12 +481,14 @@ class plugin_tracker_printers extends CommonDBTM {
 	* @param $showtotal boolean : also show total values ?
 	* @return array contains the distinct groups assigned to a tickets
 	*/
-	function graphBy($entrees,$titre="",$unit="",$showtotal=1,$type="month"){
-	
+	function graphBy($entrees,$titre="",$unit="",$showtotal=1,$type="month")
+	{
 		global $DB,$CFG_GLPI,$LANG;
+		
 		ksort($entrees);
 		$total="";
-		if ($showtotal==1) $total=array_sum($entrees);
+		if ($showtotal==1) 
+			$total=array_sum($entrees);
 	
 		echo "<p align='center'>";
 		echo "<font face='verdana,arial,helvetica,sans-serif' size='2'><strong>$titre - $total $unit</strong></font>";
@@ -501,14 +500,19 @@ class plugin_tracker_printers extends CommonDBTM {
 			$max = max($entrees);
 			$maxgraph = substr(ceil(substr($max,0,2) / 10)."000000000000", 0, strlen($max));
 	
-			if ($maxgraph < 10) $maxgraph = 10;
-			if (1.1 * $maxgraph < $max) $maxgraph.="0";	
-			if (0.8*$maxgraph > $max) $maxgraph = 0.8 * $maxgraph;
+			if ($maxgraph < 10) 
+				$maxgraph = 10;
+			if (1.1 * $maxgraph < $max)
+				$maxgraph.="0";	
+			if (0.8*$maxgraph > $max)
+				$maxgraph = 0.8 * $maxgraph;
 			$rapport = 200 / $maxgraph;
 	
 			$largeur = floor(420 / (count($entrees)));
-			if ($largeur < 1) $largeur = 1;
-			if ($largeur > 50) $largeur = 50;
+			if ($largeur < 1)
+				$largeur = 1;
+			if ($largeur > 50)
+				$largeur = 50;
 		}
 	
 		echo "<table cellpadding='0' cellspacing='0' border='0' ><tr><td style='background-image:url(".$CFG_GLPI["root_doc"]."/pics/fond-stats.gif)' >";
@@ -545,12 +549,11 @@ class plugin_tracker_printers extends CommonDBTM {
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/moyenne.png' width=".$largeur." height='1' >";
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' width=".$largeur." height=".$difference." >";
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1' >";
-					if (ereg("-01",$key)){ // janvier en couleur foncee
+					if (ereg("-01",$key)) // janvier en couleur foncee
 						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png' width=".$largeur." height=".$hauteur." >";
-					} 
-					else {
+					else
 						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png' width=".$largeur." height=".$hauteur." >";
-					}
+
 				}
 				else if ($hauteur_moyenne < $hauteur) {
 					$difference = ($hauteur - $hauteur_moyenne) -1;
@@ -569,12 +572,10 @@ class plugin_tracker_printers extends CommonDBTM {
 				}
 				else {
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1'>";
-					if (ereg("-01",$key)){ // janvier en couleur foncee
+					if (ereg("-01",$key)) // janvier en couleur foncee
 						echo "<img alt=\"$key: $val_tab\" title=\"$key: $value\" src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png' width=".$largeur." height=".$hauteur.">";
-					} 
-					else {
+					else
 						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png' width=".$largeur." height=".$hauteur.">";
-					}
 				}
 			}
 	
@@ -590,23 +591,28 @@ class plugin_tracker_printers extends CommonDBTM {
 				if ($type=="month"){
 					$splitter=split("-",$key);
 					echo "<td class='center'>".utf8_substr($LANG["calendarM"][$splitter[1]-1],0,3)."</td>";
-				} else if ($type=="year"){
+				}
+				else if ($type=="year")
 					echo "<td class='center'>".substr($key,2,2)."</td>";
-				}else if ($type=="day"){
+				else if ($type=="day")
 					echo "<td class='center'>".substr($key,8,2)."</td>";
-				}else if ($type=="week"){
-				$val = explode(" ",$key);
-       		$date = explode("-",$val[0]);
-       		$time = explode(":",$val[1]);
+				else if ($type=="week")
+				{
+					$val = explode(" ",$key);
+	       		$date = explode("-",$val[0]);
+	       		$time = explode(":",$val[1]);
 					echo "<td class='center'>".date('W',mktime($time[0],$time[1],$time[2],$date[1],$date[2],$date[0]))."</td>";
 				}
 			}
 			echo "</tr>";
 		}
 	
-		if ($maxgraph<=10) $r=2;
-		else if ($maxgraph<=100) $r=1;
-		else $r=0;
+		if ($maxgraph<=10)
+			$r=2;
+		else if ($maxgraph<=100)
+			$r=1;
+		else
+			$r=0;
 		echo "</table>";
 		echo "</td>";
 		echo "<td style='background-image:url(".$CFG_GLPI["root_doc"]."/pics/fond-stats.gif)' valign='bottom'><img src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' style='background-color:black;' width='3' height='1' alt=''></td>";
@@ -714,18 +720,14 @@ class plugin_tracker_printers extends CommonDBTM {
 		for ($i = (count($dates) -1);$i >= 0;$i--)
 		{
 			if (($page_scanned_counter[$i] == "0") OR (empty($page_scanned_counter[$i])))
-			{
 				$page_scanned_counter[$i] = $count; 
-			}
+
 			$count = $page_scanned_counter[$i];
 		}
 		$Array['dates'] = $dates;
 		$Array['count'] = $page_scanned_counter;
 		return($Array);
 	}
-	
-	
-	
 	
 }
 ?>

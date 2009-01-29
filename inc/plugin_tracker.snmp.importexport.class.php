@@ -34,9 +34,8 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT'))
-{
 	die("Sorry. You can't access directly to this file");
-}
+
 
 class plugin_tracker_importexport extends CommonDBTM
 {
@@ -61,9 +60,7 @@ class plugin_tracker_importexport extends CommonDBTM
 				$type = $DB->result($result, 0, "device_type");
 			}
 			else
-			{
 				exit();
-			}
 		}
 		
 		
