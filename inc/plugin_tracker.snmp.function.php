@@ -94,7 +94,8 @@ function plugin_tracker_getDeviceList($type)
 	{
 		while ( $data=$DB->fetch_array($result) )
 		{
-			$NetworksID[$data["ID"]] = $data["ifaddr"];
+			if ((!empty($data["ifaddr"])) AND ($data["ifaddr"] != "127.0.0.1"))
+				$NetworksID[$data["ID"]] = $data["ifaddr"];
 		}
 	}
 	return $NetworksID;
@@ -1149,9 +1150,8 @@ function plugin_tracker_snmp_ifaddr($ArraySNMPPort_Object_result,$IP,$snmp_versi
 
 	// Get ifaddr
 	$ArrayOIDifaddr = $snmp_queries->GetOID($snmp_model_ID,"oid_port_dyn='1' AND mapping_name='ifaddr'");
-//	if ($ArrayOIDifaddr)
-//	{
-
+	if ($ArrayOIDifaddr)
+	{
 		$Array_ifaddr = $snmp_queries->SNMPQueryWalkAll($ArrayOIDifaddr,$IP,$snmp_version,$snmp_auth);
 		foreach($Array_ifaddr as $object=>$SNMPValue)
 		{
@@ -1166,9 +1166,7 @@ function plugin_tracker_snmp_ifaddr($ArraySNMPPort_Object_result,$IP,$snmp_versi
 			$ArraySNMPPort_Object_result[$object] = $SNMPValue;
 			$logs->write("tracker_fullsync","ifaddr transformé : ".$object." = ".$SNMPValue,$IP,1);
 		}
-		var_dump($ArraySNMPPort_Object_result);
-		
-//	}
+	}
 	return $ArraySNMPPort_Object_result;
 
 }
