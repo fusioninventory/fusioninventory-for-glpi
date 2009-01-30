@@ -686,6 +686,7 @@ function UpdateGLPINetworkingPorts($IP,$ArraySNMPPort_Object_result,$Array_Objec
 
 			foreach ($Array_OID[$ifIndex] as $object=>$SNMPValue)
 			{
+				$logs->write("tracker_fullsync","********",$IP,1);
 				// Get object constant in relation with object
 				$explode = explode ("||", $Array_Object_TypeNameConstant[$object]);
 				$object_type = $explode[0];
