@@ -278,13 +278,18 @@ class plugin_tracker_printers extends CommonDBTM
 					$_GET["datetotalpages"]="";
 				plugin_tracker_printer_calendar($_GET["datetotalpages"],"datetotalpages",$target);		
 				// fin calendrier
-				$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datetotalpages"],'pages_total');
+			echo "</td>";
+			echo "</tr>";
+	
+			echo "<tr class='tab_bg_1'>";
+			echo "<td colspan='3'>";
+			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datetotalpages"],'pages_total');
 
-				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
-				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);	
-				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
-				echo "</table>";
+			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
+			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);	
+			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
+			echo "</table>";
 			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][128],$LANG['plugin_tracker']["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
@@ -306,6 +311,11 @@ class plugin_tracker_printers extends CommonDBTM
 					$_GET["dateblackpages"]="";
 				plugin_tracker_printer_calendar($_GET["dateblackpages"],"dateblackpages",$target);		
 				// fin calendrier
+				echo "</td>";
+				echo "</tr>";
+		
+				echo "<tr class='tab_bg_1'>";
+				echo "<td colspan='3'>";
 				$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["dateblackpages"],'pages_n_b');
 
 				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
@@ -334,6 +344,11 @@ class plugin_tracker_printers extends CommonDBTM
 					$_GET["datecolorpages"]="";
 				plugin_tracker_printer_calendar($_GET["datecolorpages"],"datecolorpages",$target);		
 				// fin calendrier
+				echo "</td>";
+				echo "</tr>";
+		
+				echo "<tr class='tab_bg_1'>";
+				echo "<td colspan='3'>";
 				$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datecolorpages"],'pages_color');
 		
 				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
@@ -362,6 +377,11 @@ class plugin_tracker_printers extends CommonDBTM
 					$_GET["daterectoversopages"]="";
 				plugin_tracker_printer_calendar($_GET["daterectoversopages"],"daterectoversopages",$target);		
 				// fin calendrier
+				echo "</td>";
+				echo "</tr>";
+		
+				echo "<tr class='tab_bg_1'>";
+				echo "<td colspan='3'>";
 				$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["daterectoversopages"],'pages_recto_verso');
 			
 				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
@@ -386,17 +406,22 @@ class plugin_tracker_printers extends CommonDBTM
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
 
-				if (!isset($_GET["datescannedpages"]))
-					$_GET["datescannedpages"]="";
-				plugin_tracker_printer_calendar($_GET["datescannedpages"],"datescannedpages",$target);		
-				// fin calendrier
-				$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datescannedpages"],'scanned');
-			
-				echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
-				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);		
-				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
-				echo "</table>";
+			if (!isset($_GET["datescannedpages"]))
+				$_GET["datescannedpages"]="";
+			plugin_tracker_printer_calendar($_GET["datescannedpages"],"datescannedpages",$target);		
+			// fin calendrier
+			echo "</td>";
+			echo "</tr>";
+	
+			echo "<tr class='tab_bg_1'>";
+			echo "<td colspan='3'>";
+			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datescannedpages"],'scanned');
+		
+			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
+			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
+			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);		
+			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
+			echo "</table>";
 			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][155],$LANG['plugin_tracker']["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
@@ -493,7 +518,7 @@ class plugin_tracker_printers extends CommonDBTM
 		echo "<p align='center'>";
 		echo "<font face='verdana,arial,helvetica,sans-serif' size='2'><strong>$titre - $total $unit</strong></font>";
 	
-		echo "<div class='center'>";
+		echo "<div class='center'><center>";
 	
 		if (count($entrees)>0){
 	
@@ -515,7 +540,8 @@ class plugin_tracker_printers extends CommonDBTM
 				$largeur = 50;
 		}
 	
-		echo "<table cellpadding='0' cellspacing='0' border='0' ><tr><td style='background-image:url(".$CFG_GLPI["root_doc"]."/pics/fond-stats.gif)' >";
+		echo "<table cellpadding='0' cellspacing='0' border='0' >
+		<tr><td style='background-image:url(".$CFG_GLPI["root_doc"]."/pics/fond-stats.gif)' >";
 		echo "<table cellpadding='0' cellspacing='0' border='0'><tr>";
 		echo "<td bgcolor='black'><img src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width='1' height='200' alt=''></td>";
 	
@@ -649,7 +675,7 @@ class plugin_tracker_printers extends CommonDBTM
 	
 		echo "</tr></table>";
 		echo "</td></tr></table>";
-		echo "</div>";
+		echo "</center></div>";
 	}
 
 
