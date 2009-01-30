@@ -349,6 +349,7 @@ $LANG['plugin_tracker']["mapping"][403]="réseaux > contact";
 $LANG['plugin_tracker']["mapping"][404]="réseaux > description";
 $LANG['plugin_tracker']["mapping"][405]="imprimante > contact";
 $LANG['plugin_tracker']["mapping"][406]="imprimante > description";
+$LANG['plugin_tracker']["mapping"][407]="imprimante > port > adresse IP";
 
 $LANG['plugin_tracker']["mapping"][101]="";
 $LANG['plugin_tracker']["mapping"][102]="";

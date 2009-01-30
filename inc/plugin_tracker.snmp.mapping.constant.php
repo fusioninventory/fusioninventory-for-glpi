@@ -697,6 +697,12 @@ $TRACKER_MAPPING[PRINTER_TYPE]['ifName']['name'] = $LANG['plugin_tracker']["mapp
 $TRACKER_MAPPING[PRINTER_TYPE]['ifName']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifName']['dropdown'] = '';
 
+$TRACKER_MAPPING[PRINTER_TYPE]['ifaddr']['table'] = 'glpi_networking_ports';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifaddr']['field'] = 'ifaddr';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifaddr']['name'] = $LANG['plugin_tracker']["mapping"][407];
+$TRACKER_MAPPING[PRINTER_TYPE]['ifaddr']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifaddr']['dropdown'] = '';
+
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['table'] = '';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['field'] = '';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['name'] = $LANG['plugin_tracker']["mapping"][97];
