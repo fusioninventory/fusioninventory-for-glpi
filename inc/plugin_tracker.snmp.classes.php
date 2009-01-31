@@ -687,10 +687,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ( $DB->numrows($result) != 0 )
 				return $DB->result($result, 0, "FK_model_infos");
-
 		}	
-	
 	}
-	
 }
 ?>

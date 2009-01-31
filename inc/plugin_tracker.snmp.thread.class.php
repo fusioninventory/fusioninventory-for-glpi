@@ -134,7 +134,12 @@ class Threads extends CommonDBTM
 					echo "<td align='center'>".$thread["ports_queries"]."</td>";
 					echo "<td align='center'>".$thread["printer_queries"]."</td>";
 					echo "<td align='center'>".$thread["discovery_queries"]."</td>";
-					echo "<td align='center'>".$thread["error_msg"]."</td>";
+					echo "<td align='center'>";
+					if ($thread["error_msg"] > 0)
+						echo "<a href='plugin_tracker.processes.errors.php?process=".$thread["process_id"]."'>".$thread["error_msg"]."</a>";
+					else
+						echo $thread["error_msg"];
+					echo "</td>";
 					
 					echo "<td align='center'>";
 					if ($thread["status"] == 3)
@@ -152,6 +157,7 @@ class Threads extends CommonDBTM
 		{
 			// Search form in form file
 		}
+		// **** Display errors on execution **** 
 		else if ($array_name == "errors")
 		{
 			echo "<tr><th colspan='12'>" . $LANG['plugin_tracker']["processes"][12] . "</th></tr>";
@@ -162,10 +168,14 @@ class Threads extends CommonDBTM
 			echo"<th>".$LANG['plugin_tracker']["processes"][12]."</th>";
 			echo"<th>".$LANG["common"][27]."</th>";
 			echo "</th></tr>\n";
-		
+			
+			$process = '';
+			if (isset($_GET['process']))
+				$process = " AND 	FK_processes='".$_GET['process']."' ";
 			$sql_errors = 	"SELECT *
 		   FROM glpi_plugin_tracker_processes_values
 		   WHERE snmp_errors!=''
+		   ".$process."
 		   ORDER BY FK_processes DESC, date DESC";
 	     	$result_errors = $DB->query($sql_errors);
 			while ($thread_errors = $DB->fetch_array($result_errors))
@@ -174,16 +184,23 @@ class Threads extends CommonDBTM
 				echo "<td align='center'></td>";
 				echo "<td align='center'>".$thread_errors["FK_processes"]."</td>";
 				
-				
-				$query_port = "SELECT * FROM glpi_networking_ports 
-				WHERE ID='".$thread_errors["port"]."' ";
-				$result_port = $DB->query($query_port);
-				$port_name = "";
-				while ($thread_port = $DB->fetch_array($result_port))
+				if ($thread_errors["port"] == "0")
 				{
-					$on_device = $thread_port["on_device"];
-					$device_type = $thread_port["device_type"];
-					$port_name = $thread_port["name"];
+					$on_device = $thread_errors["device_ID"];
+					$device_type = $thread_errors["device_type"];
+				}
+				else
+				{
+					$query_port = "SELECT * FROM glpi_networking_ports 
+					WHERE ID='".$thread_errors["port"]."' ";
+					$result_port = $DB->query($query_port);
+					$port_name = "";
+					while ($thread_port = $DB->fetch_array($result_port))
+					{
+						$on_device = $thread_port["on_device"];
+						$device_type = $thread_port["device_type"];
+						$port_name = $thread_port["name"];
+					}
 				}
 				if (isset($on_device) AND isset($device_type))
 				{
@@ -192,12 +209,16 @@ class Threads extends CommonDBTM
 				}
 				else
 					echo "<td align='center'></td>";
-
-				echo "<td align='center'>".$thread_errors["snmp_errors"]."</td>";
+				$explode = explode('%',$thread_errors["snmp_errors"]);
+				$explode[1] = preg_replace("/\[model(.*?)\]/", "<a href='plugin_tracker.models.form.php?ID=$1'>".$LANG['plugin_tracker']["profile"][24]."</a>",$explode[1]);
+				echo "<td align='center'><b>".$LANG['plugin_tracker']["errors"][$explode[0]]."</b>";
+				echo "<br/>".str_replace('--','<br/>',$explode[1]);
+				echo "</td>";
 				echo "<td align='center'>".$thread_errors["date"]."</td>";
 				echo "</tr>";
 			}		
 		}
+		// **** Display connections on execution **** 
 		else if ($array_name == "connection")
 		{
 			$Netwire = new Netwire;
@@ -338,17 +359,14 @@ class Threads extends CommonDBTM
 	
 	
 	
-	function addProcessValues($PID, $field,$FK_port,$value)
+	function addProcessValues($PID, $field,$FK_port=0,$value,$device_ID=0,$device_type=0)
 	{
 		global $DB;
 		
-		if (!empty($FK_port))
-		{
-			$query = "INSERT INTO glpi_plugin_tracker_processes_values
-			(FK_processes,port,".$field.",date)
-			VALUES('".$PID."','".$FK_port."','".$value."','".date("Y-m-d H:i:s")."')";
-			$DB->query($query);
-		}
+		$query = "INSERT INTO glpi_plugin_tracker_processes_values
+		(FK_processes,port,device_ID,device_type,".$field.",date)
+		VALUES('".$PID."','".$FK_port."','".$device_ID."','".$device_type."','".$value."','".date("Y-m-d H:i:s")."')";
+		$DB->query($query);
 	}	
 
 

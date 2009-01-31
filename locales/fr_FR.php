@@ -60,6 +60,7 @@ $LANG['plugin_tracker']["profile"][20]="Authentification SNMP";
 $LANG['plugin_tracker']["profile"][21]="Infos scripts";
 $LANG['plugin_tracker']["profile"][22]="Découverte réseau";
 $LANG['plugin_tracker']["profile"][23]="Configuration générale";
+$LANG['plugin_tracker']["profile"][24]="Modèle SNMP";
 
 
 $LANG['plugin_tracker']["setup"][2]="Merci de vous placer sur l'entité racine (voir tous)";
@@ -165,6 +166,8 @@ $LANG['plugin_tracker']["errors"][21]="Impossible de récupérer les information
 
 $LANG['plugin_tracker']["errors"][30]="Erreur Câblage";
 $LANG['plugin_tracker']["errors"][31]="Problème de câblage";
+
+$LANG['plugin_tracker']["errors"][101]="Timeout";
 
 
 $LANG['plugin_tracker']["prt_history"][0]="Historique et Statistiques des compteurs imprimante";

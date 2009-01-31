@@ -220,7 +220,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 			{
 				// SNMP error (Query impossible)
 				$processes_values["errors"]++;
-				$processes->addProcessValues($FK_process,"snmp_errors","","SNMP Query impossible (".$ID_Device.") Type ".$type." ");
+				$processes->addProcessValues($FK_process,"snmp_errors",0,"101%IP : ".$ifIP."--SNMP version : ".$snmp_version." -- [model".$snmp_model_ID."] ",$ID_Device,$type);
 			}
 			else
 			{
@@ -239,7 +239,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 						$ArraySNMPPort_Object_result = $plugin_tracker_snmp->SNMPQuery($ArrayPort_Object_oid,$ifIP,$snmp_version,$snmp_auth);
 
 					// ** Get query SNMP of switchs ports only for ifaddr
-						$ArraySNMPPort_Object_result = plugin_tracker_snmp_ifaddr($ArraySNMPPort_Object_result,$ifIP,$snmp_version,$snmp_auth,$snmp_model_ID);
+						$ArraySNMPPort_Object_result = plugin_tracker_snmp_port_ifaddr($ArraySNMPPort_Object_result,$ifIP,$snmp_version,$snmp_auth,$snmp_model_ID);
 				}
 				
 				// ** Get query SNMP on device
@@ -650,6 +650,7 @@ function UpdateGLPINetworkingPorts($IP,$ArraySNMPPort_Object_result,$Array_Objec
 	
 	$snmp_queries = new plugin_tracker_snmp;
 	$logs = new plugin_tracker_logs;
+	$processes = new Threads;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$IP,1);
 
@@ -778,6 +779,7 @@ function UpdateGLPINetworkingPorts($IP,$ArraySNMPPort_Object_result,$Array_Objec
 function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$Array_trunk_ifIndex,$vlan="",$array_port_trunk=array(),$vlan_name="")
 {
 	global $DB;
+	
 	$logs = new plugin_tracker_logs;
 	$processes = new Threads;
 	$netwire = new Netwire;
@@ -941,6 +943,7 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 }
 
 
+
 /*
  * @param $ArrayPort_LogicalNum_SNMPName : array logical port number => SNMP Port name
  * @param $ArrayPort_LogicalNum_SNMPNum : array logical port number => SNMP port number (ifindex)
@@ -1026,12 +1029,9 @@ function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMP
 		WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."' 
 			AND device_type='2' 
 			AND glpi_plugin_tracker_networking_ifaddr.ifaddr='".$IP."' ";
-//echo "QUERY CDP :".$query."\n";
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
-//var_dump($data);		
-//echo "QUERY :".$query."\n";
-//echo "PORTID :".$data["ID"]." -> ".$PortID."(".$ArrayPort_LogicalNum_SNMPNum[$ifIndex].")\n";
+
 		if ((!empty($data["ID"])) AND (!empty($PortID)))
 			$snmp_queries->PortsConnection($data["ID"], $PortID,$FK_process);
 	}
@@ -1142,7 +1142,7 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 
 
 
-function plugin_tracker_snmp_ifaddr($ArraySNMPPort_Object_result,$IP,$snmp_version,$snmp_auth,$snmp_model_ID)
+function plugin_tracker_snmp_port_ifaddr($ArraySNMPPort_Object_result,$IP,$snmp_version,$snmp_auth,$snmp_model_ID)
 {
 	global $DB;
 
@@ -1169,13 +1169,6 @@ function plugin_tracker_snmp_ifaddr($ArraySNMPPort_Object_result,$IP,$snmp_versi
 		}
 	}
 	return $ArraySNMPPort_Object_result;
-
 }
-
-
-
-
-
-
 
 ?>
