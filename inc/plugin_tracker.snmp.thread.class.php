@@ -214,7 +214,7 @@ class Threads extends CommonDBTM
 				echo "<td align='center'><b>".$LANG['plugin_tracker']["errors"][$explode[0]]."</b>";
 				echo "<br/>".str_replace('--','<br/>',$explode[1]);
 				echo "</td>";
-				echo "<td align='center'>".$thread_errors["date"]."</td>";
+				echo "<td align='center'>".convDateTime($thread_errors["date"])."</td>";
 				echo "</tr>";
 			}		
 		}
