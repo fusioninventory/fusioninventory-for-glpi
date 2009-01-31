@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker","search","commonitem","networking","computer");
+$NEEDED_ITEMS=array("tracker","search","commonitem","networking","computer","printer");
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
