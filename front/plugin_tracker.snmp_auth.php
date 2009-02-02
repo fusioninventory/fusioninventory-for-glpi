@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker","search","setup","rulesengine");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 
 plugin_tracker_checkRight("snmp_authentification","r");
 
@@ -67,7 +67,7 @@ else if ($config->getValue("authsnmp") == "DB")
 	showList(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
 }else{
 
-	echo $LANG['plugin_tracker']["functionalities"][19];
+	echo $LANGTRACKER["functionalities"][19];
 
 }
 
