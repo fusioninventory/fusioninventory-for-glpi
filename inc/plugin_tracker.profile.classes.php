@@ -54,7 +54,7 @@ class plugin_tracker_Profile extends CommonDBTM {
 	}
 		
 	function showprofileForm($target,$ID){
-		global $LANG,$CFG_GLPI;
+		global $LANG,$CFG_GLPI,$LANGTRACKER;
 
 /*		if (!haveRight("profile","r")) return false;
 
@@ -86,7 +86,7 @@ class plugin_tracker_Profile extends CommonDBTM {
 
 		echo "<th>".$LANG["profiles"][2].":</th>";
 		echo "<th><select name='interface' id='profile_interface'>";
-		echo "<option value='tracker' ".($this->fields["interface"]!="tracker"?"selected":"").">".$LANG['plugin_tracker']["profile"][1]."</option>";
+		echo "<option value='tracker' ".($this->fields["interface"]!="tracker"?"selected":"").">".$LANGTRACKER["profile"][1]."</option>";
 
 		echo "</select></th>";
 		echo "</tr></table>";
@@ -111,7 +111,7 @@ $prof=new plugin_tracker_Profile();
 	}
 	
 	function showForm($target,$ID){
-		global $LANG;
+		global $LANG,$LANGTRACKER;
 
 		if (!haveRight("profile","r")) return false;
 		$canedit=haveRight("profile","w");
@@ -122,45 +122,45 @@ $prof=new plugin_tracker_Profile();
 		echo "<form action='".$target."' method='post'>";
 		echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$LANG['plugin_tracker']["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
+		echo "<tr><th colspan='2' align='center'><strong>".$LANGTRACKER["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
 
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][16].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][16].":</td><td>";
 		dropdownNoneReadWrite("snmp_networking",$this->fields["snmp_networking"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][17].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][17].":</td><td>";
 		dropdownNoneReadWrite("snmp_peripherals",$this->fields["snmp_peripherals"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][18].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][18].":</td><td>";
 		dropdownNoneReadWrite("snmp_printers",$this->fields["snmp_printers"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][19].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][19].":</td><td>";
 		dropdownNoneReadWrite("snmp_models",$this->fields["snmp_models"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][20].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][20].":</td><td>";
 		dropdownNoneReadWrite("snmp_authentification",$this->fields["snmp_authentification"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][21].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][21].":</td><td>";
 		dropdownNoneReadWrite("snmp_scripts_infos",$this->fields["snmp_scripts_infos"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][22].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][22].":</td><td>";
 		dropdownNoneReadWrite("snmp_discovery",$this->fields["snmp_discovery"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][23].":</td><td>";
+		echo "<td>".$LANGTRACKER["profile"][23].":</td><td>";
 		dropdownNoneReadWrite("general_config",$this->fields["general_config"],1,1,1);
 		echo "</td>";
 		echo "</tr>";

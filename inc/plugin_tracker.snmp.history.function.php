@@ -84,7 +84,7 @@ function addLogConnection($status,$port,$FK_process=0)
 
 function tracker_snmp_showHistory($ID_port)
 {
-	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
+	global $DB,$LANG,$LANGTRACKER,$INFOFORM_PAGES,$CFG_GLPI;
 
 	$CommonItem = new CommonItem;
 
@@ -102,7 +102,7 @@ function tracker_snmp_showHistory($ID_port)
 	$text .= "</tr>";
 	
 	$text .= "<tr class='tab_bg_1'>";
-	$text .= "<th>".$LANG['plugin_tracker']["snmp"][50]."</th>";
+	$text .= "<th>".$LANGTRACKER["snmp"][50]."</th>";
 	$text .= "<th>".$LANG["common"][1]."</th>";
 	$text .= "<th>".$LANG["networking"][15]."</th>";
 	$text .= "<th>".$LANG["event"][18]."</th>";

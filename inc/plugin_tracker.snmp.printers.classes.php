@@ -59,7 +59,7 @@ class plugin_tracker_printers extends CommonDBTM
 
 	function showFormPrinter($target,$ID)
 	{
-		global $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING;	
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
 	
 		plugin_tracker_checkRight("snmp_printers","r");
 	
@@ -94,12 +94,12 @@ class plugin_tracker_printers extends CommonDBTM
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
-		echo $LANG['plugin_tracker']["snmp"][11];
+		echo $LANGTRACKER["snmp"][11];
 		echo "</th>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["model_info"][4]."</td>";
+		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
 		WHERE device_type!=3 
@@ -115,7 +115,7 @@ class plugin_tracker_printers extends CommonDBTM
 		echo "</tr>";
 	
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][43]."</td>";
+		echo "<td align='center'>".$LANGTRACKER["functionalities"][43]."</td>";
 		echo "<td align='center'>";
 		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
@@ -123,12 +123,12 @@ class plugin_tracker_printers extends CommonDBTM
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2' height='30'>";
-		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
+		echo $LANGTRACKER["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][36]."</td>";
+		echo "<td align='center'>".$LANGTRACKER["functionalities"][36]."</td>";
 		echo "<td align='center'>";
 		$dropdown[1] = $LANG["planning"][5];
 		$dropdown[7] = $LANG["planning"][6];
@@ -209,7 +209,7 @@ class plugin_tracker_printers extends CommonDBTM
 
 	function showFormPrinter_pagescounter($target,$ID)
 	{
-		global $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING;	
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
 		
 		$plugin_tracker_printers = new plugin_tracker_printers;
 		$plugin_tracker_snmp = new plugin_tracker_snmp;
@@ -267,7 +267,7 @@ class plugin_tracker_printers extends CommonDBTM
 			// Total page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
-			echo $LANG['plugin_tracker']["mapping"][128];
+			echo $LANGTRACKER["mapping"][128];
 			echo "</th>";
 			echo "</tr>";
 	
@@ -290,7 +290,7 @@ class plugin_tracker_printers extends CommonDBTM
 			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);	
 			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
 			echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][128],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][128],$LANGTRACKER["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -300,7 +300,7 @@ class plugin_tracker_printers extends CommonDBTM
 			// ** Black & white page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
-			echo $LANG['plugin_tracker']["mapping"][129];
+			echo $LANGTRACKER["mapping"][129];
 			echo "</th>";
 			echo "</tr>";
 	
@@ -323,7 +323,7 @@ class plugin_tracker_printers extends CommonDBTM
 				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);		
 				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
 				echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][129],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][129],$LANGTRACKER["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -333,7 +333,7 @@ class plugin_tracker_printers extends CommonDBTM
 			// ** Color page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
-			echo $LANG['plugin_tracker']["mapping"][130];
+			echo $LANGTRACKER["mapping"][130];
 			echo "</th>";
 			echo "</tr>";
 	
@@ -356,7 +356,7 @@ class plugin_tracker_printers extends CommonDBTM
 				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);		
 				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
 				echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][130],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][130],$LANGTRACKER["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -366,7 +366,7 @@ class plugin_tracker_printers extends CommonDBTM
 			// ** Recto/Verso page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
-			echo $LANG['plugin_tracker']["mapping"][154];
+			echo $LANGTRACKER["mapping"][154];
 			echo "</th>";
 			echo "</tr>";
 	
@@ -389,7 +389,7 @@ class plugin_tracker_printers extends CommonDBTM
 				$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);		
 				$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
 				echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][154],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][154],$LANGTRACKER["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -399,7 +399,7 @@ class plugin_tracker_printers extends CommonDBTM
 			// ** Scanned page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
-			echo $LANG['plugin_tracker']["mapping"][155];
+			echo $LANGTRACKER["mapping"][155];
 			echo "</th>";
 			echo "</tr>";
 
@@ -422,7 +422,7 @@ class plugin_tracker_printers extends CommonDBTM
 			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);		
 			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
 			echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][155],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->graphBy($ecart,$LANGTRACKER["mapping"][155],$LANGTRACKER["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -508,7 +508,7 @@ class plugin_tracker_printers extends CommonDBTM
 	*/
 	function graphBy($entrees,$titre="",$unit="",$showtotal=1,$type="month")
 	{
-		global $DB,$CFG_GLPI,$LANG;
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 		
 		ksort($entrees);
 		$total="";

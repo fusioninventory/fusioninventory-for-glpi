@@ -50,7 +50,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	{
 		include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
 
-		GLOBAL $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
+		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING,$IMPORT_TYPES;
 		
 		if (!plugin_tracker_haveRight("snmp_models","r"))
 			return false;
@@ -76,16 +76,16 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		
 				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
 				echo "<table class='tab_cadre_fixe'><tr><th colspan='7'>";
-				echo $LANG['plugin_tracker']["mib"][5]."</th></tr>";
+				echo $LANGTRACKER["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<th align='center'></th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
 				{
@@ -147,15 +147,15 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<br/>";
 				echo "<table class='tab_cadre_fixe'>";
 				
-				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_tracker']["mib"][4]."</th></tr>";				
+				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
 
 				echo "<tr class='tab_bg_1'>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
 				echo "</tr>";
 
 				echo "<td align='center'>";
