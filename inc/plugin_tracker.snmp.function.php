@@ -216,7 +216,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 
 			// ** Get from SNMP, description of equipment
 			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ifIP,$snmp_version,$snmp_auth);
-			if ($Array_sysdescr["sysDescr"] == "")
+			if (!isset($Array_sysdescr["sysDescr"]))
 			{
 				// SNMP error (Query impossible)
 				$processes_values["errors"]++;
