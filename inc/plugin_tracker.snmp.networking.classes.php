@@ -162,6 +162,8 @@ class plugin_tracker_networking extends CommonDBTM
 		else
 			$canedit = false;
 		
+		include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+		
 		$this->ID = $ID;
 		
 		$nw=new Netwire;

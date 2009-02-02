@@ -63,6 +63,8 @@ class plugin_tracker_printers extends CommonDBTM
 	
 		plugin_tracker_checkRight("snmp_printers","r");
 	
+		include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");	
+	
 		$this->ID = $ID;
 		
 		$plugin_tracker_printers = new plugin_tracker_printers;
