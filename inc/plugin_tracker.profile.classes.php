@@ -56,7 +56,7 @@ class plugin_tracker_Profile extends CommonDBTM {
 	function showprofileForm($target,$ID){
 		global $LANG,$CFG_GLPI,$LANGTRACKER;
 
-/*		if (!haveRight("profile","r")) return false;
+		if (!haveRight("profile","r")) return false;
 
 		$onfocus="";
 		if ($ID){
@@ -69,19 +69,13 @@ class plugin_tracker_Profile extends CommonDBTM {
 		if (empty($this->fields["interface"])) $this->fields["interface"]="tracker";
 		if (empty($this->fields["name"])) $this->fields["name"]=$LANG["common"][0];
 
-*/
-		if (!haveRight("profile","r")) return false;
-		$canedit=haveRight("profile","w");
-		if ($ID){
-			$this->getFromDB($ID);
-		}
 
 		echo "<form name='form' method='post' action=\"$target\">";
 		echo "<div align='center'>";
-//		echo "<table class='tab_cadre'><tr>";
+		echo "<table class='tab_cadre'><tr>";
 		echo "<table class='tab_cadre_fixe'>";
-//		echo "<th>".$LANG["common"][16].":</th>";
-//		echo "<th><input type='text' name='name' value=\"".$this->fields["name"]."\" $onfocus></th>";
+		echo "<th>".$LANG["common"][16].":</th>";
+		echo "<th><input type='text' name='name' value=\"".$this->fields["name"]."\" $onfocus></th>";
 		echo "<tr><th colspan='2' align='center'><strong>TEST ".$this->fields["name"]."</strong></th></tr>";
 
 		echo "<th>".$LANG["profiles"][2].":</th>";
@@ -95,11 +89,11 @@ class plugin_tracker_Profile extends CommonDBTM {
 		$params=array('interface'=>'__VALUE__',
 				'ID'=>$ID,
 			);
-//		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false);
-//		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false,'profile_interface');
-$prof=new plugin_tracker_Profile();
+		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false);
+		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false,'profile_interface');
+//$prof=new plugin_tracker_Profile();
 
-	$prof->showtrackerForm($_POST["ID"]);
+//	$prof->showtrackerForm($_POST["ID"]);
 
 		echo "<br>";
 
@@ -167,11 +161,18 @@ $prof=new plugin_tracker_Profile();
 		
 		if ($canedit){
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center' colspan='2'>";
-			echo "<input type='hidden' name='ID' value=$ID>";
-			echo "<input type='submit' name='update_user_profile' value=\"".$LANG["buttons"][7]."\" class='submit'>";
+			if ($ID){
+				echo "<td  align='center'>";
+				echo "<input type='hidden' name='ID' value=$ID>";
+				echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit'>";
+				echo "</td><td  align='center'>";
+				echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit'>";
+			} else {
+				echo "<td colspan='2' align='center'>";
+				echo "<input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit'>";
+			}
 			echo "</td></tr>";
-		}		
+		}
 		echo "</table>";
 
 	}
