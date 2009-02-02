@@ -94,7 +94,7 @@ function plugin_init_tracker() {
 function plugin_version_tracker()
 {
 	return array( 'name'    => 'Tracker',
-		'minGlpiVersion' => '0.72',
+		'minGlpiVersion' => '0.71.5',
 		'version' => '1.1.0',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
 		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',);
