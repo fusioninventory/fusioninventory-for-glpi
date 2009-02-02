@@ -34,8 +34,6 @@
 // ----------------------------------------------------------------------
 
 include_once ("hook.php");
-include_once ("plugin_tracker.define.php");
-include_once ("plugin_tracker.mibs.define.php");
 
 
 // inc files 
