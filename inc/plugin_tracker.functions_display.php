@@ -150,11 +150,7 @@ function plugin_tracker_phpextensions ()
 	{
 		$snmp = 1;
 	}
-	if (extension_loaded('runkit'))
-	{
-		$runkit = 1;
-	}
-	if (($snmp == "0") OR ($runkit == "0"))
+	if (($snmp == "0"))
 	{
 		echo "<div align='center'>";
 		echo "<table class='tab_cadre' cellpadding='5'>";
@@ -166,8 +162,6 @@ function plugin_tracker_phpextensions ()
 		if ($snmp == "0")
 			echo $LANGTRACKER["setup"][14];
 		echo "<br/>";
-		if ($runkit == "0")
-			echo $LANGTRACKER["setup"][15];
 		echo "</td>";
 		echo "</tr>";
 		echo "</table><br/>";
