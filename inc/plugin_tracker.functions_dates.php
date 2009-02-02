@@ -97,7 +97,8 @@ function plugin_tracker_printer_calendar ($getvalue,$field,$target)
 	echo "<div align='center'><form method='post' action='".$target."'>";
 	echo "<table class='tab_cadre'><tr class='tab_bg_2'><td align='right'>";
 	echo $LANG["search"][9]." :</td><td>";
-	showDateFormItem("form",$field,$getvalue);
+//	showDateFormItem("form",$field,$getvalue);
+	showCalendarForm("form",$field,$getvalue);
 	echo "</td><td rowspan='2' align='center'><input type=\"submit\" class='button' name=\"submit\" Value=\"". $LANG["buttons"][7] ."\" /></td></tr>";
 	echo "</table></form></div>";	
 }
