@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("config","w");
 
-commonHeader($LANG['plugin_tracker']["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
+commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
 $config = new plugin_tracker_config();
 $print_config = new glpi_plugin_tracker_printers_history_config();

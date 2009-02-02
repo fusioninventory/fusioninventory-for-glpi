@@ -49,7 +49,7 @@ else
 		//		glpi_header($_SERVER['HTTP_REFERER']);
 	}
 	
-	commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+	commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 	$plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"],$_GET["ID"],"glpi_plugin_tracker_mib_networking");
 
