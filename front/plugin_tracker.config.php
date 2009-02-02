@@ -77,6 +77,13 @@ else {
 	echo "<tr><th>".$LANGTRACKER["setup"][3];
 	echo "</th></tr>";
 
+	/* Profiles */
+	if (haveRight("config","w") && haveRight("profile","w")){
+	echo "<tr class='tab_bg_1'><td align='center'>";
+	echo "<a href=\"./plugin_tracker.profile.php\">".$LANGTRACKER["profile"][0]."</a>";
+	echo "</td></tr>";
+	}
+
 	/* Fonctionalities */
 	echo "<tr class='tab_bg_1'><td align='center'>";
 	echo "<a href=\"./plugin_tracker.functionalities.form.php\">".$LANGTRACKER["functionalities"][0]."</a>";
