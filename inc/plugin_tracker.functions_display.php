@@ -110,7 +110,7 @@ function plugin_tracker_Bar ($pourcentage, $message="")
 //	echo "<div class='doaction_cadre' style='height: 20px; '><div  style='width: ".$pourcentage."%;' class='doaction_progress'>".
 //  			"<div class='doaction_pourcent' style='margin-top: 3px; '>".$pourcentage."% ".$message."</div></div></div> ";
 
-	echo "<div class='center'>
+	echo "<div>
 				<table class='tab_cadre' width='400'>
 					<tbody>
 						<tr>
@@ -118,8 +118,12 @@ function plugin_tracker_Bar ($pourcentage, $message="")
 						</tr>
 						<tr>
 							<td>
+								<div>
 								<table>
 									<tbody>
+										<tr>
+											<td width='400' height='0' colspan='2'></td>										
+										</tr>
 										<tr>
 											<td bgcolor='";
 		if ($pourcentage >= 80)
@@ -129,6 +133,7 @@ function plugin_tracker_Bar ($pourcentage, $message="")
 		else 
 			echo "green";
 		echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>
+											<td></td>
 										</tr>
 									</tbody>
 								</table>
