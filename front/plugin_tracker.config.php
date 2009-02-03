@@ -68,7 +68,7 @@ if(!isset($_SESSION["glpi_plugin_tracker_installed"]) || $_SESSION["glpi_plugin_
 			echo "<tr><th>".$LANGTRACKER["setup"][3];
 			echo "</th></tr>";
 			echo "<tr class='tab_bg_1'><td>";
-			echo "<a href='plugin_tracker.install.php'>".$LANGTRACKER["setup"][4]."</a></td></tr>";
+			echo "<a href='plugin_tracker.install.php'>".$LANGTRACKER["setup"][5]."</a></td></tr>";
 			echo "</table></div>";
 		}
 		

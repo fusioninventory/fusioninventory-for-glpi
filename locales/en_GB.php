@@ -58,13 +58,15 @@ $LANGTRACKER["profile"][18]="SNMP printers";
 $LANGTRACKER["profile"][19]="Models SNMP";
 $LANGTRACKER["profile"][20]="Authentification SNMP";
 $LANGTRACKER["profile"][21]="Scripts informations";
-$LANGTRACKER["profile"][22]="Networki discover";
+$LANGTRACKER["profile"][22]="Networking discover";
 $LANGTRACKER["profile"][23]="General configuration";
+$LANGTRACKER["profile"][24]="SNMP model";
 
 
 $LANGTRACKER["setup"][2]="Thanks to put in racine entity (see all)";
 $LANGTRACKER["setup"][3]="Configuration of plugin ".$title;
 $LANGTRACKER["setup"][4]="Install plugin $title $version";
+$LANGTRACKER["setup"][5]="Update plugin $title to version $version";
 $LANGTRACKER["setup"][6]="Uninstall plugin $title $version";
 $LANGTRACKER["setup"][8]="Attention, uninstallation of plugin is irreversible.<br> You loose all datas.";
 $LANGTRACKER["setup"][11]="Instructions";
@@ -107,6 +109,7 @@ $LANGTRACKER["functionalities"][43]="SNMP authentification";
 
 $LANGTRACKER["functionalities"][50]="Number of simultaneous process for the discovery network";
 $LANGTRACKER["functionalities"][51]="Number of simultaneous process for querying SNMP";
+$LANGTRACKER["functionalities"][52]="Log files activation";
 
 $LANGTRACKER["snmp"][0]="SNMP information equipment";
 $LANGTRACKER["snmp"][1]="Général";
@@ -134,6 +137,7 @@ $LANGTRACKER["snmp"][48]="Number of bytes sent";
 $LANGTRACKER["snmp"][49]="Number of errors in reception";
 $LANGTRACKER["snmp"][50]="Connection";
 $LANGTRACKER["snmp"][51]="Duplex";
+$LANGTRACKER["snmp"][52]="Date of last TRACKER inventory";
 
 $LANGTRACKER["snmpauth"][1]="Community";
 $LANGTRACKER["snmpauth"][2]="User";
@@ -163,6 +167,8 @@ $LANGTRACKER["errors"][21]="Unable to retrieve information";
 
 $LANGTRACKER["errors"][30]="Wiring error";
 $LANGTRACKER["errors"][31]="Wiring problem";
+
+$LANGTRACKER["errors"][101]="Timeout";
 
 
 $LANGTRACKER["prt_history"][0]="History and Statistics counters printer";
@@ -347,6 +353,7 @@ $LANGTRACKER["mapping"][403]="networking > contact";
 $LANGTRACKER["mapping"][404]="networking > comments";
 $LANGTRACKER["mapping"][405]="printer > contact";
 $LANGTRACKER["mapping"][406]="printer > comments";
+$LANGTRACKER["mapping"][407]="printer > port > IP address";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
