@@ -40,7 +40,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 if (haveRight("config","w") && haveRight("profile","w")){
 
 	if(!TableExists("glpi_plugin_tracker_config")){
-	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
 		plugin_tracker_install();
 		plugin_tracker_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
 		$config = new plugin_tracker_config();
@@ -52,7 +52,9 @@ if (haveRight("config","w") && haveRight("profile","w")){
 		$discovery = new plugin_tracker_discovery;
 		$discovery->initConfig();
 		plugin_tracker_initSession();
-	}
+	}elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs"))
+		plugin_tracker_update("1.1.0");
+		
 	glpi_header($_SERVER['HTTP_REFERER']);
 }else{
 
