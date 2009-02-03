@@ -1149,6 +1149,8 @@ function plugin_tracker_snmp_port_ifaddr($ArraySNMPPort_Object_result,$IP,$snmp_
 	$snmp_queries = new plugin_tracker_snmp;
 	$logs = new plugin_tracker_logs;
 
+	$logs->write("tracker_fullsync",">>>>>>>>>> Get IP of ports in device <<<<<<<<<<",$IP,1);
+
 	// Get ifaddr
 	$ArrayOIDifaddr = $snmp_queries->GetOID($snmp_model_ID,"oid_port_dyn='1' AND mapping_name='ifaddr'");
 	if ($ArrayOIDifaddr)
