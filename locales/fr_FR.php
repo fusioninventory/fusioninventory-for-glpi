@@ -66,6 +66,7 @@ $LANGTRACKER["profile"][24]="Modèle SNMP";
 $LANGTRACKER["setup"][2]="Merci de vous placer sur l'entité racine (voir tous)";
 $LANGTRACKER["setup"][3]="Configuration du plugin ".$title;
 $LANGTRACKER["setup"][4]="Installer le plugin $title $version";
+$LANGTRACKER["setup"][4]="Mettre à jour le plugin $title vers la version $version";
 $LANGTRACKER["setup"][6]="Désinstaller le plugin $title $version";
 $LANGTRACKER["setup"][8]="Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
 $LANGTRACKER["setup"][11]="Mode d'emploi";

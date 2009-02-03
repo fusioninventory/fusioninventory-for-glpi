@@ -62,6 +62,14 @@ if(!isset($_SESSION["glpi_plugin_tracker_installed"]) || $_SESSION["glpi_plugin_
 			echo "<tr class='tab_bg_1'><td>";
 			echo "<a href='plugin_tracker.install.php'>".$LANGTRACKER["setup"][4]."</a></td></tr>";
 			echo "</table></div>";
+		}elseif (TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs")) {
+			echo "<div align='center'>";
+			echo "<table class='tab_cadre' cellpadding='5'>";
+			echo "<tr><th>".$LANGTRACKER["setup"][3];
+			echo "</th></tr>";
+			echo "<tr class='tab_bg_1'><td>";
+			echo "<a href='plugin_tracker.install.php'>".$LANGTRACKER["setup"][4]."</a></td></tr>";
+			echo "</table></div>";
 		}
 		
 	}else{
