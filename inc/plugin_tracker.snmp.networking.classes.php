@@ -248,7 +248,7 @@ class plugin_tracker_networking extends CommonDBTM
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
 			echo "<td align='center'>";
-			plugin_tracker_Bar($data["cpu"]);
+			plugin_tracker_Bar($data["cpu"],'','inverse');
 			echo "</td>";
 			echo "</tr>";	
 		}
@@ -270,7 +270,7 @@ class plugin_tracker_networking extends CommonDBTM
 			}else {
 				$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
 			}
-			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)"); 
+			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)",'inverse'); 
 			echo "</td>";
 			echo "</tr>";
 		}

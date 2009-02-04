@@ -105,7 +105,7 @@ function plugin_tracker_mib_management()
 
 
 
-function plugin_tracker_Bar ($pourcentage, $message="")
+function plugin_tracker_Bar ($pourcentage, $message="",$order='')
 {
 //	echo "<div class='doaction_cadre' style='height: 20px; '><div  style='width: ".$pourcentage."%;' class='doaction_progress'>".
 //  			"<div class='doaction_pourcent' style='margin-top: 3px; '>".$pourcentage."% ".$message."</div></div></div> ";
@@ -126,12 +126,24 @@ function plugin_tracker_Bar ($pourcentage, $message="")
 										</tr>
 										<tr>
 											<td bgcolor='";
-		if ($pourcentage < 20)
-			echo "red";
-		else if($pourcentage < 40)
-			echo "orange";
-		else 
-			echo "green";
+		if ($order!= '')
+		{
+			if ($pourcentage > 80)
+				echo "red";
+			else if($pourcentage > 60)
+				echo "orange";
+			else 
+				echo "green";
+		}
+		else
+		{
+			if ($pourcentage < 20)
+				echo "red";
+			else if($pourcentage < 40)
+				echo "orange";
+			else 
+				echo "green";
+		}
 		echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>
 											<td></td>
 										</tr>
