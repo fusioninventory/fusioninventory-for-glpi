@@ -32,6 +32,21 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+Version 1.1.0
+
+- Ajout d'une option pour l'activation des logs (spécialement pour tracker)
+- Meilleure écriture des logs
+- Ajout des imprimantes en multiprocess 
+- correction nettoyages de fonctions
+
+
+- Add option for log activation (specially for tracker)
+- enhance logs writes
+- add printer in multi-process
+- corrections and clean functions
+
+
+
 Version 1.0.0:
 
 Requêtes SNMP : 
