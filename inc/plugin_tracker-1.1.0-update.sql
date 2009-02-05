@@ -13,6 +13,8 @@ ALTER TABLE `glpi0715`.`glpi_plugin_tracker_mib_networking` ADD INDEX `FK_model_
 ALTER TABLE `glpi0715`.`glpi_plugin_tracker_mib_networking` DROP INDEX `FK_model_infos_3` ,
 ADD INDEX `FK_model_infos_3` ( `FK_model_infos` , `oid_port_counter` , `mapping_name` ) ;
 
+ALTER TABLE `glpi_plugin_tracker_networking_ifaddr` ADD INDEX ( `ifaddr` ) ;
+
 CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,

@@ -609,7 +609,7 @@ function tracker_snmp_UpdateGLPIDevice($IP,$ArraySNMP_Object_result,$Array_Objec
 				$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 				SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
 				WHERE ".$Field."='".$ID_Device."'";
-	
+
 				$DB->query($queryUpdate);
 			}
 			else
@@ -720,6 +720,7 @@ function UpdateGLPINetworkingPorts($IP,$ArraySNMPPort_Object_result,$Array_Objec
 					$query_select = "SELECT ".$TRACKER_MAPPING[$object_type][$object_name]['field']."
 					FROM ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 					WHERE ".$ID_field."='".$data["ID"]."'";
+
 					$result_select=$DB->query($query_select);
 					if ($DB->numrows($result_select) != "0")
 						$SNMPValue_old = $DB->result($result_select, 0, $TRACKER_MAPPING[$object_type][$object_name]['field']);
@@ -735,7 +736,7 @@ function UpdateGLPINetworkingPorts($IP,$ArraySNMPPort_Object_result,$Array_Objec
 						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$object_type][$object_name]['table']."
 						SET ".$TRACKER_MAPPING[$object_type][$object_name]['field']."='".$SNMPValue."' 
 						WHERE ".$ID_field."='".$data["ID"]."'";
-	
+
 						$DB->query($queryUpdate);
 						// Delete port wire if port is internal disable
 						if (($object_name == "ifinternalstatus") AND (($SNMPValue == "2") OR ($SNMPValue == "down(2)")))
