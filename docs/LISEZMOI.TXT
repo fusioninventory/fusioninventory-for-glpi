@@ -41,7 +41,6 @@ Ce plugin vous permet de récupérer des infos des équipements réseau via SNMP
 Compatibilité 0.71.3
 Le plugin nécessite obligatoirement PHP5 ou supérieur !
 Le plugin nécessite obligatoirement php5-SNMP (de préférence la version 5.x mais fonctionne en version 4.x).
-Le plugin nécessite obligatoirement php5-runkit  (version 0.9)
 
 2 - Installation
 
