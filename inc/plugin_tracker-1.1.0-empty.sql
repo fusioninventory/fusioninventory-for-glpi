@@ -228,7 +228,8 @@ CREATE TABLE `glpi_plugin_tracker_mib_networking` (
   PRIMARY KEY (`ID`),
   KEY `FK_model_infos` (`FK_model_infos`),
   KEY `FK_model_infos_2` (`FK_model_infos`,`oid_port_dyn`),
-  KEY `FK_model_infos_3` (`FK_model_infos`,`oid_port_counter`)
+  KEY `FK_model_infos_3` (`FK_model_infos`,`oid_port_counter`,`mapping_name`),
+  KEY `FK_model_infos_4` (`FK_model_infos`,`mapping_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -292,7 +293,8 @@ CREATE TABLE `glpi_plugin_tracker_networking_ports` (
   `ifdescr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `portduplex` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `trunk` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `FK_networking_ports` (`FK_networking_ports`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
