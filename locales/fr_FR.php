@@ -169,7 +169,8 @@ $LANGTRACKER["errors"][30]="Erreur Câblage";
 $LANGTRACKER["errors"][31]="Problème de câblage";
 
 $LANGTRACKER["errors"][101]="Timeout";
-
+$LANGTRACKER["errors"][102]="Modele SNMP non assigné";
+$LANGTRACKER["errors"][103]="Authentification SNMP non assigné";
 
 $LANGTRACKER["prt_history"][0]="Historique et Statistiques des compteurs imprimante";
 

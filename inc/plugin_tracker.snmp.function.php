@@ -197,7 +197,11 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 		$snmp_model_ID = '';
 		$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID_Device,$type);
 
-		if (($snmp_model_ID != "") && ($snmp_model_ID != 0) && ($ID_Device != ""))
+		// ** Get snmp version and authentification
+		$snmp_auth = $plugin_tracker_snmp_auth->GetInfos($ID_Device,$xml_auth_rep,$type);
+		$snmp_version = $snmp_auth["snmp_version"];
+
+		if (($snmp_model_ID != "") && ($snmp_model_ID != 0) && ($ID_Device != "") && (!empty($snmp_version)))
 		{
 			// ** Get oid of PortName
 			$Array_Object_oid_ifName = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_counter='0' AND mapping_name='ifName'");
@@ -209,10 +213,6 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 
 			// ** Get OIDs
 			$Array_Object_oid = $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0'");
-
-			// ** Get snmp version and authentification
-			$snmp_auth = $plugin_tracker_snmp_auth->GetInfos($ID_Device,$xml_auth_rep,$type);
-			$snmp_version = $snmp_auth["snmp_version"];
 
 			// ** Get from SNMP, description of equipment
 			$Array_sysdescr = $plugin_tracker_snmp->SNMPQuery(array("sysDescr"=>".1.3.6.1.2.1.1.1.0"),$ifIP,$snmp_version,$snmp_auth);
@@ -283,7 +283,14 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ArrayDevice,$FK_process = 0,
 		}
 		else
 		{
-			$processes_values["errors"]++;
+			if ($ID_Device != "")
+			{
+				$processes_values["errors"]++;
+				if (empty($snmp_version))
+					$processes->addProcessValues($FK_process,"snmp_errors",0,"103%IP : ".$ifIP."-- [model".$snmp_model_ID."] ",$ID_Device,$type);
+				if (($snmp_model_ID = "") OR ($snmp_model_ID == 0))
+					$processes->addProcessValues($FK_process,"snmp_errors",0,"102%IP : ".$ifIP."--SNMP version : ".$snmp_version." ",$ID_Device,$type);
+			}
 		}
 	}
 	return $processes_values;

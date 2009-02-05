@@ -169,7 +169,8 @@ $LANGTRACKER["errors"][30]="Wiring error";
 $LANGTRACKER["errors"][31]="Wiring problem";
 
 $LANGTRACKER["errors"][101]="Timeout";
-
+$LANGTRACKER["errors"][102]="No SNMP model assigned";
+$LANGTRACKER["errors"][103]="No SNMP authentification assigned";
 
 $LANGTRACKER["prt_history"][0]="History and Statistics counters printer";
 
