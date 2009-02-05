@@ -273,6 +273,18 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 		case "glpi_plugin_tracker_snmp_connection.FK_snmp_connection" :
 			$out = getDropdownName("glpi_plugin_tracker_snmp_connection", $data["ITEM_$num"], 0);
 			return $out;
+		case "glpi_plugin_tracker_snmp_connection.auth_passphrase" :
+			if (empty($data["ITEM_$num"]))
+				$out = "";
+			else
+				$out = "********";
+			return $out;
+		case "glpi_plugin_tracker_snmp_connection.priv_passphrase" :
+			if (empty($data["ITEM_$num"]))
+				$out = "";
+			else
+				$out = "********";
+			return $out;
 		case "glpi_plugin_tracker_errors.device_type" :
 			switch ($data["ITEM_$num"]) {
 				case COMPUTER_TYPE :
