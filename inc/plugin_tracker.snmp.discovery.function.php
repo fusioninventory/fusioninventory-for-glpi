@@ -73,25 +73,25 @@ function plugin_tracker_discovery_startmenu($target)
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' rowspan='2'>".$LANGTRACKER["discovery"][0]."</td>";
 	echo "<td align='center'>";
-	dropdownInteger("ip11", $ifaddr_start_1, 0, 254);
+	dropdownInteger("ip11", $ifaddr_start_1, 0, 255);
 	echo " . ";
-	dropdownInteger("ip12", $ifaddr_start_2, 0, 254);
+	dropdownInteger("ip12", $ifaddr_start_2, 0, 255);
 	echo " . ";
-	dropdownInteger("ip13", $ifaddr_start_3, 0, 254);
+	dropdownInteger("ip13", $ifaddr_start_3, 0, 255);
 	echo " . ";
-	dropdownInteger("ip14", $ifaddr_start_4, 0, 254);
+	dropdownInteger("ip14", $ifaddr_start_4, 0, 255);
 	echo "</td>";
 	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center'>";
-	dropdownInteger("ip21", $ifaddr_end_1, 0, 254);
+	dropdownInteger("ip21", $ifaddr_end_1, 0, 255);
 	echo " . ";
-	dropdownInteger("ip22", $ifaddr_end_2, 0, 254);
+	dropdownInteger("ip22", $ifaddr_end_2, 0, 255);
 	echo " . ";
-	dropdownInteger("ip23", $ifaddr_end_3, 0, 254);
+	dropdownInteger("ip23", $ifaddr_end_3, 0, 255);
 	echo " . ";
-	dropdownInteger("ip24", $ifaddr_end_4, 0, 254);
+	dropdownInteger("ip24", $ifaddr_end_4, 0, 255);
 	echo "</td>";
 	echo "</tr>";
 
