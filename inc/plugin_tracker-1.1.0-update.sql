@@ -8,9 +8,9 @@ ALTER TABLE `glpi_plugin_tracker_networking_ports` ADD INDEX ( `FK_networking_po
 
 ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD INDEX ( `FK_model_infos` );
 
-ALTER TABLE `glpi0715`.`glpi_plugin_tracker_mib_networking` ADD INDEX `FK_model_infos_4` ( `FK_model_infos` , `mapping_name` ); 
+ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD INDEX `FK_model_infos_4` ( `FK_model_infos` , `mapping_name` ); 
 
-ALTER TABLE `glpi0715`.`glpi_plugin_tracker_mib_networking` DROP INDEX `FK_model_infos_3` ,
+ALTER TABLE `glpi_plugin_tracker_mib_networking` DROP INDEX `FK_model_infos_3` ,
 ADD INDEX `FK_model_infos_3` ( `FK_model_infos` , `oid_port_counter` , `mapping_name` ) ;
 
 ALTER TABLE `glpi_plugin_tracker_networking_ifaddr` ADD INDEX ( `ifaddr` ) ;
