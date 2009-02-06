@@ -41,22 +41,25 @@ function plugin_tracker_initSession() {
 	global $DB;
 	
 	if(TableExists("glpi_plugin_tracker_config")){
-		$profile=new plugin_tracker_Profile();
-	
-		$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
-		$result = $DB->query($query);
-		$_SESSION['glpi_plugin_tracker_profile'] = array ();
-		if ($DB->numrows($result)) {
-			while ($data = $DB->fetch_assoc($result)) {
-				$profile->fields = array ();
-				if(isset($_SESSION["glpiactiveprofile"]["ID"])){
-					$profile->getFromDB($_SESSION["glpiactiveprofile"]["ID"]);
-					$_SESSION['glpi_plugin_tracker_profile'] = $profile->fields;
-				}else{
-					$profile->getFromDB($data['ID']);
-					$_SESSION['glpi_plugin_tracker_profile'] = $profile->fields;
+		
+		if (FieldExists("glpi_plugin_tracker_config","logs")){
+			$profile=new plugin_tracker_Profile();
+		
+			$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
+			$result = $DB->query($query);
+			$_SESSION['glpi_plugin_tracker_profile'] = array ();
+			if ($DB->numrows($result)) {
+				while ($data = $DB->fetch_assoc($result)) {
+					$profile->fields = array ();
+					if(isset($_SESSION["glpiactiveprofile"]["ID"])){
+						$profile->getFromDB($_SESSION["glpiactiveprofile"]["ID"]);
+						$_SESSION['glpi_plugin_tracker_profile'] = $profile->fields;
+					}else{
+						$profile->getFromDB($data['ID']);
+						$_SESSION['glpi_plugin_tracker_profile'] = $profile->fields;
+					}
+					$_SESSION["glpi_plugin_tracker_installed"]=1;
 				}
-				$_SESSION["glpi_plugin_tracker_installed"]=1;
 			}
 		}
 	}
