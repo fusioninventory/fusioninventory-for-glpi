@@ -407,6 +407,7 @@ $LANGTRACKER["mapping"][156]="Kit de maintenance";
 $LANGTRACKER["printer"][0]="pages";
 
 $LANGTRACKER["menu"][0]="Découverte de matériel réseau";
+$LANGTRACKER["menu"][1]="Gestion des agents";
 
 $LANGTRACKER["buttons"][0]="Découvrir";
 

@@ -221,6 +221,20 @@ function plugin_tracker_getSearchOption()
 	
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][13]['name'] = $LANGTRACKER["snmp"][50];
 
+
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS]['common'] = $LANGTRACKER["errors"][0];
+
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['name'] = $LANG["common"][2];
+
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['linkfield'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['name'] = $LANG["common"][16];
+
+
 	return $sopt;
 }
 
