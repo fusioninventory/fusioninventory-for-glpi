@@ -78,6 +78,7 @@ function plugin_tracker_update($version) {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
 		$DB->query($sql_line);
 	}
+	plugin_tracker_initSession();
 }
 
 
