@@ -6,8 +6,6 @@ ALTER TABLE `glpi_plugin_tracker_printers` ADD `last_tracker_update` DATETIME NU
 
 ALTER TABLE `glpi_plugin_tracker_networking_ports` ADD INDEX ( `FK_networking_ports` );
 
-ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD INDEX ( `FK_model_infos` );
-
 ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD INDEX `FK_model_infos_4` ( `FK_model_infos` , `mapping_name` ); 
 
 ALTER TABLE `glpi_plugin_tracker_mib_networking` DROP INDEX `FK_model_infos_3` ,
