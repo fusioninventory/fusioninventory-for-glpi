@@ -48,6 +48,7 @@ function plugin_init_tracker() {
 
 	pluginNewType('tracker', "PLUGIN_TRACKER_PRINTERS_CARTRIDGES", 5156, "plugin_tracker_printers", "glpi_plugin_tracker_printers_cartridges", "front/plugin_tracker.printer_info.form.php",$LANG["cartridges"][0]);
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS", 5157, "plugin_tracker_networking", "glpi_networking_ports");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AGENTS", 5158, "plugin_tracker_agents", "glpi_plugin_tracker_agents", "front/plugin_tracker.agents.php");
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
@@ -83,7 +84,9 @@ function plugin_init_tracker() {
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.php';
 					}
-						
+					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['agents'] = 'front/plugin_tracker.agents.form.php?add=1';
+					$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['agents'] = 'front/plugin_tracker.agents.php';
+
 					$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
 			}
 		}

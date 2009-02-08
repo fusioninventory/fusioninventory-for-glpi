@@ -38,16 +38,16 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","models");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
 
-plugin_tracker_checkRight("snmp_models","r");
 
-manageGetValuesInSearch(PLUGIN_TRACKER_MODEL);
 
-$_GET['target']="plugin_tracker.models.php";
+manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_AGENTS);
 
-searchForm(PLUGIN_TRACKER_MODEL,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-showList(PLUGIN_TRACKER_MODEL,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+$_GET['target']="plugin_tracker.agents.php";
+
+searchForm(PLUGIN_TRACKER_SNMP_AGENTS,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+showList(PLUGIN_TRACKER_SNMP_AGENTS,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 
 
 commonFooter();
