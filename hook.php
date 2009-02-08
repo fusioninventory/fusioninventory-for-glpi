@@ -234,6 +234,46 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['name'] = $LANG["common"][16];
 
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][3]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][3]['field'] = 'ifaddr_start';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][3]['linkfield'] = 'ifaddr_start';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][3]['name'] = $LANGTRACKER["agents"][0];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][4]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][4]['field'] = 'ifaddr_end';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][4]['linkfield'] = 'ifaddr_end';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][4]['name'] = $LANGTRACKER["agents"][1];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][5]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][5]['field'] = 'nb_process_query';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][5]['linkfield'] = 'nb_process_query';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][5]['name'] = $LANGTRACKER["agents"][2];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['field'] = 'nb_process_discovery';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['linkfield'] = 'nb_process_discovery';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['name'] = $LANGTRACKER["agents"][3];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][7]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][7]['field'] = 'last_agent_update';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][7]['linkfield'] = 'last_agent_update';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][7]['name'] = $LANGTRACKER["agents"][4];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['field'] = 'tracker_agent_version';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['linkfield'] = 'tracker_agent_version';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['name'] = $LANGTRACKER["agents"][5];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['field'] = 'lock';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['linkfield'] = 'lock';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['name'] = $LANGTRACKER["agents"][6];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['field'] = 'logs';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['linkfield'] = 'logs';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['name'] = $LANG["Menu"][30];
+
 
 	return $sopt;
 }
