@@ -34,17 +34,20 @@
 
 Version 1.1.0
 
-- Ajout d'une option pour l'activation des logs (spécialement pour tracker)
-- Meilleure écriture des logs
-- Ajout des imprimantes en multiprocess 
+- #173 Ajout d'une option pour l'activation des logs (spécialement pour tracker)
+- #174 Meilleure écriture des logs
+- #170 Ajout des imprimantes en multiprocess 
 - correction nettoyages de fonctions
+- #177 suppression de le dépendance Runkit
+- #166 Correction assignation de l'authentification SNMP en mode de stockage fichiers
 
 
-- Add option for log activation (specially for tracker)
-- enhance logs writes
-- add printer in multi-process
+- #173 Add option for log activation (specially for tracker)
+- #174 enhance logs writes
+- #170 add printer in multi-process
 - corrections and clean functions
-
+- #177 remove Runkit dependancy
+- #166 Assign auth when use SNMP File authentification
 
 
 Version 1.0.0:
