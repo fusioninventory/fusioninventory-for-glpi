@@ -338,6 +338,8 @@ function tracker_snmp_GetOIDPorts($snmp_model_ID,$IP,$IDNetworking,$ArrayPort_Lo
 	$logs->write("tracker_fullsync","oid port counter : ".$object." = ".$portcounter,$IP,1);
 
 	// Get object => oid of type of port (generaly ifType) from SNMP model
+	$object_ifType = '';
+	$oid_ifType = '';
 	foreach ($Array_Object_oid_ifType as $key=>$value)
 	{
 		$object_ifType = $key;
