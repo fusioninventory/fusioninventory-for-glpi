@@ -46,5 +46,21 @@ class plugin_tracker_agents extends CommonDBTM
 		$this->type = PLUGIN_TRACKER_SNMP_AGENTS;
 	}
 
+	function PushData($ID, $key)
+	{
+		$this->getFromDB($ID);
+		// Name of server
+		// $this->fields["name"];
+		
+		$xml = "<snmp>\n";
+		// ** boucle sur les équipements réseau
+		// ** détection des équipements avec le bon status et l'IP dans la plage de l'agent
+		//  Ecriture du fichier xml pour l'envoi à l'agent
+	
+		$xml .= "</snmp>\n";
+		// Affichage du fichier xml pour que l'agent récupère les paramètres
+		echo $xml;
+	}
+
 }
 ?>

@@ -420,8 +420,8 @@ $LANGTRACKER["discovery"][5]="Nombre de matériels importés";
 
 $LANGTRACKER["agents"][0]="Début de la plage IP";
 $LANGTRACKER["agents"][1]="Fin de la plage IP";
-$LANGTRACKER["agents"][2]="Nombre de process interrogation";
-$LANGTRACKER["agents"][3]="Nombre de process découverte";
+$LANGTRACKER["agents"][2]="Nb process interrogation";
+$LANGTRACKER["agents"][3]="Nb process découverte";
 $LANGTRACKER["agents"][4]="Dernière remontée";
 $LANGTRACKER["agents"][5]="Version de l'agent";
 $LANGTRACKER["agents"][6]="Verrouillage";
