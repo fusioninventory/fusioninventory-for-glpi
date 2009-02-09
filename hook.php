@@ -274,6 +274,11 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['linkfield'] = 'logs';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['name'] = $LANG["Menu"][30];
 
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][11]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][11]['field'] = 'FK_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][11]['linkfield'] = 'FK_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][11]['name'] = $LANG["entity"][0];
+
 
 	return $sopt;
 }
@@ -415,6 +420,17 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out .= "</td>";
 			return $out;
 			break;
+		case "glpi_plugin_tracker_agents.logs" :
+			$ArrayValues[]= $LANG["choice"][0];
+			$ArrayValues[]= $LANG["choice"][1];
+			$ArrayValues[]= $LANG["setup"][137];
+			$out = $ArrayValues[$data["ITEM_$num"]];
+			return $out;
+			break;
+//		case "glpi_plugin_tracker_agents.FK_entities" :
+//			$out = 
+//			return $out;
+//			break;
 	}
 
 	if (($type == PLUGIN_TRACKER_MODEL) AND ($linkfield == "EXPORT")) {
@@ -424,7 +440,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 					</form></div>";
 		return $out;
 	}
-	return "";
+	return "<center>".$data["ITEM_$num"]."</center>";
 }
 // Define Dropdown tables to be manage in GLPI :
 function plugin_tracker_getDropdown()
