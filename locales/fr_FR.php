@@ -408,6 +408,7 @@ $LANGTRACKER["printer"][0]="pages";
 
 $LANGTRACKER["menu"][0]="Découverte de matériel réseau";
 $LANGTRACKER["menu"][1]="Gestion des agents";
+$LANGTRACKER["menu"][2]="Plages IP";
 
 $LANGTRACKER["buttons"][0]="Découvrir";
 
@@ -418,8 +419,9 @@ $LANGTRACKER["discovery"][3]="Découverte";
 $LANGTRACKER["discovery"][4]="Numéros de série";
 $LANGTRACKER["discovery"][5]="Nombre de matériels importés";
 
-$LANGTRACKER["agents"][0]="Début de la plage IP";
-$LANGTRACKER["agents"][1]="Fin de la plage IP";
+$LANGTRACKER["rangeip"][0]="Début de la plage IP";
+$LANGTRACKER["rangeip"][1]="Fin de la plage IP";
+
 $LANGTRACKER["agents"][2]="Nb process interrogation";
 $LANGTRACKER["agents"][3]="Nb process découverte";
 $LANGTRACKER["agents"][4]="Dernière remontée";
