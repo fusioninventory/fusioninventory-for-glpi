@@ -73,7 +73,9 @@ else if(isset($_POST['get_data']))
 $ID_agent = "1";
 
 	$xml->element[0]['snmp']['element']="";
-
+	
+	// ** Discovery
+	
 	$xml->element[1]['discovery']['element']="snmp";
 
 	// Get all range to scan if discovery is ON
@@ -84,8 +86,21 @@ $ID_agent = "1";
 	$xml->element[2]['rangeip']['linkfield']['ID'] = 'id';
 	$xml->element[2]['rangeip']['linkfield']['ifaddr_start'] = 'ipstart';
 	$xml->element[2]['rangeip']['linkfield']['ifaddr_end'] = 'ipend';
-
-
+	
+	$xml->element[2]['authentification']['element']="discovery";
+	$xml->element[2]['authentification']['SQL']="SELECT * FROM glpi_plugin_tracker_snmp_connection
+	LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID";
+	$xml->element[2]['authentification']['linkfield']['community'] = 'community';
+	$xml->element[2]['authentification']['linkfield']['name'] = 'version';
+	$xml->element[2]['authentification']['linkfield']['sec_name'] = 'sec_name';
+	$xml->element[2]['authentification']['linkfield']['sec_level'] = 'sec_level';
+	$xml->element[2]['authentification']['linkfield']['auth_protocol'] = 'auth_protocol';
+	$xml->element[2]['authentification']['linkfield']['auth_passphrase'] = 'auth_passphrase';
+	$xml->element[2]['authentification']['linkfield']['priv_protocol'] = 'priv_protocol';
+	$xml->element[2]['authentification']['linkfield']['priv_passphrase'] = 'priv_passphrase';
+	
+	// ** Devices queries
+	
 	$xml->element[1]['device']['element']="snmp";
 	$xml->element[1]['device']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
 	LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking";
