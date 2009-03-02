@@ -89,7 +89,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents` (
   `tracker_agent_version` varchar(255) DEFAULT NULL,
   `lock` int(1) NOT NULL DEFAULT '0',
   `logs` int(1) NOT NULL DEFAULT '0',
-  `FK_entities` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
