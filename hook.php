@@ -264,11 +264,6 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['linkfield'] = 'logs';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['name'] = $LANG["Menu"][30];
 
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['table'] = 'glpi_plugin_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['field'] = 'FK_entities';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['linkfield'] = 'FK_entities';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['name'] = $LANG["entity"][0];
-
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP]['common'] = $LANGTRACKER["errors"][0];
 
