@@ -285,7 +285,7 @@ function plugin_tracker_discovery_scan_process($ip1,$ip2,$ip3,$ip4)
 			$device_type = 0;
 			foreach ($TRACKER_MAPPING_DISCOVERY['discovery'] as $num_const=>$value_const)
 			{
-				$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
+				//$plugin_tracker_snmp->DefineObject(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4);
 				$Array_type = $plugin_tracker_snmp->SNMPQuery(array($TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']=>$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['oid']),$ip1.".".$ip2.".".$ip3.".".$ip4,$snmp_auth[$num]['snmp_version'],$snmp_auth[$num]);
 				if (($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != "")
 					AND ($Array_type[$TRACKER_MAPPING_DISCOVERY['discovery'][$num_const]['object']] != "[[empty]]")
@@ -345,7 +345,7 @@ function plugin_tracker_discovery_scan_serial()
 					break;
 				}
 			}
-			$plugin_tracker_snmp->DefineObject($Array_Object_oid_serialnumber);
+			//$plugin_tracker_snmp->DefineObject($Array_Object_oid_serialnumber);
 			$Array_serialnumber = $plugin_tracker_snmp->SNMPQuery($Array_Object_oid_serialnumber,$data['ifaddr'],$snmp_version,$snmp_auth2);
 			foreach($Array_serialnumber as $object=>$serial)
 			{
