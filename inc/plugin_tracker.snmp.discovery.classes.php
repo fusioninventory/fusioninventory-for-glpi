@@ -35,13 +35,14 @@
 
 class plugin_tracker_discovery extends CommonDBTM {
 
-	function plugin_tracker_discovery() {
-		$this->table="glpi_plugin_tracker_discover_conf";
-		$this->type=-1;
-	}	
+	function __construct()
+	{
+		$this->table = "glpi_plugin_tracker_discover";
+		$this->type = PLUGIN_TRACKER_SNMP_DISCOVERY;
+	}
 
 
-	function initConfig() {
+/*	function initConfig() {
 		global $DB;
 		
 		$query = "INSERT INTO ".$this->table." ".
@@ -49,5 +50,5 @@ class plugin_tracker_discovery extends CommonDBTM {
 				 "VALUES ('1', '192.168.0.1', '192.168.0.254', 0, 0)";
 		
 		$DB->query($query);
-	}
+	}*/
 }
