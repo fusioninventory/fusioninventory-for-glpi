@@ -511,6 +511,16 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = getYesNo($data["ITEM_$num"]);
 			return "<center>".$out."</center>";
 			break;
+		case "glpi_plugin_tracker_discover.type" :
+			$ci=new CommonItem();
+			$ci->setType($data["ITEM_$num"]);
+			$out=$ci->getType();
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_discover.FK_snmp_connection" :
+			$out = getDropdownName("glpi_plugin_tracker_snmp_connection",$data["ITEM_$num"]);
+			return "<center>".$out."</center>";
+			break;			
 		case "glpi_plugin_tracker_discover.FK_entities" :
 			$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
 			return "<center>".$out."</center>";
