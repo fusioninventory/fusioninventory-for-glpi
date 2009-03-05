@@ -178,6 +178,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discover` (
   `type` int(11) NOT NULL DEFAULT '0',
   `FK_model_infos` int(11) NOT NULL DEFAULT '0',
   `FK_snmp_connection` int(11) NOT NULL DEFAULT '0',
+  `FK_entities` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -536,3 +537,14 @@ INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALU
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5157', '11', '10', '0');
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5157', '12', '11', '0');
 INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5157', '13', '12', '0');
+
+
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '2', '1', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '3', '2', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '4', '3', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '5', '4', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '6', '5', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '7', '6', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '8', '7', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '9', '8', '0');
+INSERT INTO `glpi_display` ( `ID` , `type` , `num` , `rank` , `FK_users` )  VALUES (NULL,'5160', '10', '9', '0');

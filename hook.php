@@ -302,6 +302,60 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['linkfield'] = 'FK_entities_default';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['name'] = $LANG["entity"][0];
 
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY]['common'] = $LANGTRACKER["errors"][0];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['name'] = $LANG["common"][2];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['field'] = 'date';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['linkfield'] = 'date';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['name'] = $LANG["common"][27];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['field'] = 'ifaddr';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['linkfield'] = 'ifaddr';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['name'] = $LANG["networking"][14];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['linkfield'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['name'] = $LANG["common"][16];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['field'] = 'descr';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['linkfield'] = 'descr';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['name'] = $LANG["joblist"][6];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['field'] = 'serialnumber';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['linkfield'] = 'serialnumber';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['name'] = $LANG["common"][19];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['field'] = 'type';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['linkfield'] = 'type';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['name'] = $LANG["common"][17];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['field'] = 'FK_model_infos';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['linkfield'] = 'FK_model_infos';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['name'] = $LANGTRACKER["model_info"][4];
+
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['field'] = 'FK_snmp_connection';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['linkfield'] = 'FK_snmp_connection';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['name'] = $LANGTRACKER["model_info"][3];
+	
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'FK_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANG["entity"][0];	
+
+
 	return $sopt;
 }
 

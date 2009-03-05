@@ -90,6 +90,7 @@ $ID_agent = "1";
 	$xml->element[2]['authentification']['element']="discovery";
 	$xml->element[2]['authentification']['SQL']="SELECT * FROM glpi_plugin_tracker_snmp_connection
 	LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID";
+	$xml->element[2]['authentification']['linkfield']['ID'] = 'id';
 	$xml->element[2]['authentification']['linkfield']['community'] = 'community';
 	$xml->element[2]['authentification']['linkfield']['name'] = 'version';
 	$xml->element[2]['authentification']['linkfield']['sec_name'] = 'sec_name';
@@ -157,132 +158,6 @@ $ID_agent = "1";
 	$gzdata = gzencode($data, 9);
 	echo $gzdata;
 
-/* New structure
-<snmp>
-	<discovery>
-		<rangeip>
-			<id>2</id>
-			<ipstart>192.168.0.1</ipstart>	
-			<ipend>192.168.0.254</ipend>		
-		</rangeip>
-	</discovery>
-	<device>
-		<infos>
-			<ip>192.168.0.80</ip>
-			<id>2</id>
-			<entity>1</entity>
-		</infos>
-		<auth>
-			<community>public</community>
-			<version>2c</version>
-		</auth>
-		<get>
-			<object>ifNumber</object>
-			<oid>.1.3.6.1.2.1.2.1.0</oid>
-		</get>
-		<get>
-			<object>sysUpTime</object>
-			<oid>.1.3.6.1.2.1.1.3.0</oid>
-		</get>
-		<get>
-			<object>chassisId</object>
-			<oid>.1.3.6.1.4.1.9.3.6.3.0</oid>
-		</get>
-		<get>
-			<object>sysLocation</object>
-			<oid>.1.3.6.1.2.1.1.6.0</oid>
-		</get>
-		<get>
-			<object>freeMem</object>
-			<oid>.1.3.6.1.4.1.9.2.1.8.0</oid>
-		</get>
-		<walk>
-			<object>IF-MIB::ifSpeed</object>
-			<oid>.1.3.6.1.2.1.2.2.1.5</oid>
-		</walk>
-		<walk>
-			<object>IF-MIB::ifInOctets</object>
-			<oid>.1.3.6.1.2.1.2.2.1.10</oid>
-		</walk>
-		<walk>
-			<object>cpmCPUTotal5sec</object>
-			<oid>.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1</oid>
-		</walk>
-		<walk>
-			<object>IF-MIB::ifMtu</object>
-			<oid>.1.3.6.1.2.1.2.2.1.4</oid>
-		</walk>
-	</device>
-</snmp>
-
-
-
-</snmp>
-
-*/
-
-
-/*
-	$xml = "<snmp>\n";
-	$xml.= "	<device>\n";
-	
-	$xml.= "		<infos>\n";
-	$xml.= "			<ip>192.168.0.80</ip>\n";
-	$xml.= "			<id>2</id>\n";
-	$xml.= "			<entity>1</entity>\n";
-	$xml.= "		</infos>\n";
-	
-	$xml.= "		<auth>\n";
-	$xml.= "			<community>public</community>\n";
-	$xml.= "			<version>2c</version>\n";
-	$xml.= "		</auth>\n";
-	
-	$xml.= "		<get>\n";
-	$xml.= "			<object>ifNumber</object>\n";
-	$xml.= "			<oid>.1.3.6.1.2.1.2.1.0</oid>\n";
-	$xml.= "		</get>\n";
-	$xml.= "		<get>\n";
-	$xml.= "			<object>sysUpTime</object>\n";
-	$xml.= "			<oid>.1.3.6.1.2.1.1.3.0</oid>\n";
-	$xml.= "		</get>\n";
-	$xml.= "		<get>\n";
-	$xml.= "			<object>chassisId</object>\n";
-	$xml.= "			<oid>.1.3.6.1.4.1.9.3.6.3.0</oid>\n";
-	$xml.= "		</get>\n";
-	$xml.= "		<get>\n";
-	$xml.= "			<object>sysLocation</object>\n";
-	$xml.= "			<oid>.1.3.6.1.2.1.1.6.0</oid>\n";
-	$xml.= "		</get>\n";
-	$xml.= "		<get>\n";
-	$xml.= "			<object>freeMem</object>\n";
-	$xml.= "			<oid>.1.3.6.1.4.1.9.2.1.8.0</oid>\n";
-	$xml.= "		</get>\n";
-	
-	$xml.= "		<walk>\n";
-	$xml.= "			<object>IF-MIB::ifSpeed</object>\n";
-	$xml.= "			<oid>.1.3.6.1.2.1.2.2.1.5</oid>\n";
-	$xml.= "		</walk>\n";
-	$xml.= "		<walk>\n";
-	$xml.= "			<object>IF-MIB::ifInOctets</object>\n";
-	$xml.= "			<oid>.1.3.6.1.2.1.2.2.1.10</oid>\n";
-	$xml.= "		</walk>\n";
-	$xml.= "		<walk>\n";
-	$xml.= "			<object>cpmCPUTotal5sec</object>\n";
-	$xml.= "			<oid>.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1</oid>\n";
-	$xml.= "		</walk>\n";
-	$xml.= "		<walk>\n";
-	$xml.= "			<object>IF-MIB::ifMtu</object>\n";
-	$xml.= "			<oid>.1.3.6.1.2.1.2.2.1.4</oid>\n";
-	$xml.= "		</walk>\n";
-
-	$xml.= "	</device>\n";
-	$xml.= "</snmp>";
-	*/
-//	$gzdata = gzencode($xml, 9);
-//	echo $gzdata;
 }
-
-
-
 
 ?>
