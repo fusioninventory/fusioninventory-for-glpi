@@ -60,7 +60,7 @@ if((isset($_POST['import'])) AND (!empty($_POST['import'])))
 
 //plugin_tracker_discovery_startmenu($_SERVER["PHP_SELF"]);
 
-plugin_tracker_discovery_display_array($_SERVER["PHP_SELF"]);
+//plugin_tracker_discovery_display_array($_SERVER["PHP_SELF"]);
 
 // NEW 
 

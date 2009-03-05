@@ -350,8 +350,8 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['linkfield'] = 'FK_snmp_connection';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['name'] = $LANGTRACKER["model_info"][3];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_discover';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'FK_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_entities';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANG["entity"][0];	
 
@@ -525,7 +525,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = getDropdownName("glpi_plugin_tracker_snmp_connection",$data["ITEM_$num"]);
 			return "<center>".$out."</center>";
 			break;			
-		case "glpi_plugin_tracker_discover.FK_entities" :
+		case "glpi_entities.name" :
 			$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
 			return "<center>".$out."</center>";
 			break;			
@@ -854,7 +854,6 @@ function plugin_tracker_MassiveActionsDisplay($type, $action)
 function plugin_tracker_MassiveActionsProcess($data)
 {
 	global $LANG;
-
 	switch ($data['action']) {
 		case "plugin_tracker_assign_model" :
 			if ($data['device_type'] == NETWORKING_TYPE) {
@@ -895,5 +894,22 @@ function plugin_tracker_MassiveActionsProcess($data)
 			}
 			break;
 	}
+}
+
+// How to display specific update fields ?
+function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield){
+	global $LINK_ID_TABLE;
+	// Table fields
+	switch ($table.".".$field){
+		case 'glpi_entities.name':
+			dropdownValue("glpi_entities",$linkfield);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_discover.type' :
+			dropdownDeviceTypes($linkfield); // Modifier !!!!
+			return true;
+			break;
+	}
+	return false;
 }
 ?>
