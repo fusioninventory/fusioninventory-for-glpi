@@ -46,7 +46,7 @@ plugin_tracker_checkRight("snmp_scripts_infos","r");
 plugin_tracker_checkRight("snmp_discovery","r");
 
 plugin_tracker_phpextensions();
-echo plugin_tracker_menu();
+plugin_tracker_menu();
 
 commonFooter();
 
