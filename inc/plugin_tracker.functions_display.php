@@ -49,6 +49,7 @@ function plugin_tracker_menu()
 
 	if(plugin_tracker_HaveRight("snmp_scripts_infos","r"))
 		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'><b>".$LANGTRACKER["processes"][0]."</b></a></td></tr>";
+	echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'><b>".$LANGTRACKER["processes"][19]."</b></a></td></tr>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r"))
 		echo "<tr class='tab_bg_1'><td align='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'><b>".$LANGTRACKER["menu"][0]."</b></a></td></tr>";
 	echo "</table></div>";

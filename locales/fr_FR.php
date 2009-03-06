@@ -241,6 +241,7 @@ $LANGTRACKER["processes"][15]="Premier PID";
 $LANGTRACKER["processes"][16]="Dernier PID";
 $LANGTRACKER["processes"][17]="Date de la première détection";
 $LANGTRACKER["processes"][18]="Date de la dernière détection";
+$LANGTRACKER["processes"][19]="Informations sur l'exécution des agents";
 
 $LANGTRACKER["state"][0]="Démarrage de l'ordinateur";
 $LANGTRACKER["state"][1]="Arrêt de l'ordinateur";
