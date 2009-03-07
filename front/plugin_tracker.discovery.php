@@ -58,21 +58,10 @@ if((isset($_POST['import'])) AND (!empty($_POST['import'])))
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-//plugin_tracker_discovery_startmenu($_SERVER["PHP_SELF"]);
-
-//plugin_tracker_discovery_display_array($_SERVER["PHP_SELF"]);
-
-// NEW 
-
-
-
 manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_DISCOVERY);
-
 
 searchForm(PLUGIN_TRACKER_SNMP_DISCOVERY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 showList(PLUGIN_TRACKER_SNMP_DISCOVERY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
-
 
 commonFooter();
 

@@ -184,19 +184,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discover` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_tracker_discover_conf`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discover_conf` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `ifaddr_start` varchar(255) DEFAULT NULL,
-  `ifaddr_end` varchar(255) DEFAULT NULL,
-  `discover` int(11) NOT NULL DEFAULT '0',
-  `getserialnumber` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_tracker_errors`;
 
 CREATE TABLE `glpi_plugin_tracker_errors` (
