@@ -282,8 +282,8 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['linkfield'] = 'ID';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['table'] = 'glpi_plugin_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['table'] = 'glpi_plugin_tracker_rangeip';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['field'] = 'FK_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['linkfield'] = 'FK_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['name'] = $LANG["ocsng"][49];
 
@@ -507,6 +507,13 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = $ArrayValues[$data["ITEM_$num"]];
 			return "<center>".$out."</center>";
 			break;
+		case "glpi_plugin_tracker_rangeip.FK_tracker_agents" :
+			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
+			$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
+			$out .= "</a>";
+			return "<center>".$out."</center>";
+			break;	
+			
 		case "glpi_plugin_tracker_rangeip.discover" :
 			$out = getYesNo($data["ITEM_$num"]);
 			return "<center>".$out."</center>";
@@ -926,7 +933,16 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			dropdownDeviceTypes('type',$linkfield,$type_list);
 			return true;
 			break;
+		case 'glpi_plugin_tracker_rangeip.discover' :
+			dropdownYesNo('discover',$linkfield);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_rangeip.discover_getserialnumber' :
+			dropdownYesNo('discover_getserialnumber',$linkfield);
+			return true;
+			break;
 	}
 	return false;
+	
 }
 ?>
