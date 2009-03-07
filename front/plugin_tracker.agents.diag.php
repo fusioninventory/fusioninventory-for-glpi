@@ -62,6 +62,18 @@ if( isset($_POST['upload']) ) // si formulaire soumis
     {
         exit("Impossible de copier le fichier dans $content_dir");
     }
+    
+	$name_file_xml = str_replace(".gz", "", $name_file);
+	$string = implode("", gzfile($content_dir . $name_file));
+	$fp = fopen($content_dir . $name_file_xml, "w");
+	fwrite($fp, $string, strlen($string));
+	fclose($fp);
+
+	
+	// Open file for put it in DB
+	$importexport = new plugin_tracker_importexport;
+	$importexport->import_agentfile($content_dir.$name_file_xml);
+
 
     echo "Le fichier a bien été uploadé";  
 
