@@ -81,8 +81,6 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_agents`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `ifaddr_start` varchar(255) DEFAULT NULL,
-  `ifaddr_end` varchar(255) DEFAULT NULL,
   `nb_process_query` int(11) NOT NULL DEFAULT '1',
   `nb_process_discovery` int(11) NOT NULL DEFAULT '1',
   `last_agent_update` datetime DEFAULT NULL,

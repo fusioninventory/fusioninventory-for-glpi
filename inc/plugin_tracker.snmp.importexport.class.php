@@ -212,10 +212,19 @@ class plugin_tracker_importexport extends CommonDBTM
 		global $DB,$LANG,$LANGTRACKER;
 
 		$xml = simplexml_load_file($file);
+		foreach($xml->agent as $agent){
+			$agent_version = $agent->version;
+			$agent_id = $agent->id;
+			$query = "UPDATE glpi_plugin_tracker_agents 
+			SET last_agent_update='".$agent->date."', tracker_agent_version='".$agent_version."'
+			WHERE ID='".$agent_id."'";
+			
+			$DB->query($query);
+		}
 		foreach($xml->discovery as $discovery){
 			$query = "INSERT INTO glpi_plugin_tracker_discovery
-			(date,ifaddr,name,descr,serialnumber,type)
-			VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."')";
+			(date,ifaddr,name,descr,serialnumber,type,FK_agents)
+			VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."')";
 			
 			$DB->query($query);
 		}
