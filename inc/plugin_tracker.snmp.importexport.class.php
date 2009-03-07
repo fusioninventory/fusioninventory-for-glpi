@@ -205,6 +205,24 @@ class plugin_tracker_importexport extends CommonDBTM
 		}
 	}
 
+
+
+	function import_agentfile($file)
+	{
+		global $DB,$LANG,$LANGTRACKER;
+
+		$xml = simplexml_load_file($file);
+		foreach($xml->discovery as $discovery){
+			$query = "INSERT INTO glpi_plugin_tracker_discovery
+			(date,ifaddr,name,descr,serialnumber,type)
+			VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."')";
+			
+			$DB->query($query);
+		}
+	}
+
+
+
 }
 
 ?>

@@ -41,14 +41,4 @@ class plugin_tracker_discovery extends CommonDBTM {
 		$this->type = PLUGIN_TRACKER_SNMP_DISCOVERY;
 	}
 
-
-/*	function initConfig() {
-		global $DB;
-		
-		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, ifaddr_start, ifaddr_end, discover, getserialnumber) ".
-				 "VALUES ('1', '192.168.0.1', '192.168.0.254', 0, 0)";
-		
-		$DB->query($query);
-	}*/
 }

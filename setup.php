@@ -50,7 +50,7 @@ function plugin_init_tracker() {
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS", 5157, "plugin_tracker_networking", "glpi_networking_ports");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AGENTS", 5158, "plugin_tracker_agents", "glpi_plugin_tracker_agents", "front/plugin_tracker.agents.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_RANGEIP", 5159, "plugin_tracker_rangeip", "glpi_plugin_tracker_rangeip", "front/plugin_tracker.rangeip.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, "plugin_tracker_discovery", "glpi_plugin_tracker_discover", "front/plugin_tracker.discovery.php");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, "plugin_tracker_discovery", "glpi_plugin_tracker_discovery", "front/plugin_tracker.discovery.php");
 
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");

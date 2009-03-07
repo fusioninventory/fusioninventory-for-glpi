@@ -166,15 +166,17 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_config_snmp_printer` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_tracker_discover`;
+DROP TABLE IF EXISTS `glpi_plugin_tracker_discovery`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discover` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discovery` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FK_processes` int(11) NOT NULL DEFAULT '0',
+  `FK_agents` int(11) NOT NULL DEFAULT '0',
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ifaddr` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `descr` text,
-  `serialnumber` varchar(255) DEFAULT NULL,
+  `ifaddr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `descr` text COLLATE utf8_unicode_ci,
+  `serialnumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` int(11) NOT NULL DEFAULT '0',
   `FK_model_infos` int(11) NOT NULL DEFAULT '0',
   `FK_snmp_connection` int(11) NOT NULL DEFAULT '0',
