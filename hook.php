@@ -512,7 +512,12 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return $out;
 			break;
 		case "glpi_plugin_tracker_agents.name" :
-			return "<center><a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.form.php?ID=".$data['ID']."'>".$data["ITEM_$num"]."</a></center>";
+			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.form.php?ID=".$data['ID']."'>";
+			$out .= $data["ITEM_$num"];
+			if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+				$out .= " (" . $data["ID"] . ")";
+			$out .="</a>";
+			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_agents.lock" :
 			$out = getYesNo($data["ITEM_$num"]);
@@ -525,6 +530,13 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = $ArrayValues[$data["ITEM_$num"]];
 			return "<center>".$out."</center>";
 			break;
+		case "glpi_plugin_tracker_rangeip.name" :
+			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.rangeip.form.php?ID=".$data['ID']."'>";
+			$out .= $data["ITEM_$num"];
+			if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+				$out .= " (" . $data["ID"] . ")";
+			$out .="</a>";
+			return "<center>".$out."</center>";			break;
 		case "glpi_plugin_tracker_rangeip.FK_tracker_agents" :
 			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
 			$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
