@@ -37,7 +37,7 @@ class plugin_tracker_discovery extends CommonDBTM {
 
 	function __construct()
 	{
-		$this->table = "glpi_plugin_tracker_discover";
+		$this->table = "glpi_plugin_tracker_discovery";
 		$this->type = PLUGIN_TRACKER_SNMP_DISCOVERY;
 	}
 
