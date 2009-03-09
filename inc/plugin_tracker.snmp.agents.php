@@ -46,6 +46,7 @@ class plugin_tracker_agents extends CommonDBTM
 		$this->type = PLUGIN_TRACKER_SNMP_AGENTS;
 	}
 
+
 	function PushData($ID, $key)
 	{
 		$this->getFromDB($ID);
@@ -60,6 +61,92 @@ class plugin_tracker_agents extends CommonDBTM
 		$xml .= "</snmp>\n";
 		// Affichage du fichier xml pour que l'agent récupère les paramètres
 		echo $xml;
+	}
+
+
+	function showForm($target, $ID = '') {
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+
+		if ($ID!='')
+			$this->getFromDB($ID);
+		else
+			$this->getEmpty();
+
+		echo "<br>";
+		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+
+		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
+		echo $LANGTRACKER["agents"][0];
+		echo " :</th></tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][2] . "</td>";
+		echo "<td align='center'>";
+		dropdownInteger("nb_process_query", $this->fields["nb_process_query"],1,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][3] . "</td>";
+		echo "<td align='center'>";
+		dropdownInteger("nb_process_discovery", $this->fields["nb_process_discovery"],1,100);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][6] . "</td>";
+		echo "<td align='center'>";
+		dropdownYesNo("lock",$this->fields["lock"]);
+		echo "</td>";
+		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG["Menu"][30] . "</td>";
+		echo "<td align='center'>";
+		$ArrayValues[]= $LANG["choice"][0];
+		$ArrayValues[]= $LANG["choice"][1];
+		$ArrayValues[]= $LANG["setup"][137];
+		if (empty($this->fields["logs"]))
+			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[0]);
+		else	
+			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[$this->fields["logs"]]);
+		echo "</td>";
+		echo "</tr>";
+	
+		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		if ($ID=='')
+		{
+			echo "<input type='hidden' name='key' value=''/>";
+			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+		}
+		else
+		{
+			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
+		}
+		echo "</td></tr>";
+		echo "</table></form></div>";
+
+	}
+
+
+	
+	function export_config($ID)
+	{
+		global $DB,$CFG_GLPI;
+	
+		$this->getFromDB($ID);
+		echo "server=".$CFG_GLPI["url_base"]."/plugins/tracker/front/plugin_tracker.agents.diag.php\n";
+		echo "id=".$ID."\n";
+		echo "key=".$this->fields["key"]."\n";
 	}
 
 }

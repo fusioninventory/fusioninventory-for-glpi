@@ -222,7 +222,7 @@ $LANGTRACKER["mib"][6]="Compteur de ports";
 $LANGTRACKER["mib"][7]="Port dynamique (.x)";
 $LANGTRACKER["mib"][8]="Liaison champs";
 
-$LANGTRACKER["processes"][0]="Informations sur l'exécution des scripts";
+$LANGTRACKER["processes"][0]="Informations sur l'exécution du script serveur";
 $LANGTRACKER["processes"][1]="PID";
 $LANGTRACKER["processes"][2]="Statut";
 $LANGTRACKER["processes"][3]="Nombre de process";
@@ -424,10 +424,12 @@ $LANGTRACKER["discovery"][5]="Nombre de matériels importés";
 $LANGTRACKER["rangeip"][0]="Début de la plage IP";
 $LANGTRACKER["rangeip"][1]="Fin de la plage IP";
 
+$LANGTRACKER["agents"][0]="Agent SNMP";
 $LANGTRACKER["agents"][2]="Nb process interrogation";
 $LANGTRACKER["agents"][3]="Nb process découverte";
 $LANGTRACKER["agents"][4]="Dernière remontée";
 $LANGTRACKER["agents"][5]="Version de l'agent";
 $LANGTRACKER["agents"][6]="Verrouillage";
+$LANGTRACKER["agents"][7]="Export config agent";
 
 ?>

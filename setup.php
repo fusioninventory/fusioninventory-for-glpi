@@ -63,6 +63,11 @@ function plugin_init_tracker() {
 		if (haveRight("config", "w") || haveRight("profile", "w")) // Config page
 			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.config.php';
 
+
+		// Define SQL table restriction of entity
+		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_discovery';
+		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_rangeip';
+
 	
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
