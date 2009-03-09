@@ -101,7 +101,9 @@ function plugin_tracker_menu()
 	
 	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r"))
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'><b>".$LANGTRACKER["menu"][0]."</b></a>";
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
+			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_discovery.png'/>
+			<br/><b>".$LANGTRACKER["menu"][0]."</b></a>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='150'>";
 	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
