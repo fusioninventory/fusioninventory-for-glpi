@@ -29,7 +29,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Nicolas SMOLYNIEC
+// Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -59,8 +59,6 @@ function plugin_tracker_installing($version) {
 	$config_snmp_networking->initConfig();
 	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
 	$config_snmp_printer->initConfig();
-	$discovery = new plugin_tracker_discovery;
-	$discovery->initConfig();
 	plugin_tracker_initSession();
    return true;
 }
