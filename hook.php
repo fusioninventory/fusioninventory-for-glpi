@@ -272,34 +272,34 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP]['common'] = $LANGTRACKER["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['table'] = 'glpi_plugin_tracker_rangeip';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['field'] = 'ifaddr_start';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['linkfield'] = 'ifaddr_start';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['name'] = $LANGTRACKER["rangeip"][0];
-
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['linkfield'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['name'] = $LANG["common"][16];
+	
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['table'] = 'glpi_plugin_tracker_rangeip';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['field'] = 'ifaddr_end';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['linkfield'] = 'ifaddr_end';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['name'] = $LANGTRACKER["rangeip"][1];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['field'] = 'ifaddr_start';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['linkfield'] = 'ifaddr_start';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['name'] = $LANGTRACKER["rangeip"][0];
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['table'] = 'glpi_plugin_tracker_rangeip';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['name'] = $LANG["common"][2];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['field'] = 'ifaddr_end';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['linkfield'] = 'ifaddr_end';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['name'] = $LANGTRACKER["rangeip"][1];
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['table'] = 'glpi_plugin_tracker_rangeip';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['field'] = 'FK_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['linkfield'] = 'FK_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['name'] = $LANG["ocsng"][49];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['table'] = 'glpi_plugin_tracker_rangeip';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['field'] = 'discover';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['linkfield'] = 'discover';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['name'] = $LANGTRACKER["discovery"][3];
-	
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['field'] = 'FK_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['linkfield'] = 'FK_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['name'] = $LANG["ocsng"][49];
+
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['table'] = 'glpi_plugin_tracker_rangeip';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['field'] = 'discover_getserialnumber';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['linkfield'] = 'discover_getserialnumber';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['name'] = $LANGTRACKER["discovery"][4];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['field'] = 'discover';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['linkfield'] = 'discover';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['name'] = $LANGTRACKER["discovery"][3];
 	
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['field'] = 'name';
@@ -533,10 +533,6 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			break;	
 			
 		case "glpi_plugin_tracker_rangeip.discover" :
-			$out = getYesNo($data["ITEM_$num"]);
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_rangeip.discover_getserialnumber" :
 			$out = getYesNo($data["ITEM_$num"]);
 			return "<center>".$out."</center>";
 			break;
@@ -961,10 +957,6 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			break;
 		case 'glpi_plugin_tracker_rangeip.discover' :
 			dropdownYesNo('discover',$linkfield);
-			return true;
-			break;
-		case 'glpi_plugin_tracker_rangeip.discover_getserialnumber' :
-			dropdownYesNo('discover_getserialnumber',$linkfield);
 			return true;
 			break;
 		case 'glpi_plugin_tracker_agents.nb_process_query' :
