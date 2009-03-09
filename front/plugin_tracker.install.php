@@ -49,8 +49,6 @@ if (haveRight("config","w") && haveRight("profile","w")){
 		$config_snmp_networking->initConfig();
 		$config_snmp_printer = new plugin_tracker_config_snmp_printer;
 		$config_snmp_printer->initConfig();
-		$discovery = new plugin_tracker_discovery;
-		$discovery->initConfig();
 		plugin_tracker_initSession();
 	}elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs"))
 		plugin_tracker_update("1.1.0");
