@@ -98,6 +98,7 @@ $ID_agent = "1";
 	$xml->element[2]['rangeip']['linkfield']['ID'] = 'id';
 	$xml->element[2]['rangeip']['linkfield']['ifaddr_start'] = 'ipstart';
 	$xml->element[2]['rangeip']['linkfield']['ifaddr_end'] = 'ipend';
+	$xml->element[2]['rangeip']['linkfield']['FK_entities'] = 'entity';
 	
 	$xml->element[2]['authentification']['element']="discovery";
 	$xml->element[2]['authentification']['SQL']="SELECT * FROM glpi_plugin_tracker_snmp_connection
