@@ -90,6 +90,16 @@ $ID_agent = "1";
 	
 	$xml->element[1]['discovery']['element']="snmp";
 
+	// Agent informations
+	$xml->element[2]['agent']['element']="discovery";
+	$xml->element[2]['agent']['SQL']="SELECT * FROM glpi_plugin_tracker_agents
+	WHERE ID='".$ID_agent."'";
+	$xml->element[2]['agent']['linkfield']['ID'] = 'id';
+	$xml->element[2]['agent']['linkfield']['nb_process_query'] = 'nb_process_query';
+	$xml->element[2]['agent']['linkfield']['nb_process_discovery'] = 'nb_process_discovery';
+	$xml->element[2]['agent']['linkfield']['logs'] = 'logs';
+	$xml->element[2]['agent']['linkfield']['key'] = 'key';
+
 	// Get all range to scan if discovery is ON
 	$xml->element[2]['rangeip']['element']="discovery";
 	$xml->element[2]['rangeip']['SQL']="SELECT * FROM glpi_plugin_tracker_rangeip 
