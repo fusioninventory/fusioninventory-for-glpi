@@ -222,11 +222,19 @@ class plugin_tracker_importexport extends CommonDBTM
 			$DB->query($query);
 		}
 		foreach($xml->discovery as $discovery){
-			$query = "INSERT INTO glpi_plugin_tracker_discovery
-			(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities)
-			VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."')";
-			
-			$DB->query($query);
+			$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
+			WHERE ifaddr='".$discovery->ip."'
+				AND name='".$discovery->name."'
+				AND descr='".$discovery->description."'
+				AND serialnumber='".$discovery->serial."' ";
+			$result_sel = $DB->query($query_sel);
+			if ($DB->numrows($result_sel) == "0")
+			{
+				$query = "INSERT INTO glpi_plugin_tracker_discovery
+				(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities)
+				VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."')";
+				$DB->query($query);
+			}			
 		}
 	}
 
