@@ -921,18 +921,17 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 								
 								if (!isset($ArrayPortsID[$ifName]))
 									$traitement = 0;
-	
+
+								$sport = $ArrayPortsID[$ifName]; // Networking_Port
 								if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 								{
-
 									$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
-									$sport = $ArrayPortsID[$ifName]; // Networking_Port
-									
 									// Connection between ports (wire table in DB)
 									$snmp_queries->PortsConnection($sport, $dport,$FK_process);
 								}
 								else if ( $traitement == "1" )
 								{
+									removeConnector($sport);
 									// Mac address unknow
 									if ($FK_process != "0")
 										$processes->unknownMAC($FK_process,$ArrayPortsID[$ifName],$MacAddress);
