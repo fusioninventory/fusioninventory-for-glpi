@@ -123,7 +123,17 @@ class plugin_tracker_agents extends CommonDBTM
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		if ($ID=='')
 		{
-			echo "<input type='hidden' name='key' value=''/>";
+			// Generator of Key
+			$chrs = 30;
+			$chaine = ""; 
+			$list = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+			mt_srand((double)microtime()*1000000);
+			$newstring="";
+			while( strlen( $newstring )< $chrs ) {
+				$newstring .= $list[mt_rand(0, strlen($list)-1)];
+			}
+
+			echo "<input type='hidden' name='key' value='".$newstring."'/>";
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
 		}
 		else
