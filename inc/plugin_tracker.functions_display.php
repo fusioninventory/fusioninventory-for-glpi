@@ -61,7 +61,7 @@ function plugin_tracker_menu()
 	$width="180";
 	echo "<div align='center'><table class='tab_cadre'>";
 
-	echo "<tr><th colspan='3'>".$LANGTRACKER["title"][0]."</th></tr>";
+	echo "<tr><th colspan='4'>".$LANGTRACKER["title"][0]."</th></tr>";
 	
 	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_models","r"))
@@ -80,13 +80,14 @@ function plugin_tracker_menu()
 	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rangeip.png'/>
 		<br/><b>".$LANGTRACKER["menu"][2]."</b></a>";
-	echo "</td></tr>";
-	
-	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='150'>";
+	echo "</td>";
+	echo "<td align='center' width='".$width."' height='150'>";
 	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_agents.png'/><br/>
 		<b>".$LANGTRACKER["menu"][1]."</b></a>";
-	echo "</td>";
+	echo "</td></tr>";
+	
+	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_scripts_infos","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
@@ -97,9 +98,8 @@ function plugin_tracker_menu()
 	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_agents.png'/>
 		<br/><b>".$LANGTRACKER["processes"][19]."</b></a>";
-	echo "</td></tr>";
-	
-	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='150'>";
+	echo "</td>";
+	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_discovery.png'/>
@@ -110,8 +110,7 @@ function plugin_tracker_menu()
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rapports.png'/>
 		<br/><b>".$LANGTRACKER["processes"][20]."</b></a>";
 	echo "</td>";
-	echo "<td align='center' width='".$width."' height='150'>";
-	echo "</td>";
+	echo "</tr>";
 	
 	echo "</table></div>";
 
