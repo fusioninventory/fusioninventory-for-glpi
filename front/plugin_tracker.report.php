@@ -41,7 +41,7 @@ include (GLPI_ROOT."/inc/includes.php");
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
 
 
-echo "Adresses MAC inconnues<br/>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.unknown_mac.php'>Adresses MAC inconnues</a><br/>";
 echo "Historique des ports de switchs<br/>";
 echo "Ports de switchs non connectés depuis xx mois<br/>";
 

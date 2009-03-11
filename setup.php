@@ -73,6 +73,11 @@ function plugin_init_tracker() {
 
 			$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
 			
+			
+			$report_list = array();
+					$report_list["report/plugin_tracker.unknown_mac.php"] = $LANGTRACKER["processes"][14];
+			$PLUGIN_HOOKS['reports']['tracker'] = $report_list;
+			
 			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r"))
 				$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 
