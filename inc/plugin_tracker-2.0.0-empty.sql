@@ -93,6 +93,26 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_agents_processes`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents_processes` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `process_number` varchar(255) DEFAULT NULL,
+  `FK_agent` int(11) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT '0',
+  `start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `errors` int(11) NOT NULL DEFAULT '0',
+  `error_msg` varchar(255) NOT NULL DEFAULT '0',
+  `network_queries` int(11) NOT NULL DEFAULT '0',
+  `printer_queries` int(11) NOT NULL DEFAULT '0',
+  `discovery_queries` int(11) NOT NULL DEFAULT '0',
+  `networking_ports_queries` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_connection_history`;
 
 CREATE TABLE `glpi_plugin_tracker_connection_history` (
@@ -230,6 +250,7 @@ CREATE TABLE `glpi_plugin_tracker_model_infos` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `device_type` int(8) NOT NULL DEFAULT '0',
   `deleted` int(1) DEFAULT NULL,
+  `FK_entities` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
