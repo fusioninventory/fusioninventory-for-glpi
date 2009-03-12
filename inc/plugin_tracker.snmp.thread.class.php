@@ -409,7 +409,7 @@ class Threads extends CommonDBTM
 	
 	
 	
-	function unknownMAC($PID,$FK_port,$macaddress)
+	function unknownMAC($PID,$FK_port,$macaddress,$sport)
 	{
 		global $DB;
 	
@@ -419,7 +419,8 @@ class Threads extends CommonDBTM
 		 AND ifmac='".$macaddress."' "; 
 		$result = $DB->query($query);		
 		if (mysql_num_rows($result) == "0"){
-	
+			removeConnector($sport);
+
 			// Search if a line exist
 			$query = "SELECT *  FROM glpi_plugin_tracker_unknown_mac
 			WHERE unknow_mac='".$macaddress."'
