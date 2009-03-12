@@ -104,8 +104,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents_processes` (
   `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `errors` int(11) NOT NULL DEFAULT '0',
   `error_msg` varchar(255) NOT NULL DEFAULT '0',
-  `network_queries` int(11) NOT NULL DEFAULT '0',
-  `printer_queries` int(11) NOT NULL DEFAULT '0',
+  `networking_queries` int(11) NOT NULL DEFAULT '0',
+  `printers_queries` int(11) NOT NULL DEFAULT '0',
   `discovery_queries` int(11) NOT NULL DEFAULT '0',
   `networking_ports_queries` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
