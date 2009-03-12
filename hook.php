@@ -360,6 +360,20 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANGTRACKER["model_info"][3];
 
 
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES]['common'] = $LANGTRACKER["errors"][0];
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['field'] = 'process_number';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['linkfield'] = 'process_number';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['name'] = $LANGTRACKER["processes"][15];
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['field'] = 'FK_agent';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['linkfield'] = 'FK_agent';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['name'] = $LANG["ocsng"][49];
+
+
+
 	return $sopt;
 }
 

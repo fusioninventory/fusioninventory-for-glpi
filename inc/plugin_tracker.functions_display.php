@@ -95,7 +95,7 @@ function plugin_tracker_menu()
 			<br/><b>".$LANGTRACKER["processes"][0]."</b></a>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='150'>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
+	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_agents.png'/>
 		<br/><b>".$LANGTRACKER["processes"][19]."</b></a>";
 	echo "</td>";
