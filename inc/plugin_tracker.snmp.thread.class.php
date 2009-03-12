@@ -419,6 +419,7 @@ class Threads extends CommonDBTM
 		 AND ifmac='".$macaddress."' "; 
 		$result = $DB->query($query);		
 		if (mysql_num_rows($result) == "0"){
+			addLogConnection("remove",$sport,$PID);
 			removeConnector($sport);
 
 			// Search if a line exist
