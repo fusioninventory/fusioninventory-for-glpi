@@ -372,7 +372,57 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['linkfield'] = 'FK_agent';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['name'] = $LANG["ocsng"][49];
 
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['field'] = 'status';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['linkfield'] = 'status';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['name'] = $LANG["joblist"][0];
 
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['field'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['linkfield'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['name'] = $LANGTRACKER["processes"][4];
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['field'] = 'end_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['linkfield'] = 'end_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['name'] = $LANGTRACKER["processes"][5];
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['field'] = 'discovery_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['linkfield'] = 'discovery_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['name'] = $LANGTRACKER["discovery"][3];
+	
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['field'] = 'networking_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['linkfield'] = 'networking_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['name'] = $LANGTRACKER["processes"][21];	
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['field'] = 'networking_ports_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['linkfield'] = 'networking_ports_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['name'] = $LANGTRACKER["processes"][8];	
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['field'] = 'errors';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['linkfield'] = 'errors';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['name'] = $LANGTRACKER["processes"][22];
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['field'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['linkfield'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['name'] = $LANGTRACKER["processes"][10];
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['field'] = 'start_time_discovery';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['linkfield'] = 'start_time_discovery';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['name'] = $LANGTRACKER["processes"][23];
+
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['table'] = 'glpi_plugin_tracker_agents_processes';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['field'] = 'start_time_query';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['linkfield'] = 'start_time_query';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['name'] = $LANGTRACKER["processes"][24];	
+	
+	
 
 	return $sopt;
 }
