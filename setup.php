@@ -51,7 +51,7 @@ function plugin_init_tracker() {
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AGENTS", 5158, "plugin_tracker_agents", "glpi_plugin_tracker_agents", "front/plugin_tracker.agents.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_RANGEIP", 5159, "plugin_tracker_rangeip", "glpi_plugin_tracker_rangeip", "front/plugin_tracker.rangeip.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, "plugin_tracker_discovery", "glpi_plugin_tracker_discovery", "front/plugin_tracker.discovery.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, "plugin_tracker_agents_processes", "glpi_plugin_tracker_agents_processes");
+	pluginNewType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, "plugin_tracker_agents_processes", "glpi_plugin_tracker_agents_processes", "front/plugin_tracker.agents.processes.php");
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
