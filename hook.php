@@ -408,8 +408,8 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['name'] = $LANGTRACKER["processes"][22];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['table'] = 'glpi_plugin_tracker_agents_processes';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['field'] = 'start_time';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['linkfield'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['linkfield'] = 'ID';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['name'] = $LANGTRACKER["processes"][10];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['table'] = 'glpi_plugin_tracker_agents_processes';
@@ -624,7 +624,30 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
 				return "<center>".$out."</center>";
 			}
-			break;			
+			break;
+		case "glpi_plugin_tracker_agents_processes.end_time" :	
+			$out = $data["ITEM_$num"];
+			if ($out == "0000-00-00 00:00:00")
+				$out = "-";
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_agents_processes.ID" :
+			$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
+			$out = timestampToString($duree_timestamp);
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
+//			$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
+//			$out = timestampToString($duree_timestamp);
+			$out = "-";
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_agents_processes.start_time_query" :
+//			$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
+//			$out = timestampToString($duree_timestamp);
+			$out = "-";
+			return "<center>".$out."</center>";
+			break;		
 	}
 
 	if (($type == PLUGIN_TRACKER_MODEL) AND ($linkfield == "EXPORT")) {
