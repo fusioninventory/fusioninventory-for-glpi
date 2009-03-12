@@ -931,10 +931,10 @@ function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$
 								}
 								else if ( $traitement == "1" )
 								{
-									removeConnector($sport);
+									
 									// Mac address unknow
 									if ($FK_process != "0")
-										$processes->unknownMAC($FK_process,$ArrayPortsID[$ifName],$MacAddress);
+										$processes->unknownMAC($FK_process,$ArrayPortsID[$ifName],$MacAddress,$sport);
 
 								}
 							}
