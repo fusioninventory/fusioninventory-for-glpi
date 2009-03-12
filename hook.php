@@ -631,7 +631,7 @@ function plugin_get_headings_tracker($type,$withtemplate){
 				);
 			}
 		}
-	}else	if (in_array($type,array(TRACKING_TYPE,PROFILE_TYPE))){
+	}else	if (in_array($type,array(PROFILE_TYPE))){
 		// template case
 		if ($withtemplate)
 			return array();
