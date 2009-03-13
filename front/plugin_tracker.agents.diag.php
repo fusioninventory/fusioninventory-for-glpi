@@ -98,6 +98,8 @@ else if(isset($_POST['get_data']))
 		else
 			$start_PID = $_POST['PID'];
 		
+		if (!isset($_POST['date']))
+			$_POST['date'] = "0000-00-00 00:00:00";
 		
 		// Add agent process entry
 		$number_PID = $ID_agent;
