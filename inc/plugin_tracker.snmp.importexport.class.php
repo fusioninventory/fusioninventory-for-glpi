@@ -216,10 +216,16 @@ class plugin_tracker_importexport extends CommonDBTM
 			$agent_version = $agent->version;
 			$agent_id = $agent->id;
 			$query = "UPDATE glpi_plugin_tracker_agents 
-			SET last_agent_update='".$agent->date."', tracker_agent_version='".$agent_version."'
+			SET last_agent_update='".$agent->end_date."', tracker_agent_version='".$agent_version."'
 			WHERE ID='".$agent_id."'";
-			
 			$DB->query($query);
+			
+			$query = "UPDATE glpi_plugin_tracker_agents_processes 
+			SET end_time='".$agent->end_date."', status='3', 
+				start_time_discovery='".$agent->start_time_discovery."', end_time_discovery='".$agent->end_time_discovery."'
+			WHERE process_number='".$agent->pid."'
+				AND FK_agent='".$agent->id."'";
+			$DB->query($query);			
 		}
 		foreach($xml->discovery as $discovery){
 			$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery

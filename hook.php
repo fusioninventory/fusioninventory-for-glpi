@@ -607,7 +607,6 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out .= "</a>";
 			return "<center>".$out."</center>";
 			break;	
-			
 		case "glpi_plugin_tracker_rangeip.discover" :
 			$out = getYesNo($data["ITEM_$num"]);
 			return "<center>".$out."</center>";
@@ -624,6 +623,28 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
 				return "<center>".$out."</center>";
 			}
+			break;
+		case "glpi_plugin_tracker_agents_processes.FK_agent" :
+			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
+			$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
+			$out .= "</a>";
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_agents_processes.status" :
+			$out = "";
+			switch($data["ITEM_$num"])
+			{
+				case 3 :
+					$out = "<img src='../pics/export.png' />";
+					break;
+				case 2 :
+					$out = "<img src='../pics/wait.png' />";
+					break;
+				case 1 :
+					$out = "<img src='../pics/ok2.png' />";
+					break;
+			}
+			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_agents_processes.end_time" :	
 			$out = $data["ITEM_$num"];
