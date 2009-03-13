@@ -40,8 +40,14 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
+$modif = 0;
+if (!isset($_GET))
+	$modif = 1;
 
 manageGetValuesInSearch(PLUGIN_TRACKER_AGENTS_PROCESSES);
+
+if ($modif == 1)
+	$_GET["order"] = "DESC";
 
 $_GET['target']="plugin_tracker.agents.processes.php";
 
