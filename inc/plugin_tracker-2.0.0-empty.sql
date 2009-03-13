@@ -255,6 +255,7 @@ CREATE TABLE `glpi_plugin_tracker_model_infos` (
   `device_type` int(8) NOT NULL DEFAULT '0',
   `deleted` int(1) DEFAULT NULL,
   `FK_entities` int(11) NOT NULL DEFAULT '0',
+  `activation` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
