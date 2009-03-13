@@ -93,6 +93,11 @@ else if(isset($_POST['get_data']))
 	{
 		$data = $DB->fetch_assoc($result);
 		$ID_agent = $data['ID'];
+		if (!isset($_POST['PID']))
+			$start_PID = "0001";
+		else
+			$start_PID = $_POST['PID'];
+		
 		
 		// Add agent process entry
 		$number_PID = $ID_agent;
@@ -101,7 +106,7 @@ else if(isset($_POST['get_data']))
 		if (strlen($number_PID) == 2)
 			$number_PID = "0".$number_PID;
 		$add_agent_process['FK_agent'] = $ID_agent;
-		$add_agent_process['process_number'] = $_POST['PID'].$number_PID;
+		$add_agent_process['process_number'] = $start_PID.$number_PID;
 		$add_agent_process['status'] = 2;
 		$add_agent_process['start_time'] = $_POST['date'];
 		$agents_processes->add($add_agent_process);
@@ -122,7 +127,7 @@ else if(isset($_POST['get_data']))
 		$xml->element[2]['agent']['linkfield']['nb_process_discovery'] = 'nb_process_discovery';
 		$xml->element[2]['agent']['linkfield']['logs'] = 'logs';
 		$xml->element[2]['agent']['linkfield']['key'] = 'key';
-		$xml->element[2]['agent']['fieldvalue']['PID'] = $_POST['PID'].$number_PID;
+		$xml->element[2]['agent']['fieldvalue']['PID'] = $start_PID.$number_PID;
 	
 		// Get all range to scan if discovery is ON
 		$xml->element[2]['rangeip']['element']="discovery";
