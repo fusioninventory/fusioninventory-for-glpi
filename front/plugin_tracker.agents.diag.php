@@ -43,7 +43,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 if( isset($_POST['upload']) ) // si formulaire soumis
 {
-	$content_dir = '/var/tmp/tracker/'; // dossier où sera déplacé le fichier
+	$content_dir = '/tmp/'; // dossier où sera déplacé le fichier
   
    $tmp_file = $_FILES['data']['tmp_name'];
 
