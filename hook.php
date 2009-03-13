@@ -658,14 +658,18 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
-//			$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
-//			$out = timestampToString($duree_timestamp);
-			$out = "-";
+			$agents_processes = new plugin_tracker_agents_processes;
+			$agents_processes->getFromDB($data['ID']);
+			$duree_timestamp = strtotime($agents_processes->fields["end_time_discovery"]) - strtotime($data["ITEM_$num"]);
+			$out = timestampToString($duree_timestamp);
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_agents_processes.start_time_query" :
-//			$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
-//			$out = timestampToString($duree_timestamp);
+			$agents_processes = new plugin_tracker_agents_processes;
+			$agents_processes->getFromDB($data['ID']);
+			$duree_timestamp = strtotime($agents_processes->fields["end_time_query"]) - strtotime($data["ITEM_$num"]);
+			$out = timestampToString($duree_timestamp);
+			return "<center>".$out."</center>";
 			$out = "-";
 			return "<center>".$out."</center>";
 			break;		
