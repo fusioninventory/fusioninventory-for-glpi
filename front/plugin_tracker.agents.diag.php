@@ -102,7 +102,7 @@ else if(isset($_POST['get_data']))
 			$number_PID = "0".$number_PID;
 		$add_agent_process['FK_agent'] = $ID_agent;
 		$add_agent_process['process_number'] = $_POST['PID'].$number_PID;
-		$add_agent_process['status'] = 1;
+		$add_agent_process['status'] = 2;
 		$add_agent_process['start_time'] = $_POST['date'];
 		$agents_processes->add($add_agent_process);
 		
