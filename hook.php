@@ -1096,10 +1096,10 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 		case 'glpi_plugin_tracker_agents.nb_process_query' :
-			dropdownInteger("nb_process_query", $linkfield,1,100);
+			dropdownInteger("nb_process_query", $linkfield,1,200);
 			return true;
 		case 'glpi_plugin_tracker_agents.nb_process_discovery' :
-			dropdownInteger("nb_process_discovery", $linkfield,1,100);
+			dropdownInteger("nb_process_discovery", $linkfield,1,400);
 			return true;
 		case 'glpi_plugin_tracker_agents.lock' :
 			dropdownYesNo('lock',$linkfield);
