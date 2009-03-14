@@ -1085,7 +1085,7 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 		case 'glpi_plugin_tracker_model_infos.name':
-			dropdownValue("glpi_plugin_tracker_model_infos",$linkfield);
+			dropdownValue("glpi_plugin_tracker_model_infos",$linkfield,'',0);
 			return true;
 			break;
 		case 'glpi_plugin_tracker_discovery.type' :
