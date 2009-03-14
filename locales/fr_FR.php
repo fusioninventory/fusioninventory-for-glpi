@@ -415,6 +415,7 @@ $LANGTRACKER["printer"][0]="pages";
 $LANGTRACKER["menu"][0]="Découverte de matériel réseau";
 $LANGTRACKER["menu"][1]="Gestion des agents";
 $LANGTRACKER["menu"][2]="Plages IP";
+$LANGTRACKER["menu"][3]="Menu";
 
 $LANGTRACKER["buttons"][0]="Découvrir";
 

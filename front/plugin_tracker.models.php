@@ -42,6 +42,8 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","
 
 plugin_tracker_checkRight("snmp_models","r");
 
+plugin_tracker_mini_menu();
+
 manageGetValuesInSearch(PLUGIN_TRACKER_MODEL);
 
 $_GET['target']="plugin_tracker.models.php";

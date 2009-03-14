@@ -44,6 +44,8 @@ $modif = 0;
 if (!isset($_GET))
 	$modif = 1;
 
+plugin_tracker_mini_menu();
+
 manageGetValuesInSearch(PLUGIN_TRACKER_AGENTS_PROCESSES);
 
 if ($modif == 1)
