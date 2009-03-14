@@ -234,6 +234,19 @@ class plugin_tracker_importexport extends CommonDBTM
 			$DB->query($query);			
 		}
 		foreach($xml->discovery as $discovery){
+			if ($discovery->modelSNMP != "")
+			{
+				$query = "SELECT * FROM glpi_plugin_tracker_model_infos
+				WHERE discovery_key='".$discovery->modelSNMP."'
+				LIMIT 0,1";
+				$result = $DB->query($query);		
+				$data = $DB->fetch_assoc($result);
+				$FK_model = $data['ID'];
+			}
+			else
+			{
+				$FK_model = 0;
+			}
 			$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
 			WHERE ifaddr='".$discovery->ip."'
 				AND name='".$discovery->name."'
@@ -243,8 +256,8 @@ class plugin_tracker_importexport extends CommonDBTM
 			if ($DB->numrows($result_sel) == "0")
 			{
 				$query = "INSERT INTO glpi_plugin_tracker_discovery
-				(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities)
-				VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."')";
+				(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos)
+				VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."')";
 				$DB->query($query);
 			}			
 		}

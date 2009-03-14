@@ -104,6 +104,16 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_MODEL][5]['linkfield'] = 'EXPORT';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['name'] = $LANG["buttons"][31];
 
+	$sopt[PLUGIN_TRACKER_MODEL][6]['table'] = 'glpi_plugin_tracker_model_infos';
+	$sopt[PLUGIN_TRACKER_MODEL][6]['field'] = 'activation';
+	$sopt[PLUGIN_TRACKER_MODEL][6]['linkfield'] = 'activation';
+	$sopt[PLUGIN_TRACKER_MODEL][6]['name'] = $LANGTRACKER["model_info"][11];
+	
+	$sopt[PLUGIN_TRACKER_MODEL][7]['table'] = 'glpi_plugin_tracker_model_infos';
+	$sopt[PLUGIN_TRACKER_MODEL][7]['field'] = 'discovery_key';
+	$sopt[PLUGIN_TRACKER_MODEL][7]['linkfield'] = 'discovery_key';
+	$sopt[PLUGIN_TRACKER_MODEL][7]['name'] = $LANGTRACKER["model_info"][12];
+
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH]['common'] = $LANGTRACKER["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['table'] = 'glpi_plugin_tracker_snmp_connection';
