@@ -211,7 +211,8 @@ $LANGTRACKER["model_info"][7]="Création de modèle SNMP";
 $LANGTRACKER["model_info"][8]="Modèle déjà existant : import non effectué";
 $LANGTRACKER["model_info"][9]="Import effectué avec succès";
 $LANGTRACKER["model_info"][10]="Importation de modèle";
-
+$LANGTRACKER["model_info"][11]="Activation";
+$LANGTRACKER["model_info"][12]="Clé modèle pour la découverte";
 
 $LANGTRACKER["mib"][1]="Label MIB";
 $LANGTRACKER["mib"][2]="Objet";
@@ -421,7 +422,7 @@ $LANGTRACKER["buttons"][0]="Découvrir";
 
 $LANGTRACKER["discovery"][0]="Plage d'ip à scanner";
 $LANGTRACKER["discovery"][1]="Liste du matériel découvert";
-$LANGTRACKER["discovery"][2]="Activation dans le script en automatique";
+$LANGTRACKER["discovery"][2]="² dans le script en automatique";
 $LANGTRACKER["discovery"][3]="Découverte";
 $LANGTRACKER["discovery"][4]="Numéros de série";
 $LANGTRACKER["discovery"][5]="Nombre de matériels importés";
