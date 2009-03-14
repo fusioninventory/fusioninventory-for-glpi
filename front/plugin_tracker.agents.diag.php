@@ -92,6 +92,13 @@ else if(isset($_POST['get_data']))
 	if ($DB->numrows($result) > 0)
 	{
 		$data = $DB->fetch_assoc($result);
+		if ($data["lock"] == "1")
+		{
+			$out = "Lock";
+			$gzout = gzencode($out, 9);
+			echo $gzout;
+			exit();
+		}
 		$ID_agent = $data['ID'];
 		if (!isset($_POST['PID']))
 			$start_PID = "0001";

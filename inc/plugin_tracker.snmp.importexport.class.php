@@ -212,6 +212,10 @@ class plugin_tracker_importexport extends CommonDBTM
 		global $DB,$LANG,$LANGTRACKER;
 
 		$xml = simplexml_load_file($file);
+		$count_discovery_devices = 0;
+		foreach($xml->discovery as $discovery){
+			$count_discovery_devices++;	
+		}		
 		foreach($xml->agent as $agent){
 			$agent_version = $agent->version;
 			$agent_id = $agent->id;
@@ -222,7 +226,9 @@ class plugin_tracker_importexport extends CommonDBTM
 			
 			$query = "UPDATE glpi_plugin_tracker_agents_processes 
 			SET end_time='".$agent->end_date."', status='3', 
-				start_time_discovery='".$agent->start_time_discovery."', end_time_discovery='".$agent->end_time_discovery."'
+				start_time_discovery='".$agent->start_time_discovery."', end_time_discovery='".$agent->end_time_discovery."',
+				discovery_queries_total='".$agent->discovery_queries_total."',
+				discovery_queries='".$count_discovery_devices."'
 			WHERE process_number='".$agent->pid."'
 				AND FK_agent='".$agent->id."'";
 			$DB->query($query);			
