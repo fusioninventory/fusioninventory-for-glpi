@@ -657,6 +657,14 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = timestampToString($duree_timestamp);
 			return "<center>".$out."</center>";
 			break;
+		case "glpi_plugin_tracker_agents_processes.discovery_queries" :
+			$agents_processes = new plugin_tracker_agents_processes;
+			$agents_processes->getFromDB($data['ID']);
+			$out = $data["ITEM_$num"]." / ".$agents_processes->fields["discovery_queries_total"];
+			if ($out == "0 / 0")
+				$out = 0;
+			return "<center>".$out."</center>";
+			break;
 		case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
 			$agents_processes = new plugin_tracker_agents_processes;
 			$agents_processes->getFromDB($data['ID']);
@@ -1081,6 +1089,10 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			break;
 		case 'glpi_plugin_tracker_rangeip.discover' :
 			dropdownYesNo('discover',$linkfield);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_rangeip.FK_tracker_agents' :
+			dropdownValue("glpi_plugin_tracker_agents",$linkfield,'',0);
 			return true;
 			break;
 		case 'glpi_plugin_tracker_agents.nb_process_query' :

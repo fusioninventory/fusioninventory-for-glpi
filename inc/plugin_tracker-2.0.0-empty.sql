@@ -16,7 +16,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_mib_object` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 CagOLLATE=utf8_unicode_ci;
 
 
 
@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents_processes` (
   `networking_queries` int(11) NOT NULL DEFAULT '0',
   `printers_queries` int(11) NOT NULL DEFAULT '0',
   `discovery_queries` int(11) NOT NULL DEFAULT '0',
+  `discovery_queries_total` int(11) NOT NULL DEFAULT '0',
   `networking_ports_queries` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
