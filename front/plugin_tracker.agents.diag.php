@@ -149,11 +149,16 @@ else if(isset($_POST['get_data']))
 		$xml->element[2]['rangeip']['linkfield']['FK_entities'] = 'entity';
 		
 		$xml->element[2]['authentification']['element']="discovery";
-		$xml->element[2]['authentification']['SQL']="SELECT * FROM glpi_plugin_tracker_snmp_connection
-		LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID";
-		$xml->element[2]['authentification']['linkfield']['ID'] = 'id';
+		$xml->element[2]['authentification']['SQL']="SELECT 
+			glpi_plugin_tracker_snmp_connection.id as IDC, community,
+			glpi_dropdown_plugin_tracker_snmp_version.name as namec,sec_name,sec_level,
+			auth_protocol,auth_passphrase,priv_protocol,priv_passphrase
+		 	FROM glpi_plugin_tracker_snmp_connection
+		LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+		ORDER BY glpi_dropdown_plugin_tracker_snmp_version.ID DESC";
+		$xml->element[2]['authentification']['linkfield']['IDC'] = 'id';
 		$xml->element[2]['authentification']['linkfield']['community'] = 'community';
-		$xml->element[2]['authentification']['linkfield']['name'] = 'version';
+		$xml->element[2]['authentification']['linkfield']['namec'] = 'version';
 		$xml->element[2]['authentification']['linkfield']['sec_name'] = 'sec_name';
 		$xml->element[2]['authentification']['linkfield']['sec_level'] = 'sec_level';
 		$xml->element[2]['authentification']['linkfield']['auth_protocol'] = 'auth_protocol';

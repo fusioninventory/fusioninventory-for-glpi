@@ -256,8 +256,8 @@ class plugin_tracker_importexport extends CommonDBTM
 			if ($DB->numrows($result_sel) == "0")
 			{
 				$query = "INSERT INTO glpi_plugin_tracker_discovery
-				(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos)
-				VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."')";
+				(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos,FK_snmp_connection)
+				VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."','".$discovery->authSNMP."')";
 				$DB->query($query);
 			}			
 		}
