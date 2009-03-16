@@ -235,7 +235,10 @@ else if(isset($_POST['get_data']))
 			$xml_writed->element[2]['infos']['linkfield']['ID'] = 'id';
 			$xml_writed->element[2]['infos']['linkfield']['ifaddr'] = 'ip';
 			$xml_writed->element[2]['infos']['linkfield']['FK_entities'] = 'entity';
-			
+			if ($devices[$i] == "device_networking")
+				$xml_writed->element[2]['infos']['fieldvalue']['type'] = NETWORKING_TYPE;
+			else if ($devices[$i] == "device_printer")
+				$xml_writed->element[2]['infos']['fieldvalue']['type'] = PRINTER_TYPE;
 			// Authentification
 			$xml_writed->element[2]['auth']['element']=$devices[$i];
 			if ($devices[$i] == "device_networking")
