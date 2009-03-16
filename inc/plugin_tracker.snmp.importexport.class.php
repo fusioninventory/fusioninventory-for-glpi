@@ -211,6 +211,9 @@ class plugin_tracker_importexport extends CommonDBTM
 	{
 		global $DB,$LANG,$LANGTRACKER;
 
+		$walks = new plugin_tracker_walk;
+		
+		$walkdata = '';
 		$xml = simplexml_load_file($file);
 		$count_discovery_devices = 0;
 		foreach($xml->discovery as $discovery){
@@ -223,6 +226,27 @@ class plugin_tracker_importexport extends CommonDBTM
 				$device_queried_networking++;
 			else if ($device->infos->type == PRINTER_TYPE)
 				$device_queried_printer++;
+			
+			unset($walkdata);
+			$walkdata['on_device']=$device->infos->id;
+			$walkdata['device_type']=$device->infos->type;
+			$walkdata['FK_agents_processes']=$xml->agent->pid;
+			$walkdata['date']=$device->infos->date;
+			foreach($device->get as $snmpget){
+				$walkdata['oid']=$snmpget->object;
+				$walkdata['value']=$snmpget->oid;
+				$walks->add($walkdata);
+				unset($walkdata['oid']);
+				unset($walkdata['value']);				
+			}
+			foreach($device->walk as $snmpwalk){
+				$walkdata['oid']=$snmpwalk->object;
+				$walkdata['value']=$snmpwalk->oid;
+				$walks->add($walkdata);
+				unset($walkdata['oid']);
+				unset($walkdata['value']);				
+			}
+
 		}
 		foreach($xml->agent as $agent){
 			$agent_version = $agent->version;

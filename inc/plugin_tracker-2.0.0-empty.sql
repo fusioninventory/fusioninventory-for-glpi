@@ -487,12 +487,27 @@ CREATE TABLE `glpi_plugin_tracker_unknown_mac` (
 
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_connection_stats`;
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_connection_stats` (
+
+CREATE TABLE `glpi_plugin_tracker_connection_stats` (
   `ID` int(11) NOT NULL auto_increment,
   `device_type` int(11) NOT NULL default '0',
   `item_id` int(11) NOT NULL,
   `checksum` timestamp NOT NULL default '0000-00-00 00:00:00' on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_walks`;
+
+CREATE TABLE `glpi_plugin_tracker_walks` (
+  `ID` int(30) NOT NULL AUTO_INCREMENT,
+  `on_device` int(11) NOT NULL DEFAULT '0',
+  `device_type` int(11) NOT NULL DEFAULT '0',
+  `FK_agents_processes` int(11) NOT NULL DEFAULT '0',
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `oid` varchar(255) DEFAULT NULL,
+  `value` text,
+  PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
