@@ -49,39 +49,32 @@ $plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 
+plugin_tracker_mini_menu();
+
 $query = "SELECT * FROM glpi_plugin_tracker_config";
 $result=$DB->query($query);
 
-if (isset ($_POST["add"])) {
+if (isset ($_POST["add"]))
+{
 	if ($DB->result($result,0,"authsnmp") == "file")
-	{
 		$new_ID = $plugin_tracker_snmp_auth->add_xml();
-	}
 	else if ($DB->result($result,0,"authsnmp") == "DB")
-	{ 
 		$new_ID = $plugin_tracker_snmp_auth->add($_POST);
-	}
 	
 	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.snmp_auth.php?ID=".$new_ID."'>".$_POST["name"]."</a>";
-	
 	glpi_header($_SERVER['HTTP_REFERER']);
-
 }
-elseif (isset ($_POST["update"])) {
+elseif (isset ($_POST["update"]))
+{
 	$plugin_tracker_snmp_auth->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-
-
 $ID = "";
 if (isset($_GET["ID"]))
-{
 	$ID = $_GET["ID"];
-}
 
 $plugin_tracker_snmp_auth->showForm($_SERVER["PHP_SELF"], $ID);
-
 
 commonFooter();
 ?>

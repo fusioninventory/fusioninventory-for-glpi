@@ -49,6 +49,7 @@ $agents = new plugin_tracker_agents;
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
+plugin_tracker_mini_menu();
 
 if (isset ($_POST["add"])){
 	$agents->add($_POST);

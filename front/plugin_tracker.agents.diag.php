@@ -83,8 +83,7 @@ else if(isset($_POST['get_data']))
 	$agents_processes = new plugin_tracker_agents_processes;
 	$xml = new plugin_tracker_XML;
 
-	//$ID_agent = "1";
-
+//$_POST['key'] = "yguihu68Jggfihbg5bgjkbtg";
 	$query = "SELECT * FROM glpi_plugin_tracker_agents
 	WHERE `key`='".$_POST['key']."'
 	LIMIT 0,1";
@@ -120,10 +119,29 @@ else if(isset($_POST['get_data']))
 		$add_agent_process['start_time'] = $_POST['date'];
 		$agents_processes->add($add_agent_process);
 		
+		// Get IP ranges for devices 
+		$rangeip_select = ' AND (';
+		$query = "SELECT * FROM glpi_plugin_tracker_rangeip 
+		WHERE FK_tracker_agents='".$ID_agent."' ";
+		$result=$DB->query($query);
+		$exclude = array();
+		$or = 0;
+		while ( $data=$DB->fetch_array($result) )
+		{
+			if ($or == "1")
+				$rangeip_select .= " OR ";
+			$rangeip_select .= " (inet_aton(ifaddr) BETWEEN inet_aton('".$data['ifaddr_start']."') AND inet_aton('".$data['ifaddr_end']."') ) ";
+			$or = 1;
+		}
+		$rangeip_select .= ') ';
+		if ($rangeip_select == " AND () ")
+			$rangeip_select = "";
+		// echo $rangeip_select;
 
 		$xml->element[0]['snmp']['element']="";
 		
-		// ** Discovery
+		// ********************************************************* //
+		// *********************** Discovery *********************** //
 		
 		$xml->element[1]['discovery']['element']="snmp";
 	
@@ -166,61 +184,140 @@ else if(isset($_POST['get_data']))
 		$xml->element[2]['authentification']['linkfield']['priv_protocol'] = 'priv_protocol';
 		$xml->element[2]['authentification']['linkfield']['priv_passphrase'] = 'priv_passphrase';
 		
-		// ** Devices queries
+		// ********************************************************* //
+		// ******************** Devices queries ******************** //
 		
-		$xml->element[1]['device']['element']="snmp";
-		$xml->element[1]['device']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
-		LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking";
-	
-		// Informations
-		$xml->element[2]['infos']['element']="device";
-		$xml->element[2]['infos']['SQL']="SELECT * FROM glpi_networking 
-		WHERE ID='[FK_networking]'";
-		$xml->element[2]['infos']['linkfield']['ID'] = 'id';
-		$xml->element[2]['infos']['linkfield']['ifaddr'] = 'ip';
-		$xml->element[2]['infos']['linkfield']['FK_entities'] = 'entity';
+		$devices[] = "device_networking";
+		$devices[] = "device_printer";
+		$writed = array();
+		$writed[1] = '';
+		for ($i=0;$i < count($devices);$i++)
+		{
+			$xml_writed = new plugin_tracker_XML;
+			$xml_writed->element[1][$devices[$i]]['element']="snmp";
+			if ($devices[$i] == "device_networking")
+			{
+				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_plugin_tracker_networking
+				LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
+				WHERE FK_model_infos != '0'
+					AND FK_snmp_connection != '0'
+					".$rangeip_select." ";
+			}
+			else if ($devices[$i] == "device_printer")
+			{
+				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_networking_ports
+				LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
+				WHERE device_type='".PRINTER_TYPE."'
+					AND FK_model_infos != '0'
+					AND FK_snmp_connection != '0'
+					".$rangeip_select."
+					AND FK_printers!=0";
+// 					AND ifaddr BETWEEN '192.168.0.1' AND '192.168.0.200'
+			}
 		
-		// Authentification
-		$xml->element[2]['auth']['element']="device";
-		$xml->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
-		LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
-		LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
-		WHERE FK_networking='[FK_networking]'";
-		$xml->element[2]['auth']['linkfield']['community'] = 'community';
-		$xml->element[2]['auth']['linkfield']['name'] = 'version';
-		$xml->element[2]['auth']['linkfield']['sec_name'] = 'sec_name';
-		$xml->element[2]['auth']['linkfield']['sec_level'] = 'sec_level';
-		$xml->element[2]['auth']['linkfield']['auth_protocol'] = 'auth_protocol';
-		$xml->element[2]['auth']['linkfield']['auth_passphrase'] = 'auth_passphrase';
-		$xml->element[2]['auth']['linkfield']['priv_protocol'] = 'priv_protocol';
-		$xml->element[2]['auth']['linkfield']['priv_passphrase'] = 'priv_passphrase';	
-	
-		// SNMPGet 
-		$xml->element[2]['get']['element']="device";
-		$xml->element[2]['get']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
-			glpi_dropdown_plugin_tracker_mib_oid.name AS oid FROM glpi_plugin_tracker_networking
-		LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_networking.FK_model_infos
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
-	 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
-		WHERE FK_networking='[FK_networking]'
-			AND oid_port_dyn=0";
-		$xml->element[2]['get']['linkfield']['object'] = 'object';
-		$xml->element[2]['get']['linkfield']['oid'] = 'oid';
-	
-		// SNMPWalk
-		$xml->element[2]['walk']['element']="device";
-		$xml->element[2]['walk']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
-			glpi_dropdown_plugin_tracker_mib_oid.name AS oid FROM glpi_plugin_tracker_networking
-		LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_networking.FK_model_infos
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
-	 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
-		WHERE FK_networking='[FK_networking]'
-			AND oid_port_dyn=1";
-		$xml->element[2]['walk']['linkfield']['object'] = 'object';
-		$xml->element[2]['walk']['linkfield']['oid'] = 'oid';
-	
+			// Informations
+			$xml_writed->element[2]['infos']['element']=$devices[$i];
+			if ($devices[$i] == "device_networking")
+			{
+				$xml_writed->element[2]['infos']['SQL']="SELECT * FROM glpi_networking
+				WHERE ID='[FK_networking]'";
+			}
+			else if ($devices[$i] == "device_printer")
+			{
+				$xml_writed->element[2]['infos']['SQL']="SELECT * FROM glpi_printers
+				LEFT JOIN glpi_plugin_tracker_printers ON glpi_printers.ID = FK_printers
+				LEFT JOIN glpi_networking_ports ON on_device = FK_printers
+				WHERE glpi_printers.ID='[FK_printers]'
+					AND device_type='".PRINTER_TYPE."'
+					AND ifaddr!=''
+					AND ifaddr!='127.0.0.1'";
+			}
+			$xml_writed->element[2]['infos']['linkfield']['ID'] = 'id';
+			$xml_writed->element[2]['infos']['linkfield']['ifaddr'] = 'ip';
+			$xml_writed->element[2]['infos']['linkfield']['FK_entities'] = 'entity';
+			
+			// Authentification
+			$xml_writed->element[2]['auth']['element']=$devices[$i];
+			if ($devices[$i] == "device_networking")
+			{
+				$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
+				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
+				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+				WHERE FK_networking='[FK_networking]'";
+			}
+			else if ($devices[$i] == "device_printer")
+			{
+				$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_printers
+				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
+				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+				WHERE FK_printers='[FK_printers]'";
+			}
+			$xml_writed->element[2]['auth']['linkfield']['community'] = 'community';
+			$xml_writed->element[2]['auth']['linkfield']['name'] = 'version';
+			$xml_writed->element[2]['auth']['linkfield']['sec_name'] = 'sec_name';
+			$xml_writed->element[2]['auth']['linkfield']['sec_level'] = 'sec_level';
+			$xml_writed->element[2]['auth']['linkfield']['auth_protocol'] = 'auth_protocol';
+			$xml_writed->element[2]['auth']['linkfield']['auth_passphrase'] = 'auth_passphrase';
+			$xml_writed->element[2]['auth']['linkfield']['priv_protocol'] = 'priv_protocol';
+			$xml_writed->element[2]['auth']['linkfield']['priv_passphrase'] = 'priv_passphrase';	
+		
+			// SNMPGet 
+			$xml_writed->element[2]['get']['element']=$devices[$i];
+			if ($devices[$i] == "device_networking")
+			{
+				$xml_writed->element[2]['get']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
+					glpi_dropdown_plugin_tracker_mib_oid.name AS oid FROM glpi_plugin_tracker_networking
+				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_networking.FK_model_infos
+				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
+			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
+				WHERE FK_networking='[FK_networking]'
+					AND oid_port_dyn=0";
+			}
+			else if ($devices[$i] == "device_printer")
+			{
+				$xml_writed->element[2]['get']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
+					glpi_dropdown_plugin_tracker_mib_oid.name AS oid FROM glpi_plugin_tracker_printers
+				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_printers.FK_model_infos
+				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
+			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
+				WHERE FK_printers='[FK_printers]'
+					AND oid_port_dyn=0";
+			}
+			$xml_writed->element[2]['get']['linkfield']['object'] = 'object';
+			$xml_writed->element[2]['get']['linkfield']['oid'] = 'oid';
+		
+			// SNMPWalk
+			$xml_writed->element[2]['walk']['element']=$devices[$i];
+			if ($devices[$i] == "device_networking")
+			{
+				$xml_writed->element[2]['walk']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
+					glpi_dropdown_plugin_tracker_mib_oid.name AS oid FROM glpi_plugin_tracker_networking
+				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_networking.FK_model_infos
+				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
+			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
+				WHERE FK_networking='[FK_networking]'
+					AND oid_port_dyn=1";
+			}
+			else if ($devices[$i] == "device_printer")
+			{
+				$xml_writed->element[2]['walk']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
+					glpi_dropdown_plugin_tracker_mib_oid.name AS oid FROM glpi_plugin_tracker_printers
+				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_printers.FK_model_infos
+				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
+			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
+				WHERE FK_printers='[FK_printers]'
+					AND oid_port_dyn=1";
+			}
+			$xml_writed->element[2]['walk']['linkfield']['object'] = 'object';
+			$xml_writed->element[2]['walk']['linkfield']['oid'] = 'oid';
+			
+			$writed[1] .= $xml_writed->writelement(1,'snmp');
+			unset($xml_writed);
+		}
+
+
 	//	echo $xml->DoXML();
-		$data = $xml->DoXML();
+		$data = $xml->DoXML($writed);
 		$gzdata = gzencode($data, 9);
 		echo $gzdata;
 	}

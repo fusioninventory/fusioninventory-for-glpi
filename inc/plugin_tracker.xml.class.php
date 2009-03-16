@@ -61,14 +61,14 @@ class plugin_tracker_XML {
 	}
 
 
-	function DoXML(){
+	function DoXML($writed=array()){
 		global $DB;
-		
+
 		$xmlclass = new plugin_tracker_XML;
 		
 		$xml = "<?xml version='1.0' encoding='UTF-8' ?>\n";
 		$xmlclass->element = $this->element;
-		$xml .= $xmlclass->writelement(0);		
+		$xml .= $xmlclass->writelement(0,'','',$writed);
 		if (empty($this->FilePath))
 			return $xml;
 		else
@@ -81,10 +81,10 @@ class plugin_tracker_XML {
 
 
 
-	function writelement($level,$prec_level_name='',$sql_data='')
+	function writelement($level,$prec_level_name='',$sql_data='',$writed=array())
 	{
 		global $DB;
-		
+
 		$xmlclass = new plugin_tracker_XML;
 		$xmlclass->element = $this->element;
 		$xml = "";
@@ -93,14 +93,23 @@ class plugin_tracker_XML {
 			$tab .= "	";
 		}
 
+		if (isset($writed[$level]))
+		{
+			$xml .= $writed[$level];
+			unset($writed[$level]);
+		}
+		
 		foreach ($this->element[$level] AS $element=>$value)
 		{
-			if ((!empty($this->element[$level][$element]['SQL'])) 
-				AND ($prec_level_name == $this->element[$level][$element]['element'])){
+		
+			if ((!empty($this->element[$level][$element]['SQL']))
+				AND ($prec_level_name == $this->element[$level][$element]['element']))
+			{
 				$query = $this->element[$level][$element]['SQL'];
 				// Detect if query has variable from precedent sql query. If yes we replace it
 					if (ereg('\[', $query))
 						$query = preg_replace("/\[(.*?)\]/", $sql_data[1],$query);
+
 				$result=$DB->query($query);
 				while ( $data=$DB->fetch_array($result) )
 				{
@@ -124,7 +133,7 @@ class plugin_tracker_XML {
 						}
 					
 					if (!empty($this->element[($level+1)]))
-						$xml .= $xmlclass->writelement($level+1,$element,$data);
+						$xml .= $xmlclass->writelement($level+1,$element,$data,$writed);
 					
 					$xml .= $tab."</".$element.">\n";
 				}
@@ -142,7 +151,7 @@ class plugin_tracker_XML {
 					}
 				
 				if (!empty($this->element[($level+1)]))
-					$xml .= $xmlclass->writelement($level+1,$element);
+					$xml .= $xmlclass->writelement($level+1,$element,'',$writed);
 				
 				$xml .= $tab."</".$element.">\n";
 			}
@@ -150,78 +159,6 @@ class plugin_tracker_XML {
 		return $xml;
 	}
 
-
-
-
-	/**
-	 * Do XML export
-	**/
-	function DoXML_EX(){
-		global $DB;
-		$fp = fopen($this->FilePath,'wb');
-		fputs($fp, '<?xml version="1.0" encoding="UTF-8" ?>\n');
-		fputs($fp, "<dataxml>\n");
-
-		foreach($this->SqlString as $strqry){
-			if ($strqry==""){
-				$this->IsError=1;
-				$this->ErrorString="Error the query can't be a null string";
-				return -1;
-			}
-			$result = $DB->query($strqry);
-
-			if ($result==FALSE){
-				$this->IsError=1;
-				$this->ErrorString="Error in SQL Query : ".$strqry;
-				return -1;
-			}
-			// OK... let's create XML ;)
-			fputs($fp, "	<fields>\n");
-			$i = 0;
-			$FieldsVector=array();
-			while ($i < $DB->num_fields ($result)){
-				$name = $DB->field_name($result,$i);
-				fputs($fp, "		<field>".$name."</field>\n");
-				$FieldsVector[]=$name;
-				$i++;
-			}
-
-			fputs($fp, "	</fields>\n");
-			// And NOW the Data ...
-			fputs($fp, "	<rows>\n");
-			while ($row = $DB->fetch_array ($result)){
-				fputs($fp, "		<row>\n");
-				for ($j=0; $j<$i; $j++){
-					$FieldName="";			// Name of TAG
-					$Attributes="";
-					switch ($this->Type){
-						case 1:
-							$FieldName="data";
-							break;
-						case 2:
-							$FieldName="data".$j;
-							break;
-						case 3:
-							$FieldName=$FieldsVector[$j];
-							break;
-						case 4:
-							$FieldName="data";
-							$Attributes=" fieldname=\"".$FieldsVector[$j]."\"";
-					}
-					fputs($fp, "			<".$FieldName.$Attributes.">".utf8_encode(htmlspecialchars($row[$j]))."</".$FieldName.">\n");
-				}
-				fputs($fp, "		</row>\n");
-			}
-			fputs($fp, "	</rows>\n");
-
-			$DB->free_result($result);
-		}
-		fputs($fp, "</dataxml>");
-		//OK free ...  ;)
-		fclose($fp);
-
-	} // End  Function : DoXML
-} // Fine Class XML
-
+}
 
 ?>
