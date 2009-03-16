@@ -215,7 +215,15 @@ class plugin_tracker_importexport extends CommonDBTM
 		$count_discovery_devices = 0;
 		foreach($xml->discovery as $discovery){
 			$count_discovery_devices++;	
-		}		
+		}
+		$device_queried_networking = 0;
+		$device_queried_printer = 0;
+		foreach($xml->device as $device){
+			if ($device->infos->type == NETWORKING_TYPE)
+				$device_queried_networking++;
+			else if ($device->infos->type == PRINTER_TYPE)
+				$device_queried_printer++;
+		}
 		foreach($xml->agent as $agent){
 			$agent_version = $agent->version;
 			$agent_id = $agent->id;
@@ -228,7 +236,9 @@ class plugin_tracker_importexport extends CommonDBTM
 			SET end_time='".$agent->end_date."', status='3', 
 				start_time_discovery='".$agent->start_time_discovery."', end_time_discovery='".$agent->end_time_discovery."',
 				discovery_queries_total='".$agent->discovery_queries_total."',
-				discovery_queries='".$count_discovery_devices."'
+				discovery_queries='".$count_discovery_devices."',
+				networking_queries='".$device_queried_networking."',
+				printers_queries='".$device_queried_printer."'
 			WHERE process_number='".$agent->pid."'
 				AND FK_agent='".$agent->id."'";
 			$DB->query($query);			
