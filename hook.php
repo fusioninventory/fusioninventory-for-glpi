@@ -667,6 +667,13 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = timestampToString($duree_timestamp);
 			return "<center>".$out."</center>";
 			break;
+		case "glpi_plugin_tracker_agents_processes.networking_queries" :
+			$agents_processes = new plugin_tracker_agents_processes;
+			$agents_processes->getFromDB($data['ID']);
+			$out = $data["ITEM_$num"] + $agents_processes->fields["printers_queries"];
+			return "<center>".$out."</center>";
+			break;
+			break;
 		case "glpi_plugin_tracker_agents_processes.discovery_queries" :
 			$agents_processes = new plugin_tracker_agents_processes;
 			$agents_processes->getFromDB($data['ID']);
