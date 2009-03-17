@@ -80,12 +80,11 @@ $type='';
 
 $logs = new plugin_tracker_logs;
 
-if(isset($_GET['discovery_process'])){
-	plugin_tracker_discovery_scan_process($_GET['ip1'],$_GET['ip2'],$_GET['ip3'],$_GET['ip4']);
-}
-elseif(isset($_GET['update_device_process'])){
+if(isset($_GET['update_device_process'])){
+	// tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
+
 	$processes = new Threads;
-	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process(array($_GET['id']=>$_GET['ip']),$_GET['FK_process'],$xml_auth_rep,$_GET['type']);
+	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
 	$device_network = 0;
 	$device_printer = 0;
 
@@ -101,25 +100,18 @@ elseif(isset($_GET['update_device_process'])){
 }
 else
 {
-	
-	
 	//Get script configuration
-	
 	$config = new plugin_tracker_config();
 	
 	if (isset($_GET["type"]))
-	{
 		$type=$_GET["type"];
-	}
 	
 	//Get the script's process identifier
 	if (isset($_GET["process_id"]))
 		$fields["process_id"] = $_GET["process_id"];
 	
 	// Add process into database
-	
 	$processes = new Threads;
-	
 	$processes->addProcess($fields["process_id"]);
 	
 	// SNMP is working
@@ -127,71 +119,23 @@ else
 
 	$OS = "";
 	if (isset($_SERVER["OSTYPE"]))
-	{
 		$OS = $_SERVER["OSTYPE"];
-	}
 	else if (isset($_SERVER["OS"]))
-	{
 		$OS = $_SERVER["OS"];
-	}
+
 	$logs->write("tracker_snmp","Operating System = ".$OS,'');
-	
-	$processes_values = array("devices"=>0,"errors"=>0);
-	$processes_values2 = array("devices"=>0,"errors"=>0);
-	
-	// ** QUERY PRINTERS ** //
-	if (($type == "printer_type") OR ($type == ""))
-	{
-		if ($config->getValue("activation_snmp_printer") == "1")
-		{
-			$ArrayListPrinter = plugin_tracker_getDeviceList(PRINTER_TYPE);
-	
-//			$processes_values2 = plugin_tracker_UpdateDeviceBySNMP($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
 
-//			$processes->updateProcess($fields["process_id"],0, $processes_values2["devices"], 0, $processes_values2["errors"]);
-			$processes_values = plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListPrinter,$fields["process_id"],$xml_auth_rep,PRINTER_TYPE);
-
-		}
-	}
-	
-	// ** QUERY NETWORKING ** //
-	if (($type == "networking_type") OR ($type == ""))
+	$query = "SELECT * FROM glpi_plugin_tracker_agents_processes
+	LEFT JOIN glpi_plugin_tracker_walks ON FK_agents_processes = process_number
+	ORDER BY process_number DESC";
+	$result=$DB->query($query);
+	while ( $data=$DB->fetch_array($result) )
 	{
-		if ($config->getValue("activation_snmp_networking") == "1")
-		{
-			// Retrieve list of all networking to query SNMP
-			$ArrayListNetworking = plugin_tracker_getDeviceList(NETWORKING_TYPE);
-			plugin_tracker_snmp_networking_ifaddr($ArrayListNetworking,$xml_auth_rep);
-
-			$processes_values = plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListNetworking,$fields["process_id"],$xml_auth_rep,NETWORKING_TYPE);
-		}
+		$ArrayListDevice[] = $data['on_device'];
+		$ArrayListType[] = $data['device_type'];
+		$ArrayListAgentProcess[] = $data['FK_agents_processes'];
 	}
-
-	
-	// Discover function
-	// get config if we can or not scan
-	$conf = plugin_tracker_discovery_getConf();
-	
-	if (((isset($conf['discover'])) && ($conf['discover'] == "1") AND ($type == "")) OR ($type == "discovery"))
-	{
-		$explode = explode(".",$conf['ifaddr_start']);
-		$Array_IP['ip11'] = $explode[0];
-		$Array_IP['ip12'] = $explode[1];
-		$Array_IP['ip13'] = $explode[2];
-		$Array_IP['ip14'] = $explode[3];
-		$explode = explode(".",$conf['ifaddr_end']);
-		$Array_IP['ip21'] = $explode[0];
-		$Array_IP['ip22'] = $explode[1];
-		$Array_IP['ip23'] = $explode[2];
-		$Array_IP['ip24'] = $explode[3];
-	
-		plugin_tracker_discovery_scan($Array_IP,$fields["process_id"]);
-	}
-	
-	if (((isset($conf['getserialnumber'])) && ($conf['getserialnumber'] == "1") AND ($type == "")) OR ($type == "discovery_serial"))
-	{
-		plugin_tracker_discovery_scan_serial();
-	}
+	plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
 
 	$processes->closeProcess($fields["process_id"]);
 }

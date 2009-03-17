@@ -69,37 +69,11 @@ class plugin_tracker_snmp extends CommonDBTM
 			if ($oid[strlen($oid)-1] != ".")
 			{
 				if ($version == "1")
-				{
-/*					if (ereg("::",$object))
-					{
-						if (defined(str_replace("::","",$object)))
-							runkit_constant_remove(str_replace("::","",$object));
-
-						define(str_replace("::","",$object),$oid);
-					}
-					else
-					{
-						if (defined($object))
-							runkit_constant_remove($object);
-
-						define($object,$oid);
-					}*/
-//					ob_start();
 					$SNMPValue = snmpget($IP, $snmp_auth["community"],$oid,1500000,1);
-//					ob_end_clean();
-				}
 				else if ($version == "2c")
-				{
-//					ob_start();
 					$SNMPValue = snmp2_get($IP, $snmp_auth["community"],$oid,1500000,1);
-//					ob_end_clean();
-				}
 				else if ($version == "3")
-				{
-//					ob_start();
 					$SNMPValue = snmp3_get($IP, $snmp_auth["sec_name"],$snmp_auth["sec_level"],$snmp_auth["auth_protocol"],$snmp_auth["auth_passphrase"], $snmp_auth["priv_protocol"],$snmp_auth["priv_passphrase"],$oid,1500000,1);
-//					ob_end_clean();
-				}
 				if($SNMPValue == false)
 					$logs->write("tracker_snmp","SNMP QUERY : ".$object."(".$oid.") = Timeout" ,$IP);
 				else
@@ -171,23 +145,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		foreach($ArrayOID as $object=>$oid)
 		{
 			if ($version == "1")
-			{
-/*				if (ereg("::",$object))
-				{
-					if (defined(str_replace("::","",$object)))
-						runkit_constant_remove(str_replace("::","",$object));
-
-					define(str_replace("::","",$object),$oid);
-				}
-				else
-				{
-					if (defined($object))
-						runkit_constant_remove($object);
-
-					define($object,$oid);
-				}*/
 				$SNMPValue = snmprealwalk($IP, $snmp_auth["community"],$oid,1500000,1);
-			}
 			else if ($version == "2c")
 				$SNMPValue = snmp2_real_walk($IP, $snmp_auth["community"],$oid,1500000,1);
 			else if ($version == "3")
@@ -311,21 +269,22 @@ class plugin_tracker_snmp extends CommonDBTM
 	/**
 	 * Get port name and ID of the network materiel from DB
 	 *
-	 * @param $IDNetworking ID of the network materiel 
+	 * @param $ID_Device : ID of device
+	 * @param $type : type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
 	 *
 	 * @return array with port name and port ID 
 	 *
 	**/
-	function GetPortsID($IDNetworking)
+	function GetPortsID($ID_Device,$type)
 	{
-
 		global $DB;	
 	
 		$PortsID = array();
 		
 		$query = "SELECT ID,name
 		FROM glpi_networking_ports
-		WHERE on_device='".$IDNetworking."'
+		WHERE on_device='".$ID_Device."'
+			AND device_type='".$type."'
 		ORDER BY logical_number ";
 
 		if ( $result=$DB->query($query) )
@@ -401,7 +360,45 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return array : array with object name and mapping_type||mapping_name
 	 *
 	**/
-	function GetLinkOidToFields($ID_Model)
+	function GetLinkOidToFields($ID_Device,$type)
+	{
+		global $DB,$TRACKER_MAPPING;
+		
+		$ObjectLink = array();
+
+		if ($type == NETWORKING_TYPE)
+			$query_add = "LEFT JOIN glpi_plugin_tracker_networking
+				ON glpi_plugin_tracker_networking.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
+			WHERE FK_networking='".$ID_Device."' ";
+		else if($type == PRINTER_TYPE)
+			$query_add = "LEFT JOIN glpi_plugin_tracker_printers
+				ON glpi_plugin_tracker_printers.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
+			WHERE FK_printers='".$ID_Device."' ";
+			
+			
+		$query = "SELECT mapping_type, mapping_name,oid_port_dyn, 
+			glpi_dropdown_plugin_tracker_mib_oid.name AS name
+		FROM glpi_plugin_tracker_mib_networking
+		
+		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
+			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
+		
+			".$query_add."
+			AND oid_port_counter='0' ";
+
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+				if ($data["oid_port_dyn"] == "1")
+					$data["name"] = $data["name"].".";
+				$ObjectLink[$data["name"]] = $data["mapping_name"];
+			}
+		}
+		return $ObjectLink;
+	}
+	
+	function GetLinkOidToFields_EX($ID_Model)
 	{
 
 		global $DB,$TRACKER_MAPPING;

@@ -231,12 +231,12 @@ class plugin_tracker_networking extends CommonDBTM
 		echo "</tr>";
 
 		// Get link field to detect if cpu, memory and uptime are get onthis network device
-		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($data["FK_model_infos"]);
+		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($_GET['ID'],NETWORKING_TYPE);
 		$mapping_name=array();
 		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 		{
-			$explode = explode("||", $mapping_type_name);
-			$mapping_name[$explode[1]] = "1";			
+//			$explode = explode("||", $mapping_type_name);
+			$mapping_name[$mapping_type_name] = "1";			
 		}
 
 		if (((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
