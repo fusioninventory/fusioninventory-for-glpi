@@ -133,6 +133,12 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dr
 
 // Networking Ports
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifIndex']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifIndex']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifIndex']['name'] = $LANGTRACKER["mapping"][408];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifIndex']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifIndex']['dropdown'] = '';
+
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifmtu']['table'] = 'glpi_plugin_tracker_networking_ports';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifmtu']['field'] = 'ifmtu';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifmtu']['name'] = $LANGTRACKER["mapping"][4];

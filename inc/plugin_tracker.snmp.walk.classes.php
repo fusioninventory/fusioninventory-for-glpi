@@ -46,5 +46,48 @@ class plugin_tracker_walk extends CommonDBTM
 		$this->type = -1;
 	}
 
+
+
+	function GetoidValues($FK_agent_process,$ID_Device,$type)
+	{
+		global $DB;
+
+		$query = "SELECT * FROM glpi_plugin_tracker_walks
+		WHERE on_device='".$ID_Device."'
+			AND device_type='".$type."'
+			AND FK_agents_processes='".$FK_agent_process."'";
+		$result=$DB->query($query);
+		while ( $data=$DB->fetch_array($result) )
+		{
+			$oidvalues[$data['oid']] = $data['value'];
+		}
+		return $oidvalues;
+	}
+	
+	
+
+	function GetoidValuesFromWalk($oidvalues,$oidsModel,$oid_dyn=0)
+	{
+		foreach ($oidvalues as $oid=>$value)
+		{
+			if (ereg($oidsModel."\.", $oid))
+			{
+				if ($oid_dyn == "0")
+					$List[] = $value;
+				else if ($oid_dyn == "1")
+					$List[] = str_replace($oidsModel.".", "", $oid);
+			}
+		}
+		return $List;
+	}
+	
+	
+	
+	function GetValuesFromOid($oid)
+	{
+	
+	
+	
+	}
 }
 ?>
