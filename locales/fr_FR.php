@@ -363,6 +363,9 @@ $LANGTRACKER["mapping"][405]="imprimante > contact";
 $LANGTRACKER["mapping"][406]="imprimante > description";
 $LANGTRACKER["mapping"][407]="imprimante > port > adresse IP";
 $LANGTRACKER["mapping"][408]="réseaux > port > numéro index";
+$LANGTRACKER["mapping"][409]="réseaux > Adresse CDP";
+$LANGTRACKER["mapping"][410]="réseaux > port CDP";
+$LANGTRACKER["mapping"][411]="réseaux > Statut port Trunk";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";

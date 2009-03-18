@@ -127,8 +127,24 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
 
 
+// Networking CDP (Walk)
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheAddress']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheAddress']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheAddress']['name'] = $LANGTRACKER["mapping"][409];
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheAddress']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheAddress']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['name'] = $LANGTRACKER["mapping"][410];
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['name'] = $LANGTRACKER["mapping"][411];
+$TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['dropdown'] = '';
 
 
 // Networking Ports
