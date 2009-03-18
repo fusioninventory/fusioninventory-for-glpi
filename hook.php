@@ -432,7 +432,42 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['linkfield'] = 'start_time_query';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['name'] = $LANGTRACKER["processes"][24];	
 	
+
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY]['common'] = $LANGTRACKER["errors"][0];
+
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['table'] = 'glpi_plugin_tracker_snmp_history';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['name'] = "ID";
+
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][2]['table'] = 'glpi_plugin_tracker_snmp_history';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][2]['field'] = 'FK_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][2]['linkfield'] = 'FK_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][2]['name'] = $LANG["setup"][175];
+
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][3]['table'] = 'glpi_plugin_tracker_snmp_history';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][3]['field'] = 'Field';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][3]['linkfield'] = 'Field';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][3]['name'] = $LANG["event"][18];
+
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['table'] = 'glpi_plugin_tracker_snmp_history';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['field'] = 'old_value';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['linkfield'] = 'old_value';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['name'] = "Ancienne valeur";
 	
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['table'] = 'glpi_plugin_tracker_snmp_history';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['field'] = 'new_value';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['linkfield'] = 'new_value';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['name'] = "Nouvelle valeur";
+	
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['table'] = 'glpi_plugin_tracker_snmp_history';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['field'] = 'date_mod';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['linkfield'] = 'date_mod';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['name'] = "Date";
+
+
+
+
 
 	return $sopt;
 }
@@ -696,6 +731,12 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = timestampToString($duree_timestamp);
 			return "<center>".$out."</center>";
 			$out = "-";
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_snmp_history.FK_ports" :
+			$netport=new Netport;
+			$netport->getFromDB($data["ITEM_$num"]);
+			$out = $netport->fields["name"];
 			return "<center>".$out."</center>";
 			break;		
 	}

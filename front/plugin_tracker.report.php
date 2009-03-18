@@ -43,7 +43,7 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","
 plugin_tracker_mini_menu();
 
 echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.unknown_mac.php'>Adresses MAC inconnues</a><br/>";
-echo "Historique des ports de switchs<br/>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php'>Historique des ports de switchs</a><br/>";
 echo "Ports de switchs non connectés depuis xx mois<br/>";
 echo "Liste des équipements prêts à être interrogés mais non associés à un agent<br/>";
 
