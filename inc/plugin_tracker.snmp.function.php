@@ -259,7 +259,8 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		// ** Get MAC adress of connected ports
 		$array_port_trunk = array();
 		if (!empty($ArrayPort_Object_oid))
-			$array_port_trunk = GetMACtoPort($ArrayPortDB_Name_ID,$ID_Device,$FK_process,$Array_trunk_ifIndex,"");
+			$array_port_trunk = GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues);
+			//$array_port_trunk = GetMACtoPort($ArrayPortDB_Name_ID,$ID_Device,$FK_process,$Array_trunk_ifIndex,"");
 exit();
 		if ($type ==  NETWORKING_TYPE)
 		{
@@ -659,7 +660,7 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
  *
 **/
 //function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$Array_trunk_ifIndex,$vlan="",$array_port_trunk=array(),$vlan_name="")
-function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues)
+function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$vlan="",$vlan_name="")
 {
 	global $DB;
 	
@@ -667,154 +668,148 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues)
 	$processes = new Threads;
 	$netwire = new Netwire;
 	$snmp_queries = new plugin_tracker_snmp;
+	$walks = new plugin_tracker_walk;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan_name."(".$vlan.")] <<<<<<<<<<",$type."][".$ID_Device,1);
 
 	$ArrayMACAdressTableObject = array("dot1dTpFdbAddress" => ".1.3.6.1.2.1.17.4.3.1.1");
+//$oidsModel[0][1]['dot1dTpFdbAddress']	
+	
 	$ArrayIPMACAdressePhysObject = array("ipNetToMediaPhysAddress" => ".1.3.6.1.2.1.4.22.1.2");
+//$oidsModel[0][1]['ipNetToMediaPhysAddress']
 	$ArrayMACAdressTableVerif = array();
 	
-	// $snmp_version
-	$community = $snmp_auth["community"];
-
-	if ($vlan != ""){
-		$snmp_auth["community"] = $snmp_auth["community"]."@".$vlan;
-	}
 	// Get by SNMP query the mac addresses and IP (ipNetToMediaPhysAddress)
-	$ArrayIPMACAdressePhys = $snmp_queries->SNMPQueryWalkAll($ArrayIPMACAdressePhysObject,$IP,$snmp_version,$snmp_auth);
+//	$ArrayIPMACAdressePhys = $snmp_queries->SNMPQueryWalkAll($ArrayIPMACAdressePhysObject,$IP,$snmp_version,$snmp_auth);
+	$ArrayIPMACAdressePhys = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ipNetToMediaPhysAddress'],1);
+
 	if (empty($ArrayIPMACAdressePhys))
-	{
-	return;
-	}
+		return;
 
 	// Get by SNMP query the mac addresses (dot1dTpFdbAddress)
-	$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP,$snmp_version,$snmp_auth);
+	//$ArrayMACAdressTable = $snmp_queries->SNMPQueryWalkAll($ArrayMACAdressTableObject,$IP,$snmp_version,$snmp_auth);
+	// Array : num => dynamic data
+	$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1);
 
-	foreach($ArrayMACAdressTable as $oid=>$value)
+	foreach($ArrayMACAdressTable as $num=>$dynamicdata)
 	{
-		$oidExplode = explode(".", $oid);
+		$oidExplode = explode(".", $dynamicdata);
 		// Get by SNMP query the port number (dot1dTpFdbPort)
-		if ((count($oidExplode) > 3)
-			AND ((isset($oidExplode[(count($oidExplode)-5)])) AND (!empty($oidExplode[(count($oidExplode)-5)])))
-			AND ((isset($oidExplode[(count($oidExplode)-4)])) AND (!empty($oidExplode[(count($oidExplode)-4)])))
-			AND ((isset($oidExplode[(count($oidExplode)-3)])) AND (!empty($oidExplode[(count($oidExplode)-3)])))
-			AND ((isset($oidExplode[(count($oidExplode)-2)])) AND (!empty($oidExplode[(count($oidExplode)-2)])))
-			AND ((isset($oidExplode[(count($oidExplode)-1)])) AND (!empty($oidExplode[(count($oidExplode)-1)])))
-			)
+		if ((count($oidExplode) > 3))
 		{
-			$OIDBridgePortNumber = ".1.3.6.1.2.1.17.4.3.1.2.0.".
-				$oidExplode[(count($oidExplode)-5)].".".
-				$oidExplode[(count($oidExplode)-4)].".".
-				$oidExplode[(count($oidExplode)-3)].".".
-				$oidExplode[(count($oidExplode)-2)].".".
-				$oidExplode[(count($oidExplode)-1)];
-			$ArraySNMPBridgePortNumber = array("dot1dTpFdbPort" => $OIDBridgePortNumber);
-			$ArrayBridgePortNumber = $snmp_queries->SNMPQuery($ArraySNMPBridgePortNumber,$IP,$snmp_version,$snmp_auth);
-			
-			foreach($ArrayBridgePortNumber as $oidBridgePort=>$BridgePortNumber)
-			{
+//			$OIDBridgePortNumber = $oidsModel[0][1]['dot1dTpFdbPort'].$dynamicdata;
+
+//			$ArraySNMPBridgePortNumber = array("dot1dTpFdbPort" => $OIDBridgePortNumber);
+//			$ArrayBridgePortNumber = $snmp_queries->SNMPQuery($ArraySNMPBridgePortNumber,$IP,$snmp_version,$snmp_auth);
+			$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata];
+
+//			foreach($ArrayBridgePortNumber as $oidBridgePort=>$BridgePortNumber)
+//			{
 				$logs->write("tracker_fullsync","****************",$type."][".$ID_Device,1);
 				$logs->write("tracker_fullsync","BRIDGEPortNumber = ".$BridgePortNumber,$type."][".$ID_Device,1);
 				
-				$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => ".1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
-		
-				$ArrayBridgePortifIndex = $snmp_queries->SNMPQuery($ArrayBridgePortifIndexObject,$IP,$snmp_version,$snmp_auth);
-				
-				foreach($ArrayBridgePortifIndex as $oidBridgePortifIndex=>$BridgePortifIndex)
-				{
+//				$ArrayBridgePortifIndexObject = array("dot1dBasePortIfIndex" => ".1.3.6.1.2.1.17.1.4.1.2.".$BridgePortNumber);
+//				$ArrayBridgePortifIndex = $snmp_queries->SNMPQuery($ArrayBridgePortifIndexObject,$IP,$snmp_version,$snmp_auth);
+				$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber];	
+//				foreach($ArrayBridgePortifIndex as $oidBridgePortifIndex=>$BridgePortifIndex)
+//				{
+					$stop = 0;
 					if (($BridgePortifIndex == "") OR ($BridgePortifIndex == "No Such Instance currently exists at this OID"))
-						break;
+						$stop = 1;
 						
 					if ((isset($Array_trunk_ifIndex[$BridgePortifIndex])) AND ($Array_trunk_ifIndex[$BridgePortifIndex] == "1"))
-						break;
+						$stop = 1;
 
-					$logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$type."][".$ID_Device,1);
-				
-					$ArrayifNameObject = array("ifName" => ".1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
-			
-					$ArrayifName = $snmp_queries->SNMPQuery($ArrayifNameObject,$IP,$snmp_version,$snmp_auth);
-					
-					foreach($ArrayifName as $oidArrayifName=>$ifName)
+					if ($stop == "0")
 					{
-						$logs->write("tracker_fullsync","** Interface = ".$ifName,$type."][".$ID_Device,1);
-	
-						// Search portID of materiel wich we would connect to this port
-						$MacAddress = trim($value);
-						$MacAddress = str_replace(" ", ":", $MacAddress);
-						$MacAddress = strtolower($MacAddress);
-						$MacAddress = $snmp_queries->MAC_Rewriting($MacAddress);
-						
-						// Verify Trunk
-						$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
-								
-						$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
-						if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "[[empty]]")
-							$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] = "";
-							
-						$logs->write("tracker_fullsync","Vlan = ".$vlan,$type."][".$ID_Device,1);
-						$logs->write("tracker_fullsync","TrunkStatus = ".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex],$type."][".$ID_Device,1);
-						$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type."][".$ID_Device,1);
-											
-						$queryPortEnd = "";	
-						if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR (empty($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
-						{
-							$logs->write("tracker_fullsync","Mac address OK",$type."][".$ID_Device,1);
-							$queryPortEnd = "SELECT * 
-							
-							FROM glpi_networking_ports
-							
-							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$IDNetworking."' ";
-						}
-						else if (($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") AND ($vlan != "")) // It's a trunk port
-						{
-							$logs->write("tracker_fullsync","Mac address FAILED(1)",$type."][".$ID_Device,1);
-							$queryPortEnd = "";
-							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-						}						
-						else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
-						{
-							$logs->write("tracker_fullsync","Mac address FAILED(2)",$type."][".$ID_Device,1);
-							$queryPortEnd = "";
-							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-						}
-	
-						if (($queryPortEnd != ""))
-						{
-							if ($resultPortEnd=$DB->query($queryPortEnd))
-							{
-								$traitement = 1;
-		
-								if ($vlan != "")
-								{
-									if (isset($array_port_trunk[$ArrayPortsID[$ifName]]) && $array_port_trunk[$ArrayPortsID[$ifName]] == "1")
-										$traitement = 0;
+						$logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$type."][".$ID_Device,1);
+					
+//						$ArrayifNameObject = array("ifName" => ".1.3.6.1.2.1.31.1.1.1.1.".$BridgePortifIndex);
+//						$ArrayifName = $snmp_queries->SNMPQuery($ArrayifNameObject,$IP,$snmp_version,$snmp_auth);
+						$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex];
 
-								}
-								
-								if (!isset($ArrayPortsID[$ifName]))
-									$traitement = 0;
-
-								$sport = $ArrayPortsID[$ifName]; // Networking_Port
-								if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
-								{
-									$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
-									// Connection between ports (wire table in DB)
-									$snmp_queries->PortsConnection($sport, $dport,$FK_process);
-								}
-								else if ( $traitement == "1" )
-								{
+//						foreach($ArrayifName as $oidArrayifName=>$ifName)
+//						{
+							$logs->write("tracker_fullsync","** Interface = ".$ifName,$type."][".$ID_Device,1);
+exit;		
+							// Search portID of materiel wich we would connect to this port
+							$MacAddress = trim($value);
+							$MacAddress = str_replace(" ", ":", $MacAddress);
+							$MacAddress = strtolower($MacAddress);
+							$MacAddress = $snmp_queries->MAC_Rewriting($MacAddress);
+							
+							// Verify Trunk
+							$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
 									
-									// Mac address unknow
-									if ($FK_process != "0")
-										$processes->unknownMAC($FK_process,$ArrayPortsID[$ifName],$MacAddress,$sport);
-
+							$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
+							if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "[[empty]]")
+								$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] = "";
+								
+							$logs->write("tracker_fullsync","Vlan = ".$vlan,$type."][".$ID_Device,1);
+							$logs->write("tracker_fullsync","TrunkStatus = ".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex],$type."][".$ID_Device,1);
+							$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type."][".$ID_Device,1);
+												
+							$queryPortEnd = "";	
+							if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR (empty($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
+							{
+								$logs->write("tracker_fullsync","Mac address OK",$type."][".$ID_Device,1);
+								$queryPortEnd = "SELECT * 
+								
+								FROM glpi_networking_ports
+								
+								WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+									AND on_device!='".$IDNetworking."' ";
+							}
+							else if (($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") AND ($vlan != "")) // It's a trunk port
+							{
+								$logs->write("tracker_fullsync","Mac address FAILED(1)",$type."][".$ID_Device,1);
+								$queryPortEnd = "";
+								$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+							}						
+							else if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "1") // It's a trunk port
+							{
+								$logs->write("tracker_fullsync","Mac address FAILED(2)",$type."][".$ID_Device,1);
+								$queryPortEnd = "";
+								$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+							}
+		
+							if (($queryPortEnd != ""))
+							{
+								if ($resultPortEnd=$DB->query($queryPortEnd))
+								{
+									$traitement = 1;
+			
+									if ($vlan != "")
+									{
+										if (isset($array_port_trunk[$ArrayPortsID[$ifName]]) && $array_port_trunk[$ArrayPortsID[$ifName]] == "1")
+											$traitement = 0;
+	
+									}
+									
+									if (!isset($ArrayPortsID[$ifName]))
+										$traitement = 0;
+	
+									$sport = $ArrayPortsID[$ifName]; // Networking_Port
+									if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
+									{
+										$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+										// Connection between ports (wire table in DB)
+										$snmp_queries->PortsConnection($sport, $dport,$FK_process);
+									}
+									else if ( $traitement == "1" )
+									{
+										
+										// Mac address unknow
+										if ($FK_process != "0")
+											$processes->unknownMAC($FK_process,$ArrayPortsID[$ifName],$MacAddress,$sport);
+	
+									}
 								}
 							}
-						}
+//						}
 					}
-				}
-			}
+//				}
+//			}
 		}
 	}
 	$snmp_auth["community"] = $community;
@@ -862,51 +857,52 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 
 	// Get by SNMP query the Name of port (ifDescr) : snmp port ID => ifDescr of port of switch connected on this port
 	//$Array_trunk_ifDescr_result = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['cdpCacheDevicePort'],1);
-	
-	foreach($Array_trunk_IP_hex_result AS $num=>$snmpportID)
+	if (!empty($Array_trunk_IP_hex_result))
 	{
-	
-		$trunk_IP = $oidvalues[$oidsModel[0][1]['cdpCacheAddress'].".".$snmpportID];
-		
-		// Convert IP HEX in Decimal
-		if (ereg("^0x",$trunk_IP))
+		foreach($Array_trunk_IP_hex_result AS $num=>$snmpportID)
 		{
-			$trunk_IP = str_replace("0x","",$trunk_IP);
-			$hex_ = preg_replace("/[^0-9a-fA-F]/","", $trunk_IP);
-			$trunk_IP_tmp = '';
-			for($i = 0; $i < strlen($hex_); $i = $i + 2)
-			$trunk_IP_tmp .= chr(hexdec(substr($hex_, $i, 2)));
-			$ip_switch_trunk = ord(substr($trunk_IP_tmp, 0, 1));
-			for($i = 1; $i < strlen($trunk_IP_tmp); $i = $i + 1)
-			$ip_switch_trunk .= ".".ord(substr($trunk_IP_tmp, $i, 1));
+		
+			$trunk_IP = $oidvalues[$oidsModel[0][1]['cdpCacheAddress'].".".$snmpportID];
+			
+			// Convert IP HEX in Decimal
+			if (ereg("^0x",$trunk_IP))
+			{
+				$trunk_IP = str_replace("0x","",$trunk_IP);
+				$hex_ = preg_replace("/[^0-9a-fA-F]/","", $trunk_IP);
+				$trunk_IP_tmp = '';
+				for($i = 0; $i < strlen($hex_); $i = $i + 2)
+				$trunk_IP_tmp .= chr(hexdec(substr($hex_, $i, 2)));
+				$ip_switch_trunk = ord(substr($trunk_IP_tmp, 0, 1));
+				for($i = 1; $i < strlen($trunk_IP_tmp); $i = $i + 1)
+				$ip_switch_trunk .= ".".ord(substr($trunk_IP_tmp, $i, 1));
+			}
+			
+			$explode = explode(".", $snmpportID);
+			$ifIndex = $explode[0];
+			$end_Number = $explode[1];
+			
+			$Array_trunk_ifIndex[$ifIndex] = 1;
+			$logs->write("tracker_fullsync","ifIndex = ".$ifIndex,$type."][".$ID_Device,1);
+			$logs->write("tracker_fullsync","ifIndex num logic = ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex],$type."][".$ID_Device,1);
+	//		$logs->write("tracker_fullsync","ifIndex name logic = ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]],$type."][".$ID_Device,1);
+	
+			// Search port of switch connected on this port and connect it if not connected
+			
+				$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID]);
+		
+				$query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+				WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."' 
+					AND device_type='".NETWORKING_TYPE."'
+					AND on_device='".$ID_Device."' ";
+				$result = $DB->query($query);		
+				$data = $DB->fetch_assoc($result);
+	
+				if ((!empty($data["ID"])) AND (!empty($PortID)))
+					$snmp_queries->PortsConnection($data["ID"], $PortID,$_SESSION['FK_process']);
+				else if ((!empty($data["ID"])) AND (empty($PortID))) // Unknow IP of switch connected to this port
+					$Threads->unknownMAC($_SESSION['FK_process'],$data["ID"],$ip_switch_trunk,$data["ID"]);
 		}
-		
-		$explode = explode(".", $snmpportID);
-		$ifIndex = $explode[0];
-		$end_Number = $explode[1];
-		
-		$Array_trunk_ifIndex[$ifIndex] = 1;
-		$logs->write("tracker_fullsync","ifIndex = ".$ifIndex,$type."][".$ID_Device,1);
-		$logs->write("tracker_fullsync","ifIndex num logic = ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex],$type."][".$ID_Device,1);
-//		$logs->write("tracker_fullsync","ifIndex name logic = ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]],$type."][".$ID_Device,1);
-
-		// Search port of switch connected on this port and connect it if not connected
-		
-			$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID]);
-	
-			$query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-			WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."' 
-				AND device_type='".NETWORKING_TYPE."'
-				AND on_device='".$ID_Device."' ";
-			$result = $DB->query($query);		
-			$data = $DB->fetch_assoc($result);
-
-			if ((!empty($data["ID"])) AND (!empty($PortID)))
-				$snmp_queries->PortsConnection($data["ID"], $PortID,$_SESSION['FK_process']);
-			else if ((!empty($data["ID"])) AND (empty($PortID))) // Unknow IP of switch connected to this port
-				$Threads->unknownMAC($_SESSION['FK_process'],$data["ID"],$ip_switch_trunk,$data["ID"]);
-	}
-	
+	}	
 	// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
 	foreach($ArrayPort_LogicalNum_SNMPNum AS $ifIndex=>$logical_num)
 	{
@@ -927,7 +923,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 					SET trunk='1'
 					WHERE id='".$data['sid']."' ";
 					$DB->query($query_update);
-					tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$FK_process);
+					tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
 				}
 			}
 			else if($data['trunk'] == "1")
@@ -936,7 +932,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 				SET trunk='0'
 				WHERE id='".$data['sid']."' ";
 				$DB->query($query_update);
-				tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$FK_process);
+				tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$_SESSION['FK_process']);
 			}
 			
 		}

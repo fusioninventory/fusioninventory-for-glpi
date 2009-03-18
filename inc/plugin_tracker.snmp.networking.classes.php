@@ -188,7 +188,6 @@ class plugin_tracker_networking extends CommonDBTM
 			
 			$DB->query($query_add);
 		}
-		
 		// Form networking informations
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";

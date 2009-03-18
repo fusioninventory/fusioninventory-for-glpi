@@ -78,6 +78,8 @@ class plugin_tracker_walk extends CommonDBTM
 					$List[] = str_replace($oidsModel.".", "", $oid);
 			}
 		}
+		if (!isset($List))
+			return;
 		return $List;
 	}
 	
