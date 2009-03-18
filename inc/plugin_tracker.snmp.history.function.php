@@ -152,6 +152,11 @@ function tracker_snmp_showHistory($ID_port)
 			$text .= "</tr>";
 		}
 	}
+	$text .= "<tr class='tab_bg_1'>";
+	$text .= "<th colspan='8'>";
+	$text .= "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
+	$text .= "</th>";
+	$text .= "</tr>";
 	$text .= "</table>";
 	return $text;
 }
