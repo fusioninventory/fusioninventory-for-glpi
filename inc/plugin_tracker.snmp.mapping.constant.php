@@ -146,6 +146,30 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['name'] = $LANGT
 $TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbAddress']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbAddress']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbAddress']['name'] = $LANGTRACKER["mapping"][412];
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbAddress']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbAddress']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipNetToMediaPhysAddress']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipNetToMediaPhysAddress']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipNetToMediaPhysAddress']['name'] = $LANGTRACKER["mapping"][413];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipNetToMediaPhysAddress']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipNetToMediaPhysAddress']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbPort']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbPort']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbPort']['name'] = $LANGTRACKER["mapping"][414];
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbPort']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dTpFdbPort']['dropdown'] = '';
+
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['name'] = $LANGTRACKER["mapping"][415];
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['dropdown'] = '';
+
 
 // Networking Ports
 

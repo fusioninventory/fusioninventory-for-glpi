@@ -366,6 +366,10 @@ $LANGTRACKER["mapping"][408]="réseaux > port > numéro index";
 $LANGTRACKER["mapping"][409]="réseaux > Adresse CDP";
 $LANGTRACKER["mapping"][410]="réseaux > port CDP";
 $LANGTRACKER["mapping"][411]="réseaux > Statut port Trunk";
+$LANGTRACKER["mapping"][412]="réseaux > Adresses mac filtrées (dot1dTpFdbAddress)";
+$LANGTRACKER["mapping"][413]="réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)";
+$LANGTRACKER["mapping"][414]="réseaux > instances de ports (dot1dTpFdbPort)";
+$LANGTRACKER["mapping"][415]="réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
