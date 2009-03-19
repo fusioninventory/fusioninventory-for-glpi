@@ -125,7 +125,7 @@ else
 
 	$logs->write("tracker_snmp","Operating System = ".$OS,'');
 
-	$query = "SELECT * FROM glpi_plugin_tracker_agents_processes
+	$query = "SELECT DISTINCT FK_agents_processes,on_device,device_type FROM glpi_plugin_tracker_agents_processes
 	LEFT JOIN glpi_plugin_tracker_walks ON FK_agents_processes = process_number
 	ORDER BY process_number DESC";
 	$result=$DB->query($query);
