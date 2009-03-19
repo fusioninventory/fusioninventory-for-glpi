@@ -155,7 +155,7 @@ class plugin_tracker_printers extends CommonDBTM
 		// get infos to get visible or not the counters
 			$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID,PRINTER_TYPE);
 			// ** Get link OID fields
-			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID); 
+			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 			{
@@ -244,7 +244,7 @@ class plugin_tracker_printers extends CommonDBTM
 		// get infos to get visible or not the counters
 			$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID,PRINTER_TYPE);
 			// ** Get link OID fields
-			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($snmp_model_ID); 
+			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 			{
