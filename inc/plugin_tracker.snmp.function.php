@@ -587,7 +587,7 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 		if ((ereg("\.$",$oid)) AND (!empty($TRACKER_MAPPING[$type][$link]['field']))) // SNMPWalk ONLY (ports)
 		{
 //			print "OID : ".$oid."\n";
-		
+			
 			// For each port
 			if ($TRACKER_MAPPING[$type][$link]['field'] == 'ifmac')
 				$query = "SELECT glpi_networking_ports.ID, logical_number, glpi_networking_ports.ifmac as ifmac FROM glpi_networking_ports
@@ -606,6 +606,15 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 			{
 				while ($data=$DB->fetch_array($result))
 				{
+					// Update Last UP
+					if (($link == 'ifstatus') AND ($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]] == "1"))
+					{
+						$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+						SET lastup='".date("Y-m-d H:i:s")."'
+						WHERE FK_networking_ports='".$data["ID"]."' ";
+						$DB->query($query_update);
+					}
+				
 					if ($link == 'ifPhysAddress')
 					{
 						$MacAddress = str_replace("0x","",$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]]);
@@ -797,7 +806,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 								foreach ($ArrayIPMACAdressePhys as $num=>$ips)
 								{
 									if ($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$ips] == $MacAddress_Hex)
-										$ip_unknown = str_replace("^1.","",$ips);
+										$ip_unknown = preg_replace("/^1\./","",$ips);
 								}
 								$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 							}
