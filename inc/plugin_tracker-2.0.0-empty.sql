@@ -506,6 +506,7 @@ CREATE TABLE `glpi_plugin_tracker_walks` (
   `device_type` int(11) NOT NULL DEFAULT '0',
   `FK_agents_processes` int(11) NOT NULL DEFAULT '0',
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `vlan` varchar(255) DEFAULT NULL,
   `oid` varchar(255) DEFAULT NULL,
   `value` text,
   PRIMARY KEY (`ID`)
