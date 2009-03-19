@@ -466,7 +466,22 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['name'] = "Date";
 
 
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2]['common'] = $LANGTRACKER["errors"][0];
 
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['table'] = 'glpi_plugin_tracker_networking_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['name'] = "ID";
+
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['table'] = 'glpi_plugin_tracker_networking_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['field'] = 'FK_networking_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['linkfield'] = 'FK_networking_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['name'] = "name";
+	
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['table'] = 'glpi_plugin_tracker_networking_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['field'] = 'lastup';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['linkfield'] = 'lastup';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['name'] = "Dernière connexion";
 
 
 	return $sopt;
@@ -737,6 +752,22 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$netport=new Netport;
 			$netport->getFromDB($data["ITEM_$num"]);
 			$out = $netport->fields["name"];
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_networking_ports.ID" :
+			$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
+			LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
+			WHERE glpi_networking_ports.ID='".$data["ITEM_2"]."'
+			LIMIT 0,1";
+			$result = $DB->query($query);		
+			$data2 = $DB->fetch_assoc($result);
+			$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$data2["ID"]."'>".$data2["name"]."</a>";
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
+			$netport=new Netport;
+			$netport->getFromDB($data["ITEM_$num"]);
+			$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$netport->fields["name"]."</a>";
 			return "<center>".$out."</center>";
 			break;		
 	}
@@ -1174,4 +1205,28 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 	return false;
 	
 }
+
+function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
+	global $SEARCH_OPTION;
+
+	$table=$SEARCH_OPTION[$type][$ID]["table"];
+	$field=$SEARCH_OPTION[$type][$ID]["field"];
+	
+	$SEARCH=makeTextSearch($val,$nott);
+
+	switch ($table.".".$field){
+		case "glpi_plugin_tracker_networking_ports.lastup" :
+			// Standard Where clause for the example but use it for specific jointures
+			$ADD="";	
+
+			if ($nott&&$val!="NULL") {
+				$ADD=" OR $table.$field IS NULL";
+			}
+			return $link." ($table.$field $val ".$ADD." ) ";
+			break;
+	}
+	return "";
+}
+
+
 ?>

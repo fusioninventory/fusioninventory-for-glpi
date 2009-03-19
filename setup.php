@@ -53,6 +53,8 @@ function plugin_init_tracker() {
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, "plugin_tracker_discovery", "glpi_plugin_tracker_discovery", "front/plugin_tracker.discovery.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, "plugin_tracker_agents_processes", "glpi_plugin_tracker_agents_processes", "front/plugin_tracker.agents.processes.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_HISTORY", 5162, "plugin_tracker_SNMP_history", "glpi_plugin_tracker_snmp_history");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2", 5163, "plugin_tracker_networking_ports", "glpi_plugin_tracker_networking_ports");
+
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
@@ -78,6 +80,7 @@ function plugin_init_tracker() {
 			$report_list = array();
 					$report_list["report/plugin_tracker.unknown_mac.php"] = $LANGTRACKER["processes"][14];
 					$report_list["report/plugin_tracker.switch_ports.history.php"] = "Historique des ports de switchs";
+					$report_list["report/plugin_tracker.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['tracker'] = $report_list;
 			
 			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r"))

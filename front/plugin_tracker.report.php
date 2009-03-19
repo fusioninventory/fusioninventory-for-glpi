@@ -44,7 +44,7 @@ plugin_tracker_mini_menu();
 
 echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.unknown_mac.php'>Adresses MAC inconnues</a><br/>";
 echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php'>Historique des ports de switchs</a><br/>";
-echo "Ports de switchs non connectés depuis xx mois<br/>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.ports_date_connections.php'>Ports de switchs non connectés depuis xx mois</a><br/>";
 echo "Liste des équipements prêts à être interrogés mais non associés à un agent<br/>";
 
 commonFooter();
