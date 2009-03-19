@@ -409,10 +409,10 @@ class Threads extends CommonDBTM
 	
 	
 	
-	function unknownMAC($PID,$FK_port,$macaddress,$sport)
+	function unknownMAC($PID,$FK_port,$macaddress,$sport,$ip_unknown='')
 	{
 		global $DB;
-	
+
 		// Detect if mac adress is different of internal mac address of port
 		$query = "SELECT *  FROM glpi_networking_ports
 		WHERE ID='".$FK_port."'
@@ -422,6 +422,9 @@ class Threads extends CommonDBTM
 			addLogConnection("remove",$sport,$PID);
 			removeConnector($sport);
 
+			if ($ip_unknown != "")
+				$macaddress .= "\n".$ip_unknown;
+			
 			// Search if a line exist
 			$query = "SELECT *  FROM glpi_plugin_tracker_unknown_mac
 			WHERE unknow_mac='".$macaddress."'
