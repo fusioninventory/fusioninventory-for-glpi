@@ -731,28 +731,40 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$vlan="",$vlan_name
 //						foreach($ArrayifName as $oidArrayifName=>$ifName)
 //						{
 							$logs->write("tracker_fullsync","** Interface = ".$ifName,$type."][".$ID_Device,1);
-exit;		
+
 							// Search portID of materiel wich we would connect to this port
-							$MacAddress = trim($value);
+/*							$MacAddress = trim($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata]);
 							$MacAddress = str_replace(" ", ":", $MacAddress);
 							$MacAddress = strtolower($MacAddress);
 							$MacAddress = $snmp_queries->MAC_Rewriting($MacAddress);
-							
+*/
+							// Convert MAC HEX in Decimal
+							$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata]);
+// Explose par groupe de 2 caractères
+						//	$hex_ = preg_replace("/[^0-9a-fA-F]/","", $MacAddress);
+							$MacAddress_tmp = str_split($MacAddress, 2);
+							$MacAddress = $MacAddress_tmp[0];
+							for($i = 1; $i < count($MacAddress_tmp); $i++)
+								$MacAddress .= ":".$MacAddress_tmp[$i];
+				
 							// Verify Trunk
-							$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
-									
-							$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
-							if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "[[empty]]")
-								$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] = "";
+//							$arrayTRUNKmod = array("vlanTrunkPortDynamicStatus.".$BridgePortifIndex => ".1.3.6.1.4.1.9.9.46.1.6.1.1.14.".$BridgePortifIndex);
+//							$Arraytrunktype = $snmp_queries->SNMPQuery($arrayTRUNKmod,$IP,$snmp_version,$snmp_auth);
+
+//							if ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "[[empty]]")
+//								$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] = "";
 								
 							$logs->write("tracker_fullsync","Vlan = ".$vlan,$type."][".$ID_Device,1);
-							$logs->write("tracker_fullsync","TrunkStatus = ".$Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex],$type."][".$ID_Device,1);
+							$logs->write("tracker_fullsync","TrunkStatus = ".$oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex],$type."][".$ID_Device,1);
 							$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type."][".$ID_Device,1);
 												
 							$queryPortEnd = "";	
-							if ((!isset($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR (empty($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex])) OR ($Arraytrunktype["vlanTrunkPortDynamicStatus.".$BridgePortifIndex] == "2"))
+							if ((!isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex])) 
+								OR (empty($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex])) 
+								OR ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex] == "2"))
 							{
 								$logs->write("tracker_fullsync","Mac address OK",$type."][".$ID_Device,1);
+exit;
 								$queryPortEnd = "SELECT * 
 								
 								FROM glpi_networking_ports
@@ -871,10 +883,10 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 				$hex_ = preg_replace("/[^0-9a-fA-F]/","", $trunk_IP);
 				$trunk_IP_tmp = '';
 				for($i = 0; $i < strlen($hex_); $i = $i + 2)
-				$trunk_IP_tmp .= chr(hexdec(substr($hex_, $i, 2)));
+					$trunk_IP_tmp .= chr(hexdec(substr($hex_, $i, 2)));
 				$ip_switch_trunk = ord(substr($trunk_IP_tmp, 0, 1));
 				for($i = 1; $i < strlen($trunk_IP_tmp); $i = $i + 1)
-				$ip_switch_trunk .= ".".ord(substr($trunk_IP_tmp, $i, 1));
+					$ip_switch_trunk .= ".".ord(substr($trunk_IP_tmp, $i, 1));
 			}
 			
 			$explode = explode(".", $snmpportID);
