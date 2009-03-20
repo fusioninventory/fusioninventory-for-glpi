@@ -235,16 +235,20 @@ class plugin_tracker_importexport extends CommonDBTM
 			foreach($device->get as $snmpget){
 				$walkdata['oid']=$snmpget->object;
 				$walkdata['value']=$snmpget->oid;
+				$walkdata['vlan']=$snmpget->vlan;
 				$walks->add($walkdata);
 				unset($walkdata['oid']);
-				unset($walkdata['value']);				
+				unset($walkdata['value']);		
+				unset($walkdata['vlan']);		
 			}
 			foreach($device->walk as $snmpwalk){
 				$walkdata['oid']=$snmpwalk->object;
 				$walkdata['value']=$snmpwalk->oid;
+				$walkdata['vlan']=$snmpwalk->vlan;
 				$walks->add($walkdata);
 				unset($walkdata['oid']);
-				unset($walkdata['value']);				
+				unset($walkdata['value']);
+				unset($walkdata['vlan']);		
 			}
 
 		}
