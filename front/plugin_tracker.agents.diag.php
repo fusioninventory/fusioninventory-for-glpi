@@ -82,7 +82,9 @@ else if(isset($_POST['get_data']))
 {
 	$agents_processes = new plugin_tracker_agents_processes;
 	$xml = new plugin_tracker_XML;
-
+	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
+	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
+	
 //$_POST['key'] = "yguihu68Jggfihbg5bgjkbtg";
 	$query = "SELECT * FROM glpi_plugin_tracker_agents
 	WHERE `key`='".$_POST['key']."'
@@ -191,6 +193,7 @@ else if(isset($_POST['get_data']))
 		$devices[] = "device_printer";
 		$writed = array();
 		$writed[1] = '';
+
 		for ($i=0;$i < count($devices);$i++)
 		{
 			$xml_writed = new plugin_tracker_XML;
@@ -201,15 +204,18 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
 				WHERE FK_model_infos != '0'
 					AND FK_snmp_connection != '0'
+					AND state='".$config_snmp_networking->getValue('active_device_state')."'
 					".$rangeip_select." ";
 			}
 			else if ($devices[$i] == "device_printer")
 			{
 				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_networking_ports
 				LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
+				LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
 				WHERE device_type='".PRINTER_TYPE."'
 					AND FK_model_infos != '0'
 					AND FK_snmp_connection != '0'
+					AND state='".$config_snmp_printer->getValue('active_device_state')."'
 					".$rangeip_select."
 					AND FK_printers!=0";
 // 					AND ifaddr BETWEEN '192.168.0.1' AND '192.168.0.200'
