@@ -59,23 +59,26 @@ class plugin_tracker_walk extends CommonDBTM
 		$result=$DB->query($query);
 		while ( $data=$DB->fetch_array($result) )
 		{
-			$oidvalues[$data['oid']] = $data['value'];
+			$oidvalues[$data['oid']][$data['vlan']] = $data['value'];
 		}
 		return $oidvalues;
 	}
 	
 	
 
-	function GetoidValuesFromWalk($oidvalues,$oidsModel,$oid_dyn=0)
+	function GetoidValuesFromWalk($oidvalues,$oidsModel,$oid_dyn=0,$vlan="")
 	{
 		foreach ($oidvalues as $oid=>$value)
 		{
 			if (ereg($oidsModel."\.", $oid))
 			{
 				if ($oid_dyn == "0")
-					$List[] = $value;
+					$List[] = $value[$vlan];
 				else if ($oid_dyn == "1")
-					$List[] = str_replace($oidsModel.".", "", $oid);
+				{
+					$value = str_replace($oidsModel.".", "", $oid);
+					$List[] = $value;
+				}
 			}
 		}
 		if (!isset($List))
