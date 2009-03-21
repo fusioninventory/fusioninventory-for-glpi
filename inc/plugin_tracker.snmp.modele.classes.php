@@ -149,7 +149,7 @@ class plugin_tracker_model_infos extends CommonDBTM
 			$exclude = array();
 			while ( $data=$DB->fetch_array($result) )
 			{
-				$oids[$data['vlan']][$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] = getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']);
+				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] = getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']);
 			}
 			return $oids;
 		}
