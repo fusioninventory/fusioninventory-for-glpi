@@ -280,7 +280,8 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
 				WHERE FK_networking='[FK_networking]'
-					AND oid_port_dyn=0";
+					AND oid_port_dyn=0
+					AND activation=1";
 			}
 			else if ($devices[$i] == "device_printer")
 			{
@@ -290,7 +291,8 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
 				WHERE FK_printers='[FK_printers]'
-					AND oid_port_dyn=0";
+					AND oid_port_dyn=0
+					AND activation=1";
 			}
 			$xml_writed->element[2]['get']['linkfield']['object'] = 'object';
 			$xml_writed->element[2]['get']['linkfield']['oid'] = 'oid';
@@ -305,7 +307,8 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
 				WHERE FK_networking='[FK_networking]'
-					AND oid_port_dyn=1";
+					AND oid_port_dyn=1
+					AND activation=1";
 			}
 			else if ($devices[$i] == "device_printer")
 			{
@@ -315,7 +318,8 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
 				WHERE FK_printers='[FK_printers]'
-					AND oid_port_dyn=1";
+					AND oid_port_dyn=1
+					AND activation=1";
 			}
 			$xml_writed->element[2]['walk']['linkfield']['object'] = 'object';
 			$xml_writed->element[2]['walk']['linkfield']['oid'] = 'oid';
