@@ -484,6 +484,37 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['name'] = "Dernière connexion";
 
 
+	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_tracker_model_infos';
+	$sopt[NETWORKING_TYPE][5190]['field']='ID';
+	$sopt[NETWORKING_TYPE][5190]['linkfield']='ID';
+	$sopt[NETWORKING_TYPE][5190]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][19];
+
+	$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
+	$sopt[NETWORKING_TYPE][5191]['field']='ID';
+	$sopt[NETWORKING_TYPE][5191]['linkfield']='ID';
+	$sopt[NETWORKING_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+
+	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_tracker_model_infos';
+	$sopt[PRINTER_TYPE][5190]['field']='ID';
+	$sopt[PRINTER_TYPE][5190]['linkfield']='ID';
+	$sopt[PRINTER_TYPE][5190]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][19];
+
+	$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
+	$sopt[PRINTER_TYPE][5191]['field']='ID';
+	$sopt[PRINTER_TYPE][5191]['linkfield']='ID';
+	$sopt[PRINTER_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+	
+	$sopt[COMPUTER_TYPE][5192]['table']='glpi_plugin_tracker_networking';
+	$sopt[COMPUTER_TYPE][5192]['field']='ID';
+	$sopt[COMPUTER_TYPE][5192]['linkfield']='ID';
+	$sopt[COMPUTER_TYPE][5192]['name']=$LANGTRACKER["title"][0]." - ".$LANG["reports"][52];	
+	
+	$sopt[COMPUTER_TYPE][5193]['table']='glpi_plugin_tracker_networking_ports';
+	$sopt[COMPUTER_TYPE][5193]['field']='ID';
+	$sopt[COMPUTER_TYPE][5193]['linkfield']='ID';
+	$sopt[COMPUTER_TYPE][5193]['name']=$LANGTRACKER["title"][0]." - ".$LANG["reports"][46];	
+	
+	
 	return $sopt;
 }
 
@@ -513,6 +544,14 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			}
 			return "<center>".$out."</center>";
 			break;
+		case "glpi_plugin_tracker_model_infos.ID" :
+			$plugin_tracker_snmp = new plugin_tracker_snmp;
+			$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
+			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
+			$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
+			$out .= "</a>";
+			return "<center>".$out."</center>";
+			break;
 		case "glpi_plugin_tracker_model_infos.device_type" :
 			$out = '<center> ';
 			switch ($data["ITEM_$num"])
@@ -535,7 +574,11 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			}
 			$out .= '</center>';			
 			return $out;
-			break;		
+			break;
+		case "glpi_plugin_tracker_model_infos.activation" :
+			$out = getYesNo($data["ITEM_$num"]);
+			return "<center>".$out."</center>";
+			break;	
 		case "glpi_dropdown_plugin_tracker_snmp_version.FK_snmp_version" :
 			$out = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version", $data["ITEM_$num"], 0);
 			return $out;
@@ -581,12 +624,18 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			}
 			return "<center>".$out."</center>";
 			break;
-
+		case "glpi_plugin_tracker_snmp_connection.ID" :
+			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+			$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
+			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
+			$out .= getDropdownName("glpi_plugin_tracker_snmp_connection", $FK_auth_DB, 0);
+			$out .= "</a>";
+			return "<center>".$out."</center>";
+			break;
 		case "glpi_plugin_tracker_errors.device_id" :
 			$device_type = $data["ITEM_1"];
 			$ID = $data["ITEM_$num"];
 			$name = plugin_tracker_getDeviceFieldFromId($device_type, $ID, "name", NULL);
-
 			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES["$device_type"] . "?ID=" . $ID . "\">";
 			$out .= $name;
 			if (empty ($name) || $CFG_GLPI["view_ID"])
@@ -755,13 +804,35 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_networking_ports.ID" :
-			$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
-			LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
-			WHERE glpi_networking_ports.ID='".$data["ITEM_2"]."'
-			LIMIT 0,1";
-			$result = $DB->query($query);		
-			$data2 = $DB->fetch_assoc($result);
-			$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$data2["ID"]."'>".$data2["name"]."</a>";
+			if ($type == COMPUTER_TYPE)
+			{
+				include_once(GLPI_ROOT."/inc/networking.class.php");
+				$query = "SELECT ID FROM glpi_networking_ports 
+				WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."') 
+				ORDER BY name, logical_number";
+				$result = $DB->query($query);
+				$out = "";
+				$np = new Netport;
+				$nw = new Netwire;
+				while ( $data2=$DB->fetch_array($result) )
+				{
+					if ($nw->getOppositeContact($data2["ID"]))
+					{
+						$np->getFromDB($nw->getOppositeContact($data2["ID"]));
+						$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$np->fields["ID"]."'>".$np->fields["name"]."</a>";
+					}
+				}
+			}
+			else
+			{
+				$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
+				LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
+				WHERE glpi_networking_ports.ID='".$data["ITEM_2"]."'
+				LIMIT 0,1";
+				$result = $DB->query($query);		
+				$data2 = $DB->fetch_assoc($result);
+				$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$data2["ID"]."'>".$data2["name"]."</a>";
+			}
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
@@ -769,7 +840,31 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$netport->getFromDB($data["ITEM_$num"]);
 			$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$netport->fields["name"]."</a>";
 			return "<center>".$out."</center>";
-			break;		
+			break;
+		case "glpi_plugin_tracker_networking.ID" :
+			// Récupérer les ip
+			// Récupérer le port et le switch
+			include_once(GLPI_ROOT."/inc/networking.class.php");
+			$query = "SELECT ID FROM glpi_networking_ports 
+			WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."') 
+			ORDER BY name, logical_number";
+			$result = $DB->query($query);
+			$out = "";
+			$np = new Netport;
+			$nw = new Netwire;
+			$nd = new Netdevice;
+			while ( $data2=$DB->fetch_array($result) )
+			{
+				if ($nw->getOppositeContact($data2["ID"]))
+				{
+					$np->getFromDB($nw->getOppositeContact($data2["ID"]));
+					$nd->getFromDB($np->fields["on_device"]);
+					$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$nd->fields["ID"]."'>".$nd->fields["name"]."</a>";
+				}
+			}
+			return "<center>".$out."</center>";
+			break;
+
 	}
 
 	if (($type == PLUGIN_TRACKER_MODEL) AND ($linkfield == "EXPORT")) {
