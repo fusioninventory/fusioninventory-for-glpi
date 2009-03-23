@@ -42,10 +42,34 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","
 
 plugin_tracker_mini_menu();
 
-echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.unknown_mac.php'>Adresses MAC inconnues</a><br/>";
-echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php'>Historique des ports de switchs</a><br/>";
-echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.ports_date_connections.php'>Ports de switchs non connectés depuis xx mois</a><br/>";
-echo "Liste des équipements prêts à être interrogés mais non associés à un agent<br/>";
+echo "<table class='tab_cadre'>";
+
+echo "<th align='center'>".$LANG["Menu"][6]."</th>";
+
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.unknown_mac.php'>Adresses MAC inconnues</a>";
+echo "</td>";
+echo "</tr>";
+
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php'>Historique des ports de switchs</a>";
+echo "</td>";
+echo "</tr>";
+
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.ports_date_connections.php'>Ports de switchs non connectés depuis xx mois</a>";
+echo "</td>";
+echo "</tr>";
+
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "Liste des équipements prêts à être interrogés mais non associés à un agent";
+echo "</td>";
+
+echo "</table>";
 
 commonFooter();
 
