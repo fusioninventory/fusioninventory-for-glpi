@@ -88,6 +88,8 @@ class plugin_tracker_importexport extends CommonDBTM
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
 				$xml .= " 			<mapping_name><![CDATA[".$data["mapping_name"]."]]></mapping_name>\n";
+				$xml .= "			<vlan>".$data["vlan"]."</vlan>\n";
+				$xml .= "			<activation>".$data["activation"]."</activation>\n";
 				$xml .= "		</oidobject>\n";
 			}
 		

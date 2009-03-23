@@ -717,7 +717,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 			{
 				$logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$type."][".$ID_Device,1);
 			
-				$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][$vlan];
+				$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 
 				$logs->write("tracker_fullsync","** Interface = ".$ifName,$type."][".$ID_Device,1);
 
