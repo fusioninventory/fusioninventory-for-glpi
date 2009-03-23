@@ -93,7 +93,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
 				{
-					echo "<tr class='tab_bg_1'>";
+					if ($data["activation"] == "0")
+						echo "<tr class='tab_bg_1' style='color: grey; '>";
+					else
+						echo "<tr class='tab_bg_1'>";
 					echo "<td align='center'>";
 					echo "<input name='item_coche[]' value='".$data["ID"]."' type='checkbox'>";
 					echo "</td>";
@@ -113,13 +116,18 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					
 					echo "<td align='center'>";
 					if ($data["oid_port_counter"] == "1")
-						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-
-					echo "</td>";
+						if ($data["activation"] == "1")
+							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+						else if ($data["activation"] == "0")
+							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+						echo "</td>";
 					
 					echo "<td align='center'>";
 					if ($data["oid_port_dyn"] == "1")
-						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+						if ($data["activation"] == "1")
+							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+						else if ($data["activation"] == "0")
+							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
 
 					echo "</td>";
 					
@@ -135,6 +143,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					echo "</td>";
 					
 					echo "<td align='center'>";
+					if ($data["activation"] == "1")
+						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+					else if ($data["activation"] == "0")
+						echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
 					echo "</td>";
 					
 					echo "</tr>";
