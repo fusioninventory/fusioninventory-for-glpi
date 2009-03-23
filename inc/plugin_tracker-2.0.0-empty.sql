@@ -239,6 +239,8 @@ CREATE TABLE `glpi_plugin_tracker_mib_networking` (
   `oid_port_dyn` int(1) DEFAULT NULL,
   `mapping_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mapping_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `activation` int(1) NOT NULL DEFAULT '1',
+  `vlan` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `FK_model_infos` (`FK_model_infos`),
   KEY `FK_model_infos_2` (`FK_model_infos`,`oid_port_dyn`),

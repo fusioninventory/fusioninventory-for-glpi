@@ -529,6 +529,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 //	$linkfield=$SEARCH_OPTION[$type][$ID]["linkfield"];
 
 //	switch ($table.'.'.$field){
+
 //echo $field."<br/>";
 	switch ($field) {
 		case "glpi_plugin_tracker_model_infos.name" :
@@ -545,11 +546,21 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_model_infos.ID" :
-			$plugin_tracker_snmp = new plugin_tracker_snmp;
-			$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
-			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
-			$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
-			$out .= "</a>";
+			if ($type == PLUGIN_TRACKER_MODEL)
+			{
+				$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
+					<input type='hidden' name='model' value='" . $data["ID"] . "' />
+					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
+					</form></div>";
+			}
+			else
+			{
+				$plugin_tracker_snmp = new plugin_tracker_snmp;
+				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
+				$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
+				$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
+				$out .= "</a>";
+			}
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_model_infos.device_type" :
@@ -867,14 +878,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 	}
 
-	if (($type == PLUGIN_TRACKER_MODEL) AND ($linkfield == "EXPORT")) {
-		$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
-					<input type='hidden' name='model' value='" . $data["ID"] . "' />
-					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
-					</form></div>";
-		return $out;
-	}
-	else if (($type == PLUGIN_TRACKER_SNMP_AGENTS) AND ($linkfield == "EXPORT")) {
+	if (($type == PLUGIN_TRACKER_SNMP_AGENTS) AND ($linkfield == "EXPORT")) {
 		$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.agents.export.php' target='_blank'>
 					<input type='hidden' name='agent' value='" . $data["ID"] . "' />
 					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>

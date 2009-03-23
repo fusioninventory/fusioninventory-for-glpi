@@ -679,12 +679,14 @@ class plugin_tracker_snmp extends CommonDBTM
 				WHERE FK_printers='".$ID_Device."' ";
 				break;
 		}
-		
-		if ( ($result = $DB->query($query)) )
+		if (isset($query))
 		{
-			if ( $DB->numrows($result) != 0 )
-				return $DB->result($result, 0, "FK_model_infos");
-		}	
+			if ( ($result = $DB->query($query)) )
+			{
+				if ( $DB->numrows($result) != 0 )
+					return $DB->result($result, 0, "FK_model_infos");
+			}
+		}
 	}
 }
 ?>
