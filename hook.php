@@ -1164,7 +1164,7 @@ function plugin_tracker_MassiveActions($type)
 			break;
 		case PLUGIN_TRACKER_SNMP_DISCOVERY;
 			return array (
-				"plugin_tracker" => $LANG["buttons"][37]
+				"plugin_tracker_discovery_import" => $LANG["buttons"][37]
 			);
 	}
 	return array ();
@@ -1194,6 +1194,13 @@ function plugin_tracker_MassiveActionsDisplay($type, $action)
 					break;
 				case "plugin_tracker_assign_auth" :
 					plugin_tracker_snmp_auth_dropdown();
+					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+					break;
+			}
+			break;
+		case PLUGIN_TRACKER_SNMP_DISCOVERY;
+			switch ($action) {
+				case "plugin_tracker_discovery_import" :
 					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
 					break;
 			}
@@ -1243,6 +1250,12 @@ function plugin_tracker_MassiveActionsProcess($data)
 
 				}
 			}
+			break;
+		case "plugin_tracker_discovery_import" :
+			foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+						plugin_tracker_discovery_import($key);
+					}
 			break;
 	}
 }

@@ -318,128 +318,122 @@ function plugin_tracker_discovery_update_devices($array, $target)
 
 
 
-function plugin_tracker_discovery_import($array_import)
+function plugin_tracker_discovery_import($discovery_ID)
 {
 	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+	
+	$td = new plugin_tracker_discovery;
+	
+	$td->getFromDB($discovery_ID);
+	//$td->fields["name"];
+	
 	$Import = 0;
-	foreach ($array_import as $key=>$value)
+
+	switch ($td->fields['type'])
 	{
-		if (ereg("check", $key))
-		{
-			foreach ($value as $key2=>$ID)
-			{
-				$query = "SELECT * FROM glpi_plugin_tracker_discover
-				WHERE ID='".$ID."' ";
-				$result = $DB->query($query);		
-				$data = $DB->fetch_assoc($result);
+		case PRINTER_TYPE :
+			$Printer = new Printer;
+			$Netport = new Netport;
+			
+			// get status for scan in tracker
+			$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_printer";
+			$result_state = $DB->query($query_state);		
+			$data_state = $DB->fetch_assoc($result_state);						
+			
+			$addArray['state'] = $data_state['active_device_state'];
+			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
+			$addArray['serial'] = $td->fields['serialnumber'];
+			$addArray['name'] = $td->fields['name'];
+			$newID = $Printer->add($addArray);
+			unset($addArray);
+			$addPort['on_device'] = $newID;
+			$addPort['device_type'] = PRINTER_TYPE;
+			$addPort['ifaddr'] = $td->fields['ifaddr'];
+			$Netport->add($addPort);
+			unset($addPort);
 
-				switch ($array_import['type-'.$ID])
-				{
-					case PRINTER_TYPE :
-						$Printer = new Printer;
-						$Netport = new Netport;
-						
-						// get status for scan in tracker
-						$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_printer";
-						$result_state = $DB->query($query_state);		
-						$data_state = $DB->fetch_assoc($result_state);						
-						
-						$addArray['state'] = $data_state['active_device_state'];
-						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-						$addArray['serial'] = $data['serialnumber'];
-						$addArray['name'] = $data['name'];
-						$newID = $Printer->add($addArray);
-						unset($addArray);
-						$addPort['on_device'] = $newID;
-						$addPort['device_type'] = PRINTER_TYPE;
-						$addPort['ifaddr'] = $data['ifaddr'];
-						$Netport->add($addPort);
-						unset($addPort);
-
-						// insert in tracker for scan
-						$query_ins = "INSERT INTO glpi_plugin_tracker_printers
-						(FK_printers,FK_model_infos,FK_snmp_connection)
-						VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
-						$DB->query($query_ins);
-						
-						$query_del = "DELETE FROM glpi_plugin_tracker_discover
-						WHERE ID='".$ID."' ";
-						$DB->query($query_del);
-						$Import++;
-						break;
-					case NETWORKING_TYPE :
-						$Netdevice = new Netdevice;
-						
-						// get status for scan in tracker
-						$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_networking";
-						$result_state = $DB->query($query_state);		
-						$data_state = $DB->fetch_assoc($result_state);						
-						
-						$addArray['state'] = $data_state['active_device_state'];
-						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-						$addArray['serial'] = $data['serialnumber'];
-						$addArray['name'] = $data['name'];
-						$addArray['ifaddr'] = $data['ifaddr'];
-						$newID = $Netdevice->add($addArray);
-						unset($addArray);
-						// insert in tracker for scan
-						$query_ins = "INSERT INTO glpi_plugin_tracker_networking
-						(FK_networking,FK_model_infos,FK_snmp_connection)
-						VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
-						$DB->query($query_ins);
-						
-						$query_del = "DELETE FROM glpi_plugin_tracker_discover
-						WHERE ID='".$ID."' ";
-						$DB->query($query_del);
-						$Import++;
-						break;
-					case PERIPHERAL_TYPE :
-						$Peripheral = new Peripheral;
-						$Netport = new Netport;
-						
-						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-						$addArray['serial'] = $data['serialnumber'];
-						$addArray['name'] = $data['name'];
-						$newID = $Peripheral->add($addArray);
-						unset($addArray);
-						$addPort['on_device'] = $newID;
-						$addPort['device_type'] = PRINTER_TYPE;
-						$addPort['ifaddr'] = $data['ifaddr'];
-						$Netport->add($addPort);
-						unset($addPort);
-						// insert in tracker for scan
-						
-						$query_del = "DELETE FROM glpi_plugin_tracker_discover
-						WHERE ID='".$ID."' ";
-						$DB->query($query_del);
-						$Import++;
-						break;
-					case COMPUTER_TYPE :
-						$Computer = new Computer;
-						$Netport = new Netport;
-						
-						$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-						$addArray['serial'] = $data['serialnumber'];
-						$addArray['name'] = $data['name'];
-						$newID = $Computer->add($addArray);
-						unset($addArray);
-						$addPort['on_device'] = $newID;
-						$addPort['device_type'] = COMPUTER_TYPE;
-						$addPort['ifaddr'] = $data['ifaddr'];
-						$Netport->add($addPort);
-						unset($addPort);
-						// insert in tracker for scan
-							// Net yet coded
-						
-						$query_del = "DELETE FROM glpi_plugin_tracker_discover
-						WHERE ID='".$ID."' ";
-						$DB->query($query_del);
-						$Import++;
-						break;
-				}
-			}
-		}
+			// insert in tracker for scan
+			$query_ins = "INSERT INTO glpi_plugin_tracker_printers
+			(FK_printers,FK_model_infos,FK_snmp_connection)
+			VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
+			$DB->query($query_ins);
+			
+			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			WHERE ID='".$ID."' ";
+			$DB->query($query_del);
+			$Import++;
+			break;
+		case NETWORKING_TYPE :
+			$Netdevice = new Netdevice;
+			
+			// get status for scan in tracker
+			$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_networking";
+			$result_state = $DB->query($query_state);		
+			$data_state = $DB->fetch_assoc($result_state);						
+			
+			$addArray['state'] = $data_state['active_device_state'];
+			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
+			$addArray['serial'] = $td->fields['serialnumber'];
+			$addArray['name'] = $td->fields['name'];
+			$addArray['ifaddr'] = $td->fields['ifaddr'];
+			$newID = $Netdevice->add($addArray);
+			unset($addArray);
+			// insert in tracker for scan
+			$query_ins = "INSERT INTO glpi_plugin_tracker_networking
+			(FK_networking,FK_model_infos,FK_snmp_connection)
+			VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
+			$DB->query($query_ins);
+			
+			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			WHERE ID='".$ID."' ";
+			$DB->query($query_del);
+			$Import++;
+			break;
+		case PERIPHERAL_TYPE :
+			$Peripheral = new Peripheral;
+			$Netport = new Netport;
+			
+			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
+			$addArray['serial'] = $td->fields['serialnumber'];
+			$addArray['name'] = $td->fields['name'];
+			$newID = $Peripheral->add($addArray);
+			unset($addArray);
+			$addPort['on_device'] = $newID;
+			$addPort['device_type'] = PRINTER_TYPE;
+			$addPort['ifaddr'] = $td->fields['ifaddr'];
+			$Netport->add($addPort);
+			unset($addPort);
+			// insert in tracker for scan
+			
+			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			WHERE ID='".$ID."' ";
+			$DB->query($query_del);
+			$Import++;
+			break;
+		case COMPUTER_TYPE :
+			$Computer = new Computer;
+			$Netport = new Netport;
+			
+			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
+			$addArray['serial'] = $td->fields['serialnumber'];
+			$addArray['name'] = $td->fields['name'];
+			$newID = $Computer->add($addArray);
+			unset($addArray);
+			$addPort['on_device'] = $newID;
+			$addPort['device_type'] = COMPUTER_TYPE;
+			$addPort['ifaddr'] = $td->fields['ifaddr'];
+			$Netport->add($addPort);
+			unset($addPort);
+			// insert in tracker for scan
+				// Net yet coded
+			
+			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			WHERE ID='".$ID."' ";
+			$DB->query($query_del);
+			$Import++;
+			break;
 	}
+
 	if ($Import != "0")
 		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
 
