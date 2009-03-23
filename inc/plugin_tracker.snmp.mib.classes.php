@@ -75,7 +75,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<div align='center'><form method='post' name='odi_list' id='oid_list'  action=\"".$target."\">";
 		
 				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
-				echo "<table class='tab_cadre_fixe'><tr><th colspan='9'>";
+				$nb_col = 8;
+				if ($data['device_type'] == COMPUTER_TYPE)
+					$nb_col++;
+				echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
 				echo $LANGTRACKER["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
@@ -86,9 +89,9 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
 				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
-				echo "<th align='center'>".$LANGTRACKER["mib"][9]."</th>";
+				if ($data['device_type'] == COMPUTER_TYPE)
+					echo "<th align='center'>".$LANGTRACKER["mib"][9]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["model_info"][11]."</th>";
-				
 				
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
@@ -128,7 +131,6 @@ class plugin_tracker_mib_networking extends CommonDBTM
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
 						else if ($data["activation"] == "0")
 							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
-
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -139,14 +141,24 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					}
 					echo "</td>";
 					
-					echo "<td align='center'>";
-					echo "</td>";
+					if ($data['device_type'] == COMPUTER_TYPE)
+					{
+						echo "<td align='center'>";
+						if ($data["vlan"] == "1")
+							if ($data["activation"] == "1")
+								echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+							else if ($data["activation"] == "0")
+								echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+						echo "</td>";
+					}
 					
 					echo "<td align='center'>";
+					echo "<a href='".$target."?ID=".$ID."&activation=".$data["ID"]."'>";
 					if ($data["activation"] == "1")
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
 					else if ($data["activation"] == "0")
 						echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+					echo "</a>";
 					echo "</td>";
 					
 					echo "</tr>";
@@ -266,6 +278,25 @@ class plugin_tracker_mib_networking extends CommonDBTM
 			$query = "DELETE FROM glpi_plugin_tracker_mib_networking WHERE id=".$item_coche[$i]." ";
 			$DB->query($query);
 		}
+	}
+
+
+
+	function activation($ID)
+	{
+		global $DB;
+		
+		$mib_networking = new plugin_tracker_mib_networking();
+		
+		$mib_networking->getFromDB($ID);
+		$data['ID'] = $ID;
+		$data = $mib_networking->fields;
+		if ($mib_networking->fields["activation"] == "1")
+			$data['activation'] = 0;
+		else
+			$data['activation'] = 1;
+		$data["links_oid_fields"]=$data["mapping_type"]."||".$data["mapping_name"];
+		$mib_networking->update($data);
 	}
 
 }

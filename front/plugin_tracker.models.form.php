@@ -71,6 +71,11 @@ elseif (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_
 	$importexport->import($_FILES);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
+else if (isset($_GET["activation"]))
+{
+	$plugin_tracker_mib_networking->activation($_GET["activation"]);
+	glpi_header($_SERVER['HTTP_REFERER']);
+}
 if (isset ($_POST["add_oid"])) {
 	$plugin_tracker_mib_networking->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
