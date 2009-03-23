@@ -222,6 +222,7 @@ $LANGTRACKER["mib"][5]="Liste des oid";
 $LANGTRACKER["mib"][6]="Compteur de ports";
 $LANGTRACKER["mib"][7]="Port dynamique (.x)";
 $LANGTRACKER["mib"][8]="Liaison champs";
+$LANGTRACKER["mib"][9]="vlan";
 
 $LANGTRACKER["processes"][0]="Informations sur l'exécution du script serveur";
 $LANGTRACKER["processes"][1]="PID";

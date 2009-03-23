@@ -75,7 +75,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<div align='center'><form method='post' name='odi_list' id='oid_list'  action=\"".$target."\">";
 		
 				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
-				echo "<table class='tab_cadre_fixe'><tr><th colspan='7'>";
+				echo "<table class='tab_cadre_fixe'><tr><th colspan='9'>";
 				echo $LANGTRACKER["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
@@ -86,6 +86,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
 				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][9]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["model_info"][11]."</th>";
+				
+				
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
 				{
@@ -125,6 +129,12 @@ class plugin_tracker_mib_networking extends CommonDBTM
 						echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'];
 						$linkoid_used[$data['mapping_type']."||".$data["mapping_name"]] = 1;
 					}
+					echo "</td>";
+					
+					echo "<td align='center'>";
+					echo "</td>";
+					
+					echo "<td align='center'>";
 					echo "</td>";
 					
 					echo "</tr>";
