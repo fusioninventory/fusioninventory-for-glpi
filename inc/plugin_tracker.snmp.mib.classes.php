@@ -76,7 +76,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 		
 				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
 				$nb_col = 8;
-				if ($data['device_type'] == COMPUTER_TYPE)
+				if ($data['device_type'] == NETWORKING_TYPE)
 					$nb_col++;
 				echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
 				echo $LANGTRACKER["mib"][5]."</th></tr>";
@@ -89,7 +89,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
 				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
-				if ($data['device_type'] == COMPUTER_TYPE)
+				if ($data['device_type'] == NETWORKING_TYPE)
 					echo "<th align='center'>".$LANGTRACKER["mib"][9]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["model_info"][11]."</th>";
 				
@@ -141,7 +141,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 					}
 					echo "</td>";
 					
-					if ($data['device_type'] == COMPUTER_TYPE)
+					if ($data['device_type'] == NETWORKING_TYPE)
 					{
 						echo "<td align='center'>";
 						if ($data["vlan"] == "1")

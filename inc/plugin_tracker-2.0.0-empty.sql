@@ -537,6 +537,9 @@ INSERT INTO `glpi_plugin_tracker_snmp_connection` VALUES (2, 'Communauté Public
 
 
 
+
+
+
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5150','3','1','0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5150','4','2','0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5150','6','3','0');
