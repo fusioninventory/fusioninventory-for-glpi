@@ -111,6 +111,7 @@ $LANGTRACKER["functionalities"][43]="Authentification SNMP";
 $LANGTRACKER["functionalities"][50]="Nombre de process simultanés pour la découverte réseau";
 $LANGTRACKER["functionalities"][51]="Nombre de process simultanés pour l'interrogation SNMP";
 $LANGTRACKER["functionalities"][52]="Activation des journaux";
+$LANGTRACKER["functionalities"][53]="Nombre de process simultanés pour le script serveur de post-traitement";
 
 $LANGTRACKER["snmp"][0]="Informations SNMP du matériel";
 $LANGTRACKER["snmp"][1]="Général";
