@@ -80,6 +80,7 @@ $LANGTRACKER["functionalities"][1]="Ajout / Suppression de fonctionnalités";
 $LANGTRACKER["functionalities"][2]="Configuration générale";
 $LANGTRACKER["functionalities"][3]="SNMP";
 $LANGTRACKER["functionalities"][4]="Connexion";
+$LANGTRACKER["functionalities"][5]="Script serveur";
 
 $LANGTRACKER["functionalities"][10]="Activation de l'historique";
 $LANGTRACKER["functionalities"][11]="Activation du module connexion";

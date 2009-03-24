@@ -90,6 +90,11 @@ class plugin_tracker_config extends CommonDBTM {
 			if ($type == "general")
 				echo " class='actif'";			
 			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANGTRACKER["functionalities"][2]."&nbsp;</a></li>\n";
+			echo "<li";
+			if ($type == "script")
+				echo " class='actif'";			
+			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANGTRACKER["functionalities"][5]."&nbsp;</a></li>\n";
+
 			if ($this->getValue("activation_snmp_networking") == "1")
 			{
 				echo "<li";
@@ -296,7 +301,7 @@ class plugin_tracker_config extends CommonDBTM {
 		$ArrayValues['file']= $LANGTRACKER["functionalities"][18];
 		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));
 		echo "</td></tr>";
-
+/*
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][50]."</td>";
 		echo "<td>";
@@ -321,7 +326,7 @@ class plugin_tracker_config extends CommonDBTM {
 		dropdownArrayValues('logs', $ArrayValues,$this->getValue('logs'));
 		echo "</td>";
 		echo "</tr>";
-
+*/
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";		
