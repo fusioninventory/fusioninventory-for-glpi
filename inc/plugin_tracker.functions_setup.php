@@ -59,6 +59,8 @@ function plugin_tracker_installing($version) {
 	$config_snmp_networking->initConfig();
 	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
 	$config_snmp_printer->initConfig();
+	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+	$config_snmp_script->initConfig();
 	plugin_tracker_initSession();
    return true;
 }

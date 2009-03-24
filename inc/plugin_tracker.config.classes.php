@@ -91,9 +91,9 @@ class plugin_tracker_config extends CommonDBTM {
 				echo " class='actif'";			
 			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANGTRACKER["functionalities"][2]."&nbsp;</a></li>\n";
 			echo "<li";
-			if ($type == "script")
+			if ($type == "smp-script")
 				echo " class='actif'";			
-			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANGTRACKER["functionalities"][5]."&nbsp;</a></li>\n";
+			echo "><a href='plugin_tracker.functionalities.form.snmp-script.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANGTRACKER["functionalities"][5]."&nbsp;</a></li>\n";
 
 			if ($this->getValue("activation_snmp_networking") == "1")
 			{
@@ -301,18 +301,65 @@ class plugin_tracker_config extends CommonDBTM {
 		$ArrayValues['file']= $LANGTRACKER["functionalities"][18];
 		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));
 		echo "</td></tr>";
-/*
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][50]."</td>";
-		echo "<td>";
-		dropdownInteger("nb_process_discovery", $this->getValue('nb_process_discovery'),1,100);
-		echo "</td>";
-		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+		echo "</table></form>";		
+	}
+}
+
+
+
+class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
+
+	function glpi_plugin_tracker_config_snmp_script() {
+		$this->table="glpi_plugin_tracker_config_snmp_script";
+		$this->type=-1;
+	}
+
+
+	function initConfig() {
+		global $DB;
+		
+		$query = "INSERT INTO ".$this->table." ".
+				 "(ID, nb_process, logs,lock) ".
+				 "VALUES ('1', '1', '0', '0')";
+		
+		$DB->query($query);
+	}
+	
+
+	/* Function to get the value of a field */
+	function getValue($field) {
+		global $DB;
+
+		$query = "SELECT ".$field." FROM ".$this->table." ".
+				 "WHERE ID = '1'";
+		if ( $result = $DB->query($query) ) {
+			if ( $this->fields = $DB->fetch_row($result) )
+				return $this->fields['0'];
+		}
+		return false;
+	}
+
+
+	function showForm($target,$ID)
+	{
+		GLOBAL $LANG,$LANGTRACKER;
+		
+		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
+		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
+		
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANGTRACKER["functionalities"][1]." :";
+		echo "</th>";
+		echo "</tr>";
+		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][51]."</td>";
+		echo "<td>".$LANGTRACKER["functionalities"][53]."</td>";
 		echo "<td>";
-		dropdownInteger("nb_process_query", $this->getValue('nb_process_query'),1,100);
+		dropdownInteger("nb_process", $this->getValue('nb_process'),1,100);
 		echo "</td>";
 		echo "</tr>";
 
@@ -326,10 +373,17 @@ class plugin_tracker_config extends CommonDBTM {
 		dropdownArrayValues('logs', $ArrayValues,$this->getValue('logs'));
 		echo "</td>";
 		echo "</tr>";
-*/
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["agents"][6]."</td>";
+		echo "<td>";
+		dropdownYesNo("lock", $this->getValue('`lock`'));
+		echo "</td>";
+		echo "</tr>";
+		
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
-		echo "</table></form>";		
+		echo "</table></form>";	
 	}
 }
 
