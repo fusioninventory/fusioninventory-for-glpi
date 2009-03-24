@@ -92,93 +92,104 @@ function plugin_tracker_uninstall() {
 	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_object`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_oid`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_version`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_plugin_tracker_agents`;";
 	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_connection_history`;";
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_agents_processes`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_plugin_tracker_computers`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_plugin_tracker_config`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_networking`;";
 	$DB->query($query) or die($DB->error());
-
+	
 	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_printer`;";
 	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_discover`;";
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_script`;";
 	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_discover_conf`;";
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_connection_history`;";
 	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_errors`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_mib_networking`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_model_infos`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_networking`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_networking_ifaddr`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_networking_ports`;";
-	$DB->query($query) or die($DB->error());	
-
-	$query = "DROP TABLE `glpi_plugin_tracker_printers_history`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_printers`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_printers_cartridges`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_processes`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_processes_values`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_profiles`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_snmp_connection`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_snmp_history`;";
-	$DB->query($query) or die($DB->error());	
-
-	$query = "DROP TABLE `glpi_plugin_tracker_unknown_mac`;";
-	$DB->query($query) or die($DB->error());	
-
+	
 	$query = "DROP TABLE `glpi_plugin_tracker_connection_stats`;";
 	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_discovery`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_errors`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_mib_networking`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_model_infos`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_networking`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_networking_ifaddr`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_networking_ports`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_printers`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_printers_cartridges`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_printers_history`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_processes`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_processes_values`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_profiles`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_rangeip`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_snmp_connection`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_snmp_history`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_unknown_mac`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_walks`;";
+	$DB->query($query) or die($DB->error());
+	
+
 	
 	$query="DELETE FROM glpi_display 
 	WHERE type='".PLUGIN_TRACKER_ERROR_TYPE."' 
@@ -186,7 +197,13 @@ function plugin_tracker_uninstall() {
 		OR type='".PLUGIN_TRACKER_SNMP_AUTH."' 
 		OR type='".PLUGIN_TRACKER_MAC_UNKNOW."' 
 		OR type='".PLUGIN_TRACKER_PRINTERS_CARTRIDGES."' 
-		OR type='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS."' ;";
+		OR type='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS."' 
+		OR type='".PLUGIN_TRACKER_SNMP_AGENTS."' 
+		OR type='".PLUGIN_TRACKER_SNMP_RANGEIP."' 
+		OR type='".PLUGIN_TRACKER_SNMP_DISCOVERY."' 
+		OR type='".PLUGIN_TRACKER_AGENTS_PROCESSES."' 
+		OR type='".PLUGIN_TRACKER_SNMP_HISTORY."' 
+		OR type='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2."' ;";
 	$DB->query($query) or die($DB->error());
 
 }

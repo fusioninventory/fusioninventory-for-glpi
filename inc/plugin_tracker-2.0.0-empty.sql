@@ -78,7 +78,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_version` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_agents`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents` (
+CREATE TABLE `glpi_plugin_tracker_agents` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `nb_process_query` int(11) NOT NULL DEFAULT '1',
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_agents_processes`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_agents_processes` (
+CREATE TABLE `glpi_plugin_tracker_agents_processes` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `process_number` varchar(255) DEFAULT NULL,
   `FK_agent` int(11) NOT NULL DEFAULT '0',
@@ -134,7 +134,7 @@ CREATE TABLE `glpi_plugin_tracker_connection_history` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_computers`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_computers` (
+CREATE TABLE `glpi_plugin_tracker_computers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_computers` int(11) NOT NULL,
   `FK_model_infos` int(8) NOT NULL DEFAULT '0',
@@ -201,7 +201,7 @@ CREATE TABLE `glpi_plugin_tracker_config_snmp_script` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_discovery`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_discovery` (
+CREATE TABLE `glpi_plugin_tracker_discovery` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_processes` int(11) NOT NULL DEFAULT '0',
   `FK_agents` int(11) NOT NULL DEFAULT '0',
@@ -293,7 +293,7 @@ CREATE TABLE `glpi_plugin_tracker_networking` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_networking_ifaddr`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_networking_ifaddr` (
+CREATE TABLE `glpi_plugin_tracker_networking_ifaddr` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_networking` int(11) NOT NULL,
   `ifaddr` varchar(255) NOT NULL,
@@ -362,7 +362,7 @@ CREATE TABLE `glpi_plugin_tracker_printers` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_printers_cartridges`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_printers_cartridges` (
+CREATE TABLE `glpi_plugin_tracker_printers_cartridges` (
   `ID` int(100) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL,
   `object_name` varchar(255) NOT NULL,
