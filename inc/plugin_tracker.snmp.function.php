@@ -108,9 +108,9 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 	global $DB;
 	
 	$Thread = new Threads;
-	$conf = new plugin_tracker_config;
+	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
 	
-	$nb_process_query = $conf->getValue('nb_process_query');
+	$nb_process_query = $config_snmp_script->getValue('nb_process');
 
 	// Prepare processes
 	$while = 'while (';
