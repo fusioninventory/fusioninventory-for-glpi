@@ -1253,9 +1253,10 @@ function plugin_tracker_MassiveActionsProcess($data)
 			break;
 		case "plugin_tracker_discovery_import" :
 			foreach ($data['item'] as $key => $val) {
-					if ($val == 1) {
-						plugin_tracker_discovery_import($key);
-					}
+				if ($val == 1) {
+					plugin_tracker_discovery_import($key);
+				}
+			}
 			break;
 	}
 }
