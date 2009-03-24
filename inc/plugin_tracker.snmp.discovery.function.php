@@ -331,7 +331,6 @@ function plugin_tracker_discovery_import($discovery_ID)
 	switch ($td->fields['type'])
 	{
 		case PRINTER_TYPE :
-			// Import is OK
 			$Printer = new Printer;
 			$Netport = new Netport;
 			$tracker_printers = new plugin_tracker_printers;
@@ -342,10 +341,10 @@ function plugin_tracker_discovery_import($discovery_ID)
 			$data["comments"] = $td->fields["descr"];
 			$ID_Device = $Printer->add($data);
 
-			$addPort['on_device'] = $ID_Device;
-			$addPort['device_type'] = PRINTER_TYPE;
-			$addPort['ifaddr'] = $td->fields['ifaddr'];
-			$Netport->add($addPort);
+			$data_Port['on_device'] = $ID_Device;
+			$data_Port['device_type'] = $td->fields['type'];
+			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$Netport->add($data_Port);
 
 			$data_tracker["FK_printers"] = $ID_Device;
 			$data_tracker["FK_model_infos"] = $td->fields["FK_model_infos"];
@@ -358,7 +357,6 @@ function plugin_tracker_discovery_import($discovery_ID)
 			$Import++;
 			break;
 		case NETWORKING_TYPE :
-			// Import is OK
 			$Netdevice = new Netdevice;
 			$tracker_networking = new glpi_plugin_tracker_networking;
 
@@ -382,54 +380,67 @@ function plugin_tracker_discovery_import($discovery_ID)
 		case PERIPHERAL_TYPE :
 			$Peripheral = new Peripheral;
 			$Netport = new Netport;
-			
-			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-			$addArray['serial'] = $td->fields['serialnumber'];
-			$addArray['name'] = $td->fields['name'];
-			$newID = $Peripheral->add($addArray);
-			unset($addArray);
-			$addPort['on_device'] = $newID;
-			$addPort['device_type'] = PRINTER_TYPE;
-			$addPort['ifaddr'] = $td->fields['ifaddr'];
-			$Netport->add($addPort);
-			unset($addPort);
-			// insert in tracker for scan
+
+			$data["FK_entities"] = $td->fields["FK_entities"];
+			$data["name"] = $td->fields["name"];
+			$data["serial"] = $td->fields["serialnumber"];
+			$data["comments"] = $td->fields["descr"];
+			$ID_Device = $Peripheral->add($data);
+
+			$data_Port['on_device'] = $ID_Device;
+			$data_Port['device_type'] = $td->fields['type'];
+			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$Netport->add($data_Port);
 			
 			$query_del = "DELETE FROM glpi_plugin_tracker_discover
-			WHERE ID='".$ID."' ";
+			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
 			break;
 		case COMPUTER_TYPE :
 			$Computer = new Computer;
 			$Netport = new Netport;
-			
-			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-			$addArray['serial'] = $td->fields['serialnumber'];
-			$addArray['name'] = $td->fields['name'];
-			$newID = $Computer->add($addArray);
-			unset($addArray);
-			$addPort['on_device'] = $newID;
-			$addPort['device_type'] = COMPUTER_TYPE;
-			$addPort['ifaddr'] = $td->fields['ifaddr'];
-			$Netport->add($addPort);
-			unset($addPort);
-			// insert in tracker for scan
-				// Net yet coded
-			
+
+			$data["FK_entities"] = $td->fields["FK_entities"];
+			$data["name"] = $td->fields["name"];
+			$data["serial"] = $td->fields["serialnumber"];
+			$data["comments"] = $td->fields["descr"];
+			$ID_Device = $Computer->add($data);
+
+			$data_Port['on_device'] = $ID_Device;
+			$data_Port['device_type'] = $td->fields['type'];
+			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$Netport->add($data_Port);
+
 			$query_del = "DELETE FROM glpi_plugin_tracker_discover
-			WHERE ID='".$ID."' ";
+			WHERE ID='".$discovery_ID."' ";
+			$DB->query($query_del);
+			$Import++;
+			break;
+		case PHONE_TYPE :
+			$Phone = new Phone;
+			$Netport = new Netport;
+
+			$data["FK_entities"] = $td->fields["FK_entities"];
+			$data["name"] = $td->fields["name"];
+			$data["serial"] = $td->fields["serialnumber"];
+			$data["comments"] = $td->fields["descr"];
+			$ID_Device = $Phone->add($data);
+
+			$data_Port['on_device'] = $ID_Device;
+			$data_Port['device_type'] = $td->fields['type'];
+			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$Netport->add($data_Port);
+
+			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
 			break;
 	}
-
 	if ($Import != "0")
 		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
-
 }
-
-
 
 
 
