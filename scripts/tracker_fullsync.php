@@ -100,9 +100,7 @@ if(isset($_GET['update_device_process'])){
 }
 else
 {
-	//Get script configuration
-	$config = new plugin_tracker_config();
-	
+
 	if (isset($_GET["type"]))
 		$type=$_GET["type"];
 	
