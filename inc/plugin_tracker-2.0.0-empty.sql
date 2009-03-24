@@ -156,9 +156,6 @@ CREATE TABLE `glpi_plugin_tracker_config` (
   `activation_snmp_phone` int(1) DEFAULT NULL,
   `activation_snmp_printer` int(1) DEFAULT NULL,
   `authsnmp` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `nb_process_query` int(11) NOT NULL DEFAULT '1',
-  `nb_process_discovery` int(11) NOT NULL DEFAULT '1',
-  `logs` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -166,7 +163,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_networking`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_config_snmp_networking` (
+CREATE TABLE `glpi_plugin_tracker_config_snmp_networking` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `active_device_state` int(11) NOT NULL DEFAULT '0',
   `history_wire` int(11) NOT NULL DEFAULT '0',
@@ -181,10 +178,22 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_config_snmp_networking` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_printer`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_config_snmp_printer` (
+CREATE TABLE `glpi_plugin_tracker_config_snmp_printer` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `active_device_state` int(1) NOT NULL DEFAULT '0',
   `manage_cartridges` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_script`;
+
+CREATE TABLE `glpi_plugin_tracker_config_snmp_script` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `nb_process` int(11) NOT NULL DEFAULT '1',
+  `logs` int(1) NOT NULL DEFAULT '0',
+  `lock` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
