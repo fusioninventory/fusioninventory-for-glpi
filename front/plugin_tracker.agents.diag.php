@@ -276,7 +276,7 @@ else if(isset($_POST['get_data']))
 			{
 				$xml_writed->element[2]['get']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
-					glpi_dropdown_plugin_tracker_mib_oid.vlan AS vlan FROM glpi_plugin_tracker_networking
+					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_networking
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_networking.FK_model_infos
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
@@ -288,7 +288,7 @@ else if(isset($_POST['get_data']))
 			{
 				$xml_writed->element[2]['get']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
-					glpi_dropdown_plugin_tracker_mib_oid.vlan AS vlan FROM glpi_plugin_tracker_printers
+					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_printers
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_printers.FK_model_infos
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
@@ -306,7 +306,7 @@ else if(isset($_POST['get_data']))
 			{
 				$xml_writed->element[2]['walk']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
-					glpi_dropdown_plugin_tracker_mib_oid.vlan AS vlan FROM glpi_plugin_tracker_networking
+					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_networking
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_networking.FK_model_infos
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
@@ -318,7 +318,7 @@ else if(isset($_POST['get_data']))
 			{
 				$xml_writed->element[2]['walk']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
-					glpi_dropdown_plugin_tracker_mib_oid.vlan AS vlan FROM glpi_plugin_tracker_printers
+					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_printers
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_printers.FK_model_infos
 				LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid ON glpi_dropdown_plugin_tracker_mib_oid.ID=FK_mib_oid
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
