@@ -325,46 +325,40 @@ function plugin_tracker_discovery_import($discovery_ID)
 	$td = new plugin_tracker_discovery;
 	
 	$td->getFromDB($discovery_ID);
-	//$td->fields["name"];
 	
 	$Import = 0;
 
 	switch ($td->fields['type'])
 	{
 		case PRINTER_TYPE :
+			// Import is OK
 			$Printer = new Printer;
 			$Netport = new Netport;
-			
-			// get status for scan in tracker
-			$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_printer";
-			$result_state = $DB->query($query_state);		
-			$data_state = $DB->fetch_assoc($result_state);						
-			
-			$addArray['state'] = $data_state['active_device_state'];
-			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-			$addArray['serial'] = $td->fields['serialnumber'];
-			$addArray['name'] = $td->fields['name'];
-			$newID = $Printer->add($addArray);
-			unset($addArray);
-			$addPort['on_device'] = $newID;
+			$tracker_printers = new plugin_tracker_printers;
+
+			$data["FK_entities"] = $td->fields["FK_entities"];
+			$data["name"] = $td->fields["name"];
+			$data["serial"] = $td->fields["serialnumber"];
+			$data["comments"] = $td->fields["descr"];
+			$ID_Device = $Printer->add($data);
+
+			$addPort['on_device'] = $ID_Device;
 			$addPort['device_type'] = PRINTER_TYPE;
 			$addPort['ifaddr'] = $td->fields['ifaddr'];
 			$Netport->add($addPort);
-			unset($addPort);
 
-			// insert in tracker for scan
-			$query_ins = "INSERT INTO glpi_plugin_tracker_printers
-			(FK_printers,FK_model_infos,FK_snmp_connection)
-			VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
-			$DB->query($query_ins);
+			$data_tracker["FK_printers"] = $ID_Device;
+			$data_tracker["FK_model_infos"] = $td->fields["FK_model_infos"];
+			$data_tracker["FK_snmp_connection"] = $td->fields["FK_snmp_connection"];
+			$tracker_printers->add($data_tracker);			
 			
 			$query_del = "DELETE FROM glpi_plugin_tracker_discover
-			WHERE ID='".$ID."' ";
+			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
 			break;
 		case NETWORKING_TYPE :
-		// Import is OK
+			// Import is OK
 			$Netdevice = new Netdevice;
 			$tracker_networking = new glpi_plugin_tracker_networking;
 
