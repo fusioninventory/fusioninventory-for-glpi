@@ -364,28 +364,24 @@ function plugin_tracker_discovery_import($discovery_ID)
 			$Import++;
 			break;
 		case NETWORKING_TYPE :
+		// Import is OK
 			$Netdevice = new Netdevice;
-			
-			// get status for scan in tracker
-			$query_state = "SELECT * FROM glpi_plugin_tracker_config_snmp_networking";
-			$result_state = $DB->query($query_state);		
-			$data_state = $DB->fetch_assoc($result_state);						
-			
-			$addArray['state'] = $data_state['active_device_state'];
-			$addArray['FK_entities'] = $array_import['FK_entities-'.$ID];
-			$addArray['serial'] = $td->fields['serialnumber'];
-			$addArray['name'] = $td->fields['name'];
-			$addArray['ifaddr'] = $td->fields['ifaddr'];
-			$newID = $Netdevice->add($addArray);
-			unset($addArray);
-			// insert in tracker for scan
-			$query_ins = "INSERT INTO glpi_plugin_tracker_networking
-			(FK_networking,FK_model_infos,FK_snmp_connection)
-			VALUES ('".$newID."', '".$array_import['model_infos-'.$ID]."','".$array_import['FK_snmp_connection']."') ";
-			$DB->query($query_ins);
-			
-			$query_del = "DELETE FROM glpi_plugin_tracker_discover
-			WHERE ID='".$ID."' ";
+			$tracker_networking = new glpi_plugin_tracker_networking;
+
+			$data["FK_entities"] = $td->fields["FK_entities"];
+			$data["name"] = $td->fields["name"];
+			$data["serial"] = $td->fields["serialnumber"];
+			$data["comments"] = $td->fields["descr"];
+			$data["ifaddr"] = $td->fields["ifaddr"];
+			$ID_Device = $Netdevice->add($data);
+
+			$data_tracker["FK_networking"] = $ID_Device;
+			$data_tracker["FK_model_infos"] = $td->fields["FK_model_infos"];
+			$data_tracker["FK_snmp_connection"] = $td->fields["FK_snmp_connection"];
+			$tracker_networking->add($data_tracker);
+
+			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
+			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
 			break;
