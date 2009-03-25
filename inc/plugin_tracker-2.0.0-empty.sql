@@ -16,7 +16,7 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_mib_object` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 CagOLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
