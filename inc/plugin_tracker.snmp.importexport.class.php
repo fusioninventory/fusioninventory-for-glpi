@@ -223,12 +223,13 @@ class plugin_tracker_importexport extends CommonDBTM
 		}
 		$device_queried_networking = 0;
 		$device_queried_printer = 0;
+
 		foreach($xml->device as $device){
 			if ($device->infos->type == NETWORKING_TYPE)
 				$device_queried_networking++;
 			else if ($device->infos->type == PRINTER_TYPE)
 				$device_queried_printer++;
-			
+/*			
 			unset($walkdata);
 			$walkdata['on_device']=$device->infos->id;
 			$walkdata['device_type']=$device->infos->type;
@@ -252,7 +253,7 @@ class plugin_tracker_importexport extends CommonDBTM
 				unset($walkdata['value']);
 				unset($walkdata['vlan']);		
 			}
-
+*/
 		}
 		foreach($xml->agent as $agent){
 			$agent_version = $agent->version;
