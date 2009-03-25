@@ -450,5 +450,6 @@ $LANGTRACKER["agents"][4]="Dernière remontée";
 $LANGTRACKER["agents"][5]="Version de l'agent";
 $LANGTRACKER["agents"][6]="Verrouillage";
 $LANGTRACKER["agents"][7]="Export config agent";
+$LANGTRACKER["agents"][8]="Fragments en Ko";
 
 ?>
