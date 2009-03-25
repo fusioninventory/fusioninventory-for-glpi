@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')){
 
 // Installation function
 function plugin_tracker_installing($version) {
-	
+
 	global $DB;
 
 	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-empty.sql";

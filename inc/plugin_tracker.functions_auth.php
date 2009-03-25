@@ -42,7 +42,7 @@ function plugin_tracker_initSession() {
 	
 	if(TableExists("glpi_plugin_tracker_config")){
 		
-		if (FieldExists("glpi_plugin_tracker_config","logs")){
+		if (FieldExists("glpi_plugin_tracker_config","ID")){
 			$profile=new plugin_tracker_Profile();
 		
 			$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
