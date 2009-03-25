@@ -43,8 +43,8 @@ include (GLPI_ROOT."/inc/includes.php");
 
 if( isset($_POST['upload']) ) // si formulaire soumis
 {
-	$content_dir = '/tmp/'; // dossier où sera déplacé le fichier
-  
+	//$content_dir = '/tmp/'; // dossier où sera déplacé le fichier
+	$content_dir = GLPI_PLUGIN_DOC_DIR."/tracker/";
    $tmp_file = $_FILES['data']['tmp_name'];
 
     if( !is_uploaded_file($tmp_file) )
@@ -68,6 +68,8 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	$fp = fopen($content_dir . $name_file_xml, "w");
 	fwrite($fp, $string, strlen($string));
 	fclose($fp);
+	
+	unlink($content_dir.$name_file);
 
 	
 	// Open file for put it in DB
