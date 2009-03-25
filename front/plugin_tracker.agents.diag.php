@@ -127,7 +127,7 @@ else if(isset($_POST['get_data']))
 		$rangeip_select = ' AND (';
 		$query = "SELECT * FROM glpi_plugin_tracker_rangeip 
 		WHERE FK_tracker_agents='".$ID_agent."' 
-		AND query=1 ";
+		AND query='1' ";
 		$result=$DB->query($query);
 		$exclude = array();
 		$or = 0;
@@ -140,8 +140,8 @@ else if(isset($_POST['get_data']))
 		}
 		$rangeip_select .= ') ';
 		if ($rangeip_select == " AND () ")
-			$rangeip_select = "";
-		// echo $rangeip_select;
+			$rangeip_select = " AND 1!=1 ";
+		 echo $rangeip_select;
 
 		$xml->element[0]['snmp']['element']="";
 		
