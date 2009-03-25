@@ -99,6 +99,13 @@ class plugin_tracker_agents extends CommonDBTM
 		dropdownInteger("nb_process_discovery", $this->fields["nb_process_discovery"],1,400);
 		echo "</td>";
 		echo "</tr>";
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][8] . "</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='fragment' value='".$this->fields["fragment"]."'/>"; 
+		echo "</td>";
+		echo "</tr>";		
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANGTRACKER["agents"][6] . "</td>";
