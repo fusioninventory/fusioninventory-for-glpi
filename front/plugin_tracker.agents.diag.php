@@ -141,7 +141,7 @@ else if(isset($_POST['get_data']))
 		$rangeip_select .= ') ';
 		if ($rangeip_select == " AND () ")
 			$rangeip_select = " AND 1!=1 ";
-		 echo $rangeip_select;
+		// echo $rangeip_select;
 
 		$xml->element[0]['snmp']['element']="";
 		
