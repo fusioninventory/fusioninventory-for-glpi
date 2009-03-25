@@ -96,7 +96,14 @@ class plugin_tracker_rangeip extends CommonDBTM
 		dropdownYesNo("discover",$this->fields["discover"]);
 		echo "</td>";
 		echo "</tr>";
-	
+		
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANGTRACKER["rangeip"][3] . "</td>";
+		echo "<td align='center'>";
+		dropdownYesNo("query",$this->fields["query"]);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		if ($ID=='')
 		{
