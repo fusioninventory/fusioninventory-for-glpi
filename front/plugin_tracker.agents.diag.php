@@ -74,11 +74,10 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	
 	// Open file for put it in DB
 	$importexport = new plugin_tracker_importexport;
-	$importexport->import_agentfile($content_dir.$name_file_xml);
-
+	if (ereg("-discovery",$name_file_xml))
+		$importexport->import_agentfile($content_dir.$name_file_xml);
 
     echo "Le fichier a bien été uploadé";  
-
 }
 else if(isset($_POST['get_data']))
 {
@@ -160,6 +159,7 @@ else if(isset($_POST['get_data']))
 		$xml->element[2]['agent']['linkfield']['logs'] = 'logs';
 		$xml->element[2]['agent']['linkfield']['key'] = 'key';
 		$xml->element[2]['agent']['fieldvalue']['PID'] = $start_PID.$number_PID;
+		$xml->element[2]['agent']['linkfield']['fragment'] = 'fragment';
 	
 		// Get all range to scan if discovery is ON
 		$xml->element[2]['rangeip']['element']="discovery";
