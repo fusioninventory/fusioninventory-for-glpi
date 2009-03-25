@@ -49,8 +49,8 @@ class plugin_tracker_config extends CommonDBTM {
 		global $DB;
 		
 		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp, logs) ".
-				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB','0')";
+				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp) ".
+				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB')";
 		
 		$DB->query($query);
 	}
@@ -322,7 +322,7 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 		global $DB;
 		
 		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, nb_process, logs,lock) ".
+				 "(ID, nb_process, logs,`lock`) ".
 				 "VALUES ('1', '1', '0', '0')";
 		
 		$DB->query($query);
