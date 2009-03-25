@@ -53,6 +53,10 @@ function plugin_tracker_installing($version) {
 
 	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
 	plugin_tracker_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
+	if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
+		mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
+	}
+	
 	$config = new plugin_tracker_config();
 	$config->initConfig();
 	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
@@ -86,6 +90,10 @@ function plugin_tracker_update($version) {
 function plugin_tracker_uninstall() {
 	
 	global $DB;
+
+	if (is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
+		rmdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
+	}
 	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_label`;";
 	$DB->query($query) or die($DB->error());
