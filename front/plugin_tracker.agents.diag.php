@@ -75,7 +75,16 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	// Open file for put it in DB
 	$importexport = new plugin_tracker_importexport;
 	if (ereg("-discovery",$name_file_xml))
+	{
 		$importexport->import_agentfile($content_dir.$name_file_xml);
+		unlink($content_dir.$name_file_xml);
+	}
+	if (!ereg("-",$name_file_xml))
+	{
+		// Recompose xml file
+		$importexport->import_agentonly($content_dir,$name_file_xml);
+	}
+
 
     echo "Le fichier a bien été uploadé";  
 }
