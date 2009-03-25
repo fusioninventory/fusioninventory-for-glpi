@@ -310,11 +310,16 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['field'] = 'discover';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['linkfield'] = 'discover';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['name'] = $LANGTRACKER["discovery"][3];
+
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['table'] = 'glpi_plugin_tracker_rangeip';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['field'] = 'query';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['linkfield'] = 'query';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['name'] = $LANGTRACKER["rangeip"][3];
 	
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['table'] = 'glpi_entities';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['linkfield'] = 'FK_entities';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['name'] = $LANG["entity"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['table'] = 'glpi_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['linkfield'] = 'FK_entities';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['name'] = $LANG["entity"][0];
 
 
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY]['common'] = $LANGTRACKER["errors"][0];
@@ -728,6 +733,10 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;	
 		case "glpi_plugin_tracker_rangeip.discover" :
+			$out = getYesNo($data["ITEM_$num"]);
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_rangeip.query" :
 			$out = getYesNo($data["ITEM_$num"]);
 			return "<center>".$out."</center>";
 			break;
@@ -1296,6 +1305,10 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			break;
 		case 'glpi_plugin_tracker_rangeip.discover' :
 			dropdownYesNo('discover',$linkfield);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_rangeip.query' :
+			dropdownYesNo('query',$linkfield);
 			return true;
 			break;
 		case 'glpi_plugin_tracker_rangeip.FK_tracker_agents' :

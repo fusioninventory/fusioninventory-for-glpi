@@ -441,6 +441,7 @@ $LANGTRACKER["discovery"][5]="Nombre de matériels importés";
 $LANGTRACKER["rangeip"][0]="Début de la plage IP";
 $LANGTRACKER["rangeip"][1]="Fin de la plage IP";
 $LANGTRACKER["rangeip"][2]="Plage IP";
+$LANGTRACKER["rangeip"][3]="Interrogation";
 
 $LANGTRACKER["agents"][0]="Agent SNMP";
 $LANGTRACKER["agents"][2]="Nb process interrogation";
