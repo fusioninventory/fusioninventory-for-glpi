@@ -39,19 +39,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 if (haveRight("config","w") && haveRight("profile","w")){
 
-	if(!TableExists("glpi_plugin_tracker_config")){
-		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
-		plugin_tracker_install();
-		plugin_tracker_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
-		$config = new plugin_tracker_config();
-		$config->initConfig();
-		$config_snmp_networking = new plugin_tracker_config_snmp_networking;
-		$config_snmp_networking->initConfig();
-		$config_snmp_printer = new plugin_tracker_config_snmp_printer;
-		$config_snmp_printer->initConfig();
-		plugin_tracker_initSession();
-	}elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs"))
-		plugin_tracker_update("1.1.0");
+	plugin_tracker_install();
 		
 	glpi_header($_SERVER['HTTP_REFERER']);
 }else{
