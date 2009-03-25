@@ -732,9 +732,14 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_discovery.type" :
-			$ci=new CommonItem();
-			$ci->setType($data["ITEM_$num"]);
-			$out=$ci->getType();
+			if ($data["ITEM_$num"] == "0")
+				$out = "";
+			else
+			{
+				$ci=new CommonItem();
+				$ci->setType($data["ITEM_$num"]);
+				$out=$ci->getType();
+			}
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_entities.name" :
