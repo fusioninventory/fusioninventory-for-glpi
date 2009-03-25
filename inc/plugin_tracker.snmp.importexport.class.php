@@ -264,12 +264,11 @@ class plugin_tracker_importexport extends CommonDBTM
 			$DB->query($query);
 			
 			$query = "UPDATE glpi_plugin_tracker_agents_processes 
-			SET end_time='".$agent->end_date."', status='3', 
-				start_time_discovery='".$agent->start_time_discovery."', end_time_discovery='".$agent->end_time_discovery."',
+			SET status='2', 
+				start_time_discovery='".$agent->start_time_discovery."', 
+				end_time_discovery='".$agent->end_time_discovery."',
 				discovery_queries_total='".$agent->discovery_queries_total."',
-				discovery_queries='".$count_discovery_devices."',
-				networking_queries='".$device_queried_networking."',
-				printers_queries='".$device_queried_printer."'
+				discovery_queries='".$count_discovery_devices."'
 			WHERE process_number='".$agent->pid."'
 				AND FK_agent='".$agent->id."'";
 			$DB->query($query);			
@@ -304,7 +303,59 @@ class plugin_tracker_importexport extends CommonDBTM
 		}
 	}
 
+	function import_agentonly($content_dir,$file)
+	{
+		global $DB,$LANG,$LANGTRACKER;
+		
+		$xml = simplexml_load_file($content_dir.$file);
+		
+		$num_files = $xml->agent->num_files;
+		
+		$file_modif = str_replace(".xml", "-device.xml", $file);
+		$target = $content_dir.$file_modif;
+		$handle = fopen($target, 'a');
+		
+		for ($i = 1; $i <= $num_files; $i++)
+		{
+			$file_modif = str_replace(".xml", "-".$i.".xml", $file);
+			$c_handle = fopen($content_dir.$file_modif, 'r');
+			do {
+				$content = fread($c_handle,1000000);
+				fwrite($handle, $content);
+			}
+			while (!empty($content));
+			fclose($c_handle);
+			unlink($content_dir.$file_modif);
+		}
+		fclose($handle);
 
+		$xml_device = simplexml_load_file($target);
+
+		$device_queried_networking = 0;
+		$device_queried_printer = 0;
+		foreach($xml_device->device as $device){
+			if ($device->infos->type == NETWORKING_TYPE)
+				$device_queried_networking++;
+			else if ($device->infos->type == PRINTER_TYPE)
+				$device_queried_printer++;
+		}
+		foreach($xml->agent as $agent){
+			$agent_version = $agent->version;
+			$agent_id = $agent->id;
+			$query = "UPDATE glpi_plugin_tracker_agents
+			SET last_agent_update='".$agent->end_date."', tracker_agent_version='".$agent_version."'
+			WHERE ID='".$agent_id."'";
+			$DB->query($query);
+ 	            
+			$query = "UPDATE glpi_plugin_tracker_agents_processes
+			SET end_time='".$agent->end_date."', status='3',
+				networking_queries='".$device_queried_networking."',
+				printers_queries='".$device_queried_printer."'
+			WHERE process_number='".$agent->pid."'
+				AND FK_agent='".$agent->id."'";
+			$DB->query($query);           
+		}		
+	}
 
 }
 
