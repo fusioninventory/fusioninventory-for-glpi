@@ -40,17 +40,20 @@ if (!defined('GLPI_ROOT'))
 
 class plugin_tracker_walk extends CommonDBTM
 {
-	function __construct()
+/*	function __construct()
 	{
 		$this->table = "glpi_plugin_tracker_walks";
 		$this->type = -1;
 	}
-
+*/
 
 
 	function GetoidValues($FK_agent_process,$ID_Device,$type)
 	{
 		global $DB;
+
+
+		
 
 		$query = "SELECT * FROM glpi_plugin_tracker_walks
 		WHERE on_device='".$ID_Device."'
