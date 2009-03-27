@@ -48,21 +48,24 @@ class plugin_tracker_walk extends CommonDBTM
 */
 
 
-	function GetoidValues($FK_agent_process,$ID_Device,$type)
+	function GetoidValues($device_snmp)
 	{
 		global $DB;
 
-
-		
-
-		$query = "SELECT * FROM glpi_plugin_tracker_walks
-		WHERE on_device='".$ID_Device."'
-			AND device_type='".$type."'
-			AND FK_agents_processes='".$FK_agent_process."'";
-		$result=$DB->query($query);
-		while ( $data=$DB->fetch_array($result) )
-		{
-			$oidvalues[$data['oid']][$data['vlan']] = $data['value'];
+		foreach($device_snmp->get as $snmpget){
+			$oidvalues["$snmpget->object"]["$snmpget->vlan"] = "$snmpget->oid";
+//			oid=$snmpget->object;
+//			value=$snmpget->oid;
+//			vlan=$snmpget->vlan;
+		}
+		foreach($device_snmp->walk as $snmpwalk){
+			$oid = "";
+			if (!empty($snmpwalk->oid))
+				$oid = $snmpwalk->oid;
+			$vlan = "";
+			if (!empty($snmpwalk->vlan))
+				$oid = $snmpwalk->vlan;
+			$oidvalues["$snmpwalk->object"]["$vlan"] = "$oid";
 		}
 		return $oidvalues;
 	}
