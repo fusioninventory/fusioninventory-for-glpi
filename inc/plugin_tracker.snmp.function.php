@@ -188,11 +188,20 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	$walks = new plugin_tracker_walk;
 	
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
-	
+
+	// Load XML Device ID
+	$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$FK_agent_process."-device.xml");
+	foreach($xml->device as $device){
+		if (($device->infos->id == $ID_Device) AND ($device->infos->type == $type))
+		{
+			$device_snmp = $device;		
+		}			
+	}
+
 	// Get SNMP model oids
 	$oidsModel = $models->oidlist($ID_Device,$type);
 	ksort($oidsModel);
-	
+
 	if ((isset($oidsModel)) && ($ID_Device != ""))
 	{
 		// Get oidvalues from agents
