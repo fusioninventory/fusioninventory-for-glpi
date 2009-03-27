@@ -70,7 +70,6 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	fclose($fp);
 	
 	unlink($content_dir.$name_file);
-
 	
 	// Open file for put it in DB
 	$importexport = new plugin_tracker_importexport;
@@ -83,6 +82,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	{
 		// Recompose xml file
 		$importexport->import_agentonly($content_dir,$name_file_xml);
+		unlink($content_dir.$name_file_xml);
 	}
 
 

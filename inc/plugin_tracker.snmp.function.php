@@ -691,7 +691,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 	$snmp_queries = new plugin_tracker_snmp;
 	$walks = new plugin_tracker_walk;
 
-	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan_name."(".$vlan.")] <<<<<<<<<<",$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan.")] <<<<<<<<<<",$type."][".$ID_Device,1);
 
 	$ArrayMACAdressTableVerif = array();
 	
@@ -708,7 +708,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 	{
 		$oidExplode = explode(".", $dynamicdata);
 		// Get by SNMP query the port number (dot1dTpFdbPort)
-		if ((count($oidExplode) > 3))
+		if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan])))
 		{
 			$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
 
@@ -741,7 +741,10 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 				// Verify Trunk
 				
 				$logs->write("tracker_fullsync","Vlan = ".$vlan,$type."][".$ID_Device,1);
-				$logs->write("tracker_fullsync","TrunkStatus = ".$oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan],$type."][".$ID_Device,1);
+				if (isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
+					$logs->write("tracker_fullsync","TrunkStatus = ".$oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan],$type."][".$ID_Device,1);
+				else
+					$logs->write("tracker_fullsync","TrunkStatus = ",$type."][".$ID_Device,1);
 				$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type."][".$ID_Device,1);
 									
 				$queryPortEnd = "";	
@@ -781,30 +784,33 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 
 						if (!isset($ArrayPortsID[$ifName]))
 							$traitement = 0;
-
-						$sport = $ArrayPortsID[$ifName]; // Networking_Port
-						if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
-						{
-							$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
-
-							// Connection between ports (wire table in DB)
-							$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process']);
-						}
-						else if ( $traitement == "1" )
-						{
 						
-							// Mac address unknow
-							if ($_SESSION['FK_process'] != "0")
+						if (isset($ArrayPortsID[$ifName]))
+						{
+							$sport = $ArrayPortsID[$ifName]; // Networking_Port
+							if ( ($DB->numrows($resultPortEnd) != 0) && ($traitement == "1") )
 							{
-								$ip_unknown = '';
-								$MacAddress_Hex = str_replace(":","",$MacAddress);
-								$MacAddress_Hex = "0x".$MacAddress_Hex;
-								foreach ($ArrayIPMACAdressePhys as $num=>$ips)
+								$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+	
+								// Connection between ports (wire table in DB)
+								$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process']);
+							}
+							else if ( $traitement == "1" )
+							{
+							
+								// Mac address unknow
+								if ($_SESSION['FK_process'] != "0")
 								{
-									if ($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$ips][$vlan] == $MacAddress_Hex)
-										$ip_unknown = preg_replace("/^1\./","",$ips);
+									$ip_unknown = '';
+									$MacAddress_Hex = str_replace(":","",$MacAddress);
+									$MacAddress_Hex = "0x".$MacAddress_Hex;
+									foreach ($ArrayIPMACAdressePhys as $num=>$ips)
+									{
+										if ($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$ips][$vlan] == $MacAddress_Hex)
+											$ip_unknown = preg_replace("/^1\./","",$ips);
+									}
+									$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 								}
-								$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 							}
 						}
 					}
