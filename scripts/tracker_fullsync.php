@@ -96,7 +96,7 @@ if(isset($_GET['update_device_process'])){
 			$device_printer = $processes_values["devices"];
 			break;
 	}
-	$processes->updateProcess($_GET['FK_process'],$device_network, $device_printer, 0, $processes_values["errors"]);
+	//$processes->updateProcess($_GET['FK_process'],$device_network, $device_printer, 0, $processes_values["errors"]);
 }
 else
 {
@@ -122,20 +122,20 @@ else
 
 	$logs->write("tracker_snmp","Operating System = ".$OS,'');
 
-	$query = "SELECT FK_agents_processes FROM glpi_plugin_tracker_agents_processes
+	$query = "SELECT process_number FROM glpi_plugin_tracker_agents_processes
 	ORDER BY process_number";
 	$result=$DB->query($query);
 	while ( $data=$DB->fetch_array($result) )
 	{
 		// Test if XLM file from Agent exist
-		if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['FK_agents_processes']."-device.xml"))
+		if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml"))
 		{
-			$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['FK_agents_processes']."-device.xml");
+			$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml");
 			foreach($xml->device as $device)
 			{
 				$ArrayListDevice[] = $device->infos->id;
 				$ArrayListType[] = $device->infos->type;
-				$ArrayListAgentProcess[] = $data['FK_agents_processes'];			
+				$ArrayListAgentProcess[] = $data['process_number'];			
 			}
 		}
 	}

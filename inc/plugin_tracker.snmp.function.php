@@ -195,6 +195,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		if (($device->infos->id == $ID_Device) AND ($device->infos->type == $type))
 		{
 			$device_snmp = $device;		
+			break;
 		}			
 	}
 
@@ -205,7 +206,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	if ((isset($oidsModel)) && ($ID_Device != ""))
 	{
 		// Get oidvalues from agents
-		$oidvalues = $walks->GetoidValues($FK_agent_process,$ID_Device,$type);
+		$oidvalues = $walks->GetoidValues($device_snmp);
 		ksort($oidvalues);
 
 		// ** Get oid of PortName
