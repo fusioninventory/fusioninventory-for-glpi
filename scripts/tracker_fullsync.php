@@ -130,6 +130,7 @@ else
 		// Test if XLM file from Agent exist
 		if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml"))
 		{
+			$xml_file[] = GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml";
 			$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml");
 			foreach($xml->device as $device)
 			{
@@ -141,6 +142,10 @@ else
 	}
 	plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
 
+	foreach ( $xml_file as $num=>$filename )
+	{
+		unlink($filename);
+	}
 	$processes->closeProcess($fields["process_id"]);
 }
 
