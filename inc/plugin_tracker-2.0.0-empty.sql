@@ -271,7 +271,8 @@ CREATE TABLE `glpi_plugin_tracker_model_infos` (
   `FK_entities` int(11) NOT NULL DEFAULT '0',
   `activation` int(1) NOT NULL DEFAULT '1',
   `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -391,7 +392,8 @@ CREATE TABLE `glpi_plugin_tracker_processes` (
   `discovery_queries` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `end_time` (`end_time`),
-  KEY `process_id` (`process_id`)
+  KEY `process_id` (`process_id`),
+  KEY `network_queries` (`network_queries`,`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -445,7 +447,8 @@ CREATE TABLE `glpi_plugin_tracker_rangeip` (
   `discover` int(1) NOT NULL DEFAULT '0',
   `query` int(1) NOT NULL DEFAULT '0',
   `FK_entities` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `FK_tracker_agents` (`FK_tracker_agents`,`discover`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -497,7 +500,8 @@ CREATE TABLE `glpi_plugin_tracker_unknown_mac` (
 	`end_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 	`port` INT( 8 ) NOT NULL,
 	`unknow_mac` VARCHAR( 255 ) NOT NULL,
-	PRIMARY KEY (`ID`)
+	PRIMARY KEY (`ID`),
+	UNIQUE KEY `start_FK_processes` (`start_FK_processes`,`end_FK_processes`,`port`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
