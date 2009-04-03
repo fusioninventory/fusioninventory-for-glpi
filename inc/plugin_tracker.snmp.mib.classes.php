@@ -190,6 +190,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
 				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
+				echo "<th align='center'>".$LANG["networking"][56]."</th>";
 				echo "</tr>";
 
 				echo "<td align='center'>";
@@ -234,6 +235,10 @@ class plugin_tracker_mib_networking extends CommonDBTM
 
 				dropdownArrayValues("links_oid_fields",$types,'',$linkoid_used);
 
+				echo "</td>";
+
+				echo "<td align='center'>";
+				dropdownYesNo("vlan");	
 				echo "</td>";
 				
 				echo "</tr>";
