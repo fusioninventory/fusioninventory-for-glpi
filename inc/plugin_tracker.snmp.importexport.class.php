@@ -121,7 +121,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		echo "</td>";
 		echo "		<td align='center'>";
 		echo "			<input type='file' name='importfile' value=''/>";
-		echo "			<input type='submit' value='".$LANG["buttons"][37]."'/>";
+		echo "			<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
 		echo "		</td>";
 		echo "	</tr>";
 		echo "</table>";
