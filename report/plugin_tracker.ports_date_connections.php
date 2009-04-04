@@ -56,24 +56,21 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"]))
 {
 		$field[0] = 3;
 		$contains[0]=getContainsArray($_POST);
-
 		
 		$_GET["field"] = $field;
 		$_GET["contains"] = $contains;
 
 		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-		
 }
 else
 	showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 	
-
 commonFooter(); 
 
 function displaySearchForm()
 {
 	global $_SERVER,$_GET,$LANG,$CFG_GLPI;
-	
+
 	echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
 	echo "<table class='tab_cadre' cellpadding='5'>";
 	echo "<tr class='tab_bg_1' align='center'>";
@@ -85,6 +82,30 @@ function displaySearchForm()
 	$values["inf"]="<";
 	$values["equal"]="=";
 
+	if (isset($_GET["contains"][0]))
+	{
+		if (ereg("lt;",$_GET["contains"][0]))
+		{
+			$_GET["dropdown_sup_inf"] = "inf";
+			$_GET["dropdown_calendar"] = str_replace("lt;", "",$_GET["contains"][0]);
+			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
+			$_GET["contains"][0] = "<".$_GET["dropdown_calendar"];
+		}
+		if (ereg("gt;",$_GET["contains"][0]))
+		{
+			$_GET["dropdown_sup_inf"] = "sup";
+			$_GET["dropdown_calendar"] = str_replace("gt;", "",$_GET["contains"][0]);
+			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
+			$_GET["contains"][0] = ">".$_GET["dropdown_calendar"];
+		}
+		if (ereg("=",$_GET["contains"][0]))
+		{
+			$_GET["dropdown_sup_inf"] = "equal";
+			$_GET["dropdown_calendar"] = str_replace("=", "",$_GET["contains"][0]);
+			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
+			$_GET["contains"][0] = "=".$_GET["dropdown_calendar"];
+		}
+	}
 	dropdownArrayValues("dropdown_sup_inf",$values,(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup"));
 	echo "&nbsp;";
 	showCalendarForm("form_ic","dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
@@ -92,7 +113,7 @@ function displaySearchForm()
 	
 	// Display Reset search
 	echo "<td>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/reports/report/plugin_reports.user.php?reset_search=reset_search' ><img title=\"".$LANG["buttons"][16]."\" alt=\"".$LANG["buttons"][16]."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
+	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/report/plugin_tracker.ports_date_connections.php?reset_search=reset_search' ><img title=\"".$LANG["buttons"][16]."\" alt=\"".$LANG["buttons"][16]."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
 	echo "</td>";
 
 	echo "<td>";
