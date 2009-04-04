@@ -232,7 +232,7 @@ else if(isset($_POST['get_data']))
 					AND FK_printers!=0";
 // 					AND ifaddr BETWEEN '192.168.0.1' AND '192.168.0.200'
 			}
-		
+
 			// Informations
 			$xml_writed->element[2]['infos']['element']=$devices[$i];
 			if ($devices[$i] == "device_networking")
@@ -250,7 +250,10 @@ else if(isset($_POST['get_data']))
 					AND ifaddr!=''
 					AND ifaddr!='127.0.0.1'";
 			}
-			$xml_writed->element[2]['infos']['linkfield']['ID'] = 'id';
+			if ($devices[$i] == "device_networking")
+				$xml_writed->element[2]['infos']['linkfield']['ID'] = 'id';
+			else if ($devices[$i] == "device_printer")
+				$xml_writed->element[2]['infos']['linkfield']['FK_printers'] = 'id';
 			$xml_writed->element[2]['infos']['linkfield']['ifaddr'] = 'ip';
 			$xml_writed->element[2]['infos']['linkfield']['FK_entities'] = 'entity';
 			if ($devices[$i] == "device_networking")

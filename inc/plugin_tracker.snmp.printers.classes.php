@@ -159,10 +159,9 @@ class plugin_tracker_printers extends CommonDBTM
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 			{
-				$explode = explode("||", $mapping_type_name);
-				if (ereg('cartridges',$explode[1]))
+				if (ereg('cartridges',$mapping_type_name))
 				{
-					$explode[1] = str_replace ("MAX", "", $explode[1]);
+					$explode[1] = str_replace ("MAX", "", $mapping_type_name);
 					$explode[1] = str_replace ("REMAIN", "", $explode[1]);
 					$mapping_name[$explode[1]] = "1";			
 				}
@@ -248,8 +247,8 @@ class plugin_tracker_printers extends CommonDBTM
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 			{
-				$explode = explode("||", $mapping_type_name);
-				$mapping_name[$explode[1]] = "1";			
+				//$explode = explode("||", $mapping_type_name);
+				$mapping_name[$mapping_type_name] = "1";
 			}	
 		
 		// Form pages counter

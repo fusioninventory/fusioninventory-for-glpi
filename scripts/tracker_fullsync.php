@@ -65,7 +65,7 @@ $CFG_GLPI["debug"]=0;
 
 //Check if plugin is installed, ie if tables are present
 if (!TableExists("glpi_plugin_tracker_networking")) {
-	echo "Plugin Tracker pas installé!!";
+	echo "Plugin Tracker pas installï¿½!!";
 	exit(1);
 }
  
@@ -85,17 +85,17 @@ if(isset($_GET['update_device_process'])){
 
 	$processes = new Threads;
 	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
-	$device_network = 0;
-	$device_printer = 0;
+//	$device_network = 0;
+//	$device_printer = 0;
 
-	switch ($_GET['type']) {
-		case NETWORKING_TYPE :
-			$device_network = $processes_values["devices"];
-			break;
-		case PRINTER_TYPE :
-			$device_printer = $processes_values["devices"];
-			break;
-	}
+//	switch ($_GET['type']) {
+//		case NETWORKING_TYPE :
+//			$device_network = $processes_values["devices"];
+//			break;
+//		case PRINTER_TYPE :
+//			$device_printer = $processes_values["devices"];
+//			break;
+//	}
 	//$processes->updateProcess($_GET['FK_process'],$device_network, $device_printer, 0, $processes_values["errors"]);
 }
 else
@@ -136,7 +136,7 @@ else
 			{
 				$ArrayListDevice[] = $device->infos->id;
 				$ArrayListType[] = $device->infos->type;
-				$ArrayListAgentProcess[] = $data['process_number'];			
+				$ArrayListAgentProcess[] = $data['process_number'];
 			}
 		}
 	}
@@ -148,10 +148,4 @@ else
 	}
 	$processes->closeProcess($fields["process_id"]);
 }
-
-
-
-
-
-
 ?>
