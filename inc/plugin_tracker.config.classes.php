@@ -335,10 +335,9 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 
 		$query = "SELECT ".$field." FROM ".$this->table." ".
 				 "WHERE ID = '1'";
-		if ( $result = $DB->query($query) ) {
-			if ( $this->fields = $DB->fetch_row($result) )
-				return $this->fields['0'];
-		}
+		$result = $DB->query($query);
+		if ( $this->fields = $DB->fetch_row($result) )
+			return $this->fields['0'];
 		return false;
 	}
 
@@ -558,12 +557,12 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][31]."</td>";
-		echo "<td>";
-		dropdownYesNo("manage_cartridges", $this->isActivated('manage_cartridges'));
-		echo "</td>";
-		echo "</tr>";	
+//		echo "<tr class='tab_bg_1'>";
+//		echo "<td>".$LANGTRACKER["functionalities"][31]."</td>";
+//		echo "<td>";
+//		dropdownYesNo("manage_cartridges", $this->isActivated('manage_cartridges'));
+//		echo "</td>";
+//		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
