@@ -50,33 +50,32 @@ if (isset($_GET["reset_search"]))
 	resetSearch();
 
 $_GET=getValues($_GET,$_POST);
-
-displaySearchForm();
+$FK_port = "";
+if (isset($_GET["FK_networking_ports"]))
+	$FK_port = $_GET["FK_networking_ports"];
+if (isset($_GET["contains"][0]))
+	$FK_port = $_GET["contains"][0];
+displaySearchForm($FK_port);
 
 manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_HISTORY);
 
 if(isset($_GET["FK_networking_ports"])){
 		
-	
 	$field[]=2;
 	$contains[]=$_GET["FK_networking_ports"];
-	
+
 	$_GET["field"] = $field;
 	$_GET["contains"] = $contains;
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
-
-
-	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-
-	
-} 
+}
+showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 	
 echo "</form>";
 
 commonFooter(); 
 
-function displaySearchForm()
+function displaySearchForm($FK_port)
 {
 	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI;
 	
@@ -98,7 +97,7 @@ function displaySearchForm()
 	while ( $data=$DB->fetch_array($result) )
 	{
 		$selected = '';
-		if ((isset($_GET["FK_networking_ports"])) AND ($data['ID'] == $_GET["FK_networking_ports"]))
+		if ((isset($FK_port)) AND ($data['ID'] == $FK_port))
 			$selected = "selected";
 		echo "<option value='".$data['ID']."' ".$selected.">".$data['name']." - ".$data['pname']."</option>";
 	}
