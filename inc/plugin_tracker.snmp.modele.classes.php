@@ -67,7 +67,7 @@ class plugin_tracker_model_infos extends CommonDBTM
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='name' value='" . $this->fields["name"] . "'/>";
+		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
 		echo "</td>";
 		echo "</tr>";
 
@@ -91,7 +91,6 @@ class plugin_tracker_model_infos extends CommonDBTM
 		echo "<option value='".PHONE_TYPE."' ".$selected.">".$LANG["Menu"][34]."</option>\n";
 		echo "</select>";
 		
-		//dropdownValue("glpi_dropdown_model_networking", "FK_model_networking", $this->fields["FK_model_networking"], 1);
 		echo "</td>";
 		echo "</tr>";
 
