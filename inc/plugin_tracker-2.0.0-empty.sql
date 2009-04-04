@@ -115,7 +115,7 @@ CREATE TABLE `glpi_plugin_tracker_agents_processes` (
   `discovery_queries_total` int(11) NOT NULL DEFAULT '0',
   `networking_ports_queries` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `process_number` (`process_number`)
+  KEY `process_number` (`process_number`,`FK_agent`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
