@@ -54,7 +54,4 @@ function plugin_tracker_snmp_auth_dropdown($selected="")
 }
 
 
-
-
-
 ?>
