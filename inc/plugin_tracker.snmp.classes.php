@@ -198,71 +198,6 @@ class plugin_tracker_snmp extends CommonDBTM
 		}
 		return $ArraySNMP;
 	}
-	
-
-
-	/**
-	 * Get SNMP port name of the network materiel and assign it to logical port number
-	 *
-	 * @param $IP IP address of network materiel
-	 * @param $snmp_version version of SNMP (1, 2c or 3)
-	 * @param $snmp_auth array with authentification of SNMP
-	 * @param $ArrayOID List whith just Object and OID values
-	 *
-	 * @return array with logical port number and port name 
-	 *
-	**/
-	function GetPortsName($IP,$snmp_version,$snmp_auth,$ArrayOID)
-	{
-		$snmp_queries = new plugin_tracker_snmp;
-		$logs = new plugin_tracker_logs;
-		
-		$Arrayportsnames = array();
-		$logs->write("tracker_fullsync",">>>>>>>>>> Get network ports name <<<<<<<<<<",$IP,1);
-		foreach($ArrayOID as $object=>$oid)
-		{
-			$Arrayportsnames = $snmp_queries->SNMPQueryWalkAll(array($object=>$oid),$IP,$snmp_version,$snmp_auth);
-		}
-	
-		$PortsName = array();
-	
-		foreach($Arrayportsnames as $object=>$value)
-		{
-			$logs->write("tracker_fullsync",$object." = ".$value,$IP,1);
-			$PortsName[] = $value;
-		}
-		return $PortsName;
-	}
-
-
-
-	/**
-	 * Get SNMP port number of the network materiel and assign it to logical port number
-	 *
-	 * @param $IP IP address of network materiel
-	 * @param $snmp_version version of SNMP (1, 2c or 3)
-	 * @param $snmp_auth array with authentification of SNMP
-	 *
-	 * @return array with logical port number and SNMP port number 
-	 *
-	**/
-	function GetPortsSNMPNumber($IP,$snmp_version,$snmp_auth)
-	{
-		$snmp_queries = new plugin_tracker_snmp;
-		$logs = new plugin_tracker_logs;
-
-		$logs->write("tracker_fullsync",">>>>>>>>>> Get network ports number with logical number <<<<<<<<<<",$IP,1);
-		$ArrayportsSNMPNumber = $snmp_queries->SNMPQueryWalkAll(array("IF-MIB::ifIndex"=>".1.3.6.1.2.1.2.2.1.1"),$IP,$snmp_version,$snmp_auth);
-	
-		$PortsName = array();
-		$i=0;
-		foreach($ArrayportsSNMPNumber as $object=>$value)
-		{
-			$PortsSNMPNumber[] = $value;
-			$logs->write("tracker_fullsync",$object." = ".$value."(N° logic : ".$i++.")",$IP,1);
-		}
-		return $PortsSNMPNumber;
-	}
 
 
 
@@ -398,34 +333,6 @@ class plugin_tracker_snmp extends CommonDBTM
 		return $ObjectLink;
 	}
 	
-	function GetLinkOidToFields_EX($ID_Model)
-	{
-
-		global $DB,$TRACKER_MAPPING;
-		
-		$ObjectLink = array();
-		
-		$query = "SELECT mapping_type, mapping_name, 
-			glpi_dropdown_plugin_tracker_mib_object.name AS name
-		FROM glpi_plugin_tracker_mib_networking
-		
-		LEFT JOIN glpi_dropdown_plugin_tracker_mib_object
-			ON glpi_plugin_tracker_mib_networking.FK_mib_object=glpi_dropdown_plugin_tracker_mib_object.ID
-		
-		WHERE FK_model_infos=".$ID_Model." 
-			AND oid_port_counter='0' ";
-		
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-				//$ObjectLink[$data["name"]] = $data["FK_links_oid_fields"];
-				$ObjectLink[$data["name"]] = $data["mapping_type"]."||".$data["mapping_name"];
-			}
-		}
-		return $ObjectLink;
-	}
-
 
 
 	function MAC_Rewriting($macadresse)
@@ -622,33 +529,6 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 	}
 
-
-
-	/**
-	 * Define a global var
-	 *
-	 * @param $ArrayOID Array with ObjectName and OID
-	 *
-	 * @return nothing
-	 *
-	**/
-	function DefineObject($ArrayOID)
-	{
-		foreach($ArrayOID as $object=>$oid)
-		{
-			if (!ereg("IF-MIB::",$object))
-			{
-				if(defined($object))
-				{
-					runkit_constant_remove($object);
-					define($object,$oid);
-				}
-				else
-					define($object,$oid);
-
-			}
-		}
-	}
 
 
 

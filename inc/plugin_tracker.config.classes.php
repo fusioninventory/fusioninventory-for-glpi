@@ -569,7 +569,4 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 		echo "</table></form>";	
 	}
 }		
-		
-		
-		
 ?>
