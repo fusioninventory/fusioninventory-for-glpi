@@ -38,66 +38,6 @@ if (!defined('GLPI_ROOT')){
 }
 
 
-/**
- * Get all DEVICE list ready for SNMP query  
- *
- * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
- *
- * @return array with ID => IP 
- *
-**/
-function plugin_tracker_getDeviceList($type)
-{
-	global $DB;
-	
-	$NetworksID = array();
-		
-	switch ($type)
-	{
-		case NETWORKING_TYPE :
-			$table = "glpi_plugin_tracker_config_snmp_networking";
-			break;
-		case PRINTER_TYPE :
-			$table = "glpi_plugin_tracker_config_snmp_printer";
-			break;
-	}
-	
-	$query = "SELECT active_device_state FROM ".$table." ";
-	
-	$result = $DB->query($query);
-	$device_state = $DB->result($result, 0, "active_device_state");
-
-	switch ($type)
-	{
-		case NETWORKING_TYPE :
-			$table = "glpi_networking";
-			$join = "";
-			$whereand = "";
-			break;
-		case PRINTER_TYPE :
-			$table = "glpi_printers";
-			$join = "LEFT JOIN glpi_networking_ports
-				ON glpi_printers.ID = glpi_networking_ports.on_device";
-			$whereand = "AND glpi_networking_ports.device_type='".PRINTER_TYPE."' ";
-			break;
-	}
-
-	$query = "SELECT ".$table.".ID,ifaddr 
-	FROM ".$table." 
-	".$join."
-	WHERE deleted='0' 
-		AND state='".$device_state."' ".$whereand." ";
-		
-	$result=$DB->query($query);
-	while ( $data=$DB->fetch_array($result) )
-	{
-		if ((!empty($data["ifaddr"])) AND ($data["ifaddr"] != "127.0.0.1"))
-			$NetworksID[$data["ID"]] = $data["ifaddr"];
-	}
-	return $NetworksID;
-}
-	
-
 
 function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_process = 0,$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess)
 {
@@ -934,7 +874,8 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 }
 
 
-// * $ArrayListNetworking : array of device infos : ID => ifaddr 
+// * $ArrayListNetworking : array of device infos : ID => ifaddr
+// NOT USED VERIFY IT
 function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 {
 	global $DB;
@@ -998,6 +939,7 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 
 
 function plugin_tracker_snmp_port_ifaddr($ID_Device,$type,$oidsModel,$oidvalues)
+// NOT USED VERIFY IT
 {
 	global $DB;
 
