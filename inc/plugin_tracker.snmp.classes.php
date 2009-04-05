@@ -256,6 +256,15 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 
 
+	/**
+	 * Description
+	 *
+	 * @param
+	 * @param
+	 *
+	 * @return
+	 *
+	**/
 	function MAC_Rewriting($macadresse)
 	{
 		// If MAC address without : (with space for separate)
@@ -299,6 +308,15 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
+	/**
+	 * Description
+	 *
+	 * @param
+	 * @param
+	 *
+	 * @return
+	 *
+	**/
 	function update_network_infos($ID, $FK_model_infos, $FK_snmp_connection)
 	{
 		global $DB;
@@ -325,6 +343,15 @@ class plugin_tracker_snmp extends CommonDBTM
 	
 	
 
+	/**
+	 * Description
+	 *
+	 * @param
+	 * @param
+	 *
+	 * @return
+	 *
+	**/
 	function update_printer_infos($ID, $FK_model_infos, $FK_snmp_connection)
 	{
 		global $DB;
@@ -350,7 +377,16 @@ class plugin_tracker_snmp extends CommonDBTM
 	}
 	
 	
-	
+
+	/**
+	 * Description
+	 *
+	 * @param
+	 * @param
+	 *
+	 * @return
+	 *
+	**/
 	function getPortIDfromDeviceIP($IP, $ifDescr)
 	{
 		global $DB;
@@ -375,6 +411,15 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
+	/**
+	 * Description
+	 *
+	 * @param
+	 * @param
+	 *
+	 * @return
+	 *
+	**/
 	function PortsConnection($source_port, $destination_port,$FK_process)
 	{
 		global $DB;
