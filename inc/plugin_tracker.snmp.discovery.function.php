@@ -37,6 +37,15 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
+/**
+ * Description
+ *
+ * @param
+ * @param
+ *
+ * @return
+ *
+**/
 function plugin_tracker_discovery_scan($Array_IP,$PID)
 {
 
@@ -180,6 +189,15 @@ function plugin_tracker_discovery_scan($Array_IP,$PID)
 
 
 
+/**
+ * Description
+ *
+ * @param
+ * @param
+ *
+ * @return
+ *
+**/
 function plugin_tracker_discovery_update_conf($data)
 {
 	global $DB;
@@ -202,6 +220,15 @@ function plugin_tracker_discovery_update_conf($data)
 
 	
 
+/**
+ * Description
+ *
+ * @param
+ * @param
+ *
+ * @return
+ *
+**/
 function plugin_tracker_discovery_update_devices($array, $target)
 {
 	global $DB;
@@ -221,6 +248,14 @@ function plugin_tracker_discovery_update_devices($array, $target)
 
 
 
+/**
+ * Function to import discovered device
+ *
+ * @param $discovery_ID ID of the device to import
+ *
+ * @return nothing
+ *
+**/
 function plugin_tracker_discovery_import($discovery_ID)
 {
 	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
@@ -344,8 +379,5 @@ function plugin_tracker_discovery_import($discovery_ID)
 	if ($Import != "0")
 		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
 }
-
-
-
 
 ?>

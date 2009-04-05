@@ -39,6 +39,15 @@ if (!defined('GLPI_ROOT')){
 
 
 
+/**
+ * Description
+ *
+ * @param
+ * @param
+ *
+ * @return
+ *
+**/
 function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_process = 0,$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess)
 {
 	global $DB;
@@ -611,7 +620,6 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
  * @return $array_port_trunk : array with SNMP port ID => 1 (from trunk oid)
  *
 **/
-//function GetMACtoPort($IP,$ArrayPortsID,$IDNetworking,$snmp_version,$snmp_auth,$FK_process=0,$Array_trunk_ifIndex,$vlan="",$array_port_trunk=array(),$vlan_name="")
 function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan="")
 {
 	global $DB;
@@ -754,11 +762,15 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 
 
 
-/*
- * @param $ArrayPort_LogicalNum_SNMPName : array logical port number => SNMP Port name
- * @param $ArrayPort_LogicalNum_SNMPNum : array logical port number => SNMP port number (ifindex)
-*/
-//function cdp_trunk($IP,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID,$ArraySNMPPort_Object_result,$snmp_version,$snmp_auth,$FK_process,$ID_Device)
+/**
+ * Description
+ *
+ * @param
+ * @param
+ *
+ * @return
+ *
+**/
 function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum)
 {
 	global $DB;
@@ -938,8 +950,17 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 
 
 
-function plugin_tracker_snmp_port_ifaddr($ID_Device,$type,$oidsModel,$oidvalues)
+/**
+ * Description
+ *
+ * @param
+ * @param
+ *
+ * @return
+ *
+**/
 // NOT USED VERIFY IT
+function plugin_tracker_snmp_port_ifaddr($ID_Device,$type,$oidsModel,$oidvalues)
 {
 	global $DB;
 
