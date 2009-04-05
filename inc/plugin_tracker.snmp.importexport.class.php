@@ -348,9 +348,12 @@ class plugin_tracker_importexport extends CommonDBTM
 			$DB->query($query);
  	            
 			$query = "UPDATE glpi_plugin_tracker_agents_processes
-			SET end_time='".$agent->end_date."', status='3',
+			SET end_time='".$agent->end_date."',
+				status='3',
 				networking_queries='".$device_queried_networking."',
-				printers_queries='".$device_queried_printer."'
+				printers_queries='".$device_queried_printer."',
+				start_time_query='".$agent->start_time_query."',
+				end_time_query='".$agent->end_time_query."'
 			WHERE process_number='".$agent->pid."'
 				AND FK_agent='".$agent->id."'";
 			$DB->query($query);           
