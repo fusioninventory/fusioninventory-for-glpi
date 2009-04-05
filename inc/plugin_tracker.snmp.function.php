@@ -763,12 +763,15 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 
 
 /**
- * Description
+ * Determine CDP ports (trunk)
  *
- * @param
- * @param
+ * @param $ID_Device : ID of device
+ * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
+ * @param $oidsModel : oid list from model SNMP
+ * @param $oidvalues : list of values from agent query
+ * @param $ArrayPort_LogicalNum_SNMPNum : array logical port number => SNMP port number (ifindex)
  *
- * @return
+ * @return array of trunk ports
  *
 **/
 function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum)
@@ -953,8 +956,10 @@ function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
 /**
  * Description
  *
- * @param
- * @param
+ * @param $ID_Device : ID of device
+ * @param $type : type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
+ * @param $oidsModel : oid list from model SNMP
+ * @param $oidvalues : list of values from agent query
  *
  * @return
  *
