@@ -85,18 +85,6 @@ if(isset($_GET['update_device_process'])){
 
 	$processes = new Threads;
 	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
-//	$device_network = 0;
-//	$device_printer = 0;
-
-//	switch ($_GET['type']) {
-//		case NETWORKING_TYPE :
-//			$device_network = $processes_values["devices"];
-//			break;
-//		case PRINTER_TYPE :
-//			$device_printer = $processes_values["devices"];
-//			break;
-//	}
-	//$processes->updateProcess($_GET['FK_process'],$device_network, $device_printer, 0, $processes_values["errors"]);
 }
 else
 {

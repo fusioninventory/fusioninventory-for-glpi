@@ -889,6 +889,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 }
 
 
+
 // * $ArrayListNetworking : array of device infos : ID => ifaddr
 // NOT USED VERIFY IT
 function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
