@@ -1,6 +1,7 @@
 <model>
 	<name><![CDATA[Cisco générique]]></name>
 	<type>2</type>
+	<key>Networking0001</key>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[ifNumber]]></object>
