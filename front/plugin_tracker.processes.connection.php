@@ -42,6 +42,8 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("snmp_scripts_infos","r");
 
+plugin_tracker_mini_menu();
+
 $Threads = new Threads;
 
 $Threads->showProcesses($_SERVER["PHP_SELF"],"connection");
