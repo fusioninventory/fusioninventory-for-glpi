@@ -491,7 +491,7 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['table'] = 'glpi_plugin_tracker_networking_ports';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['field'] = 'lastup';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['linkfield'] = 'lastup';
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['name'] = "Dernière connexion";
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['name'] = $LANG["login"][0];
 
 
 	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_tracker_model_infos';
