@@ -373,6 +373,7 @@ $LANGTRACKER["mapping"][412]="réseaux > Adresses mac filtrées (dot1dTpFdbAddre
 $LANGTRACKER["mapping"][413]="réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)";
 $LANGTRACKER["mapping"][414]="réseaux > instances de ports (dot1dTpFdbPort)";
 $LANGTRACKER["mapping"][415]="réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)";
+$LANGTRACKER["mapping"][416]="imprimante > port > numéro index";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";

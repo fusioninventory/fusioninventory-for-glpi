@@ -755,23 +755,12 @@ $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['name'] = $LANGTRACKER["mapping"][97];
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['dropdown'] = '';
 
+// Printers port
 
-// *************************** TYPE of Devices for discovery *************************** //
-
-$TRACKER_MAPPING_DISCOVERY['discovery'][0]['object'] = 'prtGeneralConfigChanges';
-$TRACKER_MAPPING_DISCOVERY['discovery'][0]['oid'] = '.1.3.6.1.2.1.43.5.1.1.1.1';
-$TRACKER_MAPPING_DISCOVERY['discovery'][0]['type'] = PRINTER_TYPE;
-
-$TRACKER_MAPPING_DISCOVERY['discovery'][1]['object'] = 'systemBridgeAdressEntry';
-$TRACKER_MAPPING_DISCOVERY['discovery'][1]['oid'] = '.1.3.6.1.2.1.17.1.1.0';
-$TRACKER_MAPPING_DISCOVERY['discovery'][1]['type'] = NETWORKING_TYPE;
-
-$TRACKER_MAPPING_DISCOVERY['discovery'][2]['object'] = 'upsIdentManufacturer';
-$TRACKER_MAPPING_DISCOVERY['discovery'][2]['oid'] = '.1.3.6.1.2.1.33.1.1.1.0';
-$TRACKER_MAPPING_DISCOVERY['discovery'][2]['type'] = PERIPHERAL_TYPE;
-
-$TRACKER_MAPPING_DISCOVERY['discovery'][3]['object'] = 'hrSWRunName';
-$TRACKER_MAPPING_DISCOVERY['discovery'][3]['oid'] = '.1.3.6.1.2.1.25.4.2.1.2.1';
-$TRACKER_MAPPING_DISCOVERY['discovery'][3]['type'] = COMPUTER_TYPE;
+$TRACKER_MAPPING[PRINTER_TYPE]['ifIndex']['table'] = '';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifIndex']['field'] = '';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifIndex']['name'] = $LANGTRACKER["mapping"][416];
+$TRACKER_MAPPING[PRINTER_TYPE]['ifIndex']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['ifIndex']['dropdown'] = '';
 
 ?>
