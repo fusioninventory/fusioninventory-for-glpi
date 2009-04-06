@@ -463,17 +463,17 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['table'] = 'glpi_plugin_tracker_snmp_history';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['field'] = 'old_value';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['linkfield'] = 'old_value';
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['name'] = "Ancienne valeur";
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][4]['name'] = $LANGTRACKER["history"][0];
 	
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['table'] = 'glpi_plugin_tracker_snmp_history';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['field'] = 'new_value';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['linkfield'] = 'new_value';
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['name'] = "Nouvelle valeur";
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][5]['name'] = $LANGTRACKER["history"][1];
 	
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['table'] = 'glpi_plugin_tracker_snmp_history';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['field'] = 'date_mod';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['linkfield'] = 'date_mod';
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['name'] = "Date";
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['name'] = $LANG["common"][27];
 
 
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2]['common'] = $LANGTRACKER["errors"][0];
@@ -481,12 +481,12 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['table'] = 'glpi_plugin_tracker_networking_ports';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['field'] = 'ID';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['name'] = "ID";
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['name'] = $LANG["reports"][52];
 
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['table'] = 'glpi_plugin_tracker_networking_ports';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['field'] = 'FK_networking_ports';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['linkfield'] = 'FK_networking_ports';
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['name'] = "name";
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['name'] = $LANG["setup"][175];
 	
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['table'] = 'glpi_plugin_tracker_networking_ports';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][3]['field'] = 'lastup';
