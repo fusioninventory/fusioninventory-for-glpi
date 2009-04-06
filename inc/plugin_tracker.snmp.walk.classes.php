@@ -53,6 +53,8 @@ class plugin_tracker_walk extends CommonDBTM
 		global $DB;
 
 		foreach($device_snmp->get as $snmpget){
+			if ($snmpget->oid == "noSuchInstance")
+				$snmpget->oid = "";
 			$oidvalues["$snmpget->object"]["$snmpget->vlan"] = "$snmpget->oid";
 //			oid=$snmpget->object;
 //			value=$snmpget->oid;
@@ -60,7 +62,7 @@ class plugin_tracker_walk extends CommonDBTM
 		}
 		foreach($device_snmp->walk as $snmpwalk){
 			$oid = "";
-			if (!empty($snmpwalk->oid))
+			if ((!empty($snmpwalk->oid)) AND ($snmpget->oid != "noSuchInstance"))
 				$oid = $snmpwalk->oid;
 			$vlan = "";
 			if (!empty($snmpwalk->vlan))
