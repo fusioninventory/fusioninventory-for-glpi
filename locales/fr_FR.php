@@ -174,6 +174,9 @@ $LANGTRACKER["errors"][101]="Timeout";
 $LANGTRACKER["errors"][102]="Modele SNMP non assigné";
 $LANGTRACKER["errors"][103]="Authentification SNMP non assigné";
 
+$LANGTRACKER["history"][0] = "Ancienne";
+$LANGTRACKER["history"][1] = "Nouvelle";
+
 $LANGTRACKER["prt_history"][0]="Historique et Statistiques des compteurs imprimante";
 
 $LANGTRACKER["prt_history"][10]="Statistiques des compteurs imprimante sur";
