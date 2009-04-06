@@ -179,7 +179,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		// ** Get oid ports Counter
 			//array with logic number => portsID from snmp
 		$ArrayPort_Object_oid = tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum);
-		
+
 		// ** Get link OID fields (oid => link)
 		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID_Device,$type);
 
@@ -271,7 +271,6 @@ function tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 				WHERE on_device='".$ID_Device."'
 					AND device_type='".$type."'
 					AND logical_number='".$i."' ";
-			
 				$result = $DB->query($query);
 				if ( $DB->numrows($result) == 0 )
 				{
@@ -297,19 +296,21 @@ function tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 						$logs->write("tracker_fullsync","Update port in DB (glpi_networking_ports) : ID".$DB->result($result, 0, "ID")." & name ".$ArrayPort_LogicalNum_SNMPName[$i],$type."][".$ID_Device,1);
 					}
 				}
+				if ($type == NETWORKING_TYPE)
+				{
+					$queryTrackerPort = "SELECT ID
+					FROM glpi_plugin_tracker_networking_ports
+					WHERE FK_networking_ports='".$IDport."' ";
 
-				$queryTrackerPort = "SELECT ID
-				FROM glpi_plugin_tracker_networking_ports
-				WHERE FK_networking_ports='".$IDport."' ";
+					$resultTrackerPort = $DB->query($queryTrackerPort);
+					if ( $DB->numrows($resultTrackerPort) == 0 ) {
 
-				$resultTrackerPort = $DB->query($queryTrackerPort);
-				if ( $DB->numrows($resultTrackerPort) == 0 ) {
-
-					$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports
-						(FK_networking_ports)
-					VALUES ('".$IDport."') ";
-					$DB->query($queryInsert);
-					$logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type."][".$ID_Device,1);
+						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports
+							(FK_networking_ports)
+						VALUES ('".$IDport."') ";
+						$DB->query($queryInsert);
+						$logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type."][".$ID_Device,1);
+					}
 				}
 			}
 		}
@@ -517,6 +518,7 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 	
 	$snmp_queries = new plugin_tracker_snmp;
 	$logs = new plugin_tracker_logs;
+	$walks = new plugin_tracker_walk;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$type."][".$ID_Device,1);
 
@@ -565,11 +567,25 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 				$logs->write("tracker_fullsync","****************",$type."][".$ID_Device,1);
 				$logs->write("tracker_fullsync","Oid : ".$oid,$type."][".$ID_Device,1);
 				$logs->write("tracker_fullsync","Link : ".$link,$type."][".$ID_Device,1);
-				$logs->write("tracker_fullsync","=> ".$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""],$type."][".$ID_Device,1);
 
-		// $ArrayPort_Object_oid : Logic port => snmp ID port
 				if ( ($link == "ifPhysAddress") AND ($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] != "") )
 						$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] = $snmp_queries->MAC_Rewriting($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]);
+
+				if ($link == "ifaddr")
+				{
+					$ArrayPort_Object_oid2 = $ArrayPort_Object_oid;
+					$Arrayifaddr = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifaddr'],1);
+					for($j=0;$j < count($Arrayifaddr);$j++)
+					{
+						if ($oidvalues[$oid.$Arrayifaddr[$j]][""] == $ArrayPort_Object_oid[$data['logical_number']])
+							$ArrayPort_Object_oid[$data['logical_number']] = $Arrayifaddr[$j];
+					}
+					$logs->write("tracker_fullsync","=> ".$ArrayPort_Object_oid[$data['logical_number']],$type."][".$ID_Device,1);
+				}
+				else
+				{
+					$logs->write("tracker_fullsync","=> ".$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""],$type."][".$ID_Device,1);
+				}
 
 				if ($data[$TRACKER_MAPPING[$type][$link]['field']] != $oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""])
 				{
@@ -578,9 +594,14 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 					else
 						$ID_field = "FK_networking_ports";
 
-					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-					SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]."'
-					WHERE ".$ID_field."='".$data["ID"]."'";
+					if ($link == "ifaddr")
+						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+						SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$ArrayPort_Object_oid[$data['logical_number']]."'
+						WHERE ".$ID_field."='".$data["ID"]."'";
+					else
+						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+						SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]."'
+						WHERE ".$ID_field."='".$data["ID"]."'";
 
 					$DB->query($queryUpdate);
 					// Delete port wire if port is internal disable
@@ -596,6 +617,8 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 					tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],$data[$TRACKER_MAPPING[$type][$link]['field']],$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""],$_SESSION['FK_process']);
 
 				}
+				if ($link == "ifaddr")
+					$ArrayPort_Object_oid = $ArrayPort_Object_oid2;
 			}
 		}
 	}
@@ -630,7 +653,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 	$snmp_queries = new plugin_tracker_snmp;
 	$walks = new plugin_tracker_walk;
 
-	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan.")] <<<<<<<<<<",$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan."] <<<<<<<<<<",$type."][".$ID_Device,1);
 
 	$ArrayMACAdressTableVerif = array();
 	
