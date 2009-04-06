@@ -58,6 +58,7 @@ class plugin_tracker_importexport extends CommonDBTM
 			{
 				$model_name = $DB->result($result, 0, "name");
 				$type = $DB->result($result, 0, "device_type");
+				$discovery_key = $DB->result($result, 0, "discovery_key");
 			}
 			else
 				exit();
@@ -69,6 +70,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		$xml = "<model>\n";
 		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
 		$xml .= "	<type>".$type."</type>\n";
+		$xml .= "	<key>".$discovery_key."</key>\n";
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
@@ -158,8 +160,8 @@ class plugin_tracker_importexport extends CommonDBTM
 			
 			
 			$query = "INSERT INTO glpi_plugin_tracker_model_infos
-			(name,device_type)
-			VALUES('".$xml->name[0]."','".$xml->type[0]."')";
+			(name,device_type,discovery_key)
+			VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."')";
 			
 			$DB->query($query);
 			$FK_model = $DB->insert_id();
