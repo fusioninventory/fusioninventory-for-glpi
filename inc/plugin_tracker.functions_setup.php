@@ -57,8 +57,10 @@ function plugin_tracker_installing($version) {
 		mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 	}
 	
-	$config = new plugin_tracker_config();
+	$config = new plugin_tracker_config;
 	$config->initConfig();
+	$config_discovery = new plugin_tracker_config_discovery;
+	$config_discovery->initConfig();
 	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
 	$config_snmp_networking->initConfig();
 	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
@@ -127,7 +129,10 @@ function plugin_tracker_uninstall() {
 	
 	$query = "DROP TABLE `glpi_plugin_tracker_config`;";
 	$DB->query($query) or die($DB->error());
-	
+
+	$query = "DROP TABLE `glpi_plugin_tracker_config_discovery`;";
+	$DB->query($query) or die($DB->error());
+
 	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_networking`;";
 	$DB->query($query) or die($DB->error());
 	
