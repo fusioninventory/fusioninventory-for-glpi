@@ -310,6 +310,48 @@ class plugin_tracker_config extends CommonDBTM {
 
 
 
+class plugin_tracker_config_discovery extends CommonDBTM {
+
+	function plugin_tracker_config_discovery() {
+		$this->table="glpi_plugin_tracker_config_discovery";
+		$this->type=-1;
+	}
+
+	function initConfig() {
+		global $DB;
+
+		$query = "INSERT INTO ".$this->table." ".
+				 "(ID, link_ip, link_name, link_serial, link2_ip, link2_name, link2_serial) ".
+				 "VALUES ('1', '0', '0', '0', '0', '0', '0')";
+
+		$DB->query($query);
+	}
+
+	/* Function to get the value of a field */
+	function getValue($field) {
+		global $DB;
+
+		$query = "SELECT ".$field." FROM ".$this->table." ".
+				 "WHERE ID = '1'";
+		if ( $result = $DB->query($query) ) {
+			if ( $this->fields = $DB->fetch_row($result) )
+				return $this->fields['0'];
+		}
+		return false;
+	}
+
+	// Confirm if the functionality is activated, or not
+	function isActivated($functionality) {
+
+		if ( !($this->getValue($functionality)) )
+			return false;
+		else
+			return true;
+	}
+}
+
+
+
 class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 
 	function glpi_plugin_tracker_config_snmp_script() {

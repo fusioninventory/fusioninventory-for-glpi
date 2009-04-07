@@ -163,6 +163,21 @@ CREATE TABLE `glpi_plugin_tracker_config` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_config_discovery`;
+
+CREATE TABLE `glpi_plugin_tracker_config_discovery` (
+  `ID` int(1) NOT NULL AUTO_INCREMENT,
+  `link_ip` int(1) NOT NULL DEFAULT '0',
+  `link_name` int(1) NOT NULL DEFAULT '0',
+  `link_serial` int(1) NOT NULL DEFAULT '0',
+  `link2_ip` int(1) NOT NULL DEFAULT '0',
+  `link2_name` int(1) NOT NULL DEFAULT '0',
+  `link2_serial` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_networking`;
 
 CREATE TABLE `glpi_plugin_tracker_config_snmp_networking` (
