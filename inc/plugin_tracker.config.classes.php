@@ -95,6 +95,11 @@ class plugin_tracker_config extends CommonDBTM {
 				echo " class='actif'";			
 			echo "><a href='plugin_tracker.functionalities.form.snmp-script.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANGTRACKER["functionalities"][5]."&nbsp;</a></li>\n";
 
+			echo "<li";
+			if ($type == "discovery")
+				echo " class='actif'";
+			echo "><a href='plugin_tracker.functionalities.form.snmp-discovery.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANGTRACKER["discovery"][3]."&nbsp;</a></li>\n";
+
 			if ($this->getValue("activation_snmp_networking") == "1")
 			{
 				echo "<li";
@@ -347,6 +352,78 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 			return false;
 		else
 			return true;
+	}
+
+		function showForm($target,$ID)
+	{
+		GLOBAL $LANG,$LANGTRACKER;
+
+		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
+		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
+
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANGTRACKER["discovery"][6]." :";
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td width='500'>".$LANG["networking"][14]."</td>";
+		echo "<td>";
+		dropdownYesNo("link_ip", $this->isActivated('link_ip'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][16]."</td>";
+		echo "<td>";
+		dropdownYesNo("link_name", $this->isActivated('link_name'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][19]."</td>";
+		echo "<td>";
+		dropdownYesNo("link_serial", $this->isActivated('link_serial'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANGTRACKER["discovery"][6]." 2 :";
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='2'>";
+		echo $LANGTRACKER["discovery"][8];
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td width='500'>".$LANG["networking"][14]."</td>";
+		echo "<td>";
+		dropdownYesNo("link2_ip", $this->isActivated('link2_ip'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][16]."</td>";
+		echo "<td>";
+		dropdownYesNo("link2_name", $this->isActivated('link2_name'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][19]."</td>";
+		echo "<td>";
+		dropdownYesNo("link2_serial", $this->isActivated('link2_serial'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+		echo "</table></form>";
 	}
 }
 

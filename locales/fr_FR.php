@@ -441,6 +441,10 @@ $LANGTRACKER["discovery"][2]="² dans le script en automatique";
 $LANGTRACKER["discovery"][3]="Découverte";
 $LANGTRACKER["discovery"][4]="Numéros de série";
 $LANGTRACKER["discovery"][5]="Nombre de matériels importés";
+$LANGTRACKER["discovery"][6]="Critères d'existence";
+$LANGTRACKER["discovery"][7]="Critères d'existence secondaires";
+$LANGTRACKER["discovery"][8]="Si tous les critères d'existence se confrontent
+ à des champs vides, vous pouvez sélectionner des critères secondaires.";
 
 $LANGTRACKER["rangeip"][0]="Début de la plage IP";
 $LANGTRACKER["rangeip"][1]="Fin de la plage IP";
