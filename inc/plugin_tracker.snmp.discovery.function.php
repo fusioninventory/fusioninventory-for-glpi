@@ -274,7 +274,6 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 			}
 			for ($i=1;$i < count($Array_criteria);$i++)
 				$query_search .= " ".$Array_criteria[$i];
-			echo $query_search."\n";
 			$result_search = $DB->query($query_search);
 			if ($DB->numrows($result_search) == "0")
 			{
