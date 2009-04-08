@@ -211,12 +211,21 @@ class plugin_tracker_importexport extends CommonDBTM
 
 
 
-	function import_agentfile($file)
+	function import_agent_discovery($file)
 	{
 		global $DB,$LANG,$LANGTRACKER;
 
 		$walks = new plugin_tracker_walk;
-		
+		$config_discovery = new plugin_tracker_config_discovery;
+
+		// Load config discovery for existence criteria
+		$link_ip = $config_discovery->getValue("link_ip");
+		$link_name = $config_discovery->getValue("link_name");
+		$link_serial = $config_discovery->getValue("link_serial");
+		$link2_ip = $config_discovery->getValue("link2_ip");
+		$link2_name = $config_discovery->getValue("link2_name");
+		$link2_serial = $config_discovery->getValue("link2_serial");
+
 		$walkdata = '';
 		$xml = simplexml_load_file($file);
 		$count_discovery_devices = 0;
@@ -231,31 +240,6 @@ class plugin_tracker_importexport extends CommonDBTM
 				$device_queried_networking++;
 			else if ($device->infos->type == PRINTER_TYPE)
 				$device_queried_printer++;
-/*			
-			unset($walkdata);
-			$walkdata['on_device']=$device->infos->id;
-			$walkdata['device_type']=$device->infos->type;
-			$walkdata['FK_agents_processes']=$xml->agent->pid;
-			$walkdata['date']=$device->infos->date;
-			foreach($device->get as $snmpget){
-				$walkdata['oid']=$snmpget->object;
-				$walkdata['value']=$snmpget->oid;
-				$walkdata['vlan']=$snmpget->vlan;
-				$walks->add($walkdata);
-				unset($walkdata['oid']);
-				unset($walkdata['value']);		
-				unset($walkdata['vlan']);		
-			}
-			foreach($device->walk as $snmpwalk){
-				$walkdata['oid']=$snmpwalk->object;
-				$walkdata['value']=$snmpwalk->oid;
-				$walkdata['vlan']=$snmpwalk->vlan;
-				$walks->add($walkdata);
-				unset($walkdata['oid']);
-				unset($walkdata['value']);
-				unset($walkdata['vlan']);		
-			}
-*/
 		}
 		foreach($xml->agent as $agent){
 			$agent_version = $agent->version;
@@ -286,22 +270,9 @@ class plugin_tracker_importexport extends CommonDBTM
 				$FK_model = $data['ID'];
 			}
 			else
-			{
 				$FK_model = 0;
-			}
-			$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
-			WHERE ifaddr='".$discovery->ip."'
-				AND name='".$discovery->name."'
-				AND descr='".$discovery->description."'
-				AND serialnumber='".$discovery->serial."' ";
-			$result_sel = $DB->query($query_sel);
-			if ($DB->numrows($result_sel) == "0")
-			{
-				$query = "INSERT INTO glpi_plugin_tracker_discovery
-				(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos,FK_snmp_connection)
-				VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."','".$discovery->authSNMP."')";
-				$DB->query($query);
-			}			
+
+			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$agent_id,$FK_model);
 		}
 	}
 

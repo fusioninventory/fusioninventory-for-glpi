@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker","search");
+$NEEDED_ITEMS=array("tracker","search","printer","computer","networking","peripheral","phone");
 include (GLPI_ROOT."/inc/includes.php");
 
 if( isset($_POST['upload']) ) // si formulaire soumis
@@ -75,7 +75,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	$importexport = new plugin_tracker_importexport;
 	if (ereg("-discovery",$name_file_xml))
 	{
-		$importexport->import_agentfile($content_dir.$name_file_xml);
+		$importexport->import_agent_discovery($content_dir.$name_file_xml);
 		unlink($content_dir.$name_file_xml);
 	}
 	if (!ereg("-",$name_file_xml))

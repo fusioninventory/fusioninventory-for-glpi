@@ -36,36 +36,6 @@
 if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
-
-
-/**
- * Description
- *
- * @param
- *
- * @return
- *
-**/
-function plugin_tracker_discovery_update_conf($data)
-{
-	global $DB;
-	
-	$discover = 0;
-	$getserialnumber = 0;
-	if ($_POST['activation'] == "discover")
-		$discover = 1;
-	if ($_POST['activation'] == "getserialnumber")
-		$getserialnumber = 1;
-
-	$query = "UPDATE glpi_plugin_tracker_discover_conf
-	SET ifaddr_start='".$_POST['ip11'].".".$_POST['ip12'].".".$_POST['ip13'].".".$_POST['ip14']."',
-	ifaddr_end='".$_POST['ip21'].".".$_POST['ip22'].".".$_POST['ip23'].".".$_POST['ip24']."',
-	discover='".$discover."',getserialnumber='".$getserialnumber."'
-	WHERE ID='1' ";
-
-	$DB->query($query);	
-}
-
 	
 
 /**
@@ -226,6 +196,106 @@ function plugin_tracker_discovery_import($discovery_ID)
 	}
 	if ($Import != "0")
 		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
+}
+
+function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$agent_id,$FK_model)
+{
+	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+
+	$ci = new commonitem;
+
+	$Array_criteria = array();
+	if ($link_ip == 1)
+	{
+		$Array_criteria[] = "ifaddr='".$discovery->ip."'";
+		$array_search[] = $discovery->ip;
+	}
+	if ($link_name == 1)
+	{
+		$Array_criteria[] = "name='".$discovery->name."'";
+		$array_search[] = $discovery->name;
+	}
+	if ($link_serial == 1)
+	{
+		$Array_criteria[] = "serial='".$discovery->serial."'";
+		$array_search[] = $discovery->serial;
+	}
+
+	if (count($Array_criteria) == 0)
+	{
+		// Insert device in discovered device
+		$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
+		WHERE ifaddr='".$discovery->ip."'
+			AND name='".$discovery->name."'
+			AND descr='".$discovery->description."'
+			AND serialnumber='".$discovery->serial."'
+			AND FK_entities='".$discovery->entity."' ";
+		$result_sel = $DB->query($query_sel);
+		if ($DB->numrows($result_sel) == "0")
+		{
+			$query = "INSERT INTO glpi_plugin_tracker_discovery
+			(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos,FK_snmp_connection)
+			VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."','".$discovery->authSNMP."')";
+			$DB->query($query);
+		}
+	}
+	else
+	{
+		$discovery_empty = 1;
+		for ($i=0;$i < count($array_search);$i++)
+		{
+			if ($array_search[$i] != '')
+				$discovery_empty = 0;
+		}
+
+		if ($discovery_empty == "1")
+		{
+			// ** On passe aux critères 2
+		}
+		else
+		{
+			// **  On cherche si le matos existe
+			if ($discovery->type == NETWORKING_TYPE OR $discovery->type == 0 OR $discovery->type == "" or !isset($discovery->type) )
+			{
+				$query_search = "SELECT * FROM glpi_networking
+				WHERE FK_entities='".$discovery->entity."'
+					AND ".$Array_criteria[0];
+			}
+			else
+			{
+				$ci->setType($discovery->type,true);
+				$query_search = "SELECT ".$ci->obj->table.".name AS name,
+				serial, glpi_networking_ports.ifaddr AS ifaddr
+				FROM ".$ci->obj->table."
+				LEFT JOIN glpi_networking_ports ON on_device=".$ci->obj->table.".ID
+					AND device_type=".$discovery->type."
+				WHERE FK_entities='".$discovery->entity."'
+					AND ".$Array_criteria[0];
+			}
+			for ($i=1;$i < count($Array_criteria);$i++)
+				$query_search .= " ".$Array_criteria[$i];
+			echo $query_search."\n";
+			$result_search = $DB->query($query_search);
+			if ($DB->numrows($result_search) == "0")
+			{
+				// Insert device in discovered device
+				$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
+				WHERE ifaddr='".$discovery->ip."'
+					AND name='".$discovery->name."'
+					AND descr='".$discovery->description."'
+					AND serialnumber='".$discovery->serial."'
+					AND FK_entities='".$discovery->entity."' ";
+				$result_sel = $DB->query($query_sel);
+				if ($DB->numrows($result_sel) == "0")
+				{
+					$query = "INSERT INTO glpi_plugin_tracker_discovery
+					(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos,FK_snmp_connection)
+					VALUES('".$discovery->date."','".$discovery->ip."','".$discovery->name."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."','".$discovery->authSNMP."')";
+					$DB->query($query);
+				}
+			}
+		}
+	}
 }
 
 ?>

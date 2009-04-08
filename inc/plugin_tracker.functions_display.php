@@ -36,7 +36,7 @@
 function plugin_tracker_menu()
 {
 	GLOBAL $CFG_GLPI,$LANG,$LANGTRACKER;
-	
+
 	$width="180";
 
 	echo "<br>";
