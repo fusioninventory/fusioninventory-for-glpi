@@ -47,11 +47,7 @@ if((isset($_POST['update'])) AND (!empty($_POST['update'])))
 	// Update DB
 	plugin_tracker_discovery_update_devices($_POST, $_SERVER["PHP_SELF"]);
 }
-if((isset($_POST['discover'])) AND (!empty($_POST['discover'])))
-{
-	plugin_tracker_discovery_update_conf($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
-}
+
 if((isset($_POST['import'])) AND (!empty($_POST['import'])))
 {
 	plugin_tracker_discovery_import($_POST);
