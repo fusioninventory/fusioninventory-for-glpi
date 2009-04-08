@@ -477,10 +477,11 @@ class Threads extends CommonDBTM
 			AND port='".$FK_port."' 
 		LIMIT 0,1";
 	
-		$result = $DB->query($query);
-		while ($data = $DB->fetch_array($result))
-		{
-			$unknownMac = $data["unknow_mac"];
+		if ($result = $DB->query($query)) {
+			while ($data = $DB->fetch_array($result))
+			{
+				$unknownMac = $data["unknow_mac"];
+			}
 		}
 		return $unknownMac;
 	}
