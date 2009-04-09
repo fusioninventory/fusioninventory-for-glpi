@@ -163,8 +163,10 @@ else if(isset($_POST['get_data']))
 		$xml->element[2]['agent']['SQL']="SELECT * FROM glpi_plugin_tracker_agents
 		WHERE ID='".$ID_agent."'";
 		$xml->element[2]['agent']['linkfield']['ID'] = 'id';
-		$xml->element[2]['agent']['linkfield']['nb_process_query'] = 'nb_process_query';
-		$xml->element[2]['agent']['linkfield']['nb_process_discovery'] = 'nb_process_discovery';
+		$xml->element[2]['agent']['linkfield']['core_discovery'] = 'core_discovery';
+		$xml->element[2]['agent']['linkfield']['threads_discovery'] = 'threads_discovery';
+		$xml->element[2]['agent']['linkfield']['core_query'] = 'core_query';
+		$xml->element[2]['agent']['linkfield']['threads_query'] = 'threads_query';
 		$xml->element[2]['agent']['linkfield']['logs'] = 'logs';
 		$xml->element[2]['agent']['linkfield']['key'] = 'key';
 		$xml->element[2]['agent']['fieldvalue']['PID'] = $start_PID.$number_PID;

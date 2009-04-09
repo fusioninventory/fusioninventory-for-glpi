@@ -75,9 +75,12 @@ class plugin_tracker_agents extends CommonDBTM
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='600'>";
+		echo "<tr>";
+		echo "<th colspan='2'>";
 		echo $LANGTRACKER["agents"][0];
-		echo " :</th></tr>";
+		echo " :</th>";
+		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
@@ -85,27 +88,6 @@ class plugin_tracker_agents extends CommonDBTM
 		echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
 		echo "</td>";
 		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["agents"][2] . "</td>";
-		echo "<td align='center'>";
-		dropdownInteger("nb_process_query", $this->fields["nb_process_query"],1,200);
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["agents"][3] . "</td>";
-		echo "<td align='center'>";
-		dropdownInteger("nb_process_discovery", $this->fields["nb_process_discovery"],1,400);
-		echo "</td>";
-		echo "</tr>";
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["agents"][8] . "</td>";
-		echo "<td align='center'>";
-		echo "<input type='text' name='fragment' value='".$this->fields["fragment"]."'/>"; 
-		echo "</td>";
-		echo "</tr>";		
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANGTRACKER["agents"][6] . "</td>";
@@ -126,7 +108,64 @@ class plugin_tracker_agents extends CommonDBTM
 			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[$this->fields["logs"]]);
 		echo "</td>";
 		echo "</tr>";
-	
+
+		echo "<script  type='text/javascript'>
+function close_array(){
+	document.getElementById('optionavance').innerHTML = '<a href=\'\' onClick=\'Effect.Fade(\"optionavance1\");Effect.Fade(\"optionavance2\");Effect.Fade(\"optionavance3\");Effect.Fade(\"optionavance4\");Effect.Fade(\"optionavance5\");appear_array(\"optionavance1\");\' >".$LANGTRACKER["agents"][9]." :</a>';
+}
+function appear_array(){
+	document.getElementById('optionavance').innerHTML = '<img src=\'\' onClick=\'Effect.Appear(\"optionavance1\");Effect.Appear(\"optionavance2\");Effect.Appear(\"optionavance3\");Effect.Appear(\"optionavance4\");Effect.Appear(\"optionavance5\");close_array(\"optionavance1\");\' >".$LANGTRACKER["agents"][9]." :</a>';
+}
+		</script>";
+
+		echo "<tr>";
+		echo "<th colspan='2' id='optionavance'>";
+		echo "<a href='#' onClick='Effect.Appear(\"optionavance1\");Effect.Appear(\"optionavance2\");Effect.Appear(\"optionavance3\");Effect.Appear(\"optionavance4\");Effect.Appear(\"optionavance5\");close_array(\"optionavance1\");'>".$LANGTRACKER["agents"][9]." :</a>";
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance1'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][11] . "</td>";
+		echo "<td align='center'>";
+		dropdownInteger("core_discovery", $this->fields["core_discovery"],1,32);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance2'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][3] . "</td>";
+		echo "<td align='center'>";
+		dropdownInteger("threads_discovery", $this->fields["threads_discovery"],1,400);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance3'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][10] . "</td>";
+		echo "<td align='center'>";
+		dropdownInteger("core_query", $this->fields["core_query"],1,200);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance4'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][2] . "</td>";
+		echo "<td align='center'>";
+		dropdownInteger("threads_query", $this->fields["threads_query"],1,200);
+		echo "</td>";
+		echo "</tr>";
+
+
+
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance5'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][8] . "</td>";
+		echo "<td align='center'>";
+		if (empty($this->fields["fragment"]))
+			$this->fields["fragment"] = 500;
+		echo "<input type='text' name='fragment' value='".$this->fields["fragment"]."'/>";
+		echo "</td>";
+		echo "</tr>";
+
+
+
+
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		if ($ID=='')
 		{
