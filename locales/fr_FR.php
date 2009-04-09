@@ -452,12 +452,15 @@ $LANGTRACKER["rangeip"][2]="Plage IP";
 $LANGTRACKER["rangeip"][3]="Interrogation";
 
 $LANGTRACKER["agents"][0]="Agent SNMP";
-$LANGTRACKER["agents"][2]="Nb process interrogation";
-$LANGTRACKER["agents"][3]="Nb process découverte";
+$LANGTRACKER["agents"][2]="Threads interrogation";
+$LANGTRACKER["agents"][3]="Threads découverte";
 $LANGTRACKER["agents"][4]="Dernière remontée";
 $LANGTRACKER["agents"][5]="Version de l'agent";
 $LANGTRACKER["agents"][6]="Verrouillage";
 $LANGTRACKER["agents"][7]="Export config agent";
 $LANGTRACKER["agents"][8]="Fragments en Ko";
+$LANGTRACKER["agents"][9]="Options avancées";
+$LANGTRACKER["agents"][10]="Coeurs (CPU) interrogation";
+$LANGTRACKER["agents"][11]="Coeurs (CPU) découverte";
 
 ?>
