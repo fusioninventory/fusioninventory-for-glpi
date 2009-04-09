@@ -152,26 +152,30 @@ else if(isset($_POST['get_data']))
 		// echo $rangeip_select;
 
 		$xml->element[0]['snmp']['element']="";
-		
+
+		// ********************************************************* //
+		// ************************* Agent ************************* //
+		//
+
+		$xml->element[1]['agent']['element']="snmp";
+		$xml->element[1]['agent']['SQL']="SELECT * FROM glpi_plugin_tracker_agents
+		WHERE ID='".$ID_agent."'";
+		$xml->element[1]['agent']['linkfield']['ID'] = 'id';
+		$xml->element[1]['agent']['linkfield']['core_discovery'] = 'core_discovery';
+		$xml->element[1]['agent']['linkfield']['threads_discovery'] = 'threads_discovery';
+		$xml->element[1]['agent']['linkfield']['core_query'] = 'core_query';
+		$xml->element[1]['agent']['linkfield']['threads_query'] = 'threads_query';
+		$xml->element[1]['agent']['linkfield']['logs'] = 'logs';
+		$xml->element[1]['agent']['linkfield']['key'] = 'key';
+		$xml->element[1]['agent']['fieldvalue']['PID'] = $start_PID.$number_PID;
+		$xml->element[1]['agent']['linkfield']['fragment'] = 'fragment';
+
+
 		// ********************************************************* //
 		// *********************** Discovery *********************** //
 		
 		$xml->element[1]['discovery']['element']="snmp";
-	
-		// Agent informations
-		$xml->element[2]['agent']['element']="discovery";
-		$xml->element[2]['agent']['SQL']="SELECT * FROM glpi_plugin_tracker_agents
-		WHERE ID='".$ID_agent."'";
-		$xml->element[2]['agent']['linkfield']['ID'] = 'id';
-		$xml->element[2]['agent']['linkfield']['core_discovery'] = 'core_discovery';
-		$xml->element[2]['agent']['linkfield']['threads_discovery'] = 'threads_discovery';
-		$xml->element[2]['agent']['linkfield']['core_query'] = 'core_query';
-		$xml->element[2]['agent']['linkfield']['threads_query'] = 'threads_query';
-		$xml->element[2]['agent']['linkfield']['logs'] = 'logs';
-		$xml->element[2]['agent']['linkfield']['key'] = 'key';
-		$xml->element[2]['agent']['fieldvalue']['PID'] = $start_PID.$number_PID;
-		$xml->element[2]['agent']['linkfield']['fragment'] = 'fragment';
-	
+
 		// Get all range to scan if discovery is ON
 		$xml->element[2]['rangeip']['element']="discovery";
 		$xml->element[2]['rangeip']['SQL']="SELECT * FROM glpi_plugin_tracker_rangeip 
