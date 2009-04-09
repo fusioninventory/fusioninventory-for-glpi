@@ -198,11 +198,18 @@ function plugin_tracker_discovery_import($discovery_ID)
 		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
 }
 
-function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$agent_id,$FK_model,$criteria_pass2=0)
+function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,$criteria_pass2=0)
 {
 	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
 	$ci = new commonitem;
+
+	if($criteria_pass2 == 1)
+	{
+		$link_ip = $link2_ip;
+		$link_name = $link2_name;
+		$link_serial = $link2_serial;
+	}
 
 	$Array_criteria = array();
 	if ($link_ip == 1)
@@ -248,9 +255,11 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 				$discovery_empty = 0;
 		}
 
-		if ($discovery_empty == "1")
+		if (($discovery_empty == "1") AND ($criteria_pass2 == 0))
 		{
 			// ** On passe aux critères 2
+			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,1);
+			return;
 		}
 		else
 		{
@@ -260,9 +269,13 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 				$query_search = "SELECT * FROM glpi_networking
 				WHERE FK_entities='".$discovery->entity."'
 					AND ".$Array_criteria[0];
+				for ($i=1;$i < count($Array_criteria);$i++)
+					$query_search .= " AND ".$Array_criteria[$i];
 			}
 			else
 			{
+				if (!ereg("ifaddr",$Array_criteria[0]))
+					$Array_criteria[0] = $ci->obj->table.".".$Array_criteria[0];
 				$ci->setType($discovery->type,true);
 				$query_search = "SELECT ".$ci->obj->table.".name AS name,
 				serial, glpi_networking_ports.ifaddr AS ifaddr
@@ -271,9 +284,9 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 					AND device_type=".$discovery->type."
 				WHERE FK_entities='".$discovery->entity."'
 					AND ".$Array_criteria[0];
+				for ($i=1;$i < count($Array_criteria);$i++)
+					$query_search .= " AND ".$ci->obj->table.".".$Array_criteria[$i];
 			}
-			for ($i=1;$i < count($Array_criteria);$i++)
-				$query_search .= " ".$Array_criteria[$i];
 			$result_search = $DB->query($query_search);
 			if ($DB->numrows($result_search) == "0")
 			{
