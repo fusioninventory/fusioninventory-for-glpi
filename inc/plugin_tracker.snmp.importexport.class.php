@@ -272,7 +272,7 @@ class plugin_tracker_importexport extends CommonDBTM
 			else
 				$FK_model = 0;
 
-			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$agent_id,$FK_model);
+			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model);
 		}
 	}
 
