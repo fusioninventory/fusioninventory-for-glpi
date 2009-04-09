@@ -81,8 +81,10 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_agents`;
 CREATE TABLE `glpi_plugin_tracker_agents` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `nb_process_query` int(11) NOT NULL DEFAULT '1',
-  `nb_process_discovery` int(11) NOT NULL DEFAULT '1',
+  `core_discovery` int(11) NOT NULL DEFAULT '1',
+  `threads_discovery` int(11) NOT NULL DEFAULT '1',
+  `core_query` int(11) NOT NULL DEFAULT '1',
+  `threads_query` int(11) NOT NULL DEFAULT '1',
   `last_agent_update` datetime DEFAULT NULL,
   `tracker_agent_version` varchar(255) DEFAULT NULL,
   `lock` int(1) NOT NULL DEFAULT '0',
@@ -609,15 +611,11 @@ INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NUL
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5157', '12', '11', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5157', '13', '12', '0');
 
-
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '3', '1', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '4', '2', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '5', '3', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '6', '4', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '7', '5', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '8', '6', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '9', '7', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '10', '8', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '8', '1', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '9', '2', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '10', '3', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '11', '4', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5158', '12', '5', '0');
 
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '2', '1', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '3', '2', '0');
