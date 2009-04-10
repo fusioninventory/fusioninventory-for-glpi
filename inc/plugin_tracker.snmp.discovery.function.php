@@ -56,7 +56,7 @@ function plugin_tracker_discovery_update_devices($array, $target)
 		if (ereg("model_infos", $key))
 		{
 			$explode = explode ("-", $key);
-			$query = "UPDATE glpi_plugin_tracker_discover
+			$query = "UPDATE glpi_plugin_tracker_discovery
 			SET FK_model_infos='".$value."',type='".$array['type-'.$explode[1]]."'
 			WHERE ID='".$explode[1]."' ";
 			$DB->query($query);
@@ -107,7 +107,7 @@ function plugin_tracker_discovery_import($discovery_ID)
 			$data_tracker["FK_snmp_connection"] = $td->fields["FK_snmp_connection"];
 			$tracker_printers->add($data_tracker);			
 			
-			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
 			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
@@ -148,7 +148,7 @@ function plugin_tracker_discovery_import($discovery_ID)
 			$data_Port['ifaddr'] = $td->fields['ifaddr'];
 			$Netport->add($data_Port);
 			
-			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
 			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
@@ -168,7 +168,7 @@ function plugin_tracker_discovery_import($discovery_ID)
 			$data_Port['ifaddr'] = $td->fields['ifaddr'];
 			$Netport->add($data_Port);
 
-			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
 			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
@@ -188,7 +188,7 @@ function plugin_tracker_discovery_import($discovery_ID)
 			$data_Port['ifaddr'] = $td->fields['ifaddr'];
 			$Netport->add($data_Port);
 
-			$query_del = "DELETE FROM glpi_plugin_tracker_discover
+			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
 			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;
