@@ -274,9 +274,9 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 			}
 			else
 			{
+				$ci->setType($discovery->type,true);
 				if (!ereg("ifaddr",$Array_criteria[0]))
 					$Array_criteria[0] = $ci->obj->table.".".$Array_criteria[0];
-				$ci->setType($discovery->type,true);
 				$query_search = "SELECT ".$ci->obj->table.".name AS name,
 				serial, glpi_networking_ports.ifaddr AS ifaddr
 				FROM ".$ci->obj->table."
