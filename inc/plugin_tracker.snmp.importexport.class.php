@@ -192,14 +192,20 @@ class plugin_tracker_importexport extends CommonDBTM
 						case 6:
 							$mapping_name = $item;
 							break;
+						case 7:
+							$vlan = $item;
+							break;
+						case 8:
+							$activation = $item;
+							break;
 					}
 				   //echo $item."<br/>";
 				}
 
 				$query = "INSERT INTO glpi_plugin_tracker_mib_networking
-				(FK_model_infos,FK_mib_oid,FK_mib_object,oid_port_counter,oid_port_dyn,mapping_type,mapping_name)
+				(FK_model_infos,FK_mib_oid,FK_mib_object,oid_port_counter,oid_port_dyn,mapping_type,mapping_name,vlan,activation)
 				VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."','".$oid_port_counter."', '".$oid_port_dyn."',
-				 '".$mapping_type."', '".$mapping_name."')";
+				 '".$mapping_type."', '".$mapping_name."', '".$vlan."', '".$activation."')";
 				
 				$DB->query($query);
 		
