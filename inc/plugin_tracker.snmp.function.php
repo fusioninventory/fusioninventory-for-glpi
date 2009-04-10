@@ -555,7 +555,7 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 					$DB->query($query_update);
 				}
 
-				if ($link == 'ifPhysAddress')
+				if (($link == 'ifPhysAddress') AND (!ereg(":",$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""])))
 				{
 					$MacAddress = str_replace("0x","",$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]);
 					$MacAddress_tmp = str_split($MacAddress, 2);

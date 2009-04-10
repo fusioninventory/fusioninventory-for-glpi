@@ -198,7 +198,7 @@ class plugin_tracker_printers extends CommonDBTM
 			}
 			echo "</td>";
 			echo "<td align='center'>";
-			plugin_tracker_Bar($state['state']); 
+			plugin_tracker_Bar($state['state']);
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -694,7 +694,7 @@ class plugin_tracker_printers extends CommonDBTM
 			if ($DB->numrows($result) == "0")
 			{
 				$datas['FK_cartridges'] = "";
-				$datas['state'] = 100;
+				$datas['state'] = "";
 			}
 			else
 			{
