@@ -244,7 +244,7 @@ class plugin_tracker_networking extends CommonDBTM
 		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 		{
 //			$explode = explode("||", $mapping_type_name);
-			$mapping_name[$mapping_type_name] = "1";			
+			$mapping_name[$mapping_type_name] = "1";
 		}
 
 		if (((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
