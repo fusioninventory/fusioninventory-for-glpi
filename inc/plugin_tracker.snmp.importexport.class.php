@@ -134,7 +134,7 @@ class plugin_tracker_importexport extends CommonDBTM
 
 
 
-	function import($file)
+	function import($file,$message=1)
 	{
 		global $DB,$LANG,$LANGTRACKER;
 
@@ -150,15 +150,12 @@ class plugin_tracker_importexport extends CommonDBTM
 		
 		if ($DB->numrows($result) > 0)
 		{
-			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][8];
+			if ($message == '1')
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][8];
 			return false;
 		}
 		else
 		{
-
-//			echo $xml->name[0]."<br/>";
-			
-			
 			$query = "INSERT INTO glpi_plugin_tracker_model_infos
 			(name,device_type,discovery_key)
 			VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."')";
@@ -199,19 +196,17 @@ class plugin_tracker_importexport extends CommonDBTM
 							$activation = $item;
 							break;
 					}
-				   //echo $item."<br/>";
 				}
 
 				$query = "INSERT INTO glpi_plugin_tracker_mib_networking
 				(FK_model_infos,FK_mib_oid,FK_mib_object,oid_port_counter,oid_port_dyn,mapping_type,mapping_name,vlan,activation)
 				VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."','".$oid_port_counter."', '".$oid_port_dyn."',
 				 '".$mapping_type."', '".$mapping_name."', '".$vlan."', '".$activation."')";
-				
+			
 				$DB->query($query);
-		
-
 			}
-			$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+			if ($message == '1')
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
 		}
 	}
 
