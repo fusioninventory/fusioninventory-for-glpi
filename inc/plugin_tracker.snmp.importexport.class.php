@@ -140,7 +140,7 @@ class plugin_tracker_importexport extends CommonDBTM
 
 		plugin_tracker_checkRight("snmp_models","w");
 
-		$xml = simplexml_load_file($_FILES['importfile']['tmp_name']);	
+		$xml = simplexml_load_file($file);
 
 		// Verify same model exist
 		$query = "SELECT ID ".
