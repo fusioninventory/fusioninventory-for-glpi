@@ -43,9 +43,7 @@ if ($handle = opendir(GLPI_ROOT.'/plugins/tracker/inc'))
 	while (false !== ($file = readdir($handle)))
 	{
 		if ((ereg(".php",$file)) AND (!ereg("constant.php",$file)))
-		{
 			include_once("inc/".$file);
-		}
 	}
 }
 closedir($handle);
