@@ -68,7 +68,7 @@ elseif (isset ($_POST["delete"])) {
 	glpi_header("plugin_tracker.models.php");
 }
 elseif (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
-	$importexport->import($_FILES);
+	$importexport->import($_FILES['importfile']['tmp_name']);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 else if (isset($_GET["activation"]))
