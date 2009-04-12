@@ -289,7 +289,7 @@ class plugin_tracker_networking extends CommonDBTM
 			echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
 			echo "<td align='center'>";
 			$sysUpTime = $data["uptime"];
-			if (ereg("days",$sysUpTime))
+			if (strstr($sysUpTime, "days"))
 				sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
 			else if($sysUpTime == "0")
 			{
@@ -444,9 +444,9 @@ function appear_array(id){
 			while ( $data=$DB->fetch_array($result) )
 			{
 				$background_img = "";
-				if (($data["trunk"] == "1") AND (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"])))
+				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")))
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/port_trunk.png\"); '";
-				else if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
+				else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1"))
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/connected_trunk.png\"); '";
 
 				echo "<tr class='tab_bg_1' height='40'".$background_img.">";
@@ -469,11 +469,11 @@ function appear_array(id){
 							break;
 						case 4 :
 							echo "<td align='center'>";			
-							if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifinternalstatus"]))
+							if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"],"1"))
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-							else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifinternalstatus"]))
+							else if (strstr($data["ifstatus"],"down") OR strstr($data["ifinternalstatus"], "2"))
 								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-							else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifinternalstatus"]))
+							else if (strstr($data["ifstatus"], "testing") OR strstr($data["ifinternalstatus"], "3"))
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
 			
 							echo "</td>";
@@ -558,13 +558,13 @@ function appear_array(id){
 						case 13 :
 							// ** Connection status
 							echo "<td align='center'>";
-							if (ereg("up",$data["ifstatus"]) OR ereg("1",$data["ifstatus"]))
+							if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1"))
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-							else if (ereg("down",$data["ifstatus"]) OR ereg("2",$data["ifstatus"]))
+							else if (strstr($data["ifstatus"], "down") OR strstr($data["ifstatus"], "2"))
 								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-							else if (ereg("testing",$data["ifstatus"]) OR ereg("3",$data["ifstatus"]))
+							else if (strstr($data["ifstatus"], "testing") OR strstr($data["ifstatus"], "3"))
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
-							else if (ereg("dormant",$data["ifstatus"]) OR ereg("5",$data["ifstatus"]))
+							else if (strstr($data["ifstatus"], "dormant") OR strstr($data["ifstatus"], "5"))
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/orangebutton.png'/>";
 							
 							echo "</td>";

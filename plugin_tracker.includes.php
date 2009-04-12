@@ -35,17 +35,9 @@
 
 include_once ("hook.php");
 
-
 // inc files 
 
-if ($handle = opendir(GLPI_ROOT.'/plugins/tracker/inc'))
-{
-	while (false !== ($file = readdir($handle)))
-	{
-		if ((ereg(".php",$file)) AND (!ereg("constant.php",$file)))
-			include_once("inc/".$file);
-	}
-}
-closedir($handle);
-
+foreach (glob(GLPI_ROOT.'/plugins/tracker/inc/*.php') as $file)
+	if ($file != GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php')
+		include_once($file);
 ?>
