@@ -759,7 +759,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 						else if ( $traitement == "1" )
 						{
 
-							// Mac address unknow
+							// Mac address unknown
 							if ($_SESSION['FK_process'] != "0")
 							{
 								$ip_unknown = '';
