@@ -81,16 +81,16 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				foreach($SNMPValue as $oidwalk=>$value)
 				{
-					if ((ereg ("Hex: ", $value)) 
-						OR (ereg ("Gauge32: ", $value)) 
-						OR (ereg ("STRING: ", $value))
-						OR (ereg ("Timeticks: ", $value))
-						OR (ereg ("INTEGER: ", $value))
-						OR (ereg ("Counter32: ", $value))
-						OR (ereg ("Hex-STRING: ", $value))
-						OR (ereg ("Network Address: ", $value))
-						OR (ereg ("IpAddress: ", $value))
-						OR (ereg ("Wrong Type (should be Gauge32 or Unsigned32): ", $value))
+					if ((strstr ($value, "Hex: "))
+						OR (strstr ($value, "Gauge32: "))
+						OR (strstr ($value, "STRING: "))
+						OR (strstr ($value, "Timeticks: "))
+						OR (strstr ($value, "INTEGER: "))
+						OR (strstr ($value, "Counter32: "))
+						OR (strstr ($value, "Hex-STRING: "))
+						OR (strstr ($value, "Network Address: "))
+						OR (strstr ($value, "IpAddress: "))
+						OR (strstr ($value, "Wrong Type (should be Gauge32 or Unsigned32): "))
 						)
 					{
 						$ArraySNMPValues = explode(": ", $value);
@@ -106,9 +106,9 @@ class plugin_tracker_snmp extends CommonDBTM
 						$ArraySNMPValues[1] = trim($ArraySNMPValues[1], '"');
 						$ArraySNMP[$oidwalk] = $ArraySNMPValues[1];
 					}
-					else if (ereg ("No Such Instance currently exists", $value))
+					else if (strstr ($value, "No Such Instance currently exists"))
 						$ArraySNMP[$oidwalk] = "[[empty]]";
-					else if (ereg ("No Such Object available on this agent at this OID", $value))
+					else if (strstr ($value, "No Such Object available on this agent at this OID"))
 						$ArraySNMP[$oidwalk] = "[[empty]]";
 					else
 						$ArraySNMP[$oidwalk] = trim($value, '"');

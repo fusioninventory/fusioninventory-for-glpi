@@ -78,7 +78,7 @@ class plugin_tracker_walk extends CommonDBTM
 	{
 		foreach ($oidvalues as $oid=>$value)
 		{
-			if (ereg($oidsModel."\.", $oid))
+			if (strstr($oid, $oidsModel."\."))
 			{
 				if ($oid_dyn == "0")
 					$List[] = $value[$vlan];

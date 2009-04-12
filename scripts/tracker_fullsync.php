@@ -42,7 +42,7 @@ if ($argv) {
 	for ($i=1;$i<count($argv);$i++)
 	{
 		$it = split("=",$argv[$i]);
-		$it[0] = eregi_replace('^--','',$it[0]);
+		$it[0] = preg_replace('/^--/i','',$it[0]);
 		$_GET[$it[0]] = $it[1];
 	}
 }

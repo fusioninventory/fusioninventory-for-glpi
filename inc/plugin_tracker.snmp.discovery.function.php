@@ -53,7 +53,7 @@ function plugin_tracker_discovery_update_devices($array, $target)
 
 	foreach ($array as $key=>$value)
 	{
-		if (ereg("model_infos", $key))
+		if (strstr($key, "model_infos"))
 		{
 			$explode = explode ("-", $key);
 			$query = "UPDATE glpi_plugin_tracker_discovery
@@ -275,7 +275,7 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 			else
 			{
 				$ci->setType($discovery->type,true);
-				if (!ereg("ifaddr",$Array_criteria[0]))
+				if (!strstr($Array_criteria[0], "ifaddr"))
 					$Array_criteria[0] = $ci->obj->table.".".$Array_criteria[0];
 				$query_search = "SELECT ".$ci->obj->table.".name AS name,
 				serial, glpi_networking_ports.ifaddr AS ifaddr

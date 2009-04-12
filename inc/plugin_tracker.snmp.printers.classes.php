@@ -159,7 +159,7 @@ class plugin_tracker_printers extends CommonDBTM
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 			{
-				if (ereg('cartridges',$mapping_type_name))
+				if (strstr($mapping_type_name, "cartridges"))
 				{
 					$explode[1] = str_replace ("MAX", "", $mapping_type_name);
 					$explode[1] = str_replace ("REMAIN", "", $explode[1]);
@@ -576,7 +576,7 @@ class plugin_tracker_printers extends CommonDBTM
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/moyenne.png' width=".$largeur." height='1' >";
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' width=".$largeur." height=".$difference." >";
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1' >";
-					if (ereg("-01",$key)) // janvier en couleur foncee
+					if (strstr($key, "-01")) // janvier en couleur foncee
 						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png' width=".$largeur." height=".$hauteur." >";
 					else
 						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png' width=".$largeur." height=".$hauteur." >";
@@ -585,7 +585,7 @@ class plugin_tracker_printers extends CommonDBTM
 				else if ($hauteur_moyenne < $hauteur) {
 					$difference = ($hauteur - $hauteur_moyenne) -1;
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1'>";
-					if (ereg("-01",$key)){ // janvier en couleur foncee
+					if (strstr($key, "-01")){ // janvier en couleur foncee
 						$couleur =  "1";
 						$couleur2 =  "2";
 					} 
@@ -599,7 +599,7 @@ class plugin_tracker_printers extends CommonDBTM
 				}
 				else {
 					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1'>";
-					if (ereg("-01",$key)) // janvier en couleur foncee
+					if (strstr($key, "-01")) // janvier en couleur foncee
 						echo "<img alt=\"$key: $val_tab\" title=\"$key: $value\" src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png' width=".$largeur." height=".$hauteur.">";
 					else
 						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png' width=".$largeur." height=".$hauteur.">";

@@ -105,15 +105,15 @@ for ($i=1;$i <= 5;$i++)
 	}
 	if (isset($_POST[$value]))
 	{
-		if (ereg($value,$_SERVER['HTTP_REFERER']))
+		if ($name_file_xml($_SERVER['HTTP_REFERER'],$value))
 		{
 			$explode = explode('&',$_SERVER['HTTP_REFERER']);
 			$reconstruct = $explode[0];
 			for ($i=1;$i < count($explode);$i++)
 			{
-				if (ereg($value,$explode[$i]))
+				if (strstr($explode[$i],$value))
 				{
-					if (ereg("0000-00-00",$_POST[$value]))
+					if (strstr($_POST[$value],"0000-00-00"))
 					{
 						$explode[$i] = '';
 					}

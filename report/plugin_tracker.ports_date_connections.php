@@ -84,21 +84,21 @@ function displaySearchForm()
 
 	if (isset($_GET["contains"][0]))
 	{
-		if (ereg("lt;",$_GET["contains"][0]))
+		if (strstr($_GET["contains"][0], "lt;"))
 		{
 			$_GET["dropdown_sup_inf"] = "inf";
 			$_GET["dropdown_calendar"] = str_replace("lt;", "",$_GET["contains"][0]);
 			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
 			$_GET["contains"][0] = "<".$_GET["dropdown_calendar"];
 		}
-		if (ereg("gt;",$_GET["contains"][0]))
+		if (strstr($_GET["contains"][0], "gt;"))
 		{
 			$_GET["dropdown_sup_inf"] = "sup";
 			$_GET["dropdown_calendar"] = str_replace("gt;", "",$_GET["contains"][0]);
 			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
 			$_GET["contains"][0] = ">".$_GET["dropdown_calendar"];
 		}
-		if (ereg("=",$_GET["contains"][0]))
+		if (strstr($_GET["contains"][0], "="))
 		{
 			$_GET["dropdown_sup_inf"] = "equal";
 			$_GET["dropdown_calendar"] = str_replace("=", "",$_GET["contains"][0]);

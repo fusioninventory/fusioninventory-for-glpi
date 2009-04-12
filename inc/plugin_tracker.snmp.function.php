@@ -257,7 +257,7 @@ function tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 			$ifType = $oidvalues[$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]][""];
 			$oidList[] = $ArrayPort_LogicalNum_SNMPNum[$i];
 			
-			if ((ereg("ethernetCsmacd",$ifType)) 
+			if ((strstr($ifType, "ethernetCsmacd"))
 				OR ($ifType == "6")
 				OR ($ifType == "ethernet-csmacd(6)"))
 			{
@@ -353,7 +353,7 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 	
 	foreach($Array_Object_TypeNameConstant as $oid=>$link)
 	{
-		if (!ereg("\.$",$oid)) // SNMPGet ONLY
+		if (!preg_match("/\.$/",$oid)) // SNMPGet ONLY
 		{
 			if ($TRACKER_MAPPING[$type][$link]['dropdown'] != "")
 				$oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0);			
@@ -386,9 +386,9 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 			{
 				$object_name_clean = str_replace("MAX", "", $link);
 				$object_name_clean = str_replace("REMAIN", "", $object_name_clean);
-				if (ereg("MAX",$link))
+				if (strstr($link, "MAX"))
 					$printer_cartridges_max_remain[$object_name_clean]["MAX"] = $oidvalues[$oid][""];
-				if (ereg("REMAIN",$link))
+				if (strstr($link, "REMAIN"))
 					$printer_cartridges_max_remain[$object_name_clean]["REMAIN"] = $oidvalues[$oid][""];
 				if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"])) AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"])))
 				{
@@ -425,7 +425,7 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 					$DB->query($queryUpdate);
 				}
 			}
-			else if (ereg("pagecounter",$link))
+			else if (strstr($link, "pagecounter"))
 			{
 				// Detect if the script has wroten a line for the counter today (if yes, don't touch, else add line)
 				$today = strftime("%Y-%m-%d", time());
@@ -477,7 +477,7 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 				if (($TRACKER_MAPPING[$type][$link]['field'] == "cpu") AND ($oidvalues[$oid][""] == ""))
 					$SNMPValue = 0;
 				
-				if (ereg("glpi_plugin_tracker",$TRACKER_MAPPING[$type][$link]['table']))
+				if (strstr($TRACKER_MAPPING[$type][$link]['table'], "glpi_plugin_tracker"))
 				{
 					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
 					SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."' 
@@ -524,7 +524,7 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 
 	foreach($Array_Object_TypeNameConstant as $oid=>$link)
 	{
-		if ((ereg("\.$",$oid)) AND (!empty($TRACKER_MAPPING[$type][$link]['field']))) // SNMPWalk ONLY (ports)
+		if ((preg_match("/\.$/",$oid)) AND (!empty($TRACKER_MAPPING[$type][$link]['field']))) // SNMPWalk ONLY (ports)
 		{
 //			print "OID : ".$oid."\n";
 			
@@ -555,7 +555,7 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 					$DB->query($query_update);
 				}
 
-				if (($link == 'ifPhysAddress') AND (!ereg(":",$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""])))
+				if (($link == 'ifPhysAddress') AND (!strstr($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""], ":")))
 				{
 					$MacAddress = str_replace("0x","",$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]);
 					$MacAddress_tmp = str_split($MacAddress, 2);
@@ -836,7 +836,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 			$trunk_IP = $oidvalues[$oidsModel[0][1]['cdpCacheAddress'].".".$snmpportID][""];
 			
 			// Convert IP HEX in Decimal
-			if (ereg("^0x",$trunk_IP))
+			if (preg_match("/^0x/",$trunk_IP))
 			{
 				$trunk_IP = str_replace("0x","",$trunk_IP);
 				$hex_ = preg_replace("/[^0-9a-fA-F]/","", $trunk_IP);
