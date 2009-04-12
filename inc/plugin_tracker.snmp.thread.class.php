@@ -421,9 +421,6 @@ class Threads extends CommonDBTM
 		if (mysql_num_rows($result) == "0"){
 			addLogConnection("remove",$sport,$PID);
 			removeConnector($sport);
-
-			if ($ip_unknown != "")
-				$macaddress .= "\n".$ip_unknown;
 			
 			// Search if a line exist
 			$query = "SELECT *  FROM glpi_plugin_tracker_unknown_mac
@@ -435,8 +432,8 @@ class Threads extends CommonDBTM
 			{
 				// Insert
 				$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
-					(start_FK_processes, start_time, port,unknow_mac,end_time,end_FK_processes)
-				VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".date("Y-m-d H:i:s")."','".$PID."')";
+					(start_FK_processes, start_time, port,unknow_mac,unknown_ip,end_time,end_FK_processes)
+				VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".$ip_unknown."','".date("Y-m-d H:i:s")."','".$PID."')";
 				$DB->query($query_ins);
 			}
 			else
