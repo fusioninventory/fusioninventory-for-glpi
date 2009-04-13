@@ -107,7 +107,7 @@ class plugin_tracker_XML {
 			{
 				$query = $this->element[$level][$element]['SQL'];
 				// Detect if query has variable from precedent sql query. If yes we replace it
-					if (strstr($query, '\['))
+					if (strstr($query, '['))
 						$query = preg_replace("/\[(.*?)\]/", $sql_data[1],$query);
 
 				$result=$DB->query($query);

@@ -35,7 +35,6 @@ class Threads extends CommonDBTM
 {
 
 	function __construct() {
-//		$this->table = "glpi_plugin_tracker_processes_values";
 		$this->table = "glpi_plugin_tracker_unknown_mac";
 		$this->type = PLUGIN_TRACKER_MAC_UNKNOWN;
 	}
@@ -413,6 +412,9 @@ class Threads extends CommonDBTM
 	{
 		global $DB;
 
+		// TODO
+		// Search IP on ocsweb.netmap based on MAC address if IP unknown
+
 		// Detect if mac adress is different of internal mac address of port
 		$query = "SELECT *  FROM glpi_networking_ports
 		WHERE ID='".$FK_port."'
@@ -452,8 +454,8 @@ class Threads extends CommonDBTM
 					{
 						// Insert
 						$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
-							(start_FK_processes, start_time, port,unknow_mac,end_time,end_FK_processes)
-						VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".date("Y-m-d H:i:s")."','".$PID."')";
+							(start_FK_processes, start_time, port,unknow_mac,unknown_ip,end_time,end_FK_processes)
+						VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".$ip_unknown."','".date("Y-m-d H:i:s")."','".$PID."')";
 						$DB->query($query_ins);
 					}
 				}
