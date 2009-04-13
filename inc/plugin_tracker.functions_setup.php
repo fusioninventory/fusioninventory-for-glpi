@@ -88,6 +88,17 @@ function plugin_tracker_update($version) {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
 		$DB->query($sql_line);
 	}
+	if ($version == "2.0.0")
+	{
+		$config_discovery = new plugin_tracker_config_discovery;
+		$config_discovery->initConfig();
+		$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+		$config_snmp_script->initConfig();
+		// Import models
+		$importexport = new plugin_tracker_importexport;
+		foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0);
+	}
+
 	plugin_tracker_initSession();
 }
 
