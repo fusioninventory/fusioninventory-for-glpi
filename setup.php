@@ -148,6 +148,19 @@ function plugin_tracker_install()
 }
 
 
+
+function plugin_tracker_needUpdate()
+{
+	if (!TableExists("glpi_plugin_tracker_config"))
+		return 0;
+	if (!TableExists("glpi_plugin_tracker_agents_processes"))
+		return 1;
+	else
+		return 0;
+}
+
+
+
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
 function plugin_tracker_check_config()
 {

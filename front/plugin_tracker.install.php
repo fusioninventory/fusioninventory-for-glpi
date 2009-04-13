@@ -39,7 +39,10 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 if (haveRight("config","w") && haveRight("profile","w")){
 
-	plugin_tracker_install();
+	if (plugin_tracker_needUpdate() == 1)
+		plugin_tracker_update("2.0.0");
+	else
+		plugin_tracker_install();
 		
 	glpi_header($_SERVER['HTTP_REFERER']);
 }else{
