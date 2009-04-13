@@ -95,7 +95,7 @@ else if(isset($_POST['get_data']))
 	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
 	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
 	
-//$_POST['key'] = "yguihu68Jggfihbg5bgjkbtg";
+//$_POST['key'] = "nN3HDPKVj0e8xxfgCIugjWmPzIRVxb";
 	$query = "SELECT * FROM glpi_plugin_tracker_agents
 	WHERE `key`='".$_POST['key']."'
 	LIMIT 0,1";
@@ -236,9 +236,7 @@ else if(isset($_POST['get_data']))
 					AND state='".$config_snmp_printer->getValue('active_device_state')."'
 					".$rangeip_select."
 					AND FK_printers!=0";
-// 					AND ifaddr BETWEEN '192.168.0.1' AND '192.168.0.200'
 			}
-
 			// Informations
 			$xml_writed->element[2]['infos']['element']=$devices[$i];
 			if ($devices[$i] == "device_networking")
@@ -356,7 +354,7 @@ else if(isset($_POST['get_data']))
 		}
 
 
-	//	echo $xml->DoXML();
+//		echo $xml->DoXML();
 		$data = $xml->DoXML($writed);
 		$gzdata = gzencode($data, 9);
 		echo $gzdata;
