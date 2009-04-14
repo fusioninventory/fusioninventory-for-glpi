@@ -33,11 +33,12 @@
 
 function plugin_tracker_search_ip_ocs_servers($MAC)
 {
-	$DBocs = new $DBocs;
+	global $DBocs, $DB;
+
 	$listserver = plugin_tracker_getOCSServerID();
 	foreach ($listserver as $num=> $ocs_server_id)
 	{
-		$DBocs->DBocs($ocs_server_id);
+		checkOCSconnection($ocs_server_id);
 		$res = $DBocs->query("SELECT IP FROM netmap WHERE MAC='".$MAC."'");
 		if ($DBocs->numrows($res) == 1)
 			return $DBocs->result($res,0,"IP");
