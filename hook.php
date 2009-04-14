@@ -260,7 +260,7 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][5]['name'] = $LANGTRACKER["agents"][10];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['table'] = 'glpi_plugin_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['field'] = 'core_query';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['field'] = 'threads_query';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['linkfield'] = 'threads_query';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][6]['name'] = $LANGTRACKER["agents"][2];
 	
