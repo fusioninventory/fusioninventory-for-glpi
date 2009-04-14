@@ -305,6 +305,7 @@ CREATE TABLE `glpi_plugin_tracker_networking` (
   `cpu` int(3) NOT NULL DEFAULT '0',
   `memory` int(8) NOT NULL DEFAULT '0',
   `last_tracker_update` datetime DEFAULT NULL,
+  `last_PID_update` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `FK_networking` (`FK_networking`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

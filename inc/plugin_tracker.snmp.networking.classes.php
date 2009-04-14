@@ -188,6 +188,8 @@ class plugin_tracker_networking extends CommonDBTM
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
+
+		$PID = $data["last_PID_update"];
 		
 		// Add in database if not exist
 		if ($DB->numrows($result) == "0")
@@ -546,7 +548,7 @@ function appear_array(id){
 							else
 							{
 								// Search in unknown mac address table
-								$PID = $processes->lastProcess(NETWORKING_TYPE);
+								//$PID = $data["last_PID_update"];
 								$unknownMac = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
 								if (empty($unknownMac))
 									echo "<td align='center'></td>";
