@@ -109,6 +109,7 @@ ALTER TABLE `glpi_plugin_tracker_model_infos` ADD `activation` int(1) NOT NULL D
 ALTER TABLE `glpi_plugin_tracker_model_infos` ADD `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL;
 
 
+ALTER TABLE `glpi_plugin_tracker_networking` ADD `last_PID_update` INT( 11 ) NOT NULL DEFAULT '0';
 
 ALTER TABLE `glpi_plugin_tracker_networking_ports` ADD `lastup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
 

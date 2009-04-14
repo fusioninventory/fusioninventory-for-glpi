@@ -339,7 +339,8 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 	$query = "UPDATE ";
 	if ($type == NETWORKING_TYPE) 
 		$query .= "glpi_plugin_tracker_networking 
-		SET last_tracker_update='".date("Y-m-d H:i:s")."' 
+		SET last_tracker_update='".date("Y-m-d H:i:s")."',
+		last_PID_update='".$_SESSION['FK_process']."'
 		WHERE FK_networking='".$ID_Device."' ";
 	if ($type == PRINTER_TYPE) 
 		$query .= "glpi_plugin_tracker_printers 

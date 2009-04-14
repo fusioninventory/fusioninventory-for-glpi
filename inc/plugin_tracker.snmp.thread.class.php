@@ -423,7 +423,11 @@ class Threads extends CommonDBTM
 		if (mysql_num_rows($result) == "0"){
 			addLogConnection("remove",$sport,$PID);
 			removeConnector($sport);
-			
+
+			// Search IP in OCS IPdiscover if OCS servers specified
+			if (empty($ip_unknown))
+				$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
+
 			// Search if a line exist
 			$query = "SELECT *  FROM glpi_plugin_tracker_unknown_mac
 			WHERE unknow_mac='".$macaddress."'
