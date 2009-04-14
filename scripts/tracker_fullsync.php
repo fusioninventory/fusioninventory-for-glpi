@@ -56,7 +56,7 @@ $DBCONNECTION_REQUIRED=1;
 define('GLPI_ROOT', '../../..');
 
 $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
-	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine");
+	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng");
 include (GLPI_ROOT . "/config/based_config.php");
 include (GLPI_ROOT . "/inc/includes.php");
 include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");

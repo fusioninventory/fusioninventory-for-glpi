@@ -412,9 +412,6 @@ class Threads extends CommonDBTM
 	{
 		global $DB;
 
-		// TODO
-		// Search IP on ocsweb.netmap based on MAC address if IP unknown
-
 		// Detect if mac adress is different of internal mac address of port
 		$query = "SELECT *  FROM glpi_networking_ports
 		WHERE ID='".$FK_port."'
