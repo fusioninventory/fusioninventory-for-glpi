@@ -471,7 +471,8 @@ class Threads extends CommonDBTM
 		global $DB;	
 		
 		$unknownMac = "";
-		$query = "SELECT unknow_mac FROM glpi_plugin_tracker_unknown_mac
+		$unknownIP = "";
+		$query = "SELECT unknow_mac,unknown_ip FROM glpi_plugin_tracker_unknown_mac
 		WHERE (start_FK_processes<".$PID." OR start_FK_processes=".$PID.")
 			AND (end_FK_processes>".$PID." OR end_FK_processes=".$PID.")
 			AND port='".$FK_port."' 
@@ -481,9 +482,10 @@ class Threads extends CommonDBTM
 			while ($data = $DB->fetch_array($result))
 			{
 				$unknownMac = $data["unknow_mac"];
+				$unknownIP = $data["unknown_ip"];
 			}
 		}
-		return $unknownMac;
+		return array($unknownMac, $unknownIP);
 	}
 	
 	

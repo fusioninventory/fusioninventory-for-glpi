@@ -549,11 +549,11 @@ function appear_array(id){
 							{
 								// Search in unknown mac address table
 								//$PID = $data["last_PID_update"];
-								$unknownMac = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
+								list($unknownMac, $unknownIP) = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
 								if (empty($unknownMac))
 									echo "<td align='center'></td>";
 								else
-									echo "<td align='center' class='tab_bg_1_2'>".$unknownMac."</td>";
+									echo "<td align='center' class='tab_bg_1_2'>".$unknownMac."<br/>".$unknownIP."</td>";
 
 							}
 							break;

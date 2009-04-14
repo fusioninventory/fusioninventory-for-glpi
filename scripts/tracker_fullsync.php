@@ -56,7 +56,7 @@ $DBCONNECTION_REQUIRED=1;
 define('GLPI_ROOT', '../../..');
 
 $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
-	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng");
+	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
 include (GLPI_ROOT . "/config/based_config.php");
 include (GLPI_ROOT . "/inc/includes.php");
 include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
@@ -65,7 +65,7 @@ $CFG_GLPI["debug"]=0;
 
 //Check if plugin is installed, ie if tables are present
 if (!TableExists("glpi_plugin_tracker_networking")) {
-	echo "Plugin Tracker pas install�!!";
+	echo "Plugin Tracker pas installé!!";
 	exit(1);
 }
  
