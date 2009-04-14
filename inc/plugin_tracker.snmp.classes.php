@@ -225,11 +225,13 @@ class plugin_tracker_snmp extends CommonDBTM
 		if ($type == NETWORKING_TYPE)
 			$query_add = "LEFT JOIN glpi_plugin_tracker_networking
 				ON glpi_plugin_tracker_networking.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
-			WHERE FK_networking='".$ID_Device."' ";
+			WHERE FK_networking='".$ID_Device."'
+				AND glpi_plugin_tracker_networking.FK_model_infos!='0' ";
 		else if($type == PRINTER_TYPE)
 			$query_add = "LEFT JOIN glpi_plugin_tracker_printers
 				ON glpi_plugin_tracker_printers.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
-			WHERE FK_printers='".$ID_Device."' ";
+			WHERE FK_printers='".$ID_Device."'
+				AND glpi_plugin_tracker_printers.FK_model_infos!='0' ";
 			
 			
 		$query = "SELECT mapping_type, mapping_name,oid_port_dyn, 
@@ -238,8 +240,7 @@ class plugin_tracker_snmp extends CommonDBTM
 		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
 			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
 		".$query_add."
-			AND oid_port_counter='0'
-			AND glpi_plugin_tracker_networking.FK_model_infos!='0' ";
+			AND oid_port_counter='0' ";
 
 		if ( $result=$DB->query($query) )
 		{
