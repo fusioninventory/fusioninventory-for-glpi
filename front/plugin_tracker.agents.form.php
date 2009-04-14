@@ -47,7 +47,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $agents = new plugin_tracker_agents;
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
 
 plugin_tracker_mini_menu();
 
