@@ -514,6 +514,11 @@ function plugin_tracker_getSearchOption()
 	$sopt[NETWORKING_TYPE][5191]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
 
+	$sopt[NETWORKING_TYPE][5194]['table']='glpi_plugin_tracker_networking';
+	$sopt[NETWORKING_TYPE][5194]['field']='last_tracker_update';
+	$sopt[NETWORKING_TYPE][5194]['linkfield']='ID';
+	$sopt[NETWORKING_TYPE][5194]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["snmp"][53];
+
 	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_tracker_model_infos';
 	$sopt[PRINTER_TYPE][5190]['field']='ID';
 	$sopt[PRINTER_TYPE][5190]['linkfield']='ID';
@@ -523,7 +528,12 @@ function plugin_tracker_getSearchOption()
 	$sopt[PRINTER_TYPE][5191]['field']='ID';
 	$sopt[PRINTER_TYPE][5191]['linkfield']='ID';
 	$sopt[PRINTER_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
-	
+
+	$sopt[PRINTER_TYPE][5194]['table']='glpi_plugin_tracker_printers';
+	$sopt[PRINTER_TYPE][5194]['field']='last_tracker_update';
+	$sopt[PRINTER_TYPE][5194]['linkfield']='ID';
+	$sopt[PRINTER_TYPE][5194]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["snmp"][53];
+
 	$sopt[COMPUTER_TYPE][5192]['table']='glpi_plugin_tracker_networking';
 	$sopt[COMPUTER_TYPE][5192]['field']='ID';
 	$sopt[COMPUTER_TYPE][5192]['linkfield']='ID';
@@ -903,6 +913,12 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				}
 			}
 			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_networking.last_tracker_update" :
+			return "<center>".convDateTime($data["ITEM_$num"])."</center>";
+			break;
+		case "glpi_plugin_tracker_printers.last_tracker_update" :
+			return "<center>".convDateTime($data["ITEM_$num"])."</center>";
 			break;
 
 	}

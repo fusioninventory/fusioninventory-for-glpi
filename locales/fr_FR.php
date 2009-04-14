@@ -140,6 +140,7 @@ $LANGTRACKER["snmp"][49]="Nb d'erreurs en réception";
 $LANGTRACKER["snmp"][50]="Connexion";
 $LANGTRACKER["snmp"][51]="Duplex";
 $LANGTRACKER["snmp"][52]="Date dernier inventaire TRACKER";
+$LANGTRACKER["snmp"][53]="Dernier inventaire";
 
 $LANGTRACKER["snmpauth"][1]="Communauté";
 $LANGTRACKER["snmpauth"][2]="Utilisateur";
