@@ -515,7 +515,7 @@ function plugin_tracker_getSearchOption()
 	$sopt[NETWORKING_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
 
 	$sopt[NETWORKING_TYPE][5194]['table']='glpi_plugin_tracker_networking';
-	$sopt[NETWORKING_TYPE][5194]['field']='last_tracker_update';
+	$sopt[NETWORKING_TYPE][5194]['field']='FK_networking';
 	$sopt[NETWORKING_TYPE][5194]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5194]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["snmp"][53];
 
@@ -695,20 +695,33 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return $out;
 			break;
 		case "glpi_plugin_tracker_networking.FK_networking" :
-			if ($num == "9") {
+			if ($num == "9")
+			{
 				$plugin_tracker_snmp = new plugin_tracker_snmp;
 				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],NETWORKING_TYPE);
 				$out = "<div align='center'>" . getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0) . "</div>";
 				return $out;
 				break;
-			} else
-				if ($num == "10") {
-					$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-					$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"], GLPI_ROOT . "/plugins/tracker/scripts/",NETWORKING_TYPE);
-					$out = "<div align='center'>" . $FK_snmp_DB["Name"] . "</div>";
-					return $out;
-					break;
-				}
+			} 
+			else if ($num == "10")
+			{
+				$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+				$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"], GLPI_ROOT . "/plugins/tracker/scripts/",NETWORKING_TYPE);
+				$out = "<div align='center'>" . $FK_snmp_DB["Name"] . "</div>";
+				return $out;
+				break;
+			}
+			else if ($num == "12")
+			{
+				$tracker_networking = new glpi_plugin_tracker_networking;
+				$tracker_networking->getFromDB($data["ITEM_$num"]);
+				$last_date = "";
+				if (isset($tracker_networking->fields["last_tracker_update"]))
+					$last_date = $tracker_networking->fields["last_tracker_update"];
+				$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+				return $out;
+				break;
+			}
 		case "glpi_plugin_tracker_unknown_mac.port" :
 			$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
 			$CommonItem = new CommonItem;
@@ -914,11 +927,14 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			}
 			return "<center>".$out."</center>";
 			break;
-		case "glpi_plugin_tracker_networking.last_tracker_update" :
-			return "<center>".convDateTime($data["ITEM_$num"])."</center>";
-			break;
-		case "glpi_plugin_tracker_printers.last_tracker_update" :
-			return "<center>".convDateTime($data["ITEM_$num"])."</center>";
+		case "glpi_plugin_tracker_printers.ID" :
+			$tracker_networking = new glpi_plugin_tracker_networking;
+			$tracker_networking->getFromDB($data["ITEM_$num"]);
+			$last_date = "";
+			if (isset($tracker_networking->fields["last_tracker_update"]))
+				$last_date = $tracker_networking->fields["last_tracker_update"];
+			$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+			return $out;
 			break;
 
 	}
