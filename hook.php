@@ -697,7 +697,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			if (strstr($_SERVER['PHP_SELF'],"front/networking.php"))
 			{
-				$query = "SELECT ID FROM glpi_plugin_tracker_networking
+				$query = "SELECT * FROM glpi_plugin_tracker_networking
 				WHERE FK_networking = '".$data["ID"]."' ";
 				if ($result = $DB->query($query))
 					$data2=$DB->fetch_array($result);
