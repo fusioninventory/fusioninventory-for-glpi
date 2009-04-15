@@ -194,14 +194,19 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['name'] = $LANG["networking"][15];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['table'] = 'glpi_plugin_tracker_unknown_mac';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['field'] = 'start_time';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['linkfield'] = 'start_time';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['name'] = $LANGTRACKER["processes"][17];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['field'] = 'unknown_ip';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['linkfield'] = 'unknown_ip';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['name'] = $LANG["networking"][14];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['table'] = 'glpi_plugin_tracker_unknown_mac';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['field'] = 'end_time';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['linkfield'] = 'end_time';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['name'] = $LANGTRACKER["processes"][18];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['field'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['linkfield'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['name'] = $LANGTRACKER["processes"][17];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['table'] = 'glpi_plugin_tracker_unknown_mac';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['field'] = 'end_time';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['linkfield'] = 'end_time';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['name'] = $LANGTRACKER["processes"][18];
 
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS]['common'] = $LANGTRACKER["errors"][0];
 
