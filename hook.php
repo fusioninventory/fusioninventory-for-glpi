@@ -928,11 +928,11 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_printers.ID" :
-			$tracker_networking = new glpi_plugin_tracker_networking;
-			$tracker_networking->getFromDB($data["ITEM_$num"]);
+			$tracker_printers = new plugin_tracker_printers;
+			$tracker_printers->getFromDB($data["ITEM_$num"]);
 			$last_date = "";
-			if (isset($tracker_networking->fields["last_tracker_update"]))
-				$last_date = $tracker_networking->fields["last_tracker_update"];
+			if (isset($tracker_printers->fields["last_tracker_update"]))
+				$last_date = $tracker_printers->fields["last_tracker_update"];
 			$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
 			return $out;
 			break;
