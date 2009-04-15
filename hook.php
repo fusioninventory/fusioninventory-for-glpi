@@ -711,7 +711,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				return $out;
 				break;
 			}
-			else if ($num == "12")
+			else if (strstr($_SERVER['PHP_SELF'],"front/networking.php"))
 			{
 				$tracker_networking = new glpi_plugin_tracker_networking;
 				$tracker_networking->getFromDB($data["ITEM_$num"]);
