@@ -697,11 +697,14 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			if (strstr($_SERVER['PHP_SELF'],"front/networking.php"))
 			{
-				$tracker_networking = new glpi_plugin_tracker_networking;
-				$tracker_networking->getFromDB($data["ITEM_$num"]);
+				$query = "SELECT ID FROM glpi_plugin_tracker_networking
+				WHERE FK_networking = '".$data["ID"]."' ";
+				if ($result = $DB->query($query))
+					$data2=$DB->fetch_array($result);
+
 				$last_date = "";
-				if (isset($tracker_networking->fields["last_tracker_update"]))
-					$last_date = $tracker_networking->fields["last_tracker_update"];
+				if (isset($data2["last_tracker_update"]))
+					$last_date = $data2["last_tracker_update"];
 				$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
 				return $out;
 				break;
