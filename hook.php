@@ -695,7 +695,18 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return $out;
 			break;
 		case "glpi_plugin_tracker_networking.FK_networking" :
-			if ($num == "9")
+			if (strstr($_SERVER['PHP_SELF'],"front/networking.php"))
+			{
+				$tracker_networking = new glpi_plugin_tracker_networking;
+				$tracker_networking->getFromDB($data["ITEM_$num"]);
+				$last_date = "";
+				if (isset($tracker_networking->fields["last_tracker_update"]))
+					$last_date = $tracker_networking->fields["last_tracker_update"];
+				$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+				return $out;
+				break;
+			}
+			else if ($num == "9")
 			{
 				$plugin_tracker_snmp = new plugin_tracker_snmp;
 				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],NETWORKING_TYPE);
@@ -708,17 +719,6 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 				$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"], GLPI_ROOT . "/plugins/tracker/scripts/",NETWORKING_TYPE);
 				$out = "<div align='center'>" . $FK_snmp_DB["Name"] . "</div>";
-				return $out;
-				break;
-			}
-			else if (strstr($_SERVER['PHP_SELF'],"front/networking.php"))
-			{
-				$tracker_networking = new glpi_plugin_tracker_networking;
-				$tracker_networking->getFromDB($data["ITEM_$num"]);
-				$last_date = "";
-				if (isset($tracker_networking->fields["last_tracker_update"]))
-					$last_date = $tracker_networking->fields["last_tracker_update"];
-				$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
 				return $out;
 				break;
 			}
