@@ -134,11 +134,12 @@ class plugin_tracker_importexport extends CommonDBTM
 
 
 
-	function import($file,$message=1)
+	function import($file,$message=1,$installation=0)
 	{
 		global $DB,$LANG,$LANGTRACKER;
 
-		plugin_tracker_checkRight("snmp_models","w");
+		if ($installation != 1)
+			plugin_tracker_checkRight("snmp_models","w");
 
 		$xml = simplexml_load_file($file);
 

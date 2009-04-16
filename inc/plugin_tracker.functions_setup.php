@@ -69,7 +69,7 @@ function plugin_tracker_installing($version) {
 	$config_snmp_script->initConfig();
 	// Import models
 	$importexport = new plugin_tracker_importexport;
-	foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0);
+	foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0,1);
 	
 	plugin_tracker_initSession();
    return true;
