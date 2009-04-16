@@ -40,7 +40,7 @@ $NEEDED_ITEMS=array("search","computer","networking");
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-plugin_reports_checkRight("user","r");
+plugin_tracker_checkRight("snmp_scripts_infos","r");
 
 commonHeader('test',$_SERVER['PHP_SELF'],"utils","report");
 
