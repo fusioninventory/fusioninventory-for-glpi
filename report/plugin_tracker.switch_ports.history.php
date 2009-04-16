@@ -40,9 +40,7 @@ $NEEDED_ITEMS=array("search","computer","infocom","setup","networking");
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-includeLocales("plugin_reports.computer");
-
-plugin_reports_checkRight("computer","r");
+plugin_tracker_checkRight("snmp_scripts_infos","r");
 
 commonHeader($GEDIFFREPORTLANG["computer"][1],$_SERVER['PHP_SELF'],"utils","report");
 
