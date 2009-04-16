@@ -42,7 +42,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_scripts_infos","r");
 
-commonHeader($GEDIFFREPORTLANG["computer"][1],$_SERVER['PHP_SELF'],"utils","report");
+commonHeader($LANGTRACKER["title"][0],$_SERVER['PHP_SELF'],"utils","report");
 
 if (isset($_GET["reset_search"]))
 	resetSearch();
