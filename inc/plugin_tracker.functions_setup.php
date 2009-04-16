@@ -48,7 +48,7 @@ function plugin_tracker_installing($version) {
 	fclose($DBf_handle);
 	foreach ( explode(";\n", "$sql_query") as $sql_line) {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-		$DB->query($sql_line)/* or die($DB->error())*/;
+		if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
 	}
 
 	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
