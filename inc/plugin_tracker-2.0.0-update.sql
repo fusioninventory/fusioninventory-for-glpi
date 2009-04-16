@@ -12,7 +12,7 @@ CREATE TABLE `glpi_plugin_tracker_agents` (
   `lock` int(1) NOT NULL DEFAULT '0',
   `logs` int(1) NOT NULL DEFAULT '0',
   `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fragment` int(11) NOT NULL DEFAULT '500',
+  `fragment` int(11) NOT NULL DEFAULT '50',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -47,6 +47,7 @@ CREATE TABLE `glpi_plugin_tracker_agents_processes` (
 ALTER TABLE `glpi_plugin_tracker_config` DROP `nb_process_query`;
 ALTER TABLE `glpi_plugin_tracker_config` DROP `nb_process_discovery`;
 ALTER TABLE `glpi_plugin_tracker_config` DROP `logs`;
+ALTER TABLE `glpi_plugin_tracker_config` ADD `URL_agent_conf` VARCHAR( 255 ) NULL 
 
 
 

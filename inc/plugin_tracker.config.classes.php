@@ -46,11 +46,11 @@ class plugin_tracker_config extends CommonDBTM {
 	}
 
 	function initConfig() {
-		global $DB;
+		global $DB,$CFG_GLPI;
 		
 		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp) ".
-				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB')";
+				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp, URL_agent_conf) ".
+				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB', '".$CFG_GLPI["url_base"]."')";
 		
 		$DB->query($query);
 	}
@@ -244,7 +244,7 @@ class plugin_tracker_config extends CommonDBTM {
 	
 	function showForm_general($target,$ID)
 	{
-		GLOBAL $LANG,$LANGTRACKER;
+		GLOBAL $LANG,$LANGTRACKER,$CFG_GLPI;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
@@ -254,7 +254,14 @@ class plugin_tracker_config extends CommonDBTM {
 		echo $LANGTRACKER["functionalities"][1]." :";
 		echo "</th>";
 		echo "</tr>";
-		
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][26]." (ex : http://192.168.0.1/glpi)</td>";
+		echo "<td>";
+		echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][10]."</td>";
 		echo "<td>";
