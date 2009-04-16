@@ -197,10 +197,13 @@ function appear_array(){
 	
 	function export_config($ID)
 	{
-		global $DB,$CFG_GLPI;
+		global $DB;
 	
+		$tracker_config = new plugin_tracker_config;
+		$tracker_config->getFromDB(1);
+
 		$this->getFromDB($ID);
-		echo "server=".$CFG_GLPI["url_base"]."/plugins/tracker/front/plugin_tracker.agents.diag.php\n";
+		echo "server=".$tracker_config->fields["URL_agent_conf"]."/plugins/tracker/front/plugin_tracker.agents.diag.php\n";
 		echo "id=".$ID."\n";
 		echo "key=".$this->fields["key"]."\n";
 	}

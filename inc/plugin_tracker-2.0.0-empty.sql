@@ -90,7 +90,7 @@ CREATE TABLE `glpi_plugin_tracker_agents` (
   `lock` int(1) NOT NULL DEFAULT '0',
   `logs` int(1) NOT NULL DEFAULT '0',
   `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fragment` int(11) NOT NULL DEFAULT '500',
+  `fragment` int(11) NOT NULL DEFAULT '50',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -160,6 +160,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
   `activation_snmp_phone` int(1) DEFAULT NULL,
   `activation_snmp_printer` int(1) DEFAULT NULL,
   `authsnmp` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `URL_agent_conf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

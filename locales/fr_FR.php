@@ -98,6 +98,7 @@ $LANGTRACKER["functionalities"][22]="Rétention de l'historique de changement d'
 $LANGTRACKER["functionalities"][23]="Rétention de l'historique des adresses MAC inconnues (0 = infini)";
 $LANGTRACKER["functionalities"][24]="Rétention de l'historique des erreurs SNMP (0 = infini)";
 $LANGTRACKER["functionalities"][25]="Rétention de l'historique des processes des scripts (0 = infini)";
+$LANGTRACKER["functionalities"][26]="URL de GLPI pour l'agent";
 
 $LANGTRACKER["functionalities"][30]="Statut du matériel actif";
 $LANGTRACKER["functionalities"][31]="Gestion des cartouches et du stock";
