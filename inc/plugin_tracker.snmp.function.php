@@ -152,7 +152,10 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	{
 		// Get oidvalues from agents
 		$oidvalues = $walks->GetoidValues($device_snmp);
-		ksort($oidvalues);
+		if (is_array($oidvalues))
+			ksort($oidvalues);
+		else
+			return;
 
 		// ** Get oid of PortName
 		$Array_Object_oid_ifName = $oidsModel[0][1]['ifName'];
@@ -352,7 +355,7 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 	{
 		if (!preg_match("/\.$/",$oid)) // SNMPGet ONLY
 		{
-			if ($TRACKER_MAPPING[$type][$link]['dropdown'] != "")
+			if ((isset($TRACKER_MAPPING[$type][$link]['dropdown'])) AND ($TRACKER_MAPPING[$type][$link]['dropdown'] != ""))
 				$oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0);			
 
 			switch ($type)
