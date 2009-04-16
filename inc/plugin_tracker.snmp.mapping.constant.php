@@ -126,6 +126,11 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANGTRACKER
 $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['macaddr']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['macaddr']['field'] = 'ifmac';
+$TRACKER_MAPPING[NETWORKING_TYPE]['macaddr']['name'] = $LANGTRACKER["mapping"][417];
+$TRACKER_MAPPING[NETWORKING_TYPE]['macaddr']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['macaddr']['dropdown'] = '';
 
 // Networking CDP (Walk)
 $TRACKER_MAPPING[NETWORKING_TYPE]['cdpCacheAddress']['table'] = '';

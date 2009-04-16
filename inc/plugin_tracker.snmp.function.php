@@ -377,7 +377,17 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 				if ($type == PRINTER_TYPE)
 					$oidvalues[$oid][""] .= " MB";
 			}
-			
+
+				if ($link == 'macaddr')
+				{
+					$MacAddress = str_replace("0x","",$oidvalues[$oid][""]);
+					$MacAddress_tmp = str_split($MacAddress, 2);
+					$MacAddress = $MacAddress_tmp[0];
+					for($i = 1; $i < count($MacAddress_tmp); $i++)
+						$MacAddress .= ":".$MacAddress_tmp[$i];
+					$oidvalues[$oid][""] = $MacAddress;
+				}
+
 			// * Printers cartridges
 			if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_plugin_tracker_printers_cartridges")
 			{
@@ -445,6 +455,8 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 					$data_line = $DB->fetch_assoc($result_line);
 					if ($data_line[$TRACKER_MAPPING[$type][$link]['field']] == "0")
 					{
+						if (empty($oidvalues[$oid][""]))
+							$oidvalues[$oid][""] = 0;
 						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
 						SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."' 
 						WHERE ".$Field."='".$ID_Device."'
