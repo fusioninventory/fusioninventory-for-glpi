@@ -69,7 +69,10 @@ class plugin_tracker_walk extends CommonDBTM
 				$vlan = $snmpwalk->vlan;
 			$oidvalues["$snmpwalk->object"]["$vlan"] = "$oid";
 		}
-		return $oidvalues;
+		if (!isset($oidvalues))
+			return;
+		else
+			return $oidvalues;
 	}
 	
 	

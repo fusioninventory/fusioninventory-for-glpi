@@ -432,6 +432,8 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 				$result_line = $DB->query($query_line);
 				if ($DB->numrows($result_line) == "0")
 				{
+					if (empty($oidvalues[$oid][""]))
+						$oidvalues[$oid][""] = 0;
 					$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
 					(".$TRACKER_MAPPING[$type][$link]['field'].",".$Field.", date)
 					VALUES('".$oidvalues[$oid][""]."','".$ID_Device."', '".$today."') ";
