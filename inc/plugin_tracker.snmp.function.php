@@ -29,7 +29,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Nicolas SMOLYNIEC
+// Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
 
