@@ -158,7 +158,7 @@ function appear_array(){
 		echo "<td align='center'>" . $LANGTRACKER["agents"][8] . "</td>";
 		echo "<td align='center'>";
 		if (empty($this->fields["fragment"]))
-			$this->fields["fragment"] = 500;
+			$this->fields["fragment"] = 50;
 		echo "<input type='text' name='fragment' value='".$this->fields["fragment"]."'/>";
 		echo "</td>";
 		echo "</tr>";
