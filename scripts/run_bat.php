@@ -38,10 +38,6 @@ function usage() {
 	echo "\t" . $_SERVER["argv"][0]. " [--args]\n";
 	echo "\n\tArguments:\n";
 	echo "\t\t--nolog: output to console\n";
-	echo "\t\t--networking_type: get SNMP only for networking devices (switchs)\n";
-	echo "\t\t--printer_type: get SNMP only for printer devices\n";
-	echo "\t\t--discovery: discover networking devices with IP range\n";
-	echo "\t\t--discovery_serial: get serial number from discovery devices by SNMP\n";	
 }
 
 function readargs () {
@@ -54,18 +50,6 @@ function readargs () {
 			case '--nolog':
 				fclose($log);
 				$log=STDOUT;
-				break;
-			case '--networking_type':
-				return '--type=networking_type';
-				break;
-			case '--printer_type':
-				return '--type=printer_type';
-				break;
-			case '--discovery':
-				return '--type=discovery';
-				break;
-			case '--discovery_serial':
-				return '--type=discovery';
 				break;
 			default: 
 				usage();
@@ -95,6 +79,7 @@ function exit_if_already_running($pidfile)
   		//echo "Empty $pidfile\n";
   		return 1;  	
   	}
+	echo "le fichier PID existe (".$pidfile.")\n";
   	exit (1);
 }
 function cleanup ($pidfile) {
@@ -123,17 +108,18 @@ $process_id=date("zHi");
 $server_id="";
 $thread_nbr=2;
 
-if (function_exists("sys_get_temp_dir")) {
-	# PHP > 5.2.x
-	$pidfile = sys_get_temp_dir()."/tracker_fullsync.pid";	
-}
-else if (DIRECTORY_SEPARATOR=='/') {
-	# Unix/Linux	
-	$pidfile = "/tmp/tracker_fullsync.pid";
+//if (function_exists("sys_get_temp_dir")) {
+//	# PHP > 5.2.x
+//	$pidfile = sys_get_temp_dir()."/tracker_fullsync.pid";
+//}
+//else if (DIRECTORY_SEPARATOR=='/') {
+if (DIRECTORY_SEPARATOR=='/') {
+# Unix/Linux	
+	$pidfile = GLPI_LOCK_DIR."/tracker_fullsync.pid";
 }
 else {
 	# Windows	
-	$pidfile = GLPI_LOG_DIR . "/tracker_fullsync.pid";
+	$pidfile = GLPI_LOCK_DIR."\tracker_fullsync.pid";
 }
 $logfilename = GLPI_LOG_DIR."/tracker_fullsync.log";
 
@@ -175,6 +161,7 @@ $ret=0;
 exec($cmd, $out, $ret);
 foreach ($out as $line) fwrite ($log, $line."\n");
 
-cleanup($pidfile);
+
+cleanup($pidfile);
 fwrite ($log, date("r") . " " . $_SERVER["argv"][0] . " ended\n\n");
 ?>

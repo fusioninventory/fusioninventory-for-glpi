@@ -27,17 +27,11 @@ trap cleanup 1 2 3 6
 
 usage()
 {
-echo "Usage:"
-echo "  $0 [--arg]"
-echo
-echo "Arguments:"
-echo "  --nolog: output to console"
-echo "  --networking_type: get SNMP only for networking devices (switchs)"
-echo "  --printer_type: get SNMP only for printer devices"
-echo "  --discovery: discover networking devices with IP range"
-echo "  --discovery_serial: get serial number from discovery devices by SNMP"
-
-
+	echo "Usage:"
+	echo "  $0 [--arg]"
+	echo
+	echo "Arguments:"
+	echo "  --nolog: output to console"
 }
 
 exit_if_soft_lock()
@@ -60,18 +54,6 @@ read_argv()
       --nolog)
       logfilename=
       ;;
-      --networking_type)
-      type="networking_type"
-      ;;
-      --printer_type)
-      type="printer_type"
-      ;;
-      --discovery)
-      type="discovery"
-      ;;
-      --discovery_serial)
-      type="discovery_serial"
-      ;; 
       *)
       usage
       exit 1
