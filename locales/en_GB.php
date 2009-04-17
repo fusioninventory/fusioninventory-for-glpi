@@ -249,7 +249,13 @@ $LANGTRACKER["processes"][14]="List of MAC address unknown ";
 $LANGTRACKER["processes"][15]="First PID";
 $LANGTRACKER["processes"][16]="Last PID";
 $LANGTRACKER["processes"][17]="Date of first detection";
-$LANGTRACKER["processes"][18]="DDate of last detection";
+$LANGTRACKER["processes"][18]="Date of last detection";
+$LANGTRACKER["processes"][19]="Informations on running agents";
+$LANGTRACKER["processes"][20]="Report / statistics";
+$LANGTRACKER["processes"][21]="Queried devices";
+$LANGTRACKER["processes"][22]="Errors";
+$LANGTRACKER["processes"][23]="Total duration of discovery";
+$LANGTRACKER["processes"][24]="Total duration of query";
 
 $LANGTRACKER["state"][0]="Computer start";
 $LANGTRACKER["state"][1]="Computer stop";
@@ -364,6 +370,16 @@ $LANGTRACKER["mapping"][404]="networking > comments";
 $LANGTRACKER["mapping"][405]="printer > contact";
 $LANGTRACKER["mapping"][406]="printer > comments";
 $LANGTRACKER["mapping"][407]="printer > port > IP address";
+$LANGTRACKER["mapping"][408]="networking > port > index number";
+$LANGTRACKER["mapping"][409]="networking > CDP address";
+$LANGTRACKER["mapping"][410]="networking > CDP port";
+$LANGTRACKER["mapping"][411]="networking > trunk port status";
+$LANGTRACKER["mapping"][412]="networking > mac addresses filtered (dot1dTpFdbAddress)";
+$LANGTRACKER["mapping"][413]="networking > mac addresses memorised (ipNetToMediaPhysAddress)";
+$LANGTRACKER["mapping"][414]="networking > ports instances (dot1dTpFdbPort)";
+$LANGTRACKER["mapping"][415]="networking > port number associed to port ID (dot1dBasePortIfIndex)";
+$LANGTRACKER["mapping"][416]="printer > port > index number";
+$LANGTRACKER["mapping"][417]="networking > MAC address";
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
@@ -414,6 +430,9 @@ $LANGTRACKER["mapping"][155]="Nomber of scanned pages";
 $LANGTRACKER["mapping"][156]="Maintenance kit";
 
 $LANGTRACKER["printer"][0]="pages";
+$LANGTRACKER["menu"][1]="Agents management";
+$LANGTRACKER["menu"][2]="IP range";
+$LANGTRACKER["menu"][3]="Menu";
 
 $LANGTRACKER["menu"][0]="Network devices discover";
 
@@ -425,5 +444,24 @@ $LANGTRACKER["discovery"][2]="Activation in the script automatically";
 $LANGTRACKER["discovery"][3]="Discover";
 $LANGTRACKER["discovery"][4]="Serial number";
 $LANGTRACKER["discovery"][5]="Number of imported devices";
+$LANGTRACKER["discovery"][6]="Criteria for existence";
+$LANGTRACKER["discovery"][7]="Secondary criteria for existence ";
+$LANGTRACKER["discovery"][8]="if all criteria for existence are fields empty on device, you can select secondary criteria.";
 
+$LANGTRACKER["rangeip"][0]="Start IP range";
+$LANGTRACKER["rangeip"][1]="End IP range";
+$LANGTRACKER["rangeip"][2]="IP range";
+$LANGTRACKER["rangeip"][3]="Query";
+
+$LANGTRACKER["agents"][0]="SNMP agent";
+$LANGTRACKER["agents"][2]="Query threads (by core)";
+$LANGTRACKER["agents"][3]="Discovery threads (by core)";
+$LANGTRACKER["agents"][4]="Last ascent";
+$LANGTRACKER["agents"][5]="Agent version";
+$LANGTRACKER["agents"][6]="Lock";
+$LANGTRACKER["agents"][7]="Export agent config";
+$LANGTRACKER["agents"][8]="Fragments in Ko";
+$LANGTRACKER["agents"][9]="Advanced options";
+$LANGTRACKER["agents"][10]="Query core (CPU)";
+$LANGTRACKER["agents"][11]="Discovery core (CPU)";
 ?>

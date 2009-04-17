@@ -373,7 +373,7 @@ $LANGTRACKER["mapping"][407]="imprimante > port > adresse IP";
 $LANGTRACKER["mapping"][408]="réseaux > port > numéro index";
 $LANGTRACKER["mapping"][409]="réseaux > Adresse CDP";
 $LANGTRACKER["mapping"][410]="réseaux > port CDP";
-$LANGTRACKER["mapping"][411]="réseaux > Statut port Trunk";
+$LANGTRACKER["mapping"][411]="réseaux > statut port Trunk";
 $LANGTRACKER["mapping"][412]="réseaux > Adresses mac filtrées (dot1dTpFdbAddress)";
 $LANGTRACKER["mapping"][413]="réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)";
 $LANGTRACKER["mapping"][414]="réseaux > instances de ports (dot1dTpFdbPort)";
@@ -446,8 +446,7 @@ $LANGTRACKER["discovery"][4]="Numéros de série";
 $LANGTRACKER["discovery"][5]="Nombre de matériels importés";
 $LANGTRACKER["discovery"][6]="Critères d'existence";
 $LANGTRACKER["discovery"][7]="Critères d'existence secondaires";
-$LANGTRACKER["discovery"][8]="Si tous les critères d'existence se confrontent
- à des champs vides, vous pouvez sélectionner des critères secondaires.";
+$LANGTRACKER["discovery"][8]="Si tous les critères d'existence se confrontent à des champs vides, vous pouvez sélectionner des critères secondaires.";
 
 $LANGTRACKER["rangeip"][0]="Début de la plage IP";
 $LANGTRACKER["rangeip"][1]="Fin de la plage IP";
