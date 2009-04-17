@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 $title="Tracker";
-$version="1.0.0";
+$version="2.0.0";
 
 $LANGTRACKER["title"][0]="$title";
 $LANGTRACKER["title"][1]="SNMP informations";
@@ -80,6 +80,7 @@ $LANGTRACKER["functionalities"][1]="Add / Delete features";
 $LANGTRACKER["functionalities"][2]="General configuration";
 $LANGTRACKER["functionalities"][3]="SNMP";
 $LANGTRACKER["functionalities"][4]="Connection";
+$LANGTRACKER["functionalities"][5]="Serser script";
 
 $LANGTRACKER["functionalities"][10]="History activation";
 $LANGTRACKER["functionalities"][11]="Connection module activation";
@@ -97,6 +98,7 @@ $LANGTRACKER["functionalities"][22]="Retention of the historic changes to the st
 $LANGTRACKER["functionalities"][23]="Retention of history unknown MAC addresses (0 = infinity)";
 $LANGTRACKER["functionalities"][24]="Retention of historical errors SNMP (0 = infinity))";
 $LANGTRACKER["functionalities"][25]="Retention of historical processes scripts (0 = infinity)";
+$LANGTRACKER["functionalities"][26]="GLPI URL for agent";
 
 $LANGTRACKER["functionalities"][30]="Status of active material";
 $LANGTRACKER["functionalities"][31]="Management cartridges and stock";
@@ -110,6 +112,7 @@ $LANGTRACKER["functionalities"][43]="SNMP authentification";
 $LANGTRACKER["functionalities"][50]="Number of simultaneous process for the discovery network";
 $LANGTRACKER["functionalities"][51]="Number of simultaneous process for querying SNMP";
 $LANGTRACKER["functionalities"][52]="Log files activation";
+$LANGTRACKER["functionalities"][53]="Number of simultaneous process for post-treatment server script";
 
 $LANGTRACKER["snmp"][0]="SNMP information equipment";
 $LANGTRACKER["snmp"][1]="Général";
@@ -138,6 +141,7 @@ $LANGTRACKER["snmp"][49]="Number of errors in reception";
 $LANGTRACKER["snmp"][50]="Connection";
 $LANGTRACKER["snmp"][51]="Duplex";
 $LANGTRACKER["snmp"][52]="Date of last TRACKER inventory";
+$LANGTRACKER["snmp"][53]="Last inventory";
 
 $LANGTRACKER["snmpauth"][1]="Community";
 $LANGTRACKER["snmpauth"][2]="User";
@@ -171,6 +175,9 @@ $LANGTRACKER["errors"][31]="Wiring problem";
 $LANGTRACKER["errors"][101]="Timeout";
 $LANGTRACKER["errors"][102]="No SNMP model assigned";
 $LANGTRACKER["errors"][103]="No SNMP authentification assigned";
+
+$LANGTRACKER["history"][0] = "Old";
+$LANGTRACKER["history"][1] = "New";
 
 $LANGTRACKER["prt_history"][0]="History and Statistics counters printer";
 
@@ -211,7 +218,8 @@ $LANGTRACKER["model_info"][7]="Creation SNMP models";
 $LANGTRACKER["model_info"][8]="Model already exists: import was not made";
 $LANGTRACKER["model_info"][9]="Import completed successfully";
 $LANGTRACKER["model_info"][10]="Model importation";
-
+$LANGTRACKER["model_info"][11]="Activation";
+$LANGTRACKER["model_info"][12]="Model key for discovery";
 
 $LANGTRACKER["mib"][1]="Label MIB";
 $LANGTRACKER["mib"][2]="Objet";
@@ -221,6 +229,7 @@ $LANGTRACKER["mib"][5]="oid list";
 $LANGTRACKER["mib"][6]="Counter ports";
 $LANGTRACKER["mib"][7]="Dynamic port (.x)";
 $LANGTRACKER["mib"][8]="Link fields";
+$LANGTRACKER["mib"][9]="vlan";
 
 $LANGTRACKER["processes"][0]="Information on running scripts";
 $LANGTRACKER["processes"][1]="PID";
