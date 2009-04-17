@@ -90,6 +90,9 @@ function plugin_tracker_update($version) {
 	}
 	if ($version == "2.0.0")
 	{
+		if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
+			mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
+		}
 		$config_discovery = new plugin_tracker_config_discovery;
 		$config_discovery->initConfig();
 		$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
