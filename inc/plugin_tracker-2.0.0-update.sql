@@ -47,7 +47,7 @@ CREATE TABLE `glpi_plugin_tracker_agents_processes` (
 ALTER TABLE `glpi_plugin_tracker_config` DROP `nb_process_query`;
 ALTER TABLE `glpi_plugin_tracker_config` DROP `nb_process_discovery`;
 ALTER TABLE `glpi_plugin_tracker_config` DROP `logs`;
-ALTER TABLE `glpi_plugin_tracker_config` ADD `URL_agent_conf` VARCHAR( 255 ) NULL 
+ALTER TABLE `glpi_plugin_tracker_config` ADD `URL_agent_conf` VARCHAR( 255 ) NULL;
 
 
 
