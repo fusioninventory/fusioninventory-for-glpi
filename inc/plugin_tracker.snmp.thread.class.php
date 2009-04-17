@@ -52,12 +52,20 @@ class Threads extends CommonDBTM
 		$Threads = new Threads;
 
 
-		$sql = "SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
-			"MIN(start_time) AS starting_date, MAX(end_time) AS ending_date, TIME_TO_SEC(MAX(end_time))-TIME_TO_SEC(MIN(start_time)) AS duree, " .
-			"end_time >= DATE_ADD(NOW(), INTERVAL -" . $minfreq . " HOUR) AS DoStat, error_msg, network_queries, 
-			printer_queries, ports_queries, discovery_queries ".
-		      	"FROM glpi_plugin_tracker_processes GROUP BY process_id ORDER BY ID DESC";
-	   $result = $DB->query($sql);
+//		$sql = "SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
+//			"MIN(start_time) AS starting_date, MAX(end_time) AS ending_date, TIME_TO_SEC(MAX(end_time))-TIME_TO_SEC(MIN(start_time)) AS duree, " .
+//			"end_time >= DATE_ADD(NOW(), INTERVAL -" . $minfreq . " HOUR) AS DoStat, error_msg, network_queries,
+//			printer_queries, ports_queries, discovery_queries ";
+//		$sql .=    	"FROM glpi_plugin_tracker_processes GROUP BY process_id ORDER BY ID DESC";
+		$sql = "SELECT ID, process_id, network_queries, status, thread_id AS threads_number,
+			start_time AS starting_date, end_time AS ending_date, TIME_TO_SEC(end_time)-TIME_TO_SEC(start_time) AS duree,
+			error_msg, network_queries,
+			printer_queries, ports_queries, discovery_queries
+			FROM glpi_plugin_tracker_processes
+			ORDER BY ID DESC";
+
+
+		$result = $DB->query($sql);
 
 /*		echo "<div id='barre_onglets'><ul id='onglet'>\n";
 		echo "<li ";
@@ -315,14 +323,13 @@ class Threads extends CommonDBTM
 	
 	
 	
-	function addProcess($PID)
-	{
-	
+	function addProcess($PID,$num_processes)
+	{	
 		global $DB;
 				
 		$query = "INSERT INTO glpi_plugin_tracker_processes
-			(start_time,process_id,status,error_msg)
-		VALUES('".date("Y-m-d H:i:s")."','".$PID."','1',0) ";
+			(start_time,process_id,status,error_msg,thread_id)
+		VALUES('".date("Y-m-d H:i:s")."','".$PID."','1',0,'".$num_processes."') ";
 		$DB->query($query);
 	}
 	

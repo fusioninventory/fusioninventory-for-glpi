@@ -94,10 +94,13 @@ else
 	//Get the script's process identifier
 	if (isset($_GET["process_id"]))
 		$fields["process_id"] = $_GET["process_id"];
-	
+
+	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+	$nb_process_query = $config_snmp_script->getValue('nb_process');
+
 	// Add process into database
 	$processes = new Threads;
-	$processes->addProcess($fields["process_id"]);
+	$processes->addProcess($fields["process_id"],$nb_process_query);
 	
 	// SNMP is working
 	$logs->write("tracker_snmp",">>>>>>>>>> Starting Script <<<<<<<<<<",'');
@@ -131,9 +134,8 @@ else
 	plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
 
 	foreach ( $xml_file as $num=>$filename )
-	{
 		unlink($filename);
-	}
+
 	$processes->closeProcess($fields["process_id"]);
 }
 ?>
