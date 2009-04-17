@@ -156,6 +156,16 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 			ksort($oidvalues);
 		else
 			return;
+		// Update count Process server script
+		switch ($type)
+		{
+			case NETWORKING_TYPE :
+				$Threads->updateProcess($_SESSION['FK_process'],1);
+				break;
+			case PRINTER_TYPE :
+				$Threads->updateProcess($_SESSION['FK_process'],0,1);
+				break;
+		}
 
 		// ** Get oid of PortName
 		$Array_Object_oid_ifName = $oidsModel[0][1]['ifName'];

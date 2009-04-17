@@ -59,7 +59,7 @@ class Threads extends CommonDBTM
 		      	"FROM glpi_plugin_tracker_processes GROUP BY process_id ORDER BY ID DESC";
 	   $result = $DB->query($sql);
 
-		echo "<div id='barre_onglets'><ul id='onglet'>\n";
+/*		echo "<div id='barre_onglets'><ul id='onglet'>\n";
 		echo "<li ";
 		if ($array_name == "")
 			echo "class='actif'";
@@ -75,7 +75,7 @@ class Threads extends CommonDBTM
 
 		echo "<ul>\n";
 		echo "</div>\n";
-
+*/
 	   echo "<div align='center'>";
 //		echo "<form name='processes' action=\"$target\" method=\"post\">";
 
@@ -94,7 +94,7 @@ class Threads extends CommonDBTM
 			echo "<th>".$LANGTRACKER["processes"][6]."</th>";
 			echo "<th>".$LANGTRACKER["processes"][8]."</th>";
 			echo "<th>".$LANGTRACKER["processes"][7]."</th>";
-			echo "<th>".$LANGTRACKER["discovery"][3]."</th>";
+//			echo "<th>".$LANGTRACKER["discovery"][3]."</th>";
 			echo "<th>".$LANGTRACKER["processes"][9]."</th>";
 			echo "<th>".$LANGTRACKER["processes"][10]."</th>";		
 			echo "</th></tr>\n";
@@ -127,7 +127,7 @@ class Threads extends CommonDBTM
 					echo "<td align='center'>".$thread["network_queries"]."</td>";
 					echo "<td align='center'>".$thread["ports_queries"]."</td>";
 					echo "<td align='center'>".$thread["printer_queries"]."</td>";
-					echo "<td align='center'>".$thread["discovery_queries"]."</td>";
+//					echo "<td align='center'>".$thread["discovery_queries"]."</td>";
 					echo "<td align='center'>";
 					if ($thread["error_msg"] > 0)
 						echo "<a href='plugin_tracker.processes.errors.php?process=".$thread["process_id"]."'>".$thread["error_msg"]."</a>";
