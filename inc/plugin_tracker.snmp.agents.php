@@ -105,7 +105,7 @@ class plugin_tracker_agents extends CommonDBTM
 		if (empty($this->fields["logs"]))
 			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[0]);
 		else	
-			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[$this->fields["logs"]]);
+			dropdownArrayValues("logs",$ArrayValues,$this->fields["logs"]);
 		echo "</td>";
 		echo "</tr>";
 
