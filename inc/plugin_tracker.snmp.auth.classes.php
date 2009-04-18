@@ -570,7 +570,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 				break;
 		}
 		
-		if ( ($result = $DB->query($query)) )
+		if ( (isset($query)) && ($result = $DB->query($query)) )
 		{
 			if ( $DB->numrows($result) != 0 )
 				return $DB->result($result, 0, "FK_snmp_connection");
