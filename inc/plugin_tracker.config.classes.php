@@ -47,10 +47,10 @@ class plugin_tracker_config extends CommonDBTM {
 
 	function initConfig() {
 		global $DB,$CFG_GLPI;
-		
+		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp, URL_agent_conf) ".
-				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB', '".$CFG_GLPI["url_base"]."')";
+				 "(ID, 	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp, URL_agent_conf, ssl_only) ".
+				 "VALUES ('1', '0', '0', '0', '0', '0', '0', 'DB', '".$url."', '1')";
 		
 		$DB->query($query);
 	}
@@ -263,7 +263,7 @@ class plugin_tracker_config extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][26]." (ex : http://192.168.0.1/glpi)</td>";
+		echo "<td>".$LANGTRACKER["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
 		echo "<td>";
 		echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
 		echo "</td>";
