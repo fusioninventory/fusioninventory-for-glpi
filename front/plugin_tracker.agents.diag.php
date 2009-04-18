@@ -64,7 +64,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 
     if( !is_uploaded_file($tmp_file) )
     {
-        exit("Le fichier est introuvable");
+        exit("The file is not found");
     }
 
     // on vérifie maintenant l'extension
@@ -75,7 +75,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 
     if( !move_uploaded_file($tmp_file, $content_dir . $name_file) )
     {
-        exit("Impossible de copier le fichier dans $content_dir");
+        exit("Impossible to copy file in $content_dir");
     }
     
 	$name_file_xml = str_replace(".gz", "", $name_file);
@@ -101,7 +101,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	}
 
 
-    echo "Le fichier a bien été uploadé";  
+    echo "The file has been successfully uploaded";
 }
 else if(isset($_POST['get_data']))
 {
@@ -170,7 +170,7 @@ else if(isset($_POST['get_data']))
 
 		// ********************************************************* //
 		// ************************* Agent ************************* //
-		//
+		// ********************************************************* //
 
 		$xml->element[1]['agent']['element']="snmp";
 		$xml->element[1]['agent']['SQL']="SELECT * FROM glpi_plugin_tracker_agents
@@ -376,7 +376,7 @@ else if(isset($_POST['get_data']))
 	}
 	else
 	{
-		echo "Non autorisé !";
+		echo "Not allowed !";
 	}
 }
 
