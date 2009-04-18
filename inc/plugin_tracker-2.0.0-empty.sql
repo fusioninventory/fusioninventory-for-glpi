@@ -161,6 +161,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
   `activation_snmp_printer` int(1) DEFAULT NULL,
   `authsnmp` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `URL_agent_conf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ssl_only` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

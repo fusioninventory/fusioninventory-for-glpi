@@ -48,7 +48,7 @@ ALTER TABLE `glpi_plugin_tracker_config` DROP `nb_process_query`;
 ALTER TABLE `glpi_plugin_tracker_config` DROP `nb_process_discovery`;
 ALTER TABLE `glpi_plugin_tracker_config` DROP `logs`;
 ALTER TABLE `glpi_plugin_tracker_config` ADD `URL_agent_conf` VARCHAR( 255 ) NULL;
-
+ALTER TABLE `glpi_plugin_tracker_config` ADD `ssl_only` INT( 1 ) NOT NULL DEFAULT '1';
 
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config_discovery`;

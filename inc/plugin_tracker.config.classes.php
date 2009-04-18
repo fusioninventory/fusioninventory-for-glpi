@@ -256,6 +256,13 @@ class plugin_tracker_config extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANGTRACKER["functionalities"][27]."</td>";
+		echo "<td>";
+		dropdownYesNo("ssl_only", $this->isActivated('ssl_only'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANGTRACKER["functionalities"][26]." (ex : http://192.168.0.1/glpi)</td>";
 		echo "<td>";
 		echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";

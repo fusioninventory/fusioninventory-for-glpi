@@ -41,6 +41,21 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker","search","printer","computer","networking","peripheral","phone");
 include (GLPI_ROOT."/inc/includes.php");
 
+// Get conf tu know if SSL is only
+$tracker_config = new plugin_tracker_config;
+$ssl = $tracker_config->getValue('ssl_only');
+if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1")) OR ($ssl == "0"))
+{
+	// echo "On continue";
+}
+else
+{
+	$out = "No SSL";
+	$gzout = gzencode($out, 9);
+	echo $gzout;
+	exit();
+}
+
 if( isset($_POST['upload']) ) // si formulaire soumis
 {
 	//$content_dir = '/tmp/'; // dossier où sera déplacé le fichier

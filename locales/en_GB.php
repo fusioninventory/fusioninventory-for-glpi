@@ -99,6 +99,7 @@ $LANGTRACKER["functionalities"][23]="Retention of history unknown MAC addresses 
 $LANGTRACKER["functionalities"][24]="Retention of historical errors SNMP (0 = infinity))";
 $LANGTRACKER["functionalities"][25]="Retention of historical processes scripts (0 = infinity)";
 $LANGTRACKER["functionalities"][26]="GLPI URL for agent";
+$LANGTRACKER["functionalities"][27]="SSL only";
 
 $LANGTRACKER["functionalities"][30]="Status of active material";
 $LANGTRACKER["functionalities"][31]="Management cartridges and stock";
