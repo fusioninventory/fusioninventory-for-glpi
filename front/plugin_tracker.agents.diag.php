@@ -86,9 +86,9 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	
 	// Open file for put it in DB
 	$importexport = new plugin_tracker_importexport;
-	if (strstr($name_file_xml,"-discovery"))
+	if (strstr($name_file_xml,"-discovery.xml"))
 	{
-		$importexport->import_agent_discovery($content_dir.$name_file_xml);
+		$importexport->import_agent_discovery($content_dir,$name_file_xml);
 		unlink($content_dir.$name_file_xml);
 	}
 	if (!strstr($name_file_xml,"-"))
