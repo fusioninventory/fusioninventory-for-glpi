@@ -213,12 +213,49 @@ class plugin_tracker_importexport extends CommonDBTM
 
 
 
-	function import_agent_discovery($file)
+	function import_agent_discovery($content_dir,$file)
 	{
 		global $DB,$LANG,$LANGTRACKER;
 
 		$walks = new plugin_tracker_walk;
 		$config_discovery = new plugin_tracker_config_discovery;
+
+		// Recompose File
+		$target = $content_dir.$file;
+		$pid = str_replace("-discovery.xml", "", $file);
+		// Get agent informations in pid-discovery.xml file
+			$agent_tmp = "";
+			$c_handle = fopen($target, 'r');
+			do {
+				$content = fread($c_handle,1000000);
+				$agent_tmp .= $content;
+			}
+			while (!empty($content));
+			fclose($c_handle);
+			$agent_tmp = str_replace("</snmp>\n","",$agent_tmp);
+		// End get lines
+		$handle = fopen($target, 'w');
+		fwrite($handle, $agent_tmp);
+		//
+		$dir = opendir($content_dir);
+		while($file_scan = readdir($dir)) {
+			if( strstr($file_scan, $pid."-tmpdiscovery-" ))
+			{
+				$c_handle = fopen($content_dir.$file_scan, 'r');
+				do {
+					$content = fread($c_handle,1000000);
+					fwrite($handle, $content);
+				}
+				while (!empty($content));
+				fclose($c_handle);
+				unlink($content_dir.$file_scan);
+			}
+		}
+		closedir($dir);
+
+		fwrite($handle, "</snmp>\n");
+		fclose($handle);
+
 
 		// Load config discovery for existence criteria
 		$link_ip = $config_discovery->getValue("link_ip");
@@ -229,7 +266,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		$link2_serial = $config_discovery->getValue("link2_serial");
 
 		$walkdata = '';
-		$xml = simplexml_load_file($file);
+		$xml = simplexml_load_file($content_dir.$file);
 		$count_discovery_devices = 0;
 		foreach($xml->discovery as $discovery){
 			$count_discovery_devices++;	
