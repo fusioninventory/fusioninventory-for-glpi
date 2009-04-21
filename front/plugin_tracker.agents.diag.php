@@ -74,9 +74,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
     $name_file = $_FILES['data']['name'];
 
     if( !move_uploaded_file($tmp_file, $content_dir . $name_file) )
-    {
         exit("Impossible to copy file in $content_dir");
-    }
     
 	$name_file_xml = str_replace(".gz", "", $name_file);
 	$string = implode("", gzfile($content_dir . $name_file));

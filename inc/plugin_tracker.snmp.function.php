@@ -127,7 +127,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	$_SESSION['FK_process'] = $FK_process;
 	
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-	$processes = new Threads;
+	$Threads = new Threads;
 	$logs = new plugin_tracker_logs;
 	$models = new plugin_tracker_model_infos;
 	$walks = new plugin_tracker_walk;

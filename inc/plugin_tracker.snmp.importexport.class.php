@@ -289,19 +289,25 @@ class plugin_tracker_importexport extends CommonDBTM
 		$file_modif = str_replace(".xml", "-device.xml", $file);
 		$target = $content_dir.$file_modif;
 		$handle = fopen($target, 'a');
-		
-		for ($i = 1; $i <= $num_files; $i++)
-		{
-			$file_modif = str_replace(".xml", "-".$i.".xml", $file);
-			$c_handle = fopen($content_dir.$file_modif, 'r');
-			do {
-				$content = fread($c_handle,1000000);
-				fwrite($handle, $content);
+		fwrite($handle, "<snmp>\n");
+		//
+		$dir = opendir($content_dir);
+		while($file_scan = readdir($dir)) {
+			if( strstr($file_scan, $xml->agent->pid."-tmp-" ))
+			{
+				$c_handle = fopen($content_dir.$file_scan, 'r');
+				do {
+					$content = fread($c_handle,1000000);
+					fwrite($handle, $content);
+				}
+				while (!empty($content));
+				fclose($c_handle);
+				unlink($content_dir.$file_scan);
 			}
-			while (!empty($content));
-			fclose($c_handle);
-			unlink($content_dir.$file_modif);
 		}
+		closedir($dir);
+
+		fwrite($handle, "</snmp>\n");
 		fclose($handle);
 
 		$xml_device = simplexml_load_file($target);
