@@ -293,6 +293,11 @@ class plugin_tracker_networking extends CommonDBTM
 			$sysUpTime = $data["uptime"];
 			if (strstr($sysUpTime, "days"))
 				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
+			else if (strstr($sysUpTime, "hours"))
+			{
+				$day = 0;
+				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d hours, %d:%d.%d");
+			}
 			else if (strstr($sysUpTime, "minutes"))
 			{
 				$day = 0;
