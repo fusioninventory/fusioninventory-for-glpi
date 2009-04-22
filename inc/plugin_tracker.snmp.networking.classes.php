@@ -292,7 +292,7 @@ class plugin_tracker_networking extends CommonDBTM
 			echo "<td align='center'>";
 			$sysUpTime = $data["uptime"];
 			if (strstr($sysUpTime, "days"))
-				sscanf($sysUpTime, "(%d) %d days, %d:%d:%d.%d",$uptime,$day,$hour,$minute,$sec,$ticks);
+				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
 			else if($sysUpTime == "0")
 			{
 				$day = 0;
@@ -302,10 +302,10 @@ class plugin_tracker_networking extends CommonDBTM
 			}
 			else
 			{
-				sscanf($sysUpTime, "(%d) %d:%d:%d.%d",$uptime,$hour,$minute,$sec,$ticks);
+				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d:%d:%d.%d");
 				$day = 0;
 			}
-	
+
 			echo "<b>$day</b> ".$LANG["stats"][31]." ";
 			echo "<b>$hour</b> ".$LANG["job"][21]." ";
 			echo "<b>$minute</b> ".$LANG["job"][22]." ";

@@ -587,6 +587,8 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
 					for($i = 1; $i < count($MacAddress_tmp); $i++)
 						$MacAddress .= ":".$MacAddress_tmp[$i];
 					$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] = $MacAddress;
+					if (empty($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]))
+						$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] = "00:00:00:00:00:00";
 				}
 				$logs->write("tracker_fullsync","****************",$type."][".$ID_Device,1);
 				$logs->write("tracker_fullsync","Oid : ".$oid,$type."][".$ID_Device,1);
