@@ -1400,11 +1400,15 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-echo $table.".".$field;
+
 	switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			// Standard Order By clause for the example but use it for specific selection
 			return " ORDER BY $table.last_tracker_update $order ";
+			break;
+		case "glpi_plugin_tracker_networking.ID" :
+			//if ($ID == "5192" )
+				//return " ORDER BY glpi_networking.name $order ";
 			break;
 	}
 	return "";
@@ -1415,8 +1419,10 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 
 switch ($new_table.".".$linkfield){
 		case "glpi_plugin_tracker_networking.ID" :
-			// Standard LEFT JOIN for the example but use it for specific jointures
-			return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
+			if ($ref_table == "glpi_computers" )
+				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
+			else
+				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
 			break;
 	}
 	return "";
