@@ -1392,6 +1392,36 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 	
 }
 
+
+// Search modification for plugin Tracker
+
+function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
+	global $SEARCH_OPTION;
+
+	$table=$SEARCH_OPTION[$type][$ID]["table"];
+	$field=$SEARCH_OPTION[$type][$ID]["field"];
+echo $table.".".$field;
+	switch ($table.".".$field){
+		case "glpi_plugin_tracker_networking.FK_networking" :
+			// Standard Order By clause for the example but use it for specific selection
+			return " ORDER BY $table.last_tracker_update $order ";
+			break;
+	}
+	return "";
+}
+
+
+function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
+
+switch ($new_table.".".$linkfield){
+		case "glpi_plugin_tracker_networking.ID" :
+			// Standard LEFT JOIN for the example but use it for specific jointures
+			return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
+			break;
+	}
+	return "";
+}
+
 function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 	global $SEARCH_OPTION;
 
@@ -1409,6 +1439,15 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 				$ADD=" OR $table.$field IS NULL";
 			}
 			return $link." ($table.$field $val ".$ADD." ) ";
+			break;
+		case "glpi_plugin_tracker_networking.FK_networking" :
+			// Standard Where clause for the example but use it for specific jointures
+			$ADD="";
+
+			if ($nott&&$val!="NULL") {
+				$ADD=" OR $table.$field IS NULL";
+			}
+			return $link." ($table.last_tracker_update LIKE '%".$val."%' ) ";
 			break;
 	}
 	return "";
