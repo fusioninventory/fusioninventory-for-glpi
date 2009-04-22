@@ -295,7 +295,7 @@ class plugin_tracker_networking extends CommonDBTM
 				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
 			else if (strstr($sysUpTime, "minutes"))
 			{
-				$days = 0;
+				$day = 0;
 				$hour = 0;
 				list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
 			}
