@@ -234,10 +234,12 @@ else if(isset($_POST['get_data']))
 				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_plugin_tracker_networking
 				LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
 				LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
+				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
 				WHERE FK_model_infos != '0'
 					AND FK_snmp_connection != '0'
 					AND state='".$config_snmp_networking->getValue('active_device_state')."'
 					AND glpi_plugin_tracker_model_infos.ID>0
+					AND glpi_plugin_tracker_snmp_connection.ID>0
 					".$rangeip_select." ";
 			}
 			else if ($devices[$i] == "device_printer")
@@ -245,10 +247,14 @@ else if(isset($_POST['get_data']))
 				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_networking_ports
 				LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
 				LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
+				LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
+				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
 				WHERE device_type='".PRINTER_TYPE."'
 					AND FK_model_infos != '0'
 					AND FK_snmp_connection != '0'
 					AND state='".$config_snmp_printer->getValue('active_device_state')."'
+					AND glpi_plugin_tracker_model_infos.ID>0
+					AND glpi_plugin_tracker_snmp_connection.ID>0
 					".$rangeip_select."
 					AND FK_printers!=0";
 			}
