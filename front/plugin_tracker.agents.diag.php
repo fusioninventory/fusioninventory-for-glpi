@@ -249,7 +249,7 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
 				LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_printers.FK_model_infos = glpi_plugin_tracker_model_infos.ID
 				LEFT JOIN glpi_plugin_tracker_snmp_connection ON glpi_plugin_tracker_printers.FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
-				WHERE device_type='".PRINTER_TYPE."'
+				WHERE glpi_networking_ports.device_type='".PRINTER_TYPE."'
 					AND FK_model_infos != '0'
 					AND FK_snmp_connection != '0'
 					AND state='".$config_snmp_printer->getValue('active_device_state')."'
@@ -322,7 +322,7 @@ else if(isset($_POST['get_data']))
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
 				WHERE FK_networking='[FK_networking]'
 					AND oid_port_dyn=0
-					AND activation=1";
+					AND glpi_plugin_tracker_mib_networking.activation=1";
 			}
 			else if ($devices[$i] == "device_printer")
 			{
@@ -334,7 +334,7 @@ else if(isset($_POST['get_data']))
 			 	LEFT JOIN glpi_dropdown_plugin_tracker_mib_object ON glpi_dropdown_plugin_tracker_mib_object.ID=FK_mib_object
 				WHERE FK_printers='[FK_printers]'
 					AND oid_port_dyn=0
-					AND activation=1";
+					AND glpi_plugin_tracker_mib_networking.activation=1";
 			}
 			$xml_writed->element[2]['get']['linkfield']['object'] = 'object';
 			$xml_writed->element[2]['get']['linkfield']['oid'] = 'oid';
