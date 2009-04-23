@@ -1075,47 +1075,48 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 		}
 		else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225"))
 		{
-			unset($ArrayMACAdressTable);
-			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1);
-			foreach($ArrayMACAdressTable as $num=>$dynamicdata)
-			{
-		
-				$oidExplode = explode(".", $dynamicdata);
-				if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""])))
-				{
-					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""];
-
-					if (($BridgePortifIndex == "1"))
-					{
-						$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
-						$MacAddress_tmp = str_split($MacAddress, 2);
-						$MacAddress = $MacAddress_tmp[0];
-						for($i = 1; $i < count($MacAddress_tmp); $i++)
-							$MacAddress .= ":".$MacAddress_tmp[$i];
-
-						// On vérifie si l'adresse MAC appartient à un port réseau de switch
-						$query = "SELECT *  FROM glpi_networking_ports
-						WHERE device_type='".NETWORKING_TYPE."'
-						 AND ifmac='".$MacAddress."' ";
-						$result = $DB->query($query);
-						if (mysql_num_rows($result) > 0)
-						{
-							$data = $DB->fetch_assoc($result);
-
-							$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-							WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum["1"]."'
-								AND device_type='".NETWORKING_TYPE."'
-								AND on_device='".$ID_Device."' ";
-
-							$result2 = $DB->query($query2);
-							$data2 = $DB->fetch_assoc($result2);
-
-							$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
-						}
-					}
-				}
-
-			}
+			// =-=-=-=-=-=-= Don't work =-=-=-=-=-=-= \\
+//			unset($ArrayMACAdressTable);
+//			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1);
+//			foreach($ArrayMACAdressTable as $num=>$dynamicdata)
+//			{
+//
+//				$oidExplode = explode(".", $dynamicdata);
+//				if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""])))
+//				{
+//					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""];
+//
+//					if (($BridgePortifIndex == "1"))
+//					{
+//						$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
+//						$MacAddress_tmp = str_split($MacAddress, 2);
+//						$MacAddress = $MacAddress_tmp[0];
+//						for($i = 1; $i < count($MacAddress_tmp); $i++)
+//							$MacAddress .= ":".$MacAddress_tmp[$i];
+//
+//						// On vérifie si l'adresse MAC appartient à un port réseau de switch
+//						$query = "SELECT *  FROM glpi_networking_ports
+//						WHERE device_type='".NETWORKING_TYPE."'
+//						 AND ifmac='".$MacAddress."' ";
+//						$result = $DB->query($query);
+//						if (mysql_num_rows($result) > 0)
+//						{
+//							$data = $DB->fetch_assoc($result);
+//
+//							$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+//							WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum["1"]."'
+//								AND device_type='".NETWORKING_TYPE."'
+//								AND on_device='".$ID_Device."' ";
+//
+//							$result2 = $DB->query($query2);
+//							$data2 = $DB->fetch_assoc($result2);
+//
+//							$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
+//						}
+//					}
+//				}
+//
+//			}
 		}
 	}
 
