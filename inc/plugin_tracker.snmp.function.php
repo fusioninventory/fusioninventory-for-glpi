@@ -1017,6 +1017,24 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 	{
 		$trunk_no_cdp["1"] = 1;
 		$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
+		$query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+			LEFT JOIN glpi_plugin_tracker_networking_ports
+			ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
+			WHERE device_type='2'
+				AND on_device='".$ID_Device."'
+				AND logical_number='0' ";
+		$result=$DB->query($query);
+		while ($data=$DB->fetch_array($result))
+		{
+			if ($data['trunk'] == "0")
+			{
+				$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+				SET trunk='1'
+				WHERE id='".$data['sid']."' ";
+				$DB->query($query_update);
+				tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
+			}
+		}
 	}
 
 	// If no Ip or mac in this trunks port, we try to search switch connected to this
