@@ -871,7 +871,10 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 		case "glpi_plugin_tracker_snmp_history.FK_ports" :
 			$netport=new Netport;
 			$netport->getFromDB($data["ITEM_$num"]);
-			$out = $netport->fields["name"];
+			if (isset($netport->fields["name"]))
+				$out = $netport->fields["name"];
+			else
+				$out = $LANG["common"][28];
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_networking_ports.ID" :
