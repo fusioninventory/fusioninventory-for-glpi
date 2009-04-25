@@ -400,7 +400,7 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['field'] = 'process_number';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['linkfield'] = 'process_number';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['name'] = $LANGTRACKER["processes"][15];
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['name'] = $LANGTRACKER["processes"][1];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['field'] = 'FK_agent';
@@ -431,12 +431,12 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['field'] = 'networking_queries';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['linkfield'] = 'networking_queries';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['name'] = $LANGTRACKER["processes"][21];	
-
+/*
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['field'] = 'networking_ports_queries';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['linkfield'] = 'networking_ports_queries';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['name'] = $LANGTRACKER["processes"][8];	
-
+*/
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['field'] = 'errors';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['linkfield'] = 'errors';
@@ -1406,12 +1406,13 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 	switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking.FK_networking" :
-			// Standard Order By clause for the example but use it for specific selection
 			return " ORDER BY $table.last_tracker_update $order ";
 			break;
 		case "glpi_plugin_tracker_networking.ID" :
 			//if ($ID == "5192" )
 				//return " ORDER BY glpi_networking.name $order ";
+			break;
+		case "glpi_plugin_tracker_networking_ports.ID" : // In computer list
 			break;
 	}
 	return "";
@@ -1419,13 +1420,15 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 
 function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
-
+echo "Left Join : ".$new_table.".".$linkfield."<br/>\n";
 switch ($new_table.".".$linkfield){
 		case "glpi_plugin_tracker_networking.ID" :
 			if ($ref_table == "glpi_computers" )
 				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
 			else
 				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
+			break;
+		case "glpi_plugin_tracker_networking_ports.ID" : // In computer list
 			break;
 	}
 	return "";
@@ -1441,18 +1444,14 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 
 	switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking_ports.lastup" :
-			// Standard Where clause for the example but use it for specific jointures
 			$ADD="";	
-
 			if ($nott&&$val!="NULL") {
 				$ADD=" OR $table.$field IS NULL";
 			}
 			return $link." ($table.$field $val ".$ADD." ) ";
 			break;
 		case "glpi_plugin_tracker_networking.FK_networking" :
-			// Standard Where clause for the example but use it for specific jointures
 			$ADD="";
-
 			if ($nott&&$val!="NULL") {
 				$ADD=" OR $table.$field IS NULL";
 			}
