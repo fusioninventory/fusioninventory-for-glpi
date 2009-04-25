@@ -292,6 +292,7 @@ else if(isset($_POST['get_data']))
 				$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
 				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
 				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol ON auth_protocol=glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol.ID
 				WHERE FK_networking='[FK_networking]'";
 			}
 			else if ($devices[$i] == "device_printer")
@@ -299,6 +300,7 @@ else if(isset($_POST['get_data']))
 				$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_printers
 				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
 				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol ON auth_protocol=glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol.ID
 				WHERE FK_printers='[FK_printers]'";
 			}
 			$xml_writed->element[2]['auth']['linkfield']['community'] = 'community';
