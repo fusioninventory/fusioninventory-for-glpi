@@ -40,7 +40,6 @@ This plugin enables you get informations for networking devices by SNMP.
 
 Compatibility 0.71.3
 PHP5 or higher is required !
-php5-SNMP (5.x version is good but 4.x version works) is required !
 
 2 - Installation
 
