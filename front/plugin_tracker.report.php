@@ -63,12 +63,12 @@ echo "<td align='center'>";
 echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.ports_date_connections.php'>Ports de switchs non connectés depuis xx mois</a>";
 echo "</td>";
 echo "</tr>";
-
+/*
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
 echo "Liste des équipements prêts à être interrogés mais non associés à un agent";
 echo "</td>";
-
+*/
 echo "</table>";
 
 commonFooter();
