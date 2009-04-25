@@ -134,12 +134,14 @@ class plugin_tracker_model_infos extends CommonDBTM
 			case NETWORKING_TYPE :
 				$query = "SELECT * FROM glpi_plugin_tracker_networking 
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_networking.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
-				WHERE FK_networking='".$ID_Device."' ";
+				WHERE FK_networking='".$ID_Device."'
+					AND glpi_plugin_tracker_mib_networking.activation='1' ";
 				break;
 			case PRINTER_TYPE :
 				$query = "SELECT * FROM glpi_plugin_tracker_printers
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_printers.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
-				WHERE FK_printers='".$ID_Device."' ";
+				WHERE FK_printers='".$ID_Device."'
+					AND glpi_plugin_tracker_mib_networking.activation='1' ";
 				break;
 		}
 		if (!empty($query))
@@ -147,9 +149,8 @@ class plugin_tracker_model_infos extends CommonDBTM
 			$result=$DB->query($query);
 			$exclude = array();
 			while ( $data=$DB->fetch_array($result) )
-			{
 				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] = getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']);
-			}
+
 			return $oids;
 		}
 	}
