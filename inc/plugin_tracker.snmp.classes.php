@@ -240,7 +240,8 @@ class plugin_tracker_snmp extends CommonDBTM
 		LEFT JOIN glpi_dropdown_plugin_tracker_mib_oid
 			ON glpi_plugin_tracker_mib_networking.FK_mib_oid=glpi_dropdown_plugin_tracker_mib_oid.ID
 		".$query_add."
-			AND oid_port_counter='0' ";
+			AND oid_port_counter='0'
+			AND glpi_plugin_tracker_mib_networking.activation='1' ";
 
 		if ( $result=$DB->query($query) )
 		{

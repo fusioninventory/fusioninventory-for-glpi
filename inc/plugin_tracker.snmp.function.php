@@ -131,7 +131,6 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	$logs = new plugin_tracker_logs;
 	$models = new plugin_tracker_model_infos;
 	$walks = new plugin_tracker_walk;
-	
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
 
 	// Load XML Device ID

@@ -75,8 +75,10 @@ commonFooter();
 
 function displaySearchForm($FK_port)
 {
-	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI;
-	
+	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$TRACKER_MAPPING,$LANGTRACKER;
+
+	include_once(GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php');
+
 	echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
 	echo "<table class='tab_cadre' cellpadding='5'>";
 	echo "<tr class='tab_bg_1' align='center'>";
@@ -89,6 +91,7 @@ function displaySearchForm($FK_port)
 	LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
 	WHERE device_type=".NETWORKING_TYPE."
 	ORDER BY glpi_networking.name,glpi_networking_ports.logical_number";
+
 	echo "<select name='FK_networking_ports'>";
 	echo "<option>-----</option>";
 	$result=$DB->query($query);
@@ -103,8 +106,36 @@ function displaySearchForm($FK_port)
 	echo "</select>";
 
 	echo "</td>";
-	
+	echo "</tr>";
+	echo "<tr>";
 	echo "<td>";
+
+	$types = array();
+	$types[] = "-----";
+	foreach ($TRACKER_MAPPING as $type=>$mapping43)
+	{
+		if (NETWORKING_TYPE == $type)
+		{
+			if (isset($TRACKER_MAPPING[$type]))
+			{
+				foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
+				{
+					$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+				}
+			}
+		}
+	}
+	echo $LANG["event"][18]." : ";
+	$default = '';
+	if (isset($_POST['Field']))
+		$default = $_POST['Field'];
+	dropdownArrayValues("Field",$types,$default);
+
+	echo "</td>";
+	echo "</tr>";
+	echo "<tr>";
+	
+	echo "<td align='center'>";
 	echo "<input type='submit' value='Valider' class='submit' />";
 	echo "</td>";
 	
