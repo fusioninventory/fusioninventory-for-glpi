@@ -77,7 +77,7 @@ function plugin_tracker_changeprofile()
 }
 
 function plugin_tracker_haveRight($module,$right){
-
+// echo $_SESSION["glpiactive_entity"];
 	$matches=array(
 			""  => array("","r","w"), // ne doit pas arriver normalement
 			"r" => array("r","w"),
