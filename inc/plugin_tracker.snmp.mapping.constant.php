@@ -96,6 +96,12 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['serial']['name'] = $LANGTRACKER["mapping"][13
 $TRACKER_MAPPING[NETWORKING_TYPE]['serial']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['serial']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['otherserial']['table'] = 'glpi_networking';
+$TRACKER_MAPPING[NETWORKING_TYPE]['otherserial']['field'] = 'otherserial';
+$TRACKER_MAPPING[NETWORKING_TYPE]['otherserial']['name'] = $LANGTRACKER["mapping"][419];
+$TRACKER_MAPPING[NETWORKING_TYPE]['otherserial']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['otherserial']['dropdown'] = '';
+
 $TRACKER_MAPPING[NETWORKING_TYPE]['name']['table'] = 'glpi_networking';
 $TRACKER_MAPPING[NETWORKING_TYPE]['name']['field'] = 'name';
 $TRACKER_MAPPING[NETWORKING_TYPE]['name']['name'] = $LANGTRACKER["mapping"][20];
@@ -301,6 +307,12 @@ $TRACKER_MAPPING[PRINTER_TYPE]['name']['field'] = 'name';
 $TRACKER_MAPPING[PRINTER_TYPE]['name']['name'] = $LANGTRACKER["mapping"][24];
 $TRACKER_MAPPING[PRINTER_TYPE]['name']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['name']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['otherserial']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['otherserial']['field'] = 'otherserial';
+$TRACKER_MAPPING[PRINTER_TYPE]['otherserial']['name'] = $LANGTRACKER["mapping"][418];
+$TRACKER_MAPPING[PRINTER_TYPE]['otherserial']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['otherserial']['dropdown'] = '';
 
 $TRACKER_MAPPING[PRINTER_TYPE]['memory']['table'] = 'glpi_printers';
 $TRACKER_MAPPING[PRINTER_TYPE]['memory']['field'] = 'ramSize';

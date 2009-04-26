@@ -381,6 +381,9 @@ $LANGTRACKER["mapping"][414]="réseaux > instances de ports (dot1dTpFdbPort)";
 $LANGTRACKER["mapping"][415]="réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)";
 $LANGTRACKER["mapping"][416]="imprimante > port > numéro index";
 $LANGTRACKER["mapping"][417]="réseaux > adresse MAC";
+$LANGTRACKER["mapping"][418]="imprimante > numéro d'inventaire";
+$LANGTRACKER["mapping"][419]="réseaux > numéro d'inventaire";
+
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
