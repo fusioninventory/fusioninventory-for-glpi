@@ -61,6 +61,8 @@ if(isset($_GET["FK_networking_ports"])){
 		
 	$field[]=2;
 	$contains[]=$_GET["FK_networking_ports"];
+	$field[]=3;
+	$contains[]=$_GET["Field"];
 
 	$_GET["field"] = $field;
 	$_GET["contains"] = $contains;
@@ -120,7 +122,7 @@ function displaySearchForm($FK_port)
 			{
 				foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
 				{
-					$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+					$types[$name]=$TRACKER_MAPPING[$type][$name]["name"];
 				}
 			}
 		}

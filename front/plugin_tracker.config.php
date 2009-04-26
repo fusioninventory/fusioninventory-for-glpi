@@ -117,10 +117,10 @@ else
 		echo "</td></tr>";
 
 		/* Models */
-		echo "<tr class='tab_bg_1'><td align='center'>";
+/*		echo "<tr class='tab_bg_1'><td align='center'>";
 		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANGTRACKER["profile"][19]."&nbsp;</a>";
 		echo "</td></tr>";
-
+*/
 		/* Uninstall */
 		if ($_SESSION["glpiactive_entity"]==0){
 			echo "<tr class='tab_bg_1'><td align='center'>";

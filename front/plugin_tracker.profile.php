@@ -90,6 +90,17 @@ else  if (isset($_POST["update"])){
 		$prof->update($_POST);
 }
 
+// New profiles
+print "Modeles<br/>";
+print "Authentification SNMP<br/>";
+print "Plages IP<br/>";
+print "Agents<br/>";
+print "infos traitement serveur<br/>";
+print "infos traitement agents<br/>";
+print "découverte<br/>";
+print "Rapports<br/>";
+
+
 echo "<div align='center'><form method='post' name='massiveaction_form' id='massiveaction_form'  action=\"./plugin_tracker.profile.php\">";
 
 echo "<table class='tab_cadre' cellpadding='5'>";

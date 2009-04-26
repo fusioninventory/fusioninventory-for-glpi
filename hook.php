@@ -1420,7 +1420,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 
 function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
-echo "Left Join : ".$new_table.".".$linkfield."<br/>\n";
+
 switch ($new_table.".".$linkfield){
 		case "glpi_plugin_tracker_networking.ID" :
 			if ($ref_table == "glpi_computers" )
@@ -1442,7 +1442,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 	
 	$SEARCH=makeTextSearch($val,$nott);
 
-	switch ($table.".".$field){
+switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking_ports.lastup" :
 			$ADD="";	
 			if ($nott&&$val!="NULL") {
