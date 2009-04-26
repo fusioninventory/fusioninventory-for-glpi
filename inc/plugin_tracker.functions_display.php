@@ -235,7 +235,10 @@ function plugin_tracker_Bar ($pourcentage, $message="",$order='')
 {
 //	echo "<div class='doaction_cadre' style='height: 20px; '><div  style='width: ".$pourcentage."%;' class='doaction_progress'>".
 //  			"<div class='doaction_pourcent' style='margin-top: 3px; '>".$pourcentage."% ".$message."</div></div></div> ";
-
+	if ((!empty($pourcentage)) AND ($pourcentage < 0))
+		unset($pourcentage);
+	elseif ((!empty($pourcentage)) AND ($pourcentage > 100))
+		unset($pourcentage);
 	echo "<div>
 				<table class='tab_cadre' width='400'>
 					<tbody>
