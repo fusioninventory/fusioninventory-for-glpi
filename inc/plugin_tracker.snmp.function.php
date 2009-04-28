@@ -907,7 +907,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 
 	$Array_trunk_ifIndex = array();
 
-	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))
+	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J")))
 	{
 		// Get trunk port directly from oid
 		$Arraytrunktype = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vlanTrunkPortDynamicStatus'],1);
