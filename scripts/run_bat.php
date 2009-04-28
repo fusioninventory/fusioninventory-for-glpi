@@ -119,7 +119,7 @@ if (DIRECTORY_SEPARATOR=='/') {
 }
 else {
 	# Windows	
-	$pidfile = GLPI_LOCK_DIR."\tracker_fullsync.pid";
+	$pidfile = GLPI_LOCK_DIR."/tracker_fullsync.pid";
 }
 $logfilename = GLPI_LOG_DIR."/tracker_fullsync.log";
 
