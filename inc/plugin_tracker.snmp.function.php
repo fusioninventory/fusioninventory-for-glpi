@@ -400,9 +400,23 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 					$oidvalues[$oid][""] = $MacAddress;
 				}
 
-			// * Printers cartridges
-			if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_plugin_tracker_printers_cartridges")
+			// Convert hexa in string
+			if (strstr($oidvalues[$oid][""], "0x0115"))
 			{
+				$hex = str_replace("0x0115","",$oidvalues[$oid][""]);
+				$string='';
+				for ($i=0; $i < strlen($hex)-1; $i+=2)
+					$string .= chr(hexdec($hex[$i].$hex[$i+1]));
+				$oidvalues[$oid][""] = $string;
+			}
+
+			if (strstr($oidvalues[$oid][""], "noSuchName"))
+			{
+				// NO Update field in GLPI
+			}
+			else if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_plugin_tracker_printers_cartridges")
+			{
+				// * Printers cartridges
 				$object_name_clean = str_replace("MAX", "", $link);
 				$object_name_clean = str_replace("REMAIN", "", $object_name_clean);
 				if (strstr($link, "MAX"))
