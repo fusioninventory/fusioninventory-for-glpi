@@ -236,6 +236,7 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
 				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
 				WHERE FK_model_infos != '0'
+					AND glpi_networking.deleted='0'
 					AND FK_snmp_connection != '0'
 					AND state='".$config_snmp_networking->getValue('active_device_state')."'
 					AND glpi_plugin_tracker_model_infos.ID>0
@@ -250,6 +251,7 @@ else if(isset($_POST['get_data']))
 				LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_printers.FK_model_infos = glpi_plugin_tracker_model_infos.ID
 				LEFT JOIN glpi_plugin_tracker_snmp_connection ON glpi_plugin_tracker_printers.FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
 				WHERE glpi_networking_ports.device_type='".PRINTER_TYPE."'
+					AND glpi_printers.deleted='0'
 					AND FK_model_infos != '0'
 					AND FK_snmp_connection != '0'
 					AND state='".$config_snmp_printer->getValue('active_device_state')."'
