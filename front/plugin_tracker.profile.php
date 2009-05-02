@@ -90,35 +90,30 @@ else  if (isset($_POST["update"])){
 		$prof->update($_POST);
 }
 
-// New profiles
-print "Modeles<br/>";
-print "Authentification SNMP<br/>";
-print "Plages IP<br/>";
-print "Agents<br/>";
-print "infos traitement serveur<br/>";
-print "infos traitement agents<br/>";
-print "découverte<br/>";
-print "Rapports<br/>";
-
-
 echo "<div align='center'><form method='post' name='massiveaction_form' id='massiveaction_form'  action=\"./plugin_tracker.profile.php\">";
 
 echo "<table class='tab_cadre' cellpadding='5'>";
+
 echo "<tr>";
-echo "	<th colspan='11'>".$LANGTRACKER["profile"][10]." : </th>";
+echo "	<th colspan='14'>".$LANGTRACKER["profile"][10]." : </th>";
 echo "</tr>";
+
 echo "<tr>";
 echo "	<th></th>";
 echo "	<th></th>";
 echo "	<th>".$LANG["Menu"][35]."</th>";
 echo "	<th>".$LANGTRACKER["profile"][16]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][17]."</th>";
 echo "	<th>".$LANGTRACKER["profile"][18]."</th>";
 echo "	<th>".$LANGTRACKER["profile"][19]."</th>";
 echo "	<th>".$LANGTRACKER["profile"][20]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][25]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][26]."</th>";
 echo "	<th>".$LANGTRACKER["profile"][21]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][27]."</th>";
 echo "	<th>".$LANGTRACKER["profile"][22]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][28]."</th>";
 echo "	<th>".$LANGTRACKER["profile"][23]."</th>";
+echo "</tr>";
 
 $query0="SELECT * FROM glpi_plugin_tracker_profiles ORDER BY name";
 $result0=$DB->query($query0);
@@ -131,62 +126,94 @@ while ($data0=$DB->fetch_assoc($result0)){
 	echo "<input type='checkbox' name='item[$ID0]' value='1'>";
 	echo "</td>";
 	echo "<td>".$data0['ID']."</td><td>".$data0['name']."</td>";
-	
-	if ($data0['snmp_networking']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_networking']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
-	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
-	
-	if ($data0['snmp_peripherals']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_peripherals']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
-	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
 
+// * snmp_networking
+	if ($data0['snmp_networking']=='r')
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['snmp_networking']=='w')
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_printers
 	if ($data0['snmp_printers']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
 	elseif ($data0['snmp_printers']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
 	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
-	
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_models
 	if ($data0['snmp_models']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
 	elseif ($data0['snmp_models']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
 	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
-	
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_authentification
 	if ($data0['snmp_authentification']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
 	elseif ($data0['snmp_authentification']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
 	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
-	
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_iprange
+	if ($data0['snmp_iprange']=='r')
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['snmp_iprange']=='w')
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_agent
+	if ($data0['snmp_agent']=='r')
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['snmp_agent']=='w')
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_scripts_infos
 	if ($data0['snmp_scripts_infos']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
 	elseif ($data0['snmp_scripts_infos']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
 	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
-	
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_agent_infos
+	if ($data0['snmp_agent_infos']=='r')
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['snmp_agent_infos']=='w')
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_discovery
 	if ($data0['snmp_discovery']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
 	elseif ($data0['snmp_discovery']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
 	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
-	
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * snmp_report
+	if ($data0['snmp_report']=='r')
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
+	elseif ($data0['snmp_report']=='w')
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
+	else
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+
+// * general_config
 	if ($data0['general_config']=='r')
-		echo "<td>".$LANG["profiles"][10]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
 	elseif ($data0['general_config']=='w')
-		echo "<td>".$LANG["profiles"][11]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
 	else
-		echo "<td>".$LANG["profiles"][12]."</td>";
+		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
 
 }
 

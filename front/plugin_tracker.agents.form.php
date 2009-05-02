@@ -43,23 +43,26 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-//plugin_tracker_checkRight("snmp_authentification","r");
-
 $agents = new plugin_tracker_agents;
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
 
+plugin_tracker_checkRight("snmp_agent","r");
+
 plugin_tracker_mini_menu();
 
 if (isset ($_POST["add"])){
+	plugin_tracker_checkRight("snmp_agent","w");
 	$agents->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 elseif (isset ($_POST["update"])) {
+	plugin_tracker_checkRight("snmp_agent","w");
 	$agents->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 elseif (isset ($_POST["delete"])) {
+	plugin_tracker_checkRight("snmp_agent","w");
 	$agents->delete($_POST);
 	glpi_header("plugin_tracker.agents.php");
 }

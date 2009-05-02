@@ -40,6 +40,8 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","rangeip");
 
+plugin_tracker_checkRight("snmp_iprange","r");
+
 plugin_tracker_mini_menu();
 
 manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_RANGEIP);

@@ -438,19 +438,22 @@ CREATE TABLE `glpi_plugin_tracker_processes_values` (
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_profiles`;
 
-CREATE TABLE `glpi_plugin_tracker_profiles` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_profiles` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `interface` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'tracker',
   `is_default` enum('0','1') COLLATE utf8_unicode_ci DEFAULT NULL,
   `snmp_networking` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `snmp_peripherals` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `snmp_printers` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `snmp_models` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `snmp_authentification` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `snmp_scripts_infos` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `snmp_discovery` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `general_config` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `snmp_iprange` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `snmp_agent` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `snmp_agent_infos` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `snmp_report` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

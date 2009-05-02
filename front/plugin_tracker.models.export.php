@@ -51,6 +51,7 @@ header("Content-Description: File Transfer");
 header('Content-type: application/xml; charset="utf-8"',true);
 header("Content-disposition: attachment; filename=export.xml");
 
+
 echo $importexport->plugin_tracker_export($_GET["model"]);
 
 //commonFooter();

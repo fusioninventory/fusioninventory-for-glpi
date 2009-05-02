@@ -61,7 +61,10 @@ $LANGTRACKER["profile"][21]="Infos scripts";
 $LANGTRACKER["profile"][22]="Découverte réseau";
 $LANGTRACKER["profile"][23]="Configuration générale";
 $LANGTRACKER["profile"][24]="Modèle SNMP";
-
+$LANGTRACKER["profile"][25]="Plages IP";
+$LANGTRACKER["profile"][26]="Agents";
+$LANGTRACKER["profile"][27]="Infos agent";
+$LANGTRACKER["profile"][28]="Rapport";
 
 $LANGTRACKER["setup"][2]="Merci de vous placer sur l'entité racine (voir tous)";
 $LANGTRACKER["setup"][3]="Configuration du plugin ".$title;

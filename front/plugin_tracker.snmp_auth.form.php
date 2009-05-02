@@ -56,6 +56,7 @@ $result=$DB->query($query);
 
 if (isset ($_POST["add"]))
 {
+	plugin_tracker_checkRight("snmp_authentification","w");
 	if ($DB->result($result,0,"authsnmp") == "file")
 		$new_ID = $plugin_tracker_snmp_auth->add_xml();
 	else if ($DB->result($result,0,"authsnmp") == "DB")
@@ -66,6 +67,7 @@ if (isset ($_POST["add"]))
 }
 elseif (isset ($_POST["update"]))
 {
+	plugin_tracker_checkRight("snmp_authentification","w");
 	$plugin_tracker_snmp_auth->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }

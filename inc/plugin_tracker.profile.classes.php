@@ -123,36 +123,61 @@ class plugin_tracker_Profile extends CommonDBTM {
 		dropdownNoneReadWrite("snmp_networking",$this->fields["snmp_networking"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
-		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANGTRACKER["profile"][17].":</td><td>";
-		dropdownNoneReadWrite("snmp_peripherals",$this->fields["snmp_peripherals"],1,1,1);
-		echo "</td>";
-		echo "</tr>";
+
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$LANGTRACKER["profile"][18].":</td><td>";
 		dropdownNoneReadWrite("snmp_printers",$this->fields["snmp_printers"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
+
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$LANGTRACKER["profile"][19].":</td><td>";
 		dropdownNoneReadWrite("snmp_models",$this->fields["snmp_models"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
+
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$LANGTRACKER["profile"][20].":</td><td>";
 		dropdownNoneReadWrite("snmp_authentification",$this->fields["snmp_authentification"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
+
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][25].":</td><td>";
+		dropdownNoneReadWrite("snmp_iprange",$this->fields["snmp_iprange"],1,1,1);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][26].":</td><td>";
+		dropdownNoneReadWrite("snmp_agent",$this->fields["snmp_agent"],1,1,1);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$LANGTRACKER["profile"][21].":</td><td>";
 		dropdownNoneReadWrite("snmp_scripts_infos",$this->fields["snmp_scripts_infos"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
+
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][27].":</td><td>";
+		dropdownNoneReadWrite("snmp_agent_infos",$this->fields["snmp_agent_infos"],1,1,1);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$LANGTRACKER["profile"][22].":</td><td>";
 		dropdownNoneReadWrite("snmp_discovery",$this->fields["snmp_discovery"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
+
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][28].":</td><td>";
+		dropdownNoneReadWrite("snmp_report",$this->fields["snmp_report"],1,1,1);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$LANGTRACKER["profile"][23].":</td><td>";
 		dropdownNoneReadWrite("general_config",$this->fields["general_config"],1,1,1);

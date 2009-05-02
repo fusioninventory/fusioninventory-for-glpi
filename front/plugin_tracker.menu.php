@@ -40,13 +40,23 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
-plugin_tracker_checkRight("snmp_models","r");
-plugin_tracker_checkRight("snmp_authentification","r");
-plugin_tracker_checkRight("snmp_scripts_infos","r");
-plugin_tracker_checkRight("snmp_discovery","r");
+// if One of with are possible, user have access
 
-plugin_tracker_phpextensions();
-plugin_tracker_menu();
+//if (plugin_tracker_HaveRight("snmp_discovery","r")
+if (plugin_tracker_HaveRight("snmp_models","r")
+	OR plugin_tracker_HaveRight("snmp_authentification","r")
+	OR plugin_tracker_HaveRight("snmp_iprange","r")
+	OR plugin_tracker_HaveRight("snmp_agent","r")
+	OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
+	OR plugin_tracker_HaveRight("snmp_agent_infos","r")
+	OR plugin_tracker_HaveRight("snmp_discovery","r")
+	OR plugin_tracker_HaveRight("snmp_report","r")
+	)
+{
+	plugin_tracker_menu();
+}
+else
+	displayRightError();
 
 commonFooter();
 

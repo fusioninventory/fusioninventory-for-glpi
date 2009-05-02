@@ -115,6 +115,14 @@ ALTER TABLE `glpi_plugin_tracker_networking` ADD `last_PID_update` INT( 11 ) NOT
 ALTER TABLE `glpi_plugin_tracker_networking_ports` ADD `lastup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
 
 
+ALTER TABLE `glpi_plugin_tracker_profiles` DROP `snmp_peripherals` ;
+
+ALTER TABLE `glpi_plugin_tracker_profiles` ADD `snmp_iprange` char(1) COLLATE utf8_unicode_ci DEFAULT NULL;
+ALTER TABLE `glpi_plugin_tracker_profiles` ADD `snmp_agent` char(1) COLLATE utf8_unicode_ci DEFAULT NULL;
+ALTER TABLE `glpi_plugin_tracker_profiles` ADD `snmp_agent_infos` char(1) COLLATE utf8_unicode_ci DEFAULT NULL;
+ALTER TABLE `glpi_plugin_tracker_profiles` ADD `snmp_report` char(1) COLLATE utf8_unicode_ci DEFAULT NULL;
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_rangeip`;
 
 CREATE TABLE `glpi_plugin_tracker_rangeip` (
