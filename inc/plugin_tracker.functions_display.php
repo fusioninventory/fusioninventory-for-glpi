@@ -51,23 +51,29 @@ function plugin_tracker_menu()
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_models.png'/>
 			<br/><b>".$LANGTRACKER["model_info"][4]."</b></a>";
 	echo "</td>";
+
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_authentification","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_authentification.png'/>
 			<br/><b>".$LANGTRACKER["model_info"][3]."</b></a>";
 	echo "</td>";
+
 	echo "<td align='center' width='".$width."' height='150'>";
-// Put rights
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
+	if(plugin_tracker_HaveRight("snmp_iprange","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rangeip.png'/>
 		<br/><b>".$LANGTRACKER["menu"][2]."</b></a>";
 	echo "</td>";
+
 	echo "<td align='center' width='".$width."' height='150'>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
+	if(plugin_tracker_HaveRight("snmp_agent","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_agents.png'/><br/>
 		<b>".$LANGTRACKER["menu"][1]."</b></a>";
-	echo "</td></tr>";
+	echo "</td>";
+	echo "</tr>";
+
 	
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' width='".$width."' height='150'>";
@@ -76,19 +82,24 @@ function plugin_tracker_menu()
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_server.png'/>
 			<br/><b>".$LANGTRACKER["processes"][0]."</b></a>";
 	echo "</td>";
+
 	echo "<td align='center' width='".$width."' height='150'>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
+	if(plugin_tracker_HaveRight("snmp_agent_infos","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_agents.png'/>
 		<br/><b>".$LANGTRACKER["processes"][19]."</b></a>";
 	echo "</td>";
+
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_discovery.png'/>
 			<br/><b>".$LANGTRACKER["menu"][0]."</b></a>";
 	echo "</td>";
+
 	echo "<td align='center' width='".$width."' height='150'>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
+	if(plugin_tracker_HaveRight("snmp_report","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rapports.png'/>
 		<br/><b>".$LANGTRACKER["processes"][20]."</b></a>";
 	echo "</td>";
@@ -126,14 +137,15 @@ function plugin_tracker_mini_menu()
 			echo "<span class='over_link' id='menu_mini_authentification'>".$LANGTRACKER["model_info"][3]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-// Put rights
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
+	if(plugin_tracker_HaveRight("snmp_iprange","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_rangeip.png'
 				 onmouseout=\"cleanhide('menu_mini_rangeip')\" onmouseover=\"cleandisplay('menu_mini_rangeip')\" /></a>";
 			echo "<span class='over_link' id='menu_mini_rangeip'>".$LANGTRACKER["menu"][2]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
+	if(plugin_tracker_HaveRight("snmp_agent","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_agents.png'
 				 onmouseout=\"cleanhide('menu_mini_agents')\" onmouseover=\"cleandisplay('menu_mini_agents')\" /></a>";
 			echo "<span class='over_link' id='menu_mini_agents'>".$LANGTRACKER["menu"][1]."</span>";
@@ -146,7 +158,8 @@ function plugin_tracker_mini_menu()
 			echo "<span class='over_link' id='menu_mini_info_server'>".$LANGTRACKER["processes"][0]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
+	if(plugin_tracker_HaveRight("snmp_agent_infos","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_info_agents.png'
 				 onmouseout=\"cleanhide('menu_mini_info_agents')\" onmouseover=\"cleandisplay('menu_mini_info_agents')\" /></a>";
 			echo "<span class='over_link' id='menu_mini_info_agents'>".$LANGTRACKER["processes"][19]."</span>";
@@ -159,7 +172,8 @@ function plugin_tracker_mini_menu()
 			echo "<span class='over_link' id='menu_mini_discovery'>".$LANGTRACKER["menu"][0]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
+	if(plugin_tracker_HaveRight("snmp_report","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_rapports.png'
 				 onmouseout=\"cleanhide('menu_mini_rapports')\" onmouseover=\"cleandisplay('menu_mini_rapports')\" /></a>";
 			echo "<span class='over_link' id='menu_mini_rapports'>".$LANGTRACKER["processes"][20]."</span>";
@@ -293,36 +307,4 @@ echo						"</td>
 			</div>";
 }
 	
-
-
-function plugin_tracker_phpextensions ()
-{
-	global $LANG,$LANGTRACKER;
-	$snmp = 0;
-	$runkit = 0;
-	if (extension_loaded('snmp'))
-	{
-		$snmp = 1;
-	}
-	if (($snmp == "0"))
-	{
-		echo "<div align='center'>";
-		echo "<table class='tab_cadre' cellpadding='5'>";
-		echo "<tr><th>".$LANGTRACKER["setup"][13];
-		echo "</th></tr>";
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-		if ($snmp == "0")
-			echo $LANGTRACKER["setup"][14];
-		echo "<br/>";
-		echo "</td>";
-		echo "</tr>";
-		echo "</table><br/>";
-	
-	}
-}
-
-
-
 ?>

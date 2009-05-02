@@ -62,7 +62,6 @@ else
 	if(!isset($_SESSION["glpi_plugin_tracker_installed"]) || $_SESSION["glpi_plugin_tracker_installed"]!=1) {
 
 		commonHeader($LANGTRACKER["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
-		plugin_tracker_phpextensions();
 		if ($_SESSION["glpiactive_entity"]==0){
 
 			if(!TableExists("glpi_plugin_tracker_rangeip")) {
@@ -92,7 +91,6 @@ else
 	}
 	else {
 		commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
-		plugin_tracker_phpextensions();
 		echo "<div align='center'>";
 		echo "<table class='tab_cadre' cellpadding='5'>";
 		echo "<tr><th>".$LANGTRACKER["setup"][3];

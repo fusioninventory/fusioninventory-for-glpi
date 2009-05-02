@@ -61,6 +61,10 @@ $LANGTRACKER["profile"][21]="Scripts informations";
 $LANGTRACKER["profile"][22]="Networking discover";
 $LANGTRACKER["profile"][23]="General configuration";
 $LANGTRACKER["profile"][24]="SNMP model";
+$LANGTRACKER["profile"][25]="IP range";
+$LANGTRACKER["profile"][26]="Agents";
+$LANGTRACKER["profile"][27]="Agents informations";
+$LANGTRACKER["profile"][28]="Report";
 
 
 $LANGTRACKER["setup"][2]="Thanks to put in racine entity (see all)";
