@@ -1338,7 +1338,7 @@ function plugin_tracker_MassiveActionsProcess($data)
 function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield){
 	global $LINK_ID_TABLE,$LANG;
 	// Table fields
-//	echo $table.".".$field."<br/>";
+	echo $table.".".$field."<br/>";
 	switch ($table.".".$field){
 		case 'glpi_entities.name':
 			dropdownValue("glpi_entities",$linkfield);
@@ -1376,9 +1376,11 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 		case 'glpi_plugin_tracker_agents.nb_process_query' :
 			dropdownInteger("nb_process_query", $linkfield,1,200);
 			return true;
+			break;
 		case 'glpi_plugin_tracker_agents.nb_process_discovery' :
 			dropdownInteger("nb_process_discovery", $linkfield,1,400);
 			return true;
+			break;
 		case 'glpi_plugin_tracker_agents.lock' :
 			dropdownYesNo('lock',$linkfield);
 			return true;
@@ -1388,6 +1390,31 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			$ArrayValues[]= $LANG["choice"][1];
 			$ArrayValues[]= $LANG["setup"][137];
 			dropdownArrayValues('logs',$ArrayValues,$linkfield);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_agents.core_discovery' :
+			dropdownInteger("core_discovery", $linkfield,1,32);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_agents.core_query' :
+			dropdownInteger("core_query", $linkfield,1,32);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_agents.threads_discovery' :
+			dropdownInteger("threads_discovery", $linkfield,1,400);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_agents.threads_query' :
+			dropdownInteger("threads_query", $linkfield,1,400);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_agents.last_agent_update' :
+			return true;
+			break;
+		case 'glpi_plugin_tracker_agents.tracker_agent_version' :
+			return true;
+			break;
+		case 'glpi_plugin_tracker_agents.ID' :
 			return true;
 			break;
 	}
