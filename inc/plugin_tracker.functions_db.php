@@ -118,4 +118,72 @@ function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 }
 
 
+function plugin_tracker_clean_db()
+{
+	global $DB;
+	
+	// * Clean glpi_plugin_tracker_networking_ports
+	$query_select = "SELECT glpi_plugin_tracker_networking_ports.ID FROM glpi_plugin_tracker_networking_ports
+	LEFT JOIN glpi_networking_ports ON glpi_networking_ports.ID = FK_networking_ports
+	LEFT JOIN glpi_networking ON glpi_networking.ID = on_device
+	WHERE glpi_networking.ID IS NULL";
+	$result=$DB->query($query_select);
+	while ( $data=$DB->fetch_array($result) )
+	{
+		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
+		WHERE ID='".$data["ID"]."'";
+		$DB->query($query_delete);
+	}
+	
+	// * Clean glpi_plugin_tracker_networking
+	$query_select = "SELECT glpi_plugin_tracker_networking.ID FROM glpi_plugin_tracker_networking
+	LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
+	WHERE glpi_networking.ID IS NULL";
+	$result=$DB->query($query_select);
+	while ( $data=$DB->fetch_array($result) )
+	{
+		$query_delete = "DELETE FROM glpi_plugin_tracker_networking
+		WHERE ID='".$data["ID"]."'";
+		$DB->query($query_delete);
+	}
+	
+	// * Clean glpi_plugin_tracker_printers
+	$query_select = "SELECT glpi_plugin_tracker_printers.ID FROM glpi_plugin_tracker_printers
+	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
+	WHERE glpi_printers.ID IS NULL";
+	$result=$DB->query($query_select);
+	while ( $data=$DB->fetch_array($result) )
+	{
+		$query_delete = "DELETE FROM glpi_plugin_tracker_printers
+		WHERE ID='".$data["ID"]."'";
+		$DB->query($query_delete);
+	}
+
+	// * Clean glpi_plugin_tracker_printers_cartridges
+	$query_select = "SELECT glpi_plugin_tracker_printers_cartridges.ID FROM glpi_plugin_tracker_printers_cartridges
+	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
+	WHERE glpi_printers.ID IS NULL";
+	$result=$DB->query($query_select);
+	while ( $data=$DB->fetch_array($result) )
+	{
+		$query_delete = "DELETE FROM glpi_plugin_tracker_printers_cartridges
+		WHERE ID='".$data["ID"]."'";
+		$DB->query($query_delete);
+	}
+
+	// * Clean glpi_plugin_tracker_printers_history
+	$query_select = "SELECT glpi_plugin_tracker_printers_history.ID FROM glpi_plugin_tracker_printers_history
+	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
+	WHERE glpi_printers.ID IS NULL";
+	$result=$DB->query($query_select);
+	while ( $data=$DB->fetch_array($result) )
+	{
+		$query_delete = "DELETE FROM glpi_plugin_tracker_printers_history
+		WHERE ID='".$data["ID"]."'";
+		$DB->query($query_delete);
+	}
+
+	
+}
+
 ?>

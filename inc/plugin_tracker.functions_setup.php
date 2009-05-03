@@ -100,6 +100,8 @@ function plugin_tracker_update($version) {
 		// Import models
 		$importexport = new plugin_tracker_importexport;
 		foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0);
+		// Clean DB (ports in glpi_plugin_tracker_networking_ports..... )
+		plugin_tracker_clean_db();
 	}
 
 	plugin_tracker_initSession();
