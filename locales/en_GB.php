@@ -183,6 +183,8 @@ $LANGTRACKER["errors"][103]="No SNMP authentification assigned";
 
 $LANGTRACKER["history"][0] = "Old";
 $LANGTRACKER["history"][1] = "New";
+$LANGTRACKER["history"][2] = "Disconnect";
+$LANGTRACKER["history"][3] = "Connection";
 
 $LANGTRACKER["prt_history"][0]="History and Statistics counters printer";
 
@@ -471,4 +473,5 @@ $LANGTRACKER["agents"][8]="Fragments in Ko";
 $LANGTRACKER["agents"][9]="Advanced options";
 $LANGTRACKER["agents"][10]="Query core (CPU)";
 $LANGTRACKER["agents"][11]="Discovery core (CPU)";
+
 ?>

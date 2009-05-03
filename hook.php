@@ -877,6 +877,24 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				$out = $LANG["common"][28];
 			return "<center>".$out."</center>";
 			break;
+		case "glpi_plugin_tracker_snmp_history.Field" :
+			if ($data["ITEM_$num"] == "0")
+			{
+				if (empty($data["ITEM_4"]))
+					return "<center><b>".$LANGTRACKER["history"][3]."</b></center>";
+				else if (empty($data["ITEM_5"]))
+					return "<center><b>".$LANGTRACKER["history"][2]."</b></center>";
+			}
+			break;
+		case "glpi_plugin_tracker_snmp_history.old_value" :
+			// TODO ADD LINK TO DEVICE
+			if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
+				return "<center><b>".$data["ITEM_$num"]."</b></center>";
+			break;
+		case "glpi_plugin_tracker_snmp_history.new_value" :
+			if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
+				return "<center><b>".$data["ITEM_$num"]."</b></center>";
+			break;
 		case "glpi_plugin_tracker_networking_ports.ID" :
 			if ($type == COMPUTER_TYPE)
 			{
