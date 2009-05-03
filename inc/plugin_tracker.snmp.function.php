@@ -176,9 +176,6 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		if (isset($oidsModel[0][0]['vtpVlanName']))
 			$Array_Object_oid_vtpVlanName = $oidsModel[0][0]['vtpVlanName'];
 
-		// ** Get OIDs (snmpget) EX $plugin_tracker_snmp->GetOID($snmp_model_ID,"oid_port_dyn='0' AND oid_port_counter='0'");
-		//$Array_Object_oid = $oidsModel[0][0][];
-
 		// ** Get from SNMP, description of equipment
 		$sysdescr = $oidvalues[".1.3.6.1.2.1.1.1.0"][""];
 
@@ -196,7 +193,6 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID_Device,$type);
 
 		// ** Update fields of switchs
-		//tracker_snmp_UpdateGLPIDevice($ArraySNMP_Object_result,$Array_Object_TypeNameConstant,$ID_Device,$type);
 		tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant);
 
 		//** From DB Array : portName => glpi_networking_ports.ID
@@ -1154,106 +1150,5 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 return $Array_trunk_ifIndex;
 }
 
-
-
-// * $ArrayListNetworking : array of device infos : ID => ifaddr
-// NOT USED VERIFY IT
-function plugin_tracker_snmp_networking_ifaddr($ArrayListDevice,$xml_auth_rep)
-{
-	global $DB;
-
-	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-	$plugin_tracker_snmp = new plugin_tracker_snmp;
-
-	$ifaddr_add = array();
-	$ifaddr = array();
-
-	$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr";
-	$result=$DB->query($query);
-	while ( $data=$DB->fetch_array($result) )
-		$ifaddr[$data["ifaddr"]] = $data["FK_networking"];
-
-
-	$oid_ifaddr_switch = array("ipAdEntAddr" => ".1.3.6.1.2.1.4.20.1.1");
-	
-	foreach ( $ArrayListDevice as $ID_Device=>$ifIP )
-	{
-		// Get SNMP model 
-		$snmp_model_ID = '';
-		$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID_Device,NETWORKING_TYPE);
-		if (($snmp_model_ID != "") && ($ID_Device != ""))
-		{
-			// ** Get snmp version and authentification
-			$snmp_auth = $plugin_tracker_snmp_auth->GetInfos($ID_Device,$xml_auth_rep,NETWORKING_TYPE);
-			$snmp_version = $snmp_auth["snmp_version"];
-			
-			$Array_Device_ifaddr = $plugin_tracker_snmp->SNMPQueryWalkAll($oid_ifaddr_switch,$ifIP,$snmp_version,$snmp_auth);
-
-			foreach ($Array_Device_ifaddr as $object=>$ifaddr_snmp)
-			{
-				if ($ifaddr[$ifaddr_snmp] == $ID_Device)
-				{	
-					if (isset($ifaddr[$ifaddr_snmp]))
-						unset ($ifaddr[$ifaddr_snmp]);
-				}
-				else
-					$ifaddr_add[$ifaddr_snmp] = $ID_Device;
-
-			}
-		}
-	}
-	foreach($ifaddr as $ifaddr_snmp=>$FK_networking)
-	{
-		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
-		WHERE FK_networking='".$FK_networking."'
-			AND ifaddr='".$ifaddr_snmp."' ";
-		$DB->query($query_delete);
-	}
-	foreach($ifaddr_add as $ifaddr_snmp=>$FK_networking)
-	{
-		$query_insert = "INSERT INTO glpi_plugin_tracker_networking_ifaddr
-		(FK_networking,ifaddr)
-		VALUES('".$FK_networking."','".$ifaddr_snmp."') ";
-		$DB->query($query_insert);
-	}
-}
-
-
-
-/**
- * Description
- *
- * @param $ID_Device : ID of device
- * @param $type : type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
- * @param $oidsModel : oid list from model SNMP
- * @param $oidvalues : list of values from agent query
- *
- * @return
- *
-**/
-// NOT USED VERIFY IT
-function plugin_tracker_snmp_port_ifaddr($ID_Device,$type,$oidsModel,$oidvalues)
-{
-	global $DB;
-
-	$snmp_queries = new plugin_tracker_snmp;
-	$logs = new plugin_tracker_logs;
-	$walks = new plugin_tracker_walk;
-
-	$logs->write("tracker_fullsync",">>>>>>>>>> Get IP of ports in device <<<<<<<<<<",$type."][".$ID_Device,1);
-
-	if($oidsModel[0][1]['ifaddr'])
-	{
-		$oidList =$walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifaddr'],1);
-		foreach($oidList as $key=>$ifaddr)
-		{
-			$SNMPValue = $oidvalues[$ArrayOIDifaddr.".".$ifaddr][""];
-			$logs->write("tracker_fullsync","ifaddr : ".$ifaddr." = ".$SNMPValue,$type."][".$ID_Device,1);
-			$ArraySNMPPort_Object_result[$oidsModel[0][1]['ifaddr'].".".$SNMPValue] = $ifaddr;
-			$logs->write("tracker_fullsync","ifaddr transformé : ".$oidsModel[0][1]['ifaddr'].".".$SNMPValue." = ".$ifaddr,$type."][".$ID_Device,1);
-		}
-	}
-	return $ArraySNMPPort_Object_result;
-}
 
 ?>
