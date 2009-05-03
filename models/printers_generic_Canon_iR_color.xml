@@ -84,16 +84,6 @@
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
-			<object><![CDATA[IF-MIB::ifIndex]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[ifIndex]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
 			<object><![CDATA[ifNumber]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.2.1.0]]></oid>
 			<portcounter>1</portcounter>
@@ -114,12 +104,22 @@
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
-			<object><![CDATA[IF-MIB::ifPhysAddress]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.6]]></oid>
+			<object><![CDATA[IP-MIB::ipAdEntIfIndex]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.2]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
 			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[ifPhysAddress]]></mapping_name>
+ 			<mapping_name><![CDATA[ifaddr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[IF-MIB::ifIndex]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifIndex]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -134,22 +134,22 @@
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
+			<object><![CDATA[IF-MIB::ifPhysAddress]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.6]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifPhysAddress]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
 			<object><![CDATA[IF-MIB::ifType]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.3]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
 			<mapping_type>3</mapping_type>
  			<mapping_name><![CDATA[ifType]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[IP-MIB::ipAdEntIfIndex]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.2]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[ifaddr]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
