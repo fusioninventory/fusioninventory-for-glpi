@@ -182,6 +182,8 @@ $LANGTRACKER["errors"][103]="Authentification SNMP non assigné";
 
 $LANGTRACKER["history"][0] = "Ancienne";
 $LANGTRACKER["history"][1] = "Nouvelle";
+$LANGTRACKER["history"][2] = "Déconnexion";
+$LANGTRACKER["history"][3] = "Connexion";
 
 $LANGTRACKER["prt_history"][0]="Historique et Statistiques des compteurs imprimante";
 

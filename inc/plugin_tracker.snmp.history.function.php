@@ -123,14 +123,14 @@ function tracker_snmp_showHistory($ID_port)
 				// Connections and disconnections
 				if ($data["old_device_ID"] != "0")
 				{
-					$text .= "<td align='center'>Déconnexion</td>";
+					$text .= "<td align='center'>".$LANGTRACKER["history"][2]."</td>";
 					$CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
 					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";						
 					$text .= "<td align='center'>".$data["old_value"]."</td>";
 				}
 				else if ($data["new_device_ID"] != "0")
 				{
-					$text .= "<td align='center'>Connexion</td>";
+					$text .= "<td align='center'>".$LANGTRACKER["history"][3]."</td>";
 					$CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
 					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
 					$text .= "<td align='center'>".$data["new_value"]."</td>";
