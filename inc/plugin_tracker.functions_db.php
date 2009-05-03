@@ -182,8 +182,6 @@ function plugin_tracker_clean_db()
 		WHERE ID='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
-
-	
 }
 
 ?>
