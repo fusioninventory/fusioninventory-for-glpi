@@ -32,6 +32,37 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+Verison 2.0.0
+
+Ajout d'un agent qui va interroger les équipement et qui est séparé de GLPI
+L'agent est programmé en perl
+Runkit est complètement supprimé de Tracker
+php-snmp n'est plus utilisé
+Le menu Tracker est plus fonctionnel, fourni, et est aggrémenté d'icones
+Un mini menu est affiché dans chaque module de Tracker afin de naviguer plus facilement
+Ajout d'un module de gestion des Plages IP
+Ajout d'un module de gestion des agents
+Ajout d'un module de gestion des exécutions et remontées des agents
+Le module 'découverte' a été complètement revu, simplifié et optimisé
+Le module 'découverte' gère les entités
+Ajout d'un module de rapport (avec 3 rapports)
+
+
+Adding an agent which will examine the equipment and which is separated from GLPI
+The agent is coded in perl
+Runkit is completely removed from Tracker
+php-snmp is no longer used
+The menu Tracker is more functional, supplied, and have icons
+A mini menu is displayed in each module Tracker to navigate more easily
+Adding a module for managing IP range
+Adding a module for managing agents
+Adding a management module executions of agents
+The module 'discovery' has been completely revised, simplified and optimized
+The module 'discovery' manages entities
+Adding a module report (3 reports)
+
+
+
 Version 1.1.0
 
 - #173 Ajout d'une option pour l'activation des logs (spécialement pour tracker)
