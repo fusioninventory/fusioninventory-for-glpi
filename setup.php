@@ -87,8 +87,16 @@ function plugin_init_tracker() {
 				$PLUGIN_HOOKS['headings']['tracker'] = 'plugin_get_headings_tracker';
 				$PLUGIN_HOOKS['headings_action']['tracker'] = 'plugin_headings_actions_tracker';
 
-			if (isset($_SESSION["glpi_plugin_tracker_profile"])) {
-
+				if (plugin_tracker_HaveRight("snmp_models","r")
+					OR plugin_tracker_HaveRight("snmp_authentification","r")
+					OR plugin_tracker_HaveRight("snmp_iprange","r")
+					OR plugin_tracker_HaveRight("snmp_agent","r")
+					OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
+					OR plugin_tracker_HaveRight("snmp_agent_infos","r")
+					OR plugin_tracker_HaveRight("snmp_discovery","r")
+					OR plugin_tracker_HaveRight("snmp_report","r")
+					)
+				{
 
 					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
 					if (plugin_tracker_haveRight("snmp_models","w")){
@@ -99,13 +107,18 @@ function plugin_init_tracker() {
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.php';
 					}
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['agents'] = 'front/plugin_tracker.agents.form.php?add=1';
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['agents'] = 'front/plugin_tracker.agents.php';
-					
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['rangeip'] = 'front/plugin_tracker.rangeip.form.php?add=1';
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['rangeip'] = 'front/plugin_tracker.rangeip.php';
+					if (plugin_tracker_haveRight("snmp_agent","w")){
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['agents'] = 'front/plugin_tracker.agents.form.php?add=1';
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['agents'] = 'front/plugin_tracker.agents.php';
+					}
 
-					$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
+					if (plugin_tracker_haveRight("snmp_iprange","w")){
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['rangeip'] = 'front/plugin_tracker.rangeip.form.php?add=1';
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['rangeip'] = 'front/plugin_tracker.rangeip.php';
+					}
+
+					if (plugin_tracker_haveRight("general_config","w")){
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
 			}
 		}
 	}
