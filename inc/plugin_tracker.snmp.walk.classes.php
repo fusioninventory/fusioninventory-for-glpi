@@ -97,13 +97,5 @@ class plugin_tracker_walk extends CommonDBTM
 		return $List;
 	}
 	
-	
-	
-	function GetValuesFromOid($oid)
-	{
-	
-	
-	
-	}
 }
 ?>
