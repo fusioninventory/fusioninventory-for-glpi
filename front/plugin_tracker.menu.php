@@ -38,11 +38,6 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
-
-// if One of with are possible, user have access
-
-//if (plugin_tracker_HaveRight("snmp_discovery","r")
 if (plugin_tracker_HaveRight("snmp_models","r")
 	OR plugin_tracker_HaveRight("snmp_authentification","r")
 	OR plugin_tracker_HaveRight("snmp_iprange","r")
@@ -53,11 +48,15 @@ if (plugin_tracker_HaveRight("snmp_models","r")
 	OR plugin_tracker_HaveRight("snmp_report","r")
 	)
 {
+
+	commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+
 	plugin_tracker_menu();
 }
 else
+{
 	displayRightError();
-
+}
 commonFooter();
 
 ?>
