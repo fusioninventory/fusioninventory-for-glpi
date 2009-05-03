@@ -83,38 +83,5 @@ class plugin_tracker_SNMP_history extends CommonDBTM
 		return mysql_insert_id();
 	}
 
-
-
-
-	/**
-	 * Insert port history with infos changes
-	 *
-	 * @param $status status of port ('make' or 'remove')
-	 * @param $array with values : $array["field"], $array["FK_ports"], $array["value"], $array["device_type"] and $array["device_ID"]
-	 *
-	 * @return ID of inserted line
-	 *
-	**/
-	function insert_infos($status,$array)
-	{
-		global $DB,$CFG_GLPI;
-	
-		if ($status == "remove")
-		{
-			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
-			(FK_ports,Field,old_value,old_device_type,old_device_ID,date_mod)
-			VALUES('".$array["FK_ports"]."','".$array["field"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."')";
-		
-		}
-		else if ($status == "make")
-		{
-			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
-			(FK_ports,Field,new_value,new_device_type,new_device_ID,date_mod)
-			VALUES('".$array["FK_ports"]."','".$array["field"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."')";
-	
-		}
-		$DB->query($query);
-		return mysql_insert_id();
-	}
 }
 ?>
