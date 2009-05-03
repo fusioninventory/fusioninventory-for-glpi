@@ -117,7 +117,7 @@ function plugin_init_tracker() {
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['rangeip'] = 'front/plugin_tracker.rangeip.php';
 					}
 
-					if (plugin_tracker_haveRight("general_config","w")){
+					if (plugin_tracker_haveRight("general_config","w"))
 						$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
 			}
 		}
