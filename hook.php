@@ -1506,5 +1506,34 @@ switch ($table.".".$field){
 	return "";
 }
 
+function plugin_pre_item_purge_tracker($parm)
+{
+	global $DB;
+	echo "TEST";
+	if (isset($parm["_item_type_"]))
+		switch ($parm["_item_type_"]){
+			case NETWORKING_TYPE :
+				// Delete all ports
+				$query_delete = "DELETE FROM glpi_plugin_tracker_networking
+				WHERE FK_networking='".$parm["ID"]."' ";
+				$DB->query($query_delete);
+
+				$query_select = "SELECT glpi_plugin_tracker_networking_ports.ID FROM glpi_plugin_tracker_networking_ports
+				LEFT JOIN glpi_networking_ports ON glpi_networking_ports.ID = FK_networking_ports
+				WHERE on_device='".$parm["ID"]."'
+					AND device_type='".NETWORKING_TYPE."'";
+				$result=$DB->query($query_select);
+				while ( $data=$DB->fetch_array($result) )
+				{
+					$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
+					WHERE ID='".$data["ID"]."'";
+					$DB->query($query_delete);
+				}
+
+				break;
+		}
+	return $parm;
+}
+
 
 ?>

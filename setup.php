@@ -72,7 +72,7 @@ function plugin_init_tracker() {
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
 			$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
-			
+			$PLUGIN_HOOKS['pre_item_purge']['tracker'] = 'plugin_pre_item_purge_tracker';
 			
 			$report_list = array();
 					$report_list["report/plugin_tracker.unknown_mac.php"] = $LANGTRACKER["processes"][14];
