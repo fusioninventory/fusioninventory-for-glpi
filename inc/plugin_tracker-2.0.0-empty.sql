@@ -91,7 +91,9 @@ CREATE TABLE `glpi_plugin_tracker_agents` (
   `logs` int(1) NOT NULL DEFAULT '0',
   `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fragment` int(11) NOT NULL DEFAULT '50',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `name` (`name`),
+  KEY `key` (`key`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -117,7 +119,8 @@ CREATE TABLE `glpi_plugin_tracker_agents_processes` (
   `discovery_queries_total` int(11) NOT NULL DEFAULT '0',
   `networking_ports_queries` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `process_number` (`process_number`,`FK_agent`)
+  KEY `process_number` (`process_number`,`FK_agent`),
+  KEY `process_number_2` (`process_number`,`FK_agent`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -275,7 +278,9 @@ CREATE TABLE `glpi_plugin_tracker_mib_networking` (
   KEY `FK_model_infos` (`FK_model_infos`),
   KEY `FK_model_infos_2` (`FK_model_infos`,`oid_port_dyn`),
   KEY `FK_model_infos_3` (`FK_model_infos`,`oid_port_counter`,`mapping_name`),
-  KEY `FK_model_infos_4` (`FK_model_infos`,`mapping_name`)
+  KEY `FK_model_infos_4` (`FK_model_infos`,`mapping_name`),
+  KEY `oid_port_dyn` (`oid_port_dyn`),
+  KEY `activation` (`activation`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -309,7 +314,8 @@ CREATE TABLE `glpi_plugin_tracker_networking` (
   `last_tracker_update` datetime DEFAULT NULL,
   `last_PID_update` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `FK_networking` (`FK_networking`)
+  KEY `FK_networking` (`FK_networking`),
+  KEY `FK_model_infos` (`FK_model_infos`,`FK_snmp_connection`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -471,7 +477,8 @@ CREATE TABLE `glpi_plugin_tracker_rangeip` (
   `query` int(1) NOT NULL DEFAULT '0',
   `FK_entities` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `FK_tracker_agents` (`FK_tracker_agents`,`discover`)
+  KEY `FK_tracker_agents` (`FK_tracker_agents`,`discover`),
+  KEY `FK_tracker_agents_2` (`FK_tracker_agents`,`query`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

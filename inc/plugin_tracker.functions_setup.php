@@ -86,7 +86,8 @@ function plugin_tracker_update($version) {
 	fclose($DBf_handle);
 	foreach ( explode(";\n", "$sql_query") as $sql_line) {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-		$DB->query($sql_line);
+		if (!empty($sql_line))
+			$DB->query($sql_line);
 	}
 	if ($version == "2.0.0")
 	{

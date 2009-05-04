@@ -13,7 +13,9 @@ CREATE TABLE `glpi_plugin_tracker_agents` (
   `logs` int(1) NOT NULL DEFAULT '0',
   `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fragment` int(11) NOT NULL DEFAULT '50',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `name` (`name`),
+  KEY `key` (`key`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -39,7 +41,8 @@ CREATE TABLE `glpi_plugin_tracker_agents_processes` (
   `discovery_queries_total` int(11) NOT NULL DEFAULT '0',
   `networking_ports_queries` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `process_number` (`process_number`,`FK_agent`)
+  KEY `process_number` (`process_number`,`FK_agent`),
+  KEY `process_number_2` (`process_number`,`FK_agent`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -104,6 +107,8 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_discover_conf`;
 
 ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD `activation` int(1) NOT NULL DEFAULT '1';
 ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD `vlan` int(1) NOT NULL DEFAULT '0';
+ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD INDEX ( `oid_port_dyn` ) ;
+ALTER TABLE `glpi_plugin_tracker_mib_networking` ADD INDEX ( `activation` ) ;
 
 ALTER TABLE `glpi_plugin_tracker_model_infos` ADD `FK_entities` int(11) NOT NULL DEFAULT '0';
 ALTER TABLE `glpi_plugin_tracker_model_infos` ADD `activation` int(1) NOT NULL DEFAULT '1';
@@ -111,9 +116,10 @@ ALTER TABLE `glpi_plugin_tracker_model_infos` ADD `discovery_key` varchar(255) C
 
 
 ALTER TABLE `glpi_plugin_tracker_networking` ADD `last_PID_update` INT( 11 ) NOT NULL DEFAULT '0';
+ALTER TABLE `glpi_plugin_tracker_networking` ADD INDEX `FK_model_infos` ( `FK_model_infos` , `FK_snmp_connection` );
+
 
 ALTER TABLE `glpi_plugin_tracker_networking_ports` ADD `lastup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
-
 
 ALTER TABLE `glpi_plugin_tracker_profiles` DROP `snmp_peripherals` ;
 
@@ -135,7 +141,8 @@ CREATE TABLE `glpi_plugin_tracker_rangeip` (
   `query` int(1) NOT NULL DEFAULT '0',
   `FK_entities` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `FK_tracker_agents` (`FK_tracker_agents`,`discover`)
+  KEY `FK_tracker_agents` (`FK_tracker_agents`,`discover`),
+  KEY `FK_tracker_agents_2` (`FK_tracker_agents`,`query`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

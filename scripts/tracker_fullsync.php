@@ -131,7 +131,8 @@ else
 			}
 		}
 	}
-	plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
+	if (isset($ArrayListDevice))
+		plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
 
 	foreach ( $xml_file as $num=>$filename )
 		unlink($filename);
