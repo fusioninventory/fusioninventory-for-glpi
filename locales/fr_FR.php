@@ -388,7 +388,7 @@ $LANGTRACKER["mapping"][416]="imprimante > port > numéro index";
 $LANGTRACKER["mapping"][417]="réseaux > adresse MAC";
 $LANGTRACKER["mapping"][418]="imprimante > numéro d'inventaire";
 $LANGTRACKER["mapping"][419]="réseaux > numéro d'inventaire";
-$LANGTRACKER["mapping"][420]="imprimante > manufacturer";
+$LANGTRACKER["mapping"][420]="imprimante > fabricant";
 
 
 $LANGTRACKER["mapping"][101]="";
