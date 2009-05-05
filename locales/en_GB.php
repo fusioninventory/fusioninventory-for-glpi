@@ -389,7 +389,7 @@ $LANGTRACKER["mapping"][416]="printer > port > index number";
 $LANGTRACKER["mapping"][417]="networking > MAC address";
 $LANGTRACKER["mapping"][418]="printer > Inventory number";
 $LANGTRACKER["mapping"][419]="networking > Inventory number";
-$LANGTRACKER["mapping"][420]="printer > fabricant";
+$LANGTRACKER["mapping"][420]="printer > manufacturer";
 
 
 $LANGTRACKER["mapping"][101]="";
