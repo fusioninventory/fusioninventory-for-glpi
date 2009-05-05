@@ -284,6 +284,12 @@ $TRACKER_MAPPING[PRINTER_TYPE]['model']['name'] = $LANGTRACKER["mapping"][25];
 $TRACKER_MAPPING[PRINTER_TYPE]['model']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['model']['dropdown'] = 'glpi_dropdown_model_printers';
 
+$TRACKER_MAPPING[PRINTER_TYPE]['enterprise']['table'] = 'glpi_printers';
+$TRACKER_MAPPING[PRINTER_TYPE]['enterprise']['field'] = 'FK_glpi_enterprise';
+$TRACKER_MAPPING[PRINTER_TYPE]['enterprise']['name'] = $LANGTRACKER["mapping"][420];
+$TRACKER_MAPPING[PRINTER_TYPE]['enterprise']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['enterprise']['dropdown'] = 'glpi_dropdown_manufacturer';
+
 $TRACKER_MAPPING[PRINTER_TYPE]['serial']['table'] = 'glpi_printers';
 $TRACKER_MAPPING[PRINTER_TYPE]['serial']['field'] = 'serial';
 $TRACKER_MAPPING[PRINTER_TYPE]['serial']['name'] = $LANGTRACKER["mapping"][27];
