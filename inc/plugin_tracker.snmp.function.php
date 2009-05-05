@@ -361,7 +361,10 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 		if (!preg_match("/\.$/",$oid)) // SNMPGet ONLY
 		{
 			if ((isset($TRACKER_MAPPING[$type][$link]['dropdown'])) AND ($TRACKER_MAPPING[$type][$link]['dropdown'] != ""))
+			{
+				$oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);
 				$oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0);			
+			}
 
 			switch ($type)
 			{
@@ -397,22 +400,7 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 				}
 
 			// Convert hexa in string
-			if (strstr($oidvalues[$oid][""], "0x0115"))
-			{
-				$hex = str_replace("0x0115","",$oidvalues[$oid][""]);
-				$string='';
-				for ($i=0; $i < strlen($hex)-1; $i+=2)
-					$string .= chr(hexdec($hex[$i].$hex[$i+1]));
-				$oidvalues[$oid][""] = $string;
-			}
-			if (strstr($oidvalues[$oid][""], "0x"))
-			{
-				$hex = str_replace("0x","",$oidvalues[$oid][""]);
-				$string='';
-				for ($i=0; $i < strlen($hex)-1; $i+=2)
-					$string .= chr(hexdec($hex[$i].$hex[$i+1]));
-				$oidvalues[$oid][""] = $string;
-			}
+			$oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);
 
 			if (strstr($oidvalues[$oid][""], "noSuchName"))
 			{
@@ -1158,5 +1146,24 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 return $Array_trunk_ifIndex;
 }
 
-
+function plugin_tracker_hex_to_string($value)
+{
+	if (strstr($value, "0x0115"))
+	{
+		$hex = str_replace("0x0115","",$value);
+		$string='';
+		for ($i=0; $i < strlen($hex)-1; $i+=2)
+			$string .= chr(hexdec($hex[$i].$hex[$i+1]));
+		$value = $string;
+	}
+	if (strstr($value, "0x"))
+	{
+		$hex = str_replace("0x","",$value);
+		$string='';
+		for ($i=0; $i < strlen($hex)-1; $i+=2)
+			$string .= chr(hexdec($hex[$i].$hex[$i+1]));
+		$value = $string;
+	}
+	return $value;
+}
 ?>
