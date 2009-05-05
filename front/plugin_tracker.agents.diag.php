@@ -275,7 +275,8 @@ else if(isset($_POST['get_data']))
 				WHERE glpi_printers.ID='[FK_printers]'
 					AND device_type='".PRINTER_TYPE."'
 					AND ifaddr!=''
-					AND ifaddr!='127.0.0.1'";
+					AND ifaddr!='127.0.0.1'
+				LIMIT 0,1";
 			}
 			if ($devices[$i] == "device_networking")
 				$xml_writed->element[2]['infos']['linkfield']['ID'] = 'id';
