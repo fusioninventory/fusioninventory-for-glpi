@@ -245,7 +245,7 @@ else if(isset($_POST['get_data']))
 			}
 			else if ($devices[$i] == "device_printer")
 			{
-				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_networking_ports
+				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT DISTINCT ifaddr,FK_printers FROM glpi_networking_ports
 				LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
 				LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
 				LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_printers.FK_model_infos = glpi_plugin_tracker_model_infos.ID
