@@ -405,6 +405,14 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 					$string .= chr(hexdec($hex[$i].$hex[$i+1]));
 				$oidvalues[$oid][""] = $string;
 			}
+			if (strstr($oidvalues[$oid][""], "0x"))
+			{
+				$hex = str_replace("0x","",$oidvalues[$oid][""]);
+				$string='';
+				for ($i=0; $i < strlen($hex)-1; $i+=2)
+					$string .= chr(hexdec($hex[$i].$hex[$i+1]));
+				$oidvalues[$oid][""] = $string;
+			}
 
 			if (strstr($oidvalues[$oid][""], "noSuchName"))
 			{
