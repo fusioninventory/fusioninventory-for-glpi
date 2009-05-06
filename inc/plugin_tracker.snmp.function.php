@@ -192,6 +192,10 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		// ** Get link OID fields (oid => link)
 		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID_Device,$type);
 
+		if ($type == NETWORKING_TYPE)
+			plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues);
+
+
 		// ** Update fields of switchs
 		tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant);
 
@@ -965,7 +969,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 		//		$logs->write("tracker_fullsync","ifIndex name logic = ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]],$type."][".$ID_Device,1);
 
 				// Search port of switch connected on this port and connect it if not connected
-
+				$logs->write("tracker_fullsync","ip = ".$ip_switch_trunk." / ifdescr = ".$oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""],$type."][".$ID_Device,1);
 				$PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""]);
 
 				$query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
@@ -1165,5 +1169,57 @@ function plugin_tracker_hex_to_string($value)
 		$value = $string;
 	}
 	return $value;
+}
+
+
+
+function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues)
+{
+	global $DB;
+
+	$walks = new plugin_tracker_walk;
+	$logs = new plugin_tracker_logs;
+
+	$logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type."][".$ID_Device,1);
+
+	$ifaddr_add = array();
+	$ifaddr = array();
+
+	$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr
+	WHERE FK_networking='".$ID_Device."' ";
+	if ( $result=$DB->query($query) )
+	{
+		while ( $data=$DB->fetch_array($result) )
+			$ifaddr[$data["ifaddr"]] = $data["FK_networking"];
+	}
+
+	$ifaddr_switch = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ipAdEntAddr']);
+
+	foreach($ifaddr as $ifIP=>$FK_networking)
+	{
+		foreach($ifaddr_switch as $num_switch=>$ifIP_switch)
+		{
+			if ($ifIP == $ifIP_switch)
+			{
+				unset ($ifaddr[$ifIP]);
+				unset ($ifaddr_switch[$num_switch]);
+			}
+		}
+	}
+
+	foreach($ifaddr as $ifaddr_snmp=>$FK_networking)
+	{
+		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
+		WHERE FK_networking='".$ID_Device."'
+			AND ifaddr='".$ifaddr_snmp."' ";
+		$DB->query($query_delete);
+	}
+	foreach($ifaddr_switch as $num_snmp=>$ifaddr_snmp)
+	{
+		$query_insert = "INSERT INTO glpi_plugin_tracker_networking_ifaddr
+		(FK_networking,ifaddr)
+		VALUES('".$ID_Device."','".$ifaddr_snmp."') ";
+		$DB->query($query_insert);
+	}
 }
 ?>

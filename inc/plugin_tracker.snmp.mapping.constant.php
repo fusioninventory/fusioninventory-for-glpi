@@ -181,6 +181,11 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['name'] = $LANGTRACKER
 $TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['dot1dBasePortIfIndex']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['name'] = $LANGTRACKER["mapping"][421];
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['dropdown'] = '';
 
 // Networking Ports
 
