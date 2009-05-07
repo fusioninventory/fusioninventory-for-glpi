@@ -1485,7 +1485,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 
 function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
-echo $new_table.".".$linkfield."<br/>";
+
 switch ($new_table.".".$linkfield){
 		case "glpi_plugin_tracker_networking.ID" :
 			if ($ref_table == "glpi_computers" )
