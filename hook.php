@@ -1538,7 +1538,10 @@ switch ($table.".".$field){
 			return $link." ($table.last_tracker_update LIKE '%".$val."%' ) ";
 			break;
 		case "glpi_plugin_tracker_model_infos.ID" :
-			return $link." ($table.name LIKE '%".$val."%' ) ";
+			$not = "";
+			if ($nott == 1)
+				$not = "NOT";
+			return $link." ($table.name ".$not." LIKE '%".$val."%' ) ";
 			break;
 	}
 	return "";
