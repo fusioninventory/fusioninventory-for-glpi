@@ -535,7 +535,7 @@ function plugin_tracker_getSearchOption()
 	$sopt[PRINTER_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
 
 	$sopt[PRINTER_TYPE][5194]['table']='glpi_plugin_tracker_printers';
-	$sopt[PRINTER_TYPE][5194]['field']='last_tracker_update';
+	$sopt[PRINTER_TYPE][5194]['field']='FK_printers';
 	$sopt[PRINTER_TYPE][5194]['linkfield']='ID';
 	$sopt[PRINTER_TYPE][5194]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["snmp"][53];
 
@@ -730,6 +730,21 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				return $out;
 				break;
 			}
+			case "glpi_plugin_tracker_printers.FK_printers" :
+				if (strstr($_SERVER['PHP_SELF'],"front/printer.php"))
+				{
+					$query = "SELECT * FROM glpi_plugin_tracker_printers
+					WHERE FK_printers = '".$data["ID"]."' ";
+					if ($result = $DB->query($query))
+						$data2=$DB->fetch_array($result);
+
+					$last_date = "";
+					if (isset($data2["last_tracker_update"]))
+						$last_date = $data2["last_tracker_update"];
+					$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+					return $out;
+					break;
+				}
 		case "glpi_plugin_tracker_unknown_mac.port" :
 			$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
 			$CommonItem = new CommonItem;
@@ -1453,6 +1468,9 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			return " ORDER BY $table.last_tracker_update $order ";
 			break;
+		case "glpi_plugin_tracker_printers.FK_printers" :
+			return " ORDER BY $table.last_tracker_update $order ";
+			break;
 		case "glpi_plugin_tracker_networking.ID" :
 			//if ($ID == "5192" )
 				//return " ORDER BY glpi_networking.name $order ";
@@ -1496,6 +1514,13 @@ switch ($table.".".$field){
 			return $link." ($table.$field $val ".$ADD." ) ";
 			break;
 		case "glpi_plugin_tracker_networking.FK_networking" :
+			$ADD="";
+			if ($nott&&$val!="NULL") {
+				$ADD=" OR $table.$field IS NULL";
+			}
+			return $link." ($table.last_tracker_update LIKE '%".$val."%' ) ";
+			break;
+		case "glpi_plugin_tracker_printers.FK_printers" :
 			$ADD="";
 			if ($nott&&$val!="NULL") {
 				$ADD=" OR $table.$field IS NULL";
