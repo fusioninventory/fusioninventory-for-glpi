@@ -1514,7 +1514,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 	
 	$SEARCH=makeTextSearch($val,$nott);
-echo $table.".".$field."<br/>";
+
 switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking_ports.lastup" :
 			$ADD="";	
