@@ -1463,13 +1463,15 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-
 	switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			return " ORDER BY $table.last_tracker_update $order ";
 			break;
 		case "glpi_plugin_tracker_printers.FK_printers" :
 			return " ORDER BY $table.last_tracker_update $order ";
+			break;
+		case "glpi_plugin_tracker_model_infos.ID" :
+			return " ORDER BY $table.name $order ";
 			break;
 		case "glpi_plugin_tracker_networking.ID" :
 			//if ($ID == "5192" )
@@ -1483,7 +1485,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 
 function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
-
+echo $new_table.".".$linkfield."<br/>";
 switch ($new_table.".".$linkfield){
 		case "glpi_plugin_tracker_networking.ID" :
 			if ($ref_table == "glpi_computers" )
@@ -1492,6 +1494,14 @@ switch ($new_table.".".$linkfield){
 				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
 			break;
 		case "glpi_plugin_tracker_networking_ports.ID" : // In computer list
+			break;
+		case "glpi_plugin_tracker_model_infos.ID" :
+			if ($ref_table == "glpi_printers" )
+				return "  LEFT JOIN glpi_plugin_tracker_printers ON ($ref_table.$linkfield = glpi_plugin_tracker_printers.FK_printers) ".
+					" LEFT JOIN $new_table ON (glpi_plugin_tracker_printers.FK_model_infos = $new_table.$linkfield) ";
+			break;
+		case "glpi_plugin_tracker_printers.ID" :
+			return " ";
 			break;
 	}
 	return "";
