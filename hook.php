@@ -1514,7 +1514,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 	
 	$SEARCH=makeTextSearch($val,$nott);
-
+echo $table.".".$field."<br/>";
 switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking_ports.lastup" :
 			$ADD="";	
@@ -1536,6 +1536,9 @@ switch ($table.".".$field){
 				$ADD=" OR $table.$field IS NULL";
 			}
 			return $link." ($table.last_tracker_update LIKE '%".$val."%' ) ";
+			break;
+		case "glpi_plugin_tracker_model_infos.ID" :
+			return $link." ($table.name LIKE '%".$val."%' ) ";
 			break;
 	}
 	return "";
