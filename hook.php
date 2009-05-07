@@ -1541,7 +1541,11 @@ switch ($table.".".$field){
 			$not = "";
 			if ($nott == 1)
 				$not = "NOT";
-			return $link." ($table.name ".$not." LIKE '%".$val."%' ) ";
+			$ADD="";
+			if ($nott&&$val!="NULL") {
+				$ADD=" OR $table.$field IS NULL";
+			}
+			return $link." ($table.name ".$not." LIKE '%".$val."%' $ADD ) ";
 			break;
 	}
 	return "";
