@@ -229,8 +229,8 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 	}
 	if ($link_name == 1)
 	{
-		$Array_criteria[] = "name='".$discovery->name."'";
-		$array_search[] = $discovery->name;
+		$Array_criteria[] = "name='".plugin_tracker_hex_to_string($discovery->name)."'";
+		$array_search[] = plugin_tracker_hex_to_string($discovery->name);
 	}
 	if ($link_serial == 1)
 	{
