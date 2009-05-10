@@ -145,25 +145,30 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	
 	
 	
-	function plugin_tracker_snmp_connections()
+	function plugin_tracker_snmp_connections($array=0)
 	{
 		GLOBAL $CFG_GLPI,$LANG,$LANGTRACKER;
 
-		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
-		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='10'>".$LANGTRACKER["model_info"][3]." :</th></tr>";
-		echo "<tr><th>".$LANG["common"][2]."</th>";
-		echo "<th>".$LANG["common"][16]."</th>";
-		echo "<th>".$LANGTRACKER["model_info"][2]."</th>";
-		echo "<th>".$LANGTRACKER["snmpauth"][1]."</th>";
-		echo "<th>".$LANGTRACKER["snmpauth"][2]."</th>";
-		echo "<th>".$LANGTRACKER["snmpauth"][3]."</th>";
-		echo "<th>".$LANGTRACKER["snmpauth"][4]."</th>";
-		echo "<th>".$LANGTRACKER["snmpauth"][5]."</th>";
-		echo "<th>".$LANGTRACKER["snmpauth"][6]."</th>";
-		echo "<th>".$LANGTRACKER["snmpauth"][7]."</th>";
-		echo "</tr>";
-	
+		$array_auth = array();
+
+		if ($array == '0')
+		{
+			echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
+			echo "<div align='center'><table class='tab_cadre_fixe'>";
+			echo "<tr><th colspan='10'>".$LANGTRACKER["model_info"][3]." :</th></tr>";
+			echo "<tr><th>".$LANG["common"][2]."</th>";
+			echo "<th>".$LANG["common"][16]."</th>";
+			echo "<th>".$LANGTRACKER["model_info"][2]."</th>";
+			echo "<th>".$LANGTRACKER["snmpauth"][1]."</th>";
+			echo "<th>".$LANGTRACKER["snmpauth"][2]."</th>";
+			echo "<th>".$LANGTRACKER["snmpauth"][3]."</th>";
+			echo "<th>".$LANGTRACKER["snmpauth"][4]."</th>";
+			echo "<th>".$LANGTRACKER["snmpauth"][5]."</th>";
+			echo "<th>".$LANGTRACKER["snmpauth"][6]."</th>";
+			echo "<th>".$LANGTRACKER["snmpauth"][7]."</th>";
+			echo "</tr>";
+		}
+
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/tracker/scripts/auth.xml");
 		
 		$i = -1;
@@ -182,6 +187,8 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 						break;
 					case 3:
 						$snmp_version[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
+						if ($snmp_version[$i] == "&nbsp;")
+							$snmp_version[$i] = "";
 						break;
 					case 4:
 						$community[$i] = $item;
@@ -191,15 +198,21 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 						break;
 					case 6:
 						$sec_level[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
+						if ($sec_level[$i] == "&nbsp;")
+							$sec_level[$i] = "";
 						break;
 					case 7:
 						$auth_protocol[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+						if ($auth_protocol[$i] == "&nbsp;")
+							$auth_protocol[$i] = "";
 						break;
 					case 8:
 						$auth_passphrase[$i] = $item;
 						break;
 					case 9:
 						$priv_protocol[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+						if ($priv_protocol[$i] == "&nbsp;")
+							$priv_protocol[$i] = "";
 						break;
 					case 10:
 						$priv_passphrase[$i] = $item;
@@ -207,24 +220,45 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 				}
 			}
 		}
-		
 		foreach ($numero AS $key=>$numero)
 		{
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$numero."</td>";
-			echo "<td align='center'>".$name[$key]."</td>";
-			echo "<td align='center'>".$snmp_version[$key]."</td>";
-			echo "<td align='center'>".$community[$key]."</td>";
-			echo "<td align='center'>".$sec_name[$key]."</td>";
-			echo "<td align='center'>".$sec_level[$key]."</td>";
-			echo "<td align='center'>".$auth_protocol[$key]."</td>";
-			echo "<td align='center'>".$auth_passphrase[$key]."</td>";
-			echo "<td align='center'>".$priv_protocol[$key]."</td>";
-			echo "<td align='center'>".$priv_passphrase[$key]."</td>";
-			echo "</tr>";
-
+			if ($array == '0')
+			{
+				echo "<tr class='tab_bg_1'>";
+				echo "<td align='center'>".$numero."</td>";
+				echo "<td align='center'>".$name[$key]."</td>";
+				echo "<td align='center'>".$snmp_version[$key]."</td>";
+				echo "<td align='center'>".$community[$key]."</td>";
+				echo "<td align='center'>".$sec_name[$key]."</td>";
+				echo "<td align='center'>".$sec_level[$key]."</td>";
+				echo "<td align='center'>".$auth_protocol[$key]."</td>";
+				echo "<td align='center'>".$auth_passphrase[$key]."</td>";
+				echo "<td align='center'>".$priv_protocol[$key]."</td>";
+				echo "<td align='center'>".$priv_passphrase[$key]."</td>";
+				echo "</tr>";
+			}
+			else if ($array == '1')
+			{
+				$array_auth["$numero"]['IDC'] = $numero;
+				$array_auth["$numero"]['name']= $name[$key];
+				$array_auth["$numero"]['namec']=$snmp_version[$key];
+				$array_auth["$numero"]['community']=$community[$key];
+				$array_auth["$numero"]['sec_name']=$sec_name[$key];
+				$array_auth["$numero"]['sec_level']=$sec_level[$key];
+				$array_auth["$numero"]['auth_protocol']=$auth_protocol[$key];
+				$array_auth["$numero"]['auth_passphrase']=$auth_passphrase[$key];
+				$array_auth["$numero"]['priv_protocol']=$priv_protocol[$key];
+				$array_auth["$numero"]['priv_passphrase']=$priv_passphrase[$key];
+			}
 		}
-		echo "</table></div></form>";
+		if ($array == '0')
+		{
+			echo "</table></div></form>";
+		}
+		else if ($array == '1')
+		{
+			return $array_auth;
+		}
 	}
 	
 
@@ -575,6 +609,36 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 			if ( $DB->numrows($result) != 0 )
 				return $DB->result($result, 0, "FK_snmp_connection");
 		}	
+	}
+
+
+	function GetSNMPAuthName_XML($ID_auth,$xml_auth_rep)
+	{
+
+		$xml = simplexml_load_file($xml_auth_rep."auth.xml");
+		
+		$i=-1;
+		foreach($xml->auth[0] as $num){
+			$i++;
+			$j = 0;
+			$recup = 0;
+			foreach($xml->auth->conf[$i] as $item){
+				$j++;
+				switch ($j)
+				{
+					case 1:
+						if ($item == $ID_auth)
+							$recup = 1;
+						break;
+					case 2:
+						if ($recup == "1") 
+								$snmp_auth_name = $item;
+						break;
+				}
+			}
+		}
+		if (isset($snmp_auth_name))
+			return "<a href='".GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.snmp_auth.php'>".$snmp_auth_name."</a>";
 	}
 
 }

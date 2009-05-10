@@ -86,6 +86,9 @@ class plugin_tracker_XML {
 		global $DB;
 
 		$xmlclass = new plugin_tracker_XML;
+		$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+		$config = new plugin_tracker_config;
+		
 		$xmlclass->element = $this->element;
 		$xml = "";
 		$tab = "";
@@ -105,37 +108,64 @@ class plugin_tracker_XML {
 			if ((!empty($this->element[$level][$element]['SQL']))
 				AND ($prec_level_name == $this->element[$level][$element]['element']))
 			{
-				$query = $this->element[$level][$element]['SQL'];
-				// Detect if query has variable from precedent sql query. If yes we replace it
-					if (strstr($query, '['))
-						$query = preg_replace("/\[(.*?)\]/", $sql_data[1],$query);
-
-				$result=$DB->query($query);
-				while ( $data=$DB->fetch_array($result) )
+				// Auth in File XML
+				if (($level == '2')
+					AND ($element == 'authentification')
+					AND ($this->element[$level][$element]['SQL'] == $this->element[2]['authentification']['SQL'])
+					AND ($config->getValue("authsnmp") == "file")
+					)
 				{
-					$xml .= $tab."<".$element.">\n";
-					if (isset($this->element[$level][$element]['linkfield']))
-						foreach($this->element[$level][$element]['linkfield'] AS $field=>$linkfield)
-						{
-							if ((is_numeric($data[$field])) OR (empty($data[$field])))
-								$xml .= $tab."	<".$linkfield.">".$data[$field]."</".$linkfield.">\n";
-							else
-								$xml .= $tab."	<".$linkfield."><![CDATA[".$data[$field]."]]></".$linkfield.">\n";
-						}						
-					
-					// Boucle pour les éléments déclaré dans les variables (fieldvalue)
-					if (isset($this->element[$level][$element]['fieldvalue']))
-						foreach($this->element[$level][$element]['fieldvalue'] AS $field=>$value){
-							if ((is_numeric($value)) OR (empty($value)))
-								$xml .= $tab."	<".$field.">".$value."</".$field.">\n";
-							else
-								$xml .= $tab."	<".$field."><![CDATA[".$value."]]></".$field.">\n";
-						}
-					
-					if (!empty($this->element[($level+1)]))
-						$xml .= $xmlclass->writelement($level+1,$element,$data,$writed);
-					
-					$xml .= $tab."</".$element.">\n";
+					$data = $plugin_tracker_snmp_auth->plugin_tracker_snmp_connections(1);
+					foreach($data AS $num_ID=>$linkauth)
+					{
+						$xml .= $tab."<".$element.">\n";
+						if (isset($this->element[$level][$element]['linkfield']))
+							foreach($this->element[$level][$element]['linkfield'] AS $field=>$linkfield)
+							{
+								if ((is_numeric($data[$num_ID][$field])) OR (empty($data[$num_ID][$field])))
+									$xml .= $tab."	<".$linkfield.">".$data[$num_ID][$field]."</".$linkfield.">\n";
+								else
+									$xml .= $tab."	<".$linkfield."><![CDATA[".$data[$num_ID][$field]."]]></".$linkfield.">\n";
+							}
+						$xml .= $tab."</".$element.">\n";
+					}
+				}
+				// Auth in MySQL DB and other elements
+				else
+				{
+					$query = $this->element[$level][$element]['SQL'];
+
+					// Detect if query has variable from precedent sql query. If yes we replace it
+						if (strstr($query, '['))
+							$query = preg_replace("/\[(.*?)\]/", $sql_data[1],$query);
+
+					$result=$DB->query($query);
+					while ( $data=$DB->fetch_array($result) )
+					{
+						$xml .= $tab."<".$element.">\n";
+						if (isset($this->element[$level][$element]['linkfield']))
+							foreach($this->element[$level][$element]['linkfield'] AS $field=>$linkfield)
+							{
+								if ((is_numeric($data[$field])) OR (empty($data[$field])))
+									$xml .= $tab."	<".$linkfield.">".$data[$field]."</".$linkfield.">\n";
+								else
+									$xml .= $tab."	<".$linkfield."><![CDATA[".$data[$field]."]]></".$linkfield.">\n";
+							}
+
+						// Boucle pour les éléments déclaré dans les variables (fieldvalue)
+						if (isset($this->element[$level][$element]['fieldvalue']))
+							foreach($this->element[$level][$element]['fieldvalue'] AS $field=>$value){
+								if ((is_numeric($value)) OR (empty($value)))
+									$xml .= $tab."	<".$field.">".$value."</".$field.">\n";
+								else
+									$xml .= $tab."	<".$field."><![CDATA[".$value."]]></".$field.">\n";
+							}
+
+						if (!empty($this->element[($level+1)]))
+							$xml .= $xmlclass->writelement($level+1,$element,$data,$writed);
+
+						$xml .= $tab."</".$element.">\n";
+					}
 				}
 			}elseif ($prec_level_name == $this->element[$level][$element]['element']){
 			
