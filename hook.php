@@ -525,10 +525,20 @@ function plugin_tracker_getSearchOption()
 	$sopt[NETWORKING_TYPE][5190]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5190]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][19];
 
-	$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
-	$sopt[NETWORKING_TYPE][5191]['field']='ID';
-	$sopt[NETWORKING_TYPE][5191]['linkfield']='ID';
-	$sopt[NETWORKING_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+	if ($config->getValue("authsnmp") == "file")
+	{
+		$sopt[NETWORKING_TYPE][5191]['table'] = 'glpi_plugin_tracker_networking';
+		$sopt[NETWORKING_TYPE][5191]['field'] = 'FK_snmp_connection';
+		$sopt[NETWORKING_TYPE][5191]['linkfield'] = 'ID';
+		$sopt[NETWORKING_TYPE][5191]['name'] = $LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+	}
+	else
+	{
+		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
+		$sopt[NETWORKING_TYPE][5191]['field']='ID';
+		$sopt[NETWORKING_TYPE][5191]['linkfield']='ID';
+		$sopt[NETWORKING_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+	}
 
 	$sopt[NETWORKING_TYPE][5194]['table']='glpi_plugin_tracker_networking';
 	$sopt[NETWORKING_TYPE][5194]['field']='FK_networking';
@@ -540,10 +550,20 @@ function plugin_tracker_getSearchOption()
 	$sopt[PRINTER_TYPE][5190]['linkfield']='ID';
 	$sopt[PRINTER_TYPE][5190]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][19];
 
-	$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
-	$sopt[PRINTER_TYPE][5191]['field']='ID';
-	$sopt[PRINTER_TYPE][5191]['linkfield']='ID';
-	$sopt[PRINTER_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+	if ($config->getValue("authsnmp") == "file")
+	{
+		$sopt[PRINTER_TYPE][5191]['table'] = 'glpi_plugin_tracker_printers';
+		$sopt[PRINTER_TYPE][5191]['field'] = 'FK_snmp_connection';
+		$sopt[PRINTER_TYPE][5191]['linkfield'] = 'ID';
+		$sopt[PRINTER_TYPE][5191]['name'] = $LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+	}
+	else
+	{
+		$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
+		$sopt[PRINTER_TYPE][5191]['field']='ID';
+		$sopt[PRINTER_TYPE][5191]['linkfield']='ID';
+		$sopt[PRINTER_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
+	}
 
 	$sopt[PRINTER_TYPE][5194]['table']='glpi_plugin_tracker_printers';
 	$sopt[PRINTER_TYPE][5194]['field']='FK_printers';
@@ -996,7 +1016,16 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
 			return "<center>".$out."</center>";
 			break;
-
+		case "glpi_plugin_tracker_networking.FK_snmp_connection" :
+			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
+			return "<center>".$out."</center>";
+			break;
+		case "glpi_plugin_tracker_printers.FK_snmp_connection" :
+			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
+			return "<center>".$out."</center>";
+			break;
 	}
 
 	if (($type == PLUGIN_TRACKER_SNMP_AGENTS) AND ($linkfield == "EXPORT")) {
@@ -1293,6 +1322,7 @@ function plugin_tracker_MassiveActions($type)
 
 function plugin_tracker_MassiveActionsDisplay($type, $action)
 {
+
 	global $LANG, $CFG_GLPI, $DB;
 	switch ($type) {
 		case NETWORKING_TYPE :
