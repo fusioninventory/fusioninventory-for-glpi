@@ -269,10 +269,11 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/tracker/scripts/auth.xml");
 		
 		$ID = $xml->incrementID[0];
-		
+		$ID = $ID + 1;
+
 		// Write XML file
 		$xml_write = "<snmp>\n";
-		$xml_write .= "	<incrementID>".$ID++."</incrementID>\n";
+		$xml_write .= "	<incrementID>".$ID."</incrementID>\n";
 		$xml_write .= "	<auth>\n";
 		$i = -1;
 		foreach($xml->auth[0] as $num){
