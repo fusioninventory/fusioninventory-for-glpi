@@ -108,7 +108,7 @@ class plugin_tracker_XML {
 			if ((!empty($this->element[$level][$element]['SQL']))
 				AND ($prec_level_name == $this->element[$level][$element]['element']))
 			{
-				// Auth in File XML
+				// Auth in File XML (for discovery)
 				if (($level == '2')
 					AND ($element == 'authentification')
 					AND ($this->element[$level][$element]['SQL'] == $this->element[2]['authentification']['SQL'])
@@ -126,6 +126,33 @@ class plugin_tracker_XML {
 									$xml .= $tab."	<".$linkfield.">".$data[$num_ID][$field]."</".$linkfield.">\n";
 								else
 									$xml .= $tab."	<".$linkfield."><![CDATA[".$data[$num_ID][$field]."]]></".$linkfield.">\n";
+							}
+						$xml .= $tab."</".$element.">\n";
+					}
+				}
+				// Auth in File XML (for query)
+				else if (strstr($this->element[$level][$element]['SQL'], "SELECT FK_snmp_connection FROM"))
+				{
+					// Get SNMP ID from device
+					$query = $this->element[$level][$element]['SQL'];
+					// Detect if query has variable from precedent sql query. If yes we replace it
+						if (strstr($query, '['))
+							$query = preg_replace("/\[(.*?)\]/", $sql_data[1],$query);
+
+					$result=$DB->query($query);
+					while ( $data=$DB->fetch_array($result) )
+					{
+						$snmp_auth = new plugin_tracker_snmp_auth;
+						$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
+						$array_auth[$data["FK_snmp_connection"]]["name"] = $array_auth[$data["FK_snmp_connection"]]["namec"];
+						$xml .= $tab."<".$element.">\n";
+						if (isset($this->element[$level][$element]['linkfield']))
+							foreach($this->element[$level][$element]['linkfield'] AS $field=>$linkfield)
+							{
+								if ((is_numeric($array_auth[$data["FK_snmp_connection"]][$field])) OR (empty($array_auth[$data["FK_snmp_connection"]][$field])))
+									$xml .= $tab."	<".$linkfield.">".$array_auth[$data["FK_snmp_connection"]][$field]."</".$linkfield.">\n";
+								else
+									$xml .= $tab."	<".$linkfield."><![CDATA[".$array_auth[$data["FK_snmp_connection"]][$field]."]]></".$linkfield.">\n";
 							}
 						$xml .= $tab."</".$element.">\n";
 					}

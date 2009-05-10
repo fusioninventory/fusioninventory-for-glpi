@@ -226,40 +226,88 @@ else if(isset($_POST['get_data']))
 		$writed = array();
 		$writed[1] = '';
 
+		// List and add in value for query ID of SNMP auth from XML file
+		if ($config->getValue("authsnmp") == "file")
+		{
+			$snmp_auth = new plugin_tracker_snmp_auth;
+			$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
+			$Auth_id_valid = "(";
+			foreach ($array_auth AS $num=>$value)
+			{
+				$Auth_id_valid .= $array_auth[$num]['IDC'].",";
+			}
+			$Auth_id_valid .= ")";
+			$Auth_id_valid = str_replace(",)", ")",$Auth_id_valid);
+		}
+
 		for ($i=0;$i < count($devices);$i++)
 		{
 			$xml_writed = new plugin_tracker_XML;
 			$xml_writed->element[1][$devices[$i]]['element']="snmp";
 			if ($devices[$i] == "device_networking")
 			{
-				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_plugin_tracker_networking
-				LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
-				LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
-				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
-				WHERE FK_model_infos != '0'
-					AND glpi_networking.deleted='0'
-					AND FK_snmp_connection != '0'
-					AND state='".$config_snmp_networking->getValue('active_device_state')."'
-					AND glpi_plugin_tracker_model_infos.ID>0
-					AND glpi_plugin_tracker_snmp_connection.ID>0
-					".$rangeip_select." ";
+				if ($config->getValue("authsnmp") == "file")
+				{
+					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_plugin_tracker_networking
+					LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
+					LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
+					WHERE FK_model_infos != '0'
+						AND glpi_networking.deleted='0'
+						AND FK_snmp_connection IN ".$Auth_id_valid."
+						AND state='".$config_snmp_networking->getValue('active_device_state')."'
+						AND glpi_plugin_tracker_model_infos.ID>0
+						".$rangeip_select." ";
+				}
+				else
+				{
+					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_plugin_tracker_networking
+					LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
+					LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
+					LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
+					WHERE FK_model_infos != '0'
+						AND glpi_networking.deleted='0'
+						AND FK_snmp_connection != '0'
+						AND state='".$config_snmp_networking->getValue('active_device_state')."'
+						AND glpi_plugin_tracker_model_infos.ID>0
+						AND glpi_plugin_tracker_snmp_connection.ID>0
+						".$rangeip_select." ";
+				}
 			}
 			else if ($devices[$i] == "device_printer")
 			{
-				$xml_writed->element[1][$devices[$i]]['SQL']="SELECT DISTINCT ifaddr,FK_printers FROM glpi_networking_ports
-				LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
-				LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
-				LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_printers.FK_model_infos = glpi_plugin_tracker_model_infos.ID
-				LEFT JOIN glpi_plugin_tracker_snmp_connection ON glpi_plugin_tracker_printers.FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
-				WHERE glpi_networking_ports.device_type='".PRINTER_TYPE."'
-					AND glpi_printers.deleted='0'
-					AND FK_model_infos != '0'
-					AND FK_snmp_connection != '0'
-					AND state='".$config_snmp_printer->getValue('active_device_state')."'
-					AND glpi_plugin_tracker_model_infos.ID>0
-					AND glpi_plugin_tracker_snmp_connection.ID>0
-					".$rangeip_select."
-					AND FK_printers!=0";
+				if ($config->getValue("authsnmp") == "file")
+				{
+					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT DISTINCT ifaddr,FK_printers FROM glpi_networking_ports
+					LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
+					LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
+					LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_printers.FK_model_infos = glpi_plugin_tracker_model_infos.ID
+					WHERE glpi_networking_ports.device_type='".PRINTER_TYPE."'
+						AND glpi_printers.deleted='0'
+						AND FK_model_infos != '0'
+						AND FK_snmp_connection IN ".$Auth_id_valid."
+						AND state='".$config_snmp_printer->getValue('active_device_state')."'
+						AND glpi_plugin_tracker_model_infos.ID>0
+						".$rangeip_select."
+						AND FK_printers!=0";
+				}
+				else
+				{
+					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT DISTINCT ifaddr,FK_printers FROM glpi_networking_ports
+					LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
+					LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
+					LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_printers.FK_model_infos = glpi_plugin_tracker_model_infos.ID
+					LEFT JOIN glpi_plugin_tracker_snmp_connection ON glpi_plugin_tracker_printers.FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID
+					WHERE glpi_networking_ports.device_type='".PRINTER_TYPE."'
+						AND glpi_printers.deleted='0'
+						AND FK_model_infos != '0'
+						AND FK_snmp_connection != '0'
+						AND state='".$config_snmp_printer->getValue('active_device_state')."'
+						AND glpi_plugin_tracker_model_infos.ID>0
+						AND glpi_plugin_tracker_snmp_connection.ID>0
+						".$rangeip_select."
+						AND FK_printers!=0";
+
+				}
 			}
 			// Informations
 			$xml_writed->element[2]['infos']['element']=$devices[$i];
@@ -293,17 +341,33 @@ else if(isset($_POST['get_data']))
 			$xml_writed->element[2]['auth']['element']=$devices[$i];
 			if ($devices[$i] == "device_networking")
 			{
-				$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
-				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
-				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
-				WHERE FK_networking='[FK_networking]'";
+				if ($config->getValue("authsnmp") == "file")
+				{
+					$xml_writed->element[2]['auth']['SQL']="SELECT FK_snmp_connection FROM glpi_plugin_tracker_networking ".
+						"WHERE FK_networking='[FK_networking]'";
+				}
+				else
+				{
+					$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
+					LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
+					LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+					WHERE FK_networking='[FK_networking]'";
+				}
 			}
 			else if ($devices[$i] == "device_printer")
 			{
-				$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_printers
-				LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
-				LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
-				WHERE FK_printers='[FK_printers]'";
+				if ($config->getValue("authsnmp") == "file")
+				{
+					$xml_writed->element[2]['auth']['SQL']="SELECT FK_snmp_connection FROM glpi_plugin_tracker_printers ".
+						"WHERE FK_printers='[FK_printers]'";
+				}
+				else
+				{
+					$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_printers
+					LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
+					LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+					WHERE FK_printers='[FK_printers]'";
+				}
 			}
 			$xml_writed->element[2]['auth']['linkfield']['community'] = 'community';
 			$xml_writed->element[2]['auth']['linkfield']['name'] = 'version';
