@@ -39,6 +39,8 @@ function plugin_tracker_getSearchOption()
 	global $LANG,$LANGTRACKER;
 	$sopt = array ();
 
+	$config = new plugin_tracker_config;
+
 	// Part header
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE]['common'] = $LANGTRACKER["errors"][0];
 
@@ -389,11 +391,20 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['linkfield'] = 'FK_model_infos';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['name'] = $LANGTRACKER["model_info"][4];
 
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_snmp_connection';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_snmp_connection';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANGTRACKER["model_info"][3];
-
+	if ($config->getValue("authsnmp") == "file")
+	{
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_discovery';
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'FK_snmp_connection';
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_snmp_connection';
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANGTRACKER["model_info"][3];
+	}
+	else
+	{
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_snmp_connection';
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'name';
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_snmp_connection';
+		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANGTRACKER["model_info"][3];
+	}
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES]['common'] = $LANGTRACKER["errors"][0];
 
@@ -980,6 +991,11 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
 			return $out;
 			break;
+		case "glpi_plugin_tracker_discovery.FK_snmp_connection" :
+			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
+			return "<center>".$out."</center>";
+			break;
 
 	}
 
@@ -1371,7 +1387,7 @@ function plugin_tracker_MassiveActionsProcess($data)
 function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield){
 	global $LINK_ID_TABLE,$LANG;
 	// Table fields
-	//echo $table.".".$field."<br/>";
+//	echo $table.".".$field."<br/>";
 	switch ($table.".".$field){
 		case 'glpi_entities.name':
 			dropdownValue("glpi_entities",$linkfield);
@@ -1448,6 +1464,11 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 		case 'glpi_plugin_tracker_agents.ID' :
+			return true;
+			break;
+		case 'glpi_plugin_tracker_discovery.FK_snmp_connection' :
+			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+			echo $plugin_tracker_snmp->selectbox();
 			return true;
 			break;
 	}
