@@ -46,20 +46,19 @@ include (GLPI_ROOT . "/inc/includes.php");
 plugin_tracker_checkRight("snmp_authentification","r");
 
 $plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+$config = new plugin_tracker_config;
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 
 plugin_tracker_mini_menu();
 
-$query = "SELECT * FROM glpi_plugin_tracker_config";
-$result=$DB->query($query);
 
 if (isset ($_POST["add"]))
 {
 	plugin_tracker_checkRight("snmp_authentification","w");
-	if ($DB->result($result,0,"authsnmp") == "file")
+	if ($config->getValue("authsnmp") == "file")
 		$new_ID = $plugin_tracker_snmp_auth->add_xml();
-	else if ($DB->result($result,0,"authsnmp") == "DB")
+	else if ($config->getValue("authsnmp") == "DB")
 		$new_ID = $plugin_tracker_snmp_auth->add($_POST);
 	
 	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_tracker.snmp_auth.php?ID=".$new_ID."'>".$_POST["name"]."</a>";

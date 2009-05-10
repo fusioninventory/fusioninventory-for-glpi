@@ -43,14 +43,12 @@ function plugin_tracker_snmp_auth_dropdown($selected="")
 	global $DB;
 
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+	$config = new plugin_tracker_config;
 
-	$query_conf = "SELECT * FROM glpi_plugin_tracker_config";
-	$result_conf=$DB->query($query_conf);
-	if ($DB->result($result_conf,0,"authsnmp") == "file")
+	if ($config->getValue("authsnmp") == "file")
 		echo $plugin_tracker_snmp_auth->selectbox($selected);
-	else  if ($DB->result($result_conf,0,"authsnmp") == "DB")
+	else  if ($config->getValue("authsnmp") == "DB")
 		dropdownValue("glpi_plugin_tracker_snmp_connection","FK_snmp_connection",$selected,0);
-
 }
 
 
