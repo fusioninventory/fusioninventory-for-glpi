@@ -1417,7 +1417,7 @@ function plugin_tracker_MassiveActionsProcess($data)
 function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield){
 	global $LINK_ID_TABLE,$LANG;
 	// Table fields
-//	echo $table.".".$field."<br/>";
+	echo $table.".".$field."<br/>";
 	switch ($table.".".$field){
 		case 'glpi_entities.name':
 			dropdownValue("glpi_entities",$linkfield);
@@ -1499,6 +1499,24 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 		case 'glpi_plugin_tracker_discovery.FK_snmp_connection' :
 			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
 			echo $plugin_tracker_snmp->selectbox();
+			return true;
+			break;
+		case 'glpi_plugin_tracker_model_infos.ID' :
+			return true;
+			break;
+		case 'glpi_plugin_tracker_model_infos.device_type' :
+			$type_list[] = COMPUTER_TYPE;
+			$type_list[] = NETWORKING_TYPE;
+			$type_list[] = PRINTER_TYPE;
+			$type_list[] = PERIPHERAL_TYPE;
+			$type_list[] = PHONE_TYPE;
+			dropdownDeviceTypes('type',$linkfield,$type_list);
+			return true;
+			break;
+		case 'glpi_plugin_tracker_model_infos.activation' :
+			return true;
+			break;
+		case 'glpi_plugin_tracker_model_infos.discovery_key' :
 			return true;
 			break;
 	}
