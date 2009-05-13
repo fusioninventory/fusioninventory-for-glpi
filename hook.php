@@ -1417,7 +1417,7 @@ function plugin_tracker_MassiveActionsProcess($data)
 function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield){
 	global $LINK_ID_TABLE,$LANG;
 	// Table fields
-	echo $table.".".$field."<br/>";
+	//echo $table.".".$field."<br/>";
 	switch ($table.".".$field){
 		case 'glpi_entities.name':
 			dropdownValue("glpi_entities",$linkfield);
@@ -1623,7 +1623,7 @@ switch ($table.".".$field){
 function plugin_pre_item_purge_tracker($parm)
 {
 	global $DB;
-	echo "TEST";
+
 	if (isset($parm["_item_type_"]))
 		switch ($parm["_item_type_"]){
 			case NETWORKING_TYPE :
