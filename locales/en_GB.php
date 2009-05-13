@@ -37,7 +37,7 @@ $title="Tracker";
 $version="2.0.0";
 
 $LANGTRACKER["title"][0]="$title";
-$LANGTRACKER["title"][1]="SNMP informations";
+$LANGTRACKER["title"][1]="SNMP information";
 $LANGTRACKER["title"][2]="connections history";
 $LANGTRACKER["title"][3]="[Trk] Errors";
 $LANGTRACKER["title"][4]="[Trk] Cron";
@@ -46,33 +46,33 @@ $LANGTRACKER["profile"][0]="Rights management";
 $LANGTRACKER["profile"][1]="$title"; //interface
 
 $LANGTRACKER["profile"][10]="Profiles configured";
-$LANGTRACKER["profile"][11]="Computers history";
-$LANGTRACKER["profile"][12]="Printers history";
-$LANGTRACKER["profile"][13]="Printers informations";
-$LANGTRACKER["profile"][14]="Network informations";
+$LANGTRACKER["profile"][11]="Computer history";
+$LANGTRACKER["profile"][12]="Printer history";
+$LANGTRACKER["profile"][13]="Printer information";
+$LANGTRACKER["profile"][14]="Network information";
 $LANGTRACKER["profile"][15]="Errors";
 
 $LANGTRACKER["profile"][16]="SNMP networking";
 $LANGTRACKER["profile"][17]="SNMP peripheral";
 $LANGTRACKER["profile"][18]="SNMP printers";
-$LANGTRACKER["profile"][19]="Models SNMP";
-$LANGTRACKER["profile"][20]="Authentification SNMP";
-$LANGTRACKER["profile"][21]="Scripts informations";
-$LANGTRACKER["profile"][22]="Networking discover";
+$LANGTRACKER["profile"][19]="SNMP models";
+$LANGTRACKER["profile"][20]="SNMP authentification";
+$LANGTRACKER["profile"][21]="Script information";
+$LANGTRACKER["profile"][22]="Network discovery";
 $LANGTRACKER["profile"][23]="General configuration";
 $LANGTRACKER["profile"][24]="SNMP model";
 $LANGTRACKER["profile"][25]="IP range";
-$LANGTRACKER["profile"][26]="Agents";
-$LANGTRACKER["profile"][27]="Agents informations";
+$LANGTRACKER["profile"][26]="Agent";
+$LANGTRACKER["profile"][27]="Agent information";
 $LANGTRACKER["profile"][28]="Report";
 
 
-$LANGTRACKER["setup"][2]="Thanks to put in racine entity (see all)";
-$LANGTRACKER["setup"][3]="Configuration of plugin ".$title;
+$LANGTRACKER["setup"][2]="Thanks to put all in root entity (see all)";
+$LANGTRACKER["setup"][3]="Plugin configuration".$title;
 $LANGTRACKER["setup"][4]="Install plugin $title $version";
 $LANGTRACKER["setup"][5]="Update plugin $title to version $version";
 $LANGTRACKER["setup"][6]="Uninstall plugin $title $version";
-$LANGTRACKER["setup"][8]="Attention, uninstallation of plugin is irreversible.<br> You loose all datas.";
+$LANGTRACKER["setup"][8]="Attention, uninstalling this plugin is an irreversible step.<br> You will loose all datas.";
 $LANGTRACKER["setup"][11]="Instructions";
 $LANGTRACKER["setup"][12]="FAQ";
 $LANGTRACKER["setup"][13]="Verification of PHP modules";
@@ -84,7 +84,7 @@ $LANGTRACKER["functionalities"][1]="Add / Delete features";
 $LANGTRACKER["functionalities"][2]="General configuration";
 $LANGTRACKER["functionalities"][3]="SNMP";
 $LANGTRACKER["functionalities"][4]="Connection";
-$LANGTRACKER["functionalities"][5]="Serser script";
+$LANGTRACKER["functionalities"][5]="Server script";
 
 $LANGTRACKER["functionalities"][10]="History activation";
 $LANGTRACKER["functionalities"][11]="Connection module activation";
@@ -106,7 +106,7 @@ $LANGTRACKER["functionalities"][26]="GLPI URL for agent";
 $LANGTRACKER["functionalities"][27]="SSL only for agent";
 
 $LANGTRACKER["functionalities"][30]="Status of active material";
-$LANGTRACKER["functionalities"][31]="Management cartridges and stock";
+$LANGTRACKER["functionalities"][31]="Management of cartridges and stock";
 $LANGTRACKER["functionalities"][36]="Frequency of meter reading";
 
 $LANGTRACKER["functionalities"][40]="Configuration";
@@ -114,13 +114,13 @@ $LANGTRACKER["functionalities"][41]="Status of active material";
 $LANGTRACKER["functionalities"][42]="Switch";
 $LANGTRACKER["functionalities"][43]="SNMP authentification";
 
-$LANGTRACKER["functionalities"][50]="Number of simultaneous process for the discovery network";
-$LANGTRACKER["functionalities"][51]="Number of simultaneous process for querying SNMP";
+$LANGTRACKER["functionalities"][50]="Number of simultaneous processes for the network discovery";
+$LANGTRACKER["functionalities"][51]="Number of simultaneous processes for SNMP queries";
 $LANGTRACKER["functionalities"][52]="Log files activation";
-$LANGTRACKER["functionalities"][53]="Number of simultaneous process for post-treatment server script";
+$LANGTRACKER["functionalities"][53]="Number of simultanous processes to be used by server script";
 
-$LANGTRACKER["snmp"][0]="SNMP information equipment";
-$LANGTRACKER["snmp"][1]="Général";
+$LANGTRACKER["snmp"][0]="SNMP information of equipment";
+$LANGTRACKER["snmp"][1]="General";
 $LANGTRACKER["snmp"][2]="Cabling";
 $LANGTRACKER["snmp"][2]="SNMP data";
 
@@ -130,9 +130,9 @@ $LANGTRACKER["snmp"][13]="CPU usage (in %)";
 $LANGTRACKER["snmp"][14]="Memory usage (in %)";
 
 $LANGTRACKER["snmp"][31]="Unable to retrieve SNMP info: This is not a switch !";
-$LANGTRACKER["snmp"][32]="Unable to retrieve information SNMP: Hardware inactive !";
+$LANGTRACKER["snmp"][32]="Unable to retrieve SNMP information: Hardware inactive !";
 $LANGTRACKER["snmp"][33]="Unable to retrieve SNMP information: IP not specified in the basic !";
-$LANGTRACKER["snmp"][34]="The switch is connected to which the machine is not filled !";
+$LANGTRACKER["snmp"][34]="The switch is connected to a machine that is not filled !";
 
 $LANGTRACKER["snmp"][41]="";
 $LANGTRACKER["snmp"][42]="MTU";
@@ -164,7 +164,7 @@ $LANGTRACKER["cron"][3]="Default";
 $LANGTRACKER["errors"][0]="Errors";
 $LANGTRACKER["errors"][1]="IP";
 $LANGTRACKER["errors"][2]="Description";
-$LANGTRACKER["errors"][3]="Date 1st problem";
+$LANGTRACKER["errors"][3]="Date first problem";
 $LANGTRACKER["errors"][4]="Date last problem";
 
 $LANGTRACKER["errors"][10]="Inconsistent with the basic GLPI";
@@ -186,9 +186,9 @@ $LANGTRACKER["history"][1] = "New";
 $LANGTRACKER["history"][2] = "Disconnect";
 $LANGTRACKER["history"][3] = "Connection";
 
-$LANGTRACKER["prt_history"][0]="History and Statistics counters printer";
+$LANGTRACKER["prt_history"][0]="History and Statistics of printer counters";
 
-$LANGTRACKER["prt_history"][10]="Statistics counters printer";
+$LANGTRACKER["prt_history"][10]="Printer counter statistics";
 $LANGTRACKER["prt_history"][11]="day(s)";
 $LANGTRACKER["prt_history"][12]="Total printed pages";
 $LANGTRACKER["prt_history"][13]="Pages / day";
@@ -215,33 +215,34 @@ $LANGTRACKER["rules"][1]="Rules";
 $LANGTRACKER["massiveaction"][1]="Assign SNMP model";
 $LANGTRACKER["massiveaction"][2]="Assign SNMP authentification";
 
-$LANGTRACKER["model_info"][1]="SNMP informations";
+$LANGTRACKER["model_info"][1]="SNMP information";
 $LANGTRACKER["model_info"][2]="SNMP version";
 $LANGTRACKER["model_info"][3]="SNMP authentification";
 $LANGTRACKER["model_info"][4]="SNMP models";
 $LANGTRACKER["model_info"][5]="MIB management";
-$LANGTRACKER["model_info"][6]="Editing SNMP models";
-$LANGTRACKER["model_info"][7]="Creation SNMP models";
-$LANGTRACKER["model_info"][8]="Model already exists: import was not made";
+$LANGTRACKER["model_info"][6]="Edit SNMP model";
+$LANGTRACKER["model_info"][7]="Create SNMP model";
+$LANGTRACKER["model_info"][8]="Model already exists: import was not done";
 $LANGTRACKER["model_info"][9]="Import completed successfully";
-$LANGTRACKER["model_info"][10]="Model importation";
+$LANGTRACKER["model_info"][10]="SNMP model import";
 $LANGTRACKER["model_info"][11]="Activation";
-$LANGTRACKER["model_info"][12]="Model key for discovery";
+$LANGTRACKER["model_info"][12]="Key for model discovery";
 
-$LANGTRACKER["mib"][1]="Label MIB";
-$LANGTRACKER["mib"][2]="Objet";
+
+$LANGTRACKER["mib"][1]="MIB Label";
+$LANGTRACKER["mib"][2]="Object";
 $LANGTRACKER["mib"][3]="oid";
 $LANGTRACKER["mib"][4]="add an oid...";
 $LANGTRACKER["mib"][5]="oid list";
-$LANGTRACKER["mib"][6]="Counter ports";
+$LANGTRACKER["mib"][6]="Port Counters";
 $LANGTRACKER["mib"][7]="Dynamic port (.x)";
-$LANGTRACKER["mib"][8]="Link fields";
-$LANGTRACKER["mib"][9]="vlan";
+$LANGTRACKER["mib"][8]="Linked fields";
+$LANGTRACKER["mib"][9]="Vlan";
 
-$LANGTRACKER["processes"][0]="Information on running scripts";
+$LANGTRACKER["processes"][0]="History of script executions";
 $LANGTRACKER["processes"][1]="PID";
 $LANGTRACKER["processes"][2]="Status";
-$LANGTRACKER["processes"][3]="Nomber of process";
+$LANGTRACKER["processes"][3]="Number of processes";
 $LANGTRACKER["processes"][4]="Start date of execution";
 $LANGTRACKER["processes"][5]="End date of execution";
 $LANGTRACKER["processes"][6]="Network equipment queried";
@@ -252,13 +253,13 @@ $LANGTRACKER["processes"][10]="Time Script";
 $LANGTRACKER["processes"][11]="added fields";
 $LANGTRACKER["processes"][12]="SNMP errors";
 $LANGTRACKER["processes"][13]="Unknown MAC";
-$LANGTRACKER["processes"][14]="List of MAC address unknown ";
+$LANGTRACKER["processes"][14]="List of unknown MAC addresses";
 $LANGTRACKER["processes"][15]="First PID";
 $LANGTRACKER["processes"][16]="Last PID";
 $LANGTRACKER["processes"][17]="Date of first detection";
 $LANGTRACKER["processes"][18]="Date of last detection";
-$LANGTRACKER["processes"][19]="Informations on running agents";
-$LANGTRACKER["processes"][20]="Report / statistics";
+$LANGTRACKER["processes"][19]="History of agent executions";
+$LANGTRACKER["processes"][20]="Reports and Statistics";
 $LANGTRACKER["processes"][21]="Queried devices";
 $LANGTRACKER["processes"][22]="Errors";
 $LANGTRACKER["processes"][23]="Total duration of discovery";
@@ -371,27 +372,26 @@ $LANGTRACKER["mapping"][98]="printer > consumables > Maintenance kit (max)";
 $LANGTRACKER["mapping"][99]="printer > consumables > Maintenance kit (remaining)";
 $LANGTRACKER["mapping"][400]="printer > consumables > Maintenance kit (%)";
 $LANGTRACKER["mapping"][401]="networking > CPU user";
-$LANGTRACKER["mapping"][402]="networking > CPU système";
+$LANGTRACKER["mapping"][402]="networking > CPU system";
 $LANGTRACKER["mapping"][403]="networking > contact";
 $LANGTRACKER["mapping"][404]="networking > comments";
 $LANGTRACKER["mapping"][405]="printer > contact";
 $LANGTRACKER["mapping"][406]="printer > comments";
 $LANGTRACKER["mapping"][407]="printer > port > IP address";
-$LANGTRACKER["mapping"][408]="networking > port > index number";
-$LANGTRACKER["mapping"][409]="networking > CDP address";
-$LANGTRACKER["mapping"][410]="networking > CDP port";
-$LANGTRACKER["mapping"][411]="networking > trunk port status";
-$LANGTRACKER["mapping"][412]="networking > mac addresses filtered (dot1dTpFdbAddress)";
-$LANGTRACKER["mapping"][413]="networking > mac addresses memorised (ipNetToMediaPhysAddress)";
-$LANGTRACKER["mapping"][414]="networking > ports instances (dot1dTpFdbPort)";
-$LANGTRACKER["mapping"][415]="networking > port number associed to port ID (dot1dBasePortIfIndex)";
+$LANGTRACKER["mapping"][408]="networking > port > numÃ©ro index";
+$LANGTRACKER["mapping"][409]="networking > Adress CDP";
+$LANGTRACKER["mapping"][410]="networking > Port CDP";
+$LANGTRACKER["mapping"][411]="networking > Trunk port status";
+$LANGTRACKER["mapping"][412]="networking > MAC address filters (dot1dTpFdbAddress)";
+$LANGTRACKER["mapping"][413]="networking > Physical addresses in memory (ipNetToMediaPhysAddress)";
+$LANGTRACKER["mapping"][414]="networking > instances de ports (dot1dTpFdbPort)";
+$LANGTRACKER["mapping"][415]="networking > numÃ©ro de ports associÃ© ID du port (dot1dBasePortIfIndex)";
 $LANGTRACKER["mapping"][416]="printer > port > index number";
 $LANGTRACKER["mapping"][417]="networking > MAC address";
 $LANGTRACKER["mapping"][418]="printer > Inventory number";
 $LANGTRACKER["mapping"][419]="networking > Inventory number";
 $LANGTRACKER["mapping"][420]="printer > manufacturer";
 $LANGTRACKER["mapping"][421]="networking > IP addresses";
-
 
 $LANGTRACKER["mapping"][101]="";
 $LANGTRACKER["mapping"][102]="";
@@ -400,10 +400,10 @@ $LANGTRACKER["mapping"][104]="MTU";
 $LANGTRACKER["mapping"][105]="Speed";
 $LANGTRACKER["mapping"][106]="Internal status";
 $LANGTRACKER["mapping"][107]="Last Change";
-$LANGTRACKER["mapping"][108]="Number of bytes entered";
-$LANGTRACKER["mapping"][109]="Number of bytes out";
+$LANGTRACKER["mapping"][108]="Number of received bytes";
+$LANGTRACKER["mapping"][109]="Number of outgoing bytes";
 $LANGTRACKER["mapping"][110]="Number of input errors";
-$LANGTRACKER["mapping"][111]="Number of errors output";
+$LANGTRACKER["mapping"][111]="Number of output errors";
 $LANGTRACKER["mapping"][112]="CPU usage";
 $LANGTRACKER["mapping"][113]="";
 $LANGTRACKER["mapping"][114]="Connection";
@@ -437,44 +437,47 @@ $LANGTRACKER["mapping"][150]="Magenta transfer unit";
 $LANGTRACKER["mapping"][151]="Waste bin";
 $LANGTRACKER["mapping"][152]="Four";
 $LANGTRACKER["mapping"][153]="Cleaning module";
-$LANGTRACKER["mapping"][154]="Number of printed duplex pages";
-$LANGTRACKER["mapping"][155]="Nomber of scanned pages";
+$LANGTRACKER["mapping"][154]="Number of pages printed duplex";
+$LANGTRACKER["mapping"][155]="Number of scanned pages";
 $LANGTRACKER["mapping"][156]="Maintenance kit";
 
 $LANGTRACKER["printer"][0]="pages";
-$LANGTRACKER["menu"][1]="Agents management";
-$LANGTRACKER["menu"][2]="IP range";
+
+
+$LANGTRACKER["menu"][1]="Agent configuration";
+$LANGTRACKER["menu"][2]="IP range configuration";
 $LANGTRACKER["menu"][3]="Menu";
 
-$LANGTRACKER["menu"][0]="Network devices discover";
+$LANGTRACKER["menu"][0]="Information about discovered devices";
 
 $LANGTRACKER["buttons"][0]="Discover";
 
-$LANGTRACKER["discovery"][0]="Ip range to scan";
+$LANGTRACKER["discovery"][0]="IP range to scan";
 $LANGTRACKER["discovery"][1]="Discovered devices";
 $LANGTRACKER["discovery"][2]="Activation in the script automatically";
 $LANGTRACKER["discovery"][3]="Discover";
 $LANGTRACKER["discovery"][4]="Serial number";
 $LANGTRACKER["discovery"][5]="Number of imported devices";
-$LANGTRACKER["discovery"][6]="Criteria for existence";
+$LANGTRACKER["discovery"][6]="Primary criteria for existence";
 $LANGTRACKER["discovery"][7]="Secondary criteria for existence ";
-$LANGTRACKER["discovery"][8]="if all criteria for existence are fields empty on device, you can select secondary criteria.";
+$LANGTRACKER["discovery"][8]="If a device returns empty fields on first ciriteria, second one will be used.";
 
-$LANGTRACKER["rangeip"][0]="Start IP range";
-$LANGTRACKER["rangeip"][1]="End IP range";
-$LANGTRACKER["rangeip"][2]="IP range";
-$LANGTRACKER["rangeip"][3]="Query";
+$LANGTRACKER["rangeip"][0]="Start of IP range";
+$LANGTRACKER["rangeip"][1]="End of IP range";
+$LANGTRACKER["rangeip"][2]="IP Ranges";
+$LANGTRACKER["rangeip"][3]="Interrogation";
 
-$LANGTRACKER["agents"][0]="SNMP agent";
-$LANGTRACKER["agents"][2]="Query threads (by core)";
-$LANGTRACKER["agents"][3]="Discovery threads (by core)";
-$LANGTRACKER["agents"][4]="Last ascent";
+
+$LANGTRACKER["agents"][0]="SNMP Agent";
+$LANGTRACKER["agents"][2]="Number of threads used by core for querying devices";
+$LANGTRACKER["agents"][3]="Number of threads used by core for network discovery";
+$LANGTRACKER["agents"][4]="Last scan";
 $LANGTRACKER["agents"][5]="Agent version";
-$LANGTRACKER["agents"][6]="Lock";
-$LANGTRACKER["agents"][7]="Export agent config";
-$LANGTRACKER["agents"][8]="Fragments in Ko";
+$LANGTRACKER["agents"][6]="Active";
+$LANGTRACKER["agents"][7]="Export agent configuration";
+$LANGTRACKER["agents"][8]="Fragments en Ko";
 $LANGTRACKER["agents"][9]="Advanced options";
-$LANGTRACKER["agents"][10]="Query core (CPU)";
-$LANGTRACKER["agents"][11]="Discovery core (CPU)";
+$LANGTRACKER["agents"][10]="Number of core(s) (CPU) used for querying devices";
+$LANGTRACKER["agents"][11]="Number of core(s) (CPU) used for network discovery";
 
 ?>
