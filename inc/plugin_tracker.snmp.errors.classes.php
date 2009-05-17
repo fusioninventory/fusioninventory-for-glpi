@@ -82,18 +82,18 @@ class plugin_tracker_errors extends CommonDBTM
 	function getIDandNewDescrFromDevice($device_type, $identifiant, $error_type, $new_error)
 	{
 			
-		global $LANG,$LANGTRACKER;
+		global $LANG;
 
 		if (!($this->getIDandDescrFromDevice($device_type, $identifiant)))
 				return false;
 
 		// string to be checked if already exists into description
 		if ( $error_type == 'db' )
-			$string = $LANGTRACKER["errors"][10];
+			$string = $LANG['plugin_tracker']["errors"][10];
 		if ( $error_type == 'snmp' )
-			$string = $LANGTRACKER["errors"][20];
+			$string = $LANG['plugin_tracker']["errors"][20];
 		if ( $error_type == 'wire' )
-			$string = $LANGTRACKER["errors"][30];
+			$string = $LANG['plugin_tracker']["errors"][30];
 
 		$description = explode('. ', $this->fields['description']);
 		$num = count($description);
@@ -119,7 +119,7 @@ class plugin_tracker_errors extends CommonDBTM
 	
 	/* returns false if can't find computer (by IP, name or otherserial), else returns the ID of the computer */
 	function writeComputerDbError($device_type, $input) {
-		global $LANG,$LANGTRACKER;
+		global $LANG;
 		global $DB;
 		
 		if ( !($input['ifaddr'] && $input['name']) )
@@ -143,7 +143,7 @@ class plugin_tracker_errors extends CommonDBTM
 	   			  "WHERE pc.otherserial = '".$input['otherserial']."';";
 	
 		$fields = array();
-		$input['description'] = "".$LANGTRACKER["errors"][10]." : ";
+		$input['description'] = $LANG['plugin_tracker']["errors"][10]." : ";
 		
 		// if error = 0, no error
 		$error = 2;
@@ -188,7 +188,7 @@ class plugin_tracker_errors extends CommonDBTM
 
 		// can't find computer ID
 		else
-			$input['description'] .= "".$LANGTRACKER["errors"][11]." ,";
+			$input['description'] .= $LANG['plugin_tracker']["errors"][11]." ,";
 		
 		
 		/// Get all inputs for DB
@@ -206,7 +206,7 @@ class plugin_tracker_errors extends CommonDBTM
 		
 		// if no description => unknown IP
 		if ( !isset($input['description']) )
-			$input['description'] = "".$LANGTRACKER["errors"][12]." ,";
+			$input['description'] = $LANG['plugin_tracker']["errors"][12]." ,";
 		// add the other elements of the error messages
 		$input['description'] .= "NetBIOS : ".$input['name'].", Admisys : ".$input['otherserial'];
 
@@ -232,13 +232,13 @@ class plugin_tracker_errors extends CommonDBTM
 	/* needs : ifaddr, device_id */
 	function writeSnmpError($device_type, $input) {
 		
-		global $LANG,$LANGTRACKER;
+		global $LANG;
 		
 		$input['device_type'] = $device_type;
 		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
 
-		$input['description'] = $LANGTRACKER["errors"][20]." : ";
-		$input['description'].= $LANGTRACKER["errors"][21];
+		$input['description'] = $LANG['plugin_tracker']["errors"][20]." : ";
+		$input['description'].= $LANG['plugin_tracker']["errors"][21];
 		
 		// if there is already an error entry for the device
 		if ( $this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'snmp', $input['description']) ) {
@@ -255,12 +255,12 @@ class plugin_tracker_errors extends CommonDBTM
 	/* needs : ifaddr, device_id */
 	function writeWireError($device_type, $input) {
 		
-		global $LANG,$LANGTRACKER;
+		global $LANG;
 		
 		$input['device_type'] = $device_type;
 		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
 		
-		$input['description'] = $LANGTRACKER["errors"][30];
+		$input['description'] = $LANG['plugin_tracker']["errors"][30];
 		
 		// if there is already an error entry for the device
 		if ( $this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'wire', $input['description']) ) {
@@ -351,7 +351,7 @@ class plugin_tracker_errors extends CommonDBTM
 	
 	function showForm($type, $target, $ID) {
 			
-		GLOBAL $LANG,$LANGTRACKER;
+		GLOBAL $LANG;
 		
 		if ( !plugin_tracker_haveRight("errors","r") )
 			return false;
@@ -384,14 +384,14 @@ class plugin_tracker_errors extends CommonDBTM
 			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'  action=\"".$target."?type=".PRINTER_TYPE."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='5'>";
-		echo $LANGTRACKER["errors"][0]." :</th></tr>";
+		echo $LANG['plugin_tracker']["errors"][0]." :</th></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th></th>";
-		echo "<th>".$LANGTRACKER["errors"][1]." :</th>";
-		echo "<th>".$LANGTRACKER["errors"][2]." :</th>";
-		echo "<th>".$LANGTRACKER["errors"][3]." :</th>";
-		echo "<th>".$LANGTRACKER["errors"][4]." :</th></tr>";
+		echo "<th>".$LANG['plugin_tracker']["errors"][1]." :</th>";
+		echo "<th>".$LANG['plugin_tracker']["errors"][2]." :</th>";
+		echo "<th>".$LANG['plugin_tracker']["errors"][3]." :</th>";
+		echo "<th>".$LANG['plugin_tracker']["errors"][4]." :</th></tr>";
 
 		for ($i=0; $i<$limit; $i++) {
 			echo "<tr class='tab_bg_1'>";

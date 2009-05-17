@@ -42,7 +42,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_report","r");
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER['PHP_SELF'],"utils","report");
+commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
 
 if (isset($_GET["reset_search"]))
 	resetSearch();
@@ -78,7 +78,7 @@ commonFooter();
 
 function displaySearchForm($FK_port)
 {
-	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$TRACKER_MAPPING,$LANGTRACKER;
+	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
 	include_once(GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php');
 

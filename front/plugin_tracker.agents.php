@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
+commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
 
 plugin_tracker_checkRight("snmp_agent","r");
 

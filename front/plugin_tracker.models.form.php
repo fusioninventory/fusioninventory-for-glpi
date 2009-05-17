@@ -50,7 +50,7 @@ $plugin_tracker_mib_networking = new plugin_tracker_mib_networking();
 
 $importexport = new plugin_tracker_importexport;
 
-commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","models");
+commonHeader($LANG['plugin_tracker']["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","models");
 
 plugin_tracker_mini_menu();
 

@@ -45,7 +45,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	}
 
 	function showForm($target, $ID = '') {
-		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+		global $DB,$CFG_GLPI,$LANG;
 
 		plugin_tracker_checkRight("snmp_authentification","r");
 
@@ -58,7 +58,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
-		echo ($ID =='' ? $LANGTRACKER["model_info"][7] : $LANGTRACKER["model_info"][3]);
+		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] : $LANG['plugin_tracker']["model_info"][3]);
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -69,56 +69,56 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["model_info"][2] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["model_info"][2] . "</td>";
 		echo "<td align='center'>";
 		dropdownValue("glpi_dropdown_plugin_tracker_snmp_version", "FK_snmp_version", $this->fields["FK_snmp_version"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["snmpauth"][1] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][1] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='community' value='" . $this->fields["community"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["snmpauth"][2] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][2] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='sec_name' value='" . $this->fields["sec_name"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["snmpauth"][3] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][3] . "</td>";
 		echo "<td align='center'>";
 		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_sec_level", "sec_level", $this->fields["sec_level"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["snmpauth"][4] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][4] . "</td>";
 		echo "<td align='center'>";
 		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol", "auth_protocol", $this->fields["auth_protocol"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["snmpauth"][5] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][5] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='auth_passphrase' value='" . $this->fields["auth_passphrase"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["snmpauth"][6] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][6] . "</td>";
 		echo "<td align='center'>";
 		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol", "priv_protocol", $this->fields["priv_protocol"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["snmpauth"][7] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][7] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='priv_passphrase' value='" . $this->fields["priv_passphrase"] . "'/>";
 		echo "</td>";
@@ -147,7 +147,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	
 	function plugin_tracker_snmp_connections($array=0)
 	{
-		GLOBAL $CFG_GLPI,$LANG,$LANGTRACKER;
+		GLOBAL $CFG_GLPI,$LANG;
 
 		$array_auth = array();
 
@@ -155,17 +155,17 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		{
 			echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 			echo "<div align='center'><table class='tab_cadre_fixe'>";
-			echo "<tr><th colspan='10'>".$LANGTRACKER["model_info"][3]." :</th></tr>";
+			echo "<tr><th colspan='10'>".$LANG['plugin_tracker']["model_info"][3]." :</th></tr>";
 			echo "<tr><th>".$LANG["common"][2]."</th>";
 			echo "<th>".$LANG["common"][16]."</th>";
-			echo "<th>".$LANGTRACKER["model_info"][2]."</th>";
-			echo "<th>".$LANGTRACKER["snmpauth"][1]."</th>";
-			echo "<th>".$LANGTRACKER["snmpauth"][2]."</th>";
-			echo "<th>".$LANGTRACKER["snmpauth"][3]."</th>";
-			echo "<th>".$LANGTRACKER["snmpauth"][4]."</th>";
-			echo "<th>".$LANGTRACKER["snmpauth"][5]."</th>";
-			echo "<th>".$LANGTRACKER["snmpauth"][6]."</th>";
-			echo "<th>".$LANGTRACKER["snmpauth"][7]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["model_info"][2]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["snmpauth"][1]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["snmpauth"][2]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["snmpauth"][3]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["snmpauth"][4]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["snmpauth"][5]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["snmpauth"][6]."</th>";
+			echo "<th>".$LANG['plugin_tracker']["snmpauth"][7]."</th>";
 			echo "</tr>";
 		}
 
@@ -392,7 +392,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	**/
 	function GetInfos($ID_Device,$xml_auth_rep,$type)
 	{
-		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+		global $DB,$CFG_GLPI,$LANG;
 
 		$config = new plugin_tracker_config();
 
