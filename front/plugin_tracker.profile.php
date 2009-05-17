@@ -95,24 +95,24 @@ echo "<div align='center'><form method='post' name='massiveaction_form' id='mass
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";
-echo "	<th colspan='14'>".$LANGTRACKER["profile"][10]." : </th>";
+echo "	<th colspan='14'>".$LANG['plugin_tracker']["profile"][10]." : </th>";
 echo "</tr>";
 
 echo "<tr>";
 echo "	<th></th>";
 echo "	<th></th>";
 echo "	<th>".$LANG["Menu"][35]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][16]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][18]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][19]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][20]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][25]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][26]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][21]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][27]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][22]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][28]."</th>";
-echo "	<th>".$LANGTRACKER["profile"][23]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][16]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][18]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][19]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][20]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][25]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][26]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][21]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][27]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][22]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][28]."</th>";
+echo "	<th>".$LANG['plugin_tracker']["profile"][23]."</th>";
 echo "</tr>";
 
 $query0="SELECT * FROM glpi_plugin_tracker_profiles ORDER BY name";

@@ -48,7 +48,7 @@ plugin_tracker_checkRight("snmp_authentification","r");
 $plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 $config = new plugin_tracker_config;
 
-commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
+commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 
 plugin_tracker_mini_menu();
 

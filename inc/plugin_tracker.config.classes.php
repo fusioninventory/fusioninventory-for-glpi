@@ -79,7 +79,7 @@ class plugin_tracker_config extends CommonDBTM {
 	
 	function showTabs ($type) {
 
-		GLOBAL $LANG,$LANGTRACKER;
+		GLOBAL $LANG;
 		
 		if (haveRight("config","w")) {
 			// tabs
@@ -89,48 +89,48 @@ class plugin_tracker_config extends CommonDBTM {
 			echo "<li";
 			if ($type == "general")
 				echo " class='actif'";			
-			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANGTRACKER["functionalities"][2]."&nbsp;</a></li>\n";
+			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][2]."&nbsp;</a></li>\n";
 			echo "<li";
 			if ($type == "smp-script")
 				echo " class='actif'";			
-			echo "><a href='plugin_tracker.functionalities.form.snmp-script.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANGTRACKER["functionalities"][5]."&nbsp;</a></li>\n";
+			echo "><a href='plugin_tracker.functionalities.form.snmp-script.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5]."&nbsp;</a></li>\n";
 
 			echo "<li";
 			if ($type == "discovery")
 				echo " class='actif'";
-			echo "><a href='plugin_tracker.functionalities.form.snmp-discovery.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANGTRACKER["discovery"][3]."&nbsp;</a></li>\n";
+			echo "><a href='plugin_tracker.functionalities.form.snmp-discovery.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3]."&nbsp;</a></li>\n";
 
 			if ($this->getValue("activation_snmp_networking") == "1")
 			{
 				echo "<li";
 				if ($type == "smp-networking")
 					echo " class='actif'";
-				echo "><a href='plugin_tracker.functionalities.form.snmp-networking.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-networking.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
 			}
 			if ($this->getValue("activation_snmp_peripheral") == "1")
 			{
 				echo "<li";
 				if ($type == "smp-peripheral")
 					echo " class='actif'";
-				echo "><a href='plugin_tracker.functionalities.form.snmp-peripheral.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][16]."&nbsp;</a></li>\n";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-peripheral.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][16]."&nbsp;</a></li>\n";
 			}
 			if ($this->getValue("activation_snmp_printer") == "1")
 			{
 				echo "<li";
 				if ($type == "smp-printer")
 					echo " class='actif'";
-				echo "><a href='plugin_tracker.functionalities.form.snmp-printers.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-printers.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
 			}
 			if ($this->getValue("activation_snmp_phone") == "1")
 			{
 				echo "<li";
 				if ($type == "smp-phone")
 					echo " class='actif'";
-				echo "><a href='plugin_tracker.functionalities.form.snmp-phone.php'>&nbsp;".$LANGTRACKER["functionalities"][3]." - ".$LANG["Menu"][34]."&nbsp;</a></li>\n";
+				echo "><a href='plugin_tracker.functionalities.form.snmp-phone.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34]."&nbsp;</a></li>\n";
 			}
 			if ($this->getValue("activation_connection") == "1")
 			{
-				echo "<li><a href=''>&nbsp;".$LANGTRACKER["functionalities"][4]."&nbsp;</a></li>\n";
+				echo "<li><a href=''>&nbsp;".$LANG['plugin_tracker']["functionalities"][4]."&nbsp;</a></li>\n";
 			}
 			echo "<ul>\n";
 			echo "</div>\n";
@@ -139,97 +139,97 @@ class plugin_tracker_config extends CommonDBTM {
 			/*echo "<div align='center'><form method='post' name='functionalities_form' id='functionalities_form'  action=\"".$target."\">";
 	
 			echo "<table class='tab_cadre_fixe' cellpadding='5'><tr><th colspan='2'>";
-			echo $LANGTRACKER["functionalities"][1]." :</th></tr>";
+			echo $LANG['plugin_tracker']["functionalities"][1]." :</th></tr>";
 			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
-			echo $LANGTRACKER["functionalities"][10]." :</th></tr>";
+			echo $LANG['plugin_tracker']["functionalities"][10]." :</th></tr>";
 			
 /*			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][11]." ";
-			echo "<img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('wire_control_info'),'none')\" onmouseover=\"setdisplay(getElementById('wire_control_info'),'block')\"><span class='over_link' id='wire_control_info'>".$LANGTRACKER["functionalities"][12]."</span>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][11]." ";
+			echo "<img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('wire_control_info'),'none')\" onmouseover=\"setdisplay(getElementById('wire_control_info'),'block')\"><span class='over_link' id='wire_control_info'>".$LANG['plugin_tracker']["functionalities"][12]."</span>";
 			echo "</td>";
 			echo "<td>";
 			dropdownYesNo("wire_control", $this->isActivated('wire_control'));
 			echo "</td></tr>";
 */			
 			/*echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][13]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][13]."</td>";
 			echo "<td>";
 			dropdownYesNo("computers_history", $this->isActivated('computers_history'));
 			echo "</td></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][14]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][14]."</td>";
 			echo "<td>";
 			dropdownYesNo("update_contact", $this->isActivated('update_contact'));
 			echo "</td></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][15]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][15]."</td>";
 			echo "<td>";
 			dropdownYesNo("update_user", $this->isActivated('update_user'));
 			echo "</td></tr>";
 
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
-			echo $LANGTRACKER["functionalities"][20]." :</th></tr>";
+			echo $LANG['plugin_tracker']["functionalities"][20]." :</th></tr>";
 			
 /*			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][21]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][21]."</td>";
 			echo "<td>";
 			dropdownYesNo("counters_statement", $this->isActivated('counters_statement'));
 			echo "</td></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][22]." ";
-			echo "<img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('info_statement_default_value'),'none')\" onmouseover=\"setdisplay(getElementById('info_statement_default_value'),'block')\"><span class='over_link' id='info_statement_default_value'>".$LANGTRACKER["functionalities"][23]."</span>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][22]." ";
+			echo "<img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('info_statement_default_value'),'none')\" onmouseover=\"setdisplay(getElementById('info_statement_default_value'),'block')\"><span class='over_link' id='info_statement_default_value'>".$LANG['plugin_tracker']["functionalities"][23]."</span>";
 			echo "</td>";
 			echo "<td>";
 			dropdownYesNo("statement_default_value", $this->isActivated('statement_default_value'));
 			echo "</td></tr>";
 */			
 			/*echo "<tr class='tab_bg_1'><th colspan='2'>";
-			echo $LANGTRACKER["functionalities"][30]." :</th></tr>";
+			echo $LANG['plugin_tracker']["functionalities"][30]." :</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][31]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][31]."</td>";
 			echo "<td>";
 			dropdownYesNo("cleaning", $this->isActivated('cleaning'));
 			echo "</td></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][32]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][32]."</td>";
 			echo "<td>";
 			echo "<input type='text' name='cleaning_days' value='".$this->getValue("cleaning_days")."' size='6'>";
 			echo "</td></tr>";
 			
 			echo "<tr class='tab_bg_1'><th colspan='2'>";
-			echo $LANGTRACKER["functionalities"][40]." :</th></tr>";
+			echo $LANG['plugin_tracker']["functionalities"][40]." :</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][41]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][41]."</td>";
 			echo "<td>";
 			dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
 			echo "</td></tr>";
 			
 /*			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][42]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][42]."</td>";
 			echo "<td>";
 			dropdownValue("glpi_type_networking", "networking_switch_type", $this->getValue("networking_switch_type"));
 			echo "</td></tr>";
 */
 			/*echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANGTRACKER["functionalities"][43]."</td>";
+			echo "<td>".$LANG['plugin_tracker']["functionalities"][43]."</td>";
 			echo "<td>";
 			echo "<select name='authsnmp'>";
 			echo "<option>-----</option>";
 			$selected = "";
 			if ($this->getValue("authsnmp") == "DB")
 				$selected = "selected";
-			echo "<option value='DB' ".$selected.">".$LANGTRACKER["functionalities"][44]."</option>";
+			echo "<option value='DB' ".$selected.">".$LANG['plugin_tracker']["functionalities"][44]."</option>";
 			$selected = "";
 			if ($this->getValue("authsnmp") == "file")
 				$selected = "selected";
-			echo "<option value='file' ".$selected.">".$LANGTRACKER["functionalities"][45]."</option>";
+			echo "<option value='file' ".$selected.">".$LANG['plugin_tracker']["functionalities"][45]."</option>";
 			echo "</select>";
 			echo "</td></tr>";
 
@@ -244,54 +244,54 @@ class plugin_tracker_config extends CommonDBTM {
 	
 	function showForm_general($target,$ID)
 	{
-		GLOBAL $LANG,$LANGTRACKER,$CFG_GLPI;
+		GLOBAL $LANG,$CFG_GLPI;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANGTRACKER["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][1]." :";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][27]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][27]."</td>";
 		echo "<td>";
 		dropdownYesNo("ssl_only", $this->isActivated('ssl_only'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
 		echo "<td>";
 		echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][10]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][10]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_history", $this->isActivated('activation_history'));
 		echo "</td>";
 		echo "</tr>";
 /* Disable for the moment SEE IT WALID
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][11]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][11]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_connection", $this->isActivated('activation_connection'));
 		echo "</td>";
 		echo "</tr>";		
 */
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][12]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][12]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_snmp_networking", $this->isActivated('activation_snmp_networking'));
 		echo "</td>";
 		echo "</tr>";	
 /* Disable PERIPHERAL because not completely implemented
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][13]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][13]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_snmp_peripheral", $this->isActivated('activation_snmp_peripheral'));
 		echo "</td>";
@@ -299,25 +299,25 @@ class plugin_tracker_config extends CommonDBTM {
 */
 /* Disable PHONE because not completely implemented
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][14]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][14]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_snmp_phone", $this->isActivated('activation_snmp_phone'));
 		echo "</td>";
 		echo "</tr>";	
 */
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][15]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][15]."</td>";
 		echo "<td>";
 		dropdownYesNo("activation_snmp_printer", $this->isActivated('activation_snmp_printer'));
 		echo "</td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][16]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][16]."</td>";
 		echo "<td>";
 		unset($ArrayValues);
-		$ArrayValues['DB']= $LANGTRACKER["functionalities"][17];
-		$ArrayValues['file']= $LANGTRACKER["functionalities"][18];
+		$ArrayValues['DB']= $LANG['plugin_tracker']["functionalities"][17];
+		$ArrayValues['file']= $LANG['plugin_tracker']["functionalities"][18];
 		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));
 		echo "</td></tr>";
 
@@ -370,14 +370,14 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 
 		function showForm($target,$ID)
 	{
-		GLOBAL $LANG,$LANGTRACKER;
+		GLOBAL $LANG;
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANGTRACKER["discovery"][6]." :";
+		echo $LANG['plugin_tracker']["discovery"][6]." :";
 		echo "</th>";
 		echo "</tr>";
 
@@ -404,13 +404,13 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANGTRACKER["discovery"][6]." 2 :";
+		echo $LANG['plugin_tracker']["discovery"][6]." 2 :";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='2'>";
-		echo $LANGTRACKER["discovery"][8];
+		echo $LANG['plugin_tracker']["discovery"][8];
 		echo "</td>";
 		echo "</tr>";
 
@@ -477,26 +477,26 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 
 	function showForm($target,$ID)
 	{
-		GLOBAL $LANG,$LANGTRACKER;
+		GLOBAL $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANGTRACKER["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][1]." :";
 		echo "</th>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][53]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][53]."</td>";
 		echo "<td>";
 		dropdownInteger("nb_process", $this->getValue('nb_process'),1,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][52]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][52]."</td>";
 		echo "<td>";
 		unset($ArrayValues);
 		$ArrayValues[]= $LANG["choice"][0];
@@ -507,7 +507,7 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["agents"][6]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["agents"][6]."</td>";
 		echo "<td>";
 		dropdownYesNo("lock", $this->getValue('`lock`'));
 		echo "</td>";
@@ -566,54 +566,54 @@ class plugin_tracker_config_snmp_networking extends CommonDBTM {
 	
 	function showForm($target,$ID)
 	{
-		GLOBAL $LANG,$LANGTRACKER;
+		GLOBAL $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANGTRACKER["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][1]." :";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][20]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][20]."</td>";
 		echo "<td>";
 		dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][21]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][21]."</td>";
 		echo "<td>";
 		dropdownInteger("history_wire", $this->getValue('history_wire'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][22]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][22]."</td>";
 		echo "<td>";
 		dropdownInteger("history_ports_state", $this->getValue('history_ports_state'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][23]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][23]."</td>";
 		echo "<td>";
 		dropdownInteger("history_unknown_mac", $this->getValue('history_unknown_mac'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][24]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][24]."</td>";
 		echo "<td>";
 		dropdownInteger("history_snmp_errors", $this->getValue('history_snmp_errors'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][25]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][25]."</td>";
 		echo "<td>";
 		dropdownInteger("history_process", $this->getValue('history_process'),0,100);
 		echo "</td>";
@@ -672,26 +672,26 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 	
 	function showForm($target,$ID)
 	{
-		GLOBAL $LANG,$LANGTRACKER;
+		GLOBAL $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANGTRACKER["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][1]." :";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANGTRACKER["functionalities"][30]."</td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][30]."</td>";
 		echo "<td>";
 		dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
 		echo "</td>";
 		echo "</tr>";
 
 //		echo "<tr class='tab_bg_1'>";
-//		echo "<td>".$LANGTRACKER["functionalities"][31]."</td>";
+//		echo "<td>".$LANG['plugin_tracker']["functionalities"][31]."</td>";
 //		echo "<td>";
 //		dropdownYesNo("manage_cartridges", $this->isActivated('manage_cartridges'));
 //		echo "</td>";

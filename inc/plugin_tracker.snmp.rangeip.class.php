@@ -48,7 +48,7 @@ class plugin_tracker_rangeip extends CommonDBTM
 
 
 	function showForm($target, $ID = '') {
-		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+		global $DB,$CFG_GLPI,$LANG;
 
 		if ($ID!='')
 			$this->getFromDB($ID);
@@ -59,7 +59,7 @@ class plugin_tracker_rangeip extends CommonDBTM
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
-		echo $LANGTRACKER["rangeip"][2];
+		echo $LANG['plugin_tracker']["rangeip"][2];
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -70,35 +70,35 @@ class plugin_tracker_rangeip extends CommonDBTM
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["rangeip"][0] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][0] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='ifaddr_start' value='".$this->fields["ifaddr_start"]."'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["rangeip"][1] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][1] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='ifaddr_end' value='".$this->fields["ifaddr_end"]."'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["agents"][0] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][0] . "</td>";
 		echo "<td align='center'>";
 		dropdownValue("glpi_plugin_tracker_agents","FK_tracker_agents",$this->fields["FK_tracker_agents"],0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["discovery"][3] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["discovery"][3] . "</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("discover",$this->fields["discover"]);
 		echo "</td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANGTRACKER["rangeip"][3] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][3] . "</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("query",$this->fields["query"]);
 		echo "</td>";

@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("config","w");
 
-commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
+commonHeader($LANG['plugin_tracker']["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
 $config = new plugin_tracker_config;
 $config_discovery = new plugin_tracker_config_discovery;
