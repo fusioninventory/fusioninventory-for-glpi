@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_mib_networking extends CommonDBTM
+class plugin_tracker_mib_networking
 {
 	function __construct()
 	{
