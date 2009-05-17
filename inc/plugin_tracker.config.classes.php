@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')){
 }
 
 
-class plugin_tracker_config extends CommonDBTM {
+class plugin_tracker_config {
 
 	function plugin_tracker_config() {
 		$this->table="glpi_plugin_tracker_config";
