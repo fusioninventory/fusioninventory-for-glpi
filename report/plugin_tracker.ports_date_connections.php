@@ -60,10 +60,10 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"]))
 		$_GET["field"] = $field;
 		$_GET["contains"] = $contains;
 
-		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
 }
 else
-	showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+	showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
 	
 commonFooter(); 
 
