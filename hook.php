@@ -1056,45 +1056,48 @@ function cron_plugin_tracker() {
 }
 
 // Define headings added by the plugin //
-function plugin_get_headings_tracker($type,$withtemplate){
+function plugin_get_headings_tracker($type,$ID,$withtemplate){
 	global $LANG;
 	$config = new plugin_tracker_config();	
 
-	if (in_array($type,array(NETWORKING_TYPE))){
-		// template case
-		if ($withtemplate)
-			return array();
-		// Non template case
-		else {
-			if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($config->getValue("activation_snmp_networking") == "1")) {
-				return array(
-					1 => $LANG['plugin_tracker']["title"][1]
-				);
-			}
-		}
-	}else if (in_array($type,array(PRINTER_TYPE))){
-		// template case
-		if ($withtemplate)
-			return array();
-		// Non template case
-		else {
-				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($config->getValue("activation_snmp_printer") == "1")) {
-				return array(
-					1 => $LANG['plugin_tracker']["title"][1]
-				);
-			}
-		}
-	}else	if (in_array($type,array(PROFILE_TYPE))){
-		// template case
-		if ($withtemplate)
-			return array();
-		// Non template case
-		else 
-			return array(
-					1 => $LANG['plugin_tracker']["title"][1],
+	switch ($type) {
+		case NETWORKING_TYPE :
+			if ($withtemplate)
+				return array();
+			// Non template case
+			else {
+				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($config->getValue("activation_snmp_networking") == "1")) {
+					return array(
+						1 => $LANG['plugin_tracker']["title"][1]
 					);
-	}else
-		return false;	
+				}
+			}
+			break;
+		case PRINTER_TYPE :
+			// template case
+			if ($withtemplate)
+				return array();
+			// Non template case
+			else {
+					if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($config->getValue("activation_snmp_printer") == "1")) {
+					return array(
+						1 => $LANG['plugin_tracker']["title"][1]
+					);
+				}
+			}
+			break;
+		case PROFILE_TYPE :
+			// template case
+			if ($withtemplate)
+				return array();
+			// Non template case
+			else
+				return array(
+						1 => $LANG['plugin_tracker']["title"][1],
+						);
+			break;
+	}
+	return false;	
 }
 /*
 function plugin_get_headings_tracker($type, $withtemplate) {
