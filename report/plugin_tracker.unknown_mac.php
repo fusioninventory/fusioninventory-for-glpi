@@ -44,8 +44,8 @@ plugin_tracker_checkRight("snmp_report","r");
 
 manageGetValuesInSearch(PLUGIN_TRACKER_MAC_UNKNOWN);
 
-searchForm(PLUGIN_TRACKER_MAC_UNKNOWN,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-showList(PLUGIN_TRACKER_MAC_UNKNOWN,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+searchForm(PLUGIN_TRACKER_MAC_UNKNOWN,$_GET);
+showList(PLUGIN_TRACKER_MAC_UNKNOWN,$_GET);
 commonFooter();
 
 ?>

@@ -70,7 +70,7 @@ if(isset($_GET["FK_networking_ports"])){
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
 }
-showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+showList(PLUGIN_TRACKER_SNMP_HISTORY,$_GET);
 	
 echo "</form>";
 
