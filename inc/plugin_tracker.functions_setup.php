@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')){
 // Installation function
 function plugin_tracker_installing($version) {
 
-	global $DB;
+	global $DB,$LANG;
 
 	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-empty.sql";
 	$DBf_handle = fopen($DB_file, "rt");
@@ -69,6 +69,8 @@ function plugin_tracker_installing($version) {
 	$config_snmp_script->initConfig();
 	// Import models
 	$importexport = new plugin_tracker_importexport;
+	include(GLPI_ROOT.'/inc/setup.function.php');
+	include(GLPI_ROOT.'/inc/rulesengine.function.php');
 	foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0,1);
 	
 	plugin_tracker_initSession();
