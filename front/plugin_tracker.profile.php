@@ -217,7 +217,7 @@ while ($data0=$DB->fetch_assoc($result0)){
 
 }
 
-echo "<tr class='tab_bg_1'><td colspan='11'>";
+echo "<tr class='tab_bg_1'><td colspan='14'>";
 echo "<div align='center'><a onclick= \"if ( markAllRows('massiveaction_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
 echo " - <a onclick= \"if ( unMarkAllRows('massiveaction_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
 echo "<input type='submit' name='delete_profile' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";	
