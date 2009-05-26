@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')){
 }
 
 
-class plugin_tracker_config {
+class plugin_tracker_config extends CommonDBTM {
 
 	function plugin_tracker_config() {
 		$this->table="glpi_plugin_tracker_config";
@@ -77,8 +77,7 @@ class plugin_tracker_config {
 			return true;
 	}
 	
-	function showTabs ($type) {
-
+	function showTabs($type) {
 		GLOBAL $LANG;
 		
 		if (haveRight("config","w")) {

@@ -33,7 +33,6 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-/* 0.72 compatibility
 $NEEDED_ITEMS=array("profile");
 define('GLPI_ROOT', '../../..'); 
 
@@ -46,8 +45,8 @@ if (isset ($_POST['update_user_profile'])) {
 	$prof->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
-*/
 
+/*
 $NEEDED_ITEMS=array("profile");
 define('GLPI_ROOT', '../../..'); 
 
@@ -249,6 +248,6 @@ if ($ID>0){
 }
 
 commonFooter();
-
+*/
 ?>
 
