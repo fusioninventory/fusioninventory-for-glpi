@@ -54,7 +54,7 @@ if (isset($_POST['update'])) {
 	$config->update($_POST);
 }
 
-$config->showTabs("general"); // config is at ID = 1
+$config->showTabs(1,'',1); // config is at ID = 1
 $config->showForm_general($_SERVER['PHP_SELF'],'1');
 commonFooter();
 
