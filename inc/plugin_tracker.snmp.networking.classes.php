@@ -180,8 +180,8 @@ class plugin_tracker_networking extends CommonDBTM
 		$CommonItem = new CommonItem;
 		$plugin_tracker_snmp = new plugin_tracker_snmp;
 
-		echo "<script type='text/javascript' src='/glpi072/lib/extjs/adapter/prototype/prototype.js'></script>";
-		echo "<script type='text/javascript' src='/glpi072/lib/extjs/adapter/prototype/effects.js'></script>";
+		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/prototype.js'></script>";
+		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/effects.js'></script>";
 		
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking=".$ID." ";
