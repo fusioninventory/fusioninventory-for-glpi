@@ -980,27 +980,30 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_networking.ID" :
-			// Récupérer les ip
-			// Récupérer le port et le switch
-			include_once(GLPI_ROOT."/inc/networking.class.php");
-			$query = "SELECT ID FROM glpi_networking_ports 
-			WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."') 
-			ORDER BY name, logical_number";
-			$result = $DB->query($query);
-			$out = "";
-			$np = new Netport;
-			$nw = new Netwire;
-			$nd = new Netdevice;
-			while ( $data2=$DB->fetch_array($result) )
+			if ($type == NETWORKING_TYPE)
 			{
-				if ($nw->getOppositeContact($data2["ID"]))
+				// Récupérer les ip
+				// Récupérer le port et le switch
+				include_once(GLPI_ROOT."/inc/networking.class.php");
+				$query = "SELECT ID FROM glpi_networking_ports
+				WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."')
+				ORDER BY name, logical_number";
+				$result = $DB->query($query);
+				$out = "";
+				$np = new Netport;
+				$nw = new Netwire;
+				$nd = new Netdevice;
+				while ( $data2=$DB->fetch_array($result) )
 				{
-					$np->getFromDB($nw->getOppositeContact($data2["ID"]));
-					$nd->getFromDB($np->fields["on_device"]);
-					$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$nd->fields["ID"]."'>".$nd->fields["name"]."</a>";
+					if ($nw->getOppositeContact($data2["ID"]))
+					{
+						$np->getFromDB($nw->getOppositeContact($data2["ID"]));
+						$nd->getFromDB($np->fields["on_device"]);
+						$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$nd->fields["ID"]."'>".$nd->fields["name"]."</a>";
+					}
 				}
+				return "<center>".$out."</center>";
 			}
-			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_printers.ID" :
 			$tracker_printers = new plugin_tracker_printers;
