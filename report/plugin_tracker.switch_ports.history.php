@@ -62,15 +62,21 @@ if(isset($_GET["FK_networking_ports"])){
 	$field[]=2;
 	$contains[]=$_GET["FK_networking_ports"];
 	$field[]=3;
-	if (isset($_GET["Field"]))
-		$contains[]=$_GET["Field"];
+	if ((isset($_GET["Field"])) AND !empty($_GET["Field"]))
+	{
+		$contains[]=$TRACKER_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
+		$_GET["link"][1] = "AND";
+	}
+	else
+		$_GET["link"][1] = "";
 
 	$_GET["field"] = $field;
 	$_GET["contains"] = $contains;
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
 }
-showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+if($_GET["field"][0] != "view")
+	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 	
 echo "</form>";
 

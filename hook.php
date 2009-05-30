@@ -1558,7 +1558,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
 
-switch ($new_table.".".$linkfield){
+	switch ($new_table.".".$linkfield){
 		case "glpi_plugin_tracker_networking.ID" :
 			if ($ref_table == "glpi_computers" )
 				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
@@ -1584,10 +1584,10 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-	
-	$SEARCH=makeTextSearch($val,$nott);
 
-switch ($table.".".$field){
+	$SEARCH=makeTextSearch($val,$nott);
+	
+	switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking_ports.lastup" :
 			$ADD="";	
 			if ($nott&&$val!="NULL") {
@@ -1618,6 +1618,12 @@ switch ($table.".".$field){
 				$ADD=" OR $table.$field IS NULL";
 			}
 			return $link." ($table.name ".$not." LIKE '%".$val."%' $ADD ) ";
+			break;
+		case "glpi_plugin_tracker_snmp_history.FK_ports" :
+			$ADD="";
+			if ($_GET['link'][1] == "AND")
+				$ADD=" AND ".$table.".Field = \"".$_GET['contains'][1]."\"";
+			return $link." ($table.$field LIKE '%".$val."%' $ADD ) ";
 			break;
 	}
 	return "";
