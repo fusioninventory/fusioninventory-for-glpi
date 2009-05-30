@@ -104,10 +104,16 @@ class plugin_tracker_rangeip extends CommonDBTM
 		echo "</td>";
 		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANG['entity'][0]."</td>";
+		echo "<td align='center'>";
+		dropdownValue('glpi_entities', 'FK_entities',$this->fields["FK_entities"]);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		if ($ID=='')
 		{
-			echo "<input type='hidden' name='FK_entities' value='".$_SESSION["glpiactive_entity"]."'/>";
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
 		}
 		else
