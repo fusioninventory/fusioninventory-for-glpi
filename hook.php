@@ -1582,7 +1582,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 	
 	$SEARCH=makeTextSearch($val,$nott);
 
-switch ($table.".".$field){
+	switch ($table.".".$field){
 		case "glpi_plugin_tracker_networking_ports.lastup" :
 			$ADD="";	
 			if ($nott&&$val!="NULL") {
@@ -1613,6 +1613,12 @@ switch ($table.".".$field){
 				$ADD=" OR $table.$field IS NULL";
 			}
 			return $link." ($table.name ".$not." LIKE '%".$val."%' $ADD ) ";
+			break;
+		case "glpi_plugin_tracker_snmp_history.FK_ports" :
+			$ADD="";
+			if ($_GET['link'][1] == "AND")
+				$ADD=" AND ".$table.".Field = \"".$_GET['contains'][1]."\"";
+			return $link." ($table.$field LIKE '%".$val."%' $ADD ) ";
 			break;
 	}
 	return "";
