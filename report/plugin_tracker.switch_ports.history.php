@@ -59,19 +59,24 @@ manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_HISTORY);
 
 if(isset($_GET["FK_networking_ports"])){
 		
-	$field[]=2;
-	$contains[]=$_GET["FK_networking_ports"];
-	$field[]=3;
-	if (isset($_GET["Field"]))
-		$contains[]=$_GET["Field"];
+	$_GET["field"][0]=2;
+	$_GET["contains"][0]=$_GET["FK_networking_ports"];
+	$_GET["field"][1]=3;
+	if ((isset($_GET["Field"])) AND !empty($_GET["Field"]))
+	{
+		$_GET["contains"][1]=$TRACKER_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
+		$_GET["link"][1] = "AND";
+	}
+	else
+		$_GET["link"][1] = "";
 
-	$_GET["field"] = $field;
-	$_GET["contains"] = $contains;
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
 }
-showList(PLUGIN_TRACKER_SNMP_HISTORY,$_GET);
-	
+
+if($_GET["field"][0] != "view")
+	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_GET);
+
 echo "</form>";
 
 commonFooter(); 
