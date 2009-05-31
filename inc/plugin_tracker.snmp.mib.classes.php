@@ -37,11 +37,12 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_mib_networking
+class plugin_tracker_mib_networking extends CommonDBTM
 {
 	function __construct()
 	{
 		$this->table="glpi_plugin_tracker_mib_networking";
+		$this->type = -1;
 	}
 
 
@@ -190,7 +191,8 @@ class plugin_tracker_mib_networking
 				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
 				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
 				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
-				echo "<th align='center'>".$LANG["networking"][56]."</th>";
+				if ($type_model == NETWORKING_TYPE)
+					echo "<th align='center'>".$LANG["networking"][56]."</th>";
 				echo "</tr>";
 
 				echo "<td align='center'>";
@@ -237,9 +239,12 @@ class plugin_tracker_mib_networking
 
 				echo "</td>";
 
-				echo "<td align='center'>";
-				dropdownYesNo("vlan");	
-				echo "</td>";
+				if ($type_model == NETWORKING_TYPE)
+				{
+					echo "<td align='center'>";
+					dropdownYesNo("vlan");
+					echo "</td>";
+				}
 				
 				echo "</tr>";
 				
