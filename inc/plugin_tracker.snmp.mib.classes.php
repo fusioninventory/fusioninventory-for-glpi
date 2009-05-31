@@ -61,7 +61,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['device_type'];		
-		
+
 			$query = "SELECT glpi_plugin_tracker_model_infos.device_type,glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
 			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
 			WHERE glpi_plugin_tracker_model_infos.ID=".$ID;
@@ -190,7 +190,8 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
 				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
 				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
-				echo "<th align='center'>".$LANG["networking"][56]."</th>";
+				if ($type_model == NETWORKING_TYPE)
+					echo "<th align='center'>".$LANG["networking"][56]."</th>";
 				echo "</tr>";
 
 				echo "<td align='center'>";
@@ -237,9 +238,12 @@ class plugin_tracker_mib_networking extends CommonDBTM
 
 				echo "</td>";
 
-				echo "<td align='center'>";
-				dropdownYesNo("vlan");	
-				echo "</td>";
+				if ($type_model == NETWORKING_TYPE)
+				{
+					echo "<td align='center'>";
+					dropdownYesNo("vlan");
+					echo "</td>";
+				}
 				
 				echo "</tr>";
 				
