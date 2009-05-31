@@ -584,17 +584,10 @@ function plugin_tracker_getSearchOption()
 	return $sopt;
 }
 
-//function plugin_tracker_giveItem($type,$ID,$data,$num)
+
 function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 {
-//	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LINK_ID_TABLE,$LANG,$LANGTRACKER,$SEARCH_OPTION;
 	global $CFG_GLPI, $LANG, $INFOFORM_PAGES, $LANGTRACKER, $DB;
-
-//	$table=$SEARCH_OPTION[$type][$ID]["table"];
-//	$field=$SEARCH_OPTION[$type][$ID]["field"];
-//	$linkfield=$SEARCH_OPTION[$type][$ID]["linkfield"];
-
-//	switch ($table.'.'.$field){
 
 //echo $field."<br/>";
 	switch ($field) {
