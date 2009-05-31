@@ -277,7 +277,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	
 
 	
-	function delete($item_coche)
+	function deleteMib($item_coche)
 	{
 		global $DB;
 		
