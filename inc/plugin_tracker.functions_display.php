@@ -296,7 +296,7 @@ echo						"</td>
 		}
 		echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>";
 	}
-		echo "									<td></td>
+		echo "									<td width='".(400 - (4 * $pourcentage))."'></td>
 										</tr>
 									</tbody>
 								</table>
