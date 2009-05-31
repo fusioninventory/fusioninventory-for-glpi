@@ -915,13 +915,20 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			return "<center>".$out."</center>";
 			break;
 		case "glpi_plugin_tracker_snmp_history.FK_ports" :
-			$netport=new Netport;
-			$netport->getFromDB($data["ITEM_$num"]);
-			if (isset($netport->fields["name"]))
-				$out = $netport->fields["name"];
-			else
-				$out = $LANG["common"][28];
-			return "<center>".$out."</center>";
+			$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+			$CommonItem = new CommonItem;
+			$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
+			$out = "<div align='center'>" . $CommonItem->getLink(1);
+
+			$query = "SELECT * FROM glpi_networking_ports
+			WHERE ID='" . $data["ITEM_$num"] . "' ";
+			$result = $DB->query($query);
+
+			if ($DB->numrows($result) != "0")
+				$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+
+			$out .= "</td>";
+			return $out;
 			break;
 		case "glpi_plugin_tracker_snmp_history.Field" :
 			if ($data["ITEM_$num"] == "0")
