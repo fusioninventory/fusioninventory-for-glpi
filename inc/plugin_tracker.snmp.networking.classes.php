@@ -508,7 +508,7 @@ function appear_array(id){
 								echo "<td align='center'>-";
 							else
 							{		
-								echo "<td align='center' class='tab_bg_1_2'>";
+								echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>";
 								echo $data["ifinerrors"];
 							}
 							echo "</td>";
@@ -527,7 +527,7 @@ function appear_array(id){
 								echo "<td align='center'>-";
 							else
 							{	
-								echo "<td align='center' class='tab_bg_1_2'>";
+								echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>";
 								echo $data["ifouterrors"];
 							}
 							echo "</td>";
@@ -564,7 +564,7 @@ function appear_array(id){
 								if (empty($unknownMac))
 									echo "<td align='center'></td>";
 								else
-									echo "<td align='center' class='tab_bg_1_2'>".$unknownMac."<br/>".$unknownIP."</td>";
+									echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$unknownMac."<br/>".$unknownIP."</td>";
 
 							}
 							break;
