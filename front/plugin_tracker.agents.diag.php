@@ -63,9 +63,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
    $tmp_file = $_FILES['data']['tmp_name'];
 
     if( !is_uploaded_file($tmp_file) )
-    {
         exit("The file is not found");
-    }
 
     // on vérifie maintenant l'extension
     $type_file = $_FILES['data']['type'];
