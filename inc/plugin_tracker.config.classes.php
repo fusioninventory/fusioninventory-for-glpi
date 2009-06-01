@@ -85,10 +85,10 @@ class plugin_tracker_config extends CommonDBTM {
 		$ong[2]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
 		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3];
 		$ong[4]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1];
-		$ong[5]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][16];
+		//$ong[5]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][16];
 		$ong[6]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2];
-		$ong[7]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34];
-		$ong[8]=$LANG['plugin_tracker']["functionalities"][4];
+		//$ong[7]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34];
+		//$ong[8]=$LANG['plugin_tracker']["functionalities"][4];
 		return $ong;
 	}
 
@@ -256,9 +256,11 @@ class plugin_tracker_config extends CommonDBTM {
 	
 
 	
-	function showForm_general($target,$ID)
+	function showForm($target,$ID)
 	{
 		GLOBAL $LANG,$CFG_GLPI;
+
+		$this->showTabs($ID, '',$_SESSION['glpi_tab']);
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";

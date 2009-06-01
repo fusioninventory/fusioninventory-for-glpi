@@ -97,7 +97,7 @@ if (isset($_GET["ID"]))
 if(!empty($_POST["item_coche"]))
 {
 	plugin_tracker_checkRight("snmp_models","w");
-	$plugin_tracker_mib_networking->delete($_POST["item_coche"]);
+	$plugin_tracker_mib_networking->deleteMib($_POST["item_coche"]);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
