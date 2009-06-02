@@ -901,13 +901,24 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 					$MacAddress = $MacAddress_tmp[0];
 					for($i = 1; $i < count($MacAddress_tmp); $i++)
 						$MacAddress .= ":".$MacAddress_tmp[$i];
-					
+
 					$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
 					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
 					$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 
-					// Mac address unknown
-					if ($_SESSION['FK_process'] != "0")
+					$queryPortEnd = "SELECT * FROM glpi_networking_ports
+						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+							AND on_device!='".$ID_Device."' ";
+					$resultPortEnd=$DB->query($queryPortEnd);
+					$sport = $ArrayPortsID[$ifName]; // Networking_Port
+					if ( ($DB->numrows($resultPortEnd) != 0)  )
+					{
+						$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+
+						// Connection between ports (wire table in DB)
+						$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process']);
+					}
+					elseif ($_SESSION['FK_process'] != "0") // Mac address unknown
 					{
 						$ip_unknown = '';
 						$MacAddress_Hex = str_replace(":","",$MacAddress);
@@ -940,7 +951,6 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum)
 {
 	global $DB;
-
 	$snmp_queries = new plugin_tracker_snmp;
 	$logs = new plugin_tracker_logs;
 	$walks = new plugin_tracker_walk;
