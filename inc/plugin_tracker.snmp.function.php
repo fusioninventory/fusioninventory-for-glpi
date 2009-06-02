@@ -883,7 +883,51 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 				}
 			}
 		}
+		else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve"))
+		{
+			// Array : num => dynamic data
+			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1,$vlan);
 
+			foreach($ArrayMACAdressTable as $num=>$dynamicdata)
+			{
+				$oidExplode = explode(".", $dynamicdata);
+				// Get by SNMP query the port number (dot1dTpFdbPort)
+				if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]) AND ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan] != "0")))
+				{
+
+					// Convert MAC HEX in Decimal
+					$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+					$MacAddress_tmp = str_split($MacAddress, 2);
+					$MacAddress = $MacAddress_tmp[0];
+					for($i = 1; $i < count($MacAddress_tmp); $i++)
+						$MacAddress .= ":".$MacAddress_tmp[$i];
+
+					$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
+					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
+					$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
+
+					$queryPortEnd = "SELECT * FROM glpi_networking_ports
+						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+							AND on_device!='".$ID_Device."' ";
+					$resultPortEnd=$DB->query($queryPortEnd);
+					$sport = $ArrayPortsID[$ifName]; // Networking_Port
+					if ( ($DB->numrows($resultPortEnd) != 0)  )
+					{
+						$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+
+						// Connection between ports (wire table in DB)
+						$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process']);
+					}
+					elseif ($_SESSION['FK_process'] != "0") // Mac address unknown
+					{
+						$ip_unknown = '';
+						$MacAddress_Hex = str_replace(":","",$MacAddress);
+						$MacAddress_Hex = "0x".$MacAddress_Hex;
+						$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
+					}
+				}
+			}
+		}
 
 		if ($vlan == "")
 			return $array_port_trunk;
