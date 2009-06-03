@@ -42,7 +42,7 @@ class plugin_tracker_config extends CommonDBTM {
 
 	function plugin_tracker_config() {
 		$this->table="glpi_plugin_tracker_config";
-		$this->type=-1;
+		$this->type=PLUGIN_TRACKER_SNMP_CONFIG;
 	}
 
 	function initConfig() {
@@ -260,7 +260,8 @@ class plugin_tracker_config extends CommonDBTM {
 	{
 		GLOBAL $LANG,$CFG_GLPI;
 
-		$this->showTabs($ID, '',$_SESSION['glpi_tab']);
+
+		
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
@@ -339,7 +340,8 @@ class plugin_tracker_config extends CommonDBTM {
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
-		echo "</table></form>";		
+		echo "</table></form>";
+
 	}
 }
 
