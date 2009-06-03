@@ -107,6 +107,12 @@ function plugin_init_tracker() {
 		'tablename' => 'glpi_plugin_tracker_networking_ports'
 		));
 
+	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_CONFIG", 5164, array(
+		'classname' => 'plugin_tracker_config',
+		'tablename' => 'glpi_plugin_tracker_config',
+		'formpage' => 'front/plugin_tracker.functionalities.form.php'
+		));
+
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
@@ -116,7 +122,7 @@ function plugin_init_tracker() {
 	if (isset($_SESSION["glpiID"])){
 
 		if (haveRight("config", "w") || haveRight("profile", "w")) // Config page
-			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.config.php';
+			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.functionalities.form.php';
 
 
 		// Define SQL table restriction of entity
@@ -172,7 +178,7 @@ function plugin_init_tracker() {
 					}
 
 					if (plugin_tracker_haveRight("general_config","w"))
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.config.php';
+						$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.functionalities.form.php';
 			}
 		}
 	}

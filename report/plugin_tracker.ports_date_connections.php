@@ -54,11 +54,9 @@ manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2);
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"]))
 {
-		$field[0] = 3;
-		$contains[0]=getContainsArray($_POST);
 		
-		$_GET["field"] = $field;
-		$_GET["contains"] = $contains;
+		$_GET["field"][0] = 3;
+		$_GET["contains"][0] = getContainsArray($_POST);
 
 		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
 }
@@ -107,8 +105,9 @@ function displaySearchForm()
 		}
 	}
 	dropdownArrayValues("dropdown_sup_inf",$values,(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup"));
-	echo "&nbsp;";
-	showCalendarForm("form_ic","dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
+	echo "</td>
+		<td width='120'>";
+	showDateFormItem("dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
 	echo "</td>";
 	
 	// Display Reset search
