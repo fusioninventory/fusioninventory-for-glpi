@@ -41,8 +41,8 @@ checkRight("config","w");
 
 commonHeader($LANG['plugin_tracker']["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
-$config = new plugin_tracker_config();
-$print_config = new glpi_plugin_tracker_printers_history_config();
+//$config = new plugin_tracker_config();
+//$print_config = new glpi_plugin_tracker_printers_history_config();
 
 if (isset($_POST['update'])) {
 
@@ -51,11 +51,29 @@ if (isset($_POST['update'])) {
 		
 	$_POST['ID']=1;
 
-	$config->update($_POST);
+	switch ($_POST['tabs']) {
+		case 'config' :
+			$config1 = new plugin_tracker_config();
+			break;
+		case 'snmp_script' :
+			$config1 = new glpi_plugin_tracker_config_snmp_script();
+			break;
+		case 'snmp_discovery' :
+			$config1 = new plugin_tracker_config_discovery();
+			break;
+		case 'snmp_networking' :
+			$config1 = new plugin_tracker_config_snmp_networking();
+			break;		
+		case 'snmp_printer' :
+			$config1 = new plugin_tracker_config_snmp_printer();
+			break;
+	}
+	if (isset($config1))
+		$config1->update($_POST);
 }
 
+$config = new plugin_tracker_config();
 
-//$config->showForm($_SERVER['PHP_SELF'],'1');
 $config->showTabs('1', '',$_SESSION['glpi_tab']);
 echo "<div id='tabcontent'></div>";
 echo "<script type='text/javascript'>loadDefaultTab();</script>";
