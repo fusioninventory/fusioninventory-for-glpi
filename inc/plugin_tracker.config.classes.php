@@ -84,175 +84,15 @@ class plugin_tracker_config extends CommonDBTM {
 		$ong[1]=$LANG['plugin_tracker']["functionalities"][2];
 		$ong[2]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
 		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3];
-		$ong[4]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1];
+		if ($this->getValue("activation_snmp_networking") == "1")
+			$ong[4]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1];
 		//$ong[5]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][16];
-		$ong[6]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2];
+		if ($this->getValue("activation_snmp_printer") == "1")
+			$ong[6]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2];
 		//$ong[7]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34];
 		//$ong[8]=$LANG['plugin_tracker']["functionalities"][4];
 		return $ong;
 	}
-
-//	function showTabs($type) {
-//		GLOBAL $LANG;
-//
-//		if (haveRight("config","w")) {
-//			// tabs
-//			echo "<div id='barre_onglets'>\n";
-//			echo "<ul id='onglet'>\n";
-//
-//			echo "<li";
-//			if ($type == "general")
-//				echo " class='actif'";
-//			echo "><a href='plugin_tracker.functionalities.form.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][2]."&nbsp;</a></li>\n";
-//			echo "<li";
-//			if ($type == "smp-script")
-//				echo " class='actif'";
-//			echo "><a href='plugin_tracker.functionalities.form.snmp-script.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5]."&nbsp;</a></li>\n";
-//
-//			echo "<li";
-//			if ($type == "discovery")
-//				echo " class='actif'";
-//			echo "><a href='plugin_tracker.functionalities.form.snmp-discovery.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3]."&nbsp;</a></li>\n";
-//
-//			if ($this->getValue("activation_snmp_networking") == "1")
-//			{
-//				echo "<li";
-//				if ($type == "smp-networking")
-//					echo " class='actif'";
-//				echo "><a href='plugin_tracker.functionalities.form.snmp-networking.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1]."&nbsp;</a></li>\n";
-//			}
-//			if ($this->getValue("activation_snmp_peripheral") == "1")
-//			{
-//				echo "<li";
-//				if ($type == "smp-peripheral")
-//					echo " class='actif'";
-//				echo "><a href='plugin_tracker.functionalities.form.snmp-peripheral.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][16]."&nbsp;</a></li>\n";
-//			}
-//			if ($this->getValue("activation_snmp_printer") == "1")
-//			{
-//				echo "<li";
-//				if ($type == "smp-printer")
-//					echo " class='actif'";
-//				echo "><a href='plugin_tracker.functionalities.form.snmp-printers.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2]."&nbsp;</a></li>\n";
-//			}
-//			if ($this->getValue("activation_snmp_phone") == "1")
-//			{
-//				echo "<li";
-//				if ($type == "smp-phone")
-//					echo " class='actif'";
-//				echo "><a href='plugin_tracker.functionalities.form.snmp-phone.php'>&nbsp;".$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34]."&nbsp;</a></li>\n";
-//			}
-//			if ($this->getValue("activation_connection") == "1")
-//			{
-//				echo "<li><a href=''>&nbsp;".$LANG['plugin_tracker']["functionalities"][4]."&nbsp;</a></li>\n";
-//			}
-//			echo "<ul>\n";
-//			echo "</div>\n";
-//
-//
-//			/*echo "<div align='center'><form method='post' name='functionalities_form' id='functionalities_form'  action=\"".$target."\">";
-//
-//			echo "<table class='tab_cadre_fixe' cellpadding='5'><tr><th colspan='2'>";
-//			echo $LANG['plugin_tracker']["functionalities"][1]." :</th></tr>";
-//
-//			echo "<tr class='tab_bg_1'><th colspan='2'>";
-//			echo $LANG['plugin_tracker']["functionalities"][10]." :</th></tr>";
-//
-///*			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][11]." ";
-//			echo "<img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('wire_control_info'),'none')\" onmouseover=\"setdisplay(getElementById('wire_control_info'),'block')\"><span class='over_link' id='wire_control_info'>".$LANG['plugin_tracker']["functionalities"][12]."</span>";
-//			echo "</td>";
-//			echo "<td>";
-//			dropdownYesNo("wire_control", $this->isActivated('wire_control'));
-//			echo "</td></tr>";
-//*/
-//			/*echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][13]."</td>";
-//			echo "<td>";
-//			dropdownYesNo("computers_history", $this->isActivated('computers_history'));
-//			echo "</td></tr>";
-//
-//			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][14]."</td>";
-//			echo "<td>";
-//			dropdownYesNo("update_contact", $this->isActivated('update_contact'));
-//			echo "</td></tr>";
-//
-//			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][15]."</td>";
-//			echo "<td>";
-//			dropdownYesNo("update_user", $this->isActivated('update_user'));
-//			echo "</td></tr>";
-//
-//			echo "<tr class='tab_bg_1'><th colspan='2'>";
-//			echo $LANG['plugin_tracker']["functionalities"][20]." :</th></tr>";
-//
-///*			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][21]."</td>";
-//			echo "<td>";
-//			dropdownYesNo("counters_statement", $this->isActivated('counters_statement'));
-//			echo "</td></tr>";
-//
-//			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][22]." ";
-//			echo "<img src='/glpi/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('info_statement_default_value'),'none')\" onmouseover=\"setdisplay(getElementById('info_statement_default_value'),'block')\"><span class='over_link' id='info_statement_default_value'>".$LANG['plugin_tracker']["functionalities"][23]."</span>";
-//			echo "</td>";
-//			echo "<td>";
-//			dropdownYesNo("statement_default_value", $this->isActivated('statement_default_value'));
-//			echo "</td></tr>";
-//*/
-//			/*echo "<tr class='tab_bg_1'><th colspan='2'>";
-//			echo $LANG['plugin_tracker']["functionalities"][30]." :</th></tr>";
-//
-//			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][31]."</td>";
-//			echo "<td>";
-//			dropdownYesNo("cleaning", $this->isActivated('cleaning'));
-//			echo "</td></tr>";
-//
-//			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][32]."</td>";
-//			echo "<td>";
-//			echo "<input type='text' name='cleaning_days' value='".$this->getValue("cleaning_days")."' size='6'>";
-//			echo "</td></tr>";
-//
-//			echo "<tr class='tab_bg_1'><th colspan='2'>";
-//			echo $LANG['plugin_tracker']["functionalities"][40]." :</th></tr>";
-//
-//			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][41]."</td>";
-//			echo "<td>";
-//			dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
-//			echo "</td></tr>";
-//
-///*			echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][42]."</td>";
-//			echo "<td>";
-//			dropdownValue("glpi_type_networking", "networking_switch_type", $this->getValue("networking_switch_type"));
-//			echo "</td></tr>";
-//*/
-//			/*echo "<tr class='tab_bg_1'>";
-//			echo "<td>".$LANG['plugin_tracker']["functionalities"][43]."</td>";
-//			echo "<td>";
-//			echo "<select name='authsnmp'>";
-//			echo "<option>-----</option>";
-//			$selected = "";
-//			if ($this->getValue("authsnmp") == "DB")
-//				$selected = "selected";
-//			echo "<option value='DB' ".$selected.">".$LANG['plugin_tracker']["functionalities"][44]."</option>";
-//			$selected = "";
-//			if ($this->getValue("authsnmp") == "file")
-//				$selected = "selected";
-//			echo "<option value='file' ".$selected.">".$LANG['plugin_tracker']["functionalities"][45]."</option>";
-//			echo "</select>";
-//			echo "</td></tr>";
-//
-//			echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-//			echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
-//			echo "</table></form></div>";
-//			*/
-//		}
-//	}
 	
 
 	
@@ -260,15 +100,12 @@ class plugin_tracker_config extends CommonDBTM {
 	{
 		GLOBAL $LANG,$CFG_GLPI;
 
-
-		
-
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][2]." :";
 		echo "</th>";
 		echo "</tr>";
 
@@ -339,6 +176,7 @@ class plugin_tracker_config extends CommonDBTM {
 		echo "</td></tr>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='hidden' name='tabs' value='config' />";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";
 
@@ -392,6 +230,12 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
+
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3]." :";
+		echo "</th>";
+		echo "</tr>";
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
@@ -454,6 +298,7 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='hidden' name='tabs' value='snmp_discovery' />";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";
 	}
@@ -502,7 +347,7 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5]." :";
 		echo "</th>";
 		echo "</tr>";
 		
@@ -532,6 +377,7 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='hidden' name='tabs' value='snmp_script' />";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";	
 	}
@@ -591,7 +437,7 @@ class plugin_tracker_config_snmp_networking extends CommonDBTM {
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1]." :";
 		echo "</th>";
 		echo "</tr>";
 
@@ -638,6 +484,7 @@ class plugin_tracker_config_snmp_networking extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='hidden' name='tabs' value='snmp_networking' />";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";	
 	}
@@ -697,7 +544,7 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["functionalities"][1]." :";
+		echo $LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2]." :";
 		echo "</th>";
 		echo "</tr>";
 
@@ -716,6 +563,7 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 //		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='hidden' name='tabs' value='snmp_printer' />";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";	
 	}
