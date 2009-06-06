@@ -50,109 +50,56 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 
 
-	checkRight("config","w");
+checkRight("config","w");
 
 
-	//show computer form to add
-	if (!empty($_POST["withtemplate"])) {
-
-		if ($_POST["ID"]>0){
-			switch($_POST['glpi_tab']){
-				case 2 :
-					showSoftwareInstalled($_POST["ID"],$_POST["withtemplate"]);
-					break;
-				case 3 :
-					showConnections($_POST['target'],$_POST["ID"],$_POST["withtemplate"]);
-					if ($_POST["withtemplate"]!=2)
-						showPortsAdd($_POST["ID"],COMPUTER_TYPE);
-					showPorts($_POST["ID"], COMPUTER_TYPE,$_POST["withtemplate"]);
-					break;
-				case 4 :
-					showInfocomForm($CFG_GLPI["root_doc"]."/front/infocom.form.php",COMPUTER_TYPE,$_POST["ID"],1,$_POST["withtemplate"]);
-					showContractAssociated(COMPUTER_TYPE,$_POST["ID"],$_POST["withtemplate"]);
-					break;
-				case 5 :
-					showDocumentAssociated(COMPUTER_TYPE,$_POST["ID"],$_POST["withtemplate"]);
-					break;
-				case 20 :
-					showComputerDisks($_POST["ID"],$_POST["withtemplate"]);
-					break;
-				default :
-					if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'], $_POST["withtemplate"]))
-						showDeviceComputerForm($_POST['target'],$_POST["ID"], $_POST["withtemplate"]);
-					break;
-			}
+switch($_POST['glpi_tab']){
+	case -1 :
+		$config = new plugin_tracker_config();
+		$config->showForm($_POST['target'],'1');
+		$config_snmp_script = new glpi_plugin_tracker_config_snmp_script();
+		$config_snmp_script->showForm($_POST['target'],'1');
+		$config_discovery = new plugin_tracker_config_discovery;
+		$config_discovery->showForm($_POST['target'],'1');
+		if ($config->getValue("activation_snmp_networking") == "1")
+		{
+			$config_snmp_networking = new plugin_tracker_config_snmp_networking();
+			$config_snmp_networking->showForm($_POST['target'],'1');
 		}
-	} else {
-
-		switch($_POST['glpi_tab']){
-			case -1 :
-				showDeviceComputerForm($_POST['target'],$_POST["ID"], $_POST["withtemplate"]);
-				showComputerDisks($_POST["ID"],$_POST["withtemplate"]);
-				showSoftwareInstalled($_POST["ID"]);
-				showConnections($_POST['target'],$_POST["ID"]);
-				showPortsAdd($_POST["ID"],COMPUTER_TYPE);
-				showPorts($_POST["ID"], COMPUTER_TYPE);
-				showInfocomForm($CFG_GLPI["root_doc"]."/front/infocom.form.php",COMPUTER_TYPE,$_POST["ID"]);
-				showContractAssociated(COMPUTER_TYPE,$_POST["ID"]);
-				showDocumentAssociated(COMPUTER_TYPE,$_POST["ID"]);
-				showJobListForItem(COMPUTER_TYPE,$_POST["ID"]);
-				showLinkOnDevice(COMPUTER_TYPE,$_POST["ID"]);
-				showRegistry($_POST["ID"]);
-				displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"]);
-				break;
-			case 2 :
-				$config_snmp_script = new glpi_plugin_tracker_config_snmp_script();
-				$config_snmp_script->showForm($_SERVER['PHP_SELF'],'1');
-				break;
-			case 3 :
-				$config_discovery = new plugin_tracker_config_discovery;
-				$config_discovery->showForm($_SERVER['PHP_SELF'],'1');
-				break;
-			case 4 :
-				$config_snmp_networking = new plugin_tracker_config_snmp_networking();
-				$config_snmp_networking->showForm($_SERVER['PHP_SELF'],'1');
-				break;
-			case 5 :
-				
-				break;
-			case 6 :
-				$config_snmp_printer = new plugin_tracker_config_snmp_printer();
-				$config_snmp_printer->showForm($_SERVER['PHP_SELF'],'1');
-				break;
-			case 7 :
-				showLinkOnDevice(COMPUTER_TYPE,$_POST["ID"]);
-				break;
-			case 10 :
-				showNotesForm($_POST['target'],COMPUTER_TYPE,$_POST["ID"]);
-				break;
-			case 11 :
-				showDeviceReservations($_POST['target'],COMPUTER_TYPE,$_POST["ID"]);
-				break;
-			case 12 :
-				showHistory(COMPUTER_TYPE,$_POST["ID"]);
-				break;
-			case 13 :
-				ocsEditLock($_POST['target'],$_POST["ID"]);
-				break;
-			case 14:
-				showRegistry($_POST["ID"]);
-				break;
-			case 20 :
-				showComputerDisks($_POST["ID"], $_POST["withtemplate"]);
-				break;
-			default :
-				if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"]))
-				{
-					$config = new plugin_tracker_config();
-					$config->showForm($_SERVER['PHP_SELF'],'1');
-				}
-				break;
+		if ($config->getValue("activation_snmp_printer") == "1")
+		{
+			$config_snmp_printer = new plugin_tracker_config_snmp_printer();
+			$config_snmp_printer->showForm($_POST['target'],'1');
 		}
-	}
+		break;
+	case 2 :
+		$config_snmp_script = new glpi_plugin_tracker_config_snmp_script();
+		$config_snmp_script->showForm($_POST['target'],'1');
+		break;
+	case 3 :
+		$config_discovery = new plugin_tracker_config_discovery;
+		$config_discovery->showForm($_POST['target'],'1');
+		break;
+	case 4 :
+		$config_snmp_networking = new plugin_tracker_config_snmp_networking();
+		$config_snmp_networking->showForm($_POST['target'],'1');
+		break;
+	case 5 :
 
+		break;
+	case 6 :
+		$config_snmp_printer = new plugin_tracker_config_snmp_printer();
+		$config_snmp_printer->showForm($_POST['target'],'1');
+		break;
+	default :
+		if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"]))
+		{
+			$config = new plugin_tracker_config();
+			$config->showForm($_POST['target'],'1');
+		}
+		break;
+}
 
-	ajaxFooter();
-
+ajaxFooter();
 
 ?>
