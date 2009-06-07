@@ -1545,6 +1545,9 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 		case "glpi_plugin_tracker_model_infos.ID" :
 			return " ORDER BY $table.name $order ";
 			break;
+		case "glpi_plugin_tracker_snmp_connection.ID" :
+			return " ORDER BY $table.name $order ";
+			break;
 		case "glpi_plugin_tracker_networking.ID" :
 			//if ($ID == "5192" )
 				//return " ORDER BY glpi_networking.name $order ";
@@ -1568,6 +1571,11 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 		case "glpi_plugin_tracker_networking_ports.ID" : // In computer list
 			break;
 		case "glpi_plugin_tracker_model_infos.ID" :
+//			if ($ref_table == "glpi_printers" )
+//				return "  LEFT JOIN glpi_plugin_tracker_printers ON ($ref_table.$linkfield = glpi_plugin_tracker_printers.FK_printers) ".
+//					" LEFT JOIN $new_table ON (glpi_plugin_tracker_printers.FK_model_infos = $new_table.$linkfield) ";
+			break;
+		case "glpi_plugin_tracker_snmp_connection.ID" :
 			if ($ref_table == "glpi_printers" )
 				return "  LEFT JOIN glpi_plugin_tracker_printers ON ($ref_table.$linkfield = glpi_plugin_tracker_printers.FK_printers) ".
 					" LEFT JOIN $new_table ON (glpi_plugin_tracker_printers.FK_model_infos = $new_table.$linkfield) ";
@@ -1584,7 +1592,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-
+echo $table.".".$field;
 	$SEARCH=makeTextSearch($val,$nott);
 
 	switch ($table.".".$field){
@@ -1614,14 +1622,22 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 			return $link." ($table.last_tracker_update LIKE '%".$val."%' ".$ADD." ) ";
 			break;
 		case "glpi_plugin_tracker_model_infos.ID" :
-			$not = "";
-			if ($nott == 1)
-				$not = "NOT";
-			$ADD="";
-			if ($nott&&$val!="NULL") {
+			$ADD = "";
+			if ($nott=="0"&&$val=="NULL") {
 				$ADD=" OR $table.$field IS NULL";
+			}elseif ($nott=="1"&&$val=="NULL") {
+				$ADD=" OR $table.$field IS NOT NULL";
 			}
-			return $link." ($table.name ".$not." LIKE '%".$val."%' $ADD ) ";
+			return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
+			break;
+		case "glpi_plugin_tracker_snmp_connection.ID" :
+			$ADD = "";
+			if ($nott=="0"&&$val=="NULL") {
+				$ADD=" OR $table.name IS NULL";
+			}elseif ($nott=="1"&&$val=="NULL") {
+				$ADD=" OR $table.name IS NOT NULL";
+			}
+			return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
 			break;
 		case "glpi_plugin_tracker_snmp_history.FK_ports" :
 			$ADD="";
