@@ -1592,7 +1592,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-echo $table.".".$field;
+//echo $table.".".$field;
 	$SEARCH=makeTextSearch($val,$nott);
 
 	switch ($table.".".$field){
