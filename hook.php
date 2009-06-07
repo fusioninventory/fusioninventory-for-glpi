@@ -1599,15 +1599,19 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 			break;
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			$ADD="";
-			if ($nott&&$val!="NULL") {
-				$ADD=" OR $table.$field IS NULL";
+			if ($nott=="0"&&$val=="NULL") {
+				$ADD=" OR $table.last_tracker_update IS NULL";
+			}elseif ($nott=="1"&&$val=="NULL") {
+				$ADD=" OR $table.last_tracker_update IS NOT NULL";
 			}
-			return $link." ($table.last_tracker_update LIKE '%".$val."%' ) ";
+			return $link." ($table.last_tracker_update LIKE '%".$val."%' ".$ADD." ) ";
 			break;
 		case "glpi_plugin_tracker_printers.FK_printers" :
 			$ADD="";
-			if ($nott&&$val!="NULL") {
-				$ADD=" OR $table.$field IS NULL";
+			if ($nott=="0"&&$val=="NULL") {
+				$ADD=" OR $table.last_tracker_update IS NULL";
+			}elseif ($nott=="1"&&$val=="NULL") {
+				$ADD=" OR $table.last_tracker_update IS NOT NULL";
 			}
 			return $link." ($table.last_tracker_update LIKE '%".$val."%' ) ";
 			break;
