@@ -35,7 +35,7 @@
 
 function plugin_tracker_menu()
 {
-	GLOBAL $CFG_GLPI,$LANG;
+	GLOBAL $CFG_GLPI,$LANG,$LANGTRACKER;
 
 	$width="180";
 
@@ -43,34 +43,34 @@ function plugin_tracker_menu()
 	echo "<div align='center'>
 		<table class='tab_cadre'>";
 
-	echo "<tr><th colspan='4'>".$LANG['plugin_tracker']["title"][0]."</th></tr>";
+	echo "<tr><th colspan='4'>".$LANGTRACKER["title"][0]."</th></tr>";
 	
 	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_models","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_models.png'/>
-			<br/><b>".$LANG['plugin_tracker']["model_info"][4]."</b></a>";
+			<br/><b>".$LANGTRACKER["model_info"][4]."</b></a>";
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_authentification","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_authentification.png'/>
-			<br/><b>".$LANG['plugin_tracker']["model_info"][3]."</b></a>";
+			<br/><b>".$LANGTRACKER["model_info"][3]."</b></a>";
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_iprange","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rangeip.png'/>
-		<br/><b>".$LANG['plugin_tracker']["menu"][2]."</b></a>";
+		<br/><b>".$LANGTRACKER["menu"][2]."</b></a>";
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_agent","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_agents.png'/><br/>
-		<b>".$LANG['plugin_tracker']["menu"][1]."</b></a>";
+		<b>".$LANGTRACKER["menu"][1]."</b></a>";
 	echo "</td>";
 	echo "</tr>";
 
@@ -80,28 +80,28 @@ function plugin_tracker_menu()
 	if(plugin_tracker_HaveRight("snmp_scripts_infos","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_server.png'/>
-			<br/><b>".$LANG['plugin_tracker']["processes"][0]."</b></a>";
+			<br/><b>".$LANGTRACKER["processes"][0]."</b></a>";
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_agent_infos","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_agents.png'/>
-		<br/><b>".$LANG['plugin_tracker']["processes"][19]."</b></a>";
+		<br/><b>".$LANGTRACKER["processes"][19]."</b></a>";
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_discovery.png'/>
-			<br/><b>".$LANG['plugin_tracker']["menu"][0]."</b></a>";
+			<br/><b>".$LANGTRACKER["menu"][0]."</b></a>";
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
 	if(plugin_tracker_HaveRight("snmp_report","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rapports.png'/>
-		<br/><b>".$LANG['plugin_tracker']["processes"][20]."</b></a>";
+		<br/><b>".$LANGTRACKER["processes"][20]."</b></a>";
 	echo "</td>";
 	echo "</tr>";
 	
@@ -113,70 +113,70 @@ function plugin_tracker_menu()
 
 function plugin_tracker_mini_menu()
 {
-	GLOBAL $CFG_GLPI,$LANG;
+	GLOBAL $CFG_GLPI,$LANG,$LANGTRACKER;
 	
 	$width="50";
 
 	echo "<div align='center'>
 		<table class='tab_cadre'>";
 
-//	echo "<tr><th colspan='8'>".$LANG['plugin_tracker']["menu"][3]."</th></tr>";
+//	echo "<tr><th colspan='8'>".$LANGTRACKER["menu"][3]."</th></tr>";
 	
 	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_models","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_models.png'
 				 onmouseout=\"cleanhide('menu_mini_models')\" onmouseover=\"cleandisplay('menu_mini_models')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_models'>".$LANG['plugin_tracker']["model_info"][4]."</span>";
+			echo "<span class='over_link' id='menu_mini_models'>".$LANGTRACKER["model_info"][4]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_authentification","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_authentification.png'
 				 onmouseout=\"cleanhide('menu_mini_authentification')\" onmouseover=\"cleandisplay('menu_mini_authentification')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_authentification'>".$LANG['plugin_tracker']["model_info"][3]."</span>";
+			echo "<span class='over_link' id='menu_mini_authentification'>".$LANGTRACKER["model_info"][3]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_iprange","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_rangeip.png'
 				 onmouseout=\"cleanhide('menu_mini_rangeip')\" onmouseover=\"cleandisplay('menu_mini_rangeip')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_rangeip'>".$LANG['plugin_tracker']["menu"][2]."</span>";
+			echo "<span class='over_link' id='menu_mini_rangeip'>".$LANGTRACKER["menu"][2]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_agent","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_agents.png'
 				 onmouseout=\"cleanhide('menu_mini_agents')\" onmouseover=\"cleandisplay('menu_mini_agents')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_agents'>".$LANG['plugin_tracker']["menu"][1]."</span>";
+			echo "<span class='over_link' id='menu_mini_agents'>".$LANGTRACKER["menu"][1]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_scripts_infos","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_info_server.png'
 				 onmouseout=\"cleanhide('menu_mini_info_server')\" onmouseover=\"cleandisplay('menu_mini_info_server')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_info_server'>".$LANG['plugin_tracker']["processes"][0]."</span>";
+			echo "<span class='over_link' id='menu_mini_info_server'>".$LANGTRACKER["processes"][0]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_agent_infos","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_info_agents.png'
 				 onmouseout=\"cleanhide('menu_mini_info_agents')\" onmouseover=\"cleandisplay('menu_mini_info_agents')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_info_agents'>".$LANG['plugin_tracker']["processes"][19]."</span>";
+			echo "<span class='over_link' id='menu_mini_info_agents'>".$LANGTRACKER["processes"][19]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_discovery.png'
 				 onmouseout=\"cleanhide('menu_mini_discovery')\" onmouseover=\"cleandisplay('menu_mini_discovery')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_discovery'>".$LANG['plugin_tracker']["menu"][0]."</span>";
+			echo "<span class='over_link' id='menu_mini_discovery'>".$LANGTRACKER["menu"][0]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_report","r"))
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_rapports.png'
 				 onmouseout=\"cleanhide('menu_mini_rapports')\" onmouseover=\"cleandisplay('menu_mini_rapports')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_rapports'>".$LANG['plugin_tracker']["processes"][20]."</span>";
+			echo "<span class='over_link' id='menu_mini_rapports'>".$LANGTRACKER["processes"][20]."</span>";
 	echo "</td>";
 	echo "</tr>";
 	
@@ -194,7 +194,7 @@ function plugin_tracker_mini_menu()
 
 function plugin_tracker_mib_management()
 {
-	GLOBAL $DB,$CFG_GLPI,$LANG;
+	GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 	$query = "
 	SELECT * 
 	FROM glpi_plugin_tracker_mib_networking 
@@ -205,11 +205,11 @@ function plugin_tracker_mib_management()
 	if($number !="0"){
 		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='4'>".$LANG['plugin_tracker']["model_info"][5]." :</th></tr>";
+		echo "<tr><th colspan='4'>".$LANGTRACKER["model_info"][5]." :</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["mib"][1]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["mib"][2]."</th>";
-		echo "<th>".$LANG['plugin_tracker']["mib"][3]."</th>";
+		echo "<th>".$LANGTRACKER["mib"][1]."</th>";
+		echo "<th>".$LANGTRACKER["mib"][2]."</th>";
+		echo "<th>".$LANGTRACKER["mib"][3]."</th>";
 		echo "</tr>";
 
 		while ($data=$DB->fetch_array($result)){
@@ -233,7 +233,7 @@ function plugin_tracker_mib_management()
 
 		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
-		echo "<tr><th colspan='3'>".$LANG['plugin_tracker']["model_info"][5].":</th></tr>";
+		echo "<tr><th colspan='3'>".$LANGTRACKER["model_info"][5].":</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
 		echo "<th>".$LANG["login"][6]."</th>";
 		echo "<th>".$LANG["login"][7]."</th>";

@@ -43,7 +43,7 @@ class Threads extends CommonDBTM
 	function showProcesses($target,$array_name="")
 	{
 
-		global $DB,$LANG;
+		global $DB,$LANG,$LANGTRACKER;
 
 		plugin_tracker_checkRight("snmp_scripts_infos","r");
 		
@@ -71,15 +71,15 @@ class Threads extends CommonDBTM
 		echo "<li ";
 		if ($array_name == "")
 			echo "class='actif'";
-		echo "><a href='plugin_tracker.processes.php'>&nbsp;".$LANG['plugin_tracker']["processes"][0]."&nbsp;</a></li>\n";
+		echo "><a href='plugin_tracker.processes.php'>&nbsp;".$LANGTRACKER["processes"][0]."&nbsp;</a></li>\n";
 		echo "<li ";
 		if ($array_name == "errors")
 			echo "class='actif'";
-		echo "><a href='plugin_tracker.processes.errors.php'>&nbsp;".$LANG['plugin_tracker']["processes"][12]."&nbsp;</a></li>\n";
+		echo "><a href='plugin_tracker.processes.errors.php'>&nbsp;".$LANGTRACKER["processes"][12]."&nbsp;</a></li>\n";
 		echo "<li ";
 		if ($array_name == "connection")
 			echo "class='actif'";
-		echo "><a href='plugin_tracker.processes.connection.php'>&nbsp;".$LANG['plugin_tracker']["snmp"][50]."&nbsp;</a></li>\n";
+		echo "><a href='plugin_tracker.processes.connection.php'>&nbsp;".$LANGTRACKER["snmp"][50]."&nbsp;</a></li>\n";
 
 		echo "<ul>\n";
 		echo "</div>\n";
@@ -91,20 +91,20 @@ class Threads extends CommonDBTM
 		
 		if ($array_name == "")
 		{
-			echo "<tr><th colspan='12'>" . $LANG['plugin_tracker']["processes"][0] . "</th></tr>";
+			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][0] . "</th></tr>";
 			echo "<tr>"; 
 			echo "<th></th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][1]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][2]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][3]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][4]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][5]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][6]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][8]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][7]."</th>";
-//			echo "<th>".$LANG['plugin_tracker']["discovery"][3]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][9]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["processes"][10]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][1]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][2]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][3]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][4]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][5]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][6]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][8]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][7]."</th>";
+//			echo "<th>".$LANGTRACKER["discovery"][3]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][9]."</th>";
+			echo "<th>".$LANGTRACKER["processes"][10]."</th>";		
 			echo "</th></tr>\n";
 		
 			if ($DB->numrows($result)) {
@@ -162,12 +162,12 @@ class Threads extends CommonDBTM
 		// **** Display errors on execution **** 
 		else if ($array_name == "errors")
 		{
-			echo "<tr><th colspan='12'>" . $LANG['plugin_tracker']["processes"][12] . "</th></tr>";
+			echo "<tr><th colspan='12'>" . $LANGTRACKER["processes"][12] . "</th></tr>";
 			echo "<tr>"; 
 			echo"<th></th>";
-			echo"<th>".$LANG['plugin_tracker']["processes"][1]."</th>";
+			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
 			echo"<th>".$LANG["common"][1]."</th>";
-			echo"<th>".$LANG['plugin_tracker']["processes"][12]."</th>";
+			echo"<th>".$LANGTRACKER["processes"][12]."</th>";
 			echo"<th>".$LANG["common"][27]."</th>";
 			echo "</th></tr>\n";
 			
@@ -212,8 +212,8 @@ class Threads extends CommonDBTM
 				else
 					echo "<td align='center'></td>";
 				$explode = explode('%',$thread_errors["snmp_errors"]);
-				$explode[1] = preg_replace("/\[model(.*?)\]/", "<a href='plugin_tracker.models.form.php?ID=$1'>".$LANG['plugin_tracker']["profile"][24]."</a>",$explode[1]);
-				echo "<td align='center'><b>".$LANG['plugin_tracker']["errors"][$explode[0]]."</b>";
+				$explode[1] = preg_replace("/\[model(.*?)\]/", "<a href='plugin_tracker.models.form.php?ID=$1'>".$LANGTRACKER["profile"][24]."</a>",$explode[1]);
+				echo "<td align='center'><b>".$LANGTRACKER["errors"][$explode[0]]."</b>";
 				echo "<br/>".str_replace('--','<br/>',$explode[1]);
 				echo "</td>";
 				echo "<td align='center'>".convDateTime($thread_errors["date"])."</td>";
@@ -226,10 +226,10 @@ class Threads extends CommonDBTM
 			$Netwire = new Netwire;
 			$netport=new Netport;			
 			
-			echo "<tr><th colspan='12'>".$LANG['plugin_tracker']["snmp"][50]."</th></tr>";
+			echo "<tr><th colspan='12'>".$LANGTRACKER["snmp"][50]."</th></tr>";
 			echo "<tr>"; 
 			echo"<th></th>";
-			echo"<th>".$LANG['plugin_tracker']["processes"][1]."</th>";
+			echo"<th>".$LANGTRACKER["processes"][1]."</th>";
 			echo"<th>".$LANG["joblist"][0]."</th>";
 			echo"<th>".$LANG["common"][1]."</th>";
 			echo"<th>".$LANG["setup"][175]."</th>";

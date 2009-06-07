@@ -42,7 +42,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_report","r");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
+commonHeader($LANGTRACKER["title"][0],$_SERVER['PHP_SELF'],"utils","report");
 
 if (isset($_GET["reset_search"]))
 	resetSearch();
@@ -54,14 +54,16 @@ manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2);
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"]))
 {
+		$field[0] = 3;
+		$contains[0]=getContainsArray($_POST);
 		
-		$_GET["field"][0] = 3;
-		$_GET["contains"][0] = getContainsArray($_POST);
+		$_GET["field"] = $field;
+		$_GET["contains"] = $contains;
 
-		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
+		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 }
 else
-	showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
+	showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 	
 commonFooter(); 
 
@@ -105,9 +107,8 @@ function displaySearchForm()
 		}
 	}
 	dropdownArrayValues("dropdown_sup_inf",$values,(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup"));
-	echo "</td>
-		<td width='120'>";
-	showDateFormItem("dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
+	echo "&nbsp;";
+	showCalendarForm("form_ic","dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
 	echo "</td>";
 	
 	// Display Reset search

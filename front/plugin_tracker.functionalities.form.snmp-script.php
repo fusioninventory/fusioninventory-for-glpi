@@ -33,19 +33,30 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
-	die("Sorry. You can't access directly to this file");
-}
+define('GLPI_ROOT', '../../..');
 
-function plugin_tracker_dropdownDefaultYesNo($name,$value) {
-	global $LANG,$LANGTRACKER;
+include (GLPI_ROOT."/inc/includes.php");
+
+checkRight("config","w");
+
+commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
+
+$config = new plugin_tracker_config();
+$config_snmp_script = new glpi_plugin_tracker_config_snmp_script();
+
+if (isset($_POST['update'])) {
+
+	if (empty($_POST['cleaning_days']))
+		$_POST['cleaning_days'] = 0;
+		
+	$_POST['ID']=1;
 	
-	echo "<select name='$name' id='dropdownyesno_$name'>\n";
-	echo "<option value='-1' ".($value==-1?" selected ":"").">".$LANGTRACKER["cron"][3]."</option>\n";
-	echo "<option value='0' ".(!$value?" selected ":"").">".$LANG["choice"][0]."</option>\n";
-	echo "<option value='1' ".($value==1?" selected ":"").">".$LANG["choice"][1]."</option>\n";
-	echo "</select>\n";
+	
+	$config_snmp_script->update($_POST);
 }
 
+$config->showTabs("smp-script");
+$config_snmp_script->showForm($_SERVER['PHP_SELF'],'1');
+commonFooter();
 
 ?>

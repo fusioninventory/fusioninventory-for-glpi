@@ -45,7 +45,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $agents = new plugin_tracker_agents;
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
 
 plugin_tracker_checkRight("snmp_agent","r");
 

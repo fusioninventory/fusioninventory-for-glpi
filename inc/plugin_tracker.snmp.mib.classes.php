@@ -42,7 +42,6 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	function __construct()
 	{
 		$this->table="glpi_plugin_tracker_mib_networking";
-		$this->type = -1;
 	}
 
 
@@ -51,7 +50,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	{
 		include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
 
-		GLOBAL $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
+		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING,$IMPORT_TYPES;
 		
 		if (!plugin_tracker_haveRight("snmp_models","r"))
 			return false;
@@ -62,7 +61,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['device_type'];		
-		
+
 			$query = "SELECT glpi_plugin_tracker_model_infos.device_type,glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
 			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
 			WHERE glpi_plugin_tracker_model_infos.ID=".$ID;
@@ -80,19 +79,19 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				if ($data['device_type'] == NETWORKING_TYPE)
 					$nb_col++;
 				echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-				echo $LANG['plugin_tracker']["mib"][5]."</th></tr>";
+				echo $LANGTRACKER["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<th align='center'></th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
 				if ($data['device_type'] == NETWORKING_TYPE)
-					echo "<th align='center'>".$LANG['plugin_tracker']["mib"][9]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["model_info"][11]."</th>";
+					echo "<th align='center'>".$LANGTRACKER["mib"][9]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["model_info"][11]."</th>";
 				
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result))
@@ -182,15 +181,15 @@ class plugin_tracker_mib_networking extends CommonDBTM
 				echo "<br/>";
 				echo "<table class='tab_cadre_fixe'>";
 				
-				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_tracker']["mib"][4]."</th></tr>";
+				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
 
 				echo "<tr class='tab_bg_1'>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
 				if ($type_model == NETWORKING_TYPE)
 					echo "<th align='center'>".$LANG["networking"][56]."</th>";
 				echo "</tr>";
@@ -277,7 +276,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	
 
 	
-	function deleteMib($item_coche)
+	function delete($item_coche)
 	{
 		global $DB;
 		

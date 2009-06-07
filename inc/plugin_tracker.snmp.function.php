@@ -951,6 +951,7 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum)
 {
 	global $DB;
+
 	$snmp_queries = new plugin_tracker_snmp;
 	$logs = new plugin_tracker_logs;
 	$walks = new plugin_tracker_walk;

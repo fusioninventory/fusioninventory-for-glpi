@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("printer","computer","networking","peripheral","tracker","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("snmp_discovery","r");
 
@@ -60,8 +60,8 @@ plugin_tracker_mini_menu();
 
 manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_DISCOVERY);
 
-searchForm(PLUGIN_TRACKER_SNMP_DISCOVERY,$_GET);
-showList(PLUGIN_TRACKER_SNMP_DISCOVERY,$_GET);
+searchForm(PLUGIN_TRACKER_SNMP_DISCOVERY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+showList(PLUGIN_TRACKER_SNMP_DISCOVERY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 
 commonFooter();
 

@@ -33,19 +33,15 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
-	die("Sorry. You can't access directly to this file");
-}
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT."/inc/includes.php");
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
 
-function plugin_tracker_dropdownDefaultYesNo($name,$value) {
-	global $LANG,$LANGTRACKER;
-	
-	echo "<select name='$name' id='dropdownyesno_$name'>\n";
-	echo "<option value='-1' ".($value==-1?" selected ":"").">".$LANGTRACKER["cron"][3]."</option>\n";
-	echo "<option value='0' ".(!$value?" selected ":"").">".$LANG["choice"][0]."</option>\n";
-	echo "<option value='1' ".($value==1?" selected ":"").">".$LANG["choice"][1]."</option>\n";
-	echo "</select>\n";
-}
+checkRight("profile","r");
 
+$prof=new plugin_tracker_Profile();
+if ($_POST["interface"]=="tracker")
+	$prof->showForm('plugin_tracker.profile.php',$_POST["ID"]);
 
 ?>

@@ -48,7 +48,7 @@ class plugin_tracker_model_infos extends CommonDBTM
 
 	function showForm($target, $ID = '')
 	{
-		global $DB,$CFG_GLPI,$LANG;
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
 		plugin_tracker_checkRight("snmp_models","r");
 
@@ -61,7 +61,7 @@ class plugin_tracker_model_infos extends CommonDBTM
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
-		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] : $LANG['plugin_tracker']["model_info"][6]);
+		echo ($ID =='' ? $LANGTRACKER["model_info"][7] : $LANGTRACKER["model_info"][6]);
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";

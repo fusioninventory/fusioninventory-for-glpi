@@ -32,7 +32,40 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-Verison 2.0.0
+Version 2.0.1
+
+- Correction de la langue anglaise
+- Correction de la langue francaise
+- Correction des modification massives
+- Correction d'affichage du tableau des droits (ticket #235)
+- Ajout d'une liste déroulante afin de choisir l'entité lors de la création de plages IP (ticket #236)
+- Suppression de la prise en charge de l'extjs (extjs non existant pour cette version)
+- Correction d'un bug de colonnes dans la liste des ordinateurs
+- Correction et amélioration du rapport "Historique des ports de switchs"
+- Suppression du champs vlan lors de l'ajout d'un OID (dans un modèle) qui n'est pas un switch (réseau)
+- Correction de la barre d'état du CPU / mémoire / état des cartouches
+- Correction d'affichage du tableau des ports sous Internet Explorer
+- Ajout du support des switch HP Procurve (pour les Ordinateurs / imprimantes connectés)
+- Ajout de la recherche 'NULL' pour le champs 'Tracker - dernier inventaire" dans la liste des imprimantes et réseau
+
+
+
+- Correction of english LANG
+- Correction of French LANG
+- Correction of massive actions
+- Correct display in rights management (ticket #235)
+- Add entity dropdown for add form of range IP (ticket #236)
+- Delete extjs load (non yet add)
+- Correction of a collumn bug in computer list
+- Correction and enhance repport "ports switch history"
+- Delete vlan add field in OID form (in model form) for type other than NETWORKING
+- Correction of bar (display CPU / memory / cartridge state)
+- Correction of ports array display with Internet Exporer
+- Add support of HP Procurve swith (for connections with computers / printers)
+- Add in printer and network search 'NULL' for field 'Tracker - last inventory'
+
+
+Version 2.0.0
 
 Ajout d'un agent qui va interroger les équipement et qui est séparé de GLPI
 L'agent est programmé en perl

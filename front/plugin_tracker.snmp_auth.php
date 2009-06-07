@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker","search","setup","rulesengine");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 
 plugin_tracker_checkRight("snmp_authentification","r");
 
@@ -65,11 +65,11 @@ else if ($config->getValue("authsnmp") == "DB")
 	
 	manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_AUTH);
 
-	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
-	showList(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
+	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+	showList(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 }else{
 
-	echo $LANG['plugin_tracker']["functionalities"][19];
+	echo $LANGTRACKER["functionalities"][19];
 
 }
 

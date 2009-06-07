@@ -84,7 +84,7 @@ function addLogConnection($status,$port,$FK_process=0)
 
 function tracker_snmp_showHistory($ID_port)
 {
-	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
+	global $DB,$LANG,$LANGTRACKER,$INFOFORM_PAGES,$CFG_GLPI;
 
 	$CommonItem = new CommonItem;
 
@@ -102,7 +102,7 @@ function tracker_snmp_showHistory($ID_port)
 	$text .= "</tr>";
 	
 	$text .= "<tr class='tab_bg_1'>";
-	$text .= "<th>".$LANG['plugin_tracker']["snmp"][50]."</th>";
+	$text .= "<th>".$LANGTRACKER["snmp"][50]."</th>";
 	$text .= "<th>".$LANG["common"][1]."</th>";
 	$text .= "<th>".$LANG["networking"][15]."</th>";
 	$text .= "<th>".$LANG["event"][18]."</th>";
@@ -123,14 +123,14 @@ function tracker_snmp_showHistory($ID_port)
 				// Connections and disconnections
 				if ($data["old_device_ID"] != "0")
 				{
-					$text .= "<td align='center'>".$LANG['plugin_tracker']["history"][2]."</td>";
+					$text .= "<td align='center'>".$LANGTRACKER["history"][2]."</td>";
 					$CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
 					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";						
 					$text .= "<td align='center'>".$data["old_value"]."</td>";
 				}
 				else if ($data["new_device_ID"] != "0")
 				{
-					$text .= "<td align='center'>".$LANG['plugin_tracker']["history"][3]."</td>";
+					$text .= "<td align='center'>".$LANGTRACKER["history"][3]."</td>";
 					$CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
 					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
 					$text .= "<td align='center'>".$data["new_value"]."</td>";

@@ -42,7 +42,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_report","r");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
+commonHeader($LANGTRACKER["title"][0],$_SERVER['PHP_SELF'],"utils","report");
 
 if (isset($_GET["reset_search"]))
 	resetSearch();
@@ -59,31 +59,32 @@ manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_HISTORY);
 
 if(isset($_GET["FK_networking_ports"])){
 		
-	$_GET["field"][0]=2;
-	$_GET["contains"][0]=$_GET["FK_networking_ports"];
-	$_GET["field"][1]=3;
+	$field[]=2;
+	$contains[]=$_GET["FK_networking_ports"];
+	$field[]=3;
 	if ((isset($_GET["Field"])) AND !empty($_GET["Field"]))
 	{
-		$_GET["contains"][1]=$TRACKER_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
+		$contains[]=$TRACKER_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
 		$_GET["link"][1] = "AND";
 	}
 	else
 		$_GET["link"][1] = "";
 
+	$_GET["field"] = $field;
+	$_GET["contains"] = $contains;
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
 }
-
 if($_GET["field"][0] != "view")
-	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_GET);
-
+	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+	
 echo "</form>";
 
 commonFooter(); 
 
 function displaySearchForm($FK_port)
 {
-	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
+	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$TRACKER_MAPPING,$LANGTRACKER;
 
 	include_once(GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php');
 

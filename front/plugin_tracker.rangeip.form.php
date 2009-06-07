@@ -45,7 +45,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $rangeip = new plugin_tracker_rangeip;
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","rangeip");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","rangeip");
 
 plugin_tracker_checkRight("snmp_iprange","r");
 

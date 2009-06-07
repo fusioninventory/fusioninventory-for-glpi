@@ -160,7 +160,7 @@ class plugin_tracker_networking extends CommonDBTM
 	
 	function showForm($target,$ID) {
 		
-		global $DB,$CFG_GLPI,$LANG;	
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;	
 		
 		$history = new plugin_tracker_SNMP_history;
 		
@@ -180,9 +180,6 @@ class plugin_tracker_networking extends CommonDBTM
 		$CommonItem = new CommonItem;
 		$plugin_tracker_snmp = new plugin_tracker_snmp;
 
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/prototype.js'></script>";
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/effects.js'></script>";
-		
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking=".$ID." ";
 
@@ -207,12 +204,12 @@ class plugin_tracker_networking extends CommonDBTM
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
-		echo $LANG['plugin_tracker']["snmp"][11];
+		echo $LANGTRACKER["snmp"][11];
 		echo "</th>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["model_info"][4]."</td>";
+		echo "<td align='center'>".$LANGTRACKER["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
 		WHERE device_type!=2 
@@ -228,7 +225,7 @@ class plugin_tracker_networking extends CommonDBTM
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][43]."</td>";
+		echo "<td align='center'>".$LANGTRACKER["functionalities"][43]."</td>";
 		echo "<td align='center'>";
 		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
@@ -236,12 +233,12 @@ class plugin_tracker_networking extends CommonDBTM
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2' height='30'>";
-		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
+		echo $LANGTRACKER["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
 		echo "</td>";
 		echo "</tr>";
 
 		// Get link field to detect if cpu, memory and uptime are get onthis network device
-		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID,NETWORKING_TYPE);
+		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($_GET['ID'],NETWORKING_TYPE);
 		$mapping_name=array();
 		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name)
 		{
@@ -256,7 +253,7 @@ class plugin_tracker_networking extends CommonDBTM
 			)
 		{
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][13]."</td>";
+			echo "<td align='center'>".$LANGTRACKER["snmp"][13]."</td>";
 			echo "<td align='center'>";
 			plugin_tracker_Bar($data["cpu"],'','inverse');
 			echo "</td>";
@@ -266,7 +263,7 @@ class plugin_tracker_networking extends CommonDBTM
 		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1"))
 		{
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][14]."</td>";
+			echo "<td align='center'>".$LANGTRACKER["snmp"][14]."</td>";
 			echo "<td align='center'>";
 			$query2 = "
 			SELECT * 
@@ -288,7 +285,7 @@ class plugin_tracker_networking extends CommonDBTM
 		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1"))
 		{
 			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][12]."</td>";
+			echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
 			echo "<td align='center'>";
 			$sysUpTime = $data["uptime"];
 			if (strstr($sysUpTime, "days"))
@@ -410,40 +407,40 @@ function appear_array(id){
 			echo "<th>";
 			switch ($data_array['num']) {
 				case 2 :
-					echo $LANG['plugin_tracker']["snmp"][42];
+					echo $LANGTRACKER["snmp"][42];
 					break;
 				case 3 :
-					echo $LANG['plugin_tracker']["snmp"][43];
+					echo $LANGTRACKER["snmp"][43];
 					break;
 				case 4 :
-					echo $LANG['plugin_tracker']["snmp"][44];
+					echo $LANGTRACKER["snmp"][44];
 					break;
 				case 5 :
-					echo $LANG['plugin_tracker']["snmp"][45];
+					echo $LANGTRACKER["snmp"][45];
 					break;
 				case 6 :
-					echo $LANG['plugin_tracker']["snmp"][46];
+					echo $LANGTRACKER["snmp"][46];
 					break;
 				case 7 :
-					echo $LANG['plugin_tracker']["snmp"][47];
+					echo $LANGTRACKER["snmp"][47];
 					break;
 				case 8 : 
-					echo $LANG['plugin_tracker']["snmp"][48];
+					echo $LANGTRACKER["snmp"][48];
 					break;
 				case 9 : 
-					echo $LANG['plugin_tracker']["snmp"][49];
+					echo $LANGTRACKER["snmp"][49];
 					break;
 				case 10 : 
-					echo $LANG['plugin_tracker']["snmp"][51];
+					echo $LANGTRACKER["snmp"][51];
 					break;
 				case 11 : 
-					echo $LANG['plugin_tracker']["mapping"][115];
+					echo $LANGTRACKER["mapping"][115];
 					break;
 				case 12 :
 					echo $LANG["networking"][17];
 					break;
 				case 13 :
-					echo $LANG['plugin_tracker']["snmp"][50];
+					echo $LANGTRACKER["snmp"][50];
 					break;
 			}
 			echo "</th>";
