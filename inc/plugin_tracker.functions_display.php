@@ -203,7 +203,6 @@ function plugin_tracker_mib_management()
 	$number = $DB->numrows($result);
 	
 	if($number !="0"){
-		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
 		echo "<tr><th colspan='4'>".$LANGTRACKER["model_info"][5]." :</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
@@ -226,19 +225,18 @@ function plugin_tracker_mib_management()
 			echo "</tr>";
 
 		}
-		echo "</table></div></form>";
+		echo "</table></div>";
 	}
 	else{
 
 
-		echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
 		echo "<tr><th colspan='3'>".$LANGTRACKER["model_info"][5].":</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
 		echo "<th>".$LANG["login"][6]."</th>";
 		echo "<th>".$LANG["login"][7]."</th>";
 		echo "</tr>";
-		echo "</table></div></form>";
+		echo "</table></div>";
 	}
 
 }
