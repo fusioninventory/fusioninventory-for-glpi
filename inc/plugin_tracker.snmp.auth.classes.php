@@ -153,7 +153,6 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 
 		if ($array == '0')
 		{
-			echo "<br><form method='post' action=\"./plugin_ticketreport.form.php\">";
 			echo "<div align='center'><table class='tab_cadre_fixe'>";
 			echo "<tr><th colspan='10'>".$LANG['plugin_tracker']["model_info"][3]." :</th></tr>";
 			echo "<tr><th>".$LANG["common"][2]."</th>";
@@ -253,7 +252,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 		}
 		if ($array == '0')
 		{
-			echo "</table></div></form>";
+			echo "</table></div>";
 		}
 		else if ($array == '1')
 		{
