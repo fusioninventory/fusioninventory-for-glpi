@@ -589,174 +589,109 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 {
 	global $CFG_GLPI, $LANG, $INFOFORM_PAGES, $LANGTRACKER, $DB;
 
-//echo $field."<br/>";
-	switch ($field) {
-		case "glpi_plugin_tracker_model_infos.name" :
-			if (empty ($data["ITEM_$num"]))
-				$out = "";
-			else
-			{
-				$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
-				$out .= $data["ITEM_$num"];
-				if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
-					$out .= " (" . $data["ID"] . ")";
-				$out .= "</a>";
-			}
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_model_infos.ID" :
-			if ($type == PLUGIN_TRACKER_MODEL)
-			{
-				$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
-					<input type='hidden' name='model' value='" . $data["ID"] . "' />
-					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
-					</form></div>";
-			}
-			else
-			{
-				$plugin_tracker_snmp = new plugin_tracker_snmp;
-				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
-				$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
-				$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
-				$out .= "</a>";
-			}
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_model_infos.device_type" :
-			$out = '<center> ';
-			switch ($data["ITEM_$num"])
-			{
-				case COMPUTER_TYPE:
-					$out .= $LANG["Menu"][0];
+//	echo $field."<br/>";
+	switch ($type) {
+		// * Computer List (front/computer.php)
+		case COMPUTER_TYPE :
+			switch ($field) {
+				
+				// ** Tracker - switch
+				case "glpi_plugin_tracker_networking.ID" :
+					$out = '';
+					include_once(GLPI_ROOT."/inc/networking.class.php");
+					$contact = new Netport;
+					$netport = new Netport;
+					$query = "SELECT ID FROM glpi_networking_ports WHERE (on_device = '".$data["ID"]."' AND device_type = '$type') ORDER BY name, logical_number";
+					if ($result = $DB->query($query))
+					{
+						while ($devid=$DB->fetch_array($result))
+						{
+							$contact->getContact($devid["ID"]);
+							if (!empty($contact->contact_id))
+							{
+								$netport->getFromDB($contact->contact_id);
+								$netport->getDeviceData($netport->fields["on_device"],$netport->fields["device_type"]);
+
+								$out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[$netport->fields["device_type"]]."?ID=".$netport->device_ID."\">";
+								$out .=  $netport->device_name;
+								if ($CFG_GLPI["view_ID"]) $out .= " (".$netport->device_ID.")";
+								$out .=  "</a><br/>";
+							}
+						}
+					}
+					return "<center>".$out."</center>";
 					break;
-				case NETWORKING_TYPE:
-					$out .= $LANG["Menu"][1];
-					break;
-				case PRINTER_TYPE:
-					$out .= $LANG["Menu"][2];
-					break;	
-				case PERIPHERAL_TYPE:
-					$out .= $LANG["Menu"][16];
-					break;	
-				case PHONE_TYPE:
-					$out .= $LANG["Menu"][34];
-					break;	
-			}
-			$out .= '</center>';			
-			return $out;
-			break;
-		case "glpi_plugin_tracker_model_infos.activation" :
-			$out = getYesNo($data["ITEM_$num"]);
-			return "<center>".$out."</center>";
-			break;	
-		case "glpi_dropdown_plugin_tracker_snmp_version.FK_snmp_version" :
-			$out = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version", $data["ITEM_$num"], 0);
-			return $out;
-		case "glpi_plugin_tracker_snmp_connection.FK_snmp_connection" :
-			$out = getDropdownName("glpi_plugin_tracker_snmp_connection", $data["ITEM_$num"], 0);
-			return $out;
-		case "glpi_plugin_tracker_snmp_connection.auth_passphrase" :
-			if (empty($data["ITEM_$num"]))
-				$out = "";
-			else
-				$out = "********";
-			return $out;
-		case "glpi_plugin_tracker_snmp_connection.priv_passphrase" :
-			if (empty($data["ITEM_$num"]))
-				$out = "";
-			else
-				$out = "********";
-			return $out;
-		case "glpi_plugin_tracker_errors.device_type" :
-			switch ($data["ITEM_$num"]) {
-				case COMPUTER_TYPE :
-					$out = $LANGTRACKER["type"][1];
-					break;
-				case NETWORKING_TYPE :
-					$out = $LANGTRACKER["type"][2];
-					break;
-				case PRINTER_TYPE :
-					$out = $LANGTRACKER["type"][3];
+				
+				// ** Tracker - switch port
+				case "glpi_plugin_tracker_networking_ports.ID" :
+						$out = '';
+						include_once(GLPI_ROOT."/inc/networking.class.php");
+						$query = "SELECT ID FROM glpi_networking_ports
+						WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."')
+						ORDER BY name, logical_number";
+						$result = $DB->query($query);
+						$out = "";
+						$np = new Netport;
+						$nw = new Netwire;
+						while ( $data2=$DB->fetch_array($result) )
+						{
+							if ($nw->getOppositeContact($data2["ID"]))
+							{
+								$np->getFromDB($nw->getOppositeContact($data2["ID"]));
+								$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$np->fields["ID"]."'>".$np->fields["name"]."</a><br/>";
+							}
+						}
+					return "<center>".$out."</center>";
 					break;
 			}
-			return $out;
-			break;
-		case "glpi_plugin_tracker_snmp_connection.name" :
-			if (empty ($data["ITEM_$num"]))
-				$out = "";
-			else
-			{
-				$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
-				$out .= $data["ITEM_$num"];
-				if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
-					$out .= " (" . $data["ID"] . ")";
-				$out .= "</a>";
-			}
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_snmp_connection.ID" :
-			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
-			$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
-			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
-			$out .= getDropdownName("glpi_plugin_tracker_snmp_connection", $FK_auth_DB, 0);
-			$out .= "</a>";
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_errors.device_id" :
-			$device_type = $data["ITEM_1"];
-			$ID = $data["ITEM_$num"];
-			$name = plugin_tracker_getDeviceFieldFromId($device_type, $ID, "name", NULL);
-			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES["$device_type"] . "?ID=" . $ID . "\">";
-			$out .= $name;
-			if (empty ($name) || $CFG_GLPI["view_ID"])
-				$out .= " ($ID)";
-			$out .= "</a>";
-			return "<center>".$out."</center>";
 			break;
 
-		case "glpi_plugin_tracker_errors.first_pb_date" :
-			$out = convDateTime($data["ITEM_$num"]);
-			return $out;
+		// * Networking List (front/networking.php)
+		case NETWORKING_TYPE :
+			switch ($field) {
+
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_networking.FK_networking" :
+					$query = "SELECT * FROM glpi_plugin_tracker_networking
+					WHERE FK_networking = '".$data["ID"]."' ";
+					if ($result = $DB->query($query))
+						$data2=$DB->fetch_array($result);
+
+					$last_date = "";
+					if (isset($data2["last_tracker_update"]))
+						$last_date = $data2["last_tracker_update"];
+					$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+					return $out;
+					break;
+
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					$plugin_tracker_snmp = new plugin_tracker_snmp;
+					$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
+					$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
+					$out .= "</a>";
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_snmp_connection.ID" :
+					$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+					$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
+					$out .= getDropdownName("glpi_plugin_tracker_snmp_connection", $FK_auth_DB, 0);
+					$out .= "</a>";
+					return "<center>".$out."</center>";
+					break;
+			}
 			break;
 
-		case "glpi_plugin_tracker_errors.last_pb_date" :
-			$out = convDateTime($data["ITEM_$num"]);
-			return $out;
-			break;
-		case "glpi_plugin_tracker_networking.FK_networking" :
-			if (strstr($_SERVER['PHP_SELF'],"front/networking.php"))
-			{
-				$query = "SELECT * FROM glpi_plugin_tracker_networking
-				WHERE FK_networking = '".$data["ID"]."' ";
-				if ($result = $DB->query($query))
-					$data2=$DB->fetch_array($result);
+		// * Printer List (front/printer.php)
+		case PRINTER_TYPE :
+			switch ($field) {
 
-				$last_date = "";
-				if (isset($data2["last_tracker_update"]))
-					$last_date = $data2["last_tracker_update"];
-				$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
-				return $out;
-				break;
-			}
-			else if ($num == "9")
-			{
-				$plugin_tracker_snmp = new plugin_tracker_snmp;
-				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],NETWORKING_TYPE);
-				$out = "<div align='center'>" . getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0) . "</div>";
-				return $out;
-				break;
-			} 
-			else if ($num == "10")
-			{
-				$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-				$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"], GLPI_ROOT . "/plugins/tracker/scripts/",NETWORKING_TYPE);
-				$out = "<div align='center'>" . $FK_snmp_DB["Name"] . "</div>";
-				return $out;
-				break;
-			}
-			case "glpi_plugin_tracker_printers.FK_printers" :
-				if (strstr($_SERVER['PHP_SELF'],"front/printer.php"))
-				{
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_printers.FK_printers" :
 					$query = "SELECT * FROM glpi_plugin_tracker_printers
 					WHERE FK_printers = '".$data["ID"]."' ";
 					if ($result = $DB->query($query))
@@ -768,267 +703,878 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 					$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
 					return $out;
 					break;
-				}
-		case "glpi_plugin_tracker_unknown_mac.port" :
-			$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
-			$CommonItem = new CommonItem;
-			$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
-			$out = "<div align='center'>" . $CommonItem->getLink(1);
 
-			$query = "SELECT * FROM glpi_networking_ports 
-			WHERE ID='" . $data["ITEM_$num"] . "' ";
-			$result = $DB->query($query);
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					$plugin_tracker_snmp = new plugin_tracker_snmp;
+					$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
+					$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
+					$out .= "</a>";
+					return "<center>".$out."</center>";
+					break;
 
-			if ($DB->numrows($result) != "0")
-				$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_snmp_connection.ID" :
+					$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+					$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
+					$out .= getDropdownName("glpi_plugin_tracker_snmp_connection", $FK_auth_DB, 0);
+					$out .= "</a>";
+					return "<center>".$out."</center>";
+					break;
 
-			$out .= "</td>";
-			return $out;
-			break;
-		case "glpi_plugin_tracker_agents.name" :
-			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.form.php?ID=".$data['ID']."'>";
-			$out .= $data["ITEM_$num"];
-			if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
-				$out .= " (" . $data["ID"] . ")";
-			$out .="</a>";
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_agents.lock" :
-			$out = getYesNo($data["ITEM_$num"]);
-			return "<center>".$out."</center>";
-			break;			
-		case "glpi_plugin_tracker_agents.logs" :
-			$ArrayValues[]= $LANG["choice"][0];
-			$ArrayValues[]= $LANG["choice"][1];
-			$ArrayValues[]= $LANG["setup"][137];
-			$out = $ArrayValues[$data["ITEM_$num"]];
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_rangeip.name" :
-			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.rangeip.form.php?ID=".$data['ID']."'>";
-			$out .= $data["ITEM_$num"];
-			if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
-				$out .= " (" . $data["ID"] . ")";
-			$out .="</a>";
-			return "<center>".$out."</center>";			break;
-		case "glpi_plugin_tracker_rangeip.FK_tracker_agents" :
-			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
-			$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
-			$out .= "</a>";
-			return "<center>".$out."</center>";
-			break;	
-		case "glpi_plugin_tracker_rangeip.discover" :
-			$out = getYesNo($data["ITEM_$num"]);
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_rangeip.query" :
-			$out = getYesNo($data["ITEM_$num"]);
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_discovery.type" :
-			if ($data["ITEM_$num"] == "0")
-				$out = "";
-			else
-			{
-				$ci=new CommonItem();
-				$ci->setType($data["ITEM_$num"]);
-				$out=$ci->getType();
 			}
-			return "<center>".$out."</center>";
 			break;
-		case "glpi_entities.name" :
-			if ($data["ITEM_$num"] == '')
-			{
-				$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
+
+		// * Model List (plugins/tracker/front/plugin_tracker.models.php)
+		case PLUGIN_TRACKER_MODEL :
+			switch ($field) {
+
+				// ** Name of model and link to form
+				case "glpi_plugin_tracker_model_infos.name" :
+					if (empty ($data["ITEM_$num"]))
+						$out = "";
+					else
+					{
+						$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
+						$out .= $data["ITEM_$num"];
+						if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+							$out .= " (" . $data["ID"] . ")";
+						$out .= "</a>";
+					}
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Name of type of model (network, printer...)
+				case "glpi_plugin_tracker_model_infos.device_type" :
+					$out = '<center> ';
+					switch ($data["ITEM_$num"])
+					{
+						case COMPUTER_TYPE:
+							$out .= $LANG["Menu"][0];
+							break;
+						case NETWORKING_TYPE:
+							$out .= $LANG["Menu"][1];
+							break;
+						case PRINTER_TYPE:
+							$out .= $LANG["Menu"][2];
+							break;
+						case PERIPHERAL_TYPE:
+							$out .= $LANG["Menu"][16];
+							break;
+						case PHONE_TYPE:
+							$out .= $LANG["Menu"][34];
+							break;
+					}
+					$out .= '</center>';
+					return $out;
+					break;
+
+				// ** Display pic / link for exporting model
+				case "glpi_plugin_tracker_model_infos.ID" :
+					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
+						<input type='hidden' name='model' value='" . $data["ID"] . "' />
+						<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
+						</form></div>";
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Display yes/no activation of model
+				case "glpi_plugin_tracker_model_infos.activation" :
+					$out = getYesNo($data["ITEM_$num"]);
+					return "<center>".$out."</center>";
+					break;
+
+			}
+			break;
+
+
+		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
+		case PLUGIN_TRACKER_SNMP_AUTH :
+			switch ($field) {
+
+				// ** Name of authentification and link to form
+				case "glpi_plugin_tracker_snmp_connection.name" :
+					if (empty ($data["ITEM_$num"]))
+						$out = "";
+					else
+					{
+						$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
+						$out .= $data["ITEM_$num"];
+						if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+							$out .= " (" . $data["ID"] . ")";
+						$out .= "</a>";
+					}
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Hidden auth passphrase (SNMP v3)
+				case "glpi_plugin_tracker_snmp_connection.auth_passphrase" :
+					if (empty($data["ITEM_$num"]))
+						$out = "";
+					else
+						$out = "********";
+					return $out;
+					break;
+
+				// ** Hidden priv passphrase (SNMP v3)
+				case "glpi_plugin_tracker_snmp_connection.priv_passphrase" :
+					if (empty($data["ITEM_$num"]))
+						$out = "";
+					else
+						$out = "********";
+					return $out;
+					break;
+			}
+			break;
+
+		// * Unknown mac addresses connectd on switch - report (plugins/tracker/report/plugin_tracker.unknown_mac.php)
+		case PLUGIN_TRACKER_MAC_UNKNOWN :
+			switch ($field) {
+
+				// ** Add switch and port where unknown MAC has been found
+				case "glpi_plugin_tracker_unknown_mac.port" :
+					$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+					$CommonItem = new CommonItem;
+					$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
+					$out = "<div align='center'>" . $CommonItem->getLink(1);
+
+					$query = "SELECT * FROM glpi_networking_ports
+					WHERE ID='" . $data["ITEM_$num"] . "' ";
+					$result = $DB->query($query);
+
+					if ($DB->numrows($result) != "0")
+						$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+
+					$out .= "</td>";
+					return $out;
+					break;
+
+			}
+			break;
+
+		// * 
+		case PLUGIN_TRACKER_SNMP_NETWORKING_PORTS :
+			switch ($field) {
+
+			}
+			break;
+
+		// * Ports date connection - report (plugins/tracker/report/plugin_tracker.ports_date_connections.php)
+		case PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2 :
+			switch ($field) {
+
+				// ** Name and link of networking device (switch)
+				case "glpi_plugin_tracker_networking_ports.ID" :
+					$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
+					LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
+					WHERE glpi_networking_ports.ID='".$data["ITEM_2"]."'
+					LIMIT 0,1";
+					$result = $DB->query($query);
+					$data2 = $DB->fetch_assoc($result);
+					$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$data2["ID"]."'>".$data2["name"]."</a>";
 				return "<center>".$out."</center>";
+				break;
+
+				// ** Name and link of port of networking device (port of switch)
+				case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
+					$netport=new Netport;
+					$netport->getFromDB($data["ITEM_$num"]);
+					$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$netport->fields["name"]."</a>";
+					return "<center>".$out."</center>";
+					break;
+
 			}
 			break;
-		case "glpi_plugin_tracker_agents_processes.FK_agent" :
-			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
-			$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
-			$out .= "</a>";
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_agents_processes.status" :
-			$out = "";
-			switch($data["ITEM_$num"])
-			{
-				case 3 :
-					$out = "<img src='../pics/export.png' />";
+
+		// * Tracker Agents list (plugins/tracker/front/plugin_tracker.agents.php)
+		case PLUGIN_TRACKER_SNMP_AGENTS :
+			switch ($field) {
+
+				// ** Name of agent and link to form
+				case "glpi_plugin_tracker_agents.name" :
+					$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.form.php?ID=".$data['ID']."'>";
+					$out .= $data["ITEM_$num"];
+					if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+						$out .= " (" . $data["ID"] . ")";
+					$out .="</a>";
+					return "<center>".$out."</center>";
 					break;
-				case 2 :
-					$out = "<img src='../pics/wait.png' />";
+
+				// ** Display Yes/No of lock of agent
+				case "glpi_plugin_tracker_agents.lock" :
+					$out = getYesNo($data["ITEM_$num"]);
+					return "<center>".$out."</center>";
 					break;
-				case 1 :
-					$out = "<img src='../pics/ok2.png' />";
+
+				// ** Display log activation / level
+				case "glpi_plugin_tracker_agents.logs" :
+					$ArrayValues[]= $LANG["choice"][0];
+					$ArrayValues[]= $LANG["choice"][1];
+					$ArrayValues[]= $LANG["setup"][137];
+					$out = $ArrayValues[$data["ITEM_$num"]];
+					return "<center>".$out."</center>";
 					break;
+
 			}
-			return "<center>".$out."</center>";
 			break;
-		case "glpi_plugin_tracker_agents_processes.end_time" :	
-			$out = $data["ITEM_$num"];
-			if ($out == "0000-00-00 00:00:00")
+
+		// * range IP list (plugins/tracker/front/plugin_tracker.rangeip.php)
+		case PLUGIN_TRACKER_SNMP_RANGEIP :
+			switch ($field) {
+
+				// ** Name of range IP and link to form
+				case "glpi_plugin_tracker_rangeip.name" :
+					$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.rangeip.form.php?ID=".$data['ID']."'>";
+					$out .= $data["ITEM_$num"];
+					if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+						$out .= " (" . $data["ID"] . ")";
+					$out .="</a>";
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Agent name associed to IP range and link to agent form
+				case "glpi_plugin_tracker_rangeip.FK_tracker_agents" :
+					$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
+					$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
+					$out .= "</a>";
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Display Yes/No discovery fonction
+				case "glpi_plugin_tracker_rangeip.discover" :
+					$out = getYesNo($data["ITEM_$num"]);
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Display Yes/No query fonction
+				case "glpi_plugin_tracker_rangeip.query" :
+					$out = getYesNo($data["ITEM_$num"]);
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Display entity name
+				case "glpi_entities.name" :
+					if ($data["ITEM_$num"] == '')
+					{
+						$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
+						return "<center>".$out."</center>";
+					}
+					break;
+				
+			}
+			break;
+
+		// * Device discovery list (plugins/tracker/front/plugin_tracker.discovery.php)
+		case PLUGIN_TRACKER_SNMP_DISCOVERY :
+			switch ($field) {
+
+				// ** Display type of device (networking, printer, computer...)
+				case "glpi_plugin_tracker_discovery.type" :
+					if ($data["ITEM_$num"] == "0")
+						$out = "";
+					else
+					{
+						$ci=new CommonItem();
+						$ci->setType($data["ITEM_$num"]);
+						$out=$ci->getType();
+					}
+					return "<center>".$out."</center>";
+					break;
+
+				// ** Display entity name
+				case "glpi_entities.name" :
+					if ($data["ITEM_$num"] == '')
+					{
+						$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
+						return "<center>".$out."</center>";
+					}
+					break;
+
+			}
+			break;
+
+		// * Processes agents list (plugins/tracker/front/plugin_tracker.agents.processes.php)
+		case PLUGIN_TRACKER_AGENTS_PROCESSES :
+			switch ($field) {
+
+			// ** Agent name and link to form
+			case "glpi_plugin_tracker_agents_processes.FK_agent" :
+				$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
+				$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
+				$out .= "</a>";
+				return "<center>".$out."</center>";
+				break;
+
+			// ** Display status of agent (finish or in progress)
+			case "glpi_plugin_tracker_agents_processes.status" :
+				$out = "";
+				switch($data["ITEM_$num"])
+				{
+					case 3 :
+						$out = "<img src='../pics/export.png' />";
+						break;
+					case 2 :
+						$out = "<img src='../pics/wait.png' />";
+						break;
+					case 1 :
+						$out = "<img src='../pics/ok2.png' />";
+						break;
+				}
+				return "<center>".$out."</center>";
+				break;
+
+			// ** Display date and hour of finished agent execution
+			case "glpi_plugin_tracker_agents_processes.end_time" :
+				$out = $data["ITEM_$num"];
+				if ($out == "0000-00-00 00:00:00")
+					$out = "-";
+				return "<center>".$out."</center>";
+				break;
+
+			// ** Counter of devices discovered
+			case "glpi_plugin_tracker_agents_processes.discovery_queries" :
+				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes->getFromDB($data['ID']);
+				$out = $data["ITEM_$num"]." / ".$agents_processes->fields["discovery_queries_total"];
+				if ($out == "0 / 0")
+					$out = 0;
+				return "<center>".$out."</center>";
+				break;
+
+			// ** Counter of devices queried
+			case "glpi_plugin_tracker_agents_processes.networking_queries" :
+				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes->getFromDB($data['ID']);
+				$out = $data["ITEM_$num"] + $agents_processes->fields["printers_queries"];
+				return "<center>".$out."</center>";
+				break;
+				break;
+			
+			// ** Total time of execution script
+			case "glpi_plugin_tracker_agents_processes.ID" :
+				$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
+				$out = timestampToString($duree_timestamp);
+				return "<center>".$out."</center>";
+				break;
+
+			// ** Total time of discovery function
+			case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
+				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes->getFromDB($data['ID']);
+				$duree_timestamp = strtotime($agents_processes->fields["end_time_discovery"]) - strtotime($data["ITEM_$num"]);
+				$out = timestampToString($duree_timestamp);
+				return "<center>".$out."</center>";
+				break;
+
+			// ** Total time of query function
+			case "glpi_plugin_tracker_agents_processes.start_time_query" :
+				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes->getFromDB($data['ID']);
+				$duree_timestamp = strtotime($agents_processes->fields["end_time_query"]) - strtotime($data["ITEM_$num"]);
+				$out = timestampToString($duree_timestamp);
+				return "<center>".$out."</center>";
 				$out = "-";
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_agents_processes.ID" :
-			$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
-			$out = timestampToString($duree_timestamp);
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_agents_processes.networking_queries" :
-			$agents_processes = new plugin_tracker_agents_processes;
-			$agents_processes->getFromDB($data['ID']);
-			$out = $data["ITEM_$num"] + $agents_processes->fields["printers_queries"];
-			return "<center>".$out."</center>";
-			break;
-			break;
-		case "glpi_plugin_tracker_agents_processes.discovery_queries" :
-			$agents_processes = new plugin_tracker_agents_processes;
-			$agents_processes->getFromDB($data['ID']);
-			$out = $data["ITEM_$num"]." / ".$agents_processes->fields["discovery_queries_total"];
-			if ($out == "0 / 0")
-				$out = 0;
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
-			$agents_processes = new plugin_tracker_agents_processes;
-			$agents_processes->getFromDB($data['ID']);
-			$duree_timestamp = strtotime($agents_processes->fields["end_time_discovery"]) - strtotime($data["ITEM_$num"]);
-			$out = timestampToString($duree_timestamp);
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_agents_processes.start_time_query" :
-			$agents_processes = new plugin_tracker_agents_processes;
-			$agents_processes->getFromDB($data['ID']);
-			$duree_timestamp = strtotime($agents_processes->fields["end_time_query"]) - strtotime($data["ITEM_$num"]);
-			$out = timestampToString($duree_timestamp);
-			return "<center>".$out."</center>";
-			$out = "-";
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_snmp_history.FK_ports" :
-			$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
-			$CommonItem = new CommonItem;
-			$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
-			$out = "<div align='center'>" . $CommonItem->getLink(1);
-
-			$query = "SELECT * FROM glpi_networking_ports
-			WHERE ID='" . $data["ITEM_$num"] . "' ";
-			$result = $DB->query($query);
-
-			if ($DB->numrows($result) != "0")
-				$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
-
-			$out .= "</td>";
-			return $out;
-			break;
-		case "glpi_plugin_tracker_snmp_history.Field" :
-			if ($data["ITEM_$num"] == "0")
-			{
-				if (empty($data["ITEM_4"]))
-					return "<center><b>".$LANGTRACKER["history"][3]."</b></center>";
-				else if (empty($data["ITEM_5"]))
-					return "<center><b>".$LANGTRACKER["history"][2]."</b></center>";
-			}
-			break;
-		case "glpi_plugin_tracker_snmp_history.old_value" :
-			// TODO ADD LINK TO DEVICE
-			if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
-				return "<center><b>".$data["ITEM_$num"]."</b></center>";
-			break;
-		case "glpi_plugin_tracker_snmp_history.new_value" :
-			if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
-				return "<center><b>".$data["ITEM_$num"]."</b></center>";
-			break;
-		case "glpi_plugin_tracker_networking_ports.ID" :
-			if ($type == COMPUTER_TYPE)
-			{
-				include_once(GLPI_ROOT."/inc/networking.class.php");
-				$query = "SELECT ID FROM glpi_networking_ports 
-				WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."') 
-				ORDER BY name, logical_number";
-				$result = $DB->query($query);
-				$out = "";
-				$np = new Netport;
-				$nw = new Netwire;
-				while ( $data2=$DB->fetch_array($result) )
-				{
-					if ($nw->getOppositeContact($data2["ID"]))
-					{
-						$np->getFromDB($nw->getOppositeContact($data2["ID"]));
-						$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$np->fields["ID"]."'>".$np->fields["name"]."</a>";
-					}
-				}
-			}
-			else
-			{
-				$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
-				LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
-				WHERE glpi_networking_ports.ID='".$data["ITEM_2"]."'
-				LIMIT 0,1";
-				$result = $DB->query($query);		
-				$data2 = $DB->fetch_assoc($result);
-				$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$data2["ID"]."'>".$data2["name"]."</a>";
-			}
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
-			$netport=new Netport;
-			$netport->getFromDB($data["ITEM_$num"]);
-			$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$netport->fields["name"]."</a>";
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_networking.ID" :
-			if ($type == NETWORKING_TYPE)
-			{
-				// Récupérer les ip
-				// Récupérer le port et le switch
-				include_once(GLPI_ROOT."/inc/networking.class.php");
-				$query = "SELECT ID FROM glpi_networking_ports
-				WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."')
-				ORDER BY name, logical_number";
-				$result = $DB->query($query);
-				$out = "";
-				$np = new Netport;
-				$nw = new Netwire;
-				$nd = new Netdevice;
-				while ( $data2=$DB->fetch_array($result) )
-				{
-					if ($nw->getOppositeContact($data2["ID"]))
-					{
-						$np->getFromDB($nw->getOppositeContact($data2["ID"]));
-						$nd->getFromDB($np->fields["on_device"]);
-						$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$nd->fields["ID"]."'>".$nd->fields["name"]."</a>";
-					}
-				}
 				return "<center>".$out."</center>";
+				break;
+				
 			}
 			break;
-		case "glpi_plugin_tracker_printers.ID" :
-			$tracker_printers = new plugin_tracker_printers;
-			$tracker_printers->getFromDB($data["ITEM_$num"]);
-			$last_date = "";
-			if (isset($tracker_printers->fields["last_tracker_update"]))
-				$last_date = $tracker_printers->fields["last_tracker_update"];
-			$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
-			return $out;
+
+		// * Detail of ports history (plugins/tracker/report/plugin_tracker.switch_ports.history.php)
+		case PLUGIN_TRACKER_SNMP_HISTORY :
+			switch ($field) {
+
+				// ** Display switch and Port
+				case "glpi_plugin_tracker_snmp_history.FK_ports" :
+					$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+					$CommonItem = new CommonItem;
+					$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
+					$out = "<div align='center'>" . $CommonItem->getLink(1);
+
+					$query = "SELECT * FROM glpi_networking_ports
+					WHERE ID='" . $data["ITEM_$num"] . "' ";
+					$result = $DB->query($query);
+
+					if ($DB->numrows($result) != "0")
+						$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+
+					$out .= "</td>";
+					return $out;
+					break;
+
+				// ** Display GLPI field of device
+				case "glpi_plugin_tracker_snmp_history.Field" :
+					if ($data["ITEM_$num"] == "0")
+					{
+						if (empty($data["ITEM_4"]))
+							return "<center><b>".$LANGTRACKER["history"][3]."</b></center>";
+						else if (empty($data["ITEM_5"]))
+							return "<center><b>".$LANGTRACKER["history"][2]."</b></center>";
+					}
+					break;
+
+				// ** Display Old Value (before changement of value)
+				case "glpi_plugin_tracker_snmp_history.old_value" :
+					// TODO ADD LINK TO DEVICE
+					if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
+						return "<center><b>".$data["ITEM_$num"]."</b></center>";
+					break;
+
+				// ** Display New Value (new value modified)
+				case "glpi_plugin_tracker_snmp_history.new_value" :
+					if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
+						return "<center><b>".$data["ITEM_$num"]."</b></center>";
+					break;
+
+			}
 			break;
-		case "glpi_plugin_tracker_discovery.FK_snmp_connection" :
-			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
-			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_networking.FK_snmp_connection" :
-			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
-			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
-			return "<center>".$out."</center>";
-			break;
-		case "glpi_plugin_tracker_printers.FK_snmp_connection" :
-			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
-			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
-			return "<center>".$out."</center>";
-			break;
+
+//// ========================================================== //
+//// ========================================================== //
+//// ========================================================== //
+//// ========================================================== //
+//// ========================================================== //
+//
+//		case "glpi_plugin_tracker_model_infos.name" :
+//			if (empty ($data["ITEM_$num"]))
+//				$out = "";
+//			else
+//			{
+//				$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
+//				$out .= $data["ITEM_$num"];
+//				if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+//					$out .= " (" . $data["ID"] . ")";
+//				$out .= "</a>";
+//			}
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_model_infos.ID" :
+//			if ($type == PLUGIN_TRACKER_MODEL)
+//			{
+//				$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.models.export.php' target='_blank'>
+//					<input type='hidden' name='model' value='" . $data["ID"] . "' />
+//					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
+//					</form></div>";
+//			}
+//			else
+//			{
+//				$plugin_tracker_snmp = new plugin_tracker_snmp;
+//				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
+//				$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
+//				$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
+//				$out .= "</a>";
+//			}
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_model_infos.device_type" :
+//			$out = '<center> ';
+//			switch ($data["ITEM_$num"])
+//			{
+//				case COMPUTER_TYPE:
+//					$out .= $LANG["Menu"][0];
+//					break;
+//				case NETWORKING_TYPE:
+//					$out .= $LANG["Menu"][1];
+//					break;
+//				case PRINTER_TYPE:
+//					$out .= $LANG["Menu"][2];
+//					break;
+//				case PERIPHERAL_TYPE:
+//					$out .= $LANG["Menu"][16];
+//					break;
+//				case PHONE_TYPE:
+//					$out .= $LANG["Menu"][34];
+//					break;
+//			}
+//			$out .= '</center>';
+//			return $out;
+//			break;
+//		case "glpi_plugin_tracker_model_infos.activation" :
+//			$out = getYesNo($data["ITEM_$num"]);
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_dropdown_plugin_tracker_snmp_version.FK_snmp_version" :
+//			$out = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version", $data["ITEM_$num"], 0);
+//			return $out;
+//		case "glpi_plugin_tracker_snmp_connection.FK_snmp_connection" :
+//			$out = getDropdownName("glpi_plugin_tracker_snmp_connection", $data["ITEM_$num"], 0);
+//			return $out;
+//		case "glpi_plugin_tracker_snmp_connection.auth_passphrase" :
+//			if (empty($data["ITEM_$num"]))
+//				$out = "";
+//			else
+//				$out = "********";
+//			return $out;
+//		case "glpi_plugin_tracker_snmp_connection.priv_passphrase" :
+//			if (empty($data["ITEM_$num"]))
+//				$out = "";
+//			else
+//				$out = "********";
+//			return $out;
+//		case "glpi_plugin_tracker_errors.device_type" :
+//			switch ($data["ITEM_$num"]) {
+//				case COMPUTER_TYPE :
+//					$out = $LANGTRACKER["type"][1];
+//					break;
+//				case NETWORKING_TYPE :
+//					$out = $LANGTRACKER["type"][2];
+//					break;
+//				case PRINTER_TYPE :
+//					$out = $LANGTRACKER["type"][3];
+//					break;
+//			}
+//			return $out;
+//			break;
+//		case "glpi_plugin_tracker_snmp_connection.name" :
+//			if (empty ($data["ITEM_$num"]))
+//				$out = "";
+//			else
+//			{
+//				$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
+//				$out .= $data["ITEM_$num"];
+//				if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+//					$out .= " (" . $data["ID"] . ")";
+//				$out .= "</a>";
+//			}
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_snmp_connection.ID" :
+//			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+//			$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
+//			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
+//			$out .= getDropdownName("glpi_plugin_tracker_snmp_connection", $FK_auth_DB, 0);
+//			$out .= "</a>";
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_errors.device_id" :
+//			$device_type = $data["ITEM_1"];
+//			$ID = $data["ITEM_$num"];
+//			$name = plugin_tracker_getDeviceFieldFromId($device_type, $ID, "name", NULL);
+//			$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES["$device_type"] . "?ID=" . $ID . "\">";
+//			$out .= $name;
+//			if (empty ($name) || $CFG_GLPI["view_ID"])
+//				$out .= " ($ID)";
+//			$out .= "</a>";
+//			return "<center>".$out."</center>";
+//			break;
+//
+//		case "glpi_plugin_tracker_errors.first_pb_date" :
+//			$out = convDateTime($data["ITEM_$num"]);
+//			return $out;
+//			break;
+//
+//		case "glpi_plugin_tracker_errors.last_pb_date" :
+//			$out = convDateTime($data["ITEM_$num"]);
+//			return $out;
+//			break;
+//		case "glpi_plugin_tracker_networking.FK_networking" :
+//			if (strstr($_SERVER['PHP_SELF'],"front/networking.php"))
+//			{
+//				$query = "SELECT * FROM glpi_plugin_tracker_networking
+//				WHERE FK_networking = '".$data["ID"]."' ";
+//				if ($result = $DB->query($query))
+//					$data2=$DB->fetch_array($result);
+//
+//				$last_date = "";
+//				if (isset($data2["last_tracker_update"]))
+//					$last_date = $data2["last_tracker_update"];
+//				$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+//				return $out;
+//				break;
+//			}
+//			else if ($num == "9")
+//			{
+//				$plugin_tracker_snmp = new plugin_tracker_snmp;
+//				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],NETWORKING_TYPE);
+//				$out = "<div align='center'>" . getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0) . "</div>";
+//				return $out;
+//				break;
+//			}
+//			else if ($num == "10")
+//			{
+//				$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+//				$FK_snmp_DB = $plugin_tracker_snmp_auth->GetInfos($data["ID"], GLPI_ROOT . "/plugins/tracker/scripts/",NETWORKING_TYPE);
+//				$out = "<div align='center'>" . $FK_snmp_DB["Name"] . "</div>";
+//				return $out;
+//				break;
+//			}
+//			case "glpi_plugin_tracker_printers.FK_printers" :
+//				if (strstr($_SERVER['PHP_SELF'],"front/printer.php"))
+//				{
+//					$query = "SELECT * FROM glpi_plugin_tracker_printers
+//					WHERE FK_printers = '".$data["ID"]."' ";
+//					if ($result = $DB->query($query))
+//						$data2=$DB->fetch_array($result);
+//
+//					$last_date = "";
+//					if (isset($data2["last_tracker_update"]))
+//						$last_date = $data2["last_tracker_update"];
+//					$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+//					return $out;
+//					break;
+//				}
+//		case "glpi_plugin_tracker_unknown_mac.port" :
+//			$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+//			$CommonItem = new CommonItem;
+//			$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
+//			$out = "<div align='center'>" . $CommonItem->getLink(1);
+//
+//			$query = "SELECT * FROM glpi_networking_ports
+//			WHERE ID='" . $data["ITEM_$num"] . "' ";
+//			$result = $DB->query($query);
+//
+//			if ($DB->numrows($result) != "0")
+//				$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+//
+//			$out .= "</td>";
+//			return $out;
+//			break;
+//		case "glpi_plugin_tracker_agents.name" :
+//			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.form.php?ID=".$data['ID']."'>";
+//			$out .= $data["ITEM_$num"];
+//			if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+//				$out .= " (" . $data["ID"] . ")";
+//			$out .="</a>";
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents.lock" :
+//			$out = getYesNo($data["ITEM_$num"]);
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents.logs" :
+//			$ArrayValues[]= $LANG["choice"][0];
+//			$ArrayValues[]= $LANG["choice"][1];
+//			$ArrayValues[]= $LANG["setup"][137];
+//			$out = $ArrayValues[$data["ITEM_$num"]];
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_rangeip.name" :
+//			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.rangeip.form.php?ID=".$data['ID']."'>";
+//			$out .= $data["ITEM_$num"];
+//			if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
+//				$out .= " (" . $data["ID"] . ")";
+//			$out .="</a>";
+//			return "<center>".$out."</center>";			break;
+//		case "glpi_plugin_tracker_rangeip.FK_tracker_agents" :
+//			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
+//			$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
+//			$out .= "</a>";
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_rangeip.discover" :
+//			$out = getYesNo($data["ITEM_$num"]);
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_rangeip.query" :
+//			$out = getYesNo($data["ITEM_$num"]);
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_discovery.type" :
+//			if ($data["ITEM_$num"] == "0")
+//				$out = "";
+//			else
+//			{
+//				$ci=new CommonItem();
+//				$ci->setType($data["ITEM_$num"]);
+//				$out=$ci->getType();
+//			}
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_entities.name" :
+//			if ($data["ITEM_$num"] == '')
+//			{
+//				$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
+//				return "<center>".$out."</center>";
+//			}
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.FK_agent" :
+//			$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
+//			$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
+//			$out .= "</a>";
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.status" :
+//			$out = "";
+//			switch($data["ITEM_$num"])
+//			{
+//				case 3 :
+//					$out = "<img src='../pics/export.png' />";
+//					break;
+//				case 2 :
+//					$out = "<img src='../pics/wait.png' />";
+//					break;
+//				case 1 :
+//					$out = "<img src='../pics/ok2.png' />";
+//					break;
+//			}
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.end_time" :
+//			$out = $data["ITEM_$num"];
+//			if ($out == "0000-00-00 00:00:00")
+//				$out = "-";
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.ID" :
+//			$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
+//			$out = timestampToString($duree_timestamp);
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.networking_queries" :
+//			$agents_processes = new plugin_tracker_agents_processes;
+//			$agents_processes->getFromDB($data['ID']);
+//			$out = $data["ITEM_$num"] + $agents_processes->fields["printers_queries"];
+//			return "<center>".$out."</center>";
+//			break;
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.discovery_queries" :
+//			$agents_processes = new plugin_tracker_agents_processes;
+//			$agents_processes->getFromDB($data['ID']);
+//			$out = $data["ITEM_$num"]." / ".$agents_processes->fields["discovery_queries_total"];
+//			if ($out == "0 / 0")
+//				$out = 0;
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
+//			$agents_processes = new plugin_tracker_agents_processes;
+//			$agents_processes->getFromDB($data['ID']);
+//			$duree_timestamp = strtotime($agents_processes->fields["end_time_discovery"]) - strtotime($data["ITEM_$num"]);
+//			$out = timestampToString($duree_timestamp);
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_agents_processes.start_time_query" :
+//			$agents_processes = new plugin_tracker_agents_processes;
+//			$agents_processes->getFromDB($data['ID']);
+//			$duree_timestamp = strtotime($agents_processes->fields["end_time_query"]) - strtotime($data["ITEM_$num"]);
+//			$out = timestampToString($duree_timestamp);
+//			return "<center>".$out."</center>";
+//			$out = "-";
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_snmp_history.FK_ports" :
+//			$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+//			$CommonItem = new CommonItem;
+//			$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
+//			$out = "<div align='center'>" . $CommonItem->getLink(1);
+//
+//			$query = "SELECT * FROM glpi_networking_ports
+//			WHERE ID='" . $data["ITEM_$num"] . "' ";
+//			$result = $DB->query($query);
+//
+//			if ($DB->numrows($result) != "0")
+//				$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+//
+//			$out .= "</td>";
+//			return $out;
+//			break;
+//		case "glpi_plugin_tracker_snmp_history.Field" :
+//			if ($data["ITEM_$num"] == "0")
+//			{
+//				if (empty($data["ITEM_4"]))
+//					return "<center><b>".$LANGTRACKER["history"][3]."</b></center>";
+//				else if (empty($data["ITEM_5"]))
+//					return "<center><b>".$LANGTRACKER["history"][2]."</b></center>";
+//			}
+//			break;
+//		case "glpi_plugin_tracker_snmp_history.old_value" :
+//			// TODO ADD LINK TO DEVICE
+//			if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
+//				return "<center><b>".$data["ITEM_$num"]."</b></center>";
+//			break;
+//		case "glpi_plugin_tracker_snmp_history.new_value" :
+//			if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"])))
+//				return "<center><b>".$data["ITEM_$num"]."</b></center>";
+//			break;
+//		case "glpi_plugin_tracker_networking_ports.ID" :
+//			if ($type == COMPUTER_TYPE)
+//			{
+//				include_once(GLPI_ROOT."/inc/networking.class.php");
+//				$query = "SELECT ID FROM glpi_networking_ports
+//				WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."')
+//				ORDER BY name, logical_number";
+//				$result = $DB->query($query);
+//				$out = "";
+//				$np = new Netport;
+//				$nw = new Netwire;
+//				while ( $data2=$DB->fetch_array($result) )
+//				{
+//					if ($nw->getOppositeContact($data2["ID"]))
+//					{
+//						$np->getFromDB($nw->getOppositeContact($data2["ID"]));
+//						$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$np->fields["ID"]."'>".$np->fields["name"]."</a>";
+//					}
+//				}
+//			}
+//			else
+//			{
+//				$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
+//				LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
+//				WHERE glpi_networking_ports.ID='".$data["ITEM_2"]."'
+//				LIMIT 0,1";
+//				$result = $DB->query($query);
+//				$data2 = $DB->fetch_assoc($result);
+//				$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$data2["ID"]."'>".$data2["name"]."</a>";
+//			}
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
+//			$netport=new Netport;
+//			$netport->getFromDB($data["ITEM_$num"]);
+//			$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$netport->fields["name"]."</a>";
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_networking.ID" :
+//			if ($type == NETWORKING_TYPE)
+//			{
+//				// Récupérer les ip
+//				// Récupérer le port et le switch
+//				include_once(GLPI_ROOT."/inc/networking.class.php");
+//				$query = "SELECT ID FROM glpi_networking_ports
+//				WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."')
+//				ORDER BY name, logical_number";
+//				$result = $DB->query($query);
+//				$out = "";
+//				$np = new Netport;
+//				$nw = new Netwire;
+//				$nd = new Netdevice;
+//				while ( $data2=$DB->fetch_array($result) )
+//				{
+//					if ($nw->getOppositeContact($data2["ID"]))
+//					{
+//						$np->getFromDB($nw->getOppositeContact($data2["ID"]));
+//						$nd->getFromDB($np->fields["on_device"]);
+//						$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$nd->fields["ID"]."'>".$nd->fields["name"]."</a>";
+//					}
+//				}
+//				return "<center>".$out."</center>";
+//			}
+//			break;
+//		case "glpi_plugin_tracker_printers.ID" :
+//			$tracker_printers = new plugin_tracker_printers;
+//			$tracker_printers->getFromDB($data["ITEM_$num"]);
+//			$last_date = "";
+//			if (isset($tracker_printers->fields["last_tracker_update"]))
+//				$last_date = $tracker_printers->fields["last_tracker_update"];
+//			$out = "<div align='center'>" .convDateTime($last_date) . "</div>";
+//			return $out;
+//			break;
+//		case "glpi_plugin_tracker_discovery.FK_snmp_connection" :
+//			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+//			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_networking.FK_snmp_connection" :
+//			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+//			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
+//			return "<center>".$out."</center>";
+//			break;
+//		case "glpi_plugin_tracker_printers.FK_snmp_connection" :
+//			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+//			$out = $plugin_tracker_snmp->GetSNMPAuthName_XML($data["ITEM_$num"], GLPI_ROOT . "/plugins/tracker/scripts/");
+//			return "<center>".$out."</center>";
+//			break;
 	}
 
 	if (($type == PLUGIN_TRACKER_SNMP_AGENTS) AND ($linkfield == "EXPORT")) {
@@ -1528,14 +2074,71 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 }
 
 
-// Search modification for plugin Tracker
+// * Search modification for plugin Tracker
+
+function plugin_example_addSelect($type,$ID,$num){
+	global $SEARCH_OPTION;
+
+	$table=$SEARCH_OPTION[$type][$ID]["table"];
+	$field=$SEARCH_OPTION[$type][$ID]["field"];
+
+	switch ($type) {
+		// * Computer List (front/computer.php)
+		case COMPUTER_TYPE :
+			switch ($table.".".$field) {
+
+				// ** Tracker - switch port
+				case "glpi_plugin_tracker_networking_ports.ID" :
+					return $table.".".$field." AS ITEM_$num, ".
+						"";
+					break;
+
+			}
+			break;
+	}
+
+//	switch ($table.".".$field){
+//		case "glpi_plugin_example.name" :
+//			// Standard Select clause for the example but use it for specific selection
+//			return $table.".".$field." AS ITEM_$num, ";
+//			break;
+//	}
+	return "";
+}
+
 
 function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 	global $SEARCH_OPTION;
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-	switch ($table.".".$field){
+
+	echo $table.".".$field;
+
+	switch ($type) {
+		// * Computer List (front/computer.php)
+		case COMPUTER_TYPE :
+			switch ($table.".".$field) {
+
+				// ** Tracker - switch
+				case "glpi_plugin_tracker_networking.ID" :
+					return " ORDER BY glpi_networking.name $order ";
+					break;
+
+				// ** Tracker - switch port
+				case "glpi_plugin_tracker_networking_ports.ID" :
+					return " ORDER BY portwire.name $order ";
+					break;
+
+
+			}
+			break;
+
+
+
+
+
+//// OLD ////
 		case "glpi_plugin_tracker_networking.FK_networking" :
 			return " ORDER BY $table.last_tracker_update $order ";
 			break;
@@ -1561,7 +2164,33 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
 
-	switch ($new_table.".".$linkfield){
+	echo "Left Join : ".$new_table.".".$linkfield."<br/>";
+	switch ($type) {
+		// * Computer List (front/computer.php)
+		case COMPUTER_TYPE :
+			switch ($new_table.".".$linkfield) {
+
+				// ** Tracker - switch
+				case "glpi_plugin_tracker_networking.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_networking_ports AS tracker_networking_ports_switch ON (glpi_computers.ID = tracker_networking_ports_switch.ID) ".
+						" LEFT JOIN glpi_networking_wire AS wire_switch ON glpi_networking_ports.ID = wire_switch.end1 OR  glpi_networking_ports.ID = wire_switch.end2 ".
+						" LEFT JOIN glpi_networking_ports AS portwire_switch ON (portwire_switch.ID  = wire_switch.end1 AND wire_switch.end1 != glpi_networking_ports.ID) OR (portwire_switch.ID = wire_switch.end2 AND wire_switch.end2 != glpi_networking_ports.ID) ".
+						" LEFT JOIN glpi_networking ON portwire_switch.on_device = glpi_networking.ID".
+						" LEFT JOIN glpi_plugin_tracker_networking ON glpi_networking.ID = glpi_plugin_tracker_networking.FK_networking";
+					break;
+
+				// ** Tracker - switch port
+				case "glpi_plugin_tracker_networking_ports.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_networking_ports ON (glpi_computers.ID = glpi_plugin_tracker_networking_ports.ID) ".
+						" LEFT JOIN glpi_networking_wire ON glpi_networking_ports.ID = glpi_networking_wire.end1 OR  glpi_networking_ports.ID = glpi_networking_wire.end2 ".
+						" LEFT JOIN glpi_networking_ports AS portwire ON (portwire.ID  = glpi_networking_wire.end1 AND glpi_networking_wire.end1 != glpi_networking_ports.ID) OR (portwire.ID = glpi_networking_wire.end2 AND glpi_networking_wire.end2 != glpi_networking_ports.ID) ";
+					break;
+				
+			}
+			break;
+
+
+//// OLD ////
 		case "glpi_plugin_tracker_networking.ID" :
 			if ($ref_table == "glpi_computers" )
 				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
@@ -1570,18 +2199,9 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			break;
 		case "glpi_plugin_tracker_networking_ports.ID" : // In computer list
 			break;
-		case "glpi_plugin_tracker_model_infos.ID" :
-//			if ($ref_table == "glpi_printers" )
-//				return "  LEFT JOIN glpi_plugin_tracker_printers ON ($ref_table.$linkfield = glpi_plugin_tracker_printers.FK_printers) ".
-//					" LEFT JOIN $new_table ON (glpi_plugin_tracker_printers.FK_model_infos = $new_table.$linkfield) ";
-			break;
-		case "glpi_plugin_tracker_snmp_connection.ID" :
-			if ($ref_table == "glpi_printers" )
-				return "  LEFT JOIN glpi_plugin_tracker_printers ON ($ref_table.$linkfield = glpi_plugin_tracker_printers.FK_printers) ".
-					" LEFT JOIN $new_table ON (glpi_plugin_tracker_printers.FK_model_infos = $new_table.$linkfield) ";
-			break;
 		case "glpi_plugin_tracker_printers.ID" :
-			return " ";
+				return "  LEFT JOIN glpi_plugin_tracker_printers ON (glpi_printers.$linkfield = glpi_plugin_tracker_printers.FK_printers) ";
+	
 			break;
 	}
 	return "";
@@ -1592,7 +2212,8 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-//echo $table.".".$field;
+
+echo "add where : ".$table.".".$field."<br/>";
 	$SEARCH=makeTextSearch($val,$nott);
 
 	switch ($table.".".$field){
