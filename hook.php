@@ -2107,6 +2107,53 @@ function plugin_example_addSelect($type,$ID,$num){
 }
 
 
+function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
+
+	echo "Left Join : ".$new_table.".".$linkfield."<br/>";
+	switch ($type) {
+		// * Computer List (front/computer.php)
+		case COMPUTER_TYPE :
+			switch ($new_table.".".$linkfield) {
+
+				// ** Tracker - switch
+				case "glpi_plugin_tracker_networking.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_networking_ports AS tracker_networking_ports_switch ON (glpi_computers.ID = tracker_networking_ports_switch.ID) ".
+						" LEFT JOIN glpi_networking_wire AS wire_switch ON glpi_networking_ports.ID = wire_switch.end1 OR  glpi_networking_ports.ID = wire_switch.end2 ".
+						" LEFT JOIN glpi_networking_ports AS portwire_switch ON (portwire_switch.ID  = wire_switch.end1 AND wire_switch.end1 != glpi_networking_ports.ID) OR (portwire_switch.ID = wire_switch.end2 AND wire_switch.end2 != glpi_networking_ports.ID) ".
+						" LEFT JOIN glpi_networking ON portwire_switch.on_device = glpi_networking.ID".
+						" LEFT JOIN glpi_plugin_tracker_networking ON glpi_networking.ID = glpi_plugin_tracker_networking.FK_networking";
+					break;
+
+				// ** Tracker - switch port
+				case "glpi_plugin_tracker_networking_ports.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_networking_ports ON (glpi_computers.ID = glpi_plugin_tracker_networking_ports.ID) ".
+						" LEFT JOIN glpi_networking_wire ON glpi_networking_ports.ID = glpi_networking_wire.end1 OR  glpi_networking_ports.ID = glpi_networking_wire.end2 ".
+						" LEFT JOIN glpi_networking_ports AS portwire ON (portwire.ID  = glpi_networking_wire.end1 AND glpi_networking_wire.end1 != glpi_networking_ports.ID) OR (portwire.ID = glpi_networking_wire.end2 AND glpi_networking_wire.end2 != glpi_networking_ports.ID) ";
+					break;
+				
+			}
+			break;
+
+
+//// OLD ////
+		case "glpi_plugin_tracker_networking.ID" :
+			if ($ref_table == "glpi_computers" )
+				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
+			else
+				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
+			break;
+		case "glpi_plugin_tracker_networking_ports.ID" : // In computer list
+			break;
+		case "glpi_plugin_tracker_printers.ID" :
+				return "  LEFT JOIN glpi_plugin_tracker_printers ON (glpi_printers.$linkfield = glpi_plugin_tracker_printers.FK_printers) ";
+	
+			break;
+	}
+	return "";
+}
+
+
+
 function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 	global $SEARCH_OPTION;
 
@@ -2162,50 +2209,6 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 }
 
 
-function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
-
-	echo "Left Join : ".$new_table.".".$linkfield."<br/>";
-	switch ($type) {
-		// * Computer List (front/computer.php)
-		case COMPUTER_TYPE :
-			switch ($new_table.".".$linkfield) {
-
-				// ** Tracker - switch
-				case "glpi_plugin_tracker_networking.ID" :
-					return " LEFT JOIN glpi_plugin_tracker_networking_ports AS tracker_networking_ports_switch ON (glpi_computers.ID = tracker_networking_ports_switch.ID) ".
-						" LEFT JOIN glpi_networking_wire AS wire_switch ON glpi_networking_ports.ID = wire_switch.end1 OR  glpi_networking_ports.ID = wire_switch.end2 ".
-						" LEFT JOIN glpi_networking_ports AS portwire_switch ON (portwire_switch.ID  = wire_switch.end1 AND wire_switch.end1 != glpi_networking_ports.ID) OR (portwire_switch.ID = wire_switch.end2 AND wire_switch.end2 != glpi_networking_ports.ID) ".
-						" LEFT JOIN glpi_networking ON portwire_switch.on_device = glpi_networking.ID".
-						" LEFT JOIN glpi_plugin_tracker_networking ON glpi_networking.ID = glpi_plugin_tracker_networking.FK_networking";
-					break;
-
-				// ** Tracker - switch port
-				case "glpi_plugin_tracker_networking_ports.ID" :
-					return " LEFT JOIN glpi_plugin_tracker_networking_ports ON (glpi_computers.ID = glpi_plugin_tracker_networking_ports.ID) ".
-						" LEFT JOIN glpi_networking_wire ON glpi_networking_ports.ID = glpi_networking_wire.end1 OR  glpi_networking_ports.ID = glpi_networking_wire.end2 ".
-						" LEFT JOIN glpi_networking_ports AS portwire ON (portwire.ID  = glpi_networking_wire.end1 AND glpi_networking_wire.end1 != glpi_networking_ports.ID) OR (portwire.ID = glpi_networking_wire.end2 AND glpi_networking_wire.end2 != glpi_networking_ports.ID) ";
-					break;
-				
-			}
-			break;
-
-
-//// OLD ////
-		case "glpi_plugin_tracker_networking.ID" :
-			if ($ref_table == "glpi_computers" )
-				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
-			else
-				return " LEFT JOIN $new_table ON ($ref_table.$linkfield = $new_table.FK_networking) ";
-			break;
-		case "glpi_plugin_tracker_networking_ports.ID" : // In computer list
-			break;
-		case "glpi_plugin_tracker_printers.ID" :
-				return "  LEFT JOIN glpi_plugin_tracker_printers ON (glpi_printers.$linkfield = glpi_plugin_tracker_printers.FK_printers) ";
-	
-			break;
-	}
-	return "";
-}
 
 function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 	global $SEARCH_OPTION;
@@ -2216,7 +2219,40 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 echo "add where : ".$table.".".$field."<br/>";
 	$SEARCH=makeTextSearch($val,$nott);
 
-	switch ($table.".".$field){
+	switch ($type) {
+		// * Computer List (front/computer.php)
+		case COMPUTER_TYPE :
+			switch ($table.".".$field) {
+
+				// ** Tracker - switch
+				case "glpi_plugin_tracker_networking.ID" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR glpi_networking.name IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR glpi_networking.name IS NOT NULL";
+					}
+					return $link." (glpi_networking.name  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+				// ** Tracker - switch port
+				case "glpi_plugin_tracker_networking_ports.ID" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR portwire.name IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR portwire.name IS NOT NULL";
+					}
+					return $link." (portwire.name  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+			}
+			break;
+
+
+
+
+//// OLD ////
 		case "glpi_plugin_tracker_networking_ports.lastup" :
 			$ADD="";	
 			if ($nott&&$val!="NULL") {
