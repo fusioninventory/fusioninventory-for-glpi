@@ -535,7 +535,7 @@ function plugin_tracker_getSearchOption()
 	else
 	{
 		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
-		$sopt[NETWORKING_TYPE][5191]['field']='ID';
+		$sopt[NETWORKING_TYPE][5191]['field']='name';
 		$sopt[NETWORKING_TYPE][5191]['linkfield']='ID';
 		$sopt[NETWORKING_TYPE][5191]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["profile"][20];
 	}
@@ -675,7 +675,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 					break;
 
 				// ** Tracker - SNMP authentification
-				case "glpi_plugin_tracker_snmp_connection.ID" :
+				case "glpi_plugin_tracker_snmp_connection.name" :
 					$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
 					$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
@@ -2076,37 +2076,6 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 
 // * Search modification for plugin Tracker
 
-function plugin_example_addSelect($type,$ID,$num){
-	global $SEARCH_OPTION;
-
-	$table=$SEARCH_OPTION[$type][$ID]["table"];
-	$field=$SEARCH_OPTION[$type][$ID]["field"];
-
-	switch ($type) {
-		// * Computer List (front/computer.php)
-		case COMPUTER_TYPE :
-			switch ($table.".".$field) {
-
-				// ** Tracker - switch port
-				case "glpi_plugin_tracker_networking_ports.ID" :
-					return $table.".".$field." AS ITEM_$num, ".
-						"";
-					break;
-
-			}
-			break;
-	}
-
-//	switch ($table.".".$field){
-//		case "glpi_plugin_example.name" :
-//			// Standard Select clause for the example but use it for specific selection
-//			return $table.".".$field." AS ITEM_$num, ";
-//			break;
-//	}
-	return "";
-}
-
-
 function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables){
 
 	echo "Left Join : ".$new_table.".".$linkfield."<br/>";
@@ -2134,6 +2103,31 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			}
 			break;
 
+		// * Networking List (front/networking.php)
+		case NETWORKING_TYPE :
+			switch ($new_table.".".$linkfield) {
+
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_networking.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_networking ON (glpi_networking.ID = glpi_plugin_tracker_networking.FK_networking) ";
+					break;
+
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_networking AS gptn_model ON (glpi_networking.ID = gptn_model.FK_networking) ".
+						" LEFT JOIN glpi_plugin_tracker_model_infos ON (gptn_model.FK_model_infos = glpi_plugin_tracker_model_infos.ID) ";
+					break;
+
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_snmp_connection.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_networking AS gptn_auth ON glpi_networking.ID = gptn_auth.FK_networking ".
+						" LEFT JOIN glpi_plugin_tracker_snmp_connection ON gptn_auth.FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID ";
+					break;
+
+			}
+			break;
+		
+
 
 //// OLD ////
 		case "glpi_plugin_tracker_networking.ID" :
@@ -2160,7 +2154,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 
-	echo $table.".".$field;
+	echo "ORDER BY : ".$table.".".$field;
 
 	switch ($type) {
 		// * Computer List (front/computer.php)
@@ -2177,11 +2171,29 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 					return " ORDER BY portwire.name $order ";
 					break;
 
-
 			}
 			break;
 
+		// * Networking List (front/networking.php)
+		case NETWORKING_TYPE :
+			switch ($table.".".$field) {
 
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_networking.FK_networking" :
+					return " ORDER BY glpi_plugin_tracker_networking.last_tracker_update $order ";
+					break;
+
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					return " ORDER BY glpi_plugin_tracker_model_infos.name $order ";
+					break;
+
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_networking.name" :
+					break;
+
+			}
+			break;
 
 
 
@@ -2248,6 +2260,40 @@ echo "add where : ".$table.".".$field."<br/>";
 
 			}
 			break;
+
+		// * Networking List (front/networking.php)
+		case NETWORKING_TYPE :
+			switch ($table.".".$field) {
+
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_networking.FK_networking" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.last_tracker_update IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.last_tracker_update IS NOT NULL";
+					}
+					return $link." ($table.last_tracker_update  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NOT NULL";
+					}
+					return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_networking.FK_snmp_connection" :
+					break;
+				
+			}
+			break;
+
 
 
 
