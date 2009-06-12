@@ -2126,7 +2126,35 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 
 			}
 			break;
-		
+
+		// * Printer List (front/printer.php)
+		case PRINTER_TYPE :
+			switch ($new_table.".".$linkfield) {
+
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_printers.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_printers ON (glpi_printers.ID = glpi_plugin_tracker_printers.FK_printers) ";
+					break;
+
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_printers AS gptp_model ON (glpi_printers.ID = gptp_model.FK_printers) ".
+						" LEFT JOIN glpi_plugin_tracker_model_infos ON (gptp_model.FK_model_infos = glpi_plugin_tracker_model_infos.ID) ";
+					break;
+
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_snmp_connection.ID" :
+					return " LEFT JOIN glpi_plugin_tracker_printers AS gptp_auth ON glpi_printers.ID = gptp_auth.FK_printers ".
+						" LEFT JOIN glpi_plugin_tracker_snmp_connection ON gptp_auth.FK_snmp_connection = glpi_plugin_tracker_snmp_connection.ID ";
+					break;
+
+			}
+			break;
+
+
+
+
+
 
 
 //// OLD ////
@@ -2194,6 +2222,30 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 			}
 			break;
+
+		// * Printer List (front/printer.php)
+		case PRINTER_TYPE :
+			switch ($table.".".$field) {
+
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_printers.FK_printers" :
+					return " ORDER BY glpi_plugin_tracker_printers.last_tracker_update $order ";
+					break;
+
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					return " ORDER BY glpi_plugin_tracker_model_infos.name $order ";
+					break;
+
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_snmp_connection.ID" :
+					return " ORDER BY glpi_plugin_tracker_snmp_connection.name $order ";
+					break;
+
+			}
+			break;
+
+
 
 
 
@@ -2289,10 +2341,58 @@ echo "add where : ".$table.".".$field."<br/>";
 
 				// ** Tracker - SNMP authentification
 				case "glpi_plugin_tracker_networking.FK_snmp_connection" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR glpi_plugin_tracker_snmp_connection.name IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR glpi_plugin_tracker_snmp_connection.name IS NOT NULL";
+					}
+					return $link." (glpi_plugin_tracker_snmp_connection.name  LIKE '%".$val."%' $ADD ) ";
 					break;
 				
 			}
 			break;
+
+		// * Printer List (front/printer.php)
+		case PRINTER_TYPE :
+			switch ($table.".".$field) {
+
+				// ** Tracker - last inventory
+				case "glpi_plugin_tracker_printers.FK_printers" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.last_tracker_update IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.last_tracker_update IS NOT NULL";
+					}
+					return $link." ($table.last_tracker_update  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+				// ** Tracker - SNMP models
+				case "glpi_plugin_tracker_model_infos.ID" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NOT NULL";
+					}
+					return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+				// ** Tracker - SNMP authentification
+				case "glpi_plugin_tracker_snmp_connection.ID" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NOT NULL";
+					}
+					return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+			}
+			break;
+
 
 
 
