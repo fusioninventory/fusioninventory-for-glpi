@@ -185,8 +185,8 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['linkfield'] = 'ID';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['table'] = 'glpi_plugin_tracker_unknown_mac';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['field'] = 'port';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['table'] = 'glpi_networking_ports';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['field'] = 'ID';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['linkfield'] = 'port';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['name'] = $LANG["common"][1];
 
@@ -834,7 +834,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 			switch ($field) {
 
 				// ** Add switch and port where unknown MAC has been found
-				case "glpi_plugin_tracker_unknown_mac.port" :
+				case "glpi_networking_ports.ID" :
 					$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
 					$CommonItem = new CommonItem;
 					$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
@@ -2151,6 +2151,48 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			}
 			break;
 
+		// * Model List (plugins/tracker/front/plugin_tracker.models.php)
+		case PLUGIN_TRACKER_MODEL :
+			switch ($new_table.".".$linkfield) {
+
+				// ** Name of model and link to form
+
+				// ** Name of type of model (network, printer...)
+				case "glpi_plugin_tracker_model_infos.device_type" :
+					break;
+
+				// ** Display pic / link for exporting model
+
+				// ** Display yes/no activation of model
+
+			}
+			break;
+
+		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
+		case PLUGIN_TRACKER_SNMP_AUTH :
+			switch ($new_table.".".$linkfield) {
+
+				// ** Name of authentification and link to form
+
+				// ** Hidden auth passphrase (SNMP v3)
+
+				// ** Hidden priv passphrase (SNMP v3)
+
+			}
+			break;
+
+		// * Unknown mac addresses connectd on switch - report (plugins/tracker/report/plugin_tracker.unknown_mac.php)
+		case PLUGIN_TRACKER_MAC_UNKNOWN :
+			switch ($new_table.".".$linkfield) {
+
+				// ** Add switch and port where unknown MAC has been found
+				case "glpi_networking_ports.port" :
+					return " LEFT JOIN glpi_networking_ports ON (glpi_plugin_tracker_unknown_mac.port = glpi_networking_ports.ID) ".
+						" LEFT JOIN glpi_networking ON glpi_networking_ports.on_device = glpi_networking.ID";
+					break;
+
+			}
+			break;
 
 
 
@@ -2244,6 +2286,50 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 			}
 			break;
+
+		// * Model List (plugins/tracker/front/plugin_tracker.models.php)
+		case PLUGIN_TRACKER_MODEL :
+			switch ($table.".".$field) {
+
+				// ** Name of model and link to form
+
+				// ** Name of type of model (network, printer...)
+				case "glpi_plugin_tracker_model_infos.device_type" :
+					break;
+
+				// ** Display pic / link for exporting model
+
+				// ** Display yes/no activation of model
+
+			}
+			break;
+
+		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
+		case PLUGIN_TRACKER_SNMP_AUTH :
+			switch ($table.".".$field) {
+
+				// ** Name of authentification and link to form
+
+				// ** Hidden auth passphrase (SNMP v3)
+
+				// ** Hidden priv passphrase (SNMP v3)
+
+			}
+			break;
+
+		// * Unknown mac addresses connectd on switch - report (plugins/tracker/report/plugin_tracker.unknown_mac.php)
+		case PLUGIN_TRACKER_MAC_UNKNOWN :
+			switch ($table.".".$field) {
+
+				// ** Add switch and port where unknown MAC has been found
+				case "glpi_plugin_tracker_unknown_mac.port" :
+					return " ORDER BY glpi_networking.name,glpi_networking_ports.name  $order ";
+					break;
+				
+			}
+			break;
+
+
 
 
 
@@ -2393,7 +2479,80 @@ echo "add where : ".$table.".".$field."<br/>";
 			}
 			break;
 
+		// * Model List (plugins/tracker/front/plugin_tracker.models.php)
+		case PLUGIN_TRACKER_MODEL :
+			switch ($table.".".$field) {
 
+				// ** Name of model and link to form
+
+				// ** Name of type of model (network, printer...)
+				case "glpi_plugin_tracker_model_infos.device_type" :
+//					Probleme, add select with REPLACE 
+//
+//					switch ($data["ITEM_$num"])
+//					{
+//						case COMPUTER_TYPE:
+//							$out .= $LANG["Menu"][0];
+//							break;
+//						case NETWORKING_TYPE:
+//							$out .= $LANG["Menu"][1];
+//							break;
+//						case PRINTER_TYPE:
+//							$out .= $LANG["Menu"][2];
+//							break;
+//						case PERIPHERAL_TYPE:
+//							$out .= $LANG["Menu"][16];
+//							break;
+//						case PHONE_TYPE:
+//							$out .= $LANG["Menu"][34];
+//
+//
+//					return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
+					break;
+
+				// ** Display pic / link for exporting model
+
+				// ** Display yes/no activation of model
+
+			}
+			break;
+
+		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
+		case PLUGIN_TRACKER_SNMP_AUTH :
+			switch ($table.".".$field) {
+
+				// ** Name of authentification and link to form
+
+				// ** Hidden auth passphrase (SNMP v3)
+
+				// ** Hidden priv passphrase (SNMP v3)
+
+			}
+			break;
+
+		// * Unknown mac addresses connectd on switch - report (plugins/tracker/report/plugin_tracker.unknown_mac.php)
+		case PLUGIN_TRACKER_MAC_UNKNOWN :
+			switch ($table.".".$field) {
+
+				// ** Tracker - SNMP authentification
+				case "glpi_networking_ports.ID" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NULL OR glpi_networking.name IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NOT NULL OR glpi_networking.name IS NOT NULL";
+					}
+					return $link." ($table.name LIKE '%".$val."%' OR glpi_networking.name LIKE '%".$val."%' $ADD ) ";
+					break;
+
+			}
+			break;
+
+
+
+
+
+		
 
 
 
