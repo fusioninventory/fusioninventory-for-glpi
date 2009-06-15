@@ -1663,9 +1663,9 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
 					return " LEFT JOIN glpi_plugin_tracker_networking_ports ON (glpi_computers.ID = glpi_plugin_tracker_networking_ports.ID) ".
-						" LEFT JOIN glpi_networking_ports AS glpi_networking_ports_switch ON glpi_networking_ports_switch.on_device = glpi_computers.ID AND glpi_networking_ports_switch.device_type='".COMPUTER_TYPE."' ".
-						" LEFT JOIN glpi_networking_wire ON glpi_networking_ports_switch.ID = glpi_networking_wire.end1 OR glpi_networking_ports_switch.ID = glpi_networking_wire.end2 ".
-						" LEFT JOIN glpi_networking_ports AS portwire ON (portwire.ID  = glpi_networking_wire.end1 AND glpi_networking_wire.end1 != glpi_networking_ports_switch.ID) OR (portwire.ID = glpi_networking_wire.end2 AND glpi_networking_wire.end2 != glpi_networking_ports_switch.ID) ";
+						" LEFT JOIN glpi_networking_ports AS glpi_networking_ports_port ON glpi_networking_ports_port.on_device = glpi_computers.ID AND glpi_networking_ports_port.device_type='".COMPUTER_TYPE."' ".
+						" LEFT JOIN glpi_networking_wire ON glpi_networking_ports_port.ID = glpi_networking_wire.end1 OR glpi_networking_ports_port.ID = glpi_networking_wire.end2 ".
+						" LEFT JOIN glpi_networking_ports AS portwire ON (portwire.ID  = glpi_networking_wire.end1 AND glpi_networking_wire.end1 != glpi_networking_ports_port.ID) OR (portwire.ID = glpi_networking_wire.end2 AND glpi_networking_wire.end2 != glpi_networking_ports_port.ID) ";
 					break;
 				
 			}
