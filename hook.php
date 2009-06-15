@@ -2452,13 +2452,24 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 				case "glpi_dropdown_locations.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR glpi_networking.location IS NULL";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR glpi_networking.location IS NOT NULL";
+					}
+					if ($val == "0")
+						return $link." (glpi_networking.location >= -1 ) ";
+					return $link." (glpi_networking.location = '".$val."' $ADD ) ";
+					break;
+
+				case "glpi_plugin_tracker_networking_ports.lastup" :
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.$field IS NULL";
 					}elseif ($nott=="1"&&$val=="NULL") {
 						$ADD=" OR $table.$field IS NOT NULL";
 					}
-					return $link." ($table.$field = '".$val."' $ADD ) ";
+					return $link." ($table.$field  $val $ADD ) ";
 					break;
-
 			}
 			break;
 

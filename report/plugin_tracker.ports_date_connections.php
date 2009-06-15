@@ -54,11 +54,15 @@ manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2);
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"]))
 {
-		$field[0] = 3;
-		$contains[0]=getContainsArray($_POST);
-		
-		$_GET["field"] = $field;
-		$_GET["contains"] = $contains;
+
+		$_GET["field"][0] = 3;
+		$_GET["contains"][0]=$_GET["location"];
+
+		$_GET["field"][1] = 4;
+		$_GET["contains"][1] = getContainsArray($_POST);
+		$_GET["link"][1] = "AND";
+
+		$_SESSION["glpisearchcount"][PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2] = 2;
 
 		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 }
@@ -111,6 +115,11 @@ function displaySearchForm()
 	showCalendarForm("form_ic","dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
 	echo "</td>";
 	
+	echo "<td>".$LANG["common"][15]."</td>";
+	echo "<td>";
+	dropdownValue("glpi_dropdown_locations","location",(isset($_GET["location"])?$_GET["location"]:""));
+	echo "</td>";
+
 	// Display Reset search
 	echo "<td>";
 	echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/report/plugin_tracker.ports_date_connections.php?reset_search=reset_search' ><img title=\"".$LANG["buttons"][16]."\" alt=\"".$LANG["buttons"][16]."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
@@ -139,11 +148,11 @@ function getContainsArray($get)
 		switch ($get["dropdown_sup_inf"])
 		{
 			case "sup":
-				return ">".$get["dropdown_calendar"];
+				return ">'".$get["dropdown_calendar"]." 00:00:00'";
 			case "equal":
-				return "=".$get["dropdown_calendar"];
+				return "LIKE '".$get["dropdown_calendar"]."%'";
 			case "inf":
-				return "<".$get["dropdown_calendar"];	
+				return "<'".$get["dropdown_calendar"]." 00:00:00'";
 		}
 	}
 }
