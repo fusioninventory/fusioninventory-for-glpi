@@ -197,10 +197,10 @@ class plugin_tracker_networking extends CommonDBTM
 			$DB->query($query_add);
 		}
 		// Form networking informations
-		echo "<br>";
+		//echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='800'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
@@ -232,6 +232,28 @@ class plugin_tracker_networking extends CommonDBTM
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='2'>";
+		echo "<div align='center'>";
+		echo "<input type='hidden' name='ID' value='".$ID."'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "</table></form>";
+
+
+
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<th colspan='3'>";
+		echo $LANGTRACKER["title"][1];
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2' height='30'>";
 		echo $LANGTRACKER["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
 		echo "</td>";
@@ -244,6 +266,48 @@ class plugin_tracker_networking extends CommonDBTM
 		{
 //			$explode = explode("||", $mapping_type_name);
 			$mapping_name[$mapping_type_name] = "1";
+		}
+
+		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1"))
+		{
+
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
+			echo "<td align='center'>";
+			$sysUpTime = $data["uptime"];
+			if (strstr($sysUpTime, "days"))
+				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
+			else if (strstr($sysUpTime, "hours"))
+			{
+				$day = 0;
+				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d hours, %d:%d.%d");
+			}
+			else if (strstr($sysUpTime, "minutes"))
+			{
+				$day = 0;
+				$hour = 0;
+				list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
+			}
+			else if($sysUpTime == "0")
+			{
+				$day = 0;
+				$hour = 0;
+				$minute = 0;
+				$sec = 0;
+			}
+			else
+			{
+				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d:%d:%d.%d");
+				$day = 0;
+			}
+
+			echo "<b>$day</b> ".$LANG["stats"][31]." ";
+			echo "<b>$hour</b> ".$LANG["job"][21]." ";
+			echo "<b>$minute</b> ".$LANG["job"][22]." ";
+			echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";
+
+			echo "</td>";
+			echo "</tr>";
 		}
 
 		if (((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
@@ -282,54 +346,14 @@ class plugin_tracker_networking extends CommonDBTM
 			echo "</tr>";
 		}
 
-		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1"))
-		{
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANGTRACKER["snmp"][12]."</td>";
-			echo "<td align='center'>";
-			$sysUpTime = $data["uptime"];
-			if (strstr($sysUpTime, "days"))
-				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
-			else if (strstr($sysUpTime, "hours"))
-			{
-				$day = 0;
-				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d hours, %d:%d.%d");
-			}
-			else if (strstr($sysUpTime, "minutes"))
-			{
-				$day = 0;
-				$hour = 0;
-				list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
-			}
-			else if($sysUpTime == "0")
-			{
-				$day = 0;
-				$hour = 0;
-				$minute = 0;
-				$sec = 0;
-			}
-			else
-			{
-				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d:%d:%d.%d");
-				$day = 0;
-			}
-
-			echo "<b>$day</b> ".$LANG["stats"][31]." ";
-			echo "<b>$hour</b> ".$LANG["job"][21]." ";
-			echo "<b>$minute</b> ".$LANG["job"][22]." ";
-			echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";      
-	     
-			echo "</td>";
-			echo "</tr>";
-		}
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='2'>";
-		echo "<div align='center'>";
-		echo "<input type='hidden' name='ID' value='".$ID."'>";
-		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
-		echo "</td>";
-		echo "</tr>";
+	
+//		echo "<tr class='tab_bg_1'>";
+//		echo "<td colspan='2'>";
+//		echo "<div align='center'>";
+//		echo "<input type='hidden' name='ID' value='".$ID."'>";
+//		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+//		echo "</td>";
+//		echo "</tr>";
 
 		echo "</table></form>";
 		
@@ -378,7 +402,7 @@ function appear_array(id){
 		
 		</script>";
 
-		echo "<br>";
+		//echo "<br>";
 		echo "<div align='center'><!--<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">-->";
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 

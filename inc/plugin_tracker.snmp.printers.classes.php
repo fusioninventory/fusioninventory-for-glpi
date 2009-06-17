@@ -89,10 +89,10 @@ class plugin_tracker_printers extends CommonDBTM
 		}
 		
 		// Form printer informations
-		echo "<br>";
+		//echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='800'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
@@ -124,12 +124,6 @@ class plugin_tracker_printers extends CommonDBTM
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' colspan='2' height='30'>";
-		echo $LANGTRACKER["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANGTRACKER["functionalities"][36]."</td>";
 		echo "<td align='center'>";
 		$dropdown[1] = $LANG["planning"][5];
@@ -138,7 +132,13 @@ class plugin_tracker_printers extends CommonDBTM
 		$dropdown[365] = $LANG["financial"][9];
 		dropdownArrayValues("frequence_days",$dropdown, $data["frequence_days"]);
 		echo "</td>";
-		echo "</tr>";		
+		echo "</tr>";	
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center' colspan='2' height='30'>";
+		echo $LANGTRACKER["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
+		echo "</td>";
+		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='2'>";
@@ -149,7 +149,7 @@ class plugin_tracker_printers extends CommonDBTM
 		echo "</tr>";
 
 		echo "</table></form>";
-
+		echo "</div>";
 		// ** FORM FOR CARTRIDGES
 
 		// get infos to get visible or not the counters
@@ -167,9 +167,11 @@ class plugin_tracker_printers extends CommonDBTM
 				}
 			}
 
-		echo "<br/><div align='center'>";
-
-		echo "<table class='tab_cadre' cellpadding='5' width='800'>";		
+		//echo "<br/>";
+		//echo "<div align='center'>";
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<th align='center' colspan='3'>";
@@ -204,6 +206,7 @@ class plugin_tracker_printers extends CommonDBTM
 		}
 
 		echo "</table></form>";
+		echo "</div>";
 	}
 
 
@@ -252,7 +255,7 @@ class plugin_tracker_printers extends CommonDBTM
 			}	
 		
 		// Form pages counter
-		echo "<br>";
+		//echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
