@@ -617,26 +617,17 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 					return "<center>".$out."</center>";
 					break;
-				
+
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
-						$out = '';
-						include_once(GLPI_ROOT."/inc/networking.class.php");
-						$query = "SELECT ID FROM glpi_networking_ports
-						WHERE (on_device = '".$data["ID"]."' AND device_type = '".$type."')
-						ORDER BY name, logical_number";
-						$result = $DB->query($query);
-						$out = "";
+					$out = '';
+					include_once(GLPI_ROOT."/inc/networking.class.php");
+					if (!empty($data["ITEM_$num"]))
+					{
 						$np = new Netport;
-						$nw = new Netwire;
-						while ( $data2=$DB->fetch_array($result) )
-						{
-							if ($nw->getOppositeContact($data2["ID"]))
-							{
-								$np->getFromDB($nw->getOppositeContact($data2["ID"]));
-								$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$np->fields["ID"]."'>".$np->fields["name"]."</a><br/>";
-							}
-						}
+						$np->getFromDB($data["ITEM_$num"]);
+						$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$np->fields["name"]."</a><br/>";
+					}
 					return "<center>".$out."</center>";
 					break;
 			}
@@ -1649,7 +1640,7 @@ function plugin_tracker_addSelect($type,$ID,$num){
 
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
-					return "TRACKER_20.".$field." AS ITEM_$num, ";
+					return "TRACKER_22.".$field." AS ITEM_$num, ";
 					break;
 			}
 			break;
@@ -1687,10 +1678,13 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
-					return " LEFT JOIN glpi_plugin_tracker_networking_ports AS TRACKER_20 ON (glpi_computers.ID = TRACKER_20.ID) ".
-						" LEFT JOIN glpi_networking_ports AS TRACKER_21 ON TRACKER_21.on_device = glpi_computers.ID AND TRACKER_21.device_type='".COMPUTER_TYPE."' ".
-						" LEFT JOIN glpi_networking_wire AS TRACKER_22 ON TRACKER_21.ID = TRACKER_22.end1 OR TRACKER_21.ID = TRACKER_22.end2 ".
-						" LEFT JOIN glpi_networking_ports AS TRACKER_23 ON TRACKER_23.ID = (TRACKER_22.end1, TRACKER_22.end2) NOT IN (SELECT end1, end2 FROM glpi_networking_wire WHERE (end1 != TRACKER_21.ID OR end2 != TRACKER_21.ID) ) ";
+//					return " LEFT JOIN glpi_plugin_tracker_networking_ports AS TRACKER_20 ON (glpi_computers.ID = TRACKER_20.ID) ".
+//						" LEFT JOIN glpi_networking_ports AS TRACKER_21 ON TRACKER_21.on_device = glpi_computers.ID AND TRACKER_21.device_type='".COMPUTER_TYPE."' ".
+//						" LEFT JOIN glpi_networking_wire AS TRACKER_22 ON TRACKER_21.ID = TRACKER_22.end1 OR TRACKER_21.ID = TRACKER_22.end2 ".
+//						" LEFT JOIN glpi_networking_ports AS TRACKER_23 ON TRACKER_23.ID = (TRACKER_22.end1, TRACKER_22.end2) NOT IN (SELECT end1, end2 FROM glpi_networking_wire WHERE (end1 != TRACKER_21.ID OR end2 != TRACKER_21.ID) ) ";
+					return " LEFT JOIN glpi_networking_ports AS TRACKER_20 ON (TRACKER_20.on_device = glpi_computers.ID AND TRACKER_20.device_type='".COMPUTER_TYPE."') ".
+						" LEFT JOIN glpi_networking_wire AS TRACKER_21 ON TRACKER_20.ID = TRACKER_21.end1 OR TRACKER_20.ID = TRACKER_21.end2 ".
+						" LEFT JOIN glpi_networking_ports AS TRACKER_22 ON TRACKER_22.ID = CASE WHEN TRACKER_21.end1 = TRACKER_20.ID THEN TRACKER_21.end2 ELSE TRACKER_21.end1 END ";
 
 					break;
 				
