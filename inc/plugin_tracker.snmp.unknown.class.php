@@ -31,54 +31,16 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_tracker_search_ip_ocs_servers($MAC)
+class plugin_tracker_unknown extends CommonDBTM
 {
-	global $DBocs, $DB;
 
-	$listserver = plugin_tracker_getOCSServerID();
-	foreach ($listserver as $num=> $ocs_server_id)
+	function __construct()
 	{
-		checkOCSconnection($ocs_server_id);
-		$res = $DBocs->query("SELECT IP FROM netmap WHERE MAC='".strtoupper($MAC)."'");
-		if ($DBocs->numrows($res) == 1)
-			return $DBocs->result($res,0,"IP");
-		else
-			return '';
-	}
-	
-}
-
-function plugin_tracker_search_name_ocs_servers($MAC)
-{
-	global $DBocs, $DB;
-
-	$listserver = plugin_tracker_getOCSServerID();
-	foreach ($listserver as $num=> $ocs_server_id)
-	{
-		checkOCSconnection($ocs_server_id);
-		$res = $DBocs->query("SELECT NAME FROM netmap WHERE MAC='".strtoupper($MAC)."'");
-		if ($DBocs->numrows($res) == 1)
-			return $DBocs->result($res,0,"NAME");
-		else
-			return '';
+		$this->table = "glpi_plugin_tracker_unknown_device";
+		$this->type = PLUGIN_TRACKER_MAC_UNKNOWN;
 	}
 
-}
 
-/**
- * Get a random ocs_server_id
- * @return an ocs server id
- */
-function plugin_tracker_getOCSServerID() {
-	global $DB;
-	$list = array();
-	$sql = "SELECT ID FROM glpi_ocs_config";
-	$result = $DB->query($sql);
-	if ($DB->numrows($result) > 0) {
-		$datas = $DB->fetch_array($result);
-		$list[] = $datas["ID"];
-	}
-	return $list;
-}
 
+}
 ?>

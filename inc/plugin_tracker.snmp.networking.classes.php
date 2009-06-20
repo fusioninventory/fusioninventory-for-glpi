@@ -575,19 +575,14 @@ function appear_array(id){
 								$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
 								$link1 = $CommonItem->getLink(1);
 								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$CommonItem->getLink());
-								echo "<td align='center'>".$link1."<br/>".$link."</td>";
+								if ($data_device["device_type"] == PLUGIN_TRACKER_MAC_UNKNOWN)
+									echo "<td align='center'background='#cf9b9b' class='tab_bg_1_2'>".$link1."<br/>".$link."</td>";
+								else
+									echo "<td align='center'>".$link1."<br/>".$link."</td>";
 							}
 							else
-							{
-								// Search in unknown mac address table
-								//$PID = $data["last_PID_update"];
-								list($unknownMac, $unknownIP) = $processes->getUnknownMacFromPIDandPort($PID,$data["FK_networking_ports"]);
-								if (empty($unknownMac))
-									echo "<td align='center'></td>";
-								else
-									echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$unknownMac."<br/>".$unknownIP."</td>";
+								echo "<td align='center'></td>";
 
-							}
 							break;
 						case 13 :
 							// ** Connection status

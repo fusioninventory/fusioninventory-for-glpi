@@ -440,6 +440,9 @@ class Threads extends CommonDBTM
 			$result = $DB->query($query);
 			if ($DB->numrows($result) == 0)
 			{
+				// Add in port history connection to this mac address
+				plugin_tracker_addLogConnection_unknown_mac($macaddress,$FK_port,$PID);
+
 				// Insert
 				$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
 					(start_FK_processes, start_time, port,unknow_mac,unknown_ip,end_time,end_FK_processes)
@@ -450,6 +453,9 @@ class Threads extends CommonDBTM
 			{
 				while ($data = $DB->fetch_array($result))
 				{
+					// Add in port history connection to this mac address
+					plugin_tracker_addLogConnection_unknown_mac($macaddress,$FK_port,$PID);
+
 					if ($data["port"] == $FK_port)
 					{
 						// Update
