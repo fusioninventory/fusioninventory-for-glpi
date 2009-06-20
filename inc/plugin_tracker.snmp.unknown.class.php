@@ -42,5 +42,48 @@ class plugin_tracker_unknown extends CommonDBTM
 
 
 
+	function showForm($target, $ID = '')
+	{
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+
+		plugin_tracker_checkRight("snmp_discovery","r");
+
+		if ($ID!='')
+			$this->getFromDB($ID);
+		else
+			$this->getEmpty();
+
+		echo "<br>";
+		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+
+		echo "<table  class='tab_cadre_fixe'>";
+
+		echo "<tr><th colspan='2'>";
+		echo "Unknown device";
+		echo " :</th></tr>";
+
+		$datestring = $LANG["common"][26].": ";
+		$date = convDateTime($this->fields["date_mod"]);
+		echo "<tr>";
+		echo "<th align='center' >";
+		echo $LANG["common"][2]." ".$this->fields["ID"];
+		echo "</th>";
+	
+		echo "<th align='center'>";
+		echo $datestring.$date;
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "</table></form></div>";
+	
+	}
+
 }
 ?>
