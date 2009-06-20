@@ -1983,7 +1983,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
-					return " ORDER BY portwire.name $order ";
+					return " ORDER BY TRACKER_22.name $order ";
 					break;
 
 			}
