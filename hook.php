@@ -2277,22 +2277,22 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 				case "glpi_plugin_tracker_networking.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
-						$ADD=" OR glpi_networking.name IS NULL";
+						$ADD=" OR TRACKER_13.name IS NULL";
 					}elseif ($nott=="1"&&$val=="NULL") {
-						$ADD=" OR glpi_networking.name IS NOT NULL";
+						$ADD=" OR TRACKER_13.name IS NOT NULL";
 					}
-					return $link." (glpi_networking.name  LIKE '%".$val."%' $ADD ) ";
+					return $link." (TRACKER_13.name  LIKE '%".$val."%' $ADD ) ";
 					break;
 
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
-						$ADD=" OR portwire.name IS NULL";
+						$ADD=" OR TRACKER_22.name IS NULL";
 					}elseif ($nott=="1"&&$val=="NULL") {
-						$ADD=" OR portwire.name IS NOT NULL";
+						$ADD=" OR TRACKER_22.name IS NOT NULL";
 					}
-					return $link." (portwire.name  LIKE '%".$val."%' $ADD ) ";
+					return $link." (TRACKER_22.name  LIKE '%".$val."%' $ADD ) ";
 					break;
 
 			}
