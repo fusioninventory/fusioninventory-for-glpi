@@ -2068,7 +2068,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 				// ** Add switch and port where unknown MAC has been found
 				case "glpi_plugin_tracker_unknown_mac.port" :
-					return " ORDER BY glpi_networking.name,glpi_networking_ports.name  $order ";
+					return " ORDER BY glpi_networking.name,glpi_networking_ports.name $order ";
 					break;
 				
 			}
@@ -2097,7 +2097,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 				// ** Location of switch
 				case "glpi_dropdown_locations.ID" :
-					return " ORDER BY glpi_dropdown_locations.name  $order ";
+					return " ORDER BY glpi_dropdown_locations.name $order ";
 					break;
 
 			}
@@ -2136,7 +2136,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 				// ** Agent name associed to IP range and link to agent form
 				case "glpi_plugin_tracker_agents.ID" :
-					return " ORDER BY glpi_plugin_tracker_agents.name  $order ";
+					return " ORDER BY glpi_plugin_tracker_agents.name $order ";
 					break;
 
 				// ** Display Yes/No discovery fonction
@@ -2180,7 +2180,7 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 			// ** Agent name and link to form
 			case "glpi_plugin_tracker_agents.ID" :
-				return " ORDER BY glpi_plugin_tracker_agents.name  $order ";
+				return " ORDER BY glpi_plugin_tracker_agents.name $order ";
 				break;
 
 			// ** Display status of agent (finish or in progress)
@@ -2227,29 +2227,29 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 				// ** Display switch and Port
 				case "glpi_plugin_tracker_snmp_history.ID" :
-					return " ORDER BY glpi_networking.name,glpi_networking_ports.name  $order ";
+					return " ORDER BY glpi_plugin_tracker_snmp_history.ID $order ";
 					break;
 				case "glpi_networking_ports.ID" :
-					return " ORDER BY glpi_networking.name,glpi_networking_ports.name  $order ";
+					return " ORDER BY glpi_networking.name,glpi_networking_ports.name $order ";
 					break;
 
 				// ** Display GLPI field of device
 				case "glpi_plugin_tracker_snmp_history.Field" :
-					return " ORDER BY glpi_plugin_tracker_snmp_history.Field  $order ";
+					return " ORDER BY glpi_plugin_tracker_snmp_history.Field $order ";
 					break;
 
 				// ** Display Old Value (before changement of value)
 				case "glpi_plugin_tracker_snmp_history.old_value" :
-					return " ORDER BY glpi_plugin_tracker_snmp_history.old_value  $order ";
+					return " ORDER BY glpi_plugin_tracker_snmp_history.old_value $order ";
 					break;
 
 				// ** Display New Value (new value modified)
 				case "glpi_plugin_tracker_snmp_history.new_value" :
-					return " ORDER BY glpi_plugin_tracker_snmp_history.new_value  $order ";
+					return " ORDER BY glpi_plugin_tracker_snmp_history.new_value $order ";
 					break;
 
 				case "glpi_plugin_tracker_snmp_history.date_mod" :
-				return " ORDER BY glpi_plugin_tracker_snmp_history.date_mod  $order ";
+				return " ORDER BY glpi_plugin_tracker_snmp_history.date_mod $order ";
 						break;
 
 			}
@@ -2260,12 +2260,12 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0){
 
 
 function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
-	global $SEARCH_OPTION;
+	global $SEARCH_OPTION,$TRACKER_MAPPING;
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 
-	echo "add where : ".$table.".".$field."<br/>";
+//	echo "add where : ".$table.".".$field."<br/>";
 	$SEARCH=makeTextSearch($val,$nott);
 
 	switch ($type) {
@@ -2633,12 +2633,19 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val){ // Delete in 0.72
 						$ADD=" OR $table.ID IS NOT NULL ";
 					}
 					return $link." ($table.ID = '".$val."' $ADD ) ";
-
 					break;
 
 				// ** Display GLPI field of device
 				case "glpi_plugin_tracker_snmp_history.Field" :
-
+					$ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.$field IS NULL ";
+					}elseif ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.$field IS NOT NULL ";
+					}
+					if (!empty($val))
+						$val = $TRACKER_MAPPING[NETWORKING_TYPE][$val]['name'];
+					return $link." ($table.$field = '".addslashes($val)."' $ADD ) ";
 					break;
 
 				// ** Display Old Value (before changement of value)
