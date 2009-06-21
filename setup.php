@@ -129,7 +129,7 @@ function plugin_version_tracker()
 {
 	return array( 'name'    => 'Tracker',
 		'minGlpiVersion' => '0.71.3',
-		'version' => '2.0.1',
+		'version' => '2.0.2',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
 		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',);
 }
@@ -150,7 +150,10 @@ function plugin_tracker_install()
 	
 	include_once (GLPI_ROOT."/inc/profile.class.php");
 
-	if(!TableExists("glpi_plugin_tracker_rangeip"))
+
+	if(!TableExists("glpi_plugin_tracker_unknown_device"))
+		plugin_tracker_installing("2.0.2");
+	elseif(!TableExists("glpi_plugin_tracker_rangeip"))
 		plugin_tracker_installing("2.0.0");
 	elseif(!TableExists("glpi_plugin_tracker_config"))
 		plugin_tracker_installing("1.1.0");
