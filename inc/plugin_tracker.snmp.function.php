@@ -817,7 +817,10 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 											$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
 										$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
 										// Add unknown device
-										$unknown_infos["name"] = $name_unknown;
+										if ($name_unknown == $ip_unknown)
+											$unknown_infos["name"] = '';
+										else
+											$unknown_infos["name"] = $name_unknown;
 										$newID=$unknown->add($unknown_infos);
 										// Add networking_port
 										$np=new Netport();
@@ -889,7 +892,10 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 									$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
 								$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
 								// Add unknown device
-								$unknown_infos["name"] = $name_unknown;
+								if ($name_unknown == $ip_unknown)
+									$unknown_infos["name"] = '';
+								else
+									$unknown_infos["name"] = $name_unknown;
 								$newID=$unknown->add($unknown_infos);
 								// Add networking_port
 								$np=new Netport();
@@ -956,7 +962,10 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 							$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
 						$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
 						// Add unknown device
-						$unknown_infos["name"] = $name_unknown;
+						if ($name_unknown == $ip_unknown)
+							$unknown_infos["name"] = '';
+						else
+							$unknown_infos["name"] = $name_unknown;
 						$newID=$unknown->add($unknown_infos);
 						// Add networking_port
 						$np=new Netport();
