@@ -82,7 +82,17 @@ class plugin_tracker_unknown extends CommonDBTM
 		echo "</tr>";
 
 		echo "</table></form></div>";
-	
+	}
+
+	function updateFromOldVersion_unknown_mac()
+	{
+		global $DB,$LANG,$LANGTRACKER;
+
+		$query = "SELECT DISTINCT unknow_mac FROM glpi_plugin_tracker_unknown_mac ".
+			" WHERE end_FK_processes=(select max(end_FK_processes) from glpi_plugin_tracker_unknown_mac) ";
+
+
+
 	}
 
 }
