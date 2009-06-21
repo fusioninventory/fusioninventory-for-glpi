@@ -154,6 +154,7 @@ CREATE TABLE `glpi_plugin_tracker_computers` (
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config`;
 
 CREATE TABLE `glpi_plugin_tracker_config` (
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `ID` int(1) NOT NULL AUTO_INCREMENT,
   `activation_history` int(1) DEFAULT NULL,
   `activation_connection` int(1) DEFAULT NULL,
