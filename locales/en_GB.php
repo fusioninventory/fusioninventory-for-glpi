@@ -447,6 +447,7 @@ $LANGTRACKER["printer"][0]="pages";
 $LANGTRACKER["menu"][1]="Agent configuration";
 $LANGTRACKER["menu"][2]="IP range configuration";
 $LANGTRACKER["menu"][3]="Menu";
+$LANGTRACKER["menu"][4]="Unknown device";
 
 $LANGTRACKER["menu"][0]="Information about discovered devices";
 
