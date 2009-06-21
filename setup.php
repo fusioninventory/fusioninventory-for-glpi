@@ -75,7 +75,7 @@ function plugin_init_tracker() {
 			$PLUGIN_HOOKS['pre_item_purge']['tracker'] = 'plugin_pre_item_purge_tracker';
 			
 			$report_list = array();
-					$report_list["report/plugin_tracker.unknown_mac.php"] = $LANGTRACKER["processes"][14];
+					//$report_list["report/plugin_tracker.unknown_mac.php"] = $LANGTRACKER["processes"][14];
 					$report_list["report/plugin_tracker.switch_ports.history.php"] = "Historique des ports de switchs";
 					$report_list["report/plugin_tracker.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['tracker'] = $report_list;
