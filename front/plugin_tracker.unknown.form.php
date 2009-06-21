@@ -45,7 +45,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-plugin_tracker_checkRight("snmp_discovery","r");
+plugin_tracker_checkRight("snmp_networking","r");
 
 $plugin_tracker_unknown = new plugin_tracker_unknown;
 //

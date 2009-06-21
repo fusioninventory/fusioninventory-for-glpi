@@ -46,7 +46,7 @@ class plugin_tracker_unknown extends CommonDBTM
 	{
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
-		plugin_tracker_checkRight("snmp_discovery","r");
+		plugin_tracker_checkRight("snmp_networking","r");
 
 		if ($ID!='')
 			$this->getFromDB($ID);
