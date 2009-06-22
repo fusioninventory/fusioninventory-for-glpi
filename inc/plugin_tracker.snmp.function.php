@@ -801,7 +801,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 									$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 
 									// Connection between ports (wire table in DB)
-									$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan_name);
+									$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan."[".$vlan_name."]");
 								}
 								else if ( $traitement == "1" )
 								{
