@@ -228,6 +228,8 @@ function plugin_tracker_getSearchOption()
 	
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][13]['name'] = $LANGTRACKER["snmp"][50];
 
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][14]['name'] = $LANG["networking"][56];
+
 
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS]['common'] = $LANGTRACKER["errors"][0];
 
