@@ -120,5 +120,54 @@ class plugin_tracker_unknown extends CommonDBTM
 		}
 	}
 
+
+
+	function FusionUnknownKnownDevice()
+	{
+		global $DB;
+
+		$query = "SELECT * FROM glpi_networking_ports ".
+			" WHERE (ifmac) IN ".
+				" (SELECT ifmac FROM glpi_networking_ports ".
+					" GROUP BY 1 ".
+					" HAVING count(*)>1) ".
+			" AND ifmac !='' ".
+			" AND ifmac!='00:00:00:00:00:00' ".
+			" AND device_type=".PLUGIN_TRACKER_MAC_UNKNOWN." ";
+
+		if ( $result=$DB->query($query) )
+		{
+			while ( $data=$DB->fetch_array($result) )
+			{
+				// $data = ID of unknown device
+
+				$query_known = "SELECT * FROM glpi_networking_ports ".
+					" WHERE ifmac='".$data["ifmac"]."' ".
+						" AND device_type!=".PLUGIN_TRACKER_MAC_UNKNOWN." ".
+					" LIMIT 0,1 ";
+				$result_known=$DB->query($query_known);
+				$data_known=$DB->fetch_array($result_known);
+
+				$query_update = "UPDATE glpi_networking_ports ".
+					" SET on_device='".$data_known["on_device"]."', ".
+						" device_type='".$data_known["device_type"]."', ".
+						" logical_number='".$data_known["logical_number"]."', ".
+						" name='".$data_known["name"]."', ".
+						" ifaddr='".$data_known["ifaddr"]."', ".
+						" iface='".$data_known["iface"]."', ".
+						" netpoint='".$data_known["netpoint"]."', ".
+						" netmask='".$data_known["netmask"]."', ".
+						" gateway='".$data_known["gateway"]."', ".
+						" subnet='".$data_known["subnet"]."' ".
+					" WHERE ID='".$data["ID"]."' ";
+				$DB->query($query_update);
+
+				$query_delete = "DELETE FROM glpi_networking_ports WHERE ID='".$data_known["ID"]."' ";
+				$DB->query($query_delete);
+			}
+		}
+
+	}
+
 }
 ?>

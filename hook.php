@@ -1159,10 +1159,12 @@ function plugin_tracker_getDropdown()
 
 }
 
-/* Cron for cleaning and printing counters */
+/* Cron */
 function cron_plugin_tracker() {
-	plugin_tracker_printingCounters();
-	plugin_tracker_cleaningHistory();
+	//plugin_tracker_printingCounters();
+	//plugin_tracker_cleaningHistory();
+	$plugin_tracker_unknown = new plugin_tracker_unknown;
+	$plugin_tracker_unknown->FusionUnknownKnownDevice();
 }
 
 // Define headings added by the plugin //
