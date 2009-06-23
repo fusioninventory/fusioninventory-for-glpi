@@ -819,10 +819,10 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 				// Display name of unknown device
 				case "glpi_plugin_tracker_unknown_device.name" :
 					if (empty($data["ITEM_$num"]))
-					{
 						$out = "<a href='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.unknown.form.php?ID=".$data["ID"]."'>(".$data["ID"].")</a>";
-						return "<center>".$out."</center>";
-					}
+					else
+						$out = "<a href='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.unknown.form.php?ID=".$data["ID"]."'>".$data["ITEM_$num"]."</a>";
+					return "<center>".$out."</center>";
 					break;
 
 				// Display switch on witch unknown device is connected
