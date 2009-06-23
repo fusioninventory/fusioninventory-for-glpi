@@ -542,6 +542,12 @@ function plugin_tracker_getSearchOption()
 	$sopt[NETWORKING_TYPE][5194]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5194]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["snmp"][53];
 
+	$sopt[NETWORKING_TYPE][5195]['table']='glpi_plugin_tracker_networking';
+	$sopt[NETWORKING_TYPE][5195]['field']='cpu';
+	$sopt[NETWORKING_TYPE][5195]['linkfield']='ID';
+	$sopt[NETWORKING_TYPE][5195]['name']=$LANGTRACKER["title"][0]." - ".$LANGTRACKER["snmp"][13];
+
+
 	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_tracker_model_infos';
 	$sopt[PRINTER_TYPE][5190]['field']='ID';
 	$sopt[PRINTER_TYPE][5190]['linkfield']='ID';
