@@ -162,8 +162,33 @@ class plugin_tracker_unknown extends CommonDBTM
 					" WHERE ID='".$data["ID"]."' ";
 				$DB->query($query_update);
 
+				// Delete old networking port
 				$query_delete = "DELETE FROM glpi_networking_ports WHERE ID='".$data_known["ID"]."' ";
 				$DB->query($query_delete);
+
+				// Delete unknown device
+				$query_delete = "DELETE FROM glpi_plugin_tracker_unknown_device WHERE ID='".$data["on_device"]."' ";
+				$DB->query($query_delete);
+
+				// Modify OCS link of this networking port
+				$query = "SELECT * 
+					FROM glpi_ocs_link 
+					WHERE glpi_id='".$data_known["on_device"]."' ";
+				$result = $DB->query($query);
+				if ($DB->numrows($result) == 1)
+				{
+					$line = $DB->fetch_assoc($result);
+
+					$import_ip = importArrayFromDB($line["import_ip"]);
+					$ip_port = $import_ip[$data_known["ID"]];
+					unset($import_ip[$data_known["ID"]]);
+					$import_ip[$data["ID"]] = $ip_port;
+
+					$query_update = "UPDATE glpi_ocs_link
+						SET `import_ip`='" . exportArrayToDB($import_ip) . "'
+						WHERE glpi_id='".$line["ID"]."' ";
+					$DB->query($query_update);
+				}
 			}
 		}
 
