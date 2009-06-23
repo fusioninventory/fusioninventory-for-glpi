@@ -341,6 +341,7 @@ class plugin_tracker_snmp extends CommonDBTM
 					{
 						if ( $DB->numrows($result) == "0" )
 						{
+							$this->CleanVlan($source_port);
 							assignVlan($source_port,$FK_vlan);
 						}
 					}
