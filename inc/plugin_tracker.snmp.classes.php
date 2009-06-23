@@ -327,6 +327,22 @@ class plugin_tracker_snmp extends CommonDBTM
 					// $vlan_name
 				}
 			}
+			else
+			{
+				// Verify vlan and update it if necessery
+				$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
+
+				$query = "SELECT FROM glpi_networking_vlan ".
+					" WHERE FK_port='$source_port' ".
+					" AND FK_vlan='$FK_vlan' ";
+				if ($result=$DB->query($query))
+				{
+					if ( $DB->numrows($result) == "0" )
+					{
+						assignVlan($source_port,$FK_vlan);
+					}
+				}
+			}
 		}
 		// Remove all connections if it is
 		if ($netwire->getOppositeContact($destination_port) != "")
