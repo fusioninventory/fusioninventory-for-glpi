@@ -65,7 +65,7 @@ class plugin_tracker_unknown extends CommonDBTM
 		$datestring = $LANG["common"][26].": ";
 		$date = convDateTime($this->fields["date_mod"]);
 		echo "<tr>";
-		echo "<th align='center' >";
+		echo "<th align='center' width='450'>";
 		echo $LANG["common"][2]." ".$this->fields["ID"];
 		echo "</th>";
 	

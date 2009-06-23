@@ -48,67 +48,12 @@ include (GLPI_ROOT . "/inc/includes.php");
 plugin_tracker_checkRight("snmp_networking","r");
 
 $plugin_tracker_unknown = new plugin_tracker_unknown;
-//
-//$plugin_tracker_model_infos = new plugin_tracker_model_infos();
-//$plugin_tracker_mib_networking = new plugin_tracker_mib_networking();
-//
-//$importexport = new plugin_tracker_importexport;
-//
+
 commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","unknown");
-//
-//plugin_tracker_mini_menu();
-//
-////if (isset ($_POST["add"]) && isset($_POST["ID"])) {
-//if (isset ($_POST["add"])){
-//	plugin_tracker_checkRight("snmp_models","w");
-//	$plugin_tracker_model_infos->add($_POST);
-//	glpi_header($_SERVER['HTTP_REFERER']);
-//}
-//elseif (isset ($_POST["update"])) {
-//	plugin_tracker_checkRight("snmp_models","w");
-//	$plugin_tracker_model_infos->update($_POST);
-//	glpi_header($_SERVER['HTTP_REFERER']);
-//}
-//elseif (isset ($_POST["delete"])) {
-//	plugin_tracker_checkRight("snmp_models","w");
-//	$plugin_tracker_model_infos->delete($_POST);
-//	glpi_header("plugin_tracker.models.php");
-//}
-//elseif (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
-//	plugin_tracker_checkRight("snmp_models","w");
-//	$importexport->import($_FILES['importfile']['tmp_name']);
-//	glpi_header($_SERVER['HTTP_REFERER']);
-//}
-//else if (isset($_GET["activation"]))
-//{
-//	plugin_tracker_checkRight("snmp_models","w");
-//	$plugin_tracker_mib_networking->activation($_GET["activation"]);
-//	glpi_header($_SERVER['HTTP_REFERER']);
-//}
-//if (isset ($_POST["add_oid"])) {
-//	plugin_tracker_checkRight("snmp_models","w");
-//	$plugin_tracker_mib_networking->add($_POST);
-//	glpi_header($_SERVER['HTTP_REFERER']);
-//}
-//
-//
-//
-//$importexport->showForm($_SERVER["PHP_SELF"]);
 
 $ID = "";
 if (isset($_GET["ID"]))
 	$ID = $_GET["ID"];
-
-//
-//if(!empty($_POST["item_coche"]))
-//{
-//	plugin_tracker_checkRight("snmp_models","w");
-//	$plugin_tracker_mib_networking->delete($_POST["item_coche"]);
-//	glpi_header($_SERVER['HTTP_REFERER']);
-//}
-
-//$plugin_tracker_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
-//$plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
 
 $plugin_tracker_unknown->showForm($_SERVER["PHP_SELF"], $ID);
 showPorts($ID, PLUGIN_TRACKER_MAC_UNKNOWN);
