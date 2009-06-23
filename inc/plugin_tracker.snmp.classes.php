@@ -322,7 +322,8 @@ class plugin_tracker_snmp extends CommonDBTM
 				if (!empty($vlan))
 				{
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
-					assignVlan($source_port,$FK_vlan);
+					if ($FK_vlan != "0")
+						assignVlan($source_port,$FK_vlan);
 					// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
 					// $vlan_name
 				}
@@ -331,15 +332,17 @@ class plugin_tracker_snmp extends CommonDBTM
 			{
 				// Verify vlan and update it if necessery
 				$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
-
-				$query = "SELECT * FROM glpi_networking_vlan ".
-					" WHERE FK_port='$source_port' ".
-					" AND FK_vlan='$FK_vlan' ";
-				if ($result=$DB->query($query))
+				if ($FK_vlan != "0")
 				{
-					if ( $DB->numrows($result) == "0" )
+					$query = "SELECT * FROM glpi_networking_vlan ".
+						" WHERE FK_port='$source_port' ".
+						" AND FK_vlan='$FK_vlan' ";
+					if ($result=$DB->query($query))
 					{
-						assignVlan($source_port,$FK_vlan);
+						if ( $DB->numrows($result) == "0" )
+						{
+							assignVlan($source_port,$FK_vlan);
+						}
 					}
 				}
 			}
