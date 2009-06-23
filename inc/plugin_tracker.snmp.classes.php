@@ -300,22 +300,14 @@ class plugin_tracker_snmp extends CommonDBTM
 		{
 			if ( $DB->numrows($resultVerif) == "0" )
 			{
-//echo "QUERY :".$queryVerif."\n";
-			
-				//$netwire=new Netwire;
-			//	if ($netwire->getOppositeContact($destination_port) != "")
-			//	{
-					addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
-					addLogConnection("remove",$destination_port,$FK_process);
-					// Remove VLAN
-					$this->CleanVlan($source_port);
-					removeConnector($destination_port);
-					removeConnector($source_port);
+				addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
+				addLogConnection("remove",$destination_port,$FK_process);
+				// Remove VLAN
+				$this->CleanVlan($source_port);
+				removeConnector($destination_port);
+				removeConnector($source_port);
 
-//	}
-			
 				makeConnector($source_port,$destination_port);
-//echo "MAKE CONNECTOR :".$source_port." - ".$destination_port."\n";
 				addLogConnection("make",$destination_port,$FK_process);
 				addLogConnection("make",$source_port,$FK_process);
 				
@@ -324,8 +316,6 @@ class plugin_tracker_snmp extends CommonDBTM
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
 					if ($FK_vlan != "0")
 						assignVlan($source_port,$FK_vlan);
-					// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
-					// $vlan_name
 				}
 			}
 			else
@@ -343,6 +333,15 @@ class plugin_tracker_snmp extends CommonDBTM
 						{
 							$this->CleanVlan($source_port);
 							assignVlan($source_port,$FK_vlan);
+						}
+						else
+						{
+							$query2 = "SELECT * FROM glpi_networking_vlan ".
+								" WHERE FK_port='$source_port' ".
+								" AND FK_vlan!='$FK_vlan' ";
+							if ( $result2=$DB->query($query2) )
+								while ( $data2=$DB->fetch_array($result2) )
+									$this->CleanVlanID($data2["ID"]);
 						}
 					}
 				}
@@ -429,7 +428,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	{
 		global $DB;
 
-		$query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$FK_port'";
+		$query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$FK_port'  LIMIT 0,1";
 		if ($result=$DB->query($query)){
 			$data=$DB->fetch_array($result);
 
@@ -444,9 +443,33 @@ class plugin_tracker_snmp extends CommonDBTM
 				$DB->query($query);
 			}
 		}
-
-		
 	}
+
+
+	function CleanVlanID($ID)
+	{
+		global $DB;
+
+		$query="SELECT * FROM glpi_networking_vlan WHERE ID='$ID' LIMIT 0,1";
+		if ($result=$DB->query($query)){
+			$data=$DB->fetch_array($result);
+
+			// Delete VLAN
+			$query="DELETE FROM glpi_networking_vlan WHERE ID='$ID'";
+			$DB->query($query);
+
+			// Delete Contact VLAN if set
+			$np=new NetPort();
+			if ($np->getContact($data['FK_port'])){
+				$query="DELETE FROM glpi_networking_vlan WHERE FK_port='".$np->contact_id."' AND FK_vlan='".$data['FK_vlan']."'";
+				$DB->query($query);
+			}
+		}
+
+
+	}
+
+
 
 }
 
