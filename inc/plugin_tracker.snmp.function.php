@@ -213,7 +213,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		// ** Get MAC adress of connected ports
 		$array_port_trunk = array();
 		if (!empty($ArrayPort_Object_oid))
-			$array_port_trunk = GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID);
+			$array_port_trunk = GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,'',$Array_trunk_ifIndex);
 
 		if ($type ==  NETWORKING_TYPE)
 		{
@@ -678,7 +678,7 @@ function UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array
  * @return $array_port_trunk : array with SNMP port ID => 1 (from trunk oid)
  *
 **/
-function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan="")
+function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan="",$Array_trunk_ifIndex=array())
 {
 	global $DB;
 	
@@ -801,7 +801,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 									$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 
 									// Connection between ports (wire table in DB)
-									$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan."[".$vlan_name."]");
+									$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
 								}
 								else if ( $traitement == "1" )
 								{
@@ -913,19 +913,17 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 								//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 							}
 						}
-
-
-
-
-
-
-
 					}
 				}
 			}
 		}
 		else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve"))
 		{
+			// Get VLAN name
+			$ArrayvtpVlanName = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1,$vlan);
+			// Get vlan port index
+			$ArrayPortVlanIndex = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['PortVlanIndex'],1,$vlan);
+
 			// Array : num => dynamic data
 			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1,$vlan);
 
@@ -945,42 +943,62 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 
 					$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
 					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
-					$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
+					$stop = 0;
+					if (($BridgePortifIndex == "") OR ($BridgePortifIndex == "No Such Instance currently exists at this OID"))
+						$stop = 1;
 
-					$queryPortEnd = "SELECT * FROM glpi_networking_ports
-						WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-							AND on_device!='".$ID_Device."' ";
-					$resultPortEnd=$DB->query($queryPortEnd);
-					$sport = $ArrayPortsID[$ifName]; // Networking_Port
-					if ( ($DB->numrows($resultPortEnd) != 0)  )
-					{
-						$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+					if ((isset($Array_trunk_ifIndex[$BridgePortifIndex])) AND ($Array_trunk_ifIndex[$BridgePortifIndex] == "1"))
+						$stop = 1;
 
-						// Connection between ports (wire table in DB)
-						$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process']);
-					}
-					elseif ($_SESSION['FK_process'] != "0") // Mac address unknown
+					if ($stop == "0")
 					{
-						$ip_unknown = '';
-						$MacAddress_Hex = str_replace(":","",$MacAddress);
-						$MacAddress_Hex = "0x".$MacAddress_Hex;
-						if (empty($ip_unknown))
-							$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
-						$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
-						// Add unknown device
-						if ($name_unknown == $ip_unknown)
-							$unknown_infos["name"] = '';
-						else
-							$unknown_infos["name"] = $name_unknown;
-						$newID=$unknown->add($unknown_infos);
-						// Add networking_port
-						$np=new Netport();
-						$port_add["on_device"] = $newID;
-						$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
-						$port_add["ifaddr"] = $ip_unknown;
-						$port_add['ifmac'] = $MacAddress;
-						$port_ID = $np->add($port_add);
-						//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
+						$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
+
+						$queryPortEnd = "SELECT * FROM glpi_networking_ports
+							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+								AND on_device!='".$ID_Device."' ";
+						$resultPortEnd=$DB->query($queryPortEnd);
+						$sport = $ArrayPortsID[$ifName]; // Networking_Port
+
+						if ( ($DB->numrows($resultPortEnd) != 0)  )
+						{
+							$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
+
+							// Get vlan name of this port
+							$vlan_tmp = "";
+							foreach($ArrayvtpVlanName as $num1=>$vlan_ID)
+							{
+								$key = 0;
+								$key = array_search($vlan_ID.".".$BridgePortifIndex, $ArrayPortVlanIndex);
+								if ($key>0)
+									$vlan_tmp = $vlan_ID." [".$oidvalues[$oidsModel[0][1]['vtpVlanName'].".".$vlan_ID][$vlan]."]";
+							}
+							// Connection between ports (wire table in DB)
+							$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan_tmp);
+						}
+						elseif ($_SESSION['FK_process'] != "0") // Mac address unknown
+						{
+							$ip_unknown = '';
+							$MacAddress_Hex = str_replace(":","",$MacAddress);
+							$MacAddress_Hex = "0x".$MacAddress_Hex;
+							if (empty($ip_unknown))
+								$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
+							$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
+							// Add unknown device
+							if ($name_unknown == $ip_unknown)
+								$unknown_infos["name"] = '';
+							else
+								$unknown_infos["name"] = $name_unknown;
+							$newID=$unknown->add($unknown_infos);
+							// Add networking_port
+							$np=new Netport();
+							$port_add["on_device"] = $newID;
+							$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
+							$port_add["ifaddr"] = $ip_unknown;
+							$port_add['ifmac'] = $MacAddress;
+							$port_ID = $np->add($port_add);
+							//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
+						}
 					}
 				}
 			}
