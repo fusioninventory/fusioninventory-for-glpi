@@ -1039,14 +1039,30 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J")))
 	{
 		// Get trunk port directly from oid
+		echo "TEST\n";
+
+		var_dump($oidsModel[0][1]['vlanTrunkPortDynamicStatus']);
 		$Arraytrunktype = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vlanTrunkPortDynamicStatus'],1);
+var_dump($Arraytrunktype);
 		foreach($Arraytrunktype as $IDtmp=>$snmpportID)
 		{
-			if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][""] == "1")
+			if (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
 			{
-				$Array_trunk_ifIndex[$snmpportID] = 1;
-				$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
-				$trunk_no_cdp[$snmpportID] = 1;
+				if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][""] == "1")
+				{
+					$Array_trunk_ifIndex[$snmpportID] = 1;
+					$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
+					$trunk_no_cdp[$snmpportID] = 1;
+				}
+			}
+			elseif (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))
+			{
+				if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][""] == "2")
+				{
+					$Array_trunk_ifIndex[$snmpportID] = 1;
+					$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
+					$trunk_no_cdp[$snmpportID] = 1;
+				}
 			}
 		}
 
