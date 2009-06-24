@@ -390,6 +390,7 @@ $LANGTRACKER["mapping"][418]="imprimante > numéro d'inventaire";
 $LANGTRACKER["mapping"][419]="réseaux > numéro d'inventaire";
 $LANGTRACKER["mapping"][420]="imprimante > fabricant";
 $LANGTRACKER["mapping"][421]="réseaux > addresses IP";
+$LANGTRACKER["mapping"][422]="réseaux > portVlanIndex";
 
 
 $LANGTRACKER["mapping"][101]="";
