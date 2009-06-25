@@ -126,14 +126,21 @@ class plugin_tracker_unknown extends CommonDBTM
 	{
 		global $DB;
 
+//		$query = "SELECT * FROM glpi_networking_ports ".
+//			" WHERE (ifmac) IN ".
+//				" (SELECT ifmac FROM glpi_networking_ports ".
+//					" GROUP BY 1 ".
+//					" HAVING count(*)>1) ".
+//			" AND ifmac !='' ".
+//			" AND ifmac!='00:00:00:00:00:00' ".
+//			" AND device_type=".PLUGIN_TRACKER_MAC_UNKNOWN." ";
 		$query = "SELECT * FROM glpi_networking_ports ".
-			" WHERE (ifmac) IN ".
-				" (SELECT ifmac FROM glpi_networking_ports ".
-					" GROUP BY 1 ".
-					" HAVING count(*)>1) ".
-			" AND ifmac !='' ".
-			" AND ifmac!='00:00:00:00:00:00' ".
-			" AND device_type=".PLUGIN_TRACKER_MAC_UNKNOWN." ";
+			" WHERE ifmac !='' ".
+				" AND ifmac!='00:00:00:00:00:00' ".
+				" AND device_type=".PLUGIN_TRACKER_MAC_UNKNOWN." ".
+			" GROUP BY ifmac ".
+			" HAVING count(*)>1) ";
+
 
 		if ( $result=$DB->query($query) )
 		{
