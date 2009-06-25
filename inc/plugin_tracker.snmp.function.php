@@ -1037,10 +1037,9 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 		
 	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get cdp trunk ports <<<<<<<<<<",$type."][".$ID_Device,1);
 
-	$Array_trunk_ifIndex = array();
-
-	// Detect if ports are trunk (with list of dot1dTpFdbPort & dot1dBasePortIfIndex
+	// Detect if ports are non trunk and have multiple mac addresses (with list of dot1dTpFdbPort & dot1dBasePortIfIndex)
 		// Get all port_number
+		$Array_multiplemac_ifIndex = array();
 		if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")))
 		{
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
@@ -1057,7 +1056,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 				foreach($ArrayPortNumber as $num=>$PortNumber)
 				{
 					if ($ArrayCount[$PortNumber] > 1)
-						$Array_trunk_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
+						$Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
 				}
 			}
 		}
@@ -1074,11 +1073,14 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 			foreach($ArrayPortNumber as $num=>$PortNumber)
 			{
 				if ($ArrayCount[$PortNumber] > 1)
-					$Array_trunk_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
+					$Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
 			}
 		}
 
-	// End detection of trunk ports
+	// End detection of ports non trunk and have multiple mac addresses
+
+	$Array_trunk_ifIndex = array();
+
 	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J")))
 	{
 
@@ -1093,6 +1095,8 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 					$Array_trunk_ifIndex[$snmpportID] = 1;
 					$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
 					$trunk_no_cdp[$snmpportID] = 1;
+					if (isset($Array_multiplemac_ifIndex[$snmpportID]))
+						unset($Array_multiplemac_ifIndex[$snmpportID]);
 				}
 			}
 			elseif (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))
@@ -1102,6 +1106,8 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 					$Array_trunk_ifIndex[$snmpportID] = 1;
 					$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
 					$trunk_no_cdp[$snmpportID] = 1;
+					if (isset($Array_multiplemac_ifIndex[$snmpportID]))
+						unset($Array_multiplemac_ifIndex[$snmpportID]);
 				}
 			}
 		}
@@ -1139,6 +1145,8 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 				$end_Number = $explode[1];
 
 				$Array_trunk_ifIndex[$ifIndex] = 1;
+				if (isset($Array_multiplemac_ifIndex[$ifIndex]))
+					unset($Array_multiplemac_ifIndex[$ifIndex]);
 				$logs->write("tracker_fullsync","ifIndex = ".$ifIndex,$type."][".$ID_Device,1);
 				$logs->write("tracker_fullsync","ifIndex num logic = ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex],$type."][".$ID_Device,1);
 		//		$logs->write("tracker_fullsync","ifIndex name logic = ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]],$type."][".$ID_Device,1);
@@ -1176,7 +1184,7 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 			{
 				if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1"))
 				{
-					if ($data['trunk'] == "0")
+					if ($data['trunk'] != "1")
 					{
 						$query_update = "UPDATE glpi_plugin_tracker_networking_ports
 						SET trunk='1'
@@ -1185,7 +1193,18 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 						tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
 					}
 				}
-				else if($data['trunk'] == "1")
+				else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1"))
+				{
+					if ($data['trunk'] != "-1")
+					{
+						$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+						SET trunk='-1'
+						WHERE id='".$data['sid']."' ";
+						$DB->query($query_update);
+						tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1",$_SESSION['FK_process']);
+					}
+				}
+				else if($data['trunk'] != "0")
 				{
 					$query_update = "UPDATE glpi_plugin_tracker_networking_ports
 					SET trunk='0'
