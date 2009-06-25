@@ -1340,7 +1340,8 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 		}
 	}
 
-	return $Array_trunk_ifIndex;
+	$arrayTrunk = array_merge($Array_trunk_ifIndex, $Array_multiplemac_ifIndex);
+	return $arrayTrunk;
 }
 
 function plugin_tracker_hex_to_string($value)
