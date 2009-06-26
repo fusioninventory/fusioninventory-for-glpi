@@ -446,6 +446,20 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 				}
 				else
 				{
+					// Test existance of row in MySQl
+						$query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$type][$link]['table']."
+						WHERE ".$Field."='".$ID_Device."'
+							AND object_name='".$link."' ";
+						$result_sel = $DB->query($query_sel);
+						if ($DB->numrows($result_sel) == "0")
+						{
+							$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
+							(".$Field.",object_name)
+							VALUES('".$ID_Device."', '".$link."') ";
+
+							$DB->query($queryInsert);
+						}
+						
 					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
 					SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."' 
 					WHERE ".$Field."='".$ID_Device."'
