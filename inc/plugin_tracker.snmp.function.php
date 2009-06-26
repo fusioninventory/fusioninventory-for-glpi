@@ -779,7 +779,8 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 
 							$queryPortEnd = "SELECT * FROM glpi_networking_ports
 							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$ID_Device."' ";
+								AND on_device!='".$ID_Device."' ".
+								" AND device_type!='".NETWORKING_TYPE."' ";
 						}
 						else if (($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "1") AND ($vlan != "")) // It's a trunk port
 						{
@@ -885,7 +886,8 @@ $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$Br
 $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 						$queryPortEnd = "SELECT * FROM glpi_networking_ports
 							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$ID_Device."' ";
+								AND on_device!='".$ID_Device."' ".
+								" AND device_type!='".NETWORKING_TYPE."' ";
 					$resultPortEnd=$DB->query($queryPortEnd);
 						$sport = $ArrayPortsID[$ifName]; // Networking_Port
 						if ( ($DB->numrows($resultPortEnd) != 0)  )
@@ -972,7 +974,8 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 
 						$queryPortEnd = "SELECT * FROM glpi_networking_ports
 							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$ID_Device."' ";
+								AND on_device!='".$ID_Device."' ".
+								" AND device_type!='".NETWORKING_TYPE."' ";
 						$resultPortEnd=$DB->query($queryPortEnd);
 						$sport = $ArrayPortsID[$ifName]; // Networking_Port
 
