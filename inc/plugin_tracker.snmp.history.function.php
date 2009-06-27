@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT'))
 
 
 
-function tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0)
+function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0)
 {
 	global $DB,$CFG_GLPI;
 	$history = new plugin_tracker_SNMP_history;
@@ -165,7 +165,7 @@ echo "2- Nothing \n";
 
 
 // List of history in networking display
-function tracker_snmp_showHistory($ID_port)
+function plugin_tracker_snmp_showHistory($ID_port)
 {
 	global $DB,$LANG,$LANGTRACKER,$INFOFORM_PAGES,$CFG_GLPI;
 
@@ -174,7 +174,7 @@ function tracker_snmp_showHistory($ID_port)
 	$query = "SELECT * FROM glpi_plugin_tracker_snmp_history
 	WHERE FK_ports='".$ID_port."'
 	ORDER BY date_mod DESC
-	LIMIT 0,30";		
+	LIMIT 0,30";
 
 	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 
