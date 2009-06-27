@@ -687,6 +687,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 	$netwire = new Netwire;
 	$snmp_queries = new plugin_tracker_snmp;
 	$walks = new plugin_tracker_walk;
+	$unknown = new plugin_tracker_unknown;
 
 	// If Cisco
 //	if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
@@ -810,7 +811,25 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 											if ($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$ips][$vlan] == $MacAddress_Hex)
 												$ip_unknown = preg_replace("/^1\./","",$ips);
 										}
-										$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
+										// Search IP in OCS IPdiscover if OCS servers specified
+										if (empty($ip_unknown))
+											$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
+										$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
+
+										// Add unknown device
+										$unknown_infos["name"] = $name_unknown;
+										$newID=$unknown->add($unknown_infos);
+										// Add networking_port
+										$np=new Netport();
+										$port_add["on_device"] = $newID;
+										$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
+										$port_add["ifaddr"] = $ip_unknown;
+										$port_add['ifmac'] = $MacAddress;
+										$port_ID = $np->add($port_add);
+										// Link unknown device to networking port
+
+
+										//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 									}
 								}
 							}
