@@ -214,7 +214,7 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 
 	$ci = new commonitem;
 
-	if($criteria_pass2 == 1)
+	if($criteria_pass2 == "1")
 	{
 		$link_ip = $link2_ip;
 		$link_name = $link2_name;
@@ -222,23 +222,23 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 	}
 
 	$Array_criteria = array();
-	if ($link_ip == 1)
+	if ($link_ip == "1")
 	{
 		$Array_criteria[] = "ifaddr='".$discovery->ip."'";
 		$array_search[] = $discovery->ip;
 	}
-	if ($link_name == 1)
+	if ($link_name == "1")
 	{
 		$Array_criteria[] = "name='".plugin_tracker_hex_to_string($discovery->name)."'";
 		$array_search[] = plugin_tracker_hex_to_string($discovery->name);
 	}
-	if ($link_serial == 1)
+	if ($link_serial == "1")
 	{
 		$Array_criteria[] = "serial='".$discovery->serial."'";
 		$array_search[] = $discovery->serial;
 	}
 
-	if (count($Array_criteria) == 0)
+	if (count($Array_criteria) == "0")
 	{
 		// Insert device in discovered device
 		$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
@@ -261,11 +261,11 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 		$discovery_empty = 1;
 		for ($i=0;$i < count($array_search);$i++)
 		{
-			if ($array_search[$i] != '')
+			if (!empty($array_search[$i]))
 				$discovery_empty = 0;
 		}
 
-		if (($discovery_empty == "1") AND ($criteria_pass2 == 0))
+		if (($discovery_empty == "1") AND ($criteria_pass2 == "0"))
 		{
 			// ** On passe aux critères 2
 			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,1);
@@ -298,7 +298,13 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 					$query_search .= " AND ".$ci->obj->table.".".$Array_criteria[$i];
 			}
 			$result_search = $DB->query($query_search);
-			if ($DB->numrows($result_search) == "0")
+			if (($DB->numrows($result_search) == "0") AND ($criteria_pass2 == "0"))
+			{
+				// ** On passe aux critères 2
+				plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,1);
+				return;
+			}
+			elseif ($DB->numrows($result_search) == "0")
 			{
 				// Insert device in discovered device
 				$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
