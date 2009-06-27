@@ -104,7 +104,24 @@ function plugin_tracker_menu()
 		<br/><b>".$LANG['plugin_tracker']["processes"][20]."</b></a>";
 	echo "</td>";
 	echo "</tr>";
-	
+
+	echo "<tr class='tab_bg_1'>";
+	echo "<td align='center' width='".$width."' height='150'>";
+	if(plugin_tracker_HaveRight("snmp_networking","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
+			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_unknown_device.png'/>
+			<br/><b>".$LANGTRACKER["menu"][4]."</b></a>";
+	echo "</td>";
+
+	echo "<td align='center' width='".$width."' height='150'>";
+	echo "</td>";
+
+	echo "<td align='center' width='".$width."' height='150'>";
+	echo "</td>";
+
+	echo "<td align='center' width='".$width."' height='150'>";
+	echo "</td>";
+
 	echo "</table></div>";
 
 }
@@ -178,6 +195,15 @@ function plugin_tracker_mini_menu()
 				 onmouseout=\"cleanhide('menu_mini_rapports')\" onmouseover=\"cleandisplay('menu_mini_rapports')\" /></a>";
 			echo "<span class='over_link' id='menu_mini_rapports'>".$LANG['plugin_tracker']["processes"][20]."</span>";
 	echo "</td>";
+
+	echo "<td align='center' width='".$width."' height='40'>";
+	if(plugin_tracker_HaveRight("snmp_networking","r"))
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
+			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_unknown_device.png'
+				 onmouseout=\"cleanhide('menu_mini_unknown')\" onmouseover=\"cleandisplay('menu_mini_unknown')\" /></a>";
+			echo "<span class='over_link' id='menu_mini_unknown'>".$LANGTRACKER["menu"][4]."</span>";
+	echo "</td>";
+
 	echo "</tr>";
 	
 	echo "</table></div>";
