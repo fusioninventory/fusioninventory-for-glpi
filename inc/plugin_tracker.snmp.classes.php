@@ -285,7 +285,7 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return
 	 *
 	**/
-	function PortsConnection($source_port, $destination_port,$FK_process)
+	function PortsConnection($source_port, $destination_port,$FK_process,$vlan="")
 	{
 		global $DB;
 		
@@ -307,21 +307,22 @@ class plugin_tracker_snmp extends CommonDBTM
 			//	{
 					addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
 					addLogConnection("remove",$destination_port,$FK_process);
+					// Remove VLAN
+					$this->CleanVlan($source_port);
 					removeConnector($destination_port);
-//echo "REMOVE CONNECTOR :".$destination_port."\n";
 					removeConnector($source_port);
-//echo "REMOVE CONNECTOR :".$source_port."\n";
-			//	}
+
+//	}
 			
 				makeConnector($source_port,$destination_port);
 //echo "MAKE CONNECTOR :".$source_port." - ".$destination_port."\n";
 				addLogConnection("make",$destination_port,$FK_process);
 				addLogConnection("make",$source_port,$FK_process);
 				
-				if ((isset($vlan)) AND (!empty($vlan)))
+				if (!empty($vlan))
 				{
-					$ID_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan_name,0);
-					
+					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
+					assignVlan($source_port,$FK_vlan);
 					// Insert into glpi_networking_vlan FK_port 	FK_vlan OR update
 					// $vlan_name
 				}
@@ -399,6 +400,32 @@ class plugin_tracker_snmp extends CommonDBTM
 			}
 		}
 	}
+
+
+
+	function CleanVlan($FK_port)
+	{
+		global $DB;
+
+		$query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$FK_port'";
+		if ($result=$DB->query($query)){
+			$data=$DB->fetch_array($result);
+
+			// Delete VLAN
+			$query="DELETE FROM glpi_networking_vlan WHERE FK_port='$FK_port'";
+			$DB->query($query);
+
+			// Delete Contact VLAN if set
+			$np=new NetPort();
+			if ($np->getContact($data['FK_port'])){
+				$query="DELETE FROM glpi_networking_vlan WHERE FK_port='".$np->contact_id."' AND FK_vlan='".$data['FK_vlan']."'";
+				$DB->query($query);
+			}
+		}
+
+
+	}
+
 }
 
 

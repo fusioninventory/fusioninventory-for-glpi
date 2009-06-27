@@ -698,6 +698,12 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 	
 		if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
 		{
+			// Get vlan name
+			if (empty($vlan))
+				$vlan_name = "";
+			else
+				$vlan_name = $oidvalues[$oidsModel[0][1]['vtpVlanName'].".".$vlan][""];
+
 			// Get by SNMP query the mac addresses and IP (ipNetToMediaPhysAddress)
 			$ArrayIPMACAdressePhys = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ipNetToMediaPhysAddress'],1,$vlan);
 
@@ -795,7 +801,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 									$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
 
 									// Connection between ports (wire table in DB)
-									$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process']);
+									$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan_name);
 								}
 								else if ( $traitement == "1" )
 								{
