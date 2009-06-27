@@ -469,6 +469,9 @@ function appear_array(id){
 				case 13 :
 					echo $LANG['plugin_tracker']["snmp"][50];
 					break;
+				case 14 :
+					echo $LANG["networking"][56];
+					break;
 			}
 			echo "</th>";
 		}			
@@ -600,7 +603,11 @@ function appear_array(id){
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/orangebutton.png'/>";
 							
 							echo "</td>";
-							echo "</th>";
+							break;
+						case 14 :
+							echo "<td align='center'>";
+							showPortVLAN($data["ID"],"");
+							echo "</td>";
 							break;
 					}
 				}
