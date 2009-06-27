@@ -1148,6 +1148,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 	}
 	return "<center>".$data["ITEM_$num"]."</center>";
 }
+
 // Define Dropdown tables to be manage in GLPI :
 function plugin_tracker_getDropdown()
 {
@@ -1166,9 +1167,8 @@ function plugin_tracker_getDropdown()
 }
 
 /* Cron */
-function cron_plugin_tracker() {
-	//plugin_tracker_printingCounters();
-	//plugin_tracker_cleaningHistory();
+function cron_plugin_tracker()
+{
 	$plugin_tracker_unknown = new plugin_tracker_unknown;
 	$plugin_tracker_unknown->FusionUnknownKnownDevice();
 }
@@ -1677,7 +1677,6 @@ function plugin_tracker_addSelect($type,$ID,$num){
 	}
 	return "";
 }
-
 
 
 
