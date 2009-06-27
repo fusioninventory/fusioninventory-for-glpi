@@ -106,6 +106,16 @@ function plugin_tracker_update($version) {
 		// Clean DB (ports in glpi_plugin_tracker_networking_ports..... )
 		plugin_tracker_clean_db();
 	}
+	if ($version == "2.0.2")
+	{
+		// Migrate unknown mac address in unknown device (MySQL table)
+		$plugin_tracker_unknown = new plugin_tracker_unknown;
+		$plugin_tracker_unknown->updateFromOldVersion_unknown_mac();
+		// Delete MySQL table "glpi_plugin_tracker_unknown_mac"
+		$DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
+
+	}
+
 
 	plugin_tracker_initSession();
 }
