@@ -48,11 +48,11 @@ echo "<table class='tab_cadre'>";
 
 echo "<th align='center'>".$LANG["Menu"][6]."</th>";
 
-echo "<tr class='tab_bg_1'>";
-echo "<td align='center'>";
-echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.unknown_mac.php'>Adresses MAC inconnues</a>";
-echo "</td>";
-echo "</tr>";
+//echo "<tr class='tab_bg_1'>";
+//echo "<td align='center'>";
+//echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.unknown_mac.php'>Adresses MAC inconnues</a>";
+//echo "</td>";
+//echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
