@@ -447,6 +447,7 @@ $LANG['plugin_tracker']["printer"][0]="pages";
 $LANG['plugin_tracker']["menu"][1]="Agent configuration";
 $LANG['plugin_tracker']["menu"][2]="IP range configuration";
 $LANG['plugin_tracker']["menu"][3]="Menu";
+$LANG['plugin_tracker']["menu"][4]="Unknown device";
 
 $LANG['plugin_tracker']["menu"][0]="Information about discovered devices";
 
