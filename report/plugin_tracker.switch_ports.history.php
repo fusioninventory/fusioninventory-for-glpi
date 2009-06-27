@@ -47,6 +47,8 @@ commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER['PHP_SELF'],"utils","r
 if (isset($_GET["reset_search"]))
 	resetSearch();
 
+if (!isset($_GET["start"]))
+	$_GET["start"] = 0;
 $_GET=getValues($_GET,$_POST);
 $FK_port = "";
 if (isset($_GET["FK_networking_ports"]))
@@ -58,25 +60,31 @@ displaySearchForm($FK_port);
 manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_HISTORY);
 
 if(isset($_GET["FK_networking_ports"])){
-		
+
 	$_GET["field"][0]=2;
 	$_GET["contains"][0]=$_GET["FK_networking_ports"];
 	$_GET["field"][1]=3;
-	if ((isset($_GET["Field"])) AND !empty($_GET["Field"]))
+	if ((isset($_GET["Field"])) AND !empty($_GET["Field"]) )
 	{
-		$_GET["contains"][1]=$TRACKER_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
+		$_GET["contains"][1]=$_GET["Field"];
+		//$TRACKER_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
 		$_GET["link"][1] = "AND";
+
 	}
 	else
-		$_GET["link"][1] = "";
+		$_GET["contains"][1] = "";
+		$_GET["link"][1] = "AND";
 
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
+
+//if($_GET["field"][0] != "view")
+//{
+	$_SESSION["glpisearchcount"][PLUGIN_TRACKER_SNMP_HISTORY] = 2;
+	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 }
 
-if($_GET["field"][0] != "view")
-	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_GET);
-
+//}
 echo "</form>";
 
 commonFooter(); 
@@ -135,8 +143,8 @@ function displaySearchForm($FK_port)
 	}
 	echo $LANG["event"][18]." : ";
 	$default = '';
-	if (isset($_POST['Field']))
-		$default = $_POST['Field'];
+	if (isset($_GET['Field']))
+		$default = $_GET['Field'];
 	dropdownArrayValues("Field",$types,$default);
 
 	echo "</td>";
@@ -158,36 +166,19 @@ function getValues($get,$post)
 	{
 		foreach ($get["field"] as $index => $value)
 		{
-			switch($value)
+			switch($index)
 			{
-				case 103:
-					if (strpos( $get["contains"][$index],"lt;")==1)
-						$get["dropdown_sup_inf"]="inf";
-					else
-						$get["dropdown_sup_inf"]="sup";
-						
-					$get["dropdown_calendar"] = substr($get["contains"][$index],4);
+				case 0:
+					$get["FK_networking_ports"] = $_GET["contains"][0];
+
 					break;
-				case 31:
-					$input["tablename"]="glpi_dropdown_state";
-					$input["value"]=$get["contains"][$index];
-					$input["FK_entities"]=0;
-					$get["dropdown_state"] = getDropdownID($input);
-					break;
-				case 32:
-					$input["tablename"]="glpi_dropdown_network";
-					$input["value"]=$get["contains"][$index];
-					$input["FK_entities"]=0;
-					$get["dropdown_network"] = $get["contains"][$index];
+				case 1:
+					$get["Field"] = stripslashes($_GET["contains"][1]);
 					break;
 			}
 		}
-		
-		if (isset($get["link"]))
-			foreach ($get["link"] as $index=>$value)
-				$get["dropdown_and"][$index]=$value;
 	}
-	return $get;	
+	return $get;
 }
 
 function resetSearch()

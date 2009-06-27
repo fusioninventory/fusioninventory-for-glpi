@@ -47,6 +47,8 @@ commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER['PHP_SELF'],"utils","r
 if (isset($_GET["reset_search"]))
 	resetSearch();
 
+if (!isset($_GET["start"]))
+	$_GET["start"] = 0;
 $_GET=getValues($_GET,$_POST);
 displaySearchForm();
 
