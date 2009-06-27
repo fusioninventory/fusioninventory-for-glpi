@@ -63,8 +63,6 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"]))
 		$_GET["link"][1] = "AND";
 
 		$_SESSION["glpisearchcount"][PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2] = 2;
-
-
 		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
 }
 else
@@ -87,28 +85,38 @@ function displaySearchForm()
 	$values["inf"]="<";
 	$values["equal"]="=";
 
-	if (isset($_GET["contains"][0]))
+	if (isset($_GET["contains"][1]))
 	{
-		if (strstr($_GET["contains"][0], "lt;"))
+		if (strstr($_GET["contains"][1], "lt;"))
 		{
 			$_GET["dropdown_sup_inf"] = "inf";
-			$_GET["dropdown_calendar"] = str_replace("lt;", "",$_GET["contains"][0]);
+			$_GET["dropdown_calendar"] = str_replace("lt;", "",$_GET["contains"][1]);
 			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
-			$_GET["contains"][0] = "<".$_GET["dropdown_calendar"];
+			$_GET["dropdown_calendar"] = str_replace("\\", "",$_GET["dropdown_calendar"]);
+			$_GET["dropdown_calendar"] = str_replace("'", "",$_GET["dropdown_calendar"]);
+			$_GET["dropdown_calendar"] = str_replace(" 00:00:00", "",$_GET["dropdown_calendar"]);
+			$_GET["contains"][1] = "<".$_GET["dropdown_calendar"];
 		}
-		if (strstr($_GET["contains"][0], "gt;"))
+		if (strstr($_GET["contains"][1], "gt;"))
 		{
 			$_GET["dropdown_sup_inf"] = "sup";
-			$_GET["dropdown_calendar"] = str_replace("gt;", "",$_GET["contains"][0]);
+			$_GET["dropdown_calendar"] = str_replace("gt;", "",$_GET["contains"][1]);
 			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
-			$_GET["contains"][0] = ">".$_GET["dropdown_calendar"];
+			$_GET["dropdown_calendar"] = str_replace("\\", "",$_GET["dropdown_calendar"]);
+			$_GET["dropdown_calendar"] = str_replace("'", "",$_GET["dropdown_calendar"]);
+			$_GET["dropdown_calendar"] = str_replace(" 00:00:00", "",$_GET["dropdown_calendar"]);
+			$_GET["contains"][1] = ">".$_GET["dropdown_calendar"];
 		}
-		if (strstr($_GET["contains"][0], "="))
+		if (strstr($_GET["contains"][1], "LIKE"))
 		{
 			$_GET["dropdown_sup_inf"] = "equal";
-			$_GET["dropdown_calendar"] = str_replace("=", "",$_GET["contains"][0]);
+			$_GET["dropdown_calendar"] = str_replace("=", "",$_GET["contains"][1]);
 			$_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
-			$_GET["contains"][0] = "=".$_GET["dropdown_calendar"];
+			$_GET["dropdown_calendar"] = str_replace("\\", "",$_GET["dropdown_calendar"]);
+			$_GET["dropdown_calendar"] = str_replace("'", "",$_GET["dropdown_calendar"]);
+			$_GET["dropdown_calendar"] = str_replace("%", "",$_GET["dropdown_calendar"]);
+			$_GET["dropdown_calendar"] = str_replace("LIKE ", "",$_GET["dropdown_calendar"]);
+			$_GET["contains"][1] = "LIKE '".$_GET["dropdown_calendar"]."%'";
 		}
 	}
 	dropdownArrayValues("dropdown_sup_inf",$values,(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup"));
