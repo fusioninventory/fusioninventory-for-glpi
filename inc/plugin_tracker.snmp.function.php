@@ -811,11 +811,11 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 											if ($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$ips][$vlan] == $MacAddress_Hex)
 												$ip_unknown = preg_replace("/^1\./","",$ips);
 										}
+
 										// Search IP in OCS IPdiscover if OCS servers specified
 										if (empty($ip_unknown))
 											$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
 										$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
-
 										// Add unknown device
 										$unknown_infos["name"] = $name_unknown;
 										$newID=$unknown->add($unknown_infos);
@@ -826,9 +826,6 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 										$port_add["ifaddr"] = $ip_unknown;
 										$port_add['ifmac'] = $MacAddress;
 										$port_ID = $np->add($port_add);
-										// Link unknown device to networking port
-
-
 										//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 									}
 								}
@@ -888,7 +885,20 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 									if ($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$ips][$vlan] == $MacAddress_Hex)
 										$ip_unknown = preg_replace("/^1\./","",$ips);
 								}
-								$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
+								if (empty($ip_unknown))
+									$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
+								$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
+								// Add unknown device
+								$unknown_infos["name"] = $name_unknown;
+								$newID=$unknown->add($unknown_infos);
+								// Add networking_port
+								$np=new Netport();
+								$port_add["on_device"] = $newID;
+								$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
+								$port_add["ifaddr"] = $ip_unknown;
+								$port_add['ifmac'] = $MacAddress;
+								$port_ID = $np->add($port_add);
+								//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 							}
 						}
 
@@ -942,7 +952,20 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 						$ip_unknown = '';
 						$MacAddress_Hex = str_replace(":","",$MacAddress);
 						$MacAddress_Hex = "0x".$MacAddress_Hex;
-						$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
+						if (empty($ip_unknown))
+							$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
+						$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
+						// Add unknown device
+						$unknown_infos["name"] = $name_unknown;
+						$newID=$unknown->add($unknown_infos);
+						// Add networking_port
+						$np=new Netport();
+						$port_add["on_device"] = $newID;
+						$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
+						$port_add["ifaddr"] = $ip_unknown;
+						$port_add['ifmac'] = $MacAddress;
+						$port_ID = $np->add($port_add);
+						//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 					}
 				}
 			}
