@@ -33,7 +33,15 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$NEEDED_ITEMS=array("setup","rulesengine","profile");
+$NEEDED_ITEMS=array(
+	"setup",
+	"rulesengine",
+	"profile",
+	"device",
+	"networking",
+	"ocsng",
+	"rules"
+	);
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php");
 
