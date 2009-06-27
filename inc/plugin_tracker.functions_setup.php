@@ -58,7 +58,7 @@ function plugin_tracker_installing($version) {
 	}
 	
 	$config = new plugin_tracker_config;
-	$config->initConfig();
+	$config->initConfig($version);
 	$config_discovery = new plugin_tracker_config_discovery;
 	$config_discovery->initConfig();
 	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
@@ -228,14 +228,15 @@ function plugin_tracker_uninstall() {
 	
 	$query = "DROP TABLE `glpi_plugin_tracker_snmp_history`;";
 	$DB->query($query) or die($DB->error());
-	
+
+	$query = "DROP TABLE `glpi_plugin_tracker_unknown_device`;";
+	$DB->query($query) or die($DB->error());
+
 	$query = "DROP TABLE `glpi_plugin_tracker_unknown_mac`;";
 	$DB->query($query) or die($DB->error());
 	
 	$query = "DROP TABLE `glpi_plugin_tracker_walks`;";
 	$DB->query($query) or die($DB->error());
-	
-
 	
 	$query="DELETE FROM glpi_display 
 	WHERE type='".PLUGIN_TRACKER_ERROR_TYPE."' 
