@@ -200,10 +200,10 @@ class plugin_tracker_networking extends CommonDBTM
 			$DB->query($query_add);
 		}
 		// Form networking informations
-		echo "<br>";
+//		echo "<br>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='800'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
@@ -235,6 +235,28 @@ class plugin_tracker_networking extends CommonDBTM
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='2'>";
+		echo "<div align='center'>";
+		echo "<input type='hidden' name='ID' value='".$ID."'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "</table></form>";
+
+
+
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<th colspan='3'>";
+		echo $LANG['plugin_tracker']["title"][1];
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2' height='30'>";
 		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
 		echo "</td>";
@@ -249,44 +271,9 @@ class plugin_tracker_networking extends CommonDBTM
 			$mapping_name[$mapping_type_name] = "1";
 		}
 
-		if (((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
-			OR (((isset($mapping_name['cpuuser']))  AND ($mapping_name['cpuuser'] == "1"))
-				AND ((isset($mapping_name['cpusystem']))  AND ($mapping_name['cpusystem'] == "1"))
-				)
-			)
-		{
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][13]."</td>";
-			echo "<td align='center'>";
-			plugin_tracker_Bar($data["cpu"],'','inverse');
-			echo "</td>";
-			echo "</tr>";	
-		}
-
-		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1"))
-		{
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][14]."</td>";
-			echo "<td align='center'>";
-			$query2 = "
-			SELECT * 
-			FROM glpi_networking
-			WHERE ID=".$ID." ";
-			$result2 = $DB->query($query2);		
-			$data2 = $DB->fetch_assoc($result2);
-
-			if (empty($data2["ram"])){
-				$ram_pourcentage = 0;
-			}else {
-				$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
-			}
-			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)",'inverse'); 
-			echo "</td>";
-			echo "</tr>";
-		}
-
 		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1"))
 		{
+
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][12]."</td>";
 			echo "<td align='center'>";
@@ -326,13 +313,50 @@ class plugin_tracker_networking extends CommonDBTM
 			echo "</tr>";
 		}
 		
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='2'>";
-		echo "<div align='center'>";
-		echo "<input type='hidden' name='ID' value='".$ID."'>";
-		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
-		echo "</td>";
-		echo "</tr>";
+		if (((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
+			OR (((isset($mapping_name['cpuuser']))  AND ($mapping_name['cpuuser'] == "1"))
+				AND ((isset($mapping_name['cpusystem']))  AND ($mapping_name['cpusystem'] == "1"))
+				)
+			)
+		{
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][13]."</td>";
+			echo "<td align='center'>";
+			plugin_tracker_Bar($data["cpu"],'','inverse');
+			echo "</td>";
+			echo "</tr>";
+		}
+
+		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1"))
+		{
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][14]."</td>";
+			echo "<td align='center'>";
+			$query2 = "
+			SELECT *
+			FROM glpi_networking
+			WHERE ID=".$ID." ";
+			$result2 = $DB->query($query2);
+			$data2 = $DB->fetch_assoc($result2);
+
+			if (empty($data2["ram"])){
+				$ram_pourcentage = 0;
+			}else {
+				$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
+			}
+			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)",'inverse');
+			echo "</td>";
+			echo "</tr>";
+		}
+
+
+//		echo "<tr class='tab_bg_1'>";
+//		echo "<td colspan='2'>";
+//		echo "<div align='center'>";
+//		echo "<input type='hidden' name='ID' value='".$ID."'>";
+//		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+//		echo "</td>";
+//		echo "</tr>";
 
 		echo "</table></form>";
 		
@@ -381,7 +405,7 @@ function appear_array(id){
 		
 		</script>";
 
-		echo "<br>";
+//		echo "<br>";
 		echo "<div align='center'><!--<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">-->";
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
