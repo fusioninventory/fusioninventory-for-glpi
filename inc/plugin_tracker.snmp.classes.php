@@ -342,6 +342,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				$query_del = "DELETE FROM glpi_networking_wire 
 				WHERE ID='".$dataVerif2["ID"]."' ";
 				$DB->query($query_del);
+				$this->CleanVlan($destination_port);
 //echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 			}
 			$queryVerif2 = "SELECT *
@@ -355,6 +356,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				$query_del = "DELETE FROM glpi_networking_wire 
 				WHERE ID='".$dataVerif2["ID"]."' ";
 				$DB->query($query_del);
+				$this->CleanVlan($destination_port);
 //echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
 			}
 		}
