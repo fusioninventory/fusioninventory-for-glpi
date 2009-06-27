@@ -43,7 +43,7 @@ commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","
 
 $config = new plugin_tracker_config();
 $config_snmp_networking = new plugin_tracker_config_snmp_networking();
-$print_config = new glpi_plugin_tracker_printers_history_config();
+$print_config = new plugin_tracker_printers_history_config();
 
 if (isset($_POST['update'])) {
 

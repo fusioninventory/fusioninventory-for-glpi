@@ -83,7 +83,7 @@ $logs = new plugin_tracker_logs;
 if(isset($_GET['update_device_process'])){
 	// tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
 
-	$processes = new Threads;
+	$processes = new plugin_tracker_Threads;
 	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
 }
 else
@@ -99,7 +99,7 @@ else
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
 
 	// Add process into database
-	$processes = new Threads;
+	$processes = new plugin_tracker_Threads;
 	$processes->addProcess($fields["process_id"],$nb_process_query);
 	
 	// SNMP is working

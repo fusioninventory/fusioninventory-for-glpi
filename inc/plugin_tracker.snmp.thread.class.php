@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class Threads extends CommonDBTM
+class plugin_tracker_Threads extends CommonDBTM
 {
 
 	function __construct() {
@@ -49,7 +49,7 @@ class Threads extends CommonDBTM
 		
 		$minfreq = 9999;
 		$CommonItem = new CommonItem;
-		$Threads = new Threads;
+		$Threads = new plugin_tracker_Threads;
 
 
 //		$sql = "SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
@@ -425,7 +425,7 @@ class Threads extends CommonDBTM
 		 AND ifmac='".$macaddress."' "; 
 		$result = $DB->query($query);		
 		if (mysql_num_rows($result) == "0"){
-			addLogConnection("remove",$sport,$PID);
+			plugin_tracker_addLogConnection("remove",$sport,$PID);
 			removeConnector($sport);
 
 			// Search IP in OCS IPdiscover if OCS servers specified
@@ -509,7 +509,7 @@ class Threads extends CommonDBTM
 	
 	
 	function Create ($file) {
-		$t = new Threads;
+		$t = new plugin_tracker_Threads;
 		$descriptor = array (0 => array ("pipe", "r"), 1 => array ("pipe", "w"), 2 => array ("pipe", "w"));
 		$t->pref = proc_open ("php -q $file ", $descriptor, $t->pipes);
 		stream_set_blocking ($t->pipes[1], 0);

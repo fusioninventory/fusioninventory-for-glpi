@@ -181,9 +181,9 @@ class plugin_tracker_printers_history extends CommonDBTM {
 	}
 }
 
-class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
+class plugin_tracker_printers_history_config extends CommonDBTM {
 
-	function glpi_plugin_tracker_printers_history_config() {
+	function plugin_tracker_printers_history_config() {
 		$this->table="glpi_plugin_tracker_printers_history_config";
 		$this->type=-1;
 	}

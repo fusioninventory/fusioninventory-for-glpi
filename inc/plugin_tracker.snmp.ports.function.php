@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT'))
 	define('GLPI_ROOT', '../../..');
 
 
-function getUniqueObjectfieldsByportID($id)
+function plugin_tracker_getUniqueObjectfieldsByportID($id)
 {
 	global $DB;
 	
@@ -63,11 +63,6 @@ function getUniqueObjectfieldsByportID($id)
 	}
 	return($array);
 }
-
-
-
-
-
 
 
 

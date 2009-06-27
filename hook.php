@@ -1094,7 +1094,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 				// ** Display switch and Port
 				case "glpi_networking_ports.ID" :
-					$Array_device = getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+					$Array_device = plugin_tracker_getUniqueObjectfieldsByportID($data["ITEM_$num"]);
 					$CommonItem = new CommonItem;
 					$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
 					$out = "<div align='center'>" . $CommonItem->getLink(1);
@@ -1371,7 +1371,7 @@ function plugin_headings_tracker_printerErrors($type, $ID)
 
 function plugin_headings_tracker_printerCronConfig($type, $ID)
 {
-	$print_config = new glpi_plugin_tracker_printers_history_config();
+	$print_config = new plugin_tracker_printers_history_config();
 	$print_config->showForm(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_history_config.form.php', $_GET["ID"]);
 }
 
