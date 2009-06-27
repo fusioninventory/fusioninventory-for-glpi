@@ -105,9 +105,10 @@ for ($i=1;$i <= 5;$i++)
 	}
 	if (isset($_POST[$value]))
 	{
-		if ($name_file_xml($_SERVER['HTTP_REFERER'],$value))
-		{
-			$explode = explode('&',$_SERVER['HTTP_REFERER']);
+//		if ($name_file_xml($_SERVER['HTTP_REFERER'],$value))
+//		{
+/*			$explode = explode('&',$_SERVER['HTTP_REFERER']);
+
 			$reconstruct = $explode[0];
 			for ($i=1;$i < count($explode);$i++)
 			{
@@ -129,8 +130,8 @@ for ($i=1;$i <= 5;$i++)
 		}
 		else
 		{
-			$arg .= "&".$value."=".$_POST[$value];
-		}
+*/			$arg .= "&".$value."=".$_POST[$value];
+//		}
 	}
 }
 	
