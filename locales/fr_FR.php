@@ -391,6 +391,14 @@ $LANGTRACKER["mapping"][419]="réseaux > numéro d'inventaire";
 $LANGTRACKER["mapping"][420]="imprimante > fabricant";
 $LANGTRACKER["mapping"][421]="réseaux > addresses IP";
 $LANGTRACKER["mapping"][422]="réseaux > portVlanIndex";
+$LANGTRACKER["mapping"][423]="imprimante > compteur > nombre total de pages imprimées (impression)";
+$LANGTRACKER["mapping"][424]="imprimante > compteur > nombre de pages noir et blanc imprimées (impression)";
+$LANGTRACKER["mapping"][425]="imprimante > compteur > nombre de pages couleur imprimées (impression)";
+$LANGTRACKER["mapping"][426]="imprimante > compteur > nombre total de pages imprimées (copie)";
+$LANGTRACKER["mapping"][427]="imprimante > compteur > nombre de pages noir et blanc imprimées (copie)";
+$LANGTRACKER["mapping"][428]="imprimante > compteur > nombre de pages couleur imprimées (copie)";
+$LANGTRACKER["mapping"][429]="imprimante > compteur > nombre total de pages imprimées (fax)";
+
 
 
 $LANGTRACKER["mapping"][101]="";
@@ -440,6 +448,17 @@ $LANGTRACKER["mapping"][153]="Module de nettoyage";
 $LANGTRACKER["mapping"][154]="Nombre de pages recto/verso imprimées";
 $LANGTRACKER["mapping"][155]="Nombre de pages scannées";
 $LANGTRACKER["mapping"][156]="Kit de maintenance";
+$LANGTRACKER["mapping"][1423]="Nombre total de pages imprimées (impression)";
+$LANGTRACKER["mapping"][1424]="Nombre de pages noir et blanc imprimées (impression)";
+$LANGTRACKER["mapping"][1425]="Nombre de pages couleur imprimées (impression)";
+$LANGTRACKER["mapping"][1426]="Nombre total de pages imprimées (copie)";
+$LANGTRACKER["mapping"][1427]="Nombre de pages noir et blanc imprimées (copie)";
+$LANGTRACKER["mapping"][1428]="Nombre de pages couleur imprimées (copie)";
+$LANGTRACKER["mapping"][1429]="Nombre total de pages imprimées (fax)";
+
+
+
+
 
 $LANGTRACKER["printer"][0]="pages";
 
