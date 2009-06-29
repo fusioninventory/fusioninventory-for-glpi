@@ -123,8 +123,16 @@ function plugin_tracker_uninstall() {
 	
 	global $DB;
 
-	if (is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
-		rmdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
+	if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
+		while (($f = readdir($dir)) !== false) {
+			if($f > '0' and filetype($current_dir.$f) == "file") {
+				unlink($current_dir.$f);
+			} elseif($f > '0' and filetype($current_dir.$f) == "dir") {
+				remove_dir($current_dir.$f."\\");
+			}
+		}
+		closedir($dir);
+		rmdir($current_dir);
 	}
 	
 	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_label`;";
