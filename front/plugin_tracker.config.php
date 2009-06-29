@@ -62,10 +62,10 @@ else
 	if(!isset($_SESSION["glpi_plugin_tracker_installed"]) || $_SESSION["glpi_plugin_tracker_installed"]!=1) {
 
 		commonHeader($LANGTRACKER["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
-		if ($_SESSION["glpiactive_entity"]==0){
-
-			if(!TableExists("glpi_plugin_tracker_rangeip")) {
-
+		if ($_SESSION["glpiactive_entity"]==0)
+		{
+			if(!TableExists("glpi_plugin_tracker_rangeip"))
+			{
 				/* Install */
 				echo "<div align='center'>";
 				echo "<table class='tab_cadre' cellpadding='5'>";
