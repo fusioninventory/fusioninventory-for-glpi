@@ -244,6 +244,16 @@
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
+			<object><![CDATA[ipAdEntAddr]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ipAdEntAddr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
 			<object><![CDATA[ipNetToMediaPhysAddress]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.4.22.1.2]]></oid>
 			<portcounter>0</portcounter>
@@ -260,6 +270,16 @@
 			<dynamicport>0</dynamicport>
 			<mapping_type>2</mapping_type>
  			<mapping_name><![CDATA[location]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[dot1dBaseBridgeAddress]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.17.1.1.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[macaddr]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
