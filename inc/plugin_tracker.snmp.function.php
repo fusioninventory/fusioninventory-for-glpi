@@ -1201,75 +1201,77 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 				unset($trunk_no_cdp[$ifIndex]);
 			}
 		}
-		// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
-		foreach($ArrayPort_LogicalNum_SNMPNum AS $ifIndex=>$logical_num)
-		{
-			$query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
-				LEFT JOIN glpi_plugin_tracker_networking_ports
-				ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
-				WHERE device_type='2'
-					AND on_device='".$ID_Device."'
-					AND logical_number='".$logical_num."' ";
-			$result=$DB->query($query);
-			while ($data=$DB->fetch_array($result))
-			{
-				if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1"))
-				{
-					if ($data['trunk'] != "1")
-					{
-						$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-						SET trunk='1'
-						WHERE id='".$data['sid']."' ";
-						$DB->query($query_update);
-						plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
-					}
-				}
-				else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1"))
-				{
-					if ($data['trunk'] != "-1")
-					{
-						$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-						SET trunk='-1'
-						WHERE id='".$data['sid']."' ";
-						$DB->query($query_update);
-						plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1",$_SESSION['FK_process']);
-					}
-				}
-				else if($data['trunk'] != "0")
-				{
-					$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-					SET trunk='0'
-					WHERE id='".$data['sid']."' ";
-					$DB->query($query_update);
-					plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$_SESSION['FK_process']);
-				}
-
-			}
-		}
 	}
 	else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225"))
 	{
 		$trunk_no_cdp["1"] = 1;
 		$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
+//		$query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+//			LEFT JOIN glpi_plugin_tracker_networking_ports
+//			ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
+//			WHERE device_type='2'
+//				AND on_device='".$ID_Device."'
+//				AND logical_number='0' ";
+//		$result=$DB->query($query);
+//		while ($data=$DB->fetch_array($result))
+//		{
+//			if ($data['trunk'] == "0")
+//			{
+//				$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+//				SET trunk='1'
+//				WHERE id='".$data['sid']."' ";
+//				$DB->query($query_update);
+//				plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
+//			}
+//		}
+	}
+
+	// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
+	foreach($ArrayPort_LogicalNum_SNMPNum AS $ifIndex=>$logical_num)
+	{
 		$query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
 			LEFT JOIN glpi_plugin_tracker_networking_ports
 			ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
 			WHERE device_type='2'
 				AND on_device='".$ID_Device."'
-				AND logical_number='0' ";
+				AND logical_number='".$logical_num."' ";
 		$result=$DB->query($query);
 		while ($data=$DB->fetch_array($result))
 		{
-			if ($data['trunk'] == "0")
+			if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1"))
+			{
+				if ($data['trunk'] != "1")
+				{
+					$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+					SET trunk='1'
+					WHERE id='".$data['sid']."' ";
+					$DB->query($query_update);
+					plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
+				}
+			}
+			else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1"))
+			{
+				if ($data['trunk'] != "-1")
+				{
+					$query_update = "UPDATE glpi_plugin_tracker_networking_ports
+					SET trunk='-1'
+					WHERE id='".$data['sid']."' ";
+					$DB->query($query_update);
+					plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1",$_SESSION['FK_process']);
+				}
+			}
+			else if($data['trunk'] != "0")
 			{
 				$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-				SET trunk='1'
+				SET trunk='0'
 				WHERE id='".$data['sid']."' ";
 				$DB->query($query_update);
-				plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
+				plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$_SESSION['FK_process']);
 			}
+
 		}
 	}
+
 
 	// If no Ip or mac in this trunks port, we try to search switch connected to this
 	foreach($trunk_no_cdp AS $ifIndex=>$activation)
