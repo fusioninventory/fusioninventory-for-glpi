@@ -528,22 +528,6 @@ CREATE TABLE `glpi_plugin_tracker_snmp_history` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_tracker_unknown_mac`;
-
-CREATE TABLE `glpi_plugin_tracker_unknown_mac` (
-	`ID` INT( 100 ) NOT NULL AUTO_INCREMENT,
-	`start_FK_processes` INT( 8 ) NOT NULL,
-	`end_FK_processes` INT( 8 ) NOT NULL,
-	`start_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-	`end_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-	`port` INT( 8 ) NOT NULL,
-	`unknow_mac` VARCHAR( 255 ) NOT NULL,
-	`unknown_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-	PRIMARY KEY (`ID`),
-	UNIQUE KEY `start_FK_processes` (`start_FK_processes`,`end_FK_processes`,`port`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 DROP TABLE IF EXISTS `glpi_plugin_tracker_unknown_device`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_unknown_device` (
