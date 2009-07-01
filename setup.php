@@ -52,6 +52,7 @@ function plugin_init_tracker() {
 	pluginNewType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, "plugin_tracker_agents_processes", "glpi_plugin_tracker_agents_processes", "front/plugin_tracker.agents.processes.php");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_HISTORY", 5162, "plugin_tracker_SNMP_history", "glpi_plugin_tracker_snmp_history");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2", 5163, "plugin_tracker_networking_ports", "glpi_plugin_tracker_networking_ports");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_TMP_NETPORTS", 5164, "plugin_tracker_tmpconnections", "glpi_plugin_tracker_tmp_netports");
 
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");

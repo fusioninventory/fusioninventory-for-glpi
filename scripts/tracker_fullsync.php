@@ -137,6 +137,10 @@ else
 	foreach ( $xml_file as $num=>$filename )
 		unlink($filename);
 
+	// Create connections between switchs
+	$tmpc = new plugin_tracker_tmpconnections;
+	$tmpc->WireInterSwitchs();
+
 	$processes->closeProcess($fields["process_id"]);
 }
 ?>
