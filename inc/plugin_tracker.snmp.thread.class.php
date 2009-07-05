@@ -35,7 +35,7 @@ class plugin_tracker_Threads extends CommonDBTM
 {
 
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_unknown_mac";
+		$this->table = "glpi_plugin_tracker_unknown_device";
 		$this->type = PLUGIN_TRACKER_MAC_UNKNOWN;
 	}
 
