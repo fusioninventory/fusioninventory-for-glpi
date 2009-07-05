@@ -1171,6 +1171,7 @@ function cron_plugin_tracker()
 {
 	$plugin_tracker_unknown = new plugin_tracker_unknown;
 	$plugin_tracker_unknown->FusionUnknownKnownDevice();
+	// Delete history
 }
 
 // Define headings added by the plugin //
