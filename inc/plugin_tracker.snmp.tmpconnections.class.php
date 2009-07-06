@@ -112,7 +112,8 @@ class plugin_tracker_tmpconnections extends CommonDBTM
 					" FROM glpi_plugin_tracker_tmp_netports ".
 				" LEFT JOIN glpi_networking_ports ON FK_networking=on_device AND FK_networking_port=device_type ".
 				" WHERE cdp='0' ".
-					" AND COUNT(ifmac) = 1";
+				" GROUP BY ifmac ".
+				" HAVING  COUNT(ifmac)=1 ";
 			if ($result=$DB->query($query))
 			{
 				while ($data=$DB->fetch_array($result))
@@ -161,7 +162,11 @@ class plugin_tracker_tmpconnections extends CommonDBTM
 		}
 		// Empty MySQL table glpi_plugin_tracker_tmp_netports
 		$query = "TRUNCATE table glpi_plugin_tracker_tmp_netports";
-		//$DB->query($query);
+		$DB->query($query);
+		
+		// Empty MySQL table glpi_plugin_tracker_tmp_connections
+		$query = "TRUNCATE table glpi_plugin_tracker_tmp_connections";
+		$DB->query($query);
 	}
 
 }
