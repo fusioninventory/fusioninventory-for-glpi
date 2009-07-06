@@ -68,7 +68,7 @@ if (!TableExists("glpi_plugin_tracker_networking")) {
 	echo "Plugin Tracker pas installé!!";
 	exit(1);
 }
- 
+
 $thread_nbr='';
 $thread_id='';
 $synchronized_nbr= 0;
@@ -143,4 +143,5 @@ else
 
 	$processes->closeProcess($fields["process_id"]);
 }
+
 ?>
