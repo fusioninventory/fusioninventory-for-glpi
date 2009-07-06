@@ -86,11 +86,14 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 	foreach ( $ArrayListDevice as $num=>$IDDevice )
 	{
 		$s++;
+
 		$t[$s] = $Thread->create("tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
 
 		if ($nb_process_query == $s)
 		{
 			eval($while);
+			// Display 0 in tracker_fullsync.log
+			// TODO : Try to not display it
 			eval($close);
 			$s = 0;
 		}
