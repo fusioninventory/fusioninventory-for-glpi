@@ -90,7 +90,7 @@ class plugin_tracker_networking extends CommonDBTM
 	function isActive() {
 		global $DB;
 		
-		$config = new plugin_tracker_config();
+		$config = new PluginTrackerConfig();
 		
 		// state number for an active device
 		if ( !($active_device_state = $config->getValue("active_device_state")) )

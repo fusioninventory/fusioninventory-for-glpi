@@ -283,7 +283,7 @@ class plugin_tracker_printers_history_config extends CommonDBTM {
 
 		global $DB;
 		
-		$config = new plugin_tracker_config();
+		$config = new PluginTrackerConfig();
 		$statement = $config->getValue("statement_default_value");
 		
 		$datas=array();

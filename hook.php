@@ -39,7 +39,7 @@ function plugin_tracker_getSearchOption()
 	global $LANG,$LANGTRACKER;
 	$sopt = array ();
 
-	$config = new plugin_tracker_config;
+	$config = new PluginTrackerConfig;
 
 	// Part header
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE]['common'] = $LANGTRACKER["errors"][0];
@@ -1177,7 +1177,7 @@ function cron_plugin_tracker()
 // Define headings added by the plugin //
 function plugin_get_headings_tracker($type,$withtemplate){
 	global $LANG,$LANGTRACKER;
-	$config = new plugin_tracker_config();	
+	$config = new PluginTrackerConfig();
 
 	if (in_array($type,array(NETWORKING_TYPE))){
 		// template case
@@ -1219,7 +1219,7 @@ function plugin_get_headings_tracker($type,$withtemplate){
 function plugin_get_headings_tracker($type, $withtemplate) {
 
 	global $LANG;
-	$config = new plugin_tracker_config();
+	$config = new PluginTrackerConfig();
 
 	switch ($type) {
 
@@ -1271,7 +1271,7 @@ function plugin_get_headings_tracker($type, $withtemplate) {
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_tracker($type) {
 
-	$config = new plugin_tracker_config();
+	$config = new PluginTrackerConfig();
 
 	switch ($type) {
 		case COMPUTER_TYPE :

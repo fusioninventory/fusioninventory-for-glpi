@@ -87,7 +87,7 @@ class plugin_tracker_XML {
 
 		$xmlclass = new plugin_tracker_XML;
 		$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-		$config = new plugin_tracker_config;
+		$config = new PluginTrackerConfig;
 		
 		$xmlclass->element = $this->element;
 		$xml = "";

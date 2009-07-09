@@ -41,8 +41,8 @@ checkRight("config","w");
 
 commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
-$config = new plugin_tracker_config;
-$config_discovery = new plugin_tracker_config_discovery;
+$config = new PluginTrackerConfig;
+$config_discovery = new PluginTrackerConfigDiscovery;
 
 if (isset($_POST['update'])) {
 

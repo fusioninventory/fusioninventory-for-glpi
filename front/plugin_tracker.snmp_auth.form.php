@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 plugin_tracker_checkRight("snmp_authentification","r");
 
 $plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-$config = new plugin_tracker_config;
+$config = new PluginTrackerConfig;
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","snmp_auth");
 

@@ -42,7 +42,7 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","
 
 plugin_tracker_checkRight("snmp_authentification","r");
 
-$config = new plugin_tracker_config();
+$config = new PluginTrackerConfig();
 
 plugin_tracker_mini_menu();
 

@@ -53,7 +53,7 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 	global $DB;
 	
 	$Thread = new plugin_tracker_Threads;
-	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+	$config_snmp_script = new PluginTrackerConfigSnmpScript;
 	
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
 

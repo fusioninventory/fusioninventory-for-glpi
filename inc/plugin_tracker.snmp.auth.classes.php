@@ -393,7 +393,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	{
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
-		$config = new plugin_tracker_config();
+		$config = new PluginTrackerConfig();
 
 		if ($ID_Device != "all")
 		{

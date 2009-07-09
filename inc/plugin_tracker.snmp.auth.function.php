@@ -43,7 +43,7 @@ function plugin_tracker_snmp_auth_dropdown($selected="")
 	global $DB;
 
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-	$config = new plugin_tracker_config;
+	$config = new PluginTrackerConfig;
 
 	if ($config->getValue("authsnmp") == "file")
 		echo $plugin_tracker_snmp_auth->selectbox($selected);

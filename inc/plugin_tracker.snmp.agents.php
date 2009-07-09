@@ -199,7 +199,7 @@ function appear_array(){
 	{
 		global $DB;
 	
-		$tracker_config = new plugin_tracker_config;
+		$tracker_config = new PluginTrackerConfig;
 		$tracker_config->getFromDB(1);
 
 		$this->getFromDB($ID);

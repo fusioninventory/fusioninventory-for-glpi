@@ -57,15 +57,15 @@ function plugin_tracker_installing($version) {
 		mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 	}
 	
-	$config = new plugin_tracker_config;
+	$config = new PluginTrackerConfig;
 	$config->initConfig($version);
-	$config_discovery = new plugin_tracker_config_discovery;
+	$config_discovery = new PluginTrackerConfigDiscovery;
 	$config_discovery->initConfig();
-	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
+	$config_snmp_networking = new PluginTrackerConfigSnmpNetworking;
 	$config_snmp_networking->initConfig();
-	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
+	$config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
 	$config_snmp_printer->initConfig();
-	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+	$config_snmp_script = new PluginTrackerConfigSnmpScript;
 	$config_snmp_script->initConfig();
 	// Import models
 	$importexport = new plugin_tracker_importexport;
@@ -94,9 +94,9 @@ function plugin_tracker_update($version) {
 		if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
 			mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 		}
-		$config_discovery = new plugin_tracker_config_discovery;
+		$config_discovery = new PluginTrackerConfigDiscovery;
 		$config_discovery->initConfig();
-		$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+		$config_snmp_script = new PluginTrackerConfigSnmpScript;
 		$config_snmp_script->initConfig();
 		// Import models
 		$importexport = new plugin_tracker_importexport;

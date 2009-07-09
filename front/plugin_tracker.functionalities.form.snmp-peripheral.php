@@ -41,8 +41,8 @@ checkRight("config","w");
 
 commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
-$config = new plugin_tracker_config();
-$config_snmp_printer = new plugin_tracker_config_snmp_printer();
+$config = new PluginTrackerConfig();
+$config_snmp_printer = new PluginTrackerConfigSnmpPrinter();
 $print_config = new plugin_tracker_printers_history_config();
 
 if (isset($_POST['update'])) {

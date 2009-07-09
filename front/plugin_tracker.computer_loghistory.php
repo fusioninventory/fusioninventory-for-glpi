@@ -39,7 +39,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-$config = new plugin_tracker_config();
+$config = new PluginTrackerConfig();
 
 $errors = new plugin_tracker_errors();
 $computers_history = new plugin_tracker_computers_history();

@@ -42,7 +42,7 @@ $NEEDED_ITEMS=array("tracker","search","printer","computer","networking","periph
 include (GLPI_ROOT."/inc/includes.php");
 
 // Get conf tu know if SSL is only
-$tracker_config = new plugin_tracker_config;
+$tracker_config = new PluginTrackerConfig;
 $ssl = $tracker_config->getValue('ssl_only');
 if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1")) OR ($ssl == "0"))
 {
@@ -120,9 +120,9 @@ else if(isset($_POST['get_data']))
 {
 	$agents_processes = new plugin_tracker_agents_processes;
 	$xml = new plugin_tracker_XML;
-	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
-	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
-	$config = new plugin_tracker_config;
+	$config_snmp_networking = new PluginTrackerConfigSnmpNetworking;
+	$config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
+	$config = new PluginTrackerConfig;
 	
 //$_POST['key'] = "nN3HDPKVj0e8xxfgCIugjWmPzIRVxb";
 	$query = "SELECT * FROM glpi_plugin_tracker_agents
