@@ -32,15 +32,10 @@
 // ----------------------------------------------------------------------
 
 $plugin_tracker_mib_networking=new PluginTrackerMibNetworking();
-if (isset($_POST["add"]))
-{
+if (isset($_POST["add"])) {
 
 
-
-
-}
-else
-{
+} else {
 	plugin_tracker_checkRight("errors","r");
 
 	if (!isset($_SESSION['glpi_tab'])) $_SESSION['glpi_tab']=1;
@@ -55,3 +50,4 @@ else
 
 	commonFooter();
 }
+?>

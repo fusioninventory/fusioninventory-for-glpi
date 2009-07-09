@@ -45,19 +45,19 @@ $NEEDED_ITEMS=array(
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php");
 
-if (haveRight("config","w") && haveRight("profile","w")){
+if (haveRight("config","w") && haveRight("profile","w")) {
 
-	if (!TableExists("glpi_plugin_tracker_config"))
+	if (!TableExists("glpi_plugin_tracker_config")) {
 		plugin_tracker_install();
-	elseif(!TableExists("glpi_plugin_tracker_unknown_device"))
+   } elseif (!TableExists("glpi_plugin_tracker_unknown_device")) {
 		plugin_tracker_update("2.0.2");
-	elseif (plugin_tracker_needUpdate() == 1)
-		plugin_tracker_update("2.0.0");
-	else
+   } else if (plugin_tracker_needUpdate() == 1) {
+      plugin_tracker_update("2.0.0");
+   } else {
 		plugin_tracker_install();
-		
+   }
 	glpi_header($_SERVER['HTTP_REFERER']);
-}else{
+} else {
 
 	commonHeader($LANG["login"][5],$_SERVER['PHP_SELF'],"plugins","tracker");
 	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";

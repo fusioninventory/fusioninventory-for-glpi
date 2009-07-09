@@ -47,18 +47,15 @@ $config = new PluginTrackerConfig();
 plugin_tracker_mini_menu();
 
 // Forms for FILE
-if ($config->getValue("authsnmp") == "file")
-{
+if ($config->getValue("authsnmp") == "file") {
 	$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
 	
-	if (!isset($_GET["ID"]))
-	{
+	if (!isset($_GET["ID"])) {
 		echo $plugin_tracker_snmp_auth->plugin_tracker_snmp_connections();
 	}
 }
 
-else if ($config->getValue("authsnmp") == "DB")
-{
+else if ($config->getValue("authsnmp") == "DB") {
 	// Forms for DB
 	
 	$_GET['target']="plugin_tracker.snmp_auth.php";
@@ -67,13 +64,10 @@ else if ($config->getValue("authsnmp") == "DB")
 
 	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 	showList(PLUGIN_TRACKER_SNMP_AUTH,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
-}else{
-
+} else {
 	echo $LANGTRACKER["functionalities"][19];
-
 }
 
 commonFooter();
-
 
 ?>

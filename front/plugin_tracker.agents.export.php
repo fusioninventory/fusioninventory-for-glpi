@@ -55,8 +55,4 @@ echo $agents->export_config($_GET["agent"]);
 
 //commonFooter();
 
-
-
-
-
 ?>

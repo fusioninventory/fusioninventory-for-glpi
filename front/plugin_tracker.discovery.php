@@ -42,15 +42,13 @@ commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("snmp_discovery","r");
 
-if((isset($_POST['update'])) AND (!empty($_POST['update'])))
-{
+if((isset($_POST['update'])) AND (!empty($_POST['update']))) {
 	// Update DB
 	plugin_tracker_checkRight("snmp_discovery","w");
 	plugin_tracker_discovery_update_devices($_POST, $_SERVER["PHP_SELF"]);
 }
 
-if((isset($_POST['import'])) AND (!empty($_POST['import'])))
-{
+if((isset($_POST['import'])) AND (!empty($_POST['import']))) {
 	plugin_tracker_checkRight("snmp_discovery","w");
 	plugin_tracker_discovery_import($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);

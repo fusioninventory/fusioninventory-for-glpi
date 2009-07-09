@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 $NEEDED_ITEMS=array("setup");
-if(!defined('GLPI_ROOT')){
+if(!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..'); 
 }
 include (GLPI_ROOT . "/inc/includes.php");
@@ -46,8 +46,7 @@ checkRight("profile","w");
 //$plugin = new Plugin();
 //if ($plugin->isInstalled("tracker") && $plugin->isActivated("tracker")) {
 
-if (plugin_tracker_needUpdate() == 1)
-{
+if (plugin_tracker_needUpdate() == 1) {
 	commonHeader($LANGTRACKER["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
 	echo "<div align='center'>";
 	echo "<table class='tab_cadre' cellpadding='5'>";
@@ -56,16 +55,11 @@ if (plugin_tracker_needUpdate() == 1)
 	echo "<tr class='tab_bg_1'><td>";
 	echo "<a href='plugin_tracker.install.php'>".$LANGTRACKER["setup"][5]."</a></td></tr>";
 	echo "</table></div>";
-}
-else
-{
+} else {
 	if(!isset($_SESSION["glpi_plugin_tracker_installed"]) || $_SESSION["glpi_plugin_tracker_installed"]!=1) {
-
 		commonHeader($LANGTRACKER["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
-		if ($_SESSION["glpiactive_entity"]==0)
-		{
-			if(!TableExists("glpi_plugin_tracker_rangeip"))
-			{
+		if ($_SESSION["glpiactive_entity"]==0) {
+			if(!TableExists("glpi_plugin_tracker_rangeip")) {
 				/* Install */
 				echo "<div align='center'>";
 				echo "<table class='tab_cadre' cellpadding='5'>";
@@ -84,12 +78,11 @@ else
 				echo "</table></div>";*/
 			}
 
-		}else{
+		} else {
 			echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";
 			echo "<b>".$LANGTRACKER["setup"][2]."</b></div>";
 		}
-	}
-	else {
+	} else {
 		commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 		echo "<div align='center'>";
 		echo "<table class='tab_cadre' cellpadding='5'>";
@@ -97,10 +90,10 @@ else
 		echo "</th></tr>";
 
 		/* Profiles */
-		if (haveRight("config","w") && haveRight("profile","w")){
-		echo "<tr class='tab_bg_1'><td align='center'>";
-		echo "<a href=\"./plugin_tracker.profile.php\">".$LANGTRACKER["profile"][0]."</a>";
-		echo "</td></tr>";
+		if (haveRight("config","w") && haveRight("profile","w")) {
+         echo "<tr class='tab_bg_1'><td align='center'>";
+         echo "<a href=\"./plugin_tracker.profile.php\">".$LANGTRACKER["profile"][0]."</a>";
+         echo "</td></tr>";
 		}
 
 		/* Fonctionalities */
@@ -120,7 +113,7 @@ else
 		echo "</td></tr>";
 */
 		/* Uninstall */
-		if ($_SESSION["glpiactive_entity"]==0){
+		if ($_SESSION["glpiactive_entity"]==0) {
 			echo "<tr class='tab_bg_1'><td align='center'>";
 			echo "<a href='plugin_tracker.uninstall.php'>".$LANGTRACKER["setup"][6]."</a>";
 			echo " <img src='".$CFG_GLPI["root_doc"]."/pics/aide.png' alt=\"\" onmouseout=\"setdisplay(getElementById('comments'),'none')\" onmouseover=\"setdisplay(getElementById('comments'),'block')\">";

@@ -46,12 +46,12 @@ $config_snmp_script = new PluginTrackerConfigSnmpScript();
 
 if (isset($_POST['update'])) {
 
-	if (empty($_POST['cleaning_days']))
+	if (empty($_POST['cleaning_days'])) {
 		$_POST['cleaning_days'] = 0;
+   }
 		
 	$_POST['ID']=1;
-	
-	
+		
 	$config_snmp_script->update($_POST);
 }
 

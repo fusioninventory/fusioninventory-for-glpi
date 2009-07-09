@@ -35,16 +35,15 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
-if (haveRight("config","w") && haveRight("profile","w")){
-
-	if(TableExists("glpi_plugin_tracker_config")){
+if (haveRight("config","w") && haveRight("profile","w")) {
+	if(TableExists("glpi_plugin_tracker_config")) {
 		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
 		plugin_tracker_uninstall();
 		unset($_SESSION["glpi_plugin_tracker_installed"]);
 	}
-		glpi_header($_SERVER['HTTP_REFERER']);
+	glpi_header($_SERVER['HTTP_REFERER']);
 
-}else{
+} else {
 
 	commonHeader($LANG["login"][5],$_SERVER['PHP_SELF'],"plugins","tracker");
 	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";

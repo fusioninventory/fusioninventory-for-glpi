@@ -46,5 +46,4 @@ echo plugin_tracker_mib_management();
 
 commonFooter();
 
-
 ?>

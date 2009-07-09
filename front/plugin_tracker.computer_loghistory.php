@@ -63,9 +63,9 @@ $contact = (isset($_GET["User"]) ? $_GET["User"] : "");
 
 // Get the GLPI username : user
 
-if ($contact != '')
+if ($contact != '') {
 	$user_id = getIdFromUser($contact);
-
+}
 /// Check and write error ///
 $computer_id = $errors->writeError(COMPUTER_TYPE, 'db', $error, $date);
 
@@ -74,9 +74,9 @@ $computer_id = $errors->writeError(COMPUTER_TYPE, 'db', $error, $date);
 if ( ($config->isActivated('computers_history')) && ($history['FK_computers'] = $computer_id) ) {
 	
 	//Get user : contact
-	if ( $contact != "")
+	if ( $contact != "") {
 		$history["username"] = $contact;
-	
+   }
 	// Get FK_users : Id of the GLPI user
 	if ( $user_id != -1)
 		$history['FK_users'] = $user_id;
@@ -92,13 +92,15 @@ if ( ($config->isActivated('computers_history')) && ($history['FK_computers'] = 
 $update = array();
 
 if ( $config->isActivated('update_contact') ) {
-	if ( $contact != "")
+	if ( $contact != "") {
 		$update['contact'] = $contact;
+   }
 }
 
 if ( $config->isActivated('update_user') ) {
-	if ( $user_id != -1)
+	if ( $user_id != -1) {
 		$update['FK_users'] = $user_id;
+   }
 }
 
 if ( (count($update)) != 0 ) {

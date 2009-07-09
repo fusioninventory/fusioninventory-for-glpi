@@ -56,8 +56,4 @@ echo $importexport->plugin_tracker_export($_GET["model"]);
 
 //commonFooter();
 
-
-
-
-
 ?>

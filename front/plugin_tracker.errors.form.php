@@ -37,31 +37,31 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-if ( isset($_GET['type']) ) {
-	if ( $_GET['type'] == COMPUTER_TYPE )
+if (isset($_GET['type'])) {
+	if ($_GET['type'] == COMPUTER_TYPE) {
 		checkRight("computer","r");
-	else if ( $_GET['type'] == NETWORKING_TYPE )
+   } else if ($_GET['type'] == NETWORKING_TYPE) {
 		checkRight("networking","r");
-	else // $_GET['type'] == PRINTER_TYPE
+   } else { // $_GET['type'] == PRINTER_TYPE
 		checkRight("printer","r");
-}
-else
+   }
+} else {
 	plugin_tracker_noRight();
-
+}
 plugin_tracker_checkRight("errors","r");
 
 $errors = new PluginTrackerErrors();
 
-if ( (isset($_POST['delete'])) ) {
+if ((isset($_POST['delete']))) {
 	
 	plugin_tracker_checkRight("errors","w");
 	
-	if ( isset($_POST['limit']) ) {
-		for ($i=0; $i<$_POST['limit']; $i++) {
-			if ( ( isset($_POST["checked_$i"]) ) && ( $_POST["checked_$i"] == 1 ) ) {
-				if ( isset($_POST["ID_$i"]) )
-				$input['ID'] = $_POST["ID_$i"];
-
+	if (isset($_POST['limit'])) {
+		for ($i=0 ; $i<$_POST['limit'] ; $i++) {
+			if ((isset($_POST["checked_$i"])) && ($_POST["checked_$i"] == 1)) {
+				if (isset($_POST["ID_$i"])) {
+               $input['ID'] = $_POST["ID_$i"];
+            }
 				$errors->delete($input);
 			}
 		}

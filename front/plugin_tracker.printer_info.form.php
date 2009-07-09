@@ -39,11 +39,9 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-
 plugin_tracker_checkRight("snmp_printers","r");
 
-
-if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
+if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	
 	plugin_tracker_checkRight("snmp_printers","w");
 	
@@ -61,7 +59,7 @@ if ( (isset($_POST['update'])) && (isset($_POST['ID'])) ) {
 	
 }
 
-if ( (isset($_POST['update_cartridges'])) && (isset($_POST['ID'])) ) {
+if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
 	plugin_tracker_checkRight("snmp_printers","w");
 
 	$plugin_tracker_printers_cartridges = new plugin_tracker_printers_cartridges;
@@ -70,41 +68,41 @@ if ( (isset($_POST['update_cartridges'])) && (isset($_POST['ID'])) ) {
 	WHERE FK_printers='".$_POST['ID']."' 
 	AND object_name='".$_POST['object_name']."' ";
 	$result = $DB->query($query);		
-	if ($DB->numrows($result) == "0")
-	{
+	if ($DB->numrows($result) == "0") {
 		$_POST['FK_printers'] = $_POST['ID'];
 		unset($_POST['ID']);
 		$plugin_tracker_printers_cartridges->add($_POST);
-	}
-	else
-	{
+	} else {
 		$data = $DB->fetch_assoc($result);
 		$plugin_tracker_printers_cartridges->update($_POST);
 	}
 }
 
 $arg = "";
-for ($i=1;$i <= 5;$i++)
-{
+for ($i=1 ; $i <= 5 ; $i++) {
 	switch ($i) {
 		case 1:
 			$value = "datetotalpages";
 			break;
+
 		case 2:
 			$value = "dateblackpages";
 			break;
+
 		case 3:
 			$value = "datecolorpages";
 			break;
+
 		case 4:
 			$value = "daterectoversopages";
 			break;
+
 		case 5:
 			$value = "datescannedpages";
 			break;
+
 	}
-	if (isset($_POST[$value]))
-	{
+	if (isset($_POST[$value])) {
 
 //		if ($name_file_xml($_SERVER['HTTP_REFERER'],$value))
 //		{

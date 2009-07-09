@@ -61,21 +61,20 @@ $prof=new PluginTrackerProfile;
 if(!isset($_POST["ID"])) $ID=0;
 else $ID=$_POST["ID"];
 
-if (isset($_POST["add"])){
+if (isset($_POST["add"])) {
 	
 		checkRight("profile","w");
 		$ID=$prof->add($_POST);
 		
-}else  if (isset($_POST["delete"])){
+} else if (isset($_POST["delete"])) {
 	checkRight("profile","w");
 		
 		$prof->delete($_POST);
 		$ID=0;
-}elseif (isset($_POST["delete_profile"])){
+} else if (isset($_POST["delete_profile"])) {
 	
-	foreach ($_POST["item"] as $key => $val){
+	foreach ($_POST["item"] as $key => $val) {
 		if ($val==1) {
-
 			$query="DELETE FROM glpi_plugin_tracker_profiles WHERE ID='".$key."'";
 			$DB->query($query);
 		}
@@ -83,8 +82,7 @@ if (isset($_POST["add"])){
 			
 	glpi_header($_SERVER['HTTP_REFERER']);
 		
-}
-else  if (isset($_POST["update"])){
+} else if (isset($_POST["update"])) {
 	checkRight("profile","w");
 		
 		$prof->update($_POST);
@@ -118,7 +116,7 @@ echo "</tr>";
 $query0="SELECT * FROM glpi_plugin_tracker_profiles ORDER BY name";
 $result0=$DB->query($query0);
 
-while ($data0=$DB->fetch_assoc($result0)){
+while ($data0=$DB->fetch_assoc($result0)) {
 	$ID0=$data0['ID'];
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center'>";
@@ -128,93 +126,97 @@ while ($data0=$DB->fetch_assoc($result0)){
 	echo "<td>".$data0['ID']."</td><td>".$data0['name']."</td>";
 
 // * snmp_networking
-	if ($data0['snmp_networking']=='r')
+	if ($data0['snmp_networking']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_networking']=='w')
+   } else if ($data0['snmp_networking']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
-
+   }
 // * snmp_printers
-	if ($data0['snmp_printers']=='r')
+	if ($data0['snmp_printers']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_printers']=='w')
+   } else if ($data0['snmp_printers']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+   }
 
 // * snmp_models
-	if ($data0['snmp_models']=='r')
+	if ($data0['snmp_models']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_models']=='w')
+   } else if ($data0['snmp_models']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
-
+   }
 // * snmp_authentification
-	if ($data0['snmp_authentification']=='r')
+	if ($data0['snmp_authentification']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_authentification']=='w')
+   } else if ($data0['snmp_authentification']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+   }
 
 // * snmp_iprange
-	if ($data0['snmp_iprange']=='r')
+	if ($data0['snmp_iprange']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_iprange']=='w')
+   } else if ($data0['snmp_iprange']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+   }
 
 // * snmp_agent
-	if ($data0['snmp_agent']=='r')
+	if ($data0['snmp_agent']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_agent']=='w')
+   } else if ($data0['snmp_agent']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
-
+   }
 // * snmp_scripts_infos
-	if ($data0['snmp_scripts_infos']=='r')
+	if ($data0['snmp_scripts_infos']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_scripts_infos']=='w')
+   } else if ($data0['snmp_scripts_infos']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
-
+   }
 // * snmp_agent_infos
-	if ($data0['snmp_agent_infos']=='r')
+	if ($data0['snmp_agent_infos']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_agent_infos']=='w')
+   } else if ($data0['snmp_agent_infos']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
-
+   }
 // * snmp_discovery
-	if ($data0['snmp_discovery']=='r')
+	if ($data0['snmp_discovery']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_discovery']=='w')
+   } else if ($data0['snmp_discovery']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
-
+   }
 // * snmp_report
-	if ($data0['snmp_report']=='r')
+	if ($data0['snmp_report']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['snmp_report']=='w')
+   } else if ($data0['snmp_report']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
+   }
 
 // * general_config
-	if ($data0['general_config']=='r')
+	if ($data0['general_config']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	elseif ($data0['general_config']=='w')
+   } else if ($data0['general_config']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	else
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
-
+   }
 }
 
 echo "<tr class='tab_bg_1'><td colspan='14'>";
@@ -231,18 +233,17 @@ $query="SELECT ID, name FROM glpi_profiles ORDER BY name";
 $result=$DB->query($query);
 
 echo "<select name='ID'>";
-while ($data=$DB->fetch_assoc($result)){
+while ($data=$DB->fetch_assoc($result)) {
 	echo "<option value='".$data["ID"]."' ".($ID==$data["ID"]?"selected":"").">".$data['name']."</option>";
 }
 echo "</select>";
 echo "<td><input type='submit' value=\"".$LANG["buttons"][2]."\" class='submit' ></td></tr>";
 echo "</table></form></div>";
 
-if ($ID>0){	
-	if ($prof->GetfromDB($ID)){
+if ($ID>0) {
+	if ($prof->GetfromDB($ID)) {
 		$prof->showprofileForm($_SERVER["PHP_SELF"],$ID);
-	}
-	else {
+	} else {
 		plugin_tracker_createaccess($ID);
 		$prof->showprofileForm($_SERVER["PHP_SELF"],$ID);		
 	}

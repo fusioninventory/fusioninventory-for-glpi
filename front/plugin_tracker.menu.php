@@ -39,17 +39,15 @@ $NEEDED_ITEMS=array("tracker");
 include (GLPI_ROOT."/inc/includes.php");
 
 if (plugin_tracker_HaveRight("snmp_models","r")
-	OR plugin_tracker_HaveRight("snmp_authentification","r")
-	OR plugin_tracker_HaveRight("snmp_iprange","r")
-	OR plugin_tracker_HaveRight("snmp_agent","r")
-	OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
-	OR plugin_tracker_HaveRight("snmp_agent_infos","r")
-	OR plugin_tracker_HaveRight("snmp_discovery","r")
-	OR plugin_tracker_HaveRight("snmp_report","r")
-	)
-{
-	if (plugin_tracker_needUpdate() == 1)
-	{
+    OR plugin_tracker_HaveRight("snmp_authentification","r")
+    OR plugin_tracker_HaveRight("snmp_iprange","r")
+    OR plugin_tracker_HaveRight("snmp_agent","r")
+    OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
+    OR plugin_tracker_HaveRight("snmp_agent_infos","r")
+    OR plugin_tracker_HaveRight("snmp_discovery","r")
+    OR plugin_tracker_HaveRight("snmp_report","r")
+	) {
+	if (plugin_tracker_needUpdate() == 1) {
 		commonHeader($LANGTRACKER["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
 		echo "<div align='center'>";
 		echo "<table class='tab_cadre' cellpadding='5'>";
@@ -58,14 +56,12 @@ if (plugin_tracker_HaveRight("snmp_models","r")
 		echo "<tr class='tab_bg_1'><td>";
 		echo "<a href='plugin_tracker.install.php'>".$LANGTRACKER["setup"][5]."</a></td></tr>";
 		echo "</table></div>";
-	}else{
+	} else {
 		commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 		plugin_tracker_menu();
 	}
-}
-else
-{
+} else {
 	displayRightError();
 }
 commonFooter();

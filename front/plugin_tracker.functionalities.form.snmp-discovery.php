@@ -46,12 +46,12 @@ $config_discovery = new PluginTrackerConfigDiscovery;
 
 if (isset($_POST['update'])) {
 
-	if (empty($_POST['cleaning_days']))
+	if (empty($_POST['cleaning_days'])) {
 		$_POST['cleaning_days'] = 0;
+   }
 		
 	$_POST['ID']=1;
-	
-	
+		
 	$config_discovery->update($_POST);
 }
 

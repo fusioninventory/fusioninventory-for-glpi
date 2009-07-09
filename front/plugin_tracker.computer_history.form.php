@@ -38,13 +38,14 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 if ( isset($_GET['type']) ) {
-	if ( $_GET['type'] == COMPUTER_TYPE )
+	if ( $_GET['type'] == COMPUTER_TYPE ) {
 		checkRight("computer","r");
-	else // $_GET['type'] == COMPUTER_TYPE
+   } else { // $_GET['type'] == COMPUTER_TYPE
 		checkRight("user","r");
-}
-else
+   }
+} else {
 	plugin_tracker_noRight();
+}
 
 plugin_tracker_checkRight("computers_history","r");
 
@@ -55,8 +56,8 @@ if ( (isset($_POST['delete'])) ) {
 	plugin_tracker_checkRight("computers_history","w");
 	
 	if ( isset($_POST['limit']) ) {
-		for ($i=0; $i<$_POST['limit']; $i++) {
-			if ( ( isset($_POST["checked_$i"]) ) && ( $_POST["checked_$i"] == 1 ) ) {
+		for ($i=0 ; $i<$_POST['limit'] ; $i++) {
+			if ((isset($_POST["checked_$i"])) && ($_POST["checked_$i"] == 1)) {
 				if ( isset($_POST["ID_$i"]) )
 				$input['ID'] = $_POST["ID_$i"];
 
@@ -64,7 +65,6 @@ if ( (isset($_POST['delete'])) ) {
 			}
 		}
 	}
-	
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);

@@ -51,17 +51,15 @@ plugin_tracker_checkRight("snmp_iprange","r");
 
 plugin_tracker_mini_menu();
 
-if (isset ($_POST["add"])){
+if (isset ($_POST["add"])) {
 	plugin_tracker_checkRight("snmp_iprange","w");
 	$rangeip->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
-}
-elseif (isset ($_POST["update"])) {
+} else if (isset ($_POST["update"])) {
 	plugin_tracker_checkRight("snmp_iprange","w");
 	$rangeip->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
-}
-elseif (isset ($_POST["delete"])) {
+} else if (isset ($_POST["delete"])) {
 	plugin_tracker_checkRight("snmp_iprange","w");
 	$agents->rangeip($_POST);
 	glpi_header("plugin_tracker.rangeip.php");
@@ -69,9 +67,9 @@ elseif (isset ($_POST["delete"])) {
 
 
 $ID = "";
-if (isset($_GET["ID"]))
+if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
-
+}
 
 $rangeip->showForm($_SERVER["PHP_SELF"], $ID);
 
