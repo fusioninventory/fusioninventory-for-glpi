@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_Threads extends CommonDBTM
+class PluginTrackerThreads extends CommonDBTM
 {
 
 	function __construct() {
@@ -49,7 +49,7 @@ class plugin_tracker_Threads extends CommonDBTM
 		
 		$minfreq = 9999;
 		$CommonItem = new CommonItem;
-		$Threads = new plugin_tracker_Threads;
+		$Threads = new PluginTrackerThreads;
 
 
 //		$sql = "SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
@@ -509,7 +509,7 @@ class plugin_tracker_Threads extends CommonDBTM
 	
 	
 	function Create ($file) {
-		$t = new plugin_tracker_Threads;
+		$t = new PluginTrackerThreads;
 		$descriptor = array (0 => array ("pipe", "r"), 1 => array ("pipe", "w"), 2 => array ("pipe", "w"));
 		$t->pref = proc_open ("php -q $file ", $descriptor, $t->pipes);
 		stream_set_blocking ($t->pipes[1], 0);

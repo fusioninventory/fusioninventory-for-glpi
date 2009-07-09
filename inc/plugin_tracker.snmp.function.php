@@ -52,7 +52,7 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 {
 	global $DB;
 	
-	$Thread = new plugin_tracker_Threads;
+	$Thread = new PluginTrackerThreads;
 	$config_snmp_script = new PluginTrackerConfigSnmpScript;
 	
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
@@ -130,10 +130,10 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	$_SESSION['FK_process'] = $FK_process;
 	
 	$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
-	$Threads = new plugin_tracker_Threads;
+	$Threads = new PluginTrackerThreads;
 	$logs = new PluginTrackerLogs;
 	$models = new PluginTrackerModelInfos;
-	$walks = new plugin_tracker_walk;
+	$walks = new PluginTrackerWalk;
 	$plugin_tracker_snmp = new PluginTrackerSnmp;
 
 	// Load XML Device ID
@@ -571,7 +571,7 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 	
 	$snmp_queries = new PluginTrackerSnmp;
 	$logs = new PluginTrackerLogs;
-	$walks = new plugin_tracker_walk;
+	$walks = new PluginTrackerWalk;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$type."][".$ID_Device,1);
 
@@ -703,11 +703,11 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 	global $DB;
 
 	$logs = new PluginTrackerLogs;
-	$processes = new plugin_tracker_Threads;
+	$processes = new PluginTrackerThreads;
 	$netwire = new Netwire;
 	$snmp_queries = new PluginTrackerSnmp;
-	$walks = new plugin_tracker_walk;
-	$unknown = new plugin_tracker_unknown;
+	$walks = new PluginTrackerWalk;
+	$unknown = new PluginTrackerUnknown;
 
 	// If Cisco
 //	if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
@@ -1055,10 +1055,10 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
 	$snmp_queries = new PluginTrackerSnmp;
 	$logs = new PluginTrackerLogs;
-	$walks = new plugin_tracker_walk;
-	$Threads = new plugin_tracker_Threads;
-	$unknown = new plugin_tracker_unknown;
-	$tmpc = new plugin_tracker_tmpconnections;
+	$walks = new PluginTrackerWalk;
+	$Threads = new PluginTrackerThreads;
+	$unknown = new PluginTrackerUnknown;
+	$tmpc = new PluginTrackerTmpconnections;
 
 	$Array_cdp_ifIndex = array();
 	$Array_trunk_ifIndex = array();
@@ -1496,7 +1496,7 @@ function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidv
 {
 	global $DB;
 
-	$walks = new plugin_tracker_walk;
+	$walks = new PluginTrackerWalk;
 	$logs = new PluginTrackerLogs;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type."][".$ID_Device,1);

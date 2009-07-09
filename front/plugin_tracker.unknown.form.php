@@ -47,7 +47,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_networking","r");
 
-$plugin_tracker_unknown = new plugin_tracker_unknown;
+$plugin_tracker_unknown = new PluginTrackerUnknown;
 
 commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","unknown");
 

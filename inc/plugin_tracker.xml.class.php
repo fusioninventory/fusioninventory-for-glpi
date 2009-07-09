@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')){
 	}
 
 /// XML class
-class plugin_tracker_XML {
+class PluginTrackerXml {
 
 	/**
 	 * Constructor
@@ -64,7 +64,7 @@ class plugin_tracker_XML {
 	function DoXML($writed=array()){
 		global $DB;
 
-		$xmlclass = new plugin_tracker_XML;
+		$xmlclass = new PluginTrackerXml;
 		
 		$xml = "<?xml version='1.0' encoding='UTF-8' ?>\n";
 		$xmlclass->element = $this->element;
@@ -85,7 +85,7 @@ class plugin_tracker_XML {
 	{
 		global $DB;
 
-		$xmlclass = new plugin_tracker_XML;
+		$xmlclass = new PluginTrackerXml;
 		$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
 		$config = new PluginTrackerConfig;
 		

@@ -1169,7 +1169,7 @@ function plugin_tracker_getDropdown()
 /* Cron */
 function cron_plugin_tracker()
 {
-	$plugin_tracker_unknown = new plugin_tracker_unknown;
+	$plugin_tracker_unknown = new PluginTrackerUnknown;
 	$plugin_tracker_unknown->FusionUnknownKnownDevice();
 	// Delete history
 }
@@ -1360,7 +1360,7 @@ function plugin_headings_tracker_printerInfo($type, $ID)
 
 function plugin_headings_tracker_printerHistory($type, $ID)
 {
-	$print_history = new plugin_tracker_printers_history();
+	$print_history = new PluginTrackerPrintersHistory();
 	$print_history->showForm(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_history.form.php', $_GET["ID"]);
 }
 
@@ -1372,7 +1372,7 @@ function plugin_headings_tracker_printerErrors($type, $ID)
 
 function plugin_headings_tracker_printerCronConfig($type, $ID)
 {
-	$print_config = new plugin_tracker_printers_history_config();
+	$print_config = new PluginTrackerPrintersHistoryConfig();
 	$print_config->showForm(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_history_config.form.php', $_GET["ID"]);
 }
 

@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_walk extends CommonDBTM
+class PluginTrackerWalk extends CommonDBTM
 {
 /*	function __construct()
 	{
@@ -48,8 +48,7 @@ class plugin_tracker_walk extends CommonDBTM
 */
 
 
-	function GetoidValues($device_snmp)
-	{
+	function GetoidValues($device_snmp) {
 		global $DB;
 
 		foreach($device_snmp->get as $snmpget){

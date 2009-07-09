@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_rangeip extends CommonDBTM
+class PluginTrackerRangeip extends CommonDBTM
 {
 	function __construct()
 	{

@@ -176,7 +176,7 @@ class plugin_tracker_networking extends CommonDBTM
 		$this->ID = $ID;
 		
 		$nw=new Netwire;
-		$processes = new plugin_tracker_Threads;
+		$processes = new PluginTrackerThreads;
 		$CommonItem = new CommonItem;
 		$plugin_tracker_snmp = new PluginTrackerSnmp;
 

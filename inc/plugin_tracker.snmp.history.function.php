@@ -89,7 +89,7 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 
 	$history = new PluginTrackerSnmpHistory;
 	$netwire = new Netwire;
-	$processes = new plugin_tracker_Threads;
+	$processes = new PluginTrackerThreads;
 	
 	// * If glpi device connected to this port, disconnect it
 	$queryVerif = "SELECT *

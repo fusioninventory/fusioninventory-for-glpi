@@ -44,7 +44,7 @@ plugin_tracker_checkRight("snmp_scripts_infos","r");
 
 plugin_tracker_mini_menu();
 
-$Threads = new plugin_tracker_Threads;
+$Threads = new PluginTrackerThreads;
 
 $Threads->showProcesses($_SERVER["PHP_SELF"]);
 

@@ -119,7 +119,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 else if(isset($_POST['get_data']))
 {
 	$agents_processes = new PluginTrackerAgentsProcesses;
-	$xml = new plugin_tracker_XML;
+	$xml = new PluginTrackerXml;
 	$config_snmp_networking = new PluginTrackerConfigSnmpNetworking;
 	$config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
 	$config = new PluginTrackerConfig;
@@ -257,7 +257,7 @@ else if(isset($_POST['get_data']))
 
 		for ($i=0;$i < count($devices);$i++)
 		{
-			$xml_writed = new plugin_tracker_XML;
+			$xml_writed = new PluginTrackerXml;
 			$xml_writed->element[1][$devices[$i]]['element']="snmp";
 			if ($devices[$i] == "device_networking")
 			{

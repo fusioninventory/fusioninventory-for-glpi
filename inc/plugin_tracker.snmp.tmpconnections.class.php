@@ -31,19 +31,16 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_tmpconnections extends CommonDBTM
-{
+class PluginTrackerTmpconnections extends CommonDBTM {
 
-	function __construct()
-	{
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_tmp_netports";
 		$this->type = PLUGIN_TRACKER_SNMP_TMP_NETPORTS;
 	}
 
 
 
-	function UpdatePort($FK_networking,$FK_networking_port,$cdp)
-	{
+	function UpdatePort($FK_networking,$FK_networking_port,$cdp) {
 		global $DB;
 
 		$query = "SELECT * FROM glpi_plugin_tracker_tmp_netports ".

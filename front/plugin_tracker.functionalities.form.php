@@ -42,7 +42,7 @@ checkRight("config","w");
 commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
 $config = new PluginTrackerConfig();
-$print_config = new plugin_tracker_printers_history_config();
+$print_config = new PluginTrackerPrintersHistoryConfig();
 
 if (isset($_POST['update'])) {
 

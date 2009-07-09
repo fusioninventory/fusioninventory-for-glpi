@@ -31,19 +31,16 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_unknown extends CommonDBTM
-{
+class PluginTrackerUnknown extends CommonDBTM {
 
-	function __construct()
-	{
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_unknown_device";
 		$this->type = PLUGIN_TRACKER_MAC_UNKNOWN;
 	}
 
 
 
-	function showForm($target, $ID = '')
-	{
+	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
 		plugin_tracker_checkRight("snmp_networking","r");
