@@ -37,11 +37,9 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_importexport extends CommonDBTM
-{
+class PluginTrackerImportExport extends CommonDBTM {
 
-	function plugin_tracker_export($ID_model)
-	{
+	function plugin_tracker_export($ID_model) {
 		global $DB;
 		
 		plugin_tracker_checkRight("snmp_models","r");

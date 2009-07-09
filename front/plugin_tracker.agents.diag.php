@@ -100,7 +100,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	unlink($content_dir.$name_file);
 	
 	// Open file for put it in DB
-	$importexport = new plugin_tracker_importexport;
+	$importexport = new PluginTrackerImportExport;
 	if (strstr($name_file_xml,"-discovery.xml"))
 	{
 		$importexport->import_agent_discovery($content_dir,$name_file_xml);
@@ -118,7 +118,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 }
 else if(isset($_POST['get_data']))
 {
-	$agents_processes = new plugin_tracker_agents_processes;
+	$agents_processes = new PluginTrackerAgentsProcesses;
 	$xml = new plugin_tracker_XML;
 	$config_snmp_networking = new PluginTrackerConfigSnmpNetworking;
 	$config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
@@ -244,7 +244,7 @@ else if(isset($_POST['get_data']))
 		// List and add in value for query ID of SNMP auth from XML file
 		if ($config->getValue("authsnmp") == "file")
 		{
-			$snmp_auth = new plugin_tracker_snmp_auth;
+			$snmp_auth = new PluginTrackerSnmpAuth;
 			$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
 			$Auth_id_valid = "(";
 			foreach ($array_auth AS $num=>$value)

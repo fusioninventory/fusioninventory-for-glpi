@@ -37,10 +37,9 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_mib_networking extends CommonDBTM
-{
-	function __construct()
-	{
+class PluginTrackerMibNetworking extends CommonDBTM {
+   
+	function __construct() {
 		$this->table="glpi_plugin_tracker_mib_networking";
 	}
 
@@ -295,7 +294,7 @@ class plugin_tracker_mib_networking extends CommonDBTM
 	{
 		global $DB;
 		
-		$mib_networking = new plugin_tracker_mib_networking();
+		$mib_networking = new PluginTrackerMibNetworking();
 		
 		$mib_networking->getFromDB($ID);
 		$data['ID'] = $ID;

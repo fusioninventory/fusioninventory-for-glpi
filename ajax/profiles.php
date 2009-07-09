@@ -40,7 +40,7 @@ header_nocache();
 
 checkRight("profile","r");
 
-$prof=new plugin_tracker_Profile();
+$prof=new PluginTrackerProfile;
 if ($_POST["interface"]=="tracker")
 	$prof->showForm('plugin_tracker.profile.php',$_POST["ID"]);
 

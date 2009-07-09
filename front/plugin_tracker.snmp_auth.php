@@ -49,7 +49,7 @@ plugin_tracker_mini_menu();
 // Forms for FILE
 if ($config->getValue("authsnmp") == "file")
 {
-	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+	$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
 	
 	if (!isset($_GET["ID"]))
 	{

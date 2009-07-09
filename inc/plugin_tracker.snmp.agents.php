@@ -37,18 +37,14 @@
 if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
-
-class plugin_tracker_agents extends CommonDBTM
-{
-	function __construct()
-	{
+class PluginTrackerAgents extends CommonDBTM {
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_agents";
 		$this->type = PLUGIN_TRACKER_SNMP_AGENTS;
 	}
 
 
-	function PushData($ID, $key)
-	{
+	function PushData($ID, $key) {
 		$this->getFromDB($ID);
 		// Name of server
 		// $this->fields["name"];

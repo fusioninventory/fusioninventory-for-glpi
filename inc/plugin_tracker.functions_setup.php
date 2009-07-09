@@ -68,7 +68,7 @@ function plugin_tracker_installing($version) {
 	$config_snmp_script = new PluginTrackerConfigSnmpScript;
 	$config_snmp_script->initConfig();
 	// Import models
-	$importexport = new plugin_tracker_importexport;
+	$importexport = new PluginTrackerImportExport;
 	foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0,1);
 	
 	plugin_tracker_initSession();
@@ -99,7 +99,7 @@ function plugin_tracker_update($version) {
 		$config_snmp_script = new PluginTrackerConfigSnmpScript;
 		$config_snmp_script->initConfig();
 		// Import models
-		$importexport = new plugin_tracker_importexport;
+		$importexport = new PluginTrackerImportExport;
 		foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0);
 		// Clean DB (ports in glpi_plugin_tracker_networking_ports..... )
 		plugin_tracker_clean_db();

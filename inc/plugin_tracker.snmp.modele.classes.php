@@ -38,16 +38,14 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_model_infos extends CommonDBTM
-{
-	function __construct()
-	{
+class PluginTrackerModelInfos extends CommonDBTM {
+   
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_model_infos";
 		$this->type = PLUGIN_TRACKER_MODEL;
 	}
 
-	function showForm($target, $ID = '')
-	{
+	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
 		plugin_tracker_checkRight("snmp_models","r");

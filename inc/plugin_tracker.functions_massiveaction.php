@@ -38,12 +38,12 @@
 function plugin_tracker_assign($id, $source_type, $source_field, $source_value)
 {
 	global $DB;
-	$plugin_tracker_snmp = new plugin_tracker_snmp;
+	$plugin_tracker_snmp = new PluginTrackerSnmp;
 	
 	if ($source_field == "model")
 	{
 		// Get auth
-		$snmp_auth = new plugin_tracker_snmp_auth;
+		$snmp_auth = new PluginTrackerSnmpAuth;
 		switch ($source_type)
 		{
 			case NETWORKING_TYPE :

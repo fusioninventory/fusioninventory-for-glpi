@@ -649,7 +649,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 				// ** Tracker - SNMP models
 				case "glpi_plugin_tracker_model_infos.ID" :
-					$plugin_tracker_snmp = new plugin_tracker_snmp;
+					$plugin_tracker_snmp = new PluginTrackerSnmp;
 					$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
 					$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
@@ -659,7 +659,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 				// ** Tracker - SNMP authentification
 				case "glpi_plugin_tracker_snmp_connection.name" :
-					$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+					$plugin_tracker_snmp = new PluginTrackerSnmpAuth;
 					$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
 					$out .= getDropdownName("glpi_plugin_tracker_snmp_connection", $FK_auth_DB, 0);
@@ -689,7 +689,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 				// ** Tracker - SNMP models
 				case "glpi_plugin_tracker_model_infos.ID" :
-					$plugin_tracker_snmp = new plugin_tracker_snmp;
+					$plugin_tracker_snmp = new PluginTrackerSnmp;
 					$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.models.form.php?ID=" . $FK_model_DB . "\">";
 					$out .= getDropdownName("glpi_plugin_tracker_model_infos", $FK_model_DB, 0);
@@ -699,7 +699,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 				// ** Tracker - SNMP authentification
 				case "glpi_plugin_tracker_snmp_connection.ID" :
-					$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+					$plugin_tracker_snmp = new PluginTrackerSnmpAuth;
 					$FK_auth_DB = $plugin_tracker_snmp->GetSNMPAuth($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/tracker/front/plugin_tracker.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
 					$out .= getDropdownName("glpi_plugin_tracker_snmp_connection", $FK_auth_DB, 0);
@@ -1042,7 +1042,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 			// ** Counter of devices discovered
 			case "glpi_plugin_tracker_agents_processes.discovery_queries" :
-				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes = new PluginTrackerAgentsProcesses;
 				$agents_processes->getFromDB($data['ID']);
 				$out = $data["ITEM_$num"]." / ".$agents_processes->fields["discovery_queries_total"];
 				if ($out == "0 / 0")
@@ -1052,7 +1052,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 			// ** Counter of devices queried
 			case "glpi_plugin_tracker_agents_processes.networking_queries" :
-				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes = new PluginTrackerAgentsProcesses;
 				$agents_processes->getFromDB($data['ID']);
 				$out = $data["ITEM_$num"] + $agents_processes->fields["printers_queries"];
 				return "<center>".$out."</center>";
@@ -1067,7 +1067,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 			// ** Total time of discovery function
 			case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
-				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes = new PluginTrackerAgentsProcesses;
 				$agents_processes->getFromDB($data['ID']);
 				$duree_timestamp = strtotime($agents_processes->fields["end_time_discovery"]) - strtotime($data["ITEM_$num"]);
 				$out = timestampToString($duree_timestamp);
@@ -1076,7 +1076,7 @@ function plugin_tracker_giveItem($type, $field, $data, $num, $linkfield = "")
 
 			// ** Total time of query function
 			case "glpi_plugin_tracker_agents_processes.start_time_query" :
-				$agents_processes = new plugin_tracker_agents_processes;
+				$agents_processes = new PluginTrackerAgentsProcesses;
 				$agents_processes->getFromDB($data['ID']);
 				$duree_timestamp = strtotime($agents_processes->fields["end_time_query"]) - strtotime($data["ITEM_$num"]);
 				$out = timestampToString($duree_timestamp);
@@ -1340,7 +1340,7 @@ function plugin_headings_tracker_computerHistory($type, $ID)
 
 function plugin_headings_tracker_computerErrors($type, $ID)
 {
-	$errors = new plugin_tracker_errors();
+	$errors = new PluginTrackerErrors();
 	$errors->showForm(COMPUTER_TYPE, GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.errors.form.php', $_GET["ID"]);
 }
 
@@ -1366,7 +1366,7 @@ function plugin_headings_tracker_printerHistory($type, $ID)
 
 function plugin_headings_tracker_printerErrors($type, $ID)
 {
-	$errors = new plugin_tracker_errors();
+	$errors = new PluginTrackerErrors();
 	$errors->showForm(PRINTER_TYPE, GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.errors.form.php', $_GET["ID"]);
 }
 
@@ -1384,7 +1384,7 @@ function plugin_headings_tracker_networkingInfo($type, $ID)
 
 function plugin_headings_tracker_networkingErrors($type, $ID)
 {
-	$errors = new plugin_tracker_errors();
+	$errors = new PluginTrackerErrors();
 	$errors->showForm(NETWORKING_TYPE, GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.errors.form.php', $_GET["ID"]);
 }
 
@@ -1401,7 +1401,7 @@ function plugin_headings_tracker($type,$ID,$withtemplate=0)
 
 	switch ($type){
 		case PROFILE_TYPE :
-			$prof=new plugin_tracker_Profile();	
+			$prof=new PluginTrackerProfile;
 			if (!$prof->GetfromDB($ID))
 				plugin_tracker_createaccess($ID);				
 			$prof->showForm($CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.profile.php",$ID);		
@@ -1611,7 +1611,7 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 		case 'glpi_plugin_tracker_discovery.FK_snmp_connection' :
-			$plugin_tracker_snmp = new plugin_tracker_snmp_auth;
+			$plugin_tracker_snmp = new PluginTrackerSnmpAuth;
 			echo $plugin_tracker_snmp->selectbox();
 			return true;
 			break;

@@ -42,7 +42,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_agent","r");
 
-$agents = new plugin_tracker_agents;
+$agents = new PluginTrackerAgents;
 
 header("Expires: 0");
 header("Cache-control: private");

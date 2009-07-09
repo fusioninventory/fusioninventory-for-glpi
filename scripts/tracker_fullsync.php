@@ -77,7 +77,7 @@ $failed_nbr= 0;
 $fields=array();
 $type='';
 
-$logs = new plugin_tracker_logs;
+$logs = new PluginTrackerLogs;
 
 if(isset($_GET['update_device_process'])) {
    // tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);

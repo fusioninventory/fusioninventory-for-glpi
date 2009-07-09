@@ -37,11 +37,9 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_errors extends CommonDBTM
-{
+class PluginTrackerErrors extends CommonDBTM {
 
-	function plugin_tracker_errors()
-	{
+	function plugin_tracker_errors() {
 		$this->table="glpi_plugin_tracker_errors";
 		$this->type=PLUGIN_TRACKER_ERROR_TYPE;
 		$this->entity_assign = true;

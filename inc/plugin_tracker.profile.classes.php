@@ -38,9 +38,9 @@ if (!defined('GLPI_ROOT')){
 }
 
 
-class plugin_tracker_Profile extends CommonDBTM {
+class PluginTrackerProfile extends CommonDBTM {
 
-	function plugin_tracker_Profile() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_profiles";
 		$this->type=-1;
 	}
@@ -91,7 +91,7 @@ class plugin_tracker_Profile extends CommonDBTM {
 			);
 		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false);
 		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false,'profile_interface');
-//$prof=new plugin_tracker_Profile();
+//$prof=new PluginTrackerProfile();
 
 //	$prof->showtrackerForm($_POST["ID"]);
 

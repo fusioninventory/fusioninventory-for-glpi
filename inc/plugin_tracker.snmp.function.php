@@ -129,12 +129,12 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	$ifIP = "";
 	$_SESSION['FK_process'] = $FK_process;
 	
-	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+	$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
 	$Threads = new plugin_tracker_Threads;
-	$logs = new plugin_tracker_logs;
-	$models = new plugin_tracker_model_infos;
+	$logs = new PluginTrackerLogs;
+	$models = new PluginTrackerModelInfos;
 	$walks = new plugin_tracker_walk;
-	$plugin_tracker_snmp = new plugin_tracker_snmp;
+	$plugin_tracker_snmp = new PluginTrackerSnmp;
 
 	// Load XML Device ID
 	$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$FK_agent_process."-device.xml");
@@ -248,7 +248,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 	global $DB,$LANG;
 
 	$np=new Netport();
-	$logs = new plugin_tracker_logs;
+	$logs = new PluginTrackerLogs;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$type."][".$ID_Device,1);
 
@@ -347,7 +347,7 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
 {
 	global $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
-	$logs = new plugin_tracker_logs;
+	$logs = new PluginTrackerLogs;
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type."][".$ID_Device,1);
 
 	// Update 'last_tracker_update' field 
@@ -569,8 +569,8 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 {
 	global $DB,$LANG,$TRACKER_MAPPING;	
 	
-	$snmp_queries = new plugin_tracker_snmp;
-	$logs = new plugin_tracker_logs;
+	$snmp_queries = new PluginTrackerSnmp;
+	$logs = new PluginTrackerLogs;
 	$walks = new plugin_tracker_walk;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$type."][".$ID_Device,1);
@@ -702,10 +702,10 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 {
 	global $DB;
 
-	$logs = new plugin_tracker_logs;
+	$logs = new PluginTrackerLogs;
 	$processes = new plugin_tracker_Threads;
 	$netwire = new Netwire;
-	$snmp_queries = new plugin_tracker_snmp;
+	$snmp_queries = new PluginTrackerSnmp;
 	$walks = new plugin_tracker_walk;
 	$unknown = new plugin_tracker_unknown;
 
@@ -1053,8 +1053,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 {
 	global $DB;
 
-	$snmp_queries = new plugin_tracker_snmp;
-	$logs = new plugin_tracker_logs;
+	$snmp_queries = new PluginTrackerSnmp;
+	$logs = new PluginTrackerLogs;
 	$walks = new plugin_tracker_walk;
 	$Threads = new plugin_tracker_Threads;
 	$unknown = new plugin_tracker_unknown;
@@ -1497,7 +1497,7 @@ function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidv
 	global $DB;
 
 	$walks = new plugin_tracker_walk;
-	$logs = new plugin_tracker_logs;
+	$logs = new PluginTrackerLogs;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type."][".$ID_Device,1);
 

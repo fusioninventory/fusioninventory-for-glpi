@@ -88,7 +88,7 @@ class plugin_tracker_unknown extends CommonDBTM
 	{
 		global $DB,$LANG,$LANGTRACKER;
 
-		$snmp_queries = new plugin_tracker_snmp;
+		$snmp_queries = new PluginTrackerSnmp;
 		$np=new Netport();
 
 		$query = "SELECT DISTINCT unknow_mac,unknown_ip,port,end_FK_processes FROM glpi_plugin_tracker_unknown_mac ".

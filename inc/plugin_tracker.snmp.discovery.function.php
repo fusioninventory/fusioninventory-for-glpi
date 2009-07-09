@@ -78,7 +78,7 @@ function plugin_tracker_discovery_import($discovery_ID)
 {
 	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 	
-	$td = new plugin_tracker_discovery;
+	$td = new PluginTrackerDiscovery;
 	
 	$td->getFromDB($discovery_ID);
 	

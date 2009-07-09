@@ -162,7 +162,7 @@ class plugin_tracker_networking extends CommonDBTM
 		
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;	
 		
-		$history = new plugin_tracker_SNMP_history;
+		$history = new PluginTrackerSnmpHistory;
 		
 		if ( !plugin_tracker_haveRight("snmp_networking","r") )
 			return false;
@@ -178,7 +178,7 @@ class plugin_tracker_networking extends CommonDBTM
 		$nw=new Netwire;
 		$processes = new plugin_tracker_Threads;
 		$CommonItem = new CommonItem;
-		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		$plugin_tracker_snmp = new PluginTrackerSnmp;
 
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking=".$ID." ";

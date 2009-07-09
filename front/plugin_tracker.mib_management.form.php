@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$plugin_tracker_mib_networking=new plugin_tracker_mib_networking();
+$plugin_tracker_mib_networking=new PluginTrackerMibNetworking();
 if (isset($_POST["add"]))
 {
 

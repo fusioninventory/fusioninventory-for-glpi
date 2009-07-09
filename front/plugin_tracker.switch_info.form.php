@@ -44,7 +44,7 @@ plugin_tracker_checkRight("snmp_networking","r");
 
 //$switch_snmp = new plugin_tracker_switch_snmp();
 
-$plugin_tracker_snmp = new plugin_tracker_snmp;
+$plugin_tracker_snmp = new PluginTrackerSnmp;
 
 if ( (isset($_POST['update'])) && (isset($_POST['ID'])) )
 {

@@ -69,7 +69,7 @@ class plugin_tracker_printers extends CommonDBTM
 		
 		$plugin_tracker_printers = new plugin_tracker_printers;
 		$config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
-		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		$plugin_tracker_snmp = new PluginTrackerSnmp;
 
 		$query = "
 		SELECT * 
@@ -216,7 +216,7 @@ class plugin_tracker_printers extends CommonDBTM
 		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING;	
 		
 		$plugin_tracker_printers = new plugin_tracker_printers;
-		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		$plugin_tracker_snmp = new PluginTrackerSnmp;
 	
 		$this->ID = $ID;
 		

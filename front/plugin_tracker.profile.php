@@ -39,7 +39,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 checkRight("profile","r");
-$prof=new plugin_tracker_Profile();
+$prof=new PluginTrackerProfile;
 
 //Save profile
 if (isset ($_POST['update_user_profile'])) {
@@ -56,7 +56,7 @@ checkRight("profile","r");
 
 commonHeader($LANG["Menu"][35],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
-$prof=new plugin_tracker_Profile();
+$prof=new PluginTrackerProfile;
 
 if(!isset($_POST["ID"])) $ID=0;
 else $ID=$_POST["ID"];

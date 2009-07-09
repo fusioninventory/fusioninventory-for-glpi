@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_snmp extends CommonDBTM
+class PluginTrackerSnmp extends CommonDBTM
 {
 	/**
 	 * Get port name and ID of the network materiel from DB

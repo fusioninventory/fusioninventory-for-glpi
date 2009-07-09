@@ -83,7 +83,7 @@ class plugin_tracker_tmpconnections extends CommonDBTM
 	{
 		global $DB;
 
-		$snmp_queries = new plugin_tracker_snmp;
+		$snmp_queries = new PluginTrackerSnmp;
 		
 		// ** port in glpi_plugin_tracker_tmp_netports is deleted = port connected ** //
 

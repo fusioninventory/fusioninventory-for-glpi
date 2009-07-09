@@ -31,10 +31,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_logs extends CommonDBTM {
+class PluginTrackerLogs extends CommonDBTM {
 	
-	function write($file,$text,$ip,$debug=0)
-	{
+	function write($file,$text,$ip,$debug=0) {
 		global $CFG_GLPI;
 	
 		$config = new PluginTrackerConfigSnmpScript();

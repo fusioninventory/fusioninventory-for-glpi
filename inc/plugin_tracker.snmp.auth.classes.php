@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
 
 
-class plugin_tracker_snmp_auth extends CommonDBTM {
+class PluginTrackerSnmpAuth extends CommonDBTM {
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_snmp_connection";
 		$this->type = PLUGIN_TRACKER_SNMP_AUTH;

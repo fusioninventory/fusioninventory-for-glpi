@@ -41,7 +41,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 $config = new PluginTrackerConfig();
 
-$errors = new plugin_tracker_errors();
+$errors = new PluginTrackerErrors;
 $computers_history = new plugin_tracker_computers_history();
 
 $computer=new Computer();

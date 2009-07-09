@@ -50,7 +50,7 @@ else
 
 plugin_tracker_checkRight("errors","r");
 
-$errors = new plugin_tracker_errors();
+$errors = new PluginTrackerErrors();
 
 if ( (isset($_POST['delete'])) ) {
 	

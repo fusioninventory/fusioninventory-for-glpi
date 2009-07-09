@@ -43,7 +43,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$agents = new plugin_tracker_agents;
+$agents = new PluginTrackerAgents;
 
 commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
 

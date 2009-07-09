@@ -86,7 +86,7 @@ class plugin_tracker_XML {
 		global $DB;
 
 		$xmlclass = new plugin_tracker_XML;
-		$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
+		$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
 		$config = new PluginTrackerConfig;
 		
 		$xmlclass->element = $this->element;
@@ -142,7 +142,7 @@ class plugin_tracker_XML {
 					$result=$DB->query($query);
 					while ( $data=$DB->fetch_array($result) )
 					{
-						$snmp_auth = new plugin_tracker_snmp_auth;
+						$snmp_auth = new PluginTrackerSnmpAuth;
 						$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
 						$array_auth[$data["FK_snmp_connection"]]["name"] = $array_auth[$data["FK_snmp_connection"]]["namec"];
 						$xml .= $tab."<".$element.">\n";
