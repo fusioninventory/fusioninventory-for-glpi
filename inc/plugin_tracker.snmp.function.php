@@ -1138,18 +1138,18 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 						$Array_trunk_ifIndex[$snmpportID] = 1;
 						$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
 						$trunk_no_cdp[$snmpportID] = 1;
-						if (isset($Array_multiplemac_ifIndex[$snmpportID])) {
-							unset($Array_multiplemac_ifIndex[$snmpportID]);
-                  }
+//						if (isset($Array_multiplemac_ifIndex[$snmpportID])) {
+//							unset($Array_multiplemac_ifIndex[$snmpportID]);
+//                  }
 					}
 				} else if ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan],"ProCurve J"))) {
 					if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "2") {
 						$Array_trunk_ifIndex[$snmpportID] = 1;
 						$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
 						$trunk_no_cdp[$snmpportID] = 1;
-						if (isset($Array_multiplemac_ifIndex[$snmpportID])) {
-							unset($Array_multiplemac_ifIndex[$snmpportID]);
-                  }
+//						if (isset($Array_multiplemac_ifIndex[$snmpportID])) {
+//							unset($Array_multiplemac_ifIndex[$snmpportID]);
+//                  }
 					}
 				}
 			}
@@ -1230,7 +1230,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 			}
 		}
 	} else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225")) {
-	    $trunk_no_cdp["1"] = 1;
+      $trunk_no_cdp["1"] = 1;
 		$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
 	}
 	// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
@@ -1443,18 +1443,16 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
    return $Array_multiplemac_ifIndex;
 }
 
-function plugin_tracker_hex_to_string($value)
-{
-	if (strstr($value, "0x0115"))
-	{
+function plugin_tracker_hex_to_string($value) {
+	if (strstr($value, "0x0115")) {
 		$hex = str_replace("0x0115","",$value);
 		$string='';
-		for ($i=0; $i < strlen($hex)-1; $i+=2)
+		for ($i=0 ; $i < strlen($hex)-1 ; $i+=2) {
 			$string .= chr(hexdec($hex[$i].$hex[$i+1]));
+      }
 		$value = $string;
 	}
-	if (strstr($value, "0x"))
-	{
+	if (strstr($value, "0x")) {
 		$hex = str_replace("0x","",$value);
 		$string='';
 		for ($i=0; $i < strlen($hex)-1; $i+=2)
@@ -1466,8 +1464,7 @@ function plugin_tracker_hex_to_string($value)
 
 
 
-function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues)
-{
+function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues) {
 	global $DB;
 
 	$walks = new PluginTrackerWalk;
@@ -1480,38 +1477,35 @@ function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidv
 
 	$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr
 	WHERE FK_networking='".$ID_Device."' ";
-	if ( $result=$DB->query($query) )
-	{
-		while ( $data=$DB->fetch_array($result) )
+	if ( $result=$DB->query($query) ) {
+		while ($data=$DB->fetch_array($result)) {
 			$ifaddr[$data["ifaddr"]] = $data["FK_networking"];
+      }
 	}
-	if (isset($ifaddr['127.0.0.1']))
+	if (isset($ifaddr['127.0.0.1'])) {
 		unset($ifaddr['127.0.0.1']);
+   }
 	$ifaddr_switch = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ipAdEntAddr']);
 
-	foreach($ifaddr as $ifIP=>$FK_networking)
-	{
+	foreach($ifaddr as $ifIP=>$FK_networking) {
 		$logs->write("tracker_fullsync","ifIP : ".$ifIP,$type."][".$ID_Device,1);
-		foreach($ifaddr_switch as $num_switch=>$ifIP_switch)
-		{
-			if ($ifIP == $ifIP_switch)
-			{
+		foreach($ifaddr_switch as $num_switch=>$ifIP_switch) {
+			if ($ifIP == $ifIP_switch) {
 				unset ($ifaddr[$ifIP]);
 				unset ($ifaddr_switch[$num_switch]);
 			}
 		}
 	}
-	if (isset($ifaddr_switch['127.0.0.1']))
-			unset($ifaddr_switch['127.0.0.1']);
-	foreach($ifaddr as $ifaddr_snmp=>$FK_networking)
-	{
+	if (isset($ifaddr_switch['127.0.0.1'])) {
+      unset($ifaddr_switch['127.0.0.1']);
+   }
+	foreach($ifaddr as $ifaddr_snmp=>$FK_networking) {
 		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
 		WHERE FK_networking='".$ID_Device."'
 			AND ifaddr='".$ifaddr_snmp."' ";
 		$DB->query($query_delete);
 	}
-	foreach($ifaddr_switch as $num_snmp=>$ifaddr_snmp)
-	{
+	foreach($ifaddr_switch as $num_snmp=>$ifaddr_snmp) {
 		$query_insert = "INSERT INTO glpi_plugin_tracker_networking_ifaddr
 		(FK_networking,ifaddr)
 		VALUES('".$ID_Device."','".$ifaddr_snmp."') ";
