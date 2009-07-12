@@ -1182,6 +1182,13 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 	} else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225")) {
       $trunk_no_cdp["1"] = 1;
 		$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
+      $query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+					WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum["1"]."'
+						AND device_type='".NETWORKING_TYPE."'
+						AND on_device='".$ID_Device."' ";
+      $result = $DB->query($query);
+      $data = $DB->fetch_assoc($result);
+      $tmpc->UpdatePort($ID_Device,$data["ID"],0);
 	}
    
 	// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
