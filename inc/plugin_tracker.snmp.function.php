@@ -545,7 +545,7 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 	foreach($Array_Object_TypeNameConstant as $oid=>$link) {
 		if ((preg_match("/\.$/",$oid)) AND (!empty($TRACKER_MAPPING[$type][$link]['field']))) { // SNMPWalk ONLY (ports)
 //			print "OID : ".$oid."\n";
-			
+			 
 			// For each port
 			if ($TRACKER_MAPPING[$type][$link]['field'] == 'ifmac') {
 				$query = "SELECT glpi_networking_ports.ID, logical_number, glpi_networking_ports.ifmac as ifmac FROM glpi_networking_ports
@@ -840,16 +840,17 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 						$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
 						$MacAddress_tmp = str_split($MacAddress, 2);
 						$MacAddress = $MacAddress_tmp[0];
-						for($i = 1; $i < count($MacAddress_tmp); $i++)
+						for($i = 1; $i < count($MacAddress_tmp); $i++) {
 							$MacAddress .= ":".$MacAddress_tmp[$i];
-$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
+                  }
+                  $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
 
-$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
+                  $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 						$queryPortEnd = "SELECT * FROM glpi_networking_ports
 							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
 								AND on_device!='".$ID_Device."' ".
 								" AND device_type!='".NETWORKING_TYPE."' ";
-					$resultPortEnd=$DB->query($queryPortEnd);
+                  $resultPortEnd=$DB->query($queryPortEnd);
 						$sport = $ArrayPortsID[$ifName]; // Networking_Port
 						if ($DB->numrows($resultPortEnd) != 0) {
 							$dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)

@@ -1434,11 +1434,10 @@ function plugin_tracker_MassiveActions($type)
 	return array ();
 }
 
-function plugin_tracker_MassiveActionsDisplay($type, $action)
-{
-
+function plugin_tracker_MassiveActionsDisplay($type, $action) {
 	global $LANG, $CFG_GLPI, $DB;
-	switch ($type) {
+
+   switch ($type) {
 		case NETWORKING_TYPE :
 			switch ($action) {
 				case "plugin_tracker_assign_model" :
