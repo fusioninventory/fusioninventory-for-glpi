@@ -1023,7 +1023,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 		if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))) {
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 
-			if ((array_count_values($Array_vlan) != 0) AND (array_count_values($Array_vlan) != "")) {
+			if ((array_count_values($Array_vlan) != 0) AND (array_count_values($Array_vlan) != 0)) {
 				$pass = 1;
 				foreach ($Array_vlan as $num=>$vlan) {
 					$Arraydot1dTpFdbPort = array();
@@ -1066,9 +1066,12 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
       }
 	// End detection of ports non trunk and have multiple mac addresses
 
+   // Initialization of Trunk ports (Trunk in Cisco AND Tagged in other switchs)
 	$Array_trunk_ifIndex = array();
 
-	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))) {
+	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
+      OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))) {
+
 		$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 		foreach ($Array_vlan as $num=>$vlan) {
 			// Get vlan name
@@ -1103,7 +1106,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 		}
 		$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
 
-		// Get trunk port from CDP
+		// Get CDP
 		// Get by SNMP query the IP addresses of the switch connected ($Array_trunk_IP_hex)
 		$Array_trunk_IP_hex_result = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['cdpCacheAddress'],1);
 
@@ -1118,11 +1121,11 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 					$trunk_IP = str_replace("0x","",$trunk_IP);
 					$hex_ = preg_replace("/[^0-9a-fA-F]/","", $trunk_IP);
 					$trunk_IP_tmp = '';
-					for($i = 0; $i < strlen($hex_); $i = $i + 2) {
+					for($i = 0 ; $i < strlen($hex_) ; $i = $i + 2) {
 						$trunk_IP_tmp .= chr(hexdec(substr($hex_, $i, 2)));
                }
 					$ip_switch_trunk = ord(substr($trunk_IP_tmp, 0, 1));
-					for($i = 1; $i < strlen($trunk_IP_tmp); $i = $i + 1) {
+					for($i = 1 ; $i < strlen($trunk_IP_tmp) ; $i = $i + 1) {
 						$ip_switch_trunk .= ".".ord(substr($trunk_IP_tmp, $i, 1));
                }
 				} else {
@@ -1134,7 +1137,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 					$ifIndex = $explode[0];
 					$end_Number = $explode[1];
 
-					$Array_trunk_ifIndex[$ifIndex] = 1;
+					//$Array_trunk_ifIndex[$ifIndex] = 1;
 					$Array_cdp_ifIndex[$ifIndex] = 1;
 					if (isset($Array_multiplemac_ifIndex[$ifIndex])) {
 						unset($Array_multiplemac_ifIndex[$ifIndex]);
@@ -1222,96 +1225,96 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
 
 	// If no Ip or mac in this trunks port, we try to search switch connected to this
-	foreach($trunk_no_cdp AS $ifIndex=>$activation)	{
-		// list all mac addresses connected to this ports
-		if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) {
-			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
-			foreach ($Array_vlan as $num=>$vlan) {
-				unset($ArrayMACAdressTable);
-				$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1,$vlan);
-
-				foreach($ArrayMACAdressTable as $num=>$dynamicdata) {
-					$oidExplode = explode(".", $dynamicdata);
-					if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]))) {
-						$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
-						$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
-
-						if (($BridgePortifIndex == $ifIndex)) {
-							$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
-							$MacAddress_tmp = str_split($MacAddress, 2);
-							$MacAddress = $MacAddress_tmp[0];
-							for($i = 1; $i < count($MacAddress_tmp); $i++) {
-								$MacAddress .= ":".$MacAddress_tmp[$i];
-                     }
-
-							// On vérifie si l'adresse MAC appartient à un port réseau de switch
-							$query = "SELECT *  FROM glpi_networking_ports
-							WHERE device_type='".NETWORKING_TYPE."'
-							 AND ifmac='".$MacAddress."' ";
-							$result = $DB->query($query);		
-							if (mysql_num_rows($result) > 0) {
-								$data = $DB->fetch_assoc($result);
-								
-								$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-								WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."'
-									AND device_type='".NETWORKING_TYPE."'
-									AND on_device='".$ID_Device."' ";
-								$result2 = $DB->query($query2);
-								$data2 = $DB->fetch_assoc($result2);
-
-								$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
-							}
-						}
-					}
-
-				}
-
-			}
-		} else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225")) {
-			// =-=-=-=-=-=-= Don't work =-=-=-=-=-=-= \\
-//			unset($ArrayMACAdressTable);
-//			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1);
-//			foreach($ArrayMACAdressTable as $num=>$dynamicdata)
-//			{
+//	foreach($trunk_no_cdp AS $ifIndex=>$activation)	{
+//		// list all mac addresses connected to this ports
+//		if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) {
+//			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+//			foreach ($Array_vlan as $num=>$vlan) {
+//				unset($ArrayMACAdressTable);
+//				$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1,$vlan);
 //
-//				$oidExplode = explode(".", $dynamicdata);
-//				if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""])))
-//				{
-//					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""];
+//				foreach($ArrayMACAdressTable as $num=>$dynamicdata) {
+//					$oidExplode = explode(".", $dynamicdata);
+//					if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]))) {
+//						$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
+//						$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
 //
-//					if (($BridgePortifIndex == "1"))
-//					{
-//						$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
-//						$MacAddress_tmp = str_split($MacAddress, 2);
-//						$MacAddress = $MacAddress_tmp[0];
-//						for($i = 1; $i < count($MacAddress_tmp); $i++)
-//							$MacAddress .= ":".$MacAddress_tmp[$i];
+//						if (($BridgePortifIndex == $ifIndex)) {
+//							$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+//							$MacAddress_tmp = str_split($MacAddress, 2);
+//							$MacAddress = $MacAddress_tmp[0];
+//							for($i = 1; $i < count($MacAddress_tmp); $i++) {
+//								$MacAddress .= ":".$MacAddress_tmp[$i];
+//                     }
 //
-//						// On vérifie si l'adresse MAC appartient à un port réseau de switch
-//						$query = "SELECT *  FROM glpi_networking_ports
-//						WHERE device_type='".NETWORKING_TYPE."'
-//						 AND ifmac='".$MacAddress."' ";
-//						$result = $DB->query($query);
-//						if (mysql_num_rows($result) > 0)
-//						{
-//							$data = $DB->fetch_assoc($result);
+//							// On vérifie si l'adresse MAC appartient à un port réseau de switch
+//							$query = "SELECT *  FROM glpi_networking_ports
+//							WHERE device_type='".NETWORKING_TYPE."'
+//							 AND ifmac='".$MacAddress."' ";
+//							$result = $DB->query($query);
+//							if (mysql_num_rows($result) > 0) {
+//								$data = $DB->fetch_assoc($result);
 //
-//							$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-//							WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum["1"]."'
-//								AND device_type='".NETWORKING_TYPE."'
-//								AND on_device='".$ID_Device."' ";
+//								$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+//								WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."'
+//									AND device_type='".NETWORKING_TYPE."'
+//									AND on_device='".$ID_Device."' ";
+//								$result2 = $DB->query($query2);
+//								$data2 = $DB->fetch_assoc($result2);
 //
-//							$result2 = $DB->query($query2);
-//							$data2 = $DB->fetch_assoc($result2);
-//
-//							$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
+//								$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
+//							}
 //						}
 //					}
+//
 //				}
 //
 //			}
-		}
-	}
+//		} else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225")) {
+//			// =-=-=-=-=-=-= Don't work =-=-=-=-=-=-= \\
+////			unset($ArrayMACAdressTable);
+////			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1);
+////			foreach($ArrayMACAdressTable as $num=>$dynamicdata)
+////			{
+////
+////				$oidExplode = explode(".", $dynamicdata);
+////				if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""])))
+////				{
+////					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""];
+////
+////					if (($BridgePortifIndex == "1"))
+////					{
+////						$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
+////						$MacAddress_tmp = str_split($MacAddress, 2);
+////						$MacAddress = $MacAddress_tmp[0];
+////						for($i = 1; $i < count($MacAddress_tmp); $i++)
+////							$MacAddress .= ":".$MacAddress_tmp[$i];
+////
+////						// On vérifie si l'adresse MAC appartient à un port réseau de switch
+////						$query = "SELECT *  FROM glpi_networking_ports
+////						WHERE device_type='".NETWORKING_TYPE."'
+////						 AND ifmac='".$MacAddress."' ";
+////						$result = $DB->query($query);
+////						if (mysql_num_rows($result) > 0)
+////						{
+////							$data = $DB->fetch_assoc($result);
+////
+////							$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+////							WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum["1"]."'
+////								AND device_type='".NETWORKING_TYPE."'
+////								AND on_device='".$ID_Device."' ";
+////
+////							$result2 = $DB->query($query2);
+////							$data2 = $DB->fetch_assoc($result2);
+////
+////							$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
+////						}
+////					}
+////				}
+////
+////			}
+//		}
+//	}
 
 	foreach($Array_cdp_ifIndex AS $ifIndex=>$val) {
 		$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
