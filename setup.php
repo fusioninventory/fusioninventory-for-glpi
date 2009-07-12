@@ -40,19 +40,19 @@ function plugin_init_tracker() {
 	
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG,$LANGTRACKER;
 
-	pluginNewType('tracker', "PLUGIN_TRACKER_ERROR_TYPE", 5150, "plugin_tracker_errors", "glpi_plugin_tracker_errors", "front/plugin_tracker.errors.form.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_MODEL", 5151, "plugin_tracker_model_infos", "glpi_plugin_tracker_model_infos", "front/plugin_tracker.models.form.php",$LANGTRACKER["model_info"][4]);
-	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AUTH", 5152, "plugin_tracker_snmp_auth", "glpi_plugin_tracker_snmp_connection", "front/plugin_tracker.snmp_auth.form.php",$LANGTRACKER["model_info"][3]);
-	pluginNewType('tracker', "PLUGIN_TRACKER_MAC_UNKNOWN", 5153, "plugin_tracker_unknown", "glpi_plugin_tracker_unknown_device", "front/plugin_tracker.unknown.form.php", $LANGTRACKER["processes"][13]);
+	pluginNewType('tracker', "PLUGIN_TRACKER_ERROR_TYPE", 5150, "PluginTrackerErrors", "glpi_plugin_tracker_errors", "front/plugin_tracker.errors.form.php");
+	pluginNewType('tracker', "PLUGIN_TRACKER_MODEL", 5151, "PluginTrackerModelInfos", "glpi_plugin_tracker_model_infos", "front/plugin_tracker.models.form.php",$LANGTRACKER["model_info"][4]);
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AUTH", 5152, "PluginTrackerSnmpAuth", "glpi_plugin_tracker_snmp_connection", "front/plugin_tracker.snmp_auth.form.php",$LANGTRACKER["model_info"][3]);
+	pluginNewType('tracker', "PLUGIN_TRACKER_MAC_UNKNOWN", 5153, "PluginTrackerUnknown", "glpi_plugin_tracker_unknown_device", "front/plugin_tracker.unknown.form.php", $LANGTRACKER["processes"][13]);
 	pluginNewType('tracker', "PLUGIN_TRACKER_PRINTERS_CARTRIDGES", 5156, "plugin_tracker_printers", "glpi_plugin_tracker_printers_cartridges", "front/plugin_tracker.printer_info.form.php",$LANG["cartridges"][0]);
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS", 5157, "plugin_tracker_networking", "glpi_networking_ports");
-	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AGENTS", 5158, "plugin_tracker_agents", "glpi_plugin_tracker_agents", "front/plugin_tracker.agents.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_RANGEIP", 5159, "plugin_tracker_rangeip", "glpi_plugin_tracker_rangeip", "front/plugin_tracker.rangeip.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, "plugin_tracker_discovery", "glpi_plugin_tracker_discovery", "front/plugin_tracker.discovery.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, "plugin_tracker_agents_processes", "glpi_plugin_tracker_agents_processes", "front/plugin_tracker.agents.processes.php");
-	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_HISTORY", 5162, "plugin_tracker_SNMP_history", "glpi_plugin_tracker_snmp_history");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_AGENTS", 5158, "PluginTrackerAgents", "glpi_plugin_tracker_agents", "front/plugin_tracker.agents.php");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_RANGEIP", 5159, "PluginTrackerRangeip", "glpi_plugin_tracker_rangeip", "front/plugin_tracker.rangeip.php");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, "PluginTrackerDiscovery", "glpi_plugin_tracker_discovery", "front/plugin_tracker.discovery.php");
+	pluginNewType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, "PluginTrackerAgentsProcesses", "glpi_plugin_tracker_agents_processes", "front/plugin_tracker.agents.processes.php");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_HISTORY", 5162, "PluginTrackerSnmpHistory", "glpi_plugin_tracker_snmp_history");
 	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2", 5163, "plugin_tracker_networking_ports", "glpi_plugin_tracker_networking_ports");
-	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_TMP_NETPORTS", 5164, "plugin_tracker_tmpconnections", "glpi_plugin_tracker_tmp_netports");
+	pluginNewType('tracker', "PLUGIN_TRACKER_SNMP_TMP_NETPORTS", 5164, "PluginTrackerTmpconnections", "glpi_plugin_tracker_tmp_netports");
 
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
