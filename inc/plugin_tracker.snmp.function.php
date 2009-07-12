@@ -135,7 +135,8 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 			break;
 		}			
 	}
-
+   unset($xml);
+   unset($device);
 	// Get SNMP model oids
 	$oidsModel = $models->oidlist($ID_Device,$type);
 	ksort($oidsModel);
@@ -143,6 +144,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	if ((isset($oidsModel)) && ($ID_Device != "")) {
 		// Get oidvalues from agents
 		$oidvalues = $walks->GetoidValues($device_snmp);
+      unset($device_snmp);
 		if (is_array($oidvalues)) {
 			ksort($oidvalues);
       } else {
@@ -381,15 +383,15 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
             }
 			}
 
-				if ($link == 'macaddr') {
-					$MacAddress = str_replace("0x","",$oidvalues[$oid][""]);
-					$MacAddress_tmp = str_split($MacAddress, 2);
-					$MacAddress = $MacAddress_tmp[0];
-					for($i = 1; $i < count($MacAddress_tmp); $i++) {
-						$MacAddress .= ":".$MacAddress_tmp[$i];
-               }
-					$oidvalues[$oid][""] = $MacAddress;
-				}
+         if ($link == 'macaddr') {
+            $MacAddress = str_replace("0x","",$oidvalues[$oid][""]);
+            $MacAddress_tmp = str_split($MacAddress, 2);
+            $MacAddress = $MacAddress_tmp[0];
+            for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
+               $MacAddress .= ":".$MacAddress_tmp[$i];
+            }
+            $oidvalues[$oid][""] = $MacAddress;
+         }
 
 			// Convert hexa in string
 			$oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);

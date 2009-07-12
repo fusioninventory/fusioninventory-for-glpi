@@ -124,16 +124,19 @@ if(isset($_GET['update_device_process'])) {
             $ArrayListType[] = $device->infos->type;
             $ArrayListAgentProcess[] = $data['process_number'];
          }
+         unset($xml);
+         unset($device);
       }
    }
+   
    if (isset($ArrayListDevice)) {
       plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
    }
-
-   foreach ( $xml_file as $num=>$filename ) {
-      unlink($filename);
+   if ((isset($xml_file)) AND (!empty($xml_file))) {
+      foreach ( $xml_file as $num=>$filename ) {
+         unlink($filename);
+      }
    }
-
    // Create connections between switchs
    $tmpc = new PluginTrackerTmpconnections;
    $tmpc->WireInterSwitchs();
