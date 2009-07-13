@@ -210,7 +210,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 		global $DB,$LANG,$LANGTRACKER;
 
 		$walks = new PluginTrackerWalk;
-		$config_discovery = new plugin_tracker_config_discovery;
+		$config_discovery = new PluginTrackerConfigDiscovery;
 
 		// Recompose File
 		$target = $content_dir.$file;
