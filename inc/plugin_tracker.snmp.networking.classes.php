@@ -408,7 +408,7 @@ function appear_array(id){
 
 		echo "<tr class='tab_bg_1'>";
 		$query_array = "SELECT * FROM glpi_display
-		WHERE type='5157'
+		WHERE type='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS."'
 			AND FK_users='0'
 		ORDER BY rank";
 		$result_array=$DB->query($query_array);
