@@ -981,9 +981,9 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 			}
 		}
 
-		if ($vlan == "") {
-			return $array_port_trunk;
-      }
+//		if ($vlan == "") {
+//			return $array_port_trunk;
+//      }
 //	}
 }
 
@@ -1404,6 +1404,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 //	}
 
 //	return $Array_trunk_ifIndex;
+
    return $Array_multiplemac_ifIndex;
 }
 
