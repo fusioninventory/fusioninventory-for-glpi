@@ -254,8 +254,9 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 	} else {
 		$discovery_empty = 1;
 		for ($i=0 ; $i < count($array_search) ; $i++) {
-			if (!empty($array_search[$i]))
+			if ($array_search[$i] != "") { // NE PAS METTRE !EMPTY
 				$discovery_empty = 0;
+         }
 		}
 
 		if (($discovery_empty == "1") AND ($criteria_pass2 == "0")) {
