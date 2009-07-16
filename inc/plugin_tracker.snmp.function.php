@@ -834,7 +834,9 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 										$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
 										$port_add["ifaddr"] = $ip_unknown;
 										$port_add['ifmac'] = $MacAddress;
-										$port_ID = $np->add($port_add);
+                              $dport = $np->add($port_add);
+										$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
+
 										//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 									}
 								}
@@ -909,7 +911,8 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 								$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
 								$port_add["ifaddr"] = $ip_unknown;
 								$port_add['ifmac'] = $MacAddress;
-								$port_ID = $np->add($port_add);
+								$dport = $np->add($port_add);
+								$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
 								//$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
 							}
 						}
@@ -996,7 +999,8 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
                      $port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
                      $port_add["ifaddr"] = $ip_unknown;
                      $port_add['ifmac'] = $MacAddress;
-                     $port_ID = $np->add($port_add);
+							$dport = $np->add($port_add);
+							$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
                      //$processes->unknownMAC($_SESSION['FK_process'],$ArrayPortsID[$ifName],$MacAddress,$sport,$ip_unknown);
                   }
                }
