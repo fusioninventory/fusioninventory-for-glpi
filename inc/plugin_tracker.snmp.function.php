@@ -1194,7 +1194,6 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 	}
 
 	// If no Ip or mac in this trunks port, we try to search switch connected to this
-	//var_dump($trunk_no_cdp);
 	foreach($trunk_no_cdp AS $ifIndex=>$activation)
 	{
 		// list all mac addresses connected to this ports
