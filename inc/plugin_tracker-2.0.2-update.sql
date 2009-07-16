@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_tracker_unknown_device` (
 
 ALTER TABLE `glpi_plugin_tracker_config` ADD `version` VARCHAR( 255 ) NOT NULL DEFAULT '0' AFTER `ID` ;
 
-UPDATE `glpi0715`.`glpi_plugin_tracker_config` SET `version` = '2.0.2' WHERE `glpi_plugin_tracker_config`.`ID` =1 LIMIT 1 ;
+UPDATE `glpi_plugin_tracker_config` SET `version` = '2.0.2' WHERE `glpi_plugin_tracker_config`.`ID` =1 LIMIT 1 ;
 
 ALTER TABLE `glpi_plugin_tracker_printers_history` ADD `pages_total_print` INT( 11 ) NOT NULL DEFAULT '0',
 ADD `pages_n_b_print` INT( 11 ) NOT NULL DEFAULT '0',
