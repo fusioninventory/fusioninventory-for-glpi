@@ -1352,8 +1352,10 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 		}
 	}
 
-	$arrayTrunk = array_merge($Array_trunk_ifIndex, $Array_multiplemac_ifIndex);
-	return $arrayTrunk;
+	foreach($Array_multiplemac_ifIndex AS $ifIndex=>$val)
+		$Array_trunk_ifIndex[$ifIndex] = $val;
+
+	return $Array_trunk_ifIndex;
 }
 
 function plugin_tracker_hex_to_string($value)
