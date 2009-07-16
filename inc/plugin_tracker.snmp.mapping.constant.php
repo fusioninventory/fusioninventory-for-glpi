@@ -730,6 +730,8 @@ $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['name'] = $LANG
 $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['cartridgesmaintenancekitREMAIN']['dropdown'] = '';
 
+// Printers : Counter pages
+
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['table'] = 'glpi_plugin_tracker_printers_history';
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['field'] = 'pages_total';
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['name'] = $LANG['plugin_tracker']["mapping"][28];
@@ -765,6 +767,57 @@ $TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'] = $LANG['
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['dropdown'] = '';
 
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['field'] = 'pages_total_print';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['name'] = $LANGTRACKER["mapping"][423];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['shortname'] = $LANGTRACKER["mapping"][1423];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['field'] = 'pages_n_b_print';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['name'] = $LANGTRACKER["mapping"][424];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['shortname'] = $LANGTRACKER["mapping"][1424];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['field'] = 'pages_color_print';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['name'] = $LANGTRACKER["mapping"][425];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['shortname'] = $LANGTRACKER["mapping"][1425];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['field'] = 'pages_total_copy';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['name'] = $LANGTRACKER["mapping"][426];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['shortname'] = $LANGTRACKER["mapping"][1426];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['field'] = 'pages_n_b_copy';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['name'] = $LANGTRACKER["mapping"][427];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'] = $LANGTRACKER["mapping"][1427];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['field'] = 'pages_color_copy';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['name'] = $LANGTRACKER["mapping"][428];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'] = $LANGTRACKER["mapping"][1428];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['dropdown'] = '';
+
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['table'] = 'glpi_plugin_tracker_printers_history';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['field'] = 'pages_total_fax';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['name'] = $LANGTRACKER["mapping"][429];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname'] = $LANGTRACKER["mapping"][1429];
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['type'] = 'text';
+$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['dropdown'] = '';
+
+// Printers : Networking
+
 $TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['table'] = 'glpi_networking_ports';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['field'] = 'ifmac';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifPhysAddress']['name'] = $LANG['plugin_tracker']["mapping"][58];
@@ -788,8 +841,6 @@ $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['field'] = '';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['name'] = $LANG['plugin_tracker']["mapping"][97];
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifType']['dropdown'] = '';
-
-// Printers port
 
 $TRACKER_MAPPING[PRINTER_TYPE]['ifIndex']['table'] = '';
 $TRACKER_MAPPING[PRINTER_TYPE]['ifIndex']['field'] = '';
