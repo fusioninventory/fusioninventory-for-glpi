@@ -621,7 +621,7 @@ function appear_array(id){
 				
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
-					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".tracker_snmp_showHistory($data["ID"])."</td>
+					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".plugin_tracker_snmp_showHistory($data["ID"])."</td>
 				</tr>
 				";
 			}

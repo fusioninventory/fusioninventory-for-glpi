@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT'))
 
 
 
-function tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0)
+function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0)
 {
 	global $DB,$CFG_GLPI;
 	$history = new plugin_tracker_SNMP_history;
@@ -165,7 +165,7 @@ echo "2- Nothing \n";
 
 
 // List of history in networking display
-function tracker_snmp_showHistory($ID_port)
+function plugin_tracker_snmp_showHistory($ID_port)
 {
 	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
