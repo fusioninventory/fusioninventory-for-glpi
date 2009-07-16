@@ -706,6 +706,8 @@ class plugin_tracker_printers extends CommonDBTM
 				$data = $DB->fetch_assoc($result);
 				$datas['FK_cartridges'] = $data['FK_cartridges'];
 				$datas['state'] = $data['state'];
+				if (($datas['state']) < 0)
+					$datas['state'] = "0";
 			}
 		}
 		return $datas;
