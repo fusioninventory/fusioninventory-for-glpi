@@ -228,10 +228,10 @@ function plugin_tracker_install()
 
 function plugin_tracker_needUpdate()
 {
-	if(!TableExists("glpi_plugin_tracker_unknown_device"))
-		return 1;
 	if (!TableExists("glpi_plugin_tracker_config"))
 		return 0;
+	if(!TableExists("glpi_plugin_tracker_unknown_device"))
+		return 1;
 	if (!TableExists("glpi_plugin_tracker_agents_processes"))
 		return 1;
 	else
