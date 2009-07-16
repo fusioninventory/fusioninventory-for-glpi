@@ -486,7 +486,9 @@ function appear_array(id){
 				$background_img = "";
 				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")))
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/port_trunk.png\"); '";
-				else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1"))
+				else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")))
+					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/multiple_mac_addresses.png\"); '";
+            else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1"))
 					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/connected_trunk.png\"); '";
 
 				echo "<tr class='tab_bg_1' height='40'".$background_img.">";
