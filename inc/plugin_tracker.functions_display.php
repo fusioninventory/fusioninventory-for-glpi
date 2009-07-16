@@ -280,8 +280,11 @@ function plugin_tracker_Bar ($pourcentage, $message="",$order='')
 					<tbody>
 						<tr>
 							<td align='center' width='400'>";
-	if (!empty($pourcentage))
+
+	if ((!empty($pourcentage)) OR ($pourcentage == "0"))
 		echo $pourcentage."% ".$message;
+
+
 echo						"</td>
 						</tr>
 						<tr>
@@ -316,10 +319,16 @@ echo						"</td>
 			else 
 				echo "green";
 		}
-		echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>";
+		if ($pourcentage == 0)
+			echo "' height='20' width='1'>&nbsp;</td>";
+		else
+         echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>";
 	}
-		echo "									<td width='".(400 - (4 * $pourcentage))."'></td>
-										</tr>
+		if ($pourcentage == 0)
+			echo "									<td width='1'></td>";
+		else
+			echo "									<td width='".(400 - (4 * $pourcentage))."'></td>";
+		echo "								</tr>
 									</tbody>
 								</table>
 							</td>
