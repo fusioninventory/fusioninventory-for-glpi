@@ -47,7 +47,9 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 if (haveRight("config","w") && haveRight("profile","w")){
 
-	if(!TableExists("glpi_plugin_tracker_unknown_device"))
+	if (!TableExists("glpi_plugin_tracker_config"))
+		plugin_tracker_install();
+	elseif(!TableExists("glpi_plugin_tracker_unknown_device"))
 		plugin_tracker_update("2.0.2");
 	elseif (plugin_tracker_needUpdate() == 1)
 		plugin_tracker_update("2.0.0");
