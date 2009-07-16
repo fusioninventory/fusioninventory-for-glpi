@@ -22,3 +22,26 @@ ADD `pages_total_copy` INT( 11 ) NOT NULL DEFAULT '0',
 ADD `pages_n_b_copy` INT( 11 ) NOT NULL DEFAULT '0',
 ADD `pages_color_copy` INT( 11 ) NOT NULL DEFAULT '0',
 ADD `pages_total_fax` INT( 11 ) NOT NULL DEFAULT '0';
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_tmp_netports`;
+
+CREATE TABLE `glpi_plugin_tracker_tmp_netports` (
+  `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+  `FK_networking` INT( 11 ) NOT NULL DEFAULT '0',
+  `FK_networking_port` INT( 11 ) NOT NULL DEFAULT '0',
+  `cdp` INT( 1 ) NOT NULL DEFAULT '0',
+  PRIMARY KEY ( `ID` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_tmp_connections`;
+
+CREATE TABLE `glpi_plugin_tracker_tmp_connections` (
+  `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+  `FK_tmp_netports` INT( 11 ) NOT NULL DEFAULT '0',
+  `macaddress` VARCHAR( 255 ) NULL ,
+  PRIMARY KEY ( `ID` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
