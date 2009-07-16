@@ -507,7 +507,7 @@ function tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$A
 			}
 			else if ($TRACKER_MAPPING[$type][$link]['table'] != "")
 			{
-				if (($TRACKER_MAPPING[$type][$link]['field'] == "cpu") AND ($oidvalues[$oid][""] == ""))
+				if (($TRACKER_MAPPING[$type][$link]['field'] == "cpu") AND (empty($oidvalues[$oid][""])))
 					$SNMPValue = 0;
 				
 				if (strstr($TRACKER_MAPPING[$type][$link]['table'], "glpi_plugin_tracker"))
@@ -1036,12 +1036,9 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 
 	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J")))
 	{
-		// Get trunk port directly from oid
-		echo "TEST\n";
 
-		var_dump($oidsModel[0][1]['vlanTrunkPortDynamicStatus']);
 		$Arraytrunktype = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vlanTrunkPortDynamicStatus'],1);
-var_dump($Arraytrunktype);
+
       foreach($Arraytrunktype as $IDtmp=>$snmpportID)
 		{
 			if (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
