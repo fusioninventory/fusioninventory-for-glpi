@@ -393,6 +393,14 @@ $LANG['plugin_tracker']["mapping"][419]="networking > Inventory number";
 $LANG['plugin_tracker']["mapping"][420]="printer > manufacturer";
 $LANG['plugin_tracker']["mapping"][421]="networking > IP addresses";
 $LANG['plugin_tracker']["mapping"][422]="networking > portVlanIndex";
+$LANG['plugin_tracker']["mapping"][423]="printer > meter > total number of printed pages (print)";
+$LANG['plugin_tracker']["mapping"][424]="printer > meter > number of printed black and white pages (print)";
+$LANG['plugin_tracker']["mapping"][425]="printer > meter > number of printed color pages (print)";
+$LANG['plugin_tracker']["mapping"][426]="printer > meter > total number of printed pages (copy)";
+$LANG['plugin_tracker']["mapping"][427]="printer > meter > number of printed black and white pages (copy)";
+$LANG['plugin_tracker']["mapping"][428]="printer > meter > number of printed color pages (copy)";
+$LANG['plugin_tracker']["mapping"][429]="printer > meter > total number of printed pages (fax)";
+
 
 
 $LANG['plugin_tracker']["mapping"][101]="";
@@ -442,6 +450,14 @@ $LANG['plugin_tracker']["mapping"][153]="Cleaning module";
 $LANG['plugin_tracker']["mapping"][154]="Number of pages printed duplex";
 $LANG['plugin_tracker']["mapping"][155]="Number of scanned pages";
 $LANG['plugin_tracker']["mapping"][156]="Maintenance kit";
+$LANG['plugin_tracker']["mapping"][1423]="Total number of printed pages (print)";
+$LANG['plugin_tracker']["mapping"][1424]="Number of printed black and white pages (print)";
+$LANG['plugin_tracker']["mapping"][1425]="Number of printed color pages (print)";
+$LANG['plugin_tracker']["mapping"][1426]="Total number of printed pages (copy)";
+$LANG['plugin_tracker']["mapping"][1427]="Number of printed black and white pages (copy)";
+$LANG['plugin_tracker']["mapping"][1428]="Number of printed color pages (copy)";
+$LANG['plugin_tracker']["mapping"][1429]="Total number of printed pages (fax)";
+
 
 $LANG['plugin_tracker']["printer"][0]="pages";
 

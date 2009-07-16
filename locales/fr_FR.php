@@ -391,6 +391,14 @@ $LANG['plugin_tracker']["mapping"][419]="réseaux > numéro d'inventaire";
 $LANG['plugin_tracker']["mapping"][420]="imprimante > fabricant";
 $LANG['plugin_tracker']["mapping"][421]="réseaux > addresses IP";
 $LANG['plugin_tracker']["mapping"][422]="réseaux > portVlanIndex";
+$LANG['plugin_tracker']["mapping"][423]="imprimante > compteur > nombre total de pages imprimées (impression)";
+$LANG['plugin_tracker']["mapping"][424]="imprimante > compteur > nombre de pages noir et blanc imprimées (impression)";
+$LANG['plugin_tracker']["mapping"][425]="imprimante > compteur > nombre de pages couleur imprimées (impression)";
+$LANG['plugin_tracker']["mapping"][426]="imprimante > compteur > nombre total de pages imprimées (copie)";
+$LANG['plugin_tracker']["mapping"][427]="imprimante > compteur > nombre de pages noir et blanc imprimées (copie)";
+$LANG['plugin_tracker']["mapping"][428]="imprimante > compteur > nombre de pages couleur imprimées (copie)";
+$LANG['plugin_tracker']["mapping"][429]="imprimante > compteur > nombre total de pages imprimées (fax)";
+
 
 
 $LANG['plugin_tracker']["mapping"][101]="";
@@ -440,6 +448,14 @@ $LANG['plugin_tracker']["mapping"][153]="Module de nettoyage";
 $LANG['plugin_tracker']["mapping"][154]="Nombre de pages recto/verso imprimées";
 $LANG['plugin_tracker']["mapping"][155]="Nombre de pages scannées";
 $LANG['plugin_tracker']["mapping"][156]="Kit de maintenance";
+$LANG['plugin_tracker']["mapping"][1423]="Nombre total de pages imprimées (impression)";
+$LANG['plugin_tracker']["mapping"][1424]="Nombre de pages noir et blanc imprimées (impression)";
+$LANG['plugin_tracker']["mapping"][1425]="Nombre de pages couleur imprimées (impression)";
+$LANG['plugin_tracker']["mapping"][1426]="Nombre total de pages imprimées (copie)";
+$LANG['plugin_tracker']["mapping"][1427]="Nombre de pages noir et blanc imprimées (copie)";
+$LANG['plugin_tracker']["mapping"][1428]="Nombre de pages couleur imprimées (copie)";
+$LANG['plugin_tracker']["mapping"][1429]="Nombre total de pages imprimées (fax)";
+
 
 $LANG['plugin_tracker']["printer"][0]="pages";
 
