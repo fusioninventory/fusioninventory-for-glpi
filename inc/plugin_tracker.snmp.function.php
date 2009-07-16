@@ -1056,10 +1056,15 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 	// Detect if ports are non trunk and have multiple mac addresses (with list of dot1dTpFdbPort & dot1dBasePortIfIndex)
 		// Get all port_number
 		$Array_multiplemac_ifIndex = array();
+		$pass = 0;
 		if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")))
 		{
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
-			foreach ($Array_vlan as $num=>$vlan)
+
+			if ((array_count_values($Array_vlan) != 0) AND (array_count_values($Array_vlan) != ""))
+			{
+				$pass = 1;
+         foreach ($Array_vlan as $num=>$vlan)
 			{
 				$Arraydot1dTpFdbPort = array();
 				$ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
@@ -1076,7 +1081,10 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 				}
 			}
 		}
-		else
+
+		}
+
+		if ($pass == "0")
 		{
          $Arraydot1dTpFdbPort = array();
          $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
@@ -1092,41 +1100,45 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 					$Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
 			}
 		}
-
+		if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco IOS Software, C1")))
+			$Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".3"][$vlan]] = 1;
 	// End detection of ports non trunk and have multiple mac addresses
 
 	$Array_trunk_ifIndex = array();
 
    if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J")))
 	{
-
-		$Arraytrunktype = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vlanTrunkPortDynamicStatus'],1);
-
-      foreach($Arraytrunktype as $IDtmp=>$snmpportID)
+		$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+		foreach ($Array_vlan as $num=>$vlan)
 		{
-			if (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
-			{
-            if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][""] == "1")
-            {
-               $Array_trunk_ifIndex[$snmpportID] = 1;
-               $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
-               $trunk_no_cdp[$snmpportID] = 1;
-					if (isset($Array_multiplemac_ifIndex[$snmpportID]))
-						unset($Array_multiplemac_ifIndex[$snmpportID]);
+			$Arraytrunktype = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vlanTrunkPortDynamicStatus'],1,$vlan);
+
+         foreach($Arraytrunktype as $IDtmp=>$snmpportID)
+         {
+				if (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan],"Cisco"))
+				{
+					if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "1")
+                {
+                  $Array_trunk_ifIndex[$snmpportID] = 1;
+                  $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
+                  $trunk_no_cdp[$snmpportID] = 1;
+                  if (isset($Array_multiplemac_ifIndex[$snmpportID]))
+                     unset($Array_multiplemac_ifIndex[$snmpportID]);
+               }
+            }
+				elseif (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan],"ProCurve J"))
+				{
+					if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "2")
+               {
+                  $Array_trunk_ifIndex[$snmpportID] = 1;
+                  $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
+                  $trunk_no_cdp[$snmpportID] = 1;
+                  if (isset($Array_multiplemac_ifIndex[$snmpportID]))
+                     unset($Array_multiplemac_ifIndex[$snmpportID]);
+               }
             }
          }
-			elseif (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))
-			{
-				if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][""] == "2")
-				{
-					$Array_trunk_ifIndex[$snmpportID] = 1;
-					$logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
-					$trunk_no_cdp[$snmpportID] = 1;
-					if (isset($Array_multiplemac_ifIndex[$snmpportID]))
-						unset($Array_multiplemac_ifIndex[$snmpportID]);
-				}
-			}
-		}
+      }
       
 		$ArrayPort_LogicalNum_SNMPNum = array_flip($ArrayPort_LogicalNum_SNMPNum);
 
