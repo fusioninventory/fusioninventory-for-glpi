@@ -44,6 +44,16 @@
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
+			<object><![CDATA[hpSwitchCpuStat]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.11.2.14.11.5.1.9.6.1.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[cpu]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
 			<object><![CDATA[dot1dBasePortIfIndex]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.17.1.4.1.2]]></oid>
 			<portcounter>0</portcounter>
@@ -254,8 +264,8 @@
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
-			<object><![CDATA[freeMem]]></object>
-			<oid><![CDATA[.1.3.6.1.4.1.9.2.1.8.0]]></oid>
+			<object><![CDATA[hpLocalMemFreeBytes]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.6.1]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>2</mapping_type>
@@ -284,8 +294,8 @@
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
-			<object><![CDATA[processorRam]]></object>
-			<oid><![CDATA[.1.3.6.1.4.1.9.3.6.6.0]]></oid>
+			<object><![CDATA[hpLocalMemTotalBytes]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.5.1]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>2</mapping_type>
