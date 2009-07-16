@@ -1257,6 +1257,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 			$result=$DB->query($query);
 			while ($data=$DB->fetch_array($result))
 			{
+            // If trunk => 1
 				if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1"))
 				{
 					if ($data['trunk'] != "1")
@@ -1267,8 +1268,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 						$DB->query($query_update);
 						plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
 					}
-				}
-				else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1"))
+            // If multiple => -1
+				} else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1"))
 				{
 					if ($data['trunk'] != "-1")
 					{
@@ -1399,58 +1400,59 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 		$result_sel2=$DB->query($query_sel2);
 		$FK_networking = $DB->result($result_sel2, 0, "on_device");
 		$TMP_ID = $tmpc->UpdatePort($FK_networking,$ArrayPortsID[$ifName],1);
+      $Array_multiplemac_ifIndex[$ifIndex] = 1;
 	}
 
-	foreach($Array_multiplemac_ifIndex AS $ifIndex=>$val)
-		$Array_trunk_ifIndex[$ifIndex] = $val;
+//	foreach($Array_multiplemac_ifIndex AS $ifIndex=>$val)
+//		$Array_trunk_ifIndex[$ifIndex] = $val;
 
-	foreach($Array_trunk_ifIndex AS $ifIndex=>$val)
-	{
-		$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
-		$query_sel2 = "SELECT * FROM glpi_networking_ports ".
-		    " WHERE ID='".$ArrayPortsID[$ifName]."' ";
-		$result_sel2=$DB->query($query_sel2);
-		$FK_networking = $DB->result($result_sel2, 0, "on_device");
-		$TMP_ID = $tmpc->UpdatePort($FK_networking,$ArrayPortsID[$ifName],0);
-		// ** Search if one of connection is a switch port, If there is only one, we can connect
-		// Search all ports in dot1dBasePortIfIndex
-		$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$ifIndex][""];
-		$Arraydot1dTpFdbPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
-		$ArrayMacAddress = array();
-		$ArrayPort = array();
-		foreach($Arraydot1dTpFdbPort as $num=>$dynamicdata)
-		{
-		    if ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""] == $BridgePortifIndex)
-		    {
-				if (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]))
-				{
-					// Convert MAC HEX in Decimal
-					$tmp = $oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""];
-					$MacAddress = str_replace("0x","",$tmp);
-
-					$MacAddress_tmp = str_split($MacAddress, 2);
-					$MacAddress = $MacAddress_tmp[0];
-					for($i = 1; $i < count($MacAddress_tmp); $i++)
-						$MacAddress .= ":".$MacAddress_tmp[$i];
-
-					$query = "SELECT *  FROM glpi_networking_ports
-					WHERE device_type='".NETWORKING_TYPE."'
-					AND ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."') ";
-					$result = $DB->query($query);
-					if (mysql_num_rows($result) == 1)
-					{
-						$ArrayMacAddress[] = $MacAddress;
-						$data = $DB->fetch_assoc($result);
-						$ArrayPort[$MacAddress] = $data["ID"];
-						$ArrayMacAddress = array();
-						$ArrayMacAddress[] = $MacAddress;
-						if (!empty($TMP_ID))
-   						$tmpc->AddConnections($TMP_ID,$ArrayMacAddress);
-					}
-				}
-			}
-		}
-		$logs->write("tracker_fullsync","Count multiple mac Port [".$ifIndex."] : ".count($ArrayMacAddress),$type."][".$ID_Device,1);
+//	foreach($Array_trunk_ifIndex AS $ifIndex=>$val)
+//	{
+//		$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
+//		$query_sel2 = "SELECT * FROM glpi_networking_ports ".
+//		    " WHERE ID='".$ArrayPortsID[$ifName]."' ";
+//		$result_sel2=$DB->query($query_sel2);
+//		$FK_networking = $DB->result($result_sel2, 0, "on_device");
+//		$TMP_ID = $tmpc->UpdatePort($FK_networking,$ArrayPortsID[$ifName],0);
+//		// ** Search if one of connection is a switch port, If there is only one, we can connect
+//		// Search all ports in dot1dBasePortIfIndex
+//		$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$ifIndex][""];
+//		$Arraydot1dTpFdbPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
+//		$ArrayMacAddress = array();
+//		$ArrayPort = array();
+//		foreach($Arraydot1dTpFdbPort as $num=>$dynamicdata)
+//		{
+//		    if ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""] == $BridgePortifIndex)
+//		    {
+//				if (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]))
+//				{
+//					// Convert MAC HEX in Decimal
+//					$tmp = $oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""];
+//					$MacAddress = str_replace("0x","",$tmp);
+//
+//					$MacAddress_tmp = str_split($MacAddress, 2);
+//					$MacAddress = $MacAddress_tmp[0];
+//					for($i = 1; $i < count($MacAddress_tmp); $i++)
+//						$MacAddress .= ":".$MacAddress_tmp[$i];
+//
+//					$query = "SELECT *  FROM glpi_networking_ports
+//					WHERE device_type='".NETWORKING_TYPE."'
+//					AND ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."') ";
+//					$result = $DB->query($query);
+//					if (mysql_num_rows($result) == 1)
+//					{
+//						$ArrayMacAddress[] = $MacAddress;
+//						$data = $DB->fetch_assoc($result);
+//						$ArrayPort[$MacAddress] = $data["ID"];
+//						$ArrayMacAddress = array();
+//						$ArrayMacAddress[] = $MacAddress;
+//						if (!empty($TMP_ID))
+//							$tmpc->AddConnections($TMP_ID,$ArrayMacAddress);
+//					}
+//				}
+//			}
+//		}
+//		$logs->write("tracker_fullsync","Count multiple mac Port [".$ifIndex."] : ".count($ArrayMacAddress),$type."][".$ID_Device,1);
 
 //		if (count($ArrayMacAddress) == "1")
 //		{
@@ -1462,10 +1464,12 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 //
 //		}
 
-		$Array_trunk_ifIndex[$ifIndex] = $val;
-	}
+//		$Array_trunk_ifIndex[$ifIndex] = $val;
+//	}
 
-	return $Array_trunk_ifIndex;
+//	return $Array_trunk_ifIndex;
+   return $Array_multiplemac_ifIndex;
+
 }
 
 function plugin_tracker_hex_to_string($value)
