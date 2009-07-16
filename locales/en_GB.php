@@ -392,6 +392,8 @@ $LANG['plugin_tracker']["mapping"][418]="printer > Inventory number";
 $LANG['plugin_tracker']["mapping"][419]="networking > Inventory number";
 $LANG['plugin_tracker']["mapping"][420]="printer > manufacturer";
 $LANG['plugin_tracker']["mapping"][421]="networking > IP addresses";
+$LANG['plugin_tracker']["mapping"][422]="networking > portVlanIndex";
+
 
 $LANG['plugin_tracker']["mapping"][101]="";
 $LANG['plugin_tracker']["mapping"][102]="";

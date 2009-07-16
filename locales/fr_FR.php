@@ -390,6 +390,7 @@ $LANG['plugin_tracker']["mapping"][418]="imprimante > numéro d'inventaire";
 $LANG['plugin_tracker']["mapping"][419]="réseaux > numéro d'inventaire";
 $LANG['plugin_tracker']["mapping"][420]="imprimante > fabricant";
 $LANG['plugin_tracker']["mapping"][421]="réseaux > addresses IP";
+$LANG['plugin_tracker']["mapping"][422]="réseaux > portVlanIndex";
 
 
 $LANG['plugin_tracker']["mapping"][101]="";
