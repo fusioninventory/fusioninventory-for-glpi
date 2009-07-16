@@ -220,7 +220,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 			// Foreach VLAN ID to GET MAC Adress on each VLAN
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 			foreach ($Array_vlan as $num=>$vlan_ID)
-				GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,$vlan_ID);
+				GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,$vlan_ID,$Array_trunk_ifIndex);
 		}
 	}
 }
@@ -860,7 +860,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 					$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
 					if ($BridgePortNumber > 1)
 					{
-						echo $num." : ".$BridgePortNumber."\n";
+//						echo $num." : ".$BridgePortNumber."\n";
 						// Convert MAC HEX in Decimal
 						$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
 						$MacAddress_tmp = str_split($MacAddress, 2);
@@ -1040,21 +1040,44 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 
 	// Detect if ports are trunk (with list of dot1dTpFdbPort & dot1dBasePortIfIndex
 		// Get all port_number
-
-		$Arraydot1dTpFdbPort = array();
-		$ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
-		foreach($ArrayConnectionsPort as $num=>$Connectionkey)
-			$Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan];
-
-		$ArrayCount = array_count_values($Arraydot1dTpFdbPort);
-
-		$ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
-		foreach($ArrayPortNumber as $num=>$PortNumber)
+		if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")))
 		{
-			if ($ArrayCount[$PortNumber] > 1)
-				$Array_trunk_ifIndex[$PortNumber] = 1;
+			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+			foreach ($Array_vlan as $num=>$vlan)
+			{
+				$Arraydot1dTpFdbPort = array();
+				$ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
+				foreach($ArrayConnectionsPort as $num=>$Connectionkey)
+					$Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan];
+
+				$ArrayCount = array_count_values($Arraydot1dTpFdbPort);
+
+				$ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
+				foreach($ArrayPortNumber as $num=>$PortNumber)
+				{
+					if ($ArrayCount[$PortNumber] > 1)
+						$Array_trunk_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
+				}
+			}
+		}
+		else
+		{
+         $Arraydot1dTpFdbPort = array();
+         $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
+         foreach($ArrayConnectionsPort as $num=>$Connectionkey)
+            $Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan];
+
+         $ArrayCount = array_count_values($Arraydot1dTpFdbPort);
+
+         $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
+         foreach($ArrayPortNumber as $num=>$PortNumber)
+         {
+            if ($ArrayCount[$PortNumber] > 1)
+					$Array_trunk_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
+			}
 		}
 
+	// End detection of trunk ports
 	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J")))
 	{
 
