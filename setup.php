@@ -113,6 +113,11 @@ function plugin_init_tracker() {
 		'formpage' => 'front/plugin_tracker.functionalities.form.php'
 		));
 
+   registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_TMP_NETPORTS", 5165, array(
+		'classname' => 'plugin_tracker_tmpconnections',
+		'tablename' => 'glpi_plugin_tracker_tmp_netports'
+		));
+	
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
