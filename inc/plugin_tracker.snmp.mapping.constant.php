@@ -187,6 +187,12 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['name'] = $LANG['plugin_tracker
 $TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ipAdEntAddr']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['PortVlanIndex']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['PortVlanIndex']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['PortVlanIndex']['name'] = $LANG['plugin_tracker']["mapping"][422];
+$TRACKER_MAPPING[NETWORKING_TYPE]['PortVlanIndex']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['PortVlanIndex']['dropdown'] = '';
+
 // Networking Ports
 
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifIndex']['table'] = '';
