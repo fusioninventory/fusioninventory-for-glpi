@@ -1442,7 +1442,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 						$ArrayPort[$MacAddress] = $data["ID"];
 						$ArrayMacAddress = array();
 						$ArrayMacAddress[] = $MacAddress;
-						$tmpc->AddConnections($TMP_ID,$ArrayMacAddress);
+						if (!empty($TMP_ID))
+   						$tmpc->AddConnections($TMP_ID,$ArrayMacAddress);
 					}
 				}
 			}
