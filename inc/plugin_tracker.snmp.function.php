@@ -1034,6 +1034,23 @@ function cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_
 
 	$Array_trunk_ifIndex = array();
 
+	// Detect if ports are trunk (with list of dot1dTpFdbPort & dot1dBasePortIfIndex
+		// Get all port_number
+
+		$Arraydot1dTpFdbPort = array();
+		$ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
+		foreach($ArrayConnectionsPort as $num=>$Connectionkey)
+			$Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan];
+
+		$ArrayCount = array_count_values($Arraydot1dTpFdbPort);
+
+		$ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
+		foreach($ArrayPortNumber as $num=>$PortNumber)
+		{
+			if ($ArrayCount[$PortNumber] > 1)
+				$Array_trunk_ifIndex[$PortNumber] = 1;
+		}
+
 	if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J")))
 	{
 
