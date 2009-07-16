@@ -91,6 +91,8 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 		if ($nb_process_query == $s)
 		{
 			eval($while);
+			// Display 0 in tracker_fullsync.log
+			// TODO : Try to not display it
 			eval($close);
 			$s = 0;
 		}
