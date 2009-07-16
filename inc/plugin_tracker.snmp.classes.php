@@ -320,32 +320,35 @@ class plugin_tracker_snmp extends CommonDBTM
 			}
 			else
 			{
-				// Verify vlan and update it if necessery
-				$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
-				if ($FK_vlan != "0")
+				if (!empty($vlan))
 				{
-					$query = "SELECT * FROM glpi_networking_vlan ".
-						" WHERE FK_port='$source_port' ".
-						" AND FK_vlan='$FK_vlan' ";
-					if ($result=$DB->query($query))
-					{
-						if ( $DB->numrows($result) == "0" )
-						{
-							$this->CleanVlan($source_port);
-							assignVlan($source_port,$FK_vlan);
-						}
-						else
-						{
-							$query2 = "SELECT * FROM glpi_networking_vlan ".
-								" WHERE FK_port='$source_port' ".
-								" AND FK_vlan!='$FK_vlan' ";
-							if ( $result2=$DB->query($query2) )
-								while ( $data2=$DB->fetch_array($result2) )
-									$this->CleanVlanID($data2["ID"]);
+               // Verify vlan and update it if necessery
+               $FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
+               if ($FK_vlan != "0")
+               {
+                  $query = "SELECT * FROM glpi_networking_vlan ".
+                     " WHERE FK_port='$source_port' ".
+                     " AND FK_vlan='$FK_vlan' ";
+                  if ($result=$DB->query($query))
+                  {
+                     if ( $DB->numrows($result) == "0" )
+                     {
+                        $this->CleanVlan($source_port);
+                        assignVlan($source_port,$FK_vlan);
+                     }
+                     else
+                     {
+                        $query2 = "SELECT * FROM glpi_networking_vlan ".
+                           " WHERE FK_port='$source_port' ".
+                           " AND FK_vlan!='$FK_vlan' ";
+                        if ( $result2=$DB->query($query2) )
+                           while ( $data2=$DB->fetch_array($result2) )
+                              $this->CleanVlanID($data2["ID"]);
+                     }
                   }
-					}
-				}
-			}
+               }
+            }
+         }
 		}
 		// Remove all connections if it is
 		if ($netwire->getOppositeContact($destination_port) != "")
