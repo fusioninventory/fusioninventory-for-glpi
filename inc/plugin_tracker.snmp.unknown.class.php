@@ -139,7 +139,7 @@ class plugin_tracker_unknown extends CommonDBTM
 				" AND ifmac!='00:00:00:00:00:00' ".
 				" AND device_type=".PLUGIN_TRACKER_MAC_UNKNOWN." ".
 			" GROUP BY ifmac ".
-			" HAVING count(*)>1) ";
+			" HAVING count(*)>1 ";
 
 
 		if ( $result=$DB->query($query) )
