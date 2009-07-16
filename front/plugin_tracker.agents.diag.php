@@ -75,10 +75,27 @@ if( isset($_POST['upload']) ) // si formulaire soumis
         exit("Impossible to copy file in $content_dir");
     
 	$name_file_xml = str_replace(".gz", "", $name_file);
-	$string = implode("", gzfile($content_dir . $name_file));
-	$fp = fopen($content_dir . $name_file_xml, "w");
-	fwrite($fp, $string, strlen($string));
-	fclose($fp);
+//	$string = implode("", gzfile($content_dir . $name_file));
+//	$fp = fopen($content_dir . $name_file_xml, "w");
+//	fwrite($fp, $string, strlen($string));
+//	fclose($fp);
+
+
+	$fp = fopen($content_dir . $name_file_xml, "w") ;
+	// file to be unzipped on your server
+	$zp = gzopen($content_dir . $name_file, "r");
+	if ($zp)
+	{
+	 while (!gzeof($zp))
+	 {
+	   $buff1 = gzgets ($zp, 4096) ;
+	   $buff1 = str_replace(chr(0),"",$buff1);
+	   fputs($fp, $buff1) ;
+	 }
+	}
+	gzclose($zp) ;
+	fclose($fp) ;
+
 	
 	unlink($content_dir.$name_file);
 	
