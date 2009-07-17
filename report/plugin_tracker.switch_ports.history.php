@@ -44,36 +44,38 @@ plugin_tracker_checkRight("snmp_report","r");
 
 commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
 
-if (isset($_GET["reset_search"]))
+if (isset($_GET["reset_search"])) {
 	resetSearch();
+}
 
-if (!isset($_GET["start"]))
+if (!isset($_GET["start"])) {
 	$_GET["start"] = 0;
+}
 $_GET=getValues($_GET,$_POST);
 $FK_port = "";
-if (isset($_GET["FK_networking_ports"]))
+if (isset($_GET["FK_networking_ports"])) {
 	$FK_port = $_GET["FK_networking_ports"];
-if (isset($_GET["contains"][0]))
+}
+if (isset($_GET["contains"][0])) {
 	$FK_port = $_GET["contains"][0];
+}
 displaySearchForm($FK_port);
 
 manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_HISTORY);
 
-if(isset($_GET["FK_networking_ports"])){
+if(isset($_GET["FK_networking_ports"])) {
 
 	$_GET["field"][0]=2;
 	$_GET["contains"][0]=$_GET["FK_networking_ports"];
 	$_GET["field"][1]=3;
-	if ((isset($_GET["Field"])) AND !empty($_GET["Field"]) )
-	{
+	if ((isset($_GET["Field"])) AND !empty($_GET["Field"])) {
 		$_GET["contains"][1]=$_GET["Field"];
 		//$TRACKER_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
 		$_GET["link"][1] = "AND";
-
-	}
-	else
+	} else {
 		$_GET["contains"][1] = "";
 		$_GET["link"][1] = "AND";
+   }
 
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
@@ -89,8 +91,7 @@ echo "</form>";
 
 commonFooter(); 
 
-function displaySearchForm($FK_port)
-{
+function displaySearchForm($FK_port) {
 	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
 	include_once(GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php');
@@ -111,11 +112,11 @@ function displaySearchForm($FK_port)
 	echo "<select name='FK_networking_ports'>";
 	echo "<option>-----</option>";
 	$result=$DB->query($query);
-	while ( $data=$DB->fetch_array($result) )
-	{
+	while ($data=$DB->fetch_array($result)) {
 		$selected = '';
-		if ((isset($FK_port)) AND ($data['ID'] == $FK_port))
+		if ((isset($FK_port)) AND ($data['ID'] == $FK_port)) {
 			$selected = "selected";
+      }
 		echo "<option value='".$data['ID']."' ".$selected.">".$data['name']." - ".$data['pname']."</option>";
 	}
 	
@@ -128,14 +129,10 @@ function displaySearchForm($FK_port)
 
 	$types = array();
 	$types[] = "-----";
-	foreach ($TRACKER_MAPPING as $type=>$mapping43)
-	{
-		if (NETWORKING_TYPE == $type)
-		{
-			if (isset($TRACKER_MAPPING[$type]))
-			{
-				foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
-				{
+	foreach ($TRACKER_MAPPING as $type=>$mapping43) {
+		if (NETWORKING_TYPE == $type) {
+			if (isset($TRACKER_MAPPING[$type])) {
+				foreach ($TRACKER_MAPPING[$type] as $name=>$mapping) {
 					$types[$name]=$TRACKER_MAPPING[$type][$name]["name"];
 				}
 			}
@@ -143,8 +140,9 @@ function displaySearchForm($FK_port)
 	}
 	echo $LANG["event"][18]." : ";
 	$default = '';
-	if (isset($_GET['Field']))
+	if (isset($_GET['Field'])) {
 		$default = $_GET['Field'];
+   }
 	dropdownArrayValues("Field",$types,$default);
 
 	echo "</td>";
@@ -159,19 +157,15 @@ function displaySearchForm($FK_port)
 	echo "</table></form>";
 }
  
-function getValues($get,$post)
-{
+function getValues($get,$post) {
 	$get=array_merge($get,$post);
-	if (isset($get["field"]))
-	{
-		foreach ($get["field"] as $index => $value)
-		{
-			switch($index)
-			{
+	if (isset($get["field"])) {
+		foreach ($get["field"] as $index => $value) {
+			switch($index) {
 				case 0:
 					$get["FK_networking_ports"] = $_GET["contains"][0];
-
 					break;
+            
 				case 1:
 					$get["Field"] = stripslashes($_GET["contains"][1]);
 					break;
@@ -181,8 +175,7 @@ function getValues($get,$post)
 	return $get;
 }
 
-function resetSearch()
-{
+function resetSearch() {
 	$_GET["start"]=0;
 	$_GET["order"]="ASC";
 	$_GET["deleted"]=0;
