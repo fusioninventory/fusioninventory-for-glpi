@@ -603,9 +603,9 @@ function appear_array(id){
                            }
                            echo "</td>";
 							}
-							else
+							}else{
 								echo "<td align='center'></td>";
-
+							}
 							break;
 						case 13 :
 							// ** Connection status
