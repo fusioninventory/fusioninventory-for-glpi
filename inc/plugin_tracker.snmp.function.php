@@ -144,7 +144,8 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 			break;
 		}			
 	}
-
+   unset($xml);
+   unset($device);
 	// Get SNMP model oids
 	$oidsModel = $models->oidlist($ID_Device,$type);
 	ksort($oidsModel);
@@ -153,6 +154,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	{
 		// Get oidvalues from agents
 		$oidvalues = $walks->GetoidValues($device_snmp);
+      unset($device_snmp);
 		if (is_array($oidvalues))
 			ksort($oidvalues);
 		else
