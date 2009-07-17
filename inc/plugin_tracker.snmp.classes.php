@@ -311,8 +311,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				addLogConnection("make",$destination_port,$FK_process);
 				addLogConnection("make",$source_port,$FK_process);
 				
-				if (!empty($vlan))
-				{
+				if ((!empty($vlan)) AND ($vlan != " []")) {
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
 					if ($FK_vlan != "0")
 						assignVlan($source_port,$FK_vlan);
@@ -320,8 +319,7 @@ class plugin_tracker_snmp extends CommonDBTM
 			}
 			else
 			{
-				if (!empty($vlan))
-				{
+				if ((!empty($vlan)) AND ($vlan != " []")) {
                // Verify vlan and update it if necessery
                $FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
                if ($FK_vlan != "0")
