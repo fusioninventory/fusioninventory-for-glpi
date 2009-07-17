@@ -768,17 +768,18 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 						// Verify Trunk
 
 						$logs->write("tracker_fullsync","Vlan = ".$vlan,$type."][".$ID_Device,1);
-						if (isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
-							$logs->write("tracker_fullsync","TrunkStatus = ".$oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan],$type."][".$ID_Device,1);
-						else
-							$logs->write("tracker_fullsync","TrunkStatus = ",$type."][".$ID_Device,1);
+//						if (isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
+//							$logs->write("tracker_fullsync","TrunkStatus = ".$oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan],$type."][".$ID_Device,1);
+//						else
+//							$logs->write("tracker_fullsync","TrunkStatus = ",$type."][".$ID_Device,1);
 						$logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type."][".$ID_Device,1);
 
 						$queryPortEnd = "";
-						if ((!isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
-							OR (empty($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
-							OR ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "2"))
-						{
+//						if ((!isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
+//							OR (empty($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
+//							OR ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "2"))
+//						{
+                  if ((isset($Array_trunk_ifIndex[$BridgePortifIndex]) AND ($Array_trunk_ifIndex[$BridgePortifIndex] == 1))) {
 							$logs->write("tracker_fullsync","Mac address OK",$type."][".$ID_Device,1);
 
 							$queryPortEnd = "SELECT * FROM glpi_networking_ports
@@ -786,18 +787,18 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 								AND on_device!='".$ID_Device."' ".
 								" AND device_type!='".NETWORKING_TYPE."' ";
 						}
-						else if (($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "1") AND ($vlan != "")) // It's a trunk port
-						{
-							$logs->write("tracker_fullsync","Mac address FAILED(1)",$type."][".$ID_Device,1);
-							$queryPortEnd = "";
-							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-						}
-						else if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "1") // It's a trunk port
-						{
-							$logs->write("tracker_fullsync","Mac address FAILED(2)",$type."][".$ID_Device,1);
-							$queryPortEnd = "";
-							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
-						}
+//						else if (($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "1") AND ($vlan != "")) // It's a trunk port
+//						{
+//							$logs->write("tracker_fullsync","Mac address FAILED(1)",$type."][".$ID_Device,1);
+//							$queryPortEnd = "";
+//							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+//						}
+//						else if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "1") // It's a trunk port
+//						{
+//							$logs->write("tracker_fullsync","Mac address FAILED(2)",$type."][".$ID_Device,1);
+//							$queryPortEnd = "";
+//							$array_port_trunk[$ArrayPortsID[$ifName]] = 1;
+//						}
 
 						if (($queryPortEnd != ""))
 						{
