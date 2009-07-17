@@ -1252,7 +1252,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
       $tmpc->UpdatePort($ID_Device,$data["ID"],0);
-
+      $Array_multiplemac_ifIndex["1"] = 1;
    }
 
 		// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
