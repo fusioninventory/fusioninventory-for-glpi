@@ -1141,8 +1141,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                   $Array_trunk_ifIndex[$snmpportID] = 1;
                   $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
                   $trunk_no_cdp[$snmpportID] = 1;
-                  if (isset($Array_multiplemac_ifIndex[$snmpportID]))
-                     unset($Array_multiplemac_ifIndex[$snmpportID]);
+//                  if (isset($Array_multiplemac_ifIndex[$snmpportID]))
+//                     unset($Array_multiplemac_ifIndex[$snmpportID]);
                }
             }
 				elseif ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan],"ProCurve J")))
@@ -1152,8 +1152,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                   $Array_trunk_ifIndex[$snmpportID] = 1;
                   $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
                   $trunk_no_cdp[$snmpportID] = 1;
-                  if (isset($Array_multiplemac_ifIndex[$snmpportID]))
-                     unset($Array_multiplemac_ifIndex[$snmpportID]);
+//                  if (isset($Array_multiplemac_ifIndex[$snmpportID]))
+//                     unset($Array_multiplemac_ifIndex[$snmpportID]);
                }
             }
          }
