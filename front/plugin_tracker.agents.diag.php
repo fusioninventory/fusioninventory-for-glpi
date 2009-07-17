@@ -44,26 +44,23 @@ include (GLPI_ROOT."/inc/includes.php");
 // Get conf tu know if SSL is only
 $tracker_config = new plugin_tracker_config;
 $ssl = $tracker_config->getValue('ssl_only');
-if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1")) OR ($ssl == "0"))
-{
+if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1")) OR ($ssl == "0")) {
 	// echo "On continue";
-}
-else
-{
+} else {
 	$out = "No SSL";
 	$gzout = gzencode($out, 9);
 	echo $gzout;
 	exit();
 }
 
-if( isset($_POST['upload']) ) // si formulaire soumis
-{
+if(isset($_POST['upload'])) { // si formulaire soumis
 	//$content_dir = '/tmp/'; // dossier où sera déplacé le fichier
 	$content_dir = GLPI_PLUGIN_DOC_DIR."/tracker/";
    $tmp_file = $_FILES['data']['tmp_name'];
 
-    if( !is_uploaded_file($tmp_file) )
+    if(!is_uploaded_file($tmp_file)) {
         exit("The file is not found");
+    }
 
     // on vérifie maintenant l'extension
     $type_file = $_FILES['data']['type'];
@@ -71,8 +68,9 @@ if( isset($_POST['upload']) ) // si formulaire soumis
     // on copie le fichier dans le dossier de destination
     $name_file = $_FILES['data']['name'];
 
-    if( !move_uploaded_file($tmp_file, $content_dir . $name_file) )
+    if(!move_uploaded_file($tmp_file, $content_dir . $name_file)) {
         exit("Impossible to copy file in $content_dir");
+    }
     
 	$name_file_xml = str_replace(".gz", "", $name_file);
 //	$string = implode("", gzfile($content_dir . $name_file));
@@ -84,14 +82,12 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	$fp = fopen($content_dir . $name_file_xml, "w") ;
 	// file to be unzipped on your server
 	$zp = gzopen($content_dir . $name_file, "r");
-	if ($zp)
-	{
-	 while (!gzeof($zp))
-	 {
-	   $buff1 = gzgets ($zp, 4096) ;
-	   $buff1 = str_replace(chr(0),"",$buff1);
-	   fputs($fp, $buff1) ;
-	 }
+   if ($zp) {
+      while (!gzeof($zp)) {
+         $buff1 = gzgets ($zp, 4096) ;
+         $buff1 = str_replace(chr(0),"",$buff1);
+         fputs($fp, $buff1) ;
+      }
 	}
 	gzclose($zp) ;
 	fclose($fp) ;
@@ -101,13 +97,11 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 	
 	// Open file for put it in DB
 	$importexport = new plugin_tracker_importexport;
-	if (strstr($name_file_xml,"-discovery.xml"))
-	{
+	if (strstr($name_file_xml,"-discovery.xml")) {
 		$importexport->import_agent_discovery($content_dir,$name_file_xml);
 		unlink($content_dir.$name_file_xml);
 	}
-	if (!strstr($name_file_xml,"-"))
-	{
+	if (!strstr($name_file_xml,"-")) {
 		// Recompose xml file
 		$importexport->import_agentonly($content_dir,$name_file_xml);
 		unlink($content_dir.$name_file_xml);
@@ -115,9 +109,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
 
 
     echo "The file has been successfully uploaded";
-}
-else if(isset($_POST['get_data']))
-{
+} else if(isset($_POST['get_data'])) {
 	$agents_processes = new plugin_tracker_agents_processes;
 	$xml = new plugin_tracker_XML;
 	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
@@ -129,31 +121,31 @@ else if(isset($_POST['get_data']))
 	WHERE `key`='".$_POST['key']."'
 	LIMIT 0,1";
 	$result=$DB->query($query);
-	if ($DB->numrows($result) > 0)
-	{
+	if ($DB->numrows($result) > 0) {
 		$data = $DB->fetch_assoc($result);
-		if ($data["lock"] == "1")
-		{
+		if ($data["lock"] == "1") {
 			$out = "Lock";
 			$gzout = gzencode($out, 9);
 			echo $gzout;
 			exit();
 		}
 		$ID_agent = $data['ID'];
-		if (!isset($_POST['PID']))
+		if (!isset($_POST['PID'])) {
 			$start_PID = "0001";
-		else
+      } else {
 			$start_PID = $_POST['PID'];
-		
-		if (!isset($_POST['date']))
+      }
+		if (!isset($_POST['date'])) {
 			$_POST['date'] = "0000-00-00 00:00:00";
-		
+      }
 		// Add agent process entry
 		$number_PID = $ID_agent;
-		if (strlen($number_PID) == 1)
+		if (strlen($number_PID) == 1) {
 			$number_PID = "00".$number_PID;
-		if (strlen($number_PID) == 2)
+      }
+		if (strlen($number_PID) == 2) {
 			$number_PID = "0".$number_PID;
+      }
 		$add_agent_process['FK_agent'] = $ID_agent;
 		$add_agent_process['process_number'] = $start_PID.$number_PID;
 		$add_agent_process['status'] = 2;
@@ -168,16 +160,17 @@ else if(isset($_POST['get_data']))
 		$result=$DB->query($query);
 		$exclude = array();
 		$or = 0;
-		while ( $data=$DB->fetch_array($result) )
-		{
-			if ($or == "1")
+		while ($data=$DB->fetch_array($result)) {
+			if ($or == "1") {
 				$rangeip_select .= " OR ";
+         }
 			$rangeip_select .= " (inet_aton(ifaddr) BETWEEN inet_aton('".$data['ifaddr_start']."') AND inet_aton('".$data['ifaddr_end']."') ) ";
 			$or = 1;
 		}
 		$rangeip_select .= ') ';
-		if ($rangeip_select == " AND () ")
+		if ($rangeip_select == " AND () ") {
 			$rangeip_select = " AND 1!=1 ";
+      }
 		// echo $rangeip_select;
 
 		$xml->element[0]['snmp']['element']="";
@@ -242,27 +235,22 @@ else if(isset($_POST['get_data']))
 		$writed[1] = '';
 
 		// List and add in value for query ID of SNMP auth from XML file
-		if ($config->getValue("authsnmp") == "file")
-		{
+		if ($config->getValue("authsnmp") == "file") {
 			$snmp_auth = new plugin_tracker_snmp_auth;
 			$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
 			$Auth_id_valid = "(";
-			foreach ($array_auth AS $num=>$value)
-			{
+			foreach ($array_auth AS $num=>$value) {
 				$Auth_id_valid .= $array_auth[$num]['IDC'].",";
 			}
 			$Auth_id_valid .= ")";
 			$Auth_id_valid = str_replace(",)", ")",$Auth_id_valid);
 		}
 
-		for ($i=0;$i < count($devices);$i++)
-		{
+		for ($i=0 ; $i < count($devices) ; $i++) {
 			$xml_writed = new plugin_tracker_XML;
 			$xml_writed->element[1][$devices[$i]]['element']="snmp";
-			if ($devices[$i] == "device_networking")
-			{
-				if ($config->getValue("authsnmp") == "file")
-				{
+			if ($devices[$i] == "device_networking") {
+				if ($config->getValue("authsnmp") == "file") {
 					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_plugin_tracker_networking
 					LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
 					LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
@@ -272,9 +260,7 @@ else if(isset($_POST['get_data']))
 						AND state='".$config_snmp_networking->getValue('active_device_state')."'
 						AND glpi_plugin_tracker_model_infos.ID>0
 						".$rangeip_select." ";
-				}
-				else
-				{
+				} else {
 					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT * FROM glpi_plugin_tracker_networking
 					LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
 					LEFT JOIN glpi_plugin_tracker_model_infos ON FK_model_infos = glpi_plugin_tracker_model_infos.ID
@@ -287,11 +273,8 @@ else if(isset($_POST['get_data']))
 						AND glpi_plugin_tracker_snmp_connection.ID>0
 						".$rangeip_select." ";
 				}
-			}
-			else if ($devices[$i] == "device_printer")
-			{
-				if ($config->getValue("authsnmp") == "file")
-				{
+			} else if ($devices[$i] == "device_printer") {
+				if ($config->getValue("authsnmp") == "file") {
 					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT DISTINCT ifaddr,FK_printers FROM glpi_networking_ports
 					LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
 					LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
@@ -304,9 +287,7 @@ else if(isset($_POST['get_data']))
 						AND glpi_plugin_tracker_model_infos.ID>0
 						".$rangeip_select."
 						AND FK_printers!=0";
-				}
-				else
-				{
+				} else {
 					$xml_writed->element[1][$devices[$i]]['SQL']="SELECT DISTINCT ifaddr,FK_printers FROM glpi_networking_ports
 					LEFT JOIN glpi_plugin_tracker_printers ON on_device = FK_printers
 					LEFT JOIN glpi_printers ON on_device = glpi_printers.ID
@@ -326,13 +307,10 @@ else if(isset($_POST['get_data']))
 			}
 			// Informations
 			$xml_writed->element[2]['infos']['element']=$devices[$i];
-			if ($devices[$i] == "device_networking")
-			{
+			if ($devices[$i] == "device_networking") {
 				$xml_writed->element[2]['infos']['SQL']="SELECT * FROM glpi_networking
 				WHERE ID='[FK_networking]'";
-			}
-			else if ($devices[$i] == "device_printer")
-			{
+			} else if ($devices[$i] == "device_printer") {
 				$xml_writed->element[2]['infos']['SQL']="SELECT * FROM glpi_printers
 				LEFT JOIN glpi_plugin_tracker_printers ON glpi_printers.ID = FK_printers
 				LEFT JOIN glpi_networking_ports ON on_device = FK_printers
@@ -342,42 +320,35 @@ else if(isset($_POST['get_data']))
 					AND ifaddr!='127.0.0.1'
 				LIMIT 0,1";
 			}
-			if ($devices[$i] == "device_networking")
+			if ($devices[$i] == "device_networking") {
 				$xml_writed->element[2]['infos']['linkfield']['ID'] = 'id';
-			else if ($devices[$i] == "device_printer")
+         } else if ($devices[$i] == "device_printer") {
 				$xml_writed->element[2]['infos']['linkfield']['FK_printers'] = 'id';
+         }
 			$xml_writed->element[2]['infos']['linkfield']['ifaddr'] = 'ip';
 			$xml_writed->element[2]['infos']['linkfield']['FK_entities'] = 'entity';
-			if ($devices[$i] == "device_networking")
+			if ($devices[$i] == "device_networking") {
 				$xml_writed->element[2]['infos']['fieldvalue']['type'] = NETWORKING_TYPE;
-			else if ($devices[$i] == "device_printer")
+         } else if ($devices[$i] == "device_printer") {
 				$xml_writed->element[2]['infos']['fieldvalue']['type'] = PRINTER_TYPE;
+         }
 			// Authentification
 			$xml_writed->element[2]['auth']['element']=$devices[$i];
-			if ($devices[$i] == "device_networking")
-			{
-				if ($config->getValue("authsnmp") == "file")
-				{
+			if ($devices[$i] == "device_networking") {
+				if ($config->getValue("authsnmp") == "file") {
 					$xml_writed->element[2]['auth']['SQL']="SELECT FK_snmp_connection FROM glpi_plugin_tracker_networking ".
 						"WHERE FK_networking='[FK_networking]'";
-				}
-				else
-				{
+				} else {
 					$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
 					LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
 					LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
 					WHERE FK_networking='[FK_networking]'";
 				}
-			}
-			else if ($devices[$i] == "device_printer")
-			{
-				if ($config->getValue("authsnmp") == "file")
-				{
+			} else if ($devices[$i] == "device_printer") {
+				if ($config->getValue("authsnmp") == "file") {
 					$xml_writed->element[2]['auth']['SQL']="SELECT FK_snmp_connection FROM glpi_plugin_tracker_printers ".
 						"WHERE FK_printers='[FK_printers]'";
-				}
-				else
-				{
+				} else {
 					$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_printers
 					LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
 					LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
@@ -395,8 +366,7 @@ else if(isset($_POST['get_data']))
 		
 			// SNMPGet 
 			$xml_writed->element[2]['get']['element']=$devices[$i];
-			if ($devices[$i] == "device_networking")
-			{
+			if ($devices[$i] == "device_networking") {
 				$xml_writed->element[2]['get']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
 					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_networking
@@ -406,9 +376,7 @@ else if(isset($_POST['get_data']))
 				WHERE FK_networking='[FK_networking]'
 					AND oid_port_dyn=0
 					AND glpi_plugin_tracker_mib_networking.activation=1";
-			}
-			else if ($devices[$i] == "device_printer")
-			{
+			} else if ($devices[$i] == "device_printer") {
 				$xml_writed->element[2]['get']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
 					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_printers
@@ -425,8 +393,7 @@ else if(isset($_POST['get_data']))
 		
 			// SNMPWalk
 			$xml_writed->element[2]['walk']['element']=$devices[$i];
-			if ($devices[$i] == "device_networking")
-			{
+			if ($devices[$i] == "device_networking") {
 				$xml_writed->element[2]['walk']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
 					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_networking
@@ -436,9 +403,7 @@ else if(isset($_POST['get_data']))
 				WHERE FK_networking='[FK_networking]'
 					AND oid_port_dyn=1
 					AND activation=1";
-			}
-			else if ($devices[$i] == "device_printer")
-			{
+			} else if ($devices[$i] == "device_printer") {
 				$xml_writed->element[2]['walk']['SQL']="SELECT glpi_dropdown_plugin_tracker_mib_object.name AS object,
 					glpi_dropdown_plugin_tracker_mib_oid.name AS oid,
 					glpi_plugin_tracker_mib_networking.vlan AS vlan FROM glpi_plugin_tracker_printers
@@ -462,9 +427,7 @@ else if(isset($_POST['get_data']))
 		$data = $xml->DoXML($writed);
 		$gzdata = gzencode($data, 9);
 		echo $gzdata;
-	}
-	else
-	{
+	} else {
 		echo "Not allowed !";
 	}
 }

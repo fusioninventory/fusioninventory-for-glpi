@@ -42,21 +42,20 @@ plugin_tracker_checkRight("snmp_printers","r");
 
 $printer_history = new plugin_tracker_printers_history();
 
-if ( (isset($_POST['delete'])) ) {
+if ((isset($_POST['delete']))) {
 	
 	plugin_tracker_checkRight("snmp_printers","w");
 	
-	if ( isset($_POST['limit']) ) {
-		for ($i=0; $i<$_POST['limit']; $i++) {
-			if ( ( isset($_POST["checked_$i"]) ) && ( $_POST["checked_$i"] == 1 ) ) {
-				if ( isset($_POST["ID_$i"]) )
-				$input['ID'] = $_POST["ID_$i"];
-
+	if (isset($_POST['limit'])) {
+		for ($i=0 ; $i<$_POST['limit'] ; $i++) {
+			if ((isset($_POST["checked_$i"])) && ($_POST["checked_$i"] == 1)) {
+				if (isset($_POST["ID_$i"])) {
+   				$input['ID'] = $_POST["ID_$i"];
+            }
 				$printer_history->delete($input);
 			}
 		}
 	}
-	
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);

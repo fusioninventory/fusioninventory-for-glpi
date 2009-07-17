@@ -42,8 +42,7 @@ plugin_tracker_checkRight("snmp_printers","w");
 
 $print_config = new glpi_plugin_tracker_printers_history_config();
 
-if ( (isset($_POST['update'])) && (isset($_POST['FK_printers'])) ) {
-	
+if ((isset($_POST['update'])) && (isset($_POST['FK_printers']))) {
 	$print_config->updateOne($_POST);
 }
 

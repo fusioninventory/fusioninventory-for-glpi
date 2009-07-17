@@ -53,7 +53,7 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 checkRight("config","w");
 
 
-switch($_POST['glpi_tab']){
+switch($_POST['glpi_tab']) {
 	case -1 :
 		$config = new plugin_tracker_config();
 		$config->showForm($_POST['target'],'1');
@@ -61,39 +61,41 @@ switch($_POST['glpi_tab']){
 		$config_snmp_script->showForm($_POST['target'],'1');
 		$config_discovery = new plugin_tracker_config_discovery;
 		$config_discovery->showForm($_POST['target'],'1');
-		if ($config->getValue("activation_snmp_networking") == "1")
-		{
+		if ($config->getValue("activation_snmp_networking") == "1") {
 			$config_snmp_networking = new plugin_tracker_config_snmp_networking();
 			$config_snmp_networking->showForm($_POST['target'],'1');
 		}
-		if ($config->getValue("activation_snmp_printer") == "1")
-		{
+		if ($config->getValue("activation_snmp_printer") == "1") {
 			$config_snmp_printer = new plugin_tracker_config_snmp_printer();
 			$config_snmp_printer->showForm($_POST['target'],'1');
 		}
 		break;
+
 	case 2 :
 		$config_snmp_script = new glpi_plugin_tracker_config_snmp_script();
 		$config_snmp_script->showForm($_POST['target'],'1');
 		break;
+
 	case 3 :
 		$config_discovery = new plugin_tracker_config_discovery;
 		$config_discovery->showForm($_POST['target'],'1');
 		break;
+
 	case 4 :
 		$config_snmp_networking = new plugin_tracker_config_snmp_networking();
 		$config_snmp_networking->showForm($_POST['target'],'1');
 		break;
-	case 5 :
 
+	case 5 :
 		break;
-	case 6 :
+
+   case 6 :
 		$config_snmp_printer = new plugin_tracker_config_snmp_printer();
 		$config_snmp_printer->showForm($_POST['target'],'1');
 		break;
+
 	default :
-		if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"]))
-		{
+		if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
 			$config = new plugin_tracker_config();
 			$config->showForm($_POST['target'],'1');
 		}

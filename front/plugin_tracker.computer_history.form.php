@@ -37,34 +37,33 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-if ( isset($_GET['type']) ) {
-	if ( $_GET['type'] == COMPUTER_TYPE )
+if (isset($_GET['type'])) {
+	if ($_GET['type'] == COMPUTER_TYPE) {
 		checkRight("computer","r");
-	else // $_GET['type'] == COMPUTER_TYPE
+   } else { // $_GET['type'] == COMPUTER_TYPE
 		checkRight("user","r");
-}
-else
+   }
+} else {
 	plugin_tracker_noRight();
-
+}
 plugin_tracker_checkRight("computers_history","r");
 
 $computer_history = new plugin_tracker_computers_history();
 
-if ( (isset($_POST['delete'])) ) {
-	
+if ((isset($_POST['delete']))) {	
 	plugin_tracker_checkRight("computers_history","w");
 	
-	if ( isset($_POST['limit']) ) {
-		for ($i=0; $i<$_POST['limit']; $i++) {
-			if ( ( isset($_POST["checked_$i"]) ) && ( $_POST["checked_$i"] == 1 ) ) {
-				if ( isset($_POST["ID_$i"]) )
-				$input['ID'] = $_POST["ID_$i"];
+	if (isset($_POST['limit'])) {
+		for ($i=0 ; $i<$_POST['limit'] ; $i++) {
+			if ((isset($_POST["checked_$i"])) && ($_POST["checked_$i"] == 1)) {
+				if (isset($_POST["ID_$i"])) {
+               $input['ID'] = $_POST["ID_$i"];
+            }
 
 				$computer_history->delete($input);
 			}
 		}
 	}
-	
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);

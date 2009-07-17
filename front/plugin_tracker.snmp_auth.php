@@ -47,18 +47,13 @@ $config = new plugin_tracker_config();
 plugin_tracker_mini_menu();
 
 // Forms for FILE
-if ($config->getValue("authsnmp") == "file")
-{
+if ($config->getValue("authsnmp") == "file") {
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 	
-	if (!isset($_GET["ID"]))
-	{
+	if (!isset($_GET["ID"])) {
 		echo $plugin_tracker_snmp_auth->plugin_tracker_snmp_connections();
 	}
-}
-
-else if ($config->getValue("authsnmp") == "DB")
-{
+} else if ($config->getValue("authsnmp") == "DB") {
 	// Forms for DB
 	
 	$_GET['target']="plugin_tracker.snmp_auth.php";
@@ -67,10 +62,8 @@ else if ($config->getValue("authsnmp") == "DB")
 
 	searchForm(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
 	showList(PLUGIN_TRACKER_SNMP_AUTH,$_GET);
-}else{
-
+} else {
 	echo $LANG['plugin_tracker']["functionalities"][19];
-
 }
 
 commonFooter();

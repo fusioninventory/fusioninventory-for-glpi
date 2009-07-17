@@ -52,8 +52,9 @@ $plugin_tracker_unknown = new plugin_tracker_unknown;
 commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","unknown");
 
 $ID = "";
-if (isset($_GET["ID"]))
+if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
+}
 
 $plugin_tracker_unknown->showForm($_SERVER["PHP_SELF"], $ID);
 showPorts($ID, PLUGIN_TRACKER_MAC_UNKNOWN);
