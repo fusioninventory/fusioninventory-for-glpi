@@ -39,8 +39,7 @@ $xml_auth_rep = "";
 
 # Converts cli parameter to web parameter for compatibility
 if ($argv) {
-	for ($i=1;$i<count($argv);$i++)
-	{
+	for ($i=1 ; $i<count($argv) ; $i++) {
 		$it = split("=",$argv[$i]);
 		$it[0] = preg_replace('/^--/i','',$it[0]);
 		$_GET[$it[0]] = $it[1];
@@ -80,20 +79,20 @@ $type='';
 
 $logs = new plugin_tracker_logs;
 
-if(isset($_GET['update_device_process'])){
+if(isset($_GET['update_device_process'])) {
 	// tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
 
 	$processes = new Threads;
 	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
-}
-else
-{
-	if (isset($_GET["type"]))
+} else {
+	if (isset($_GET["type"])) {
 		$type=$_GET["type"];
+   }
 	
 	//Get the script's process identifier
-	if (isset($_GET["process_id"]))
+	if (isset($_GET["process_id"])) {
 		$fields["process_id"] = $_GET["process_id"];
+   }
 
 	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
@@ -106,36 +105,35 @@ else
 	$logs->write("tracker_snmp",">>>>>>>>>> Starting Script <<<<<<<<<<",'');
 
 	$OS = "";
-	if (isset($_SERVER["OSTYPE"]))
+	if (isset($_SERVER["OSTYPE"])) {
 		$OS = $_SERVER["OSTYPE"];
-	else if (isset($_SERVER["OS"]))
+   } else if (isset($_SERVER["OS"])) {
 		$OS = $_SERVER["OS"];
+   }
 
 	$logs->write("tracker_snmp","Operating System = ".$OS,'');
 
 	$query = "SELECT process_number FROM glpi_plugin_tracker_agents_processes
 	ORDER BY process_number";
 	$result=$DB->query($query);
-	while ( $data=$DB->fetch_array($result) )
-	{
+	while ($data=$DB->fetch_array($result)) {
 		// Test if XLM file from Agent exist
-		if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml"))
-		{
+		if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml")) {
 			$xml_file[] = GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml";
 			$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml");
-			foreach($xml->device as $device)
-			{
+			foreach($xml->device as $device) {
 				$ArrayListDevice[] = $device->infos->id;
 				$ArrayListType[] = $device->infos->type;
 				$ArrayListAgentProcess[] = $data['process_number'];
 			}
 		}
 	}
-	if (isset($ArrayListDevice))
+	if (isset($ArrayListDevice)) {
 		plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
-
-	foreach ( $xml_file as $num=>$filename )
+   }
+	foreach ($xml_file as $num=>$filename) {
 		unlink($filename);
+   }
 
 	// Create connections between switchs
 	$tmpc = new plugin_tracker_tmpconnections;

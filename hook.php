@@ -34,8 +34,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_tracker_getSearchOption()
-{
+function plugin_tracker_getSearchOption() {
 	global $LANG;
 	$sopt = array ();
 
@@ -383,15 +382,12 @@ function plugin_tracker_getSearchOption()
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['linkfield'] = 'FK_model_infos';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['name'] = $LANG['plugin_tracker']["model_info"][4];
 
-	if ($config->getValue("authsnmp") == "file")
-	{
+	if ($config->getValue("authsnmp") == "file") {
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_discovery';
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'FK_snmp_connection';
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_snmp_connection';
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANG['plugin_tracker']["model_info"][3];
-	}
-	else
-	{
+	} else {
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_snmp_connection';
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'name';
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_snmp_connection';
@@ -522,15 +518,12 @@ function plugin_tracker_getSearchOption()
 	$sopt[NETWORKING_TYPE][5190]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5190]['name']=$LANG['plugin_tracker']["title"][0]." - ".$LANG['plugin_tracker']["profile"][19];
 
-	if ($config->getValue("authsnmp") == "file")
-	{
+	if ($config->getValue("authsnmp") == "file") {
 		$sopt[NETWORKING_TYPE][5191]['table'] = 'glpi_plugin_tracker_networking';
 		$sopt[NETWORKING_TYPE][5191]['field'] = 'FK_snmp_connection';
 		$sopt[NETWORKING_TYPE][5191]['linkfield'] = 'ID';
 		$sopt[NETWORKING_TYPE][5191]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG['plugin_tracker']["profile"][20];
-	}
-	else
-	{
+	} else {
 		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
 		$sopt[NETWORKING_TYPE][5191]['field']='name';
 		$sopt[NETWORKING_TYPE][5191]['linkfield']='ID';
@@ -553,15 +546,12 @@ function plugin_tracker_getSearchOption()
 	$sopt[PRINTER_TYPE][5190]['linkfield']='ID';
 	$sopt[PRINTER_TYPE][5190]['name']=$LANG['plugin_tracker']["title"][0]." - ".$LANG['plugin_tracker']["profile"][19];
 
-	if ($config->getValue("authsnmp") == "file")
-	{
+	if ($config->getValue("authsnmp") == "file") {
 		$sopt[PRINTER_TYPE][5191]['table'] = 'glpi_plugin_tracker_printers';
 		$sopt[PRINTER_TYPE][5191]['field'] = 'FK_snmp_connection';
 		$sopt[PRINTER_TYPE][5191]['linkfield'] = 'ID';
 		$sopt[PRINTER_TYPE][5191]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG['plugin_tracker']["profile"][20];
-	}
-	else
-	{
+	} else {
 		$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_tracker_snmp_connection';
 		$sopt[PRINTER_TYPE][5191]['field']='ID';
 		$sopt[PRINTER_TYPE][5191]['linkfield']='ID';
@@ -588,8 +578,7 @@ function plugin_tracker_getSearchOption()
 }
 
 
-function plugin_tracker_giveItem($type,$ID,$data,$num)
-{
+function plugin_tracker_giveItem($type,$ID,$data,$num) {
 	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LINK_ID_TABLE,$LANG,$SEARCH_OPTION;
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
@@ -623,8 +612,7 @@ function plugin_tracker_giveItem($type,$ID,$data,$num)
 				case "glpi_plugin_tracker_networking_ports.ID" :
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
-					if (!empty($data["ITEM_$num"]))
-					{
+					if (!empty($data["ITEM_$num"])) {
 						$np = new Netport;
 						$np->getFromDB($data["ITEM_$num"]);
 						$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$np->fields["name"]."</a><br/>";

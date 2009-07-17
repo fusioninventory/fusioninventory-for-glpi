@@ -51,20 +51,22 @@ function readargs () {
 				fclose($log);
 				$log=STDOUT;
 				break;
+
 			default: 
 				usage();
 				exit(1);
 		}
 	}	
 }
+
 function exit_if_soft_lock() {
 	if (file_exists(TRACKER_IMPORT_LOCKFILE)) {
 		echo "Software lock : script can't run !\n";
     	exit (1);
 	}
 }
-function exit_if_already_running($pidfile)
-{
+
+function exit_if_already_running($pidfile) {
   	# No pidfile, probably no daemon present
   	#
   	if (!file_exists($pidfile)) {
@@ -82,13 +84,15 @@ function exit_if_already_running($pidfile)
 	echo "le fichier PID existe (".$pidfile.")\n";
   	exit (1);
 }
+
 function cleanup ($pidfile) {
 	@unlink($pidfile);
 	
 	$dir=opendir(GLPI_LOCK_DIR);
 	if ($dir) while ($name=readdir($dir)) {
-		if (strpos($name, "lock_entity")===0)
+		if (strpos($name, "lock_entity")===0) {
 			unlink(GLPI_LOCK_DIR."/".$name);
+      }
 	}
 }
 
@@ -116,8 +120,7 @@ $thread_nbr=2;
 if (DIRECTORY_SEPARATOR=='/') {
 # Unix/Linux	
 	$pidfile = GLPI_LOCK_DIR."/tracker_fullsync.pid";
-}
-else {
+} else {
 	# Windows	
 	$pidfile = GLPI_LOCK_DIR."/tracker_fullsync.pid";
 }
@@ -139,18 +142,18 @@ cleanup($pidfile);
 //workaround to work with php4
 if(!function_exists('file_put_contents')) {
 	function file_put_contents($filename, $data, $file_append = false) {
-	  $fp = fopen($filename, (!$file_append ? 'w+' : 'a+'));
-	  if(!$fp) {
-	   trigger_error('file_put_contents ne peut pas écrire dans le fichier.', E_USER_ERROR);
-	   return;
+      $fp = fopen($filename, (!$file_append ? 'w+' : 'a+'));
+      if(!$fp) {
+         trigger_error('file_put_contents ne peut pas écrire dans le fichier.', E_USER_ERROR);
+         return;
 	  }
 	  fputs($fp, $data);
 	  fclose($fp);
 	}
-}
-else
+} else {
 	//Only available with PHP5 or later
 	file_put_contents($pidfile, getmypid());
+}
 
 fwrite($log, date("r") . " " . $_SERVER["argv"][0] . " started\n");
 
@@ -160,7 +163,6 @@ $out=array();
 $ret=0;
 exec($cmd, $out, $ret);
 foreach ($out as $line) fwrite ($log, $line."\n");
-
 
 cleanup($pidfile);
 fwrite ($log, date("r") . " " . $_SERVER["argv"][0] . " ended\n\n");
