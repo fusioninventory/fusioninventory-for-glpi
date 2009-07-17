@@ -247,7 +247,6 @@ class PluginTrackerImportExport extends CommonDBTM {
 		fwrite($handle, "</snmp>\n");
 		fclose($handle);
 
-
 		// Load config discovery for existence criteria
 		$link_ip = $config_discovery->getValue("link_ip");
 		$link_name = $config_discovery->getValue("link_name");

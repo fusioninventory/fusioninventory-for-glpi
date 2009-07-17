@@ -258,7 +258,6 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 				$discovery_empty = 0;
          }
 		}
-
 		if (($discovery_empty == "1") AND ($criteria_pass2 == "0")) {
 			// ** On passe aux critères 2
 			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,1);
