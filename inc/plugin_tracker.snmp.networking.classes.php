@@ -583,10 +583,25 @@ function appear_array(id){
 								$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
 								$link1 = $CommonItem->getLink(1);
 								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$CommonItem->getLink());
-								if ($data_device["device_type"] == PLUGIN_TRACKER_MAC_UNKNOWN)
-									echo "<td align='center'background='#cf9b9b' class='tab_bg_1_2'>".$link1."<br/>".$link."</td>";
-								else
-									echo "<td align='center'>".$link1."<br/>".$link."</td>";
+                        $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],$CommonItem->getLink());
+								if ($data_device["device_type"] == PLUGIN_TRACKER_MAC_UNKNOWN) {
+									echo "<td align='center'background='#cf9b9b' class='tab_bg_1_2'>".$link1;
+                           if (!empty($link)) {
+                              echo "<br/>".$link;
+                           }
+                           if (!empty($link2)) {
+                              echo "<br/>".$link2;
+                           }
+                           echo "</td>";
+                        } else {
+									echo "<td align='center'>".$link1;
+                           if (!empty($link)) {
+                              echo "<br/>".$link;
+                           }
+                           if (!empty($link2)) {
+                              echo "<br/>".$link2;
+                           }
+                           echo "</td>";
 							}
 							else
 								echo "<td align='center'></td>";
