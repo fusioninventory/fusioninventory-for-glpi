@@ -781,7 +781,7 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 //							OR (empty($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan]))
 //							OR ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "2"))
 //						{
-                  if ((isset($Array_trunk_ifIndex[$BridgePortifIndex]) AND ($Array_trunk_ifIndex[$BridgePortifIndex] == 1))) {
+                  if ((!isset($Array_trunk_ifIndex[$BridgePortifIndex]))) {
 							$logs->write("tracker_fullsync","Mac address OK",$type."][".$ID_Device,1);
 
 							$queryPortEnd = "SELECT * FROM glpi_networking_ports
@@ -842,8 +842,8 @@ function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$
 
 										// Search IP in OCS IPdiscover if OCS servers specified
 										if (empty($ip_unknown))
-											$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
-										$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
+											$ip_unknown = plugin_tracker_search_ip_ocs_servers($MacAddress);
+										$name_unknown = plugin_tracker_search_name_ocs_servers($MacAddress);
 										// Add unknown device
 										if ($name_unknown == $ip_unknown)
 											$unknown_infos["name"] = '';
