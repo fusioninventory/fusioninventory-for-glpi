@@ -1126,7 +1126,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
       OR (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))) {
 
 		$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
-		foreach ($Array_vlan as $num=>$vlan)
+      $Array_vlan[] = "";
+      foreach ($Array_vlan as $num=>$vlan)
 		{
 			// Get vlan name
 			if (empty($vlan))
@@ -1138,19 +1139,18 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
          foreach($Arraytrunktype as $IDtmp=>$snmpportID)
          {
-				if ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan],"Cisco")))
-				{
-					if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "1")
-                {
+				if ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][""])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))) {
+					if ((isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan]))
+                  AND ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "1")) {
+
                   $Array_trunk_ifIndex[$snmpportID] = 1;
                   $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type."][".$ID_Device,1);
                   $trunk_no_cdp[$snmpportID] = 1;
 //                  if (isset($Array_multiplemac_ifIndex[$snmpportID]))
 //                     unset($Array_multiplemac_ifIndex[$snmpportID]);
                }
-            }
-				elseif ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][$vlan],"ProCurve J")))
-				{
+				} else if ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][""])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))) {
+
 					if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "2")
                {
                   $Array_trunk_ifIndex[$snmpportID] = 1;
