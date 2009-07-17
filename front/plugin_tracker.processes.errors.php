@@ -50,8 +50,4 @@ $Threads->showProcesses($_SERVER["PHP_SELF"],"errors");
 
 commonFooter();
 
-
-
-
-
 ?>

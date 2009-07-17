@@ -43,16 +43,16 @@ commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins",
 plugin_tracker_checkRight("snmp_agent_infos","r");
 
 $modif = 0;
-if (empty($_GET))
+if (empty($_GET)) {
 	$modif = 1;
+}
 
 plugin_tracker_mini_menu();
 
 manageGetValuesInSearch(PLUGIN_TRACKER_AGENTS_PROCESSES);
 
-if ($modif == 1)
-{
-//sort=1&order=ASC&start=0&field[0]=view
+if ($modif == 1) {
+   //sort=1&order=ASC&start=0&field[0]=view
 	$_GET["sort"] = 1;
 	$_GET["order"] = "DESC";
 }

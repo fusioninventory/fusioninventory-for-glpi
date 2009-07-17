@@ -46,8 +46,9 @@ commonHeader($LANG['plugin_tracker']["functionalities"][0],$_SERVER["PHP_SELF"],
 
 if (isset($_POST['update'])) {
 
-	if (empty($_POST['cleaning_days']))
+	if (empty($_POST['cleaning_days'])) {
 		$_POST['cleaning_days'] = 0;
+   }
 		
 	$_POST['ID']=1;
 
@@ -55,21 +56,26 @@ if (isset($_POST['update'])) {
 		case 'config' :
 			$config1 = new plugin_tracker_config();
 			break;
+
 		case 'snmp_script' :
 			$config1 = new glpi_plugin_tracker_config_snmp_script();
 			break;
+
 		case 'snmp_discovery' :
 			$config1 = new plugin_tracker_config_discovery();
 			break;
+
 		case 'snmp_networking' :
 			$config1 = new plugin_tracker_config_snmp_networking();
-			break;		
+			break;
+		
 		case 'snmp_printer' :
 			$config1 = new plugin_tracker_config_snmp_printer();
 			break;
 	}
-	if (isset($config1))
+	if (isset($config1)) {
 		$config1->update($_POST);
+   }
 }
 
 $config = new plugin_tracker_config();
