@@ -1031,8 +1031,8 @@ $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
             }
          }
       }
-		if ($vlan == "")
-			return $array_port_trunk;
+//		if ($vlan == "")
+//			return $array_port_trunk;
 //	}
 }
 
