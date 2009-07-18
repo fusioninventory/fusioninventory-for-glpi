@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
@@ -61,9 +61,10 @@ class plugin_tracker_config extends CommonDBTM {
 
 		$query = "SELECT ".$field." FROM ".$this->table." ".
 				 "WHERE ID = '1'";
-		if ( $result = $DB->query($query) ) {
-			if ( $this->fields = $DB->fetch_row($result) )
+		if ($result = $DB->query($query)) {
+			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
+         }
 		}
 		return false;
 	}
@@ -71,24 +72,27 @@ class plugin_tracker_config extends CommonDBTM {
 	// Confirm if the functionality is activated, or not
 	function isActivated($functionality) {
 		
-		if ( !($this->getValue($functionality)) )
+		if (!($this->getValue($functionality))) {
 			return false;
-		else
+      } else {
 			return true;
+      }
 	}
 
 
-	function defineTabs($ID,$withtemplate){
-		global $LANG,$CFG_GLPI;
+	function defineTabs($ID,$withtemplate) {
+		GLOBAL $LANG,$CFG_GLPI;
 
 		$ong[1]=$LANG['plugin_tracker']["functionalities"][2];
 		$ong[2]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
 		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3];
-		if ($this->getValue("activation_snmp_networking") == "1")
+		if ($this->getValue("activation_snmp_networking") == "1") {
 			$ong[4]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1];
+      }
 		//$ong[5]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][16];
-		if ($this->getValue("activation_snmp_printer") == "1")
+		if ($this->getValue("activation_snmp_printer") == "1") {
 			$ong[6]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2];
+      }
 		//$ong[7]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34];
 		//$ong[8]=$LANG['plugin_tracker']["functionalities"][4];
 		return $ong;
@@ -96,8 +100,7 @@ class plugin_tracker_config extends CommonDBTM {
 	
 
 	
-	function showForm($target,$ID)
-	{
+	function showForm($target,$ID) {
 		GLOBAL $LANG,$CFG_GLPI;
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
@@ -208,9 +211,10 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 
 		$query = "SELECT ".$field." FROM ".$this->table." ".
 				 "WHERE ID = '1'";
-		if ( $result = $DB->query($query) ) {
-			if ( $this->fields = $DB->fetch_row($result) )
+		if ($result = $DB->query($query)) {
+			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
+         }
 		}
 		return false;
 	}
@@ -218,14 +222,14 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 	// Confirm if the functionality is activated, or not
 	function isActivated($functionality) {
 
-		if ( !($this->getValue($functionality)) )
+		if (!($this->getValue($functionality))) {
 			return false;
-		else
+      } else {
 			return true;
+      }
 	}
 
-		function showForm($target,$ID)
-	{
+		function showForm($target,$ID) {
 		GLOBAL $LANG;
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
@@ -332,14 +336,14 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 		$query = "SELECT ".$field." FROM ".$this->table." ".
 				 "WHERE ID = '1'";
 		$result = $DB->query($query);
-		if ( $this->fields = $DB->fetch_row($result) )
+		if ($this->fields = $DB->fetch_row($result)) {
 			return $this->fields['0'];
+      }
 		return false;
 	}
 
 
-	function showForm($target,$ID)
-	{
+	function showForm($target,$ID) {
 		GLOBAL $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
@@ -410,9 +414,10 @@ class plugin_tracker_config_snmp_networking extends CommonDBTM {
 
 		$query = "SELECT ".$field." FROM ".$this->table." ".
 				 "WHERE ID = '1'";
-		if ( $result = $DB->query($query) ) {
-			if ( $this->fields = $DB->fetch_row($result) )
+		if ($result = $DB->query($query)) {
+			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
+         }
 		}
 		return false;
 	}
@@ -420,16 +425,16 @@ class plugin_tracker_config_snmp_networking extends CommonDBTM {
 	// Confirm if the functionality is activated, or not
 	function isActivated($functionality) {
 		
-		if ( !($this->getValue($functionality)) )
+		if (!($this->getValue($functionality))) {
 			return false;
-		else
+      } else {
 			return true;
+      }
 	}
 
 
 	
-	function showForm($target,$ID)
-	{
+	function showForm($target,$ID) {
 		GLOBAL $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
@@ -517,9 +522,10 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 
 		$query = "SELECT ".$field." FROM ".$this->table." ".
 				 "WHERE ID = '1'";
-		if ( $result = $DB->query($query) ) {
-			if ( $this->fields = $DB->fetch_row($result) )
+		if ($result = $DB->query($query)) {
+			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
+         }
 		}
 		return false;
 	}
@@ -527,16 +533,16 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 	// Confirm if the functionality is activated, or not
 	function isActivated($functionality) {
 		
-		if ( !($this->getValue($functionality)) )
+		if (!($this->getValue($functionality))) {
 			return false;
-		else
+      } else {
 			return true;
+      }
 	}
 
 
 	
-	function showForm($target,$ID)
-	{
+	function showForm($target,$ID) {
 		GLOBAL $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
@@ -568,4 +574,5 @@ class plugin_tracker_config_snmp_printer extends CommonDBTM {
 		echo "</table></form>";	
 	}
 }		
+
 ?>

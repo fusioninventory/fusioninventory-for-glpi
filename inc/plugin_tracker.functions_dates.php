@@ -33,54 +33,47 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_tracker_date ($number_dates,$frequence,$today='')
-{
-	if ($today == "")
-	{
+function plugin_tracker_date ($number_dates,$frequence,$today='') {
+	if ($today == "") {
 		$today = time();
-	}
-	else
-	{
+	} else {
 		$explode = explode("-",$today);
 		$today = mktime(0, 0, 0, $explode[1], $explode[2], $explode[0]);
 	}
 
 	// ** For weekly stats
-	switch ($frequence)
-	{
+	switch ($frequence) {
 		case "day":
 			// Get days
-			for ($i = 0; $i < $number_dates; $i++)
-			{
+			for ($i = 0 ; $i < $number_dates ; $i++) {
 				$dates[] = strftime("%Y-%m-%d", ($today - (86400 * ($number_dates - 1))  + (86400 * $i)));
 			}
-			break;	
+			break;
+
 		case "week":		
 			// Get Last Monday
 			if (gmdate("w", $today) == 0) $today -= (86400 * 6);
 			if (gmdate("w", $today) > 1) $today -= (86400 * (gmdate("w", $today) - 1));
-			for ($i = 0; $i < $number_dates; $i++)
-			{
+			for ($i = 0 ; $i < $number_dates ; $i++) {
 				$dates[$i] = strftime("%Y-%m-%d", (($today - (86400 * 7 * ($number_dates - 1)))+(86400 * 7 *  $i)));
 			}
-			
 			break;
+
 		case "month":	
 			// ** For monthly stats
 			$month = (gmdate("n", $today));
 			$year = (gmdate("Y", $today));
 			$dates[($number_dates - 1)] = strftime("%Y-%m-%d", mktime(0, 0, 0, $month, 1, $year));
-			for ($i = 0; $i < ($number_dates - 1); $i++)
-			{
+			for ($i = 0 ; $i < ($number_dates - 1) ; $i++) {
 				$dates[$i] = strftime("%Y-%m-%d", mktime(0, 0, 0, ($month - ($number_dates - 1) + $i), 1, $year));
 			}
 			break;
+
 		case "year":
 			// ** For yearly stats
 			$year = (gmdate("Y", $today));
 			$dates[($number_dates - 1)] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, 1, $year));
-			for ($i = 0; $i < ($number_dates - 1); $i++)
-			{
+			for ($i = 0 ; $i < ($number_dates - 1) ; $i++) {
 				$dates[$i] = strftime("%Y-%m-%d", mktime(0, 0, 0, 1, 1, ($year - ($number_dates - 1) + $i)));
 			}
 			break;
@@ -90,9 +83,8 @@ function plugin_tracker_date ($number_dates,$frequence,$today='')
 
 
 
-function plugin_tracker_printer_calendar ($getvalue,$field,$target)
-{
-	global $DB,$LANG;
+function plugin_tracker_printer_calendar ($getvalue,$field,$target) {
+	GLOBAL $DB,$LANG;
 
 	echo "<div align='center'><form method='post' action='".$target."'>";
 	echo "<table class='tab_cadre'><tr class='tab_bg_2'><td align='right'>";

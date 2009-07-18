@@ -34,21 +34,19 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
+}
 
+class plugin_tracker_agents extends CommonDBTM {
 
-class plugin_tracker_agents extends CommonDBTM
-{
-	function __construct()
-	{
+   function __construct() {
 		$this->table = "glpi_plugin_tracker_agents";
 		$this->type = PLUGIN_TRACKER_SNMP_AGENTS;
 	}
 
 
-	function PushData($ID, $key)
-	{
+	function PushData($ID, $key) {
 		$this->getFromDB($ID);
 		// Name of server
 		// $this->fields["name"];
@@ -65,12 +63,13 @@ class plugin_tracker_agents extends CommonDBTM
 
 
 	function showForm($target, $ID = '') {
-		global $DB,$CFG_GLPI,$LANG;
+		GLOBAL $DB,$CFG_GLPI,$LANG;
 
-		if ($ID!='')
+		if ($ID!='') {
 			$this->getFromDB($ID);
-		else
+      } else {
 			$this->getEmpty();
+      }
 
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
@@ -102,10 +101,11 @@ class plugin_tracker_agents extends CommonDBTM
 		$ArrayValues[]= $LANG["choice"][0];
 		$ArrayValues[]= $LANG["choice"][1];
 		$ArrayValues[]= $LANG["setup"][137];
-		if (empty($this->fields["logs"]))
+		if (empty($this->fields["logs"])) {
 			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[0]);
-		else	
+      } else {
 			dropdownArrayValues("logs",$ArrayValues,$this->fields["logs"]);
+      }
 		echo "</td>";
 		echo "</tr>";
 
@@ -153,7 +153,6 @@ function appear_array(){
 		echo "</tr>";
 
 
-
 		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance5'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][8] . "</td>";
 		echo "<td align='center'>";
@@ -164,11 +163,8 @@ function appear_array(){
 		echo "</tr>";
 
 
-
-
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		if ($ID=='')
-		{
+		if ($ID=='') {
 			// Generator of Key
 			$chrs = 30;
 			$chaine = ""; 
@@ -181,9 +177,7 @@ function appear_array(){
 
 			echo "<input type='hidden' name='key' value='".$newstring."'/>";
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-		}
-		else
-		{
+		} else {
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
 			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
 			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
@@ -195,9 +189,8 @@ function appear_array(){
 
 
 	
-	function export_config($ID)
-	{
-		global $DB;
+	function export_config($ID) {
+		GLOBAL $DB;
 	
 		$tracker_config = new plugin_tracker_config;
 		$tracker_config->getFromDB(1);
@@ -209,4 +202,5 @@ function appear_array(){
 	}
 
 }
+
 ?>

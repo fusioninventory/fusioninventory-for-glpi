@@ -47,8 +47,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 			" WHERE FK_networking='".$FK_networking."' ".
 				" AND FK_networking_port=".$FK_networking_port." ";
 		$result = $DB->query($query);
-		if ( $DB->numrows($result) == 0 )
-		{
+		if ($DB->numrows($result) == 0) {
 			$datas["FK_networking"] = $FK_networking;
 			$datas["FK_networking_port"] = $FK_networking_port;
 			$datas["cdp"] = $cdp;
@@ -60,12 +59,10 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 
 
 
-	function AddConnections($FK_tmp_netports,$ArrayMacAddress)
-	{
+	function AddConnections($FK_tmp_netports,$ArrayMacAddress) {
 		global $DB;
 
-		foreach($ArrayMacAddress as $num=>$MacAddress)
-		{
+		foreach($ArrayMacAddress as $num=>$MacAddress) {
 			$query_insert = "INSERT INTO glpi_plugin_tracker_tmp_connections ".
 				" (FK_tmp_netports, macaddress) ".
 				" VALUES ('".$FK_tmp_netports."', '".$MacAddress."') ";
@@ -76,8 +73,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 
 
 
-	function WireInterSwitchs()
-	{
+	function WireInterSwitchs() {
 		global $DB;
 
 		$snmp_queries = new PluginTrackerSnmp;
@@ -89,8 +85,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 			" LEFT JOIN glpi_networking_ports ON FK_networking=on_device AND FK_networking_port=device_type ".
 			" WHERE cdp='1' ";
 		$result=$DB->query($query);
-		while ($data=$DB->fetch_array($result))
-		{
+		while ($data=$DB->fetch_array($result)) {
 			$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections ".
 				" WHERE macaddress='".$data['ifmac']."' ";
 			$DB->query($query_delete);
@@ -102,8 +97,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 		}
 		// Get ports which have only one connection and connect between ports(swicths)
 		$i = 1;
-		while ($i != 0)
-		{
+		while ($i != 0) {
 			$i = 0;
 			$query = "SELECT ifmac, glpi_plugin_tracker_tmp_netports.ID as IDnetports, FK_networking, FK_networking_port ".
 					" FROM glpi_plugin_tracker_tmp_netports ".
@@ -111,10 +105,8 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 				" WHERE cdp='0' ".
 				" GROUP BY ifmac ".
 				" HAVING  COUNT(ifmac)=1 ";
-			if ($result=$DB->query($query))
-			{
-				while ($data=$DB->fetch_array($result))
-				{
+			if ($result=$DB->query($query)) {
+				while ($data=$DB->fetch_array($result)) {
 					$i++;
 					$sport = $data['FK_networking_port'];
 					$query_sel2 = "SELECT * FROM glpi_networking_ports ".
@@ -165,8 +157,6 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 		$query = "TRUNCATE table glpi_plugin_tracker_tmp_connections";
 		$DB->query($query);
 	}
-
 }
-
 
 ?>

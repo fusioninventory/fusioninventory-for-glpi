@@ -34,14 +34,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
+}
 
+class plugin_tracker_rangeip extends CommonDBTM {
 
-class plugin_tracker_rangeip extends CommonDBTM
-{
-	function __construct()
-	{
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_rangeip";
 		$this->type = PLUGIN_TRACKER_SNMP_RANGEIP;
 	}
@@ -50,11 +49,11 @@ class plugin_tracker_rangeip extends CommonDBTM
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
-		if ($ID!='')
+		if ($ID!='') {
 			$this->getFromDB($ID);
-		else
+      } else {
 			$this->getEmpty();
-
+      }
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
@@ -113,20 +112,16 @@ class plugin_tracker_rangeip extends CommonDBTM
 
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		if ($ID=='')
-		{
+		if ($ID=='') {
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-		}
-		else
-		{
+		} else {
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
 			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
 			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
 		}
 		echo "</td></tr>";
 		echo "</table></form></div>";
-
 	}
-
 }
+
 ?>

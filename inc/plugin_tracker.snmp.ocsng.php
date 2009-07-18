@@ -31,36 +31,34 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_tracker_search_ip_ocs_servers($MAC)
-{
+function plugin_tracker_search_ip_ocs_servers($MAC) {
 	global $DBocs, $DB;
 
 	$listserver = plugin_tracker_getOCSServerID();
-	foreach ($listserver as $num=> $ocs_server_id)
-	{
+	foreach ($listserver as $num=> $ocs_server_id) {
 		checkOCSconnection($ocs_server_id);
 		$res = $DBocs->query("SELECT IP FROM netmap WHERE MAC='".strtoupper($MAC)."'");
-		if ($DBocs->numrows($res) == 1)
+		if ($DBocs->numrows($res) == 1) {
 			return $DBocs->result($res,0,"IP");
-		else
+      } else {
 			return '';
+      }
 	}
 	
 }
 
-function plugin_tracker_search_name_ocs_servers($MAC)
-{
+function plugin_tracker_search_name_ocs_servers($MAC) {
 	global $DBocs, $DB;
 
 	$listserver = plugin_tracker_getOCSServerID();
-	foreach ($listserver as $num=> $ocs_server_id)
-	{
+	foreach ($listserver as $num=> $ocs_server_id) {
 		checkOCSconnection($ocs_server_id);
 		$res = $DBocs->query("SELECT NAME FROM netmap WHERE MAC='".strtoupper($MAC)."'");
-		if ($DBocs->numrows($res) == 1)
+		if ($DBocs->numrows($res) == 1) {
 			return $DBocs->result($res,0,"NAME");
-		else
+      } else {
 			return '';
+      }
 	}
 
 }

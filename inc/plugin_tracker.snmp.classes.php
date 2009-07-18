@@ -33,12 +33,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_snmp extends CommonDBTM
-{
+class plugin_tracker_snmp extends CommonDBTM {
 	/**
 	 * Get port name and ID of the network materiel from DB
 	 *
@@ -48,9 +47,8 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return array with port name and port ID 
 	 *
 	**/
-	function GetPortsID($ID_Device,$type)
-	{
-		global $DB;	
+	function GetPortsID($ID_Device,$type) {
+		GLOBAL $DB;
 	
 		$PortsID = array();
 		
@@ -60,10 +58,8 @@ class plugin_tracker_snmp extends CommonDBTM
 			AND device_type='".$type."'
 		ORDER BY logical_number ";
 
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
+		if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
 				$PortsID[$data["name"]] = $data["ID"];
 			}
 		}
@@ -80,23 +76,22 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return array : array with object name and mapping_type||mapping_name
 	 *
 	**/
-	function GetLinkOidToFields($ID_Device,$type)
-	{
+	function GetLinkOidToFields($ID_Device,$type) {
 		global $DB,$TRACKER_MAPPING;
 		
 		$ObjectLink = array();
 
-		if ($type == NETWORKING_TYPE)
+		if ($type == NETWORKING_TYPE) {
 			$query_add = "LEFT JOIN glpi_plugin_tracker_networking
 				ON glpi_plugin_tracker_networking.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
 			WHERE FK_networking='".$ID_Device."'
 				AND glpi_plugin_tracker_networking.FK_model_infos!='0' ";
-		else if($type == PRINTER_TYPE)
+      } else if($type == PRINTER_TYPE) {
 			$query_add = "LEFT JOIN glpi_plugin_tracker_printers
 				ON glpi_plugin_tracker_printers.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
 			WHERE FK_printers='".$ID_Device."'
 				AND glpi_plugin_tracker_printers.FK_model_infos!='0' ";
-			
+      }
 			
 		$query = "SELECT mapping_type, mapping_name,oid_port_dyn, 
 			glpi_dropdown_plugin_tracker_mib_oid.name AS name
@@ -107,12 +102,11 @@ class plugin_tracker_snmp extends CommonDBTM
 			AND oid_port_counter='0'
 			AND glpi_plugin_tracker_mib_networking.activation='1' ";
 
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
-				if ($data["oid_port_dyn"] == "1")
+		if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+				if ($data["oid_port_dyn"] == "1") {
 					$data["name"] = $data["name"].".";
+            }
 				$ObjectLink[$data["name"]] = $data["mapping_name"];
 			}
 		}
@@ -130,18 +124,16 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return
 	 *
 	**/
-	function MAC_Rewriting($macadresse)
-	{
+	function MAC_Rewriting($macadresse) {
 		// If MAC address without : (with space for separate)
 		$macadresse = trim($macadresse);
-		if ( substr_count($macadresse, ':') == "0"){
+		if (substr_count($macadresse, ':') == "0") {
 			$macexplode = explode(" ",$macadresse);
 			$assembledmac = "";
-			for($num = 0;$num < count($macexplode);$num++)
-			{
-				if ($num > 0)
+			for($num = 0 ; $num < count($macexplode) ; $num++) {
+				if ($num > 0) {
 					$assembledmac .= ":";
-	
+            }
 				$assembledmac .= $macexplode[$num];
 			}
 			$macadresse = $assembledmac;
@@ -150,23 +142,23 @@ class plugin_tracker_snmp extends CommonDBTM
 		// Rewrite
 		$macexplode = explode(":",$macadresse);
 		$assembledmac = "";
-		for($num = 0;$num < count($macexplode);$num++)
-		{
-			if ($num > 0)
+		for($num = 0 ; $num < count($macexplode) ; $num++) {
+			if ($num > 0) {
 				$assembledmac .= ":";
-		
+         }
 			switch (strlen($macexplode[$num])) {
 			case 0:
 			    $assembledmac .= "00";
 			    break;
+
 			case 1:
 			    $assembledmac .= "0".$macexplode[$num];
 			    break;
+
 			case 2:
 			    $assembledmac .= $macexplode[$num];
 			    break;
 			}
-		
 		}
 		return $assembledmac;
 	}
@@ -182,23 +174,22 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return
 	 *
 	**/
-	function update_network_infos($ID, $FK_model_infos, $FK_snmp_connection)
-	{
-		global $DB;
+	function update_network_infos($ID, $FK_model_infos, $FK_snmp_connection) {
+		GLOBAL $DB;
 		
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking='".$ID."' ";
 		$result = $DB->query($query);
-		if ($DB->numrows($result) == "0")
-		{
+		if ($DB->numrows($result) == "0") {
 			$queryInsert = "INSERT INTO glpi_plugin_tracker_networking
 			(FK_networking)
 			VALUES('".$ID."') ";
 
 			$DB->query($queryInsert);
 		}		
-		if (empty($FK_snmp_connection))
+		if (empty($FK_snmp_connection)) {
 			$FK_snmp_connection = 0;
+      }
 		$query = "UPDATE glpi_plugin_tracker_networking
 		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
 		WHERE FK_networking='".$ID."' ";
@@ -217,23 +208,22 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return
 	 *
 	**/
-	function update_printer_infos($ID, $FK_model_infos, $FK_snmp_connection)
-	{
-		global $DB;
+	function update_printer_infos($ID, $FK_model_infos, $FK_snmp_connection) {
+		GLOBAL $DB;
 
 		$query = "SELECT * FROM glpi_plugin_tracker_printers
 		WHERE FK_printers='".$ID."' ";
 		$result = $DB->query($query);
-		if ($DB->numrows($result) == "0")
-		{
+		if ($DB->numrows($result) == "0") {
 			$queryInsert = "INSERT INTO glpi_plugin_tracker_printers
 			(FK_printers)
 			VALUES('".$ID."') ";
 
 			$DB->query($queryInsert);
 		}
-		if (empty($FK_snmp_connection))
+		if (empty($FK_snmp_connection)) {
 			$FK_snmp_connection = 0;
+      }
 		$query = "UPDATE glpi_plugin_tracker_printers
 		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
 		WHERE FK_printers='".$ID."' ";
@@ -252,9 +242,8 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return
 	 *
 	**/
-	function getPortIDfromDeviceIP($IP, $ifDescr)
-	{
-		global $DB;
+	function getPortIDfromDeviceIP($IP, $ifDescr) {
+		GLOBAL $DB;
 	
 		$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr
 		WHERE ifaddr='".$IP."' ";
@@ -285,9 +274,8 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return
 	 *
 	**/
-	function PortsConnection($source_port, $destination_port,$FK_process,$vlan="")
-	{
-		global $DB;
+	function PortsConnection($source_port, $destination_port,$FK_process,$vlan="") {
+		GLOBAL $DB;
 		
 		$netwire = new Netwire;
 		
@@ -296,16 +284,14 @@ class plugin_tracker_snmp extends CommonDBTM
 		WHERE end1 IN ('$source_port', '$destination_port')
 			AND end2 IN ('$source_port', '$destination_port') ";
 
-		if ($resultVerif=$DB->query($queryVerif))
-		{
-			if ( $DB->numrows($resultVerif) == "0" )
-			{
-					addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
-					addLogConnection("remove",$destination_port,$FK_process);
-					// Remove VLAN
-					$this->CleanVlan($source_port);
-					removeConnector($destination_port);
-					removeConnector($source_port);
+		if ($resultVerif=$DB->query($queryVerif)) {
+			if ($DB->numrows($resultVerif) == "0") {
+				addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
+				addLogConnection("remove",$destination_port,$FK_process);
+				// Remove VLAN
+				$this->CleanVlan($source_port);
+				removeConnector($destination_port);
+				removeConnector($source_port);
 			
 				makeConnector($source_port,$destination_port);
 				addLogConnection("make",$destination_port,$FK_process);
@@ -313,35 +299,31 @@ class plugin_tracker_snmp extends CommonDBTM
 				
 				if ((!empty($vlan)) AND ($vlan != " []")) {
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
-					if ($FK_vlan != "0")
+					if ($FK_vlan != "0") {
 						assignVlan($source_port,$FK_vlan);
+               }
 				}
-			}
-			else
-			{
+			} else {
 				if ((!empty($vlan)) AND ($vlan != " []")) {
                // Verify vlan and update it if necessery
                $FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
-               if ($FK_vlan != "0")
-               {
+               if ($FK_vlan != "0") {
                   $query = "SELECT * FROM glpi_networking_vlan ".
                      " WHERE FK_port='$source_port' ".
                      " AND FK_vlan='$FK_vlan' ";
-                  if ($result=$DB->query($query))
-                  {
-                     if ( $DB->numrows($result) == "0" )
-                     {
+                  if ($result=$DB->query($query)) {
+                     if ($DB->numrows($result) == "0") {
                         $this->CleanVlan($source_port);
                         assignVlan($source_port,$FK_vlan);
-                     }
-                     else
-                     {
+                     } else {
                         $query2 = "SELECT * FROM glpi_networking_vlan ".
                            " WHERE FK_port='$source_port' ".
                            " AND FK_vlan!='$FK_vlan' ";
-                        if ( $result2=$DB->query($query2) )
-                           while ( $data2=$DB->fetch_array($result2) )
+                        if ($result2=$DB->query($query2)) {
+                           while ($data2=$DB->fetch_array($result2)) {
                               $this->CleanVlanID($data2["ID"]);
+                           }
+                        }
                      }
                   }
                }
@@ -349,16 +331,14 @@ class plugin_tracker_snmp extends CommonDBTM
          }
 		}
 		// Remove all connections if it is
-		if ($netwire->getOppositeContact($destination_port) != "")
-		{
+		if ($netwire->getOppositeContact($destination_port) != "") {
 			$queryVerif2 = "SELECT *
 			FROM glpi_networking_wire 
 			WHERE end1='".$netwire->getOppositeContact($destination_port)."'
 				AND end2!='$destination_port' ";
 			
 			$resultVerif2=$DB->query($queryVerif2);
-			while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
-			{
+			while ($dataVerif2=$DB->fetch_array($resultVerif2)) {
 				$query_del = "DELETE FROM glpi_networking_wire 
 				WHERE ID='".$dataVerif2["ID"]."' ";
 				$DB->query($query_del);
@@ -371,8 +351,7 @@ class plugin_tracker_snmp extends CommonDBTM
 				AND end2!='".$netwire->getOppositeContact($destination_port)."' ";
 			
 			$resultVerif2=$DB->query($queryVerif2);
-			while ( $dataVerif2=$DB->fetch_array($resultVerif2) )
-			{
+			while ($dataVerif2=$DB->fetch_array($resultVerif2)) {
 				$query_del = "DELETE FROM glpi_networking_wire 
 				WHERE ID='".$dataVerif2["ID"]."' ";
 				$DB->query($query_del);
@@ -385,7 +364,6 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
-
 	/**
 	 * Get SNMP model of the device 
 	 *
@@ -395,42 +373,38 @@ class plugin_tracker_snmp extends CommonDBTM
 	 * @return ID of the SNMP model or nothing 
 	 *
 	**/
-	function GetSNMPModel($ID_Device,$type)
-	{
-	
-		global $DB;
+	function GetSNMPModel($ID_Device,$type) {
+		GLOBAL $DB;
 
-		switch ($type)
-		{
+		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT FK_model_infos
 				FROM glpi_plugin_tracker_networking 
 				WHERE FK_networking='".$ID_Device."' ";
 				break;
+
 			case PRINTER_TYPE :
 				$query = "SELECT FK_model_infos
 				FROM glpi_plugin_tracker_printers 
 				WHERE FK_printers='".$ID_Device."' ";
 				break;
 		}
-		if (isset($query))
-		{
-			if ( ($result = $DB->query($query)) )
-			{
-				if ( $DB->numrows($result) != 0 )
+		if (isset($query)) {
+			if (($result = $DB->query($query))) {
+				if ($DB->numrows($result) != 0) {
 					return $DB->result($result, 0, "FK_model_infos");
+            }
 			}
 		}
 	}
 
 
 
-	function CleanVlan($FK_port)
-	{
-		global $DB;
+	function CleanVlan($FK_port) {
+		GLOBAL $DB;
 
 		$query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$FK_port'  LIMIT 0,1";
-		if ($result=$DB->query($query)){
+		if ($result=$DB->query($query)) {
 			$data=$DB->fetch_array($result);
 
 			// Delete VLAN
@@ -439,7 +413,7 @@ class plugin_tracker_snmp extends CommonDBTM
 
 			// Delete Contact VLAN if set
 			$np=new NetPort();
-			if ($np->getContact($data['FK_port'])){
+			if ($np->getContact($data['FK_port'])) {
 				$query="DELETE FROM glpi_networking_vlan WHERE FK_port='".$np->contact_id."' AND FK_vlan='".$data['FK_vlan']."'";
 				$DB->query($query);
 			}
@@ -448,12 +422,11 @@ class plugin_tracker_snmp extends CommonDBTM
 
 
 
-	function CleanVlanID($ID)
-	{
-		global $DB;
+	function CleanVlanID($ID) {
+		GLOBAL $DB;
 
 		$query="SELECT * FROM glpi_networking_vlan WHERE ID='$ID' LIMIT 0,1";
-		if ($result=$DB->query($query)){
+		if ($result=$DB->query($query)) {
 			$data=$DB->fetch_array($result);
 
 			// Delete VLAN
@@ -462,18 +435,12 @@ class plugin_tracker_snmp extends CommonDBTM
 
 			// Delete Contact VLAN if set
 			$np=new NetPort();
-			if ($np->getContact($data['FK_port'])){
+			if ($np->getContact($data['FK_port'])) {
 				$query="DELETE FROM glpi_networking_vlan WHERE FK_port='".$np->contact_id."' AND FK_vlan='".$data['FK_vlan']."'";
 				$DB->query($query);
 			}
 		}
-
-
 	}
-
-
-
 }
-
 
 ?>

@@ -34,22 +34,21 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
+}
 
-
-function plugin_tracker_snmp_auth_dropdown($selected="")
-{
-	global $DB;
+function plugin_tracker_snmp_auth_dropdown($selected="") {
+	GLOBAL $DB;
 
 	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
 	$config = new plugin_tracker_config;
 
-	if ($config->getValue("authsnmp") == "file")
+	if ($config->getValue("authsnmp") == "file") {
 		echo $plugin_tracker_snmp_auth->selectbox($selected);
-	else  if ($config->getValue("authsnmp") == "DB")
+   } else  if ($config->getValue("authsnmp") == "DB") {
 		dropdownValue("glpi_plugin_tracker_snmp_connection","FK_snmp_connection",$selected,0);
+   }
 }
-
 
 ?>
