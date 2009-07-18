@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 
 class plugin_tracker_errors extends CommonDBTM {
 
-	function plugin_tracker_errors() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_errors";
 		$this->type=PLUGIN_TRACKER_ERROR_TYPE;
 		$this->entity_assign = true;

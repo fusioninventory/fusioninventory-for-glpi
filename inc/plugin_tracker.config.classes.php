@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 
 class plugin_tracker_config extends CommonDBTM {
 
-	function plugin_tracker_config() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_config";
 		$this->type=PLUGIN_TRACKER_SNMP_CONFIG;
 	}
@@ -190,7 +190,7 @@ class plugin_tracker_config extends CommonDBTM {
 
 class plugin_tracker_config_discovery extends CommonDBTM {
 
-	function plugin_tracker_config_discovery() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_config_discovery";
 		$this->type=-1;
 	}
@@ -312,7 +312,7 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 
 class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 
-	function glpi_plugin_tracker_config_snmp_script() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_config_snmp_script";
 		$this->type=-1;
 	}
@@ -391,7 +391,7 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 
 class plugin_tracker_config_snmp_networking extends CommonDBTM {
 
-	function plugin_tracker_config_snmp_networking() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_config_snmp_networking";
 		$this->type=-1;
 	}	
@@ -499,7 +499,7 @@ class plugin_tracker_config_snmp_networking extends CommonDBTM {
 
 class plugin_tracker_config_snmp_printer extends CommonDBTM {
 
-	function plugin_tracker_config_snmp_printer() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_config_snmp_printer";
 		$this->type=-1;
 	}	

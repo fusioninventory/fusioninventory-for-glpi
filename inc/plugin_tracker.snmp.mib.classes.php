@@ -38,6 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class plugin_tracker_mib_networking extends CommonDBTM {
+   
 	function __construct() {
 		$this->table="glpi_plugin_tracker_mib_networking";
 		$this->type = -1;

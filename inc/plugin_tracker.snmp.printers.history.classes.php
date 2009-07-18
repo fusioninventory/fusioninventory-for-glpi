@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 
 class plugin_tracker_printers_history extends CommonDBTM {
 
-	function plugin_tracker_printers_history() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_printers_history";
 		$this->type=-1;
 	}
@@ -184,7 +184,7 @@ class plugin_tracker_printers_history extends CommonDBTM {
 
 class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 
-	function glpi_plugin_tracker_printers_history_config() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_printers_history_config";
 		$this->type=-1;
 	}
