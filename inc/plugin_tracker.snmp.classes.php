@@ -286,16 +286,16 @@ class plugin_tracker_snmp extends CommonDBTM {
 
 		if ($resultVerif=$DB->query($queryVerif)) {
 			if ($DB->numrows($resultVerif) == "0") {
-				addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
-				addLogConnection("remove",$destination_port,$FK_process);
+				plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
+				plugin_tracker_addLogConnection("remove",$destination_port,$FK_process);
 				// Remove VLAN
 				$this->CleanVlan($source_port);
 				removeConnector($destination_port);
 				removeConnector($source_port);
 			
 				makeConnector($source_port,$destination_port);
-				addLogConnection("make",$destination_port,$FK_process);
-				addLogConnection("make",$source_port,$FK_process);
+				plugin_tracker_addLogConnection("make",$destination_port,$FK_process);
+				plugin_tracker_addLogConnection("make",$source_port,$FK_process);
 				
 				if ((!empty($vlan)) AND ($vlan != " []")) {
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);

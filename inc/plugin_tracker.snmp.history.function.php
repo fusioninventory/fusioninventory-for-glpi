@@ -54,7 +54,7 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_proce
 
 
 // $status = connection or disconnection	
-function addLogConnection($status,$port,$FK_process=0) {
+function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 	GLOBAL $DB,$CFG_GLPI;
 	$CommonItem = new CommonItem;
 	$history = new plugin_tracker_SNMP_history;
@@ -97,8 +97,8 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 
 	if ($resultVerif=$DB->query($queryVerif)) {
 		if ($DB->numrows($resultVerif) != "0") {
-			addLogConnection("remove",$netwire->getOppositeContact($port),$FK_process);
-			addLogConnection("remove",$port,$FK_process);
+			plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($port),$FK_process);
+			plugin_tracker_addLogConnection("remove",$port,$FK_process);
 			while ($dataVerif2=$DB->fetch_array($resultVerif)) {
 				$query_del = "DELETE FROM glpi_networking_wire
 					WHERE ID='".$dataVerif2["ID"]."' ";

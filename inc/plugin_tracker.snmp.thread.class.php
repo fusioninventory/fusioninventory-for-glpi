@@ -392,7 +392,7 @@ class Threads extends CommonDBTM {
 		 AND ifmac='".$macaddress."' "; 
 		$result = $DB->query($query);		
 		if (mysql_num_rows($result) == "0") {
-			addLogConnection("remove",$sport,$PID);
+			plugin_tracker_addLogConnection("remove",$sport,$PID);
 			removeConnector($sport);
 
 			// Search IP in OCS IPdiscover if OCS servers specified
