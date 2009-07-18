@@ -33,35 +33,28 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
+}
 
+class plugin_tracker_importexport extends CommonDBTM {
 
-class plugin_tracker_importexport extends CommonDBTM
-{
-
-	function plugin_tracker_export($ID_model)
-	{
+	function plugin_tracker_export($ID_model) {
 		global $DB;
 		
 		plugin_tracker_checkRight("snmp_models","r");
-		
 		$query = "SELECT * 
-					
 		FROM glpi_plugin_tracker_model_infos
-		
 		WHERE ID='".$ID_model."' ";
 
-		if ( $result=$DB->query($query) )
-		{
-			if ( $DB->numrows($result) != 0 )
-			{
+		if ($result=$DB->query($query)) {
+			if ($DB->numrows($result) != 0) {
 				$model_name = $DB->result($result, 0, "name");
 				$type = $DB->result($result, 0, "device_type");
 				$discovery_key = $DB->result($result, 0, "discovery_key");
-			}
-			else
+			} else {
 				exit();
+         }
 		}
 		
 		
@@ -79,10 +72,8 @@ class plugin_tracker_importexport extends CommonDBTM
 
 		WHERE FK_model_infos='".$ID_model."' ";
 		
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
+		if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
 				$xml .= "		<oidobject>\n";
 				$xml .= "			<object><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."]]></object>\n";		
 				$xml .= "			<oid><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";		
@@ -105,8 +96,7 @@ class plugin_tracker_importexport extends CommonDBTM
 	
 	
 	
-	function showForm($target)
-	{
+	function showForm($target) {
 		GLOBAL $DB,$CFG_GLPI,$LANG;
 		
 		plugin_tracker_checkRight("snmp_models","r");
@@ -134,13 +124,12 @@ class plugin_tracker_importexport extends CommonDBTM
 
 
 
-	function import($file,$message=1,$installation=0)
-	{
+	function import($file,$message=1,$installation=0) {
 		global $DB,$LANG;
 
-		if ($installation != 1)
+		if ($installation != 1) {
 			plugin_tracker_checkRight("snmp_models","w");
-
+      }
 		$xml = simplexml_load_file($file);
 
 		// Verify same model exist
@@ -149,14 +138,12 @@ class plugin_tracker_importexport extends CommonDBTM
 				 "WHERE name='".$xml->name[0]."';";
 		$result = $DB->query($query);
 		
-		if ($DB->numrows($result) > 0)
-		{
-			if ($message == '1')
+		if ($DB->numrows($result) > 0) {
+			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][8];
+         }
 			return false;
-		}
-		else
-		{
+		} else {
 			$query = "INSERT INTO glpi_plugin_tracker_model_infos
 			(name,device_type,discovery_key)
 			VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."')";
@@ -165,34 +152,40 @@ class plugin_tracker_importexport extends CommonDBTM
 			$FK_model = $DB->insert_id();
 			
 			$i = -1;
-			foreach($xml->oidlist[0] as $num){
+			foreach($xml->oidlist[0] as $num) {
 				$i++;
 				$j = 0;
-				foreach($xml->oidlist->oidobject[$i] as $item){
+				foreach($xml->oidlist->oidobject[$i] as $item) {
 					$j++;
-					switch ($j)
-					{
+					switch ($j) {
 						case 1:
 							$FK_mib_object = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_object",$item);
 							break;
+
 						case 2:
 							$FK_mib_oid = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_oid",$item);
 							break;
+
 						case 3:
 							$oid_port_counter = $item;
 							break;
+
 						case 4:
 							$oid_port_dyn = $item;
 							break;
+
 						case 5:
 							$mapping_type = $item;
 							break;
+
 						case 6:
 							$mapping_name = $item;
 							break;
+
 						case 7:
 							$vlan = $item;
 							break;
+
 						case 8:
 							$activation = $item;
 							break;
@@ -206,15 +199,15 @@ class plugin_tracker_importexport extends CommonDBTM
 			
 				$DB->query($query);
 			}
-			if ($message == '1')
+			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+         }
 		}
 	}
 
 
 
-	function import_agent_discovery($content_dir,$file)
-	{
+	function import_agent_discovery($content_dir,$file) {
 		global $DB,$LANG;
 
 		$walks = new plugin_tracker_walk;
@@ -239,8 +232,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		//
 		$dir = opendir($content_dir);
 		while($file_scan = readdir($dir)) {
-			if( strstr($file_scan, $pid."-tmpdiscovery-" ))
-			{
+			if(strstr($file_scan, $pid."-tmpdiscovery-")) {
 				$c_handle = fopen($content_dir.$file_scan, 'r');
 				do {
 					$content = fread($c_handle,1000000);
@@ -268,19 +260,20 @@ class plugin_tracker_importexport extends CommonDBTM
 		$walkdata = '';
 		$xml = simplexml_load_file($content_dir.$file);
 		$count_discovery_devices = 0;
-		foreach($xml->discovery as $discovery){
+		foreach($xml->discovery as $discovery) {
 			$count_discovery_devices++;	
 		}
 		$device_queried_networking = 0;
 		$device_queried_printer = 0;
 
-		foreach($xml->device as $device){
-			if ($device->infos->type == NETWORKING_TYPE)
+		foreach($xml->device as $device) {
+			if ($device->infos->type == NETWORKING_TYPE) {
 				$device_queried_networking++;
-			else if ($device->infos->type == PRINTER_TYPE)
+         } else if ($device->infos->type == PRINTER_TYPE) {
 				$device_queried_printer++;
+         }
 		}
-		foreach($xml->agent as $agent){
+		foreach($xml->agent as $agent) {
 			$agent_version = $agent->version;
 			$agent_id = $agent->id;
 			$query = "UPDATE glpi_plugin_tracker_agents 
@@ -298,27 +291,26 @@ class plugin_tracker_importexport extends CommonDBTM
 				AND FK_agent='".$agent->id."'";
 			$DB->query($query);			
 		}
-		foreach($xml->discovery as $discovery){
-			if ($discovery->modelSNMP != "")
-			{
+		foreach($xml->discovery as $discovery) {
+			if ($discovery->modelSNMP != "") {
 				$query = "SELECT * FROM glpi_plugin_tracker_model_infos
 				WHERE discovery_key='".$discovery->modelSNMP."'
 				LIMIT 0,1";
 				$result = $DB->query($query);		
 				$data = $DB->fetch_assoc($result);
 				$FK_model = $data['ID'];
-			}
-			else
+			} else {
 				$FK_model = 0;
+         }
 
-			if (empty($FK_model))
+			if (empty($FK_model)) {
 				$FK_model = 0;
+         }
 			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model);
 		}
 	}
 
-	function import_agentonly($content_dir,$file)
-	{
+	function import_agentonly($content_dir,$file) {
 		global $DB,$LANG;
 		
 		$xml = simplexml_load_file($content_dir.$file);
@@ -332,8 +324,7 @@ class plugin_tracker_importexport extends CommonDBTM
 		//
 		$dir = opendir($content_dir);
 		while($file_scan = readdir($dir)) {
-			if( strstr($file_scan, $xml->agent->pid."-tmp-" ))
-			{
+			if(strstr($file_scan, $xml->agent->pid."-tmp-")) {
 				$c_handle = fopen($content_dir.$file_scan, 'r');
 				do {
 					$content = fread($c_handle,1000000);
@@ -353,13 +344,14 @@ class plugin_tracker_importexport extends CommonDBTM
 
 		$device_queried_networking = 0;
 		$device_queried_printer = 0;
-		foreach($xml_device->device as $device){
-			if ($device->infos->type == NETWORKING_TYPE)
+		foreach($xml_device->device as $device) {
+			if ($device->infos->type == NETWORKING_TYPE) {
 				$device_queried_networking++;
-			else if ($device->infos->type == PRINTER_TYPE)
+         } else if ($device->infos->type == PRINTER_TYPE) {
 				$device_queried_printer++;
+         }
 		}
-		foreach($xml->agent as $agent){
+		foreach($xml->agent as $agent) {
 			$agent_version = $agent->version;
 			$agent_id = $agent->id;
 			$query = "UPDATE glpi_plugin_tracker_agents

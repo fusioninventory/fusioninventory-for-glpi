@@ -31,28 +31,25 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_unknown extends CommonDBTM
-{
+class plugin_tracker_unknown extends CommonDBTM {
 
-	function __construct()
-	{
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_unknown_device";
 		$this->type = PLUGIN_TRACKER_MAC_UNKNOWN;
 	}
 
 
 
-	function showForm($target, $ID = '')
-	{
-		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
+	function showForm($target, $ID = '') {
+		global $DB,$CFG_GLPI,$LANG;
 
 		plugin_tracker_checkRight("snmp_networking","r");
 
-		if ($ID!='')
+		if ($ID!='') {
 			$this->getFromDB($ID);
-		else
+      } else {
 			$this->getEmpty();
-
+      }
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
@@ -84,9 +81,8 @@ class plugin_tracker_unknown extends CommonDBTM
 		echo "</table></form></div>";
 	}
 
-	function updateFromOldVersion_unknown_mac()
-	{
-		global $DB,$LANG,$LANGTRACKER;
+	function updateFromOldVersion_unknown_mac() {
+		global $DB,$LANG;
 
 		$snmp_queries = new plugin_tracker_snmp;
 		$np=new Netport();
@@ -94,16 +90,15 @@ class plugin_tracker_unknown extends CommonDBTM
 		$query = "SELECT DISTINCT unknow_mac,unknown_ip,port,end_FK_processes FROM glpi_plugin_tracker_unknown_mac ".
 			" WHERE end_FK_processes=(select max(end_FK_processes) from glpi_plugin_tracker_unknown_mac) ";
 
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
+		if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
 				$name_unknown = plugin_tracker_search_name_ocs_servers($data["unknow_mac"]);
 				// Add unknown device
-				if ($name_unknown == $data["unknown_ip"])
+				if ($name_unknown == $data["unknown_ip"]) {
 					$unknown_infos["name"] = '';
-				else
+            } else {
 					$unknown_infos["name"] = $name_unknown;
+            }
 				$newID=$this->add($unknown_infos);
 				unset($unknown_infos);
 				// Add networking_port
@@ -122,8 +117,7 @@ class plugin_tracker_unknown extends CommonDBTM
 
 
 
-	function FusionUnknownKnownDevice()
-	{
+	function FusionUnknownKnownDevice() {
 		global $DB;
 
 //		$query = "SELECT * FROM glpi_networking_ports ".
@@ -142,10 +136,8 @@ class plugin_tracker_unknown extends CommonDBTM
 			" HAVING count(*)>1 ";
 
 
-		if ( $result=$DB->query($query) )
-		{
-			while ( $data=$DB->fetch_array($result) )
-			{
+		if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
 				// $data = ID of unknown device
 
 				$query_known = "SELECT * FROM glpi_networking_ports ".
@@ -182,8 +174,7 @@ class plugin_tracker_unknown extends CommonDBTM
 					FROM glpi_ocs_link 
 					WHERE glpi_id='".$data_known["on_device"]."' ";
 				$result = $DB->query($query);
-				if ($DB->numrows($result) == 1)
-				{
+				if ($DB->numrows($result) == 1) {
 					$line = $DB->fetch_assoc($result);
 
 					$import_ip = importArrayFromDB($line["import_ip"]);
@@ -198,8 +189,7 @@ class plugin_tracker_unknown extends CommonDBTM
 				}
 			}
 		}
-
 	}
-
 }
+
 ?>

@@ -33,14 +33,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
 // Installation function
 function plugin_tracker_installing($version) {
-
-	global $DB,$LANG;
+	GLOBAL $DB,$LANG;
 
 	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-empty.sql";
 	$DBf_handle = fopen($DB_file, "rt");
@@ -79,7 +78,6 @@ function plugin_tracker_installing($version) {
 
 
 function plugin_tracker_update($version) {
-	
 	GLOBAL $DB;
 	
 	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql";
@@ -88,11 +86,11 @@ function plugin_tracker_update($version) {
 	fclose($DBf_handle);
 	foreach ( explode(";\n", "$sql_query") as $sql_line) {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-		if (!empty($sql_line))
+		if (!empty($sql_line)) {
 			$DB->query($sql_line);
+      }
 	}
-	if ($version == "2.0.0")
-	{
+	if ($version == "2.0.0") {
 		if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
 			mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 		}
@@ -106,8 +104,7 @@ function plugin_tracker_update($version) {
 		// Clean DB (ports in glpi_plugin_tracker_networking_ports..... )
 		plugin_tracker_clean_db();
 	}
-	if ($version == "2.0.2")
-	{
+	if ($version == "2.0.2") {
 		// Migrate unknown mac address in unknown device (MySQL table)
 		$plugin_tracker_unknown = new plugin_tracker_unknown;
 		$plugin_tracker_unknown->updateFromOldVersion_unknown_mac();
@@ -123,14 +120,13 @@ function plugin_tracker_update($version) {
 
 // Uninstallation function
 function plugin_tracker_uninstall() {
-	
-	global $DB;
+   GLOBAL $DB;
 
 	if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
 		while (($f = readdir($dir)) !== false) {
 			if($f > '0' and filetype($current_dir.$f) == "file") {
 				unlink($current_dir.$f);
-			} elseif($f > '0' and filetype($current_dir.$f) == "dir") {
+			} else if ($f > '0' and filetype($current_dir.$f) == "dir") {
 				remove_dir($current_dir.$f."\\");
 			}
 		}

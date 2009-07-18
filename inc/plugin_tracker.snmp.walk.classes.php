@@ -34,12 +34,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
+}
 
-
-class plugin_tracker_walk extends CommonDBTM
-{
+class plugin_tracker_walk extends CommonDBTM {
 /*	function __construct()
 	{
 		$this->table = "glpi_plugin_tracker_walks";
@@ -48,11 +47,10 @@ class plugin_tracker_walk extends CommonDBTM
 */
 
 
-	function GetoidValues($device_snmp)
-	{
+	function GetoidValues($device_snmp) {
 		global $DB;
 
-		foreach($device_snmp->get as $snmpget){
+		foreach($device_snmp->get as $snmpget) {
 			if ($snmpget->oid == "noSuchInstance")
 				$snmpget->oid = "";
 			$oidvalues["$snmpget->object"]["$snmpget->vlan"] = "$snmpget->oid";
@@ -60,42 +58,43 @@ class plugin_tracker_walk extends CommonDBTM
 //			value=$snmpget->oid;
 //			vlan=$snmpget->vlan;
 		}
-		foreach($device_snmp->walk as $snmpwalk){
+		foreach($device_snmp->walk as $snmpwalk) {
 			$oid = "";
-			if ((!empty($snmpwalk->oid)) AND ($snmpget->oid != "noSuchInstance"))
+			if ((!empty($snmpwalk->oid)) AND ($snmpget->oid != "noSuchInstance")) {
 				$oid = $snmpwalk->oid;
+         }
 			$vlan = "";
-			if (!empty($snmpwalk->vlan))
+			if (!empty($snmpwalk->vlan)) {
 				$vlan = $snmpwalk->vlan;
+         }
 			$oidvalues["$snmpwalk->object"]["$vlan"] = "$oid";
 		}
-		if (!isset($oidvalues))
+		if (!isset($oidvalues)) {
 			return;
-		else
+      } else {
 			return $oidvalues;
+      }
 	}
 	
 	
 
-	function GetoidValuesFromWalk($oidvalues,$oidsModel,$oid_dyn=0,$vlan="")
-	{
-		foreach ($oidvalues as $oid=>$value)
-		{
-			if (strstr($oid, $oidsModel."."))
-			{
-				if ($oid_dyn == "0")
+	function GetoidValuesFromWalk($oidvalues,$oidsModel,$oid_dyn=0,$vlan="") {
+		foreach ($oidvalues as $oid=>$value) {
+			if (strstr($oid, $oidsModel.".")) {
+				if ($oid_dyn == "0") {
 					$List[] = $value[$vlan];
-				else if ($oid_dyn == "1")
-				{
+            } else if ($oid_dyn == "1") {
 					$value = str_replace($oidsModel.".", "", $oid);
 					$List[] = $value;
 				}
 			}
 		}
-		if (!isset($List))
+		if (!isset($List)) {
 			return;
+      }
 		return $List;
 	}
 	
 }
+
 ?>

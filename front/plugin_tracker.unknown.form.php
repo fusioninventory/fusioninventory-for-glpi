@@ -49,7 +49,7 @@ plugin_tracker_checkRight("snmp_networking","r");
 
 $plugin_tracker_unknown = new plugin_tracker_unknown;
 
-commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","unknown");
+commonHeader($LANG['plugin_tracker']["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","unknown");
 
 $ID = "";
 if (isset($_GET["ID"])) {

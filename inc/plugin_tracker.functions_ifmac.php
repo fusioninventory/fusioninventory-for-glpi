@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT'))  {
 	die("Sorry. You can't access directly to this file");
 }
 
@@ -42,59 +42,67 @@ function plugin_tracker_is_hex($value) {
 	$hex=0;
 	$len = strlen($value);
 	$value = str_split($value);
-	for ($i=0; $i<$len; $i++) {
-		if ( (($value["$i"] >= '0') && ($value["$i"] <= '9')) || (($value["$i"] >= 'a' ) &&  ($value["$i"] <= 'f' ))  || (($value["$i"] >= 'A' ) &&  ($value["$i"] <= 'F' )) )
-			$hex++;
+	for ($i=0 ; $i<$len ; $i++) {
+		if ((($value["$i"] >= '0') && ($value["$i"] <= '9')) 
+         || (($value["$i"] >= 'a') &&  ($value["$i"] <= 'f'))
+         || (($value["$i"] >= 'A') &&  ($value["$i"] <= 'F'))) {
+         
+         $hex++;
+      }
 	}
-	if ( $hex == $len )
+	if ($hex == $len) {
 		return true;
-	else
+   } else {
 		return false;
+   }
 }
 
 /* To convert a string to a MAC address... Return false if not a MAC */
 function plugin_tracker_stringToIfmac($string) {
-	if ( $string == "")
+	if ($string == "") {
 		return false;
+   }
 	// if MAC adress without any separation character : 12 characters
-	if ( strlen($string) == 12 ) { 
+	if (strlen($string) == 12) { 
 		$string = str_split($string, 2);
-	}
-	else {
+	} else {
 		// to seperate each element of the MAC address in an array
 		$string = split("[ :-]", $string);
-		for ($i=0; $i<count($string); $i++) {
+		for ($i=0 ; $i<count($string) ; $i++) {
 			// if value like "0" or "x" instead of "00" or "0x", put "0" before
-			if ( strlen($string["$i"]) == 1 )
+			if (strlen($string["$i"]) == 1) {
 				$string["$i"] = "0".$string["$i"];
-			// if length not equal to 2, not a correct value => unset
-			else if ( strlen($string["$i"]) != 2 )
+         // if length not equal to 2, not a correct value => unset
+         } else if (strlen($string["$i"]) != 2) {
 				unset($string["$i"]);
+         }
 		}
-		if ( count($string) != 6 )
+		if (count($string) != 6) {
 			return false;
+      }
 	}
 	// check if mac address not equal to : "00:00:00:00:00:00" and if each value is hexadecimal
 	$i=0;
 	$null=0;
-	while ( ($i<6)  && ( ($is_hex = plugin_tracker_is_hex($string["$i"])) != false ) ){
-		if ( $string["$i"] == "00" )
+	while (($i<6)  && ( ($is_hex = plugin_tracker_is_hex($string["$i"])) != false )) {
+		if ($string["$i"] == "00") {
 			$null++;
+      }
 		$i++;
 	}
-	if ( ($null != 6) && ($is_hex != false) ) {
+	if (($null != 6) && ($is_hex != false)) {
 		$ifmac = implode (':', $string);
 		$ifmac = strtoupper($ifmac); // uppercase
 		return $ifmac;
-	}
-	else
+	} else {
 		return false;
+   }
 }
 
 /* transforms an hexadecimal MAC address to a decimal MAC address, like "%d.%d.%d.%d.%d.%d" */
 function plugin_tracker_ifmacToDecimal($ifmac) {
 	$decimal = explode(":", $ifmac);
-	for($i=0; $i<6; $i++) {
+	for($i=0 ; $i<6 ; $i++) {
 		$decimal["$i"] = hexdec($decimal["$i"]);
 	}
 	$decimal = implode(".", $decimal);

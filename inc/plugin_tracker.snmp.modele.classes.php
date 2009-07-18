@@ -34,29 +34,26 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
+}
 
-
-class plugin_tracker_model_infos extends CommonDBTM
-{
-	function __construct()
-	{
+class plugin_tracker_model_infos extends CommonDBTM {
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_model_infos";
 		$this->type = PLUGIN_TRACKER_MODEL;
 	}
 
-	function showForm($target, $ID = '')
-	{
+	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
 		plugin_tracker_checkRight("snmp_models","r");
 
-		if ($ID!='')
+		if ($ID!='') {
 			$this->getFromDB($ID);
-		else
+      } else {
 			$this->getEmpty();	
-
+      }
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
@@ -97,13 +94,12 @@ class plugin_tracker_model_infos extends CommonDBTM
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
 		if ($ID=='') {
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-
 		} else {
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
 			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-			if (!$this->fields["deleted"])
+			if (!$this->fields["deleted"]) {
 				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
-			else {
+         } else {
 				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" . $LANG["buttons"][21] . "\" class='submit'>";
 
 				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" . $LANG["buttons"][22] . "\" class='submit'>";
@@ -125,18 +121,17 @@ class plugin_tracker_model_infos extends CommonDBTM
 	 * @return OID list in array
 	 *
 	**/
-	function oidlist($ID_Device,$type)
-	{
+	function oidlist($ID_Device,$type) {
 		global $DB;
 
-		switch ($type)
-		{
+		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT * FROM glpi_plugin_tracker_networking 
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_networking.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
 				WHERE FK_networking='".$ID_Device."'
 					AND glpi_plugin_tracker_mib_networking.activation='1' ";
 				break;
+
 			case PRINTER_TYPE :
 				$query = "SELECT * FROM glpi_plugin_tracker_printers
 				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_printers.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
@@ -144,15 +139,15 @@ class plugin_tracker_model_infos extends CommonDBTM
 					AND glpi_plugin_tracker_mib_networking.activation='1' ";
 				break;
 		}
-		if (!empty($query))
-		{
+		if (!empty($query)) {
 			$result=$DB->query($query);
 			$exclude = array();
-			while ( $data=$DB->fetch_array($result) )
+			while ($data=$DB->fetch_array($result)) {
 				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] = getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']);
-
+         }
 			return $oids;
 		}
 	}
 }
+
 ?>

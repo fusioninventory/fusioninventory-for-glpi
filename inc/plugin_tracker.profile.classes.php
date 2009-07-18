@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
@@ -47,19 +47,18 @@ class plugin_tracker_Profile extends CommonDBTM {
 	
 	//if profile deleted
 	function cleanProfiles($ID) {
-	
-		global $DB;
+		GLOBAL $DB;
 		$query = "DELETE FROM glpi_plugin_tracker_profiles WHERE ID='$ID' ";
 		$DB->query($query);
 	}
 		
-	function showprofileForm($target,$ID){
-		global $LANG,$CFG_GLPI;
+	function showprofileForm($target,$ID) {
+		GLOBAL $LANG,$CFG_GLPI;
 
 		if (!haveRight("profile","r")) return false;
 
 		$onfocus="";
-		if ($ID){
+		if ($ID) {
 			$this->getFromDB($ID);
 		} else {
 			$this->getEmpty();
@@ -104,12 +103,12 @@ class plugin_tracker_Profile extends CommonDBTM {
 
 	}
 	
-	function showForm($target,$ID){
+	function showForm($target,$ID) {
 		global $LANG;
 
 		if (!haveRight("profile","r")) return false;
 		$canedit=haveRight("profile","w");
-		if ($ID){
+		if ($ID) {
 			$this->getFromDB($ID);
 		}
 
@@ -184,7 +183,7 @@ class plugin_tracker_Profile extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 		
-		if ($canedit){
+		if ($canedit) {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td  align='center' colspan='3'>";
 			echo "<input type='hidden' name='ID' value=$ID>";

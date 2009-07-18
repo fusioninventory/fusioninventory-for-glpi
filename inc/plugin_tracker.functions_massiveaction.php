@@ -35,36 +35,32 @@
 // ----------------------------------------------------------------------
 
 
-function plugin_tracker_assign($id, $source_type, $source_field, $source_value)
-{
+function plugin_tracker_assign($id, $source_type, $source_field, $source_value) {
 	global $DB;
 	$plugin_tracker_snmp = new plugin_tracker_snmp;
 	
-	if ($source_field == "model")
-	{
+	if ($source_field == "model") {
 		// Get auth
 		$snmp_auth = new plugin_tracker_snmp_auth;
-		switch ($source_type)
-		{
+		switch ($source_type) {
 			case NETWORKING_TYPE :
 				$FK_snmp_auth_DB = $snmp_auth->GetSNMPAuth($id,NETWORKING_TYPE);
 				$plugin_tracker_snmp->update_network_infos($id, $source_value, $FK_snmp_auth_DB);
 				break;
+
 			case PRINTER_TYPE :
 				$FK_snmp_auth_DB = $snmp_auth->GetSNMPAuth($id,PRINTER_TYPE);
 				$plugin_tracker_snmp->update_printer_infos($id, $source_value, $FK_snmp_auth_DB);
 				break;
 		}
-	}
-	else if ($source_field == "auth")
-	{
-		switch ($source_type)
-		{
+	} else if ($source_field == "auth") {
+		switch ($source_type) {
 			case NETWORKING_TYPE :
 				// Get model
 				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($id,NETWORKING_TYPE);
 				$plugin_tracker_snmp->update_network_infos($id, $FK_model_DB, $source_value);
 				break;
+
 			case PRINTER_TYPE :
 				// Get model
 				$FK_model_DB = $plugin_tracker_snmp->GetSNMPModel($id,PRINTER_TYPE);
