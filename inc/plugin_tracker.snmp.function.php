@@ -870,9 +870,9 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 										$ip_unknown = preg_replace("/^1\./","",$ips);
 								}
 								if (empty($ip_unknown)) {
-									$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
+									$ip_unknown = plugin_tracker_search_ip_ocs_servers($MacAddress);
                         }
-								$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
+								$name_unknown = plugin_tracker_search_name_ocs_servers($MacAddress);
 								// Add unknown device
 								if ($name_unknown == $ip_unknown) {
 									$unknown_infos["name"] = '';
@@ -957,8 +957,8 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 							$MacAddress_Hex = str_replace(":","",$MacAddress);
 							$MacAddress_Hex = "0x".$MacAddress_Hex;
 							if (empty($ip_unknown))
-								$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
-							$name_unknown = plugin_tracker_search_name_ocs_servers($macaddress);
+								$ip_unknown = plugin_tracker_search_ip_ocs_servers($MacAddress);
+							$name_unknown = plugin_tracker_search_name_ocs_servers($MacAddress);
 							// Add unknown device
 							if ($name_unknown == $ip_unknown) {
 								$unknown_infos["name"] = '';
@@ -1041,6 +1041,21 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 					foreach($ArrayPortNumber as $num=>$PortNumber) {
 						if ((isset($ArrayCount[$PortNumber])) AND ($ArrayCount[$PortNumber] > 1)) {
 							$Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
+   
+                     //$tmpc_id = $tmpc->UpdatePort($ID_Device,$data["ID"],1);
+                     //
+                     //dynamicdata = oid de dot1dTpFdbAddress
+//                     // Convert MAC HEX in Decimal
+//                        $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+//                        $MacAddress_tmp = str_split($MacAddress, 2);
+//                        $MacAddress = $MacAddress_tmp[0];
+//                        for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
+//                           $MacAddress .= ":".$MacAddress_tmp[$i];
+//                        }
+//
+                     // $ArrayMacAddress
+                     //$tmpc->AddConnections($tmpc_id,$ArrayMacAddress);
+                     
                   }
 					}
 				}
