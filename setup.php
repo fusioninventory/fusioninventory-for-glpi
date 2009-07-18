@@ -37,7 +37,6 @@ include_once ("plugin_tracker.includes.php");
 
 // Init the hooks of tracker
 function plugin_init_tracker() {
-	
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
 	// Params - Register type
@@ -126,11 +125,11 @@ function plugin_init_tracker() {
 
 	$PLUGIN_HOOKS['cron']['tracker'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
-	if (isset($_SESSION["glpiID"])){
+	if (isset($_SESSION["glpiID"])) {
 
-		if (haveRight("config", "w") || haveRight("profile", "w")) // Config page
+		if (haveRight("config", "w") || haveRight("profile", "w")) {// Config page
 			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.functionalities.form.php';
-
+      }
 
 		// Define SQL table restriction of entity
 		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_discovery';
@@ -142,58 +141,58 @@ function plugin_init_tracker() {
 			$PLUGIN_HOOKS['pre_item_purge']['tracker'] = 'plugin_pre_item_purge_tracker';
 			
 			$report_list = array();
-					$report_list["report/plugin_tracker.unknown_mac.php"] = $LANG['plugin_tracker']["processes"][14];
-					$report_list["report/plugin_tracker.switch_ports.history.php"] = "Historique des ports de switchs";
-					$report_list["report/plugin_tracker.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
+         $report_list["report/plugin_tracker.unknown_mac.php"] = $LANG['plugin_tracker']["processes"][14];
+         $report_list["report/plugin_tracker.switch_ports.history.php"] = "Historique des ports de switchs";
+         $report_list["report/plugin_tracker.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['tracker'] = $report_list;
 			
-			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r"))
+			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r")) {
 				$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
+         }
 
-				// Tabs for each type
-				$PLUGIN_HOOKS['headings']['tracker'] = 'plugin_get_headings_tracker';
-				$PLUGIN_HOOKS['headings_action']['tracker'] = 'plugin_headings_actions_tracker';
+         // Tabs for each type
+         $PLUGIN_HOOKS['headings']['tracker'] = 'plugin_get_headings_tracker';
+         $PLUGIN_HOOKS['headings_action']['tracker'] = 'plugin_headings_actions_tracker';
 
-				if (plugin_tracker_HaveRight("snmp_models","r")
-					OR plugin_tracker_HaveRight("snmp_authentification","r")
-					OR plugin_tracker_HaveRight("snmp_iprange","r")
-					OR plugin_tracker_HaveRight("snmp_agent","r")
-					OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
-					OR plugin_tracker_HaveRight("snmp_agent_infos","r")
-					OR plugin_tracker_HaveRight("snmp_discovery","r")
-					OR plugin_tracker_HaveRight("snmp_report","r")
-					)
-				{
+         if (plugin_tracker_HaveRight("snmp_models","r")
+            OR plugin_tracker_HaveRight("snmp_authentification","r")
+            OR plugin_tracker_HaveRight("snmp_iprange","r")
+            OR plugin_tracker_HaveRight("snmp_agent","r")
+            OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
+            OR plugin_tracker_HaveRight("snmp_agent_infos","r")
+            OR plugin_tracker_HaveRight("snmp_discovery","r")
+            OR plugin_tracker_HaveRight("snmp_report","r")
+            ) {
 
-					$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
-					if (plugin_tracker_haveRight("snmp_models","w")){
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
-					}
-					if (plugin_tracker_haveRight("snmp_authentification","w")){
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.php';
-					}
-					if (plugin_tracker_haveRight("snmp_agent","w")){
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['agents'] = 'front/plugin_tracker.agents.form.php?add=1';
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['agents'] = 'front/plugin_tracker.agents.php';
-					}
+            $PLUGIN_HOOKS['menu_entry']['tracker'] = true;
+            if (plugin_tracker_haveRight("snmp_models","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
+            }
+            if (plugin_tracker_haveRight("snmp_authentification","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.php';
+            }
+            if (plugin_tracker_haveRight("snmp_agent","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['agents'] = 'front/plugin_tracker.agents.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['agents'] = 'front/plugin_tracker.agents.php';
+            }
 
-					if (plugin_tracker_haveRight("snmp_iprange","w")){
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['add']['rangeip'] = 'front/plugin_tracker.rangeip.form.php?add=1';
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['search']['rangeip'] = 'front/plugin_tracker.rangeip.php';
-					}
+            if (plugin_tracker_haveRight("snmp_iprange","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['rangeip'] = 'front/plugin_tracker.rangeip.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['rangeip'] = 'front/plugin_tracker.rangeip.php';
+            }
 
-					if (plugin_tracker_haveRight("general_config","w"))
-						$PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.functionalities.form.php';
+            if (plugin_tracker_haveRight("general_config","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.functionalities.form.php';
+            }
 			}
 		}
 	}
 }
 
 // Name and Version of the plugin
-function plugin_version_tracker()
-{
+function plugin_version_tracker() {
 	return array( 'name'    => 'Tracker',
 		'minGlpiVersion' => '0.71.3',
 		'version' => '2.0.2',
@@ -203,59 +202,56 @@ function plugin_version_tracker()
 
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
-function plugin_tracker_check_prerequisites()
-{
-	if (GLPI_VERSION>=0.72)
+function plugin_tracker_check_prerequisites() {
+	if (GLPI_VERSION>=0.72) {
 		return true;
-	else
+   } else {
 		echo "GLPI version not compatible need 0.72";
+   }
 }
 
-function plugin_tracker_install()
-{
+function plugin_tracker_install() {
 	global $DB, $LANG, $CFG_GLPI;
 	
 	include_once (GLPI_ROOT."/inc/profile.class.php");
 
-	if(!TableExists("glpi_plugin_tracker_unknown_device"))
+	if(!TableExists("glpi_plugin_tracker_unknown_device")) {
 		plugin_tracker_installing("2.0.2");
-	elseif(!TableExists("glpi_plugin_tracker_rangeip"))
+   } else if (!TableExists("glpi_plugin_tracker_rangeip")) {
 		plugin_tracker_installing("2.0.0");
-	elseif(!TableExists("glpi_plugin_tracker_config"))
+   } else if (!TableExists("glpi_plugin_tracker_config")) {
 		plugin_tracker_installing("1.1.0");
-//	elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs"))
-//		plugin_tracker_update("1.1.0");
-
+   }
+   //	elseif(TableExists("glpi_plugin_tracker_config") && !FieldExists("glpi_plugin_tracker_config","logs"))
+   //		plugin_tracker_update("1.1.0");
 	return true;
 }
 
 
 
-function plugin_tracker_needUpdate()
-{
-	if (!TableExists("glpi_plugin_tracker_config"))
+function plugin_tracker_needUpdate() {
+	if (!TableExists("glpi_plugin_tracker_config")) {
 		return 0; // Installation
-	elseif(!TableExists("glpi_plugin_tracker_unknown_device"))
+   } else if (!TableExists("glpi_plugin_tracker_unknown_device")) {
 		return 1; //Update
-	elseif (!TableExists("glpi_plugin_tracker_agents_processes"))
+   } else if (!TableExists("glpi_plugin_tracker_agents_processes")) {
 		return 1; // Update
-	else
+   } else {
 		return 0;
+   }
 }
 
 
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
-function plugin_tracker_check_config()
-{
+function plugin_tracker_check_config() {
 	return true;
 }
 
 
 
-function plugin_tracker_haveTypeRight($type,$right)
-{
-	switch ($type){
+function plugin_tracker_haveTypeRight($type,$right) {
+	switch ($type) {
 		case PLUGIN_TRACKER_ERROR_TYPE :
 			return plugin_tracker_haveRight("errors",$right);
 			break;
