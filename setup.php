@@ -220,66 +220,6 @@ function plugin_tracker_check_config() {
 
 
 
-function plugin_tracker_install() {
-	global $DB, $LANG, $CFG_GLPI;
-	
-	include_once (GLPI_ROOT."/inc/profile.class.php");
-    /**
-    *  List of all Trackers versions :
-    *    1.0.0
-    *    1.1.0 non exists glpi_plugin_tracker_agents (MySQL)
-    *    2.0.0 non exists glpi_plugin_tracker_config_discovery (MySQL)
-    *    2.0.1 Nothing
-    *    2.0.2 config version field 2.0.2
-    *    2.1.0 config version field 2.1.0
-    **/
-   plugin_tracker_installing("2.1.0");
-
-   return true;
-}
-
-
-
-/**
-* Check if Tracker need to be updated
-*
-* @param
-*
-* @return 0 (no need update) OR 1 (need update)
-**/
-function plugin_tracker_needUpdate() {
-
-    /**
-    *  List of all Trackers versions :
-    *    1.0.0 
-    *    1.1.0 non exists glpi_plugin_tracker_agents (MySQL)
-    *    2.0.0 non exists glpi_plugin_tracker_config_discovery (MySQL)
-    *    2.0.1 Nothing
-    *    2.0.2 config version field 2.0.2
-    *    2.1.0 config version field 2.1.0
-    **/
-	if (!TableExists("glpi_plugin_tracker_config")) {
-		return 0; // Installation
-   } else if (!TableExists("glpi_plugin_tracker_agents")) {
-		return 1; //Update
-   } else if (!TableExists("glpi_plugin_tracker_config_discovery")) {
-		return 1; // Update
-   } else if (!FieldExists("glpi_plugin_tracker_config", "version")) {
-      return 1; // Update
-   } else if (FieldExists("glpi_plugin_tracker_config", "version")) {
-      $config = new plugin_tracker_config;
-      if ($config->getValue('version') != "2.1.0") {
-         return 1;
-      } else {
-         return 0;
-      }
-   } else {
-		return 0;
-   }
-}
-
-
-
 function plugin_tracker_haveTypeRight($type,$right) {
 	switch ($type) {
 		case PLUGIN_TRACKER_ERROR_TYPE :
