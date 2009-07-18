@@ -123,6 +123,7 @@ function plugin_tracker_uninstall() {
    GLOBAL $DB;
 
 	if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
+      $current_dir = GLPI_PLUGIN_DOC_DIR.'/tracker/';
 		while (($f = readdir($dir)) !== false) {
 			if($f > '0' and filetype($current_dir.$f) == "file") {
 				unlink($current_dir.$f);
@@ -133,115 +134,17 @@ function plugin_tracker_uninstall() {
 		closedir($dir);
 		rmdir($current_dir);
 	}
-	
-	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_label`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_object`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_oid`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_version`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_agents`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_agents_processes`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_computers`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_config`;";
-	$DB->query($query) or die($DB->error());
 
-	$query = "DROP TABLE `glpi_plugin_tracker_config_discovery`;";
-	$DB->query($query) or die($DB->error());
+	$query = "SHOW TABLES";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if ((strstr($data[0],"glpi_dropdown_plugin_tracker_"))
+         OR (strstr($data[0],"glpi_plugin_tracker_"))){
+         $query_delete = "DROP TABLE `".$data[0]."`";
+         $DB->query($query_delete) or die($DB->error());
+      }
+   }
 
-	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_networking`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_printer`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_script`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_connection_history`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_connection_stats`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_discovery`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_errors`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_mib_networking`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_model_infos`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_networking`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_networking_ifaddr`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_networking_ports`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_printers`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_printers_cartridges`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_printers_history`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_processes`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_processes_values`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_profiles`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_rangeip`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_snmp_connection`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_snmp_history`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_unknown_device`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_tracker_unknown_mac`;";
-	$DB->query($query) or die($DB->error());
-	
-	$query = "DROP TABLE `glpi_plugin_tracker_walks`;";
-	$DB->query($query) or die($DB->error());
-	
 	$query="DELETE FROM glpi_display 
 	WHERE type='".PLUGIN_TRACKER_ERROR_TYPE."' 
 		OR type='".PLUGIN_TRACKER_MODEL."' 
