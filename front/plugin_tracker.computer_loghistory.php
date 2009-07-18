@@ -64,7 +64,7 @@ $contact = (isset($_GET["User"]) ? $_GET["User"] : "");
 // Get the GLPI username : user
 
 if ($contact != '') {
-	$user_id = getIdFromUser($contact);
+	$user_id = plugin_tracker_getIdFromUser($contact);
 }
 /// Check and write error ///
 $computer_id = $errors->writeError(COMPUTER_TYPE, 'db', $error, $date);

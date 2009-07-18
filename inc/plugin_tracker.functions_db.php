@@ -68,7 +68,7 @@ function plugin_tracker_createaccess($ID) {
 	$DB->query($query);
 }
 
-function getIdFromUser($name) {
+function plugin_tracker_getIdFromUser($name) {
 	
 	global $DB;
 	
