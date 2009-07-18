@@ -132,6 +132,7 @@ class plugin_tracker_mib_networking extends CommonDBTM {
                   } else if ($data["activation"] == "0") {
 							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
                   }
+               }
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -149,6 +150,7 @@ class plugin_tracker_mib_networking extends CommonDBTM {
                      } else if ($data["activation"] == "0") {
 								echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
                      }
+                  }
 						echo "</td>";
 					}
 					
