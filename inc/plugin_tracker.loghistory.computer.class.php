@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 
 class plugin_tracker_computers_history extends CommonDBTM {
 
-	function plugin_tracker_computers_history() {
+	function __construct() {
 		$this->table="glpi_plugin_tracker_connection_history";
 		$this->type=-1;
 	}
