@@ -33,9 +33,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if(!defined('GLPI_ROOT'))
+if(!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../..'); 
-
+}
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
