@@ -194,21 +194,31 @@ function plugin_init_tracker() {
 // Name and Version of the plugin
 function plugin_version_tracker() {
 	return array( 'name'    => 'Tracker',
-		'minGlpiVersion' => '0.71.3',
-		'version' => '2.0.2',
+		'version' => '2.1.0',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
-		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',);
+		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',
+      'minGlpiVersion' => '0.72'// For compatibility / no install in version < 0.72
+   );
 }
 
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_tracker_check_prerequisites() {
+   global $LANG;
 	if (GLPI_VERSION>=0.72) {
 		return true;
    } else {
-		echo "GLPI version not compatible need 0.72";
+		echo $LANG['plugin_tracker']["errors"][50];
    }
 }
+
+
+
+function plugin_tracker_check_config() {
+	return true;
+}
+
+
 
 function plugin_tracker_install() {
 	global $DB, $LANG, $CFG_GLPI;
@@ -239,13 +249,6 @@ function plugin_tracker_needUpdate() {
    } else {
 		return 0;
    }
-}
-
-
-
-// Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
-function plugin_tracker_check_config() {
-	return true;
 }
 
 
