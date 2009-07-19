@@ -125,6 +125,8 @@ function plugin_init_tracker() {
 
 	$PLUGIN_HOOKS['cron']['tracker'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
+   $PLUGIN_HOOKS['add_javascript']['tracker']="script.js";
+
 	if (isset($_SESSION["glpiID"])) {
 
 		if (haveRight("config", "w") || haveRight("profile", "w")) {// Config page

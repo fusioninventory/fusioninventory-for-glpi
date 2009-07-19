@@ -109,43 +109,38 @@ class plugin_tracker_agents extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<script  type='text/javascript'>
-function close_array(){
-	document.getElementById('optionavance').innerHTML = '<a href=\'\' onClick=\'Effect.Fade(\"optionavance1\");Effect.Fade(\"optionavance2\");Effect.Fade(\"optionavance3\");Effect.Fade(\"optionavance4\");Effect.Fade(\"optionavance5\");appear_array(\"optionavance1\");\' >".$LANG['plugin_tracker']["agents"][9]." :</a>';
-}
-function appear_array(){
-	document.getElementById('optionavance').innerHTML = '<img src=\'\' onClick=\'Effect.Appear(\"optionavance1\");Effect.Appear(\"optionavance2\");Effect.Appear(\"optionavance3\");Effect.Appear(\"optionavance4\");Effect.Appear(\"optionavance5\");close_array(\"optionavance1\");\' >".$LANG['plugin_tracker']["agents"][9]." :</a>';
-}
-		</script>";
-
 		echo "<tr>";
-		echo "<th colspan='2' id='optionavance'>";
-		echo "<a href='#' onClick='Effect.Appear(\"optionavance1\");Effect.Appear(\"optionavance2\");Effect.Appear(\"optionavance3\");Effect.Appear(\"optionavance4\");Effect.Appear(\"optionavance5\");close_array(\"optionavance1\");'>".$LANG['plugin_tracker']["agents"][9]." :</a>";
+		echo "<th colspan='2'>";
+		echo "<a href='#' onClick='getSlide(\"optionavance\");'>".$LANG['plugin_tracker']["agents"][9]." :</a>";
 		echo "</th>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][11] . "</td>";
-		echo "<td align='center'>";
+      echo "</table>";
+      echo "<div  id='optionavance' style='display: none;'>";
+      echo "<table class='tab_cadre' cellpadding='5' width='600'>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center' width='200'>" . $LANG['plugin_tracker']["agents"][11] . "</td>";
+		echo "<td align='center' width='200'>";
 		dropdownInteger("core_discovery", $this->fields["core_discovery"],1,32);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance2'>";
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_tracker']["agents"][3]."</td>";
 		echo "<td align='center'>";
 		dropdownInteger("threads_discovery", $this->fields["threads_discovery"],1,400);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance3'>";
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_tracker']["agents"][10]."</td>";
 		echo "<td align='center'>";
 		dropdownInteger("core_query", $this->fields["core_query"],1,200);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance4'>";
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][2] . "</td>";
 		echo "<td align='center'>";
 		dropdownInteger("threads_query", $this->fields["threads_query"],1,200);
@@ -153,7 +148,7 @@ function appear_array(){
 		echo "</tr>";
 
 
-		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance5'>";
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][8] . "</td>";
 		echo "<td align='center'>";
 		if (empty($this->fields["fragment"]))
@@ -162,6 +157,9 @@ function appear_array(){
 		echo "</td>";
 		echo "</tr>";
 
+      echo "</table>";
+      echo "</div>";
+      echo "<table class='tab_cadre' cellpadding='5' width='600'>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		if ($ID=='') {
