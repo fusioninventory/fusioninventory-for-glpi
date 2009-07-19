@@ -1344,6 +1344,49 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 //		}
 //	}
 
+   // ** Add ports and connections in glpi_plugin_tracker_tmp_* tables for connections between switchs
+   foreach($Array_multiplemac_ifIndex AS $ifIndex=>$val) {
+      $query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+         WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."'
+				AND device_type='".NETWORKING_TYPE."'
+				AND on_device='".$ID_Device."' ";
+		$result = $DB->query($query);
+		$data = $DB->fetch_assoc($result);
+
+      $tmpc_id = $tmpc->UpdatePort($ID_Device,$data["ID"]);
+
+      if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) {
+			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+			foreach ($Array_vlan as $num=>$vlan) {
+      		$BridgePortifIndex = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
+            foreach($BridgePortifIndex as $num=>$BridgePortNumber) {
+               $ifIndexFound = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
+               if ($ifIndexFound == $ifIndex) {
+                  // Search in dot1dTpFdbPort the dynamicdata associate to this BridgePortNumber
+                  $ArrayBridgePortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
+                  foreach($ArrayBridgePortNumber as $num=>$dynamicdata) {
+                     $BridgePortifIndexFound = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
+                     if ($BridgePortifIndexFound == $BridgePortNumber) {
+                        $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+                        $MacAddress_tmp = str_split($MacAddress, 2);
+                        $MacAddress = $MacAddress_tmp[0];
+                        for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
+                           $MacAddress .= ":".$MacAddress_tmp[$i];
+                        }
+                        $tmpc->AddConnections($tmpc_id, array($MacAddress));
+                     }
+                  }
+               }
+            }
+         }
+      } else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve")) {
+
+      } else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225")) {
+         
+      }
+   }
+
+
 	foreach($Array_cdp_ifIndex AS $ifIndex=>$val) {
 		$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
 		$query_sel2 = "SELECT * FROM glpi_networking_ports ".

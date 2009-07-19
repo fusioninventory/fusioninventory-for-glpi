@@ -40,7 +40,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 
 
 
-	function UpdatePort($FK_networking,$FK_networking_port,$cdp) {
+	function UpdatePort($FK_networking,$FK_networking_port,$cdp=0) {
 		global $DB;
 
 		$query = "SELECT * FROM glpi_plugin_tracker_tmp_netports ".
@@ -63,10 +63,29 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 		global $DB;
 
 		foreach($ArrayMacAddress as $num=>$MacAddress) {
-			$query_insert = "INSERT INTO glpi_plugin_tracker_tmp_connections ".
-				" (FK_tmp_netports, macaddress) ".
-				" VALUES ('".$FK_tmp_netports."', '".$MacAddress."') ";
-			$DB->query($query_insert);
+         // Verify if macaddress is a switch or a switch port
+         $insert = 0;
+         $query = "SELECT * FROM glpi_networking_ports
+            WHERE device_type='".NETWORKING_TYPE."'
+               AND ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) != 0) {
+               $insert = 1;
+         }
+
+         $query = "SELECT * FROM glpi_networking
+            WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) != 0) {
+               $insert = 1;
+         }
+         
+         if ($insert == "1") {
+            $query_insert = "INSERT INTO glpi_plugin_tracker_tmp_connections ".
+               " (FK_tmp_netports, macaddress) ".
+               " VALUES ('".$FK_tmp_netports."', '".$MacAddress."') ";
+            $DB->query($query_insert);
+         }
 		}
 	}
 
@@ -148,6 +167,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 				}
 			}
 		}
+
 		// Empty MySQL table glpi_plugin_tracker_tmp_netports
 		$query = "TRUNCATE table glpi_plugin_tracker_tmp_netports";
 		$DB->query($query);
