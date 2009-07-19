@@ -188,6 +188,7 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['field'] = 'ifmac';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['linkfield'] = 'ID';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['name'] = $LANG["networking"][15];
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['forcegroupby']='1';
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['table'] = 'glpi_networking';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['field'] = 'ID';
@@ -1191,8 +1192,28 @@ function plugin_tracker_install() {
     *    2.0.2 config version field 2.0.2
     *    2.1.0 config version field 2.1.0
     **/
-   plugin_tracker_installing("2.1.0");
-
+   if (!TableExists("glpi_plugin_tracker_config")) {
+      plugin_tracker_installing("2.1.0");
+   } else {
+      $config = new plugin_tracker_config;
+      if (!TableExists("glpi_plugin_tracker_agents")) {
+         plugin_tracker_update("1.1.0");
+      }
+      if (!TableExists("glpi_plugin_tracker_config_discovery")) {
+         plugin_tracker_update("2.0.0");
+      }
+      if (!FieldExists("glpi_plugin_tracker_config", "version")) {
+         plugin_tracker_update("2.0.2");
+      }
+      if (FieldExists("glpi_plugin_tracker_config", "version")) {
+         if ($config->getValue('version') == "2.0.2") {
+            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1");
+         }
+         if  ($config->getValue('version') == "0") {
+            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1");
+         }
+      }
+   }
    return true;
 }
 
