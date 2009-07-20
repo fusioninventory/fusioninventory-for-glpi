@@ -37,15 +37,11 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class glpi_plugin_tracker_networking extends CommonDBTM {
+class PluginTrackerNetworking extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_networking";
 	}
-}
-
-
-class plugin_tracker_networking extends CommonDBTM {
 	
 	// fields of the result of a MySQL request
 	var $fields;
@@ -88,7 +84,7 @@ class plugin_tracker_networking extends CommonDBTM {
 	function isActive() {
 		global $DB;
 		
-		$config = new plugin_tracker_config();
+		$config = new PluginTrackerConfig;
 		
 		// state number for an active device
 		if (!($active_device_state = $config->getValue("active_device_state"))) {
@@ -162,7 +158,7 @@ class plugin_tracker_networking extends CommonDBTM {
 		
 		global $DB,$CFG_GLPI,$LANG;	
 		
-		$history = new plugin_tracker_SNMP_history;
+		$history = new PluginTrackerSNMPHistory;
 		
 		if (!plugin_tracker_haveRight("snmp_networking","r")) {
 			return false;
@@ -177,9 +173,9 @@ class plugin_tracker_networking extends CommonDBTM {
 		$this->ID = $ID;
 		
 		$nw=new Netwire;
-		$processes = new Threads;
+		$processes = new PluginTrackerProcesses;
 		$CommonItem = new CommonItem;
-		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		$plugin_tracker_snmp = new PluginTrackerSNMP;
 
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/prototype.js'></script>";
 		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/effects.js'></script>";

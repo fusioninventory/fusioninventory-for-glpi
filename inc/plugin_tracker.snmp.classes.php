@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_snmp extends CommonDBTM {
+class PluginTrackerSNMP extends CommonDBTM {
 	/**
 	 * Get port name and ID of the network materiel from DB
 	 *
@@ -412,7 +412,7 @@ class plugin_tracker_snmp extends CommonDBTM {
 			$DB->query($query);
 
 			// Delete Contact VLAN if set
-			$np=new NetPort();
+			$np=new NetPort;
 			if ($np->getContact($data['FK_port'])) {
 				$query="DELETE FROM glpi_networking_vlan WHERE FK_port='".$np->contact_id."' AND FK_vlan='".$data['FK_vlan']."'";
 				$DB->query($query);
@@ -434,7 +434,7 @@ class plugin_tracker_snmp extends CommonDBTM {
 			$DB->query($query);
 
 			// Delete Contact VLAN if set
-			$np=new NetPort();
+			$np=new NetPort;
 			if ($np->getContact($data['FK_port'])) {
 				$query="DELETE FROM glpi_networking_vlan WHERE FK_port='".$np->contact_id."' AND FK_vlan='".$data['FK_vlan']."'";
 				$DB->query($query);

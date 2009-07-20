@@ -74,7 +74,7 @@ function plugin_tracker_discovery_update_devices($array, $target) {
 function plugin_tracker_discovery_import($discovery_ID) {
 	GLOBAL $DB,$CFG_GLPI,$LANG;
 	
-	$td = new plugin_tracker_discovery;
+	$td = new PluginTrackerDiscovery;
 	
 	$td->getFromDB($discovery_ID);
 	
@@ -84,8 +84,8 @@ function plugin_tracker_discovery_import($discovery_ID) {
 		case PRINTER_TYPE :
 			$Printer = new Printer;
 			$Netport = new Netport;
-			$tracker_printers = new plugin_tracker_printers;
-			$tracker_config_snmp_printer = new plugin_tracker_config_snmp_printer;
+			$tracker_printers = new PluginTrackerPrinters;
+			$tracker_config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
 
 			$tracker_config_snmp_printer->getFromDB(1);
 			$data['state'] = $tracker_config_snmp_printer->fields["active_device_state"];
@@ -116,8 +116,8 @@ function plugin_tracker_discovery_import($discovery_ID) {
 
 		case NETWORKING_TYPE :
 			$Netdevice = new Netdevice;
-			$tracker_networking = new glpi_plugin_tracker_networking;
-			$tracker_config_snmp_networking = new plugin_tracker_config_snmp_networking;
+			$tracker_networking = new PluginTrackerNetworking;
+			$tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
 
 			$tracker_config_snmp_networking->getFromDB(1);
 			$data['state'] = $tracker_config_snmp_networking->fields["active_device_state"];

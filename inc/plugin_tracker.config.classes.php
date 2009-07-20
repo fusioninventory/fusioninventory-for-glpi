@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class plugin_tracker_config extends CommonDBTM {
+class PluginTrackerConfig extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_config";
@@ -188,7 +188,7 @@ class plugin_tracker_config extends CommonDBTM {
 
 
 
-class plugin_tracker_config_discovery extends CommonDBTM {
+class PluginTrackerConfigDiscovery extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_config_discovery";
@@ -310,7 +310,7 @@ class plugin_tracker_config_discovery extends CommonDBTM {
 
 
 
-class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
+class PluginTrackerConfigSNMPScript extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_config_snmp_script";
@@ -389,7 +389,7 @@ class glpi_plugin_tracker_config_snmp_script extends CommonDBTM {
 
 
 
-class plugin_tracker_config_snmp_networking extends CommonDBTM {
+class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_config_snmp_networking";
@@ -497,7 +497,7 @@ class plugin_tracker_config_snmp_networking extends CommonDBTM {
 
 
 
-class plugin_tracker_config_snmp_printer extends CommonDBTM {
+class PluginTrackerConfigSNMPPrinter extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_config_snmp_printer";

@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("printer","r");
 plugin_tracker_checkRight("snmp_printers","r");
 
-$printer_history = new plugin_tracker_printers_history();
+$printer_history = new PluginTrackerPrintersHistory;
 
 if ((isset($_POST['delete']))) {
 	

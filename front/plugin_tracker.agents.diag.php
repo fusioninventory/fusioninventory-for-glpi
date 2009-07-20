@@ -42,7 +42,7 @@ $NEEDED_ITEMS=array("tracker","search","printer","computer","networking","periph
 include (GLPI_ROOT."/inc/includes.php");
 
 // Get conf tu know if SSL is only
-$tracker_config = new plugin_tracker_config;
+$tracker_config = new PluginTrackerConfig;
 $ssl = $tracker_config->getValue('ssl_only');
 if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1")) OR ($ssl == "0")) {
 	// echo "On continue";
@@ -100,7 +100,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 	unlink($content_dir.$name_file);
 	
 	// Open file for put it in DB
-	$importexport = new plugin_tracker_importexport;
+	$importexport = new PluginTrackerImportExport;
 	if (strstr($name_file_xml,"-discovery.xml")) {
 		$importexport->import_agent_discovery($content_dir,$name_file_xml);
 		unlink($content_dir.$name_file_xml);
@@ -114,11 +114,11 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 
     echo "The file has been successfully uploaded";
 } else if(isset($_POST['get_data'])) {
-	$agents_processes = new plugin_tracker_agents_processes;
-	$xml = new plugin_tracker_XML;
-	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
-	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
-	$config = new plugin_tracker_config;
+	$agents_processes = new PluginTrackerAgentsProcesses;
+	$xml = new PluginTrackerXML;
+	$config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
+	$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
+	$config = new PluginTrackerConfig;
 	
 //$_POST['key'] = "nN3HDPKVj0e8xxfgCIugjWmPzIRVxb";
 	$query = "SELECT * FROM glpi_plugin_tracker_agents
@@ -240,7 +240,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 
 		// List and add in value for query ID of SNMP auth from XML file
 		if ($config->getValue("authsnmp") == "file") {
-			$snmp_auth = new plugin_tracker_snmp_auth;
+			$snmp_auth = new PluginTrackerSNMPAuth;
 			$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
 			$Auth_id_valid = "(";
 			foreach ($array_auth AS $num=>$value) {
@@ -251,7 +251,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 		}
 
 		for ($i=0 ; $i < count($devices) ; $i++) {
-			$xml_writed = new plugin_tracker_XML;
+			$xml_writed = new PluginTrackerXML;
 			$xml_writed->element[1][$devices[$i]]['element']="snmp";
 			if ($devices[$i] == "device_networking") {
 				if ($config->getValue("authsnmp") == "file") {

@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class plugin_tracker_SNMP_history extends CommonDBTM {
+class PluginTrackerSNMPHistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_snmp_history";

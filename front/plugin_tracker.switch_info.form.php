@@ -42,9 +42,7 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("networking","r");
 plugin_tracker_checkRight("snmp_networking","r");
 
-//$switch_snmp = new plugin_tracker_switch_snmp();
-
-$plugin_tracker_snmp = new plugin_tracker_snmp;
+$plugin_tracker_snmp = new PluginTrackerSNMP;
 
 if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	plugin_tracker_checkRight("snmp_networking","w");

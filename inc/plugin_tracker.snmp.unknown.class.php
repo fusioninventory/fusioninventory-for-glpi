@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_unknown extends CommonDBTM {
+class PluginTrackerUnknown extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_unknown_device";
@@ -84,8 +84,8 @@ class plugin_tracker_unknown extends CommonDBTM {
 	function updateFromOldVersion_unknown_mac() {
 		global $DB,$LANG;
 
-		$snmp_queries = new plugin_tracker_snmp;
-		$np=new Netport();
+		$snmp_queries = new PluginTrackerSNMP;
+		$np=new Netport;
 
 		$query = "SELECT DISTINCT unknow_mac,unknown_ip,port,end_FK_processes FROM glpi_plugin_tracker_unknown_mac ".
 			" WHERE end_FK_processes=(select max(end_FK_processes) from glpi_plugin_tracker_unknown_mac) ";

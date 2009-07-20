@@ -51,8 +51,8 @@ if (!defined('GLPI_ROOT')) {
 function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_process = 0,$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess) {
 	GLOBAL $DB;
 	
-	$Thread = new Threads;
-	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+	$Thread = new PluginTrackerProcesses;
+	$config_snmp_script = new PluginTrackerConfigSNMPScript;
 	
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
 
@@ -119,12 +119,12 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	$ifIP = "";
 	$_SESSION['FK_process'] = $FK_process;
 	
-	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-	$Threads = new Threads;
-	$logs = new plugin_tracker_logs;
-	$models = new plugin_tracker_model_infos;
-	$walks = new plugin_tracker_walk;
-	$plugin_tracker_snmp = new plugin_tracker_snmp;
+	$plugin_tracker_snmp_auth = new PluginTrackerSNMPAuth;
+	$Threads = new PluginTrackerProcesses;
+	$logs = new PluginTrackerLogs;
+	$models = new PluginTrackerModelInfos;
+	$walks = new PluginTrackerWalk;
+	$plugin_tracker_snmp = new PluginTrackerSNMP;
 
 	// Load XML Device ID
 	$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$FK_agent_process."-device.xml");
@@ -210,7 +210,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		if (!empty($ArrayPort_Object_oid)) {
 			$array_port_trunk = plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,'',$Array_trunk_ifIndex);
       }
-		if ($type ==  NETWORKING_TYPE) {
+		if ($type == NETWORKING_TYPE) {
 			// Foreach VLAN ID to GET MAC Adress on each VLAN
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 			foreach ($Array_vlan as $num=>$vlan_ID) {
@@ -238,8 +238,8 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum) {
 	GLOBAL $DB,$LANG;
 
-	$np=new Netport();
-	$logs = new plugin_tracker_logs;
+	$np=new Netport;
+	$logs = new PluginTrackerLogs;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$type."][".$ID_Device,1);
 
@@ -329,7 +329,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant) {
 	GLOBAL $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
-	$logs = new plugin_tracker_logs;
+	$logs = new PluginTrackerLogs;
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type."][".$ID_Device,1);
 
 	// Update 'last_tracker_update' field 
@@ -536,9 +536,9 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
 function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant,$ArrayPort_Object_oid) {
 	GLOBAL $DB,$LANG,$TRACKER_MAPPING;
 	
-	$snmp_queries = new plugin_tracker_snmp;
-	$logs = new plugin_tracker_logs;
-	$walks = new plugin_tracker_walk;
+	$snmp_queries = new PluginTrackerSNMP;
+	$logs = new PluginTrackerLogs;
+	$walks = new PluginTrackerWalk;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$type."][".$ID_Device,1);
 
@@ -608,31 +608,43 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 					if ($data[$TRACKER_MAPPING[$type][$link]['field']] != $oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]) {
 						if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_networking_ports") {
 							$ID_field = "ID";
+                  } else {
+                     $ID_field = "FK_networking_ports";
                   }
                } else {
-							$ID_field = "FK_networking_ports";
+						if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_networking_ports") {
+							$ID_field = "ID";
+                  } else {
+                     $ID_field = "FK_networking_ports";
+                  }
                }
+               $queryUpdate = '';
                if ($link == "ifaddr") {
-                  $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$ArrayPort_Object_oid[$data['logical_number']]."'
-                  WHERE ".$ID_field."='".$data["ID"]."'";
+                  if ($data[$TRACKER_MAPPING[$type][$link]['field']] != $ArrayPort_Object_oid[$data['logical_number']]) {
+                     $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+                     SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$ArrayPort_Object_oid[$data['logical_number']]."'
+                     WHERE ".$ID_field."='".$data["ID"]."'";
+                  }
                } else {
-                  $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]."'
-                  WHERE ".$ID_field."='".$data["ID"]."'";
+                  if ($data[$TRACKER_MAPPING[$type][$link]['field']] != $oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]) {
+                     $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+                     SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""]."'
+                     WHERE ".$ID_field."='".$data["ID"]."'";
+                  }
                }
-               $DB->query($queryUpdate);
-               // Delete port wire if port is internal disable
-               if (($link == "ifinternalstatus") AND (($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] == "2") OR ($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] == "down(2)"))) {
-                  $netwire=new Netwire;
-                  plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
-                  plugin_tracker_addLogConnection("remove",$data["ID"],$FK_process);
-                  removeConnector($data["ID"]);
+               if ($queryUpdate != '') {
+                  $DB->query($queryUpdate);
+                  // Delete port wire if port is internal disable
+                  if (($link == "ifinternalstatus") AND (($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] == "2") OR ($oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""] == "down(2)"))) {
+                     $netwire=new Netwire;
+                     plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
+                     plugin_tracker_addLogConnection("remove",$data["ID"],$FK_process);
+                     removeConnector($data["ID"]);
 
+                  }
+                  // Add log because snmp value change
+                  plugin_tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],$data[$TRACKER_MAPPING[$type][$link]['field']],$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""],$_SESSION['FK_process']);
                }
-               // Add log because snmp value change
-               plugin_tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],$data[$TRACKER_MAPPING[$type][$link]['field']],$oidvalues[$oid.$ArrayPort_Object_oid[$data['logical_number']]][""],$_SESSION['FK_process']);
-
          	}
 				if ($link == "ifaddr") {
 					$ArrayPort_Object_oid = $ArrayPort_Object_oid2;
@@ -664,12 +676,12 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan="",$Array_trunk_ifIndex=array()) {
 	GLOBAL $DB;
 	
-	$logs = new plugin_tracker_logs;
-	$processes = new Threads;
+	$logs = new PluginTrackerLogs;
+	$processes = new PluginTrackerProcesses;
 	$netwire = new Netwire;
-	$snmp_queries = new plugin_tracker_snmp;
-	$walks = new plugin_tracker_walk;
-	$unknown = new plugin_tracker_unknown;
+	$snmp_queries = new PluginTrackerSNMP;
+	$walks = new PluginTrackerWalk;
+	$unknown = new PluginTrackerUnknown;
 
 	// If Cisco
 //	if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
@@ -807,7 +819,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
                               }
 										$newID=$unknown->add($unknown_infos);
 										// Add networking_port
-										$np=new Netport();
+										$np=new Netport;
 										$port_add["on_device"] = $newID;
 										$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
 										$port_add["ifaddr"] = $ip_unknown;
@@ -878,7 +890,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
                         }
 								$newID=$unknown->add($unknown_infos);
 								// Add networking_port
-								$np=new Netport();
+								$np=new Netport;
 								$port_add["on_device"] = $newID;
 								$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
 								$port_add["ifaddr"] = $ip_unknown;
@@ -960,7 +972,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
                      }
                      $newID=$unknown->add($unknown_infos);
                      // Add networking_port
-                     $np=new Netport();
+                     $np=new Netport;
                      $port_add["on_device"] = $newID;
                      $port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
                      $port_add["ifaddr"] = $ip_unknown;
@@ -993,14 +1005,14 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
  *
 **/
 function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID) {
-	GLOBAL $DB;
-	$snmp_queries = new plugin_tracker_snmp;
-	$logs = new plugin_tracker_logs;
-	$walks = new plugin_tracker_walk;
-	$Threads = new Threads;
-	$unknown = new plugin_tracker_unknown;
-  	$tmpc = new plugin_tracker_tmpconnections;
-
+	global $DB;
+	$snmp_queries = new PluginTrackerSNMP;
+	$logs = new PluginTrackerLogs;
+	$walks = new PluginTrackerWalk;
+	$Threads = new PluginTrackerProcesses;
+	$unknown = new PluginTrackerUnknown;
+  	$tmpc = new PluginTrackerTmpConnections;
+ 
 	$Array_cdp_ifIndex = array();
 	$Array_trunk_ifIndex = array();
 	$Array_multiplemac_ifIndex = array();
@@ -1009,52 +1021,52 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get cdp trunk ports <<<<<<<<<<",$type."][".$ID_Device,1);
 
 	// Detect if ports are non trunk and have multiple mac addresses (with list of dot1dTpFdbPort & dot1dBasePortIfIndex)
-		// Get all port_number
-		$pass = 0;
-		if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))) {
-			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+   // Get all port_number
+   $pass = 0;
+   if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))) {
+      $Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 
-			if ((array_count_values($Array_vlan) != 0) AND (array_count_values($Array_vlan) != 0)) {
-				$pass = 1;
-            foreach ($Array_vlan as $num=>$vlan) {
-               $Arraydot1dTpFdbPort = array();
-               $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
-               foreach($ArrayConnectionsPort as $num=>$Connectionkey) {
-                  if (!empty($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan])) {
-                     $Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan];
-                  }
+      if ((array_count_values($Array_vlan) != 0) AND (array_count_values($Array_vlan) != 0)) {
+         $pass = 1;
+         foreach ($Array_vlan as $num=>$vlan) {
+            $Arraydot1dTpFdbPort = array();
+            $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
+            foreach($ArrayConnectionsPort as $num=>$Connectionkey) {
+               if (!empty($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan])) {
+                  $Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan];
                }
+            }
 
-               $ArrayCount = array_count_values($Arraydot1dTpFdbPort);
+            $ArrayCount = array_count_values($Arraydot1dTpFdbPort);
 
-               $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
-               foreach($ArrayPortNumber as $num=>$PortNumber) {
-                  if ((isset($ArrayCount[$PortNumber])) AND ($ArrayCount[$PortNumber] > 1)) {
-                     $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
-                  }
+            $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
+            foreach($ArrayPortNumber as $num=>$PortNumber) {
+               if ((isset($ArrayCount[$PortNumber])) AND ($ArrayCount[$PortNumber] > 1)) {
+                  $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
                }
             }
          }
-		}
-
-		if ($pass == "0") {
-         $Arraydot1dTpFdbPort = array();
-         $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
-         foreach($ArrayConnectionsPort as $num=>$Connectionkey) {
-				$Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][""];
-         }
-         $ArrayCount = array_count_values($Arraydot1dTpFdbPort);
-
-         $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
-         foreach($ArrayPortNumber as $num=>$PortNumber) {
-				if ((isset($ArrayCount[$PortNumber])) AND ($ArrayCount[$PortNumber] > 1)) {
-					$Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][""]] = 1;
-            }
-			}
-		}
-		if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco IOS Software, C1"))) {
-			$Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".3"][$vlan]] = 1;
       }
+   }
+
+   if ($pass == "0") {
+      $Arraydot1dTpFdbPort = array();
+      $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
+      foreach($ArrayConnectionsPort as $num=>$Connectionkey) {
+         $Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][""];
+      }
+      $ArrayCount = array_count_values($Arraydot1dTpFdbPort);
+
+      $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
+      foreach($ArrayPortNumber as $num=>$PortNumber) {
+         if ((isset($ArrayCount[$PortNumber])) AND ($ArrayCount[$PortNumber] > 1)) {
+            $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][""]] = 1;
+         }
+      }
+   }
+   if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco IOS Software, C1"))) {
+      $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".3"][$vlan]] = 1;
+   }
 	// End detection of ports non trunk and have multiple mac addresses
 
    // Initialization of Trunk ports (Trunk in Cisco AND Tagged in other switchs)
@@ -1156,7 +1168,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 						$unknown_infos["name"] = '';
 						$newID=$unknown->add($unknown_infos);
 						// Add networking_port
-						$np=new Netport();
+						$np=new Netport;
 						$port_add["on_device"] = $newID;
 						$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
 						$port_add["ifaddr"] = $ip_switch_trunk;
@@ -1184,143 +1196,44 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
       $Array_multiplemac_ifIndex["1"] = 1;
    }
 
-		// ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
-		foreach($ArrayPort_LogicalNum_SNMPNum AS $ifIndex=>$logical_num) {
-			$query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
-				LEFT JOIN glpi_plugin_tracker_networking_ports
-				ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
-				WHERE device_type='2'
-					AND on_device='".$ID_Device."'
-					AND logical_number='".$logical_num."' ";
-			$result=$DB->query($query);
-			while ($data=$DB->fetch_array($result)) {
-            // If trunk => 1
-				if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1")) {
-					if ($data['trunk'] != "1") {
-						$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-						SET trunk='1'
-						WHERE id='".$data['sid']."' ";
-						$DB->query($query_update);
-						plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
-					}
-            // If multiple => -1
-				} else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1")) {
-					if ($data['trunk'] != "-1") {
-						$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-						SET trunk='-1'
-						WHERE id='".$data['sid']."' ";
-						$DB->query($query_update);
-						plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1",$_SESSION['FK_process']);
-					}
-				} else if($data['trunk'] != "0") {
-					$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-					SET trunk='0'
-					WHERE id='".$data['sid']."' ";
-					$DB->query($query_update);
-					plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$_SESSION['FK_process']);
-				}
-			}
-		}
+   // ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
+   foreach($ArrayPort_LogicalNum_SNMPNum AS $ifIndex=>$logical_num) {
+      $query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+         LEFT JOIN glpi_plugin_tracker_networking_ports
+         ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
+         WHERE device_type='2'
+            AND on_device='".$ID_Device."'
+            AND logical_number='".$logical_num."' ";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         // If trunk => 1
+         if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1")) {
+            if ($data['trunk'] != "1") {
+               $query_update = "UPDATE glpi_plugin_tracker_networking_ports
+               SET trunk='1'
+               WHERE id='".$data['sid']."' ";
+               $DB->query($query_update);
+               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
+            }
+         // If multiple => -1
+         } else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1")) {
+            if ($data['trunk'] != "-1") {
+               $query_update = "UPDATE glpi_plugin_tracker_networking_ports
+               SET trunk='-1'
+               WHERE id='".$data['sid']."' ";
+               $DB->query($query_update);
+               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1",$_SESSION['FK_process']);
+            }
+         } else if($data['trunk'] != "0") {
+            $query_update = "UPDATE glpi_plugin_tracker_networking_ports
+            SET trunk='0'
+            WHERE id='".$data['sid']."' ";
+            $DB->query($query_update);
+            plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$_SESSION['FK_process']);
+         }
+      }
+   }
 
-	// If no Ip or mac in this trunks port, we try to search switch connected to this
-//	foreach($trunk_no_cdp AS $ifIndex=>$activation)
-//	{
-//		// list all mac addresses connected to this ports
-//		if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))
-//		{
-//			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
-//			foreach ($Array_vlan as $num=>$vlan)
-//			{
-//				unset($ArrayMACAdressTable);
-//				$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1,$vlan);
-//
-//				foreach($ArrayMACAdressTable as $num=>$dynamicdata)
-//				{
-//					$oidExplode = explode(".", $dynamicdata);
-//					if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan])))
-//					{
-//						$BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
-//						$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
-//
-//						if (($BridgePortifIndex == $ifIndex))
-//						{
-//							$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
-//							$MacAddress_tmp = str_split($MacAddress, 2);
-//							$MacAddress = $MacAddress_tmp[0];
-//							for($i = 1; $i < count($MacAddress_tmp); $i++)
-//								$MacAddress .= ":".$MacAddress_tmp[$i];
-//
-//							// On vérifie si l'adresse MAC appartient à un port réseau de switch
-//							$query = "SELECT *  FROM glpi_networking_ports
-//							WHERE device_type='".NETWORKING_TYPE."'
-//							 AND ifmac='".$MacAddress."' ";
-//							$result = $DB->query($query);
-//							if (mysql_num_rows($result) > 0)
-//							{
-//								$data = $DB->fetch_assoc($result);
-//
-//								$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-//								WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."'
-//									AND device_type='".NETWORKING_TYPE."'
-//									AND on_device='".$ID_Device."' ";
-//								$result2 = $DB->query($query2);
-//								$data2 = $DB->fetch_assoc($result2);
-//
-//								$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
-//							}
-//						}
-//					}
-//
-//				}
-//
-//			}
-//		}
-//		else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225"))
-//		{
-//			// =-=-=-=-=-=-= Don't work =-=-=-=-=-=-= \\
-////			unset($ArrayMACAdressTable);
-////			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1);
-////			foreach($ArrayMACAdressTable as $num=>$dynamicdata)
-////			{
-////
-////				$oidExplode = explode(".", $dynamicdata);
-////				if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""])))
-////				{
-////					$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""];
-////
-////					if (($BridgePortifIndex == "1"))
-////					{
-////						$MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
-////						$MacAddress_tmp = str_split($MacAddress, 2);
-////						$MacAddress = $MacAddress_tmp[0];
-////						for($i = 1; $i < count($MacAddress_tmp); $i++)
-////							$MacAddress .= ":".$MacAddress_tmp[$i];
-////
-////						// On vérifie si l'adresse MAC appartient à un port réseau de switch
-////						$query = "SELECT *  FROM glpi_networking_ports
-////						WHERE device_type='".NETWORKING_TYPE."'
-////						 AND ifmac='".$MacAddress."' ";
-////						$result = $DB->query($query);
-////						if (mysql_num_rows($result) > 0)
-////						{$oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225"))
-////							$data = $DB->fetch_assoc($result);
-////
-////							$query2 = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-////							WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum["1"]."'
-////								AND device_type='".NETWORKING_TYPE."'
-////								AND on_device='".$ID_Device."' ";
-////
-////							$result2 = $DB->query($query2);
-////							$data2 = $DB->fetch_assoc($result2);
-////
-////							$snmp_queries->PortsConnection($data["ID"], $data2["ID"],$_SESSION['FK_process']);
-////						}
-////					}
-////				}
-////
-////			}
-//		}
-//	}
 
 	foreach($Array_cdp_ifIndex AS $ifIndex=>$val) {
 		$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
@@ -1332,73 +1245,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
       $Array_multiplemac_ifIndex[$ifIndex] = 1;
 	}
 
-//	foreach($Array_multiplemac_ifIndex AS $ifIndex=>$val)
-//		$Array_trunk_ifIndex[$ifIndex] = $val;
-
-//	foreach($Array_trunk_ifIndex AS $ifIndex=>$val)
-//	{
-//		$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
-//		$query_sel2 = "SELECT * FROM glpi_networking_ports ".
-//		    " WHERE ID='".$ArrayPortsID[$ifName]."' ";
-//		$result_sel2=$DB->query($query_sel2);
-//		$FK_networking = $DB->result($result_sel2, 0, "on_device");
-//		$TMP_ID = $tmpc->UpdatePort($FK_networking,$ArrayPortsID[$ifName],0);
-//		// ** Search if one of connection is a switch port, If there is only one, we can connect
-//		// Search all ports in dot1dBasePortIfIndex
-//		$BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$ifIndex][""];
-//		$Arraydot1dTpFdbPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
-//		$ArrayMacAddress = array();
-//		$ArrayPort = array();
-//		foreach($Arraydot1dTpFdbPort as $num=>$dynamicdata)
-//		{
-//		    if ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""] == $BridgePortifIndex)
-//		    {
-//				if (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]))
-//				{
-//					// Convert MAC HEX in Decimal
-//					$tmp = $oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""];
-//					$MacAddress = str_replace("0x","",$tmp);
-//
-//					$MacAddress_tmp = str_split($MacAddress, 2);
-//					$MacAddress = $MacAddress_tmp[0];
-//					for($i = 1; $i < count($MacAddress_tmp); $i++)
-//						$MacAddress .= ":".$MacAddress_tmp[$i];
-//
-//					$query = "SELECT *  FROM glpi_networking_ports
-//					WHERE device_type='".NETWORKING_TYPE."'
-//					AND ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."') ";
-//					$result = $DB->query($query);
-//					if (mysql_num_rows($result) == 1)
-//					{
-//						$ArrayMacAddress[] = $MacAddress;
-//						$data = $DB->fetch_assoc($result);
-//						$ArrayPort[$MacAddress] = $data["ID"];
-//						$ArrayMacAddress = array();
-//						$ArrayMacAddress[] = $MacAddress;
-//						if (!empty($TMP_ID))
-//							$tmpc->AddConnections($TMP_ID,$ArrayMacAddress);
-//					}
-//				}
-//			}
-//		}
-//		$logs->write("tracker_fullsync","Count multiple mac Port [".$ifIndex."] : ".count($ArrayMacAddress),$type."][".$ID_Device,1);
-
-//		if (count($ArrayMacAddress) == "1")
-//		{
-//			// Connection
-//			$ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
-//			$sport = $ArrayPortsID[$ifName];
-//			$snmp_queries->PortsConnection($sport, $ArrayPort[$ArrayMacAddress[0]], $_SESSION['FK_process']);
-//		$logs->write("tracker_fullsync","Mac (multiple) [".$ifIndex."] : ".$ArrayMacAddress[0],$type."][".$ID_Device,1);
-//
-//		}
-
-//		$Array_trunk_ifIndex[$ifIndex] = $val;
-//	}
-
-//	return $Array_trunk_ifIndex;
    return $Array_multiplemac_ifIndex;
-
 }
 
 function plugin_tracker_hex_to_string($value) {
@@ -1424,8 +1271,8 @@ function plugin_tracker_hex_to_string($value) {
 function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues) {
 	GLOBAL $DB;
 
-	$walks = new plugin_tracker_walk;
-	$logs = new plugin_tracker_logs;
+	$walks = new PluginTrackerWalk;
+	$logs = new PluginTrackerLogs;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type."][".$ID_Device,1);
 

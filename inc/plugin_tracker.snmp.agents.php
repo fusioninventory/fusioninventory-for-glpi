@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_agents extends CommonDBTM {
+class PluginTrackerAgents extends CommonDBTM {
 
    function __construct() {
 		$this->table = "glpi_plugin_tracker_agents";
@@ -190,7 +190,7 @@ class plugin_tracker_agents extends CommonDBTM {
 	function export_config($ID) {
 		GLOBAL $DB;
 	
-		$tracker_config = new plugin_tracker_config;
+		$tracker_config = new PluginTrackerConfig;
 		$tracker_config->getFromDB(1);
 
 		$this->getFromDB($ID);

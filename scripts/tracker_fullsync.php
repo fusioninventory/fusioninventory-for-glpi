@@ -77,12 +77,12 @@ $failed_nbr= 0;
 $fields=array();
 $type='';
 
-$logs = new plugin_tracker_logs;
+$logs = new PluginTrackerLogs;
 
 if(isset($_GET['update_device_process'])) {
 	// tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
 
-	$processes = new Threads;
+	$processes = new PluginTrackerProcesses;
 	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
 } else {
 	if (isset($_GET["type"])) {
@@ -94,11 +94,11 @@ if(isset($_GET['update_device_process'])) {
 		$fields["process_id"] = $_GET["process_id"];
    }
 
-	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+	$config_snmp_script = new PluginTrackerConfigSNMPScript;
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
 
 	// Add process into database
-	$processes = new Threads;
+	$processes = new PluginTrackerProcesses;
 	$processes->addProcess($fields["process_id"],$nb_process_query);
 	
 	// SNMP is working
@@ -136,7 +136,7 @@ if(isset($_GET['update_device_process'])) {
    }
 
 	// Create connections between switchs
-	$tmpc = new plugin_tracker_tmpconnections;
+	$tmpc = new PluginTrackerTmpConnections;
 	$tmpc->WireInterSwitchs();
 
 	$processes->closeProcess($fields["process_id"]);

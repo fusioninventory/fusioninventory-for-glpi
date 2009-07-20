@@ -48,7 +48,7 @@ if (isset($_GET['type'])) {
 }
 plugin_tracker_checkRight("computers_history","r");
 
-$computer_history = new plugin_tracker_computers_history();
+$computer_history = new PluginTrackerComputersHistory;
 
 if ((isset($_POST['delete']))) {	
 	plugin_tracker_checkRight("computers_history","w");

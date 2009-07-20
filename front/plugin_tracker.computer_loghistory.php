@@ -39,12 +39,10 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-$config = new plugin_tracker_config();
-
-$errors = new plugin_tracker_errors();
-$computers_history = new plugin_tracker_computers_history();
-
-$computer=new Computer();
+$config = new PluginTrackerConfig;
+$errors = new PluginTrackerErrors;
+$computers_history = new PluginTrackerComputersHistory;
+$computer=new Computer;
 
 // Get date
 $date = date("Y-m-d H:i:s");

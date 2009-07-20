@@ -56,18 +56,18 @@ function plugin_tracker_installing($version) {
 		mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 	}
 	
-	$config = new plugin_tracker_config;
+	$config = new PluginTrackerConfig;
 	$config->initConfig($version);
-	$config_discovery = new plugin_tracker_config_discovery;
+	$config_discovery = new PluginTrackerConfigDiscovery;
 	$config_discovery->initConfig();
-	$config_snmp_networking = new plugin_tracker_config_snmp_networking;
+	$config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
 	$config_snmp_networking->initConfig();
-	$config_snmp_printer = new plugin_tracker_config_snmp_printer;
+	$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
 	$config_snmp_printer->initConfig();
-	$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+	$config_snmp_script = new PluginTrackerConfigSNMPScript;
 	$config_snmp_script->initConfig();
 	// Import models
-	$importexport = new plugin_tracker_importexport;
+	$importexport = new PluginTrackerImportExport;
 	include(GLPI_ROOT.'/inc/setup.function.php');
 	include(GLPI_ROOT.'/inc/rulesengine.function.php');
 	foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0,1);
@@ -94,19 +94,19 @@ function plugin_tracker_update($version) {
 		if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
 			mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 		}
-		$config_discovery = new plugin_tracker_config_discovery;
+		$config_discovery = new PluginTrackerConfigDiscovery;
 		$config_discovery->initConfig();
-		$config_snmp_script = new glpi_plugin_tracker_config_snmp_script;
+		$config_snmp_script = new PluginTrackerConfigSNMPScript;
 		$config_snmp_script->initConfig();
 		// Import models
-		$importexport = new plugin_tracker_importexport;
+		$importexport = new PluginTrackerImportExport;
 		foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0);
 		// Clean DB (ports in glpi_plugin_tracker_networking_ports..... )
 		plugin_tracker_clean_db();
 	}
 	if ($version == "2.0.2") {
 		// Migrate unknown mac address in unknown device (MySQL table)
-		$plugin_tracker_unknown = new plugin_tracker_unknown;
+		$plugin_tracker_unknown = new PluginTrackerUnknown;
 		$plugin_tracker_unknown->updateFromOldVersion_unknown_mac();
 		// Delete MySQL table "glpi_plugin_tracker_unknown_mac"
 		$DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");

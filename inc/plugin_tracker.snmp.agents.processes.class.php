@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_agents_processes extends CommonDBTM {
+class PluginTrackerAgentsProcesses extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_agents_processes";

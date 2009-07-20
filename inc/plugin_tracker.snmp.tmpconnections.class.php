@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginTrackerTmpconnections extends CommonDBTM {
+class PluginTrackerTmpConnections extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_tmp_netports";
@@ -76,7 +76,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 	function WireInterSwitchs() {
 		global $DB;
 
-		$snmp_queries = new PluginTrackerSnmp;
+		$snmp_queries = new PluginTrackerSNMP;
 		
 		// ** port in glpi_plugin_tracker_tmp_netports is deleted = port connected ** //
 

@@ -43,7 +43,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$rangeip = new plugin_tracker_rangeip;
+$rangeip = new PluginTrackerRangeIP;
 
 commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","rangeip");
 

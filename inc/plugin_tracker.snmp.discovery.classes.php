@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class plugin_tracker_discovery extends CommonDBTM {
+class PluginTrackerDiscovery extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_discovery";

@@ -41,9 +41,9 @@ function plugin_tracker_createfirstaccess($ID) {
 
 	global $DB;
 	
-	$plugin_tracker_Profile=new plugin_tracker_Profile();
+	$plugin_tracker_Profile=new PluginTrackerProfile;
 	if (!$plugin_tracker_Profile->GetfromDB($ID)) {
-		$Profile=new Profile();
+		$Profile=new Profile;
 		$Profile->GetfromDB($ID);
 		$name=$Profile->fields["name"];
 
@@ -58,7 +58,7 @@ function plugin_tracker_createaccess($ID) {
 
 	GLOBAL $DB;
 	
-	$Profile=new Profile();
+	$Profile=new Profile;
 	$Profile->GetfromDB($ID);
 	$name=$Profile->fields["name"];
 	

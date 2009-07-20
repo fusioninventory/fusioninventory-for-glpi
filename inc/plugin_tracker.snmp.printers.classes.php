@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_printers_cartridges extends CommonDBTM {
+class PluginTrackerPrintersCartridges extends CommonDBTM {
    
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_printers_cartridges";
@@ -46,7 +46,7 @@ class plugin_tracker_printers_cartridges extends CommonDBTM {
 	}
 }
 
-class plugin_tracker_printers extends CommonDBTM {
+class PluginTrackerPrinters extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_printers";
@@ -64,9 +64,9 @@ class plugin_tracker_printers extends CommonDBTM {
 	
 		$this->ID = $ID;
 		
-		$plugin_tracker_printers = new plugin_tracker_printers;
-		$config_snmp_printer = new plugin_tracker_config_snmp_printer;
-		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		$plugin_tracker_printers = new PluginTrackerPrinters;
+		$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
+		$plugin_tracker_snmp = new PluginTrackerSNMP;
 
 		$query = "
 		SELECT * 
@@ -207,8 +207,8 @@ class plugin_tracker_printers extends CommonDBTM {
 	function showFormPrinter_pagescounter($target,$ID) {
 		global $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING;	
 		
-		$plugin_tracker_printers = new plugin_tracker_printers;
-		$plugin_tracker_snmp = new plugin_tracker_snmp;
+		$plugin_tracker_printers = new PluginTrackerPrinters;
+		$plugin_tracker_snmp = new PluginTrackerSNMP;
 	
 		$this->ID = $ID;
 		
