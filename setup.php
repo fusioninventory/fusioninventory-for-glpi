@@ -106,17 +106,17 @@ function plugin_init_tracker() {
 		'tablename' => 'glpi_plugin_tracker_networking_ports'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_CONFIG", 5164, array(
+   registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_TMP_NETPORTS", 5164, array(
+		'classname' => 'plugin_tracker_tmpconnections',
+		'tablename' => 'glpi_plugin_tracker_tmp_netports'
+		));
+
+
+	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_CONFIG", 5165, array(
 		'classname' => 'plugin_tracker_config',
 		'tablename' => 'glpi_plugin_tracker_config',
 		'formpage' => 'front/plugin_tracker.functionalities.form.php'
 		));
-
-   registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_TMP_NETPORTS", 5165, array(
-		'classname' => 'plugin_tracker_tmpconnections',
-		'tablename' => 'glpi_plugin_tracker_tmp_netports'
-		));
-	
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
 	
