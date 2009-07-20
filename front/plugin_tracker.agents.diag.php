@@ -56,6 +56,9 @@ if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"
 if( isset($_POST['upload']) ) { // si formulaire soumis
 	//$content_dir = '/tmp/'; // dossier où sera déplacé le fichier
 	$content_dir = GLPI_PLUGIN_DOC_DIR."/tracker/";
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
+		mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
+	}
    $tmp_file = $_FILES['data']['tmp_name'];
 
     if( !is_uploaded_file($tmp_file) )
