@@ -43,7 +43,7 @@ function plugin_tracker_initSession() {
 	if(TableExists("glpi_plugin_tracker_config")) {
 		
 		if (FieldExists("glpi_plugin_tracker_config","ID")) {
-			$profile=new plugin_tracker_Profile();
+			$profile=new PluginTrackerProfile;
 		
 			$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
 			$result = $DB->query($query);
@@ -67,7 +67,7 @@ function plugin_tracker_initSession() {
 
 function plugin_tracker_changeprofile() {
 	if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
-		$prof=new plugin_tracker_Profile();
+		$prof=new PluginTrackerProfile;
 		if($prof->getFromDB($_SESSION['glpiactiveprofile']['ID'])) {
 			$_SESSION["glpi_plugin_tracker_profile"]=$prof->fields;
       } else {

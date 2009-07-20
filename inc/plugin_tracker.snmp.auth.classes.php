@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_snmp_auth extends CommonDBTM {
+class PluginTrackerSNMPAuth extends CommonDBTM {
    
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_snmp_connection";
@@ -400,7 +400,7 @@ class plugin_tracker_snmp_auth extends CommonDBTM {
 	function GetInfos($ID_Device,$xml_auth_rep,$type) {
 		GLOBAL $DB,$CFG_GLPI,$LANG;
 
-		$config = new plugin_tracker_config();
+		$config = new PluginTrackerConfig;
 
 		if ($ID_Device != "all") {
 			switch ($type) {

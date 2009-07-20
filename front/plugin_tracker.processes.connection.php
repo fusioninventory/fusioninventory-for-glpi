@@ -44,7 +44,7 @@ plugin_tracker_checkRight("snmp_scripts_infos","r");
 
 plugin_tracker_mini_menu();
 
-$Threads = new Threads;
+$Threads = new PluginTrackerProcesses;
 
 $Threads->showProcesses($_SERVER["PHP_SELF"],"connection");
 

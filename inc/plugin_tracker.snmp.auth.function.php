@@ -41,8 +41,8 @@ if (!defined('GLPI_ROOT')) {
 function plugin_tracker_snmp_auth_dropdown($selected="") {
 	GLOBAL $DB;
 
-	$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-	$config = new plugin_tracker_config;
+	$plugin_tracker_snmp_auth = new PluginTrackerSNMPAuth;
+	$config = new PluginTrackerConfig;
 
 	if ($config->getValue("authsnmp") == "file") {
 		echo $plugin_tracker_snmp_auth->selectbox($selected);

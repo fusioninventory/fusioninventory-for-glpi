@@ -45,7 +45,7 @@ plugin_tracker_checkRight("snmp_printers","r");
 if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 		plugin_tracker_checkRight("snmp_printers","w");
 	
-	$plugin_tracker_printers = new plugin_tracker_printers();
+	$plugin_tracker_printers = new PluginTrackerPrinters;
 	
 	$_POST['FK_printers'] = $_POST['ID'];
 	unset($_POST['ID']);
@@ -62,7 +62,7 @@ if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
 	plugin_tracker_checkRight("snmp_printers","w");
 
-	$plugin_tracker_printers_cartridges = new plugin_tracker_printers_cartridges;
+	$plugin_tracker_printers_cartridges = new PluginTrackerPrintersCartridges;
 
 	$query = "SELECT * FROM glpi_plugin_tracker_printers_cartridges
 	WHERE FK_printers='".$_POST['ID']."' 

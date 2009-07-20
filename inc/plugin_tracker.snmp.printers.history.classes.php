@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_printers_history extends CommonDBTM {
+class PluginTrackerPrintersHistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_printers_history";
@@ -182,7 +182,7 @@ class plugin_tracker_printers_history extends CommonDBTM {
 	}
 }
 
-class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
+class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_printers_history_config";
@@ -275,7 +275,7 @@ class glpi_plugin_tracker_printers_history_config extends CommonDBTM {
 	function getAllActivated() {
 		global $DB;
 		
-		$config = new plugin_tracker_config();
+		$config = new PluginTrackerConfig;
 		$statement = $config->getValue("statement_default_value");
 		
 		$datas=array();

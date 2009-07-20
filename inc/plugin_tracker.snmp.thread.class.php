@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class Threads extends CommonDBTM {
+class PluginTrackerProcesses extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_unknown_device";
@@ -46,7 +46,7 @@ class Threads extends CommonDBTM {
 		
 		$minfreq = 9999;
 		$CommonItem = new CommonItem;
-		$Threads = new Threads;
+		$Threads = new PluginTrackerProcesses;
 
 
 //		$sql = "SELECT ID, process_id, SUM(network_queries) AS network_queries, status, COUNT(*) AS threads_number, " .
@@ -467,7 +467,7 @@ class Threads extends CommonDBTM {
 	
 	
 	function Create ($file) {
-		$t = new Threads;
+		$t = new PluginTrackerProcesses;
 		$descriptor = array (0 => array ("pipe", "r"), 1 => array ("pipe", "w"), 2 => array ("pipe", "w"));
 		$t->pref = proc_open ("php -q $file ", $descriptor, $t->pipes);
 		stream_set_blocking ($t->pipes[1], 0);

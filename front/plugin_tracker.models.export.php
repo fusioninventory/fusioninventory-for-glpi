@@ -42,7 +42,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_models","r");
 
-$importexport = new plugin_tracker_importexport;
+$importexport = new PluginTrackerImportExport;
 
 header("Expires: 0");
 header("Cache-control: private");

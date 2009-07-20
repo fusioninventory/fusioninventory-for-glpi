@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_importexport extends CommonDBTM {
+class PluginTrackerImportExport extends CommonDBTM {
 
 	function plugin_tracker_export($ID_model) {
 		global $DB;
@@ -210,8 +210,8 @@ class plugin_tracker_importexport extends CommonDBTM {
 	function import_agent_discovery($content_dir,$file) {
 		global $DB,$LANG;
 
-		$walks = new plugin_tracker_walk;
-		$config_discovery = new plugin_tracker_config_discovery;
+		$walks = new PluginTrackerWalk;
+		$config_discovery = new PluginTrackerConfigDiscovery;
 
 		// Recompose File
 		$target = $content_dir.$file;

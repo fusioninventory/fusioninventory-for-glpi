@@ -57,7 +57,7 @@ include (GLPI_ROOT . "/inc/includes.php");
  **/
 
 if (haveRight("config","w") && haveRight("profile","w")) {
-   $config = new plugin_tracker_config;
+   $config = new PluginTrackerConfig;
    if (!TableExists("glpi_plugin_tracker_agents")) {
 		plugin_tracker_update("1.1.0");
    }

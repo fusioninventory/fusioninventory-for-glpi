@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class plugin_tracker_computers_history extends CommonDBTM {
+class PluginTrackerComputersHistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_connection_history";

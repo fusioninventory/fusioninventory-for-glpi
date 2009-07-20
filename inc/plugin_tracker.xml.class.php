@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 	}
 
 /// XML class
-class plugin_tracker_XML {
+class PluginTrackerXML {
 
 	/**
 	 * Constructor
@@ -60,7 +60,7 @@ class plugin_tracker_XML {
 	function DoXML($writed=array()) {
 		global $DB;
 
-		$xmlclass = new plugin_tracker_XML;
+		$xmlclass = new PluginTrackerXML;
 		
 		$xml = "<?xml version='1.0' encoding='UTF-8' ?>\n";
 		$xmlclass->element = $this->element;
@@ -79,9 +79,10 @@ class plugin_tracker_XML {
 	function writelement($level,$prec_level_name='',$sql_data='',$writed=array()) {
 		global $DB;
 
-		$xmlclass = new plugin_tracker_XML;
-		$plugin_tracker_snmp_auth = new plugin_tracker_snmp_auth;
-		$config = new plugin_tracker_config;
+		$xmlclass = new PluginTrackerXML;
+		$plugin_tracker_snmp_auth = new PluginTrackerSNMPAuth;
+		$config = new PluginTrackerConfig;
+      $snmp_auth = new PluginTrackerSNMPAuth;
 		
 		$xmlclass->element = $this->element;
 		$xml = "";
@@ -129,7 +130,6 @@ class plugin_tracker_XML {
                }
 					$result=$DB->query($query);
 					while ($data=$DB->fetch_array($result)) {
-						$snmp_auth = new plugin_tracker_snmp_auth;
 						$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
 						$array_auth[$data["FK_snmp_connection"]]["name"] = $array_auth[$data["FK_snmp_connection"]]["namec"];
 						$xml .= $tab."<".$element.">\n";
