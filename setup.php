@@ -62,6 +62,7 @@ function plugin_init_tracker() {
 	registerPluginType('tracker', "PLUGIN_TRACKER_MAC_UNKNOWN", 5153, array(
 		'classname' => 'PluginTrackerUnknown',
 		'tablename' => 'glpi_plugin_tracker_unknown_device',
+      'formpage' => 'front/plugin_tracker.unknown.form.php',
 		'searchpage' => 'front/plugin_tracker.unknown.form.php',
 		'typename' => $LANG['plugin_tracker']["processes"][13]
 		));
