@@ -90,7 +90,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 6 :
-		$config_snmp_printer = new PluginTrackerPrinters;
+		$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
 		$config_snmp_printer->showForm($_POST['target'],'1');
 		break;
 
