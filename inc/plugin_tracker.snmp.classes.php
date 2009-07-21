@@ -313,8 +313,14 @@ class PluginTrackerSnmp extends CommonDBTM
 				
 				if ((!empty($vlan)) AND ($vlan != " []")) {
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
-					if ($FK_vlan != "0")
-						assignVlan($source_port,$FK_vlan);
+					if ($FK_vlan != "0") {
+                  $query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$source_port' AND FK_vlan='$FK_vlan'  LIMIT 0,1";
+                  if ($result=$DB->query($query)) {
+                     if ($DB->numrows($result) == "0") {
+                        assignVlan($source_port,$FK_vlan);
+                     }
+                  }
+               }
 				}
 			}
 			else
