@@ -160,12 +160,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 				break;
 		}
 
-		// ** Get oid of PortName
-		$Array_Object_oid_ifName = $oidsModel[0][1]['ifName'];
-
-		$Array_Object_oid_ifType = $oidsModel[0][1]['ifType'];
-		
-		// ** Get oid of vtpVlanName
+   	// ** Get oid of vtpVlanName
 		$Array_Object_oid_vtpVlanName = '';
 		if (isset($oidsModel[0][0]['vtpVlanName'])) {
 			$Array_Object_oid_vtpVlanName = $oidsModel[0][0]['vtpVlanName'];

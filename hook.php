@@ -1784,17 +1784,10 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			switch ($new_table.".".$linkfield) {
 				// ** Tracker - switch
 				case "glpi_plugin_tracker_networking.ID" :
-/*					return " LEFT JOIN glpi_plugin_tracker_networking_ports AS TRACKER_10 ON (glpi_computers.ID = TRACKER_10.ID) ".
-						" LEFT JOIN glpi_networking_ports AS TRACKER_11 ON TRACKER_11.on_device = glpi_computers.ID AND TRACKER_11.device_type='".COMPUTER_TYPE."' ".
-						" LEFT JOIN glpi_networking_wire AS TRACKER_12 ON TRACKER_11.ID = TRACKER_12.end1 OR  TRACKER_11.ID = TRACKER_12.end2 ".
-						" LEFT JOIN glpi_networking_ports AS TRACKER_13 ON TRACKER_13.ID = (TRACKER_12.end1, TRACKER_12.end2) NOT IN (SELECT end1, end2 FROM glpi_networking_wire WHERE (end1 != TRACKER_11.ID OR end2 != TRACKER_11.ID) ) ".
-						" LEFT JOIN glpi_networking AS TRACKER_14 ON TRACKER_13.on_device = TRACKER_14.ID";
-*/				//		" LEFT JOIN glpi_plugin_tracker_networking AS TRACKER_15 ON TRACKER_14.ID = TRACKER_15.FK_networking";
-					return " LEFT JOIN glpi_networking_ports AS TRACKER_10 ON (TRACKER_10.on_device = glpi_computers.ID AND TRACKER_10.device_type='".COMPUTER_TYPE."') ".
+   				return " LEFT JOIN glpi_networking_ports AS TRACKER_10 ON (TRACKER_10.on_device = glpi_computers.ID AND TRACKER_10.device_type='".COMPUTER_TYPE."') ".
 						" LEFT JOIN glpi_networking_wire AS TRACKER_11 ON TRACKER_10.ID = TRACKER_11.end1 OR TRACKER_10.ID = TRACKER_11.end2 ".
 						" LEFT JOIN glpi_networking_ports AS TRACKER_12 ON TRACKER_12.ID = CASE WHEN TRACKER_11.end1 = TRACKER_10.ID THEN TRACKER_11.end2 ELSE TRACKER_11.end1 END ".
-						" LEFT JOIN glpi_networking AS TRACKER_13 ON TRACKER_12.on_device = TRACKER_13.ID";
-
+						" LEFT JOIN glpi_networking AS TRACKER_13 ON TRACKER_12.on_device = TRACKER_13.ID ";
 					break;
 
 				// ** Tracker - switch port
