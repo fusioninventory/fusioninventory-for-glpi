@@ -503,7 +503,6 @@ class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
                $query_delete = "DELETE FROM glpi_plugin_tracker_processes
                   WHERE end_time < date_add(now(),interval -".$this->getValue("history_process")." day) ";
                $DB->query($query_delete);
-               echo $query_delete."\n";
             }
             break;
       }
