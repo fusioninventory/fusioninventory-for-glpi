@@ -753,8 +753,9 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 
 							$queryPortEnd = "SELECT * FROM glpi_networking_ports
 							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$ID_Device."' ".
-								" AND device_type!='".NETWORKING_TYPE."' ";
+                        AND (on_device!='".$ID_Device."'
+                        || device_type!='".NETWORKING_TYPE."') ";
+
                   }
 //						} else if (($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$BridgePortifIndex][$vlan] == "1") AND ($vlan != "")) { // It's a trunk port
 //							$logs->write("tracker_fullsync","Mac address FAILED(1)",$type."][".$ID_Device,1);
@@ -850,8 +851,8 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
                   $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 						$queryPortEnd = "SELECT * FROM glpi_networking_ports
 							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$ID_Device."' ".
-								" AND device_type!='".NETWORKING_TYPE."' ";
+                        AND (on_device!='".$ID_Device."'
+                        || device_type!='".NETWORKING_TYPE."') ";
                   $resultPortEnd=$DB->query($queryPortEnd);
 						$sport = $ArrayPortsID[$ifName]; // Networking_Port
 						if ($DB->numrows($resultPortEnd) != 0) {
@@ -933,8 +934,8 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 
 						$queryPortEnd = "SELECT * FROM glpi_networking_ports
 							WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-								AND on_device!='".$ID_Device."' ".
-								" AND device_type!='".NETWORKING_TYPE."' ";
+								AND (on_device!='".$ID_Device."'
+                        || device_type!='".NETWORKING_TYPE."') ";
 						$resultPortEnd=$DB->query($queryPortEnd);
 						$sport = $ArrayPortsID[$ifName]; // Networking_Port
 
