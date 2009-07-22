@@ -1175,6 +1175,9 @@ function plugin_tracker_getDropdown() {
 function cron_plugin_tracker() {
 	$plugin_tracker_unknown = new PluginTrackerUnknown;
 	$plugin_tracker_unknown->FusionUnknownKnownDevice();
+   // Clean server script processes history
+   $tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
+   $tracker_config_snmp_networking->CleanHistory("history_process");
 }
 
 
