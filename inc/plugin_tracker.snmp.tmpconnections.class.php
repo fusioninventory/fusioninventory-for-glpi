@@ -133,7 +133,6 @@ class PluginTrackerTmpConnections extends CommonDBTM {
             GROUP BY FK_networking_port
             HAVING  COUNT(FK_networking_port)=1 ";
 
-
 			if ($result=$DB->query($query)) {
 				while ($data=$DB->fetch_array($result)) {
 					$i++;
@@ -160,6 +159,29 @@ class PluginTrackerTmpConnections extends CommonDBTM {
                   // Delet all witch have this macaddress in glpi_plugin_tracker_tmp_connections
                   $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections
 							WHERE macaddress='".$data["macaddress"]."' ";
+						$DB->query($query_delete);
+                  // Delete all in glpi_plugin_tracker_tmp_connections which have mac of port source
+                  $query_sel2 = "SELECT * FROM glpi_networking_ports
+                     WHERE ID='".$data['FK_networking_port']."'
+                     LIMIT 0,1";
+                  $result_sel2=$DB->query($query_sel2);
+                  $data_sel2 = $DB->fetch_assoc($result_sel2);
+                  $s_ifmac = $data_sel2["ifmac"];
+                  $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections
+							WHERE macaddress='".$s_ifmac."' ";
+						$DB->query($query_delete);
+                  // Delete in glpi_plugin_tracker_tmp_netports ports destination
+                  $query_sel2 = "SELECT * FROM glpi_plugin_tracker_tmp_netports
+                     WHERE FK_networking_port='".$dport."'
+                     LIMIT 0,1";
+                  $result_sel2=$DB->query($query_sel2);
+                  $data_sel2 = $DB->fetch_assoc($result_sel2);
+                  $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_netports
+							WHERE ID='".$data_sel2["ID"]."' ";
+						$DB->query($query_delete);
+                  // Delete in glpi_plugin_tracker_tmp_connections to tmp_netports ports destination
+                  $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections
+							WHERE FK_tmp_netports='".$data_sel2["ID"]."' ";
 						$DB->query($query_delete);
 				}
 			}
