@@ -34,7 +34,7 @@
          - management of SNMP versions v1, v2c]]></en>
       </long>
    </description>
-   <homepage>http://forge.glpi-project.org/Trakcer/</homepage>
+   <homepage>http://forge.glpi-project.org/Tracker/</homepage>
    <download>http://forge.glpi-project.org/Tracker/download.php</download>
    <authors>
       <author><a href="mailto:d.durieux@siprossii.com">David DURIEUX</a></author>
