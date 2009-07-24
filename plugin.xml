@@ -15,7 +15,7 @@
    <description>
       <short>
          <fr><![CDATA[Récupération des informations via le protocole SNMP]]></fr>
-         <en></en>
+         <en><![CDATA[Get informations by SNMP protocol]]></en>
       </short>
       <long>
          <fr><![CDATA[Tracker permet de récupérer les informations des équipements réseau via le protocole SNMP :
@@ -25,15 +25,25 @@
          - gestion des adresses MAC inconnues
          - gestion des cartouches et compteurs d’imprimantes
          - gestion des versions SNMP v1, v2c]]></fr>
-         <en></en>
+         <en><![CDATA[Tracker permits to get informations from networking devices with SNMP protocol :
+         - networking devices discovery with IP range
+         - care switches, routers, printers
+         - connexions between computers / printers with swicthes (only cisco, HP Procurve and 3com Intellijack 225)
+         - management of unknown MAC addresses
+         - management of cartridges and printers counters
+         - management of SNMP versions v1, v2c]]></en>
       </long>
    </description>
    <homepage>http://forge.glpi-project.org/Trakcer/</homepage>
    <download>http://forge.glpi-project.org/Tracker/download.php</download>
    <authors>
-      <author>David DURIEUX</author>
+      <author><a href="mailto:d.durieux@siprossii.com">David DURIEUX</a></author>
    </authors>
    <versions>
+      <version>
+          <num>1.0.0</num>
+          <compatibility>0.71</compatibility>
+      </version>
       <version>
           <num>2.0.0</num>
           <compatibility>0.71</compatibility>
