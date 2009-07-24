@@ -45,6 +45,10 @@
           <compatibility>0.71</compatibility>
       </version>
       <version>
+          <num>1.1.0</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
           <num>2.0.0</num>
           <compatibility>0.71</compatibility>
       </version>
