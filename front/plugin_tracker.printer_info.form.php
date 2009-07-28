@@ -103,29 +103,10 @@ for ($i=1 ; $i <= 5 ; $i++) {
 
 	}
 	if (isset($_POST[$value])) {
-//		if ($name_file_xml($_SERVER['HTTP_REFERER'],$value)) {
-/*			$explode = explode('&',$_SERVER['HTTP_REFERER']);
-
-			$reconstruct = $explode[0];
-			for ($i=1;$i < count($explode);$i++) {
-				if (strstr($explode[$i],$value)) {
-					if (strstr($_POST[$value],"0000-00-00")) {
-						$explode[$i] = '';
-					} else {
-						$explode[$i] = $value.'='.$_POST[$value];
-					}
-				}
-				if (!empty($explode[$i])) {
-					$reconstruct .= '&'.$explode[$i];
-            }
-			}
-			$_SERVER['HTTP_REFERER'] = $reconstruct;
-		} else {
-*/			$arg .= "&".$value."=".$_POST[$value];
-//		}
+      $_SESSION[$value] = $_POST[$value];
 	}
 }
 	
-glpi_header($_SERVER['HTTP_REFERER'].$arg);
+glpi_header($_SERVER['HTTP_REFERER']);
 
 ?>
