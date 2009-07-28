@@ -1023,28 +1023,26 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
       if ((array_count_values($Array_vlan) != 0) AND (array_count_values($Array_vlan) != 0)) {
          $pass = 1;
+         // Creation of var for each port
+         foreach ($ArrayPort_LogicalNum_SNMPNum AS $num=>$ifIndex) {
+            $Arraydot1dTpFdbPort[$ifIndex] = 0;            
+         }
+
          foreach ($Array_vlan as $num=>$vlan) {
-            $Arraydot1dTpFdbPort = array();
-            $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
-            foreach($ArrayConnectionsPort as $num=>$Connectionkey) {
-               if (!empty($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan])) {
-                  $Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][$vlan];
-               }
-            }
-
-            $ArrayCount = array_count_values($Arraydot1dTpFdbPort);
-
             $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
             foreach($ArrayPortNumber as $num=>$PortNumber) {
-               if ((isset($ArrayCount[$PortNumber])) AND ($ArrayCount[$PortNumber] > 1)) {
-                  $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]] = 1;
-               }
+               $Arraydot1dTpFdbPort[$PortNumber]++;
             }
          }
       }
    }
-
-   if ($pass == "0") {
+   if ($pass == "1") {
+      foreach ($Arraydot1dTpFdbPort AS $ifIndex=>$num) {
+         if ($num > 1) {
+            $Array_multiplemac_ifIndex[$ifIndex] = 1;
+         }
+      }
+   } else if ($pass == "0") {
       $Arraydot1dTpFdbPort = array();
       $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
       foreach($ArrayConnectionsPort as $num=>$Connectionkey) {
