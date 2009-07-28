@@ -221,12 +221,12 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 			}
 		}
 		// Empty MySQL table glpi_plugin_tracker_tmp_netports
-		$query = "TRUNCATE table glpi_plugin_tracker_tmp_netports";
-		$DB->query($query);
+//		$query = "TRUNCATE table glpi_plugin_tracker_tmp_netports";
+//		$DB->query($query);
 		
 		// Empty MySQL table glpi_plugin_tracker_tmp_connections
-		$query = "TRUNCATE table glpi_plugin_tracker_tmp_connections";
-		$DB->query($query);
+//		$query = "TRUNCATE table glpi_plugin_tracker_tmp_connections";
+//		$DB->query($query);
 	}
 }
 
