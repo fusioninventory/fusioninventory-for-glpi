@@ -270,17 +270,17 @@ class PluginTrackerPrinters extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
          // calendrier
-         if (!isset($_GET["datetotalpages"])) {
-            $_GET["datetotalpages"]="";
+         if (!isset($_SESSION["datetotalpages"])) {
+            $_SESSION["datetotalpages"]="";
          }
-         plugin_tracker_printer_calendar($_GET["datetotalpages"],"datetotalpages",$target);
+         plugin_tracker_printer_calendar($_SESSION["datetotalpages"],"datetotalpages",$target);
          // fin calendrier
 			echo "</td>";
 			echo "</tr>";
 	
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
-			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datetotalpages"],'pages_total');
+			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["datetotalpages"],'pages_total');
 
 			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
 			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
@@ -302,18 +302,17 @@ class PluginTrackerPrinters extends CommonDBTM {
 	
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
-				
-         if (!isset($_GET["dateblackpages"])) {
-            $_GET["dateblackpages"]="";
+         if (!isset($_SESSION["dateblackpages"])) {
+            $_SESSION["dateblackpages"]="";
          }
-         plugin_tracker_printer_calendar($_GET["dateblackpages"],"dateblackpages",$target);
+         plugin_tracker_printer_calendar($_SESSION["dateblackpages"],"dateblackpages",$target);
          // fin calendrier
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["dateblackpages"],'pages_n_b');
+         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["dateblackpages"],'pages_n_b');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
          $plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
@@ -336,17 +335,17 @@ class PluginTrackerPrinters extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
 
-         if (!isset($_GET["datecolorpages"])) {
-            $_GET["datecolorpages"]="";
+         if (!isset($_SESSION["datecolorpages"])) {
+            $_SESSION["datecolorpages"]="";
          }
-         plugin_tracker_printer_calendar($_GET["datecolorpages"],"datecolorpages",$target);
+         plugin_tracker_printer_calendar($_SESSION["datecolorpages"],"datecolorpages",$target);
          // fin calendrier
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datecolorpages"],'pages_color');
+         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["datecolorpages"],'pages_color');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
          $plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
@@ -369,17 +368,17 @@ class PluginTrackerPrinters extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
 
-         if (!isset($_GET["daterectoversopages"])) {
-            $_GET["daterectoversopages"]="";
+         if (!isset($_SESSION["daterectoversopages"])) {
+            $_SESSION["daterectoversopages"]="";
          }
-         plugin_tracker_printer_calendar($_GET["daterectoversopages"],"daterectoversopages",$target);
+         plugin_tracker_printer_calendar($_SESSION["daterectoversopages"],"daterectoversopages",$target);
          // fin calendrier
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["daterectoversopages"],'pages_recto_verso');
+         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["daterectoversopages"],'pages_recto_verso');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
          $plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
@@ -402,17 +401,17 @@ class PluginTrackerPrinters extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
 
-			if (!isset($_GET["datescannedpages"])) {
-				$_GET["datescannedpages"]="";
+			if (!isset($_SESSION["datescannedpages"])) {
+				$_SESSION["datescannedpages"]="";
          }
-			plugin_tracker_printer_calendar($_GET["datescannedpages"],"datescannedpages",$target);		
+			plugin_tracker_printer_calendar($_SESSION["datescannedpages"],"datescannedpages",$target);
 			// fin calendrier
 			echo "</td>";
 			echo "</tr>";
 	
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
-			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_GET["datescannedpages"],'scanned');
+			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["datescannedpages"],'scanned');
 		
 			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
 			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
