@@ -210,6 +210,7 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 	GLOBAL $DB,$CFG_GLPI,$LANG;
 
 	$ci = new commonitem;
+   $PTD = new PluginTrackerDiscovery;
 
 	if($criteria_pass2 == "1") {
 		$link_ip = $link2_ip;
@@ -232,20 +233,17 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 	}
 
 	if (count($Array_criteria) == "0") {
-		// Insert device in discovered device
-		$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
-		WHERE ifaddr='".$discovery->ip."'
-			AND name='".plugin_tracker_hex_to_string($discovery->name)."'
-			AND descr='".$discovery->description."'
-			AND serialnumber='".$discovery->serial."'
-			AND FK_entities='".$discovery->entity."' ";
-		$result_sel = $DB->query($query_sel);
-		if ($DB->numrows($result_sel) == "0") {
-			$query = "INSERT INTO glpi_plugin_tracker_discovery
-			(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos,FK_snmp_connection)
-			VALUES('".$discovery->date."','".$discovery->ip."','".plugin_tracker_hex_to_string($discovery->name)."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."','".$discovery->authSNMP."')";
-			$DB->query($query);
-		}
+      $data['date'] = $discovery->date;
+      $data['ip'] = $discovery->ip;
+      $data['name'] = $discovery->name;
+      $data['description'] = $discovery->description;
+      $data['serial'] = $discovery->serial;
+      $data['type'] = $discovery->type;
+      $data['agent_id'] = $agent_id;
+      $data['entity'] = $discovery->entity;
+      $data['FK_model'] = $FK_model;
+      $data['authSNMP'] = $discovery->authSNMP;
+      $PTD->addDevice($data);
 	} else {
 		$discovery_empty = 1;
 		for ($i=0 ; $i < count($array_search) ; $i++) {
@@ -289,20 +287,17 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 				plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,1);
 				return;
 			} elseif ($DB->numrows($result_search) == "0") {
-				// Insert device in discovered device
-				$query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
-				WHERE ifaddr='".$discovery->ip."'
-					AND name='".plugin_tracker_hex_to_string($discovery->name)."'
-					AND descr='".$discovery->description."'
-					AND serialnumber='".$discovery->serial."'
-					AND FK_entities='".$discovery->entity."' ";
-				$result_sel = $DB->query($query_sel);
-				if ($DB->numrows($result_sel) == "0") {
-					$query = "INSERT INTO glpi_plugin_tracker_discovery
-					(date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos,FK_snmp_connection)
-					VALUES('".$discovery->date."','".$discovery->ip."','".plugin_tracker_hex_to_string($discovery->name)."','".$discovery->description."','".$discovery->serial."', '".$discovery->type."', '".$agent_id."', '".$discovery->entity."','".$FK_model."','".$discovery->authSNMP."')";
-					$DB->query($query);
-				}
+            $data['date'] = $discovery->date;
+            $data['ip'] = $discovery->ip;
+            $data['name'] = $discovery->name;
+            $data['description'] = $discovery->description;
+            $data['serial'] = $discovery->serial;
+            $data['type'] = $discovery->type;
+            $data['agent_id'] = $agent_id;
+            $data['entity'] = $discovery->entity;
+            $data['FK_model'] = $FK_model;
+            $data['authSNMP'] = $discovery->authSNMP;
+            $PTD->addDevice($data);
 			}
 		}
 	}
