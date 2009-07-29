@@ -304,6 +304,7 @@ class PluginTrackerSnmp extends CommonDBTM
 				plugin_tracker_addLogConnection("remove",$destination_port,$FK_process);
 				// Remove VLAN
 				$this->CleanVlan($source_port);
+            $this->CleanVlan($destination_port);
 				removeConnector($destination_port);
 				removeConnector($source_port);
 
@@ -314,10 +315,14 @@ class PluginTrackerSnmp extends CommonDBTM
 				if ((!empty($vlan)) AND ($vlan != " []")) {
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
 					if ($FK_vlan != "0") {
-                  $query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$source_port' AND FK_vlan='$FK_vlan'  LIMIT 0,1";
-                  if ($result=$DB->query($query)) {
-                     if ($DB->numrows($result) == "0") {
-                        assignVlan($source_port,$FK_vlan);
+                  $ports[] = $source_port;
+                  $ports[] = $destination_port;
+                  foreach ($ports AS $num=>$tmp_port) {
+                     $query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$tmp_port' AND FK_vlan='$FK_vlan' LIMIT 0,1";
+                     if ($result=$DB->query($query)) {
+                        if ($DB->numrows($result) == "0") {
+                              assignVlan($tmp_port,$FK_vlan);
+                        }
                      }
                   }
                }
@@ -329,23 +334,27 @@ class PluginTrackerSnmp extends CommonDBTM
 					// Verify vlan and update it if necessery
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
 					if ($FK_vlan != "0") {
-						$query = "SELECT * FROM glpi_networking_vlan ".
-							" WHERE FK_port='$source_port' ".
-							" AND FK_vlan='$FK_vlan' ";
-						if ($result=$DB->query($query)) {
-							if ( $DB->numrows($result) == "0" ) {
-								$this->CleanVlan($source_port);
-								assignVlan($source_port,$FK_vlan);
-							} else {
-								$query2 = "SELECT * FROM glpi_networking_vlan ".
-									" WHERE FK_port='$source_port' ".
-									" AND FK_vlan!='$FK_vlan' ";
-								if ($result2=$DB->query($query2)) {
-									while ($data2=$DB->fetch_array($result2)) {
-										$this->CleanVlanID($data2["ID"]);
+                  $ports[] = $source_port;
+                  $ports[] = $destination_port;
+                  foreach ($ports AS $num=>$tmp_port) {
+   						$query = "SELECT * FROM glpi_networking_vlan ".
+                        " WHERE FK_port='$tmp_port' ".
+      						" AND FK_vlan='$FK_vlan' ";
+   						if ($result=$DB->query($query)) {
+      						if ( $DB->numrows($result) == "0" ) {
+                           $this->CleanVlan($tmp_port);
+                           assignVlan($tmp_port,$FK_vlan);
+   							} else {
+      							$query2 = "SELECT * FROM glpi_networking_vlan ".
+                              " WHERE FK_port='$tmp_port' ".
+      								" AND FK_vlan!='$FK_vlan' ";
+                           if ($result2=$DB->query($query2)) {
+                              while ($data2=$DB->fetch_array($result2)) {
+                                 $this->CleanVlanID($data2["ID"]);
+                              }
                            }
                         }
-							}
+                     }
 						}
 					}
 				}
