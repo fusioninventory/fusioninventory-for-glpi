@@ -58,6 +58,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
          $datas["cdp"] = $cdp;
          $datas["ID"] = $data["ID"];
          $this->update($datas);
+         return $data["ID"];
 		}
 		return '';
 	}
@@ -88,7 +89,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
          if ($insert == "1") {
             $query_insert = "INSERT INTO glpi_plugin_tracker_tmp_connections ".
                " (FK_tmp_netports, macaddress) ".
-               " VALUES ('".$FK_tmp_netports."', '".$MacAddress."') ";
+               " VALUES ('".$FK_tmp_netports."','".$MacAddress."') ";
             $DB->query($query_insert);
          }
 		}
