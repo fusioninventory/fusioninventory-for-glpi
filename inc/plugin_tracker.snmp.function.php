@@ -1036,7 +1036,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
             foreach ($Array_vlan as $num=>$vlan) {
                $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
                foreach($ArrayPortNumber as $num=>$PortNumber) {
-                  $Arraydot1dTpFdbPort[$PortNumber]++;
+                  $Arraydot1dTpFdbPort[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]]++;
                }
             }
          }
