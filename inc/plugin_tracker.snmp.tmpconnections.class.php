@@ -125,54 +125,40 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 		$i = 1;
 		while ($i != 0) {
 			$i = 0;
-			$query = "SELECT ifmac, glpi_plugin_tracker_tmp_netports.ID as IDnetports, FK_networking, FK_networking_port ".
-					" FROM glpi_plugin_tracker_tmp_netports ".
-				" LEFT JOIN glpi_networking_ports ON FK_networking=glpi_networking_ports.ID ".
-				" WHERE cdp='0' ".
-				" GROUP BY ifmac ".
-				" HAVING  COUNT(ifmac)=1 ";
+         $query = "SELECT macaddress, glpi_plugin_tracker_tmp_netports.ID, FK_networking, FK_networking_port
+            FROM glpi_plugin_tracker_tmp_netports
+            LEFT JOIN glpi_plugin_tracker_tmp_connections ON glpi_plugin_tracker_tmp_connections.FK_tmp_netports = glpi_plugin_tracker_tmp_netports.ID
+            WHERE cdp = '0'
+               AND macaddress IS NOT NULL
+            GROUP BY FK_networking_port
+            HAVING  COUNT(FK_networking_port)=1 ";
+
+
 			if ($result=$DB->query($query)) {
 				while ($data=$DB->fetch_array($result)) {
 					$i++;
 					$sport = $data['FK_networking_port'];
-					$query_sel2 = "SELECT * FROM glpi_networking_ports ".
-						" WHERE ifmac='".$data['ifmac']."' ";
+
+               // Search DestionationPort
+               $query_sel2 = "SELECT * FROM glpi_networking_ports
+						WHERE ifmac='".$data['macaddress']."'
+                  LIMIT 0,1";
 					$result_sel2=$DB->query($query_sel2);
 					$dport = $DB->result($result_sel2, 0, "ID");
                $logs->write("tracker_fullsync","Connection wire switch ".$sport." - ".$dport,"",1);
 
 					$snmp_queries->PortsConnection($sport, $dport,$PID,$vlan." [".$vlan_name."]");
 					// Delete all connections with this 2 mac addresses
-						// Delete connections of mac of sport
-						$query_sel2 = "SELECT * FROM glpi_networking_ports ".
-							" WHERE ID='".$data['FK_networking_port']."' ";
-						$result_sel2=$DB->query($query_sel2);
-						$ifmac_dport = $DB->result($result_sel2, 0, "ifmac");
-						$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections ".
-							" WHERE macaddress='".$ifmac_dport."' ";
+                  // Delete in glpi_plugin_tracker_tmp_netports
+                  $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_netports
+							WHERE ID='".$data["ID"]."' ";
 						$DB->query($query_delete);
-						// Delete connections of mac of dport
-						$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections ".
-							" WHERE macaddress='".$data['ifmac']."' ";
+                  $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections
+							WHERE FK_tmp_netports='".$data["ID"]."' ";
 						$DB->query($query_delete);
-					// Delete this 2 ports
-						// Delete sport
-						$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections ".
-							" WHERE FK_tmp_netports='".$data['IDnetports']."' ";
-						$DB->query($query_delete);
-						$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_netports ".
-							" WHERE ID='".$data['IDnetports']."' ";
-						$DB->query($query_delete);
-						// Delete dport
-						$query_sel2 = "SELECT * FROM glpi_plugin_tracker_tmp_netports ".
-							" WHERE FK_networking_port='".$dport."' ";
-						$result_sel2=$DB->query($query_sel2);
-						$tmp_dport = $DB->result($result_sel2, 0, "ID");
-						$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections ".
-							" WHERE FK_tmp_netports='".$tmp_dport."' ";
-						$DB->query($query_delete);
-						$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_netports ".
-							" WHERE ID='".$tmp_dport."' ";
+                  // Delet all witch have this macaddress in glpi_plugin_tracker_tmp_connections
+                  $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections
+							WHERE macaddress='".$data["macaddress"]."' ";
 						$DB->query($query_delete);
 				}
 			}
