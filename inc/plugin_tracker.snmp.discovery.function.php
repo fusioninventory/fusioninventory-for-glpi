@@ -72,14 +72,12 @@ function plugin_tracker_discovery_update_devices($array, $target) {
  * @return nothing
  *
 **/
-function plugin_tracker_discovery_import($discovery_ID) {
+function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 	
 	$td = new PluginTrackerDiscovery;
 	
 	$td->getFromDB($discovery_ID);
-	
-	$Import = 0;
 
 	switch ($td->fields['type']) {
 		case PRINTER_TYPE :
@@ -206,9 +204,7 @@ function plugin_tracker_discovery_import($discovery_ID) {
 			$Import++;
 			break;
 	}
-	if ($Import != "0") {
-		addMessageAfterRedirect($LANGTRACKER["discovery"][5]." : ".$Import );
-   }
+   return $Import;
 }
 
 function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,$criteria_pass2=0) {
