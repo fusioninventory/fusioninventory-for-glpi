@@ -7,7 +7,7 @@ function getSlide(id) {
       {
          duration: .5,
          remove: false,
-         useDisplay: true,
+         useDisplay: true
       });
 
    } else{
@@ -17,7 +17,7 @@ function getSlide(id) {
          {
             duration: .5,
             remove: false,
-            useDisplay: true,
+            useDisplay: true
          });
 
    }
