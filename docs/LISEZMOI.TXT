@@ -38,7 +38,7 @@ Author : David DURIEUX
 
 Ce plugin vous permet de récupérer des infos des équipements réseau via SNMP.
 
-Compatibilité 0.71.3
+Compatibilité 0.72
 Le plugin nécessite obligatoirement PHP5 ou supérieur !
 
 2 - Installation

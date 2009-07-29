@@ -1,9 +1,9 @@
-﻿/*
+/*
  * @version $Id: setup.php,v 1.2 2006/04/02 14:45:27 moyo Exp $
- ---------------------------------------------------------------------- 
- GLPI - Gestionnaire Libre de Parc Informatique 
+ ----------------------------------------------------------------------
+ GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2008 by the INDEPNET Development Team.
- 
+
  http://indepnet.net/   http://glpi-project.org/
  ----------------------------------------------------------------------
 
@@ -31,6 +31,64 @@
 // Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
+
+
+Version 2.1.0
+- Compatabilité 0.72
+
+
+- 0.72 compatibility
+
+Version 2.0.2
+
+- Correction du dico englais
+- réécriture du HOOK (functions)
+- Correction du rapport ports non connecté depuis xxx et ajout de la recherche par lieu
+- Correction des rapports
+- Corrections et modification de l'affichage de l'onglet 'Informations SNMP' pour les imprimantes et switchs
+- Correction des graphiques de compteur de pages des imprimantes
+- Nouvelle gestion des matériels inconnus (nouvel objet) + icone dans le menu Tracker
+- Correction des critères pour la découverte des équipements réseaux
+- Ajout de la gestion des VLAN récupéré lors de l'interrogation
+- Ajout du numéro de version dans la table de configuration (MySQL)
+- Ajout d'un cron pour la fusion des matériel inconnus et ceux rajoutés dans GLPI (à la main, par OCS)
+- Modification du model des Procurve
+- Correction des modèles RICOH
+- Correction de plusieurs modèles
+- Meilleure gestion des ports Trunk et ajout de l'état multiple adresses mac (fond bleu)
+- réécriture des fonctions
+- Correction de l'import des fichiers xml reçu par l'agent
+- Correction des niveaux d'encre des cartouches des imprimantes
+- Ajout des connections entre switchs (avec les tables tmp_ de MySQL)
+- Plusieurs corrections mineures
+
+
+
+
+
+- English LANG corrections
+- Rewrite HOOK (functions)
+- Corrections of report networking ports non connected since xxx and add location search
+- Corrections of reports
+- Corrections and display modifications of tab 'SNMP Informations' for printers and networking devices
+- Correction of page count graphs of printers
+- New management of unknown devices (new object) + picture in Tracker menu
+- Correction of criteria for networking devices discovery
+- Add management of VLAN get by snmp query
+- Add Tracker version in configuration table (MySQL)
+- Add cron for fusion of unknown devices and known devices add in GLPI (by hand, by OCS)
+- Modification of Procurve model
+- Correction of RICOH model
+- Corrections of many models
+- Better management of trunk ports and add multiple mac detection (blue background)
+- rewrite fonctions
+- Correction of import XML files received by agent
+- Correction of level of cartrige of printers
+- Add connections between switch (with tmp_ tables MySQL)
+- Many minor corrections
+
+
+
 
 Verison 2.0.0
 
@@ -67,7 +125,7 @@ Version 1.1.0
 
 - #173 Ajout d'une option pour l'activation des logs (spécialement pour tracker)
 - #174 Meilleure écriture des logs
-- #170 Ajout des imprimantes en multiprocess 
+- #170 Ajout des imprimantes en multiprocess
 - correction nettoyages de fonctions
 - #177 suppression de le dépendance Runkit
 - #166 Correction assignation de l'authentification SNMP en mode de stockage fichiers
@@ -83,7 +141,7 @@ Version 1.1.0
 
 Version 1.0.0:
 
-Requêtes SNMP : 
+Requêtes SNMP :
  - découverte des équipement réseau avec une plage d'IP
  - prise en charge des switchs, routeurs, imprimantes
  - connection entre les ordinateurs / imprimantes sur les switchs (cisco seulement)
@@ -92,7 +150,7 @@ Requêtes SNMP :
  - gestion des versions SNMP v1, v2c, v3 (sauf pour les vlans des switchs)
 
 
-SNMP queries : 
+SNMP queries :
  - networking devices discovery with IP range.
  - care switches, routers, printers
  - connexions between computers / printers with swicthes (only cisco)
