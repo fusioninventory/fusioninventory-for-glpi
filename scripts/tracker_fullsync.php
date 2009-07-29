@@ -139,7 +139,7 @@ if(isset($_GET['update_device_process'])) {
    }
    // Create connections between switchs
    $tmpc = new PluginTrackerTmpconnections;
-   $tmpc->WireInterSwitchs();
+	$tmpc->WireInterSwitchs($fields["process_id"]);
 
    $processes->closeProcess($fields["process_id"]);
 }

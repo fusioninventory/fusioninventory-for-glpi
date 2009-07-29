@@ -53,16 +53,21 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 			$datas["cdp"] = $cdp;
 			$TMP_ID = $this->add($datas);
 			return $TMP_ID;
+		} else {
+         $data = $DB->fetch_assoc($result);
+         $datas["cdp"] = $cdp;
+         $datas["ID"] = $data["ID"];
+         $this->update($datas);
 		}
 		return '';
 	}
 
 
 
-	function AddConnections($FK_tmp_netports,$ArrayMacAddress) {
+	function AddConnections($FK_tmp_netports,$MacAddress) {
 		global $DB;
 
-		foreach($ArrayMacAddress as $num=>$MacAddress) {
+      if (($MacAddress != "") AND (!strstr($MacAddress,"]"))) {
          // Verify if macaddress is a switch or a switch port
          $insert = 0;
          $query = "SELECT * FROM glpi_networking_ports
@@ -79,7 +84,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
          if ($DB->numrows($result) != 0) {
                $insert = 1;
          }
-         
+
          if ($insert == "1") {
             $query_insert = "INSERT INTO glpi_plugin_tracker_tmp_connections ".
                " (FK_tmp_netports, macaddress) ".
@@ -91,11 +96,14 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 
 
 
-	function WireInterSwitchs() {
+	function WireInterSwitchs($PID) {
 		global $DB;
 
+      $logs = new PluginTrackerLogs;
 		$snmp_queries = new PluginTrackerSnmp;
-		
+
+      $logs->write("tracker_fullsync",">>>>>>>>>> WireInterSwitchs <<<<<<<<<<","",1);
+
 		// ** port in glpi_plugin_tracker_tmp_netports is deleted = port connected ** //
 
 		// Select all cdp = 1 & their mac adress
@@ -119,7 +127,7 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 			$i = 0;
 			$query = "SELECT ifmac, glpi_plugin_tracker_tmp_netports.ID as IDnetports, FK_networking, FK_networking_port ".
 					" FROM glpi_plugin_tracker_tmp_netports ".
-				" LEFT JOIN glpi_networking_ports ON FK_networking=on_device AND FK_networking_port=device_type ".
+				" LEFT JOIN glpi_networking_ports ON FK_networking=glpi_networking_ports.ID ".
 				" WHERE cdp='0' ".
 				" GROUP BY ifmac ".
 				" HAVING  COUNT(ifmac)=1 ";
@@ -131,7 +139,9 @@ class PluginTrackerTmpconnections extends CommonDBTM {
 						" WHERE ifmac='".$data['ifmac']."' ";
 					$result_sel2=$DB->query($query_sel2);
 					$dport = $DB->result($result_sel2, 0, "ID");
-					$snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
+               $logs->write("tracker_fullsync","Connection wire switch ".$sport." - ".$dport,"",1);
+
+					$snmp_queries->PortsConnection($sport, $dport,$PID,$vlan." [".$vlan_name."]");
 					// Delete all connections with this 2 mac addresses
 						// Delete connections of mac of sport
 						$query_sel2 = "SELECT * FROM glpi_networking_ports ".

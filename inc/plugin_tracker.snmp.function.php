@@ -1358,6 +1358,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
       if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) {
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+         $Array_vlan[] = "";
 			foreach ($Array_vlan as $num=>$vlan) {
       		$BridgePortifIndex = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
             foreach($BridgePortifIndex as $num=>$BridgePortNumber) {
@@ -1381,7 +1382,29 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
             }
          }
       } else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve")) {
-
+         $Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+         $Array_vlan[] = "";
+         foreach ($Array_vlan as $num=>$vlan) {
+     			$ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1,$vlan);
+            foreach($ArrayMACAdressTable as $num=>$dynamicdata) {
+               $oidExplode = explode(".", $dynamicdata);
+               // Get by SNMP query the port number (dot1dTpFdbPort)
+               if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]) AND ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan] != "0"))) {
+                  // Convert MAC HEX in Decimal
+                  $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+                  $MacAddress_tmp = str_split($MacAddress, 2);
+                  $MacAddress = $MacAddress_tmp[0];
+                  for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
+                     $MacAddress .= ":".$MacAddress_tmp[$i];
+                  }
+                  $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
+                  $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
+                  if ($ifIndex == $BridgePortifIndex) {
+                     $tmpc->AddConnections($TMP_ID, $MacAddress);
+                  }
+               }
+            }
+         }
       } else if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"3Com IntelliJack NJ225")) {
          
       }
