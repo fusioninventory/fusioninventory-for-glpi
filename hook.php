@@ -1590,11 +1590,13 @@ function plugin_tracker_MassiveActionsProcess($data) {
 			break;
       
 		case "plugin_tracker_discovery_import" :
+         $Import = 0;
 			foreach ($data['item'] as $key => $val) {
 				if ($val == 1) {
-					plugin_tracker_discovery_import($key);
+					$Import = plugin_tracker_discovery_import($key,$Import);
 				}
 			}
+         addMessageAfterRedirect($LANG['plugin_tracker']["discovery"][5]." : ".$Import );
 			break;
 	}
 }
