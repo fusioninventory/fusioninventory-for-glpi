@@ -35,11 +35,11 @@
 
 class PluginTrackerDiscovery extends CommonDBTM {
 
-	function __construct() {
+	function __construct()
+	{
 		$this->table = "glpi_plugin_tracker_discovery";
 		$this->type = PLUGIN_TRACKER_SNMP_DISCOVERY;
 	}
-
 
    /**
     * Add discovered device to discovered table in MySQL
@@ -97,6 +97,6 @@ class PluginTrackerDiscovery extends CommonDBTM {
             '".$Array['authSNMP']."')";
             $DB->query($query);
          }
-		}      
+		}
    }
 }

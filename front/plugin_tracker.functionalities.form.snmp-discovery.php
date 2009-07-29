@@ -1,5 +1,4 @@
 <?php
-
 /*
  * @version $Id$
  ----------------------------------------------------------------------
@@ -30,26 +29,34 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
+// Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
-	die("Sorry. You can't access directly to this file");
+define('GLPI_ROOT', '../../..');
 
+include (GLPI_ROOT."/inc/includes.php");
 
-function plugin_tracker_snmp_auth_dropdown($selected="")
-{
-	global $DB;
+checkRight("config","w");
 
-	$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
-	$config = new PluginTrackerConfig;
+commonHeader($LANGTRACKER["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","tracker","summary");
 
-	if ($config->getValue("authsnmp") == "file")
-		echo $plugin_tracker_snmp_auth->selectbox($selected);
-	else  if ($config->getValue("authsnmp") == "DB")
-		dropdownValue("glpi_plugin_tracker_snmp_connection","FK_snmp_connection",$selected,0);
+$config = new PluginTrackerConfig;
+$config_discovery = new PluginTrackerConfigDiscovery;
+
+if (isset($_POST['update'])) {
+
+	if (empty($_POST['cleaning_days'])) {
+		$_POST['cleaning_days'] = 0;
+   }
+		
+	$_POST['ID']=1;
+		
+	$config_discovery->update($_POST);
 }
 
+$config->showTabs("discovery");
+$config_discovery->showForm($_SERVER['PHP_SELF'],'1');
+commonFooter();
 
 ?>

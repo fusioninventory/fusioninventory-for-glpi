@@ -36,6 +36,7 @@
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
+
 	
 
 /**
@@ -48,7 +49,7 @@ if (!defined('GLPI_ROOT')) {
  *
 **/
 function plugin_tracker_discovery_update_devices($array, $target) {
-	GLOBAL $DB;
+	global $DB;
 
 	foreach ($array as $key=>$value) {
 		if (strstr($key, "model_infos")) {
@@ -72,18 +73,18 @@ function plugin_tracker_discovery_update_devices($array, $target) {
  *
 **/
 function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
-	GLOBAL $DB,$CFG_GLPI,$LANG;
+	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 	
 	$td = new PluginTrackerDiscovery;
 	
 	$td->getFromDB($discovery_ID);
-	
+
 	switch ($td->fields['type']) {
 		case PRINTER_TYPE :
 			$Printer = new Printer;
 			$Netport = new Netport;
-			$tracker_printers = new PluginTrackerPrinters;
-			$tracker_config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
+			$tracker_printers = new plugin_tracker_printers;
+			$tracker_config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
 
 			$tracker_config_snmp_printer->getFromDB(1);
 			$data['state'] = $tracker_config_snmp_printer->fields["active_device_state"];
@@ -114,8 +115,8 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 		case NETWORKING_TYPE :
 			$Netdevice = new Netdevice;
-			$tracker_networking = new PluginTrackerNetworking;
-			$tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
+			$tracker_networking = new glpi_plugin_tracker_networking;
+			$tracker_config_snmp_networking = new PluginTrackerConfigSnmpNetworking;
 
 			$tracker_config_snmp_networking->getFromDB(1);
 			$data['state'] = $tracker_config_snmp_networking->fields["active_device_state"];
@@ -181,7 +182,7 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 			$DB->query($query_del);
 			$Import++;
 			break;
-
+      
 		case PHONE_TYPE :
 			$Phone = new Phone;
 			$Netport = new Netport;
@@ -207,10 +208,10 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 }
 
 function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,$criteria_pass2=0) {
-	GLOBAL $DB,$CFG_GLPI,$LANG;
+	global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
-	$ci = new commonitem;
    $PTD = new PluginTrackerDiscovery;
+   $ci = new commonitem;
 
 	if($criteria_pass2 == "1") {
 		$link_ip = $link2_ip;
@@ -251,14 +252,17 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 				$discovery_empty = 0;
          }
 		}
-
 		if (($discovery_empty == "1") AND ($criteria_pass2 == "0")) {
 			// ** On passe aux critères 2
 			plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,1);
 			return;
 		} else {
 			// **  On cherche si le matos existe
-			if ($discovery->type == NETWORKING_TYPE OR $discovery->type == 0 OR $discovery->type == "" or !isset($discovery->type)) {
+			if ($discovery->type == NETWORKING_TYPE
+            OR $discovery->type == 0
+            OR $discovery->type == ""
+            OR !isset($discovery->type)) {
+            
 				$query_search = "SELECT * FROM glpi_networking
 				WHERE FK_entities='".$discovery->entity."'
 					AND ".$Array_criteria[0];
@@ -286,7 +290,7 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 				// ** On passe aux critères 2
 				plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_serial,$link2_ip,$link2_name,$link2_serial,$agent_id,$FK_model,1);
 				return;
-			} elseif ($DB->numrows($result_search) == "0") {
+			} else if ($DB->numrows($result_search) == "0") {
             $data['date'] = $discovery->date;
             $data['ip'] = $discovery->ip;
             $data['name'] = $discovery->name;

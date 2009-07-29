@@ -37,9 +37,7 @@ include_once ("hook.php");
 
 // inc files 
 
-foreach (glob(GLPI_ROOT.'/plugins/tracker/inc/*.php') as $file) {
-	if ($file != GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php') {
+foreach (glob(GLPI_ROOT.'/plugins/tracker/inc/*.php') as $file)
+	if ($file != GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php')
 		include_once($file);
-   }
-}
 ?>

@@ -33,12 +33,12 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
 
 
-class PluginTrackerSNMPHistory extends CommonDBTM {
+
+class PluginTrackerSnmpHistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_snmp_history";
@@ -54,19 +54,24 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 	 * @return ID of inserted line
 	 *
 	**/
-	function insert_connection($status,$array,$FK_process=0) {
+	function insert_connection($status,$array,$FK_process=0)
+	{
 		global $DB,$CFG_GLPI;
-		if ($status == "remove") {
+		if ($status == "remove")
+		{
 			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
 			(FK_ports,old_value,old_device_type,old_device_ID,date_mod,FK_process)
 			VALUES('".$array["FK_ports"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."','".$FK_process."')";
 		
-		} else if ($status == "make") {
+		}
+		else if ($status == "make")
+		{
 			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
 			(FK_ports,new_value,new_device_type,new_device_ID,date_mod,FK_process)
 			VALUES('".$array["FK_ports"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."','".$FK_process."')";
 	
-		} else if ($status == "field") {
+		}else if ($status == "field")
+		{
 			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
 			(FK_ports,field,old_value,new_value,date_mod,FK_process)
 			VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."','".$array["old_value"]."','".$array["new_value"]."','".date("Y-m-d H:i:s")."','".$FK_process."')";
@@ -75,6 +80,6 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 		$DB->query($query);
 		return mysql_insert_id();
 	}
-}
 
+}
 ?>

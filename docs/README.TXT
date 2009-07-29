@@ -38,7 +38,7 @@ Author : David DURIEUX
 
 This plugin enables you get informations for networking devices by SNMP. 
 
-Compatibility 0.72
+Compatibility 0.71.3
 PHP5 or higher is required !
 
 2 - Installation

@@ -42,40 +42,20 @@ $NEEDED_ITEMS=array(
 	"ocsng",
 	"rules"
 	);
-
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php");
 
- /**
- *  List of all Trackers versions :
- *    1.0.0
- *    1.1.0 non exists glpi_plugin_tracker_agents (MySQL)
- *    2.0.0 non exists glpi_plugin_tracker_config_discovery (MySQL)
- *    2.0.1 Nothing
- *    2.0.2 config version field 2.0.2
- *    2.1.0 config version field 2.1.0
- **/
-
 if (haveRight("config","w") && haveRight("profile","w")) {
-   $config = new PluginTrackerConfig;
-   if (!TableExists("glpi_plugin_tracker_agents")) {
-		plugin_tracker_update("1.1.0");
-   }
-   if (!TableExists("glpi_plugin_tracker_config_discovery")) {
-		plugin_tracker_update("2.0.0");
-   }
-   if (!FieldExists("glpi_plugin_tracker_config", "version")) {
-      plugin_tracker_update("2.0.2");
-   }
-   if (FieldExists("glpi_plugin_tracker_config", "version")) {
-      if ($config->getValue('version') == "2.0.2") {
-         $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1");
-      }
-      if  ($config->getValue('version') == "0") {
-         $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1");
-      }
-   }
 
+	if (!TableExists("glpi_plugin_tracker_config")) {
+		plugin_tracker_install();
+   } elseif (!TableExists("glpi_plugin_tracker_unknown_device")) {
+		plugin_tracker_update("2.0.2");
+   } else if (plugin_tracker_needUpdate() == 1) {
+      plugin_tracker_update("2.0.0");
+   } else {
+		plugin_tracker_install();
+   }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else {
 

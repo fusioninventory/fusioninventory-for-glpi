@@ -39,10 +39,12 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-$config = new PluginTrackerConfig;
+$config = new PluginTrackerConfig();
+
 $errors = new PluginTrackerErrors;
-$computers_history = new PluginTrackerComputersHistory;
-$computer=new Computer;
+$computers_history = new plugin_tracker_computers_history();
+
+$computer=new Computer();
 
 // Get date
 $date = date("Y-m-d H:i:s");
@@ -62,23 +64,23 @@ $contact = (isset($_GET["User"]) ? $_GET["User"] : "");
 // Get the GLPI username : user
 
 if ($contact != '') {
-	$user_id = plugin_tracker_getIdFromUser($contact);
+	$user_id = getIdFromUser($contact);
 }
 /// Check and write error ///
 $computer_id = $errors->writeError(COMPUTER_TYPE, 'db', $error, $date);
 
 
 // if computers history is active
-if (($config->isActivated('computers_history')) && ($history['FK_computers'] = $computer_id)) {
+if ( ($config->isActivated('computers_history')) && ($history['FK_computers'] = $computer_id) ) {
 	
 	//Get user : contact
 	if ( $contact != "") {
 		$history["username"] = $contact;
    }
 	// Get FK_users : Id of the GLPI user
-	if ( $user_id != -1) {
+	if ( $user_id != -1)
 		$history['FK_users'] = $user_id;
-   }
+	
 	// Get state of computer session : 0, 1 or 2, i.e. : Off, On or Connected
 	$history["state"] = (isset($_GET["State"]) ? $_GET["State"] : "");
 	
@@ -89,19 +91,19 @@ if (($config->isActivated('computers_history')) && ($history['FK_computers'] = $
 // fields to update into glpi_computers table
 $update = array();
 
-if ($config->isActivated('update_contact')) {
-	if ($contact != "") {
+if ( $config->isActivated('update_contact') ) {
+	if ( $contact != "") {
 		$update['contact'] = $contact;
    }
 }
 
-if ($config->isActivated('update_user')) {
-	if ($user_id != -1) {
+if ( $config->isActivated('update_user') ) {
+	if ( $user_id != -1) {
 		$update['FK_users'] = $user_id;
    }
 }
 
-if ((count($update)) != 0) {
+if ( (count($update)) != 0 ) {
 	$update['ID'] = $computer_id;
 	//Disable history when changing user
 	$computer->dohistory=false;

@@ -33,9 +33,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginTrackerImportExport extends CommonDBTM {
 
@@ -44,8 +44,8 @@ class PluginTrackerImportExport extends CommonDBTM {
 		
 		plugin_tracker_checkRight("snmp_models","r");
 		$query = "SELECT * 
-		FROM glpi_plugin_tracker_model_infos
-		WHERE ID='".$ID_model."' ";
+         FROM glpi_plugin_tracker_model_infos
+         WHERE ID='".$ID_model."' ";
 
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) != 0) {
@@ -67,10 +67,8 @@ class PluginTrackerImportExport extends CommonDBTM {
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
-					
-		FROM glpi_plugin_tracker_mib_networking AS model_t
-
-		WHERE FK_model_infos='".$ID_model."' ";
+   		FROM glpi_plugin_tracker_mib_networking AS model_t
+      	WHERE FK_model_infos='".$ID_model."' ";
 		
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
@@ -97,7 +95,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 	
 	
 	function showForm($target) {
-		GLOBAL $DB,$CFG_GLPI,$LANG;
+		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 		
 		plugin_tracker_checkRight("snmp_models","r");
 		
@@ -105,11 +103,11 @@ class PluginTrackerImportExport extends CommonDBTM {
 		
 		echo "<br>";
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-		echo $LANG['plugin_tracker']["model_info"][10]." :</th></tr>";
+		echo $LANGTRACKER["model_info"][10]." :</th></tr>";
 		
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'>";
-//		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANG['plugin_tracker']["profile"][19]."&nbsp;</a>";
+//		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:tracker:models' target='_blank'>".$LANGTRACKER["profile"][19]."&nbsp;</a>";
 		echo "</td>";
 		echo "		<td align='center'>";
 		echo "			<input type='file' name='importfile' value=''/>";
@@ -125,11 +123,12 @@ class PluginTrackerImportExport extends CommonDBTM {
 
 
 	function import($file,$message=1,$installation=0) {
-		global $DB,$LANG;
+		global $DB,$LANG,$LANGTRACKER;
 
 		if ($installation != 1) {
 			plugin_tracker_checkRight("snmp_models","w");
       }
+
 		$xml = simplexml_load_file($file);
 
 		// Verify same model exist
@@ -140,7 +139,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 		
 		if ($DB->numrows($result) > 0) {
 			if ($message == '1') {
-				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][8];
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][8];
          }
 			return false;
 		} else {
@@ -200,7 +199,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 				$DB->query($query);
 			}
 			if ($message == '1') {
-				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANGTRACKER["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
          }
 		}
 	}
@@ -208,7 +207,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 
 
 	function import_agent_discovery($content_dir,$file) {
-		global $DB,$LANG;
+		global $DB,$LANG,$LANGTRACKER;
 
 		$walks = new PluginTrackerWalk;
 		$config_discovery = new PluginTrackerConfigDiscovery;
@@ -232,7 +231,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 		//
 		$dir = opendir($content_dir);
 		while($file_scan = readdir($dir)) {
-			if(strstr($file_scan, $pid."-tmpdiscovery-")) {
+			if( strstr($file_scan, $pid."-tmpdiscovery-" )) {
 				$c_handle = fopen($content_dir.$file_scan, 'r');
 				do {
 					$content = fread($c_handle,1000000);
@@ -247,7 +246,6 @@ class PluginTrackerImportExport extends CommonDBTM {
 
 		fwrite($handle, "</snmp>\n");
 		fclose($handle);
-
 
 		// Load config discovery for existence criteria
 		$link_ip = $config_discovery->getValue("link_ip");
@@ -311,7 +309,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 	}
 
 	function import_agentonly($content_dir,$file) {
-		global $DB,$LANG;
+		global $DB,$LANG,$LANGTRACKER;
 		
 		$xml = simplexml_load_file($content_dir.$file);
 		
@@ -324,7 +322,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 		//
 		$dir = opendir($content_dir);
 		while($file_scan = readdir($dir)) {
-			if(strstr($file_scan, $xml->agent->pid."-tmp-")) {
+			if( strstr($file_scan, $xml->agent->pid."-tmp-" )) {
 				$c_handle = fopen($content_dir.$file_scan, 'r');
 				do {
 					$content = fread($c_handle,1000000);

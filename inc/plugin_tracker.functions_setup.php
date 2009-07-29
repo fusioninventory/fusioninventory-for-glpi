@@ -33,13 +33,14 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
 // Installation function
 function plugin_tracker_installing($version) {
-	GLOBAL $DB,$LANG;
+
+	global $DB;
 
 	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-empty.sql";
 	$DBf_handle = fopen($DB_file, "rt");
@@ -60,16 +61,14 @@ function plugin_tracker_installing($version) {
 	$config->initConfig($version);
 	$config_discovery = new PluginTrackerConfigDiscovery;
 	$config_discovery->initConfig();
-	$config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
+	$config_snmp_networking = new PluginTrackerConfigSnmpNetworking;
 	$config_snmp_networking->initConfig();
-	$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
+	$config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
 	$config_snmp_printer->initConfig();
-	$config_snmp_script = new PluginTrackerConfigSNMPScript;
+	$config_snmp_script = new PluginTrackerConfigSnmpScript;
 	$config_snmp_script->initConfig();
 	// Import models
 	$importexport = new PluginTrackerImportExport;
-	include(GLPI_ROOT.'/inc/setup.function.php');
-	include(GLPI_ROOT.'/inc/rulesengine.function.php');
 	foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0,1);
 	
 	plugin_tracker_initSession();
@@ -78,6 +77,7 @@ function plugin_tracker_installing($version) {
 
 
 function plugin_tracker_update($version) {
+	
 	GLOBAL $DB;
 	
 	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql";
@@ -86,17 +86,17 @@ function plugin_tracker_update($version) {
 	fclose($DBf_handle);
 	foreach ( explode(";\n", "$sql_query") as $sql_line) {
 		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-		if (!empty($sql_line)) {
+		if (!empty($sql_line))
 			$DB->query($sql_line);
-      }
 	}
-	if ($version == "2.0.0") {
+	if ($version == "2.0.0")
+	{
 		if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
 			mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 		}
 		$config_discovery = new PluginTrackerConfigDiscovery;
 		$config_discovery->initConfig();
-		$config_snmp_script = new PluginTrackerConfigSNMPScript;
+		$config_snmp_script = new PluginTrackerConfigSnmpScript;
 		$config_snmp_script->initConfig();
 		// Import models
 		$importexport = new PluginTrackerImportExport;
@@ -104,7 +104,8 @@ function plugin_tracker_update($version) {
 		// Clean DB (ports in glpi_plugin_tracker_networking_ports..... )
 		plugin_tracker_clean_db();
 	}
-	if ($version == "2.0.2") {
+	if ($version == "2.0.2")
+	{
 		// Migrate unknown mac address in unknown device (MySQL table)
 		$plugin_tracker_unknown = new PluginTrackerUnknown;
 		$plugin_tracker_unknown->updateFromOldVersion_unknown_mac();
@@ -113,37 +114,134 @@ function plugin_tracker_update($version) {
 		$DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.0.2' WHERE ID=1 LIMIT 1 ;");
 	}
 
-
 	plugin_tracker_initSession();
 }
 
 
 // Uninstallation function
 function plugin_tracker_uninstall() {
-   GLOBAL $DB;
+	
+	global $DB;
 
 	if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
-      $current_dir = GLPI_PLUGIN_DOC_DIR.'/tracker/';
 		while (($f = readdir($dir)) !== false) {
 			if($f > '0' and filetype($current_dir.$f) == "file") {
 				unlink($current_dir.$f);
-			} else if ($f > '0' and filetype($current_dir.$f) == "dir") {
+			} elseif($f > '0' and filetype($current_dir.$f) == "dir") {
 				remove_dir($current_dir.$f."\\");
 			}
 		}
 		closedir($dir);
 		rmdir($current_dir);
 	}
+	
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_label`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_object`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_mib_oid`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_dropdown_plugin_tracker_snmp_version`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_agents`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_agents_processes`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_computers`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_config`;";
+	$DB->query($query) or die($DB->error());
 
-	$query = "SHOW TABLES";
-   $result=$DB->query($query);
-   while ($data=$DB->fetch_array($result)) {
-      if ((strstr($data[0],"glpi_dropdown_plugin_tracker_"))
-         OR (strstr($data[0],"glpi_plugin_tracker_"))){
-         $query_delete = "DROP TABLE `".$data[0]."`";
-         $DB->query($query_delete) or die($DB->error());
-      }
-   }
+	$query = "DROP TABLE `glpi_plugin_tracker_config_discovery`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_networking`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_printer`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_config_snmp_script`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_connection_history`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_connection_stats`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_discovery`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_errors`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_mib_networking`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_model_infos`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_networking`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_networking_ifaddr`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_networking_ports`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_printers`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_printers_cartridges`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_printers_history`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_processes`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_processes_values`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_profiles`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_rangeip`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_snmp_connection`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_tracker_snmp_history`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_unknown_device`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_unknown_mac`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_tracker_walks`;";
+	$DB->query($query) or die($DB->error());
 
 	$query="DELETE FROM glpi_display 
 	WHERE type='".PLUGIN_TRACKER_ERROR_TYPE."' 

@@ -34,31 +34,32 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
 
-class PluginTrackerRangeIP extends CommonDBTM {
 
-	function __construct() {
+class PluginTrackerRangeip extends CommonDBTM
+{
+	function __construct()
+	{
 		$this->table = "glpi_plugin_tracker_rangeip";
 		$this->type = PLUGIN_TRACKER_SNMP_RANGEIP;
 	}
 
 
 	function showForm($target, $ID = '') {
-		global $DB,$CFG_GLPI,$LANG;
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
-		if ($ID!='') {
+		if ($ID!='')
 			$this->getFromDB($ID);
-      } else {
+		else
 			$this->getEmpty();
-      }
+
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
-		echo $LANG['plugin_tracker']["rangeip"][2];
+		echo $LANGTRACKER["rangeip"][2];
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -69,35 +70,35 @@ class PluginTrackerRangeIP extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][0] . "</td>";
+		echo "<td align='center'>" . $LANGTRACKER["rangeip"][0] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='ifaddr_start' value='".$this->fields["ifaddr_start"]."'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][1] . "</td>";
+		echo "<td align='center'>" . $LANGTRACKER["rangeip"][1] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='ifaddr_end' value='".$this->fields["ifaddr_end"]."'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][0] . "</td>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][0] . "</td>";
 		echo "<td align='center'>";
 		dropdownValue("glpi_plugin_tracker_agents","FK_tracker_agents",$this->fields["FK_tracker_agents"],0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["discovery"][3] . "</td>";
+		echo "<td align='center'>" . $LANGTRACKER["discovery"][3] . "</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("discover",$this->fields["discover"]);
 		echo "</td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][3] . "</td>";
+		echo "<td align='center'>" . $LANGTRACKER["rangeip"][3] . "</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("query",$this->fields["query"]);
 		echo "</td>";
@@ -110,18 +111,21 @@ class PluginTrackerRangeIP extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		if ($ID=='') {
+		if ($ID=='')
+		{
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-		} else {
+		}
+		else
+		{
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
 			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
 			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
 		}
 		echo "</td></tr>";
 		echo "</table></form></div>";
-	}
-}
 
+	}
+
+}
 ?>

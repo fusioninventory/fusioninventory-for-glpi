@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
@@ -51,10 +51,9 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 		$query = "SELECT count(DISTINCT ID) ".
 				 "FROM ".$this->table." ".
 				 "WHERE FK_printers = '".$ID."';";
-		if ($result_num=$DB->query($query)) {
-			if ($field = $DB->result($result_num,0,0)) {
+		if ( $result_num=$DB->query($query) ) {
+			if ( $field = $DB->result($result_num,0,0) )
 				$num += $field;
-         }
 		}
 		return $num;
 	}
@@ -68,9 +67,9 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 				 "WHERE FK_printers = '".$ID."' ";
 				 "LIMIT ".$begin.", ".$limit.";";
 
-		if ($result=$DB->query($query)) {
+		if ( $result=$DB->query($query) ){
 			$i = 0;
-			while ($data=$DB->fetch_assoc($result)) {
+			while ( $data=$DB->fetch_assoc($result) ) {
 				$data['date'] = convDateTime($data['date']);
 				$datas["$i"] = $data;
 				$i++;
@@ -82,7 +81,8 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 	
 
 	
-	function stats($ID) {
+	function stats($ID)
+	{
 		global $DB;
 		
 		$query = "SELECT MIN(date) AS min_date, MIN(pages) AS min_pages, ".
@@ -90,8 +90,10 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 				 "FROM ".$this->table." ".
 				 "WHERE FK_printers = '".$ID."';";
 
-		if ($result = $DB->query($query)) {
-			if ($fields = $DB->fetch_assoc($result)) {
+		if ( $result = $DB->query($query))
+		{
+			if ($fields = $DB->fetch_assoc($result))
+			{
 				$output['num_days'] = ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
 				$output['num_pages'] = $fields['max_pages'] - $fields['min_pages'];
 				$output['pages_per_day'] = round($output['num_pages'] / $output['num_days']);
@@ -101,26 +103,26 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 		return false;
 	}
 	
-	function showForm($target, $ID) {
-		global $LANG;
+	function showForm($target, $ID)
+	{
+		global $LANG,$LANGTRACKER;
 		
-		if (!plugin_tracker_haveRight("snmp_printers","r")) {
+		if ( !plugin_tracker_haveRight("snmp_printers","r") )
 			return false;
-      }
 		
 		// display stats
-		if ($stats = $this->stats($ID)) {
+		if ( $stats = $this->stats($ID) ) {
 				
 			echo "<br><div align = 'center'>";
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-			echo $LANG['plugin_tracker']["prt_history"][10]." ".$stats["num_days"]." ".$LANG['plugin_tracker']["prt_history"][11]."</th></tr>";
+			echo $LANGTRACKER["prt_history"][10]." ".$stats["num_days"]." ".$LANGTRACKER["prt_history"][11]."</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANG['plugin_tracker']["prt_history"][12]." : </td>";
+			echo "<td>".$LANGTRACKER["prt_history"][12]." : </td>";
 			echo "<td>".$stats["num_pages"]."</td></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANG['plugin_tracker']["prt_history"][13]." : </td>";
+			echo "<td>".$LANGTRACKER["prt_history"][13]." : </td>";
 			echo "<td>".$stats["pages_per_day"]."</td></tr>";
 			
 			echo "</table></div>";
@@ -128,9 +130,8 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 		}
 		
 		// preparing to display history
-		if (!isset($_GET['start'])) {
+		if ( !isset($_GET['start']) )
 			$_GET['start'] = 0;
-      }
 		
 		$numrows = $this->countAllEntries($ID);
 		$parameters = "ID=".$_GET["ID"]."&onglet=".$_SESSION["glpi_onglet"];	
@@ -138,27 +139,26 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 		echo "<br>";
 		printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
 
-		if ($_SESSION["glpilist_limit"] < $numrows) {
+		if ( $_SESSION["glpilist_limit"] < $numrows )
 			$limit = $_SESSION["glpilist_limit"];
-      } else {
+		else
 			$limit = $numrows;
-      }
+			
 		// Get history
-		if (!($data = $this->getEntries($ID, $_GET['start'], $limit))) {
+		if ( !($data = $this->getEntries($ID, $_GET['start'], $limit)) )
 			return false;
-      }
 
 		echo "<div align='center'><form method='post' name='printer_history_form' id='printer_history_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
-		echo $LANG['plugin_tracker']["prt_history"][20]." :</th></tr>";
+		echo $LANGTRACKER["prt_history"][20]." :</th></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th></th>";
-		echo "<th>".$LANG['plugin_tracker']["prt_history"][21]." :</th>";
-		echo "<th>".$LANG['plugin_tracker']["prt_history"][22]." :</th></tr>";
+		echo "<th>".$LANGTRACKER["prt_history"][21]." :</th>";
+		echo "<th>".$LANGTRACKER["prt_history"][22]." :</th></tr>";
 
-		for ($i=0 ; $i<$limit ; $i++) {
+		for ($i=0; $i<$limit; $i++) {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>";
 			echo "<input type='checkbox' name='checked_$i' value='1'>";
@@ -169,9 +169,8 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['ID']."'>";
 		}
 		
-		if (!plugin_tracker_haveRight("snmp_printers","w")) {
+		if ( !plugin_tracker_haveRight("snmp_printers","w") )
 			return false;
-      }
 			
 		echo "<input type='hidden' name='limit' value='".$limit."'>";
 		echo "<tr class='tab_bg_1'><td colspan='3'>";
@@ -201,12 +200,12 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 
 		$query = "SELECT counter FROM ".$this->table." ".
 				 "WHERE FK_printers = '".$ID."';";
-		if ($result = $DB->query($query)) {
-			if ($this->fields = $DB->fetch_row($result)) {
+		if ($result = $DB->query($query))
+		{
+			if ($this->fields = $DB->fetch_row($result))
 				return $this->fields['0'];
-         } else {
+			else
 				return -1;
-         }
 		}
 		return false;
 	}
@@ -217,12 +216,15 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	 * @param $ID : ID of the printer (equiv to FK_printers into table)
 	 * @return true if get an entry, otherwise false
 	 */
-	function getDataFromPrinterId($ID) {
+	function getDataFromPrinterId($ID)
+	{
 		global $DB;
 		$query = "SELECT ID, counter FROM ".$this->table." ".
 				 "WHERE FK_printers = '".$ID."';";
-		if ($result = $DB->query($query)) {
-			if ($DB->numrows($result) == 1) {
+		if ($result = $DB->query($query))
+		{
+			if ($DB->numrows($result) == 1)
+			{
 				$this->fields = $DB->fetch_assoc($result);
 				return true;
 			}
@@ -234,14 +236,17 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	 * set cron to 1 for all printers -- not used
 	 *
 	 */
-	function setAll() {
+	function setAll()
+	{
 		global $DB;
 		$query= "SELECT ID ".
 				"FROM glpi_printers ".
 				"WHERE 1;";
-		if ($result=$DB->query($query)) {
+		if ($result=$DB->query($query))
+		{
 			$end = $DB->numrows($result);
-			if (($end = $DB->numrows($result)) > 0) {
+			if (($end = $DB->numrows($result)) > 0)
+			{
 				$fields = $DB->fetch_row($result);
 				$input['counter'] = 1;
 				for ($i=0; $i<$end; $i++) {
@@ -257,7 +262,8 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	 * set cron to 0 for all printers -- not used
 	 *
 	 */
-	function unsetAll() {
+	function unsetAll()
+	{
 		global $DB;
 		$query = "UPDATE ".$this->table." ".
 				 "SET counter='0' ".
@@ -272,20 +278,25 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	 * - $datas['number'] for the number of activated printers
 	 * - $datas['$i'] : contains the activated printers ID
 	 */
-	function getAllActivated() {
+	function getAllActivated()
+	{
+
 		global $DB;
 		
-		$config = new PluginTrackerConfig;
+		$config = new PluginTrackerConfig();
 		$statement = $config->getValue("statement_default_value");
 		
 		$datas=array();
 		
 		// if statement is not active by default, get exceptions
-		if (!$statement) {
+		if ( !$statement )
+		{
 			$query = "SELECT FK_printers FROM ".$this->table." ".
 					 "WHERE counter = '1';";
-      // if statement is active by default, get all without the exceptions
-		} else {
+		}
+		// if statement is active by default, get all without the exceptions
+		else
+		{
 			$query= "SELECT glpi_printers.ID ".
 					"FROM glpi_printers ".
 					"LEFT JOIN ".$this->table." ".
@@ -294,9 +305,9 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 					"OR ".$this->table.".counter IS NULL;";
 		}
 		
-		if ($result = $DB->query($query)) {
+		if ( $result = $DB->query($query) ){
 			$i = 0;
-			while ($data=$DB->fetch_row($result)) {
+			while ( $data=$DB->fetch_row($result) ) {
 				$data['FK_printers'] = $data[0];
 				unset($data[0]);
 				$datas["$i"] = $data;
@@ -310,33 +321,34 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 
 	function updateOne($input) {
 		// if exists
-		if ($this->getDataFromPrinterId($input['FK_printers'])) {
+		if ( $this->getDataFromPrinterId($input['FK_printers']) ) {
 			// default value (-1) : no entry in DB
 			$input['ID'] = $this->fields['ID'];
-			if ($input['counter'] == -1) {
+			if ( $input['counter'] == -1 )
 				$this->delete($input);
-         } else if ($this->fields['counter'] != $input['counter']) {
+			else if ( $this->fields['counter'] != $input['counter'] ) {
 				$this->update($input);
 			}
-		} else {
-			if ($input['counter'] != -1) {
+		}
+		else {
+			if ( $input['counter'] != -1 )
 				$this->add($input);
-         }
 		}
 	}
 	
-	function showForm($target,$ID) {
-		global $LANG;
+	function showForm($target,$ID)
+	{
+		global $LANG,$LANGTRACKER;
 		
-		if (plugin_tracker_haveRight("snmp_printers","w")) {
+		if ( plugin_tracker_haveRight("snmp_printers","w") ) {
 			echo "<br>";
 			echo "<div align='center'><form method='post' name='printer_history_config_form' id='printer_history_config_form'  action=\"".$target."\">";
 	
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-			echo $LANG['plugin_tracker']["cron"][0]." :</th></tr>";
+			echo $LANGTRACKER["cron"][0]." :</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANG['plugin_tracker']["cron"][1]."</td>";
+			echo "<td>".$LANGTRACKER["cron"][1]."</td>";
 			echo "<td align='center'>";
 			plugin_tracker_dropdownDefaultYesNo("counter", $this->getCounterValue($ID));
 			echo "</td>";
@@ -349,5 +361,6 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 		}
 	}
 }
+
 
 ?>

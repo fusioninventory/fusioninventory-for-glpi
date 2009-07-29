@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginTrackerTmpConnections extends CommonDBTM {
+class PluginTrackerTmpconnections extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_tracker_tmp_netports";
@@ -59,7 +59,7 @@ class PluginTrackerTmpConnections extends CommonDBTM {
          $datas["ID"] = $data["ID"];
          $this->update($datas);
          return $data["ID"];
-      }
+		}
 		return '';
 	}
 
@@ -92,7 +92,7 @@ class PluginTrackerTmpConnections extends CommonDBTM {
                " VALUES ('".$FK_tmp_netports."','".$MacAddress."') ";
             $DB->query($query_insert);
          }
-      }
+		}
 	}
 
 
@@ -101,7 +101,7 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 		global $DB;
 
       $logs = new PluginTrackerLogs;
-		$snmp_queries = new PluginTrackerSNMP;
+		$snmp_queries = new PluginTrackerSnmp;
 
       $logs->write("tracker_fullsync",">>>>>>>>>> WireInterSwitchs <<<<<<<<<<","",1);
 
@@ -110,15 +110,15 @@ class PluginTrackerTmpConnections extends CommonDBTM {
       // *** Delete ifmac in glpi_plugin_tracker_tmp_connections where destination port is cdp
       $query = "SELECT * FROM glpi_plugin_tracker_tmp_connections
          WHERE macaddress IS NOT NULL";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+		$result=$DB->query($query);
+		while ($data=$DB->fetch_array($result)) {
          $query_sel1 = "SELECT * FROM glpi_plugin_tracker_tmp_netports
             LEFT JOIN glpi_networking_ports ON glpi_networking_ports.ID = FK_networking_port
             WHERE ifmac='".$data['macaddress']."' ";
          $result_sel1=$DB->query($query_sel1);
          while ($data_sel1=$DB->fetch_array($result_sel1)) {
             if ($data_sel1['cdp'] == "1") {
-               $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections 
+               $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections
                   WHERE ID='".$data['ID']."' ";
                $DB->query($query_delete);
             }
@@ -134,7 +134,7 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 			$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections ".
 				" WHERE macaddress='".$data['ifmac']."' ";
 			$DB->query($query_delete);
-         
+
 			//delete after port with cdp = 1
 			$query_delete = "DELETE FROM glpi_plugin_tracker_tmp_netports ".
 				" WHERE ID='".$data["ID"]."' ";
@@ -167,7 +167,7 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 
 				while ($data=$DB->fetch_array($result)) {
 					$i++;
-               $sport = $data['FK_networking_port'];
+					$sport = $data['FK_networking_port'];
 
                // Search DestionationPort
                $query_sel2 = "SELECT * FROM glpi_networking_ports
@@ -175,7 +175,6 @@ class PluginTrackerTmpConnections extends CommonDBTM {
                   LIMIT 0,1";
 					$result_sel2=$DB->query($query_sel2);
 					$dport = $DB->result($result_sel2, 0, "ID");
-
                $logs->write("tracker_fullsync","Connection wire switch ".$sport." - ".$dport,"",1);
 
 					$snmp_queries->PortsConnection($sport, $dport,$PID,$vlan." [".$vlan_name."]");
@@ -184,7 +183,6 @@ class PluginTrackerTmpConnections extends CommonDBTM {
                   $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_netports
 							WHERE ID='".$data["ID"]."' ";
 						$DB->query($query_delete);
-                  // Delete in glpi_plugin_tracker_tmp_connections
                   $query_delete = "DELETE FROM glpi_plugin_tracker_tmp_connections
 							WHERE FK_tmp_netports='".$data["ID"]."' ";
 						$DB->query($query_delete);
@@ -220,14 +218,17 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 				}
 			}
 		}
+
 		// Empty MySQL table glpi_plugin_tracker_tmp_netports
 		$query = "TRUNCATE table glpi_plugin_tracker_tmp_netports";
 		$DB->query($query);
-		
+
 		// Empty MySQL table glpi_plugin_tracker_tmp_connections
 		$query = "TRUNCATE table glpi_plugin_tracker_tmp_connections";
 		$DB->query($query);
 	}
+
 }
+
 
 ?>

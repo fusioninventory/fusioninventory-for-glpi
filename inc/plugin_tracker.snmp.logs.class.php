@@ -36,13 +36,12 @@ class PluginTrackerLogs extends CommonDBTM {
 	function write($file,$text,$ip,$debug=0) {
 		global $CFG_GLPI;
 	
-		$config = new PluginTrackerConfigSNMPScript;
+		$config = new PluginTrackerConfigSnmpScript();
 
-		if (($config->getValue("logs") == '1') AND ($debug == '0')) {
+		if (($config->getValue("logs") == '1') AND ($debug == '0'))
 			error_log("[".convDateTime(date("Y-m-d H:i:s"))."][".$ip."] ".$text."\n",3,GLPI_LOG_DIR."/".$file.".log");
-      } else if ($config->getValue("logs") == '2') {
+		else if ($config->getValue("logs") == '2')
 			error_log("[".convDateTime(date("Y-m-d H:i:s"))."][".$ip."] ".$text."\n",3,GLPI_LOG_DIR."/".$file.".log");
-      }
 	}
 }
 

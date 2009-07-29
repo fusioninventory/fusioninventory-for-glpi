@@ -38,13 +38,12 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("errors","r");
 
 echo plugin_tracker_mib_management();
 
 commonFooter();
-
 
 ?>

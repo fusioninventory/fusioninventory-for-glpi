@@ -53,18 +53,16 @@ if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"
 	exit();
 }
 
-if(isset($_POST['upload'])) { // si formulaire soumis
+if( isset($_POST['upload']) ) { // si formulaire soumis
 	//$content_dir = '/tmp/'; // dossier où sera déplacé le fichier
 	$content_dir = GLPI_PLUGIN_DOC_DIR."/tracker/";
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
 		mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
 	}
-
    $tmp_file = $_FILES['data']['tmp_name'];
 
-    if(!is_uploaded_file($tmp_file)) {
+    if( !is_uploaded_file($tmp_file) )
         exit("The file is not found");
-    }
 
     // on vérifie maintenant l'extension
     $type_file = $_FILES['data']['type'];
@@ -72,9 +70,8 @@ if(isset($_POST['upload'])) { // si formulaire soumis
     // on copie le fichier dans le dossier de destination
     $name_file = $_FILES['data']['name'];
 
-    if(!move_uploaded_file($tmp_file, $content_dir . $name_file)) {
+    if( !move_uploaded_file($tmp_file, $content_dir . $name_file) )
         exit("Impossible to copy file in $content_dir");
-    }
     
 	$name_file_xml = str_replace(".gz", "", $name_file);
 //	$string = implode("", gzfile($content_dir . $name_file));
@@ -86,7 +83,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 	$fp = fopen($content_dir . $name_file_xml, "w") ;
 	// file to be unzipped on your server
 	$zp = gzopen($content_dir . $name_file, "r");
-   if ($zp) {
+	if ($zp)	{
       while (!gzeof($zp)) {
          $buff1 = gzgets ($zp, 4096) ;
          $buff1 = str_replace(chr(0),"",$buff1);
@@ -95,29 +92,30 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 	}
 	gzclose($zp) ;
 	fclose($fp) ;
-
+	
 	
 	unlink($content_dir.$name_file);
 	
 	// Open file for put it in DB
 	$importexport = new PluginTrackerImportExport;
-	if (strstr($name_file_xml,"-discovery.xml")) {
+	if (strstr($name_file_xml,"-discovery.xml"))	{
 		$importexport->import_agent_discovery($content_dir,$name_file_xml);
 		unlink($content_dir.$name_file_xml);
 	}
-	if (!strstr($name_file_xml,"-")) {
-		// Recompose xml file
+	if (!strstr($name_file_xml,"-"))	{
+      // Recompose xml file
 		$importexport->import_agentonly($content_dir,$name_file_xml);
 		unlink($content_dir.$name_file_xml);
 	}
 
 
     echo "The file has been successfully uploaded";
-} else if(isset($_POST['get_data'])) {
+}
+else if(isset($_POST['get_data'])) {
 	$agents_processes = new PluginTrackerAgentsProcesses;
-	$xml = new PluginTrackerXML;
-	$config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
-	$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
+	$xml = new PluginTrackerXml;
+	$config_snmp_networking = new PluginTrackerConfigSnmpNetworking;
+	$config_snmp_printer = new PluginTrackerConfigSnmpPrinter;
 	$config = new PluginTrackerConfig;
 	
 //$_POST['key'] = "nN3HDPKVj0e8xxfgCIugjWmPzIRVxb";
@@ -139,9 +137,11 @@ if(isset($_POST['upload'])) { // si formulaire soumis
       } else {
 			$start_PID = $_POST['PID'];
       }
+		
 		if (!isset($_POST['date'])) {
 			$_POST['date'] = "0000-00-00 00:00:00";
       }
+		
 		// Add agent process entry
 		$number_PID = $ID_agent;
 		if (strlen($number_PID) == 1) {
@@ -164,7 +164,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 		$result=$DB->query($query);
 		$exclude = array();
 		$or = 0;
-		while ($data=$DB->fetch_array($result)) {
+		while ( $data=$DB->fetch_array($result) ) {
 			if ($or == "1") {
 				$rangeip_select .= " OR ";
          }
@@ -240,7 +240,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 
 		// List and add in value for query ID of SNMP auth from XML file
 		if ($config->getValue("authsnmp") == "file") {
-			$snmp_auth = new PluginTrackerSNMPAuth;
+			$snmp_auth = new PluginTrackerSnmpAuth;
 			$array_auth = $snmp_auth->plugin_tracker_snmp_connections("1");
 			$Auth_id_valid = "(";
 			foreach ($array_auth AS $num=>$value) {
@@ -251,7 +251,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 		}
 
 		for ($i=0 ; $i < count($devices) ; $i++) {
-			$xml_writed = new PluginTrackerXML;
+			$xml_writed = new PluginTrackerXml;
 			$xml_writed->element[1][$devices[$i]]['element']="snmp";
 			if ($devices[$i] == "device_networking") {
 				if ($config->getValue("authsnmp") == "file") {

@@ -33,38 +33,40 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginTrackerMibNetworking extends CommonDBTM {
    
 	function __construct() {
 		$this->table="glpi_plugin_tracker_mib_networking";
-		$this->type = -1;
 	}
 
 
 
-	function showForm($target,$ID) {
+	function showForm($target,$ID)
+	{
 		include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
 
-		GLOBAL $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
+		GLOBAL $DB,$CFG_GLPI,$LANG,$LANGTRACKER,$TRACKER_MAPPING,$IMPORT_TYPES;
 		
-		if (!plugin_tracker_haveRight("snmp_models","r")) {
+		if (!plugin_tracker_haveRight("snmp_models","r"))
 			return false;
-      } else if ((isset($ID)) AND (!empty($ID))) {
+		else if ((isset($ID)) AND (!empty($ID)))
+		{
 			$query = "SELECT device_type FROM glpi_plugin_tracker_model_infos
 			WHERE ID='".$ID."' ";
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['device_type'];		
-		
+
 			$query = "SELECT glpi_plugin_tracker_model_infos.device_type,glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
 			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
 			WHERE glpi_plugin_tracker_model_infos.ID=".$ID;
 			
-			if ($result = $DB->query($query)) {
+			if ($result = $DB->query($query))
+			{
 				$object_used = array();
 				$linkoid_used = array();
 				
@@ -73,32 +75,30 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 		
 				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
 				$nb_col = 8;
-				if ($data['device_type'] == NETWORKING_TYPE) {
+				if ($data['device_type'] == NETWORKING_TYPE)
 					$nb_col++;
-            }
 				echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-				echo $LANG['plugin_tracker']["mib"][5]."</th></tr>";
+				echo $LANGTRACKER["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<th align='center'></th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
-				if ($data['device_type'] == NETWORKING_TYPE) {
-					echo "<th align='center'>".$LANG['plugin_tracker']["mib"][9]."</th>";
-            }
-				echo "<th align='center'>".$LANG['plugin_tracker']["model_info"][11]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
+				if ($data['device_type'] == NETWORKING_TYPE)
+					echo "<th align='center'>".$LANGTRACKER["mib"][9]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["model_info"][11]."</th>";
 				
 				echo "</tr>";
-				while ($data=$DB->fetch_array($result)) {
-					if ($data["activation"] == "0") {
+				while ($data=$DB->fetch_array($result))
+				{
+					if ($data["activation"] == "0")
 						echo "<tr class='tab_bg_1' style='color: grey; '>";
-               } else {
+					else
 						echo "<tr class='tab_bg_1'>";
-               }
 					echo "<td align='center'>";
 					echo "<input name='item_coche[]' value='".$data["ID"]."' type='checkbox'>";
 					echo "</td>";
@@ -117,51 +117,46 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					if ($data["oid_port_counter"] == "1") {
-						if ($data["activation"] == "1") {
+					if ($data["oid_port_counter"] == "1")
+						if ($data["activation"] == "1")
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                  } else if ($data["activation"] == "0") {
+						else if ($data["activation"] == "0")
 							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
-                  }
-               }
+						echo "</td>";
+					
+					echo "<td align='center'>";
+					if ($data["oid_port_dyn"] == "1")
+						if ($data["activation"] == "1")
+							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+						else if ($data["activation"] == "0")
+							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					if ($data["oid_port_dyn"] == "1") {
-						if ($data["activation"] == "1") {
-							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                  } else if ($data["activation"] == "0") {
-							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
-                  }
-               }
-					echo "</td>";
-					
-					echo "<td align='center'>";
-					if (isset($TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'])) {
+					if (isset($TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name']))
+					{
 						echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'];
 						$linkoid_used[$data['mapping_type']."||".$data["mapping_name"]] = 1;
 					}
 					echo "</td>";
 					
-					if ($data['device_type'] == NETWORKING_TYPE) {
+					if ($data['device_type'] == NETWORKING_TYPE)
+					{
 						echo "<td align='center'>";
-						if ($data["vlan"] == "1") {
-							if ($data["activation"] == "1") {
+						if ($data["vlan"] == "1")
+							if ($data["activation"] == "1")
 								echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                     } else if ($data["activation"] == "0") {
+							else if ($data["activation"] == "0")
 								echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
-                     }
-                  }
 						echo "</td>";
 					}
 					
 					echo "<td align='center'>";
 					echo "<a href='".$target."?ID=".$ID."&activation=".$data["ID"]."'>";
-					if ($data["activation"] == "1") {
+					if ($data["activation"] == "1")
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-               } else if ($data["activation"] == "0") {
+					else if ($data["activation"] == "0")
 						echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
-               }
 					echo "</a>";
 					echo "</td>";
 					
@@ -185,18 +180,17 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 				echo "<br/>";
 				echo "<table class='tab_cadre_fixe'>";
 				
-				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_tracker']["mib"][4]."</th></tr>";
+				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANGTRACKER["mib"][4]."</th></tr>";				
 
 				echo "<tr class='tab_bg_1'>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
-				if ($type_model == NETWORKING_TYPE) {
+				echo "<th align='center'>".$LANGTRACKER["mib"][1]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][2]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][3]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][6]."</th>";
+				echo "<th align='center'>".$LANGTRACKER["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANGTRACKER["mib"][8]."</th>";
+				if ($type_model == NETWORKING_TYPE)
 					echo "<th align='center'>".$LANG["networking"][56]."</th>";
-            }
 				echo "</tr>";
 
 				echo "<td align='center'>";
@@ -225,10 +219,14 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 				//echo "<select name='links_oid_fields' size='1'>";
 				$types = array();
 				$types[] = "-----";
-				foreach ($TRACKER_MAPPING as $type=>$mapping43) {
-					if (($type_model == $type) OR ($type_model == "0")) {
-						if (isset($TRACKER_MAPPING[$type])) {
-							foreach ($TRACKER_MAPPING[$type] as $name=>$mapping) {
+				foreach ($TRACKER_MAPPING as $type=>$mapping43)
+				{
+					if (($type_model == $type) OR ($type_model == "0"))
+					{
+						if (isset($TRACKER_MAPPING[$type]))
+						{
+							foreach ($TRACKER_MAPPING[$type] as $name=>$mapping)
+							{
 								$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
 							}
 						}
@@ -239,7 +237,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 
 				echo "</td>";
 
-				if ($type_model == NETWORKING_TYPE) {
+				if ($type_model == NETWORKING_TYPE)
+				{
 					echo "<td align='center'>";
 					dropdownYesNo("vlan");
 					echo "</td>";
@@ -257,14 +256,16 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 		}
 	}
 
-	function prepareInputForUpdate($input) {
+	function prepareInputForUpdate($input)
+	{
 		$explode = explode("||",$input["links_oid_fields"]);
 		$input["mapping_type"] = $explode[0];
 		$input["mapping_name"] = $explode[1];
 		return $input;
 	}
 
-	function prepareInputForAdd($input) {
+	function prepareInputForAdd($input)
+	{
 		$explode = explode("||",$input["links_oid_fields"]);
 		$input["mapping_type"] = $explode[0];
 		$input["mapping_name"] = $explode[1];
@@ -274,12 +275,14 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 	
 
 	
-	function deleteMib($item_coche) {
+	function delete($item_coche)
+	{
 		global $DB;
 		
 		plugin_tracker_checkRight("snmp_models","w");
 		
-		for ($i = 0; $i < count($item_coche); $i++) {
+		for ($i = 0; $i < count($item_coche); $i++)
+		{
 			$query = "DELETE FROM glpi_plugin_tracker_mib_networking WHERE id=".$item_coche[$i]." ";
 			$DB->query($query);
 		}
@@ -287,19 +290,19 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 
 
 
-	function activation($ID) {
+	function activation($ID)
+	{
 		global $DB;
 		
-		$mib_networking = new PluginTrackerMibNetworking;
+		$mib_networking = new PluginTrackerMibNetworking();
 		
 		$mib_networking->getFromDB($ID);
 		$data['ID'] = $ID;
 		$data = $mib_networking->fields;
-		if ($mib_networking->fields["activation"] == "1") {
+		if ($mib_networking->fields["activation"] == "1")
 			$data['activation'] = 0;
-      } else {
+		else
 			$data['activation'] = 1;
-      }
 		$data["links_oid_fields"]=$data["mapping_type"]."||".$data["mapping_name"];
 		$mib_networking->update($data);
 	}

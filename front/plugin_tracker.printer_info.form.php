@@ -39,13 +39,13 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-
 plugin_tracker_checkRight("snmp_printers","r");
 
 if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
-		plugin_tracker_checkRight("snmp_printers","w");
 	
-	$plugin_tracker_printers = new PluginTrackerPrinters;
+	plugin_tracker_checkRight("snmp_printers","w");
+	
+	$plugin_tracker_printers = new plugin_tracker_printers();
 	
 	$_POST['FK_printers'] = $_POST['ID'];
 	unset($_POST['ID']);
@@ -62,7 +62,7 @@ if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
 	plugin_tracker_checkRight("snmp_printers","w");
 
-	$plugin_tracker_printers_cartridges = new PluginTrackerPrintersCartridges;
+	$plugin_tracker_printers_cartridges = new plugin_tracker_printers_cartridges;
 
 	$query = "SELECT * FROM glpi_plugin_tracker_printers_cartridges
 	WHERE FK_printers='".$_POST['ID']."' 
@@ -103,10 +103,36 @@ for ($i=1 ; $i <= 5 ; $i++) {
 
 	}
 	if (isset($_POST[$value])) {
-      $_SESSION[$value] = $_POST[$value];
+
+//		if ($name_file_xml($_SERVER['HTTP_REFERER'],$value))
+//		{
+/*			$explode = explode('&',$_SERVER['HTTP_REFERER']);
+			$reconstruct = $explode[0];
+			for ($i=1;$i < count($explode);$i++)
+			{
+				if (strstr($explode[$i],$value))
+				{
+					if (strstr($_POST[$value],"0000-00-00"))
+					{
+						$explode[$i] = '';
+					}
+					else
+					{
+						$explode[$i] = $value.'='.$_POST[$value];
+					}
+				}
+				if (!empty($explode[$i]))
+					$reconstruct .= '&'.$explode[$i];	
+			}
+			$_SERVER['HTTP_REFERER'] = $reconstruct;
+		}
+		else
+		{
+*/			$arg .= "&".$value."=".$_POST[$value];
+//		}
 	}
 }
 	
-glpi_header($_SERVER['HTTP_REFERER']);
+glpi_header($_SERVER['HTTP_REFERER'].$arg);
 
 ?>

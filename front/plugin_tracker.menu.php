@@ -39,25 +39,25 @@ $NEEDED_ITEMS=array("tracker");
 include (GLPI_ROOT."/inc/includes.php");
 
 if (plugin_tracker_HaveRight("snmp_models","r")
-	OR plugin_tracker_HaveRight("snmp_authentification","r")
-	OR plugin_tracker_HaveRight("snmp_iprange","r")
-	OR plugin_tracker_HaveRight("snmp_agent","r")
-	OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
-	OR plugin_tracker_HaveRight("snmp_agent_infos","r")
-	OR plugin_tracker_HaveRight("snmp_discovery","r")
-	OR plugin_tracker_HaveRight("snmp_report","r")
+    OR plugin_tracker_HaveRight("snmp_authentification","r")
+    OR plugin_tracker_HaveRight("snmp_iprange","r")
+    OR plugin_tracker_HaveRight("snmp_agent","r")
+    OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
+    OR plugin_tracker_HaveRight("snmp_agent_infos","r")
+    OR plugin_tracker_HaveRight("snmp_discovery","r")
+    OR plugin_tracker_HaveRight("snmp_report","r")
 	) {
 	if (plugin_tracker_needUpdate() == 1) {
-		commonHeader($LANG['plugin_tracker']["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
+		commonHeader($LANGTRACKER["setup"][4], $_SERVER["PHP_SELF"],"plugins","tracker");
 		echo "<div align='center'>";
 		echo "<table class='tab_cadre' cellpadding='5'>";
-		echo "<tr><th>".$LANG['plugin_tracker']["setup"][3];
+		echo "<tr><th>".$LANGTRACKER["setup"][3];
 		echo "</th></tr>";
 		echo "<tr class='tab_bg_1'><td>";
-		echo "<a href='plugin_tracker.install.php'>".$LANG['plugin_tracker']["setup"][5]."</a></td></tr>";
+		echo "<a href='plugin_tracker.install.php'>".$LANGTRACKER["setup"][5]."</a></td></tr>";
 		echo "</table></div>";
 	} else {
-		commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+		commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 		plugin_tracker_menu();
 	}

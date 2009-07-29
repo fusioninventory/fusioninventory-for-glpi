@@ -50,9 +50,10 @@ if (isset($_GET['type'])) {
 }
 plugin_tracker_checkRight("errors","r");
 
-$errors = new PluginTrackerErrors;
+$errors = new PluginTrackerErrors();
 
 if ((isset($_POST['delete']))) {
+	
 	plugin_tracker_checkRight("errors","w");
 	
 	if (isset($_POST['limit'])) {
@@ -61,11 +62,11 @@ if ((isset($_POST['delete']))) {
 				if (isset($_POST["ID_$i"])) {
                $input['ID'] = $_POST["ID_$i"];
             }
-
 				$errors->delete($input);
 			}
 		}
 	}
+	
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);

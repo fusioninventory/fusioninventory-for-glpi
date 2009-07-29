@@ -33,14 +33,15 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
 
 
-function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0) {
+
+function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0)
+{
 	global $DB,$CFG_GLPI;
-	$history = new PluginTrackerSNMPHistory;
+	$history = new PluginTrackerSnmpHistory;
 	
 	$array["FK_ports"] = $port;
 	$array["field"] = $field;
@@ -52,21 +53,21 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_proce
 }
 
 
-
+	
 // $status = connection or disconnection	
-function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
-	GLOBAL $DB,$CFG_GLPI;
+function plugin_tracker_addLogConnection($status,$port,$FK_process=0)
+{
+	global $DB,$CFG_GLPI;
 	$CommonItem = new CommonItem;
-	$history = new PluginTrackerSNMPHistory;
+	$history = new PluginTrackerSnmpHistory;
 	// Récupérer le port de la machine associé au port du switch
 	$nw=new Netwire;
 	// Récupérer le type de matériel
 	$netport=new Netport;
 	$array["FK_ports"] = $port;
 	$opposite_port = $nw->getOppositeContact($port);
-	if ($opposite_port == "0") {
+	if ($opposite_port == "0")
 		return;
-   }
 	$netport->getFromDB($opposite_port);
 	$array["device_type"] = $netport->fields["device_type"];
 	
@@ -82,24 +83,28 @@ function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 
 
 // $status = connection or disconnection
-function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_process=0) {
-	GLOBAL $DB,$CFG_GLPI;
+function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_process=0)
+{
+	global $DB,$CFG_GLPI;
 
-	$history = new PluginTrackerSNMPHistory;
+	$history = new PluginTrackerSnmpHistory;
 	$netwire = new Netwire;
-	$processes = new PluginTrackerProcesses;
-
+	$processes = new PluginTrackerThreads;
+	
 	// * If glpi device connected to this port, disconnect it
 	$queryVerif = "SELECT *
 		FROM glpi_networking_wire
 		WHERE end1 = '".$port."'
 			OR end2  = '".$port."' ";
 
-	if ($resultVerif=$DB->query($queryVerif)) {
-		if ($DB->numrows($resultVerif) != "0") {
+	if ($resultVerif=$DB->query($queryVerif))
+	{
+		if ( $DB->numrows($resultVerif) != "0" )
+		{
 			plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($port),$FK_process);
 			plugin_tracker_addLogConnection("remove",$port,$FK_process);
-			while ($dataVerif2=$DB->fetch_array($resultVerif)) {
+			while ( $dataVerif2=$DB->fetch_array($resultVerif) )
+			{
 				$query_del = "DELETE FROM glpi_networking_wire
 					WHERE ID='".$dataVerif2["ID"]."' ";
 				$DB->query($query_del);
@@ -117,9 +122,10 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 	$data = $DB->fetch_assoc($result);
 
 	$PID = $data["last_PID_update"];
-
+echo $PID." => ".$FK_process." => ".$port."\n";
 	list($unknownMac, $unknownIP) = $processes->getUnknownMacFromPIDandPort($PID,$port);
-	if ((!empty($unknownMac)) AND ($unknownMac != $macaddress)) {
+	if ((!empty($unknownMac)) AND ($unknownMac != $macaddress))
+	{
 		$array["FK_ports"] = $port;
 		$array["value"] = $unknownMac;
 		$array["device_type"] = 0;
@@ -134,15 +140,20 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 
 
 	list($unknownMac_now, $unknownIP_now) = $processes->getUnknownMacFromPIDandPort($FK_process,$port);
-
+echo $unknownMac." - ".$macaddress."\n";
 	// * If same unknown mac adresse connected, nothing
-	if ($unknownMac == $macaddress) {
-      echo "1- Nothing \n";
-   // else connect in this process
-	} else if ($unknownMac_now == $macaddress) {
-      echo "2- Nothing \n";
-   // else connect it
-	} else {
+	if ($unknownMac == $macaddress)
+	{
+echo "1- Nothing \n";
+	}
+	// else connect in this process
+	elseif ($unknownMac_now == $macaddress)
+	{
+echo "2- Nothing \n";
+	}
+	// else connect it
+	else
+	{
 		echo "3- Connect \n";
 		$array["FK_ports"] = $port;
 		$array["value"] = $macaddress;
@@ -154,15 +165,16 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 
 
 // List of history in networking display
-function plugin_tracker_snmp_showHistory($ID_port) {
-	GLOBAL $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
+function plugin_tracker_snmp_showHistory($ID_port)
+{
+	global $DB,$LANG,$LANGTRACKER,$INFOFORM_PAGES,$CFG_GLPI;
 
 	$CommonItem = new CommonItem;
 
 	$query = "SELECT * FROM glpi_plugin_tracker_snmp_history
 	WHERE FK_ports='".$ID_port."'
 	ORDER BY date_mod DESC
-	LIMIT 0,30";		
+	LIMIT 0,30";
 
 	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 
@@ -173,7 +185,7 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 	$text .= "</tr>";
 	
 	$text .= "<tr class='tab_bg_1'>";
-	$text .= "<th>".$LANG['plugin_tracker']["snmp"][50]."</th>";
+	$text .= "<th>".$LANGTRACKER["snmp"][50]."</th>";
 	$text .= "<th>".$LANG["common"][1]."</th>";
 	$text .= "<th>".$LANG["networking"][15]."</th>";
 	$text .= "<th>".$LANG["event"][18]."</th>";
@@ -183,19 +195,25 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 	$text .= "<th>".$LANG["common"][27]."</th>";
 	$text .= "</tr>";
 	
-	if ($result=$DB->query($query)) {
-		while ($data=$DB->fetch_array($result)) {
+	if ( $result=$DB->query($query) )
+	{
+		while ( $data=$DB->fetch_array($result) )
+		{
 			$text .= "<tr class='tab_bg_1'>";
 			
-			if (($data["old_device_ID"] != "0") OR ($data["new_device_ID"] != "0")) {
+			if (($data["old_device_ID"] != "0") OR ($data["new_device_ID"] != "0"))
+			{
 				// Connections and disconnections
-				if ($data["old_device_ID"] != "0") {
-					$text .= "<td align='center'>".$LANG['plugin_tracker']["history"][2]."</td>";
+				if ($data["old_device_ID"] != "0")
+				{
+					$text .= "<td align='center'>".$LANGTRACKER["history"][2]."</td>";
 					$CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
 					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";						
 					$text .= "<td align='center'>".$data["old_value"]."</td>";
-				} else if ($data["new_device_ID"] != "0") {
-					$text .= "<td align='center'>".$LANG['plugin_tracker']["history"][3]."</td>";
+				}
+				else if ($data["new_device_ID"] != "0")
+				{
+					$text .= "<td align='center'>".$LANGTRACKER["history"][3]."</td>";
 					$CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
 					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
 					$text .= "<td align='center'>".$data["new_value"]."</td>";
@@ -203,22 +221,29 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 				$text .= "<td align='center' colspan='4'></td>";
 				$text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
 
-			} else if (($data["old_device_ID"] == "0") AND ($data["new_device_ID"] == "0") AND ($data["Field"] == "0")) {
+			}
+			elseif (($data["old_device_ID"] == "0") AND ($data["new_device_ID"] == "0") AND ($data["Field"] == "0"))
+			{
 				// Unknown Mac address
-				if (!empty($data["old_value"])) {
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_tracker']["history"][2]."</td>";
+				if (!empty($data["old_value"]))
+				{
+					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANGTRACKER["history"][2]."</td>";
 					$CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
 					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
 					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["old_value"]."</td>";
-				} else if (!empty($data["new_value"])) {
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_tracker']["history"][3]."</td>";
+				}
+				elseif (!empty($data["new_value"]))
+				{
+					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANGTRACKER["history"][3]."</td>";
 					$CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
 					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
 					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["new_value"]."</td>";
 				}
 				$text .= "<td align='center' colspan='4' background='#cf9b9b' class='tab_bg_1_2'></td>";
 				$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".convDateTime($data["date_mod"])."</td>";
-			} else {
+			}
+			else
+			{
 				// Changes values
 				$text .= "<td align='center' colspan='3'></td>";
 				$text .= "<td align='center'>".$data["Field"]."</td>";

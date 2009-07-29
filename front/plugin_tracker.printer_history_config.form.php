@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("printer","r");
 plugin_tracker_checkRight("snmp_printers","w");
 
-$print_config = new PluginTrackerPrintersHistoryConfig;
+$print_config = new PluginTrackerPrintersHistoryConfig();
 
 if ((isset($_POST['update'])) && (isset($_POST['FK_printers']))) {
 	$print_config->updateOne($_POST);

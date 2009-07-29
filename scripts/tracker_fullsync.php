@@ -39,11 +39,11 @@ $xml_auth_rep = "";
 
 # Converts cli parameter to web parameter for compatibility
 if ($argv) {
-	for ($i=1 ; $i<count($argv) ; $i++) {
-		$it = split("=",$argv[$i]);
-		$it[0] = preg_replace('/^--/i','',$it[0]);
-		$_GET[$it[0]] = $it[1];
-	}
+   for ($i=1;$i<count($argv);$i++) {
+      $it = split("=",$argv[$i]);
+      $it[0] = preg_replace('/^--/i','',$it[0]);
+      $_GET[$it[0]] = $it[1];
+   }
 }
 
 // Can't run on MySQL replicate
@@ -55,7 +55,7 @@ $DBCONNECTION_REQUIRED=1;
 define('GLPI_ROOT', '../../..');
 
 $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
-	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
+   "phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
 include (GLPI_ROOT . "/config/based_config.php");
 include (GLPI_ROOT . "/inc/includes.php");
 include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
@@ -64,10 +64,10 @@ $CFG_GLPI["debug"]=0;
 
 //Check if plugin is installed, ie if tables are present
 if (!TableExists("glpi_plugin_tracker_networking")) {
-	echo "Plugin Tracker pas installé!!";
-	exit(1);
+   echo "Plugin Tracker pas installé!!";
+   exit(1);
 }
- 
+
 $thread_nbr='';
 $thread_id='';
 $synchronized_nbr= 0;
@@ -80,65 +80,68 @@ $type='';
 $logs = new PluginTrackerLogs;
 
 if(isset($_GET['update_device_process'])) {
-	// tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
+   // tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
 
-	$processes = new PluginTrackerProcesses;
-	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
+   $processes = new PluginTrackerThreads;
+   $processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
 } else {
-	if (isset($_GET["type"])) {
-		$type=$_GET["type"];
-   }
-	
-	//Get the script's process identifier
-	if (isset($_GET["process_id"])) {
-		$fields["process_id"] = $_GET["process_id"];
-   }
+   if (isset($_GET["type"]))
+      $type=$_GET["type"];
 
-	$config_snmp_script = new PluginTrackerConfigSNMPScript;
-	$nb_process_query = $config_snmp_script->getValue('nb_process');
+   //Get the script's process identifier
+   if (isset($_GET["process_id"]))
+      $fields["process_id"] = $_GET["process_id"];
 
-	// Add process into database
-	$processes = new PluginTrackerProcesses;
-	$processes->addProcess($fields["process_id"],$nb_process_query);
-	
-	// SNMP is working
-	$logs->write("tracker_snmp",">>>>>>>>>> Starting Script <<<<<<<<<<",'');
+   $config_snmp_script = new PluginTrackerConfigSnmpScript;
+   $nb_process_query = $config_snmp_script->getValue('nb_process');
 
-	$OS = "";
-	if (isset($_SERVER["OSTYPE"])) {
-		$OS = $_SERVER["OSTYPE"];
+   // Add process into database
+   $processes = new PluginTrackerThreads;
+   $processes->addProcess($fields["process_id"],$nb_process_query);
+
+   // SNMP is working
+   $logs->write("tracker_snmp",">>>>>>>>>> Starting Script <<<<<<<<<<",'');
+
+   $OS = "";
+   if (isset($_SERVER["OSTYPE"])) {
+      $OS = $_SERVER["OSTYPE"];
    } else if (isset($_SERVER["OS"])) {
-		$OS = $_SERVER["OS"];
+      $OS = $_SERVER["OS"];
    }
 
-	$logs->write("tracker_snmp","Operating System = ".$OS,'');
+   $logs->write("tracker_snmp","Operating System = ".$OS,'');
 
-	$query = "SELECT process_number FROM glpi_plugin_tracker_agents_processes
-	ORDER BY process_number";
-	$result=$DB->query($query);
-	while ($data=$DB->fetch_array($result)) {
-		// Test if XLM file from Agent exist
-		if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml")) {
-			$xml_file[] = GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml";
-			$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml");
-			foreach($xml->device as $device) {
-				$ArrayListDevice[] = $device->infos->id;
-				$ArrayListType[] = $device->infos->type;
-				$ArrayListAgentProcess[] = $data['process_number'];
-			}
-		}
-	}
-	if (isset($ArrayListDevice)) {
-		plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
+   $query = "SELECT process_number FROM glpi_plugin_tracker_agents_processes
+   ORDER BY process_number";
+   $result=$DB->query($query);
+   while ( $data=$DB->fetch_array($result) ) {
+      // Test if XLM file from Agent exist
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml")) {
+         $xml_file[] = GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml";
+         $xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml");
+         foreach($xml->device as $device) {
+            $ArrayListDevice[] = $device->infos->id;
+            $ArrayListType[] = $device->infos->type;
+            $ArrayListAgentProcess[] = $data['process_number'];
+         }
+         unset($xml);
+         unset($device);
+      }
    }
-	foreach ($xml_file as $num=>$filename) {
-		unlink($filename);
+   
+   if (isset($ArrayListDevice)) {
+      plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
    }
-
-	// Create connections between switchs
-	$tmpc = new PluginTrackerTmpConnections;
+   if ((isset($xml_file)) AND (!empty($xml_file))) {
+      foreach ( $xml_file as $num=>$filename ) {
+         unlink($filename);
+      }
+   }
+   // Create connections between switchs
+   $tmpc = new PluginTrackerTmpconnections;
 	$tmpc->WireInterSwitchs($fields["process_id"]);
 
-	$processes->closeProcess($fields["process_id"]);
+   $processes->closeProcess($fields["process_id"]);
 }
+
 ?>

@@ -33,17 +33,18 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
-function plugin_tracker_createfirstaccess($ID) {
+function plugin_tracker_createfirstaccess($ID){
 
 	global $DB;
 	
-	$plugin_tracker_Profile=new PluginTrackerProfile;
-	if (!$plugin_tracker_Profile->GetfromDB($ID)) {
-		$Profile=new Profile;
+	$plugin_tracker_Profile=new PluginTrackerProfile();
+	if (!$plugin_tracker_Profile->GetfromDB($ID)){
+		
+		$Profile=new Profile();
 		$Profile->GetfromDB($ID);
 		$name=$Profile->fields["name"];
 
@@ -54,11 +55,11 @@ function plugin_tracker_createfirstaccess($ID) {
 	}
 }
 
-function plugin_tracker_createaccess($ID) {
+function plugin_tracker_createaccess($ID){
 
 	GLOBAL $DB;
 	
-	$Profile=new Profile;
+	$Profile=new Profile();
 	$Profile->GetfromDB($ID);
 	$name=$Profile->fields["name"];
 	
@@ -68,7 +69,7 @@ function plugin_tracker_createaccess($ID) {
 	$DB->query($query);
 }
 
-function plugin_tracker_getIdFromUser($name) {
+function getIdFromUser($name) {
 	
 	global $DB;
 	
@@ -76,7 +77,7 @@ function plugin_tracker_getIdFromUser($name) {
 			 "FROM glpi_users ".
 			 "WHERE name = '".$name."';";
 
-	if (($result = $DB->query($query))) {
+	if ( ($result = $DB->query($query)) ) {
 		return $DB->result($result,0,"ID");
 	}
 	return false;
@@ -85,6 +86,7 @@ function plugin_tracker_getIdFromUser($name) {
 function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 	global $DB;
 	switch($type) {
+		
 		case COMPUTER_TYPE:
 			$table = "glpi_computers";
 			break;
@@ -108,17 +110,17 @@ function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 	
 	$query = "SELECT ".$field." FROM ".$table." ".
 			 "WHERE ID = '".$ID."';";
-	if ($result = $DB->query($query)) {
-		if (($fields=$DB->fetch_row($result)) && ($fields['0'] != NULL)) {
+	if ( $result = $DB->query($query) ) {
+		if ( ($fields=$DB->fetch_row($result)) && ($fields['0'] != NULL) )
 			return $fields['0'];
-      }
 	}
 	return $return;
 }
 
 
-function plugin_tracker_clean_db() {
-	GLOBAL $DB;
+function plugin_tracker_clean_db()
+{
+	global $DB;
 	
 	// * Clean glpi_plugin_tracker_networking_ports
 	$query_select = "SELECT glpi_plugin_tracker_networking_ports.ID FROM glpi_plugin_tracker_networking_ports
@@ -126,7 +128,8 @@ function plugin_tracker_clean_db() {
 	LEFT JOIN glpi_networking ON glpi_networking.ID = on_device
 	WHERE glpi_networking.ID IS NULL";
 	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+	while ( $data=$DB->fetch_array($result) )
+	{
 		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
 		WHERE ID='".$data["ID"]."'";
 		$DB->query($query_delete);
@@ -137,7 +140,8 @@ function plugin_tracker_clean_db() {
 	LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
 	WHERE glpi_networking.ID IS NULL";
 	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+	while ( $data=$DB->fetch_array($result) )
+	{
 		$query_delete = "DELETE FROM glpi_plugin_tracker_networking
 		WHERE ID='".$data["ID"]."'";
 		$DB->query($query_delete);
@@ -148,7 +152,8 @@ function plugin_tracker_clean_db() {
 	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
 	WHERE glpi_printers.ID IS NULL";
 	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+	while ( $data=$DB->fetch_array($result) )
+	{
 		$query_delete = "DELETE FROM glpi_plugin_tracker_printers
 		WHERE ID='".$data["ID"]."'";
 		$DB->query($query_delete);
@@ -159,7 +164,8 @@ function plugin_tracker_clean_db() {
 	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
 	WHERE glpi_printers.ID IS NULL";
 	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+	while ( $data=$DB->fetch_array($result) )
+	{
 		$query_delete = "DELETE FROM glpi_plugin_tracker_printers_cartridges
 		WHERE ID='".$data["ID"]."'";
 		$DB->query($query_delete);
@@ -170,7 +176,8 @@ function plugin_tracker_clean_db() {
 	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
 	WHERE glpi_printers.ID IS NULL";
 	$result=$DB->query($query_select);
-	while ($data=$DB->fetch_array($result)) {
+	while ( $data=$DB->fetch_array($result) )
+	{
 		$query_delete = "DELETE FROM glpi_plugin_tracker_printers_history
 		WHERE ID='".$data["ID"]."'";
 		$DB->query($query_delete);

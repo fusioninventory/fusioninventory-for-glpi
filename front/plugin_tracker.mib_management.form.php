@@ -31,8 +31,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$plugin_tracker_mib_networking=new PluginTrackerMibNetworking;
+$plugin_tracker_mib_networking=new PluginTrackerMibNetworking();
 if (isset($_POST["add"])) {
+
 
 } else {
 	plugin_tracker_checkRight("errors","r");
@@ -43,9 +44,10 @@ if (isset($_POST["add"])) {
 		//		glpi_header($_SERVER['HTTP_REFERER']);
 	}
 	
-	commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+	commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 	$plugin_tracker_mib_networking->showForm($_SERVER["PHP_SELF"],$_GET["ID"],"glpi_plugin_tracker_mib_networking");
 
 	commonFooter();
 }
+?>

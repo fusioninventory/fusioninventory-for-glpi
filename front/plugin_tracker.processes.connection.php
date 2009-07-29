@@ -38,13 +38,13 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker","search","commonitem","networking","computer","printer","phone");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("snmp_scripts_infos","r");
 
 plugin_tracker_mini_menu();
 
-$Threads = new PluginTrackerProcesses;
+$Threads = new PluginTrackerThreads;
 
 $Threads->showProcesses($_SERVER["PHP_SELF"],"connection");
 

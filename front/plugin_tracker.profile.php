@@ -33,6 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+/* 0.72 compatibility
 $NEEDED_ITEMS=array("profile");
 define('GLPI_ROOT', '../../..'); 
 
@@ -45,8 +46,8 @@ if (isset ($_POST['update_user_profile'])) {
 	$prof->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
+*/
 
-/*
 $NEEDED_ITEMS=array("profile");
 define('GLPI_ROOT', '../../..'); 
 
@@ -74,7 +75,6 @@ if (isset($_POST["add"])) {
 	
 	foreach ($_POST["item"] as $key => $val) {
 		if ($val==1) {
-
 			$query="DELETE FROM glpi_plugin_tracker_profiles WHERE ID='".$key."'";
 			$DB->query($query);
 		}
@@ -93,24 +93,24 @@ echo "<div align='center'><form method='post' name='massiveaction_form' id='mass
 echo "<table class='tab_cadre' cellpadding='5'>";
 
 echo "<tr>";
-echo "	<th colspan='14'>".$LANG['plugin_tracker']["profile"][10]." : </th>";
+echo "	<th colspan='14'>".$LANGTRACKER["profile"][10]." : </th>";
 echo "</tr>";
 
 echo "<tr>";
 echo "	<th></th>";
 echo "	<th></th>";
 echo "	<th>".$LANG["Menu"][35]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][16]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][18]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][19]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][20]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][25]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][26]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][21]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][27]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][22]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][28]."</th>";
-echo "	<th>".$LANG['plugin_tracker']["profile"][23]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][16]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][18]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][19]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][20]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][25]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][26]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][21]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][27]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][22]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][28]."</th>";
+echo "	<th>".$LANGTRACKER["profile"][23]."</th>";
 echo "</tr>";
 
 $query0="SELECT * FROM glpi_plugin_tracker_profiles ORDER BY name";
@@ -130,87 +130,91 @@ while ($data0=$DB->fetch_assoc($result0)) {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
    } else if ($data0['snmp_networking']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
 // * snmp_printers
 	if ($data0['snmp_printers']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_printers']=='w') {
+   } else if ($data0['snmp_printers']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
+
 // * snmp_models
 	if ($data0['snmp_models']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_models']=='w') {
+   } else if ($data0['snmp_models']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
 // * snmp_authentification
 	if ($data0['snmp_authentification']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_authentification']=='w') {
+   } else if ($data0['snmp_authentification']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
+
 // * snmp_iprange
 	if ($data0['snmp_iprange']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_iprange']=='w') {
+   } else if ($data0['snmp_iprange']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
+
 // * snmp_agent
 	if ($data0['snmp_agent']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_agent']=='w') {
+   } else if ($data0['snmp_agent']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
 // * snmp_scripts_infos
 	if ($data0['snmp_scripts_infos']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_scripts_infos']=='w') {
+   } else if ($data0['snmp_scripts_infos']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
 // * snmp_agent_infos
 	if ($data0['snmp_agent_infos']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_agent_infos']=='w') {
+   } else if ($data0['snmp_agent_infos']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
 // * snmp_discovery
 	if ($data0['snmp_discovery']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_discovery']=='w') {
+   } else if ($data0['snmp_discovery']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
 // * snmp_report
 	if ($data0['snmp_report']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['snmp_report']=='w') {
+   } else if ($data0['snmp_report']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
+
 // * general_config
 	if ($data0['general_config']=='r') {
 		echo "<td align='center'>".$LANG["profiles"][10]."</td>";
-	} else if ($data0['general_config']=='w') {
+   } else if ($data0['general_config']=='w') {
 		echo "<td align='center'>".$LANG["profiles"][11]."</td>";
-	} else {
+   } else {
 		echo "<td align='center'>".$LANG["profiles"][12]."</td>";
    }
 }
@@ -246,6 +250,6 @@ if ($ID>0) {
 }
 
 commonFooter();
-*/
+
 ?>
 

@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("tracker","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","unknown");
+commonHeader($LANGTRACKER["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","unknown");
 
 plugin_tracker_checkRight("snmp_networking","r");
 
@@ -48,8 +48,8 @@ manageGetValuesInSearch(PLUGIN_TRACKER_MAC_UNKNOWN);
 
 $_GET['target']="plugin_tracker.unknown.php";
 
-searchForm(PLUGIN_TRACKER_MAC_UNKNOWN,$_GET);
-showList(PLUGIN_TRACKER_MAC_UNKNOWN,$_GET);
+searchForm(PLUGIN_TRACKER_MAC_UNKNOWN,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+showList(PLUGIN_TRACKER_MAC_UNKNOWN,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
 
 
 commonFooter();

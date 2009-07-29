@@ -34,13 +34,12 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	die("Sorry. You can't access directly to this file");
-}
 
 class PluginTrackerAgents extends CommonDBTM {
-
-   function __construct() {
+   
+	function __construct() {
 		$this->table = "glpi_plugin_tracker_agents";
 		$this->type = PLUGIN_TRACKER_SNMP_AGENTS;
 	}
@@ -63,13 +62,12 @@ class PluginTrackerAgents extends CommonDBTM {
 
 
 	function showForm($target, $ID = '') {
-		GLOBAL $DB,$CFG_GLPI,$LANG;
+		global $DB,$CFG_GLPI,$LANG,$LANGTRACKER;
 
-		if ($ID!='') {
+		if ($ID!='')
 			$this->getFromDB($ID);
-      } else {
+		else
 			$this->getEmpty();
-      }
 
 		echo "<br>";
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
@@ -77,7 +75,7 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "<table class='tab_cadre' cellpadding='5' width='600'>";
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["agents"][0];
+		echo $LANGTRACKER["agents"][0];
 		echo " :</th>";
 		echo "</tr>";
 
@@ -89,7 +87,7 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][6] . "</td>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][6] . "</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("lock",$this->fields["lock"]);
 		echo "</td>";
@@ -101,55 +99,60 @@ class PluginTrackerAgents extends CommonDBTM {
 		$ArrayValues[]= $LANG["choice"][0];
 		$ArrayValues[]= $LANG["choice"][1];
 		$ArrayValues[]= $LANG["setup"][137];
-		if (empty($this->fields["logs"])) {
+		if (empty($this->fields["logs"]))
 			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[0]);
-      } else {
+		else	
 			dropdownArrayValues("logs",$ArrayValues,$this->fields["logs"]);
-      }
 		echo "</td>";
 		echo "</tr>";
 
+		echo "<script  type='text/javascript'>
+function close_array(){
+	document.getElementById('optionavance').innerHTML = '<a href=\'\' onClick=\'Effect.Fade(\"optionavance1\");Effect.Fade(\"optionavance2\");Effect.Fade(\"optionavance3\");Effect.Fade(\"optionavance4\");Effect.Fade(\"optionavance5\");appear_array(\"optionavance1\");\' >".$LANGTRACKER["agents"][9]." :</a>';
+}
+function appear_array(){
+	document.getElementById('optionavance').innerHTML = '<img src=\'\' onClick=\'Effect.Appear(\"optionavance1\");Effect.Appear(\"optionavance2\");Effect.Appear(\"optionavance3\");Effect.Appear(\"optionavance4\");Effect.Appear(\"optionavance5\");close_array(\"optionavance1\");\' >".$LANGTRACKER["agents"][9]." :</a>';
+}
+		</script>";
+
 		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo "<a href='#' onClick='getSlide(\"optionavance\");'>".$LANG['plugin_tracker']["agents"][9]." :</a>";
+		echo "<th colspan='2' id='optionavance'>";
+		echo "<a href='#' onClick='Effect.Appear(\"optionavance1\");Effect.Appear(\"optionavance2\");Effect.Appear(\"optionavance3\");Effect.Appear(\"optionavance4\");Effect.Appear(\"optionavance5\");close_array(\"optionavance1\");'>".$LANGTRACKER["agents"][9]." :</a>";
 		echo "</th>";
 		echo "</tr>";
 
-      echo "</table>";
-      echo "<div  id='optionavance' style='display: none;'>";
-      echo "<table class='tab_cadre' cellpadding='5' width='600'>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' width='200'>" . $LANG['plugin_tracker']["agents"][11] . "</td>";
-		echo "<td align='center' width='200'>";
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance1'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][11] . "</td>";
+		echo "<td align='center'>";
 		dropdownInteger("core_discovery", $this->fields["core_discovery"],1,32);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["agents"][3]."</td>";
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance2'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][3] . "</td>";
 		echo "<td align='center'>";
 		dropdownInteger("threads_discovery", $this->fields["threads_discovery"],1,400);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["agents"][10]."</td>";
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance3'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][10] . "</td>";
 		echo "<td align='center'>";
 		dropdownInteger("core_query", $this->fields["core_query"],1,200);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][2] . "</td>";
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance4'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][2] . "</td>";
 		echo "<td align='center'>";
 		dropdownInteger("threads_query", $this->fields["threads_query"],1,200);
 		echo "</td>";
 		echo "</tr>";
 
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][8] . "</td>";
+
+		echo "<tr class='tab_bg_1' style='display: none;' id='optionavance5'>";
+		echo "<td align='center'>" . $LANGTRACKER["agents"][8] . "</td>";
 		echo "<td align='center'>";
 		if (empty($this->fields["fragment"]))
 			$this->fields["fragment"] = 50;
@@ -157,12 +160,12 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-      echo "</table>";
-      echo "</div>";
-      echo "<table class='tab_cadre' cellpadding='5' width='600'>";
+
+
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		if ($ID=='') {
+		if ($ID=='')
+		{
 			// Generator of Key
 			$chrs = 30;
 			$chaine = ""; 
@@ -175,7 +178,9 @@ class PluginTrackerAgents extends CommonDBTM {
 
 			echo "<input type='hidden' name='key' value='".$newstring."'/>";
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-		} else {
+		}
+		else
+		{
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
 			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
 			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
@@ -187,8 +192,9 @@ class PluginTrackerAgents extends CommonDBTM {
 
 
 	
-	function export_config($ID) {
-		GLOBAL $DB;
+	function export_config($ID)
+	{
+		global $DB;
 	
 		$tracker_config = new PluginTrackerConfig;
 		$tracker_config->getFromDB(1);
@@ -200,5 +206,4 @@ class PluginTrackerAgents extends CommonDBTM {
 	}
 
 }
-
 ?>

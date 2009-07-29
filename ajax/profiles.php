@@ -1,5 +1,4 @@
 <?php
-
 /*
  * @version $Id$
  ----------------------------------------------------------------------
@@ -30,26 +29,20 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: DURIEUX David
+// Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT'))
-	die("Sorry. You can't access directly to this file");
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT."/inc/includes.php");
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
 
+checkRight("profile","r");
 
-function plugin_tracker_snmp_auth_dropdown($selected="")
-{
-	global $DB;
-
-	$plugin_tracker_snmp_auth = new PluginTrackerSnmpAuth;
-	$config = new PluginTrackerConfig;
-
-	if ($config->getValue("authsnmp") == "file")
-		echo $plugin_tracker_snmp_auth->selectbox($selected);
-	else  if ($config->getValue("authsnmp") == "DB")
-		dropdownValue("glpi_plugin_tracker_snmp_connection","FK_snmp_connection",$selected,0);
+$prof=new PluginTrackerProfile;
+if ($_POST["interface"]=="tracker") {
+	$prof->showForm('plugin_tracker.profile.php',$_POST["ID"]);
 }
-
 
 ?>

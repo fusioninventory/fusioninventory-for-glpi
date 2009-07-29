@@ -33,12 +33,6 @@
 // ----------------------------------------------------------------------
 
 
-Version 2.1.0
-- Compatabilité 0.72
-
-
-- 0.72 compatibility
-
 Version 2.0.2
 
 - Correction du dico englais

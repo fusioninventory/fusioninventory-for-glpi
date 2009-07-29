@@ -45,12 +45,12 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 plugin_tracker_checkRight("snmp_models","r");
 
-$plugin_tracker_model_infos = new PluginTrackerModelInfos;
-$plugin_tracker_mib_networking = new PluginTrackerMibNetworking;
+$plugin_tracker_model_infos = new PluginTrackerModelInfos();
+$plugin_tracker_mib_networking = new PluginTrackerMibNetworking();
 
 $importexport = new PluginTrackerImportExport;
 
-commonHeader($LANG['plugin_tracker']["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","models");
+commonHeader($LANGTRACKER["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","models");
 
 plugin_tracker_mini_menu();
 
@@ -82,15 +82,15 @@ if (isset ($_POST["add_oid"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
+
 $importexport->showForm($_SERVER["PHP_SELF"]);
 $ID = "";
-if (isset($_GET["ID"])) {
+if (isset($_GET["ID"]))
 	$ID = $_GET["ID"];
-}
 
 if(!empty($_POST["item_coche"])) {
 	plugin_tracker_checkRight("snmp_models","w");
-	$plugin_tracker_mib_networking->deleteMib($_POST["item_coche"]);
+	$plugin_tracker_mib_networking->delete($_POST["item_coche"]);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 

@@ -36,7 +36,6 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 if (haveRight("config","w") && haveRight("profile","w")) {
-
 	if(TableExists("glpi_plugin_tracker_config")) {
 		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
 		plugin_tracker_uninstall();
@@ -45,6 +44,7 @@ if (haveRight("config","w") && haveRight("profile","w")) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 
 } else {
+
 	commonHeader($LANG["login"][5],$_SERVER['PHP_SELF'],"plugins","tracker");
 	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";
 	echo "<b>".$LANG["login"][5]."</b></div>";

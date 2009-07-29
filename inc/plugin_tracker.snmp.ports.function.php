@@ -31,27 +31,31 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT'))
 	define('GLPI_ROOT', '../../..');
-}
 
-function plugin_tracker_getUniqueObjectfieldsByportID($id) {
+
+function plugin_tracker_getUniqueObjectfieldsByportID($id)
+{
 	global $DB;
 	
 	$array = array();
 	$query = "SELECT * FROM glpi_networking_ports 
 	WHERE ID='".$id."' ";
-	if ($result=$DB->query($query)) {
+	if ($result=$DB->query($query))
+	{
 		$data = $DB->fetch_array($result);
 		$array["on_device"] = $data["on_device"];
 		$array["device_type"] = $data["device_type"];	
 	}
-	switch($array["device_type"]) {
+	switch($array["device_type"])
+	{
 		case NETWORKING_TYPE:
 			$query = "SELECT * FROM glpi_networking
 			WHERE ID='".$array["device_type"]."' 
 			LIMIT 0,1 ";
-			if ($result=$DB->query($query)) {
+			if ($result=$DB->query($query))
+			{
 				$data = $DB->fetch_array($result);
 				$array["name"] = $data["name"];
 			}
@@ -59,5 +63,8 @@ function plugin_tracker_getUniqueObjectfieldsByportID($id) {
 	}
 	return($array);
 }
+
+
+
 
 ?>

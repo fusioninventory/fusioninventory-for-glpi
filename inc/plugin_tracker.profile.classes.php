@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 }
 
@@ -47,18 +47,19 @@ class PluginTrackerProfile extends CommonDBTM {
 	
 	//if profile deleted
 	function cleanProfiles($ID) {
-		GLOBAL $DB;
+	
+		global $DB;
 		$query = "DELETE FROM glpi_plugin_tracker_profiles WHERE ID='$ID' ";
 		$DB->query($query);
 	}
 		
-	function showprofileForm($target,$ID) {
-		GLOBAL $LANG,$CFG_GLPI;
+	function showprofileForm($target,$ID){
+		global $LANG,$CFG_GLPI,$LANGTRACKER;
 
 		if (!haveRight("profile","r")) return false;
 
 		$onfocus="";
-		if ($ID) {
+		if ($ID){
 			$this->getFromDB($ID);
 		} else {
 			$this->getEmpty();
@@ -79,7 +80,7 @@ class PluginTrackerProfile extends CommonDBTM {
 
 		echo "<th>".$LANG["profiles"][2].":</th>";
 		echo "<th><select name='interface' id='profile_interface'>";
-		echo "<option value='tracker' ".($this->fields["interface"]!="tracker"?"selected":"").">".$LANG['plugin_tracker']["profile"][1]."</option>";
+		echo "<option value='tracker' ".($this->fields["interface"]!="tracker"?"selected":"").">".$LANGTRACKER["profile"][1]."</option>";
 
 		echo "</select></th>";
 		echo "</tr></table>";
@@ -90,7 +91,7 @@ class PluginTrackerProfile extends CommonDBTM {
 			);
 		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false);
 		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false,'profile_interface');
-//$prof=new PluginTrackerProfile;
+//$prof=new PluginTrackerProfile();
 
 //	$prof->showtrackerForm($_POST["ID"]);
 
@@ -103,92 +104,99 @@ class PluginTrackerProfile extends CommonDBTM {
 
 	}
 	
-	function showForm($target,$ID) {
-		global $LANG;
+	function showForm($target,$ID){
+		global $LANG,$LANGTRACKER;
 
 		if (!haveRight("profile","r")) return false;
 		$canedit=haveRight("profile","w");
-		if ($ID) {
+		if ($ID){
 			$this->getFromDB($ID);
 		}
 
 		echo "<form action='".$target."' method='post'>";
 		echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$LANG['plugin_tracker']["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
+		echo "<tr><th colspan='2' align='center'><strong>".$LANGTRACKER["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][16].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][16].":</td><td>";
 		dropdownNoneReadWrite("snmp_networking",$this->fields["snmp_networking"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][18].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][18].":</td><td>";
 		dropdownNoneReadWrite("snmp_printers",$this->fields["snmp_printers"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][19].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][19].":</td><td>";
 		dropdownNoneReadWrite("snmp_models",$this->fields["snmp_models"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][20].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][20].":</td><td>";
 		dropdownNoneReadWrite("snmp_authentification",$this->fields["snmp_authentification"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][25].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][25].":</td><td>";
 		dropdownNoneReadWrite("snmp_iprange",$this->fields["snmp_iprange"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][26].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][26].":</td><td>";
 		dropdownNoneReadWrite("snmp_agent",$this->fields["snmp_agent"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][21].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][21].":</td><td>";
 		dropdownNoneReadWrite("snmp_scripts_infos",$this->fields["snmp_scripts_infos"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][27].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][27].":</td><td>";
 		dropdownNoneReadWrite("snmp_agent_infos",$this->fields["snmp_agent_infos"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][22].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][22].":</td><td>";
 		dropdownNoneReadWrite("snmp_discovery",$this->fields["snmp_discovery"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][28].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][28].":</td><td>";
 		dropdownNoneReadWrite("snmp_report",$this->fields["snmp_report"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][23].":</td><td>";
+		echo "<tr class='tab_bg_2'>";
+		echo "<td>".$LANGTRACKER["profile"][23].":</td><td>";
 		dropdownNoneReadWrite("general_config",$this->fields["general_config"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 		
-		if ($canedit) {
+		if ($canedit){
 			echo "<tr class='tab_bg_1'>";
-			echo "<td  align='center' colspan='3'>";
-			echo "<input type='hidden' name='ID' value=$ID>";
-			echo "<input type='submit' name='update_user_profile' value=\"".$LANG["buttons"][7]."\" class='submit'>";
-			echo "</td></tr>\n";
+			if ($ID){
+				echo "<td  align='center'>";
+				echo "<input type='hidden' name='ID' value=$ID>";
+				echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit'>";
+				echo "</td><td  align='center'>";
+				echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit'>";
+			} else {
+				echo "<td colspan='2' align='center'>";
+				echo "<input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit'>";
+			}
+			echo "</td></tr>";
 		}
 		echo "</table>";
 

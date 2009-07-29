@@ -33,17 +33,17 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
+if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 	}
 
 function plugin_tracker_initSession() {
 	global $DB;
 	
-	if(TableExists("glpi_plugin_tracker_config")) {
+	if(TableExists("glpi_plugin_tracker_config")){
 		
-		if (FieldExists("glpi_plugin_tracker_config","ID")) {
-			$profile=new PluginTrackerProfile;
+		if (FieldExists("glpi_plugin_tracker_config","ID")){
+			$profile=new PluginTrackerProfile();
 		
 			$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
 			$result = $DB->query($query);
@@ -51,10 +51,10 @@ function plugin_tracker_initSession() {
 			if ($DB->numrows($result)) {
 				while ($data = $DB->fetch_assoc($result)) {
 					$profile->fields = array ();
-					if(isset($_SESSION["glpiactiveprofile"]["ID"])) {
+					if(isset($_SESSION["glpiactiveprofile"]["ID"])){
 						$profile->getFromDB($_SESSION["glpiactiveprofile"]["ID"]);
 						$_SESSION['glpi_plugin_tracker_profile'] = $profile->fields;
-					} else {
+					}else{
 						$profile->getFromDB($data['ID']);
 						$_SESSION['glpi_plugin_tracker_profile'] = $profile->fields;
 					}
@@ -65,18 +65,18 @@ function plugin_tracker_initSession() {
 	}
 }
 
-function plugin_tracker_changeprofile() {
-	if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
+function plugin_tracker_changeprofile()
+{
+	if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1){
 		$prof=new PluginTrackerProfile;
-		if($prof->getFromDB($_SESSION['glpiactiveprofile']['ID'])) {
+		if($prof->getFromDB($_SESSION['glpiactiveprofile']['ID']))
 			$_SESSION["glpi_plugin_tracker_profile"]=$prof->fields;
-      } else {
+		else
 			unset($_SESSION["glpi_plugin_tracker_profile"]);
-      }
 	}
 }
 
-function plugin_tracker_haveRight($module,$right) {
+function plugin_tracker_haveRight($module,$right){
 // echo $_SESSION["glpiactive_entity"];
 	$matches=array(
 			""  => array("","r","w"), // ne doit pas arriver normalement
@@ -85,11 +85,9 @@ function plugin_tracker_haveRight($module,$right) {
 			"1" => array("1"),
 			"0" => array("0","1"), // ne doit pas arriver non plus
 		      );
-	if (isset($_SESSION["glpi_plugin_tracker_profile"][$module])&&in_array($_SESSION["glpi_plugin_tracker_profile"][$module],$matches[$right])) {
+	if (isset($_SESSION["glpi_plugin_tracker_profile"][$module])&&in_array($_SESSION["glpi_plugin_tracker_profile"][$module],$matches[$right]))
 		return true;
-   } else {
-      return false;
-   }
+	else return false;
 }
 
 function plugin_tracker_checkRight($module, $right) {
