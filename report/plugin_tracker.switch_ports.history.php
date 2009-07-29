@@ -82,7 +82,7 @@ if(isset($_GET["FK_networking_ports"])){
 //if($_GET["field"][0] != "view")
 //{
 	$_SESSION["glpisearchcount"][PLUGIN_TRACKER_SNMP_HISTORY] = 2;
-	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_SERVER['PHP_SELF'],$_GET["field"],$_GET["contains"],$_GET["sort"],$_GET["order"],$_GET["start"],$_GET["deleted"],$_GET["link"],$_GET["distinct"],$_GET["link2"],$_GET["contains2"],$_GET["field2"],$_GET["type2"]);
+	showList(PLUGIN_TRACKER_SNMP_HISTORY,$_GET);
 }
 
 //}
