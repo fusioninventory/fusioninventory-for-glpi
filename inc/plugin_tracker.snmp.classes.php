@@ -244,7 +244,8 @@ class PluginTrackerSNMP extends CommonDBTM {
 	**/
 	function getPortIDfromDeviceIP($IP, $ifDescr) {
 		GLOBAL $DB;
-	
+
+      $PortID = "";
 		$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr
 		WHERE ifaddr='".$IP."' ";
 		
@@ -259,8 +260,19 @@ class PluginTrackerSNMP extends CommonDBTM {
 			AND glpi_networking_ports.device_type='2' ";
 		$resultPort = $DB->query($queryPort);		
 		$dataPort = $DB->fetch_assoc($resultPort);
-
-		return($dataPort["FK_networking_ports"]);
+      if ($DB->numrows($resultPort) == "0") {
+         // Search in other devices
+         $queryPort = "SELECT * FROM glpi_networking_ports
+         WHERE ifaddr='".$IP."'
+         ORDER BY device_type
+         LIMIT 0,1";
+         $resultPort = $DB->query($queryPort);
+         $dataPort = $DB->fetch_assoc($resultPort);
+         $PortID = $dataPort["ID"];
+      } else {
+         $PortID = $dataPort["FK_networking_ports"];
+      }
+		return($PortID);
 	}
 
 
