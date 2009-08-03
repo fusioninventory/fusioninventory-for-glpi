@@ -12,7 +12,7 @@
    <name>Tracker</name>
    <key>tracker</key>
    <state>stable</state>
-   <logo>http://www.siprossii.com/image/actualite.jpg</logo>
+   <logo>pics/tracker.png</logo>
    <description>
       <short>
          <fr><![CDATA[Récupération des informations via le protocole SNMP. Interrogation des imprimantes (informations + état des cartouches + compteurs d'impression) et des switch (informations de chaque port + récupération des connexions des ordinateurs sur les switchs)]]></fr>
