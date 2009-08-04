@@ -40,7 +40,7 @@
    <homepage>http://forge.glpi-project.org/Tracker/</homepage>
    <download>http://forge.glpi-project.org/Tracker/download.php</download>
    <authors>
-      <author><a href="mailto:d.durieux@siprossii.com">David DURIEUX</a></author>
+      <author>David DURIEUX</author>
    </authors>
    <versions>
       <version>
