@@ -74,14 +74,14 @@
             <tag>réseau</tag>
             <tag>SNMP</tag>
             <tag>Switchs</tag>
-            <tag>imprimantes réseau</tag>
+            <tag>imprimantes</tag>
             <tag>inventaire</tag>
          </fr>
          <en>
             <tag>network</tag>
             <tag>SNMP</tag>
             <tag>switchs</tag>
-            <tag>network printers</tag>
+            <tag>printers</tag>
             <tag>inventory</tag>
          </en>
    </tags>
