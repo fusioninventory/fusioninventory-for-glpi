@@ -1763,7 +1763,7 @@ function plugin_tracker_addSelect($type,$ID,$num) {
 			switch ($table.".".$field) {
 
 				case "glpi_networking.ID" :
-					return "TRACKER_13.".$field." AS ITEM_$num, ";
+					return "TRACKER_12.".$field." AS ITEM_$num, ";
 					break;
 
 				case "glpi_networking_ports.name" :
@@ -2130,12 +2130,12 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 
 				// ** Tracker - switch
 				case "glpi_plugin_tracker_networking.ID" :
-					return " ORDER BY TRACKER_13.name $order ";
+					return " ORDER BY TRACKER_12.on_device $order ";
 					break;
 
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
-					return " ORDER BY TRACKER_22.name $order ";
+					return " ORDER BY TRACKER_22.".$field." $order ";
 					break;
 
 			}
@@ -2220,12 +2220,12 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 
 				// ** Tracker - switch
 				case "glpi_networking.ID" :
-					return " ORDER BY TRACKER_13.name $order ";
+					return " ORDER BY TRACKER_12.on_device $order ";
 					break;
 
 				// ** Tracker - switch port
 				case "glpi_networking_ports.name" :
-					return " ORDER BY TRACKER_22.name $order ";
+					return " ORDER BY TRACKER_22.".$field." $order ";
 					break;
 
 			}
@@ -2434,11 +2434,11 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 				case "glpi_plugin_tracker_networking.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
-						$ADD=" OR TRACKER_13.name IS NULL";
+						$ADD=" OR TRACKER_12.on_device IS NULL";
 					} else if ($nott=="1"&&$val=="NULL") {
-						$ADD=" OR TRACKER_13.name IS NOT NULL";
+						$ADD=" OR TRACKER_12.on_device IS NOT NULL";
 					}
-					return $link." (TRACKER_13.name  LIKE '%".$val."%' $ADD ) ";
+					return $link." (TRACKER_12.on_device  LIKE '%".$val."%' $ADD ) ";
 					break;
 
 				// ** Tracker - switch port
@@ -2593,11 +2593,11 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 				case "glpi_networking.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
-						$ADD=" OR TRACKER_13.name IS NULL";
+						$ADD=" OR TRACKER_12.on_device IS NULL";
 					} else if ($nott=="1"&&$val=="NULL") {
-						$ADD=" OR TRACKER_13.name IS NOT NULL";
+						$ADD=" OR TRACKER_12.on_device IS NOT NULL";
 					}
-					return $link." (TRACKER_13.name  LIKE '%".$val."%' $ADD ) ";
+					return $link." (TRACKER_12.on_device  LIKE '%".$val."%' $ADD ) ";
 					break;
 
 				// ** Tracker - switch port
