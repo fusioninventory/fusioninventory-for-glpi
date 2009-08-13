@@ -33,8 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_tracker_menu()
-{
+function plugin_tracker_menu() {
 	GLOBAL $CFG_GLPI,$LANG;
 
 	$width="180";
@@ -46,71 +45,80 @@ function plugin_tracker_menu()
 	echo "<tr><th colspan='4'>".$LANG['plugin_tracker']["title"][0]."</th></tr>";
 	
 	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_models","r"))
+	if(plugin_tracker_HaveRight("snmp_models","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_models.png'/>
 			<br/><b>".$LANG['plugin_tracker']["model_info"][4]."</b></a>";
+   }
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_authentification","r"))
+	if(plugin_tracker_HaveRight("snmp_authentification","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_authentification.png'/>
 			<br/><b>".$LANG['plugin_tracker']["model_info"][3]."</b></a>";
+   }
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_iprange","r"))
+	if(plugin_tracker_HaveRight("snmp_iprange","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rangeip.png'/>
 		<br/><b>".$LANG['plugin_tracker']["menu"][2]."</b></a>";
+   }
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_agent","r"))
+	if(plugin_tracker_HaveRight("snmp_agent","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_agents.png'/><br/>
 		<b>".$LANG['plugin_tracker']["menu"][1]."</b></a>";
+   }
 	echo "</td>";
 	echo "</tr>";
 
 	
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_scripts_infos","r"))
+	if(plugin_tracker_HaveRight("snmp_scripts_infos","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_server.png'/>
 			<br/><b>".$LANG['plugin_tracker']["processes"][0]."</b></a>";
+   }
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_agent_infos","r"))
+	if(plugin_tracker_HaveRight("snmp_agent_infos","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_agents.png'/>
 		<br/><b>".$LANG['plugin_tracker']["processes"][19]."</b></a>";
+   }
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_discovery","r"))
+	if(plugin_tracker_HaveRight("snmp_discovery","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_discovery.png'/>
 			<br/><b>".$LANG['plugin_tracker']["menu"][0]."</b></a>";
+   }
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_report","r"))
+	if(plugin_tracker_HaveRight("snmp_report","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rapports.png'/>
 		<br/><b>".$LANG['plugin_tracker']["processes"][20]."</b></a>";
+   }
 	echo "</td>";
 	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' width='".$width."' height='150'>";
-	if(plugin_tracker_HaveRight("snmp_networking","r"))
+	if(plugin_tracker_HaveRight("snmp_networking","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_unknown_device.png'/>
 			<br/><b>".$LANG['plugin_tracker']["menu"][4]."</b></a>";
+   }
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='150'>";
@@ -128,8 +136,7 @@ function plugin_tracker_menu()
 
 
 
-function plugin_tracker_mini_menu()
-{
+function plugin_tracker_mini_menu() {
 	GLOBAL $CFG_GLPI,$LANG;
 	
 	$width="50";
@@ -140,68 +147,77 @@ function plugin_tracker_mini_menu()
 //	echo "<tr><th colspan='8'>".$LANG['plugin_tracker']["menu"][3]."</th></tr>";
 	
 	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_models","r"))
+	if(plugin_tracker_HaveRight("snmp_models","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_models.png'
 				 onmouseout=\"cleanhide('menu_mini_models')\" onmouseover=\"cleandisplay('menu_mini_models')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_models'>".$LANG['plugin_tracker']["model_info"][4]."</span>";
+   }
+	echo "<span class='over_link' id='menu_mini_models'>".$LANG['plugin_tracker']["model_info"][4]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_authentification","r"))
+	if(plugin_tracker_HaveRight("snmp_authentification","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_authentification.png'
 				 onmouseout=\"cleanhide('menu_mini_authentification')\" onmouseover=\"cleandisplay('menu_mini_authentification')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_authentification'>".$LANG['plugin_tracker']["model_info"][3]."</span>";
+   }
+	echo "<span class='over_link' id='menu_mini_authentification'>".$LANG['plugin_tracker']["model_info"][3]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_iprange","r"))
+	if(plugin_tracker_HaveRight("snmp_iprange","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_rangeip.png'
 				 onmouseout=\"cleanhide('menu_mini_rangeip')\" onmouseover=\"cleandisplay('menu_mini_rangeip')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_rangeip'>".$LANG['plugin_tracker']["menu"][2]."</span>";
+   }
+   echo "<span class='over_link' id='menu_mini_rangeip'>".$LANG['plugin_tracker']["menu"][2]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_agent","r"))
+	if(plugin_tracker_HaveRight("snmp_agent","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_agents.png'
 				 onmouseout=\"cleanhide('menu_mini_agents')\" onmouseover=\"cleandisplay('menu_mini_agents')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_agents'>".$LANG['plugin_tracker']["menu"][1]."</span>";
+   }
+   echo "<span class='over_link' id='menu_mini_agents'>".$LANG['plugin_tracker']["menu"][1]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_scripts_infos","r"))
+	if(plugin_tracker_HaveRight("snmp_scripts_infos","r")){
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_info_server.png'
 				 onmouseout=\"cleanhide('menu_mini_info_server')\" onmouseover=\"cleandisplay('menu_mini_info_server')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_info_server'>".$LANG['plugin_tracker']["processes"][0]."</span>";
+   }
+   echo "<span class='over_link' id='menu_mini_info_server'>".$LANG['plugin_tracker']["processes"][0]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_agent_infos","r"))
+	if(plugin_tracker_HaveRight("snmp_agent_infos","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_info_agents.png'
 				 onmouseout=\"cleanhide('menu_mini_info_agents')\" onmouseover=\"cleandisplay('menu_mini_info_agents')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_info_agents'>".$LANG['plugin_tracker']["processes"][19]."</span>";
+   }
+   echo "<span class='over_link' id='menu_mini_info_agents'>".$LANG['plugin_tracker']["processes"][19]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_discovery","r"))
+	if(plugin_tracker_HaveRight("snmp_discovery","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_discovery.png'
 				 onmouseout=\"cleanhide('menu_mini_discovery')\" onmouseover=\"cleandisplay('menu_mini_discovery')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_discovery'>".$LANG['plugin_tracker']["menu"][0]."</span>";
+   }
+   echo "<span class='over_link' id='menu_mini_discovery'>".$LANG['plugin_tracker']["menu"][0]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_report","r"))
+	if(plugin_tracker_HaveRight("snmp_report","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_rapports.png'
 				 onmouseout=\"cleanhide('menu_mini_rapports')\" onmouseover=\"cleandisplay('menu_mini_rapports')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_rapports'>".$LANG['plugin_tracker']["processes"][20]."</span>";
+   }
+   echo "<span class='over_link' id='menu_mini_rapports'>".$LANG['plugin_tracker']["processes"][20]."</span>";
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_networking","r"))
+	if(plugin_tracker_HaveRight("snmp_networking","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_unknown_device.png'
 				 onmouseout=\"cleanhide('menu_mini_unknown')\" onmouseover=\"cleandisplay('menu_mini_unknown')\" /></a>";
-			echo "<span class='over_link' id='menu_mini_unknown'>".$LANG['plugin_tracker']["menu"][4]."</span>";
+   }
+   echo "<span class='over_link' id='menu_mini_unknown'>".$LANG['plugin_tracker']["menu"][4]."</span>";
 	echo "</td>";
 
 	echo "</tr>";
@@ -218,8 +234,7 @@ function plugin_tracker_mini_menu()
 
 
 
-function plugin_tracker_mib_management()
-{
+function plugin_tracker_mib_management() {
 	GLOBAL $DB,$CFG_GLPI,$LANG;
 	$query = "
 	SELECT * 
@@ -228,7 +243,7 @@ function plugin_tracker_mib_management()
 	$result = $DB->query($query);
 	$number = $DB->numrows($result);
 	
-	if($number !="0"){
+	if($number !="0") {
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
 		echo "<tr><th colspan='4'>".$LANG['plugin_tracker']["model_info"][5]." :</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
@@ -237,23 +252,21 @@ function plugin_tracker_mib_management()
 		echo "<th>".$LANG['plugin_tracker']["mib"][3]."</th>";
 		echo "</tr>";
 
-		while ($data=$DB->fetch_array($result)){
-			
+		while ($data=$DB->fetch_array($result)) {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'><a href=''><b>
-			".getDropdownName("glpi_plugin_tracker_model_infos",$data["FK_model_infos"])."</b></a></td>";
+            ".getDropdownName("glpi_plugin_tracker_model_infos",$data["FK_model_infos"])."</b></a></td>";
 			echo "<td align='center'>
-			".getDropdownName("glpi_dropdown_plugin_tracker_mib_label",$data["FK_mib_oid"])."</td>";
+            ".getDropdownName("glpi_dropdown_plugin_tracker_mib_label",$data["FK_mib_oid"])."</td>";
 			echo "<td align='center'>
-			".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."</td>";
+            ".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."</td>";
 			echo "<td align='center'>
-			".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."</td>";
+            ".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."</td>";
 			echo "</tr>";
 
 		}
 		echo "</table></div>";
-	}
-	else{
+	} else {
 		echo "<div align='center'><table class='tab_cadre_fixe'>";
 		echo "<tr><th colspan='3'>".$LANG['plugin_tracker']["model_info"][5].":</th></tr>";
 		echo "<tr><th>".$LANG["common"][16]."</th>";
@@ -262,30 +275,27 @@ function plugin_tracker_mib_management()
 		echo "</tr>";
 		echo "</table></div>";
 	}
-
 }
 
 
 
-function plugin_tracker_Bar ($pourcentage, $message="",$order='')
-{
-//	echo "<div class='doaction_cadre' style='height: 20px; '><div  style='width: ".$pourcentage."%;' class='doaction_progress'>".
-//  			"<div class='doaction_pourcent' style='margin-top: 3px; '>".$pourcentage."% ".$message."</div></div></div> ";
-	if ((!empty($pourcentage)) AND ($pourcentage < 0))
+function plugin_tracker_Bar ($pourcentage, $message="",$order='') {
+	if ((!empty($pourcentage)) AND ($pourcentage < 0)) {
 		unset($pourcentage);
-	elseif ((!empty($pourcentage)) AND ($pourcentage > 100))
+   } else if ((!empty($pourcentage)) AND ($pourcentage > 100)) {
 		unset($pourcentage);
+   }
 	echo "<div>
 				<table class='tab_cadre' width='400'>
 					<tbody>
 						<tr>
 							<td align='center' width='400'>";
 
-	if ((!empty($pourcentage)) OR ($pourcentage == "0"))
+	if ((!empty($pourcentage)) OR ($pourcentage == "0")) {
 		echo $pourcentage."% ".$message;
+   }
 
-
-echo						"</td>
+   echo						"</td>
 						</tr>
 						<tr>
 							<td>
@@ -296,39 +306,39 @@ echo						"</td>
 											<td width='400' height='0' colspan='2'></td>										
 										</tr>
 										<tr>";
-	if (empty($pourcentage))
+	if (empty($pourcentage)) {
 		echo "<td></td>";
-	else
-	{
+   } else {
 		echo "										<td bgcolor='";
-		if ($order!= '')
-		{
-			if ($pourcentage > 80)
+		if ($order!= '') {
+			if ($pourcentage > 80) {
 				echo "red";
-			else if($pourcentage > 60)
+         } else if($pourcentage > 60) {
 				echo "orange";
-			else 
+         } else {
 				echo "green";
-		}
-		else
-		{
-			if ($pourcentage < 20)
+         }
+		} else {
+			if ($pourcentage < 20) {
 				echo "red";
-			else if($pourcentage < 40)
+         } else if($pourcentage < 40) {
 				echo "orange";
-			else 
+         } else {
 				echo "green";
+         }
 		}
-		if ($pourcentage == 0)
+		if ($pourcentage == 0) {
 			echo "' height='20' width='1'>&nbsp;</td>";
-		else
+      } else {
          echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>";
+      }
 	}
-		if ($pourcentage == 0)
-			echo "									<td width='1'></td>";
-		else
-			echo "									<td width='".(400 - (4 * $pourcentage))."'></td>";
-		echo "								</tr>
+   if ($pourcentage == 0) {
+      echo "									<td width='1'></td>";
+   } else {
+      echo "									<td width='".(400 - (4 * $pourcentage))."'></td>";
+   }
+   echo "								</tr>
 									</tbody>
 								</table>
 							</td>
