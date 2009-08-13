@@ -157,7 +157,26 @@ class PluginTrackerPrinters extends CommonDBTM {
 				if (strstr($mapping_type_name, "cartridges")) {
 					$explode[1] = str_replace ("MAX", "", $mapping_type_name);
 					$explode[1] = str_replace ("REMAIN", "", $explode[1]);
-					$mapping_name[$explode[1]] = "1";			
+               switch($explode[1]) {
+                     CASE "cartridgesblack":
+                        $mapping_name[$explode[1]] = "1";
+                        break;
+
+                     CASE "cartridgescyan":
+                        $mapping_name[$explode[1]] = "2";
+                        break;
+
+                     CASE "cartridgesmagenta":
+                        $mapping_name[$explode[1]] = "3";
+                        break;
+
+                     CASE "cartridgesyellow":
+                        $mapping_name[$explode[1]] = "4";
+                        break;
+
+                     default:
+                        $mapping_name[$explode[1]] = "5";
+               }
 				}
 			}
 
@@ -174,7 +193,7 @@ class PluginTrackerPrinters extends CommonDBTM {
 		echo "</th>";
 		echo "</tr>";
 
-		ksort($mapping_name);
+		asort($mapping_name);
 		foreach ($mapping_name as $cartridge_name=>$val) {
 			$state = $plugin_tracker_printers->cartridges_state($ID, $cartridge_name);
 			echo "<tr class='tab_bg_1'>";
