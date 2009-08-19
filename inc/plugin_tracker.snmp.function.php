@@ -756,7 +756,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
                      WHERE ID='".$ArrayPortsID[$ifName]."' ";
                      $result_verif = $DB->query($query_verif);
                      $data_verif = $DB->fetch_assoc($result_verif);
-                       if (($data_verif['ifmac'] == $MacAddress) OR ($data_verif['ifmac'] == strtoupper($MacAddress))) {
+                       if ((($data_verif['ifmac'] == $MacAddress) OR ($data_verif['ifmac'] == strtoupper($MacAddress))) AND ($data_verif['ifmac'] != "")) {
                           $queryPortEnd = "";
                        } else {
                            $logs->write("tracker_fullsync","Mac address OK",$type."][".$ID_Device,1);
