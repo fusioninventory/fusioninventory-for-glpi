@@ -244,66 +244,105 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 	$oid_ifType = $oidsModel[0][1]['ifType'];
 	$logs->write("tracker_fullsync","type of port : ".$oid_ifType,$type."][".$ID_Device,1);
 
+   asort($ArrayPort_LogicalNum_SNMPNum);
+
+   // Reorder ports with good logic number
+   $query = "SELECT last_PID_update FROM glpi_plugin_tracker_networking
+      WHERE FK_networking='".$ID_Device."' 
+         AND last_PID_update='0' ";
+   $result = $DB->query($query);
+   if ($DB->numrows($result) == 1) {
+      foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$i) {
+         $query_update = "UPDATE glpi_networking_ports
+            SET logical_number='".$i."'
+            WHERE on_device='".$ID_Device."'
+               AND device_type='".$type."'
+               AND name='".$ArrayPort_LogicalNum_SNMPName[$num]."' ";
+         $DB->query($query_update);
+      }
+   }
+   
+
+
 	// Get query SNMP to have number of ports
 	if ((isset($portcounter)) AND (!empty($portcounter))) {
 		// ** Add ports in DataBase if they don't exists
-		for ($i=0 ; $i < $portcounter ; $i++) {
+
+      foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$i) {
+		//for ($i=0 ; $i < $portcounter ; $i++) {
 			// Get type of port
-			$ifType = $oidvalues[$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$i]][""];
-			$oidList[] = $ArrayPort_LogicalNum_SNMPNum[$i];
+			$ifType = $oidvalues[$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$num]][""];
+			$oidList[$i] = $ArrayPort_LogicalNum_SNMPNum[$num];
 
 			if ((strstr($ifType, "ethernetCsmacd"))
 				OR ($ifType == "6")
 				OR ($ifType == "ethernet-csmacd(6)")) {
 
-				// Increment number of port queried in process
-//				$query = "UPDATE glpi_plugin_tracker_processes SET ports_queries = ports_queries + 1
-//				WHERE process_id='".$FK_process."' ";
-//				$DB->query($query);
+            $goodname = 1;
+            if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) {
+               if (strstr($ArrayPort_LogicalNum_SNMPName[$num], 'VL')) {
+                  $goodname = 0;
+                  $deleteportname[] = $i;
+                  unset($oidList[$i]);
+               }
+            }
+            if ($goodname == 1) {
+               $query = "SELECT ID,name
+               FROM glpi_networking_ports
+               WHERE on_device='".$ID_Device."'
+                  AND device_type='".$type."'
+                  AND logical_number='".$i."' ";
+               $result = $DB->query($query);
+               if ($DB->numrows($result) == 0) {
+                  unset($array);
+                  $array["logical_number"] = $i;
+                  $array["name"] = $ArrayPort_LogicalNum_SNMPName[$num];
+                  $array["on_device"] = $ID_Device;
+                  $array["device_type"] = $type;
 
-				$query = "SELECT ID,name
-				FROM glpi_networking_ports
-				WHERE on_device='".$ID_Device."'
-					AND device_type='".$type."'
-					AND logical_number='".$i."' ";
-				$result = $DB->query($query);
-				if ($DB->numrows($result) == 0) {
-					unset($array);
-					$array["logical_number"] = $i;
-					$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
-					$array["on_device"] = $ID_Device;
-					$array["device_type"] = $type;
+                  $IDport = $np->add($array);
+                  logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
+                  $logs->write("tracker_fullsync","Add port in DB (glpi_networking_ports) : ".$ArrayPort_LogicalNum_SNMPName[$i],$type."][".$ID_Device,1);
+               } else {
+                  $IDport = $DB->result($result, 0, "ID");
+                  if ($DB->result($result, 0, "name") != $ArrayPort_LogicalNum_SNMPName[$num]) {
+                     unset($array);
+                     $array["name"] = $ArrayPort_LogicalNum_SNMPName[$num];
+                     $array["ID"] = $DB->result($result, 0, "ID");
+                     $np->update($array);
+                     $logs->write("tracker_fullsync","Update port in DB (glpi_networking_ports) : ID".$DB->result($result, 0, "ID")." & name ".$ArrayPort_LogicalNum_SNMPName[$i],$type."][".$ID_Device,1);
+                  }
+               }
+               if ($type == NETWORKING_TYPE) {
+                  $queryTrackerPort = "SELECT ID
+                  FROM glpi_plugin_tracker_networking_ports
+                  WHERE FK_networking_ports='".$IDport."' ";
 
-					$IDport = $np->add($array);
-					logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
-					$logs->write("tracker_fullsync","Add port in DB (glpi_networking_ports) : ".$ArrayPort_LogicalNum_SNMPName[$i],$type."][".$ID_Device,1);
-				} else {
-					$IDport = $DB->result($result, 0, "ID");
-					if ($DB->result($result, 0, "name") != $ArrayPort_LogicalNum_SNMPName[$i]) {
-						unset($array);
-						$array["name"] = $ArrayPort_LogicalNum_SNMPName[$i];
-						$array["ID"] = $DB->result($result, 0, "ID");
-						$np->update($array);
-						$logs->write("tracker_fullsync","Update port in DB (glpi_networking_ports) : ID".$DB->result($result, 0, "ID")." & name ".$ArrayPort_LogicalNum_SNMPName[$i],$type."][".$ID_Device,1);
-					}
-				}
-				if ($type == NETWORKING_TYPE) {
-					$queryTrackerPort = "SELECT ID
-					FROM glpi_plugin_tracker_networking_ports
-					WHERE FK_networking_ports='".$IDport."' ";
-
-					$resultTrackerPort = $DB->query($queryTrackerPort);
-					if ($DB->numrows($resultTrackerPort) == 0) {
-						$queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports
-							(FK_networking_ports)
-						VALUES ('".$IDport."') ";
-						$DB->query($queryInsert);
-						$logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type."][".$ID_Device,1);
-					}
-				}
+                  $resultTrackerPort = $DB->query($queryTrackerPort);
+                  if ($DB->numrows($resultTrackerPort) == 0) {
+                     $queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports
+                        (FK_networking_ports)
+                     VALUES ('".$IDport."') ";
+                     $DB->query($queryInsert);
+                     $logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type."][".$ID_Device,1);
+                  }
+               }
+            }
 			}
 		}
 	}
+   // Delete all ports that will be not here
+   foreach($deleteportname as $id=>$i) {
+      $query = "SELECT *
+      FROM glpi_networking_ports
+      WHERE on_device='".$ID_Device."'
+         AND device_type='".$type."'
+         AND logical_number='".$i."' ";
+      $result = $DB->query($query);
+      $data = $DB->fetch_assoc($result);
+
+      $np->delete($data);
+   }
 	return $oidList;
 }
 
@@ -1150,7 +1189,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                   unset($Array_multiplemac_ifIndex[$ifIndex]);
                }
                $logs->write("tracker_fullsync","ifIndex = ".$ifIndex,$type."][".$ID_Device,1);
-               $logs->write("tracker_fullsync","ifIndex num logic = ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex],$type."][".$ID_Device,1);
+               //$logs->write("tracker_fullsync","ifIndex num logic = ".$ArrayPort_LogicalNum_SNMPNum[$ifIndex],$type."][".$ID_Device,1);
          //		$logs->write("tracker_fullsync","ifIndex name logic = ".$ArrayPort_LogicalNum_SNMPName[$ArrayPort_LogicalNum_SNMPNum[$ifIndex]],$type."][".$ID_Device,1);
 
                // Search port of switch connected on this port and connect it if not connected
@@ -1158,7 +1197,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                $PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""]);
 
                $query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-               WHERE logical_number='".$ArrayPort_LogicalNum_SNMPNum[$ifIndex]."'
+               WHERE logical_number='".$ifIndex."'
                   AND device_type='".NETWORKING_TYPE."'
                   AND on_device='".$ID_Device."' ";
                $result = $DB->query($query);
