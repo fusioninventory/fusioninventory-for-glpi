@@ -1072,11 +1072,11 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
          foreach ($ArrayPort_LogicalNum_SNMPNum AS $num=>$ifIndex) {
             $Arraydot1dTpFdbPort[$ifIndex] = 0;
          }
-
          foreach ($Array_vlan as $num=>$vlan) {
-            $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1,$vlan);
-            foreach($ArrayPortNumber as $num=>$PortNumber) {
-               $Arraydot1dTpFdbPort[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][$vlan]]++;
+            $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
+            foreach($ArrayPortNumber as $num=>$dynamicdata) {
+               $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
+               $Arraydot1dTpFdbPort[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan]]++;
             }
          }
       }
