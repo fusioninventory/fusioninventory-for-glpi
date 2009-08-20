@@ -280,7 +280,12 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 
             $goodname = 1;
             if(strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) {
-               if (strstr($ArrayPort_LogicalNum_SNMPName[$num], 'VL')) {
+               if (strstr($ArrayPort_LogicalNum_SNMPName[$num], 'VLAN-')) {
+                  $goodname = 0;
+                  $deleteportname[] = $i;
+                  unset($oidList[$i]);
+               }
+               if (strstr($ArrayPort_LogicalNum_SNMPName[$num], 'Vl')) {
                   $goodname = 0;
                   $deleteportname[] = $i;
                   unset($oidList[$i]);
