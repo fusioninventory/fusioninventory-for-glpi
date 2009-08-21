@@ -1064,6 +1064,10 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
       switch (!false) {
 
+         case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco IOS Software, C1") :
+            $sysDescr = "Cisco IOS Software, C1";
+            break;
+
          case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco") :
             $sysDescr = "Cisco";
             break;
@@ -1085,7 +1089,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
    //$manufCisco->NbMacEachPort
 
-   if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))) {
+   if ($sysDescr == "Cisco") {
       $Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 
       if ((array_count_values($Array_vlan) != 0) AND (array_count_values($Array_vlan) != 0)) {
@@ -1124,7 +1128,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
          }
       }
    }
-   if((strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco IOS Software, C1"))) {
+   if ($sysDescr == "Cisco IOS Software, C1") {
       $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".3"][$vlan]] = 1;
    }
 	// End detection of ports non trunk and have multiple mac addresses
