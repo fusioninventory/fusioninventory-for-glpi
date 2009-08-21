@@ -38,6 +38,58 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
+class PluginTrackerManufacturerHP extends CommonDBTM {
 
+
+
+// Get trunk/tagged ports from OID
+   function TrunkPorts ($oidvalues,$oidsModel,$ID_Device,$type) {
+      // Same code as Cisco
+      $manufCisco = new PluginTrackerManufacturerCisco;
+      return $manufCisco->TrunkPorts($oidvalues,$oidsModel,$ID_Device,$type);
+   }
+
+
+   function CDPPorts ($oidvalues,$oidsModel,$ID_Device,$type,$Array_multiplemac_ifIndex) {
+      // Same code as Cisco
+      $manufCisco = new PluginTrackerManufacturerCisco;
+      list($Array_cdp_ifIndex, $Array_multiplemac_ifIndex) = $manufCisco->CDPPorts($oidvalues,$oidsModel,$ID_Device,$type,$Array_multiplemac_ifIndex);
+      return array ($Array_cdp_ifIndex, $Array_multiplemac_ifIndex);
+   }
+
+
+
+   function tmpConnections($oidvalues,$oidsModel,$ifIndex,$TMP_ID,$ID_Device,$type) {
+      $logs = new PluginTrackerLogs;
+      $tmpc = new PluginTrackerTmpConnections;
+      $walks = new PluginTrackerWalk;
+
+      $Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
+      $Array_vlan[] = "";
+      foreach ($Array_vlan as $num=>$vlan) {
+         $ArrayMACAdressTable = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbAddress'],1,$vlan);
+         foreach($ArrayMACAdressTable as $num=>$dynamicdata) {
+            $oidExplode = explode(".", $dynamicdata);
+            // Get by SNMP query the port number (dot1dTpFdbPort)
+            if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]) AND ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan] != "0"))) {
+               // Convert MAC HEX in Decimal
+               $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+               $MacAddress_tmp = str_split($MacAddress, 2);
+               $MacAddress = $MacAddress_tmp[0];
+               for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
+                  $MacAddress .= ":".$MacAddress_tmp[$i];
+               }
+               $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
+               $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
+               if ($ifIndex == $BridgePortifIndex) {
+                  $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type."][".$ID_Device,1);
+                  $tmpc->AddConnections($TMP_ID, $MacAddress);
+               }
+            }
+         }
+      }
+   }
+
+}
 
 ?>

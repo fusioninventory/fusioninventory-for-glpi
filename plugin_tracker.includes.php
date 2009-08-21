@@ -42,4 +42,9 @@ foreach (glob(GLPI_ROOT.'/plugins/tracker/inc/*.php') as $file) {
 		include_once($file);
    }
 }
+
+foreach (glob(GLPI_ROOT.'/plugins/tracker/inc_manufacturer/*.php') as $file) {
+   include_once($file);
+}
+
 ?>
