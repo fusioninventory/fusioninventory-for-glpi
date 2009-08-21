@@ -37,7 +37,48 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
+class PluginTrackerManufacturer3com extends CommonDBTM {
 
+   function MultiplePorts() {
+      // For 3Com IntelliJack NJ225
+      $Array_multiplemac_ifIndex["1"] = 1;
+      return $Array_multiplemac_ifIndex;
+   }
+
+
+   function tmpConnections($oidvalues,$oidsModel,$ifIndex,$TMP_ID,$ID_Device,$type) {
+      $logs = new PluginTrackerLogs;
+      $tmpc = new PluginTrackerTmpConnections;
+      $walks = new PluginTrackerWalk;
+
+
+      $BridgePortifIndex = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
+      foreach($BridgePortifIndex as $num=>$BridgePortNumber) {
+         $logs->write("tracker_fullsync","*********** TMP ".$BridgePortNumber,$type."][".$ID_Device,1);
+         $ifIndexFound = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][""];
+         if ($ifIndexFound == $ifIndex) {
+            // Search in dot1dTpFdbPort the dynamicdata associate to this BridgePortNumber
+            $ArrayBridgePortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
+            foreach($ArrayBridgePortNumber as $num=>$dynamicdata) {
+               $BridgePortifIndexFound = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""];
+               if ($BridgePortifIndexFound == $BridgePortNumber) {
+                  $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
+                  $MacAddress_tmp = str_split($MacAddress, 2);
+                  $MacAddress = $MacAddress_tmp[0];
+                  for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
+                     $MacAddress .= ":".$MacAddress_tmp[$i];
+                  }
+                  $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type."][".$ID_Device,1);
+                  $tmpc->AddConnections($TMP_ID, $MacAddress);
+               }
+            }
+         }
+      }
+
+   }
+
+
+}
 
 
 ?>
