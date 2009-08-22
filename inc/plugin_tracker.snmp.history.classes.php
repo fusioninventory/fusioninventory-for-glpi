@@ -108,7 +108,9 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
             }
          }
       }
-      asort($listName);
+      if (!empty($listName)) {
+         asort($listName);
+      }
 
       // Get list of fields configured for history
       $query = "SELECT * FROM glpi_plugin_tracker_config_snmp_history";
@@ -119,8 +121,9 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
             unset($listName[$data['field']]);
          }
       }
-      asort($options);
-
+      if (!empty($options)) {
+         asort($options);
+      }
       echo "<td class='right' width='350'>";
       if (count($listName)) {
          echo "<select name='plugin_tracker_extraction_to_add[]' multiple size='15'>";
