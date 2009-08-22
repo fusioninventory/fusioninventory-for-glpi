@@ -117,76 +117,91 @@ class PluginTrackerUnknown extends CommonDBTM {
 
 
 
+   function CleanOrphelinsConnections() {
+      global $DB;
+
+      $query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
+         LEFT JOIN glpi_plugin_tracker_unknown_device
+            ON on_device=glpi_plugin_tracker_unknown_device.ID
+         WHERE device_type=".PLUGIN_TRACKER_MAC_UNKNOWN."
+            AND glpi_plugin_tracker_unknown_device.ID IS NULL";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $unknown_infos["name"] = '';
+            $newID=$this->add($unknown_infos);
+            
+            $query_update = "UPDATE glpi_networking_ports
+					SET on_device='".$newID."'
+               WHERE ID='".$data["ID"]."' ";
+				$DB->query($query_update);
+         }
+      }
+      
+   }
+
+
+
 	function FusionUnknownKnownDevice() {
 		global $DB;
 
-//		$query = "SELECT * FROM glpi_networking_ports ".
-//			" WHERE (ifmac) IN ".
-//				" (SELECT ifmac FROM glpi_networking_ports ".
-//					" GROUP BY 1 ".
-//					" HAVING count(*)>1) ".
-//			" AND ifmac !='' ".
-//			" AND ifmac!='00:00:00:00:00:00' ".
-//			" AND device_type=".PLUGIN_TRACKER_MAC_UNKNOWN." ";
 		$query = "SELECT * FROM glpi_networking_ports ".
 			" WHERE ifmac !='' ".
 				" AND ifmac!='00:00:00:00:00:00' ".
 				" AND device_type=".PLUGIN_TRACKER_MAC_UNKNOWN." ".
 			" GROUP BY ifmac ".
 			" HAVING count(*)>0 ";
-
-
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
 				// $data = ID of unknown device
-
 				$query_known = "SELECT * FROM glpi_networking_ports ".
 					" WHERE ifmac='".$data["ifmac"]."' ".
 						" AND device_type!=".PLUGIN_TRACKER_MAC_UNKNOWN." ".
 					" LIMIT 0,1 ";
 				$result_known=$DB->query($query_known);
-				$data_known=$DB->fetch_array($result_known);
+            if ($DB->numrows($result_known) > 0) {
+               $data_known=$DB->fetch_array($result_known);
 
-				$query_update = "UPDATE glpi_networking_ports ".
-					" SET on_device='".$data_known["on_device"]."', ".
-						" device_type='".$data_known["device_type"]."', ".
-						" logical_number='".$data_known["logical_number"]."', ".
-						" name='".$data_known["name"]."', ".
-						" ifaddr='".$data_known["ifaddr"]."', ".
-						" iface='".$data_known["iface"]."', ".
-						" netpoint='".$data_known["netpoint"]."', ".
-						" netmask='".$data_known["netmask"]."', ".
-						" gateway='".$data_known["gateway"]."', ".
-						" subnet='".$data_known["subnet"]."' ".
-					" WHERE ID='".$data["ID"]."' ";
-				$DB->query($query_update);
+               $query_update = "UPDATE glpi_networking_ports ".
+                  " SET on_device='".$data_known["on_device"]."', ".
+                     " device_type='".$data_known["device_type"]."', ".
+                     " logical_number='".$data_known["logical_number"]."', ".
+                     " name='".$data_known["name"]."', ".
+                     " ifaddr='".$data_known["ifaddr"]."', ".
+                     " iface='".$data_known["iface"]."', ".
+                     " netpoint='".$data_known["netpoint"]."', ".
+                     " netmask='".$data_known["netmask"]."', ".
+                     " gateway='".$data_known["gateway"]."', ".
+                     " subnet='".$data_known["subnet"]."' ".
+                  " WHERE ID='".$data["ID"]."' ";
+               $DB->query($query_update);
 
-				// Delete old networking port
-				$query_delete = "DELETE FROM glpi_networking_ports WHERE ID='".$data_known["ID"]."' ";
-				$DB->query($query_delete);
+               // Delete old networking port
+               $query_delete = "DELETE FROM glpi_networking_ports WHERE ID='".$data_known["ID"]."' ";
+               $DB->query($query_delete);
 
-				// Delete unknown device
-				$query_delete = "DELETE FROM glpi_plugin_tracker_unknown_device WHERE ID='".$data["on_device"]."' ";
-				$DB->query($query_delete);
+               // Delete unknown device
+               $query_delete = "DELETE FROM glpi_plugin_tracker_unknown_device WHERE ID='".$data["on_device"]."' ";
+               $DB->query($query_delete);
 
-				// Modify OCS link of this networking port
-				$query = "SELECT * 
-					FROM glpi_ocs_link 
-					WHERE glpi_id='".$data_known["on_device"]."' ";
-				$result = $DB->query($query);
-				if ($DB->numrows($result) == 1) {
-					$line = $DB->fetch_assoc($result);
+               // Modify OCS link of this networking port
+               $query = "SELECT *
+                  FROM glpi_ocs_link
+                  WHERE glpi_id='".$data_known["on_device"]."' ";
+               $result = $DB->query($query);
+               if ($DB->numrows($result) == 1) {
+                  $line = $DB->fetch_assoc($result);
 
-					$import_ip = importArrayFromDB($line["import_ip"]);
-					$ip_port = $import_ip[$data_known["ID"]];
-					unset($import_ip[$data_known["ID"]]);
-					$import_ip[$data["ID"]] = $ip_port;
+                  $import_ip = importArrayFromDB($line["import_ip"]);
+                  $ip_port = $import_ip[$data_known["ID"]];
+                  unset($import_ip[$data_known["ID"]]);
+                  $import_ip[$data["ID"]] = $ip_port;
 
-					$query_update = "UPDATE glpi_ocs_link
-						SET `import_ip`='" . exportArrayToDB($import_ip) . "'
-						WHERE glpi_id='".$line["ID"]."' ";
-					$DB->query($query_update);
-				}
+                  $query_update = "UPDATE glpi_ocs_link
+                     SET `import_ip`='" . exportArrayToDB($import_ip) . "'
+                     WHERE glpi_id='".$line["ID"]."' ";
+                  $DB->query($query_update);
+               }
+            }
 			}
 		}
 	}

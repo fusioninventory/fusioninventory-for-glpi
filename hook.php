@@ -1173,11 +1173,14 @@ function plugin_tracker_getDropdown() {
 
 /* Cron */
 function cron_plugin_tracker() {
+   logInFile('tracker',"cron called\n");
 	$plugin_tracker_unknown = new PluginTrackerUnknown;
+   $plugin_tracker_unknown->CleanOrphelinsConnections();
 	$plugin_tracker_unknown->FusionUnknownKnownDevice();
-   // Clean server script processes history
+   #Clean server script processes history
    $tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
    $tracker_config_snmp_networking->CleanHistory("history_process");
+   return 1;
 }
 
 
