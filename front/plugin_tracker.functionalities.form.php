@@ -76,6 +76,14 @@ if (isset($_POST['update'])) {
 	if (isset($config1)) {
 		$config1->update($_POST);
    }
+} else if ((isset($_POST['plugin_tracker_extraction_add']))
+	OR (isset($_POST['plugin_tracker_extraction_delete']))) {
+
+   $history = new PluginTrackerSNMPHistory;
+	$history->UpdateConfigFields($_POST);
+} else if ((isset($_POST['Clean_history']))) {
+    $history = new PluginTrackerSNMPHistory;
+    $history->CleanHistory("");
 }
 
 $config = new PluginTrackerConfig;

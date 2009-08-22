@@ -93,6 +93,7 @@ class PluginTrackerConfig extends CommonDBTM {
 		if ($this->getValue("activation_snmp_printer") == "1") {
 			$ong[6]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2];
       }
+      $ong[7]=$LANG['title'][38];
 		//$ong[7]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34];
 		//$ong[8]=$LANG['plugin_tracker']["functionalities"][4];
 		return $ong;

@@ -75,6 +75,167 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 		$DB->query($query);
 		return mysql_insert_id();
 	}
+
+
+   function showForm($target,$ID) {
+      global $LANG, $DB;
+
+      echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
+		echo "<table class='tab_cadre_fixe' cellpadding='2'>";
+
+		echo "<tr>";
+		echo "<th colspan='3'>";
+		echo $LANG['plugin_tracker']["functionalities"][28]." :";
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='3'>";
+		echo $LANG['plugin_tracker']["functionalities"][29]." :";
+		echo "</td>";
+		echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+
+      include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+
+      $options="";
+
+      foreach ($TRACKER_MAPPING as $type=>$mapping43) {
+         if (isset($TRACKER_MAPPING[$type])) {
+            foreach ($TRACKER_MAPPING[$type] as $name=>$mapping) {
+               $listName[$type."-".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+            }
+         }
+      }
+      asort($listName);
+
+      // Get list of fields configured for history
+      $query = "SELECT * FROM glpi_plugin_tracker_config_snmp_history";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            list($type,$name) = explode("-", $data['field']);
+            $options[$data['field']]=$TRACKER_MAPPING[$type][$name]["name"];
+            unset($listName[$data['field']]);
+         }
+      }
+      asort($options);
+
+      echo "<td class='right' width='350'>";
+      if (count($listName)) {
+         echo "<select name='plugin_tracker_extraction_to_add[]' multiple size='15'>";
+         foreach ($listName as $key => $val) {
+            //list ($item_type, $item) = split("_", $key);
+            echo "<option value='$key'>" . $val . "</option>\n";
+         }
+         echo "</select>";
+      }
+
+      echo "</td><td class='center'>";
+
+      if (count($listName)) {
+         echo "<input type='submit'  class=\"submit\" name='plugin_tracker_extraction_add' value='" . $LANG["buttons"][8] . " >>'>";
+      }
+      echo "<br /><br />";
+      if (!empty($options)) {
+         echo "<input type='submit'  class=\"submit\" name='plugin_tracker_extraction_delete' value='<< " . $LANG["buttons"][6] . "'>";
+      }
+
+      echo "</td><td class='left'>";
+      if (!empty($options)) {
+         echo "<select name='plugin_tracker_extraction_to_delete[]' multiple size='15'>";
+         foreach ($options as $key => $val) {
+            //list ($item_type, $item) = split("_", $key);
+            echo "<option value='$key'>" . $val . "</option>\n";
+         }
+         echo "</select>";
+      } else {
+         echo "&nbsp;";
+      }
+      echo "</td>";
+		echo "</tr>";
+
+
+		echo "<tr>";
+		echo "<th colspan='3'>";
+		echo $LANG['plugin_tracker']["functionalities"][60]." :";
+		echo "</th>";
+		echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='3' class='center'>";
+      echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
+      echo "</td>";
+      echo "</tr>";
+
+
+		echo "<tr>";
+		echo "<th colspan='3'>";
+      echo "&nbsp;";
+		echo "</th>";
+		echo "</tr>";
+
+
+		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+		echo "<input type='hidden' name='tabs' value='history' />";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+		echo "</table></form>";
+
+   }
+
+   function UpdateConfigFields($data) {
+      GLOBAL $DB;
+
+		if (isset($data['plugin_tracker_extraction_to_add'])) {
+			foreach ($data['plugin_tracker_extraction_to_add'] as $key=>$id_value) {
+				$query = "INSERT INTO glpi_plugin_tracker_config_snmp_history
+				(field)
+				VALUES ('".$id_value."')";
+				$DB->query($query);
+			}
+      }
+
+		if (isset($data['plugin_tracker_extraction_to_delete'])) {
+			foreach ($data['plugin_tracker_extraction_to_delete'] as $key=>$id_value) {
+				$query = "DELETE FROM glpi_plugin_tracker_config_snmp_history
+				WHERE field='".$id_value."'";
+				$DB->query($query);
+			}
+      }
+   }
+
+
+   function CleanHistory($data) {
+      GLOBAL $DB;
+
+      include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+
+      foreach ($TRACKER_MAPPING as $type=>$mapping43) {
+         if (isset($TRACKER_MAPPING[$type])) {
+            foreach ($TRACKER_MAPPING[$type] as $name=>$mapping) {
+               $listName[$type."-".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+            }
+         }
+      }
+
+      $query = "SELECT * FROM glpi_plugin_tracker_config_snmp_history";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            list($type,$name) = explode("-", $data['field']);
+            $options[$data['field']]=$TRACKER_MAPPING[$type][$name]["name"];
+            unset($listName[$data['field']]);
+         }
+      }
+
+      foreach ($listName as $var=>$tmp) {
+         list($type,$name) = explode("-", $var);
+         $query_delete = 'DELETE FROM glpi_plugin_tracker_snmp_history
+            WHERE Field="'.$TRACKER_MAPPING[$type][$name]["name"].'" ';
+         $DB->query($query_delete);
+      }
+
+   }
+
 }
 
 ?>

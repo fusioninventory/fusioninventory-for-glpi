@@ -11,3 +11,12 @@ ALTER TABLE `glpi_plugin_tracker_printers` ADD INDEX (`FK_snmp_connection`);
 ALTER TABLE `glpi_plugin_tracker_tmp_connections` ADD INDEX (`macaddress`);
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_history`;
+
+CREATE TABLE `glpi_plugin_tracker_config_snmp_history` (
+   `id` INT( 8 ) NOT NULL AUTO_INCREMENT ,
+   `field` VARCHAR( 255 ) NOT NULL ,
+   PRIMARY KEY ( `id` ) ,
+   INDEX ( `field` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
