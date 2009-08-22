@@ -1173,7 +1173,6 @@ function plugin_tracker_getDropdown() {
 
 /* Cron */
 function cron_plugin_tracker() {
-   logInFile('tracker',"cron called\n");
 	$plugin_tracker_unknown = new PluginTrackerUnknown;
    $plugin_tracker_unknown->CleanOrphelinsConnections();
 	$plugin_tracker_unknown->FusionUnknownKnownDevice();
