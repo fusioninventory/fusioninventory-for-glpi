@@ -104,6 +104,8 @@ $LANG['plugin_tracker']["functionalities"][24]="Retention of historical errors S
 $LANG['plugin_tracker']["functionalities"][25]="Retention of historical processes scripts (0 = infinity)";
 $LANG['plugin_tracker']["functionalities"][26]="GLPI URL for agent";
 $LANG['plugin_tracker']["functionalities"][27]="SSL only for agent";
+$LANG['plugin_tracker']["functionalities"][28]="History configuration";
+$LANG['plugin_tracker']["functionalities"][29]="List of fields to history";
 
 $LANG['plugin_tracker']["functionalities"][30]="Status of active material";
 $LANG['plugin_tracker']["functionalities"][31]="Management of cartridges and stock";
@@ -118,6 +120,8 @@ $LANG['plugin_tracker']["functionalities"][50]="Number of simultaneous processes
 $LANG['plugin_tracker']["functionalities"][51]="Number of simultaneous processes for SNMP queries";
 $LANG['plugin_tracker']["functionalities"][52]="Log files activation";
 $LANG['plugin_tracker']["functionalities"][53]="Number of simultanous processes to be used by server script";
+
+$LANG['plugin_tracker']["functionalities"][60]="Clean history";
 
 $LANG['plugin_tracker']["snmp"][0]="SNMP information of equipment";
 $LANG['plugin_tracker']["snmp"][1]="General";

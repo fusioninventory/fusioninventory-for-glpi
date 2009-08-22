@@ -103,6 +103,8 @@ $LANG['plugin_tracker']["functionalities"][24]="Rétention de l'historique des e
 $LANG['plugin_tracker']["functionalities"][25]="Rétention de l'historique des processes des scripts (0 = infini)";
 $LANG['plugin_tracker']["functionalities"][26]="URL de GLPI pour l'agent";
 $LANG['plugin_tracker']["functionalities"][27]="SSL seulement pour l'agent";
+$LANG['plugin_tracker']["functionalities"][28]="Configuration de l'historique";
+$LANG['plugin_tracker']["functionalities"][29]="Liste des champs à historiser";
 
 $LANG['plugin_tracker']["functionalities"][30]="Statut du matériel actif";
 $LANG['plugin_tracker']["functionalities"][31]="Gestion des cartouches et du stock";
@@ -117,6 +119,8 @@ $LANG['plugin_tracker']["functionalities"][50]="Nombre de process simultanés po
 $LANG['plugin_tracker']["functionalities"][51]="Nombre de process simultanés pour l'interrogation SNMP";
 $LANG['plugin_tracker']["functionalities"][52]="Activation des journaux";
 $LANG['plugin_tracker']["functionalities"][53]="Nombre de process simultanés pour le script serveur de post-traitement";
+
+$LANG['plugin_tracker']["functionalities"][60]="Nettoyage de l'historique";
 
 $LANG['plugin_tracker']["snmp"][0]="Informations SNMP du matériel";
 $LANG['plugin_tracker']["snmp"][1]="Général";

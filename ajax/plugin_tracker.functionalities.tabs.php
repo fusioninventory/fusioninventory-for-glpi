@@ -94,6 +94,12 @@ switch($_POST['glpi_tab']) {
 		$config_snmp_printer->showForm($_POST['target'],'1');
 		break;
 
+   case 7 :
+		// Historique
+      $history = new PluginTrackerSNMPHistory;
+      $history->showForm($_POST['target'],'1');
+		break;
+
 	default :
 		if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
 			$config = new PluginTrackerConfig;
