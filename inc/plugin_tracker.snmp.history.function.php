@@ -38,17 +38,29 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$FK_process=0) {
+function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,$FK_process=0) {
 	global $DB,$CFG_GLPI;
 	$history = new PluginTrackerSNMPHistory;
-	
-	$array["FK_ports"] = $port;
-	$array["field"] = $field;
-	$array["old_value"] = $old_value;
-	$array["new_value"] = $new_value;
-	
-	// Ajouter en DB
-	$history->insert_connection("field",$array,$FK_process);
+
+   $doHistory = 1;
+   if ($mapping != "") {
+      $query = "SELECT * FROM glpi_plugin_tracker_config_snmp_history
+         WHERE field='".$mapping."' ";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == 0) {
+         $doHistory = 0;
+      }
+   }
+
+   if ($doHistory == "1") {
+      $array["FK_ports"] = $port;
+      $array["field"] = $field;
+      $array["old_value"] = $old_value;
+      $array["new_value"] = $new_value;
+
+      // Ajouter en DB
+      $history->insert_connection("field",$array,$FK_process);
+   }
 }
 
 

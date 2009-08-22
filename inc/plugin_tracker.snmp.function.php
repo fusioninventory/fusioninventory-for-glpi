@@ -675,7 +675,7 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 
                   }
                   // Add log because snmp value change
-                  plugin_tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],$data[$TRACKER_MAPPING[$type][$link]['field']],$oidvalues[$oid.$data['logical_number']][""],$_SESSION['FK_process']);
+                  plugin_tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],$data[$TRACKER_MAPPING[$type][$link]['field']],$oidvalues[$oid.$data['logical_number']][""],$type."-".$link,$_SESSION['FK_process']);
                }
          	}
 			}
@@ -1172,7 +1172,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                SET trunk='1'
                WHERE id='".$data['sid']."' ";
                $DB->query($query_update);
-               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1",$_SESSION['FK_process']);
+               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1","",$_SESSION['FK_process']);
             }
          // If multiple => -1
          } else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1")) {
@@ -1181,14 +1181,14 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                SET trunk='-1'
                WHERE id='".$data['sid']."' ";
                $DB->query($query_update);
-               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1",$_SESSION['FK_process']);
+               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",$_SESSION['FK_process']);
             }
          } else if($data['trunk'] != "0") {
             $query_update = "UPDATE glpi_plugin_tracker_networking_ports
             SET trunk='0'
             WHERE id='".$data['sid']."' ";
             $DB->query($query_update);
-            plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0",$_SESSION['FK_process']);
+            plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0","",$_SESSION['FK_process']);
          }
       }
    }
