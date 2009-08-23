@@ -888,7 +888,11 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
 					$netport=new Netport;
 					$netport->getFromDB($data["ITEM_$num"]);
-					$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$netport->fields["name"]."</a>";
+               $name = "";
+               if (isset($netport->fields["name"])) {
+                  $name = $netport->fields["name"];
+               }
+					$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$name."</a>";
 					return "<center>".$out."</center>";
 					break;
 
