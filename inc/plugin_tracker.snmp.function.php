@@ -125,6 +125,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 	$models = new PluginTrackerModelInfos;
 	$walks = new PluginTrackerWalk;
 	$plugin_tracker_snmp = new PluginTrackerSNMP;
+   $manufOKI = new PluginTrackerManufacturerOKI;
 
 	// Load XML Device ID
 	$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$FK_agent_process."-device.xml");
@@ -149,6 +150,11 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
       } else {
 			return;
       }
+
+      // For some manufacturer
+      $oidvalues = $manufOKI->CorrectFirmware($oidvalues);
+
+
 		// Update count Process server script
 		switch ($type) {
 			case NETWORKING_TYPE :
