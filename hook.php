@@ -597,15 +597,16 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_tracker_networking.ID" :
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
-
 					$netport = new Netport;
+               $list = explode("$$$$",$data["ITEM_$num"]);
+               foreach ($list as $numtmp=>$vartmp) {
+                  $netport->getDeviceData($vartmp,NETWORKING_TYPE);
 
-					$netport->getDeviceData($data["ITEM_$num"],NETWORKING_TYPE);
-
-					$out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?ID=".$data["ITEM_$num"]."\">";
-					$out .=  $netport->device_name;
-					if ($CFG_GLPI["view_ID"]) $out .= " (".$data["ITEM_$num"].")";
-					$out .=  "</a><br/>";
+                  $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?ID=".$vartmp."\">";
+                  $out .=  $netport->device_name;
+                  if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
+                  $out .=  "</a><br/>";
+               }
 					return "<center>".$out."</center>";
 					break;
 
@@ -614,9 +615,12 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
 					if (!empty($data["ITEM_$num"])) {
-						$np = new Netport;
-						$np->getFromDB($data["ITEM_$num"]);
-						$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$np->fields["name"]."</a><br/>";
+                  $list = explode("$$$$",$data["ITEM_$num"]);
+                  $np = new Netport;
+                  foreach ($list as $numtmp=>$vartmp) {
+                     $np->getFromDB($vartmp);
+                     $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$vartmp."'>".$np->fields["name"]."</a><br/>";
+                  }
 					}
 					return "<center>".$out."</center>";
 					break;
@@ -1751,12 +1755,12 @@ function plugin_tracker_addSelect($type,$ID,$num) {
 
 			// ** Tracker - switch
 				case "glpi_plugin_tracker_networking.ID" :
-					return "TRACKER_12.on_device AS ITEM_$num, ";
+					return "GROUP_CONCAT( DISTINCT TRACKER_12.on_device SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
 				// ** Tracker - switch port
 				case "glpi_plugin_tracker_networking_ports.ID" :
-               return "TRACKER_22.".$field." AS ITEM_$num, ";
+               return "GROUP_CONCAT( DISTINCT TRACKER_22.".$field." SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 			}
 			break;
