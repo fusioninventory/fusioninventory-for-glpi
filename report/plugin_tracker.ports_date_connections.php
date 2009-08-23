@@ -58,11 +58,11 @@ manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2);
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 		
-		$_GET["field"][0] = 3;
+		$_GET["field"][0] = 4;
 		$_GET["contains"][0] = getContainsArray($_POST);
 
-		$_GET["field"][1] = 4;
-		$_GET["contains"][1] = getContainsArray($_POST);
+		$_GET["field"][1] = 3;
+		$_GET["contains"][1] = $_POST['location'];
 		$_GET["link"][1] = "AND";
 
 		$_SESSION["glpisearchcount"][PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2] = 2;
