@@ -102,22 +102,24 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 	$processes = new PluginTrackerProcesses;
 
 	// * If glpi device connected to this port, disconnect it
-	$queryVerif = "SELECT *
-		FROM glpi_networking_wire
-		WHERE end1 = '".$port."'
-			OR end2  = '".$port."' ";
+   if ($port != "") {
+      $queryVerif = "SELECT *
+         FROM glpi_networking_wire
+         WHERE end1 = '".$port."'
+            OR end2  = '".$port."' ";
 
-	if ($resultVerif=$DB->query($queryVerif)) {
-		if ($DB->numrows($resultVerif) != "0") {
-			plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($port),$FK_process);
-			plugin_tracker_addLogConnection("remove",$port,$FK_process);
-			while ($dataVerif2=$DB->fetch_array($resultVerif)) {
-				$query_del = "DELETE FROM glpi_networking_wire
-					WHERE ID='".$dataVerif2["ID"]."' ";
-				$DB->query($query_del);
-			}
-		}
-	}
+      if ($resultVerif=$DB->query($queryVerif)) {
+         if ($DB->numrows($resultVerif) != "0") {
+            plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($port),$FK_process);
+            plugin_tracker_addLogConnection("remove",$port,$FK_process);
+            while ($dataVerif2=$DB->fetch_array($resultVerif)) {
+               $query_del = "DELETE FROM glpi_networking_wire
+                  WHERE ID='".$dataVerif2["ID"]."' ";
+               $DB->query($query_del);
+            }
+         }
+      }
+   }
 
 	// * If other unknown mac adress connected, disconnect it
 	$query = "SELECT last_PID_update FROM glpi_networking_ports
