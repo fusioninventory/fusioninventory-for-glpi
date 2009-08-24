@@ -196,9 +196,9 @@ function plugin_init_tracker() {
 // Name and Version of the plugin
 function plugin_version_tracker() {
 	return array( 'name'    => 'Tracker',
-		'version' => '2.1.0',
+		'version' => '2.1.1',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
-		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',
+		'homepage'=>'https://forge.indepnet.net/projects/show/tracker',
       'minGlpiVersion' => '0.72'// For compatibility / no install in version < 0.72
    );
 }
