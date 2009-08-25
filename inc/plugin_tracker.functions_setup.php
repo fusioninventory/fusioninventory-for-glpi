@@ -112,6 +112,10 @@ function plugin_tracker_update($version) {
 		$DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
 		$DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.0.2' WHERE ID=1 LIMIT 1 ;");
 	}
+   if ($version == "2.1.0") {
+      $DB->query("UPDATE glpi_plugin_tracker_networking SET last_PID_update = '1';");
+      
+   }
 
 
 	plugin_tracker_initSession();
