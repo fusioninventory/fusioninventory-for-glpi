@@ -172,7 +172,10 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 			$Array_Object_oid_vtpVlanName = $oidsModel[0][0]['vtpVlanName'];
       }
 		// ** Get from SNMP, description of equipment
-		$sysdescr = $oidvalues[".1.3.6.1.2.1.1.1.0"][""];
+      $sysDescr = "";
+      if (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco")) {
+         $sysDescr = "Cisco";
+      }
 
 		//**
 		$ArrayPort_LogicalNum_SNMPName = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifName']);
@@ -211,7 +214,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 		if (!empty($ArrayPort_Object_oid)) {
 			$array_port_trunk = plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,'',$Array_trunk_ifIndex);
       }
-		if ($type == NETWORKING_TYPE) {
+		if (($type == NETWORKING_TYPE) AND ($sysDescr == "Cisco")) {
 			// Foreach VLAN ID to GET MAC Adress on each VLAN
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 			foreach ($Array_vlan as $num=>$vlan_ID) {
@@ -714,6 +717,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 	$logs = new PluginTrackerLogs;
    $manuf3com = new PluginTrackerManufacturer3com;
    $manufCisco = new PluginTrackerManufacturerCisco;
+   $manufFoundryNetworks = new PluginTrackerManufacturerFoundryNetworks;
    $manufHP = new PluginTrackerManufacturerHP;
 
    switch (!false) {
@@ -734,6 +738,10 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
          $sysDescr = "3Com IntelliJack NJ225";
          break;
 
+      case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Foundry Networks") :
+         $sysDescr = "Foundry Networks";
+         break;
+
    }
 
    $logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan."] <<<<<<<<<<",$type."][".$ID_Device,1);
@@ -744,6 +752,8 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
       $manuf3com->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
    } else if($sysDescr == "ProCurve") {
       $manufHP->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
+   } else if($sysDescr == "Foundry Networks") {
+      $manufFoundryNetworks->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
    }
 }
 
