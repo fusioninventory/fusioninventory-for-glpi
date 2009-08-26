@@ -242,9 +242,9 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
 function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum) {
 	GLOBAL $DB,$LANG;
 
-	$np=new Netport;
 	$logs = new PluginTrackerLogs;
    $manufCisco = new PluginTrackerManufacturerCisco;
+   $np=new Netport;
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$type,$ID_Device,1);
 
@@ -372,6 +372,7 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
 	GLOBAL $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
 	$logs = new PluginTrackerLogs;
+   
 	$logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type,$ID_Device,1);
 
 	// Update 'last_tracker_update' field
@@ -965,15 +966,17 @@ function plugin_tracker_hex_to_string($value) {
 	if (strstr($value, "0x0115")) {
 		$hex = str_replace("0x0115","",$value);
 		$string='';
-		for ($i=0; $i < strlen($hex)-1; $i+=2)
+		for ($i=0; $i < strlen($hex)-1; $i+=2) {
 			$string .= chr(hexdec($hex[$i].$hex[$i+1]));
+      }
 		$value = $string;
 	}
 	if (strstr($value, "0x")) {
 		$hex = str_replace("0x","",$value);
 		$string='';
-		for ($i=0; $i < strlen($hex)-1; $i+=2)
+		for ($i=0; $i < strlen($hex)-1; $i+=2) {
 			$string .= chr(hexdec($hex[$i].$hex[$i+1]));
+      }
 		$value = $string;
 	}
 	return $value;
@@ -984,8 +987,8 @@ function plugin_tracker_hex_to_string($value) {
 function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues) {
 	GLOBAL $DB;
 
-	$walks = new PluginTrackerWalk;
-	$logs = new PluginTrackerLogs;
+   $logs = new PluginTrackerLogs;
+	$walks = new PluginTrackerWalk;	
 
 	$logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type,$ID_Device,1);
 
