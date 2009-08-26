@@ -54,7 +54,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
 
       $BridgePortifIndex = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
       foreach($BridgePortifIndex as $num=>$BridgePortNumber) {
-         $logs->write("tracker_fullsync","*********** TMP ".$BridgePortNumber,$type."][".$ID_Device,1);
+         $logs->write("tracker_fullsync","*********** TMP ".$BridgePortNumber,$type,$ID_Device,1);
          $ifIndexFound = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][""];
          if ($ifIndexFound == $ifIndex) {
             // Search in dot1dTpFdbPort the dynamicdata associate to this BridgePortNumber
@@ -68,7 +68,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
                   for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
                      $MacAddress .= ":".$MacAddress_tmp[$i];
                   }
-                  $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type."][".$ID_Device,1);
+                  $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type,$ID_Device,1);
                   $tmpc->AddConnections($TMP_ID, $MacAddress);
                }
             }

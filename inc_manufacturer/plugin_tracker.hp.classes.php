@@ -82,7 +82,7 @@ class PluginTrackerManufacturerHP extends CommonDBTM {
                $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
                $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
                if ($ifIndex == $BridgePortifIndex) {
-                  $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type."][".$ID_Device,1);
+                  $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type,$ID_Device,1);
                   $tmpc->AddConnections($TMP_ID, $MacAddress);
                }
             }

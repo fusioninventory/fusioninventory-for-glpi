@@ -102,7 +102,7 @@ if(isset($_GET['update_device_process'])) {
 	$processes->addProcess($fields["process_id"],$nb_process_query);
 	
 	// SNMP is working
-	$logs->write("tracker_snmp",">>>>>>>>>> Starting Script <<<<<<<<<<",'');
+	$logs->write("tracker_snmp",">>>>>>>>>> Starting Script <<<<<<<<<<","","");
 
 	$OS = "";
 	if (isset($_SERVER["OSTYPE"])) {
@@ -111,7 +111,7 @@ if(isset($_GET['update_device_process'])) {
 		$OS = $_SERVER["OS"];
    }
 
-	$logs->write("tracker_snmp","Operating System = ".$OS,'');
+	$logs->write("tracker_snmp","Operating System = ".$OS,"","");
 
 	$query = "SELECT process_number FROM glpi_plugin_tracker_agents_processes
 	ORDER BY process_number";
