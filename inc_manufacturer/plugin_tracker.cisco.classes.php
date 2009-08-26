@@ -298,9 +298,7 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
 
                   if (!isset($ArrayPortsID[$ifName])) {
                      $traitement = 0;
-                  }
-
-                  if (isset($ArrayPortsID[$ifName])) {
+                  } else {
                      $sport = $ArrayPortsID[$ifName]; // Networking_Port
                      if (($DB->numrows($resultPortEnd) != 0) && ($traitement == "1")) {
                         $dport = $DB->result($resultPortEnd, 0, "ID"); // Port of other materiel (Computer, printer...)
