@@ -246,13 +246,13 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 	$logs = new PluginTrackerLogs;
    $manufCisco = new PluginTrackerManufacturerCisco;
 
-	$logs->write("tracker_fullsync",">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$type,$ID_Device,1);
 
 	$portcounter = $oidvalues[$oidsModel[1][0][""]][""];
-	$logs->write("tracker_fullsync","oid port counter : ".$oidsModel[1][0][""]." = ".$portcounter,$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync","oid port counter : ".$oidsModel[1][0][""]." = ".$portcounter,$type,$ID_Device,1);
 
 	$oid_ifType = $oidsModel[0][1]['ifType'];
-	$logs->write("tracker_fullsync","type of port : ".$oid_ifType,$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync","type of port : ".$oid_ifType,$type,$ID_Device,1);
 
    asort($ArrayPort_LogicalNum_SNMPNum);
 
@@ -310,7 +310,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 
                   $IDport = $np->add($array);
                   logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
-                  $logs->write("tracker_fullsync","Add port in DB (glpi_networking_ports) : ".$ArrayPort_LogicalNum_SNMPName[$i],$type."][".$ID_Device,1);
+                  $logs->write("tracker_fullsync","Add port in DB (glpi_networking_ports) : ".$ArrayPort_LogicalNum_SNMPName[$i],$type,$ID_Device,1);
                } else {
                   $IDport = $DB->result($result, 0, "ID");
                   if ($DB->result($result, 0, "name") != $ArrayPort_LogicalNum_SNMPName[$num]) {
@@ -318,7 +318,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
                      $array["name"] = $ArrayPort_LogicalNum_SNMPName[$num];
                      $array["ID"] = $DB->result($result, 0, "ID");
                      $np->update($array);
-                     $logs->write("tracker_fullsync","Update port in DB (glpi_networking_ports) : ID".$DB->result($result, 0, "ID")." & name ".$ArrayPort_LogicalNum_SNMPName[$i],$type."][".$ID_Device,1);
+                     $logs->write("tracker_fullsync","Update port in DB (glpi_networking_ports) : ID".$DB->result($result, 0, "ID")." & name ".$ArrayPort_LogicalNum_SNMPName[$i],$type,$ID_Device,1);
                   }
                }
                if ($type == NETWORKING_TYPE) {
@@ -332,7 +332,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
                         (FK_networking_ports)
                      VALUES ('".$IDport."') ";
                      $DB->query($queryInsert);
-                     $logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type."][".$ID_Device,1);
+                     $logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type,$ID_Device,1);
                   }
                }
             }
@@ -372,7 +372,7 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
 	GLOBAL $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
 	$logs = new PluginTrackerLogs;
-	$logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type,$ID_Device,1);
 
 	// Update 'last_tracker_update' field
 	$query = "UPDATE ";
@@ -415,7 +415,7 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
                }
 					break;
 			}
-			$logs->write("tracker_fullsync",$link." = ".$oidvalues[$oid][""],$type."][".$ID_Device,1);
+			$logs->write("tracker_fullsync",$link." = ".$oidvalues[$oid][""],$type,$ID_Device,1);
 
 			// * Memory
 			if (($link == "ram") OR ($link == "memory")) {
@@ -578,11 +578,11 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
 function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant,$ArrayPort_Object_oid) {
 	GLOBAL $DB,$LANG,$TRACKER_MAPPING;
 
-	$snmp_queries = new PluginTrackerSNMP;
 	$logs = new PluginTrackerLogs;
-	$walks = new PluginTrackerWalk;
+	$snmp_queries = new PluginTrackerSNMP;
+   $walks = new PluginTrackerWalk;
 
-	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$type,$ID_Device,1);
 
 	foreach($Array_Object_TypeNameConstant as $oid=>$link) {
 		if ((preg_match("/\.$/",$oid)) AND (!empty($TRACKER_MAPPING[$type][$link]['field']))) { // SNMPWalk ONLY (ports)
@@ -625,9 +625,9 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 						$oidvalues[$oid.$data['logical_number']][""] = "00:00:00:00:00:00";
                }
 				}
-				$logs->write("tracker_fullsync","****************",$type."][".$ID_Device,1);
-				$logs->write("tracker_fullsync","Oid : ".$oid,$type."][".$ID_Device,1);
-				$logs->write("tracker_fullsync","Link : ".$link,$type."][".$ID_Device,1);
+				$logs->write("tracker_fullsync","****************",$type,$ID_Device,1);
+				$logs->write("tracker_fullsync","Oid : ".$oid,$type,$ID_Device,1);
+				$logs->write("tracker_fullsync","Link : ".$link,$type,$ID_Device,1);
 
 				if (($link == "ifPhysAddress") AND ($oidvalues[$oid.$data['logical_number']][""] != "")) {
 						$oidvalues[$oid.$data['logical_number']][""] = $snmp_queries->MAC_Rewriting($oidvalues[$oid.$data['logical_number']][""]);
@@ -639,10 +639,10 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
 							$data['logical_number'] = $Arrayifaddr[$j];
                   }
 					}
-					$logs->write("tracker_fullsync","=> ".$data['logical_number'],$type."][".$ID_Device,1);
+					$logs->write("tracker_fullsync","=> ".$data['logical_number'],$type,$ID_Device,1);
 				} else {
 					if (isset($oidvalues[$oid.$data['logical_number']][""])) {
-						$logs->write("tracker_fullsync","=> ".$oidvalues[$oid.$data['logical_number']][""],$type."][".$ID_Device,1);
+						$logs->write("tracker_fullsync","=> ".$oidvalues[$oid.$data['logical_number']][""],$type,$ID_Device,1);
                }
             }
 				if (isset($oidvalues[$oid.$data['logical_number']][""])) {
@@ -743,8 +743,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
          break;
 
    }
-
-   $logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan."] <<<<<<<<<<",$type."][".$ID_Device,1);
+   $logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan."] <<<<<<<<<<",$type,$ID_Device,1);
 
    if($sysDescr == "Cisco") {
       $manufCisco->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
@@ -788,7 +787,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 	$Array_multiplemac_ifIndex = array();
 	//$trunk_no_cdp = array();
 
-	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get cdp trunk ports <<<<<<<<<<",$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get cdp trunk ports <<<<<<<<<<",$type,$ID_Device,1);
 
       switch (!false) {
 
@@ -988,7 +987,7 @@ function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidv
 	$walks = new PluginTrackerWalk;
 	$logs = new PluginTrackerLogs;
 
-	$logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type."][".$ID_Device,1);
+	$logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type,$ID_Device,1);
 
 	$ifaddr_add = array();
 	$ifaddr = array();
