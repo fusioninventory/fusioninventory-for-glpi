@@ -1659,7 +1659,7 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 
-		case 'glpi_plugin_tracker_rangeip.FK_tracker_agents' :
+		case 'glpi_plugin_tracker_agents.ID' :
 			dropdownValue("glpi_plugin_tracker_agents",$linkfield,'',0);
 			return true;
 			break;
