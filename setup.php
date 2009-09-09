@@ -142,12 +142,12 @@ function plugin_init_tracker() {
 
 			$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
 			$PLUGIN_HOOKS['pre_item_purge']['tracker'] = 'plugin_pre_item_purge_tracker';
-			
+
 			$report_list = array();
          $report_list["report/plugin_tracker.switch_ports.history.php"] = "Historique des ports de switchs";
          $report_list["report/plugin_tracker.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['tracker'] = $report_list;
-			
+
 			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r")) {
 				$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
          }
@@ -189,6 +189,7 @@ function plugin_init_tracker() {
                $PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.functionalities.form.php';
             }
 			}
+         $PLUGIN_HOOKS['submenu_entry']['tracker']["<img  src='".GLPI_ROOT."/plugins/tracker/pics/books.png' title='".$LANG['plugin_tracker']["setup"][16]."' alt='".$LANG['plugin_tracker']["setup"][16]."'>"] = 'front/plugin_tracker.documentation.php';
 		}
 	}
 }
