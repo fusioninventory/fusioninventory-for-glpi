@@ -78,6 +78,7 @@ $LANG['plugin_tracker']["setup"][12]="FAQ";
 $LANG['plugin_tracker']["setup"][13]="Verification of PHP modules";
 $LANG['plugin_tracker']["setup"][14]="SNMP extension of PHP isn't load";
 $LANG['plugin_tracker']["setup"][15]="PHP/PECL runkit extension isn't load";
+$LANG['plugin_tracker']["setup"][16]="Documentation";
 
 $LANG['plugin_tracker']["functionalities"][0]="Features";
 $LANG['plugin_tracker']["functionalities"][1]="Add / Delete features";
