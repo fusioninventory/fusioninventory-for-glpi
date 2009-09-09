@@ -36,7 +36,7 @@
 function plugin_tracker_menu() {
 	GLOBAL $CFG_GLPI,$LANG;
 
-	$width="180";
+	$width="150";
 
 	echo "<br>";
 	echo "<div align='center'>
@@ -44,7 +44,7 @@ function plugin_tracker_menu() {
 
 	echo "<tr><th colspan='4'>".$LANG['plugin_tracker']["title"][0]."</th></tr>";
 	
-	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='150'>";
+	echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_models","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.models.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_models.png'/>
@@ -52,7 +52,7 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_authentification","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.snmp_auth.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_authentification.png'/>
@@ -60,7 +60,7 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_iprange","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.rangeip.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rangeip.png'/>
@@ -68,7 +68,7 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_agent","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_agents.png'/><br/>
@@ -79,7 +79,7 @@ function plugin_tracker_menu() {
 
 	
 	echo "<tr class='tab_bg_1'>";
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_scripts_infos","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_server.png'/>
@@ -87,7 +87,7 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_agent_infos","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.agents.processes.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_agents.png'/>
@@ -95,7 +95,7 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_discovery.png'/>
@@ -103,7 +103,7 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_report","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.report.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_rapports.png'/>
@@ -113,7 +113,7 @@ function plugin_tracker_menu() {
 	echo "</tr>";
 
 	echo "<tr class='tab_bg_1'>";
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_networking","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
 			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_unknown_device.png'/>
@@ -121,13 +121,13 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	echo "</td>";
 
-	echo "<td align='center' width='".$width."' height='150'>";
+	echo "<td align='center' width='".$width."' height='130'>";
 	echo "</td>";
 
 	echo "</table></div>";
