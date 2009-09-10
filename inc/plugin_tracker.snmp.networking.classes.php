@@ -400,7 +400,7 @@ function appear_array(id){
 		ORDER BY rank";
 		$result_array=$DB->query($query_array);
 		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
-		echo "Tableau des ports";
+		echo $LANG['plugin_tracker']["snmp"][40];
 		echo "</th>";
 		echo "</tr>";
 		
