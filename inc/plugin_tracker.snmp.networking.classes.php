@@ -401,6 +401,12 @@ function appear_array(id){
 		$result_array=$DB->query($query_array);
 		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
 		echo $LANG['plugin_tracker']["snmp"][40];
+      if ($_SESSION["glpilanguage"] == "fr_FR") {
+         $url_legend = "https://forge.indepnet.net/wiki/tracker/Fr_VI_visualisationsdonnees_2_reseau";
+      } else {
+         $url_legend = "https://forge.indepnet.net/wiki/tracker/En_VI_visualisationsdonnees_2_reseau";
+      }
+      echo " <a href='".$url_legend."'>[ ".$LANG['plugin_tracker']["functionalities"][6]." ]</a>";
 		echo "</th>";
 		echo "</tr>";
 		
