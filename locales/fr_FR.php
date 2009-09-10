@@ -85,6 +85,7 @@ $LANG['plugin_tracker']["functionalities"][2]="Configuration générale";
 $LANG['plugin_tracker']["functionalities"][3]="SNMP";
 $LANG['plugin_tracker']["functionalities"][4]="Connexion";
 $LANG['plugin_tracker']["functionalities"][5]="Script serveur";
+$LANG['plugin_tracker']["functionalities"][6]="Légende";
 
 $LANG['plugin_tracker']["functionalities"][10]="Activation de l'historique";
 $LANG['plugin_tracker']["functionalities"][11]="Activation du module connexion";
