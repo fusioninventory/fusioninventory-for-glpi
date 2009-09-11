@@ -1534,35 +1534,45 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 		case NETWORKING_TYPE :
 			switch ($action) {
 				case "plugin_tracker_assign_model" :
-					dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
-					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
-					break;
+               if(plugin_tracker_HaveRight("snmp_models","w")) {
+                  dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
+                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
+               break;
 
 				case "plugin_tracker_assign_auth" :
-					plugin_tracker_snmp_auth_dropdown();
-					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
-					break;
+               if(plugin_tracker_HaveRight("snmp_authentification","w")) {
+                  plugin_tracker_snmp_auth_dropdown();
+                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
+               break;
 			}
 			break;
 
 		case PRINTER_TYPE :
 			switch ($action) {
 				case "plugin_tracker_assign_model" :
-					dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
-					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
-					break;
+               if(plugin_tracker_HaveRight("snmp_models","w")) {
+                  dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
+                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
+               break;
 
 				case "plugin_tracker_assign_auth" :
-					plugin_tracker_snmp_auth_dropdown();
-					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
-					break;
+               if(plugin_tracker_HaveRight("snmp_authentification","w")) {
+                  plugin_tracker_snmp_auth_dropdown();
+                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
+               break;
 			}
 			break;
 
 		case PLUGIN_TRACKER_SNMP_DISCOVERY;
 			switch ($action) {
 				case "plugin_tracker_discovery_import" :
-					echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               if(plugin_tracker_HaveRight("snmp_discovery","w")) {
+                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
 					break;
 			}
 			break;
@@ -1606,13 +1616,15 @@ function plugin_tracker_MassiveActionsProcess($data) {
 			break;
       
 		case "plugin_tracker_discovery_import" :
-         $Import = 0;
-			foreach ($data['item'] as $key => $val) {
-				if ($val == 1) {
-					$Import = plugin_tracker_discovery_import($key,$Import);
-				}
-			}
-         addMessageAfterRedirect($LANG['plugin_tracker']["discovery"][5]." : ".$Import );
+         if(plugin_tracker_HaveRight("snmp_discovery","w")) {
+            $Import = 0;
+            foreach ($data['item'] as $key => $val) {
+               if ($val == 1) {
+                  $Import = plugin_tracker_discovery_import($key,$Import);
+               }
+            }
+            addMessageAfterRedirect($LANG['plugin_tracker']["discovery"][5]." : ".$Import );
+         }
 			break;
 	}
 }
