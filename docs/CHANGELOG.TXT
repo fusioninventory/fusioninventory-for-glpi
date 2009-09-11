@@ -33,6 +33,61 @@
 // ----------------------------------------------------------------------
 
 
+Version 2.1.1
+
+FRANCAIS :
+- Bug #1454: Message d'erreur pour le SSL
+- Bug #1457: Bugs sur "tout cocher" liste des OID dans les modèles
+- Bug #1461: Erreurs sur le rapport "Historique des ports de switchs" lorsqu'on sélectionne un champs
+- Bug #1506: Ports virtuels à supprimer
+- Bug #1507: Problème des Cisco 2950 - connexion des ports sur eux-même
+- Bug #1516: Cron, correction des ports réseaux inconnus qui ne remplacaient pas les connus
+- Bug #1520: Correction dans le rapport ports_date_connections
+- Bug #1691: Correction des droits sur l'import de matériel découvert et sur assigner modèle et authentification
+- Feature #1448: Mise à jour des modèles Cisco et de leur détection
+- Feature #1453: Optimiser le code suivant les équipements réseau
+- Feature #1455: Rajout d'imprimantes Oki C5250n & Oki C5600
+- Feature #1467: Organiser l'affichage des cartouches d'imprimante
+- Feature #1469: Ajout de model pour l'imprimante Epson AL-C3800
+- Feature #1508: Ordre d'affichage des ports de switch
+- Feature #1514: Optimisations des requêtes MySQL
+- Feature #1517: Selectionner les champs à mettre dans l'historique
+- Feature #1624: Ajout d'un modèle pour les switchs Foundry Networks (Pas encore fonctionnel)
+- Feature #1625: Optimisation de l'écriture des logs
+- Feature #1667: Ajout d'un lien vers le wiki Tracker
+- Feature #1668: Amélioration du  menu
+- Feature #1672: Liste des codes couleurs des ports
+
+
+ENGLISH :
+- Bug #1454: Add error message for SSL
+- Bug #1457: Bugs on check all on OID list
+- Bug #1461: Errors on report "switchs ports history" when select a field
+- Bug #1506: Virtual port to delete
+- Bug #1507: Problem on Cisco 2950 - connection of ports on themself
+- Bug #1516: Cron, correction on unknown networking ports that not replace known
+- Bug #1520: Correction in report ports_date_connections
+- Bug #1691: Correction of rights on import discovery and assign model & auth
+- Feature #1448: Update Cisco models and discovery
+- Feature #1453: Optimize code for each switchs manufacturer
+- Feature #1455: Add printer Oki C5250n & Oki C5600
+- Feature #1467: Reorder display of printer cartridge
+- Feature #1469: Add model for print Epson AL-C3800
+- Feature #1508: Reorder display of networking ports
+- Feature #1514: Optimizations on MySQL queries
+- Feature #1517: Select fields to put in history
+- Feature #1624: Add model for switchs Foundry Networks (Not yet ready)
+- Feature #1625: Optimization of logs write
+- Feature #1667: Add link to wiki Tracker
+- Feature #1668: Modification of menu
+- Feature #1672: Lis of networking ports colors
+
+
+
+
+
+
+
 Version 2.1.0
 - Compatabilité 0.72
 
