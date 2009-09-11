@@ -69,6 +69,8 @@ switch($_POST['glpi_tab']) {
 			$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
 			$config_snmp_printer->showForm($_POST['target'],'1');
 		}
+      $history = new PluginTrackerSNMPHistory;
+      $history->showForm($_POST['target'],'1');
 		break;
 
 	case 2 :
