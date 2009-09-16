@@ -42,9 +42,11 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
 
    function ListVirtualPorts($sysdescr,$PortName) {
       if(strstr($sysdescr,"Cisco")) {
-         if (strstr($PortName, 'VLAN-')) {
+         if (preg_match("/VLAN-/", $PortName)) {
             return true;
-         } else if (strstr($PortName, 'Vl')) {
+         } else if (preg_match("/Vl/", $PortName)) {
+            return true;
+         } else if (preg_match("/VL/", $PortName)) {
             return true;
          }
       }
