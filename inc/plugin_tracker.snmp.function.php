@@ -919,9 +919,9 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
          $Array_multiplemac_ifIndex = $manuf3com->MultiplePorts();
          break;
    }
-      
+
    // ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
-   foreach($ArrayPort_LogicalNum_SNMPNum AS $ifIndex=>$logical_num) {
+   foreach($ArrayPort_LogicalNum_SNMPNum AS $num=>$ifIndex) {
       $query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
          LEFT JOIN glpi_plugin_tracker_networking_ports
          ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
