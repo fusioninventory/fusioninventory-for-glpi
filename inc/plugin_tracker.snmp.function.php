@@ -262,9 +262,9 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
          AND last_PID_update='0' ";
    $result = $DB->query($query);
    if ($DB->numrows($result) == 1) {
-      foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$i) {
+      foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$ifIndex) {
          $query_update = "UPDATE glpi_networking_ports
-            SET logical_number='".$i."'
+            SET logical_number='".$ifIndex."'
             WHERE on_device='".$ID_Device."'
                AND device_type='".$type."'
                AND name='".$ArrayPort_LogicalNum_SNMPName[$num]."' ";
@@ -278,9 +278,9 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 	if ((isset($portcounter)) AND (!empty($portcounter))) {
 		// ** Add ports in DataBase if they don't exists
       $logicalnumberlist = "(";
-      foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$i) {
+      foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$ifIndex) {
          //$i is the logical number
-         $logicalnumberlist .= $i.",";
+         $logicalnumberlist .= $ifIndex.",";
 
 		//for ($i=0 ; $i < $portcounter ; $i++) {
 			// Get type of port
@@ -294,19 +294,19 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
             $goodname = 1;
             if ($manufCisco->ListVirtualPorts($oidvalues[".1.3.6.1.2.1.1.1.0"][""],$ArrayPort_LogicalNum_SNMPName[$num]) == true) {
                $goodname = 0;
-               $deleteportname[] = $i;
-               unset($oidList[$i]);
+               $deleteportname[] = $ifIndex;
+               unset($oidList[$ifIndex]);
             }
             if ($goodname == 1) {
                $query = "SELECT ID,name
                FROM glpi_networking_ports
                WHERE on_device='".$ID_Device."'
                   AND device_type='".$type."'
-                  AND logical_number='".$i."' ";
+                  AND logical_number='".$ifIndex."' ";
                $result = $DB->query($query);
                if ($DB->numrows($result) == 0) {
                   unset($array);
-                  $array["logical_number"] = $i;
+                  $array["logical_number"] = $ifIndex;
                   $array["name"] = $ArrayPort_LogicalNum_SNMPName[$num];
                   $array["on_device"] = $ID_Device;
                   $array["device_type"] = $type;
