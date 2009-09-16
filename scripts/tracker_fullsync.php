@@ -134,6 +134,9 @@ if(isset($_GET['update_device_process'])) {
 	foreach ($xml_file as $num=>$filename) {
 		unlink($filename);
    }
+   
+   // Clean ports
+   plugin_tracker_clean_db();
 
 	// Create connections between switchs
 	$tmpc = new PluginTrackerTmpConnections;
