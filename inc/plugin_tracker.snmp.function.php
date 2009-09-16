@@ -240,9 +240,9 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$x
  *
 **/
 function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum) {
-	GLOBAL $DB,$LANG;
+   GLOBAL $DB,$LANG;
 
-	$logs = new PluginTrackerLogs;
+   $logs = new PluginTrackerLogs;
    $manufCisco = new PluginTrackerManufacturerCisco;
    $np=new Netport;
 
@@ -277,8 +277,11 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 	// Get query SNMP to have number of ports
 	if ((isset($portcounter)) AND (!empty($portcounter))) {
 		// ** Add ports in DataBase if they don't exists
-
+      $logicalnumberlist = "(";
       foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$i) {
+         //$i is the logical number
+         $logicalnumberlist .= $i.",";
+
 		//for ($i=0 ; $i < $portcounter ; $i++) {
 			// Get type of port
 			$ifType = $oidvalues[$oid_ifType.".".$ArrayPort_LogicalNum_SNMPNum[$num]][""];
@@ -338,6 +341,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
             }
 			}
 		}
+      $logicalnumberlist .= ")";
 	}
    // Delete all ports that will be not here
    foreach($deleteportname as $id=>$i) {
@@ -349,9 +353,32 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
 
+      removeConnector($data['ID']);
+
+      $query_del = "DELETE FROM glpi_plugin_tracker_networking_ports
+      WHERE FK_networking_ports=".$data['ID']." ";
+      $DB->query($query_del);
+
       $np->delete($data);
    }
-	return $oidList;
+
+   // Delete ports where logical number in glpi_plugin_tracker_networking_ports
+   // not exist on switch : it's ports reorder not well
+   $logicalnumberlist = str_replace(",)", ")", $logicalnumberlist);
+   $query = "SELECT * FROM glpi_networking_ports
+   WHERE on_device='".$ID_Device."'
+      AND device_type='".$type."' 
+      AND logical_number NOT IN ".$logicalnumberlist." ";
+   $result=$DB->query($query);
+	while ($data=$DB->fetch_array($result)) {
+      removeConnector($data['ID']);
+      $np->delete($data);
+		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
+		WHERE FK_networking_ports='".$data["ID"]."'";
+		$DB->query($query_delete);
+	}
+
+    return $oidList;
 }
 
 
@@ -1027,5 +1054,6 @@ function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidv
 		$DB->query($query_insert);
 	}
 }
+
 
 ?>
