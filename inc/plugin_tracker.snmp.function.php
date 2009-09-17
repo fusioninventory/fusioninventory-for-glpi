@@ -949,10 +949,10 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                $DB->query($query_update);
                plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",$_SESSION['FK_process']);
                // Remove vlan
-               $snmp_queries->CleanVlan($data['sid']);
-               $snmp_queries->CleanVlan($netwire->getOppositeContact($data['sid']));
+               $snmp_queries->CleanVlan($data['FK_networking_ports']);
+               $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
                // Remove connection
-   				removeConnector($data['sid']);
+   				removeConnector($data['FK_networking_ports']);
             }
          } else if($data['trunk'] != "0") {
             $query_update = "UPDATE glpi_plugin_tracker_networking_ports
