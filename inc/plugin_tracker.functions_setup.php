@@ -114,7 +114,6 @@ function plugin_tracker_update($version) {
 	}
    if ($version == "2.1.0") {
       $DB->query("UPDATE glpi_plugin_tracker_networking SET last_PID_update = '0';");
-      
    }
 
 
