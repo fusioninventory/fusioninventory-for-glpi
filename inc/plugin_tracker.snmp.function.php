@@ -939,6 +939,9 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                WHERE ID='".$data['sid']."' ";
                $DB->query($query_update);
                plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1","",$_SESSION['FK_process']);
+               // Remove vlan
+               $snmp_queries->CleanVlan($data['FK_networking_ports']);
+               $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
             }
          // If multiple => -1
          } else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1")) {
