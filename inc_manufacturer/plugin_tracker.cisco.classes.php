@@ -215,7 +215,6 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
       $unknown = new PluginTrackerUnknown;
       $walks = new PluginTrackerWalk;
 
-
       // Get vlan name
       $vlan_name = "";
       if (!empty($vlan)) {

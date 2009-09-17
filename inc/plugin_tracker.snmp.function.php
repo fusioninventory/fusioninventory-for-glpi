@@ -800,6 +800,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
 **/
 function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID) {
 	global $DB;
+   $netwire=new Netwire;
 	$snmp_queries = new PluginTrackerSNMP;
 	$logs = new PluginTrackerLogs;
 	$walks = new PluginTrackerWalk;
@@ -922,7 +923,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 
    // ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
    foreach($ArrayPort_LogicalNum_SNMPNum AS $num=>$ifIndex) {
-      $query = "SELECT *,glpi_plugin_tracker_networking_ports.id AS sid  FROM glpi_networking_ports
+      $query = "SELECT *,glpi_plugin_tracker_networking_ports.ID AS sid  FROM glpi_networking_ports
          LEFT JOIN glpi_plugin_tracker_networking_ports
          ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
          WHERE device_type='2'
@@ -935,7 +936,7 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
             if ($data['trunk'] != "1") {
                $query_update = "UPDATE glpi_plugin_tracker_networking_ports
                SET trunk='1'
-               WHERE id='".$data['sid']."' ";
+               WHERE ID='".$data['sid']."' ";
                $DB->query($query_update);
                plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1","",$_SESSION['FK_process']);
             }
@@ -944,14 +945,19 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
             if ($data['trunk'] != "-1") {
                $query_update = "UPDATE glpi_plugin_tracker_networking_ports
                SET trunk='-1'
-               WHERE id='".$data['sid']."' ";
+               WHERE ID='".$data['sid']."' ";
                $DB->query($query_update);
                plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",$_SESSION['FK_process']);
+               // Remove vlan
+               $snmp_queries->CleanVlan($data['sid']);
+               $snmp_queries->CleanVlan($netwire->getOppositeContact($data['sid']));
+               // Remove connection
+   				removeConnector($data['sid']);
             }
          } else if($data['trunk'] != "0") {
             $query_update = "UPDATE glpi_plugin_tracker_networking_ports
             SET trunk='0'
-            WHERE id='".$data['sid']."' ";
+            WHERE ID='".$data['sid']."' ";
             $DB->query($query_update);
             plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0","",$_SESSION['FK_process']);
          }
