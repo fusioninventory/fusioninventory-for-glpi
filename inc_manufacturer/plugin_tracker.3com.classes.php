@@ -41,7 +41,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
 
    function MultiplePorts() {
       // For 3Com IntelliJack NJ225
-      $Array_multiplemac_ifIndex["101"] = 1;
+      $Array_multiplemac_ifIndex["1"] = 1;
       return $Array_multiplemac_ifIndex;
    }
 
