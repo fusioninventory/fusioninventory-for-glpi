@@ -33,6 +33,25 @@
 // ----------------------------------------------------------------------
 
 
+Version 2.1.2
+
+FRANCAIS :
+- Bug #1647: Modif massive sur les plages IP (modifier agent)
+- Bug #1725: Suppression des ports qui n'existe pas et donc suppression des doublons
+- Bug #1726: Correction du port trunk des 3com 225
+- Bug #1727: Correction des multiple mac
+- Bug #1730: Correction des bugs pour les Cisco
+
+
+ENGLISH :
+- Bug #1647: massive modification on range IP (modify agent)
+- Bug #1725: Delete ports are not exits on switch
+- Bug #1726: Correction of trunk port for 3com 225
+- Bug #1727: Correction of multiple mac addresses
+- Bug #1730: Cisco bugs
+
+
+
 Version 2.1.1
 
 FRANCAIS :
