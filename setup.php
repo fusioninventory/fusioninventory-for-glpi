@@ -197,7 +197,7 @@ function plugin_init_tracker() {
 // Name and Version of the plugin
 function plugin_version_tracker() {
 	return array( 'name'    => 'Tracker',
-		'version' => '2.1.1',
+		'version' => '2.1.2',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
 		'homepage'=>'https://forge.indepnet.net/projects/show/tracker',
       'minGlpiVersion' => '0.72'// For compatibility / no install in version < 0.72

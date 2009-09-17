@@ -1227,8 +1227,12 @@ function plugin_tracker_install() {
             plugin_tracker_update("2.1.1");
             $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.1' WHERE ID=1");
          }
+         if ($config->getValue('version') == "2.1.1") {
+            plugin_tracker_update("2.1.2");
+            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.2' WHERE ID=1");
+         }
          if  ($config->getValue('version') == "0") {
-            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1");
+            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.2' WHERE ID=1");
          }
       }
    }
@@ -1266,7 +1270,7 @@ function plugin_tracker_needUpdate() {
       return 1; // Update
    } else if (FieldExists("glpi_plugin_tracker_config", "version")) {
       $config = new PluginTrackerConfig;
-      if ($config->getValue('version') != "2.1.1") {
+      if ($config->getValue('version') != "2.1.2") {
          return 1;
       } else {
          return 0;
