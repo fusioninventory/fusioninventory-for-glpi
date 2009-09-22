@@ -580,12 +580,13 @@ function plugin_tracker_getSearchOption() {
 	$sopt[COMPUTER_TYPE][5192]['field']='ID';
 	$sopt[COMPUTER_TYPE][5192]['linkfield']='ID';
 	$sopt[COMPUTER_TYPE][5192]['name']=$LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][52];
+	$sopt[COMPUTER_TYPE][5192]['forcegroupby']='1';
 
 	$sopt[COMPUTER_TYPE][5193]['table']='glpi_plugin_tracker_networking_ports';
 	$sopt[COMPUTER_TYPE][5193]['field']='ID';
 	$sopt[COMPUTER_TYPE][5193]['linkfield']='ID';
 	$sopt[COMPUTER_TYPE][5193]['name']=$LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][46];
-
+	$sopt[COMPUTER_TYPE][5193]['forcegroupby']='1';
 
 	return $sopt;
 }
@@ -1871,6 +1872,12 @@ function plugin_tracker_addSelect($type,$ID,$num) {
 
 function plugin_tracker_forceGroupBy($type) {
     switch ($type) {
+
+      case COMPUTER_TYPE :
+         // ** Tracker - switch
+         return "GROUP BY glpi_computers.id";
+         break;
+
         case PRINTER_TYPE :
             // ** Tracker - switch
             return "GROUP BY glpi_printers.id";
