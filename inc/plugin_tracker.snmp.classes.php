@@ -255,7 +255,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 		$queryPort = "SELECT * FROM glpi_plugin_tracker_networking_ports
 		LEFT JOIN glpi_networking_ports
 		ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.ID
-		WHERE ifdescr='".$ifDescr."' 
+		WHERE (ifdescr='".$ifDescr."' OR glpi_networking_ports.name='".$ifDescr."')
 			AND glpi_networking_ports.on_device='".$data["FK_networking"]."'
 			AND glpi_networking_ports.device_type='2' ";
 		$resultPort = $DB->query($queryPort);		
