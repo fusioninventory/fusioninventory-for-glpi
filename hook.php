@@ -882,16 +882,20 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
 					$netport = new Netport;
-					$netport->getDeviceData($data["ITEM_$num"],NETWORKING_TYPE);
+               $netportswitch = new Netport;
+					$netport->getFromDB($data["ITEM_$num"]);
+               if (isset($netport->fields["on_device"])) {
+                  $netportswitch->getDeviceData($netport->fields["on_device"],NETWORKING_TYPE);
 
-					$out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?ID=".$data["ITEM_$num"]."\">";
-					$out .=  $netport->device_name;
-					if ($CFG_GLPI["view_ID"]) $out .= " (".$data["ITEM_$num"].")";
-					$out .=  "</a><br/>";
+                  $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?ID=".$netport->fields["on_device"]."\">";
+                  $out .=  $netportswitch->device_name;
+                  if ($CFG_GLPI["view_ID"]) $out .= " (".$data["ITEM_$num"].")";
+                  $out .=  "</a><br/>";
+               }
 					return "<center>".$out."</center>";
 					break;
 
-				// ** Tracker - switch port
+				// ** Tracker - switch portgetDeviceData
 				case "glpi_networking_ports.name" :
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
