@@ -1256,7 +1256,7 @@ function plugin_tracker_install() {
     *    2.1.1 config version field 2.1.1
     **/
    if (!TableExists("glpi_plugin_tracker_config")) {
-      plugin_tracker_installing("2.1.1");
+      plugin_tracker_installing("2.1.2");
    } else {
       $config = new PluginTrackerConfig;
       if (!TableExists("glpi_plugin_tracker_agents")) {
