@@ -236,7 +236,7 @@ $LANG['plugin_tracker']["model_info"][9]="Import completed successfully";
 $LANG['plugin_tracker']["model_info"][10]="SNMP model import";
 $LANG['plugin_tracker']["model_info"][11]="Activation";
 $LANG['plugin_tracker']["model_info"][12]="Key for model discovery";
-
+$LANG['plugin_tracker']["model_info"][13]="Load right model";
 
 $LANG['plugin_tracker']["mib"][1]="MIB Label";
 $LANG['plugin_tracker']["mib"][2]="Object";

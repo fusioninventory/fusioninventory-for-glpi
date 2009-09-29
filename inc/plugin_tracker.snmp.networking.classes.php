@@ -219,7 +219,7 @@ class PluginTrackerNetworking extends CommonDBTM {
 			$exclude_models[] = $data_models['ID'];		
 		}
 		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0,-1,'',$exclude_models);
-		echo "</td>";
+		echo " <input type='submit' name='GetRightModel' value='".$LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";

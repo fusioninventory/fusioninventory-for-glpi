@@ -47,6 +47,9 @@ $plugin_tracker_snmp = new PluginTrackerSNMP;
 if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	plugin_tracker_checkRight("snmp_networking","w");
 	$plugin_tracker_snmp->update_network_infos($_POST['ID'], $_POST['model_infos'], $_POST['FK_snmp_connection']);
+} else if ((isset($_POST["GetRightModel"])) && (isset($_POST['ID']))) {
+   $plugin_tracker_model_infos = new PluginTrackerModelInfos;
+   $plugin_tracker_model_infos->getrightmodel($_POST['ID'], NETWORKING_TYPE);
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);
