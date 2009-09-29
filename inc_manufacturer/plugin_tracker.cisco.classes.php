@@ -78,13 +78,13 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                   AND ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "1")) {
 
                   $Array_trunk_ifIndex[$snmpportID] = 1;
-                  $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
+                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
                   //$trunk_no_cdp[$snmpportID] = 1;
                }
             } else if ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][""])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))) {
                if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "2") {
                   $Array_trunk_ifIndex[$snmpportID] = 1;
-                  $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
+                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
                   //$trunk_no_cdp[$snmpportID] = 1;
                }
             }
@@ -137,10 +137,10 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                if (isset($Array_multiplemac_ifIndex[$ifIndex])) {
                   unset($Array_multiplemac_ifIndex[$ifIndex]);
                }
-               $logs->write("tracker_fullsync","ifIndex = ".$ifIndex,$type,$ID_Device,1);
+               if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","ifIndex = ".$ifIndex,$type,$ID_Device,1);
 
                // Search port of switch connected on this port and connect it if not connected
-               $logs->write("tracker_fullsync","ip = ".$ip_switch_trunk." / ifdescr = ".$oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""],$type,$ID_Device,1);
+               if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","ip = ".$ip_switch_trunk." / ifdescr = ".$oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""],$type,$ID_Device,1);
                $PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""]);
 
                $query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
@@ -191,13 +191,9 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                foreach($ArrayBridgePortNumber as $num=>$dynamicdata) {
                   $BridgePortifIndexFound = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
                   if ($BridgePortifIndexFound == $BridgePortNumber) {
-                     $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
-                     $MacAddress_tmp = str_split($MacAddress, 2);
-                     $MacAddress = $MacAddress_tmp[0];
-                     for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
-                        $MacAddress .= ":".$MacAddress_tmp[$i];
-                     }
-                     $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type,$ID_Device,1);
+                     $MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+
+                     if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type,$ID_Device,1);
                      $tmpc->AddConnections($TMP_ID, $MacAddress);
                   }
                }
@@ -207,6 +203,22 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
    }
 
 
+
+   /**
+    * Associate a MAC address of a device to switch port
+    *
+    * @param $ID_Device
+    * @param $type
+    * @param $oidsModel
+    * @param $oidvalues
+    * @param $array_port_trunk : array with SNMP port ID => 1 (from trunk oid)
+    * @param $ArrayPortsID : array with port name and port ID (from DB)
+    * @param $vlan : VLAN number
+    * @param $Array_trunk_ifIndex : array with SNMP port ID => 1 (from CDP)
+    *
+    * @return nothing
+    *
+   **/
    function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex) {
       GLOBAL $DB;
 
@@ -237,8 +249,8 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
          if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]))) {
             $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
 
-            $logs->write("tracker_fullsync","****************",$type,$ID_Device,1);
-            $logs->write("tracker_fullsync","BRIDGEPortNumber = ".$BridgePortNumber,$type,$ID_Device,1);
+            if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","****************",$type,$ID_Device,1);
+            if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","BRIDGEPortNumber = ".$BridgePortNumber,$type,$ID_Device,1);
 
             $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
             $stop = 0;
@@ -250,23 +262,19 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                $stop = 1;
             }
             if ($stop == "0") {
-               $logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$type,$ID_Device,1);
+               if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$type,$ID_Device,1);
 
                $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 
-               $logs->write("tracker_fullsync","** Interface = ".$ifName,$type,$ID_Device,1);
+               if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","** Interface = ".$ifName,$type,$ID_Device,1);
 
                // Convert MAC HEX in Decimal
-               $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
-               $MacAddress_tmp = str_split($MacAddress, 2);
-               $MacAddress = $MacAddress_tmp[0];
-               for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
-                  $MacAddress .= ":".$MacAddress_tmp[$i];
-               }
+               $MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+               
                // Verify Trunk
 
-               $logs->write("tracker_fullsync","Vlan = ".$vlan,$type,$ID_Device,1);
-               $logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type,$ID_Device,1);
+               if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Vlan = ".$vlan,$type,$ID_Device,1);
+               if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type,$ID_Device,1);
 
                $queryPortEnd = "";
 
@@ -280,7 +288,7 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                     if ((($data_verif['ifmac'] == $MacAddress) OR ($data_verif['ifmac'] == strtoupper($MacAddress))) AND ($data_verif['ifmac'] != "")) {
                        $queryPortEnd = "";
                     } else {
-                        $logs->write("tracker_fullsync","Mac address OK",$type,$ID_Device,1);
+                        if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Mac address OK",$type,$ID_Device,1);
 
                         $queryPortEnd = "SELECT * FROM glpi_networking_ports
                         WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
@@ -346,8 +354,6 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
          }
       }
    }
-
-
 }
 
 ?>
