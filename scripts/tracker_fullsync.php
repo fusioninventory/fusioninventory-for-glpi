@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: ocsng_fullsync.php 4980 2007-05-15 13:32:29Z walid $
+ * @version $Id: tracker_fullsync.php 4980 2009-09-28 21:25:18Z ddurieux $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
  Copyright (C) 2003-2008 by the INDEPNET Development Team.
@@ -32,10 +32,9 @@
 // Original Author of file: David DURIEUX
 // Purpose of file:
 // ----------------------------------------------------------------------
+
 ini_set("memory_limit","-1");
 ini_set("max_execution_time", "0");
-
-$xml_auth_rep = "";
 
 # Converts cli parameter to web parameter for compatibility
 if ($argv) {
@@ -50,8 +49,6 @@ if ($argv) {
 $USEDBREPLICATE=0;
 $DBCONNECTION_REQUIRED=1;
 
-
-// MASS IMPORT for OCSNG
 define('GLPI_ROOT', '../../..');
 
 $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
@@ -77,13 +74,11 @@ $failed_nbr= 0;
 $fields=array();
 $type='';
 
-$logs = new PluginTrackerLogs;
-
 if(isset($_GET['update_device_process'])) {
 	// tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
-
 	$processes = new PluginTrackerProcesses;
-	$processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$xml_auth_rep,$_GET['type'],$_GET['FK_agent_process']);
+
+   $processes_values = plugin_tracker_UpdateDeviceBySNMP_process($_GET['id'],$_GET['FK_process'],$_GET['type'],$_GET['FK_agent_process']);
 } else {
 	if (isset($_GET["type"])) {
 		$type=$_GET["type"];
@@ -95,10 +90,12 @@ if(isset($_GET['update_device_process'])) {
    }
 
 	$config_snmp_script = new PluginTrackerConfigSNMPScript;
-	$nb_process_query = $config_snmp_script->getValue('nb_process');
+   $logs = new PluginTrackerLogs;
+   $processes = new PluginTrackerProcesses;
+   
+   $nb_process_query = $config_snmp_script->getValue('nb_process');
 
 	// Add process into database
-	$processes = new PluginTrackerProcesses;
 	$processes->addProcess($fields["process_id"],$nb_process_query);
 	
 	// SNMP is working
@@ -126,10 +123,11 @@ if(isset($_GET['update_device_process'])) {
 				$ArrayListType[] = $device->infos->type;
 				$ArrayListAgentProcess[] = $data['process_number'];
 			}
-		}
+         unset($xml);
+      }
 	}
 	if (isset($ArrayListDevice)) {
-		plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$xml_auth_rep,$ArrayListType,$ArrayListAgentProcess);
+		plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$fields["process_id"],$ArrayListType,$ArrayListAgentProcess);
    }
 	foreach ($xml_file as $num=>$filename) {
 		unlink($filename);

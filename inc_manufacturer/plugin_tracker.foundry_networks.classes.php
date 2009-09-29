@@ -73,23 +73,17 @@ class PluginTrackerManufacturerFoundryNetworks extends CommonDBTM {
 
          $BridgePortifIndex = $oidExplode[0];
 
-         $logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$type,$ID_Device,1);
+         if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","BridgePortifIndex = ".$BridgePortifIndex,$type,$ID_Device,1);
 
          $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 
-         $logs->write("tracker_fullsync","** Interface = ".$ifName,$type,$ID_Device,1);
+         if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","** Interface = ".$ifName,$type,$ID_Device,1);
 
          // Convert MAC HEX in Decimal
-         $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$dynamicdata][$vlan]);
-         $MacAddress_tmp = str_split($MacAddress, 2);
-         $MacAddress = $MacAddress_tmp[0];
-         for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
-            $MacAddress .= ":".$MacAddress_tmp[$i];
-         }
+         $MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$dynamicdata][$vlan]);
 
-
-         $logs->write("tracker_fullsync","Vlan = ".$vlan,$type,$ID_Device,1);
-         $logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type,$ID_Device,1);
+         if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Vlan = ".$vlan,$type,$ID_Device,1);
+         if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Mac address = ".$MacAddress,$type,$ID_Device,1);
 
          $queryPortEnd = "";
 
@@ -103,7 +97,7 @@ class PluginTrackerManufacturerFoundryNetworks extends CommonDBTM {
               if ((($data_verif['ifmac'] == $MacAddress) OR ($data_verif['ifmac'] == strtoupper($MacAddress))) AND ($data_verif['ifmac'] != "")) {
                  $queryPortEnd = "";
               } else {
-                  $logs->write("tracker_fullsync","Mac address OK",$type,$ID_Device,1);
+                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Mac address OK",$type,$ID_Device,1);
 
                   $queryPortEnd = "SELECT * FROM glpi_networking_ports
                   WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
@@ -153,7 +147,7 @@ class PluginTrackerManufacturerFoundryNetworks extends CommonDBTM {
                      $port_add["ifaddr"] = $ip_unknown;
                      $port_add['ifmac'] = $MacAddress;
                      $dport = $np->add($port_add);
-                     $logs->write("tracker_fullsync","INCONNU",$type,$ID_Device,1);
+                     if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","INCONNU",$type,$ID_Device,1);
                      $snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
                   }
                }

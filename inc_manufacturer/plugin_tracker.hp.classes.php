@@ -73,16 +73,12 @@ class PluginTrackerManufacturerHP extends CommonDBTM {
             // Get by SNMP query the port number (dot1dTpFdbPort)
             if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]) AND ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan] != "0"))) {
                // Convert MAC HEX in Decimal
-               $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
-               $MacAddress_tmp = str_split($MacAddress, 2);
-               $MacAddress = $MacAddress_tmp[0];
-               for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
-                  $MacAddress .= ":".$MacAddress_tmp[$i];
-               }
+               $MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+
                $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
                $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
                if ($ifIndex == $BridgePortifIndex) {
-                  $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type,$ID_Device,1);
+                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type,$ID_Device,1);
                   $tmpc->AddConnections($TMP_ID, $MacAddress);
                }
             }
@@ -112,12 +108,8 @@ class PluginTrackerManufacturerHP extends CommonDBTM {
          // Get by SNMP query the port number (dot1dTpFdbPort)
          if (((count($oidExplode) > 3)) AND (isset($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan]) AND ($oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan] != "0"))) {
             // Convert MAC HEX in Decimal
-            $MacAddress = str_replace("0x","",$oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
-            $MacAddress_tmp = str_split($MacAddress, 2);
-            $MacAddress = $MacAddress_tmp[0];
-            for($i = 1 ; $i < count($MacAddress_tmp) ; $i++) {
-               $MacAddress .= ":".$MacAddress_tmp[$i];
-            }
+            $MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+
             $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
             $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
             $stop = 0;

@@ -109,4 +109,14 @@ function plugin_tracker_ifmacToDecimal($ifmac) {
 	return $decimal;
 }
 
+function plugin_tracker_ifmacwalk_ifmacaddress($mac) {
+   $MacAddress = str_replace("0x","",$mac);
+   $MacAddress_tmp = str_split($MacAddress, 2);
+   $MacAddress = $MacAddress_tmp[0];
+   for($i=1 ; $i < count($MacAddress_tmp) ; $i++) {
+      $MacAddress .= ":".$MacAddress_tmp[$i];
+   }
+   return $MacAddress;
+}
+
 ?>
