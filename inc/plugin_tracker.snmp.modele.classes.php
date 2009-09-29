@@ -149,6 +149,52 @@ class PluginTrackerModelInfos extends CommonDBTM {
 			return $oids;
 		}
 	}
+
+
+   function getrightmodel($device_id, $type) {
+      global $DB;
+
+      // Get description (sysdescr) of device
+      // And search in device_serials base
+      $sysdescr = '';
+      switch($type) {
+
+         case NETWORKING_TYPE:
+            $Netdevice = new Netdevice;
+            $Netdevice->check($device_id,'r');
+            $sysdescr = $Netdevice->fields["comments"];
+            break;
+
+      }
+      if (!empty($sysdescr)) {
+         include(GLPI_ROOT.'/plugins/tracker/inc/device_serials.pm.php');
+         foreach ($ModelDef as $desc=>$value) {
+            if (strstr($sysdescr, $desc)) {
+               $modelgetted = $ModelDef{$desc};
+               break;
+            }
+         }
+         if (!empty($modelgetted)) {
+            $query = "SELECT * FROM glpi_plugin_tracker_model_infos
+				WHERE discovery_key='".$modelgetted."'
+				LIMIT 0,1";
+				$result = $DB->query($query);
+				$data = $DB->fetch_assoc($result);
+				$FK_model = $data['ID'];
+            // Udpate Device with this model
+            switch($type) {
+
+               case NETWORKING_TYPE:
+                  $query = "UPDATE glpi_plugin_tracker_networking
+                  SET FK_model_infos='".$FK_model."'
+                  WHERE FK_networking='".$device_id."'";
+                  $DB->query($query);
+                  break;
+
+            }
+         }
+      }
+   }
 }
 
 ?>
