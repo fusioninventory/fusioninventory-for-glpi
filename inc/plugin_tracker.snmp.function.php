@@ -299,7 +299,11 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 
 			if ((strstr($ifType, "ethernetCsmacd"))
 				OR ($ifType == "6")
-				OR ($ifType == "ethernet-csmacd(6)")) {
+				OR ($ifType == "ethernet-csmacd(6)")
+            OR (strstr($ifType, "iso88023Csmacd"))
+            OR ($ifType == "7"))
+               {
+
 
             $goodname = 1;
             if ($manufCisco->ListVirtualPorts($oidvalues[".1.3.6.1.2.1.1.1.0"][""],$ArrayPort_LogicalNum_SNMPName[$num]) == true) {
