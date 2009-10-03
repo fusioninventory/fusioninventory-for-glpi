@@ -154,7 +154,7 @@ class PluginTrackerUnknown extends CommonDBTM {
 			while ($data=$DB->fetch_array($result)) {
 				// $data = ID of unknown device
 				$query_known = "SELECT * FROM glpi_networking_ports ".
-					" WHERE ifmac='".$data["ifmac"]."' ".
+               " WHERE ifmac IN ('".$data["ifmac"]."','".strtoupper($data["ifmac"])."','".strtolower($data["ifmac"])."') ".
 						" AND device_type!=".PLUGIN_TRACKER_MAC_UNKNOWN." ".
 					" LIMIT 0,1 ";
 				$result_known=$DB->query($query_known);
