@@ -1597,7 +1597,15 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 
 				case "plugin_tracker_assign_model" :
                if(plugin_tracker_HaveRight("snmp_models","w")) {
-                  dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
+                  $query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
+                  WHERE device_type!=2
+                     AND device_type!=0";
+                  $result_models=$DB->query($query_models);
+                  $exclude_models = array();
+                  while ($data_models=$DB->fetch_array($result_models)) {
+                     $exclude_models[] = $data_models['ID'];
+                  }
+                  dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name",0,-1,'',$exclude_models);
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
@@ -1623,7 +1631,15 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 
 				case "plugin_tracker_assign_model" :
                if(plugin_tracker_HaveRight("snmp_models","w")) {
-                  dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
+                  $query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
+                  WHERE device_type!=3
+                     AND device_type!=0";
+                  $result_models=$DB->query($query_models);
+                  $exclude_models = array();
+                  while ($data_models=$DB->fetch_array($result_models)) {
+                     $exclude_models[] = $data_models['ID'];
+                  }
+                  dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name",0,-1,'',$exclude_models);
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
