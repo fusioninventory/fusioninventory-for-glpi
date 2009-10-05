@@ -57,6 +57,9 @@ if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	$_POST['ID'] = $data['ID'];
 	$plugin_tracker_printers->update($_POST);
 	
+} else if ((isset($_POST["GetRightModel"])) && (isset($_POST['ID']))) {
+   $plugin_tracker_model_infos = new PluginTrackerModelInfos;
+   $plugin_tracker_model_infos->getrightmodel($_POST['ID'], PRINTER_TYPE);
 }
 
 if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {

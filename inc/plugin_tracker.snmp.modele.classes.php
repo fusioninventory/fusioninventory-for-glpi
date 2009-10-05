@@ -165,6 +165,12 @@ class PluginTrackerModelInfos extends CommonDBTM {
             $sysdescr = $Netdevice->fields["comments"];
             break;
 
+         case PRINTER_TYPE:
+            $Printer = new Printer;
+            $Printer->check($device_id,'r');
+            $sysdescr = $Printer->fields["comments"];
+            break;
+
       }
       if (!empty($sysdescr)) {
          include(GLPI_ROOT.'/plugins/tracker/inc/device_serials.pm.php');
@@ -188,6 +194,13 @@ class PluginTrackerModelInfos extends CommonDBTM {
                   $query = "UPDATE glpi_plugin_tracker_networking
                   SET FK_model_infos='".$FK_model."'
                   WHERE FK_networking='".$device_id."'";
+                  $DB->query($query);
+                  break;
+
+               case PRINTER_TYPE:
+                  $query = "UPDATE glpi_plugin_tracker_printers
+                  SET FK_model_infos='".$FK_model."'
+                  WHERE FK_printers='".$device_id."'";
                   $DB->query($query);
                   break;
 

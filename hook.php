@@ -1560,6 +1560,7 @@ function plugin_tracker_MassiveActions($type) {
 	switch ($type) {
 		case NETWORKING_TYPE :
 			return array (
+            "plugin_tracker_get_model" => $LANG['plugin_tracker']["model_info"][14],
 				"plugin_tracker_assign_model" => $LANG['plugin_tracker']["massiveaction"][1],
 				"plugin_tracker_assign_auth" => $LANG['plugin_tracker']["massiveaction"][2]
 			);
@@ -1567,6 +1568,7 @@ function plugin_tracker_MassiveActions($type) {
 
 		case PRINTER_TYPE :
 			return array (
+            "plugin_tracker_get_model" => $LANG['plugin_tracker']["model_info"][14],
 				"plugin_tracker_assign_model" => $LANG['plugin_tracker']["massiveaction"][1],
 				"plugin_tracker_assign_auth" => $LANG['plugin_tracker']["massiveaction"][2]
 			);
@@ -1586,6 +1588,13 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 	switch ($type) {
 		case NETWORKING_TYPE :
 			switch ($action) {
+
+            case "plugin_tracker_get_model" :
+               if(plugin_tracker_HaveRight("snmp_models","w")) {
+                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
+               break;
+
 				case "plugin_tracker_assign_model" :
                if(plugin_tracker_HaveRight("snmp_models","w")) {
                   dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
@@ -1599,11 +1608,19 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
+
 			}
 			break;
 
 		case PRINTER_TYPE :
 			switch ($action) {
+
+            case "plugin_tracker_get_model" :
+               if(plugin_tracker_HaveRight("snmp_models","w")) {
+                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
+               }
+               break;
+
 				case "plugin_tracker_assign_model" :
                if(plugin_tracker_HaveRight("snmp_models","w")) {
                   dropdownValue("glpi_plugin_tracker_model_infos", "snmp_model", "name");
@@ -1636,6 +1653,25 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 function plugin_tracker_MassiveActionsProcess($data) {
 	global $LANG;
 	switch ($data['action']) {
+
+      case "plugin_tracker_get_model" :
+         if ($data['device_type'] == NETWORKING_TYPE) {
+				foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+                  $PluginTrackerModelInfos = new PluginTrackerModelInfos;
+                  $PluginTrackerModelInfos->getrightmodel($key, NETWORKING_TYPE);
+					}
+				}
+         } else if($data['device_type'] == PRINTER_TYPE) {
+            foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+                  $PluginTrackerModelInfos = new PluginTrackerModelInfos;
+                  $PluginTrackerModelInfos->getrightmodel($key, PRINTER_TYPE);
+					}
+				}
+         }
+         break;
+
 		case "plugin_tracker_assign_model" :
 			if ($data['device_type'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {

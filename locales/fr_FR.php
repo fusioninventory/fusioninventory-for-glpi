@@ -236,6 +236,7 @@ $LANG['plugin_tracker']["model_info"][10]="Importation de modèle";
 $LANG['plugin_tracker']["model_info"][11]="Activation";
 $LANG['plugin_tracker']["model_info"][12]="Clé modèle pour la découverte";
 $LANG['plugin_tracker']["model_info"][13]="Charger le bon modèle";
+$LANG['plugin_tracker']["model_info"][14]="Charger le bon modèle SNMP";
 
 $LANG['plugin_tracker']["mib"][1]="Label MIB";
 $LANG['plugin_tracker']["mib"][2]="Objet";
