@@ -781,7 +781,7 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
       $manufCisco->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
    } else if($sysDescr == "3Com IntelliJack NJ225") {
       $manuf3com->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
-   } else if($sysDescr == "ProCurve") {
+   } else if($sysDescr == "ProCurve J") {
       $manufHP->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
    } else if($sysDescr == "Foundry Networks") {
       $manufFoundryNetworks->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
