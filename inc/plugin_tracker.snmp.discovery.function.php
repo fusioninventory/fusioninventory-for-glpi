@@ -211,13 +211,11 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 
 	$ci = new commonitem;
    $PTD = new PluginTrackerDiscovery;
-
 	if($criteria_pass2 == "1") {
 		$link_ip = $link2_ip;
 		$link_name = $link2_name;
 		$link_serial = $link2_serial;
 	}
-
 	$Array_criteria = array();
 	if ($link_ip == "1") {
 		$Array_criteria[] = "ifaddr='".$discovery->ip."'";
@@ -231,7 +229,6 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 		$Array_criteria[] = "serial='".$discovery->serial."'";
 		$array_search[] = $discovery->serial;
 	}
-
 	if (count($Array_criteria) == "0") {
       $data['date'] = $discovery->date;
       $data['ip'] = $discovery->ip;
@@ -258,12 +255,52 @@ function plugin_tracker_discovery_criteria($discovery,$link_ip,$link_name,$link_
 			return;
 		} else {
 			// **  On cherche si le matos existe
-			if ($discovery->type == NETWORKING_TYPE OR $discovery->type == 0 OR $discovery->type == "" or !isset($discovery->type)) {
+			if ($discovery->type == NETWORKING_TYPE) {
 				$query_search = "SELECT * FROM glpi_networking
 				WHERE FK_entities='".$discovery->entity."'
 					AND ".$Array_criteria[0];
 				for ($i=1 ; $i < count($Array_criteria) ; $i++) {
 					$query_search .= " AND ".$Array_criteria[$i];
+            }
+         } else if ($discovery->type == "0") {
+            // Type not discovered
+            $query_search = 'SELECT * FROM glpi_plugin_tracker_config
+            WHERE ID=0 LIMIT 0,1';
+            $query_search_network = "SELECT * FROM glpi_networking
+				WHERE FK_entities='".$discovery->entity."'
+					AND ".$Array_criteria[0];
+				for ($i=1 ; $i < count($Array_criteria) ; $i++) {
+					$query_search_network .= " AND ".$Array_criteria[$i];
+            }
+            $result_search_network = $DB->query($query_search_network);
+            if ($DB->numrows($result_search_network) == "0") {
+               // Try with device with have Networking ports
+               $types[] = COMPUTER_TYPE;
+               $types[] = PRINTER_TYPE;
+               $types[] = PERIPHERAL_TYPE;
+               $types[] = PHONE_TYPE;
+               foreach($types as $type) {
+                  $ci->setType($type,true);
+                  if (!strstr($Array_criteria[0], "ifaddr")) {
+                     $Array_criteria[0] = $ci->obj->table.".".$Array_criteria[0];
+                  }
+                  $query_search_other = "SELECT ".$ci->obj->table.".name AS name,
+                  serial, glpi_networking_ports.ifaddr AS ifaddr
+                  FROM ".$ci->obj->table."
+                  LEFT JOIN glpi_networking_ports ON on_device=".$ci->obj->table.".ID
+                     AND device_type=".$type."
+                  WHERE FK_entities='".$discovery->entity."'
+                     AND ".$Array_criteria[0];
+                  for ($i=1 ; $i < count($Array_criteria) ; $i++) {
+                     $query_search_other .= " AND ".$ci->obj->table.".".$Array_criteria[$i];
+                  }
+                  $result_search_other = $DB->query($query_search_other);
+                  if ($DB->numrows($result_search_other) != "0") {
+                     $query_search = $query_search_other;
+                  }
+               }
+            } else {
+               $query_search = $query_search_network;
             }
 			} else {
 				$ci->setType($discovery->type,true);
