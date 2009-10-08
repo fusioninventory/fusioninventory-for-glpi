@@ -216,10 +216,17 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 		$xml->element[2]['authentification']['element']="discovery";
 		$xml->element[2]['authentification']['SQL']="SELECT ".
 			"glpi_plugin_tracker_snmp_connection.id as IDC, community, ".
-			"glpi_dropdown_plugin_tracker_snmp_version.name as namec,sec_name,sec_level, ".
-			"auth_protocol,auth_passphrase,priv_protocol,priv_passphrase ".
+			"glpi_dropdown_plugin_tracker_snmp_version.name as namec,sec_name, ".
+         "glpi_dropdown_plugin_tracker_snmp_auth_sec_level.name AS sec_level, ".
+			"glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol.name as auth_protocol, ".
+         "auth_passphrase, ".
+         "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol.name as priv_protocol, ".
+         "priv_passphrase ".
 			"FROM glpi_plugin_tracker_snmp_connection ".
 		"LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID ".
+      "LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_sec_level ON sec_level=glpi_dropdown_plugin_tracker_snmp_auth_sec_level.ID ".
+      "LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol ON auth_protocol=glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol.ID ".
+      "LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol ON priv_protocol=glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol.ID ".
 		"ORDER BY glpi_dropdown_plugin_tracker_snmp_version.ID DESC";
 		$xml->element[2]['authentification']['linkfield']['IDC'] = 'id';
 		$xml->element[2]['authentification']['linkfield']['community'] = 'community';
@@ -344,9 +351,21 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 					$xml_writed->element[2]['auth']['SQL']="SELECT FK_snmp_connection FROM glpi_plugin_tracker_networking ".
 						"WHERE FK_networking='[FK_networking]'";
 				} else {
-					$xml_writed->element[2]['auth']['SQL']="SELECT * FROM glpi_plugin_tracker_networking
+					$xml_writed->element[2]['auth']['SQL']="SELECT
+                  community,
+                  glpi_dropdown_plugin_tracker_snmp_version.name as name,
+                  sec_name,
+                  glpi_dropdown_plugin_tracker_snmp_auth_sec_level.name AS sec_level,
+                  glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol.name as auth_protocol,
+                  auth_passphrase,
+                  glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol.name as priv_protocol,
+                  priv_passphrase
+                  FROM glpi_plugin_tracker_networking
 					LEFT JOIN glpi_plugin_tracker_snmp_connection ON FK_snmp_connection=glpi_plugin_tracker_snmp_connection.ID
 					LEFT JOIN glpi_dropdown_plugin_tracker_snmp_version ON FK_snmp_version=glpi_dropdown_plugin_tracker_snmp_version.ID
+               LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_sec_level ON sec_level=glpi_dropdown_plugin_tracker_snmp_auth_sec_level.ID
+               LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol ON auth_protocol=glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol.ID
+               LEFT JOIN glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol ON priv_protocol=glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol.ID
 					WHERE FK_networking='[FK_networking]'";
 				}
 			} else if ($devices[$i] == "device_printer") {
