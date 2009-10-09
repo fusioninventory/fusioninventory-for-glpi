@@ -44,7 +44,7 @@ function readargs () {
 	global $server_id, $thread_nbr, $log;
 	
 	for ($i=1 ; $i<$_SERVER["argc"] ; $i++) {
-		$it = split("=",$_SERVER["argv"][$i]);
+		$it = explode("=",$_SERVER["argv"][$i]);
 		
 		switch ($it[0]) {
 			case '--nolog':

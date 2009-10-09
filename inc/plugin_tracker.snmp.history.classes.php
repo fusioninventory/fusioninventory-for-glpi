@@ -128,7 +128,7 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
       if (count($listName)) {
          echo "<select name='plugin_tracker_extraction_to_add[]' multiple size='15'>";
          foreach ($listName as $key => $val) {
-            //list ($item_type, $item) = split("_", $key);
+            //list ($item_type, $item) = explode("_", $key);
             echo "<option value='$key'>" . $val . "</option>\n";
          }
          echo "</select>";
@@ -148,7 +148,7 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
       if (!empty($options)) {
          echo "<select name='plugin_tracker_extraction_to_delete[]' multiple size='15'>";
          foreach ($options as $key => $val) {
-            //list ($item_type, $item) = split("_", $key);
+            //list ($item_type, $item) = explode("_", $key);
             echo "<option value='$key'>" . $val . "</option>\n";
          }
          echo "</select>";

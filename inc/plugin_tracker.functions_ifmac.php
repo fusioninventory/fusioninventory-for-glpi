@@ -67,7 +67,7 @@ function plugin_tracker_stringToIfmac($string) {
 		$string = str_split($string, 2);
 	} else {
 		// to seperate each element of the MAC address in an array
-		$string = split("[ :-]", $string);
+		$string = preg_split("/[ :-]/", $string);
 		for ($i=0 ; $i<count($string) ; $i++) {
 			// if value like "0" or "x" instead of "00" or "0x", put "0" before
 			if (strlen($string["$i"]) == 1) {
