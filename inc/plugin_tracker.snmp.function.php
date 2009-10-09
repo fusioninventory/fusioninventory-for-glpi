@@ -433,171 +433,172 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
 
 	foreach($Array_Object_TypeNameConstant as $oid=>$link) {
 		if (!preg_match("/\.$/",$oid)) { // SNMPGet ONLY
-			if ((isset($TRACKER_MAPPING[$type][$link]['dropdown'])) AND (!empty($TRACKER_MAPPING[$type][$link]['dropdown']))) {
-				$oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);
-				if ($TRACKER_MAPPING[$type][$link]['dropdown'] == "glpi_dropdown_model_networking") {
-					$oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0,array("manufacturer"=>$oidvalues[$oid][""]));
-            } else {
-               $oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0);
+         if (isset($oidvalues[$oid][""])) {
+            if ((isset($TRACKER_MAPPING[$type][$link]['dropdown'])) AND (!empty($TRACKER_MAPPING[$type][$link]['dropdown']))) {
+               $oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);
+               if ($TRACKER_MAPPING[$type][$link]['dropdown'] == "glpi_dropdown_model_networking") {
+                  $oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0,array("manufacturer"=>$oidvalues[$oid][""]));
+               } else {
+                  $oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0);
+               }
+            }
+
+
+            switch ($type) {
+               case NETWORKING_TYPE :
+                  $Field = "FK_networking";
+                  if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_networking") {
+                     $Field = "ID";
+                  }
+                  break;
+
+               case PRINTER_TYPE :
+                  $Field = "FK_printers";
+                  if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_printers") {
+                     $Field = "ID";
+                  }
+                  break;
+            }
+            if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",$link." = ".$oidvalues[$oid][""],$type,$ID_Device,1);
+
+            // * Memory
+            if (($link == "ram") OR ($link == "memory")) {
+               $oidvalues[$oid][""] = ceil(($oidvalues[$oid][""] / 1024) / 1024) ;
+               if ($type == PRINTER_TYPE) {
+                  $oidvalues[$oid][""] .= " MB";
+               }
+            }
+
+               if ($link == 'macaddr') {
+                  $MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oid][""]);
+
+                  $oidvalues[$oid][""] = $MacAddress;
+               }
+
+            // Convert hexa in string
+            $oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);
+
+            if (strstr($oidvalues[$oid][""], "noSuchName")) {
+               // NO Update field in GLPI
+            } else if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_plugin_tracker_printers_cartridges") {
+               // * Printers cartridges
+               $object_name_clean = str_replace("MAX", "", $link);
+               $object_name_clean = str_replace("REMAIN", "", $object_name_clean);
+               if (strstr($link, "MAX")) {
+                  $printer_cartridges_max_remain[$object_name_clean]["MAX"] = $oidvalues[$oid][""];
+               }
+               if (strstr($link, "REMAIN")) {
+                  $printer_cartridges_max_remain[$object_name_clean]["REMAIN"] = $oidvalues[$oid][""];
+               }
+               if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"])) AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]))) {
+                  $pourcentage = ceil((100 * $printer_cartridges_max_remain[$object_name_clean]["REMAIN"]) / $printer_cartridges_max_remain[$object_name_clean]["MAX"]);
+                  // Test existance of row in MySQl
+                  $query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$type][$link]['table']."
+                  WHERE ".$Field."='".$ID_Device."'
+                     AND object_name='".$object_name_clean."' ";
+                  $result_sel = $DB->query($query_sel);
+                  if ($DB->numrows($result_sel) == "0") {
+                     $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
+                     (".$Field.",object_name)
+                     VALUES('".$ID_Device."', '".$object_name_clean."') ";
+
+                     $DB->query($queryInsert);
+                  }
+
+                  $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$pourcentage."'
+                  WHERE ".$Field."='".$ID_Device."'
+                     AND object_name='".$object_name_clean."' ";
+
+                  $DB->query($queryUpdate);
+                  unset($printer_cartridges_max_remain[$object_name_clean]["MAX"]);
+                  unset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]);
+               } else {
+                  // Test existance of row in MySQl
+                  $query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$type][$link]['table']."
+                  WHERE ".$Field."='".$ID_Device."'
+                     AND object_name='".$link."' ";
+                  $result_sel = $DB->query($query_sel);
+                  if ($DB->numrows($result_sel) == "0") {
+                     $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
+                     (".$Field.",object_name)
+                     VALUES('".$ID_Device."', '".$link."') ";
+
+                     $DB->query($queryInsert);
+                  }
+
+                  $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
+                  WHERE ".$Field."='".$ID_Device."'
+                     AND object_name='".$link."' ";
+
+                  $DB->query($queryUpdate);
+               }
+            } else if (strstr($link, "pagecounter")) {
+               // Detect if the script has wroten a line for the counter today (if yes, don't touch, else add line)
+               $today = strftime("%Y-%m-%d", time());
+               $query_line = "SELECT * FROM glpi_plugin_tracker_printers_history
+               WHERE date LIKE '".$today."%'
+                  AND FK_printers='".$ID_Device."' ";
+               $result_line = $DB->query($query_line);
+               if ($DB->numrows($result_line) == "0") {
+                  if (empty($oidvalues[$oid][""])) {
+                     $oidvalues[$oid][""] = 0;
+                  }
+                  $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
+                  (".$TRACKER_MAPPING[$type][$link]['field'].",".$Field.", date)
+                  VALUES('".$oidvalues[$oid][""]."','".$ID_Device."', '".$today."') ";
+
+                  $DB->query($queryInsert);
+               } else {
+                  $data_line = $DB->fetch_assoc($result_line);
+                  if ($data_line[$TRACKER_MAPPING[$type][$link]['field']] == "0") {
+                     if (empty($oidvalues[$oid][""])) {
+                        $oidvalues[$oid][""] = 0;
+                     }
+                     $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+                     SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
+                     WHERE ".$Field."='".$ID_Device."'
+                        AND date LIKE '".$today."%' ";
+
+                     $DB->query($queryUpdate);
+                  }
+               }
+            } else if (($link == "cpuuser") OR ($link ==  "cpusystem")) {
+               if ($object_name == "cpuuser") {
+                  $cpu_values['cpuuser'] = $oidvalues[$oid][""];
+               }
+               if ($object_name ==  "cpusystem") {
+                  $cpu_values['cpusystem'] = $oidvalues[$oid][""];
+               }
+               if ((isset($cpu_values['cpuuser'])) AND (isset($cpu_values['cpusystem']))) {
+                  $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".($cpu_values['cpuuser'] + $cpu_values['cpusystem'])."'
+                  WHERE ".$Field."='".$ID_Device."'";
+
+                  $DB->query($queryUpdate);
+                  unset($cpu_values);
+               }
+            } else if ($TRACKER_MAPPING[$type][$link]['table'] != "") {
+               if (($TRACKER_MAPPING[$type][$link]['field'] == "cpu") AND (empty($oidvalues[$oid][""]))) {
+                  $SNMPValue = 0;
+               }
+               if (strstr($TRACKER_MAPPING[$type][$link]['table'], "glpi_plugin_tracker")) {
+                  $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
+                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
+                  WHERE ".$Field."='".$ID_Device."'";
+
+                  $DB->query($queryUpdate);
+               } else {
+                  $commonitem = new commonitem;
+                  $commonitem->setType($type,true);
+
+                  $tableau[$Field] = $ID_Device;
+                  $tableau[$TRACKER_MAPPING[$type][$link]['field']] = $oidvalues[$oid][""];
+                  $commonitem->obj->update($tableau);
+               }
             }
          }
-      }
-      if (isset($oidvalues[$oid][""])) {
-
-			switch ($type) {
-				case NETWORKING_TYPE :
-					$Field = "FK_networking";
-					if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_networking") {
-						$Field = "ID";
-               }
-					break;
-
-				case PRINTER_TYPE :
-					$Field = "FK_printers";
-					if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_printers") {
-						$Field = "ID";
-               }
-					break;
-			}
-			if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",$link." = ".$oidvalues[$oid][""],$type,$ID_Device,1);
-
-			// * Memory
-			if (($link == "ram") OR ($link == "memory")) {
-				$oidvalues[$oid][""] = ceil(($oidvalues[$oid][""] / 1024) / 1024) ;
-				if ($type == PRINTER_TYPE) {
-					$oidvalues[$oid][""] .= " MB";
-            }
-			}
-
-				if ($link == 'macaddr') {
-					$MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oid][""]);
-
-					$oidvalues[$oid][""] = $MacAddress;
-				}
-
-			// Convert hexa in string
-			$oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);
-
-			if (strstr($oidvalues[$oid][""], "noSuchName")) {
-				// NO Update field in GLPI
-			} else if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_plugin_tracker_printers_cartridges") {
-				// * Printers cartridges
-				$object_name_clean = str_replace("MAX", "", $link);
-				$object_name_clean = str_replace("REMAIN", "", $object_name_clean);
-				if (strstr($link, "MAX")) {
-					$printer_cartridges_max_remain[$object_name_clean]["MAX"] = $oidvalues[$oid][""];
-            }
-				if (strstr($link, "REMAIN")) {
-					$printer_cartridges_max_remain[$object_name_clean]["REMAIN"] = $oidvalues[$oid][""];
-            }
-				if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"])) AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]))) {
-					$pourcentage = ceil((100 * $printer_cartridges_max_remain[$object_name_clean]["REMAIN"]) / $printer_cartridges_max_remain[$object_name_clean]["MAX"]);
-					// Test existance of row in MySQl
-               $query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$type][$link]['table']."
-               WHERE ".$Field."='".$ID_Device."'
-                  AND object_name='".$object_name_clean."' ";
-               $result_sel = $DB->query($query_sel);
-               if ($DB->numrows($result_sel) == "0") {
-                  $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
-                  (".$Field.",object_name)
-                  VALUES('".$ID_Device."', '".$object_name_clean."') ";
-
-                  $DB->query($queryInsert);
-               }
-
-					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-					SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$pourcentage."'
-					WHERE ".$Field."='".$ID_Device."'
-						AND object_name='".$object_name_clean."' ";
-
-					$DB->query($queryUpdate);
-					unset($printer_cartridges_max_remain[$object_name_clean]["MAX"]);
-					unset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]);
-				} else {
-					// Test existance of row in MySQl
-               $query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$type][$link]['table']."
-               WHERE ".$Field."='".$ID_Device."'
-                  AND object_name='".$link."' ";
-               $result_sel = $DB->query($query_sel);
-               if ($DB->numrows($result_sel) == "0") {
-                  $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
-                  (".$Field.",object_name)
-                  VALUES('".$ID_Device."', '".$link."') ";
-
-                  $DB->query($queryInsert);
-               }
-
-					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-					SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
-					WHERE ".$Field."='".$ID_Device."'
-						AND object_name='".$link."' ";
-
-					$DB->query($queryUpdate);
-				}
-			} else if (strstr($link, "pagecounter")) {
-				// Detect if the script has wroten a line for the counter today (if yes, don't touch, else add line)
-				$today = strftime("%Y-%m-%d", time());
-				$query_line = "SELECT * FROM glpi_plugin_tracker_printers_history
-				WHERE date LIKE '".$today."%'
-					AND FK_printers='".$ID_Device."' ";
-				$result_line = $DB->query($query_line);
-				if ($DB->numrows($result_line) == "0") {
-					if (empty($oidvalues[$oid][""])) {
-						$oidvalues[$oid][""] = 0;
-               }
-					$queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
-					(".$TRACKER_MAPPING[$type][$link]['field'].",".$Field.", date)
-					VALUES('".$oidvalues[$oid][""]."','".$ID_Device."', '".$today."') ";
-
-					$DB->query($queryInsert);
-				} else {
-					$data_line = $DB->fetch_assoc($result_line);
-					if ($data_line[$TRACKER_MAPPING[$type][$link]['field']] == "0") {
-						if (empty($oidvalues[$oid][""])) {
-							$oidvalues[$oid][""] = 0;
-                  }
-						$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-						SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
-						WHERE ".$Field."='".$ID_Device."'
-							AND date LIKE '".$today."%' ";
-
-						$DB->query($queryUpdate);
-					}
-				}
-			} else if (($link == "cpuuser") OR ($link ==  "cpusystem")) {
-            if ($object_name == "cpuuser") {
-					$cpu_values['cpuuser'] = $oidvalues[$oid][""];
-            }
-				if ($object_name ==  "cpusystem") {
-					$cpu_values['cpusystem'] = $oidvalues[$oid][""];
-            }
-				if ((isset($cpu_values['cpuuser'])) AND (isset($cpu_values['cpusystem']))) {
-					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-					SET ".$TRACKER_MAPPING[$type][$link]['field']."='".($cpu_values['cpuuser'] + $cpu_values['cpusystem'])."'
-					WHERE ".$Field."='".$ID_Device."'";
-
-					$DB->query($queryUpdate);
-					unset($cpu_values);
-				}
-			} else if ($TRACKER_MAPPING[$type][$link]['table'] != "") {
-				if (($TRACKER_MAPPING[$type][$link]['field'] == "cpu") AND (empty($oidvalues[$oid][""]))) {
-					$SNMPValue = 0;
-            }
-				if (strstr($TRACKER_MAPPING[$type][$link]['table'], "glpi_plugin_tracker")) {
-					$queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-					SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
-					WHERE ".$Field."='".$ID_Device."'";
-
-					$DB->query($queryUpdate);
-				} else {
-					$commonitem = new commonitem;
-					$commonitem->setType($type,true);
-
-					$tableau[$Field] = $ID_Device;
-					$tableau[$TRACKER_MAPPING[$type][$link]['field']] = $oidvalues[$oid][""];
-					$commonitem->obj->update($tableau);
-				}
-			}
 		}
 	}
 }
