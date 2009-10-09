@@ -925,7 +925,8 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_tracker_networking_ports.ID" :
 					$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
 					LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
-					WHERE glpi_networking_ports.ID='".$data["ITEM_2"]."'
+               LEFT JOIN glpi_plugin_tracker_networking_ports ON glpi_networking_ports.ID=FK_networking_ports
+					WHERE glpi_plugin_tracker_networking_ports.ID='".$data["ITEM_$num"]."'
 					LIMIT 0,1";
 					$result = $DB->query($query);
 					$data2 = $DB->fetch_assoc($result);
