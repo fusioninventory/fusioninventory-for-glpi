@@ -96,7 +96,7 @@ function plugin_init_tracker() {
 	registerPluginType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, array(
 		'classname' => 'PluginTrackerAgentsProcesses',
 		'tablename' => 'glpi_plugin_tracker_agents_processes',
-		'formpage' => 'front/plugin_tracker.agents.processes.php'
+		'formpage' => 'front/plugin_tracker.agents.processes.php',
 		));
 	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_HISTORY", 5162, array(
 		'classname' => 'PluginTrackerSNMPHistory',
