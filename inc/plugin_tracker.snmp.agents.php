@@ -89,6 +89,13 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG['plugin_tracker']["agents"][5]."</td>";
+		echo "<td align='center'>";
+		echo $this->fields["tracker_agent_version"];
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][6] . "</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("lock",$this->fields["lock"]);
