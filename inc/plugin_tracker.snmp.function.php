@@ -440,7 +440,9 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
             } else {
                $oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0);
             }
-			}
+         }
+      }
+      if (isset($oidvalues[$oid][""])) {
 
 			switch ($type) {
 				case NETWORKING_TYPE :
