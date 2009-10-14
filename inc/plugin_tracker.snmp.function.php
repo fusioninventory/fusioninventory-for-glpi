@@ -766,6 +766,8 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
          break;
 
       case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J") :
+      case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"HP J4") :
+      case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"PROCURVE J") :
          $sysDescr = "ProCurve J";
          break;
 
@@ -838,6 +840,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
          break;
 
       case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J") :
+      case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"HP J4") :
+      case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"PROCURVE J") :
          $sysDescr = "ProCurve J";
          break;
 

@@ -73,19 +73,29 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
          $Arraytrunktype = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vlanTrunkPortDynamicStatus'],1,$vlan);
 
          foreach($Arraytrunktype as $IDtmp=>$snmpportID) {
-            if ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][""])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco"))) {
-               if ((isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan]))
-                  AND ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "1")) {
+            if (isset($oidvalues[".1.3.6.1.2.1.1.1.0"][""])) {
+               switch (!false) {
 
-                  $Array_trunk_ifIndex[$snmpportID] = 1;
-                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
-                  //$trunk_no_cdp[$snmpportID] = 1;
-               }
-            } else if ((isset($oidvalues[".1.3.6.1.2.1.1.1.0"][""])) AND (strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J"))) {
-               if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "2") {
-                  $Array_trunk_ifIndex[$snmpportID] = 1;
-                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
-                  //$trunk_no_cdp[$snmpportID] = 1;
+                  case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"Cisco") :
+                     if ((isset($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan]))
+                        AND ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "1")) {
+
+                        $Array_trunk_ifIndex[$snmpportID] = 1;
+                        if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
+                        //$trunk_no_cdp[$snmpportID] = 1;
+                     }
+                     break;
+
+                  case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"ProCurve J") :
+                  case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"HP J4") :
+                  case strstr($oidvalues[".1.3.6.1.2.1.1.1.0"][""],"PROCURVE J") :
+                     if ($oidvalues[$oidsModel[0][1]['vlanTrunkPortDynamicStatus'].".".$snmpportID][$vlan] == "2") {
+                        $Array_trunk_ifIndex[$snmpportID] = 1;
+                        if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Trunk = ".$snmpportID,$type,$ID_Device,1);
+                        //$trunk_no_cdp[$snmpportID] = 1;
+                     }
+                     break;
+
                }
             }
          }
