@@ -48,10 +48,10 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][1]['linkfield'] = 'ifaddr';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][1]['name'] = $LANG['plugin_tracker']["errors"][1];
 
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][2]['table'] = 'glpi_plugin_tracker_errors';
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][2]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][2]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_ERROR_TYPE][2]['name'] = $LANG["common"][2];
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][30]['table'] = 'glpi_plugin_tracker_errors';
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][30]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_ERROR_TYPE][30]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][3]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][3]['field'] = 'device_type';
@@ -67,33 +67,37 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['field'] = 'description';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['linkfield'] = 'description';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['name'] = $LANG['plugin_tracker']["errors"][2];
-
+  $sopt[PLUGIN_TRACKER_ERROR_TYPE][6]['datatype']='text';
+  
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['field'] = 'first_pb_date';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['linkfield'] = 'first_pb_date';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['name'] = $LANG['plugin_tracker']["errors"][3];
-
+  $sopt[PLUGIN_TRACKER_ERROR_TYPE][7]['datatype']='datetime';
+  
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['table'] = 'glpi_plugin_tracker_errors';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['field'] = 'last_pb_date';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['linkfield'] = 'last_pb_date';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['name'] = $LANG['plugin_tracker']["errors"][4];
-
+  $sopt[PLUGIN_TRACKER_ERROR_TYPE][8]['datatype']='datetime';
+  
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['field'] = 'completename';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['linkfield'] = 'FK_entities';
 	$sopt[PLUGIN_TRACKER_ERROR_TYPE][80]['name'] = $LANG["entity"][0];
 
-	$sopt[PLUGIN_TRACKER_MODEL]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_MODEL]['common'] = $LANG['plugin_tracker']["profile"][19];
 
 	$sopt[PLUGIN_TRACKER_MODEL][1]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_MODEL][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_MODEL][1]['name'] = $LANG["common"][16];
-
-	$sopt[PLUGIN_TRACKER_MODEL][2]['table'] = 'glpi_plugin_tracker_model_infos';
-	$sopt[PLUGIN_TRACKER_MODEL][2]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MODEL][2]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MODEL][2]['name'] = $LANG["common"][2];
+  $sopt[PLUGIN_TRACKER_MODEL][1]['datatype']='itemlink';
+  
+	$sopt[PLUGIN_TRACKER_MODEL][30]['table'] = 'glpi_plugin_tracker_model_infos';
+	$sopt[PLUGIN_TRACKER_MODEL][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_MODEL][30]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_MODEL][30]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_MODEL][3]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][3]['field'] = 'device_type';
@@ -102,30 +106,32 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_MODEL][5]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MODEL][5]['linkfield'] = 'EXPORT';
+	$sopt[PLUGIN_TRACKER_MODEL][5]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_MODEL][5]['name'] = $LANG["buttons"][31];
 
 	$sopt[PLUGIN_TRACKER_MODEL][6]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][6]['field'] = 'activation';
 	$sopt[PLUGIN_TRACKER_MODEL][6]['linkfield'] = 'activation';
 	$sopt[PLUGIN_TRACKER_MODEL][6]['name'] = $LANG['plugin_tracker']["model_info"][11];
+	$sopt[PLUGIN_TRACKER_MODEL][6]['datatype']='bool';
 
 	$sopt[PLUGIN_TRACKER_MODEL][7]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_MODEL][7]['field'] = 'discovery_key';
 	$sopt[PLUGIN_TRACKER_MODEL][7]['linkfield'] = 'discovery_key';
 	$sopt[PLUGIN_TRACKER_MODEL][7]['name'] = $LANG['plugin_tracker']["model_info"][12];
 
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH]['common'] = $LANG['plugin_tracker']["profile"][22];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['table'] = 'glpi_plugin_tracker_snmp_connection';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['name'] = $LANG["common"][16];
-
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][2]['table'] = 'glpi_plugin_tracker_snmp_connection';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][2]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][2]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][2]['name'] = $LANG["common"][2];
+  $sopt[PLUGIN_TRACKER_SNMP_AUTH][1]['datatype']='itemlink';
+  
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][30]['table'] = 'glpi_plugin_tracker_snmp_connection';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][30]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_AUTH][30]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['table'] = 'glpi_dropdown_plugin_tracker_snmp_version';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][3]['field'] = 'name';
@@ -167,18 +173,20 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['linkfield'] = 'priv_passphrase';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][10]['name'] = $LANG['plugin_tracker']["snmpauth"][7];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN]['common'] = $LANG['plugin_tracker']["menu"][4];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['table'] = 'glpi_plugin_tracker_unknown_device';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['name'] = $LANG["common"][16];
-
+  $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['datatype']='itemlink';
+  
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['table'] = 'glpi_plugin_tracker_unknown_device';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['field'] = 'date_mod';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['linkfield'] = 'date_mod';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['name'] = $LANG["common"][26];
-
+  $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['datatype']='datetime';
+  
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['table'] = 'glpi_networking_ports';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['field'] = 'ifaddr';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['linkfield'] = 'ID';
@@ -190,10 +198,10 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['name'] = $LANG["networking"][15];
    $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['forcegroupby']='1';
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['table'] = 'glpi_networking';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][52];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['table'] = 'glpi_networking';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][52];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['table'] = 'glpi_networking_ports';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['field'] = 'name';
@@ -231,17 +239,18 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][14]['name'] = $LANG["networking"][56];
 
 
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS]['common'] = $LANG['plugin_tracker']["profile"][26];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['name'] = $LANG["common"][16];
-
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['table'] = 'glpi_plugin_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][2]['name'] = $LANG["common"][2];
+  $sopt[PLUGIN_TRACKER_SNMP_AGENTS][1]['datatype']='itemlink';
+  
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][30]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][30]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][30]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][3]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][3]['field'] = 'core_discovery';
@@ -270,19 +279,21 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['field'] = 'last_agent_update';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['linkfield'] = 'last_agent_update';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['name'] = $LANG['plugin_tracker']["agents"][4];
-
+  $sopt[PLUGIN_TRACKER_SNMP_AGENTS][8]['datatype']='datetime';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['field'] = 'tracker_agent_version';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['linkfield'] = 'tracker_agent_version';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][9]['name'] = $LANG['plugin_tracker']["agents"][5];
 
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['field'] = 'lock';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['linkfield'] = 'lock';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['name'] = $LANG['plugin_tracker']["agents"][6];
-
+  $sopt[PLUGIN_TRACKER_SNMP_AGENTS][10]['datatype']='bool';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][11]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][11]['field'] = 'logs';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][11]['linkfield'] = 'logs';
@@ -290,16 +301,17 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][12]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][12]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][12]['linkfield'] = 'EXPORT';
+	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][12]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_SNMP_AGENTS][12]['name'] = $LANG['plugin_tracker']["agents"][7];
 
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP]['common'] = $LANG['plugin_tracker']["profile"][25];
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['table'] = 'glpi_plugin_tracker_rangeip';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['name'] = $LANG["common"][16];
-
+  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['datatype']='itemlink';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['table'] = 'glpi_plugin_tracker_rangeip';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['field'] = 'ifaddr_start';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['linkfield'] = 'ifaddr_start';
@@ -310,43 +322,48 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['linkfield'] = 'ifaddr_end';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][3]['name'] = $LANG['plugin_tracker']["rangeip"][1];
 
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['table'] = 'glpi_plugin_tracker_rangeip';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][4]['name'] = $LANG["common"][2];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][30]['table'] = 'glpi_plugin_tracker_rangeip';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][30]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][30]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['table'] = 'glpi_plugin_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['linkfield'] = 'FK_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['name'] = $LANG["ocsng"][49];
-
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['datatype']='itemlink';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
+  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['forcegroupby']='1';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['table'] = 'glpi_plugin_tracker_rangeip';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['field'] = 'discover';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['linkfield'] = 'discover';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['name'] = $LANG['plugin_tracker']["discovery"][3];
-
+  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['datatype']='bool';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['table'] = 'glpi_plugin_tracker_rangeip';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['field'] = 'query';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['linkfield'] = 'query';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['name'] = $LANG['plugin_tracker']["rangeip"][3];
-
+  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['datatype']='bool';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['linkfield'] = 'FK_entities';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['name'] = $LANG["entity"][0];
 
 
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY]['common'] = $LANG['plugin_tracker']["profile"][22];
 
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['table'] = 'glpi_plugin_tracker_discovery';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['name'] = $LANG["common"][16];
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][2]['name'] = $LANG["common"][2];
+  
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['table'] = 'glpi_plugin_tracker_discovery';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['field'] = 'name';
@@ -355,9 +372,10 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['table'] = 'glpi_plugin_tracker_discovery';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['field'] = 'date';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['linkfield'] = 'date';
+	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['name'] = $LANG["common"][27];
-
+  $sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['datatype']='datetime';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['table'] = 'glpi_plugin_tracker_discovery';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['field'] = 'ifaddr';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['linkfield'] = 'ifaddr';
@@ -367,7 +385,8 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['field'] = 'descr';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['linkfield'] = 'descr';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['name'] = $LANG["joblist"][6];
-
+  $sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['datatype']='text';
+  
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['table'] = 'glpi_plugin_tracker_discovery';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['field'] = 'serialnumber';
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['linkfield'] = 'serialnumber';
@@ -395,41 +414,46 @@ function plugin_tracker_getSearchOption() {
 		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANG['plugin_tracker']["model_info"][3];
 	}
 
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES]['common'] = $LANG['plugin_tracker']["profile"][21];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['field'] = 'process_number';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['linkfield'] = 'process_number';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][1]['name'] = $LANG['plugin_tracker']["processes"][1];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['table'] = 'glpi_plugin_tracker_agents';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['linkfield'] = 'FK_agent';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['name'] = $LANG["ocsng"][49];
-
+  $sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['datatype']='itemlink';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
+  $sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][2]['forcegroupby']='1';
+  
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['field'] = 'status';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['linkfield'] = 'status';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][3]['name'] = $LANG["joblist"][0];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['field'] = 'start_time';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['linkfield'] = 'start_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['name'] = $LANG['plugin_tracker']["processes"][4];
-
+  $sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][4]['datatype']='datetime';
+  
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['field'] = 'end_time';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['linkfield'] = 'end_time';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['name'] = $LANG['plugin_tracker']["processes"][5];
-
+  $sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][5]['datatype']='datetime';
+  
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['field'] = 'discovery_queries';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['linkfield'] = 'discovery_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][6]['name'] = $LANG['plugin_tracker']["discovery"][3];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['field'] = 'networking_queries';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['linkfield'] = 'networking_queries';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][7]['name'] = $LANG['plugin_tracker']["processes"][21];
 /*
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][8]['table'] = 'glpi_plugin_tracker_agents_processes';
@@ -439,31 +463,30 @@ function plugin_tracker_getSearchOption() {
 */
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['field'] = 'errors';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['linkfield'] = 'errors';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][9]['name'] = $LANG['plugin_tracker']["processes"][22];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][10]['name'] = $LANG['plugin_tracker']["processes"][10];
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['field'] = 'start_time_discovery';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['linkfield'] = 'start_time_discovery';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][11]['name'] = $LANG['plugin_tracker']["processes"][23];
-
+  
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['table'] = 'glpi_plugin_tracker_agents_processes';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['field'] = 'start_time_query';
-	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['linkfield'] = 'start_time_query';
+	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['linkfield'] = '';
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES][12]['name'] = $LANG['plugin_tracker']["processes"][24];
 
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY]['common'] = $LANG['plugin_tracker']["title"][2];
 
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY]['common'] = $LANG['plugin_tracker']["errors"][0];
-
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['table'] = 'glpi_plugin_tracker_snmp_history';
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][1]['name'] = "ID";
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][30]['table'] = 'glpi_plugin_tracker_snmp_history';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][30]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][30]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][2]['table'] = 'glpi_networking_ports';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][2]['field'] = 'ID';
@@ -489,14 +512,15 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['field'] = 'date_mod';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['linkfield'] = 'date_mod';
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['name'] = $LANG["common"][27];
+	$sopt[PLUGIN_TRACKER_SNMP_HISTORY][6]['datatype']='datetime';
 
 
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2]['common'] = $LANG['plugin_tracker']["errors"][0];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2]['common'] = $LANG['plugin_tracker']["profile"][28];
 
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['table'] = 'glpi_plugin_tracker_networking_ports';
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][1]['name'] = $LANG["reports"][52];
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][30]['table'] = 'glpi_plugin_tracker_networking_ports';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][30]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][30]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][30]['name'] = $LANG["reports"][52];
 
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['table'] = 'glpi_plugin_tracker_networking_ports';
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2][2]['field'] = 'FK_networking_ports';
@@ -597,8 +621,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
-	$linkfield=$SEARCH_OPTION[$type][$ID]["linkfield"];
-
 
 //	echo "GiveItem : ".$field."<br/>";
 	switch ($type) {
@@ -761,21 +783,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 		case PLUGIN_TRACKER_MODEL :
 			switch ($table.'.'.$field) {
 
-				// ** Name of model and link to form
-				case "glpi_plugin_tracker_model_infos.name" :
-					if (empty ($data["ITEM_$num"])) {
-						$out = "";
-               } else {
-						$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
-						$out .= $data["ITEM_$num"];
-						if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"])) {
-							$out .= " (" . $data["ID"] . ")";
-                  }
-						$out .= "</a>";
-					}
-					return "<center>".$out."</center>";
-					break;
-
 				// ** Name of type of model (network, printer...)
 				case "glpi_plugin_tracker_model_infos.device_type" :
 					$out = '<center> ';
@@ -813,12 +820,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 					return "<center>".$out."</center>";
 					break;
 
-				// ** Display yes/no activation of model
-				case "glpi_plugin_tracker_model_infos.activation" :
-					$out = getYesNo($data["ITEM_$num"]);
-					return "<center>".$out."</center>";
-					break;
-
 			}
 			break;
 
@@ -826,20 +827,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
 		case PLUGIN_TRACKER_SNMP_AUTH :
 			switch ($table.'.'.$field) {
-
-				// ** Name of authentification and link to form
-				case "glpi_plugin_tracker_snmp_connection.name" :
-					if (empty ($data["ITEM_$num"])) {
-						$out = "";
-               } else {
-						$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/" . $INFOFORM_PAGES[$type] . "?ID=" . $data['ID'] . "\">";
-						$out .= $data["ITEM_$num"];
-						if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"]))
-							$out .= " (" . $data["ID"] . ")";
-						$out .= "</a>";
-					}
-					return "<center>".$out."</center>";
-					break;
 
 				// ** Hidden auth passphrase (SNMP v3)
 				case "glpi_plugin_tracker_snmp_connection.auth_passphrase" :
@@ -959,29 +946,21 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 		case PLUGIN_TRACKER_SNMP_AGENTS :
 			switch ($table.'.'.$field) {
 
-				// ** Name of agent and link to form
-				case "glpi_plugin_tracker_agents.name" :
-					$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.form.php?ID=".$data['ID']."'>";
-					$out .= $data["ITEM_$num"];
-					if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"])) {
-						$out .= " (" . $data["ID"] . ")";
-               }
-					$out .="</a>";
-					return "<center>".$out."</center>";
-					break;
-
-				// ** Display Yes/No of lock of agent
-				case "glpi_plugin_tracker_agents.lock" :
-					$out = getYesNo($data["ITEM_$num"]);
-					return "<center>".$out."</center>";
-					break;
-
 				// ** Display log activation / level
 				case "glpi_plugin_tracker_agents.logs" :
 					$ArrayValues[]= $LANG["choice"][0];
 					$ArrayValues[]= $LANG["choice"][1];
 					$ArrayValues[]= $LANG["setup"][137];
 					$out = $ArrayValues[$data["ITEM_$num"]];
+					return "<center>".$out."</center>";
+					break;
+				
+				// ** Display pic / link for exporting model
+				case "glpi_plugin_tracker_agents.ID" :
+					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.agents.export.php' target='_blank'>
+					<input type='hidden' name='agent' value='" . $data["ID"] . "' />
+					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
+					</form></div>";
 					return "<center>".$out."</center>";
 					break;
 
@@ -992,36 +971,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 		case PLUGIN_TRACKER_SNMP_RANGEIP :
 			switch ($table.'.'.$field) {
 
-				// ** Name of range IP and link to form
-				case "glpi_plugin_tracker_rangeip.name" :
-					$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.rangeip.form.php?ID=".$data['ID']."'>";
-					$out .= $data["ITEM_$num"];
-					if ($CFG_GLPI["view_ID"] || empty ($data["ITEM_$num"])) {
-						$out .= " (" . $data["ID"] . ")";
-               }
-					$out .="</a>";
-					return "<center>".$out."</center>";
-					break;
-
-				// ** Agent name associed to IP range and link to agent form
-				case "glpi_plugin_tracker_agents.ID" :
-					$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
-					$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
-					$out .= "</a>";
-					return "<center>".$out."</center>";
-					break;
-
-				// ** Display Yes/No discovery fonction
-				case "glpi_plugin_tracker_rangeip.discover" :
-					$out = getYesNo($data["ITEM_$num"]);
-					return "<center>".$out."</center>";
-					break;
-
-				// ** Display Yes/No query fonction
-				case "glpi_plugin_tracker_rangeip.query" :
-					$out = getYesNo($data["ITEM_$num"]);
-					return "<center>".$out."</center>";
-					break;
 
 				// ** Display entity name
 				case "glpi_entities.name" :
@@ -1065,14 +1014,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 		case PLUGIN_TRACKER_AGENTS_PROCESSES :
 			switch ($table.'.'.$field) {
 
-			// ** Agent name and link to form
-			case "glpi_plugin_tracker_agents.ID" :
-				$out = "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.php?ID=".$data["ITEM_$num"]."'>";
-				$out .= getDropdownName("glpi_plugin_tracker_agents", $data["ITEM_$num"], 0);
-				$out .= "</a>";
-				return "<center>".$out."</center>";
-				break;
-
 			// ** Display status of agent (finish or in progress)
 			case "glpi_plugin_tracker_agents_processes.status" :
 				$out = "";
@@ -1089,15 +1030,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 						$out = "<img src='../pics/ok2.png' />";
 						break;
 				}
-				return "<center>".$out."</center>";
-				break;
-
-			// ** Display date and hour of finished agent execution
-			case "glpi_plugin_tracker_agents_processes.end_time" :
-				$out = $data["ITEM_$num"];
-				if ($out == "0000-00-00 00:00:00") {
-					$out = "-";
-            }
 				return "<center>".$out."</center>";
 				break;
 
@@ -1203,14 +1135,7 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 
 	}
 
-	if (($type == PLUGIN_TRACKER_SNMP_AGENTS) AND ($linkfield == "EXPORT")) {
-		$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.agents.export.php' target='_blank'>
-					<input type='hidden' name='agent' value='" . $data["ID"] . "' />
-					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
-					</form></div>";
-		return $out;
-	}
-	return "<center>".$data["ITEM_$num"]."</center>";
+	return "";
 }
 
 // Define Dropdown tables to be manage in GLPI :
@@ -1379,58 +1304,6 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
 	}
 	return false;	
 }
-/*
-function plugin_get_headings_tracker($type, $withtemplate) {
-
-	global $LANG;
-	$config = new PluginTrackerConfig;
-
-	switch ($type) {
-
-		case COMPUTER_TYPE :
-			$array = array();
-			// template case
-			if ($withtemplate)
-				return array ();
-			// Non template case
-			else {
-				$array = array ();
-
-				if (plugin_tracker_haveRight("printers_info", "r")) {
-					$array = array (
-						2 => $LANG['plugin_tracker']["title"][1]
-					);
-				}
-				if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-					$array = array (
-						1 => $LANG['plugin_tracker']["title"][2]
-					);
-				}
-				return $array;
-			}
-
-			break;
-
-		case USER_TYPE :
-			$array = array();
-			// template case
-			if ($withtemplate)
-				return array ();
-			// Non template case
-			else {
-				if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-					return array (
-						1 => $LANG['plugin_tracker']["title"][2]
-					);
-				}
-			}
-
-			break;
-
-	}
-	return false;
-}
-*/
 
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_tracker($type) {
@@ -1742,10 +1615,6 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 	// Table fields
 	//echo $table.".".$field."<br/>";
 	switch ($table.".".$field) {
-		case 'glpi_entities.name':
-			dropdownValue("glpi_entities",$linkfield);
-			return true;
-			break;
 
 		case 'glpi_plugin_tracker_snmp_connection.name':
 			dropdownValue("glpi_plugin_tracker_snmp_connection",$linkfield);
@@ -1767,16 +1636,6 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 
-		case 'glpi_plugin_tracker_rangeip.discover' :
-			dropdownYesNo('discover',$linkfield);
-			return true;
-			break;
-
-		case 'glpi_plugin_tracker_rangeip.query' :
-			dropdownYesNo('query',$linkfield);
-			return true;
-			break;
-
 		case 'glpi_plugin_tracker_agents.ID' :
 			dropdownValue("glpi_plugin_tracker_agents",$linkfield,'',0);
 			return true;
@@ -1789,11 +1648,6 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 
 		case 'glpi_plugin_tracker_agents.nb_process_discovery' :
 			dropdownInteger("nb_process_discovery", $linkfield,1,400);
-			return true;
-			break;
-
-		case 'glpi_plugin_tracker_agents.lock' :
-			dropdownYesNo('lock',$linkfield);
 			return true;
 			break;
 
@@ -1825,25 +1679,9 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 
-		case 'glpi_plugin_tracker_agents.last_agent_update' :
-			return true;
-			break;
-
-		case 'glpi_plugin_tracker_agents.tracker_agent_version' :
-			return true;
-			break;
-
-		case 'glpi_plugin_tracker_agents.ID' :
-			return true;
-			break;
-
 		case 'glpi_plugin_tracker_discovery.FK_snmp_connection' :
 			$plugin_tracker_snmp = new PluginTrackerSNMPAuth;
 			echo $plugin_tracker_snmp->selectbox();
-			return true;
-			break;
-
-		case 'glpi_plugin_tracker_model_infos.ID' :
 			return true;
 			break;
 
@@ -1854,14 +1692,6 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			$type_list[] = PERIPHERAL_TYPE;
 			$type_list[] = PHONE_TYPE;
 			dropdownDeviceTypes('type',$linkfield,$type_list);
-			return true;
-			break;
-
-		case 'glpi_plugin_tracker_model_infos.activation' :
-			return true;
-			break;
-
-		case 'glpi_plugin_tracker_model_infos.discovery_key' :
 			return true;
 			break;
 	}
@@ -2093,36 +1923,6 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			}
 			break;
 
-		// * Model List (plugins/tracker/front/plugin_tracker.models.php)
-		case PLUGIN_TRACKER_MODEL :
-			switch ($new_table.".".$linkfield) {
-
-				// ** Name of model and link to form
-
-				// ** Name of type of model (network, printer...)
-				case "glpi_plugin_tracker_model_infos.device_type" :
-					break;
-
-				// ** Display pic / link for exporting model
-
-				// ** Display yes/no activation of model
-
-			}
-			break;
-
-		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
-		case PLUGIN_TRACKER_SNMP_AUTH :
-			switch ($new_table.".".$linkfield) {
-
-				// ** Name of authentification and link to form
-
-				// ** Hidden auth passphrase (SNMP v3)
-
-				// ** Hidden priv passphrase (SNMP v3)
-
-			}
-			break;
-
 		// * Unknown mac addresses connectd on switch - report (plugins/tracker/report/plugin_tracker.unknown_mac.php)
 		case PLUGIN_TRACKER_MAC_UNKNOWN :
 			switch ($new_table.".".$linkfield) {
@@ -2146,26 +1946,10 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			}
 			break;
 
-		// *
-		case PLUGIN_TRACKER_SNMP_NETWORKING_PORTS :
-			switch ($new_table.".".$linkfield) {
-
-			}
-			break;
 
 		// * Ports date connection - report (plugins/tracker/report/plugin_tracker.ports_date_connections.php)
 		case PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2 :
 			switch ($new_table.".".$linkfield) {
-
-				// ** Name and link of networking device (switch)
-				case "glpi_plugin_tracker_networking_ports.ID" :
-
-				break;
-
-				// ** Name and link of port of networking device (port of switch)
-				case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
-
-					break;
 
 				// ** Location of switch
 				case "glpi_dropdown_locations.FK_networking_ports" :
@@ -2177,149 +1961,17 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			}
 			break;
 
-		// * Tracker Agents list (plugins/tracker/front/plugin_tracker.agents.php)
-		case PLUGIN_TRACKER_SNMP_AGENTS :
-			switch ($new_table.".".$linkfield) {
-
-				// ** Name of agent and link to form
-				case "glpi_plugin_tracker_agents.name" :
-
-					break;
-
-				// ** Display Yes/No of lock of agent
-				case "glpi_plugin_tracker_agents.lock" :
-
-					break;
-
-				// ** Display log activation / level
-				case "glpi_plugin_tracker_agents.logs" :
-
-					break;
-
-			}
-			break;
-
 		// * range IP list (plugins/tracker/front/plugin_tracker.rangeip.php)
 		case PLUGIN_TRACKER_SNMP_RANGEIP :
 			switch ($new_table.".".$linkfield) {
-
-				// ** Name of range IP and link to form
-				case "glpi_plugin_tracker_rangeip.name" :
-
-					break;
 
 				// ** Agent name associed to IP range and link to agent form
 				case "glpi_plugin_tracker_agents.FK_tracker_agents" :
 					return " LEFT JOIN glpi_plugin_tracker_agents ON (glpi_plugin_tracker_agents.ID = glpi_plugin_tracker_rangeip.FK_tracker_agents) ";
 					break;
 
-				// ** Display Yes/No discovery fonction
-				case "glpi_plugin_tracker_rangeip.discover" :
-
-					break;
-
-				// ** Display Yes/No query fonction
-				case "glpi_plugin_tracker_rangeip.query" :
-
-					break;
-
-				// ** Display entity name
-				case "glpi_entities.name" :
-
-					break;
-
 			}
 			break;
-
-		// * Device discovery list (plugins/tracker/front/plugin_tracker.discovery.php)
-		case PLUGIN_TRACKER_SNMP_DISCOVERY :
-			switch ($new_table.".".$linkfield) {
-
-				// ** Display type of device (networking, printer, computer...)
-				case "glpi_plugin_tracker_discovery.type" :
-
-					break;
-
-				// ** Display entity name
-				case "glpi_entities.name" :
-
-					break;
-
-			}
-			break;
-
-		// * Processes agents list (plugins/tracker/front/plugin_tracker.agents.processes.php)
-		case PLUGIN_TRACKER_AGENTS_PROCESSES :
-			switch ($new_table.".".$linkfield) {
-
-			// ** Agent name and link to form
-			case "glpi_plugin_tracker_agents_processes.FK_agent" :
-
-				break;
-
-			// ** Display status of agent (finish or in progress)
-			case "glpi_plugin_tracker_agents_processes.status" :
-
-				break;
-
-			// ** Display date and hour of finished agent execution
-			case "glpi_plugin_tracker_agents_processes.end_time" :
-
-				break;
-
-			// ** Counter of devices discovered
-			case "glpi_plugin_tracker_agents_processes.discovery_queries" :
-
-				break;
-
-			// ** Counter of devices queried
-			case "glpi_plugin_tracker_agents_processes.networking_queries" :
-
-				break;
-
-			// ** Total time of execution script
-			case "glpi_plugin_tracker_agents_processes.ID" :
-
-				break;
-
-			// ** Total time of discovery function
-			case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
-
-				break;
-
-			// ** Total time of query function
-			case "glpi_plugin_tracker_agents_processes.start_time_query" :
-
-				break;
-
-			}
-			break;
-
-		// * Detail of ports history (plugins/tracker/report/plugin_tracker.switch_ports.history.php)
-		case PLUGIN_TRACKER_SNMP_HISTORY :
-			switch ($new_table.".".$linkfield) {
-
-				// ** Display switch and Port
-				case "glpi_networking_ports.FK_ports" :
-					return " LEFT JOIN glpi_networking_ports ON (glpi_plugin_tracker_snmp_history.FK_ports = glpi_networking_ports.ID) ".
-						" LEFT JOIN glpi_networking ON glpi_networking_ports.on_device = glpi_networking.ID";
-					break;
-
-				// ** Display GLPI field of device
-				case "glpi_plugin_tracker_snmp_history.Field" :
-
-					break;
-
-				// ** Display Old Value (before changement of value)
-				case "glpi_plugin_tracker_snmp_history.old_value" :
-
-					break;
-
-				// ** Display New Value (new value modified)
-				case "glpi_plugin_tracker_snmp_history.new_value" :
-
-					break;
-			}
 	}
 	return "";
 }
@@ -2366,10 +2018,6 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 					return " ORDER BY glpi_plugin_tracker_model_infos.name $order ";
 					break;
 
-				// ** Tracker - SNMP authentification
-				case "glpi_plugin_tracker_networking.name" :
-					break;
-
 			}
 			break;
 
@@ -2405,36 +2053,6 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 			}
 			break;
 
-		// * Model List (plugins/tracker/front/plugin_tracker.models.php)
-		case PLUGIN_TRACKER_MODEL :
-			switch ($table.".".$field) {
-
-				// ** Name of model and link to form
-
-				// ** Name of type of model (network, printer...)
-				case "glpi_plugin_tracker_model_infos.device_type" :
-					break;
-
-				// ** Display pic / link for exporting model
-
-				// ** Display yes/no activation of model
-
-			}
-			break;
-
-		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
-		case PLUGIN_TRACKER_SNMP_AUTH :
-			switch ($table.".".$field) {
-
-				// ** Name of authentification and link to form
-
-				// ** Hidden auth passphrase (SNMP v3)
-
-				// ** Hidden priv passphrase (SNMP v3)
-
-			}
-			break;
-
 		// * Unknown mac addresses connectd on switch - report (plugins/tracker/report/plugin_tracker.unknown_mac.php)
 		case PLUGIN_TRACKER_MAC_UNKNOWN :
 			switch ($table.".".$field) {
@@ -2452,26 +2070,9 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 			}
 			break;
 
-		// *
-		case PLUGIN_TRACKER_SNMP_NETWORKING_PORTS :
-			switch ($table.".".$field) {
-
-			}
-			break;
-
 		// * Ports date connection - report (plugins/tracker/report/plugin_tracker.ports_date_connections.php)
 		case PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2 :
 			switch ($table.".".$field) {
-
-				// ** Name and link of networking device (switch)
-				case "glpi_plugin_tracker_networking_ports.ID" :
-
-				break;
-
-				// ** Name and link of port of networking device (port of switch)
-				case "glpi_plugin_tracker_networking_ports.FK_networking_ports" :
-
-					break;
 
 				// ** Location of switch
 				case "glpi_dropdown_locations.ID" :
@@ -2481,72 +2082,13 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 			}
 			break;
 
-		// * Tracker Agents list (plugins/tracker/front/plugin_tracker.agents.php)
-		case PLUGIN_TRACKER_SNMP_AGENTS :
-			switch ($table.".".$field) {
-
-				// ** Name of agent and link to form
-				case "glpi_plugin_tracker_agents.name" :
-
-					break;
-
-				// ** Display Yes/No of lock of agent
-				case "glpi_plugin_tracker_agents.lock" :
-
-					break;
-
-				// ** Display log activation / level
-				case "glpi_plugin_tracker_agents.logs" :
-
-					break;
-
-			}
-			break;
-
 		// * range IP list (plugins/tracker/front/plugin_tracker.rangeip.php)
 		case PLUGIN_TRACKER_SNMP_RANGEIP :
 			switch ($table.".".$field) {
-
-				// ** Name of range IP and link to form
-				case "glpi_plugin_tracker_rangeip.name" :
-
-					break;
-
+			
 				// ** Agent name associed to IP range and link to agent form
 				case "glpi_plugin_tracker_agents.ID" :
 					return " ORDER BY glpi_plugin_tracker_agents.name $order ";
-					break;
-
-				// ** Display Yes/No discovery fonction
-				case "glpi_plugin_tracker_rangeip.discover" :
-
-					break;
-
-				// ** Display Yes/No query fonction
-				case "glpi_plugin_tracker_rangeip.query" :
-
-					break;
-
-				// ** Display entity name
-				case "glpi_entities.name" :
-
-					break;
-
-			}
-			break;
-
-		// * Device discovery list (plugins/tracker/front/plugin_tracker.discovery.php)
-		case PLUGIN_TRACKER_SNMP_DISCOVERY :
-			switch ($table.".".$field) {
-
-				// ** Display type of device (networking, printer, computer...)
-				case "glpi_plugin_tracker_discovery.type" :
-
-					break;
-
-				// ** Display entity name
-				case "glpi_entities.name" :
-
 					break;
 
 			}
@@ -2559,41 +2101,6 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 			// ** Agent name and link to form
 			case "glpi_plugin_tracker_agents.ID" :
 				return " ORDER BY glpi_plugin_tracker_agents.name $order ";
-				break;
-
-			// ** Display status of agent (finish or in progress)
-			case "glpi_plugin_tracker_agents_processes.status" :
-
-				break;
-
-			// ** Display date and hour of finished agent execution
-			case "glpi_plugin_tracker_agents_processes.end_time" :
-
-				break;
-
-			// ** Counter of devices discovered
-			case "glpi_plugin_tracker_agents_processes.discovery_queries" :
-
-				break;
-
-			// ** Counter of devices queried
-			case "glpi_plugin_tracker_agents_processes.networking_queries" :
-
-				break;
-
-			// ** Total time of execution script
-			case "glpi_plugin_tracker_agents_processes.ID" :
-
-				break;
-
-			// ** Total time of discovery function
-			case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
-
-				break;
-
-			// ** Total time of query function
-			case "glpi_plugin_tracker_agents_processes.start_time_query" :
-
 				break;
 
 			}
@@ -2777,57 +2284,6 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 			}
 			break;
 
-		// * Model List (plugins/tracker/front/plugin_tracker.models.php)
-		case PLUGIN_TRACKER_MODEL :
-			switch ($table.".".$field) {
-
-				// ** Name of model and link to form
-
-				// ** Name of type of model (network, printer...)
-				case "glpi_plugin_tracker_model_infos.device_type" :
-//					Probleme, add select with REPLACE
-//
-//					switch ($data["ITEM_$num"])
-//					{
-//						case COMPUTER_TYPE:
-//							$out .= $LANG["Menu"][0];
-//							break;
-//						case NETWORKING_TYPE:
-//							$out .= $LANG["Menu"][1];
-//							break;
-//						case PRINTER_TYPE:
-//							$out .= $LANG["Menu"][2];
-//							break;
-//						case PERIPHERAL_TYPE:
-//							$out .= $LANG["Menu"][16];
-//							break;
-//						case PHONE_TYPE:
-//							$out .= $LANG["Menu"][34];
-//
-//
-//					return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
-					break;
-
-				// ** Display pic / link for exporting model
-
-				// ** Display yes/no activation of model
-
-			}
-			break;
-
-		// * Authentification List (plugins/tracker/front/plugin_tracker.snmp_auth.php)
-		case PLUGIN_TRACKER_SNMP_AUTH :
-			switch ($table.".".$field) {
-
-				// ** Name of authentification and link to form
-
-				// ** Hidden auth passphrase (SNMP v3)
-
-				// ** Hidden priv passphrase (SNMP v3)
-
-			}
-			break;
-
 		// * Unknown mac addresses connectd on switch - report (plugins/tracker/report/plugin_tracker.unknown_mac.php)
 		case PLUGIN_TRACKER_MAC_UNKNOWN :
 			switch ($table.".".$field) {
@@ -2853,13 +2309,6 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 					}
 					return $link." (TRACKER_22.name  LIKE '%".$val."%' $ADD ) ";
 					break;
-			}
-			break;
-
-		// *
-		case PLUGIN_TRACKER_SNMP_NETWORKING_PORTS :
-			switch ($table.".".$field) {
-
 			}
 			break;
 
@@ -2903,24 +2352,6 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 			}
 			break;
 
-		// * Tracker Agents list (plugins/tracker/front/plugin_tracker.agents.php)
-		case PLUGIN_TRACKER_SNMP_AGENTS :
-			switch ($table.".".$field) {
-			}
-			break;
-
-				// ** Name of agent and link to form
-				case "glpi_plugin_tracker_agents.name" :
-					break;
-
-				// ** Display Yes/No of lock of agent
-				case "glpi_plugin_tracker_agents.lock" :
-					break;
-
-				// ** Display log activation / level
-				case "glpi_plugin_tracker_agents.logs" :
-					break;
-
 		// * range IP list (plugins/tracker/front/plugin_tracker.rangeip.php)
 		case PLUGIN_TRACKER_SNMP_RANGEIP :
 			switch ($table.".".$field) {
@@ -2938,72 +2369,6 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 						$ADD=" OR $table.name IS NOT NULL";
 					}
 					return $link." ($table.name  LIKE '%".$val."%' $ADD ) ";
-					break;
-
-				// ** Display Yes/No discovery fonction
-				case "glpi_plugin_tracker_rangeip.discover" :
-					break;
-
-				// ** Display Yes/No query fonction
-				case "glpi_plugin_tracker_rangeip.query" :
-					break;
-
-				// ** Display entity name
-				case "glpi_entities.name" :
-					break;
-
-			}
-			break;
-
-		// * Device discovery list (plugins/tracker/front/plugin_tracker.discovery.php)
-		case PLUGIN_TRACKER_SNMP_DISCOVERY :
-			switch ($table.".".$field) {
-
-				// ** Display type of device (networking, printer, computer...)
-				case "glpi_plugin_tracker_discovery.type" :
-					break;
-
-				// ** Display entity name
-				case "glpi_entities.name" :
-					break;
-
-			}
-			break;
-
-		// * Processes agents list (plugins/tracker/front/plugin_tracker.agents.processes.php)
-		case PLUGIN_TRACKER_AGENTS_PROCESSES :
-			switch ($table.".".$field) {
-
-				// ** Agent name and link to form
-				case "glpi_plugin_tracker_agents_processes.FK_agent" :
-					break;
-
-				// ** Display status of agent (finish or in progress)
-				case "glpi_plugin_tracker_agents_processes.status" :
-					break;
-
-				// ** Display date and hour of finished agent execution
-				case "glpi_plugin_tracker_agents_processes.end_time" :
-					break;
-
-				// ** Counter of devices discovered
-				case "glpi_plugin_tracker_agents_processes.discovery_queries" :
-					break;
-
-				// ** Counter of devices queried
-				case "glpi_plugin_tracker_agents_processes.networking_queries" :
-					break;
-
-				// ** Total time of execution script
-				case "glpi_plugin_tracker_agents_processes.ID" :
-					break;
-
-				// ** Total time of discovery function
-				case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
-					break;
-
-				// ** Total time of query function
-				case "glpi_plugin_tracker_agents_processes.start_time_query" :
 					break;
 
 			}
@@ -3037,14 +2402,6 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 						$val = $TRACKER_MAPPING[NETWORKING_TYPE][$val]['name'];
                }
 					return $link." ($table.$field = '".addslashes($val)."' $ADD ) ";
-					break;
-
-				// ** Display Old Value (before changement of value)
-				case "glpi_plugin_tracker_snmp_history.old_value" :
-					break;
-
-				// ** Display New Value (new value modified)
-				case "glpi_plugin_tracker_snmp_history.new_value" :
 					break;
 
 			}
