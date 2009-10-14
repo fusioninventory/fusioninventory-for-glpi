@@ -62,9 +62,10 @@ function plugin_init_tracker() {
 	registerPluginType('tracker', "PLUGIN_TRACKER_MAC_UNKNOWN", 5153, array(
 		'classname' => 'PluginTrackerUnknown',
 		'tablename' => 'glpi_plugin_tracker_unknown_device',
-      'formpage' => 'front/plugin_tracker.unknown.form.php',
+    'formpage' => 'front/plugin_tracker.unknown.form.php',
 		'searchpage' => 'front/plugin_tracker.unknown.form.php',
-		'typename' => $LANG['plugin_tracker']["processes"][13]
+		'typename' => $LANG['plugin_tracker']["processes"][13],
+		'deleted_tables' => true,
 		));
 	registerPluginType('tracker', "PLUGIN_TRACKER_PRINTERS_CARTRIDGES", 5156, array(
 		'classname' => 'PluginTrackerPrinters',
@@ -91,12 +92,13 @@ function plugin_init_tracker() {
 	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, array(
 		'classname' => 'PluginTrackerDiscovery',
 		'tablename' => 'glpi_plugin_tracker_discovery',
-		'formpage' => 'front/plugin_tracker.discovery.php'
+		'searchpage' => 'front/plugin_tracker.discovery.php'
 		));
 	registerPluginType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, array(
 		'classname' => 'PluginTrackerAgentsProcesses',
 		'tablename' => 'glpi_plugin_tracker_agents_processes',
 		'formpage' => 'front/plugin_tracker.agents.processes.php',
+		'massiveaction_noupdate' => true
 		));
 	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_HISTORY", 5162, array(
 		'classname' => 'PluginTrackerSNMPHistory',
