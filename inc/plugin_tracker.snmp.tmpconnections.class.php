@@ -43,22 +43,24 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 	function UpdatePort($FK_networking,$FK_networking_port,$cdp=0) {
 		global $DB;
 
-		$query = "SELECT * FROM glpi_plugin_tracker_tmp_netports ".
-			" WHERE FK_networking='".$FK_networking."' ".
-				" AND FK_networking_port=".$FK_networking_port." ";
-		$result = $DB->query($query);
-		if ($DB->numrows($result) == 0) {
-			$datas["FK_networking"] = $FK_networking;
-			$datas["FK_networking_port"] = $FK_networking_port;
-			$datas["cdp"] = $cdp;
-			$TMP_ID = $this->add($datas);
-			return $TMP_ID;
-		} else {
-         $data = $DB->fetch_assoc($result);
-         $datas["cdp"] = $cdp;
-         $datas["ID"] = $data["ID"];
-         $this->update($datas);
-         return $data["ID"];
+      if (isset($FK_networking_port)) {
+         $query = "SELECT * FROM glpi_plugin_tracker_tmp_netports ".
+            " WHERE FK_networking='".$FK_networking."' ".
+               " AND FK_networking_port=".$FK_networking_port." ";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 0) {
+            $datas["FK_networking"] = $FK_networking;
+            $datas["FK_networking_port"] = $FK_networking_port;
+            $datas["cdp"] = $cdp;
+            $TMP_ID = $this->add($datas);
+            return $TMP_ID;
+         } else {
+            $data = $DB->fetch_assoc($result);
+            $datas["cdp"] = $cdp;
+            $datas["ID"] = $data["ID"];
+            $this->update($datas);
+            return $data["ID"];
+         }
       }
 		return '';
 	}
