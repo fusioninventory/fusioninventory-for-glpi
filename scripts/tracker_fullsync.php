@@ -118,7 +118,7 @@ if(isset($_GET['update_device_process'])) {
 		if (file_exists(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml")) {
 			$xml_file[] = GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml";
 			$xml = simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/tracker/".$data['process_number']."-device.xml");
-			foreach($xml->device as $device) {
+         foreach($xml->device as $device) {
 				$ArrayListDevice[] = $device->infos->id;
 				$ArrayListType[] = $device->infos->type;
 				$ArrayListAgentProcess[] = $data['process_number'];
