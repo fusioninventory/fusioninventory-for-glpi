@@ -199,10 +199,10 @@ function plugin_init_tracker() {
 // Name and Version of the plugin
 function plugin_version_tracker() {
 	return array( 'name'    => 'Tracker',
-		'version' => '2.1.2',
+		'version' => '2.1.3',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
 		'homepage'=>'https://forge.indepnet.net/projects/show/tracker',
-      'minGlpiVersion' => '0.72'// For compatibility / no install in version < 0.72
+      'minGlpiVersion' => '0.72.1'// For compatibility / no install in version < 0.72
    );
 }
 
@@ -210,7 +210,7 @@ function plugin_version_tracker() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_tracker_check_prerequisites() {
    global $LANG;
-	if (GLPI_VERSION>=0.72) {
+	if (GLPI_VERSION >= '0.72.1') {
 		return true;
    } else {
 		echo $LANG['plugin_tracker']["errors"][50];

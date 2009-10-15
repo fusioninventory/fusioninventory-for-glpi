@@ -184,7 +184,7 @@ $LANG['plugin_tracker']["errors"][21]="Unable to retrieve information";
 $LANG['plugin_tracker']["errors"][30]="Wiring error";
 $LANG['plugin_tracker']["errors"][31]="Wiring problem";
 
-$LANG['plugin_tracker']["errors"][50]="GLPI version not compatible need 0.72";
+$LANG['plugin_tracker']["errors"][50]="GLPI version not compatible need 0.72.1";
 
 $LANG['plugin_tracker']["errors"][101]="Timeout";
 $LANG['plugin_tracker']["errors"][102]="No SNMP model assigned";
