@@ -1,15 +1,15 @@
 <?
-# Version 1.0
+# Version 1.01
 # Correspondance between Description of device and oid to get serial
 ###########################################
 ################# Switchs #################
-###########################################
+##########ric#################################
 
 	#* 3Com
 	$SerialNumberDef['3Com IntelliJack NJ225'] = '.1.3.6.1.4.1.43.29.4.18.2.1.7.1';
 	$TypeDef['3Com IntelliJack NJ225'] = 2;
 	$ModelDef['3Com IntelliJack NJ225'] = 'Networking0004';
-	
+
 	$SerialNumberDef['3Com SuperStack'] = '.1.3.6.1.4.1.43.10.27.1.1.1.13.1';
 	$TypeDef['3Com SuperStack'] = 2;
 	$ModelDef['3Com SuperStack'] = 'Networking0002';
@@ -24,12 +24,38 @@
 	$TypeDef['Alvarion - BreezeNet B'] = 2;
 	$ModelDef['Alvarion - BreezeNet B'] = 'Networking0002';
 
+   #* Apple (wireless router)
+	$SerialNumberDef['Apple AirPort'] = '';
+	$TypeDef['Apple AirPort'] = 2;
+	$ModelDef['Apple AirPort'] = '';
+
+	$SerialNumberDef['Apple Base Station'] = '';
+	$TypeDef['Apple Base Station'] = 2;
+	$ModelDef['Apple Base Station'] = '';
+
 	#* Avaya
 	$SerialNumberDef['Avaya Inc. - P330 Stackable Switch'] = '';
 	$TypeDef['Avaya Inc. - P330 Stackable Switch'] = 2;
 	$ModelDef['Avaya Inc. - P330 Stackable Switch'] = 'Networking0002';
 
 	#* Cisco
+
+      #** C850 (Router)
+
+         $SerialNumberDef['Cisco IOS Software, C850'] = '';
+         $TypeDef['Cisco IOS Software, C850'] = 2;
+         $ModelDef['Cisco IOS Software, C850'] = '';
+
+      #** C870 (Router)
+
+         $SerialNumberDef['Cisco IOS Software, C870'] = '';
+         $TypeDef['Cisco IOS Software, C870'] = 2;
+         $ModelDef['Cisco IOS Software, C870'] = '';
+
+      #** C2800
+         $SerialNumberDef['Cisco IOS Software, 2800 Software'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1';
+         $TypeDef['Cisco IOS Software, 2800 Software'] = 2;
+         $ModelDef['Cisco IOS Software, 2800 Software'] = 'Networking0007';
 
       #** C2900XL (2912 / 2924)
 
@@ -57,11 +83,21 @@
          $TypeDef['Cisco IOS Software, C2960 Software'] = 2;
          $ModelDef['Cisco IOS Software, C2960 Software'] = 'Networking0001';
 
+      #** C3550
+
+         $SerialNumberDef['Cisco IOS Software, C3550 Software'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1001';
+         $TypeDef['Cisco IOS Software, C3550 Software'] = 2;
+         $ModelDef['Cisco IOS Software, C3550 Software'] = 'Networking0001';
+
       #** C3560
 
          $SerialNumberDef['Cisco IOS Software, C3560 Software'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1001';
          $TypeDef['Cisco IOS Software, C3560 Software'] = 2;
          $ModelDef['Cisco IOS Software, C3560 Software'] = 'Networking0001';
+
+         $SerialNumberDef['Cisco IOS Software, C3560E Software'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1001';
+         $TypeDef['Cisco IOS Software, C3560E Software'] = 2;
+         $ModelDef['Cisco IOS Software, C3560E Software'] = 'Networking0001';
 
       #** C3750
 
@@ -79,17 +115,35 @@
          $TypeDef['IOS (tm) Catalyst 4000'] = 2;
          $ModelDef['IOS (tm) Catalyst 4000'] = 'Networking0005';
 
+      #** C4003
+
+         $SerialNumberDef['Cisco Systems, Inc. WS-C4003 Cisco Catalyst'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1';
+         $TypeDef['Cisco Systems, Inc. WS-C4003 Cisco Catalyst'] = 2;
+         $ModelDef['Cisco Systems, Inc. WS-C4003 Cisco Catalyst'] = 'Networking0005';
+
       #** C4500
 
          $SerialNumberDef['Cisco IOS Software, Catalyst 4500'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1';
          $TypeDef['Cisco IOS Software, Catalyst 4500'] = 2;
          $ModelDef['Cisco IOS Software, Catalyst 4500'] = 'Networking0005';
 
+      #** C4506
+
+         $SerialNumberDef['Cisco Systems, Inc. WS-C4506 Cisco Catalyst'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1';
+         $TypeDef['Cisco Systems, Inc. WS-C4506 Cisco Catalyst'] = 2;
+         $ModelDef['Cisco Systems, Inc. WS-C4506 Cisco Catalyst'] = 'Networking0005';
+
+      #** C6006
+
+         $SerialNumberDef['Cisco Systems WS-C6006 Cisco Catalyst'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1';
+         $TypeDef['Cisco Systems WS-C6006 Cisco Catalyst'] = 2;
+         $ModelDef['Cisco Systems WS-C6006 Cisco Catalyst'] = 'Networking0005';
+
       #** Model 6xxx
 
-         $SerialNumberDef['Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M)'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1';
-         $TypeDef['Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M)'] = 2;
-         $ModelDef['Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M)'] = 'Networking0005';
+         $SerialNumberDef['Cisco IOS Software, s72033_rp Software'] = '.1.3.6.1.2.1.47.1.1.1.1.11.1';
+         $TypeDef['Cisco IOS Software, s72033_rp Software'] = 2;
+         $ModelDef['Cisco IOS Software, s72033_rp Software'] = 'Networking0005';
 
       #** Other
 
@@ -143,13 +197,26 @@
 
 
 	#* Dlink
-	$SerialNumberDef['DES-3550 Fast-Ethernet Switch'] = '';
-	$TypeDef['DES-3550 Fast-Ethernet Switch'] = 2;
-	$ModelDef['DES-3550 Fast-Ethernet Switch'] = 'Networking0002';
-	
-	$SerialNumberDef['DES-3526 Fast-Ethernet Switch'] = '';
-	$TypeDef['DES-3526 Fast-Ethernet Switch'] = 2;
-	$ModelDef['DES-3526 Fast-Ethernet Switch'] = 'Networking0002';
+	$SerialNumberDef['DES-3'] = '';
+	$TypeDef['DES-3'] = 2;
+	$ModelDef['DES-3'] = 'Networking0002';
+
+   #* extreme networks
+	$SerialNumberDef['Summit200'] = '';
+	$TypeDef['Summit200'] = 2;
+	$ModelDef['Summit200'] = '';
+
+	$SerialNumberDef['Summit300'] = '';
+	$TypeDef['Summit300'] = 2;
+	$ModelDef['Summit300'] = '';
+
+	$SerialNumberDef['Summit400'] = '';
+	$TypeDef['Summit400'] = 2;
+	$ModelDef['Summit400'] = '';
+
+	$SerialNumberDef['BlackDiamond6'] = '';
+	$TypeDef['BlackDiamond6'] = 2;
+	$ModelDef['BlackDiamond6'] = '';
 
    #* Foundry Networks
    $SerialNumberDef['Foundry Networks'] = '';
@@ -169,16 +236,25 @@
 	$TypeDef['HP ProCurve Access Point'] = 2;
 	$ModelDef['HP ProCurve Access Point'] = 'Networking0002';
 
+	$SerialNumberDef['ProCurve Access Point'] = '';
+	$TypeDef['ProCurve Access Point'] = 2;
+	$ModelDef['ProCurve Access Point'] = 'Networking0002';
+
 	$SerialNumberDef['ProCurve Switch'] = '.1.3.6.1.4.1.11.2.36.1.1.2.9.0';
 	$TypeDef['ProCurve Switch'] = 2;
 	$ModelDef['ProCurve Switch'] = 'Networking0003';
+
+   #* Motorola
+	$SerialNumberDef['Netopia'] = '';
+	$TypeDef['Netopia'] = 2;
+	$ModelDef['Netopia'] = '';
 
 	#* NetGear
 	# Wireless
 		$SerialNumberDef['Linux PA2 2.4.27-devicescape.3 #2 Wed Oct 3 15:02:28 EDT 2007 armv5b'] = '';
 		$TypeDef['Linux PA2 2.4.27-devicescape.3 #2 Wed Oct 3 15:02:28 EDT 2007 armv5b'] = 2;
 		$ModelDef['Linux PA2 2.4.27-devicescape.3 #2 Wed Oct 3 15:02:28 EDT 2007 armv5b'] = 'Networking0002';
-		
+
 		$SerialNumberDef['ProSafe 802.11b/g Wireless Access Point'] = '';
 		$TypeDef['ProSafe 802.11b/g Wireless Access Point'] = 2;
 		$ModelDef['ProSafe 802.11b/g Wireless Access Point'] = 'Networking0002';
@@ -191,7 +267,7 @@
 	$SerialNumberDef['BayStack '] = '';
 	$TypeDef['BayStack '] = 2;
 	$ModelDef['BayStack '] = 'Networking0002';
-	
+
 	$SerialNumberDef['Passport-'] = '';
 	$TypeDef['Passport-'] = 2;
 	$ModelDef['Passport-'] = 'Networking0002';
@@ -199,11 +275,11 @@
 	$SerialNumberDef['Ethernet Switch 425-24T'] = '';
 	$TypeDef['Ethernet Switch 425-24T'] = 2;
 	$ModelDef['Ethernet Switch 425-24T'] = 'Networking0002';
-	
+
 	$SerialNumberDef['Ethernet Routing Switch 25'] = '';
 	$TypeDef['Ethernet Routing Switch 25'] = 2;
 	$ModelDef['Ethernet Routing Switch 25'] = 'Networking0002';
-	
+
 	$SerialNumberDef['Ethernet Routing Switch 55'] = '';
 	$TypeDef['Ethernet Routing Switch 55'] = 2;
 	$ModelDef['Ethernet Routing Switch 55'] = 'Networking0002';
@@ -218,14 +294,46 @@
 	$ModelDef['TigerSwitch 10/100 SMC'] = 'Networking0002';
 
 	#* SonicWall (FireWall)
-	$SerialNumberDef['SonicWALL PRO 4100'] = '';
-	$TypeDef['SonicWALL PRO 4100'] = 2;
-	$ModelDef['SonicWALL PRO 4100'] = 'Networking0002';
+	$SerialNumberDef['SonicWALL'] = '';
+	$TypeDef['SonicWALL'] = 2;
+	$ModelDef['SonicWALL'] = 'Networking0002';
 
 	#* Zyxel
 	$SerialNumberDef['ZyWALL USG '] = '';
 	$TypeDef['ZyWALL USG '] = 2;
 	$ModelDef['ZyWALL USG '] = 'Networking0002';
+
+	$SerialNumberDef['ZyWALL'] = '';
+	$TypeDef['ZyWALL'] = 2;
+	$ModelDef['ZyWALL'] = '';
+
+	$SerialNumberDef['ZyXEL'] = '';
+	$TypeDef['ZyXEL'] = 2;
+	$ModelDef['ZyXEL'] = '';
+
+	$SerialNumberDef['Prestige 3'] = '';
+	$TypeDef['Prestige 3'] = 2;
+	$ModelDef['Prestige 3'] = '';
+
+	$SerialNumberDef['Prestige 6'] = '';
+	$TypeDef['Prestige 6'] = 2;
+	$ModelDef['Prestige 6'] = '';
+
+	$SerialNumberDef['P-660H'] = '';
+	$TypeDef['P-660H'] = 2;
+	$ModelDef['P-660H'] = '';
+
+	$SerialNumberDef['P-660R'] = '';
+	$TypeDef['P-660R'] = 2;
+	$ModelDef['P-660R'] = '';
+
+	$SerialNumberDef['P-661H'] = '';
+	$TypeDef['P-661H'] = 2;
+	$ModelDef['P-661H'] = '';
+
+	$SerialNumberDef['P-662H'] = '';
+	$TypeDef['P-662H'] = 2;
+	$ModelDef['P-662H'] = '';
 
 ###########################################
 ################ Printers #################
@@ -245,7 +353,7 @@
 	$SerialNumberDef['Canon iR'] = '.1.3.6.1.4.1.1602.1.2.1.4.0';
 	$TypeDef['Canon iR'] = 3;
 	$ModelDef['Canon iR'] = 'Printer0001';
-	
+
 	$SerialNumberDef['Canon iR C'] = '.1.3.6.1.4.1.1602.1.2.1.4.0';
 	$TypeDef['Canon iR C'] = 3;
 	$ModelDef['Canon iR C'] = 'Printer0004';
@@ -283,7 +391,7 @@
 	$SerialNumberDef['Dell Laser Printer'] = '.1.3.6.1.2.1.43.5.1.1.17.1';
 	$TypeDef['Dell Laser Printer'] = 3;
 	$ModelDef['Dell Laser Printer'] = 'Printer0001';
-	
+
 	$SerialNumberDef['DELL NETWORK PRINTER'] = '';
 	$TypeDef['DELL NETWORK PRINTER'] = 3;
 	$ModelDef['DELL NETWORK PRINTER'] = 'Printer0001';
@@ -291,6 +399,10 @@
 	$SerialNumberDef['Dell  18'] = '.1.3.6.1.2.1.43.5.1.1.17.1.1';
 	$TypeDef['Dell  18'] = 3;
 	$ModelDef['Dell  18'] = 'Printer0007';
+
+	$SerialNumberDef['Dell 18'] = '.1.3.6.1.2.1.43.5.1.1.17.1.1';
+	$TypeDef['Dell 18'] = 3;
+	$ModelDef['Dell 18'] = 'Printer0007';
 
 	$SerialNumberDef['Dell Laser Printer 1720'] = '.1.3.6.1.4.1.674.10898.100.2.1.2.1.6.1';
 	$TypeDef['Dell Laser Printer 1720'] = 3;
@@ -312,7 +424,7 @@
 	$SerialNumberDef['EPSON Type-B 10Base-T/100Base-TX Print Server'] = '';
 	$TypeDef['EPSON Type-B 10Base-T/100Base-TX Print Server'] = 3;
 	$ModelDef['EPSON Type-B 10Base-T/100Base-TX Print Server'] = 'Printer0001';
-	
+
 	$SerialNumberDef['EPSON AL-'] = '.1.3.6.1.4.1.1248.1.2.2.1.1.1.5.'; # Todo : verify
 	$TypeDef['EPSON AL-'] = 3;
 	$ModelDef['EPSON AL-'] = 'Printer0001';
@@ -331,6 +443,14 @@
 	$TypeDef['hp color LaserJet'] = 3;
 	$ModelDef['hp color LaserJet'] = 'Printer0005';
 
+	$SerialNumberDef['HP Color Laserjet'] = '.1.3.6.1.2.1.43.5.1.1.17.1';
+	$TypeDef['HP Color Laserjet'] = 3;
+	$ModelDef['HP Color Laserjet'] = 'Printer0005';
+
+	$SerialNumberDef['HP Color LaserJet'] = '.1.3.6.1.2.1.43.5.1.1.17.1';
+	$TypeDef['HP Color LaserJet'] = 3;
+	$ModelDef['HP Color LaserJet'] = 'Printer0005';
+
 	$SerialNumberDef['HP Color Inkjet CP1'] = '.1.3.6.1.2.1.43.5.1.1.17.1';
    $TypeDef['HP Color Inkjet CP1'] = 3;
    $ModelDef['HP Color Inkjet CP1'] = 'Printer0005';
@@ -338,6 +458,10 @@
 	$SerialNumberDef['HP LaserJet'] = '.1.3.6.1.2.1.43.5.1.1.17.1';
 	$TypeDef['HP LaserJet'] = 3;
 	$ModelDef['HP LaserJet'] = 'Printer0006';
+
+	$SerialNumberDef['hp LaserJet'] = '.1.3.6.1.2.1.43.5.1.1.17.1';
+	$TypeDef['hp LaserJet'] = 3;
+	$ModelDef['hp LaserJet'] = 'Printer0006';
 
 	$SerialNumberDef['hp business inkjet 3000'] = '.1.3.6.1.2.1.43.5.1.1.17.1';
    $TypeDef['hp business inkjet 3000'] = 3;
@@ -351,10 +475,19 @@
    $TypeDef['HP Officejet Pro K'] = 3;
    $ModelDef['HP Officejet Pro K'] = 'Printer0001';
 
+   $SerialNumberDef['Photosmart C'] = '';
+   $TypeDef['Photosmart C'] = 3;
+   $ModelDef['Photosmart C'] = 'Printer0001';
+
 	#* Intel
 	$SerialNumberDef['NetportExpress(tm) 10/100'] = ''; # Serveur d'impression
 	$TypeDef['NetportExpress(tm) 10/100'] = 3;
 	$ModelDef['NetportExpress(tm) 10/100'] = 'Printer0001';
+
+   #* Intermec
+   $SerialNumberDef['Thermal Label Printer Intermec EasyCoder PF4i'] = '';
+   $TypeDef['Thermal Label Printer Intermec EasyCoder PF4i'] = 3;
+   $ModelDef['Thermal Label Printer Intermec EasyCoder PF4i'] = 'Printer0001';
 
 	#* KONICA MINOLTA
    $SerialNumberDef['KONICA MINOLTA'] = '';
@@ -378,11 +511,11 @@
 	$SerialNumberDef['Lexmark E'] = '.1.3.6.1.4.1.641.2.1.2.1.6.1';
 	$TypeDef['Lexmark E'] = 3;
 	$ModelDef['Lexmark E'] = 'Printer0001';
-	
+
 	$SerialNumberDef['Lexmark T'] = '.1.3.6.1.4.1.641.2.1.2.1.6.1';
 	$TypeDef['Lexmark T'] = 3;
 	$ModelDef['Lexmark T'] = 'Printer0010';
-	
+
 	$SerialNumberDef['Lexmark Optra'] = '';
 	$TypeDef['Lexmark Optra'] = 3;
 	$ModelDef['Lexmark Optra'] = 'Printer0001';
@@ -417,6 +550,10 @@
 	$TypeDef['BASE Ethernet PrintServer: Attached to C5600 Rev'] = 3;
 	$ModelDef['BASE Ethernet PrintServer: Attached to C5600 Rev'] = 'Printer0015';
 
+	$SerialNumberDef['OKI OkiLAN 8'] = '.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0';
+	$TypeDef['OKI OkiLAN 8'] = 3;
+	$ModelDef['OKI OkiLAN 8'] = 'Printer0015';
+
 	#* Ricoh
 	$SerialNumberDef['RICOH Aficio SP C'] = '.1.3.6.1.4.1.367.3.2.1.2.1.4.0';
 	$TypeDef['RICOH Aficio SP C'] = 3;
@@ -433,7 +570,7 @@
 	$SerialNumberDef['RICOH Aficio AP'] = '.1.3.6.1.4.1.367.3.2.1.2.1.4.0';
 	$TypeDef['RICOH Aficio AP'] = 3;
 	$ModelDef['RICOH Aficio AP'] = 'Printer0012';
-	
+
 	$SerialNumberDef['RICOH Aficio 3260'] = '.1.3.6.1.4.1.367.3.2.1.2.1.4.0';
 	$TypeDef['RICOH Aficio 3260'] = 3;
 	$ModelDef['RICOH Aficio 3260'] = 'Printer0012';
@@ -441,6 +578,10 @@
 	$SerialNumberDef['RICOH Network Printer C model'] = '.1.3.6.1.4.1.367.3.2.1.2.1.4.0';
 	$TypeDef['RICOH Network Printer C model'] = 3;
 	$ModelDef['RICOH Network Printer C model'] = 'Printer0012';
+
+	$SerialNumberDef['RICOH Network Printer D model'] = '.1.3.6.1.4.1.367.3.2.1.2.1.4.0';
+	$TypeDef['RICOH Network Printer D model'] = 3;
+	$ModelDef['RICOH Network Printer D model'] = 'Printer0012';
 
 	#* Samsung
 	$SerialNumberDef['SAMSUNG NETWORK PRINTER,ROM'] = '.1.3.6.1.4.1.236.11.5.1.1.1.4.0';
@@ -484,6 +625,10 @@
    $TypeDef['Xerox 41'] = 3;
    $ModelDef['Xerox 41'] = 'Printer0001';
 
+   $SerialNumberDef['Xerox Phaser'] = '';
+   $TypeDef['Xerox Phaser'] = 3;
+   $ModelDef['Xerox Phaser'] = 'Printer0001';
+
 ###########################################
 ################# Phones ##################
 ###########################################
@@ -503,6 +648,10 @@
 ###########################################
 
 	#* Itium
+	$SerialNumberDef['ITIUM 2820'] = '';
+	$TypeDef['ITIUM 2820'] = 1;
+	$ModelDef['ITIUM 2820'] = '';
+
 	$SerialNumberDef['ITIUM 4030'] = '';
 	$TypeDef['ITIUM 4030'] = 1;
 	$ModelDef['ITIUM 4030'] = '';
@@ -531,10 +680,11 @@
 ###########################################
 ################ Onduleurs ################
 ###########################################
-	
+
 	#* MGE
 	$SerialNumberDef['Evolution 500'] = '';
 	$TypeDef['Evolution 500'] = 5;
 	$ModelDef['Evolution 500'] = '';
+
 
 ?>
