@@ -79,17 +79,19 @@ function plugin_tracker_installing($version) {
 
 function plugin_tracker_update($version) {
 	GLOBAL $DB;
-	
-	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql";
-	$DBf_handle = fopen($DB_file, "rt");
-	$sql_query = fread($DBf_handle, filesize($DB_file));
-	fclose($DBf_handle);
-	foreach ( explode(";\n", "$sql_query") as $sql_line) {
-		if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-		if (!empty($sql_line)) {
-			$DB->query($sql_line);
+
+   if (file_exists(GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql")) {
+   	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql";
+   	$DBf_handle = fopen($DB_file, "rt");
+   	$sql_query = fread($DBf_handle, filesize($DB_file));
+   	fclose($DBf_handle);
+      foreach ( explode(";\n", "$sql_query") as $sql_line) {
+         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+         if (!empty($sql_line)) {
+            $DB->query($sql_line);
+         }
       }
-	}
+   }
 	if ($version == "2.0.0") {
 		if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
 			mkdir(GLPI_PLUGIN_DOC_DIR.'/tracker');
@@ -114,8 +116,14 @@ function plugin_tracker_update($version) {
 	}
    if ($version == "2.1.0") {
       $DB->query("UPDATE glpi_plugin_tracker_networking SET last_PID_update = '0';");
+      $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1 LIMIT 1 ;");
    }
-
+   if ($version == "2.1.1") {
+      $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.1' WHERE ID=1 LIMIT 1 ;");
+   }
+   if ($version == "2.1.2") {
+      $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.3' WHERE ID=1 LIMIT 1 ;");
+   }
 
 	plugin_tracker_initSession();
 }
