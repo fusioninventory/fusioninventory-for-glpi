@@ -1055,7 +1055,10 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 
 			// ** Total time of execution script
 			case "glpi_plugin_tracker_agents_processes.ID" :
-				$duree_timestamp = strtotime($data["ITEM_5"]) - strtotime($data["ITEM_4"]);
+            $agentsprocesses = new PluginTrackerAgentsProcesses;
+            $starttime = $agentsprocesses->getValue('start_time', $data['ID']);
+            $endtime = $agentsprocesses->getValue('end_time', $data['ID']);
+				$duree_timestamp = strtotime($endtime) - strtotime($starttime);
 				$out = timestampToString($duree_timestamp);
 				return "<center>".$out."</center>";
 				break;
@@ -1207,9 +1210,9 @@ function plugin_tracker_install() {
             plugin_tracker_update("2.1.2");
             $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.2' WHERE ID=1");
          }
-         if ($config->getValue('version') == "2.121") {
+         if ($config->getValue('version') == "2.1.2") {
             plugin_tracker_update("2.1.2");
-            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.2' WHERE ID=1");
+            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.3' WHERE ID=1");
          }
          if  ($config->getValue('version') == "0") {
             $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.3' WHERE ID=1");

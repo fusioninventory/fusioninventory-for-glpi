@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 $title="Tracker";
-$version="2.1.1";
+$version="2.1.3";
 
 $LANG['plugin_tracker']["title"][0]="$title";
 $LANG['plugin_tracker']["title"][1]="Informations SNMP";
