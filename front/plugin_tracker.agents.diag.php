@@ -90,6 +90,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
       while (!gzeof($zp)) {
          $buff1 = gzgets ($zp, 4096) ;
          $buff1 = str_replace(chr(0),"",$buff1);
+         $buff1 = str_replace(chr(0x1),"",$buff1);
          $buff1 = str_replace(chr(0x2),"",$buff1);
          $buff1 = str_replace(chr(0x3),"",$buff1);
          $buff1 = str_replace(chr(0x4),"",$buff1);
@@ -97,6 +98,13 @@ if(isset($_POST['upload'])) { // si formulaire soumis
          $buff1 = str_replace(chr(0x6),"",$buff1);
          $buff1 = str_replace(chr(0x7),"",$buff1);
          $buff1 = str_replace(chr(0x8),"",$buff1);
+         $buff1 = str_replace(chr(0x9),"",$buff1);
+         $buff1 = str_replace(chr(0x10),"",$buff1);
+         $buff1 = str_replace(chr(0x11),"",$buff1);
+         $buff1 = str_replace(chr(0x12),"",$buff1);
+         $buff1 = str_replace(chr(0x13),"",$buff1);
+         $buff1 = str_replace(chr(0x14),"",$buff1);
+         $buff1 = str_replace(chr(0x15),"",$buff1);
          fputs($fp, $buff1) ;
       }
 	}
