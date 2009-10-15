@@ -58,14 +58,14 @@ manageGetValuesInSearch(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2);
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 		
-		$_GET["field"][0] = 4;
+		$_GET["field"][0] = 3;
 		$_GET["contains"][0] = getContainsArray($_POST);
 
-		$_GET["field"][1] = 3;
+		$_GET["field"][1] = 2;
 		$_GET["contains"][1] = $_POST['location'];
 		$_GET["link"][1] = "AND";
 
-		$_SESSION["glpisearchcount"][PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2] = 2;
+		$_SESSION["glpisearchcount"][PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2] = 1;
 		showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
 } else {
 	showList(PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2,$_GET);
@@ -170,9 +170,10 @@ function buildBookmarkUrl($url,$get) {
 
 function getValues($get,$post) {
 	$get=array_merge($get,$post);
-	
 	if (isset($get["field"])) {
 		foreach ($get["field"] as $index => $value) {
+         $get["contains"][$index] = stripslashes($get["contains"][$index]);
+         $get["contains"][$index] = htmlspecialchars_decode($get["contains"][$index]);
 			switch($value) {
 				case 14:
 					if (strpos( $get["contains"][$index],"=")==1) {
