@@ -1,4 +1,4 @@
-<?
+<?php
 # Version 1.01
 # Correspondance between Description of device and oid to get serial
 ###########################################
