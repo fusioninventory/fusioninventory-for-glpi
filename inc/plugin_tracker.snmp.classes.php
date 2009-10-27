@@ -357,35 +357,8 @@ class PluginTrackerSNMP extends CommonDBTM {
          }
 		}
 		// Remove all connections if it is
-		if ($netwire->getOppositeContact($destination_port) != "") {
-			$queryVerif2 = "SELECT *
-			FROM glpi_networking_wire 
-			WHERE end1='".$netwire->getOppositeContact($destination_port)."'
-				AND end2!='$destination_port' ";
-			
-			$resultVerif2=$DB->query($queryVerif2);
-			while ($dataVerif2=$DB->fetch_array($resultVerif2)) {
-				$query_del = "DELETE FROM glpi_networking_wire 
-				WHERE ID='".$dataVerif2["ID"]."' ";
-				$DB->query($query_del);
-				$this->CleanVlan($destination_port);
-//echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
-			}
-			$queryVerif2 = "SELECT *
-			FROM glpi_networking_wire 
-			WHERE end1='$destination_port'
-				AND end2!='".$netwire->getOppositeContact($destination_port)."' ";
-			
-			$resultVerif2=$DB->query($queryVerif2);
-			while ($dataVerif2=$DB->fetch_array($resultVerif2)) {
-				$query_del = "DELETE FROM glpi_networking_wire 
-				WHERE ID='".$dataVerif2["ID"]."' ";
-				$DB->query($query_del);
-				$this->CleanVlan($destination_port);
-//echo "DELETE ".$dataVerif2["ID"]." - PORTS ".$end1." - ".$end2."\n";
-			}
-		}
-	
+      $this->CleanVlan($destination_port);
+      removeConnector($destination_port);
 	}
 
 
@@ -434,8 +407,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 			$data=$DB->fetch_array($result);
 
 			// Delete VLAN
-			$query="DELETE FROM glpi_networking_vlan WHERE FK_port='$FK_port'";
-			$DB->query($query);
+         $this->CleanVlan($FK_port);
 
 			// Delete Contact VLAN if set
 			$np=new NetPort;
@@ -456,8 +428,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 			$data=$DB->fetch_array($result);
 
 			// Delete VLAN
-			$query="DELETE FROM glpi_networking_vlan WHERE ID='$ID'";
-			$DB->query($query);
+         $this->CleanVlan($ID);
 
 			// Delete Contact VLAN if set
 			$np=new NetPort;

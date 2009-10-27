@@ -112,11 +112,7 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
          if ($DB->numrows($resultVerif) != "0") {
             plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($port),$FK_process);
             plugin_tracker_addLogConnection("remove",$port,$FK_process);
-            while ($dataVerif2=$DB->fetch_array($resultVerif)) {
-               $query_del = "DELETE FROM glpi_networking_wire
-                  WHERE ID='".$dataVerif2["ID"]."' ";
-               $DB->query($query_del);
-            }
+            removeConnector($port);
          }
       }
    }
