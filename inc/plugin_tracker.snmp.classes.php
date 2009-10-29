@@ -407,7 +407,8 @@ class PluginTrackerSNMP extends CommonDBTM {
 			$data=$DB->fetch_array($result);
 
 			// Delete VLAN
-         $this->CleanVlan($FK_port);
+			$query="DELETE FROM glpi_networking_vlan WHERE FK_port='$FK_port'";
+			$DB->query($query);
 
 			// Delete Contact VLAN if set
 			$np=new NetPort;
@@ -428,7 +429,8 @@ class PluginTrackerSNMP extends CommonDBTM {
 			$data=$DB->fetch_array($result);
 
 			// Delete VLAN
-         $this->CleanVlan($ID);
+			$query="DELETE FROM glpi_networking_vlan WHERE ID='$ID'";
+			$DB->query($query);
 
 			// Delete Contact VLAN if set
 			$np=new NetPort;
