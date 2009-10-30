@@ -40,6 +40,7 @@ if (!defined('GLPI_ROOT')) {
 
 function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,$FK_process=0) {
 	global $DB,$CFG_GLPI;
+
 	$history = new PluginTrackerSNMPHistory;
 
    $doHistory = 1;
@@ -68,12 +69,15 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,
 // $status = connection or disconnection	
 function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 	GLOBAL $DB,$CFG_GLPI;
+
 	$CommonItem = new CommonItem;
 	$history = new PluginTrackerSNMPHistory;
-	// Récupérer le port de la machine associé au port du switch
-	$nw=new Netwire;
-	// Récupérer le type de matériel
 	$netport=new Netport;
+	$nw=new Netwire;
+
+	// Récupérer le port de la machine associé au port du switch
+
+	// Récupérer le type de matériel
 	$array["FK_ports"] = $port;
 	$opposite_port = $nw->getOppositeContact($port);
 	if ($opposite_port == "0") {

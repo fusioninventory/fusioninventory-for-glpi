@@ -53,10 +53,9 @@ if (!defined('GLPI_ROOT')) {
 function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_process = 0,$ArrayListType,$ArrayListAgentProcess) {
 	GLOBAL $DB;
 
-	$Thread = new PluginTrackerProcesses;
 	$config_snmp_script = new PluginTrackerConfigSNMPScript;
-
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
+	$Thread = new PluginTrackerProcesses;
 
 	// Prepare processes
 	$while = 'while (';
@@ -254,6 +253,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 
    if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
    $manufCisco = new PluginTrackerManufacturerCisco;
+   $netwire=new Netwire;
    $np=new Netport;
 
 	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$type,$ID_Device,1);

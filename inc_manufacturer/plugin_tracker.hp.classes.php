@@ -60,7 +60,7 @@ class PluginTrackerManufacturerHP extends CommonDBTM {
 
 
    function tmpConnections($oidvalues,$oidsModel,$ifIndex,$TMP_ID,$ID_Device,$type) {
-      $logs = new PluginTrackerLogs;
+      if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
       $tmpc = new PluginTrackerTmpConnections;
       $walks = new PluginTrackerWalk;
 
@@ -90,7 +90,7 @@ class PluginTrackerManufacturerHP extends CommonDBTM {
    function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex) {
       GLOBAL $DB;
 
-      $logs = new PluginTrackerLogs;
+      if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
       $snmp_queries = new PluginTrackerSNMP;
       $unknown = new PluginTrackerUnknown;
       $walks = new PluginTrackerWalk;

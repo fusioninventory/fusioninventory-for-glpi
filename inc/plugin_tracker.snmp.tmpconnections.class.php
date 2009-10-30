@@ -102,10 +102,10 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 	function WireInterSwitchs($PID) {
 		global $DB;
 
-      $logs = new PluginTrackerLogs;
+      if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
 		$snmp_queries = new PluginTrackerSNMP;
 
-      $logs->write("tracker_fullsync",">>>>>>>>>> WireInterSwitchs <<<<<<<<<<","","",1);
+      if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> WireInterSwitchs <<<<<<<<<<","","",1);
 
 		// ** port in glpi_plugin_tracker_tmp_netports is deleted = port connected ** //
 
@@ -178,7 +178,7 @@ class PluginTrackerTmpConnections extends CommonDBTM {
 					$result_sel2=$DB->query($query_sel2);
 					$dport = $DB->result($result_sel2, 0, "ID");
 
-               $logs->write("tracker_fullsync","Connection wire switch ".$sport." - ".$dport,"","",1);
+               if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Connection wire switch ".$sport." - ".$dport,"","",1);
 
 					$snmp_queries->PortsConnection($sport, $dport,$PID,$vlan." [".$vlan_name."]");
 					// Delete all connections with this 2 mac addresses
