@@ -100,6 +100,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
                   WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
                      AND (on_device!='".$ID_Device."'
                      || device_type!='".NETWORKING_TYPE."') ";
+               plugin_tracker_db_lock_wire_check();
                $resultPortEnd=$DB->query($queryPortEnd);
                $sport = $ArrayPortsID[$ifName]; // Networking_Port
                if (($DB->numrows($resultPortEnd) != 0)) {
@@ -138,6 +139,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
                      $snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
                   }
                }
+               plugin_tracker_db_lock_wire_unlock();
             }
          }
       }

@@ -177,4 +177,29 @@ function plugin_tracker_clean_db() {
 	}
 }
 
+function plugin_tracker_db_lock_wire_check() {
+   while (1) {
+      $file_lock = GLPI_PLUGIN_DOC_DIR."/tracker/wire.lock";
+      $fp =  fopen($file_lock,"r+");
+      $lock = 1;
+      fseek($fp,0);
+      $lock = fgets($fp,255);
+      if ($lock == 0) {
+         fseek($fp,0);
+         fputs($fp,1);
+         fclose($fp);
+         return;
+      }
+      fclose($fp);
+      usleep(250000);
+   }
+}
+
+function plugin_tracker_db_lock_wire_unlock() {
+   $file_lock = GLPI_PLUGIN_DOC_DIR."/tracker/wire.lock";
+   $fp =  fopen($file_lock,"r+");
+   fputs($fp,0);
+   fclose($fp);
+}
+
 ?>

@@ -107,6 +107,7 @@ class PluginTrackerManufacturerFoundryNetworks extends CommonDBTM {
          }
 
          if (($queryPortEnd != "")) {
+            plugin_tracker_db_lock_wire_check();
             $resultPortEnd=$DB->query($queryPortEnd);
             $traitement = 1;
             if ($vlan != "") {
@@ -152,6 +153,7 @@ class PluginTrackerManufacturerFoundryNetworks extends CommonDBTM {
                   }
                }
             }
+            plugin_tracker_db_lock_wire_unlock();
          }
       }
    }

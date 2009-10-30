@@ -152,7 +152,7 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                // Search port of switch connected on this port and connect it if not connected
                if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","ip = ".$ip_switch_trunk." / ifdescr = ".$oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""],$type,$ID_Device,1);
                $PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""]);
-
+               plugin_tracker_db_lock_wire_check();
                $query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
                WHERE logical_number='".$ifIndex."'
                   AND device_type='".NETWORKING_TYPE."'
@@ -176,6 +176,7 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                   $snmp_queries->PortsConnection($data["ID"], $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
                   //$Threads->unknownMAC($_SESSION['FK_process'],$data["ID"],$ip_switch_trunk,$data["ID"]);
                }
+               plugin_tracker_db_lock_wire_unlock();
             }
          }
       }
@@ -308,6 +309,7 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                }
 
                if (($queryPortEnd != "")) {
+                  plugin_tracker_db_lock_wire_check();
                   $resultPortEnd=$DB->query($queryPortEnd);
                   $traitement = 1;
                   if ($vlan != "") {
@@ -359,6 +361,7 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                         }
                      }
                   }
+                  plugin_tracker_db_lock_wire_unlock();
                }
             }
          }

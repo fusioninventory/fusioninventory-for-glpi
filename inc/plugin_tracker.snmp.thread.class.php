@@ -392,7 +392,8 @@ class PluginTrackerProcesses extends CommonDBTM {
 		 AND ifmac='".$macaddress."' "; 
 		$result = $DB->query($query);		
 		if (mysql_num_rows($result) == "0") {
-			plugin_tracker_addLogConnection("remove",$sport,$PID);
+         plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($sport),$FK_process);
+         plugin_tracker_addLogConnection("remove",$sport,$FK_process);
 			removeConnector($sport);
 
 			// Search IP in OCS IPdiscover if OCS servers specified

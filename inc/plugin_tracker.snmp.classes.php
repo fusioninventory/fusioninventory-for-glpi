@@ -298,14 +298,16 @@ class PluginTrackerSNMP extends CommonDBTM {
 
 		if ($resultVerif=$DB->query($queryVerif)) {
 			if ($DB->numrows($resultVerif) == "0") {
+				plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($source_port),$FK_process);
+				plugin_tracker_addLogConnection("remove",$source_port,$FK_process);
+				$this->CleanVlan($source_port);
+            removeConnector($source_port);
+
 				plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
 				plugin_tracker_addLogConnection("remove",$destination_port,$FK_process);
-				// Remove VLAN
-				$this->CleanVlan($source_port);
             $this->CleanVlan($destination_port);
-				removeConnector($destination_port);
-				removeConnector($source_port);
-			
+            removeConnector($destination_port);
+						
 				makeConnector($source_port,$destination_port);
 				plugin_tracker_addLogConnection("make",$destination_port,$FK_process);
 				plugin_tracker_addLogConnection("make",$source_port,$FK_process);
@@ -357,8 +359,10 @@ class PluginTrackerSNMP extends CommonDBTM {
          }
 		}
 		// Remove all connections if it is
-      $this->CleanVlan($destination_port);
-      removeConnector($destination_port);
+//		plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
+//      plugin_tracker_addLogConnection("remove",$destination_port,$FK_process);
+//      $this->CleanVlan($destination_port);
+//      removeConnector($destination_port);
 	}
 
 

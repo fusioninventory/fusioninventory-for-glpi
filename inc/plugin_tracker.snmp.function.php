@@ -367,6 +367,8 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
 
+		plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data['ID']),$FK_process);
+      plugin_tracker_addLogConnection("remove",$data['ID'],$FK_process);
       removeConnector($data['ID']);
 
       $query_del = "DELETE FROM glpi_plugin_tracker_networking_ports
@@ -385,6 +387,8 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
       AND logical_number NOT IN ".$logicalnumberlist." ";
    $result=$DB->query($query);
 	while ($data=$DB->fetch_array($result)) {
+		plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data['ID']),$FK_process);
+      plugin_tracker_addLogConnection("remove",$data['ID'],$FK_process);
       removeConnector($data['ID']);
       $np->delete($data);
 		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
@@ -710,6 +714,7 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
                   }
                }
                if ($queryUpdate != '') {
+                  plugin_tracker_db_lock_wire_check();
                   $DB->query($queryUpdate);
                   // Delete port wire if port is internal disable
                   if (($link == "ifinternalstatus") AND (($oidvalues[$oid.$data['logical_number']][""] == "2") OR ($oidvalues[$oid.$data['logical_number']][""] == "down(2)"))) {
@@ -721,6 +726,7 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
                   }
                   // Add log because snmp value change
                   plugin_tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],$data[$TRACKER_MAPPING[$type][$link]['field']],$oidvalues[$oid.$data['logical_number']][""],$type."-".$link,$_SESSION['FK_process']);
+                  plugin_tracker_db_lock_wire_unlock();
                }
          	}
 			}
@@ -965,10 +971,14 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                $DB->query($query_update);
                plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",$_SESSION['FK_process']);
                // Remove vlan
+               plugin_tracker_db_lock_wire_check();
+               plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data['FK_networking_ports']),$FK_process);
+               plugin_tracker_addLogConnection("remove",$data['FK_networking_ports'],$FK_process);
                $snmp_queries->CleanVlan($data['FK_networking_ports']);
                $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
                // Remove connection
    				removeConnector($data['FK_networking_ports']);
+               plugin_tracker_db_lock_wire_unlock();
             }
          } else if($data['trunk'] != "0") {
             $query_update = "UPDATE glpi_plugin_tracker_networking_ports
