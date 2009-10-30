@@ -140,7 +140,7 @@ $LANG['plugin_tracker']["snmp"][33]="Impossible de récupérer les infos SNMP : 
 $LANG['plugin_tracker']["snmp"][34]="Le commutateur auquel est reliée la machine n'est pas renseigné !";
 
 $LANG['plugin_tracker']["snmp"][40]="Tableau des ports";
-$LANG['plugin_tracker']["snmp"][41]="";
+$LANG['plugin_tracker']["snmp"][41]="Description du port";
 $LANG['plugin_tracker']["snmp"][42]="MTU";
 $LANG['plugin_tracker']["snmp"][43]="Vitesse";
 $LANG['plugin_tracker']["snmp"][44]="Statut Interne";

@@ -141,7 +141,7 @@ $LANG['plugin_tracker']["snmp"][33]="Unable to retrieve SNMP information: IP not
 $LANG['plugin_tracker']["snmp"][34]="The switch is connected to a machine that is not filled !";
 
 $LANG['plugin_tracker']["snmp"][40]="Ports array";
-$LANG['plugin_tracker']["snmp"][41]="";
+$LANG['plugin_tracker']["snmp"][41]="Port description";
 $LANG['plugin_tracker']["snmp"][42]="MTU";
 $LANG['plugin_tracker']["snmp"][43]="Speed";
 $LANG['plugin_tracker']["snmp"][44]="Internal status";

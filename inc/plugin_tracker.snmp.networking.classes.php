@@ -473,6 +473,11 @@ function appear_array(id){
 				case 14 :
 					echo $LANG["networking"][56];
 					break;
+        
+            case 15 :
+					echo $LANG['plugin_tracker']["snmp"][41];
+					break;
+					
 			}
 			echo "</th>";
 		}			
@@ -633,6 +638,11 @@ function appear_array(id){
 							echo "<td align='center'>";
 							showPortVLAN($data["ID"],"");
 							echo "</td>";
+							break;
+						
+						case 15 : 
+							//Port description
+							echo "<td align='center'>".$data["ifdescr"]."</td>";
 							break;
 					}
 				}
