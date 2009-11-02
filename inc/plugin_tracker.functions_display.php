@@ -281,9 +281,9 @@ function plugin_tracker_mib_management() {
 
 function plugin_tracker_Bar ($pourcentage, $message="",$order='') {
 	if ((!empty($pourcentage)) AND ($pourcentage < 0)) {
-		unset($pourcentage);
+		$pourcentage = "";
    } else if ((!empty($pourcentage)) AND ($pourcentage > 100)) {
-		unset($pourcentage);
+		$pourcentage = "";
    }
 	echo "<div>
 				<table class='tab_cadre' width='400'>
