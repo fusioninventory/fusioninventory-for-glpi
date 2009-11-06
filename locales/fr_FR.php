@@ -504,5 +504,9 @@ $LANG['plugin_tracker']["agents"][8]="Fragments en Ko";
 $LANG['plugin_tracker']["agents"][9]="Options avancées";
 $LANG['plugin_tracker']["agents"][10]="Coeurs (CPU) interrogation";
 $LANG['plugin_tracker']["agents"][11]="Coeurs (CPU) découverte";
+$LANG['plugin_tracker']["agents"][12]="Agent découverte";
+$LANG['plugin_tracker']["agents"][13]="Agent interrogation";
 
+$LANG['plugin_tracker']["unknown"][0]="Nom DNS";
+$LANG['plugin_tracker']["unknown"][1]="Nom port réseau";
 ?>

@@ -179,34 +179,96 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['name'] = $LANG["common"][16];
-  $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['datatype']='itemlink';
-  
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][1]['datatype']='itemlink';
+
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['table'] = 'glpi_plugin_tracker_unknown_device';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['field'] = 'date_mod';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['linkfield'] = '';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['name'] = $LANG["common"][26];
-  $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['datatype']='datetime';
-  
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['table'] = 'glpi_networking_ports';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['field'] = 'ifaddr';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['name'] = $LANG["networking"][14];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['field'] = 'dnsname';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['linkfield'] = 'dnsname';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][2]['name'] = $LANG['plugin_tracker']["unknown"][0];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['table'] = 'glpi_networking_ports';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['field'] = 'ifmac';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['name'] = $LANG["networking"][15];
-   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['forcegroupby']='1';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['field'] = 'date_mod';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][3]['name'] = $LANG["common"][26];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['table'] = 'glpi_networking';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['linkfield'] = 'ID';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][30]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][52];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['table'] = 'glpi_entities';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['linkfield'] = 'FK_entities';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][4]['name'] = $LANG["entity"][0];
 
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['table'] = 'glpi_networking_ports';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['linkfield'] = 'name';
-	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][46];
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['field'] = 'serial';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['linkfield'] = 'serial';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][5]['name'] = $LANG['common'][19];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['field'] = 'otherserial';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['linkfield'] = 'otherserial';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][6]['name'] = $LANG['common'][20];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['field'] = 'contact';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['linkfield'] = 'contact';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][7]['name'] = $LANG['common'][18];
+ 
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['table'] = 'glpi_dropdown_domain';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['linkfield'] = 'domain';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][8]['name'] = $LANG["setup"][89];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][9]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][9]['field'] = 'comments';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][9]['linkfield'] = 'comments';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][9]['name'] = $LANG['common'][25];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][10]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][10]['field'] = 'type';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][10]['linkfield'] = 'type';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][10]['name'] = $LANG['common'][17];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][11]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][11]['field'] = 'snmp';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][11]['linkfield'] = 'snmp';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][11]['name'] = $LANG['plugin_tracker']["functionalities"][3];
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][11]['datatype']='bool';
+   
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][12]['table'] = 'glpi_plugin_tracker_model_infos';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][12]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][12]['linkfield'] = 'FK_model_infos';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][12]['name'] = $LANG['plugin_tracker']["model_info"][4];
+
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][13]['table'] = 'glpi_plugin_tracker_snmp_connection';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][13]['field'] = 'name';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][13]['linkfield'] = 'FK_snmp_connection';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][13]['name'] = $LANG['plugin_tracker']["model_info"][3];
+
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][14]['table'] = 'glpi_networking_ports';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][14]['field'] = 'ifaddr';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][14]['linkfield'] = 'ID';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][14]['name'] = $LANG["networking"][14];
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][14]['forcegroupby']='1';
+
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][15]['table'] = 'glpi_networking_ports';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][15]['field'] = 'ifmac';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][15]['linkfield'] = 'ID';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][15]['name'] = $LANG["networking"][15];
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][15]['forcegroupby']='1';
+
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['table'] = 'glpi_networking';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['field'] = 'ID';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['linkfield'] = 'ID';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][52];
+
+//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['table'] = 'glpi_networking_ports';
+//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['field'] = 'name';
+//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['linkfield'] = 'name';
+//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][46];
+
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['table'] = 'glpi_networking_ports';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['name'] = $LANG['plugin_tracker']["unknown"][1];
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['forcegroupby']='1';
 
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS]['common'] = $LANG['plugin_tracker']["errors"][0];
 
@@ -330,8 +392,8 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['linkfield'] = 'FK_tracker_agents';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['name'] = $LANG["ocsng"][49];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['linkfield'] = 'FK_tracker_agents_discover';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['name'] = $LANG['plugin_tracker']["agents"][12];
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['datatype']='itemlink';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['forcegroupby']='1';
@@ -353,6 +415,13 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['linkfield'] = 'FK_entities';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['name'] = $LANG["entity"][0];
 
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['name'] = $LANG['plugin_tracker']["agents"][13];
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['datatype']='itemlink';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
+  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['forcegroupby']='1';
 
 	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY]['common'] = $LANG['plugin_tracker']["profile"][22];
 
@@ -885,13 +954,24 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** Tracker - switch portgetDeviceData
-				case "glpi_networking_ports.name" :
-					$out = '';
-					include_once(GLPI_ROOT."/inc/networking.class.php");
-					if (!empty($data["ITEM_$num"])) {
-						$np = new Netport;
-						$np->getFromDB($data["ITEM_$num"]);
-						$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$np->fields["name"]."</a><br/>";
+//				case "glpi_networking_ports.name" :
+//					$out = '';
+//					include_once(GLPI_ROOT."/inc/networking.class.php");
+//					if (!empty($data["ITEM_$num"])) {
+//						$np = new Netport;
+//						$np->getFromDB($data["ITEM_$num"]);
+//						$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$np->fields["name"]."</a><br/>";
+//					}
+//					return "<center>".$out."</center>";
+//					break;
+
+            case "glpi_plugin_tracker_unknown_device.type" :
+					if ($data["ITEM_$num"] == "0") {
+						$out = "";
+               } else {
+						$ci=new CommonItem;
+						$ci->setType($data["ITEM_$num"]);
+						$out=$ci->getType();
 					}
 					return "<center>".$out."</center>";
 					break;
@@ -1755,9 +1835,9 @@ function plugin_tracker_addSelect($type,$ID,$num) {
 					return "TRACKER_12.".$field." AS ITEM_$num, ";
 					break;
 
-				case "glpi_networking_ports.name" :
-					return "TRACKER_22.ID AS ITEM_$num, ";
-					break;
+//				case "glpi_networking_ports.name" :
+//					return "TRACKER_22.ID AS ITEM_$num, ";
+//					break;
 
 			}
 			break;

@@ -269,6 +269,13 @@ class PluginTrackerConfigDiscovery extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['device_iface'][2]."</td>";
+		echo "<td>";
+		dropdownYesNo("link_macaddr", $this->isActivated('link_macaddr'));
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr>";
 		echo "<th colspan='2'>";
 		echo $LANG['plugin_tracker']["discovery"][6]." 2 :";
@@ -299,6 +306,13 @@ class PluginTrackerConfigDiscovery extends CommonDBTM {
 		echo "<td>".$LANG["common"][19]."</td>";
 		echo "<td>";
 		dropdownYesNo("link2_serial", $this->isActivated('link2_serial'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['device_iface'][2]."</td>";
+		echo "<td>";
+		dropdownYesNo("link2_macaddr", $this->isActivated('link2_macaddr'));
 		echo "</td>";
 		echo "</tr>";
 

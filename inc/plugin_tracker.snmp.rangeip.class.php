@@ -83,9 +83,16 @@ class PluginTrackerRangeIP extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][0] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][12] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_tracker_agents","FK_tracker_agents",$this->fields["FK_tracker_agents"],0);
+		dropdownValue("glpi_plugin_tracker_agents","FK_tracker_agents_discover",$this->fields["FK_tracker_agents_discover"],0);
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][13] . "</td>";
+		echo "<td align='center'>";
+		dropdownValue("glpi_plugin_tracker_agents","FK_tracker_agents_query",$this->fields["FK_tracker_agents_query"],0);
 		echo "</td>";
 		echo "</tr>";
 

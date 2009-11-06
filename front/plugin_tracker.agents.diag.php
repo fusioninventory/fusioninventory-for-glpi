@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker","search","printer","computer","networking","peripheral","phone");
+$NEEDED_ITEMS=array("tracker","search","printer","computer","networking","peripheral","phone","setup","rulesengine");
 include (GLPI_ROOT."/inc/includes.php");
 
 // Get conf tu know if SSL is only
@@ -174,7 +174,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 		// Get IP ranges for devices 
 		$rangeip_select = ' AND (';
 		$query = "SELECT * FROM glpi_plugin_tracker_rangeip 
-		WHERE FK_tracker_agents='".$ID_agent."' 
+		WHERE FK_tracker_agents_discover='".$ID_agent."'
 		AND query='1' ";
 		$result=$DB->query($query);
 		$exclude = array();
@@ -220,7 +220,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 		// Get all range to scan if discovery is ON
 		$xml->element[2]['rangeip']['element']="discovery";
 		$xml->element[2]['rangeip']['SQL']="SELECT * FROM glpi_plugin_tracker_rangeip 
-		WHERE FK_tracker_agents='".$ID_agent."'
+		WHERE FK_tracker_agents_discover='".$ID_agent."'
 			AND discover='1'";
 		$xml->element[2]['rangeip']['linkfield']['ID'] = 'id';
 		$xml->element[2]['rangeip']['linkfield']['ifaddr_start'] = 'ipstart';
