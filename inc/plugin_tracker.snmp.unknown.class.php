@@ -50,36 +50,130 @@ class PluginTrackerUnknown extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-		echo "<br>";
+      $this->showTabs($ID, "",$_SESSION['glpi_tab']);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table  class='tab_cadre_fixe'>";
 
-		echo "<tr><th colspan='2'>";
-		echo "Unknown device";
+		echo "<tr><th colspan='4'>";
+		echo $LANG['plugin_tracker']["menu"][4];
 		echo " :</th></tr>";
 
 		$datestring = $LANG["common"][26].": ";
 		$date = convDateTime($this->fields["date_mod"]);
 		echo "<tr>";
-		echo "<th align='center' width='450'>";
+		echo "<th align='center' width='450' colspan='2'>";
 		echo $LANG["common"][2]." ".$this->fields["ID"];
 		echo "</th>";
 	
-		echo "<th align='center'>";
+		echo "<th align='center' colspan='2'>";
 		echo $datestring.$date;
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
+		echo "<td align='center'>" . $LANG["common"][16] . " :</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
 		echo "</td>";
+      
+      echo "<td align='center'>" . $LANG['entity'][0] . " : </td>";
+      echo "</td>";
+      echo "<td align='center'>";
+      dropdownvalue("glpi_entities",'FK_entities', $this->fields["FK_entities"]);
+      echo "</td>";
+		echo "</tr>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["unknown"][0] . " :</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='dnsname' value='" . $this->fields["dnsname"] . "' size='35'/>";
+		echo "</td>";
+
+      echo "<td align='center'>" . $LANG['common'][18] . " : </td>";
+      echo "</td>";
+      echo "<td align='center'>";
+		echo "<input type='text' name='contact' value='" . $this->fields["contact"] . "' size='35'/>";
+      echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['common'][17] . " :</td>";
+		echo "<td align='center'>";
+			$type_list[] = COMPUTER_TYPE;
+			$type_list[] = NETWORKING_TYPE;
+			$type_list[] = PRINTER_TYPE;
+			$type_list[] = PERIPHERAL_TYPE;
+			$type_list[] = PHONE_TYPE;
+			dropdownDeviceTypes('type',$this->fields["type"],$type_list);
+		echo "</td>";
+
+      echo "<td align='center'>" . $LANG['setup'][89] . " : </td>";
+      echo "</td>";
+      echo "<td align='center'>";
+      dropdownValue("glpi_dropdown_domain", "domain", $this->fields["domain"]);
+      echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['common'][15] . " :</td>";
+		echo "<td align='center'>";
+      dropdownValue("glpi_dropdown_locations", "location", $this->fields["location"]);
+		echo "</td>";
+
+      echo "<td align='center'>" . $LANG['common'][19] . " : </td>";
+      echo "</td>";
+      echo "<td align='center'>";
+		echo "<input type='text' name='serial' value='" . $this->fields["serial"] . "' size='35'/>";
+      echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["unknown"][2] . " :</td>";
+		echo "<td align='center'>";
+      dropdownYesNo("accepted", $this->fields["accepted"]);
+		echo "</td>";
+
+      echo "<td align='center'>" . $LANG['common'][20] . " : </td>";
+      echo "</td>";
+      echo "<td align='center'>";
+		echo "<input type='text' name='otherserial' value='" . $this->fields["otherserial"] . "' size='35'/>";
+      echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['plugin_tracker']["functionalities"][3] . " :</td>";
+		echo "<td align='center'>";
+      dropdownYesNo("snmp", $this->fields["snmp"]);
+		echo "</td>";
+
+      if ($this->fields["snmp"] == "1") {
+         echo "<td align='center'>" . $LANG['plugin_tracker']["model_info"][4] . " : </td>";
+         echo "</td>";
+         echo "<td align='center'>";
+         dropdownValue("glpi_plugin_tracker_model_infos", "FK_model_infos", $this->fields["FK_model_infos"]);
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>" . $LANG['plugin_tracker']["model_info"][3] . " :</td>";
+         echo "<td align='center'>";
+         dropdownValue("glpi_plugin_tracker_snmp_connection", "FK_snmp_connection", $this->fields["FK_snmp_connection"]);
+         echo "</td>";
+      }
+
+      echo "<td align='center'>" . $LANG['common'][25] . " : </td>";
+      echo "</td>";
+      echo "<td align='middle'>";
+      echo "<textarea  cols='50' rows='5' name='comments' >".$this->fields["comments"]."</textarea>";
+      echo "</td>";
 		echo "</tr>";
 
 		echo "</table></form></div>";
 	}
+
+
 
 	function updateFromOldVersion_unknown_mac() {
 		global $DB,$LANG;

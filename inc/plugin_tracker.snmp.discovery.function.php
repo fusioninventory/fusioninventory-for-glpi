@@ -74,7 +74,7 @@ function plugin_tracker_discovery_update_devices($array, $target) {
 function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 	GLOBAL $DB,$CFG_GLPI,$LANG;
 	
-	$td = new PluginTrackerDiscovery;
+	$td = new PluginTrackerUnknown;
 	
 	$td->getFromDB($discovery_ID);
 	
@@ -124,8 +124,8 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
          }
 			$data["FK_entities"] = $td->fields["FK_entities"];
 			$data["name"] = $td->fields["name"];
-			$data["serial"] = $td->fields["serialnumber"];
-			$data["comments"] = $td->fields["descr"];
+			$data["serial"] = $td->fields["serial"];
+			$data["comments"] = $td->fields["comments"];
 			$data["ifaddr"] = $td->fields["ifaddr"];
 			$ID_Device = $Netdevice->add($data);
 
@@ -134,7 +134,7 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 			$data_tracker["FK_snmp_connection"] = $td->fields["FK_snmp_connection"];
 			$tracker_networking->add($data_tracker);
 
-			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
+			$query_del = "DELETE FROM glpi_plugin_tracker_unknown_device
 			WHERE ID='".$discovery_ID."' ";
 			$DB->query($query_del);
 			$Import++;

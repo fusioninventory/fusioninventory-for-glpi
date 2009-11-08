@@ -255,14 +255,14 @@ function plugin_tracker_getSearchOption() {
    $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][15]['forcegroupby']='1';
 
    $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['table'] = 'glpi_networking';
-   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['field'] = 'ID';
-   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['linkfield'] = 'ID';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['field'] = 'device';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['linkfield'] = 'device';
    $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][16]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][52];
 
-//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['table'] = 'glpi_networking_ports';
-//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['field'] = 'name';
-//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['linkfield'] = 'name';
-//   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][46];
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['table'] = 'glpi_networking_ports';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['field'] = 'netport';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['linkfield'] = 'nerport';
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][17]['name'] = $LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][46];
 
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['table'] = 'glpi_networking_ports';
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['field'] = 'name';
@@ -925,18 +925,8 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 		case PLUGIN_TRACKER_MAC_UNKNOWN :
 			switch ($table.'.'.$field) {
 
-				// Display name of unknown device
-				case "glpi_plugin_tracker_unknown_device.name" :
-					if (empty($data["ITEM_$num"])) {
-						$out = "<a href='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.unknown.form.php?ID=".$data["ID"]."'>(".$data["ID"].")</a>";
-               } else {
-						$out = "<a href='" . GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.unknown.form.php?ID=".$data["ID"]."'>".$data["ITEM_$num"]."</a>";
-               }
-					return "<center>".$out."</center>";
-					break;
-
 				// Display switch on witch unknown device is connected
-				case "glpi_networking.ID" :
+				case "glpi_networking.device" :
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
 					$netport = new Netport;
@@ -954,16 +944,16 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** Tracker - switch portgetDeviceData
-//				case "glpi_networking_ports.name" :
-//					$out = '';
-//					include_once(GLPI_ROOT."/inc/networking.class.php");
-//					if (!empty($data["ITEM_$num"])) {
-//						$np = new Netport;
-//						$np->getFromDB($data["ITEM_$num"]);
-//						$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$np->fields["name"]."</a><br/>";
-//					}
-//					return "<center>".$out."</center>";
-//					break;
+				case "glpi_networking_ports.netport" :
+					$out = '';
+					include_once(GLPI_ROOT."/inc/networking.class.php");
+					if (!empty($data["ITEM_$num"])) {
+						$np = new Netport;
+						$np->getFromDB($data["ITEM_$num"]);
+						$out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$np->fields["name"]."</a><br/>";
+					}
+					return "<center>".$out."</center>";
+					break;
 
             case "glpi_plugin_tracker_unknown_device.type" :
 					if ($data["ITEM_$num"] == "0") {
@@ -1537,7 +1527,7 @@ function plugin_tracker_MassiveActions($type) {
 			);
 			break;
 
-		case PLUGIN_TRACKER_SNMP_DISCOVERY;
+		case PLUGIN_TRACKER_MAC_UNKNOWN;
 			return array (
 				"plugin_tracker_discovery_import" => $LANG["buttons"][37]
 			);
@@ -1616,7 +1606,7 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 			}
 			break;
 
-		case PLUGIN_TRACKER_SNMP_DISCOVERY;
+		case PLUGIN_TRACKER_MAC_UNKNOWN;
 			switch ($action) {
 				case "plugin_tracker_discovery_import" :
                if(plugin_tracker_HaveRight("snmp_discovery","w")) {
@@ -1715,7 +1705,7 @@ function plugin_tracker_MassiveActionsFieldsDisplay($type,$table,$field,$linkfie
 			return true;
 			break;
 
-		case 'glpi_plugin_tracker_discovery.type' :
+		case 'glpi_plugin_tracker_unknown_device.type' :
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
 			$type_list[] = PRINTER_TYPE;
@@ -1831,13 +1821,13 @@ function plugin_tracker_addSelect($type,$ID,$num) {
 		case PLUGIN_TRACKER_MAC_UNKNOWN :
 			switch ($table.".".$field) {
 
-				case "glpi_networking.ID" :
-					return "TRACKER_12.".$field." AS ITEM_$num, ";
+				case "glpi_networking.device" :
+					return "TRACKER_12.name AS ITEM_$num, ";
 					break;
 
-//				case "glpi_networking_ports.name" :
-//					return "TRACKER_22.ID AS ITEM_$num, ";
-//					break;
+				case "glpi_networking_ports.netport" :
+					return "TRACKER_22.ID AS ITEM_$num, ";
+					break;
 
 			}
 			break;
@@ -2021,7 +2011,7 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 			switch ($new_table.".".$linkfield) {
 
 				// ** Tracker - switch
-				case "glpi_networking.ID" :
+				case "glpi_networking.device" :
 					return " LEFT JOIN glpi_networking_ports AS TRACKER_10 ON (TRACKER_10.on_device = glpi_plugin_tracker_unknown_device.ID AND TRACKER_10.device_type='".PLUGIN_TRACKER_MAC_UNKNOWN."') ".
 						" LEFT JOIN glpi_networking_wire AS TRACKER_11 ON TRACKER_10.ID = TRACKER_11.end1 OR TRACKER_10.ID = TRACKER_11.end2 ".
 						" LEFT JOIN glpi_networking_ports AS TRACKER_12 ON TRACKER_12.ID = CASE WHEN TRACKER_11.end1 = TRACKER_10.ID THEN TRACKER_11.end2 ELSE TRACKER_11.end1 END ".
@@ -2030,7 +2020,7 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 					break;
 
 				// ** Tracker - switch port
-				case "glpi_networking_ports.name" :
+				case "glpi_networking_ports.netport" :
 					return " LEFT JOIN glpi_networking_ports AS TRACKER_20 ON (TRACKER_20.on_device = glpi_plugin_tracker_unknown_device.ID AND TRACKER_20.device_type='".PLUGIN_TRACKER_MAC_UNKNOWN."') ".
 						" LEFT JOIN glpi_networking_wire AS TRACKER_21 ON TRACKER_20.ID = TRACKER_21.end1 OR TRACKER_20.ID = TRACKER_21.end2 ".
 						" LEFT JOIN glpi_networking_ports AS TRACKER_22 ON TRACKER_22.ID = CASE WHEN TRACKER_21.end1 = TRACKER_20.ID THEN TRACKER_21.end2 ELSE TRACKER_21.end1 END ";
@@ -2151,12 +2141,12 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** Tracker - switch
-				case "glpi_networking.ID" :
+				case "glpi_networking.device" :
 					return " ORDER BY TRACKER_12.on_device $order ";
 					break;
 
 				// ** Tracker - switch port
-				case "glpi_networking_ports.name" :
+				case "glpi_networking_ports.netport" :
 					return " ORDER BY TRACKER_22.".$field." $order ";
 					break;
 
@@ -2388,7 +2378,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 			switch ($table.".".$field) {
 
 				// ** Tracker - switch
-				case "glpi_networking.ID" :
+				case "glpi_networking.device" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR TRACKER_12.on_device IS NULL";
@@ -2399,7 +2389,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 				// ** Tracker - switch port
-				case "glpi_networking_ports.name" :
+				case "glpi_networking_ports.netport" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR TRACKER_22.name IS NULL";

@@ -596,7 +596,11 @@ function appear_array(id){
 								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$CommonItem->getLink());
                         $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],$CommonItem->getLink());
 								if ($data_device["device_type"] == PLUGIN_TRACKER_MAC_UNKNOWN) {
-									echo "<td align='center'background='#cf9b9b' class='tab_bg_1_2'>".$link1;
+                           if ($CommonItem->getField("accepted") == "1") {
+                              echo "<td align='center' style='background:#bfec75' class='tab_bg_1_2'>".$link1;
+                           } else {
+                              echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$link1;
+                           }
                            if (!empty($link)) {
                               echo "<br/>".$link;
                            }

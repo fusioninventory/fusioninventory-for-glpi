@@ -509,4 +509,5 @@ $LANG['plugin_tracker']["agents"][13]="Agent interrogation";
 
 $LANG['plugin_tracker']["unknown"][0]="Nom DNS";
 $LANG['plugin_tracker']["unknown"][1]="Nom port réseau";
+$LANG['plugin_tracker']["unknown"][2]="Matériel approuvé";
 ?>
