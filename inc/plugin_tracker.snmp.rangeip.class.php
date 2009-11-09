@@ -54,10 +54,10 @@ class PluginTrackerRangeIP extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-		echo "<br>";
+		$this->showTabs($ID, "",$_SESSION['glpi_tab']);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
 		echo $LANG['plugin_tracker']["rangeip"][2];
 		echo " :</th></tr>";
 

@@ -71,10 +71,10 @@ class PluginTrackerAgents extends CommonDBTM {
 			$this->getEmpty();
       }
 
-		echo "<br>";
+		$this->showTabs($ID, "",$_SESSION['glpi_tab']);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='600'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		echo "<tr>";
 		echo "<th colspan='2'>";
 		echo $LANG['plugin_tracker']["agents"][0];
@@ -124,7 +124,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
       echo "</table>";
       echo "<div  id='optionavance' style='display: none;'>";
-      echo "<table class='tab_cadre' cellpadding='5' width='600'>";
+      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' width='200'>" . $LANG['plugin_tracker']["agents"][11] . "</td>";
@@ -166,7 +166,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
       echo "</table>";
       echo "</div>";
-      echo "<table class='tab_cadre' cellpadding='5' width='600'>";
+      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		if ($ID=='') {

@@ -73,15 +73,22 @@ function plugin_tracker_discovery_update_devices($array, $target) {
 **/
 function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 	GLOBAL $DB,$CFG_GLPI,$LANG;
-	
+
+   $Netport = new Netport;
 	$td = new PluginTrackerUnknown;
 	
 	$td->getFromDB($discovery_ID);
-	
+   $query = "SELECT ID FROM glpi_networking_ports
+   WHERE on_device = '".$discovery_ID."'
+      AND device_type = '".PLUGIN_TRACKER_MAC_UNKNOWN."' ";
+	if ($result = $DB->query($query)) {
+      $data = $DB->fetch_assoc($result);
+      $Netport->getFromDB($data["ID"]);
+   }
+
 	switch ($td->fields['type']) {
 		case PRINTER_TYPE :
 			$Printer = new Printer;
-			$Netport = new Netport;
 			$tracker_printers = new PluginTrackerPrinters;
 			$tracker_config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
 
@@ -98,7 +105,9 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 			$data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $td->fields['type'];
-			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$data_Port['name'] = $Netport->fields["name"];
+			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
+         $data_Port["ifmac"] = $Netport->fields["ifmac"];
 			$Netport->add($data_Port);
 
 			$data_tracker["FK_printers"] = $ID_Device;
@@ -124,9 +133,14 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
          }
 			$data["FK_entities"] = $td->fields["FK_entities"];
 			$data["name"] = $td->fields["name"];
+         $data["location"] = $td->fields["location"];
 			$data["serial"] = $td->fields["serial"];
+         $data["otherserial"] = $td->fields["otherserial"];
+         $data["contact"] = $td->fields["contact"];
+         $data["domain"] = $td->fields["domain"];
 			$data["comments"] = $td->fields["comments"];
-			$data["ifaddr"] = $td->fields["ifaddr"];
+			$data["ifaddr"] = $Netport->fields["ifaddr"];
+         $data["ifmac"] = $Netport->fields["ifmac"];
 			$ID_Device = $Netdevice->add($data);
 
 			$data_tracker["FK_networking"] = $ID_Device;
@@ -142,7 +156,6 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 		case PERIPHERAL_TYPE :
 			$Peripheral = new Peripheral;
-			$Netport = new Netport;
 
 			$data["FK_entities"] = $td->fields["FK_entities"];
 			$data["name"] = $td->fields["name"];
@@ -152,7 +165,9 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 			$data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $td->fields['type'];
-			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$data_Port['name'] = $Netport->fields["name"];
+			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
+         $data_Port["ifmac"] = $Netport->fields["ifmac"];
 			$Netport->add($data_Port);
 			
 			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
@@ -163,7 +178,6 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 		case COMPUTER_TYPE :
 			$Computer = new Computer;
-			$Netport = new Netport;
 
 			$data["FK_entities"] = $td->fields["FK_entities"];
 			$data["name"] = $td->fields["name"];
@@ -173,7 +187,9 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 			$data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $td->fields['type'];
-			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$data_Port['name'] = $Netport->fields["name"];
+			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
+         $data_Port["ifmac"] = $Netport->fields["ifmac"];
 			$Netport->add($data_Port);
 
 			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
@@ -184,7 +200,6 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 		case PHONE_TYPE :
 			$Phone = new Phone;
-			$Netport = new Netport;
 
 			$data["FK_entities"] = $td->fields["FK_entities"];
 			$data["name"] = $td->fields["name"];
@@ -194,7 +209,9 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 			$data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $td->fields['type'];
-			$data_Port['ifaddr'] = $td->fields['ifaddr'];
+			$data_Port['name'] = $Netport->fields["name"];
+			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
+         $data_Port["ifmac"] = $Netport->fields["ifmac"];
 			$Netport->add($data_Port);
 
 			$query_del = "DELETE FROM glpi_plugin_tracker_discovery

@@ -55,10 +55,11 @@ class PluginTrackerModelInfos extends CommonDBTM {
       } else {
 			$this->getEmpty();	
       }
-		echo "<br>";
+
+      $this->showTabs($ID, "",$_SESSION['glpi_tab']);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='600'><tr><th colspan='2'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
 		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] : $LANG['plugin_tracker']["model_info"][6]);
 		echo " :</th></tr>";
 

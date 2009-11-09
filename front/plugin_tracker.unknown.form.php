@@ -51,10 +51,34 @@ $plugin_tracker_unknown = new PluginTrackerUnknown;
 
 commonHeader($LANG['plugin_tracker']["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","unknown");
 
+plugin_tracker_mini_menu();
+
 $ID = "";
 if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
 }
+
+if (isset($_POST["delete"])) {
+	$plugin_tracker_unknown->check($_POST['ID'],'w');
+
+	$plugin_tracker_unknown->delete($_POST,1);
+
+//	logEvent($_POST["ID"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
+	glpi_header($CFG_GLPI["root_doc"]."plugins/tracker/front/plugin_tracker.unknown.php");
+} else if (isset($_POST["restore"])) {
+
+
+} else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
+
+
+} else if (isset($_POST["update"])) {
+	$plugin_tracker_unknown->check($_POST['ID'],'w');
+	$plugin_tracker_unknown->update($_POST);
+//	logEvent($_POST["ID"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][21]);
+	glpi_header($_SERVER['HTTP_REFERER']);
+}
+
+
 
 $plugin_tracker_unknown->showForm($_SERVER["PHP_SELF"], $ID);
 showPorts($ID, PLUGIN_TRACKER_MAC_UNKNOWN);

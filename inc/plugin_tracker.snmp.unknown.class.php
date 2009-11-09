@@ -170,6 +170,26 @@ class PluginTrackerUnknown extends CommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
+
+      echo "<tr>";
+      echo "<td class='tab_bg_2' align='center' colspan='2'>\n";
+      echo "<input type='hidden' name='ID' value=$ID>";
+      echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+      echo "</td>\n";
+
+      echo "<td class='tab_bg_2' colspan='2'  align='center'>\n";
+      echo "<input type='hidden' name='ID' value=$ID>";
+      echo "<div class='center'>";
+      if (!$this->fields["deleted"]){
+         echo "<input type='submit' name='delete' value=\"".$LANG['buttons'][6]."\" class='submit'>";
+         }else {
+         echo "<input type='submit' name='restore' value=\"".$LANG['buttons'][21]."\" class='submit'>";
+
+         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"".$LANG['buttons'][22]."\" class='submit'>";
+      }
+      echo "</div>";
+      echo "</td>";
+
 		echo "</table></form></div>";
 	}
 
