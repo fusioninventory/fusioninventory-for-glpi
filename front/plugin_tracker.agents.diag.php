@@ -111,7 +111,7 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 	gzclose($zp) ;
 	fclose($fp) ;
 
-	
+
 	unlink($content_dir.$name_file);
 	
 	// Open file for put it in DB
