@@ -38,13 +38,15 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker","search","printer","computer","networking","peripheral","phone","setup","rulesengine");
+$NEEDED_ITEMS=array("tracker","search","printer","computer","networking","peripheral","phone",
+                    "setup","rulesengine");
 include (GLPI_ROOT."/inc/includes.php");
 
 // Get conf tu know if SSL is only
 $tracker_config = new PluginTrackerConfig;
 $ssl = $tracker_config->getValue('ssl_only');
-if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1")) OR ($ssl == "0")) {
+if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
+    OR ($ssl == "0")) {
 	// echo "On continue";
 } else {
 	$out = "No SSL";
@@ -136,9 +138,10 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 	$config = new PluginTrackerConfig;
 	
 //$_POST['key'] = "nN3HDPKVj0e8xxfgCIugjWmPzIRVxb";
-	$query = "SELECT * FROM glpi_plugin_tracker_agents
-	WHERE `key`='".$_POST['key']."'
-	LIMIT 0,1";
+	$query = "SELECT * 
+             FROM `glpi_plugin_tracker_agents`
+             WHERE `key`='".$_POST['key']."'
+             LIMIT 0,1";
 	$result=$DB->query($query);
 	if ($DB->numrows($result) > 0) {
 		$data = $DB->fetch_assoc($result);
@@ -173,9 +176,10 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 		
 		// Get IP ranges for devices 
 		$rangeip_select = ' AND (';
-		$query = "SELECT * FROM glpi_plugin_tracker_rangeip 
-		WHERE FK_tracker_agents_discover='".$ID_agent."'
-		AND query='1' ";
+		$query = "SELECT * 
+                FROM `glpi_plugin_tracker_rangeip`
+                WHERE `FK_tracker_agents_discover`='".$ID_agent."'
+                      AND `query`='1' ";
 		$result=$DB->query($query);
 		$exclude = array();
 		$or = 0;
@@ -183,7 +187,8 @@ if(isset($_POST['upload'])) { // si formulaire soumis
 			if ($or == "1") {
 				$rangeip_select .= " OR ";
          }
-			$rangeip_select .= " (inet_aton(ifaddr) BETWEEN inet_aton('".$data['ifaddr_start']."') AND inet_aton('".$data['ifaddr_end']."') ) ";
+			$rangeip_select .= " (inet_aton(ifaddr) BETWEEN inet_aton('".$data['ifaddr_start']."')
+                                                      AND inet_aton('".$data['ifaddr_end']."') ) ";
 			$or = 1;
 		}
 		$rangeip_select .= ') ';

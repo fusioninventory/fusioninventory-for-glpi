@@ -69,14 +69,20 @@ if (haveRight("config","w") && haveRight("profile","w")) {
    }
    if (FieldExists("glpi_plugin_tracker_config", "version")) {
       if ($config->getValue('version') == "2.0.2") {
-         $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.1' WHERE ID=1");
+         $DB->query("UPDATE `glpi_plugin_tracker_config` 
+                     SET `version` = '2.1.1'
+                     WHERE `ID`=1");
       }
       if ($config->getValue('version') == "2.1.0") {
-         $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.1' WHERE ID=1");
+         $DB->query("UPDATE `glpi_plugin_tracker_config` 
+                     SET `version` = '2.1.1'
+                     WHERE `ID`=1");
       }
       plugin_tracker_update("2.0.2");
       if  ($config->getValue('version') == "0") {
-         $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.1' WHERE ID=1");
+         $DB->query("UPDATE `glpi_plugin_tracker_config` 
+                     SET `version` = '2.1.1'
+                     WHERE `ID`=1");
       }
    }
 
@@ -84,7 +90,8 @@ if (haveRight("config","w") && haveRight("profile","w")) {
 } else {
 
 	commonHeader($LANG["login"][5],$_SERVER['PHP_SELF'],"plugins","tracker");
-	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";
+	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\"
+              alt=\"warning\"><br><br>";
 	echo "<b>".$LANG["login"][5]."</b></div>";
 	commonFooter();
 }

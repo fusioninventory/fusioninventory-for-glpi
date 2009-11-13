@@ -47,9 +47,11 @@ function plugin_tracker_createfirstaccess($ID) {
 		$Profile->GetfromDB($ID);
 		$name=$Profile->fields["name"];
 
-		$query = "INSERT INTO `glpi_plugin_tracker_profiles` ".
-				 "( `ID`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`, `snmp_models`, `snmp_authentification`, `snmp_scripts_infos`, `snmp_discovery`, `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` ) ".
-				 "VALUES ('$ID', '$name','tracker','0','w','w','w','w','w','w','w','w','w','w','w');";
+		$query = "INSERT INTO `glpi_plugin_tracker_profiles` (
+				    `ID`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`, 
+                `snmp_models`, `snmp_authentification`, `snmp_scripts_infos`, `snmp_discovery`,
+                `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` )
+				    VALUES ('$ID', '$name','tracker','0','w','w','w','w','w','w','w','w','w','w','w');";
 		$DB->query($query);
 	}
 }
@@ -61,9 +63,12 @@ function plugin_tracker_createaccess($ID) {
 	$Profile->GetfromDB($ID);
 	$name=$Profile->fields["name"];
 	
-	$query = "INSERT INTO `glpi_plugin_tracker_profiles` ".
-			 "( `ID`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`, `snmp_models`, `snmp_authentification`, `snmp_scripts_infos`, `snmp_discovery`, `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` ) ".
-			 "VALUES ('$ID', '$name','tracker','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);";
+	$query = "INSERT INTO `glpi_plugin_tracker_profiles` (
+             `ID`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`, 
+             `snmp_models`, `snmp_authentification`, `snmp_scripts_infos`, `snmp_discovery`,
+             `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` )
+             VALUES ('$ID', '$name','tracker','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+                     NULL,NULL);";
 	$DB->query($query);
 }
 
@@ -71,9 +76,9 @@ function plugin_tracker_getIdFromUser($name) {
 	
 	global $DB;
 	
-	$query = "SELECT ID ".
-			 "FROM glpi_users ".
-			 "WHERE name = '".$name."';";
+	$query = "SELECT `ID` ".
+            "FROM `glpi_users` ".
+            "WHERE `name` = '".$name."';";
 
 	if (($result = $DB->query($query))) {
 		return $DB->result($result,0,"ID");
@@ -85,19 +90,19 @@ function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 	global $DB;
 	switch($type) {
 		case COMPUTER_TYPE:
-			$table = "glpi_computers";
+			$table = "`glpi_computers`";
 			break;
 			
 		case NETWORKING_TYPE:
-			$table = "glpi_networking";
+			$table = "`glpi_networking`";
 			break;
 			
 		case PRINTER_TYPE:
-			$table = "glpi_printers";
+			$table = "`glpi_printers`";
 			break;
 			
 		case USER_TYPE:
-			$table = "glpi_users";
+			$table = "`glpi_users`";
 			break;
 			
 		default:
@@ -105,8 +110,9 @@ function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 			break;
 	}
 	
-	$query = "SELECT ".$field." FROM ".$table." ".
-			 "WHERE ID = '".$ID."';";
+	$query = "SELECT ".$field.
+            "FROM ".$table." ".
+            "WHERE `ID` = '".$ID."';";
 	if ($result = $DB->query($query)) {
 		if (($fields=$DB->fetch_row($result)) && ($fields['0'] != NULL)) {
 			return $fields['0'];
@@ -120,69 +126,76 @@ function plugin_tracker_clean_db() {
 	global $DB;
 	
 	// * Clean glpi_plugin_tracker_networking_ports
-	$query_select = "SELECT glpi_plugin_tracker_networking_ports.ID FROM glpi_plugin_tracker_networking_ports
-	LEFT JOIN glpi_networking_ports ON glpi_networking_ports.ID = FK_networking_ports
-	LEFT JOIN glpi_networking ON glpi_networking.ID = on_device
-	WHERE glpi_networking.ID IS NULL";
+	$query_select = "SELECT `glpi_plugin_tracker_networking_ports`.`ID`
+                    FROM `glpi_plugin_tracker_networking_ports`
+                          LEFT JOIN `glpi_networking_ports`
+                                    ON `glpi_networking_ports`.`ID` = `FK_networking_ports`
+                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `on_device`
+                    WHERE `glpi_networking`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
-		WHERE ID='".$data["ID"]."'";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ports`
+                       WHERE `ID`='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
 
 	// * Clean glpi_plugin_tracker_networking_ifaddr
-	$query_select = "SELECT glpi_plugin_tracker_networking_ifaddr.ID FROM glpi_plugin_tracker_networking_ifaddr
-	LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
-	WHERE glpi_networking.ID IS NULL";
+	$query_select = "SELECT `glpi_plugin_tracker_networking_ifaddr`.`ID`
+                    FROM `glpi_plugin_tracker_networking_ifaddr`
+                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
+                    WHERE `glpi_networking`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
-		WHERE ID='".$data["ID"]."'";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ifaddr`
+                       WHERE `ID`='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
 
 	// * Clean glpi_plugin_tracker_networking
-	$query_select = "SELECT glpi_plugin_tracker_networking.ID FROM glpi_plugin_tracker_networking
-	LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
-	WHERE glpi_networking.ID IS NULL";
+	$query_select = "SELECT `glpi_plugin_tracker_networking`.`ID`
+                    FROM `glpi_plugin_tracker_networking`
+                          LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
+                    WHERE `glpi_networking`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM glpi_plugin_tracker_networking
-		WHERE ID='".$data["ID"]."'";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking`
+                       WHERE `ID`='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
 	
 	// * Clean glpi_plugin_tracker_printers
-	$query_select = "SELECT glpi_plugin_tracker_printers.ID FROM glpi_plugin_tracker_printers
-	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
-	WHERE glpi_printers.ID IS NULL";
+	$query_select = "SELECT `glpi_plugin_tracker_printers`.`ID`
+                    FROM `glpi_plugin_tracker_printers`
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
+                    WHERE `glpi_printers`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM glpi_plugin_tracker_printers
-		WHERE ID='".$data["ID"]."'";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_printers`
+                       WHERE `ID`='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
 
 	// * Clean glpi_plugin_tracker_printers_cartridges
-	$query_select = "SELECT glpi_plugin_tracker_printers_cartridges.ID FROM glpi_plugin_tracker_printers_cartridges
-	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
-	WHERE glpi_printers.ID IS NULL";
+	$query_select = "SELECT `glpi_plugin_tracker_printers_cartridges`.`ID`
+                    FROM `glpi_plugin_tracker_printers_cartridges`
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
+                    WHERE `glpi_printers`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM glpi_plugin_tracker_printers_cartridges
-		WHERE ID='".$data["ID"]."'";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_printers_cartridges`
+                       WHERE `ID`='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
 
 	// * Clean glpi_plugin_tracker_printers_history
-	$query_select = "SELECT glpi_plugin_tracker_printers_history.ID FROM glpi_plugin_tracker_printers_history
-	LEFT JOIN glpi_printers ON glpi_printers.ID = FK_printers
-	WHERE glpi_printers.ID IS NULL";
+	$query_select = "SELECT `glpi_plugin_tracker_printers_history`.`ID`
+                    FROM `glpi_plugin_tracker_printers_history`
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
+                    WHERE `glpi_printers`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM glpi_plugin_tracker_printers_history
-		WHERE ID='".$data["ID"]."'";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_printers_history`
+                       WHERE `ID`='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
 }

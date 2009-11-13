@@ -54,10 +54,10 @@ class PluginTrackerErrors extends CommonDBTM {
       } else { // networking or printer
 			$field = 'device_id';
       }
-		$query = "SELECT ID, description ".
-				 "FROM ".$this->table." ".
-				 "WHERE ".$field." = '".$value."' ".
-				 "AND device_type = '".$device_type."';";
+		$query = "SELECT `ID`, `description` ".
+               "FROM ".$this->table." ".
+               "WHERE ".$field." = '".$value."'
+                       AND `device_type` = '".$device_type."';";
 		
 		if (($result = $DB->query($query))) {
 			if (($this->fields = $DB->fetch_assoc($result))) {
@@ -115,7 +115,8 @@ class PluginTrackerErrors extends CommonDBTM {
 		return true;
 	}
 	
-	/* returns false if can't find computer (by IP, name or otherserial), else returns the ID of the computer */
+	/* returns false if can't find computer (by IP, name or otherserial),
+    * else returns the ID of the computer */
 	function writeComputerDbError($device_type, $input) {
 		global $LANG;
 		global $DB;
@@ -125,21 +126,22 @@ class PluginTrackerErrors extends CommonDBTM {
       }
 			
 		// Trying to find ID by IP
-		$query = "SELECT pc.ID AS ID, pc.name AS name, pc.otherserial AS otherserial, pc.FK_entities AS FK_entities ".
-				 "FROM glpi_computers pc, glpi_networking_ports port ".
-	   			 "WHERE port.device_type = ".$device_type." ".
-	   			 "AND port.ifaddr = '".$input['ifaddr']."' ".
-	   			 "AND port.on_device = pc.ID;";
+		$query = "SELECT `pc`.`ID` AS `ID`, `pc`.`name` AS `name`,
+                       `pc`.`otherserial` AS `otherserial`, `pc`.`FK_entities` AS `FK_entities`
+                FROM `glpi_computers` AS `pc`, `glpi_networking_ports` AS `port`
+	   			 WHERE `port`.`device_type` = ".$device_type." ".
+                      "AND `port`.`ifaddr` = '".$input['ifaddr']."' ".
+                      "AND `port`.`on_device` = `pc`.`ID`;";
 		
 		// else, find ID by name
-		$query2 = "SELECT ID, otherserial, FK_entities ".
-				  "FROM glpi_computers pc ".
-				  "WHERE pc.name = '".$input['name']."';";
+		$query2 = "SELECT `ID`, `otherserial`, `FK_entities` ".
+				    "FROM `glpi_computers` AS `pc` ".
+				    "WHERE `pc`.`name` = '".$input['name']."';";
 		
 		// else, find ID by otherserial
-		$query3 = "SELECT ID, FK_entities ".
-				  "FROM glpi_computers pc ".
-	   			  "WHERE pc.otherserial = '".$input['otherserial']."';";
+		$query3 = "SELECT `ID`, `FK_entities` ".
+				    "FROM `glpi_computers` AS `pc` ".
+	   			 "WHERE `pc`.`otherserial` = '".$input['otherserial']."';";
 	
 		$fields = array();
 		$input['description'] = $LANG['plugin_tracker']["errors"][10]." : ";
@@ -206,7 +208,8 @@ class PluginTrackerErrors extends CommonDBTM {
 
 
 		/// Check if this IP has already an entry in errors DB
-		if ($this->getIDandNewDescrFromDevice($device_type, $input['ifaddr'], 'db', $input['description'])) {
+		if ($this->getIDandNewDescrFromDevice($device_type, $input['ifaddr'], 'db',
+                                            $input['description'])) {
 			$input['ID'] = $this->fields['ID'];
 			$input['description'] = $this->fields['description'];
 			$this->update($input);
@@ -226,13 +229,15 @@ class PluginTrackerErrors extends CommonDBTM {
 		global $LANG;
 		
 		$input['device_type'] = $device_type;
-		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
+		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'],
+                                                                  "FK_entities", false);
 
 		$input['description'] = $LANG['plugin_tracker']["errors"][20]." : ";
 		$input['description'].= $LANG['plugin_tracker']["errors"][21];
 		
 		// if there is already an error entry for the device
-		if ($this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'snmp', $input['description'])) {
+		if ($this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'snmp',
+                                            $input['description'])) {
 			$input['ID'] = $this->fields['ID'];
 			$input['description'] = $this->fields['description'];
 			$this->update($input);	
@@ -247,12 +252,14 @@ class PluginTrackerErrors extends CommonDBTM {
 		global $LANG;
 		
 		$input['device_type'] = $device_type;
-		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
+		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'],
+                                                                  "FK_entities", false);
 		
 		$input['description'] = $LANG['plugin_tracker']["errors"][30];
 		
 		// if there is already an error entry for the device
-		if ($this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'wire', $input['description'])) {
+		if ($this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'wire',
+                                            $input['description'])) {
 			$input['ID'] = $this->fields['ID'];
 			$input['description'] = $this->fields['description'];
 			$this->update($input);	
@@ -287,17 +294,17 @@ class PluginTrackerErrors extends CommonDBTM {
 		global $DB;
 		
 		$num = 0;
-		$query = "SELECT count(DISTINCT ID) ".
-				 "FROM ".$this->table." ";
+		$query = "SELECT count(DISTINCT `ID`) ".
+               "FROM ".$this->table." ";
 		
 		if ($type == COMPUTER_TYPE) {
-			$query .="WHERE device_type = '".COMPUTER_TYPE."' ";
+			$query .="WHERE `device_type` = '".COMPUTER_TYPE."' ";
       } else if ($type == NETWORKING_TYPE) {
-			$query .="WHERE device_type = '".NETWORKING_TYPE."' ";
+			$query .="WHERE `device_type` = '".NETWORKING_TYPE."' ";
       } else { // $type == PRINTER_TYPE
-			$query .="WHERE device_type = '".PRINTER_TYPE."' ";
+			$query .="WHERE `device_type` = '".PRINTER_TYPE."' ";
       }
-		$query .= "AND device_id = '".$ID."';";
+		$query .= "AND `device_id` = '".$ID."';";
 		
 		if ($result_num=$DB->query($query)) {
 			if ($field = $DB->result($result_num,0,0)) {
@@ -311,17 +318,18 @@ class PluginTrackerErrors extends CommonDBTM {
 		global $DB;
 		
 		$datas=array();
-		$query = "SELECT * FROM ".$this->table." ";
+		$query = "SELECT *
+                FROM ".$this->table." ";
 		
 		if ($type == COMPUTER_TYPE) {
-			$query .= "WHERE device_type = '".COMPUTER_TYPE."' ";
+			$query .= "WHERE `device_type` = '".COMPUTER_TYPE."' ";
       } else if ($type == NETWORKING_TYPE) {
-			$query .= "WHERE device_type = '".NETWORKING_TYPE."' ";
+			$query .= "WHERE `device_type` = '".NETWORKING_TYPE."' ";
       } else { // $type == PRINTER_TYPE
-			$query .= "WHERE device_type = '".PRINTER_TYPE."' ";
+			$query .= "WHERE `device_type` = '".PRINTER_TYPE."' ";
       }
-		$query .= "AND device_id = '".$ID."' ".
-				  "LIMIT ".$begin.", ".$limit.";";
+		$query .= "AND `device_id` = '".$ID."' ".
+                "LIMIT ".$begin.", ".$limit.";";
 		
 		if ($result=$DB->query($query)) {
 			$i = 0;
@@ -366,11 +374,14 @@ class PluginTrackerErrors extends CommonDBTM {
 
 		// for $_GET['type'] (useful to check rights)
 		if ($type == COMPUTER_TYPE) {
-			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'  action=\"".$target."?type=".COMPUTER_TYPE."\">";
+			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'
+                    action=\"".$target."?type=".COMPUTER_TYPE."\">";
       } else if ($type == NETWORKING_TYPE) {
-			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'  action=\"".$target."?type=".NETWORKING_TYPE."\">";
+			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'
+                    action=\"".$target."?type=".NETWORKING_TYPE."\">";
       } else { // $type == PRINTER_TYPE
-			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'  action=\"".$target."?type=".PRINTER_TYPE."\">";
+			echo "<div align='center'><form method='post' name='errors_form' id='errors_form'
+                    action=\"".$target."?type=".PRINTER_TYPE."\">";
       }
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='5'>";
 		echo $LANG['plugin_tracker']["errors"][0]." :</th></tr>";
@@ -400,9 +411,12 @@ class PluginTrackerErrors extends CommonDBTM {
       }
 		echo "<input type='hidden' name='limit' value='".$limit."'>";
 		echo "<tr class='tab_bg_1'><td colspan='5'>";
-		echo "<div align='center'><a onclick= \"if ( markAllRows('errors_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
-		echo " - <a onclick= \"if ( unMarkAllRows('errors_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
-		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";	
+		echo "<div align='center'><a onclick= \"if ( markAllRows('errors_form') ) return false;\"
+                 href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
+		echo " - <a onclick= \"if ( unMarkAllRows('errors_form') ) return false;\"
+                  href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
+		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' >
+            </div></td></tr>";
 		echo "</table></form></div>";
 	}
 }

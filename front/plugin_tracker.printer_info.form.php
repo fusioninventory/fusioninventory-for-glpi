@@ -50,8 +50,9 @@ if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	$_POST['FK_printers'] = $_POST['ID'];
 	unset($_POST['ID']);
 	
-	$query = "SELECT * FROM glpi_plugin_tracker_printers
-	WHERE FK_printers='".$_POST['FK_printers']."' ";
+	$query = "SELECT * 
+             FROM `glpi_plugin_tracker_printers`
+             WHERE `FK_printers`='".$_POST['FK_printers']."' ";
 	$result = $DB->query($query);		
 	$data = $DB->fetch_assoc($result);	
 	$_POST['ID'] = $data['ID'];
@@ -67,9 +68,10 @@ if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
 
 	$plugin_tracker_printers_cartridges = new PluginTrackerPrintersCartridges;
 
-	$query = "SELECT * FROM glpi_plugin_tracker_printers_cartridges
-	WHERE FK_printers='".$_POST['ID']."' 
-	AND object_name='".$_POST['object_name']."' ";
+	$query = "SELECT * 
+             FROM `glpi_plugin_tracker_printers_cartridges`
+             WHERE `FK_printers`='".$_POST['ID']."'
+                   AND `object_name`='".$_POST['object_name']."' ";
 	$result = $DB->query($query);		
 	if ($DB->numrows($result) == "0") {
 		$_POST['FK_printers'] = $_POST['ID'];
