@@ -421,68 +421,7 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['name'] = $LANG['plugin_tracker']["agents"][13];
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['datatype']='itemlink';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
-  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['forcegroupby']='1';
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY]['common'] = $LANG['plugin_tracker']["profile"][22];
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['linkfield'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][1]['name'] = $LANG["common"][16];
-  
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['field'] = 'ID';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['linkfield'] = '';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][30]['name'] = $LANG["common"][2];
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['table'] = 'glpi_entities';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['linkfield'] = 'FK_entities';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][3]['name'] = $LANG["entity"][0];
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['field'] = 'date';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['linkfield'] = '';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['name'] = $LANG["common"][27];
-  $sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][4]['datatype']='datetime';
-  
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['field'] = 'ifaddr';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['linkfield'] = 'ifaddr';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][5]['name'] = $LANG["networking"][14];
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['field'] = 'descr';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['linkfield'] = 'descr';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['name'] = $LANG["joblist"][6];
-  $sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][6]['datatype']='text';
-  
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['field'] = 'serialnumber';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['linkfield'] = 'serialnumber';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][7]['name'] = $LANG["common"][19];
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['table'] = 'glpi_plugin_tracker_discovery';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['field'] = 'type';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['linkfield'] = 'type';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][8]['name'] = $LANG["common"][17];
-
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['table'] = 'glpi_plugin_tracker_model_infos';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['linkfield'] = 'FK_model_infos';
-	$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][9]['name'] = $LANG['plugin_tracker']["model_info"][4];
-
-	if ($config->getValue("authsnmp") == "file") {
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_discovery';
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'FK_snmp_connection';
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_snmp_connection';
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANG['plugin_tracker']["model_info"][3];
-	} else {
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['table'] = 'glpi_plugin_tracker_snmp_connection';
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['field'] = 'name';
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['linkfield'] = 'FK_snmp_connection';
-		$sopt[PLUGIN_TRACKER_SNMP_DISCOVERY][10]['name'] = $LANG['plugin_tracker']["model_info"][3];
-	}
+   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['forcegroupby']='1';
 
 	$sopt[PLUGIN_TRACKER_AGENTS_PROCESSES]['common'] = $LANG['plugin_tracker']["profile"][21];
 
@@ -1043,33 +982,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 		case PLUGIN_TRACKER_SNMP_RANGEIP :
 			switch ($table.'.'.$field) {
 
-
-				// ** Display entity name
-				case "glpi_entities.name" :
-					if ($data["ITEM_$num"] == '') {
-						$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
-						return "<center>".$out."</center>";
-					}
-					break;
-
-			}
-			break;
-
-		// * Device discovery list (plugins/tracker/front/plugin_tracker.discovery.php)
-		case PLUGIN_TRACKER_SNMP_DISCOVERY :
-			switch ($table.'.'.$field) {
-
-				// ** Display type of device (networking, printer, computer...)
-				case "glpi_plugin_tracker_discovery.type" :
-					if ($data["ITEM_$num"] == "0") {
-						$out = "";
-               } else {
-						$ci=new CommonItem;
-						$ci->setType($data["ITEM_$num"]);
-						$out=$ci->getType();
-					}
-					return "<center>".$out."</center>";
-					break;
 
 				// ** Display entity name
 				case "glpi_entities.name" :

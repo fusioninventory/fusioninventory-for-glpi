@@ -89,11 +89,6 @@ function plugin_init_tracker() {
 		'formpage' => 'front/plugin_tracker.rangeip.form.php',
 		'searchpage' => 'front/plugin_tracker.rangeip.php'
 		));
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_DISCOVERY", 5160, array(
-		'classname' => 'PluginTrackerDiscovery',
-		'tablename' => 'glpi_plugin_tracker_discovery',
-		'searchpage' => 'front/plugin_tracker.discovery.php'
-		));
 	registerPluginType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, array(
 		'classname' => 'PluginTrackerAgentsProcesses',
 		'tablename' => 'glpi_plugin_tracker_agents_processes',

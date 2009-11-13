@@ -96,10 +96,10 @@ function plugin_tracker_menu() {
 	echo "</td>";
 
 	echo "<td align='center' width='".$width."' height='130'>";
-	if(plugin_tracker_HaveRight("snmp_discovery","r")) {
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
-			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_discovery.png'/>
-			<br/><b>".$LANG['plugin_tracker']["menu"][0]."</b></a>";
+	if(plugin_tracker_HaveRight("snmp_networking","r")) {
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
+			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_unknown_device.png'/>
+			<br/><b>".$LANG['plugin_tracker']["menu"][4]."</b></a>";
    }
 	echo "</td>";
 
@@ -111,24 +111,6 @@ function plugin_tracker_menu() {
    }
 	echo "</td>";
 	echo "</tr>";
-
-	echo "<tr class='tab_bg_1'>";
-	echo "<td align='center' width='".$width."' height='130'>";
-	if(plugin_tracker_HaveRight("snmp_networking","r")) {
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
-			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_unknown_device.png'/>
-			<br/><b>".$LANG['plugin_tracker']["menu"][4]."</b></a>";
-   }
-	echo "</td>";
-
-	echo "<td align='center' width='".$width."' height='130'>";
-	echo "</td>";
-
-	echo "<td align='center' width='".$width."' height='130'>";
-	echo "</td>";
-
-	echo "<td align='center' width='".$width."' height='130'>";
-	echo "</td>";
 
 	echo "</table></div>";
 
@@ -196,11 +178,11 @@ function plugin_tracker_mini_menu() {
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_discovery","r")) {
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.discovery.php'>
-			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_discovery.png'
-				 onmouseout=\"cleanhide('menu_mini_discovery')\" onmouseover=\"cleandisplay('menu_mini_discovery')\" /></a>";
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
+			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_unknown_device.png'
+				 onmouseout=\"cleanhide('menu_mini_unknown')\" onmouseover=\"cleandisplay('menu_mini_unknown')\" /></a>";
    }
-   echo "<span class='over_link' id='menu_mini_discovery'>".$LANG['plugin_tracker']["menu"][0]."</span>";
+   echo "<span class='over_link' id='menu_mini_unknown'>".$LANG['plugin_tracker']["menu"][4]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_report","r")) {
@@ -209,15 +191,6 @@ function plugin_tracker_mini_menu() {
 				 onmouseout=\"cleanhide('menu_mini_rapports')\" onmouseover=\"cleandisplay('menu_mini_rapports')\" /></a>";
    }
    echo "<span class='over_link' id='menu_mini_rapports'>".$LANG['plugin_tracker']["processes"][20]."</span>";
-	echo "</td>";
-
-	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_networking","r")) {
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.unknown.php'>
-			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_unknown_device.png'
-				 onmouseout=\"cleanhide('menu_mini_unknown')\" onmouseover=\"cleandisplay('menu_mini_unknown')\" /></a>";
-   }
-   echo "<span class='over_link' id='menu_mini_unknown'>".$LANG['plugin_tracker']["menu"][4]."</span>";
 	echo "</td>";
 
 	echo "</tr>";
