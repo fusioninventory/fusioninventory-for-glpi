@@ -472,12 +472,13 @@ $LANG['plugin_tracker']["mapping"][1429]="Total number of printed pages (fax)";
 $LANG['plugin_tracker']["printer"][0]="pages";
 
 
+$LANG['plugin_tracker']["menu"][0]="Information about discovered devices";
 $LANG['plugin_tracker']["menu"][1]="Agent configuration";
 $LANG['plugin_tracker']["menu"][2]="IP range configuration";
 $LANG['plugin_tracker']["menu"][3]="Menu";
 $LANG['plugin_tracker']["menu"][4]="Unknown device";
-
-$LANG['plugin_tracker']["menu"][0]="Information about discovered devices";
+$LANG['plugin_tracker']["menu"][5]="Switchs ports history";
+$LANG['plugin_tracker']["menu"][6]="Unused switchs ports";
 
 $LANG['plugin_tracker']["buttons"][0]="Discover";
 

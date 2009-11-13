@@ -475,6 +475,8 @@ $LANG['plugin_tracker']["menu"][1]="Gestion des agents";
 $LANG['plugin_tracker']["menu"][2]="Plages IP";
 $LANG['plugin_tracker']["menu"][3]="Menu";
 $LANG['plugin_tracker']["menu"][4]="Matériel inconnu";
+$LANG['plugin_tracker']["menu"][5]="Historique des ports de switchs";
+$LANG['plugin_tracker']["menu"][6]="Ports de switchs inutilisés";
 
 $LANG['plugin_tracker']["buttons"][0]="Découvrir";
 

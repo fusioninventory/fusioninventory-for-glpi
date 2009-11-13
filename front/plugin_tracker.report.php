@@ -56,13 +56,13 @@ echo "<th align='center'>".$LANG["Menu"][6]."</th>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
-echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php'>Historique des ports de switchs</a>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php'>".$LANG['plugin_tracker']["menu"][5]."</a>";
 echo "</td>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
-echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.ports_date_connections.php'>Ports de switchs non connectés depuis xx mois</a>";
+echo "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.ports_date_connections.php'>".$LANG['plugin_tracker']["menu"][6]."</a>";
 echo "</td>";
 echo "</tr>";
 /*
