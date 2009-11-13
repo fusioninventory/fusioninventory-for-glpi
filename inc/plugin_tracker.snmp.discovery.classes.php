@@ -59,7 +59,7 @@ class PluginTrackerDiscovery extends CommonDBTM {
     *@return Nothing (displays)
     **/
    function addDevice($Array) {
-      GLOBAL $DB;
+      global $DB;
 
       // Detect if device exist
       $query_sel = "SELECT * FROM glpi_plugin_tracker_discovery

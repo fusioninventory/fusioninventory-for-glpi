@@ -74,7 +74,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
 
 
    function GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex) {
-      GLOBAL $DB;
+      global $DB;
 
       if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
       $snmp_queries = new PluginTrackerSNMP;

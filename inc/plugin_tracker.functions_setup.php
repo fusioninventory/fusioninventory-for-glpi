@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 
 // Installation function
 function plugin_tracker_installing($version) {
-	GLOBAL $DB,$LANG;
+	global $DB,$LANG;
 
 	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-empty.sql";
 	$DBf_handle = fopen($DB_file, "rt");
@@ -78,7 +78,7 @@ function plugin_tracker_installing($version) {
 
 
 function plugin_tracker_update($version) {
-	GLOBAL $DB;
+	global $DB;
 
    if (file_exists(GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql")) {
    	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql";
@@ -131,7 +131,7 @@ function plugin_tracker_update($version) {
 
 // Uninstallation function
 function plugin_tracker_uninstall() {
-   GLOBAL $DB;
+   global $DB;
 
 	if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/tracker')) {
       $current_dir = GLPI_PLUGIN_DOC_DIR.'/tracker/';

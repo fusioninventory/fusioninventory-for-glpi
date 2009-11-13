@@ -63,7 +63,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
 
 	function showForm($target, $ID = '') {
-		GLOBAL $DB,$CFG_GLPI,$LANG;
+		global $DB,$CFG_GLPI,$LANG;
 
 		if ($ID!='') {
 			$this->getFromDB($ID);
@@ -195,7 +195,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
 	
 	function export_config($ID) {
-		GLOBAL $DB;
+		global $DB;
 	
 		$tracker_config = new PluginTrackerConfig;
 		$tracker_config->getFromDB(1);

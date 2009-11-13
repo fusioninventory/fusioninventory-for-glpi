@@ -48,7 +48,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 	 *
 	**/
 	function GetPortsID($ID_Device,$type) {
-		GLOBAL $DB;
+		global $DB;
 	
 		$PortsID = array();
 		
@@ -175,7 +175,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 	 *
 	**/
 	function update_network_infos($ID, $FK_model_infos, $FK_snmp_connection) {
-		GLOBAL $DB;
+		global $DB;
 		
 		$query = "SELECT * FROM glpi_plugin_tracker_networking
 		WHERE FK_networking='".$ID."' ";
@@ -209,7 +209,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 	 *
 	**/
 	function update_printer_infos($ID, $FK_model_infos, $FK_snmp_connection) {
-		GLOBAL $DB;
+		global $DB;
 
 		$query = "SELECT * FROM glpi_plugin_tracker_printers
 		WHERE FK_printers='".$ID."' ";
@@ -243,7 +243,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 	 *
 	**/
 	function getPortIDfromDeviceIP($IP, $ifDescr) {
-		GLOBAL $DB;
+		global $DB;
 
       $PortID = "";
 		$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr
@@ -287,7 +287,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 	 *
 	**/
 	function PortsConnection($source_port, $destination_port,$FK_process,$vlan="") {
-		GLOBAL $DB;
+		global $DB;
 		
 		$netwire = new Netwire;
 		
@@ -377,7 +377,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 	 *
 	**/
 	function GetSNMPModel($ID_Device,$type) {
-		GLOBAL $DB;
+		global $DB;
 
 		switch ($type) {
 			case NETWORKING_TYPE :
@@ -404,7 +404,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 
 
 	function CleanVlan($FK_port) {
-		GLOBAL $DB;
+		global $DB;
 
 		$query="SELECT * FROM glpi_networking_vlan WHERE FK_port='$FK_port'  LIMIT 0,1";
 		if ($result=$DB->query($query)) {
@@ -426,7 +426,7 @@ class PluginTrackerSNMP extends CommonDBTM {
 
 
 	function CleanVlanID($ID) {
-		GLOBAL $DB;
+		global $DB;
 
 		$query="SELECT * FROM glpi_networking_vlan WHERE ID='$ID' LIMIT 0,1";
 		if ($result=$DB->query($query)) {

@@ -97,7 +97,7 @@ class PluginTrackerImportExport extends CommonDBTM {
 	
 	
 	function showForm($target) {
-		GLOBAL $DB,$CFG_GLPI,$LANG;
+		global $DB,$CFG_GLPI,$LANG;
 		
 		plugin_tracker_checkRight("snmp_models","r");
 		

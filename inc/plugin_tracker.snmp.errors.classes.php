@@ -47,7 +47,7 @@ class PluginTrackerErrors extends CommonDBTM {
 	
 	/* Useful function for : getIDandNewDescrFromDevice */
 	function getIDandDescrFromDevice($device_type, $value) {
-		GLOBAL $DB;
+		global $DB;
 		
 		if ($device_type == COMPUTER_TYPE) {
 			$field = 'ifaddr';
@@ -79,7 +79,7 @@ class PluginTrackerErrors extends CommonDBTM {
 	 * => Puts ID and description into $this->fields
 	 */
 	function getIDandNewDescrFromDevice($device_type, $identifiant, $error_type, $new_error) {
-		GLOBAL $LANG;
+		global $LANG;
 
 		if (!($this->getIDandDescrFromDevice($device_type, $identifiant))) {
 				return false;
@@ -223,7 +223,7 @@ class PluginTrackerErrors extends CommonDBTM {
 	
 	/* needs : ifaddr, device_id */
 	function writeSnmpError($device_type, $input) {
-		GLOBAL $LANG;
+		global $LANG;
 		
 		$input['device_type'] = $device_type;
 		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
@@ -244,7 +244,7 @@ class PluginTrackerErrors extends CommonDBTM {
 	
 	/* needs : ifaddr, device_id */
 	function writeWireError($device_type, $input) {
-		GLOBAL $LANG;
+		global $LANG;
 		
 		$input['device_type'] = $device_type;
 		$input['FK_entities'] = plugin_tracker_getDeviceFieldFromId($device_type, $input['device_id'], "FK_entities", false);
@@ -284,7 +284,7 @@ class PluginTrackerErrors extends CommonDBTM {
 	}
 
 	function countEntries($type, $ID) {
-		GLOBAL $DB;
+		global $DB;
 		
 		$num = 0;
 		$query = "SELECT count(DISTINCT ID) ".
@@ -308,7 +308,7 @@ class PluginTrackerErrors extends CommonDBTM {
 	}
 
 	function getEntries($type, $ID, $begin, $limit) {
-		GLOBAL $DB;
+		global $DB;
 		
 		$datas=array();
 		$query = "SELECT * FROM ".$this->table." ";
@@ -337,7 +337,7 @@ class PluginTrackerErrors extends CommonDBTM {
 	}
 	
 	function showForm($type, $target, $ID) {
-		GLOBAL $LANG;
+		global $LANG;
 		
 		if (!plugin_tracker_haveRight("errors","r")) {
 			return false;

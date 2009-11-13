@@ -51,7 +51,7 @@ if (!defined('GLPI_ROOT')) {
  *
 **/
 function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_process = 0,$ArrayListType,$ArrayListAgentProcess) {
-	GLOBAL $DB;
+	global $DB;
 
 	$config_snmp_script = new PluginTrackerConfigSNMPScript;
 	$nb_process_query = $config_snmp_script->getValue('nb_process');
@@ -249,7 +249,7 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$t
  *
 **/
 function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum) {
-   GLOBAL $DB,$LANG;
+   global $DB,$LANG;
 
    if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
    $manufCisco = new PluginTrackerManufacturerCisco;
@@ -414,7 +414,7 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
  *
 **/
 function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant) {
-	GLOBAL $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
+	global $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
 	if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
    
@@ -620,7 +620,7 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
  *
 **/
 function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant) {
-	GLOBAL $DB,$LANG,$TRACKER_MAPPING;
+	global $DB,$LANG,$TRACKER_MAPPING;
 
 	if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
 	$snmp_queries = new PluginTrackerSNMP;
@@ -752,7 +752,7 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
  *
 **/
 function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan="",$Array_trunk_ifIndex=array()) {
-	GLOBAL $DB;
+	global $DB;
 
 	if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
    # * Manufacturers
@@ -1044,7 +1044,7 @@ function plugin_tracker_hex_to_string($value) {
 
 
 function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues) {
-	GLOBAL $DB;
+	global $DB;
 
    if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
 	$walks = new PluginTrackerWalk;	

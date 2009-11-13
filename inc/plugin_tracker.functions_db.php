@@ -55,8 +55,7 @@ function plugin_tracker_createfirstaccess($ID) {
 }
 
 function plugin_tracker_createaccess($ID) {
-
-	GLOBAL $DB;
+	global $DB;
 	
 	$Profile=new Profile;
 	$Profile->GetfromDB($ID);
@@ -118,7 +117,7 @@ function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 
 
 function plugin_tracker_clean_db() {
-	GLOBAL $DB;
+	global $DB;
 	
 	// * Clean glpi_plugin_tracker_networking_ports
 	$query_select = "SELECT glpi_plugin_tracker_networking_ports.ID FROM glpi_plugin_tracker_networking_ports

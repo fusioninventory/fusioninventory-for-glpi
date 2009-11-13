@@ -81,7 +81,7 @@ class PluginTrackerConfig extends CommonDBTM {
 
 
 	function defineTabs($ID,$withtemplate) {
-		GLOBAL $LANG,$CFG_GLPI;
+		global $LANG,$CFG_GLPI;
 
 		$ong[1]=$LANG['plugin_tracker']["functionalities"][2];
 		$ong[2]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
@@ -102,7 +102,7 @@ class PluginTrackerConfig extends CommonDBTM {
 
 	
 	function showForm($target,$ID) {
-		GLOBAL $LANG,$CFG_GLPI;
+		global $LANG,$CFG_GLPI;
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
@@ -230,8 +230,8 @@ class PluginTrackerConfigDiscovery extends CommonDBTM {
       }
 	}
 
-		function showForm($target,$ID) {
-		GLOBAL $LANG;
+   function showForm($target,$ID) {
+		global $LANG;
 
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
@@ -359,7 +359,7 @@ class PluginTrackerConfigSNMPScript extends CommonDBTM {
 
 
 	function showForm($target,$ID) {
-		GLOBAL $LANG;
+		global $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
@@ -450,7 +450,7 @@ class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
 
 	
 	function showForm($target,$ID) {
-		GLOBAL $LANG;
+		global $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
@@ -572,7 +572,7 @@ class PluginTrackerConfigSNMPPrinter extends CommonDBTM {
 
 	
 	function showForm($target,$ID) {
-		GLOBAL $LANG;
+		global $LANG;
 		
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";

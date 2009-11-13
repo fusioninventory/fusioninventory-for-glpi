@@ -187,7 +187,7 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
    }
 
    function UpdateConfigFields($data) {
-      GLOBAL $DB;
+      global $DB;
 
 		if (isset($data['plugin_tracker_extraction_to_add'])) {
 			foreach ($data['plugin_tracker_extraction_to_add'] as $key=>$id_value) {
@@ -209,7 +209,7 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 
 
    function CleanHistory($data) {
-      GLOBAL $DB;
+      global $DB;
 
       include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
 

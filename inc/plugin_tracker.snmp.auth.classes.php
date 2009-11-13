@@ -146,7 +146,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 	
 	
 	function plugin_tracker_snmp_connections($array=0) {
-		GLOBAL $CFG_GLPI,$LANG;
+		global $CFG_GLPI,$LANG;
 
 		$array_auth = array();
 
@@ -398,7 +398,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 	 *
 	**/
 	function GetInfos($ID_Device,$xml_auth_rep,$type) {
-		GLOBAL $DB,$CFG_GLPI,$LANG;
+		global $DB,$CFG_GLPI,$LANG;
 
 		$config = new PluginTrackerConfig;
 
@@ -608,7 +608,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 
 
 	function GetSNMPAuth($ID_Device,$type) {
-		GLOBAL $DB;
+		global $DB;
+
 		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT FK_snmp_connection

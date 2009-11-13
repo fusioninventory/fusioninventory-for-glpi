@@ -47,13 +47,14 @@ class PluginTrackerProfile extends CommonDBTM {
 	
 	//if profile deleted
 	function cleanProfiles($ID) {
-		GLOBAL $DB;
+		global $DB;
+
 		$query = "DELETE FROM glpi_plugin_tracker_profiles WHERE ID='$ID' ";
 		$DB->query($query);
 	}
 		
 	function showprofileForm($target,$ID) {
-		GLOBAL $LANG,$CFG_GLPI;
+		global $LANG,$CFG_GLPI;
 
 		if (!haveRight("profile","r")) return false;
 

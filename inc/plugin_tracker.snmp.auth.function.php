@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 function plugin_tracker_snmp_auth_dropdown($selected="") {
-	GLOBAL $DB;
+	global $DB;
 
 	$plugin_tracker_snmp_auth = new PluginTrackerSNMPAuth;
 	$config = new PluginTrackerConfig;

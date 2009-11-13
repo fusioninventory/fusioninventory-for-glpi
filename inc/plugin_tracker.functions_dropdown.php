@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 function plugin_tracker_dropdownDefaultYesNo($name,$value) {
-	GLOBAL $LANG;
+	global $LANG;
 	
 	echo "<select name='$name' id='dropdownyesno_$name'>\n";
 	echo "<option value='-1' ".($value==-1?" selected ":"").">".$LANG['plugin_tracker']["cron"][3]."</option>\n";

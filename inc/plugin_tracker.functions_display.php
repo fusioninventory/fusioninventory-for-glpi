@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 function plugin_tracker_menu() {
-	GLOBAL $CFG_GLPI,$LANG;
+	global $CFG_GLPI,$LANG;
 
 	$width="150";
 
@@ -119,7 +119,7 @@ function plugin_tracker_menu() {
 
 
 function plugin_tracker_mini_menu() {
-	GLOBAL $CFG_GLPI,$LANG;
+	global $CFG_GLPI,$LANG;
 	
 	$width="50";
 
@@ -208,7 +208,8 @@ function plugin_tracker_mini_menu() {
 
 
 function plugin_tracker_mib_management() {
-	GLOBAL $DB,$CFG_GLPI,$LANG;
+	global $DB,$CFG_GLPI,$LANG;
+   
 	$query = "
 	SELECT * 
 	FROM glpi_plugin_tracker_mib_networking 

@@ -84,7 +84,7 @@ function plugin_tracker_date ($number_dates,$frequence,$today='') {
 
 
 function plugin_tracker_printer_calendar ($getvalue,$field,$target) {
-	GLOBAL $DB,$LANG;
+	global $DB,$LANG;
 
 	echo "<div align='center'><form method='post' action='".$target."'>";
 	echo "<table class='tab_cadre'><tr class='tab_bg_2'><td align='right'>";

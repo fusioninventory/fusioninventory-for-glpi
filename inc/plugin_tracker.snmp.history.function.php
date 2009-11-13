@@ -68,7 +68,7 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,
 
 // $status = connection or disconnection	
 function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
-	GLOBAL $DB,$CFG_GLPI;
+	global $DB,$CFG_GLPI;
 
 	$CommonItem = new CommonItem;
 	$history = new PluginTrackerSNMPHistory;
@@ -99,7 +99,7 @@ function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 
 // $status = connection or disconnection
 function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_process=0) {
-	GLOBAL $DB,$CFG_GLPI;
+	global $DB,$CFG_GLPI;
 
 	$history = new PluginTrackerSNMPHistory;
 	$netwire = new Netwire;
@@ -169,7 +169,7 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 
 // List of history in networking display
 function plugin_tracker_snmp_showHistory($ID_port) {
-	GLOBAL $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
+	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
 	$CommonItem = new CommonItem;
 

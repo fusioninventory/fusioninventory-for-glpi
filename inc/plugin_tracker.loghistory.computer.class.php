@@ -57,7 +57,7 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 	}
 	
 	function countEntries($type, $ID) {
-		GLOBAL $DB;
+		global $DB;
 		
 		$num = 0;
 		$query = "SELECT count(DISTINCT ID) ".
@@ -78,7 +78,7 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 	
 	/* Gets history (and the number of entries) of one computer */
 	function getEntries($type, $ID, $begin, $limit) {
-		GLOBAL $DB;
+		global $DB;
 		
 		$datas=array();
 		$query = "SELECT * FROM ".$this->table." ";
@@ -105,7 +105,7 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 	}
 	
 	function showForm($type, $target, $ID) {
-		GLOBAL $LANG,$INFOFORM_PAGES,$CFG_GLPI;
+		global $LANG,$INFOFORM_PAGES,$CFG_GLPI;
 		
 		if (!plugin_tracker_haveRight("computers_history","r")) {
 			return false;

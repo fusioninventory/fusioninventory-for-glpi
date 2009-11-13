@@ -48,7 +48,7 @@ if (!defined('GLPI_ROOT')) {
  *
 **/
 function plugin_tracker_discovery_update_devices($array, $target) {
-	GLOBAL $DB;
+	global $DB;
 
 	foreach ($array as $key=>$value) {
 		if (strstr($key, "model_infos")) {
@@ -72,7 +72,7 @@ function plugin_tracker_discovery_update_devices($array, $target) {
  *
 **/
 function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
-	GLOBAL $DB,$CFG_GLPI,$LANG;
+	global $DB,$CFG_GLPI,$LANG;
 
    $Netport = new Netport;
 	$td = new PluginTrackerUnknown;
@@ -224,7 +224,7 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 }
 
 function plugin_tracker_discovery_criteria($discovery,$nbcriteria,$typerequest) {
-	GLOBAL $DB,$CFG_GLPI,$LANG;
+	global $DB,$CFG_GLPI,$LANG;
 
    $ci = new commonitem;
    $config_discovery = new PluginTrackerConfigDiscovery;
