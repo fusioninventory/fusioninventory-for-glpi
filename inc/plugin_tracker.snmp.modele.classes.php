@@ -60,7 +60,8 @@ class PluginTrackerModelInfos extends CommonDBTM {
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] : $LANG['plugin_tracker']["model_info"][6]);
+		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] :
+            $LANG['plugin_tracker']["model_info"][6]);
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -95,16 +96,21 @@ class PluginTrackerModelInfos extends CommonDBTM {
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
 		if ($ID=='') {
-			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
+              "\" class='submit' >";
 		} else {
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+			echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
+              "\" class='submit' >";
 			if (!$this->fields["deleted"]) {
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
+				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
+                 $LANG["buttons"][6] . "\" class='submit'>";
          } else {
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" . $LANG["buttons"][21] . "\" class='submit'>";
+				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" .
+                 $LANG["buttons"][21] . "\" class='submit'>";
 
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" . $LANG["buttons"][22] . "\" class='submit'>";
+				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" .
+                 $LANG["buttons"][22] . "\" class='submit'>";
 			}
 		}
 		echo "</td>";
@@ -128,24 +134,31 @@ class PluginTrackerModelInfos extends CommonDBTM {
 
 		switch ($type) {
 			case NETWORKING_TYPE :
-				$query = "SELECT * FROM glpi_plugin_tracker_networking 
-				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_networking.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
-				WHERE FK_networking='".$ID_Device."'
-					AND glpi_plugin_tracker_mib_networking.activation='1' ";
+				$query = "SELECT * 
+                      FROM `glpi_plugin_tracker_networking`
+                           LEFT JOIN `glpi_plugin_tracker_mib_networking`
+                           ON `glpi_plugin_tracker_networking`.`FK_model_infos`=
+                              `glpi_plugin_tracker_mib_networking`.`FK_model_infos`
+                      WHERE `FK_networking`='".$ID_Device."'
+                            AND `glpi_plugin_tracker_mib_networking`.`activation`='1' ";
 				break;
 
 			case PRINTER_TYPE :
-				$query = "SELECT * FROM glpi_plugin_tracker_printers
-				LEFT JOIN glpi_plugin_tracker_mib_networking ON glpi_plugin_tracker_printers.FK_model_infos=glpi_plugin_tracker_mib_networking.FK_model_infos
-				WHERE FK_printers='".$ID_Device."'
-					AND glpi_plugin_tracker_mib_networking.activation='1' ";
+				$query = "SELECT * 
+                      FROM `glpi_plugin_tracker_printers`
+                           LEFT JOIN `glpi_plugin_tracker_mib_networking`
+                           ON `glpi_plugin_tracker_printers`.`FK_model_infos`=
+                              `glpi_plugin_tracker_mib_networking`.`FK_model_infos`
+                      WHERE `FK_printers`='".$ID_Device."'
+                            AND `glpi_plugin_tracker_mib_networking`.`activation`='1' ";
 				break;
 		}
 		if (!empty($query)) {
 			$result=$DB->query($query);
 			$exclude = array();
 			while ($data=$DB->fetch_array($result)) {
-				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] = getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']);
+				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
+               getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']);
          }
 			return $oids;
 		}
@@ -182,9 +195,10 @@ class PluginTrackerModelInfos extends CommonDBTM {
             }
          }
          if (!empty($modelgetted)) {
-            $query = "SELECT * FROM glpi_plugin_tracker_model_infos
-				WHERE discovery_key='".$modelgetted."'
-				LIMIT 0,1";
+            $query = "SELECT * 
+                      FROM `glpi_plugin_tracker_model_infos`
+                      WHERE `discovery_key`='".$modelgetted."'
+                      LIMIT 0,1";
 				$result = $DB->query($query);
 				$data = $DB->fetch_assoc($result);
 				$FK_model = $data['ID'];
@@ -192,16 +206,16 @@ class PluginTrackerModelInfos extends CommonDBTM {
             switch($type) {
 
                case NETWORKING_TYPE:
-                  $query = "UPDATE glpi_plugin_tracker_networking
-                  SET FK_model_infos='".$FK_model."'
-                  WHERE FK_networking='".$device_id."'";
+                  $query = "UPDATE `glpi_plugin_tracker_networking`
+                            SET `FK_model_infos`='".$FK_model."'
+                            WHERE `FK_networking`='".$device_id."'";
                   $DB->query($query);
                   break;
 
                case PRINTER_TYPE:
-                  $query = "UPDATE glpi_plugin_tracker_printers
-                  SET FK_model_infos='".$FK_model."'
-                  WHERE FK_printers='".$device_id."'";
+                  $query = "UPDATE `glpi_plugin_tracker_printers`
+                            SET `FK_model_infos`='".$FK_model."'
+                            WHERE `FK_printers`='".$device_id."'";
                   $DB->query($query);
                   break;
 

@@ -48,9 +48,9 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 		global $DB;
 		
 		$num = 0;
-		$query = "SELECT count(DISTINCT ID) ".
-				 "FROM ".$this->table." ".
-				 "WHERE FK_printers = '".$ID."';";
+		$query = "SELECT count(DISTINCT `ID`)
+                FROM ".$this->table."
+                WHERE `FK_printers` = '".$ID."';";
 		if ($result_num=$DB->query($query)) {
 			if ($field = $DB->result($result_num,0,0)) {
 				$num += $field;
@@ -64,9 +64,10 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 		global $DB;
 		
 		$datas=array();
-		$query = "SELECT * FROM ".$this->table." ".
-				 "WHERE FK_printers = '".$ID."' ";
-				 "LIMIT ".$begin.", ".$limit.";";
+		$query = "SELECT *
+                FROM ".$this->table."
+				    WHERE `FK_printers` = '".$ID."'
+                LIMIT ".$begin.", ".$limit.";";
 
 		if ($result=$DB->query($query)) {
 			$i = 0;
@@ -85,14 +86,15 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 	function stats($ID) {
 		global $DB;
 		
-		$query = "SELECT MIN(date) AS min_date, MIN(pages) AS min_pages, ".
-				 		"MAX(date) AS max_date, MAX(pages) AS max_pages ".
-				 "FROM ".$this->table." ".
-				 "WHERE FK_printers = '".$ID."';";
+		$query = "SELECT MIN(`date`) AS `min_date`, MIN(`pages`) AS `min_pages`, ".
+				 		"MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
+                FROM ".$this->table."
+                WHERE `FK_printers` = '".$ID."';";
 
 		if ($result = $DB->query($query)) {
 			if ($fields = $DB->fetch_assoc($result)) {
-				$output['num_days'] = ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
+				$output['num_days'] =
+               ceil((strtotime($fields['max_date']) - strtotime($fields['min_date']))/(60*60*24));
 				$output['num_pages'] = $fields['max_pages'] - $fields['min_pages'];
 				$output['pages_per_day'] = round($output['num_pages'] / $output['num_days']);
 				return $output;
@@ -113,7 +115,8 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 				
 			echo "<br><div align = 'center'>";
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-			echo $LANG['plugin_tracker']["prt_history"][10]." ".$stats["num_days"]." ".$LANG['plugin_tracker']["prt_history"][11]."</th></tr>";
+			echo $LANG['plugin_tracker']["prt_history"][10]." ".$stats["num_days"]." ".
+                 $LANG['plugin_tracker']["prt_history"][11]."</th></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANG['plugin_tracker']["prt_history"][12]." : </td>";
@@ -148,7 +151,8 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 			return false;
       }
 
-		echo "<div align='center'><form method='post' name='printer_history_form' id='printer_history_form'  action=\"".$target."\">";
+		echo "<div align='center'><form method='post' name='printer_history_form'
+                 id='printer_history_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
 		echo $LANG['plugin_tracker']["prt_history"][20]." :</th></tr>";
@@ -175,9 +179,13 @@ class PluginTrackerPrintersHistory extends CommonDBTM {
 			
 		echo "<input type='hidden' name='limit' value='".$limit."'>";
 		echo "<tr class='tab_bg_1'><td colspan='3'>";
-		echo "<div align='center'><a onclick= \"if ( markAllRows('printer_history_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
-		echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
-		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";	
+		echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form')) 
+                 return false;\"
+                 href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
+		echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\"
+                  href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
+		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' >
+            </div></td></tr>";
 		echo "</table></form></div>";
 	}
 }
@@ -199,8 +207,9 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	function getCounterValue($ID) {
 		global $DB;
 
-		$query = "SELECT counter FROM ".$this->table." ".
-				 "WHERE FK_printers = '".$ID."';";
+		$query = "SELECT `counter`
+                FROM ".$this->table."
+                WHERE `FK_printers` = '".$ID."';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -219,8 +228,9 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	 */
 	function getDataFromPrinterId($ID) {
 		global $DB;
-		$query = "SELECT ID, counter FROM ".$this->table." ".
-				 "WHERE FK_printers = '".$ID."';";
+		$query = "SELECT `ID`, `counter`
+                FROM ".$this->table."
+                WHERE `FK_printers` = '".$ID."';";
 		if ($result = $DB->query($query)) {
 			if ($DB->numrows($result) == 1) {
 				$this->fields = $DB->fetch_assoc($result);
@@ -236,9 +246,9 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	 */
 	function setAll() {
 		global $DB;
-		$query= "SELECT ID ".
-				"FROM glpi_printers ".
-				"WHERE 1;";
+		$query= "SELECT `ID`
+               FROM `glpi_printers`
+               WHERE 1;";
 		if ($result=$DB->query($query)) {
 			$end = $DB->numrows($result);
 			if (($end = $DB->numrows($result)) > 0) {
@@ -259,9 +269,9 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 	 */
 	function unsetAll() {
 		global $DB;
-		$query = "UPDATE ".$this->table." ".
-				 "SET counter='0' ".
-				 "WHERE 1;";
+		$query = "UPDATE ".$this->table." 
+                SET `counter`='0'
+                WHERE 1;";
 		$DB->query($query);	
 	}
 	
@@ -282,16 +292,16 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 		
 		// if statement is not active by default, get exceptions
 		if (!$statement) {
-			$query = "SELECT FK_printers FROM ".$this->table." ".
-					 "WHERE counter = '1';";
+			$query = "SELECT `FK_printers`
+                   FROM ".$this->table."
+                   WHERE `counter` = '1';";
       // if statement is active by default, get all without the exceptions
 		} else {
-			$query= "SELECT glpi_printers.ID ".
-					"FROM glpi_printers ".
-					"LEFT JOIN ".$this->table." ".
-					"ON glpi_printers.ID = ".$this->table.".FK_printers ".
-					"WHERE ".$this->table.".counter != '0' ".
-					"OR ".$this->table.".counter IS NULL;";
+			$query= "SELECT `glpi_printers`.`ID`
+                  FROM `glpi_printers`
+                  LEFT JOIN ".$this->table." ON `glpi_printers`.`ID`=".$this->table.".`FK_printers`
+                  WHERE ".$this->table.".`counter` != '0'
+                        OR ".$this->table.".`counter` IS NULL;";
 		}
 		
 		if ($result = $DB->query($query)) {
@@ -330,7 +340,8 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 		
 		if (plugin_tracker_haveRight("snmp_printers","w")) {
 			echo "<br>";
-			echo "<div align='center'><form method='post' name='printer_history_config_form' id='printer_history_config_form'  action=\"".$target."\">";
+			echo "<div align='center'><form method='post' name='printer_history_config_form'
+                    id='printer_history_config_form'  action=\"".$target."\">";
 	
 			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
 			echo $LANG['plugin_tracker']["cron"][0]." :</th></tr>";
@@ -344,7 +355,8 @@ class PluginTrackerPrintersHistoryConfig extends CommonDBTM {
 			
 			echo "<tr class='tab_bg_1'><td colspan='2'>";
 			echo "<input type='hidden' name='FK_printers' value='".$ID."'>";
-			echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";	
+			echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][2].
+                    "\" class='submit' ></div></td></tr>";
 			echo "</table></form></div>";
 		}
 	}

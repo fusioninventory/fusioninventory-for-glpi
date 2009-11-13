@@ -68,25 +68,25 @@ class PluginTrackerPrinters extends CommonDBTM {
 		$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
 		$plugin_tracker_snmp = new PluginTrackerSNMP;
 
-		$query = "
-		SELECT * 
-		FROM glpi_plugin_tracker_printers
-		WHERE FK_printers=".$ID." ";
+		$query = "SELECT * 
+                FROM `glpi_plugin_tracker_printers`
+                WHERE `FK_printers`=".$ID." ";
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
 		
 		// Add in database if not exist
 		if ($DB->numrows($result) == "0") {
-			$query_add = "INSERT INTO glpi_plugin_tracker_printers
-			(FK_printers) VALUES('".$ID."') ";
+			$query_add = "INSERT INTO `glpi_plugin_tracker_printers` (`FK_printers`)
+                              VALUES('".$ID."') ";
 			
 			$DB->query($query_add);
 		}
 		
 		// Form printer informations
 //		echo "<br>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
+                 action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		
@@ -99,16 +99,19 @@ class PluginTrackerPrinters extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_tracker']["model_info"][4]."</td>";
 		echo "<td align='center'>";
-		$query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
-		WHERE device_type!=3 
-			AND device_type!=0";
+		$query_models = "SELECT * 
+                       FROM `glpi_plugin_tracker_model_infos`
+                       WHERE `device_type`!=3
+                             AND `device_type`!=0";
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['ID'];		
 		}
-		dropdownValue("glpi_plugin_tracker_model_infos","FK_model_infos",$data["FK_model_infos"],0,-1,'',$exclude_models);
-      echo " <input type='submit' name='GetRightModel' value='".$LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
+		dropdownValue("glpi_plugin_tracker_model_infos","FK_model_infos",$data["FK_model_infos"],
+                     0,-1,'',$exclude_models);
+      echo " <input type='submit' name='GetRightModel' value='".
+             $LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
       echo "</td>";
 		echo "</tr>";
 	
@@ -152,7 +155,7 @@ class PluginTrackerPrinters extends CommonDBTM {
 		// get infos to get visible or not the counters
 			$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID,PRINTER_TYPE);
 			// ** Get link OID fields
-			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
+			$Array_Object_TypeNameConstant= $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
 				if (strstr($mapping_type_name, "cartridges")) {
@@ -183,11 +186,9 @@ class PluginTrackerPrinters extends CommonDBTM {
 
 		//echo "<br/>";
 		//echo "<div align='center'>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
-
-
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
+                 action=\"".$target."\">";
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-
 		echo "<tr class='tab_bg_1'>";
 		echo "<th align='center' colspan='3'>";
 		echo $LANG["cartridges"][16];
@@ -208,7 +209,8 @@ class PluginTrackerPrinters extends CommonDBTM {
 				dropdownValue("glpi_cartridges_type","FK_cartridges",$state['FK_cartridges'],0);
 				echo "<input type='hidden' name='ID' value='".$ID."' />";
 				echo "<input type='hidden' name='object_name' value='".$cartridge_name."' />";
-				echo "<input name='update_cartridges' value='update_cartridges' src='".GLPI_ROOT."/pics/actualiser.png' class='calendrier' type='image'>";
+				echo "<input name='update_cartridges' value='update_cartridges' src='".GLPI_ROOT.
+                 "/pics/actualiser.png' class='calendrier' type='image'>";
 				echo "</form>";
 			}
 			echo "</td>";
@@ -232,10 +234,9 @@ class PluginTrackerPrinters extends CommonDBTM {
 	
 		$this->ID = $ID;
 		
-		$query = "
-		SELECT * 
-		FROM glpi_plugin_tracker_printers
-		WHERE FK_printers=".$ID." ";
+		$query = "SELECT * 
+                FROM `glpi_plugin_tracker_printers`
+                WHERE `FK_printers`=".$ID." ";
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
@@ -260,7 +261,7 @@ class PluginTrackerPrinters extends CommonDBTM {
 		// get infos to get visible or not the counters
 			$snmp_model_ID = $plugin_tracker_snmp->GetSNMPModel($ID,PRINTER_TYPE);
 			// ** Get link OID fields
-			$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
+			$Array_Object_TypeNameConstant= $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
 				//$explode = explode("||", $mapping_type_name);
@@ -269,17 +270,17 @@ class PluginTrackerPrinters extends CommonDBTM {
 		
 		// Form pages counter
 //		echo "<br>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
-
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
+                 action=\"".$target."\">";
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th colspan='3'>";
 		echo $LANG["cartridges"][39];
 		echo "</th>";
 		echo "</tr>";
 
-		if ((isset($mapping_name['pagecountertotalpages']))  AND ($mapping_name['pagecountertotalpages'] == "1")) {
+		if ( (isset($mapping_name['pagecountertotalpages']))
+           AND ($mapping_name['pagecountertotalpages'] == "1") ) {
 			// Total page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
@@ -300,19 +301,26 @@ class PluginTrackerPrinters extends CommonDBTM {
 	
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
-			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["datetotalpages"],'pages_total');
+			$Array = $plugin_tracker_printers->
+                     getPagesCount($ID,$frequence,$_SESSION["datetotalpages"],'pages_total');
 
 			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);	
-			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
+			$plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
+			$plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
+			$ecart= $plugin_tracker_printers->
+                 counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
 			echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][128],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->
+            graphBy($ecart,$LANG['plugin_tracker']["mapping"][128],
+                    $LANG['plugin_tracker']["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
 		
-		if ((isset($mapping_name['pagecounterblackpages']))  AND ($mapping_name['pagecounterblackpages'] == "1")) {
+		if ( (isset($mapping_name['pagecounterblackpages']))
+           AND ($mapping_name['pagecounterblackpages'] == "1") ) {
 			// ** Black & white page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
@@ -332,19 +340,26 @@ class PluginTrackerPrinters extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["dateblackpages"],'pages_n_b');
+         $Array = $plugin_tracker_printers->
+                  getPagesCount($ID,$frequence,$_SESSION["dateblackpages"],'pages_n_b');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-         $plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
-         $plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
-         $ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
+         $plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
+         $plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
+         $ecart= $plugin_tracker_printers->
+                 counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
          echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][129],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->
+            graphBy($ecart,$LANG['plugin_tracker']["mapping"][129],
+                    $LANG['plugin_tracker']["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
 
-		if ((isset($mapping_name['pagecountercolorpages']))  AND ($mapping_name['pagecountercolorpages'] == "1")) {
+		if ( (isset($mapping_name['pagecountercolorpages']))
+           AND ($mapping_name['pagecountercolorpages'] == "1") ) {
 			// ** Color page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
@@ -365,19 +380,26 @@ class PluginTrackerPrinters extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["datecolorpages"],'pages_color');
+         $Array = $plugin_tracker_printers->
+                  getPagesCount($ID,$frequence,$_SESSION["datecolorpages"],'pages_color');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-         $plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
-         $plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
-         $ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
+         $plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
+         $plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
+         $ecart= $plugin_tracker_printers->
+                 counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
          echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][130],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->
+            graphBy($ecart,$LANG['plugin_tracker']["mapping"][130],
+                    $LANG['plugin_tracker']["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
 
-		if ((isset($mapping_name['pagecounterrectoversopages']))  AND ($mapping_name['pagecounterrectoversopages'] == "1")) {
+		if ( (isset($mapping_name['pagecounterrectoversopages']))
+           AND ($mapping_name['pagecounterrectoversopages'] == "1") ) {
 			// ** Recto/Verso page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
@@ -391,26 +413,34 @@ class PluginTrackerPrinters extends CommonDBTM {
          if (!isset($_SESSION["daterectoversopages"])) {
             $_SESSION["daterectoversopages"]="";
          }
-         plugin_tracker_printer_calendar($_SESSION["daterectoversopages"],"daterectoversopages",$target);
+         plugin_tracker_printer_calendar($_SESSION["daterectoversopages"],"daterectoversopages",
+                                         $target);
          // fin calendrier
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         $Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["daterectoversopages"],'pages_recto_verso');
+         $Array= $plugin_tracker_printers->
+                 getPagesCount($ID,$frequence,$_SESSION["daterectoversopages"],'pages_recto_verso');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-         $plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
-         $plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
-         $ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
+         $plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
+         $plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
+         $ecart= $plugin_tracker_printers->
+                 counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
          echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][154],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->
+            graphBy($ecart,$LANG['plugin_tracker']["mapping"][154],
+                    $LANG['plugin_tracker']["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
 
-		if ((isset($mapping_name['pagecounterscannedpages']))  AND ($mapping_name['pagecounterscannedpages'] == "1")) {
+		if ( (isset($mapping_name['pagecounterscannedpages']))
+           AND ($mapping_name['pagecounterscannedpages'] == "1") ) {
 			// ** Scanned page counter
 			echo "<tr class='tab_bg_1'>";
 			echo "<th colspan='3'>";
@@ -431,14 +461,20 @@ class PluginTrackerPrinters extends CommonDBTM {
 	
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
-			$Array = $plugin_tracker_printers->getPagesCount($ID,$frequence,$_SESSION["datescannedpages"],'scanned');
+			$Array = $plugin_tracker_printers->
+                  getPagesCount($ID,$frequence,$_SESSION["datescannedpages"],'scanned');
 		
 			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
-			$plugin_tracker_printers->counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);		
-			$ecart = $plugin_tracker_printers->counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
+			$plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["common"][27],$Array['dates'],1);
+			$plugin_tracker_printers->
+            counter_page_arrayLine_display($LANG["printers"][31],$Array['count']);
+			$ecart= $plugin_tracker_printers->
+                 counter_page_arrayLine_display_difference("ecart",$Array['count'],$Array['dates']);
 			echo "</table>";
-			$plugin_tracker_printers->graphBy($ecart,$LANG['plugin_tracker']["mapping"][155],$LANG['plugin_tracker']["printer"][0],1,$frequence);
+			$plugin_tracker_printers->
+            graphBy($ecart,$LANG['plugin_tracker']["mapping"][155],
+                    $LANG['plugin_tracker']["printer"][0],1,$frequence);
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -450,9 +486,10 @@ class PluginTrackerPrinters extends CommonDBTM {
 	function update_printers_infos($ID, $FK_model_infos, $FK_snmp_connection) {
 		global $DB;
 		
-		$query = "UPDATE glpi_plugin_tracker_printers
-		SET FK_model_infos='".$FK_model_infos."',FK_snmp_connection='".$FK_snmp_connection."'
-		WHERE FK_printers='".$ID."' ";
+		$query = "UPDATE `glpi_plugin_tracker_printers`
+                SET `FK_model_infos`='".$FK_model_infos."',
+                    `FK_snmp_connection`='".$FK_snmp_connection."'
+                WHERE `FK_printers`='".$ID."' ";
 	
 		$DB->query($query);
 	}	
@@ -523,8 +560,8 @@ class PluginTrackerPrinters extends CommonDBTM {
       }
 	
 		echo "<p align='center'>";
-		echo "<font face='verdana,arial,helvetica,sans-serif' size='2'><strong>$titre - $total $unit</strong></font>";
-	
+		echo "<font face='verdana,arial,helvetica,sans-serif' size='2'>
+            <strong>$titre - $total $unit</strong></font>";
 		echo "<div class='center'><center>";
 	
 		if (count($entrees)>0) {
@@ -555,7 +592,8 @@ class PluginTrackerPrinters extends CommonDBTM {
 		echo "<table cellpadding='0' cellspacing='0' border='0' >
 		<tr><td style='background-image:url(".$CFG_GLPI["root_doc"]."/pics/fond-stats.gif)' >";
 		echo "<table cellpadding='0' cellspacing='0' border='0'><tr>";
-		echo "<td bgcolor='black'><img src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width='1' height='200' alt=''></td>";
+		echo "<td bgcolor='black'><img src='".$CFG_GLPI["root_doc"].
+           "/pics/noir.png' width='1' height='200' alt=''></td>";
 	
 		// Presentation graphique
 		$n = 0;
@@ -585,17 +623,26 @@ class PluginTrackerPrinters extends CommonDBTM {
 			if ($hauteur >= 0) {
 				if ($hauteur_moyenne > $hauteur) {
 					$difference = ($hauteur_moyenne - $hauteur) -1;
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/moyenne.png' width=".$largeur." height='1' >";
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' width=".$largeur." height=".$difference." >";
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1' >";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"].
+                    "/pics/moyenne.png' width=".$largeur." height='1' >";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"].
+                    "/pics/rien.gif' width=".$largeur." height=".$difference." >";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"].
+                    "/pics/noir.png' width=".$largeur." height='1' >";
 					if (strstr($key, "-01")) { // janvier en couleur foncee
-						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png' width=".$largeur." height=".$hauteur." >";
+						echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                             src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png'
+                             width=".$largeur." height=".$hauteur." >";
                } else {
-						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png' width=".$largeur." height=".$hauteur." >";
+						echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                             src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png'
+                             width=".$largeur." height=".$hauteur." >";
                }
 				} else if ($hauteur_moyenne < $hauteur) {
 					$difference = ($hauteur - $hauteur_moyenne) -1;
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1'>";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                          src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur."
+                          height='1'>";
 					if (strstr($key, "-01")) { // janvier en couleur foncee
 						$couleur =  "1";
 						$couleur2 =  "2";
@@ -603,29 +650,44 @@ class PluginTrackerPrinters extends CommonDBTM {
 						$couleur = "2";
 						$couleur2 = "1";
 					}
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph$couleur.png' width=".$largeur." height=".$difference.">";
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/moyenne.png' width=".$largeur." height='1'>";
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph$couleur.png' width=".$largeur." height=".$hauteur_moyenne.">";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                          src='".$CFG_GLPI["root_doc"]."/pics/fondgraph$couleur.png'
+                          width=".$largeur." height=".$difference.">";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                          src='".$CFG_GLPI["root_doc"]."/pics/moyenne.png'
+                          width=".$largeur." height='1'>";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                          src='".$CFG_GLPI["root_doc"]."/pics/fondgraph$couleur.png'
+                          width=".$largeur." height=".$hauteur_moyenne.">";
 				} else {
-					echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width=".$largeur." height='1'>";
+					echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                          src='".$CFG_GLPI["root_doc"]."/pics/noir.png'
+                          width=".$largeur." height='1'>";
 					if (strstr($key, "-01")) { // janvier en couleur foncee
-						echo "<img alt=\"$key: $val_tab\" title=\"$key: $value\" src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png' width=".$largeur." height=".$hauteur.">";
+						echo "<img alt=\"$key: $val_tab\" title=\"$key: $value\" 
+                             src='".$CFG_GLPI["root_doc"]."/pics/fondgraph1.png'
+                             width=".$largeur." height=".$hauteur.">";
                } else {
-						echo "<img alt=\"$key: $value\" title=\"$key: $value\"  src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png' width=".$largeur." height=".$hauteur.">";
+						echo "<img alt=\"$key: $value\" title=\"$key: $value\" 
+                             src='".$CFG_GLPI["root_doc"]."/pics/fondgraph2.png'
+                             width=".$largeur." height=".$hauteur.">";
                }
 				}
 			}
-			echo "<img alt=\"$value\" title=\"$value\"  src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' width=".$largeur." height='1'>";
+			echo "<img alt=\"$value\" title=\"$value\"  src='".$CFG_GLPI["root_doc"]."/pics/rien.gif'
+                    width=".$largeur." height='1'>";
 			echo "</td>\n";
 		}
-		echo "<td bgcolor='black'><img src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width='1' height='1' alt=''></td>";
+		echo "<td bgcolor='black'><img src='".$CFG_GLPI["root_doc"]."/pics/noir.png' width='1'
+                                     height='1' alt=''></td>";
 		echo "</tr>";
 		if ($largeur>10) {
 			echo "<tr><td></td>";
 			foreach ($entrees as $key => $val) {
 				if ($type=="month") {
 					$splitter=explode("-",$key);
-					echo "<td class='center'>".utf8_substr($LANG["calendarM"][$splitter[1]-1],0,3)."</td>";
+					echo "<td class='center'>".utf8_substr($LANG["calendarM"][$splitter[1]-1],0,3).
+                    "</td>";
 				} else if ($type=="year") {
 					echo "<td class='center'>".substr($key,2,2)."</td>";
             } else if ($type=="day") {
@@ -634,7 +696,8 @@ class PluginTrackerPrinters extends CommonDBTM {
 					$val = explode(" ",$key);
 	       		$date = explode("-",$val[0]);
 	       		$time = explode(":",$val[1]);
-					echo "<td class='center'>".date('W',mktime($time[0],$time[1],$time[2],$date[1],$date[2],$date[0]))."</td>";
+					echo "<td class='center'>".
+                    date('W',mktime($time[0],$time[1],$time[2],$date[1],$date[2],$date[0]))."</td>";
 				}
 			}
 			echo "</tr>";
@@ -649,33 +712,44 @@ class PluginTrackerPrinters extends CommonDBTM {
       }
 		echo "</table>";
 		echo "</td>";
-		echo "<td style='background-image:url(".$CFG_GLPI["root_doc"]."/pics/fond-stats.gif)' valign='bottom'><img src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' style='background-color:black;' width='3' height='1' alt=''></td>";
-		echo "<td><img src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' width='5' height='1' alt=''></td>";
+		echo "<td style='background-image:url(".$CFG_GLPI["root_doc"]."/pics/fond-stats.gif)' 
+                valign='bottom'><img src='".$CFG_GLPI["root_doc"]."/pics/rien.gif'
+                style='background-color:black;' width='3' height='1' alt=''></td>";
+		echo "<td><img src='".$CFG_GLPI["root_doc"]."/pics/rien.gif' width='5' height='1' alt=''>
+            </td>";
 		echo "<td valign='top'>";
 		echo "<table cellpadding='0' cellspacing='0' border='0'>";
 		echo "<tr><td height='15' valign='top'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1'><strong>".formatNumber($maxgraph,false,$r)."</strong></font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1'><strong>".
+            formatNumber($maxgraph,false,$r)."</strong></font>";
 		echo "</td></tr>";
 		echo "<tr><td height='25' valign='middle'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".formatNumber(7*($maxgraph/8),false,$r)."</font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".
+            formatNumber(7*($maxgraph/8),false,$r)."</font>";
 		echo "</td></tr>";
 		echo "<tr><td height='25' valign='middle'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1'>".formatNumber(3*($maxgraph/4),false,$r)."</font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1'>".
+            formatNumber(3*($maxgraph/4),false,$r)."</font>";
 		echo "</td></tr>";
 		echo "<tr><td height='25' valign='middle'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".formatNumber(5*($maxgraph/8),false,$r)."</font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".
+            formatNumber(5*($maxgraph/8),false,$r)."</font>";
 		echo "</td></tr>";
 		echo "<tr><td height='25' valign='middle'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1'><strong>".formatNumber($maxgraph/2,false,$r)."</strong></font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1'><strong>".
+            formatNumber($maxgraph/2,false,$r)."</strong></font>";
 		echo "</td></tr>";
 		echo "<tr><td height='25' valign='middle'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".formatNumber(3*($maxgraph/8),false,$r)."</font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".
+            formatNumber(3*($maxgraph/8),false,$r)."</font>";
 		echo "</td></tr>";
 		echo "<tr><td height='25' valign='middle'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1'>".formatNumber($maxgraph/4,false,$r)."</font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1'>".
+            formatNumber($maxgraph/4,false,$r)."</font>";
 		echo "</td></tr>";
 		echo "<tr><td height='25' valign='middle'>";		
-		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".formatNumber(1*($maxgraph/8),false,$r)."</font>";
+		echo "<font face='arial,helvetica,sans-serif' size='1' color='#999999'>".
+            formatNumber(1*($maxgraph/8),false,$r)."</font>";
 		echo "</td></tr>";
 		echo "<tr><td height='10' valign='bottom'>";		
 		echo "<font face='arial,helvetica,sans-serif' size='1'><strong>0</strong></font>";
@@ -692,9 +766,10 @@ class PluginTrackerPrinters extends CommonDBTM {
 		global $DB;
 		
 		$datas = array();
-		$query = "SELECT * FROM glpi_plugin_tracker_printers_cartridges
-		WHERE FK_printers='".$FK_printers."'
-			AND object_name='".$object_name."' ";
+		$query = "SELECT * 
+                FROM `glpi_plugin_tracker_printers_cartridges`
+                WHERE `FK_printers`='".$FK_printers."'
+                      AND `object_name`='".$object_name."' ";
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) == "0") {
 				$datas['FK_cartridges'] = "";
@@ -717,15 +792,16 @@ class PluginTrackerPrinters extends CommonDBTM {
 		global $DB;	
 		
 		$dates = plugin_tracker_date(9,$frequence,$date_end);
-		$query = "SELECT * FROM glpi_plugin_tracker_printers_history
-		WHERE FK_printers=".$id."
-			AND date IN ('".$dates[0]." 00:00:00'";
+		$query = "SELECT * 
+                FROM `glpi_plugin_tracker_printers_history`
+                WHERE `FK_printers`=".$id."
+                      AND `date` IN ('".$dates[0]." 00:00:00'";
 		for ($i = 1 ; $i < count($dates) ; $i++) {
 			$query .= ",'".$dates[$i]." 00:00:00'";
 		}
 		$query .= ") 
-		ORDER BY date DESC
-		LIMIT 0,9";
+                ORDER BY `date` DESC
+                LIMIT 0,9";
 
 		$dates_ex = $dates;
 
