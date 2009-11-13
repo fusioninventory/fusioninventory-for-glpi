@@ -2519,7 +2519,17 @@ function plugin_pre_item_purge_tracker($parm) {
 					WHERE ID='".$data["ID"]."'";
 					$DB->query($query_delete);
 				}
-				break;
+
+				$query_select = "SELECT glpi_plugin_tracker_networking_ifaddr.ID FROM glpi_plugin_tracker_networking_ifaddr
+				LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
+				WHERE FK_networking='".$parm["ID"]."' ";
+				$result=$DB->query($query_select);
+				while ($data=$DB->fetch_array($result)) {
+					$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
+					WHERE ID='".$data["ID"]."'";
+					$DB->query($query_delete);
+				}
+            break;
 
          case PLUGIN_TRACKER_MAC_UNKNOWN :
             // Delete ports and connections if exists

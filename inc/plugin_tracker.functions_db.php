@@ -131,7 +131,18 @@ function plugin_tracker_clean_db() {
 		WHERE ID='".$data["ID"]."'";
 		$DB->query($query_delete);
 	}
-	
+
+	// * Clean glpi_plugin_tracker_networking_ifaddr
+	$query_select = "SELECT glpi_plugin_tracker_networking_ifaddr.ID FROM glpi_plugin_tracker_networking_ifaddr
+	LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
+	WHERE glpi_networking.ID IS NULL";
+	$result=$DB->query($query_select);
+	while ($data=$DB->fetch_array($result)) {
+		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
+		WHERE ID='".$data["ID"]."'";
+		$DB->query($query_delete);
+	}
+
 	// * Clean glpi_plugin_tracker_networking
 	$query_select = "SELECT glpi_plugin_tracker_networking.ID FROM glpi_plugin_tracker_networking
 	LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
