@@ -678,8 +678,9 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 
 				// ** Tracker - last inventory
 				case "glpi_plugin_tracker_networking.FK_networking" :
-					$query = "SELECT * FROM glpi_plugin_tracker_networking
-					WHERE FK_networking = '".$data["ID"]."' ";
+					$query = "SELECT *
+                         FROM `glpi_plugin_tracker_networking`
+                         WHERE `FK_networking` = '".$data["ID"]."';";
 					if ($result = $DB->query($query)) {
 						$data2=$DB->fetch_array($result);
                }
@@ -752,8 +753,9 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 
 				// ** Tracker - last inventory
 				case "glpi_plugin_tracker_printers.FK_printers" :
-					$query = "SELECT * FROM glpi_plugin_tracker_printers
-					WHERE FK_printers = '".$data["ID"]."' ";
+					$query = "SELECT *
+                         FROM `glpi_plugin_tracker_printers`
+                         WHERE `FK_printers` = '".$data["ID"]."';";
 					if ($result = $DB->query($query)) {
 						$data2=$DB->fetch_array($result);
                }
@@ -921,11 +923,14 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 
 				// ** Name and link of networking device (switch)
 				case "glpi_plugin_tracker_networking_ports.ID" :
-					$query = "SELECT glpi_networking.name as name,glpi_networking.ID as ID FROM glpi_networking
-					LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
-               LEFT JOIN glpi_plugin_tracker_networking_ports ON glpi_networking_ports.ID=FK_networking_ports
-					WHERE glpi_plugin_tracker_networking_ports.ID='".$data["ITEM_$num"]."'
-					LIMIT 0,1";
+					$query = "SELECT `glpi_networking`.`name` AS `name`, `glpi_networking`.`ID` AS `ID`
+                         FROM `glpi_networking`
+                              LEFT JOIN `glpi_networking_ports`
+                                        ON `on_device` = `glpi_networking`.`ID`
+                              LEFT JOIN `glpi_plugin_tracker_networking_ports`
+                                        ON `glpi_networking_ports`.`ID`=`FK_networking_ports`
+                         WHERE `glpi_plugin_tracker_networking_ports`.`ID`='".$data["ITEM_$num"]."'
+                         LIMIT 0,1;";
 					$result = $DB->query($query);
 					$data2 = $DB->fetch_assoc($result);
 					$out = "<a href='".GLPI_ROOT."/front/networking.form.php?ID=".$data2["ID"]."'>".$data2["name"]."</a>";
@@ -1080,8 +1085,9 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 					$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
 					$out = "<div align='center'>" . $CommonItem->getLink(1);
 
-					$query = "SELECT * FROM glpi_networking_ports
-					WHERE ID='" . $data["ITEM_$num"] . "' ";
+					$query = "SELECT *
+                         FROM `glpi_networking_ports`
+                         WHERE `ID`='" . $data["ITEM_$num"] . "';";
 					$result = $DB->query($query);
 
 					if ($DB->numrows($result) != "0") {
@@ -1183,7 +1189,9 @@ function plugin_tracker_install() {
       }
       if (FieldExists("glpi_plugin_tracker_config", "version")) {
          if ($config->getValue('version') == "2.0.2") {
-            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1");
+            $DB->query("UPDATE `glpi_plugin_tracker_config`
+                        SET `version` = '2.1.0'
+                        WHERE `ID`='1';");
          }
          if ($config->getValue('version') == "2.1.0") {
             plugin_tracker_update("2.1.1");
@@ -1191,14 +1199,20 @@ function plugin_tracker_install() {
          }
          if ($config->getValue('version') == "2.1.1") {
             plugin_tracker_update("2.1.2");
-            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.2' WHERE ID=1");
+            $DB->query("UPDATE `glpi_plugin_tracker_config`
+                        SET `version` = '2.1.2'
+                        WHERE `ID`='1';");
          }
          if ($config->getValue('version') == "2.1.2") {
             plugin_tracker_update("2.1.2");
-            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.3' WHERE ID=1");
+            $DB->query("UPDATE `glpi_plugin_tracker_config`
+                        SET `version` = '2.1.3'
+                        WHERE `ID`='1';");
          }
          if  ($config->getValue('version') == "0") {
-            $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.3' WHERE ID=1");
+            $DB->query("UPDATE `glpi_plugin_tracker_config`
+                        SET `version` = '2.1.3'
+                        WHERE `ID`='1';");
          }
       }
    }
@@ -1462,9 +1476,10 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 
 				case "plugin_tracker_assign_model" :
                if(plugin_tracker_HaveRight("snmp_models","w")) {
-                  $query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
-                  WHERE device_type!=2
-                     AND device_type!=0";
+                  $query_models = "SELECT *
+                                   FROM `glpi_plugin_tracker_model_infos`
+                                   WHERE `device_type`!='2'
+                                         AND `device_type`!='0';";
                   $result_models=$DB->query($query_models);
                   $exclude_models = array();
                   while ($data_models=$DB->fetch_array($result_models)) {
@@ -1496,9 +1511,10 @@ function plugin_tracker_MassiveActionsDisplay($type, $action) {
 
 				case "plugin_tracker_assign_model" :
                if(plugin_tracker_HaveRight("snmp_models","w")) {
-                  $query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
-                  WHERE device_type!=3
-                     AND device_type!=0";
+                  $query_models = "SELECT *
+                                   FROM `glpi_plugin_tracker_model_infos`
+                                   WHERE `device_type`!='3'
+                                         AND `device_type`!='0';";
                   $result_models=$DB->query($query_models);
                   $exclude_models = array();
                   while ($data_models=$DB->fetch_array($result_models)) {
@@ -2417,28 +2433,32 @@ function plugin_pre_item_purge_tracker($parm) {
 		switch ($parm["_item_type_"]) {
 			case NETWORKING_TYPE :
 				// Delete all ports
-				$query_delete = "DELETE FROM glpi_plugin_tracker_networking
-				WHERE FK_networking='".$parm["ID"]."' ";
+				$query_delete = "DELETE FROM `glpi_plugin_tracker_networking`
+                             WHERE `FK_networking`='".$parm["ID"]."';";
 				$DB->query($query_delete);
 
-				$query_select = "SELECT glpi_plugin_tracker_networking_ports.ID FROM glpi_plugin_tracker_networking_ports
-				LEFT JOIN glpi_networking_ports ON glpi_networking_ports.ID = FK_networking_ports
-				WHERE on_device='".$parm["ID"]."'
-					AND device_type='".NETWORKING_TYPE."'";
+				$query_select = "SELECT `glpi_plugin_tracker_networking_ports`.`ID`
+                             FROM `glpi_plugin_tracker_networking_ports`
+                                  LEFT JOIN `glpi_networking_ports`
+                                            ON `glpi_networking_ports`.`ID` = `FK_networking_ports`
+                             WHERE `on_device`='".$parm["ID"]."'
+                                   AND `device_type`='".NETWORKING_TYPE."';";
 				$result=$DB->query($query_select);
 				while ($data=$DB->fetch_array($result)) {
-					$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
-					WHERE ID='".$data["ID"]."'";
+					$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ports`
+                                WHERE `ID`='".$data["ID"]."';";
 					$DB->query($query_delete);
 				}
 
-				$query_select = "SELECT glpi_plugin_tracker_networking_ifaddr.ID FROM glpi_plugin_tracker_networking_ifaddr
-				LEFT JOIN glpi_networking ON glpi_networking.ID = FK_networking
-				WHERE FK_networking='".$parm["ID"]."' ";
+				$query_select = "SELECT `glpi_plugin_tracker_networking_ifaddr`.`ID`
+                             FROM `glpi_plugin_tracker_networking_ifaddr`
+                                  LEFT JOIN `glpi_networking`
+                                            ON `glpi_networking`.`ID` = `FK_networking`
+                             WHERE `FK_networking`='".$parm["ID"]."';";
 				$result=$DB->query($query_select);
 				while ($data=$DB->fetch_array($result)) {
-					$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
-					WHERE ID='".$data["ID"]."'";
+					$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ifaddr`
+                                WHERE `ID`='".$data["ID"]."';";
 					$DB->query($query_delete);
 				}
             break;
@@ -2446,7 +2466,10 @@ function plugin_pre_item_purge_tracker($parm) {
          case PLUGIN_TRACKER_MAC_UNKNOWN :
             // Delete ports and connections if exists
             $np=new Netport;
-            $query = "SELECT ID FROM glpi_networking_ports WHERE on_device = '".$parm["ID"]."' AND device_type = '".PLUGIN_TRACKER_MAC_UNKNOWN."'";
+            $query = "SELECT `ID`
+                      FROM `glpi_networking_ports`
+                      WHERE `on_device` = '".$parm["ID"]."'
+                            AND `device_type` = '".PLUGIN_TRACKER_MAC_UNKNOWN."';";
             $result = $DB->query($query);
             while ($data = $DB->fetch_array($result)) {
                removeConnector($data["ID"]);

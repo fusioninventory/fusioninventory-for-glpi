@@ -89,9 +89,9 @@ class PluginTrackerManufacturerFoundryNetworks extends CommonDBTM {
 
          if (!isset($Array_trunk_ifIndex[$BridgePortifIndex])) {
             // Verify if mac adress isn't the same than this port
-            $query_verif = "SELECT ifmac
-            FROM glpi_networking_ports
-            WHERE ID='".$ArrayPortsID[$ifName]."' ";
+            $query_verif = "SELECT `ifmac`
+                            FROM `glpi_networking_ports`
+                            WHERE `ID`='".$ArrayPortsID[$ifName]."';";
             $result_verif = $DB->query($query_verif);
             $data_verif = $DB->fetch_assoc($result_verif);
               if ((($data_verif['ifmac'] == $MacAddress) OR ($data_verif['ifmac'] == strtoupper($MacAddress))) AND ($data_verif['ifmac'] != "")) {
@@ -99,10 +99,12 @@ class PluginTrackerManufacturerFoundryNetworks extends CommonDBTM {
               } else {
                   if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Mac address OK",$type,$ID_Device,1);
 
-                  $queryPortEnd = "SELECT * FROM glpi_networking_ports
-                  WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-                     AND (on_device!='".$ID_Device."'
-                     || device_type!='".NETWORKING_TYPE."') ";
+                  $queryPortEnd = "SELECT *
+                                   FROM `glpi_networking_ports`
+                                   WHERE `ifmac` IN ('".$MacAddress."',
+                                                     '".strtoupper($MacAddress)."')
+                                         AND (`on_device`!='".$ID_Device."'
+                                              OR `device_type`!='".NETWORKING_TYPE."');";
               }
          }
 

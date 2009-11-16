@@ -117,8 +117,9 @@ if(isset($_GET['update_device_process'])) {
 
 	$logs->write("tracker_snmp","Operating System = ".$OS,"","");
 
-	$query = "SELECT process_number FROM glpi_plugin_tracker_agents_processes
-	ORDER BY process_number";
+	$query = "SELECT `process_number`
+             FROM `glpi_plugin_tracker_agents_processes`
+             ORDER BY `process_number`;";
 	$result=$DB->query($query);
 	while ($data=$DB->fetch_array($result)) {
 		// Test if XLM file from Agent exist

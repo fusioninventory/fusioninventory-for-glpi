@@ -103,11 +103,12 @@ function displaySearchForm($FK_port) {
 	echo "<td>";
 	echo $LANG["reports"][46]." :&nbsp;";
 
-	$query = "SELECT glpi_networking.name as name,glpi_networking_ports.name as pname,
-	glpi_networking_ports.ID as ID FROM glpi_networking
-	LEFT JOIN glpi_networking_ports ON on_device = glpi_networking.ID
-	WHERE device_type=".NETWORKING_TYPE."
-	ORDER BY glpi_networking.name,glpi_networking_ports.logical_number";
+	$query = "SELECT `glpi_networking`.`name` as `name`, `glpi_networking_ports`.`name` as `pname`,
+                    `glpi_networking_ports`.`ID` as `ID`
+             FROM `glpi_networking`
+                  LEFT JOIN `glpi_networking_ports` ON `on_device` = `glpi_networking`.`ID`
+             WHERE `device_type`=".NETWORKING_TYPE."
+             ORDER BY `glpi_networking`.`name`, `glpi_networking_ports`.`logical_number`;";
 
 	echo "<select name='FK_networking_ports'>";
 	echo "<option>-----</option>";

@@ -122,10 +122,11 @@ class PluginTrackerManufacturerHP extends CommonDBTM {
             if ($stop == "0") {
                $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$BridgePortifIndex][""];
 
-               $queryPortEnd = "SELECT * FROM glpi_networking_ports
-                  WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-                     AND (on_device!='".$ID_Device."'
-                     || device_type!='".NETWORKING_TYPE."') ";
+               $queryPortEnd = "SELECT *
+                                FROM `glpi_networking_ports`
+                                WHERE `ifmac` IN ('".$MacAddress."','".strtoupper($MacAddress)."')
+                                      AND (`on_device`!='".$ID_Device."'
+                                           OR `device_type`!='".NETWORKING_TYPE."');";
                plugin_tracker_db_lock_wire_check();
                $resultPortEnd=$DB->query($queryPortEnd);
                $sport = $ArrayPortsID[$ifName]; // Networking_Port

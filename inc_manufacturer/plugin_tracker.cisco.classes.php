@@ -153,10 +153,11 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","ip = ".$ip_switch_trunk." / ifdescr = ".$oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""],$type,$ID_Device,1);
                $PortID = $snmp_queries->getPortIDfromDeviceIP($ip_switch_trunk, $oidvalues[$oidsModel[0][1]['cdpCacheDevicePort'].".".$snmpportID][""]);
                plugin_tracker_db_lock_wire_check();
-               $query = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports
-               WHERE logical_number='".$ifIndex."'
-                  AND device_type='".NETWORKING_TYPE."'
-                  AND on_device='".$ID_Device."' ";
+               $query = "SELECT `glpi_networking_ports`.`ID`
+                         FROM `glpi_networking_ports`
+                         WHERE `logical_number`='".$ifIndex."'
+                               AND `device_type`='".NETWORKING_TYPE."'
+                               AND `on_device`='".$ID_Device."';";
                $result = $DB->query($query);
                $data = $DB->fetch_assoc($result);
 
@@ -291,9 +292,9 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
 
                if (!isset($Array_trunk_ifIndex[$BridgePortifIndex])) {
                   // Verify if mac adress isn't the same than this port
-                  $query_verif = "SELECT ifmac
-                  FROM glpi_networking_ports
-                  WHERE ID='".$ArrayPortsID[$ifName]."' ";
+                  $query_verif = "SELECT `ifmac`
+                                  FROM `glpi_networking_ports`
+                                  WHERE `ID`='".$ArrayPortsID[$ifName]."';";
                   $result_verif = $DB->query($query_verif);
                   $data_verif = $DB->fetch_assoc($result_verif);
                     if ((($data_verif['ifmac'] == $MacAddress) OR ($data_verif['ifmac'] == strtoupper($MacAddress))) AND ($data_verif['ifmac'] != "")) {
@@ -301,10 +302,12 @@ class PluginTrackerManufacturerCisco extends CommonDBTM {
                     } else {
                         if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Mac address OK",$type,$ID_Device,1);
 
-                        $queryPortEnd = "SELECT * FROM glpi_networking_ports
-                        WHERE ifmac IN ('".$MacAddress."','".strtoupper($MacAddress)."')
-                           AND (on_device!='".$ID_Device."'
-                           || device_type!='".NETWORKING_TYPE."') ";
+                        $queryPortEnd = "SELECT *
+                                         FROM `glpi_networking_ports`
+                                         WHERE `ifmac` IN ('".$MacAddress."',
+                                                           '".strtoupper($MacAddress)."')
+                                               AND (`on_device`!='".$ID_Device."'
+                                                    OR `device_type`!='".NETWORKING_TYPE."');";
                     }
                }
 
