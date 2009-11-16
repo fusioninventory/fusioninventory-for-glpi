@@ -54,22 +54,28 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 		if (!plugin_tracker_haveRight("snmp_models","r")) {
 			return false;
       } else if ((isset($ID)) AND (!empty($ID))) {
-			$query = "SELECT device_type FROM glpi_plugin_tracker_model_infos
-			WHERE ID='".$ID."' ";
+			$query = "SELECT `device_type`
+                   FROM `glpi_plugin_tracker_model_infos`
+                   WHERE `ID`='".$ID."';";
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['device_type'];		
 		
-			$query = "SELECT glpi_plugin_tracker_model_infos.device_type,glpi_plugin_tracker_mib_networking.* FROM glpi_plugin_tracker_mib_networking
-			LEFT JOIN glpi_plugin_tracker_model_infos ON glpi_plugin_tracker_mib_networking.FK_model_infos=glpi_plugin_tracker_model_infos.ID
-			WHERE glpi_plugin_tracker_model_infos.ID=".$ID;
+			$query = "SELECT `glpi_plugin_tracker_model_infos`.`device_type`,
+                          `glpi_plugin_tracker_mib_networking`.*
+                   FROM `glpi_plugin_tracker_mib_networking`
+                        LEFT JOIN `glpi_plugin_tracker_model_infos`
+                        ON `glpi_plugin_tracker_mib_networking`.`FK_model_infos`=
+                           `glpi_plugin_tracker_model_infos`.`ID`
+                   WHERE `glpi_plugin_tracker_model_infos`.`ID`='".$ID."';";
 			
 			if ($result = $DB->query($query)) {
 				$object_used = array();
 				$linkoid_used = array();
 				
 				echo "<br>";
-				echo "<div align='center'><form method='post' name='odi_list' id='oid_list'  action=\"".$target."\">";
+				echo "<div align='center'><form method='post' name='odi_list' id='oid_list'
+                       action=\"".$target."\">";
 		
 				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
 				$nb_col = 8;
@@ -109,7 +115,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 					
 					echo "<td align='center'>";
 					$object_used[] = $data["FK_mib_object"];
-					echo getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"]);
+					echo getDropdownName("glpi_dropdown_plugin_tracker_mib_object",
+                                    $data["FK_mib_object"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -121,7 +128,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 						if ($data["activation"] == "1") {
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                   } else if ($data["activation"] == "0") {
-							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+							echo "<img src='".$CFG_GLPI["root_doc"].
+                              "/plugins/tracker/pics/bookmark_off.png'/>";
                   }
                }
 					echo "</td>";
@@ -131,7 +139,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 						if ($data["activation"] == "1") {
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                   } else if ($data["activation"] == "0") {
-							echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+							echo "<img src='".$CFG_GLPI["root_doc"].
+                              "/plugins/tracker/pics/bookmark_off.png'/>";
                   }
                }
 					echo "</td>";
@@ -149,7 +158,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 							if ($data["activation"] == "1") {
 								echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                      } else if ($data["activation"] == "0") {
-								echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+								echo "<img src='".$CFG_GLPI["root_doc"].
+                                 "/plugins/tracker/pics/bookmark_off.png'/>";
                      }
                   }
 						echo "</td>";
@@ -160,7 +170,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 					if ($data["activation"] == "1") {
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                } else if ($data["activation"] == "0") {
-						echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+						echo "<img src='".$CFG_GLPI["root_doc"].
+                           "/plugins/tracker/pics/bookmark_off.png'/>";
                }
 					echo "</a>";
 					echo "</td>";
@@ -172,10 +183,15 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 				echo "<div align='center'>";
 				echo "<table class='tab_cadre_fixe'>";
 				echo "<tr>"; 
-				echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td><td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a></td>";
-				echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a>";
+				echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td>
+                  <td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return false;\"
+                      href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a></td>";
+				echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') ) 
+                     return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
+                     $LANG["buttons"][19]."</a>";
 				echo "</td><td align='left' colspan='6' width='80%'>"; 
-				echo "<input class='submit' type='submit' name='delete_oid' value='" . $LANG["buttons"][6] . "'>";
+				echo "<input class='submit' type='submit' name='delete_oid' value='" .
+                     $LANG["buttons"][6] . "'>";
 				echo "</td>";
 				echo "</tr>";
 				echo "</table></div>";
@@ -185,7 +201,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 				echo "<br/>";
 				echo "<table class='tab_cadre_fixe'>";
 				
-				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_tracker']["mib"][4]."</th></tr>";
+				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_tracker']["mib"][4].
+                     "</th></tr>";
 
 				echo "<tr class='tab_bg_1'>";
 				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
@@ -249,7 +266,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 				
 				echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
 				echo "<input type='hidden' name='FK_model_infos' value='".$ID."'/>";
-				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2]."\" class='submit' >";
+				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
+                     "\" class='submit' >";
 				echo "</td></tr>";	
 				
 				echo "</table></form></div>";
@@ -280,7 +298,8 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 		plugin_tracker_checkRight("snmp_models","w");
 		
 		for ($i = 0; $i < count($item_coche); $i++) {
-			$query = "DELETE FROM glpi_plugin_tracker_mib_networking WHERE id=".$item_coche[$i]." ";
+			$query = "DELETE FROM `glpi_plugin_tracker_mib_networking`
+                   WHERE `ID`='".$item_coche[$i]."';";
 			$DB->query($query);
 		}
 	}

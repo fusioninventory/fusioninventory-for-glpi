@@ -60,13 +60,13 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 		global $DB;
 		
 		$num = 0;
-		$query = "SELECT count(DISTINCT ID) ".
-				 "FROM ".$this->table." ";
+		$query = "SELECT count(DISTINCT `ID`)
+                FROM ".$this->table." ";
 		
 		if ($type == COMPUTER_TYPE) {
-			$query .= "WHERE FK_computers = '".$ID."';";
+			$query .= "WHERE `FK_computers` = '".$ID."';";
       } else { // $type == USER_TYPE
-			$query .= "WHERE FK_users = '".$ID."';";
+			$query .= "WHERE `FK_users` = '".$ID."';";
       }
 		if ($result_num=$DB->query($query)) {
 			if ($field = $DB->result($result_num,0,0)) {
@@ -81,20 +81,23 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 		global $DB;
 		
 		$datas=array();
-		$query = "SELECT * FROM ".$this->table." ";
+		$query = "SELECT *
+                FROM ".$this->table." ";
 		
 		if ($type == COMPUTER_TYPE) {
-			$query .= "WHERE FK_computers = '".$ID."' ";
+			$query .= "WHERE `FK_computers` = '".$ID."' ";
       } else { // $type == USER_TYPE
-			$query .= "WHERE FK_users = '".$ID."' ";
+			$query .= "WHERE `FK_users` = '".$ID."' ";
       }
-		$query .= "ORDER BY date DESC LIMIT ".$begin.", ".$limit.";";
+		$query .= "ORDER BY `date` DESC LIMIT ".$begin.", ".$limit.";";
 
 		if ($result=$DB->query($query)){
 			$i = 0;
 			while ($data=$DB->fetch_assoc($result)) {
-				$data["computer_name"] = plugin_tracker_getDeviceFieldFromId(COMPUTER_TYPE, $data["FK_computers"], "name", NULL);
-				$data["user_name"] = plugin_tracker_getDeviceFieldFromId(USER_TYPE, $data["FK_users"], "name", NULL);
+				$data["computer_name"] = plugin_tracker_getDeviceFieldFromId(
+                                     COMPUTER_TYPE, $data["FK_computers"], "name", NULL);
+				$data["user_name"] = plugin_tracker_getDeviceFieldFromId(
+                                 USER_TYPE, $data["FK_users"], "name", NULL);
 				$data['date'] = convDateTime($data['date']);
 				$datas["$i"] = $data;
 				$i++;				
@@ -133,9 +136,13 @@ class PluginTrackerComputersHistory extends CommonDBTM {
       }
 		// for $_GET['type'] (useful to check rights)
 		if ($type == COMPUTER_TYPE) {
-			echo "<div align='center'><form method='post' name='computer_history_form' id='computer_history_form'  action=\"".$target."?type=".COMPUTER_TYPE."\">";
+			echo "<div align='center'>
+                  <form method='post' name='computer_history_form' id='computer_history_form'
+                        action=\"".$target."?type=".COMPUTER_TYPE."\">";
       } else { // $type == USER_TYPE
-			echo "<div align='center'><form method='post' name='computer_history_form' id='computer_history_form'  action=\"".$target."?type=".USER_TYPE."\">";
+			echo "<div align='center'>
+                  <form method='post' name='computer_history_form' id='computer_history_form'
+                        action=\"".$target."?type=".USER_TYPE."\">";
       }
 		echo "<table class='tab_cadre_fixe' cellpadding='5'><tr><th colspan='5'>";
 		echo $LANG['plugin_tracker']["cpt_history"][0]." :</th></tr>";
@@ -161,7 +168,8 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 			echo "<td align='center'>";
 			if ($type == COMPUTER_TYPE) {
 				if ($data["$i"]["user_name"]) {
-					echo "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[USER_TYPE]."?ID=".$data["$i"]["FK_users"]."\">";
+					echo "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[USER_TYPE].
+                     "?ID=".$data["$i"]["FK_users"]."\">";
 					echo $data["$i"]["user_name"];
 					if (empty($data["$i"]["user_name"]) || $CFG_GLPI["view_ID"]) {
 						echo " (".$data["$i"]['FK_users'].")";
@@ -170,7 +178,8 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 				}
 			} else { // $type == USER_TYPE
 				if ($data["$i"]["computer_name"]) {
-					echo "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[COMPUTER_TYPE]."?ID=".$data["$i"]["FK_computers"]."\">";
+					echo "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[COMPUTER_TYPE].
+                        "?ID=".$data["$i"]["FK_computers"]."\">";
 					echo $data["$i"]["computer_name"];
 					if (empty($data["$i"]["computer_name"]) || $CFG_GLPI["view_ID"]) {
 						echo " (".$data["$i"]['FK_computers'].")";
@@ -190,9 +199,13 @@ class PluginTrackerComputersHistory extends CommonDBTM {
 			
 		echo "<input type='hidden' name='limit' value='".$limit."'>";
 		echo "<tr class='tab_bg_1'><td colspan='5'>";
-		echo "<div align='center'><a onclick= \"if ( markAllRows('printer_history_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
-		echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
-		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";	
+		echo "<div align='center'>
+               <a onclick= \"if ( markAllRows('printer_history_form') ) return false;\"
+                  href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
+		echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\"
+                  href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
+		echo "<input type='submit' name='delete' value=\"".$LANG["buttons"][6]."\" class='submit' >
+            </div></td></tr>";
 		echo "</table></form></div>";
 	}
 }

@@ -43,8 +43,9 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 	function getValue($field,$ID) {
 		global $DB;
 
-		$query = "SELECT ".$field." FROM ".$this->table." ".
-				 "WHERE ID = '".$ID."'";
+		$query = "SELECT ".$field."
+                FROM ".$this->table."
+                WHERE `ID` = '".$ID."';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];

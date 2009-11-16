@@ -92,9 +92,9 @@ class PluginTrackerNetworking extends CommonDBTM {
       }
 			
 		// compare device status and active device status
-		$query = "SELECT state ".
-				 "FROM $this->table ".
-				 "WHERE ID='".$this->ID."';";
+		$query = "SELECT `state`
+                FROM $this->table
+                WHERE `ID`='".$this->ID."';";
 		if ($result = $DB->query($query)) {
 			if ($fields = $DB->fetch_row($result)) {
 				if (($fields['0']) == $active_device_state) {
@@ -177,11 +177,14 @@ class PluginTrackerNetworking extends CommonDBTM {
 		$CommonItem = new CommonItem;
 		$plugin_tracker_snmp = new PluginTrackerSNMP;
 
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/prototype.js'></script>";
-		echo "<script type='text/javascript' src='".GLPI_ROOT."/lib/extjs/adapter/prototype/effects.js'></script>";
+		echo "<script type='text/javascript' src='".GLPI_ROOT.
+               "/lib/extjs/adapter/prototype/prototype.js'></script>";
+		echo "<script type='text/javascript' src='".GLPI_ROOT.
+               "/lib/extjs/adapter/prototype/effects.js'></script>";
 		
-		$query = "SELECT * FROM glpi_plugin_tracker_networking
-		WHERE FK_networking=".$ID." ";
+		$query = "SELECT *
+                FROM `glpi_plugin_tracker_networking`
+                WHERE `FK_networking`='".$ID."';";
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
@@ -190,14 +193,15 @@ class PluginTrackerNetworking extends CommonDBTM {
 		
 		// Add in database if not exist
 		if ($DB->numrows($result) == "0") {
-			$query_add = "INSERT INTO glpi_plugin_tracker_networking
-			(FK_networking) VALUES('".$ID."') ";
+			$query_add = "INSERT INTO `glpi_plugin_tracker_networking` (`FK_networking`)
+                       VALUES('".$ID."');";
 			
 			$DB->query($query_add);
 		}
 		// Form networking informations
 //		echo "<br>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		echo "<div align='center'>
+            <form method='post' name='snmp_form' id='snmp_form' action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		
@@ -210,16 +214,19 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_tracker']["model_info"][4]."</td>";
 		echo "<td align='center'>";
-		$query_models = "SELECT * FROM glpi_plugin_tracker_model_infos
-		WHERE device_type!=2 
-			AND device_type!=0";
+		$query_models = "SELECT * 
+                       FROM `glpi_plugin_tracker_model_infos`
+                       WHERE `device_type`!='2'
+                             AND `device_type`!='0';";
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['ID'];		
 		}
-		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0,-1,'',$exclude_models);
-		echo " <input type='submit' name='GetRightModel' value='".$LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
+		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0,-1,'',
+                    $exclude_models);
+		echo " <input type='submit' name='GetRightModel'
+                    value='".$LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
@@ -241,7 +248,8 @@ class PluginTrackerNetworking extends CommonDBTM {
 
 
 
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+		echo "<div align='center'>
+            <form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
@@ -258,7 +266,8 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "</tr>";
 
 		// Get link field to detect if cpu, memory and uptime are get onthis network device
-		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID,NETWORKING_TYPE);
+		$Array_Object_TypeNameConstant =
+                    $plugin_tracker_snmp->GetLinkOidToFields($ID,NETWORKING_TYPE);
 		$mapping_name=array();
 		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
 //			$explode = explode("||", $mapping_type_name);
@@ -316,10 +325,9 @@ class PluginTrackerNetworking extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][14]."</td>";
 			echo "<td align='center'>";
-			$query2 = "
-			SELECT *
-			FROM glpi_networking
-			WHERE ID=".$ID." ";
+			$query2 = "SELECT *
+                    FROM `glpi_networking`
+                    WHERE `ID`='".$ID."';";
 			$result2 = $DB->query($query2);
 			$data2 = $DB->fetch_assoc($result2);
 
@@ -328,7 +336,8 @@ class PluginTrackerNetworking extends CommonDBTM {
 			} else {
 				$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
 			}
-			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".$data2["ram"]." Mo)",'inverse');
+			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".
+                            $data2["ram"]." Mo)",'inverse');
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -345,9 +354,9 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "</table></form>";
 		
 		
-// **************************************************************************************************** //
-// ***************************************** METTRE TABLEAU DES PORTS ********************************* //
-// **************************************************************************************************** //	
+// ********************************************************************************************** //
+// *********************************** METTRE TABLEAU DES PORTS ********************************* //
+// ********************************************************************************************** //	
 		function ByteSize($bytes,$sizeoct=1024) {
 			$size = $bytes / $sizeoct;
 			if ($size < $sizeoct) {
@@ -381,23 +390,27 @@ class PluginTrackerNetworking extends CommonDBTM {
 
 		echo "<script  type='text/javascript'>
 function close_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\' onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\'
+      onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
 } 
 function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\' onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\'
+      onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
 }		
 		
 		</script>";
 
 //		echo "<br>";
-		echo "<div align='center'><!--<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">-->";
+		echo "<div align='center'><!--
+            <form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">-->";
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
 		echo "<tr class='tab_bg_1'>";
-		$query_array = "SELECT * FROM glpi_display
-		WHERE type='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS."'
-			AND FK_users='0'
-		ORDER BY rank";
+		$query_array = "SELECT *
+                      FROM `glpi_display`
+                      WHERE `type`='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS."'
+                            AND `FK_users`='0'
+                      ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
 		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
 		echo $LANG['plugin_tracker']["snmp"][40];
@@ -411,13 +424,20 @@ function appear_array(id){
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut" title="Sélectionnez les éléments à afficher par défaut" src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer" onclick="var w = window.open(\''.GLPI_ROOT.'/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\', \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
+		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut" 
+                     title="Sélectionnez les éléments à afficher par défaut"
+                     src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
+                     onclick="var w = window.open(\''.GLPI_ROOT.
+                        '/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\',
+                        \'height=400,
+                     width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
 
-		$query_array = "SELECT * FROM glpi_display
-		WHERE type='5157'
-			AND FK_users='0'
-		ORDER BY rank";
+		$query_array = "SELECT * 
+                      FROM `glpi_display`
+                      WHERE `type`='5157'
+                             AND `FK_users`='0'
+                      ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
 		while ($data_array=$DB->fetch_array($result_array)) {
 			echo "<th>";
@@ -488,21 +508,30 @@ function appear_array(id){
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
 				$background_img = "";
-				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1"))) {
-					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/port_trunk.png\"); '";
-            } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1"))) {
-					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/multiple_mac_addresses.png\"); '";
+				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
+                  OR strstr($data["ifstatus"], "1"))) {
+					$background_img = " style='background-image: url(\"".GLPI_ROOT.
+                                    "/plugins/tracker/pics/port_trunk.png\"); '";
+            } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up")
+                        OR strstr($data["ifstatus"], "1"))) {
+					$background_img = " style='background-image: url(\"".GLPI_ROOT.
+                                    "/plugins/tracker/pics/multiple_mac_addresses.png\"); '";
             } else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
-					$background_img = " style='background-image: url(\"".GLPI_ROOT."/plugins/tracker/pics/connected_trunk.png\"); '";
+					$background_img = " style='background-image: url(\"".GLPI_ROOT.
+                                    "/plugins/tracker/pics/connected_trunk.png\"); '";
             }
 				echo "<tr class='tab_bg_1' height='40'".$background_img.">";
-				echo "<td align='center' id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT."/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"]."\");close_array(".$data["ID"].");' /></td>";
-				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".$data["name"]."</a></td>";
+				echo "<td align='center' id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT.
+                     "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"].
+                     "\");close_array(".$data["ID"].");' /></td>";
+				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".
+                     $data["name"]."</a></td>";
 				
-				$query_array = "SELECT * FROM glpi_display
-				WHERE type='5157'
-					AND FK_users='0'
-				ORDER BY rank";
+				$query_array = "SELECT *
+                            FROM `glpi_display`
+                            WHERE `type`='5157'
+                                  AND `FK_users`='0'
+                            ORDER BY `rank`;";
 				$result_array=$DB->query($query_array);
 				while ($data_array=$DB->fetch_array($result_array)) {
 					switch ($data_array['num']) {
@@ -518,9 +547,11 @@ function appear_array(id){
 							echo "<td align='center'>";			
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"],"1")) {
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-                     } else if (strstr($data["ifstatus"],"down") OR strstr($data["ifinternalstatus"], "2")) {
+                     } else if (strstr($data["ifstatus"],"down")
+                                 OR strstr($data["ifinternalstatus"], "2")) {
 								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-                     } else if (strstr($data["ifstatus"], "testing") OR strstr($data["ifinternalstatus"], "3")) {
+                     } else if (strstr($data["ifstatus"], "testing")
+                                 OR strstr($data["ifinternalstatus"], "3")) {
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
                      }
 							echo "</td>";
@@ -583,23 +614,27 @@ function appear_array(id){
 							// ** Mac address and link to device which are connected to this port
 							$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
 							if ($opposite_port != "") {
-								$query_device = "
-								SELECT * 
-								FROM glpi_networking_ports
-								WHERE ID=".$opposite_port." ";
+								$query_device = "SELECT * 
+                                         FROM `glpi_networking_ports`
+                                         WHERE `ID`='".$opposite_port."';";
 				
 								$result_device = $DB->query($query_device);		
 								$data_device = $DB->fetch_assoc($result_device);				
 								
-								$CommonItem->getFromDB($data_device["device_type"],$data_device["on_device"]);
+								$CommonItem->getFromDB($data_device["device_type"],
+                                               $data_device["on_device"]);
 								$link1 = $CommonItem->getLink(1);
-								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],$CommonItem->getLink());
-                        $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],$CommonItem->getLink());
+								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],
+                                            $CommonItem->getLink());
+                        $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],
+                                             $CommonItem->getLink());
 								if ($data_device["device_type"] == PLUGIN_TRACKER_MAC_UNKNOWN) {
                            if ($CommonItem->getField("accepted") == "1") {
-                              echo "<td align='center' style='background:#bfec75' class='tab_bg_1_2'>".$link1;
+                              echo "<td align='center' style='background:#bfec75'
+                                        class='tab_bg_1_2'>".$link1;
                            } else {
-                              echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$link1;
+                              echo "<td align='center' background='#cf9b9b'
+                                        class='tab_bg_1_2'>".$link1;
                            }
                            if (!empty($link)) {
                               echo "<br/>".$link;
@@ -628,11 +663,14 @@ function appear_array(id){
 							echo "<td align='center'>";
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
-                     } else if (strstr($data["ifstatus"], "down") OR strstr($data["ifstatus"], "2")) {
+                     } else if (strstr($data["ifstatus"], "down")
+                                OR strstr($data["ifstatus"], "2")) {
 								echo "<img src='".GLPI_ROOT."/pics/redbutton.png'/>";
-                     } else if (strstr($data["ifstatus"], "testing") OR strstr($data["ifstatus"], "3")) {
+                     } else if (strstr($data["ifstatus"], "testing")
+                                OR strstr($data["ifstatus"], "3")) {
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/yellowbutton.png'/>";
-                     } else if (strstr($data["ifstatus"], "dormant") OR strstr($data["ifstatus"], "5")) {
+                     } else if (strstr($data["ifstatus"], "dormant")
+                                OR strstr($data["ifstatus"], "5")) {
 								echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/orangebutton.png'/>";
                      }
 							echo "</td>";
@@ -658,7 +696,8 @@ function appear_array(id){
 				
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
-					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".plugin_tracker_snmp_showHistory($data["ID"])."</td>
+					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".
+                  plugin_tracker_snmp_showHistory($data["ID"])."</td>
 				</tr>
 				";
 			}
@@ -671,9 +710,10 @@ function appear_array(id){
 	/* Useful to get the ID of a device into the table "glpi_networking_ports */
 	function getNetworkingPortsIDfromID() {
 		global $DB;
-		$query = "SELECT ID FROM glpi_networking_ports ".
-				 "WHERE on_device='".$this->ID."' ".
-				 "AND device_type='".$this->type."';";
+		$query = "SELECT `ID`
+                FROM `glpi_networking_ports`
+                WHERE `on_device`='".$this->ID."'
+                      AND `device_type`='".$this->type."';";
 		if ($result=$DB->query($query)) {
 			$this->fields = $DB->fetch_row($result);
 			// check if IP is in db
@@ -688,9 +728,10 @@ function appear_array(id){
 	
 	function getIDfromNetworkingPortsID() {
 		global $DB;
-		$query = "SELECT on_device FROM glpi_networking_ports ".
-				 "WHERE ID='".$this->networking_ports_ID."' ".
-				 "AND device_type='".$this->type."';";
+		$query = "SELECT `on_device`
+                FROM `glpi_networking_ports`
+                WHERE `ID`='".$this->networking_ports_ID."'
+                AND `device_type`='".$this->type."';";
 		if ($result=$DB->query($query)) {
 			$this->fields = $DB->fetch_row($result);
 			// check if IP is in db

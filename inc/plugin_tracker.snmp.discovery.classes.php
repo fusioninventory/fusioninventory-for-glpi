@@ -62,39 +62,43 @@ class PluginTrackerDiscovery extends CommonDBTM {
       global $DB;
 
       // Detect if device exist
-      $query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
-		WHERE ifaddr='".$Array['ip']."'
-			AND name='".plugin_tracker_hex_to_string($Array['name'])."'
-			AND descr='".$Array['description']."'
-			AND serialnumber='".$Array['serial']."'
-			AND FK_entities='".$Array['entity']."' ";
+      $query_sel = "SELECT *
+                    FROM `glpi_plugin_tracker_discovery`
+                    WHERE `ifaddr`='".$Array['ip']."'
+                          AND `name`='".plugin_tracker_hex_to_string($Array['name'])."'
+                          AND `descr`='".$Array['description']."'
+                          AND `serialnumber`='".$Array['serial']."'
+                          AND `FK_entities`='".$Array['entity']."';";
 		$result_sel = $DB->query($query_sel);
 		if ($DB->numrows($result_sel) == "0") {
          $insert = 1;
          if (!empty($Array['serial'])) {
             // Detect is a device is same but this another IP (like switch)
-            $query_sel = "SELECT * FROM glpi_plugin_tracker_discovery
-            WHERE name='".plugin_tracker_hex_to_string($Array['name'])."'
-               AND descr='".$Array['description']."'
-               AND serialnumber='".$Array['serial']."' ";
+            $query_sel = "SELECT *
+                          FROM `glpi_plugin_tracker_discovery`
+                          WHERE `name`='".plugin_tracker_hex_to_string($Array['name'])."'
+                                AND `descr`='".$Array['description']."'
+                                AND `serialnumber`='".$Array['serial']."';";
             $result_sel = $DB->query($query_sel);
             if ($DB->numrows($result_sel) > 0) {
                $insert = 0;
             }
          }
          if ($insert == "1") {
-            $query = "INSERT INTO glpi_plugin_tracker_discovery
-            (date,ifaddr,name,descr,serialnumber,type,FK_agents,FK_entities,FK_model_infos,FK_snmp_connection)
-            VALUES('".$Array['date']."',
-            '".$Array['ip']."',
-            '".plugin_tracker_hex_to_string($Array['name'])."',
-            '".$Array['description']."',
-            '".$Array['serial']."',
-            '".$Array['type']."',
-            '".$Array['agent_id']."',
-            '".$Array['entity']."',
-            '".$Array['FK_model']."',
-            '".$Array['authSNMP']."')";
+            $query = "INSERT INTO `glpi_plugin_tracker_discovery`
+                                  (`date`, `ifaddr`, `name`, `descr`, `serialnumber`, `type`,
+                                   `FK_agents`, `FK_entities`, `FK_model_infos`,
+                                   `FK_snmp_connection`)
+                      VALUES('".$Array['date']."',
+                             '".$Array['ip']."',
+                             '".plugin_tracker_hex_to_string($Array['name'])."',
+                             '".$Array['description']."',
+                             '".$Array['serial']."',
+                             '".$Array['type']."',
+                             '".$Array['agent_id']."',
+                             '".$Array['entity']."',
+                             '".$Array['FK_model']."',
+                             '".$Array['authSNMP']."');";
             $DB->query($query);
          }
 		}      

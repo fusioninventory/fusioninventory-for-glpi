@@ -59,7 +59,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] : $LANG['plugin_tracker']["model_info"][3]);
+		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] :
+            $LANG['plugin_tracker']["model_info"][3]);
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -72,7 +73,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["model_info"][2] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_version", "FK_snmp_version", $this->fields["FK_snmp_version"], 0);
+		dropdownValue("glpi_dropdown_plugin_tracker_snmp_version", "FK_snmp_version",
+         $this->fields["FK_snmp_version"], 0);
 		echo "</td>";
 		echo "</tr>";
 
@@ -93,49 +95,62 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][3] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_sec_level", "sec_level", $this->fields["sec_level"], 0);
+		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_sec_level", "sec_level",
+         $this->fields["sec_level"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][4] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol", "auth_protocol", $this->fields["auth_protocol"], 0);
+		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol", "auth_protocol",
+         $this->fields["auth_protocol"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][5] . "</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='auth_passphrase' value='" . $this->fields["auth_passphrase"] . "'/>";
+		echo "<input type='text' name='auth_passphrase'
+                   value='".$this->fields["auth_passphrase"]."'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][6] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol", "priv_protocol", $this->fields["priv_protocol"], 0);
+		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol", "priv_protocol",
+            $this->fields["priv_protocol"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][7] . "</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='priv_passphrase' value='" . $this->fields["priv_passphrase"] . "'/>";
+		echo "<input type='text' name='priv_passphrase'
+                   value='" . $this->fields["priv_passphrase"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
 		if ($ID=='') {
-			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+			echo "<div align='center'><input type='submit' name='add'
+                    value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
       } else {
 			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+			echo "<div align='center'><input type='submit' name='update'
+                    value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
 			if (!$this->fields["deleted"]) {
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
+				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type='submit' name='delete'
+                         value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
          } else {
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" . $LANG["buttons"][21] . "\" class='submit'>";
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" . $LANG["buttons"][22] . "\" class='submit'>";
+				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type='submit' name='restore'
+                         value=\"" . $LANG["buttons"][21] . "\" class='submit'>";
+				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type='submit' name='purge'
+                         value=\"" . $LANG["buttons"][22] . "\" class='submit'>";
 			}
 		}
 		echo "</td>";
@@ -184,7 +199,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						break;
 
 					case 3:
-						$snmp_version[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
+						$snmp_version[$i] = getDropdownName(
+                                      "glpi_dropdown_plugin_tracker_snmp_version",$item);
 						if ($snmp_version[$i] == "&nbsp;") {
 							$snmp_version[$i] = "";
                   }
@@ -199,14 +215,16 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						break;
 
 					case 6:
-						$sec_level[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
+						$sec_level[$i] = getDropdownName(
+                                   "glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
 						if ($sec_level[$i] == "&nbsp;") {
 							$sec_level[$i] = "";
                   }
 						break;
 
 					case 7:
-						$auth_protocol[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+						$auth_protocol[$i] = getDropdownName(
+                                    "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
 						if ($auth_protocol[$i] == "&nbsp;") {
 							$auth_protocol[$i] = "";
                   }
@@ -217,7 +235,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						break;
 
 					case 9:
-						$priv_protocol[$i] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+						$priv_protocol[$i] = getDropdownName(
+                                    "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
 						if ($priv_protocol[$i] == "&nbsp;") {
 							$priv_protocol[$i] = "";
                   }
@@ -314,7 +333,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						break;
 
 					case 8:
-						$xml_write .= "			<auth_passphrase><![CDATA[".$item."]]></auth_passphrase>\n";
+						$xml_write .= "			<auth_passphrase><![CDATA[".$item.
+                                "]]></auth_passphrase>\n";
 						break;
 
 					case 9:
@@ -322,7 +342,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						break;
 
 					case 10:
-						$xml_write .= "			<priv_passphrase><![CDATA[".$item."]]></priv_passphrase>\n";
+						$xml_write .= "			<priv_passphrase><![CDATA[".$item.
+                                "]]></priv_passphrase>\n";
 						break;
 				}
 			}
@@ -337,9 +358,11 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		$xml_write .= "			<sec_name><![CDATA[".$_POST["sec_name"]."]]></sec_name>\n";
 		$xml_write .= "			<sec_level>".$_POST["sec_level"]."</sec_level>\n";
 		$xml_write .= "			<auth_protocol>".$_POST["auth_protocol"]."</auth_protocol>\n";
-		$xml_write .= "			<auth_passphrase><![CDATA[".$_POST["auth_passphrase"]."]]></auth_passphrase>\n";
+		$xml_write .= "			<auth_passphrase><![CDATA[".$_POST["auth_passphrase"].
+                    "]]></auth_passphrase>\n";
 		$xml_write .= "			<priv_protocol>".$_POST["priv_protocol"]."</priv_protocol>\n";
-		$xml_write .= "			<priv_passphrase><![CDATA[".$_POST["priv_passphrase"]."]]></priv_passphrase>\n";
+		$xml_write .= "			<priv_passphrase><![CDATA[".$_POST["priv_passphrase"].
+                    "]]></priv_passphrase>\n";
 		$xml_write .= "		</conf>\n";
 		
 		$xml_write .= "	</auth>\n";
@@ -358,7 +381,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 	function selectbox($selected=0) {
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/tracker/scripts/auth.xml");
 		$i = -1;
-		$selectbox = "<select name='FK_snmp_connection' size='1'>\n<option value='0'>-----</option>\n";
+		$selectbox = "<select name='FK_snmp_connection' size='1'>\n
+                       <option value='0'>-----</option>\n";
 		foreach($xml->auth[0] as $num) {
 			$i++;
 
@@ -405,13 +429,15 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		if ($ID_Device != "all") {
 			switch ($type) {
 				case NETWORKING_TYPE :
-					$query = "SELECT * FROM glpi_plugin_tracker_networking
-					WHERE FK_networking='".$ID_Device."' ";
+					$query = "SELECT *
+                         FROM `glpi_plugin_tracker_networking`
+                         WHERE `FK_networking`='".$ID_Device."';";
 					break;
 
 				case PRINTER_TYPE :
-					$query = "SELECT * FROM glpi_plugin_tracker_printers
-					WHERE FK_printers='".$ID_Device."' ";
+					$query = "SELECT *
+                         FROM `glpi_plugin_tracker_printers`
+                         WHERE `FK_printers`='".$ID_Device."';";
 					break;
 			}		
 			$result=$DB->query($query);
@@ -475,10 +501,12 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 
 						case 3:
 							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
+								$snmp_auth["snmp_version"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_version",$item);
                      }
 							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$item);
+								$snmp_auth[($i+2)]["snmp_version"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_version",$item);
                      }
 							break;
 
@@ -502,19 +530,23 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 
 						case 6:
 							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
+								$snmp_auth["sec_level"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
                      }
 							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
+								$snmp_auth[($i+2)]["sec_level"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$item);
                      }
 							break;
 
 						case 7:
 							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+								$snmp_auth["auth_protocol"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
                      }
 							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+								$snmp_auth[($i+2)]["auth_protocol"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
                      }
 							break;
 
@@ -529,10 +561,12 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
                   
 						case 9:
 							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+								$snmp_auth["priv_protocol"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
                      }
 							if ($ID_Device == "all") {
-									$snmp_auth[($i+2)]["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+									$snmp_auth[($i+2)]["priv_protocol"] = getDropdownName(
+                              "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
                      }
 							break;
 
@@ -549,10 +583,12 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 			}	
 		} else if ($config->getValue("authsnmp") == "DB") {
 			if ($ID_Device == "all") {
-				$query = "SELECT * FROM glpi_plugin_tracker_snmp_connection";
+				$query = "SELECT *
+                      FROM `glpi_plugin_tracker_snmp_connection`";
          } else {
-				$query = "SELECT * FROM glpi_plugin_tracker_snmp_connection
-				WHERE ID='".$ID_auth."' ";
+				$query = "SELECT *
+                      FROM `glpi_plugin_tracker_snmp_connection`
+                      WHERE `ID`='".$ID_auth."';";
 			}
 			$result=$DB->query($query);
 			if (($DB->numrows($result) == "0") AND ($ID_Device != "all")) {
@@ -567,35 +603,49 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 				$snmp_auth["priv_passphrase"] = "";
 			} else if ($ID_Device != "all") {
 				$snmp_auth["Name"] = $DB->result($result,0,"name");
-				$snmp_auth["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$DB->result($result,0,"FK_snmp_version"));
+				$snmp_auth["snmp_version"] = getDropdownName(
+               "glpi_dropdown_plugin_tracker_snmp_version",$DB->result($result,0,
+               "FK_snmp_version"));
 				$snmp_auth["community"] = $DB->result($result,0,"community");
 				$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
-				$snmp_auth["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$DB->result($result,0,"sec_level"));
-				$snmp_auth["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$DB->result($result,0,"auth_protocol"));
+				$snmp_auth["sec_level"] = getDropdownName(
+               "glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$DB->result($result,0,
+               "sec_level"));
+				$snmp_auth["auth_protocol"] = getDropdownName(
+               "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$DB->result($result,0,
+               "auth_protocol"));
 				$snmp_auth["auth_passphrase"] = $DB->result($result,0,"auth_passphrase");
-				$snmp_auth["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$DB->result($result,0,"priv_protocol"));
+				$snmp_auth["priv_protocol"] = getDropdownName(
+               "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$DB->result($result,0,
+               "priv_protocol"));
 				$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
 			} else if ($ID_Device == "all") {
 				$i = 2;
 				while ($data=$DB->fetch_array($result)) {
-					if (($snmp_auth[0]["snmp_version"] == getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
+					if (($snmp_auth[0]["snmp_version"] == getDropdownName(
+                        "glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
                   AND ($snmp_auth[0]["community"] == $data["community"])) {
                   
 						$snmp_auth[0]["ID"] = $data["ID"];
-                } else if (($snmp_auth[1]["snmp_version"] == getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
+                } else if (($snmp_auth[1]["snmp_version"] == getDropdownName(
+                         "glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
                   AND ($snmp_auth[1]["community"] == $data["community"])) {
 
 						$snmp_auth[1]["ID"] = $data["ID"];
                } else {
 						$snmp_auth[$i]["ID"] = $data["ID"];
 						$snmp_auth[$i]["Name"] = $data["name"];
-						$snmp_auth[$i]["snmp_version"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]);
+						$snmp_auth[$i]["snmp_version"] = getDropdownName(
+                     "glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]);
 						$snmp_auth[$i]["community"] = $data["community"];
 						$snmp_auth[$i]["sec_name"] = $data["sec_name"];
-						$snmp_auth[$i]["sec_level"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$data["sec_level"]);
-						$snmp_auth[$i]["auth_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$data["auth_protocol"]);
+						$snmp_auth[$i]["sec_level"] = getDropdownName(
+                     "glpi_dropdown_plugin_tracker_snmp_auth_sec_level",$data["sec_level"]);
+						$snmp_auth[$i]["auth_protocol"] = getDropdownName(
+                     "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$data["auth_protocol"]);
 						$snmp_auth[$i]["auth_passphrase"] = $data["auth_passphrase"];
-						$snmp_auth[$i]["priv_protocol"] = getDropdownName("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$data["priv_protocol"]);
+						$snmp_auth[$i]["priv_protocol"] = getDropdownName(
+                     "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$data["priv_protocol"]);
 						$snmp_auth[$i]["priv_passphrase"] = $data["priv_passphrase"];
 						$i++;
 					}
@@ -618,9 +668,9 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 				break;
 
 			case PRINTER_TYPE :
-				$query = "SELECT FK_snmp_connection
-				FROM glpi_plugin_tracker_printers 
-				WHERE FK_printers='".$ID_Device."' ";
+				$query = "SELECT `FK_snmp_connection`
+                      FROM `glpi_plugin_tracker_printers`
+                      WHERE `FK_printers`='".$ID_Device."';";
 				break;
 		}
 		
@@ -658,7 +708,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 			}
 		}
 		if (isset($snmp_auth_name)) {
-			return "<a href='".GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.snmp_auth.php'>".$snmp_auth_name."</a>";
+			return "<a href='".GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.snmp_auth.php'>".
+                $snmp_auth_name."</a>";
       }
 	}
 }

@@ -44,8 +44,8 @@ class PluginTrackerImportExport extends CommonDBTM {
 		
 		plugin_tracker_checkRight("snmp_models","r");
 		$query = "SELECT * 
-		FROM glpi_plugin_tracker_model_infos
-		WHERE ID='".$ID_model."' ";
+                FROM `glpi_plugin_tracker_model_infos`
+                WHERE `ID`='".$ID_model."';";
 
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) != 0) {
@@ -67,16 +67,18 @@ class PluginTrackerImportExport extends CommonDBTM {
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
-					
-		FROM glpi_plugin_tracker_mib_networking AS model_t
-
-		WHERE FK_model_infos='".$ID_model."' ";
+                FROM `glpi_plugin_tracker_mib_networking` AS `model_t`
+                WHERE `FK_model_infos`='".$ID_model."';";
 		
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
 				$xml .= "		<oidobject>\n";
-				$xml .= "			<object><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"])."]]></object>\n";		
-				$xml .= "			<oid><![CDATA[".getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";		
+				$xml .= "			<object><![CDATA[".
+               getDropdownName("glpi_dropdown_plugin_tracker_mib_object",$data["FK_mib_object"]).
+               "]]></object>\n";
+				$xml .= "			<oid><![CDATA[".
+               getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"])."]]>
+               </oid>\n";
 				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
@@ -133,9 +135,9 @@ class PluginTrackerImportExport extends CommonDBTM {
 		$xml = simplexml_load_file($file);
 
 		// Verify same model exist
-		$query = "SELECT ID ".
-				 "FROM glpi_plugin_tracker_model_infos ".
-				 "WHERE name='".$xml->name[0]."';";
+		$query = "SELECT ID
+                FROM `glpi_plugin_tracker_model_infos`
+                WHERE `name`='".$xml->name[0]."';";
 		$result = $DB->query($query);
 		
 		if ($DB->numrows($result) > 0) {
@@ -144,10 +146,9 @@ class PluginTrackerImportExport extends CommonDBTM {
          }
 			return false;
 		} else {
-			$query = "INSERT INTO glpi_plugin_tracker_model_infos
-			(name,device_type,discovery_key)
-			VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."')";
-			
+			$query = "INSERT INTO `glpi_plugin_tracker_model_infos`
+                               (`name`,`device_type`,`discovery_key`)
+                   VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."');";
 			$DB->query($query);
 			$FK_model = $DB->insert_id();
 			
@@ -159,11 +160,13 @@ class PluginTrackerImportExport extends CommonDBTM {
 					$j++;
 					switch ($j) {
 						case 1:
-							$FK_mib_object = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_object",$item);
+							$FK_mib_object = externalImportDropdown(
+                                         "glpi_dropdown_plugin_tracker_mib_object",$item);
 							break;
 
 						case 2:
-							$FK_mib_oid = externalImportDropdown("glpi_dropdown_plugin_tracker_mib_oid",$item);
+							$FK_mib_oid = externalImportDropdown(
+                                      "glpi_dropdown_plugin_tracker_mib_oid",$item);
 							break;
 
 						case 3:
@@ -192,15 +195,17 @@ class PluginTrackerImportExport extends CommonDBTM {
 					}
 				}
 
-				$query = "INSERT INTO glpi_plugin_tracker_mib_networking
-				(FK_model_infos,FK_mib_oid,FK_mib_object,oid_port_counter,oid_port_dyn,mapping_type,mapping_name,vlan,activation)
-				VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."','".$oid_port_counter."', '".$oid_port_dyn."',
-				 '".$mapping_type."', '".$mapping_name."', '".$vlan."', '".$activation."')";
-			
+				$query = "INSERT INTO `glpi_plugin_tracker_mib_networking`
+                                  (`FK_model_infos`,`FK_mib_oid`,`FK_mib_object`,`oid_port_counter`,
+                                   `oid_port_dyn`,`mapping_type`,`mapping_name`,`vlan`,`activation`)
+                      VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."',
+                             '".$oid_port_counter."', '".$oid_port_dyn."', '".$mapping_type."',
+                             '".$mapping_name."', '".$vlan."', '".$activation."');";
 				$DB->query($query);
 			}
 			if ($message == '1') {
-				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][9]." : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_tracker']["model_info"][9].
+               " : <a href='plugin_tracker.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
          }
 		}
 	}
@@ -280,26 +285,28 @@ class PluginTrackerImportExport extends CommonDBTM {
 		foreach($xml->agent as $agent) {
 			$agent_version = $agent->version;
 			$agent_id = $agent->id;
-			$query = "UPDATE glpi_plugin_tracker_agents 
-			SET last_agent_update='".$agent->end_date."', tracker_agent_version='".$agent_version."'
-			WHERE ID='".$agent_id."'";
+			$query = "UPDATE `glpi_plugin_tracker_agents`
+                   SET `last_agent_update`='".$agent->end_date."',
+                       `tracker_agent_version`='".$agent_version."'
+                   WHERE `ID`='".$agent_id."';";
 			$DB->query($query);
 			
-			$query = "UPDATE glpi_plugin_tracker_agents_processes 
-			SET status='2', 
-				start_time_discovery='".$agent->start_time_discovery."', 
-				end_time_discovery='".$agent->end_time_discovery."',
-				discovery_queries_total='".$agent->discovery_queries_total."',
-				discovery_queries='".$count_discovery_devices."'
-			WHERE process_number='".$agent->pid."'
-				AND FK_agent='".$agent->id."'";
+			$query = "UPDATE `glpi_plugin_tracker_agents_processes`
+                   SET `status`='2',
+                       `start_time_discovery`='".$agent->start_time_discovery."',
+                       `end_time_discovery`='".$agent->end_time_discovery."',
+                       `discovery_queries_total`='".$agent->discovery_queries_total."',
+                       `discovery_queries`='".$count_discovery_devices."'
+                   WHERE `process_number`='".$agent->pid."'
+                         AND `FK_agent`='".$agent->id."';";
 			$DB->query($query);			
 		}
 		foreach($xml->host as $discovery) {
 			if ($discovery->modelSNMP != "") {
-				$query = "SELECT * FROM glpi_plugin_tracker_model_infos
-				WHERE discovery_key='".$discovery->modelSNMP."'
-				LIMIT 0,1";
+				$query = "SELECT *
+                      FROM `glpi_plugin_tracker_model_infos`
+                      WHERE `discovery_key`='".$discovery->modelSNMP."'
+                      LIMIT 0,1;";
 				$result = $DB->query($query);		
 				$data = $DB->fetch_assoc($result);
 				$FK_model = $data['ID'];
@@ -334,7 +341,8 @@ class PluginTrackerImportExport extends CommonDBTM {
             $data['serial'] = $discovery->serial;
             $data['contact'] = $discovery->usersession;
             if (!empty($discovery->workgroup)) {
-               $data['domain'] = externalImportDropdown("glpi_dropdown_domain",$discovery->workgroup,$discovery->entity);
+               $data['domain'] = externalImportDropdown(
+                                  "glpi_dropdown_domain",$discovery->workgroup,$discovery->entity);
             }
             $data['comments'] = $discovery->description;
             $data['type'] = $discovery->type;
@@ -403,20 +411,21 @@ class PluginTrackerImportExport extends CommonDBTM {
 		foreach($xml->agent as $agent) {
 			$agent_version = $agent->version;
 			$agent_id = $agent->id;
-			$query = "UPDATE glpi_plugin_tracker_agents
-			SET last_agent_update='".$agent->end_date."', tracker_agent_version='".$agent_version."'
-			WHERE ID='".$agent_id."'";
+			$query = "UPDATE `glpi_plugin_tracker_agents`
+                   SET `last_agent_update`='".$agent->end_date."',
+                       `tracker_agent_version`='".$agent_version."'
+                   WHERE `ID`='".$agent_id."';";
 			$DB->query($query);
  	            
-			$query = "UPDATE glpi_plugin_tracker_agents_processes
-			SET end_time='".$agent->end_date."',
-				status='3',
-				networking_queries='".$device_queried_networking."',
-				printers_queries='".$device_queried_printer."',
-				start_time_query='".$agent->start_time_query."',
-				end_time_query='".$agent->end_time_query."'
-			WHERE process_number='".$agent->pid."'
-				AND FK_agent='".$agent->id."'";
+			$query = "UPDATE `glpi_plugin_tracker_agents_processes`
+                   SET `end_time`='".$agent->end_date."',
+                       `status`='3',
+                       `networking_queries`='".$device_queried_networking."',
+                       `printers_queries`='".$device_queried_printer."',
+                       `start_time_query`='".$agent->start_time_query."',
+                       `end_time_query`='".$agent->end_time_query."'
+                   WHERE `process_number`='".$agent->pid."'
+                        AND `FK_agent`='".$agent->id."';";
 			$DB->query($query);           
 		}		
 	}

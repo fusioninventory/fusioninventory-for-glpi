@@ -50,7 +50,8 @@ if (!defined('GLPI_ROOT')) {
  * @return
  *
 **/
-function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_process = 0,$ArrayListType,$ArrayListAgentProcess) {
+function plugin_tracker_UpdateDeviceBySNMP_startprocess(
+                           $ArrayListDevice,$FK_process = 0,$ArrayListType,$ArrayListAgentProcess) {
 	global $DB;
 
 	$config_snmp_script = new PluginTrackerConfigSNMPScript;
@@ -82,7 +83,9 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
 	$s = 0;
    foreach ($ArrayListDevice as $num=>$IDDevice) {
 		$s++;
-		$t[$s] = $Thread->create("tracker_fullsync.php --update_device_process=1 --id=".$IDDevice." --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num]." --type=".$ArrayListType[$num]);
+		$t[$s] = $Thread->create("tracker_fullsync.php --update_device_process=1 --id=".$IDDevice.
+         " --FK_process=".$FK_process." --FK_agent_process=".$ArrayListAgentProcess[$num].
+         " --type=".$ArrayListType[$num]);
 
 		if ($nb_process_query == $s) {
 			eval($while);
@@ -118,7 +121,8 @@ function plugin_tracker_UpdateDeviceBySNMP_startprocess($ArrayListDevice,$FK_pro
  * @return nothing
  *
 **/
-function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$type,$FK_agent_process) {
+function plugin_tracker_UpdateDeviceBySNMP_process(
+                           $ID_Device,$FK_process = 0,$type,$FK_agent_process) {
 	$ifIP = "";
 	$_SESSION['FK_process'] = $FK_process;
 
@@ -187,14 +191,18 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$t
       }
 
 		//**
-		$ArrayPort_LogicalNum_SNMPName = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifName']);
+		$ArrayPort_LogicalNum_SNMPName =
+                 $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifName']);
 
 		// **
-		$ArrayPort_LogicalNum_SNMPNum = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifIndex'],1);
+		$ArrayPort_LogicalNum_SNMPNum =
+                 $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifIndex'],1);
 
 		// ** Get oid ports Counter
 			//array with logic number => portsID from snmp
-		$ArrayPort_Object_oid = plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum);
+		$ArrayPort_Object_oid = plugin_tracker_snmp_GetOIDPorts(
+               $ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,
+               $ArrayPort_LogicalNum_SNMPNum);
 
 		// ** Get link OID fields (oid => link)
 		$Array_Object_TypeNameConstant = $plugin_tracker_snmp->GetLinkOidToFields($ID_Device,$type);
@@ -204,30 +212,38 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$t
       }
 
 		// ** Update fields of switchs
-		plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant);
+		plugin_tracker_snmp_UpdateGLPIDevice(
+            $ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant);
 
 		//** From DB Array : portName => glpi_networking_ports.ID
 		$ArrayPortDB_Name_ID = $plugin_tracker_snmp->GetPortsID($ID_Device,$type);
 
 		// ** Update ports fields of switchs
 		if (!empty($ArrayPort_Object_oid)) {
-			plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant);
+			plugin_tracker_UpdateGLPINetworkingPorts(
+            $ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant);
       }
       $Array_trunk_ifIndex = array();
 
 		if ($type == NETWORKING_TYPE) {
-			$Array_trunk_ifIndex = plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortDB_Name_ID);
+			$Array_trunk_ifIndex = plugin_tracker_cdp_trunk(
+            $ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum,
+            $ArrayPortDB_Name_ID);
       }
 		// ** Get MAC adress of connected ports
 		$array_port_trunk = array();
 		if (!empty($ArrayPort_Object_oid)) {
-			$array_port_trunk = plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,'',$Array_trunk_ifIndex);
+			$array_port_trunk = plugin_tracker_GetMACtoPort(
+            $ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,'',
+            $Array_trunk_ifIndex);
       }
 		if (($type == NETWORKING_TYPE) AND ($sysDescr == "Cisco")) {
 			// Foreach VLAN ID to GET MAC Adress on each VLAN
 			$Array_vlan = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['vtpVlanName'],1);
 			foreach ($Array_vlan as $num=>$vlan_ID) {
-				plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,$vlan_ID,$Array_trunk_ifIndex);
+				plugin_tracker_GetMACtoPort(
+               $ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortDB_Name_ID,
+               $vlan_ID,$Array_trunk_ifIndex);
          }
 		}
 	}
@@ -248,7 +264,9 @@ function plugin_tracker_UpdateDeviceBySNMP_process($ID_Device,$FK_process = 0,$t
  * @return $oidList : array with logic number => portsID from snmp
  *
 **/
-function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum) {
+function plugin_tracker_snmp_GetOIDPorts(
+      $ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPName,
+      $ArrayPort_LogicalNum_SNMPNum) {
    global $DB,$LANG;
 
    if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
@@ -256,28 +274,34 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
    $netwire=new Netwire;
    $np=new Netport;
 
-	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",$type,$ID_Device,1);
+	if ($_SESSION['tracker_logs'] == "1")
+      $logs->write("tracker_fullsync",
+         ">>>>>>>>>> Get OID ports list (SNMP model) and create ports in DB if not exists <<<<<<<<<<",
+         $type,$ID_Device,1);
 
 	$portcounter = $oidvalues[$oidsModel[1][0][""]][""];
-	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","oid port counter : ".$oidsModel[1][0][""]." = ".$portcounter,$type,$ID_Device,1);
+	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","oid port counter : ".
+            $oidsModel[1][0][""]." = ".$portcounter,$type,$ID_Device,1);
 
 	$oid_ifType = $oidsModel[0][1]['ifType'];
-	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","type of port : ".$oid_ifType,$type,$ID_Device,1);
+	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","type of port : ".
+            $oid_ifType,$type,$ID_Device,1);
 
    asort($ArrayPort_LogicalNum_SNMPNum);
 
    // Reorder ports with good logic number
-   $query = "SELECT last_PID_update FROM glpi_plugin_tracker_networking
-      WHERE FK_networking='".$ID_Device."' 
-         AND last_PID_update='0' ";
+   $query = "SELECT `last_PID_update`
+             FROM `glpi_plugin_tracker_networking`
+             WHERE `FK_networking`='".$ID_Device."'
+                   AND `last_PID_update`='0';";
    $result = $DB->query($query);
    if ($DB->numrows($result) == 1) {
       foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$ifIndex) {
-         $query_update = "UPDATE glpi_networking_ports
-            SET logical_number='".$ifIndex."'
-            WHERE on_device='".$ID_Device."'
-               AND device_type='".$type."'
-               AND name='".$ArrayPort_LogicalNum_SNMPName[$num]."' ";
+         $query_update = "UPDATE `glpi_networking_ports`
+                          SET `logical_number`='".$ifIndex."'
+                          WHERE `on_device`='".$ID_Device."'
+                                AND `device_type`='".$type."'
+                                AND `name`='".$ArrayPort_LogicalNum_SNMPName[$num]."';";
          $DB->query($query_update);
       }
    }
@@ -306,17 +330,18 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 
 
             $goodname = 1;
-            if ($manufCisco->ListVirtualPorts($oidvalues[".1.3.6.1.2.1.1.1.0"][""],$ArrayPort_LogicalNum_SNMPName[$num]) == true) {
+            if ($manufCisco->ListVirtualPorts($oidvalues[".1.3.6.1.2.1.1.1.0"][""],
+                              $ArrayPort_LogicalNum_SNMPName[$num]) == true) {
                $goodname = 0;
                $deleteportname[] = $ifIndex;
                unset($oidList[$ifIndex]);
             }
             if ($goodname == 1) {
-               $query = "SELECT ID,name
-               FROM glpi_networking_ports
-               WHERE on_device='".$ID_Device."'
-                  AND device_type='".$type."'
-                  AND logical_number='".$ifIndex."' ";
+               $query = "SELECT `ID`, `name`
+                         FROM `glpi_networking_ports`
+                         WHERE `on_device`='".$ID_Device."'
+                               AND `device_type`='".$type."'
+                               AND `logical_number`='".$ifIndex."';";
                $result = $DB->query($query);
                if ($DB->numrows($result) == 0) {
                   unset($array);
@@ -327,7 +352,9 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
 
                   $IDport = $np->add($array);
                   logEvent(0, "networking", 5, "inventory", "Tracker ".$LANG["log"][70]);
-                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Add port in DB (glpi_networking_ports) : ".$ArrayPort_LogicalNum_SNMPName[$i],$type,$ID_Device,1);
+                  if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",
+                        "Add port in DB (glpi_networking_ports) : ".
+                        $ArrayPort_LogicalNum_SNMPName[$i],$type,$ID_Device,1);
                } else {
                   $IDport = $DB->result($result, 0, "ID");
                   if ($DB->result($result, 0, "name") != $ArrayPort_LogicalNum_SNMPName[$num]) {
@@ -335,21 +362,27 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
                      $array["name"] = $ArrayPort_LogicalNum_SNMPName[$num];
                      $array["ID"] = $DB->result($result, 0, "ID");
                      $np->update($array);
-                     if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Update port in DB (glpi_networking_ports) : ID".$DB->result($result, 0, "ID")." & name ".$ArrayPort_LogicalNum_SNMPName[$i],$type,$ID_Device,1);
+                     if ($_SESSION['tracker_logs'] == "1") 
+                           $logs->write("tracker_fullsync",
+                              "Update port in DB (glpi_networking_ports) : ID".
+                                 $DB->result($result, 0, "ID")." & name ".
+                                 $ArrayPort_LogicalNum_SNMPName[$i],$type,$ID_Device,1);
                   }
                }
                if ($type == NETWORKING_TYPE) {
-                  $queryTrackerPort = "SELECT ID
-                  FROM glpi_plugin_tracker_networking_ports
-                  WHERE FK_networking_ports='".$IDport."' ";
+                  $queryTrackerPort = "SELECT `ID`
+                                       FROM `glpi_plugin_tracker_networking_ports`
+                                       WHERE `FK_networking_ports`='".$IDport."';";
 
                   $resultTrackerPort = $DB->query($queryTrackerPort);
                   if ($DB->numrows($resultTrackerPort) == 0) {
-                     $queryInsert = "INSERT INTO glpi_plugin_tracker_networking_ports
-                        (FK_networking_ports)
-                     VALUES ('".$IDport."') ";
+                     $queryInsert = "INSERT INTO `glpi_plugin_tracker_networking_ports`
+                                                 (`FK_networking_ports`)
+                                     VALUES ('".$IDport."');";
                      $DB->query($queryInsert);
-                     if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type,$ID_Device,1);
+                     if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",
+                        "Add port in DB (glpi_plugin_tracker_networking_ports) : ID ".$IDport,$type,
+                        $ID_Device,1);
                   }
                }
             }
@@ -360,19 +393,20 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
    // Delete all ports that will be not here
    foreach($deleteportname as $id=>$i) {
       $query = "SELECT *
-      FROM glpi_networking_ports
-      WHERE on_device='".$ID_Device."'
-         AND device_type='".$type."'
-         AND logical_number='".$i."' ";
+                FROM `glpi_networking_ports`
+                WHERE `on_device`='".$ID_Device."'
+                      AND `device_type`='".$type."'
+                      AND `logical_number`='".$i."';";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
 
-		plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data['ID']),$FK_process);
+		plugin_tracker_addLogConnection(
+         "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
       plugin_tracker_addLogConnection("remove",$data['ID'],$FK_process);
       removeConnector($data['ID']);
 
-      $query_del = "DELETE FROM glpi_plugin_tracker_networking_ports
-      WHERE FK_networking_ports=".$data['ID']." ";
+      $query_del = "DELETE FROM `glpi_plugin_tracker_networking_ports`
+                    WHERE `FK_networking_ports`='".$data['ID']."';";
       $DB->query($query_del);
 
       $np->delete($data);
@@ -381,18 +415,20 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
    // Delete ports where logical number in glpi_plugin_tracker_networking_ports
    // not exist on switch : it's ports reorder not well
    $logicalnumberlist = str_replace(",)", ")", $logicalnumberlist);
-   $query = "SELECT * FROM glpi_networking_ports
-   WHERE on_device='".$ID_Device."'
-      AND device_type='".$type."' 
-      AND logical_number NOT IN ".$logicalnumberlist." ";
+   $query = "SELECT *
+             FROM `glpi_networking_ports`
+             WHERE `on_device`='".$ID_Device."'
+                   AND `device_type`='".$type."'
+                   AND `logical_number` NOT IN ".$logicalnumberlist.";";
    $result=$DB->query($query);
 	while ($data=$DB->fetch_array($result)) {
-		plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data['ID']),$FK_process);
+		plugin_tracker_addLogConnection(
+         "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
       plugin_tracker_addLogConnection("remove",$data['ID'],$FK_process);
       removeConnector($data['ID']);
       $np->delete($data);
-		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ports
-		WHERE FK_networking_ports='".$data["ID"]."'";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ports`
+                       WHERE `FK_networking_ports`='".$data["ID"]."';";
 		$DB->query($query_delete);
 	}
 
@@ -413,37 +449,45 @@ function plugin_tracker_snmp_GetOIDPorts($ID_Device,$type,$oidsModel,$oidvalues,
  * @return $oidList : array with ports object name and oid
  *
 **/
-function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant) {
+function plugin_tracker_snmp_UpdateGLPIDevice(
+      $ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant) {
 	global $DB,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
 	if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
    
-	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type,$ID_Device,1);
+	if ($_SESSION['tracker_logs'] == "1") 
+      $logs->write("tracker_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type,
+         $ID_Device,1);
 
 	// Update 'last_tracker_update' field
 	$query = "UPDATE ";
 	if ($type == NETWORKING_TYPE) {
-		$query .= "glpi_plugin_tracker_networking
-		SET last_tracker_update='".date("Y-m-d H:i:s")."',
-		last_PID_update='".$_SESSION['FK_process']."'
-		WHERE FK_networking='".$ID_Device."' ";
+		$query .= "`glpi_plugin_tracker_networking`
+             SET `last_tracker_update`='".date("Y-m-d H:i:s")."',
+                 `last_PID_update`='".$_SESSION['FK_process']."'
+             WHERE `FK_networking`='".$ID_Device."';";
    }
 	if ($type == PRINTER_TYPE) {
-		$query .= "glpi_plugin_tracker_printers
-		SET last_tracker_update='".date("Y-m-d H:i:s")."'
-		WHERE FK_printers='".$ID_Device."' ";
+		$query .= "`glpi_plugin_tracker_printers`
+             SET `last_tracker_update`='".date("Y-m-d H:i:s")."'
+             WHERE `FK_printers`='".$ID_Device."';";
    }
 	$DB->query($query);
 
 	foreach($Array_Object_TypeNameConstant as $oid=>$link) {
 		if (!preg_match("/\.$/",$oid)) { // SNMPGet ONLY
          if (isset($oidvalues[$oid][""])) {
-            if ((isset($TRACKER_MAPPING[$type][$link]['dropdown'])) AND (!empty($TRACKER_MAPPING[$type][$link]['dropdown']))) {
+            if ((isset($TRACKER_MAPPING[$type][$link]['dropdown']))
+                  AND (!empty($TRACKER_MAPPING[$type][$link]['dropdown']))) {
                $oidvalues[$oid][""] = plugin_tracker_hex_to_string($oidvalues[$oid][""]);
                if ($TRACKER_MAPPING[$type][$link]['dropdown'] == "glpi_dropdown_model_networking") {
-                  $oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0,array("manufacturer"=>$oidvalues[$oid][""]));
+                  $oidvalues[$oid][""] = 
+                     externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],
+                        $oidvalues[$oid][""],0,array("manufacturer"=>$oidvalues[$oid][""]));
                } else {
-                  $oidvalues[$oid][""] = externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],$oidvalues[$oid][""],0);
+                  $oidvalues[$oid][""] = 
+                     externalImportDropdown($TRACKER_MAPPING[$type][$link]['dropdown'],
+                        $oidvalues[$oid][""],0);
                }
             }
 
@@ -463,7 +507,8 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
                   }
                   break;
             }
-            if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",$link." = ".$oidvalues[$oid][""],$type,$ID_Device,1);
+            if ($_SESSION['tracker_logs'] == "1")
+               $logs->write("tracker_fullsync",$link." = ".$oidvalues[$oid][""],$type,$ID_Device,1);
 
             // * Memory
             if (($link == "ram") OR ($link == "memory")) {
@@ -484,7 +529,8 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
 
             if (strstr($oidvalues[$oid][""], "noSuchName")) {
                // NO Update field in GLPI
-            } else if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_plugin_tracker_printers_cartridges") {
+            } else if ($TRACKER_MAPPING[$type][$link]['table'] ==
+                       "glpi_plugin_tracker_printers_cartridges") {
                // * Printers cartridges
                $object_name_clean = str_replace("MAX", "", $link);
                $object_name_clean = str_replace("REMAIN", "", $object_name_clean);
@@ -492,67 +538,76 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
                   $printer_cartridges_max_remain[$object_name_clean]["MAX"] = $oidvalues[$oid][""];
                }
                if (strstr($link, "REMAIN")) {
-                  $printer_cartridges_max_remain[$object_name_clean]["REMAIN"] = $oidvalues[$oid][""];
+                  $printer_cartridges_max_remain[$object_name_clean]["REMAIN"] =
+                     $oidvalues[$oid][""];
                }
-               if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"])) AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]))) {
-                  $pourcentage = ceil((100 * $printer_cartridges_max_remain[$object_name_clean]["REMAIN"]) / $printer_cartridges_max_remain[$object_name_clean]["MAX"]);
+               if ((isset($printer_cartridges_max_remain[$object_name_clean]["MAX"]))
+                     AND (isset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]))) {
+                  $pourcentage = ceil((
+                        100 * $printer_cartridges_max_remain[$object_name_clean]["REMAIN"]) /
+                        $printer_cartridges_max_remain[$object_name_clean]["MAX"]);
                   // Test existance of row in MySQl
-                  $query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$type][$link]['table']."
-                  WHERE ".$Field."='".$ID_Device."'
-                     AND object_name='".$object_name_clean."' ";
+                  $query_sel = "SELECT *
+                                FROM ".$TRACKER_MAPPING[$type][$link]['table']."
+                                WHERE ".$Field."='".$ID_Device."'
+                                      AND `object_name`='".$object_name_clean."';";
                   $result_sel = $DB->query($query_sel);
                   if ($DB->numrows($result_sel) == "0") {
                      $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
-                     (".$Field.",object_name)
-                     VALUES('".$ID_Device."', '".$object_name_clean."') ";
-
+                                                 (".$Field.",object_name)
+                                     VALUES('".$ID_Device."', '".$object_name_clean."');";
                      $DB->query($queryInsert);
                   }
 
                   $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$pourcentage."'
-                  WHERE ".$Field."='".$ID_Device."'
-                     AND object_name='".$object_name_clean."' ";
+                                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$pourcentage."'
+                                  WHERE ".$Field."='".$ID_Device."'
+                                        AND `object_name`='".$object_name_clean."';";
 
                   $DB->query($queryUpdate);
                   unset($printer_cartridges_max_remain[$object_name_clean]["MAX"]);
                   unset($printer_cartridges_max_remain[$object_name_clean]["REMAIN"]);
                } else {
                   // Test existance of row in MySQl
-                  $query_sel = "SELECT * FROM ".$TRACKER_MAPPING[$type][$link]['table']."
-                  WHERE ".$Field."='".$ID_Device."'
-                     AND object_name='".$link."' ";
+                  $query_sel = "SELECT *
+                                FROM ".$TRACKER_MAPPING[$type][$link]['table']."
+                                WHERE ".$Field."='".$ID_Device."'
+                                      AND `object_name`='".$link."';";
                   $result_sel = $DB->query($query_sel);
                   if ($DB->numrows($result_sel) == "0") {
                      $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
-                     (".$Field.",object_name)
-                     VALUES('".$ID_Device."', '".$link."') ";
+                                                 (".$Field.",object_name)
+                                     VALUES('".$ID_Device."', '".$link."');";
 
                      $DB->query($queryInsert);
                   }
 
                   $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
-                  WHERE ".$Field."='".$ID_Device."'
-                     AND object_name='".$link."' ";
+                                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".
+                                      $oidvalues[$oid][""]."'
+                                  WHERE ".$Field."='".$ID_Device."'
+                                        AND `object_name`='".$link."';";
 
                   $DB->query($queryUpdate);
                }
             } else if (strstr($link, "pagecounter")) {
-               // Detect if the script has wroten a line for the counter today (if yes, don't touch, else add line)
+               // Detect if the script has wroten a line for the counter today
+               // (if yes, don't touch, else add line)
                $today = strftime("%Y-%m-%d", time());
-               $query_line = "SELECT * FROM glpi_plugin_tracker_printers_history
-               WHERE date LIKE '".$today."%'
-                  AND FK_printers='".$ID_Device."' ";
+               $query_line = "SELECT *
+                              FROM `glpi_plugin_tracker_printers_history`
+                              WHERE `date` LIKE '".$today."%'
+                                    AND `FK_printers`='".$ID_Device."';";
                $result_line = $DB->query($query_line);
                if ($DB->numrows($result_line) == "0") {
                   if (empty($oidvalues[$oid][""])) {
                      $oidvalues[$oid][""] = 0;
                   }
                   $queryInsert = "INSERT INTO ".$TRACKER_MAPPING[$type][$link]['table']."
-                  (".$TRACKER_MAPPING[$type][$link]['field'].",".$Field.", date)
-                  VALUES('".$oidvalues[$oid][""]."','".$ID_Device."', '".$today."') ";
-
+                                              (".$TRACKER_MAPPING[$type][$link]['field'].",".
+                                               $Field.", `date`)
+                                  VALUES('".$oidvalues[$oid][""]."','".$ID_Device."', '".
+                                         $today."');";
                   $DB->query($queryInsert);
                } else {
                   $data_line = $DB->fetch_assoc($result_line);
@@ -561,9 +616,10 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
                         $oidvalues[$oid][""] = 0;
                      }
                      $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-                     SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid][""]."'
-                     WHERE ".$Field."='".$ID_Device."'
-                        AND date LIKE '".$today."%' ";
+                                     SET ".$TRACKER_MAPPING[$type][$link]['field']."='".
+                                         $oidvalues[$oid][""]."'
+                                     WHERE ".$Field."='".$ID_Device."'
+                                           AND `date` LIKE '".$today."%';";
 
                      $DB->query($queryUpdate);
                   }
@@ -577,14 +633,16 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
                }
                if ((isset($cpu_values['cpuuser'])) AND (isset($cpu_values['cpusystem']))) {
                   $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".($cpu_values['cpuuser'] + $cpu_values['cpusystem'])."'
-                  WHERE ".$Field."='".$ID_Device."'";
+                                  SET ".$TRACKER_MAPPING[$type][$link]['field']."='".
+                                      ($cpu_values['cpuuser'] + $cpu_values['cpusystem'])."'
+                                  WHERE ".$Field."='".$ID_Device."';";
 
                   $DB->query($queryUpdate);
                   unset($cpu_values);
                }
             } else if ($TRACKER_MAPPING[$type][$link]['table'] != "") {
-               if (($TRACKER_MAPPING[$type][$link]['field'] == "cpu") AND (empty($oidvalues[$oid][""]))) {
+               if (($TRACKER_MAPPING[$type][$link]['field'] == "cpu")
+                   AND (empty($oidvalues[$oid][""]))) {
                   $SNMPValue = 0;
                }
                if (strstr($TRACKER_MAPPING[$type][$link]['table'], "glpi_plugin_tracker")) {
@@ -619,74 +677,95 @@ function plugin_tracker_snmp_UpdateGLPIDevice($ID_Device,$type,$oidsModel,$oidva
  * @param $Array_Object_TypeNameConstant : array with oid => constant in relation with fields to update
  *
 **/
-function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant) {
+function plugin_tracker_UpdateGLPINetworkingPorts(
+      $ID_Device,$type,$oidsModel,$oidvalues,$Array_Object_TypeNameConstant) {
 	global $DB,$LANG,$TRACKER_MAPPING;
 
 	if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
 	$snmp_queries = new PluginTrackerSNMP;
    $walks = new PluginTrackerWalk;
 
-	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> Update ports device values <<<<<<<<<<",$type,$ID_Device,1);
+	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",
+         ">>>>>>>>>> Update ports device values <<<<<<<<<<",$type,$ID_Device,1);
 
 	foreach($Array_Object_TypeNameConstant as $oid=>$link) {
-		if ((preg_match("/\.$/",$oid)) AND (!empty($TRACKER_MAPPING[$type][$link]['field']))) { // SNMPWalk ONLY (ports)
+		if ((preg_match("/\.$/",$oid)) AND (!empty($TRACKER_MAPPING[$type][$link]['field']))) {
+         // SNMPWalk ONLY (ports)
 //			print "OID : ".$oid."\n";
 
 			// For each port
 			if ($TRACKER_MAPPING[$type][$link]['field'] == 'ifmac') {
-				$query = "SELECT glpi_networking_ports.ID, logical_number, glpi_networking_ports.ifmac as ifmac FROM glpi_networking_ports
-				LEFT JOIN glpi_plugin_tracker_networking_ports ON FK_networking_ports=glpi_networking_ports.ID
-				WHERE on_device='".$ID_Device."'
-					AND device_type='".$type."'
-				ORDER BY logical_number";
+				$query = "SELECT `glpi_networking_ports`.`ID`, `logical_number`,
+                             `glpi_networking_ports`.`ifmac` as `ifmac`
+                      FROM `glpi_networking_ports`
+                           LEFT JOIN `glpi_plugin_tracker_networking_ports`
+                                     ON `FK_networking_ports`=`glpi_networking_ports`.`ID`
+                      WHERE `on_device`='".$ID_Device."'
+                            AND `device_type`='".$type."'
+                      ORDER BY `logical_number`;";
          } else {
-				$query = "SELECT glpi_networking_ports.ID, logical_number, ".$TRACKER_MAPPING[$type][$link]['field']." FROM glpi_networking_ports
-				LEFT JOIN glpi_plugin_tracker_networking_ports ON FK_networking_ports=glpi_networking_ports.ID
-				WHERE on_device='".$ID_Device."'
-					AND device_type='".$type."'
-				ORDER BY logical_number";
+				$query = "SELECT `glpi_networking_ports`.`ID`, `logical_number`, ".
+                             $TRACKER_MAPPING[$type][$link]['field']."
+                      FROM `glpi_networking_ports`
+                            LEFT JOIN `glpi_plugin_tracker_networking_ports`
+                                       ON `FK_networking_ports`=`glpi_networking_ports`.`ID`
+            			 WHERE `on_device`='".$ID_Device."'
+                            AND `device_type`='".$type."'
+                      ORDER BY `logical_number`;";
          }
 			$result=$DB->query($query);
 
 			while ($data=$DB->fetch_array($result)) {
 				// Update Last UP
 				if (($link == 'ifstatus') AND ($oidvalues[$oid.$data['logical_number']][""] == "1")) {
-					$query_update = "UPDATE glpi_plugin_tracker_networking_ports
-					SET lastup='".date("Y-m-d H:i:s")."'
-					WHERE FK_networking_ports='".$data["ID"]."' ";
+					$query_update = "UPDATE `glpi_plugin_tracker_networking_ports`
+                                SET `lastup`='".date("Y-m-d H:i:s")."'
+                                WHERE `FK_networking_ports`='".$data["ID"]."';";
 					$DB->query($query_update);
 				}
 
-				if (($link == 'ifPhysAddress') AND (!strstr($oidvalues[$oid.$data['logical_number']][""], ":"))) {
-					$MacAddress = plugin_tracker_ifmacwalk_ifmacaddress($oidvalues[$oid.$data['logical_number']][""]);
+				if (($link == 'ifPhysAddress')
+                AND (!strstr($oidvalues[$oid.$data['logical_number']][""], ":"))) {
+					$MacAddress = plugin_tracker_ifmacwalk_ifmacaddress(
+                  $oidvalues[$oid.$data['logical_number']][""]);
 
 					$oidvalues[$oid.$data['logical_number']][""] = $MacAddress;
 					if (empty($oidvalues[$oid.$data['logical_number']][""])) {
 						$oidvalues[$oid.$data['logical_number']][""] = "00:00:00:00:00:00";
                }
 				}
-				if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","****************",$type,$ID_Device,1);
-				if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Oid : ".$oid,$type,$ID_Device,1);
-				if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","Link : ".$link,$type,$ID_Device,1);
+				if ($_SESSION['tracker_logs'] == "1") $logs->write(
+                  "tracker_fullsync","****************",$type,$ID_Device,1);
+				if ($_SESSION['tracker_logs'] == "1") $logs->write(
+                  "tracker_fullsync","Oid : ".$oid,$type,$ID_Device,1);
+				if ($_SESSION['tracker_logs'] == "1") $logs->write(
+                  "tracker_fullsync","Link : ".$link,$type,$ID_Device,1);
 
-				if (($link == "ifPhysAddress") AND ($oidvalues[$oid.$data['logical_number']][""] != "")) {
-						$oidvalues[$oid.$data['logical_number']][""] = $snmp_queries->MAC_Rewriting($oidvalues[$oid.$data['logical_number']][""]);
+				if (($link == "ifPhysAddress")
+                AND ($oidvalues[$oid.$data['logical_number']][""] != "")) {
+						$oidvalues[$oid.$data['logical_number']][""] =
+                     $snmp_queries->MAC_Rewriting($oidvalues[$oid.$data['logical_number']][""]);
             }
 				if ($link == "ifaddr") {
-							$Arrayifaddr = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ifaddr'],1);
+							$Arrayifaddr = $walks->GetoidValuesFromWalk(
+                        $oidvalues,$oidsModel[0][1]['ifaddr'],1);
 					for($j=0 ; $j < count($Arrayifaddr) ; $j++) {
 						if ($oidvalues[$oid.$Arrayifaddr[$j]][""] == $data['logical_number']) {
 							$data['logical_number'] = $Arrayifaddr[$j];
                   }
 					}
-					if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","=> ".$data['logical_number'],$type,$ID_Device,1);
+					if ($_SESSION['tracker_logs'] == "1")
+                  $logs->write("tracker_fullsync","=> ".$data['logical_number'],$type,$ID_Device,1);
 				} else {
 					if (isset($oidvalues[$oid.$data['logical_number']][""])) {
-						if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync","=> ".$oidvalues[$oid.$data['logical_number']][""],$type,$ID_Device,1);
+						if ($_SESSION['tracker_logs'] == "1") $logs->write(
+                     "tracker_fullsync","=> ".$oidvalues[$oid.$data['logical_number']][""],$type,
+                     $ID_Device,1);
                }
             }
 				if (isset($oidvalues[$oid.$data['logical_number']][""])) {
-					if ($data[$TRACKER_MAPPING[$type][$link]['field']] != $oidvalues[$oid.$data['logical_number']][""]) {
+					if ($data[$TRACKER_MAPPING[$type][$link]['field']] !=
+                     $oidvalues[$oid.$data['logical_number']][""]) {
 						if ($TRACKER_MAPPING[$type][$link]['table'] == "glpi_networking_ports") {
 							$ID_field = "ID";
                   } else {
@@ -707,25 +786,33 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
                      WHERE ".$ID_field."='".$data["ID"]."'";
                   }
                } else {
-                  if ($data[$TRACKER_MAPPING[$type][$link]['field']] != $oidvalues[$oid.$data['logical_number']][""]) {
+                  if ($data[$TRACKER_MAPPING[$type][$link]['field']] !=
+                        $oidvalues[$oid.$data['logical_number']][""]) {
                      $queryUpdate = "UPDATE ".$TRACKER_MAPPING[$type][$link]['table']."
-                     SET ".$TRACKER_MAPPING[$type][$link]['field']."='".$oidvalues[$oid.$data['logical_number']][""]."'
-                     WHERE ".$ID_field."='".$data["ID"]."'";
+                                     SET ".$TRACKER_MAPPING[$type][$link]['field']."='".
+                                         $oidvalues[$oid.$data['logical_number']][""]."'
+                                     WHERE ".$ID_field."='".$data["ID"]."';";
                   }
                }
                if ($queryUpdate != '') {
                   plugin_tracker_db_lock_wire_check();
                   $DB->query($queryUpdate);
                   // Delete port wire if port is internal disable
-                  if (($link == "ifinternalstatus") AND (($oidvalues[$oid.$data['logical_number']][""] == "2") OR ($oidvalues[$oid.$data['logical_number']][""] == "down(2)"))) {
+                  if (($link == "ifinternalstatus")
+                      AND (($oidvalues[$oid.$data['logical_number']][""] == "2")
+                           OR ($oidvalues[$oid.$data['logical_number']][""] == "down(2)"))) {
                      $netwire=new Netwire;
-                     plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
+                     plugin_tracker_addLogConnection(
+                           "remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
                      plugin_tracker_addLogConnection("remove",$data["ID"],$FK_process);
                      removeConnector($data["ID"]);
 
                   }
                   // Add log because snmp value change
-                  plugin_tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],$data[$TRACKER_MAPPING[$type][$link]['field']],$oidvalues[$oid.$data['logical_number']][""],$type."-".$link,$_SESSION['FK_process']);
+                  plugin_tracker_snmp_addLog($data["ID"],$TRACKER_MAPPING[$type][$link]['name'],
+                     $data[$TRACKER_MAPPING[$type][$link]['field']],
+                     $oidvalues[$oid.$data['logical_number']][""],$type."-".$link,
+                     $_SESSION['FK_process']);
                   plugin_tracker_db_lock_wire_unlock();
                }
          	}
@@ -751,7 +838,8 @@ function plugin_tracker_UpdateGLPINetworkingPorts($ID_Device,$type,$oidsModel,$o
  * @return nothing
  *
 **/
-function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan="",$Array_trunk_ifIndex=array()) {
+function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,
+      $ArrayPortsID,$vlan="",$Array_trunk_ifIndex=array()) {
 	global $DB;
 
 	if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
@@ -786,16 +874,22 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
          break;
 
    }
-   if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan."] <<<<<<<<<<",$type,$ID_Device,1);
+   if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",
+         ">>>>>>>>>> Networking : Get MAC associate to Port [Vlan ".$vlan."] <<<<<<<<<<",$type,
+         $ID_Device,1);
 
    if($sysDescr == "Cisco") {
-      $manufCisco->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
+      $manufCisco->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,
+         $ArrayPortsID,$vlan,$Array_trunk_ifIndex);
    } else if($sysDescr == "3Com IntelliJack NJ225") {
-      $manuf3com->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
+      $manuf3com->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,
+         $ArrayPortsID,$vlan,$Array_trunk_ifIndex);
    } else if($sysDescr == "ProCurve J") {
-      $manufHP->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
+      $manufHP->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,
+         $vlan,$Array_trunk_ifIndex);
    } else if($sysDescr == "Foundry Networks") {
-      $manufFoundryNetworks->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,$ArrayPortsID,$vlan,$Array_trunk_ifIndex);
+      $manufFoundryNetworks->GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$array_port_trunk,
+         $ArrayPortsID,$vlan,$Array_trunk_ifIndex);
    }
 }
 
@@ -814,7 +908,8 @@ function plugin_tracker_GetMACtoPort($ID_Device,$type,$oidsModel,$oidvalues,$arr
  * @return array of trunk ports
  *
 **/
-function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID) {
+function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,
+      $ArrayPort_LogicalNum_SNMPNum,$ArrayPortsID) {
 	global $DB;
    
    $netwire=new Netwire;
@@ -833,7 +928,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
 	$Array_multiplemac_ifIndex = array();
 	//$trunk_no_cdp = array();
 
-   if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> Networking : Get cdp trunk ports <<<<<<<<<<",$type,$ID_Device,1);
+   if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",
+         ">>>>>>>>>> Networking : Get cdp trunk ports <<<<<<<<<<",$type,$ID_Device,1);
 
    switch (!false) {
 
@@ -858,7 +954,8 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
    }
 
 
-	// Detect if ports are non trunk and have multiple mac addresses (with list of dot1dTpFdbPort & dot1dBasePortIfIndex)
+	// Detect if ports are non trunk and have multiple mac addresses
+   // (with list of dot1dTpFdbPort & dot1dBasePortIfIndex)
    // Get all port_number
    $pass = 0;
 
@@ -874,10 +971,13 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
             $Arraydot1dTpFdbPort[$ifIndex] = 0;
          }
          foreach ($Array_vlan as $num=>$vlan) {
-            $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
+            $ArrayPortNumber = $walks->GetoidValuesFromWalk(
+               $oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1,$vlan);
             foreach($ArrayPortNumber as $num=>$dynamicdata) {
-               $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
-               $Arraydot1dTpFdbPort[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan]]++;
+               $BridgePortNumber =
+                  $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
+               $Arraydot1dTpFdbPort[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".
+                     $BridgePortNumber][$vlan]]++;
             }
          }
       }
@@ -890,21 +990,26 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
       }
    } else if ($pass == "0") {
       $Arraydot1dTpFdbPort = array();
-      $ArrayConnectionsPort = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
+      $ArrayConnectionsPort =
+         $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dTpFdbPort'],1);
       foreach($ArrayConnectionsPort as $num=>$Connectionkey) {
-         $Arraydot1dTpFdbPort[] = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][""];
+         $Arraydot1dTpFdbPort[] =
+            $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$Connectionkey][""];
       }
       $ArrayCount = array_count_values($Arraydot1dTpFdbPort);
 
-      $ArrayPortNumber = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
+      $ArrayPortNumber =
+         $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['dot1dBasePortIfIndex'],1);
       foreach($ArrayPortNumber as $num=>$PortNumber) {
          if ((isset($ArrayCount[$PortNumber])) AND ($ArrayCount[$PortNumber] > 1)) {
-            $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$PortNumber][""]] = 1;
+            $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".
+                  $PortNumber][""]] = 1;
          }
       }
    }
    if ($sysDescr == "Cisco IOS Software, C1") {
-      $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".3"][$vlan]] = 1;
+      $Array_multiplemac_ifIndex[$oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].
+            ".3"][$vlan]] = 1;
    }
 	// End detection of ports non trunk and have multiple mac addresses
 
@@ -928,11 +1033,14 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
    switch ($sysDescr) {
 
       case "Cisco" :
-         list($Array_cdp_ifIndex, $Array_multiplemac_ifIndex) = $manufCisco->CDPPorts($oidvalues,$oidsModel,$ID_Device,$type,$Array_multiplemac_ifIndex);
+         list($Array_cdp_ifIndex, $Array_multiplemac_ifIndex) = 
+            $manufCisco->CDPPorts($oidvalues,$oidsModel,$ID_Device,$type,
+               $Array_multiplemac_ifIndex);
          break;
 
       case "ProCurve J" :
-         list($Array_cdp_ifIndex, $Array_multiplemac_ifIndex) = $manufHP->CDPPorts($oidvalues,$oidsModel,$ID_Device,$type,$Array_multiplemac_ifIndex);
+         list($Array_cdp_ifIndex, $Array_multiplemac_ifIndex) =
+            $manufHP->CDPPorts($oidvalues,$oidsModel,$ID_Device,$type,$Array_multiplemac_ifIndex);
          break;
 
       case "3Com IntelliJack NJ225" :
@@ -940,39 +1048,46 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
          break;
    }
 
-   // ** Update for all ports on this network device the field 'trunk' in glpi_plugin_tracker_networking_ports
+   // ** Update for all ports on this network device the field 'trunk' in
+   // glpi_plugin_tracker_networking_ports
    foreach($ArrayPort_LogicalNum_SNMPNum AS $num=>$ifIndex) {
-      $query = "SELECT *,glpi_plugin_tracker_networking_ports.ID AS sid  FROM glpi_networking_ports
-         LEFT JOIN glpi_plugin_tracker_networking_ports
-         ON glpi_plugin_tracker_networking_ports.FK_networking_ports = glpi_networking_ports.id
-         WHERE device_type='2'
-            AND on_device='".$ID_Device."'
-            AND logical_number='".$ifIndex."' ";
+      $query = "SELECT *, `glpi_plugin_tracker_networking_ports`.`ID` AS `sid`
+                FROM `glpi_networking_ports`
+                     LEFT JOIN `glpi_plugin_tracker_networking_ports`
+                               ON `glpi_plugin_tracker_networking_ports`.`FK_networking_ports` =
+                                  `glpi_networking_ports`.`ID`
+                WHERE `device_type`='2'
+                      AND `on_device`='".$ID_Device."'
+                      AND `logical_number`='".$ifIndex."';";
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          // If trunk => 1
          if ((isset($Array_trunk_ifIndex[$ifIndex])) AND ($Array_trunk_ifIndex[$ifIndex] == "1")) {
             if ($data['trunk'] != "1") {
-               $query_update = "UPDATE glpi_plugin_tracker_networking_ports
-               SET trunk='1'
-               WHERE ID='".$data['sid']."' ";
+               $query_update = "UPDATE `glpi_plugin_tracker_networking_ports`
+                                SET `trunk`='1'
+                                WHERE `ID`='".$data['sid']."';";
                $DB->query($query_update);
-               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","1","",$_SESSION['FK_process']);
+               plugin_tracker_snmp_addLog(
+                     $data["FK_networking_ports"],"trunk","0","1","",$_SESSION['FK_process']);
                // Remove vlan
                $snmp_queries->CleanVlan($data['FK_networking_ports']);
                $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
             }
          // If multiple => -1
-         } else if ((isset($Array_multiplemac_ifIndex[$ifIndex])) AND ($Array_multiplemac_ifIndex[$ifIndex] == "1")) {
+         } else if (isset($Array_multiplemac_ifIndex[$ifIndex])
+                    AND ($Array_multiplemac_ifIndex[$ifIndex] == "1")) {
             if ($data['trunk'] != "-1") {
-               $query_update = "UPDATE glpi_plugin_tracker_networking_ports
-               SET trunk='-1'
-               WHERE ID='".$data['sid']."' ";
+               $query_update = "UPDATE `glpi_plugin_tracker_networking_ports`
+                                SET `trunk`='-1'
+                                WHERE `ID`='".$data['sid']."';";
                $DB->query($query_update);
-               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",$_SESSION['FK_process']);
+               plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",
+                  $_SESSION['FK_process']);
                // Remove vlan
                plugin_tracker_db_lock_wire_check();
-               plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($data['FK_networking_ports']),$FK_process);
+               plugin_tracker_addLogConnection("remove",
+                  $netwire->getOppositeContact($data['FK_networking_ports']),$FK_process);
                plugin_tracker_addLogConnection("remove",$data['FK_networking_ports'],$FK_process);
                $snmp_queries->CleanVlan($data['FK_networking_ports']);
                $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
@@ -981,17 +1096,19 @@ function plugin_tracker_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues,$ArrayP
                plugin_tracker_db_lock_wire_unlock();
             }
          } else if($data['trunk'] != "0") {
-            $query_update = "UPDATE glpi_plugin_tracker_networking_ports
-            SET trunk='0'
-            WHERE ID='".$data['sid']."' ";
+            $query_update = "UPDATE `glpi_plugin_tracker_networking_ports`
+                             SET `trunk`='0'
+                             WHERE `ID`='".$data['sid']."';";
             $DB->query($query_update);
-            plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0","",$_SESSION['FK_process']);
+            plugin_tracker_snmp_addLog($data["FK_networking_ports"],"trunk","1","0","",
+               $_SESSION['FK_process']);
          }
       }
    }
 
 
-   // ***** Add ports and connections in glpi_plugin_tracker_tmp_* tables for connections between switchs
+   // ***** Add ports and connections in glpi_plugin_tracker_tmp_* tables for connections between
+   // switchs
    foreach($Array_multiplemac_ifIndex AS $ifIndex=>$val) {
       $ifName = $oidvalues[$oidsModel[0][1]['ifName'].".".$ifIndex][""];
       $TMP_ID = $tmpc->UpdatePort($ID_Device,$ArrayPortsID[$ifName]);
@@ -1049,13 +1166,15 @@ function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidv
    if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
 	$walks = new PluginTrackerWalk;	
 
-	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type,$ID_Device,1);
+	if ($_SESSION['tracker_logs'] == "1") $logs->write("tracker_fullsync",
+         ">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type,$ID_Device,1);
 
 	$ifaddr_add = array();
 	$ifaddr = array();
 
-	$query = "SELECT * FROM glpi_plugin_tracker_networking_ifaddr
-	WHERE FK_networking='".$ID_Device."' ";
+	$query = "SELECT *
+             FROM `glpi_plugin_tracker_networking_ifaddr`
+             WHERE `FK_networking`='".$ID_Device."';";
 	if ($result=$DB->query($query)) {
 		while ($data=$DB->fetch_array($result)) {
 			$ifaddr[$data["ifaddr"]] = $data["FK_networking"];
@@ -1074,15 +1193,14 @@ function plugin_tracker_snmp_networking_ifaddr($ID_Device,$type,$oidsModel,$oidv
 	}
 
 	foreach($ifaddr as $ifaddr_snmp=>$FK_networking) {
-		$query_delete = "DELETE FROM glpi_plugin_tracker_networking_ifaddr
-		WHERE FK_networking='".$ID_Device."'
-			AND ifaddr='".$ifaddr_snmp."' ";
+		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ifaddr`
+                       WHERE `FK_networking`='".$ID_Device."'
+                             AND `ifaddr`='".$ifaddr_snmp."';";
 		$DB->query($query_delete);
 	}
 	foreach($ifaddr_switch as $num_snmp=>$ifaddr_snmp) {
-		$query_insert = "INSERT INTO glpi_plugin_tracker_networking_ifaddr
-		(FK_networking,ifaddr)
-		VALUES('".$ID_Device."','".$ifaddr_snmp."') ";
+		$query_insert = "INSERT INTO `glpi_plugin_tracker_networking_ifaddr`(`FK_networking`,`ifaddr`)
+                       VALUES('".$ID_Device."','".$ifaddr_snmp."');";
 		$DB->query($query_insert);
 	}
 }

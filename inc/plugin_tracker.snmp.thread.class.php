@@ -54,13 +54,14 @@ class PluginTrackerProcesses extends CommonDBTM {
 //			"end_time >= DATE_ADD(NOW(), INTERVAL -" . $minfreq . " HOUR) AS DoStat, error_msg, network_queries,
 //			printer_queries, ports_queries, discovery_queries ";
 //		$sql .=    	"FROM glpi_plugin_tracker_processes GROUP BY process_id ORDER BY ID DESC";
-		$sql = "SELECT ID, process_id, network_queries, status, thread_id AS threads_number,
-			start_time AS starting_date, end_time AS ending_date, TIME_TO_SEC(end_time)-TIME_TO_SEC(start_time) AS duree,
-			error_msg, network_queries,
-			printer_queries, ports_queries, discovery_queries
-			FROM glpi_plugin_tracker_processes
-			ORDER BY ID DESC";
-
+		$sql = "SELECT `ID`, `process_id`, `network_queries`, `status`,
+                     `thread_id` AS `threads_number`,	`start_time` AS `starting_date`,
+                     `end_time` AS `ending_date`,
+                     `TIME_TO_SEC`(`end_time`)-`TIME_TO_SEC`(`start_time`) AS `duree`,
+                     `error_msg`, `network_queries`, `printer_queries`, `ports_queries`,
+                     `discovery_queries`
+              FROM `glpi_plugin_tracker_processes`
+              ORDER BY `ID` DESC;";
 
 		$result = $DB->query($sql);
 
@@ -108,7 +109,10 @@ class PluginTrackerProcesses extends CommonDBTM {
 
 					echo "<tr class='tab_bg_1'>"; 
 					echo "<td width='10'>&nbsp;</td>";
-					echo "<td align='center'><!--<a href=\"./plugin_mass_ocs_import.process.form.php?pid=".$thread["process_id"]."\">-->".$thread["process_id"]."<!--</a>--></td>";
+					echo "<td align='center'><!--
+                        <a href=\"./plugin_mass_ocs_import.process.form.php?
+                           pid=".$thread["process_id"]."\">-->".$thread["process_id"]."<!--</a>-->
+                     </td>";
 					echo "<td align='center'>";
 					
 					switch($Threads->getProcessStatus($thread["process_id"])) {
@@ -135,7 +139,8 @@ class PluginTrackerProcesses extends CommonDBTM {
 //					echo "<td align='center'>".$thread["discovery_queries"]."</td>";
 					echo "<td align='center'>";
 					if ($thread["error_msg"] > 0) {
-						echo "<a href='plugin_tracker.processes.errors.php?process=".$thread["process_id"]."'>".$thread["error_msg"]."</a>";
+						echo "<a href='plugin_tracker.processes.errors.php?
+                           process=".$thread["process_id"]."'>".$thread["error_msg"]."</a>";
                } else {
 						echo $thread["error_msg"];
                }
@@ -168,13 +173,12 @@ class PluginTrackerProcesses extends CommonDBTM {
 			
 			$process = '';
 			if (isset($_GET['process'])) {
-				$process = " AND 	FK_processes='".$_GET['process']."' ";
+				$process = " AND 	`FK_processes`='".$_GET['process']."' ";
          }
 			$sql_errors = 	"SELECT *
-		   FROM glpi_plugin_tracker_processes_values
-		   WHERE snmp_errors!=''
-		   ".$process."
-		   ORDER BY FK_processes DESC, date DESC";
+                         FROM `glpi_plugin_tracker_processes_values`
+                         WHERE `snmp_errors`!=''".$process."
+                         ORDER BY `FK_processes` DESC, `date` DESC;";
 	     	$result_errors = $DB->query($sql_errors);
 			while ($thread_errors = $DB->fetch_array($result_errors)) {
 				echo "<tr class='tab_bg_1'>";
@@ -185,8 +189,9 @@ class PluginTrackerProcesses extends CommonDBTM {
 					$on_device = $thread_errors["device_ID"];
 					$device_type = $thread_errors["device_type"];
 				} else {
-					$query_port = "SELECT * FROM glpi_networking_ports 
-					WHERE ID='".$thread_errors["port"]."' ";
+					$query_port = "SELECT *
+                              FROM `glpi_networking_ports`
+                              WHERE `ID`='".$thread_errors["port"]."';";
 					$result_port = $DB->query($query_port);
 					$port_name = "";
 					while ($thread_port = $DB->fetch_array($result_port)) {
@@ -202,7 +207,9 @@ class PluginTrackerProcesses extends CommonDBTM {
 					echo "<td align='center'></td>";
             }
 				$explode = explode('%',$thread_errors["snmp_errors"]);
-				$explode[1] = preg_replace("/\[model(.*?)\]/", "<a href='plugin_tracker.models.form.php?ID=$1'>".$LANG['plugin_tracker']["profile"][24]."</a>",$explode[1]);
+				$explode[1] = preg_replace("/\[model(.*?)\]/", 
+               "<a href='plugin_tracker.models.form.php?ID=$1'>".
+                   $LANG['plugin_tracker']["profile"][24]."</a>",$explode[1]);
 				echo "<td align='center'><b>".$LANG['plugin_tracker']["errors"][$explode[0]]."</b>";
 				echo "<br/>".str_replace('--','<br/>',$explode[1]);
 				echo "</td>";
@@ -227,19 +234,19 @@ class PluginTrackerProcesses extends CommonDBTM {
 			echo "</th></tr>\n";
 		
 			$sql_connection = "SELECT *
-		   FROM glpi_plugin_tracker_snmp_history
-		   WHERE Field=''
-		   	OR Field='0'
-		   	AND ((new_device_type='2')
-		   		OR (old_device_type='2'))
-		   ORDER BY FK_process DESC, date_mod DESC";
+                            FROM `glpi_plugin_tracker_snmp_history`
+                            WHERE `Field`=''
+                                  OR `Field`='0'
+                                  AND ((`new_device_type`='2') OR (`old_device_type`='2'))
+                            ORDER BY `FK_process` DESC, `date`_mod DESC;";
 	     	$result_connection = $DB->query($sql_connection);
 			while ($thread_connection = $DB->fetch_array($result_connection)) {
 				echo "<tr class='tab_bg_1'>";
 				echo "<td align='center'></td>";
 				echo "<td align='center'>".$thread_connection["FK_process"]."</td>";
 				
-				if (($thread_connection["old_device_ID"] != "0") OR ($thread_connection["new_device_ID"] != "0")) {
+				if (($thread_connection["old_device_ID"] != "0")
+                OR ($thread_connection["new_device_ID"] != "0")) {
 					// Connections and disconnections
 					if ($thread_connection["old_device_ID"] != "0") {
 						// disconnection
@@ -249,8 +256,9 @@ class PluginTrackerProcesses extends CommonDBTM {
 						echo "<td align='center'>".$LANG["log"][55]."</td>";
 					}
 
-					$query_port = "SELECT * FROM glpi_networking_ports 
-					WHERE ID='".$thread_connection["FK_ports"]."' ";
+					$query_port = "SELECT *
+                              FROM `glpi_networking_ports`
+                              WHERE `ID`='".$thread_connection["FK_ports"]."';";
 					$result_port = $DB->query($query_port);
 					$port_name = "";
 					$device_type = 0;
@@ -265,30 +273,35 @@ class PluginTrackerProcesses extends CommonDBTM {
 					echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
 					
 					//echo "<td></td>";
-					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$thread_connection["FK_ports"]."'>".$port_name."</a></td>";
+					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".
+                     $thread_connection["FK_ports"]."'>".$port_name."</a></td>";
 
 					echo "<td align='center'>".$thread_connection["date_mod"]."</td>";
 					if ($thread_connection["old_device_ID"] != "0") {
-						$CommonItem->getFromDB($thread_connection["old_device_type"],$thread_connection["old_device_ID"]);
+						$CommonItem->getFromDB($thread_connection["old_device_type"],
+                     $thread_connection["old_device_ID"]);
 						echo "<td align='center'>".$CommonItem->getLink(1)."</td>";	
 						$queryPort = "SELECT * 
-						FROM glpi_networking_ports
-						WHERE ifmac='".$thread_connection['old_value']."' 
-						LIMIT 0,1";
+                                FROM `glpi_networking_ports`
+                                WHERE `ifmac`='".$thread_connection['old_value']."'
+                                LIMIT 0,1;";
 						$resultPort = $DB->query($queryPort);		
 						$dataPort = $DB->fetch_assoc($resultPort);
 					} else if ($thread_connection["new_device_ID"] != "0") {
-						$CommonItem->getFromDB($thread_connection["new_device_type"],$thread_connection["new_device_ID"]);
+						$CommonItem->getFromDB($thread_connection["new_device_type"],
+                     $thread_connection["new_device_ID"]);
 						echo "<td align='center'>".$CommonItem->getLink(1)."</td>";
 						$queryPort = "SELECT * 
-						FROM glpi_networking_ports
-						WHERE ifmac='".$thread_connection['new_value']."' 
-						LIMIT 0,1";
+                                FROM `glpi_networking_ports`
+                                WHERE `ifmac`='".$thread_connection['new_value']."'
+                                LIMIT 0,1;";
 						$resultPort = $DB->query($queryPort);		
 						$dataPort = $DB->fetch_assoc($resultPort);
 					}
 					// Search network card with mac address
-					echo "<td align='center'><a href='".GLPI_ROOT."/front/networking.port.php?ID=".$dataPort['ID']."'>".$dataPort['name']."</a></td>";
+					echo "<td align='center'><a href='".GLPI_ROOT.
+                        "/front/networking.port.php?ID=".$dataPort['ID']."'>".$dataPort['name'].
+                        "</a></td>";
 				}
 			}
 		}
@@ -300,22 +313,23 @@ class PluginTrackerProcesses extends CommonDBTM {
 	function addProcess($PID,$num_processes) {
 		global $DB;
 				
-		$query = "INSERT INTO glpi_plugin_tracker_processes
-			(start_time,process_id,status,error_msg,thread_id)
-		VALUES('".date("Y-m-d H:i:s")."','".$PID."','1',0,'".$num_processes."') ";
+		$query = "INSERT INTO `glpi_plugin_tracker_processes`
+                            (`start_time`,`process_id`,`status`,`error_msg`,`thread_id`)
+                VALUES('".date("Y-m-d H:i:s")."','".$PID."','1',0,'".$num_processes."');";
 		$DB->query($query);
 	}
 	
 	
-	function updateProcess($PID, $NetworkQueries=0, $PrinterQueries=0, $DiscoveryQueries=0, $errors=0) {
+	function updateProcess($PID, $NetworkQueries=0, $PrinterQueries=0, $DiscoveryQueries=0,
+                          $errors=0) {
 		global $DB;
 
-		$query = "UPDATE glpi_plugin_tracker_processes
-		SET network_queries=network_queries + ".$NetworkQueries.",
-			printer_queries=printer_queries + ".$PrinterQueries.",
-			discovery_queries=discovery_queries + ".$DiscoveryQueries.",
-			error_msg=error_msg + ".$errors."
-		WHERE process_id='".$PID."' ";
+		$query = "UPDATE `glpi_plugin_tracker_processes`
+                SET `network_queries`=`network_queries` + '".$NetworkQueries."',
+                    `printer_queries`=`printer_queries` + '".$PrinterQueries."',
+                    `discovery_queries`=`discovery_queries` + '".$DiscoveryQueries."',
+                    `error_msg`=`error_msg` + '".$errors."'
+                WHERE `process_id`='".$PID."';";
 		$DB->query($query);
 	}
 
@@ -323,9 +337,9 @@ class PluginTrackerProcesses extends CommonDBTM {
 
 	function closeProcess($PID) {
 		global $DB;
-		$query = "UPDATE glpi_plugin_tracker_processes
-		SET end_time='".date("Y-m-d H:i:s")."', status='3'
-		WHERE process_id='".$PID."' ";
+		$query = "UPDATE `glpi_plugin_tracker_processes`
+                SET `end_time`='".date("Y-m-d H:i:s")."', `status`='3'
+                WHERE `process_id`='".$PID."';";
 		$DB->query($query);
 	}
 	
@@ -334,16 +348,19 @@ class PluginTrackerProcesses extends CommonDBTM {
 	function addProcessValues($PID, $field,$FK_port=0,$value,$device_ID=0,$device_type=0) {
 		global $DB;
 		
-		$query = "INSERT INTO glpi_plugin_tracker_processes_values
-		(FK_processes,port,device_ID,device_type,".$field.",date)
-		VALUES('".$PID."','".$FK_port."','".$device_ID."','".$device_type."','".$value."','".date("Y-m-d H:i:s")."')";
+		$query = "INSERT INTO `glpi_plugin_tracker_processes_values`
+                            (`FK_processes`,`port`,`device_ID`,`device_type`,".$field.",`date`)
+                VALUES('".$PID."','".$FK_port."','".$device_ID."','".$device_type."','".
+                       $value."','".date("Y-m-d H:i:s")."');";
 		$DB->query($query);
 	}	
 
 
 	function getProcessStatus($pid) {
 		global $DB;
-		$sql = "SELECT status FROM glpi_plugin_tracker_processes WHERE process_id=" . $pid;
+		$sql = "SELECT `status`
+              FROM `glpi_plugin_tracker_processes`
+              WHERE `process_id`='".$pid."';";
 		$result = $DB->query($sql);
 		$status = 0;
 		$thread_number = 0;
@@ -369,10 +386,11 @@ class PluginTrackerProcesses extends CommonDBTM {
 		$PID = "";
 		switch ($type) {
 			case NETWORKING_TYPE:
-				$query = "SELECT * FROM glpi_plugin_tracker_processes
-				WHERE network_queries > 0 
-				ORDER BY ID DESC
-				LIMIT 0,1 ";
+				$query = "SELECT *
+                      FROM `glpi_plugin_tracker_processes`
+                      WHERE `network_queries` > 0
+                      ORDER BY `ID` DESC
+                      LIMIT 0,1;";
 				$result = $DB->query($query);
 				$data = $DB->fetch_assoc($result);
 				$PID = $data["process_id"];
@@ -387,9 +405,10 @@ class PluginTrackerProcesses extends CommonDBTM {
 		global $DB;
 
 		// Detect if mac adress is different of internal mac address of port
-		$query = "SELECT *  FROM glpi_networking_ports
-		WHERE ID='".$FK_port."'
-		 AND ifmac='".$macaddress."' "; 
+		$query = "SELECT * 
+                FROM `glpi_networking_ports`
+                WHERE `ID`='".$FK_port."'
+                      AND `ifmac`='".$macaddress."';";
 		$result = $DB->query($query);		
 		if (mysql_num_rows($result) == "0") {
          plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($sport),$FK_process);
@@ -401,19 +420,23 @@ class PluginTrackerProcesses extends CommonDBTM {
 				$ip_unknown = plugin_tracker_search_ip_ocs_servers($macaddress);
          }
 			// Search if a line exist
-			$query = "SELECT *  FROM glpi_plugin_tracker_unknown_mac
-			WHERE unknow_mac='".$macaddress."'
-			ORDER BY end_time DESC
-			LIMIT 0,1";
+			$query = "SELECT *
+                   FROM `glpi_plugin_tracker_unknown_mac`
+                   WHERE `unknow_mac`='".$macaddress."'
+                   ORDER BY `end_time` DESC
+                   LIMIT 0,1;";
 			$result = $DB->query($query);
 			if ($DB->numrows($result) == 0) {
 				// Add in port history connection to this mac address
 				plugin_tracker_addLogConnection_unknown_mac($macaddress,$FK_port,$PID);
 
 				// Insert
-				$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
-					(start_FK_processes, start_time, port,unknow_mac,unknown_ip,end_time,end_FK_processes)
-				VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".$ip_unknown."','".date("Y-m-d H:i:s")."','".$PID."')";
+				$query_ins = "INSERT INTO `glpi_plugin_tracker_unknown_mac`
+                                      (`start_FK_processes`, `start_time`, `port`, `unknow_mac`,
+                                       `unknown_ip`,`end_time`,`end_FK_processes`)
+                          VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".
+                                  $macaddress."','".$ip_unknown."','".date("Y-m-d H:i:s")."','".
+                                  $PID."');";
 				$DB->query($query_ins);
 			} else {
 				while ($data = $DB->fetch_array($result)) {
@@ -422,15 +445,20 @@ class PluginTrackerProcesses extends CommonDBTM {
 
 					if ($data["port"] == $FK_port) {
 						// Update
-						$query_upd = "UPDATE glpi_plugin_tracker_unknown_mac
-						SET end_time='".date("Y-m-d H:i:s")."',end_FK_processes='".$PID."' 
-						WHERE ID='".$data["ID"]."' ";
+						$query_upd = "UPDATE `glpi_plugin_tracker_unknown_mac`
+                                SET `end_time`='".date("Y-m-d H:i:s")."',
+                                    `end_FK_processes`='".$PID."'
+                                WHERE `ID`='".$data["ID"]."';";
 						$DB->query($query_upd);
 					} else {
 						// Insert
-						$query_ins = "INSERT INTO glpi_plugin_tracker_unknown_mac
-							(start_FK_processes, start_time, port,unknow_mac,unknown_ip,end_time,end_FK_processes)
-						VALUES ('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".$macaddress."','".$ip_unknown."','".date("Y-m-d H:i:s")."','".$PID."')";
+						$query_ins = "INSERT INTO `glpi_plugin_tracker_unknown_mac`
+                                            (`start_FK_processes`, `start_time`, `port`,
+                                             `unknow_mac`, `unknown_ip`, `end_time`,
+                                             `end_FK_processes`)
+                                VALUES('".$PID."','".date("Y-m-d H:i:s")."','".$FK_port."','".
+                                       $macaddress."','".$ip_unknown."','".date("Y-m-d H:i:s").
+                                       "','".$PID."');";
 						$DB->query($query_ins);
 					}
 				}
@@ -445,11 +473,12 @@ class PluginTrackerProcesses extends CommonDBTM {
 		
 		$unknownMac = "";
 		$unknownIP = "";
-		$query = "SELECT unknow_mac,unknown_ip FROM glpi_plugin_tracker_unknown_mac
-		WHERE (start_FK_processes<".$PID." OR start_FK_processes=".$PID.")
-			AND (end_FK_processes>".$PID." OR end_FK_processes=".$PID.")
-			AND port='".$FK_port."' 
-		LIMIT 0,1";
+		$query = "SELECT `unknow_mac`, `unknown_ip`
+                FROM `glpi_plugin_tracker_unknown_mac`
+                WHERE (`start_FK_processes`<".$PID." OR `start_FK_processes`=".$PID.")
+                      AND (`end_FK_processes`>".$PID." OR `end_FK_processes`=".$PID.")
+                      AND `port`='".$FK_port."'
+                LIMIT 0,1;";
 	
 		if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
@@ -469,7 +498,9 @@ class PluginTrackerProcesses extends CommonDBTM {
 	
 	function Create ($file) {
 		$t = new PluginTrackerProcesses;
-		$descriptor = array (0 => array ("pipe", "r"), 1 => array ("pipe", "w"), 2 => array ("pipe", "w"));
+		$descriptor = array (0 => array ("pipe", "r"),
+                           1 => array ("pipe", "w"),
+                           2 => array ("pipe", "w"));
 		$t->pref = proc_open ("php -q $file ", $descriptor, $t->pipes);
 		stream_set_blocking ($t->pipes[1], 0);
 		return $t;

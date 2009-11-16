@@ -71,7 +71,8 @@ function plugin_tracker_search_name_ocs_servers($MAC) {
 function plugin_tracker_getOCSServerID() {
 	global $DB;
 	$list = array();
-	$sql = "SELECT ID FROM glpi_ocs_config";
+	$sql = "SELECT `ID`
+           FROM `glpi_ocs_config`;";
 	$result = $DB->query($sql);
 	if ($DB->numrows($result) > 0) {
 		$datas = $DB->fetch_array($result);
