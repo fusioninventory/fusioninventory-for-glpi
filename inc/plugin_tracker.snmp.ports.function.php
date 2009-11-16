@@ -39,8 +39,9 @@ function plugin_tracker_getUniqueObjectfieldsByportID($id) {
 	global $DB;
 	
 	$array = array();
-	$query = "SELECT * FROM glpi_networking_ports 
-	WHERE ID='".$id."' ";
+	$query = "SELECT *
+             FROM `glpi_networking_ports`
+             WHERE `ID`='".$id."';";
 	if ($result=$DB->query($query)) {
 		$data = $DB->fetch_array($result);
 		$array["on_device"] = $data["on_device"];
@@ -48,9 +49,10 @@ function plugin_tracker_getUniqueObjectfieldsByportID($id) {
 	}
 	switch($array["device_type"]) {
 		case NETWORKING_TYPE:
-			$query = "SELECT * FROM glpi_networking
-			WHERE ID='".$array["device_type"]."' 
-			LIMIT 0,1 ";
+			$query = "SELECT *
+                   FROM `glpi_networking`
+                   WHERE `ID`='".$array["device_type"]."'
+                   LIMIT 0,1;";
 			if ($result=$DB->query($query)) {
 				$data = $DB->fetch_array($result);
 				$array["name"] = $data["name"];

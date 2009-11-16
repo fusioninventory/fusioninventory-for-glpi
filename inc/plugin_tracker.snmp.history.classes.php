@@ -57,19 +57,27 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 	function insert_connection($status,$array,$FK_process=0) {
 		global $DB,$CFG_GLPI;
 		if ($status == "remove") {
-			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
-			(FK_ports,old_value,old_device_type,old_device_ID,date_mod,FK_process)
-			VALUES('".$array["FK_ports"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."','".$FK_process."')";
+			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
+                               `FK_ports`,`old_value`,`old_device_type`,`old_device_ID`,`date_mod`,
+                               `FK_process`)
+                   VALUES('".$array["FK_ports"]."','".$array["value"]."',
+                          '".$array["device_type"]."','".$array["device_ID"]."',
+                          '".date("Y-m-d H:i:s")."','".$FK_process."');";
 		
 		} else if ($status == "make") {
-			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
-			(FK_ports,new_value,new_device_type,new_device_ID,date_mod,FK_process)
-			VALUES('".$array["FK_ports"]."','".$array["value"]."','".$array["device_type"]."','".$array["device_ID"]."','".date("Y-m-d H:i:s")."','".$FK_process."')";
+			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
+                               `FK_ports`,`new_value`,`new_device_type`,`new_device_ID`,`date_mod`,
+                               `FK_process`)
+                   VALUES('".$array["FK_ports"]."','".$array["value"]."',
+                          '".$array["device_type"]."','".$array["device_ID"]."',
+                          '".date("Y-m-d H:i:s")."','".$FK_process."');";
 	
 		} else if ($status == "field") {
-			$query = "INSERT INTO glpi_plugin_tracker_snmp_history
-			(FK_ports,field,old_value,new_value,date_mod,FK_process)
-			VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."','".$array["old_value"]."','".$array["new_value"]."','".date("Y-m-d H:i:s")."','".$FK_process."')";
+			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
+                               `FK_ports`,`field`,`old_value`,`new_value`,`date_mod`,`FK_process`)
+                   VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."',
+                          '".$array["old_value"]."','".$array["new_value"]."',
+                          '".date("Y-m-d H:i:s")."','".$FK_process."');";
 	
 		}
 		$DB->query($query);
@@ -80,7 +88,8 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
    function showForm($target,$ID) {
       global $LANG, $DB;
 
-      echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
+      echo "<form method='post' name='functionalities_form' id='functionalities_form'
+                  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='2'>";
 
 		echo "<tr>";
@@ -113,7 +122,8 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
       }
 
       // Get list of fields configured for history
-      $query = "SELECT * FROM glpi_plugin_tracker_config_snmp_history";
+      $query = "SELECT *
+                FROM `glpi_plugin_tracker_config_snmp_history`;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             list($type,$name) = explode("-", $data['field']);
@@ -191,17 +201,16 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 
 		if (isset($data['plugin_tracker_extraction_to_add'])) {
 			foreach ($data['plugin_tracker_extraction_to_add'] as $key=>$id_value) {
-				$query = "INSERT INTO glpi_plugin_tracker_config_snmp_history
-				(field)
-				VALUES ('".$id_value."')";
+				$query = "INSERT INTO `glpi_plugin_tracker_config_snmp_history` (`field`)
+                      VALUES ('".$id_value."');";
 				$DB->query($query);
 			}
       }
 
 		if (isset($data['plugin_tracker_extraction_to_delete'])) {
 			foreach ($data['plugin_tracker_extraction_to_delete'] as $key=>$id_value) {
-				$query = "DELETE FROM glpi_plugin_tracker_config_snmp_history
-				WHERE field='".$id_value."'";
+				$query = "DELETE FROM `glpi_plugin_tracker_config_snmp_history`
+                      WHERE `field`='".$id_value."';";
 				$DB->query($query);
 			}
       }
@@ -221,7 +230,8 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
          }
       }
 
-      $query = "SELECT * FROM glpi_plugin_tracker_config_snmp_history";
+      $query = "SELECT *
+                FROM `glpi_plugin_tracker_config_snmp_history`;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             list($type,$name) = explode("-", $data['field']);
@@ -232,8 +242,8 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 
       foreach ($listName as $var=>$tmp) {
          list($type,$name) = explode("-", $var);
-         $query_delete = 'DELETE FROM glpi_plugin_tracker_snmp_history
-            WHERE Field="'.$TRACKER_MAPPING[$type][$name]["name"].'" ';
+         $query_delete = 'DELETE FROM `glpi_plugin_tracker_snmp_history`
+                          WHERE `field`="'.$TRACKER_MAPPING[$type][$name]["name"].'";';
          $DB->query($query_delete);
       }
 

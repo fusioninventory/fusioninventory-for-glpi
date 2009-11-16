@@ -45,8 +45,9 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,
 
    $doHistory = 1;
    if ($mapping != "") {
-      $query = "SELECT * FROM glpi_plugin_tracker_config_snmp_history
-         WHERE field='".$mapping."' ";
+      $query = "SELECT *
+                FROM `glpi_plugin_tracker_config_snmp_history`
+                WHERE `field`='".$mapping."';";
       $result = $DB->query($query);
       if ($DB->numrows($result) == 0) {
          $doHistory = 0;
@@ -108,9 +109,9 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 	// * If glpi device connected to this port, disconnect it
    if ($port != "") {
       $queryVerif = "SELECT *
-         FROM glpi_networking_wire
-         WHERE end1 = '".$port."'
-            OR end2  = '".$port."' ";
+                     FROM `glpi_networking_wire`
+                     WHERE `end1` = '".$port."'
+                           OR `end2` = '".$port."';";
 
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) != "0") {
@@ -122,10 +123,14 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
    }
 
 	// * If other unknown mac adress connected, disconnect it
-	$query = "SELECT last_PID_update FROM glpi_networking_ports
-		LEFT JOIN glpi_networking ON glpi_networking.ID = glpi_networking_ports.on_device
-		LEFT JOIN glpi_plugin_tracker_networking ON glpi_plugin_tracker_networking.FK_networking = glpi_networking.ID
-		WHERE glpi_networking_ports.ID=".$port." ";
+	$query = "SELECT `last_PID_update`
+             FROM `glpi_networking_ports`
+                  LEFT JOIN `glpi_networking`
+                            ON `glpi_networking`.`ID` = `glpi_networking_ports`.`on_device`
+                  LEFT JOIN `glpi_plugin_tracker_networking`
+                            ON `glpi_plugin_tracker_networking`.`FK_networking` =
+                               `glpi_networking`.`ID`
+             WHERE `glpi_networking_ports`.`ID`='".$port."';";
 
 	$result = $DB->query($query);
 	$data = $DB->fetch_assoc($result);
@@ -173,10 +178,11 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 
 	$CommonItem = new CommonItem;
 
-	$query = "SELECT * FROM glpi_plugin_tracker_snmp_history
-	WHERE FK_ports='".$ID_port."'
-	ORDER BY date_mod DESC
-	LIMIT 0,30";		
+	$query = "SELECT *
+             FROM `glpi_plugin_tracker_snmp_history`
+             WHERE `FK_ports`='".$ID_port."'
+             ORDER BY `date_mod` DESC
+             LIMIT 0,30;";
 
 	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 

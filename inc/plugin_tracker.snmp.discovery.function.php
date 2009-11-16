@@ -53,9 +53,9 @@ function plugin_tracker_discovery_update_devices($array, $target) {
 	foreach ($array as $key=>$value) {
 		if (strstr($key, "model_infos")) {
 			$explode = explode ("-", $key);
-			$query = "UPDATE glpi_plugin_tracker_discovery
-			SET FK_model_infos='".$value."',type='".$array['type-'.$explode[1]]."'
-			WHERE ID='".$explode[1]."' ";
+			$query = "UPDATE `glpi_plugin_tracker_discovery`
+                   SET `FK_model_infos`='".$value."',`type`='".$array['type-'.$explode[1]]."'
+                   WHERE `ID`='".$explode[1]."';";
 			$DB->query($query);
 		}
 	}
@@ -78,9 +78,10 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 	$td = new PluginTrackerUnknown;
 	
 	$td->getFromDB($discovery_ID);
-   $query = "SELECT ID FROM glpi_networking_ports
-   WHERE on_device = '".$discovery_ID."'
-      AND device_type = '".PLUGIN_TRACKER_MAC_UNKNOWN."' ";
+   $query = "SELECT `ID`
+             FROM `glpi_networking_ports`
+             WHERE `on_device` = '".$discovery_ID."'
+                   AND `device_type` = '".PLUGIN_TRACKER_MAC_UNKNOWN."';";
 	if ($result = $DB->query($query)) {
       $data = $DB->fetch_assoc($result);
       $Netport->getFromDB($data["ID"]);
@@ -115,8 +116,8 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 			$data_tracker["FK_snmp_connection"] = $td->fields["FK_snmp_connection"];
 			$tracker_printers->add($data_tracker);			
 			
-			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
-			WHERE ID='".$discovery_ID."' ";
+			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
+                       WHERE `ID`='".$discovery_ID."';";
 			$DB->query($query_del);
 			$Import++;
 			break;
@@ -148,8 +149,8 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 			$data_tracker["FK_snmp_connection"] = $td->fields["FK_snmp_connection"];
 			$tracker_networking->add($data_tracker);
 
-			$query_del = "DELETE FROM glpi_plugin_tracker_unknown_device
-			WHERE ID='".$discovery_ID."' ";
+			$query_del = "DELETE FROM `glpi_plugin_tracker_unknown_device`
+                       WHERE `ID`='".$discovery_ID."';";
 			$DB->query($query_del);
 			$Import++;
 			break;
@@ -170,8 +171,8 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
          $data_Port["ifmac"] = $Netport->fields["ifmac"];
 			$Netport->add($data_Port);
 			
-			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
-			WHERE ID='".$discovery_ID."' ";
+			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
+                       WHERE `ID`='".$discovery_ID."';";
 			$DB->query($query_del);
 			$Import++;
 			break;
@@ -192,8 +193,8 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
          $data_Port["ifmac"] = $Netport->fields["ifmac"];
 			$Netport->add($data_Port);
 
-			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
-			WHERE ID='".$discovery_ID."' ";
+			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
+                       WHERE `ID`='".$discovery_ID."';";
 			$DB->query($query_del);
 			$Import++;
 			break;
@@ -214,8 +215,8 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
          $data_Port["ifmac"] = $Netport->fields["ifmac"];
 			$Netport->add($data_Port);
 
-			$query_del = "DELETE FROM glpi_plugin_tracker_discovery
-			WHERE ID='".$discovery_ID."' ";
+			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
+                       WHERE `ID`='".$discovery_ID."';";
 			$DB->query($query_del);
 			$Import++;
 			break;
@@ -269,9 +270,10 @@ function plugin_tracker_discovery_criteria($discovery,$nbcriteria,$typerequest) 
       $Array_criteria_source = $Array_criteria;
       if ($typerequest == "0") {
          if (($discovery->type == NETWORKING_TYPE) OR ($discovery->type == "0")) {
-            $query_search = "SELECT * FROM glpi_networking
-				WHERE FK_entities='".$discovery->entity."'
-					AND ".$Array_criteria[0];
+            $query_search = "SELECT *
+                             FROM `glpi_networking`
+                             WHERE `FK_entities`='".$discovery->entity."'
+                                   AND ".$Array_criteria[0];
 				for ($i=1 ; $i < count($Array_criteria) ; $i++) {
 					$query_search .= " AND ".$Array_criteria[$i];
             }
@@ -290,13 +292,14 @@ function plugin_tracker_discovery_criteria($discovery,$nbcriteria,$typerequest) 
                   $Array_criteria[$i] = $ci->obj->table.".".$Array_criteria[0];
                }
             }
-				$query_search = "SELECT ".$ci->obj->table.".name AS name,
-				serial, glpi_networking_ports.ifaddr AS ifaddr
-				FROM ".$ci->obj->table."
-				LEFT JOIN glpi_networking_ports ON on_device=".$ci->obj->table.".ID
-					AND device_type='".$discovery->type."'
-				WHERE FK_entities='".$discovery->entity."'
-					AND ".$Array_criteria[0];
+				$query_search = "SELECT ".$ci->obj->table.".`name` AS `name`, `serial`,
+                                    `glpi_networking_ports`.`ifaddr` AS `ifaddr`
+                             FROM ".$ci->obj->table."
+                                  LEFT JOIN `glpi_networking_ports`
+                                            ON `on_device`=".$ci->obj->table.".`ID`
+                                               AND `device_type`='".$discovery->type."'
+                             WHERE `FK_entities`='".$discovery->entity."'
+                                   AND ".$Array_criteria[0];
 				for ($i=1 ; $i < count($Array_criteria) ; $i++) {
 					$query_search .= " AND ".$ci->obj->table.".".$Array_criteria[$i];
             }
@@ -320,13 +323,14 @@ function plugin_tracker_discovery_criteria($discovery,$nbcriteria,$typerequest) 
                      $Array_criteria[$i] = $ci->obj->table.".".$Array_criteria[0];
                   }
                }
-               $query_search = "SELECT ".$ci->obj->table.".name AS name,
-               serial, glpi_networking_ports.ifaddr AS ifaddr
-               FROM ".$ci->obj->table."
-               LEFT JOIN glpi_networking_ports ON on_device=".$ci->obj->table.".ID
-                  AND device_type=".$type."
-               WHERE FK_entities='".$discovery->entity."'
-                  AND ".$Array_criteria[0];
+               $query_search = "SELECT ".$ci->obj->table.".`name` AS `name`, `serial`,
+                                       `glpi_networking_ports`.`ifaddr` AS `ifaddr`
+                                FROM ".$ci->obj->table."
+                                     LEFT JOIN `glpi_networking_ports`
+                                               ON `on_device`=".$ci->obj->table.".`ID`
+                                                  AND `device_type`=".$type."
+                                WHERE `FK_entities`='".$discovery->entity."'
+                                      AND ".$Array_criteria[0];
                for ($i=1 ; $i < count($Array_criteria) ; $i++) {
                   $query_search .= " AND ".$ci->obj->table.".".$Array_criteria[$i];
                }
@@ -340,12 +344,13 @@ function plugin_tracker_discovery_criteria($discovery,$nbcriteria,$typerequest) 
       } else if ($typerequest == "5153") {
          // Search in unknown devices
          $ci->setType(PLUGIN_TRACKER_MAC_UNKNOWN,true);
-         $query_search = "SELECT ".$ci->obj->table.".ID AS ID,
-         glpi_networking_ports.ID AS netID
-         FROM ".$ci->obj->table."
-         LEFT JOIN glpi_networking_ports ON on_device=".$ci->obj->table.".ID
-         WHERE FK_entities='".$discovery->entity."'
-            AND ifmac='".$discovery->mac."'";
+         $query_search = "SELECT ".$ci->obj->table.".`ID` AS `ID`,
+                                 `glpi_networking_ports`.`ID` AS `netID`
+                          FROM ".$ci->obj->table."
+                               LEFT JOIN `glpi_networking_ports`
+                                         ON `on_device`=".$ci->obj->table.".`ID`
+                          WHERE `FK_entities`='".$discovery->entity."'
+                                AND `ifmac`='".$discovery->mac."';";
          $result_search = $DB->query($query_search);
          if ($DB->numrows($result_search) == "0") {
             return 0;

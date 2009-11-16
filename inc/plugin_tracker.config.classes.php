@@ -48,9 +48,12 @@ class PluginTrackerConfig extends CommonDBTM {
 	function initConfig($version) {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
-		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, version,	activation_history, activation_connection, activation_snmp_networking, activation_snmp_peripheral, activation_snmp_phone, activation_snmp_printer, authsnmp, URL_agent_conf, ssl_only) ".
-				 "VALUES ('1', '".$version."', '0', '0', '0', '0', '0', '0', 'DB', '".$url."', '1')";
+		$query = "INSERT INTO ".$this->table."(
+                              `ID`, `version`, `activation_history`, `activation_connection`,
+                              `activation_snmp_networking`, `activation_snmp_peripheral`,
+                              `activation_snmp_phone`,`activation_snmp_printer`, `authsnmp`,
+                              `URL_agent_conf`, `ssl_only`)
+                VALUES ('1', '".$version."', '0', '0', '0', '0', '0', '0', 'DB', '".$url."', '1');";
 		
 		$DB->query($query);
 	}
@@ -59,8 +62,9 @@ class PluginTrackerConfig extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
-		$query = "SELECT ".$field." FROM ".$this->table." ".
-				 "WHERE ID = '1'";
+		$query = "SELECT ".$field."
+                FROM ".$this->table."
+                WHERE `ID` = '1';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -199,9 +203,10 @@ class PluginTrackerConfigDiscovery extends CommonDBTM {
 	function initConfig() {
 		global $DB;
 
-		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, link_ip, link_name, link_serial, link2_ip, link2_name, link2_serial) ".
-				 "VALUES ('1', '0', '0', '0', '0', '0', '0')";
+		$query = "INSERT INTO ".$this->table."(
+                            `ID`, `link_ip`, `link_name`, `link_serial`, `link2_ip`, `link2_name`,
+                           `link2_serial`)
+                VALUES ('1', '0', '0', '0', '0', '0', '0');";
 
 		$DB->query($query);
 	}
@@ -210,8 +215,9 @@ class PluginTrackerConfigDiscovery extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
-		$query = "SELECT ".$field." FROM ".$this->table." ".
-				 "WHERE ID = '1'";
+		$query = "SELECT ".$field."
+                FROM ".$this->table."
+                WHERE `ID` = '1';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -336,9 +342,9 @@ class PluginTrackerConfigSNMPScript extends CommonDBTM {
 	function initConfig() {
 		global $DB;
 		
-		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, nb_process, logs,`lock`) ".
-				 "VALUES ('1', '1', '0', '0')";
+		$query = "INSERT INTO ".$this->table."(
+                            `ID`, `nb_process`, `logs`,`lock`)
+                VALUES ('1', '1', '0', '0');";
 		
 		$DB->query($query);
 	}
@@ -348,8 +354,9 @@ class PluginTrackerConfigSNMPScript extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
-		$query = "SELECT ".$field." FROM ".$this->table." ".
-				 "WHERE ID = '1'";
+		$query = "SELECT ".$field."
+                FROM ".$this->table."
+                WHERE `ID` = '1';";
 		$result = $DB->query($query);
 		if ($this->fields = $DB->fetch_row($result)) {
 			return $this->fields['0'];
@@ -415,9 +422,10 @@ class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
 	function initConfig() {
 		global $DB;
 		
-		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, active_device_state, history_wire, history_ports_state, history_unknown_mac, history_snmp_errors, history_process) ".
-				 "VALUES ('1', '0', '0', '0', '0', '0', '0')";
+		$query = "INSERT INTO ".$this->table."(
+                            `ID`, `active_device_state`, `history_wire`, `history_ports_state`,
+                            `history_unknown_mac`, `history_snmp_errors`, `history_process`)
+                VALUES ('1', '0', '0', '0', '0', '0', '0');";
 		
 		$DB->query($query);
 	}
@@ -427,8 +435,9 @@ class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
-		$query = "SELECT ".$field." FROM ".$this->table." ".
-				 "WHERE ID = '1'";
+		$query = "SELECT ".$field."
+                FROM ".$this->table."
+                WHERE `ID` = '1';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -515,8 +524,9 @@ class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
       switch ($option) {
          case "history_process":
             if ($this->getValue("history_process") != 0) {
-               $query_delete = "DELETE FROM glpi_plugin_tracker_processes
-                  WHERE start_time < date_add(now(),interval -".$this->getValue("history_process")." day) ";
+               $query_delete = "DELETE FROM `glpi_plugin_tracker_processes`
+                                WHERE `start_time` < date_add(now(),interval -".
+                                       $this->getValue("history_process")." day);";
                $DB->query($query_delete);
             }
             break;
@@ -537,9 +547,9 @@ class PluginTrackerConfigSNMPPrinter extends CommonDBTM {
 	function initConfig() {
 		global $DB;
 		
-		$query = "INSERT INTO ".$this->table." ".
-				 "(ID, active_device_state, manage_cartridges) ".
-				 "VALUES ('1', '0', '0')";
+		$query = "INSERT INTO ".$this->table."(
+                `ID`, `active_device_state`, `manage_cartridges`)
+                VALUES ('1', '0', '0');";
 		
 		$DB->query($query);
 	}
@@ -549,8 +559,9 @@ class PluginTrackerConfigSNMPPrinter extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
-		$query = "SELECT ".$field." FROM ".$this->table." ".
-				 "WHERE ID = '1'";
+		$query = "SELECT ".$field."
+                FROM ".$this->table."
+                WHERE `ID` = '1';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];

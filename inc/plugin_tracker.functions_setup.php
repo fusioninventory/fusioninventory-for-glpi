@@ -112,17 +112,30 @@ function plugin_tracker_update($version) {
 		$plugin_tracker_unknown->updateFromOldVersion_unknown_mac();
 		// Delete MySQL table "glpi_plugin_tracker_unknown_mac"
 		$DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
-		$DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.0.2' WHERE ID=1 LIMIT 1 ;");
+		$DB->query("UPDATE `glpi_plugin_tracker_config`
+                  SET `version` = '2.0.2'
+                  WHERE `ID`='1'
+                  LIMIT 1 ;");
 	}
    if ($version == "2.1.0") {
-      $DB->query("UPDATE glpi_plugin_tracker_networking SET last_PID_update = '0';");
-      $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.0' WHERE ID=1 LIMIT 1 ;");
+      $DB->query("UPDATE `glpi_plugin_tracker_networking`
+                  SET `last_PID_update` = '0';");
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
+                  SET `version` = '2.1.0'
+                  WHERE `ID`='1'
+                  LIMIT 1 ;");
    }
    if ($version == "2.1.1") {
-      $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.1' WHERE ID=1 LIMIT 1 ;");
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
+                  SET `version` = '2.1.1'
+                  WHERE `ID`=1
+                  LIMIT 1 ;");
    }
    if ($version == "2.1.2") {
-      $DB->query("UPDATE `glpi_plugin_tracker_config` SET version = '2.1.3' WHERE ID=1 LIMIT 1 ;");
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
+                  SET `version` = '2.1.3'
+                  WHERE `ID`=1
+                  LIMIT 1 ;");
    }
 
 	plugin_tracker_initSession();
@@ -146,29 +159,29 @@ function plugin_tracker_uninstall() {
 		rmdir($current_dir);
 	}
 
-	$query = "SHOW TABLES";
+	$query = "SHOW TABLES;";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
       if ((strstr($data[0],"glpi_dropdown_plugin_tracker_"))
          OR (strstr($data[0],"glpi_plugin_tracker_"))){
-         $query_delete = "DROP TABLE `".$data[0]."`";
+         $query_delete = "DROP TABLE `".$data[0]."`;";
          $DB->query($query_delete) or die($DB->error());
       }
    }
 
-	$query="DELETE FROM glpi_display 
-	WHERE type='".PLUGIN_TRACKER_ERROR_TYPE."' 
-		OR type='".PLUGIN_TRACKER_MODEL."' 
-		OR type='".PLUGIN_TRACKER_SNMP_AUTH."' 
-		OR type='".PLUGIN_TRACKER_MAC_UNKNOWN."'
-		OR type='".PLUGIN_TRACKER_PRINTERS_CARTRIDGES."' 
-		OR type='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS."' 
-		OR type='".PLUGIN_TRACKER_SNMP_AGENTS."' 
-		OR type='".PLUGIN_TRACKER_SNMP_RANGEIP."' 
-		OR type='".PLUGIN_TRACKER_SNMP_DISCOVERY."' 
-		OR type='".PLUGIN_TRACKER_AGENTS_PROCESSES."' 
-		OR type='".PLUGIN_TRACKER_SNMP_HISTORY."' 
-		OR type='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2."' ;";
+	$query="DELETE FROM `glpi_display`
+           WHERE `type`='".PLUGIN_TRACKER_ERROR_TYPE."'
+                 OR `type`='".PLUGIN_TRACKER_MODEL."'
+                 OR `type`='".PLUGIN_TRACKER_SNMP_AUTH."'
+                 OR `type`='".PLUGIN_TRACKER_MAC_UNKNOWN."'
+                 OR `type`='".PLUGIN_TRACKER_PRINTERS_CARTRIDGES."'
+                 OR `type`='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS."'
+                 OR `type`='".PLUGIN_TRACKER_SNMP_AGENTS."'
+                 OR `type`='".PLUGIN_TRACKER_SNMP_RANGEIP."'
+                 OR `type`='".PLUGIN_TRACKER_SNMP_DISCOVERY."'
+                 OR `type`='".PLUGIN_TRACKER_AGENTS_PROCESSES."'
+                 OR `type`='".PLUGIN_TRACKER_SNMP_HISTORY."'
+                 OR `type`='".PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2."' ;";
 	$DB->query($query) or die($DB->error());
 
 }
