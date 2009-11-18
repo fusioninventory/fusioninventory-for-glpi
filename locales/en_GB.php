@@ -495,7 +495,7 @@ $LANG['plugin_tracker']["discovery"][8]="If a device returns empty fields on fir
 $LANG['plugin_tracker']["rangeip"][0]="Start of IP range";
 $LANG['plugin_tracker']["rangeip"][1]="End of IP range";
 $LANG['plugin_tracker']["rangeip"][2]="IP Ranges";
-$LANG['plugin_tracker']["rangeip"][3]="Interrogation";
+$LANG['plugin_tracker']["rangeip"][3]="Query";
 
 
 $LANG['plugin_tracker']["agents"][0]="SNMP Agent";
@@ -509,5 +509,10 @@ $LANG['plugin_tracker']["agents"][8]="Fragments en Ko";
 $LANG['plugin_tracker']["agents"][9]="Advanced options";
 $LANG['plugin_tracker']["agents"][10]="Number of core(s) (CPU) used for querying devices";
 $LANG['plugin_tracker']["agents"][11]="Number of core(s) (CPU) used for network discovery";
+$LANG['plugin_tracker']["agents"][12]="Discovery Agent";
+$LANG['plugin_tracker']["agents"][13]="Query Agent";
 
+$LANG['plugin_tracker']["unknown"][0]="DNS Name";
+$LANG['plugin_tracker']["unknown"][1]="Network port name";
+$LANG['plugin_tracker']["unknown"][2]="Approved devices";
 ?>
