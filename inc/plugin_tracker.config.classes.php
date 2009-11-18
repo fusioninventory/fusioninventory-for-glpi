@@ -88,18 +88,11 @@ class PluginTrackerConfig extends CommonDBTM {
 		global $LANG,$CFG_GLPI;
 
 		$ong[1]=$LANG['plugin_tracker']["functionalities"][2];
-		$ong[2]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
-		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3];
-		if ($this->getValue("activation_snmp_networking") == "1") {
-			$ong[4]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1];
-      }
-		//$ong[5]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][16];
-		if ($this->getValue("activation_snmp_printer") == "1") {
-			$ong[6]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][2];
-      }
+      $ong[2]=$LANG['plugin_tracker']['config'][1];
+		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
+//		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3];
+
       $ong[7]=$LANG['title'][38];
-		//$ong[7]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][34];
-		//$ong[8]=$LANG['plugin_tracker']["functionalities"][4];
 		return $ong;
 	}
 	
@@ -112,78 +105,89 @@ class PluginTrackerConfig extends CommonDBTM {
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 		
 		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["functionalities"][2]." :";
+		echo "<th colspan='4'>";
+		echo $LANG['plugin_tracker']["functionalities"][2]."&nbsp;:";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][27]."</td>";
-		echo "<td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][27]."&nbsp;:</td>";
+		echo "<td width='20%'>";
 		dropdownYesNo("ssl_only", $this->isActivated('ssl_only'));
 		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
-		echo "<td>";
-		echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][10]."</td>";
-		echo "<td>";
-		dropdownYesNo("activation_history", $this->isActivated('activation_history'));
-		echo "</td>";
-		echo "</tr>";
-/* Disable for the moment SEE IT WALID
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][11]."</td>";
-		echo "<td>";
-		dropdownYesNo("activation_connection", $this->isActivated('activation_connection'));
-		echo "</td>";
-		echo "</tr>";		
-*/
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][12]."</td>";
-		echo "<td>";
-		dropdownYesNo("activation_snmp_networking", $this->isActivated('activation_snmp_networking'));
-		echo "</td>";
-		echo "</tr>";	
-/* Disable PERIPHERAL because not completely implemented
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][13]."</td>";
-		echo "<td>";
-		dropdownYesNo("activation_snmp_peripheral", $this->isActivated('activation_snmp_peripheral'));
-		echo "</td>";
-		echo "</tr>";
-*/
-/* Disable PHONE because not completely implemented
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][14]."</td>";
-		echo "<td>";
-		dropdownYesNo("activation_snmp_phone", $this->isActivated('activation_snmp_phone'));
-		echo "</td>";
-		echo "</tr>";	
-*/
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][15]."</td>";
-		echo "<td>";
-		dropdownYesNo("activation_snmp_printer", $this->isActivated('activation_snmp_printer'));
-		echo "</td>";
-		echo "</tr>";
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][16]."</td>";
-		echo "<td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][16]."&nbsp;:</td>";
+		echo "<td width='20%'>";
 		unset($ArrayValues);
 		$ArrayValues['DB']= $LANG['plugin_tracker']["functionalities"][17];
 		$ArrayValues['file']= $LANG['plugin_tracker']["functionalities"][18];
 		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));
-		echo "</td></tr>";
+		echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
+ 		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['plugin_tracker']['config'][0]."&nbsp;:</td>";
+		echo "<td>";
+      dropdownInteger("inventory_frequence",$this->getValue('inventory_frequence'),1,240);
+		echo "</td>";
+		echo "<td></td>";
+		echo "<td>";
+		echo "</td>";
+      echo "</tr>";
+
+		echo "<tr>";
+		echo "<th colspan='2'>";
+		echo $LANG['plugin_tracker']["discovery"][6]."&nbsp;:";
+		echo "</th>";
+		echo "<th colspan='2'>";
+		echo $LANG['plugin_tracker']["discovery"][6]." 2&nbsp;:";
+		echo "</th>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria1_ip", $this->isActivated('criteria1_ip'));
+		echo "</td>";
+		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria2_ip", $this->isActivated('criteria2_ip'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria1_name", $this->isActivated('criteria1_name'));
+		echo "</td>";
+		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria2_name", $this->isActivated('criteria2_name'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria1_serial", $this->isActivated('criteria1_serial'));
+		echo "</td>";
+		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria2_serial", $this->isActivated('criteria2_serial'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria1_macaddr", $this->isActivated('criteria1_macaddr'));
+		echo "</td>";
+		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("criteria2_macaddr", $this->isActivated('criteria2_macaddr'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'><td align='center' colspan='4'>";
 		echo "<input type='hidden' name='tabs' value='config' />";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
 		echo "</table></form>";
@@ -242,85 +246,7 @@ class PluginTrackerConfigDiscovery extends CommonDBTM {
 		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
 		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
 
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3]." :";
-		echo "</th>";
-		echo "</tr>";
 
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["discovery"][6]." :";
-		echo "</th>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td width='500'>".$LANG["networking"][14]."</td>";
-		echo "<td>";
-		dropdownYesNo("link_ip", $this->isActivated('link_ip'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][16]."</td>";
-		echo "<td>";
-		dropdownYesNo("link_name", $this->isActivated('link_name'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][19]."</td>";
-		echo "<td>";
-		dropdownYesNo("link_serial", $this->isActivated('link_serial'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['device_iface'][2]."</td>";
-		echo "<td>";
-		dropdownYesNo("link_macaddr", $this->isActivated('link_macaddr'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["discovery"][6]." 2 :";
-		echo "</th>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='2'>";
-		echo $LANG['plugin_tracker']["discovery"][8];
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td width='500'>".$LANG["networking"][14]."</td>";
-		echo "<td>";
-		dropdownYesNo("link2_ip", $this->isActivated('link2_ip'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][16]."</td>";
-		echo "<td>";
-		dropdownYesNo("link2_name", $this->isActivated('link2_name'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][19]."</td>";
-		echo "<td>";
-		dropdownYesNo("link2_serial", $this->isActivated('link2_serial'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['device_iface'][2]."</td>";
-		echo "<td>";
-		dropdownYesNo("link2_macaddr", $this->isActivated('link2_macaddr'));
-		echo "</td>";
-		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		echo "<input type='hidden' name='tabs' value='snmp_discovery' />";

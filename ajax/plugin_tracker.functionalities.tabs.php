@@ -57,43 +57,23 @@ switch($_POST['glpi_tab']) {
 	case -1 :
 		$config = new PluginTrackerConfig;
 		$config->showForm($_POST['target'],'1');
-		$config_snmp_script = new PluginTrackerConfigSNMPScript;
-		$config_snmp_script->showForm($_POST['target'],'1');
-		$config_discovery = new PluginTrackerConfigDiscovery;
-		$config_discovery->showForm($_POST['target'],'1');
-		if ($config->getValue("activation_snmp_networking") == "1") {
-			$config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
-			$config_snmp_networking->showForm($_POST['target'],'1');
-		}
-		if ($config->getValue("activation_snmp_printer") == "1") {
-			$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
-			$config_snmp_printer->showForm($_POST['target'],'1');
-		}
+		$config_modules = new PluginTrackerConfigModules;
+		$config_modules->showForm($_POST['target'],'1');
+//		$config_discovery = new PluginTrackerConfigDiscovery;
+//		$config_discovery->showForm($_POST['target'],'1');
+
       $history = new PluginTrackerSNMPHistory;
       $history->showForm($_POST['target'],'1');
 		break;
 
 	case 2 :
-		$config_snmp_script = new PluginTrackerConfigSNMPScript;
-		$config_snmp_script->showForm($_POST['target'],'1');
+		$config_modules = new PluginTrackerConfigModules;
+		$config_modules->showForm($_POST['target'],'1');
 		break;
 
 	case 3 :
 		$config_discovery = new PluginTrackerConfigDiscovery;
 		$config_discovery->showForm($_POST['target'],'1');
-		break;
-
-	case 4 :
-		$config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
-		$config_snmp_networking->showForm($_POST['target'],'1');
-		break;
-
-	case 5 :
-		break;
-
-   case 6 :
-		$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
-		$config_snmp_printer->showForm($_POST['target'],'1');
 		break;
 
    case 7 :

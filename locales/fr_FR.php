@@ -42,6 +42,13 @@ $LANG['plugin_tracker']["title"][2]="Historique de connexion";
 $LANG['plugin_tracker']["title"][3]="[Trk] Erreurs";
 $LANG['plugin_tracker']["title"][4]="[Trk] Cron";
 
+$LANG['plugin_tracker']['config'][0] = "Fréquence des inventaires (en heures)";
+$LANG['plugin_tracker']['config'][1] = "Modules";
+$LANG['plugin_tracker']['config'][2] = "Snmp";
+$LANG['plugin_tracker']['config'][3] = "Inventaire OCS";
+$LANG['plugin_tracker']['config'][4] = "Découverte d'équipements";
+$LANG['plugin_tracker']['config'][5] = "Controle de l'agent à partir de GLPI";
+
 $LANG['plugin_tracker']["profile"][0]="Gestion des droits";
 $LANG['plugin_tracker']["profile"][1]="$title"; //interface
 
