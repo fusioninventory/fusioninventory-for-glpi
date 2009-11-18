@@ -1245,7 +1245,7 @@ function plugin_tracker_needUpdate() {
    } else if (!TableExists("glpi_plugin_tracker_agents")) {
 		return 1; //Update
    } else if (!TableExists("glpi_plugin_tracker_config_discovery")) {
-		return 1; // Update
+//		return 1; // Update (Bug with new version SVN 2.1.4
    } else if (!FieldExists("glpi_plugin_tracker_config", "version")) {
       return 1; // Update
    } else if (FieldExists("glpi_plugin_tracker_config", "version")) {
