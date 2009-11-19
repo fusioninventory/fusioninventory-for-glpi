@@ -54,10 +54,23 @@ class PluginTrackerConfigModules extends CommonDBTM {
 		
 		$DB->query($query);
 	}
+	
+	/* Function to get the value of a field */
+	function getValue($field) {
+		global $DB;
 
-   
+		$query = "SELECT ".$field."
+                FROM ".$this->table."
+                WHERE `ID` = '1';";
+		if ($result = $DB->query($query)) {
+			if ($this->fields = $DB->fetch_row($result)) {
+				return $this->fields['0'];
+         }
+		}
+		return false;
+	}
 
-   // Confirm if the functionality is activated, or not
+	// Confirm if the functionality is activated, or not
 	function isActivated($functionality) {
 		
 		if (!($this->getValue($functionality))) {
