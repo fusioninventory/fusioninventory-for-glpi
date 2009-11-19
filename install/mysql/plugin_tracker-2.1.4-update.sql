@@ -52,7 +52,7 @@ DROP TABLE `glpi_plugin_tracker_config_discovery` ;
 
 DROP TABLE `glpi_plugin_tracker_config_snmp_printer`
 
-CREATE TABLE `glpi072`.`glpi_plugin_tracker_config_modules` (
+CREATE TABLE `glpi_plugin_tracker_config_modules` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
    `snmp` INT( 1 ) NOT NULL DEFAULT '0',
    `inventoryocs` INT( 1 ) NOT NULL DEFAULT '0',
@@ -60,5 +60,28 @@ CREATE TABLE `glpi072`.`glpi_plugin_tracker_config_modules` (
    `remotehttpagent` INT( 1 ) NOT NULL DEFAULT '0'
    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_lock`;
 
+CREATE TABLE `glpi_plugin_tracker_lock` (
+   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `itemtype` INT( 11 ) NOT NULL ,
+   `items_id` INT( 11 ) NOT NULL ,
+   `fields` LONGTEXT ,
+   PRIMARY KEY ( `ID` ) ,
+   KEY `itemtype` ( `itemtype` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_lockable`;
+
+CREATE TABLE `glpi_plugin_tracker_lockable` (
+   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `itemtype` INT( 11 ) NOT NULL ,
+   `fields` LONGTEXT ,
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `recursive` TINYINT( 1 ) NOT NULL DEFAULT '0',
+   PRIMARY KEY ( `ID` ) ,
+   KEY `itemtype` ( `itemtype` ),
+   KEY `entities_id` ( `entities_id` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+COLLATE=utf8_unicode_ci;
