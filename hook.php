@@ -1265,7 +1265,7 @@ function plugin_tracker_needUpdate() {
 // Define headings added by the plugin //
 function plugin_get_headings_tracker($type,$ID,$withtemplate) {
 	global $LANG;
-	$config = new PluginTrackerConfig;
+	$configModules = new PluginTrackerConfigModules;
 
 	switch ($type) {
 		case NETWORKING_TYPE :
@@ -1273,9 +1273,9 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($config->getValue("activation_snmp_networking") == "1")) {
+				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					return array(
-						1 => $LANG['plugin_tracker']["title"][1]
+						1 => $LANG['plugin_tracker']["title"][0]
 					);
 				}
 			}
@@ -1287,9 +1287,9 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($config->getValue("activation_snmp_printer") == "1")) {
+				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					return array(
-						1 => $LANG['plugin_tracker']["title"][1]
+						1 => $LANG['plugin_tracker']["title"][0]
 					);
 				}
 			}

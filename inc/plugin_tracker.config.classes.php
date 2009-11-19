@@ -49,12 +49,12 @@ class PluginTrackerConfig extends CommonDBTM {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(
-                              `ID`, `version`, `activation_history`, `activation_connection`,
-                              `activation_snmp_networking`, `activation_snmp_peripheral`,
-                              `activation_snmp_phone`,`activation_snmp_printer`, `authsnmp`,
-                              `URL_agent_conf`, `ssl_only`)
-                VALUES ('1', '".$version."', '0', '0', '0', '0', '0', '0', 'DB', '".$url."', '1');";
-		
+                              `ID`, `version`, `ssl_only`, `authsnmp`, `inventory_frequence`
+                              `criteria1_ip`, `criteria1_name`, `criteria1_serial`,
+                              `criteria1_macaddr`, `criteria2_ip`, `criteria2_name`,
+                              `criteria2_serial`, `criteria2_macaddr`)
+                VALUES ('1', '".$version."', '1', 'DB', '24', '0', '0', '0', '0', '0', '0', '0', '0');";
+
 		$DB->query($query);
 	}
 	

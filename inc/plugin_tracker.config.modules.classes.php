@@ -49,31 +49,15 @@ class PluginTrackerConfigModules extends CommonDBTM {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(
-                              `ID`, `version`, `activation_history`, `activation_connection`,
-                              `activation_snmp_networking`, `activation_snmp_peripheral`,
-                              `activation_snmp_phone`,`activation_snmp_printer`, `authsnmp`,
-                              `URL_agent_conf`, `ssl_only`)
-                VALUES ('1', '".$version."', '0', '0', '0', '0', '0', '0', 'DB', '".$url."', '1');";
+                              `id`, `snmp`, `inventoryocs`, `netdiscovery`, `remotehttpagent`)
+                VALUES ('1', '0', '0', '0', '0');";
 		
 		$DB->query($query);
 	}
-	
-	/* Function to get the value of a field */
-	function getValue($field) {
-		global $DB;
 
-		$query = "SELECT ".$field."
-                FROM ".$this->table."
-                WHERE `ID` = '1';";
-		if ($result = $DB->query($query)) {
-			if ($this->fields = $DB->fetch_row($result)) {
-				return $this->fields['0'];
-         }
-		}
-		return false;
-	}
+   
 
-	// Confirm if the functionality is activated, or not
+   // Confirm if the functionality is activated, or not
 	function isActivated($functionality) {
 		
 		if (!($this->getValue($functionality))) {
