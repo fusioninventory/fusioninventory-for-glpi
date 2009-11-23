@@ -134,8 +134,8 @@ class PluginTrackerCommunication {
             $sxml_param->addAttribute('LOGS', '2');
          $sxml_rangeip = $sxml_option->addChild('RANGEIP');
             $sxml_rangeip->addAttribute('ID', '1');
-            $sxml_rangeip->addAttribute('IPSTART', '<![CDATA[192.168.0.1]]>');
-            $sxml_rangeip->addAttribute('IPEND', '<![CDATA[192.168.0.254]]>');
+            $sxml_rangeip->addAttribute('IPSTART', '192.168.0.1');
+            $sxml_rangeip->addAttribute('IPEND', '192.168.0.254');
             $sxml_rangeip->addAttribute('ENTITY', '0');
          $this->addAuth($sxml_option, 2, 'public', '2c');
          $this->addAuth($sxml_option, 1, 'public', '1');
@@ -154,8 +154,8 @@ class PluginTrackerCommunication {
                     $p_auth_prot='', $p_auth_pass='', $p_priv_prot='', $p_priv_pass='') {
       $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
          $sxml_authentication->addAttribute('ID', $p_id);
-         $sxml_authentication->addAttribute('COMMUNITY', "<![CDATA[$p_community]]>");
-         $sxml_authentication->addAttribute('VERSION', "<![CDATA[$p_version]]>");
+         $sxml_authentication->addAttribute('COMMUNITY', $p_community);
+         $sxml_authentication->addAttribute('VERSION', $p_version);
          $sxml_authentication->addAttribute('SEC_NAME', $p_sec_name);
          $sxml_authentication->addAttribute('SEC_LEVEL', $p_sec_level);
          $sxml_authentication->addAttribute('AUTH_PROTOCOLE', $p_auth_prot);
@@ -166,16 +166,16 @@ class PluginTrackerCommunication {
 
    function addGet($p_sxml_node, $p_object, $p_oid, $p_vlan) {
       $sxml_get = $p_sxml_node->addChild('GET');
-         $sxml_get->addAttribute('OBJECT', "<![CDATA[$p_object]]>");
-         $sxml_get->addAttribute('OID', "<![CDATA[$p_oid]]>");
+         $sxml_get->addAttribute('OBJECT', $p_object);
+         $sxml_get->addAttribute('OID', $p_oid);
          $sxml_get->addAttribute('VLAN', $p_vlan);
          $sxml_get->addAttribute('LINK', 'comments');
    }
 
    function addWalk($p_sxml_node, $p_object, $p_oid, $p_vlan) {
       $sxml_walk = $p_sxml_node->addChild('WALK');
-         $sxml_walk->addAttribute('OBJECT', "<![CDATA[$p_object]]>");
-         $sxml_walk->addAttribute('OID', "<![CDATA[$p_oid]]>");
+         $sxml_walk->addAttribute('OBJECT', $p_object);
+         $sxml_walk->addAttribute('OID', $p_oid);
          $sxml_walk->addAttribute('VLAN', $p_vlan);
          $sxml_walk->addAttribute('LINK', 'comments');
    }
@@ -183,7 +183,7 @@ class PluginTrackerCommunication {
    function addInfo($p_sxml_node, $p_id, $p_ip) {
       $sxml_info = $p_sxml_node->addChild('INFO');
          $sxml_info->addAttribute('ID', $p_id);
-         $sxml_info->addAttribute('IP', "<![CDATA[$p_ip]]>");
+         $sxml_info->addAttribute('IP', $p_ip);
    }
 
    function addDevice($p_sxml_node, $p_type) {
