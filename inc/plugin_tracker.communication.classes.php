@@ -180,12 +180,15 @@ class PluginTrackerCommunication {
          $sxml_walk->addAttribute('LINK', 'comments');
    }
 
-   function addInfo($p_sxml_node, $p_id, $p_ip) {
+   function addInfo($p_sxml_node, $p_id, $p_ip, $p_authsnmp_id) {
       $sxml_info = $p_sxml_node->addChild('INFO');
          $sxml_info->addAttribute('ID', $p_id);
          $sxml_info->addAttribute('IP', $p_ip);
+         $sxml_info->addAttribute('AUTHSNMP_ID', $p_authsnmp_id);
    }
 
+// ne pas renvoyer toutes les données d'authentification:
+// seulement $sxml_authentication->addAttribute('ID', $p_id);
    function addDevice($p_sxml_node, $p_type) {
       $type='';
       switch ($p_type) {
@@ -200,9 +203,7 @@ class PluginTrackerCommunication {
       }
       $sxml_device = $p_sxml_node->addChild('DEVICE');
          $sxml_device->addAttribute('TYPE', $type);
-         $this->addInfo($sxml_device, '3', '192.168.0.80');
-         $this->addAuth($sxml_device, 2, 'public', '2c');
-         $this->addAuth($sxml_device, 1, 'public', '1');
+         $this->addInfo($sxml_device, '3', '192.168.0.80', '2');
          $this->addGet($sxml_device, 'ifNumber', '.1.3.6.1.2.1.2.1.0', '0');
          $this->addGet($sxml_device, 'cpmCPUTotal5sec', '.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1', '0');
          $this->addWalk($sxml_device, 'IF-MIB::ifSpeed', '.1.3.6.1.2.1.2.2.1.5', '0');
