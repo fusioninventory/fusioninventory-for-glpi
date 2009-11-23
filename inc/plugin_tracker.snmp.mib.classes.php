@@ -47,7 +47,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 
 
 	function showForm($target,$ID) {
-		include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+		include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
 
 		global $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
 		

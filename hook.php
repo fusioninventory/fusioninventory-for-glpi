@@ -2415,7 +2415,7 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 						$ADD=" OR $table.$field IS NOT NULL ";
 					}
 					if (!empty($val)) {
-                  include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+                  include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
 						$val = $TRACKER_MAPPING[NETWORKING_TYPE][$val]['name'];
                }
 					return $link." ($table.$field = '".addslashes($val)."' $ADD ) ";

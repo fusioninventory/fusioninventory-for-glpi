@@ -94,7 +94,7 @@ commonFooter();
 function displaySearchForm($FK_port) {
 	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$TRACKER_MAPPING;
 
-	include_once(GLPI_ROOT.'/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php');
+	include_once(GLPI_ROOT.'/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php');
 
 	echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
 	echo "<table class='tab_cadre' cellpadding='5'>";

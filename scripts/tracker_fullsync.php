@@ -55,7 +55,7 @@ $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","mon
 	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
 include (GLPI_ROOT . "/config/based_config.php");
 include (GLPI_ROOT . "/inc/includes.php");
-include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
 
 $CFG_GLPI["debug"]=0; 
 

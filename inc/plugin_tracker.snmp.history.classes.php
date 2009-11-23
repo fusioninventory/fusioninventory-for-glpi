@@ -106,7 +106,7 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
 
-      include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
 
       $options="";
 
@@ -220,7 +220,7 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
    function CleanHistory($data) {
       global $DB;
 
-      include (GLPI_ROOT . "/plugins/tracker/inc/plugin_tracker.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
 
       foreach ($TRACKER_MAPPING as $type=>$mapping43) {
          if (isset($TRACKER_MAPPING[$type])) {
