@@ -111,6 +111,8 @@ class PluginTrackerCommunication {
    }
 
    function addQuery() {
+      $ptmi = new PluginTrackerModelInfos;
+
       $sxml_option = $this->sxml->addChild('OPTION');
          $sxml_option->addChild('NAME', 'SNMPQUERY');
          $sxml_param = $sxml_option->addChild('PARAM');
@@ -122,6 +124,15 @@ class PluginTrackerCommunication {
          $this->addDevice($sxml_option, 'printer');
          $this->addAuth($sxml_option, 2, 'public', '2c');
          $this->addAuth($sxml_option, 1, 'public', '1');
+
+         $modelslist=$ptmi->find();
+         $db_plugins=array();
+         if (count($modelslist)){
+            foreach ($modelslist as $model){
+               $this->addModel($sxml_option, $model['ID']);
+            }
+         }
+         
    }
 
    function addDiscovery() {
@@ -164,27 +175,39 @@ class PluginTrackerCommunication {
          $sxml_authentication->addAttribute('PRIV_PASSPHRASE', $p_priv_pass);
    }
 
-   function addGet($p_sxml_node, $p_object, $p_oid, $p_vlan) {
+   function addModel($p_sxml_node, $p_id) {
+      $models = new PluginTrackerModelInfos;
+      $mib_networking = new PluginTrackerMibNetworking;
+
+      $models->getFromDB($p_id);
+      $sxml_model = $p_sxml_node->addChild('MODEL');
+         $sxml_model->addAttribute('ID', $p_id);
+         $sxml_model->addAttribute('NAME', $models->fields['name']);
+         $mib_networking->oidList($p_sxml_node,$p_id);
+   }
+
+   function addGet($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_get = $p_sxml_node->addChild('GET');
          $sxml_get->addAttribute('OBJECT', $p_object);
          $sxml_get->addAttribute('OID', $p_oid);
          $sxml_get->addAttribute('VLAN', $p_vlan);
-         $sxml_get->addAttribute('LINK', 'comments');
+         $sxml_get->addAttribute('LINK', $p_link);
    }
 
-   function addWalk($p_sxml_node, $p_object, $p_oid, $p_vlan) {
+   function addWalk($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
       $sxml_walk = $p_sxml_node->addChild('WALK');
          $sxml_walk->addAttribute('OBJECT', $p_object);
          $sxml_walk->addAttribute('OID', $p_oid);
          $sxml_walk->addAttribute('VLAN', $p_vlan);
-         $sxml_walk->addAttribute('LINK', 'comments');
+         $sxml_walk->addAttribute('LINK', $p_link);
    }
 
-   function addInfo($p_sxml_node, $p_id, $p_ip, $p_authsnmp_id) {
+   function addInfo($p_sxml_node, $p_id, $p_ip, $p_authsnmp_id, $p_model_id) {
       $sxml_info = $p_sxml_node->addChild('INFO');
          $sxml_info->addAttribute('ID', $p_id);
          $sxml_info->addAttribute('IP', $p_ip);
          $sxml_info->addAttribute('AUTHSNMP_ID', $p_authsnmp_id);
+         $sxml_info->addAttribute('MODELSNMP_ID', $p_model_id);
    }
 
 // ne pas renvoyer toutes les données d'authentification:
@@ -203,11 +226,7 @@ class PluginTrackerCommunication {
       }
       $sxml_device = $p_sxml_node->addChild('DEVICE');
          $sxml_device->addAttribute('TYPE', $type);
-         $this->addInfo($sxml_device, '3', '192.168.0.80', '2');
-         $this->addGet($sxml_device, 'ifNumber', '.1.3.6.1.2.1.2.1.0', '0');
-         $this->addGet($sxml_device, 'cpmCPUTotal5sec', '.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1', '0');
-         $this->addWalk($sxml_device, 'IF-MIB::ifSpeed', '.1.3.6.1.2.1.2.2.1.5', '0');
-         $this->addWalk($sxml_device, 'IF-MIB::ifInOctets', '.1.3.6.1.2.1.2.2.1.10', '0');
+         $this->addInfo($sxml_device, '3', '192.168.0.80', '2', '2');
    }
 }
 ?>

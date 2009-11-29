@@ -53,8 +53,9 @@ if (1) {
             <RESPONSE>SEND</RESPONSE>
             <PROLOG_FREQ>24</PROLOG_FREQ>
 </REPLY>");
-   echo $ptc->send(); // echo response for the agent
    $ptc->addQuery();
+   $ptc->setXML($ptc->getXML());
+   echo $ptc->send(); // echo response for the agent
    //$ptc->addDiscovery();
 //   echo $ptc->getXML();
 } else {

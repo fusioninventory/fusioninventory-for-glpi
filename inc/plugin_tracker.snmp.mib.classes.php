@@ -323,6 +323,43 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 		$mib_networking->update($data);
 	}
 
+   function oidList($p_sxml_node,$p_id) {
+		global $DB;
+
+      $ptc = new PluginTrackerCommunication();
+
+      // oid GET
+      $query = "SELECT * FROM `glpi_plugin_tracker_mib_networking`
+                   WHERE `FK_model_infos`='".$p_id."'
+                     AND `activation`='1'
+                     AND `oid_port_counter`='0';";
+      $result=$DB->query($query);
+		while ($data=$DB->fetch_array($result)) {
+         switch ($data['oid_port_dyn']) {
+            case 0:
+               $ptc->addGet($p_sxml_node,
+                  getDropdownName('glpi_dropdown_plugin_tracker_mib_object',$data['FK_mib_object']),
+                  getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']),
+                  $data['mapping_name'], $data['vlan']);
+               break;
+            
+            case 1:
+               $ptc->addWalk($p_sxml_node,
+                  getDropdownName('glpi_dropdown_plugin_tracker_mib_object',$data['FK_mib_object']),
+                  getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']),
+                  $data['mapping_name'], $data['vlan']);
+               break;
+            
+         }
+
+      }
+
+
+
+
+      // oid WALK
+   }
+
 }
 
 ?>
