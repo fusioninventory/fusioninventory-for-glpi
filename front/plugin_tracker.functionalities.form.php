@@ -82,8 +82,11 @@ if (isset($_POST['update'])) {
    $history = new PluginTrackerSNMPHistory;
 	$history->UpdateConfigFields($_POST);
 } else if ((isset($_POST['Clean_history']))) {
-    $history = new PluginTrackerSNMPHistory;
-    $history->CleanHistory("");
+   $history = new PluginTrackerSNMPHistory;
+   $history->CleanHistory("");
+} else if ((isset($_POST['plugin_tracker_lockable_add']))
+           OR (isset($_POST['plugin_tracker_lockable_delete']))) {
+   plugin_tracker_lockable_setLockableForm($_POST);
 }
 
 $config = new PluginTrackerConfig;

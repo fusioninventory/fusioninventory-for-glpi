@@ -82,7 +82,13 @@ switch($_POST['glpi_tab']) {
       $history->showForm($_POST['target'],'1');
 		break;
 
-	default :
+   case 8 :
+		// lockables
+      $ptLockable = new PluginTrackerLockable;
+      $ptLockable->showForm($_POST['target']);
+		break;
+
+   default :
 		if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
 			$config = new PluginTrackerConfig;
 			$config->showForm($_POST['target'],'1');

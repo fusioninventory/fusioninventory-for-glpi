@@ -1268,30 +1268,58 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
 	$configModules = new PluginTrackerConfigModules;
 
 	switch ($type) {
+		case COMPUTER_TYPE :
+			if ($withtemplate) { //?
+				return array();
+			// Non template case
+         } else {
+//				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+					return array(
+						1 => $LANG['plugin_tracker']["title"][5]
+					);
+//				}
+			}
+			break;
+
+		case MONITOR_TYPE :
+			if ($withtemplate) { //?
+				return array();
+			// Non template case
+         } else {
+//				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+					return array(
+						1 => $LANG['plugin_tracker']["title"][5]
+					);
+//				}
+			}
+			break;
+
 		case NETWORKING_TYPE :
 			if ($withtemplate) {
 				return array();
 			// Non template case
          } else {
+            $array = array ();
 				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
-					return array(
-						1 => $LANG['plugin_tracker']["title"][0]
-					);
+					$array = array( 1 => $LANG['plugin_tracker']["title"][0] );
 				}
+            $array = array( 2 => $LANG['plugin_tracker']["title"][5] );
+            return $array;
 			}
 			break;
-      
+
 		case PRINTER_TYPE :
 			// template case
 			if ($withtemplate) {
 				return array();
 			// Non template case
          } else {
+            $array = array ();
 				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
-					return array(
-						1 => $LANG['plugin_tracker']["title"][0]
-					);
+					$array = array( 1 => $LANG['plugin_tracker']["title"][0] );
 				}
+            $array = array( 2 => $LANG['plugin_tracker']["title"][5] );
+            return $array;
 			}
 			break;
 
@@ -1318,28 +1346,44 @@ function plugin_headings_actions_tracker($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-			if (plugin_tracker_haveRight("printers_info", "r")) {
+//			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
 				$array = array (
-					2 => "plugin_headings_tracker_computersInfo"
+					1 => "plugin_headings_tracker_trackerLocks"
 				);
-			}
-			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-				$array = array (
-					1 => "plugin_headings_tracker_computerHistory"
-				);
-			}
-
+//			}
+//			if (plugin_tracker_haveRight("printers_info", "r")) {
+//				$array = array (
+//					2 => "plugin_headings_tracker_computersInfo"
+//				);
+//			}
+//			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
+//				$array = array (
+//					1 => "plugin_headings_tracker_computerHistory"
+//				);
+//			}
 			return $array;
-
 			break;
 
-		case PRINTER_TYPE :
+		case MONITOR_TYPE :
+			$array = array ();
+//			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
+				$array = array (
+					1 => "plugin_headings_tracker_trackerLocks"
+				);
+//			}
+			return $array;
+			break;
+
+      case PRINTER_TYPE :
 			$array = array ();
 			if (plugin_tracker_haveRight("snmp_printers", "r")) {
 				$array = array (
 					1 => "plugin_headings_tracker_printerInfo"
 				);
 			}
+         $array = array (
+            2 => "plugin_headings_tracker_trackerLocks"
+         );
 			return $array;
 			break;
 
@@ -1349,6 +1393,9 @@ function plugin_headings_actions_tracker($type) {
 					1 => "plugin_headings_tracker_networkingInfo"
 				);
 			}
+         $array = array (
+            2 => "plugin_headings_tracker_trackerLocks"
+         );
 			return $array;
 			break;
 
@@ -1418,6 +1465,10 @@ function plugin_headings_tracker_userHistory($type, $ID) {
 	$computer_history->showForm(USER_TYPE, GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.computer_history.form.php', $_GET["ID"]);
 }
 
+function plugin_headings_tracker_trackerLocks($type, $ID) {
+	$tracker_locks = new PluginTrackerLock();
+	$tracker_locks->showForm(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.lock.form.php', $type, $ID);
+}
 
 function plugin_headings_tracker($type,$ID,$withtemplate=0) {
 	global $CFG_GLPI;

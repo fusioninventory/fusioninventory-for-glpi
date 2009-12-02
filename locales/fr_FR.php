@@ -41,6 +41,7 @@ $LANG['plugin_tracker']["title"][1]="Informations SNMP";
 $LANG['plugin_tracker']["title"][2]="Historique de connexion";
 $LANG['plugin_tracker']["title"][3]="[Trk] Erreurs";
 $LANG['plugin_tracker']["title"][4]="[Trk] Cron";
+$LANG['plugin_tracker']["title"][5]="Verrous Tracker";
 
 $LANG['plugin_tracker']['config'][0] = "Fréquence des inventaires (en heures)";
 $LANG['plugin_tracker']['config'][1] = "Modules";
@@ -93,6 +94,7 @@ $LANG['plugin_tracker']["functionalities"][3]="SNMP";
 $LANG['plugin_tracker']["functionalities"][4]="Connexion";
 $LANG['plugin_tracker']["functionalities"][5]="Script serveur";
 $LANG['plugin_tracker']["functionalities"][6]="Légende";
+$LANG['plugin_tracker']["functionalities"][7]="Champs verrouillables";
 
 $LANG['plugin_tracker']["functionalities"][10]="Activation de l'historique";
 $LANG['plugin_tracker']["functionalities"][11]="Activation du module connexion";
@@ -130,6 +132,13 @@ $LANG['plugin_tracker']["functionalities"][52]="Activation des journaux";
 $LANG['plugin_tracker']["functionalities"][53]="Nombre de process simultanés pour le script serveur de post-traitement";
 
 $LANG['plugin_tracker']["functionalities"][60]="Nettoyage de l'historique";
+
+$LANG['plugin_tracker']["functionalities"][70]="Configuration des champs verrouillables";
+$LANG['plugin_tracker']["functionalities"][71]="Champs non verrouillables";
+$LANG['plugin_tracker']["functionalities"][72]="Table";
+$LANG['plugin_tracker']["functionalities"][73]="Champs";
+$LANG['plugin_tracker']["functionalities"][74]="Valeurs";
+$LANG['plugin_tracker']["functionalities"][75]="Verrous";
 
 $LANG['plugin_tracker']["snmp"][0]="Informations SNMP du matériel";
 $LANG['plugin_tracker']["snmp"][1]="Général";
@@ -519,4 +528,8 @@ $LANG['plugin_tracker']["agents"][13]="Agent interrogation";
 $LANG['plugin_tracker']["unknown"][0]="Nom DNS";
 $LANG['plugin_tracker']["unknown"][1]="Nom port réseau";
 $LANG['plugin_tracker']["unknown"][2]="Matériel approuvé";
+
+$LANG['plugin_tracker']["mapping_fields"][0]="nom";
+$LANG['plugin_tracker']["mapping_fields"][1]="contact";
+$LANG['plugin_tracker']["mapping_fields"][2]="commentaires";
 ?>

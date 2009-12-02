@@ -41,6 +41,7 @@ $LANG['plugin_tracker']["title"][1]="SNMP information";
 $LANG['plugin_tracker']["title"][2]="connections history";
 $LANG['plugin_tracker']["title"][3]="[Trk] Errors";
 $LANG['plugin_tracker']["title"][4]="[Trk] Cron";
+$LANG['plugin_tracker']["title"][5]=" Tracker's locks";
 
 $LANG['plugin_tracker']["profile"][0]="Rights management";
 $LANG['plugin_tracker']["profile"][1]="$title"; //interface
@@ -87,6 +88,7 @@ $LANG['plugin_tracker']["functionalities"][3]="SNMP";
 $LANG['plugin_tracker']["functionalities"][4]="Connection";
 $LANG['plugin_tracker']["functionalities"][5]="Server script";
 $LANG['plugin_tracker']["functionalities"][6]="Legend";
+$LANG['plugin_tracker']["functionalities"][7]="Lockable fields";
 
 $LANG['plugin_tracker']["functionalities"][10]="History activation";
 $LANG['plugin_tracker']["functionalities"][11]="Connection module activation";
@@ -124,6 +126,13 @@ $LANG['plugin_tracker']["functionalities"][52]="Log files activation";
 $LANG['plugin_tracker']["functionalities"][53]="Number of simultanous processes to be used by server script";
 
 $LANG['plugin_tracker']["functionalities"][60]="Clean history";
+
+$LANG['plugin_tracker']["functionalities"][70]="Lockable fields configuration";
+$LANG['plugin_tracker']["functionalities"][71]="Unlockable fields";
+$LANG['plugin_tracker']["functionalities"][72]="Table";
+$LANG['plugin_tracker']["functionalities"][73]="Fields";
+$LANG['plugin_tracker']["functionalities"][74]="Values";
+$LANG['plugin_tracker']["functionalities"][75]="Locks";
 
 $LANG['plugin_tracker']["snmp"][0]="SNMP information of equipment";
 $LANG['plugin_tracker']["snmp"][1]="General";
@@ -515,4 +524,9 @@ $LANG['plugin_tracker']["agents"][13]="Query Agent";
 $LANG['plugin_tracker']["unknown"][0]="DNS Name";
 $LANG['plugin_tracker']["unknown"][1]="Network port name";
 $LANG['plugin_tracker']["unknown"][2]="Approved devices";
+
+$LANG['plugin_tracker']["mapping_fields"][0]="name";
+$LANG['plugin_tracker']["mapping_fields"][1]="contact";
+$LANG['plugin_tracker']["mapping_fields"][2]="comments";
+
 ?>
