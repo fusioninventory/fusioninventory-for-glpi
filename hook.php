@@ -1371,14 +1371,11 @@ function plugin_headings_actions_tracker($type) {
 					1 => "plugin_headings_tracker_trackerLocks"
 				);
 //			}
-			return $array;
-			break;
-
       case PRINTER_TYPE :
 			$array = array ();
 			if (plugin_tracker_haveRight("snmp_printers", "r")) {
 				$array = array (
-					1 => "plugin_headings_tracker_printerInfo"
+					0 => "plugin_headings_tracker_printerInfo"
 				);
 			}
          $array = array (
@@ -1390,16 +1387,13 @@ function plugin_headings_actions_tracker($type) {
 		case NETWORKING_TYPE :
 			if (plugin_tracker_haveRight("snmp_networking", "r")) {
 				$array = array (
-					1 => "plugin_headings_tracker_networkingInfo"
+					0 => "plugin_headings_tracker_networkingInfo"
 				);
 			}
          $array = array (
             2 => "plugin_headings_tracker_trackerLocks"
          );
 			return $array;
-			break;
-
-		case USER_TYPE :
 			break;
 
 		case PROFILE_TYPE :
