@@ -42,7 +42,6 @@ class PluginTrackerConfigModules extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_tracker_config_modules";
-//		$this->type=PLUGIN_TRACKER_SNMP_CONFIG_MODULES;
 	}
 
 	function initConfig($version) {
