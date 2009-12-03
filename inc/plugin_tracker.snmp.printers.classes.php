@@ -65,7 +65,7 @@ class PluginTrackerPrinters extends CommonDBTM {
 		$this->ID = $ID;
 		
 		$plugin_tracker_printers = new PluginTrackerPrinters;
-		$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
+//		$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
 		$plugin_tracker_snmp = new PluginTrackerSNMP;
 
 		$query = "SELECT * 
@@ -110,6 +110,8 @@ class PluginTrackerPrinters extends CommonDBTM {
 		}
 		dropdownValue("glpi_plugin_tracker_model_infos","FK_model_infos",$data["FK_model_infos"],
                      0,-1,'',$exclude_models);
+      echo "</td>";
+      echo "<td align='center'>";
       echo " <input type='submit' name='GetRightModel' value='".
              $LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
       echo "</td>";
@@ -120,7 +122,9 @@ class PluginTrackerPrinters extends CommonDBTM {
 		echo "<td align='center'>";
 		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
-		echo "</tr>";
+      echo "<td>";
+      echo "</td>";
+      echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][36]."</td>";
@@ -131,16 +135,20 @@ class PluginTrackerPrinters extends CommonDBTM {
 		$dropdown[365] = $LANG["financial"][9];
 		dropdownArrayValues("frequence_days",$dropdown, $data["frequence_days"]);
 		echo "</td>";
+      echo "<td>";
+      echo "</td>";
 		echo "</tr>";		
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2' height='30'>";
 		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
 		echo "</td>";
+      echo "<td>";
+      echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='2'>";
+		echo "<td colspan='3'>";
 		echo "<div align='center'>";
 		echo "<input type='hidden' name='ID' value='".$ID."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
@@ -184,8 +192,6 @@ class PluginTrackerPrinters extends CommonDBTM {
 				}
 			}
 
-		//echo "<br/>";
-		//echo "<div align='center'>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
                  action=\"".$target."\">";
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -204,15 +210,15 @@ class PluginTrackerPrinters extends CommonDBTM {
 			echo " : ";
 			echo "</td>";
 			echo "<td align='center'>";
-			if ($config_snmp_printer->getValue('manage_cartridges') == "1") {
-				echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
-				dropdownValue("glpi_cartridges_type","FK_cartridges",$state['FK_cartridges'],0);
-				echo "<input type='hidden' name='ID' value='".$ID."' />";
-				echo "<input type='hidden' name='object_name' value='".$cartridge_name."' />";
-				echo "<input name='update_cartridges' value='update_cartridges' src='".GLPI_ROOT.
-                 "/pics/actualiser.png' class='calendrier' type='image'>";
-				echo "</form>";
-			}
+//			if ($config_snmp_printer->getValue('manage_cartridges') == "1") {
+//				echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+//				dropdownValue("glpi_cartridges_type","FK_cartridges",$state['FK_cartridges'],0);
+//				echo "<input type='hidden' name='ID' value='".$ID."' />";
+//				echo "<input type='hidden' name='object_name' value='".$cartridge_name."' />";
+//				echo "<input name='update_cartridges' value='update_cartridges' src='".GLPI_ROOT.
+//                 "/pics/actualiser.png' class='calendrier' type='image'>";
+//				echo "</form>";
+//			}
 			echo "</td>";
 			echo "<td align='center'>";
 			plugin_tracker_Bar($state['state']);

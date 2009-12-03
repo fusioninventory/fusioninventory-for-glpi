@@ -225,6 +225,8 @@ class PluginTrackerNetworking extends CommonDBTM {
 		}
 		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0,-1,'',
                     $exclude_models);
+      echo "</td>";
+      echo "<td align='center'>";
 		echo " <input type='submit' name='GetRightModel'
                     value='".$LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
 		echo "</tr>";
@@ -234,10 +236,12 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "<td align='center'>";
 		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
+      echo "<td>";
+      echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='2'>";
+		echo "<td colspan='3'>";
 		echo "<div align='center'>";
 		echo "<input type='hidden' name='ID' value='".$ID."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";

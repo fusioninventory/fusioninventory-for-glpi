@@ -121,7 +121,7 @@ class PluginTrackerCommunication {
             $sxml_param->addAttribute('PID', '03201054001');
             $sxml_param->addAttribute('LOGS', '2');
          $this->addDevice($sxml_option, 'networking');
-         $this->addDevice($sxml_option, 'printer');
+         //$this->addDevice($sxml_option, 'printer');
          $this->addAuth($sxml_option, 2, 'public', '2c');
          $this->addAuth($sxml_option, 1, 'public', '1');
 
@@ -183,7 +183,7 @@ class PluginTrackerCommunication {
       $sxml_model = $p_sxml_node->addChild('MODEL');
          $sxml_model->addAttribute('ID', $p_id);
          $sxml_model->addAttribute('NAME', $models->fields['name']);
-         $mib_networking->oidList($p_sxml_node,$p_id);
+         $mib_networking->oidList($sxml_model,$p_id);
    }
 
    function addGet($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
@@ -226,7 +226,7 @@ class PluginTrackerCommunication {
       }
       $sxml_device = $p_sxml_node->addChild('DEVICE');
          $sxml_device->addAttribute('TYPE', $type);
-         $this->addInfo($sxml_device, '3', '192.168.0.80', '2', '2');
+         $this->addInfo($sxml_device, '3', '192.168.0.80', '2', '4');
    }
 }
 ?>
