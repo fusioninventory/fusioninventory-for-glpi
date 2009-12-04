@@ -202,12 +202,13 @@ class PluginTrackerCommunication {
          $sxml_walk->addAttribute('LINK', $p_link);
    }
 
-   function addInfo($p_sxml_node, $p_id, $p_ip, $p_authsnmp_id, $p_model_id) {
-      $sxml_info = $p_sxml_node->addChild('INFO');
-         $sxml_info->addAttribute('ID', $p_id);
-         $sxml_info->addAttribute('IP', $p_ip);
-         $sxml_info->addAttribute('AUTHSNMP_ID', $p_authsnmp_id);
-         $sxml_info->addAttribute('MODELSNMP_ID', $p_model_id);
+   function addInfo($p_sxml_node, $p_id, $p_ip, $p_authsnmp_id, $p_model_id, $p_type) {
+      $sxml_device = $p_sxml_node->addChild('DEVICE');
+         $sxml_device->addAttribute('TYPE', $p_type);
+         $sxml_device->addAttribute('ID', $p_id);
+         $sxml_device->addAttribute('IP', $p_ip);
+         $sxml_device->addAttribute('AUTHSNMP_ID', $p_authsnmp_id);
+         $sxml_device->addAttribute('MODELSNMP_ID', $p_model_id);
    }
 
 // ne pas renvoyer toutes les données d'authentification:
@@ -224,9 +225,11 @@ class PluginTrackerCommunication {
          default: // type non géré
             return false;
       }
-      $sxml_device = $p_sxml_node->addChild('DEVICE');
-         $sxml_device->addAttribute('TYPE', $type);
-         $this->addInfo($sxml_device, '3', '192.168.0.80', '2', '4');
+//      $sxml_device = $p_sxml_node->addChild('DEVICE');
+//         $sxml_device->addAttribute('TYPE', $type);
+//         $this->addInfo($sxml_device, '3', '192.168.0.80', '2', '4');
+      $this->addInfo($p_sxml_node, '3', '192.168.0.80', '2', '4', $type);
+      $this->addInfo($p_sxml_node, '8', '192.168.0.81', '2', '4', $p_type);
    }
 }
 ?>
