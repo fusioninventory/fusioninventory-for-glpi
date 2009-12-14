@@ -57,84 +57,11 @@ class PluginTrackerPort extends CommonDBTM {
    }
 
    /**
-    * Load an existing port
+    * Load an optionnaly existing port
     *
     *@return nothing
     **/
-   function load($p_id) {
-      global $DB;
-
-      if ($p_id!='') {
-         $this->getFromDB($p_id);
-
-         $this->ID = $this->fields['ID'];
-         $this->name = $this->fields['name'];
-         $this->ifmac = $this->fields['ifmac'];
-         $this->logical_number = $this->fields['logical_number'];
-
-         $query = "SELECT `ID`
-                   FROM `glpi_plugin_tracker_networking_ports`
-                   WHERE `FK_networking_ports` = '".$p_id."';";
-         if ($result = $DB->query($query)) {
-            if ($DB->numrows($result) != 0) {
-               $portTracker = $DB->fetch_assoc($result);
-               $this->tracker_networking_ports_ID = $portTracker['ID'];
-               $this->oTracker_networking_ports->getFromDB($this->tracker_networking_ports_ID);
-               $this->ifdescr = $this->oTracker_networking_ports->fields['ifdescr']; //tracker
-               $this->ifinerrors = $this->oTracker_networking_ports->fields['ifinerrors']; //tracker
-               $this->ifouterrors = $this->oTracker_networking_ports->fields['ifouterrors']; //tracker
-               $this->ifinoctets = $this->oTracker_networking_ports->fields['ifinoctets']; //tracker
-               $this->ifoutoctets = $this->oTracker_networking_ports->fields['ifoutoctets']; //tracker
-               $this->iflastchange = $this->oTracker_networking_ports->fields['iflastchange']; //tracker
-               $this->ifmtu = $this->oTracker_networking_ports->fields['ifmtu']; //tracker
-               $this->ifspeed = $this->oTracker_networking_ports->fields['ifspeed']; //tracker
-               $this->ifstatus = $this->oTracker_networking_ports->fields['ifstatus']; //tracker
-               $this->ifinternalstatus = $this->oTracker_networking_ports->fields['ifinternalstatus']; //tracker
-               $this->trunk = $this->oTracker_networking_ports->fields['trunk']; //tracker
-            } else { // port exists in core but not in tracker
-               $this->tracker_networking_ports_ID = NULL;
-               $this->ifdescr = NULL;
-               $this->ifinerrors = NULL;
-               $this->ifouterrors = NULL;
-               $this->ifinoctets = NULL;
-               $this->ifoutoctets = NULL;
-               $this->iflastchange = NULL;
-               $this->ifmtu = NULL;
-               $this->ifspeed = NULL;
-               $this->ifstatus = NULL;
-   //          $this->iftype = NULL;
-               $this->ifinternalstatus = NULL;
-               $this->trunk = NULL;
-            }
-         }
-      } else { // port doesn't exist in core (also in tracker)
-            $this->ID = NULL;
-            $this->name = NULL;
-            $this->ifmac = NULL;
-            $this->logical_number = NULL;
-            $this->tracker_networking_ports_ID = NULL;
-            $this->ifdescr = NULL;
-            $this->ifinerrors = NULL;
-            $this->ifouterrors = NULL;
-            $this->ifinoctets = NULL;
-            $this->ifoutoctets = NULL;
-            $this->iflastchange = NULL;
-            $this->ifmtu = NULL;
-            $this->ifspeed = NULL;
-            $this->ifstatus = NULL;
-//          $this->iftype = NULL;
-            $this->ifinternalstatus = NULL;
-            $this->trunk = NULL;
-      }
-   }
-
-   /**
-    * Import a port
-    *
-    *@param $p_id='' Port id
-    *@return nothing
-    **/
-   function import($p_id='') {
+   function load($p_id='') {
       global $DB;
 
       if ($p_id=='') { // port doesn't exist
@@ -189,8 +116,6 @@ class PluginTrackerPort extends CommonDBTM {
          $this->oTracker_networking_ports->update($this->updates);
          // update core
          $this->updates['ID'] = $this->ID;
-         // todo : ajouter le device_type et on_device dans $this->updates
-         // ou gérer ça par la commondbtm ?
          $this->update($this->updates);
       }
    }

@@ -52,17 +52,21 @@ class PluginTrackerIfaddr extends CommonDBTM {
    }
 
    /**
-    * Load an existing address
+    * Load an eventually existing interface address
     *
     *@return nothing
     **/
-   function load($p_id) {
+   function load($p_id='') {
       global $DB;
 
-      $this->getFromDB($p_id);
-
-      $this->ID = $this->fields['ID'];
-      $this->ifaddr = $this->fields['ifaddr'];
+      if ($p_id=='') { // ifaddr doesn't exist
+         $this->ID = NULL;
+         $this->ifaddr = NULL;
+      } else {
+         $this->getFromDB($p_id);
+         $this->ID = $this->fields['ID'];
+         $this->ifaddr = $this->fields['ifaddr'];
+      }
    }
 
    /**
@@ -71,7 +75,6 @@ class PluginTrackerIfaddr extends CommonDBTM {
     *@return nothing
     **/
    function updateDB() {
-//      print_r($this->updates);
       if (count($this->updates)) {
          $this->updates['ID'] = $this->ID;
          $this->update($this->updates);
@@ -84,9 +87,6 @@ class PluginTrackerIfaddr extends CommonDBTM {
     *@return Array of all class vars => values
     **/
    function getVars() {
-//      return get_class_vars( __CLASS__ );
-//      return get_class_vars( __CLASS__ );
-//      return get_object_vars( __CLASS__ );
       return get_object_vars($this);
    }
 
@@ -110,12 +110,10 @@ class PluginTrackerIfaddr extends CommonDBTM {
     *@return true if value set / false if unknown field
     **/
    function setValue($p_field, $p_value) {
-      if (eval("return isset(\$this->\$p_field);")) {
+      if (property_exists($this, $p_field)) {
          if (!eval("return \$this->$p_field==\$p_value;")) { // don't update if values are the same
             eval("return \$this->$p_field=\$p_value;");
-   //         array_push($this->updates, "$p_field=>$p_value");
             $this->updates[$p_field] = $p_value;
-   //         $this->updates = compact(eval("return \$this->$p_field;"));
          }
          return true;
       } else {
@@ -123,5 +121,27 @@ class PluginTrackerIfaddr extends CommonDBTM {
       }
    }
 
+   /**
+    * Delete a loaded ifaddr
+    *
+    *@param $p_id Ifaddr ID
+    *@return nothing
+    **/
+   function deleteDB() {
+      $this->deleteFromDB($this->ID, 1);
+   }
+
+   /**
+    * Add a new ifaddr with the instance values
+    *
+    *@param $p_id Networking ID
+    *@return nothing
+    **/
+   function addDB($p_id) {
+      if (count($this->updates)) {
+         $this->updates['FK_networking']=$p_id;
+         $this->add($this->updates);
+      }
+   }
 }
 ?>

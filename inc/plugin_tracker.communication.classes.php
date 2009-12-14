@@ -419,7 +419,6 @@ class PluginTrackerCommunication {
    function importInfo($p_info) {
       $errors='';
       if (isset($p_info->TYPE) AND isset($p_info->ID)) {
-         echo $p_info->ID;
          $this->deviceId = $p_info->ID;
          if ($p_info->TYPE=='NETWORKING') {
             $errors.=$this->importNetworking($p_info);
@@ -501,16 +500,27 @@ class PluginTrackerCommunication {
     **/
    function importIps($p_ips) {
       $errors='';
+      $pti = new PluginTrackerIfaddr;
       foreach ($p_ips->children() as $name=>$child)
       {
          switch ($child->getName()) {
             case 'IP' :
-               $this->ptn->addIP($child);
+               $ifaddrIndex = $this->ptn->getIfaddrIndex($child);
+               if (is_int($ifaddrIndex)) {
+                  $oldIfaddr = $this->ptn->getIfaddr($ifaddrIndex);
+                  $pti->load($oldIfaddr->getValue('ID'));
+               } else {
+                  $pti->load();
+               }
+               $pti->setValue('ifaddr', $child);
+               $this->ptn->addIfaddr(clone $pti, $ifaddrIndex);
                break;
             default :
                $errors.='Elément invalide dans IPS : '.$child->getName()."\n";
          }
       }
+      $this->ptn->saveIfaddrs();
+      return $errors;
    }
 
    /**
@@ -525,9 +535,11 @@ class PluginTrackerCommunication {
       $portIndex = $this->ptn->getPortIndex($p_port->MAC); //todo ajouter le 2e param (ip) a partir de connections
       if (is_int($portIndex)) {
          $oldPort = $this->ptn->getPort($portIndex);
-         $ptp->import($oldPort->getValue('ID'));
+//         $ptp->import($oldPort->getValue('ID'));
+         $ptp->load($oldPort->getValue('ID'));
       } else {
-         $ptp->import();
+//         $ptp->import();
+         $ptp->load();
       }
       foreach ($p_port->children() as $name=>$child)
       {
@@ -564,7 +576,7 @@ class PluginTrackerCommunication {
                $errors.='Elément invalide dans PORT : '.$name."\n";
          }
       }
-      $this->ptn->addNewPort($ptp, $portIndex);
+      $this->ptn->addPort($ptp, $portIndex);
       return $errors;
    }
 }

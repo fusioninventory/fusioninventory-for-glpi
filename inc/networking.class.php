@@ -45,12 +45,15 @@ class PluginTrackerNetworking2 extends CommonDBTM {
            $ram, $memory, $uptime, $ports=array(), $cpu, $ifaddrs=array();
    private $oTracker_networking, $oTracker_networking_ifaddr, $oTracker_networking_ports;
    private $updates=array(), $newPorts=array(), $updatesPorts=array();
+   private $newIfaddrs=array(), $updatesIfaddrs=array();
 
 	/**
 	 * Constructor
 	**/
    function __construct() {
       $this->table="glpi_networking";
+      $this->dohistory=true;
+      $this->type=NETWORKING_TYPE;
       $this->oTracker_networking = new CommonDBTM;
       $this->oTracker_networking->table="glpi_plugin_tracker_networking";
    }
@@ -63,7 +66,7 @@ class PluginTrackerNetworking2 extends CommonDBTM {
    function load($p_id) {
       $this->ID = $p_id;
 
-      $this->ifaddrs = $this->getIpsDB();
+      $this->ifaddrs = $this->getIfaddrsDB();
       $this->ports = $this->getPortsDB();
       $this->oTracker_networking->getFromDB($p_id);
 
@@ -89,6 +92,15 @@ class PluginTrackerNetworking2 extends CommonDBTM {
     **/
    function updateDB() {
       if (count($this->updates)) {
+         // special for dropdowns : model, firmware
+         if (array_key_exists('model', $this->updates)) {
+            $manufacturer = getDropdownName("glpi_dropdown_manufacturer",$this->fields['FK_glpi_enterprise']);
+            $this->updates['model'] = externalImportDropdown("glpi_dropdown_model_networking",$this->updates['model'], 0, array('manufacturer'=>$manufacturer));
+         }
+         if (array_key_exists('firmware', $this->updates)) {
+            $this->updates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",$this->updates['firmware']);
+         }
+
          $this->updates['ID'] = $this->ID;
          $this->oTracker_networking->update($this->updates);
          $this->update($this->updates);
@@ -185,6 +197,25 @@ class PluginTrackerNetworking2 extends CommonDBTM {
    }
 
    /**
+    * Get index of ifaddr object
+    *
+    *@param $p_ip='' IP address
+    *@return Index of ifaddr object in ifaddrs array or '' if not found
+    **/
+   function getIfaddrIndex($p_ip) {
+      $ifaddrIndex = '';
+      foreach ($this->ifaddrs as $index => $oIfaddr) {
+         if (is_object($oIfaddr)) { //todo pourquoi ne serait ce pas vrai ?
+            if ($oIfaddr->fields['ifaddr']==$p_ip) {
+               $ifaddrIndex = $index;
+               break;
+            }
+         }
+      }
+      return $ifaddrIndex;
+   }
+
+   /**
     * Get port object
     *
     *@param $p_index Index of port object in $ports
@@ -217,13 +248,35 @@ class PluginTrackerNetworking2 extends CommonDBTM {
    }
 
    /**
+    * Save ifadddrs
+    *
+    *@return nothing
+    **/
+   function saveIfaddrs() {
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_tracker_networking_ifaddr"; // todo : à ranger !
+
+      foreach ($this->ifaddrs as $index=>$pti) {
+         if (!in_array($index, $this->updatesIfaddrs)) {
+            $pti->deleteDB();
+         }
+      }
+      foreach ($this->newIfaddrs as $pti) {
+         if ($pti->getValue('ID')=='') {
+            $pti->addDB($this->getValue('ID'));
+         } else {
+            $pti->updateDB();
+         }
+      }
+   }
+
+   /**
     * Add new port
     *
     *@param $p_oPort port object
     *@param $p_portIndex='' index of port in $ports if already exists
     *@return nothing
     **/
-   function addNewPort($p_oPort, $p_portIndex='') {
+   function addPort($p_oPort, $p_portIndex='') {
       $this->newPorts[]=$p_oPort;
       if (is_int($p_portIndex)) {
          $this->updatesPorts[]=$p_portIndex;
@@ -235,41 +288,33 @@ class PluginTrackerNetworking2 extends CommonDBTM {
     *
     *@return Array of ips instances
     **/
-   private function getIpsDB() {
+   private function getIfaddrsDB() {
       global $DB;
 
       $pti = new PluginTrackerIfaddr();
       $query = "SELECT `ID`
                 FROM `glpi_plugin_tracker_networking_ifaddr`
-                WHERE `FK_networking` = '$this->ID');";
-      $ipsIds = array();
+                WHERE `FK_networking` = '$this->ID';";
+      $ifaddrsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
-            while ($ip = $DB->fetch_assoc($result)) {
-               $pti->load($ip['ID']);
-               array_push($ipsIds, clone $pti);
-
+            while ($ifaddr = $DB->fetch_assoc($result)) {
+               $pti->load($ifaddr['ID']);
+               $ifaddrsIds[] = clone $pti;
             }
          }
       }
-      return $ipsIds;
+      return $ifaddrsIds;
    }
 
    /**
-    * Get index of ifaddr object
+    * Get ifaddr object
     *
-    *@param $p_ip='' IP address
-    *@return Index of ifaddr object in ifaddrs array
+    *@param $p_index Index of ifaddr object in $ifaddrs
+    *@return Ifaddr object in ifaddrs array
     **/
-   function getIfaddr($p_ip) {
-      $portIndex = '';
-      foreach ($this->ifaddrs as $index => $oIfaddr) {
-         if ($oIfaddr->fields['ifaddr']==$p_ip) {
-            $ipIndex = $index;
-            break;
-         }
-      }
-      return $ipIndex;
+   function getIfaddr($p_index) {
+      return $this->ifaddrs[$p_index];
    }
 
    /**
@@ -292,7 +337,7 @@ class PluginTrackerNetworking2 extends CommonDBTM {
     *@return true if value set / false if unknown field
     **/
    function setValue($p_field, $p_value) {
-      if (eval("return isset(\$this->\$p_field);")) {
+      if (property_exists($this, $p_field)) {
          if (!eval("return \$this->$p_field==\$p_value;")) { // don't update if values are the same
             eval("return \$this->$p_field=\$p_value;");
             $this->updates[$p_field] = $p_value;
@@ -306,12 +351,17 @@ class PluginTrackerNetworking2 extends CommonDBTM {
    /**
     * Add IP
     *
-    *@param $p_ip IP address
+    *@param $p_oIfaddr Ifaddr object
+    *@param $p_ifaddrIndex='' index of ifaddr in $ifaddrs if already exists
     *@return nothing
     **/
-   function addIP($p_ip) {
-      if (!in_array($p_ip, $this->ifaddrs)) {
-         $this->ifaddrs[]=$p_ip;
+   function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
+      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networking.ifaddr
+         $this->setValue('ifaddr', $p_oIfaddr->getValue('ifaddr'));
+      }
+      $this->newIfaddrs[]=$p_oIfaddr;
+      if (is_int($p_ifaddrIndex)) {
+         $this->updatesIfaddrs[]=$p_ifaddrIndex;
       }
    }
 
