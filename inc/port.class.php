@@ -40,20 +40,15 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking ports
  **/
-class PluginTrackerPort extends CommonDBTM {
-   private $ID, $name, $ifmac, $ifdescr, $ifinerrors, $ifouterrors, $ifinoctets, $ifoutoctets,
-           $iflastchange, $ifmtu, $logical_number, $ifspeed, $ifstatus, $iftype, $ifinternalstatus,
-           $trunk;
+class PluginTrackerPort extends PluginTrackerCommonDBTM {
    private $oTracker_networking_ports, $tracker_networking_ports_ID;
-   private $updates=array();
 
 	/**
 	 * Constructor
 	**/
    function __construct() {
-      $this->table="glpi_networking_ports";
-      $this->oTracker_networking_ports = new CommonDBTM;
-      $this->oTracker_networking_ports->table="glpi_plugin_tracker_networking_ports";
+      parent::__construct("glpi_networking_ports");
+      $this->oTracker_networking_ports = new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking_ports");
    }
 
    /**
@@ -64,13 +59,8 @@ class PluginTrackerPort extends CommonDBTM {
    function load($p_id='') {
       global $DB;
 
-      if ($p_id=='') { // port doesn't exist
-         $this->ID = NULL;
-         $this->tracker_networking_ports_ID = NULL;
-      } else {
-         $this->getFromDB($p_id);// todo voir s'il ne faudrait pas utiliser un objet temporaire pour ne pas polluer l'enregistrement avec des anciennes valeurs
-         $this->ID = $this->fields['ID'];
-         // get tracker id
+      parent::load($p_id);
+      if (is_numeric($p_id)) { // port exists
          $query = "SELECT `ID`
                    FROM `glpi_plugin_tracker_networking_ports`
                    WHERE `FK_networking_ports` = '".$p_id."';";
@@ -78,30 +68,19 @@ class PluginTrackerPort extends CommonDBTM {
             if ($DB->numrows($result) != 0) {
                $portTracker = $DB->fetch_assoc($result);
                $this->tracker_networking_ports_ID = $portTracker['ID'];
-               $this->oTracker_networking_ports->getFromDB($this->tracker_networking_ports_ID);
+               $this->oTracker_networking_ports->load($this->tracker_networking_ports_ID);
+               $this->ptcdLinkedObjects[]=$this->oTracker_networking_ports;
             } else {
                $this->tracker_networking_ports_ID = NULL;
+               $this->oTracker_networking_ports->load();
+               $this->ptcdLinkedObjects[]=$this->oTracker_networking_ports;
             }
-         } else {
-            $this->tracker_networking_ports_ID = NULL;
          }
-         // todo inititalisation des champs avec locks
+      } else {
+         $this->tracker_networking_ports_ID = NULL;
+         $this->oTracker_networking_ports->load();
+         $this->ptcdLinkedObjects[]=$this->oTracker_networking_ports;
       }
-      $this->name = NULL;
-      $this->ifmac = NULL;
-      $this->logical_number = NULL;
-      $this->ifdescr = NULL;
-      $this->ifinerrors = NULL;
-      $this->ifouterrors = NULL;
-      $this->ifinoctets = NULL;
-      $this->ifoutoctets = NULL;
-      $this->iflastchange = NULL;
-      $this->ifmtu = NULL;
-      $this->ifspeed = NULL;
-      $this->ifstatus = NULL;
-//          $this->iftype = NULL;
-      $this->ifinternalstatus = NULL;
-      $this->trunk = NULL;
    }
 
    /**
@@ -110,14 +89,8 @@ class PluginTrackerPort extends CommonDBTM {
     *@return nothing
     **/
    function updateDB() {
-      if (count($this->updates)) {
-         // update tracker
-         $this->updates['ID'] = $this->tracker_networking_ports_ID;
-         $this->oTracker_networking_ports->update($this->updates);
-         // update core
-         $this->updates['ID'] = $this->ID;
-         $this->update($this->updates);
-      }
+      parent::updateDB(); // update core
+      $this->oTracker_networking_ports->updateDB(); // update tracker
    }
 
    /**
@@ -126,15 +99,17 @@ class PluginTrackerPort extends CommonDBTM {
     *@param $p_id Networking ID
     *@return nothing
     **/
-   function addDB($p_id) {
-      if (count($this->updates)) {
+   function addDB($p_id) { //todo utiliser les bons tableau updates port et tracker ou le meme ?
+      if (count($this->ptcdUpdates)) {
          // update core
-         $this->updates['on_device']=$p_id;
-         $this->updates['device_type']=NETWORKING_TYPE;
-         $portID=$this->add($this->updates);
+         $this->ptcdUpdates['on_device']=$p_id;
+         $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
+         $portID=parent::add($this->ptcdUpdates);
          // update tracker
-         $this->updates['FK_networking_ports']=$portID;
-         $this->oTracker_networking_ports->add($this->updates);
+         if (count($this->oTracker_networking_ports->ptcdUpdates)) {
+            $this->oTracker_networking_ports->ptcdUpdates['FK_networking_ports']=$portID;
+            $this->oTracker_networking_ports->add($this->oTracker_networking_ports->ptcdUpdates);
+         }
       }
    }
 
@@ -145,68 +120,8 @@ class PluginTrackerPort extends CommonDBTM {
     *@return nothing
     **/
    function deleteDB() {
-      // tracker
-      $this->oTracker_networking_ports->deleteFromDB($this->tracker_networking_ports_ID, 1);
-      // core
-      $this->deleteFromDB($this->ID, 1);
-   }
-
-   /**
-    * Get all objetc vars and values
-    *
-    *@return Array of all class vars => values
-    **/
-   function getVars() {
-      return get_object_vars($this);
-   }
-
-   /**
-    * Get field value
-    *
-    *@param $p_field Field
-    *@return Field value / nothing if unknown field
-    **/
-   function getValue($p_field) {
-      if (eval("return isset(\$this->\$p_field);")) {
-         return eval("return \$this->$p_field;");
-      }
-   }
-
-   /**
-    * Set field value
-    *
-    *@param $p_field Field
-    *@param $p_value Value
-    *@return true if value set / false if unknown field
-    **/
-   function setValue($p_field, $p_value) {
-// todo simplifier le code : creer un autre port oldPort à l'import alimenté avec toutes les valeurs existantes et comparer avec oldPort->value
-
-      if (is_null($this->ID)) { // new port --> nothing to check : let's update
-         $this->$p_field=$p_value;
-         $this->updates[$p_field] = $p_value;
-      } else {
-         if (property_exists($this, $p_field)) {
-            if (array_key_exists($p_field, $this->fields)) { // core field
-               if ($this->fields[$p_field]!=$p_value) { // don't update if values are the same
-                  $this->$p_field=$p_value;
-                  $this->updates[$p_field] = $p_value;
-               } else {
-                  return false;
-               }
-            } elseif(array_key_exists($p_field, $this->oTracker_networking_ports->fields)) { // tracker field
-               if ($this->oTracker_networking_ports->fields[$p_field]!=$p_value) { // don't update if values are the same
-                  $this->$p_field=$p_value;
-                  $this->updates[$p_field] = $p_value;
-               } else {
-                  return false;
-               }
-            }
-         } else {
-            return false;
-         }
-      }
-      return true;
+      $this->oTracker_networking_ports->deleteDB(); // tracker
+      parent::deleteDB(); // core
    }
 }
 ?>

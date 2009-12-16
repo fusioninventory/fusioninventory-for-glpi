@@ -40,49 +40,34 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginTrackerNetworking2 extends CommonDBTM {
-   private $ID, $name, $firmware, $serial, $ifaddr, $ifmac, $model, $comments,
-           $ram, $memory, $uptime, $ports=array(), $cpu, $ifaddrs=array();
+class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
+   private $ports=array(), $ifaddrs=array();
    private $oTracker_networking, $oTracker_networking_ifaddr, $oTracker_networking_ports;
-   private $updates=array(), $newPorts=array(), $updatesPorts=array();
+   private $newPorts=array(), $updatesPorts=array();
    private $newIfaddrs=array(), $updatesIfaddrs=array();
 
 	/**
 	 * Constructor
 	**/
    function __construct() {
-      $this->table="glpi_networking";
+      parent::__construct("glpi_networking");
       $this->dohistory=true;
       $this->type=NETWORKING_TYPE;
-      $this->oTracker_networking = new CommonDBTM;
-      $this->oTracker_networking->table="glpi_plugin_tracker_networking";
+      $this->oTracker_networking = new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking");
    }
 
    /**
-    * Load an existing switch
+    * Load an existing networking switch
     *
     *@return nothing
     **/
-   function load($p_id) {
-      $this->ID = $p_id;
-
+   function load($p_id='') {
+      parent::load($p_id);
       $this->ifaddrs = $this->getIfaddrsDB();
       $this->ports = $this->getPortsDB();
-      $this->oTracker_networking->getFromDB($p_id);
 
-      $this->getFromDB($p_id);
-      $this->ID = $this->fields['ID'];
-      $this->name = $this->fields['name'];
-      $this->firmware = $this->fields['firmware']; // via dropdown
-      $this->serial = $this->fields['serial'];
-      $this->ifaddr = $this->fields['ifaddr']; // et glpi_plugin_tracker_networking_ifaddr
-      $this->ifmac = $this->fields['ifmac'];
-      $this->model = $this->fields['model']; // via dropdown
-      $this->comments = $this->fields['comments'];
-      $this->ram = $this->fields['ram'];
-      $this->memory = $this->oTracker_networking->fields['memory']; //tracker
-      $this->uptime = $this->oTracker_networking->fields['uptime']; //tracker
-      $this->cpu = $this->oTracker_networking->fields['cpu']; //tracker
+      $this->oTracker_networking->load($p_id);
+      $this->ptcdLinkedObjects[]=$this->oTracker_networking;
    }
 
    /**
@@ -91,29 +76,15 @@ class PluginTrackerNetworking2 extends CommonDBTM {
     *@return nothing
     **/
    function updateDB() {
-      if (count($this->updates)) {
-         // special for dropdowns : model, firmware
-         if (array_key_exists('model', $this->updates)) {
-            $manufacturer = getDropdownName("glpi_dropdown_manufacturer",$this->fields['FK_glpi_enterprise']);
-            $this->updates['model'] = externalImportDropdown("glpi_dropdown_model_networking",$this->updates['model'], 0, array('manufacturer'=>$manufacturer));
-         }
-         if (array_key_exists('firmware', $this->updates)) {
-            $this->updates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",$this->updates['firmware']);
-         }
-
-         $this->updates['ID'] = $this->ID;
-         $this->oTracker_networking->update($this->updates);
-         $this->update($this->updates);
+      if (array_key_exists('model', $this->ptcdUpdates)) {
+         $manufacturer = getDropdownName("glpi_dropdown_manufacturer",$this->getValue('FK_glpi_enterprise'));
+         $this->ptcdUpdates['model'] = externalImportDropdown("glpi_dropdown_model_networking",$this->ptcdUpdates['model'], 0, array('manufacturer'=>$manufacturer));
       }
-   }
-
-   /**
-    * Get all object vars and values
-    *
-    *@return Array of all class vars => values
-    **/
-   function getVars() {
-      return get_object_vars($this);
+      if (array_key_exists('firmware', $this->ptcdUpdates)) {
+         $this->ptcdUpdates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",$this->ptcdUpdates['firmware']);
+      }
+      parent::updateDB();
+      $this->oTracker_networking->updateDB();
    }
 
    /**
@@ -127,7 +98,7 @@ class PluginTrackerNetworking2 extends CommonDBTM {
       $ptp = new PluginTrackerPort();
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
-                WHERE (`on_device` = '$this->ID' AND `device_type` = '".NETWORKING_TYPE."');";
+                WHERE (`on_device` = '".$this->getValue('ID')."' AND `device_type` = '".NETWORKING_TYPE."');";
       $portsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -150,25 +121,6 @@ class PluginTrackerNetworking2 extends CommonDBTM {
    }
 
    /**
-    * Set ports
-    *
-    *@param $p_ports Array of ports id
-    *@return nothing
-    **/
-/*   function setPorts($p_ports) {
-//      foreach ($p_ports as $newPort) {
-//         if ($this->getPort($newPort->getValue('mac'), $newPort->getValue('ip'))) {
-//
-//         }
-//      }
-      if (!in_array($this->ports, $port)) { // don't update if values are the same
-         eval("return \$this->$p_field=\$p_value;");
-         $this->updates[$p_field] = $p_value;
-      }
-
-   }*/
-
-   /**
     * Get index of port object
     *
     *@param $p_mac MAC address
@@ -179,7 +131,7 @@ class PluginTrackerNetworking2 extends CommonDBTM {
       $portIndex = '';
       foreach ($this->ports as $index => $oPort) {
          if (is_object($oPort)) { //todo pourquoi ne serait ce pas vrai ?
-            if ($oPort->fields['ifmac']==$p_mac) {
+            if ($oPort->getValue('ifmac')==$p_mac) {
                $portIndex = $index;
                break;
             }
@@ -187,7 +139,7 @@ class PluginTrackerNetworking2 extends CommonDBTM {
       }
       if ($portIndex == '' AND $p_ip != '') {
          foreach ($this->ports as $index => $oPort) {
-            if ($oPort->fields['ifaddr']==$p_ip) {
+            if ($oPort->getValue('ifaddr')==$p_ip) {
                $portIndex = $index;
                break;
             }
@@ -206,7 +158,7 @@ class PluginTrackerNetworking2 extends CommonDBTM {
       $ifaddrIndex = '';
       foreach ($this->ifaddrs as $index => $oIfaddr) {
          if (is_object($oIfaddr)) { //todo pourquoi ne serait ce pas vrai ?
-            if ($oIfaddr->fields['ifaddr']==$p_ip) {
+            if ($oIfaddr->getValue('ifaddr')==$p_ip) {
                $ifaddrIndex = $index;
                break;
             }
@@ -294,7 +246,7 @@ class PluginTrackerNetworking2 extends CommonDBTM {
       $pti = new PluginTrackerIfaddr();
       $query = "SELECT `ID`
                 FROM `glpi_plugin_tracker_networking_ifaddr`
-                WHERE `FK_networking` = '$this->ID';";
+                WHERE `FK_networking` = '".$this->getValue('ID')."';";
       $ifaddrsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -315,37 +267,6 @@ class PluginTrackerNetworking2 extends CommonDBTM {
     **/
    function getIfaddr($p_index) {
       return $this->ifaddrs[$p_index];
-   }
-
-   /**
-    * Get field value
-    *
-    *@param $p_field Field
-    *@return Field value / nothing if unknown field
-    **/
-   function getValue($p_field) {
-      if (eval("return isset(\$this->\$p_field);")) {
-         return eval("return \$this->$p_field;");
-      }
-   }
-
-   /**
-    * Set field value
-    *
-    *@param $p_field Field
-    *@param $p_value Value
-    *@return true if value set / false if unknown field
-    **/
-   function setValue($p_field, $p_value) {
-      if (property_exists($this, $p_field)) {
-         if (!eval("return \$this->$p_field==\$p_value;")) { // don't update if values are the same
-            eval("return \$this->$p_field=\$p_value;");
-            $this->updates[$p_field] = $p_value;
-         }
-         return true;
-      } else {
-         return false;
-      }
    }
 
    /**

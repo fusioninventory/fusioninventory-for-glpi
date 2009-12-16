@@ -367,14 +367,12 @@ class PluginTrackerCommunication {
       {
          switch ($child->getName()) {
             case 'DEVICE' :
-//               $errors.=$this->importDevice($this->sxml->CONTENT->DEVICE);
                $errors.=$this->importDevice($child);
                break;
             default :
                $errors.='Elément invalide dans CONTENT : '.$child->getName()."\n";
          }
       }
-
       return $errors;
    }
 
@@ -386,7 +384,6 @@ class PluginTrackerCommunication {
     **/
    function importDevice($p_device) {
       $errors=''; $this->deviceId='';
-//      $errors.=$this->importInfo($this->sxml->CONTENT->DEVICE->INFO);
       $errors.=$this->importInfo($p_device->INFO);
       if ($this->deviceId!='') {
          foreach ($p_device->children() as $child)
@@ -478,7 +475,6 @@ class PluginTrackerCommunication {
                $this->ptn->setValue('uptime', $p_info->UPTIME);
                break;
             case 'IPS' :
-//               $errors.=$this->importIps($this->sxml->CONTENT->DEVICE->INFO->IPS);
                $errors.=$this->importIps($child);
                break;
             default :
@@ -535,10 +531,8 @@ class PluginTrackerCommunication {
       $portIndex = $this->ptn->getPortIndex($p_port->MAC); //todo ajouter le 2e param (ip) a partir de connections
       if (is_int($portIndex)) {
          $oldPort = $this->ptn->getPort($portIndex);
-//         $ptp->import($oldPort->getValue('ID'));
          $ptp->load($oldPort->getValue('ID'));
       } else {
-//         $ptp->import();
          $ptp->load();
       }
       foreach ($p_port->children() as $name=>$child)
@@ -570,7 +564,7 @@ class PluginTrackerCommunication {
             case 'IFSTATUS' :
             case 'IFTYPE' :
             case 'TRUNK' :
-               $ptp->setValue(strtolower($name), eval("return \$p_port->$name;"));;
+               $ptp->setValue(strtolower($name), eval("return \$p_port->$name;")); //todo supprimer le eval ?
                break;
             default :
                $errors.='Elément invalide dans PORT : '.$name."\n";

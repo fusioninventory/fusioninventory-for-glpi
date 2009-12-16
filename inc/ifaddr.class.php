@@ -40,95 +40,12 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking interface address
  **/
-class PluginTrackerIfaddr extends CommonDBTM {
-   private $ID, $ifaddr;
-   private $updates=array();
-
+class PluginTrackerIfaddr  extends PluginTrackerCommonDBTM {
 	/**
 	 * Constructor
 	**/
    function __construct() {
-      $this->table="glpi_plugin_tracker_networking_ifaddr";
-   }
-
-   /**
-    * Load an eventually existing interface address
-    *
-    *@return nothing
-    **/
-   function load($p_id='') {
-      global $DB;
-
-      if ($p_id=='') { // ifaddr doesn't exist
-         $this->ID = NULL;
-         $this->ifaddr = NULL;
-      } else {
-         $this->getFromDB($p_id);
-         $this->ID = $this->fields['ID'];
-         $this->ifaddr = $this->fields['ifaddr'];
-      }
-   }
-
-   /**
-    * Update an existing preloaded address with the instance values
-    *
-    *@return nothing
-    **/
-   function updateDB() {
-      if (count($this->updates)) {
-         $this->updates['ID'] = $this->ID;
-         $this->update($this->updates);
-      }
-   }
-
-   /**
-    * Get all objetc vars and values
-    *
-    *@return Array of all class vars => values
-    **/
-   function getVars() {
-      return get_object_vars($this);
-   }
-
-   /**
-    * Get field value
-    *
-    *@param $p_field Field
-    *@return Field value / nothing if unknown field
-    **/
-   function getValue($p_field) {
-      if (eval("return isset(\$this->\$p_field);")) {
-         return eval("return \$this->$p_field;");
-      }
-   }
-
-   /**
-    * Set field value
-    *
-    *@param $p_field Field
-    *@param $p_value Value
-    *@return true if value set / false if unknown field
-    **/
-   function setValue($p_field, $p_value) {
-      if (property_exists($this, $p_field)) {
-         if (!eval("return \$this->$p_field==\$p_value;")) { // don't update if values are the same
-            eval("return \$this->$p_field=\$p_value;");
-            $this->updates[$p_field] = $p_value;
-         }
-         return true;
-      } else {
-         return false;
-      }
-   }
-
-   /**
-    * Delete a loaded ifaddr
-    *
-    *@param $p_id Ifaddr ID
-    *@return nothing
-    **/
-   function deleteDB() {
-      $this->deleteFromDB($this->ID, 1);
+      parent::__construct("glpi_plugin_tracker_networking_ifaddr");
    }
 
    /**
@@ -138,9 +55,9 @@ class PluginTrackerIfaddr extends CommonDBTM {
     *@return nothing
     **/
    function addDB($p_id) {
-      if (count($this->updates)) {
-         $this->updates['FK_networking']=$p_id;
-         $this->add($this->updates);
+      if (count($this->ptcdUpdates)) {
+         $this->ptcdUpdates['FK_networking']=$p_id;
+         $this->add($this->ptcdUpdates);
       }
    }
 }
