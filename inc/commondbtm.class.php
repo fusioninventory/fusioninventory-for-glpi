@@ -43,6 +43,7 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginTrackerCommonDBTM extends CommonDBTM {
    private $ptcdFields=array();
+   private $ptcdLockFields=array();
    protected $ptcdUpdates=array();
    protected $ptcdLinkedObjects=array();
 
@@ -59,11 +60,15 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
     *@return nothing
     **/
    function load($p_id='') {
-      global $DB;
+      global $DB, $LINK_ID_TABLE;
 
       if ($p_id!='') { // existing item : load old values
          $this->getFromDB($p_id);
          $this->ptcdFields=$this->fields;
+         $itemtype=array_search($this->table, $LINK_ID_TABLE);
+         if ($itemtype) {
+            $this->ptcdLockFields=plugin_tracker_lock_getLockFields($itemtype, $p_id);
+         }
       } else { // new item : initialize all fields to NULL
          $query = "SHOW COLUMNS FROM `".$this->table."`";
          if ($result=$DB->query($query)) {
@@ -133,8 +138,10 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
       }
       if (array_key_exists($p_field, $p_object->ptcdFields)) {
          if ($p_object->ptcdFields[$p_field]!=$p_value) { // don't update if values are the same
-            $p_object->ptcdFields[$p_field] = $p_value;
-            $p_object->ptcdUpdates[$p_field] = $p_value;
+            if (!in_array($p_field, $this->ptcdLockFields)) { // don't update if field is locked
+               $p_object->ptcdFields[$p_field] = $p_value;
+               $p_object->ptcdUpdates[$p_field] = $p_value;
+            }
          }
          return true;
       } else {
@@ -146,6 +153,5 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
          return false;
       }
    }
-
 }
 ?>
