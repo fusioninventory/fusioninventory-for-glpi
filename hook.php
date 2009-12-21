@@ -2527,5 +2527,23 @@ function plugin_pre_item_purge_tracker($parm) {
 	return $parm;
 }
 
+/**
+ * Hook after updates
+ *
+ * @param $parm
+ * @return nothing
+ *
+**/
+function plugin_item_update_tracker($parm) {
+   if (isset($_SESSION["glpiID"]) AND $_SESSION["glpiID"]!='') { // manual task
+      // lock fields which have been updated
+      $type=$parm['type'];
+      $ID=$parm['ID'];
+      $fieldsToLock=$parm['updates'];
+      $lockables = plugin_tracker_lockable_getLockableFields('', $type);
+      $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
+      plugin_tracker_lock_addLocks($type, $ID, $fieldsToLock);
+   }
+}
 
 ?>

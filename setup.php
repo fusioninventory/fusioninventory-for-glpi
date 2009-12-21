@@ -139,6 +139,7 @@ function plugin_init_tracker() {
 
 			$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
 			$PLUGIN_HOOKS['pre_item_purge']['tracker'] = 'plugin_pre_item_purge_tracker';
+			$PLUGIN_HOOKS['item_update']['tracker'] = 'plugin_item_update_tracker';
 
 			$report_list = array();
          $report_list["report/plugin_tracker.switch_ports.history.php"] = "Historique des ports de switchs";

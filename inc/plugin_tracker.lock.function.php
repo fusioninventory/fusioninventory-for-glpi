@@ -133,6 +133,39 @@ function plugin_tracker_lock_setLockArray($p_itemtype, $p_items_id, $p_fieldsToL
 }
 
 /**
+ * Add lock fields for a record.
+ *
+  *@param $p_itemtype Table id.
+  *@param $p_items_id Line id.
+  *@param $p_fieldsToLock Array of fields to lock.
+ *TODO:  check rights and entity
+ *
+ *@return nothing
+ **/
+function plugin_tracker_lock_addLocks($p_itemtype, $p_items_id, $p_fieldsToLock) {
+	global $DB;
+
+	$result = plugin_tracker_lock_getLock($p_itemtype, $p_items_id);
+   if ($DB->numrows($result)){
+      $row = mysql_fetch_assoc($result);
+      $lockedFields = importArrayFromDB($row['fields']);
+      if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
+         $p_fieldsToLock = array_merge($p_fieldsToLock, $lockedFields);
+         $update = "UPDATE `glpi_plugin_tracker_lock`
+                    SET `fields`='" . exportArrayToDB($p_fieldsToLock) . "'
+                    WHERE `itemtype`='".$p_itemtype."'
+                          AND `items_id`='".$p_items_id."';";
+         $DB->query($update);
+      }
+   } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
+      $insert = "INSERT INTO `glpi_plugin_tracker_lock` (`itemtype`, `items_id`, `fields`)
+                 VALUES ('".$p_itemtype."', '".$p_items_id."' ,
+                         '".exportArrayToDB($p_fieldsToLock) . "');";
+      $DB->query($insert);
+   }
+}
+
+/**
  * Get lock fields for a record.
  *
  * @param $p_itemtype Table id.
