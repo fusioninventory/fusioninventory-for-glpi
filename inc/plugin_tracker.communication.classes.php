@@ -538,7 +538,8 @@ class PluginTrackerCommunication {
       foreach ($p_port->children() as $name=>$child)
       {
          switch ($name) {
-            case 'CONNECTIONS' : // todo
+            case 'CONNECTIONS' :
+               $errors.=$this->importConnections($child, $ptp);
                break;
             case 'VLANS' : // todo
                break;
@@ -571,6 +572,83 @@ class PluginTrackerCommunication {
          }
       }
       $this->ptn->addPort($ptp, $portIndex);
+      return $errors;
+   }
+
+   /**
+    * Import CONNECTIONS
+    *@param $p_connections CONNECTIONS code to import
+    *@param $p_oPort Port object to connect
+    *
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importConnections($p_connections, $p_oPort) {
+      $errors='';
+      echo '<br>importConnections';
+//      $pti = new PluginTrackerIfaddr;
+      if (isset($p_connections->CDP)) {
+         $cdp = $p_connections->CDP;
+         if ($cdp!=1) {
+            $errors.='Elément invalide dans CONNECTIONS : CDP='.$cdp."\n";
+         }
+      } else {
+         $cdp=0;
+      }
+      foreach ($p_connections->children() as $name=>$child)
+      {
+         switch ($child->getName()) {
+            case 'CDP' : // already managed
+               break;
+            case 'CONNECTION' :
+               $errors.=$this->importConnection($child, $p_oPort, $cdp);
+               break;
+            default :
+               $errors.='Elément invalide dans CONNECTIONS : '.$child->getName()."\n";
+         }
+      }
+//      $this->ptn->saveIfaddrs();
+      return $errors;
+   }
+
+   /**
+    * Import CONNECTION
+    *@param $p_connection CONNECTION code to import
+    *@param $p_oPort Port object to connect
+    *@param $p_cdp CDP value (1 or <>1)
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importConnection($p_connection, $p_oPort, $p_cdp) {
+      $errors='';
+      $portID='';
+      $ptsnmp= new PluginTrackerSNMP;
+      if ($p_cdp==1) {
+         $ip=''; $ifdescr='';
+         foreach ($p_connection->children() as $name=>$child) {
+            switch ($child->getName()) {
+               case 'IP' :
+                  $ip=$child;
+                  break;
+               case 'IFDESCR' :
+                  $ifdescr=$child;
+                  break;
+               default :
+                  $errors.='Elément invalide dans CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
+            }
+         }
+         $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
+      } else {
+         foreach ($p_connection->children() as $name=>$child) {
+            switch ($child->getName()) {
+               case 'MAC' :
+//                  $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $this->deviceId);
+                  $portID=$ptsnmp->getPortIDfromDeviceMAC($child);
+                  break;
+               default :
+                  $errors.='Elément invalide dans CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
+            }            
+         }
+      }
+      $p_oPort->addConnection($portID);
       return $errors;
    }
 }

@@ -42,6 +42,7 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginTrackerPort extends PluginTrackerCommonDBTM {
    private $oTracker_networking_ports, $tracker_networking_ports_ID;
+   private $portConnections=array();
 
 	/**
 	 * Constructor
@@ -91,6 +92,11 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
    function updateDB() {
       parent::updateDB(); // update core
       $this->oTracker_networking_ports->updateDB(); // update tracker
+      // update connections
+      $ptsnmp=new PluginTrackerSNMP;
+      foreach($this->portConnections as $connection) {
+         $ptsnmp->PortsConnection($this->getValue('ID'), $connection, 0);
+      }
    }
 
    /**
@@ -110,6 +116,10 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
             $this->oTracker_networking_ports->ptcdUpdates['FK_networking_ports']=$portID;
             $this->oTracker_networking_ports->add($this->oTracker_networking_ports->ptcdUpdates);
          }
+         // update connections
+         foreach($this->portConnections as $connection) {
+            PortsConnection($portID, $connection, 0);
+         }
       }
    }
 
@@ -122,6 +132,16 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
    function deleteDB() {
       $this->oTracker_networking_ports->deleteDB(); // tracker
       parent::deleteDB(); // core
+   }
+
+   /**
+    * Add connection
+    *
+    *@param $p_port Port id
+    *@return nothing
+    **/
+   function addConnection($p_port) {
+      $this->portConnections[]=$p_port;
    }
 }
 ?>

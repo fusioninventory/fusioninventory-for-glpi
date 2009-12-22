@@ -36,6 +36,8 @@
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
+include_once(GLPI_ROOT.'/inc/networking.class.php'); // todo a ranger
+include_once(GLPI_ROOT.'/inc/networking.function.php');
 
 class PluginTrackerSNMP extends CommonDBTM {
 	/**
@@ -285,7 +287,32 @@ class PluginTrackerSNMP extends CommonDBTM {
 		return($PortID);
 	}
 
+	/**
+	 * Get port ID from device MAC address
+	 *
+	 * @param $p_mac MAC address
+	 * @param $p_deviceID Link device ID
+	 *
+	 * @return Port ID
+	 *
+	**/
+//	function getPortIDfromDeviceMAC($p_mac, $p_deviceID) {
+	function getPortIDfromDeviceMAC($p_mac) {
+		global $DB;
 
+//      $NEEDED_ITEMS = array ('computer', 'enterprise', 'monitor', 'networking', 'peripheral',
+//                      'phone', 'planning', 'printer', 'reminder', 'software', 'tracking', 'user');
+      $query = "SELECT ID
+                       FROM `glpi_networking_ports`
+                       WHERE `ifmac` IN ('".$p_mac."',
+                                         '".strtoupper($p_mac)."');";
+//                                         '".strtoupper($p_mac)."')
+//                             AND (`on_device`!='".$p_deviceID."'
+//                                  OR `device_type`!='".NETWORKING_TYPE."');";
+		$result = $DB->query($query);
+		$data = $DB->fetch_assoc($result);
+		return($data["ID"]);
+	}
 
 	/**
 	 * Description
