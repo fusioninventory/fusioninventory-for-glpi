@@ -584,8 +584,6 @@ class PluginTrackerCommunication {
     **/
    function importConnections($p_connections, $p_oPort) {
       $errors='';
-      echo '<br>importConnections';
-//      $pti = new PluginTrackerIfaddr;
       if (isset($p_connections->CDP)) {
          $cdp = $p_connections->CDP;
          if ($cdp!=1) {
@@ -606,7 +604,6 @@ class PluginTrackerCommunication {
                $errors.='Elément invalide dans CONNECTIONS : '.$child->getName()."\n";
          }
       }
-//      $this->ptn->saveIfaddrs();
       return $errors;
    }
 
@@ -640,15 +637,16 @@ class PluginTrackerCommunication {
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
                case 'MAC' :
-//                  $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $this->deviceId);
-                  $portID=$ptsnmp->getPortIDfromDeviceMAC($child);
+                  $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $p_oPort->getValue('ID'));
                   break;
                default :
                   $errors.='Elément invalide dans CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
             }            
          }
       }
-      $p_oPort->addConnection($portID);
+      if ($portID != '') {
+         $p_oPort->addConnection($portID);
+      }
       return $errors;
    }
 }

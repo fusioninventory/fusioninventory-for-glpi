@@ -291,24 +291,18 @@ class PluginTrackerSNMP extends CommonDBTM {
 	 * Get port ID from device MAC address
 	 *
 	 * @param $p_mac MAC address
-	 * @param $p_deviceID Link device ID
+	 * @param $p_fromPortID Link port ID
 	 *
 	 * @return Port ID
-	 *
 	**/
-//	function getPortIDfromDeviceMAC($p_mac, $p_deviceID) {
-	function getPortIDfromDeviceMAC($p_mac) {
+	function getPortIDfromDeviceMAC($p_mac, $p_fromPortID) {
 		global $DB;
 
-//      $NEEDED_ITEMS = array ('computer', 'enterprise', 'monitor', 'networking', 'peripheral',
-//                      'phone', 'planning', 'printer', 'reminder', 'software', 'tracking', 'user');
       $query = "SELECT ID
-                       FROM `glpi_networking_ports`
-                       WHERE `ifmac` IN ('".$p_mac."',
-                                         '".strtoupper($p_mac)."');";
-//                                         '".strtoupper($p_mac)."')
-//                             AND (`on_device`!='".$p_deviceID."'
-//                                  OR `device_type`!='".NETWORKING_TYPE."');";
+                FROM `glpi_networking_ports`
+                WHERE `ifmac` IN ('".$p_mac."',
+                                  '".strtoupper($p_mac)."')
+                      AND `ID`!='".$p_fromPortID."';"; // do not get the link port
 		$result = $DB->query($query);
 		$data = $DB->fetch_assoc($result);
 		return($data["ID"]);
