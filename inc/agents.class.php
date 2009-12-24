@@ -206,6 +206,22 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "key=".$this->fields["key"]."\n";
 	}
 
+
+
+   function InfosByKey($key) {
+      global $DB;
+
+      $query = "SELECT * FROM `glpi_plugin_tracker_agents`
+      WHERE `key`='".$key."'";
+
+      $agent = array();
+      if ($result = $DB->query($query)) {
+         if ($DB->numrows($result) != 0) {
+            $agent = $DB->fetch_assoc($result);
+         }
+      }
+      return $agent;
+   }
 }
 
 ?>

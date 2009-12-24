@@ -36,30 +36,50 @@
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
+$NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
+	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
 include (GLPI_ROOT."/inc/includes.php");
-
 //include("agent_communication.php");
 $ptc = new PluginTrackerCommunication();
 $res='';
 $errors='';
-//if ($ac->connectionOK($errors)) {
-if (1) {
-   $res .= "1'".$errors."'";
-   $ptc->addDiscovery();
-   $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
-         <REPLY>
-<OPTION><NAME>DOWNLOAD</NAME>
-<PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" /></OPTION>
-            <RESPONSE>SEND</RESPONSE>
-            <PROLOG_FREQ>24</PROLOG_FREQ>
-</REPLY>");
-   $ptc->addQuery();
-   $ptc->setXML($ptc->getXML());
-   echo $ptc->send(); // echo response for the agent
-   //$ptc->addDiscovery();
-//   echo $ptc->getXML();
+file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+$top0 = gettimeofday();
+if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
+   //if ($ac->connectionOK($errors)) {
+   if (1) {
+      $res .= "1'".$errors."'";
+
+      $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+            <REPLY>
+   <OPTION><NAME>DOWNLOAD</NAME>
+   <PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" /></OPTION>
+               <RESPONSE>SEND</RESPONSE>
+               <PROLOG_FREQ>24</PROLOG_FREQ>
+   </REPLY>");
+
+   // ******** NETDISCOVERY
+      $ptc->addDiscovery();
+
+   // ******** SNMPQUERY
+//      $ptc->addQuery();
+
+   // ******** Send XML
+      $ptc->setXML($ptc->getXML());
+      echo $ptc->getSend(); // echo response for the agent
+   } else {
+      $res .= "0'".$errors."'";
+   }
 } else {
-   $res .= "0'".$errors."'";
+   $top1 = gettimeofday();
+   $duree["sec"]  = $top1["sec"]-$top0["sec"];
+  $duree["usec"] = $top1["usec"]-$top0["usec"];
+
+  if ($duree["usec"]<0) {
+   $duree["sec"]--;
+   $duree["usec"]+=1000000;
+  }
+
+ #  file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/import.log", "Il a fallu ".$duree["sec"]." secondes et ". $duree["usec"]." microsecondes");
 }
-//file_put_contents('dial.log', $res);
 ?>

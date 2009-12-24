@@ -85,3 +85,20 @@ CREATE TABLE `glpi_plugin_tracker_lockable` (
    KEY `entities_id` ( `entities_id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE `glpi_plugin_tracker_config_snmp_script`;
+
+
+CREATE TABLE `glpi072`.`glpi_plugin_tracker_task` (
+   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `date` DATETIME NOT NULL ,
+   `agent_id` INT( 11 ) NOT NULL ,
+   `action` VARCHAR( 255 ) NOT NULL ,
+   `param` varchar(255) NOT NULL,
+   `on_device` INT( 11 ) NOT NULL ,
+   `device_type` SMALLINT( 6 ) NOT NULL ,
+   `single` int(1) NOT NULL,
+   PRIMARY KEY ( `id` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+COLLATE=utf8_unicode_ci;

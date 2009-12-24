@@ -129,6 +129,66 @@ class PluginTrackerRangeIP extends CommonDBTM {
 		echo "</td></tr>";
 		echo "</table></form></div>";
 	}
+
+
+
+   function Counter($agent_id, $type) {
+      global $DB;
+      
+      $count = 0;
+      switch ($type) {
+
+         case "discover":
+            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_tracker_rangeip`
+               WHERE `FK_tracker_agents_discover`='".$agent_id."'
+                  AND `discover`='1' ";
+            break;
+
+         case "query":
+            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_tracker_rangeip`
+               WHERE `FK_tracker_agents_query`='".$agent_id."'
+                  AND `query`='1' ";
+            break;
+
+      }
+
+      if ($result = $DB->query($query)) {
+         $res = $DB->fetch_assoc($result);
+         $count = $res["count"];
+      }
+      return $count;
+   }
+
+
+   function ListRange($agent_id, $type) {
+      global $DB;
+
+      $ranges = array();
+      switch ($type) {
+
+         case "discover":
+            $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`
+               WHERE `FK_tracker_agents_discover`='".$agent_id."'
+                  AND `discover`='1' ";
+            break;
+
+         case "query":
+            $query = "SELECT * FROM `glpi_plugin_tracker_rangeip`
+               WHERE `FK_tracker_agents_query`='".$agent_id."'
+                  AND `query`='1' ";
+            break;
+
+      }
+      if ($result = $DB->query($query)) {
+         if ($DB->numrows($result) != 0) {
+            while ($data=$DB->fetch_array($result)) {
+               $ranges[$data["ID"]] = $data;
+            }
+         }
+      }
+      return $ranges;
+   }
+   
 }
 
 ?>

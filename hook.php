@@ -270,6 +270,12 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['name'] = $LANG['plugin_tracker']["unknown"][1];
    $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][18]['forcegroupby']='1';
 
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][19]['table'] = 'glpi_plugin_tracker_unknown_device';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][19]['field'] = 'accepted';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][19]['linkfield'] = 'accepted';
+	$sopt[PLUGIN_TRACKER_MAC_UNKNOWN][19]['name'] = $LANG['plugin_tracker']["unknown"][2];
+   $sopt[PLUGIN_TRACKER_MAC_UNKNOWN][19]['datatype']='bool';
+
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS]['common'] = $LANG['plugin_tracker']["errors"][0];
 
 	$sopt[PLUGIN_TRACKER_SNMP_NETWORKING_PORTS][1]['name'] = $LANG["common"][16];
@@ -620,6 +626,55 @@ function plugin_tracker_getSearchOption() {
 	$sopt[COMPUTER_TYPE][5193]['linkfield']='ID';
 	$sopt[COMPUTER_TYPE][5193]['name']=$LANG['plugin_tracker']["title"][0]." - ".$LANG["reports"][46];
 	$sopt[COMPUTER_TYPE][5193]['forcegroupby']='1';
+
+
+
+	$sopt[PLUGIN_TRACKER_TASK]['common'] = $LANG['plugin_tracker']["task"][0];
+
+	$sopt[PLUGIN_TRACKER_TASK][1]['table'] = 'glpi_plugin_tracker_task';
+	$sopt[PLUGIN_TRACKER_TASK][1]['field'] = 'id';
+	$sopt[PLUGIN_TRACKER_TASK][1]['linkfield'] = 'id';
+	$sopt[PLUGIN_TRACKER_TASK][1]['name'] = $LANG["common"][16];
+   $sopt[PLUGIN_TRACKER_TASK][1]['datatype']='itemlink';
+
+	$sopt[PLUGIN_TRACKER_TASK][2]['table'] = 'glpi_plugin_tracker_task';
+	$sopt[PLUGIN_TRACKER_TASK][2]['field'] = 'date';
+	$sopt[PLUGIN_TRACKER_TASK][2]['linkfield'] = 'date';
+	$sopt[PLUGIN_TRACKER_TASK][2]['name'] = $LANG["common"][27];
+   $sopt[PLUGIN_TRACKER_TASK][2]['datatype']='datetime';
+
+ 	$sopt[PLUGIN_TRACKER_TASK][3]['table'] = 'glpi_plugin_tracker_agents';
+	$sopt[PLUGIN_TRACKER_TASK][3]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_TASK][3]['linkfield'] = 'agent_id';
+	$sopt[PLUGIN_TRACKER_TASK][3]['name'] = $LANG['plugin_tracker']["agents"][13];
+	$sopt[PLUGIN_TRACKER_TASK][3]['datatype']='itemlink';
+	$sopt[PLUGIN_TRACKER_TASK][3]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
+   $sopt[PLUGIN_TRACKER_TASK][3]['forcegroupby']='1';
+
+	$sopt[PLUGIN_TRACKER_TASK][4]['table'] = 'glpi_plugin_tracker_task';
+	$sopt[PLUGIN_TRACKER_TASK][4]['field'] = 'action';
+	$sopt[PLUGIN_TRACKER_TASK][4]['linkfield'] = 'action';
+//	$sopt[PLUGIN_TRACKER_TASK][4]['name'] = $LANG["common"][27];
+
+	$sopt[PLUGIN_TRACKER_TASK][5]['table'] = 'glpi_plugin_tracker_task';
+	$sopt[PLUGIN_TRACKER_TASK][5]['field'] = 'param';
+	$sopt[PLUGIN_TRACKER_TASK][5]['linkfield'] = 'param';
+//	$sopt[PLUGIN_TRACKER_TASK][5]['name'] = $LANG["common"][27];
+   
+	$sopt[PLUGIN_TRACKER_TASK][6]['table'] = 'glpi_plugin_tracker_task';
+	$sopt[PLUGIN_TRACKER_TASK][6]['field'] = 'device_type';
+	$sopt[PLUGIN_TRACKER_TASK][6]['linkfield'] = 'device_type';
+	$sopt[PLUGIN_TRACKER_TASK][6]['name'] = $LANG["common"][1];
+ 
+	$sopt[PLUGIN_TRACKER_TASK][7]['table'] = 'glpi_plugin_tracker_task';
+	$sopt[PLUGIN_TRACKER_TASK][7]['field'] = 'on_device';
+	$sopt[PLUGIN_TRACKER_TASK][7]['linkfield'] = 'on_device';
+//	$sopt[PLUGIN_TRACKER_TASK][7]['name'] = $LANG["common"][27];
+
+	$sopt[PLUGIN_TRACKER_TASK][8]['table'] = 'glpi_plugin_tracker_task';
+	$sopt[PLUGIN_TRACKER_TASK][8]['field'] = 'single';
+	$sopt[PLUGIN_TRACKER_TASK][8]['linkfield'] = 'single';
+//	$sopt[PLUGIN_TRACKER_TASK][8]['name'] = $LANG["common"][27];
 
 	return $sopt;
 }
@@ -1149,9 +1204,9 @@ function plugin_tracker_getDropdown() {
 
 /* Cron */
 function cron_plugin_tracker() {
-	$plugin_tracker_unknown = new PluginTrackerUnknown;
-   $plugin_tracker_unknown->CleanOrphelinsConnections();
-	$plugin_tracker_unknown->FusionUnknownKnownDevice();
+	$ptud = new PluginTrackerUnknownDevice;
+   $ptud->CleanOrphelinsConnections();
+	$ptud->FusionUnknownKnownDevice();
    #Clean server script processes history
    $tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
    $tracker_config_snmp_networking->CleanHistory("history_process");
@@ -1301,9 +1356,9 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
          } else {
             $array = array ();
 				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
-					$array = array( 1 => $LANG['plugin_tracker']["title"][0] );
+					$array[1] = $LANG['plugin_tracker']["title"][0];
 				}
-            $array = array( 2 => $LANG['plugin_tracker']["title"][5] );
+            $array[2] = $LANG['plugin_tracker']["title"][5];
             return $array;
 			}
 			break;
@@ -1374,25 +1429,17 @@ function plugin_headings_actions_tracker($type) {
       case PRINTER_TYPE :
 			$array = array ();
 			if (plugin_tracker_haveRight("snmp_printers", "r")) {
-				$array = array (
-					0 => "plugin_headings_tracker_printerInfo"
-				);
+				$array[1] = "plugin_headings_tracker_printerInfo";
 			}
-         $array = array (
-            2 => "plugin_headings_tracker_trackerLocks"
-         );
+         $array[2] = "plugin_headings_tracker_trackerLocks";
 			return $array;
 			break;
 
 		case NETWORKING_TYPE :
 			if (plugin_tracker_haveRight("snmp_networking", "r")) {
-				$array = array (
-					0 => "plugin_headings_tracker_networkingInfo"
-				);
+				$array[1] = "plugin_headings_tracker_networkingInfo";
 			}
-         $array = array (
-            2 => "plugin_headings_tracker_trackerLocks"
-         );
+         $array[2] = "plugin_headings_tracker_trackerLocks";
 			return $array;
 			break;
 

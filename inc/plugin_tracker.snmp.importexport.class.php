@@ -212,100 +212,66 @@ class PluginTrackerImportExport extends CommonDBTM {
 
 
 
-	function import_agent_discovery($content_dir,$file) {
+	function import_netdiscovery($p_xml) {
 		global $DB,$LANG;
+$test = '';
 
 		$walks = new PluginTrackerWalk;
-		$config_discovery = new PluginTrackerConfigDiscovery;
+
+		$config_discovery = new PluginTrackerConfig;
       $np=new Netport;
-      $plugin_tracker_unknown = new PluginTrackerUnknown;
 
-		// Recompose File
-		$target = $content_dir.$file;
-		$pid = str_replace("-discovery.xml", "", $file);
-		// Get agent informations in pid-discovery.xml file
-			$agent_tmp = "";
-			$c_handle = fopen($target, 'r');
-			do {
-				$content = fread($c_handle,1000000);
-				$agent_tmp .= $content;
-			}
-			while (!empty($content));
-			fclose($c_handle);
-			$agent_tmp = str_replace("</snmp>\n","",$agent_tmp);
-		// End get lines
-		$handle = fopen($target, 'w');
-		fwrite($handle, $agent_tmp);
-		//
-		$dir = opendir($content_dir);
-		while($file_scan = readdir($dir)) {
-			if(strstr($file_scan, $pid."-tmpdiscovery-")) {
-				$c_handle = fopen($content_dir.$file_scan, 'r');
-				do {
-					$content = fread($c_handle,1000000);
-					fwrite($handle, $content);
-				}
-				while (!empty($content));
-				fclose($c_handle);
-				unlink($content_dir.$file_scan);
-			}
-		}
-		closedir($dir);
-
-		fwrite($handle, "</snmp>\n");
-		fclose($handle);
-
+      $ptud = new PluginTrackerUnknownDevice;
 
 		// Load config discovery for existence criteria
-		$link_ip = $config_discovery->getValue("link_ip");
-		$link_name = $config_discovery->getValue("link_name");
-		$link_serial = $config_discovery->getValue("link_serial");
-      $link_macaddr = $config_discovery->getValue("link_macaddr");
-		$link2_ip = $config_discovery->getValue("link2_ip");
-		$link2_name = $config_discovery->getValue("link2_name");
-		$link2_serial = $config_discovery->getValue("link2_serial");
-      $link2_macaddr = $config_discovery->getValue("link2_macaddr");
-
+		$link_ip = $config_discovery->getValue("criteria1_ip");
+		$link_name = $config_discovery->getValue("criteria1_name");
+		$link_serial = $config_discovery->getValue("criteria1_serial");
+      $link_macaddr = $config_discovery->getValue("criteria1_macaddr");
+		$link2_ip = $config_discovery->getValue("criteria2_ip");
+		$link2_name = $config_discovery->getValue("criteria2_name");
+		$link2_serial = $config_discovery->getValue("criteria2_serial");
+      $link2_macaddr = $config_discovery->getValue("criteria2_macaddr");
 		$walkdata = '';
-		$xml = simplexml_load_file($content_dir.$file);
 		$count_discovery_devices = 0;
-		foreach($xml->host as $discovery) {
+		foreach($p_xml->DEVICE as $discovery) {
 			$count_discovery_devices++;	
 		}
+
 		$device_queried_networking = 0;
 		$device_queried_printer = 0;
 
-		foreach($xml->device as $device) {
-			if ($device->infos->type == NETWORKING_TYPE) {
+		foreach($p_xml->DEVICE as $device) {
+			if ($device->TYPE == NETWORKING_TYPE) {
 				$device_queried_networking++;
-         } else if ($device->infos->type == PRINTER_TYPE) {
+         } else if ($device->TYPE == PRINTER_TYPE) {
 				$device_queried_printer++;
          }
 		}
-		foreach($xml->agent as $agent) {
-			$agent_version = $agent->version;
-			$agent_id = $agent->id;
-			$query = "UPDATE `glpi_plugin_tracker_agents`
-                   SET `last_agent_update`='".$agent->end_date."',
-                       `tracker_agent_version`='".$agent_version."'
-                   WHERE `ID`='".$agent_id."';";
-			$DB->query($query);
-			
-			$query = "UPDATE `glpi_plugin_tracker_agents_processes`
-                   SET `status`='2',
-                       `start_time_discovery`='".$agent->start_time_discovery."',
-                       `end_time_discovery`='".$agent->end_time_discovery."',
-                       `discovery_queries_total`='".$agent->discovery_queries_total."',
-                       `discovery_queries`='".$count_discovery_devices."'
-                   WHERE `process_number`='".$agent->pid."'
-                         AND `FK_agent`='".$agent->id."';";
-			$DB->query($query);			
-		}
-		foreach($xml->host as $discovery) {
-			if ($discovery->modelSNMP != "") {
+//		foreach($p_xml->agent as $agent) {
+//			$agent_version = $agent->version;
+//			$agent_id = $agent->id;
+//			$query = "UPDATE `glpi_plugin_tracker_agents`
+//                   SET `last_agent_update`='".$agent->end_date."',
+//                       `tracker_agent_version`='".$agent_version."'
+//                   WHERE `ID`='".$agent_id."';";
+//			$DB->query($query);
+//
+//			$query = "UPDATE `glpi_plugin_tracker_agents_processes`
+//                   SET `status`='2',
+//                       `start_time_discovery`='".$agent->start_time_discovery."',
+//                       `end_time_discovery`='".$agent->end_time_discovery."',
+//                       `discovery_queries_total`='".$agent->discovery_queries_total."',
+//                       `discovery_queries`='".$count_discovery_devices."'
+//                   WHERE `process_number`='".$agent->pid."'
+//                         AND `FK_agent`='".$agent->id."';";
+//			$DB->query($query);
+//		}
+		foreach($p_xml->DEVICE as $discovery) {
+			if ($discovery->MODELSNMP != "") {
 				$query = "SELECT *
                       FROM `glpi_plugin_tracker_model_infos`
-                      WHERE `discovery_key`='".$discovery->modelSNMP."'
+                      WHERE `discovery_key`='".$discovery->MODELSNMP."'
                       LIMIT 0,1;";
 				$result = $DB->query($query);		
 				$data = $DB->fetch_assoc($result);
@@ -313,55 +279,55 @@ class PluginTrackerImportExport extends CommonDBTM {
 			} else {
 				$FK_model = 0;
          }
-         $discovery->mac = strtolower($discovery->mac);
+         $discovery->MAC = strtolower($discovery->MAC);
 
 			if (empty($FK_model)) {
 				$FK_model = 0;
          }
-			$return = plugin_tracker_discovery_criteria($discovery, 1, 0);
-         if ($return == "0") {
-            $return = plugin_tracker_discovery_criteria($discovery, 2, 0);
-         }
-         if ($return == "0") {
-            $return = plugin_tracker_discovery_criteria($discovery, 1, 5153);
-         }
-         if ($return == "0") {
-            $return = plugin_tracker_discovery_criteria($discovery, 2, 5153);
-         }
-         if ($return == "0") {
+//			$return = plugin_tracker_discovery_criteria($discovery, 1, 0);
+//         if ($return == "0") {
+//            $return = plugin_tracker_discovery_criteria($discovery, 2, 0);
+//         }
+//         if ($return == "0") {
+//            $return = plugin_tracker_discovery_criteria($discovery, 1, 5153);
+//         }
+//         if ($return == "0") {
+//            $return = plugin_tracker_discovery_criteria($discovery, 2, 5153);
+//         }
+//         if ($return == "0") {
             // Add in unknown device
             $data = array();
-            if (!empty($discovery->netbiosname)) {
-               $data['name'] = $discovery->netbiosname;
-            } else if (!empty($discovery->snmphostname)) {
-               $data['name'] = $discovery->snmphostname;
+            if (!empty($discovery->NETBIOSNAME)) {
+               $data['name'] = $discovery->NETBIOSNAME;
+            } else if (!empty($discovery->SNMPHOSTNAME)) {
+               $data['name'] = $discovery->SNMPHOSTNAME;
             }
-            $data['dnsname'] = $discovery->dnshostname;
-            $data['FK_entities'] = $discovery->entity;
-            $data['serial'] = $discovery->serial;
-            $data['contact'] = $discovery->usersession;
-            if (!empty($discovery->workgroup)) {
+            $data['dnsname'] = $discovery->DNSHOSTNAME;
+            $data['FK_entities'] = $discovery->ENTITY;
+            $data['serial'] = $discovery->SERIAL;
+            $data['contact'] = $discovery->USERSESSION;
+            if (!empty($discovery->WORKGROUP)) {
                $data['domain'] = externalImportDropdown(
-                                  "glpi_dropdown_domain",$discovery->workgroup,$discovery->entity);
+                                  "glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
             }
-            $data['comments'] = $discovery->description;
-            $data['type'] = $discovery->type;
+            $data['comments'] = $discovery->DESCRIPTION;
+            $data['type'] = $discovery->TYPE;
             $data['FK_model_infos'] = $FK_model;
-            $data['FK_snmp_connection'] = $discovery->authSNMP;
-            if ($discovery->authSNMP != "0") {
+            $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
+            if ($discovery->AUTHSNMP != "") {
                $data['snmp'] = 1;
             }
-				$newID = $plugin_tracker_unknown->add($data);
+				$newID = $ptud->add($data);
 				unset($data);
 				// Add networking_port
 				$port_add["on_device"] = $newID;
 				$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
-				$port_add["ifaddr"] = $discovery->ip;
-				$port_add['ifmac'] = $discovery->mac;
-            $port_add['name'] = $discovery->netportvendor;
+				$port_add["ifaddr"] = $discovery->IP;
+				$port_add['ifmac'] = $discovery->MAC;
+            $port_add['name'] = $discovery->NETPORTVENDOR;
 				$port_ID = $np->add($port_add);
 				unset($port_add);
-         }
+//         }
 		}
 	}
 

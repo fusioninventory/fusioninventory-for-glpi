@@ -149,7 +149,7 @@ class PluginTrackerCommunication {
          $sxml_option->addChild('NAME', 'SNMPQUERY');
          $sxml_param = $sxml_option->addChild('PARAM');
             $sxml_param->addAttribute('CORE_QUERY', '1');
-            $sxml_param->addAttribute('THREADS_QUERY', '2');
+            $sxml_param->addAttribute('THREADS_QUERY', '5');
             $sxml_param->addAttribute('PID', '03201054001');
             $sxml_param->addAttribute('LOGS', '2');
          $this->addDevice($sxml_option, 'networking');
@@ -172,21 +172,36 @@ class PluginTrackerCommunication {
     *@return nothing
     **/
    function addDiscovery() {
-      $sxml_option = $this->sxml->addChild('OPTION');
-         $sxml_option->addChild('NAME', 'NETDISCOVERY');
-         $sxml_param = $sxml_option->addChild('PARAM');
-            $sxml_param->addAttribute('CORE_DISCOVERY', '2');
-            $sxml_param->addAttribute('THREADS_DISCOVERY', '5');
-            $sxml_param->addAttribute('PID', '03201054001');
-            $sxml_param->addAttribute('LOGS', '2');
-         $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-            $sxml_rangeip->addAttribute('ID', '1');
-            $sxml_rangeip->addAttribute('IPSTART', '192.168.0.1');
-            $sxml_rangeip->addAttribute('IPEND', '192.168.0.254');
-            $sxml_rangeip->addAttribute('ENTITY', '0');
-         $this->addAuth($sxml_option, 2, 'public', '2c');
-         $this->addAuth($sxml_option, 1, 'public', '1');
-      $this->sxml->addChild('RESPONSE', 'SEND');
+      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $pxml = @simplexml_load_string($p_xml);
+
+      $pta = new PluginTrackerAgents;
+      $ptrip = new PluginTrackerRangeIP;
+      
+      $agent = $pta->InfosByKey($pxml->DEVICEID);
+      $count_range = $ptrip->Counter($agent["ID"], "discover");
+
+      if (($count_range > 0) && ($agent["lock"] == 0)) {
+         $sxml_option = $this->sxml->addChild('OPTION');
+            $sxml_option->addChild('NAME', 'NETDISCOVERY');
+            $sxml_param = $sxml_option->addChild('PARAM');
+               $sxml_param->addAttribute('CORE_DISCOVERY', $agent["core_discovery"]);
+               $sxml_param->addAttribute('THREADS_DISCOVERY', $agent["threads_discovery"]);
+               $sxml_param->addAttribute('PID', '03201054001');
+               $sxml_param->addAttribute('LOGS', $agent["logs"]);
+
+            $ranges = $ptrip->ListRange($agent["ID"], "discover");
+            foreach ($ranges as $range_id=>$rangeInfos) {
+               $sxml_rangeip = $sxml_option->addChild('RANGEIP');
+                  $sxml_rangeip->addAttribute('ID', $range_id);
+                  $sxml_rangeip->addAttribute('IPSTART', $ranges[$range_id]["ifaddr_start"]);
+                  $sxml_rangeip->addAttribute('IPEND', $ranges[$range_id]["ifaddr_end"]);
+                  $sxml_rangeip->addAttribute('ENTITY', $ranges[$range_id]["FK_entities"]);
+            }
+            $this->addAuth($sxml_option, 2, 'public', '2c');
+            $this->addAuth($sxml_option, 1, 'public', '1');
+         $this->sxml->addChild('RESPONSE', 'SEND');
+      }
    }
 
    /**
@@ -305,6 +320,7 @@ class PluginTrackerCommunication {
     *@return true (device added) / false (unknown type of device)
     **/
    function addDevice($p_sxml_node, $p_type) {
+      global $DB;
 // ne pas renvoyer toutes les données d'authentification:
 // seulement $sxml_authentication->addAttribute('ID', $p_id);
       $type='';
@@ -320,9 +336,36 @@ class PluginTrackerCommunication {
       }
 //      $sxml_device = $p_sxml_node->addChild('DEVICE');
 //         $sxml_device->addAttribute('TYPE', $type);
-//         $this->addInfo($sxml_device, '3', '192.168.0.80', '2', '4');
-      $this->addInfo($p_sxml_node, '3', '192.168.0.80', '2', '4', $type);
-      $this->addInfo($p_sxml_node, '8', '192.168.0.81', '2', '4', $type);
+      $query = "SELECT glpi_networking.ID AS gnID, glpi_networking.ifaddr AS gnifaddr, FK_snmp_connection, FK_model_infos FROM glpi_networking
+         LEFT JOIN glpi_plugin_tracker_networking on FK_networking=glpi_networking.ID
+         WHERE FK_model_infos!=0
+            AND FK_snmp_connection!=0
+            AND glpi_networking.ID='3' ";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $this->addInfo($p_sxml_node, 
+                        $data['gnID'],
+                        $data['gnifaddr'],
+                        $data['FK_snmp_connection'],
+                        $data['FK_model_infos'],
+                        $type);         
+      }
+
+
+
+//      $this->addInfo($p_sxml_node, '3', '192.168.0.80', '2', '4', $type);
+
+
+//      $this->addInfo($p_sxml_node, '8', '192.168.0.81', '2', '4', $type);
+//      $this->addInfo($p_sxml_node, '9', '192.168.0.80', '2', '4', $type);
+//      $this->addInfo($p_sxml_node, '10', '192.168.0.80', '2', '4', $type);
+//      $this->addInfo($p_sxml_node, '11', '192.168.0.80', '2', '4', $type);
+//      $this->addInfo($p_sxml_node, '12', '192.168.0.80', '2', '4', $type);
+//      $this->addInfo($p_sxml_node, '13', '192.168.0.80', '2', '4', $type);
+//      $this->addInfo($p_sxml_node, '14', '192.168.0.80', '2', '4', $type);
+
+// Doum : 3com     $this->addInfo($p_sxml_node, '15', '172.25.22.103', '1', '1', $type);
+//      $this->addInfo($p_sxml_node, '9', '192.168.0.201', '2', '1', $type);
       return true;
    }
 
@@ -334,14 +377,19 @@ class PluginTrackerCommunication {
     *@return true (import ok) / false (import ko)
     **/
    function import($p_xml, &$p_errors='') {
+
       // TODO : gérer l'encodage, la version
       // pas gérer le REQUEST (tjs pareil)
       $this->setXML($p_xml);
       $errors = '';
+
       switch ($this->sxml->QUERY) {
          case 'SNMPQUERY' :
             $errors.=$this->importContent($this->sxml->CONTENT);
             break;
+         case 'NETDISCOVERY' :
+            $pti = new PluginTrackerImportExport;
+            $errors.=$pti->import_netdiscovery($this->sxml->CONTENT);
          default :
             $errors.='QUERY invalide : '.$this->sxml->QUERY."\n";
       }

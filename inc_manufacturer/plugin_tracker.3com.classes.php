@@ -78,7 +78,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
 
       if ($_SESSION['tracker_logs'] == "1") $logs = new PluginTrackerLogs;
       $snmp_queries = new PluginTrackerSNMP;
-      $unknown = new PluginTrackerUnknown;
+      $ptud = new PluginTrackerUnknownDevice;
       $walks = new PluginTrackerWalk;
 
             // Get by SNMP query the mac addresses and IP (ipNetToMediaPhysAddress)
@@ -129,7 +129,7 @@ class PluginTrackerManufacturer3com extends CommonDBTM {
                      if ($name_unknown != $ip_unknown) {
                         $unknown_infos["name"] = $name_unknown;
                      }
-                     $newID=$unknown->add($unknown_infos);
+                     $newID=$ptud->add($unknown_infos);
                      // Add networking_port
                      $np=new Netport;
                      $port_add["on_device"] = $newID;
