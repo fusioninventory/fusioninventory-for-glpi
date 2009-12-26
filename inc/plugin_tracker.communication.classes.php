@@ -177,9 +177,11 @@ class PluginTrackerCommunication {
 
       $pta = new PluginTrackerAgents;
       $ptrip = new PluginTrackerRangeIP;
+      $ptt =  new PluginTrackerTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
       $count_range = $ptrip->Counter($agent["ID"], "discover");
+      $count_range += $ptt->Counter($agent["ID"], "NETDISCOVERY");
 
       if (($count_range > 0) && ($agent["lock"] == 0)) {
          $sxml_option = $this->sxml->addChild('OPTION');
@@ -198,6 +200,18 @@ class PluginTrackerCommunication {
                   $sxml_rangeip->addAttribute('IPEND', $ranges[$range_id]["ifaddr_end"]);
                   $sxml_rangeip->addAttribute('ENTITY', $ranges[$range_id]["FK_entities"]);
             }
+            
+            $tasks = $ptt->ListTask($agent["ID"], "NETDISCOVERY");
+            foreach ($tasks as $task_id=>$taskInfos) {
+               $sxml_rangeip = $sxml_option->addChild('RANGEIP');
+                  $sxml_rangeip->addAttribute('ID', $task_id);
+                  $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ifaddr"]);
+                  $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ifaddr"]);
+                  $sxml_rangeip->addAttribute('ENTITY', "");
+                  $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["on_device"]);
+                  $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["device_type"]);
+            }
+            
             $this->addAuth($sxml_option, 2, 'public', '2c');
             $this->addAuth($sxml_option, 1, 'public', '1');
          $this->sxml->addChild('RESPONSE', 'SEND');

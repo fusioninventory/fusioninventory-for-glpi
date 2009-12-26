@@ -51,12 +51,12 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       $res .= "1'".$errors."'";
 
       $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
-            <REPLY>
-   <OPTION><NAME>DOWNLOAD</NAME>
-   <PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" /></OPTION>
-               <RESPONSE>SEND</RESPONSE>
-               <PROLOG_FREQ>24</PROLOG_FREQ>
-   </REPLY>");
+<REPLY>
+<OPTION><NAME>DOWNLOAD</NAME>
+<PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" /></OPTION>
+<RESPONSE>SEND</RESPONSE>
+<PROLOG_FREQ>24</PROLOG_FREQ>
+</REPLY>");
 
    // ******** NETDISCOVERY
       $ptc->addDiscovery();

@@ -80,10 +80,10 @@ function plugin_tracker_menu() {
 	
 	echo "<tr class='tab_bg_1'>";
 	echo "<td align='center' width='".$width."' height='130'>";
-	if(plugin_tracker_HaveRight("snmp_scripts_infos","r")) {
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
-			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_server.png'/>
-			<br/><b>".$LANG['plugin_tracker']["processes"][0]."</b></a>";
+	if(plugin_tracker_HaveRight("tracker_task","r")) {
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.task.php'>
+			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_task.png'/>
+			<br/><b>".$LANG['plugin_tracker']["task"][1]."</b></a>";
    }
 	echo "</td>";
 
@@ -170,14 +170,14 @@ function plugin_tracker_mini_menu() {
         "</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
-	if(plugin_tracker_HaveRight("snmp_scripts_infos","r")){
-		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.processes.php'>
-			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_info_server.png'
-				 onmouseout=\"cleanhide('menu_mini_info_server')\"
-             onmouseover=\"cleandisplay('menu_mini_info_server')\" /></a>";
+	if(plugin_tracker_HaveRight("tracker_task","r")){
+		echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/tracker/front/plugin_tracker.task.php'>
+			<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_task.png'
+				 onmouseout=\"cleanhide('menu_mini_task')\"
+             onmouseover=\"cleandisplay('menu_mini_task')\" /></a>";
    }
-   echo "<span class='over_link' id='menu_mini_info_server'>".
-            $LANG['plugin_tracker']["processes"][0]."</span>";
+   echo "<span class='over_link' id='menu_mini_task'>".
+            $LANG['plugin_tracker']["task"][1]."</span>";
 	echo "</td>";
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_agent_infos","r")) {

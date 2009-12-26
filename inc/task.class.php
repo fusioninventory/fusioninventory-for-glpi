@@ -40,8 +40,52 @@ class PluginTrackerTask extends CommonDBTM {
 	}
 
 
+   function Counter($agent_id, $action) {
+      global $DB;
+
+      $count = 0;
+      $query = "SELECT COUNT(*) as count FROM `glpi_plugin_tracker_task`
+         WHERE `agent_id`='".$agent_id."'
+            AND `action`='".$action."' ";
+
+      if ($result = $DB->query($query)) {
+         $res = $DB->fetch_assoc($result);
+         $count = $res["count"];
+      }
+      return $count;
+   }
 
 
+   function ListTask($agent_id, $action) {
+      global $DB;
+
+      $tasks = array();
+      $query = "SELECT glpi_plugin_tracker_task.id, param, ifaddr, single,
+            glpi_plugin_tracker_task.on_device, glpi_plugin_tracker_task.device_type
+            FROM `glpi_plugin_tracker_task`
+         INNER JOIN glpi_networking_ports on (glpi_plugin_tracker_task.on_device=glpi_networking_ports.on_device
+                                             AND glpi_plugin_tracker_task.device_type=glpi_networking_ports.device_type)
+         WHERE `agent_id`='".$agent_id."'
+            AND `action`='".$action."' ";
+
+      if ($result = $DB->query($query)) {
+         if ($DB->numrows($result) != 0) {
+            while ($data=$DB->fetch_array($result)) {
+               $tasks[$data["id"]] = $data;
+               $type='';
+               switch ($tasks[$data["id"]]["device_type"]) {
+                  case "networking":
+                     $tasks[$data["id"]]["device_type"]='NETWORKING';
+                     break;
+                  case "printer":
+                     $tasks[$data["id"]]["device_type"]='PRINTER';
+                     break;
+               }
+            }
+         }
+      }
+      return $tasks;
+   }
 }
 
 ?>

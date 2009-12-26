@@ -102,3 +102,6 @@ CREATE TABLE `glpi072`.`glpi_plugin_tracker_task` (
    PRIMARY KEY ( `id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
 COLLATE=utf8_unicode_ci;
+
+
+ALTER TABLE `glpi_plugin_tracker_profiles` CHANGE `snmp_scripts_infos` `tracker_task` CHAR( 1 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL
