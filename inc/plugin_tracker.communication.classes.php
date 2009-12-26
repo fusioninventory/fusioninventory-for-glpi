@@ -69,7 +69,7 @@ class PluginTrackerCommunication {
     *@return readable XML code
     **/
    function getXML() {
-      return str_replace("><", ">\n<", $this->sxml->asXML());
+      return $this->formatXmlString();
    }
 
    /**
@@ -177,7 +177,7 @@ class PluginTrackerCommunication {
 
       $pta = new PluginTrackerAgents;
       $ptrip = new PluginTrackerRangeIP;
-      
+
       $agent = $pta->InfosByKey($pxml->DEVICEID);
       $count_range = $ptrip->Counter($agent["ID"], "discover");
 
@@ -697,5 +697,41 @@ class PluginTrackerCommunication {
       }
       return $errors;
    }
+
+   /**
+    * Add indent in XML to have nice XML format
+    *
+    *@return XML
+    **/
+   function formatXmlString() {
+      $xml = str_replace("><", ">\n<", $this->sxml->asXML());
+      $token      = strtok($xml, "\n");
+      $result     = '';
+      $pad        = 0;
+      $matches    = array();
+
+      while ($token !== false) {
+         // 1. open and closing tags on same line - no change
+         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
+            $indent=0;
+         // 2. closing tag - outdent now
+         elseif (preg_match('/^<\/\w/', $token, $matches)) :
+            $pad = $pad-3;
+         // 3. opening tag - don't pad this one, only subsequent tags
+         elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
+            $indent=3;
+         else :
+            $indent = 0;
+         endif;
+
+         $line    = str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
+         $result .= $line . "\n";
+         $token   = strtok("\n");
+         $pad    += $indent;
+      }
+      $this->setXML($result);
+      return $this->sxml->asXML();
+   }
+
 }
 ?>
