@@ -143,27 +143,51 @@ class PluginTrackerCommunication {
     *@return nothing
     **/
    function addQuery() {
-      $ptmi = new PluginTrackerModelInfos;
+      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $pxml = @simplexml_load_string($p_xml);
 
-      $sxml_option = $this->sxml->addChild('OPTION');
-         $sxml_option->addChild('NAME', 'SNMPQUERY');
-         $sxml_param = $sxml_option->addChild('PARAM');
-            $sxml_param->addAttribute('CORE_QUERY', '1');
-            $sxml_param->addAttribute('THREADS_QUERY', '5');
-            $sxml_param->addAttribute('PID', '03201054001');
-            $sxml_param->addAttribute('LOGS', '2');
-         $this->addDevice($sxml_option, 'networking');
-         //$this->addDevice($sxml_option, 'printer');
-         $this->addAuth($sxml_option, 2, 'public', '2c');
-         $this->addAuth($sxml_option, 1, 'public', '1');
+      $ptmi    = new PluginTrackerModelInfos;
+      $ptsnmpa = new PluginTrackerSNMPAuth;
+      $pta     = new PluginTrackerAgents;
+      $ptrip   = new PluginTrackerRangeIP;
+      $ptt     = new PluginTrackerTask;
 
-         $modelslist=$ptmi->find();
-         $db_plugins=array();
-         if (count($modelslist)){
-            foreach ($modelslist as $model){
-               $this->addModel($sxml_option, $model['ID']);
+      $agent = $pta->InfosByKey($pxml->DEVICEID);
+      $count_range = $ptrip->Counter($agent["ID"], "query");
+      $count_range += $ptt->Counter($agent["ID"], "SNMPQUERY");
+
+      if (($count_range > 0) && ($agent["lock"] == 0)) {
+         $sxml_option = $this->sxml->addChild('OPTION');
+            $sxml_option->addChild('NAME', 'SNMPQUERY');
+            $sxml_param = $sxml_option->addChild('PARAM');
+               $sxml_param->addAttribute('CORE_QUERY', $agent["core_query"]);
+               $sxml_param->addAttribute('THREADS_QUERY', $agent["threads_query"]);
+               $sxml_param->addAttribute('PID', '03201054001');
+               $sxml_param->addAttribute('LOGS', $agent["logs"]);
+
+               $ranges = $ptrip->ListRange($agent["ID"], "query");
+               foreach ($ranges as $range_id=>$rangeInfos) {
+                  $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
+                                    $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
+                  $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
+                                    $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
+               }
+
+            $snmpauthlist=$ptsnmpa->find();
+            if (count($snmpauthlist)){
+               foreach ($snmpauthlist as $snmpauth){
+                  $this->addAuth($sxml_option, $snmpauth['ID']);
+               }
             }
-         }
+
+            $modelslist=$ptmi->find();
+            $db_plugins=array();
+            if (count($modelslist)){
+               foreach ($modelslist as $model){
+                  $this->addModel($sxml_option, $model['ID']);
+               }
+            }
+      }
    }
 
    /**
@@ -175,9 +199,9 @@ class PluginTrackerCommunication {
       $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
       $pxml = @simplexml_load_string($p_xml);
 
-      $pta = new PluginTrackerAgents;
-      $ptrip = new PluginTrackerRangeIP;
-      $ptt =  new PluginTrackerTask;
+      $pta     = new PluginTrackerAgents;
+      $ptrip   = new PluginTrackerRangeIP;
+      $ptt     = new PluginTrackerTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
       $count_range = $ptrip->Counter($agent["ID"], "discover");
@@ -223,33 +247,38 @@ class PluginTrackerCommunication {
     *
     *@param $p_sxml_node XML node to authenticate
     *@param $p_id Authenticate id
-    *@param $p_community Value of COMMUNITY attribute
-    *@param $p_version SNMP version
-    *@param $p_sec_name='' Value of SEC_NAME attribute
-    *@param $p_sec_level='' Value of SEC_LEVEL attribute
-    *@param $p_auth_prot='' Value of AUTH_PROTOCOLE attribute
-    *@param $p_auth_pass='' Value of AUTH_PASSPHRASE attribute
-    *@param $p_priv_prot='' Value of PRIV_PROTOCOLE attribute
-    *@param $p_priv_pass='' Value of PRIV_PASSPHRASE attribute
     *@return nothing
     **/
-   function addAuth($p_sxml_node, $p_id, $p_community, $p_version, $p_sec_name='', $p_sec_level='',
-                    $p_auth_prot='', $p_auth_pass='', $p_priv_prot='', $p_priv_pass='') {
-   /*
-    * table snmp_connections -->
-    * 1. modifier addAuth() pour lui passer la réf de l'emplacment de la base ou elle va trouver les donnees d'authentification
-    * 2. ne pas modifier addAuth() et insérer avant une fonction getAuth() qui l'alimentera avec les bonnes donnees
-    */
+   function addAuth($p_sxml_node, $p_id) {
+      $ptsnmpa = new PluginTrackerSNMPAuth;
+      $ptsnmpa->getFromDB($p_id);
+
       $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
          $sxml_authentication->addAttribute('ID', $p_id);
-         $sxml_authentication->addAttribute('COMMUNITY', $p_community);
-         $sxml_authentication->addAttribute('VERSION', $p_version);
-         $sxml_authentication->addAttribute('SEC_NAME', $p_sec_name);
-         $sxml_authentication->addAttribute('SEC_LEVEL', $p_sec_level);
-         $sxml_authentication->addAttribute('AUTH_PROTOCOLE', $p_auth_prot);
-         $sxml_authentication->addAttribute('AUTH_PASSPHRASE', $p_auth_pass);
-         $sxml_authentication->addAttribute('PRIV_PROTOCOLE', $p_priv_prot);
-         $sxml_authentication->addAttribute('PRIV_PASSPHRASE', $p_priv_pass);
+         $sxml_authentication->addAttribute('COMMUNITY', $ptsnmpa->fields['community']);
+         $sxml_authentication->addAttribute('VERSION', getDropdownName('glpi_dropdown_plugin_tracker_snmp_version',
+                                                                        $ptsnmpa->fields['FK_snmp_version']));
+         $sxml_authentication->addAttribute('SEC_NAME', $ptsnmpa->fields['sec_name']);
+         if ($ptsnmpa->fields['sec_level'] == '0') {
+            $sxml_authentication->addAttribute('SEC_LEVEL', '');
+         } else {
+            $sxml_authentication->addAttribute('SEC_LEVEL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_sec_level',
+                                                                           $ptsnmpa->fields['sec_level']));
+         }
+         if ($ptsnmpa->fields['auth_protocol'] == '0') {
+            $sxml_authentication->addAttribute('AUTH_PROTOCOLE', '');
+         } else {
+            $sxml_authentication->addAttribute('AUTH_PROTOCOLE', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol',
+                                                                           $ptsnmpa->fields['auth_protocol']));
+         }
+         $sxml_authentication->addAttribute('AUTH_PASSPHRASE', $ptsnmpa->fields['auth_passphrase']);
+         if ($ptsnmpa->fields['priv_protocol'] == '0') {
+            $sxml_authentication->addAttribute('PRIV_PROTOCOLE', '');
+         } else {
+            $sxml_authentication->addAttribute('PRIV_PROTOCOLE', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol',
+                                                                           $ptsnmpa->fields['priv_protocol']));
+         }
+         $sxml_authentication->addAttribute('PRIV_PASSPHRASE', $ptsnmpa->fields['priv_passphrase']);
    }
 
    /**
@@ -331,55 +360,57 @@ class PluginTrackerCommunication {
     *
     *@param $p_sxml_node XML node to complete
     *@param $p_type Type of device
+    *@param $p_ipstart Start ip of range
+    *@param $p_ipend End ip of range
+    *@param $p_entity Entity of device
     *@return true (device added) / false (unknown type of device)
     **/
-   function addDevice($p_sxml_node, $p_type) {
+   function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity) {
       global $DB;
-// ne pas renvoyer toutes les données d'authentification:
-// seulement $sxml_authentication->addAttribute('ID', $p_id);
+
       $type='';
       switch ($p_type) {
+         
          case "networking":
             $type='NETWORKING';
+            $query = "SELECT glpi_networking.ID AS gID, glpi_networking.ifaddr AS gnifaddr,
+                  FK_snmp_connection, FK_model_infos FROM glpi_networking
+               LEFT JOIN glpi_plugin_tracker_networking on FK_networking=glpi_networking.ID
+               WHERE FK_model_infos!=0
+                  AND FK_snmp_connection!=0
+                  AND FK_entities='".$p_entity."'
+                  AND inet_aton(`ifaddr`)
+                     BETWEEN inet_aton('".$p_ipstart."')
+                     AND inet_aton('".$p_ipend."') ";
             break;
+         
          case "printer":
             $type='PRINTER';
+            $query = "SELECT glpi_printers.ID AS gID, glpi_networking_ports.ifaddr AS gnifaddr,
+                  FK_snmp_connection, FK_model_infos FROM glpi_printers
+               LEFT JOIN glpi_plugin_tracker_printers on FK_printers=glpi_printers.ID
+               LEFT JOIN glpi_networking_ports on on_device=glpi_printers.ID AND device_type='".PRINTER_TYPE."'
+               WHERE FK_model_infos!=0
+                  AND FK_snmp_connection!=0
+                  AND FK_entities='".$p_entity."'
+                  AND inet_aton(`ifaddr`)
+                     BETWEEN inet_aton('".$p_ipstart."')
+                     AND inet_aton('".$p_ipend."') ";
             break;
+         
          default: // type non géré
             return false;
       }
-//      $sxml_device = $p_sxml_node->addChild('DEVICE');
-//         $sxml_device->addAttribute('TYPE', $type);
-      $query = "SELECT glpi_networking.ID AS gnID, glpi_networking.ifaddr AS gnifaddr, FK_snmp_connection, FK_model_infos FROM glpi_networking
-         LEFT JOIN glpi_plugin_tracker_networking on FK_networking=glpi_networking.ID
-         WHERE FK_model_infos!=0
-            AND FK_snmp_connection!=0
-            AND glpi_networking.ID='3' ";
+
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $this->addInfo($p_sxml_node, 
-                        $data['gnID'],
+                        $data['gID'],
                         $data['gnifaddr'],
                         $data['FK_snmp_connection'],
                         $data['FK_model_infos'],
                         $type);         
       }
-
-
-
-//      $this->addInfo($p_sxml_node, '3', '192.168.0.80', '2', '4', $type);
-
-
-//      $this->addInfo($p_sxml_node, '8', '192.168.0.81', '2', '4', $type);
-//      $this->addInfo($p_sxml_node, '9', '192.168.0.80', '2', '4', $type);
-//      $this->addInfo($p_sxml_node, '10', '192.168.0.80', '2', '4', $type);
-//      $this->addInfo($p_sxml_node, '11', '192.168.0.80', '2', '4', $type);
-//      $this->addInfo($p_sxml_node, '12', '192.168.0.80', '2', '4', $type);
-//      $this->addInfo($p_sxml_node, '13', '192.168.0.80', '2', '4', $type);
-//      $this->addInfo($p_sxml_node, '14', '192.168.0.80', '2', '4', $type);
-
-// Doum : 3com     $this->addInfo($p_sxml_node, '15', '172.25.22.103', '1', '1', $type);
-//      $this->addInfo($p_sxml_node, '9', '192.168.0.201', '2', '1', $type);
       return true;
    }
 

@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 function plugin_tracker_installing($version) {
 	global $DB,$LANG;
 
-	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-empty.sql";
+	$DB_file = GLPI_ROOT ."/plugins/tracker/install/mysql/plugin_tracker-".$version."-empty.sql";
 	$DBf_handle = fopen($DB_file, "rt");
 	$sql_query = fread($DBf_handle, filesize($DB_file));
 	fclose($DBf_handle);
@@ -80,8 +80,8 @@ function plugin_tracker_installing($version) {
 function plugin_tracker_update($version) {
 	global $DB;
 
-   if (file_exists(GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql")) {
-   	$DB_file = GLPI_ROOT ."/plugins/tracker/inc/plugin_tracker-".$version."-update.sql";
+   if (file_exists(GLPI_ROOT ."/plugins/tracker/install/mysql/plugin_tracker-".$version."-update.sql")) {
+   	$DB_file = GLPI_ROOT ."/plugins/tracker/install/mysql/plugin_tracker-".$version."-update.sql";
    	$DBf_handle = fopen($DB_file, "rt");
    	$sql_query = fread($DBf_handle, filesize($DB_file));
    	fclose($DBf_handle);
@@ -137,7 +137,12 @@ function plugin_tracker_update($version) {
                   WHERE `ID`=1
                   LIMIT 1 ;");
    }
-
+   if ($version == "2.1.3") {
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
+                  SET `version` = '2.2.0'
+                  WHERE `ID`=1
+                  LIMIT 1 ;");
+   }
 	plugin_tracker_initSession();
 }
 

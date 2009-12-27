@@ -50,7 +50,7 @@ ALTER TABLE `glpi_plugin_tracker_config`
 
 DROP TABLE `glpi_plugin_tracker_config_discovery` ;
 
-DROP TABLE `glpi_plugin_tracker_config_snmp_printer`
+DROP TABLE `glpi_plugin_tracker_config_snmp_printer` ;
 
 CREATE TABLE `glpi_plugin_tracker_config_modules` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -90,7 +90,7 @@ COLLATE=utf8_unicode_ci;
 DROP TABLE `glpi_plugin_tracker_config_snmp_script`;
 
 
-CREATE TABLE `glpi072`.`glpi_plugin_tracker_task` (
+CREATE TABLE `glpi_plugin_tracker_task` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `date` DATETIME NOT NULL ,
    `agent_id` INT( 11 ) NOT NULL ,

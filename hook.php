@@ -1264,6 +1264,12 @@ function plugin_tracker_install() {
                         SET `version` = '2.1.3'
                         WHERE `ID`='1';");
          }
+         if ($config->getValue('version') == "2.1.3") {
+            plugin_tracker_update("2.2.0");
+            $DB->query("UPDATE `glpi_plugin_tracker_config`
+                        SET `version` = '2.2.0'
+                        WHERE `ID`='1';");
+         }
          if  ($config->getValue('version') == "0") {
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.1.3'
@@ -1371,9 +1377,9 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
          } else {
             $array = array ();
 				if ((plugin_tracker_haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
-					$array = array( 1 => $LANG['plugin_tracker']["title"][0] );
+					$array[1] = $LANG['plugin_tracker']["title"][0];
 				}
-            $array = array( 2 => $LANG['plugin_tracker']["title"][5] );
+            $array[2] = $LANG['plugin_tracker']["title"][5];
             return $array;
 			}
 			break;
