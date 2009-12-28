@@ -49,7 +49,7 @@ class PluginTrackerConfig extends CommonDBTM {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(
-                              `ID`, `version`, `ssl_only`, `authsnmp`, `inventory_frequence`
+                              `ID`, `version`, `ssl_only`, `authsnmp`, `inventory_frequence`,
                               `criteria1_ip`, `criteria1_name`, `criteria1_serial`,
                               `criteria1_macaddr`, `criteria2_ip`, `criteria2_name`,
                               `criteria2_serial`, `criteria2_macaddr`)

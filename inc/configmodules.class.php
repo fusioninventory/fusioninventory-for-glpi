@@ -44,7 +44,7 @@ class PluginTrackerConfigModules extends CommonDBTM {
 		$this->table="glpi_plugin_tracker_config_modules";
 	}
 
-	function initConfig($version) {
+	function initConfig() {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(

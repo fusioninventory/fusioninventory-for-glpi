@@ -62,7 +62,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       $ptc->addDiscovery();
 
    // ******** SNMPQUERY
-//      $ptc->addQuery();
+      $ptc->addQuery();
 
    // ******** Send XML
       $ptc->setXML($ptc->getXML());

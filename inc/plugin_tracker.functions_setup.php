@@ -58,14 +58,10 @@ function plugin_tracker_installing($version) {
 	
 	$config = new PluginTrackerConfig;
 	$config->initConfig($version);
-	$config_discovery = new PluginTrackerConfigDiscovery;
-	$config_discovery->initConfig();
+	$config_modules = new PluginTrackerConfigModules;
+	$config_modules->initConfig();
 	$config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
 	$config_snmp_networking->initConfig();
-	$config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
-	$config_snmp_printer->initConfig();
-	$config_snmp_script = new PluginTrackerConfigSNMPScript;
-	$config_snmp_script->initConfig();
 	// Import models
 	$importexport = new PluginTrackerImportExport;
 	include(GLPI_ROOT.'/inc/setup.function.php');

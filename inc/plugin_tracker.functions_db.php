@@ -49,7 +49,7 @@ function plugin_tracker_createfirstaccess($ID) {
 
 		$query = "INSERT INTO `glpi_plugin_tracker_profiles` (
 				    `ID`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`, 
-                `snmp_models`, `snmp_authentification`, `snmp_scripts_infos`, `snmp_discovery`,
+                `snmp_models`, `snmp_authentification`, `tracker_task`, `snmp_discovery`,
                 `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` )
 				    VALUES ('$ID', '$name','tracker','0','w','w','w','w','w','w','w','w','w','w','w');";
 		$DB->query($query);
@@ -65,7 +65,7 @@ function plugin_tracker_createaccess($ID) {
 	
 	$query = "INSERT INTO `glpi_plugin_tracker_profiles` (
              `ID`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`, 
-             `snmp_models`, `snmp_authentification`, `snmp_scripts_infos`, `snmp_discovery`,
+             `snmp_models`, `snmp_authentification`, `tracker_task`, `snmp_discovery`,
              `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` )
              VALUES ('$ID', '$name','tracker','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
                      NULL,NULL);";
