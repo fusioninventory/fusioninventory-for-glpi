@@ -106,6 +106,21 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 			$type_list[] = PRINTER_TYPE;
 			$type_list[] = PERIPHERAL_TYPE;
 			$type_list[] = PHONE_TYPE;
+
+         // GENERIC OBJECT : Search types in generic object
+         $plugin = new Plugin;
+         if ($plugin->isActivated('genericobject')) {
+            if (TableExists("glpi_plugin_genericobject_types")) {
+               $query = "SELECT * FROM `glpi_plugin_genericobject_types`
+                  WHERE `status`='1' ";
+               if ($result=$DB->query($query)) {
+                  while ($data=$DB->fetch_array($result)) {
+                     $type_list[] = $data['device_type'];
+                  }
+               }
+            }
+         }
+         // END GENERIC OBJECT
 			dropdownDeviceTypes('type',$this->fields["type"],$type_list);
 		echo "</td>";
 

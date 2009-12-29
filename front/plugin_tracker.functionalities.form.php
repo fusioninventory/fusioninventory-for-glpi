@@ -49,29 +49,18 @@ if (isset($_POST['update'])) {
 	if (empty($_POST['cleaning_days'])) {
 		$_POST['cleaning_days'] = 0;
    }
-		
-	$_POST['ID']=1;
 
+   $_POST['ID']=1;
 	switch ($_POST['tabs']) {
+      
 		case 'config' :
 			$config1 = new PluginTrackerConfig;
 			break;
 
-		case 'snmp_script' :
-			$config1 = new PluginTrackerConfigSNMPScript;
-			break;
+      case 'configmodules' :
+         $config1 = new PluginTrackerConfigModules;
+         break;
 
-		case 'snmp_discovery' :
-			$config1 = new PluginTrackerConfigDiscovery;
-			break;
-
-		case 'snmp_networking' :
-			$config1 = new PluginTrackerConfigSNMPNetworking;
-			break;
-		
-		case 'snmp_printer' :
-			$config1 = new PluginTrackerConfigSNMPPrinter;
-			break;
 	}
 	if (isset($config1)) {
 		$config1->update($_POST);

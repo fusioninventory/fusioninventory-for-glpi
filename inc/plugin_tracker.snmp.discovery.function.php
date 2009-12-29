@@ -71,7 +71,7 @@ function plugin_tracker_discovery_update_devices($array, $target) {
  * @return nothing
  *
 **/
-function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
+function plugin_tracker_discovery_import($discovery_ID,$Import=0, $NoImport=0) {
 	global $DB,$CFG_GLPI,$LANG;
 
    $Netport = new Netport;
@@ -90,48 +90,36 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 	switch ($ptud->fields['type']) {
 		case PRINTER_TYPE :
 			$Printer = new Printer;
-			$tracker_printers = new PluginTrackerPrinters;
-			$tracker_config_snmp_printer = new PluginTrackerConfigSNMPPrinter;
+			$tp = new PluginTrackerPrinters;
 
-			$tracker_config_snmp_printer->getFromDB(1);
-			$data['state'] = $tracker_config_snmp_printer->fields["active_device_state"];
-			if (empty($data['state'])) {
-				$data['state'] = 0;
-         }
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
 			$data["name"] = $ptud->fields["name"];
-			$data["serial"] = $ptud->fields["serialnumber"];
-			$data["comments"] = $ptud->fields["descr"];
+         $data["location"] = $ptud->fields["location"];
+			$data["serial"] = $ptud->fields["serial"];
+         $data["otherserial"] = $ptud->fields["otherserial"];
+         $data["contact"] = $ptud->fields["contact"];
+         $data["domain"] = $ptud->fields["domain"];
+			$data["comments"] = $ptud->fields["comments"];
 			$ID_Device = $Printer->add($data);
 
-			$data_Port['on_device'] = $ID_Device;
+         $data_Port = $Netport->fields;
+         $data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $ptud->fields['type'];
-			$data_Port['name'] = $Netport->fields["name"];
-			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
-         $data_Port["ifmac"] = $Netport->fields["ifmac"];
-			$Netport->add($data_Port);
+			$Netport->update($data_Port);
 
 			$data_tracker["FK_printers"] = $ID_Device;
 			$data_tracker["FK_model_infos"] = $ptud->fields["FK_model_infos"];
 			$data_tracker["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
-			$tracker_printers->add($data_tracker);			
-			
-			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
-                       WHERE `ID`='".$discovery_ID."';";
-			$DB->query($query_del);
+			$tp->add($data_tracker);			
+
+         $ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
 
 		case NETWORKING_TYPE :
 			$Netdevice = new Netdevice;
 			$tracker_networking = new PluginTrackerNetworking;
-			$tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
 
-			$tracker_config_snmp_networking->getFromDB(1);
-			$data['state'] = $tracker_config_snmp_networking->fields["active_device_state"];
-			if (empty($data['state'])) {
-				$data['state'] = 0;
-         }
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
 			$data["name"] = $ptud->fields["name"];
          $data["location"] = $ptud->fields["location"];
@@ -143,15 +131,16 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 			$data["ifaddr"] = $Netport->fields["ifaddr"];
          $data["ifmac"] = $Netport->fields["ifmac"];
 			$ID_Device = $Netdevice->add($data);
+         
+         removeConnector($Netport->fields["ID"]);
+         $Netdevice->deleteFromDB($Netport->fields["ID"]);
 
 			$data_tracker["FK_networking"] = $ID_Device;
 			$data_tracker["FK_model_infos"] = $ptud->fields["FK_model_infos"];
 			$data_tracker["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
 			$tracker_networking->add($data_tracker);
 
-			$query_del = "DELETE FROM `glpi_plugin_tracker_unknown_device`
-                       WHERE `ID`='".$discovery_ID."';";
-			$DB->query($query_del);
+			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
 
@@ -160,20 +149,19 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
 			$data["name"] = $ptud->fields["name"];
-			$data["serial"] = $ptud->fields["serialnumber"];
-			$data["comments"] = $ptud->fields["descr"];
+         $data["location"] = $ptud->fields["location"];
+			$data["serial"] = $ptud->fields["serial"];
+         $data["otherserial"] = $ptud->fields["otherserial"];
+         $data["contact"] = $ptud->fields["contact"];
+			$data["comments"] = $ptud->fields["comments"];
 			$ID_Device = $Peripheral->add($data);
 
-			$data_Port['on_device'] = $ID_Device;
+         $data_Port = $Netport->fields;
+         $data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $ptud->fields['type'];
-			$data_Port['name'] = $Netport->fields["name"];
-			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
-         $data_Port["ifmac"] = $Netport->fields["ifmac"];
-			$Netport->add($data_Port);
+			$Netport->update($data_Port);
 			
-			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
-                       WHERE `ID`='".$discovery_ID."';";
-			$DB->query($query_del);
+			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
 
@@ -182,20 +170,20 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
 			$data["name"] = $ptud->fields["name"];
-			$data["serial"] = $ptud->fields["serialnumber"];
-			$data["comments"] = $ptud->fields["descr"];
+         $data["location"] = $ptud->fields["location"];
+			$data["serial"] = $ptud->fields["serial"];
+         $data["otherserial"] = $ptud->fields["otherserial"];
+         $data["contact"] = $ptud->fields["contact"];
+         $data["domain"] = $ptud->fields["domain"];
+			$data["comments"] = $ptud->fields["comments"];
 			$ID_Device = $Computer->add($data);
 
-			$data_Port['on_device'] = $ID_Device;
+         $data_Port = $Netport->fields;
+         $data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $ptud->fields['type'];
-			$data_Port['name'] = $Netport->fields["name"];
-			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
-         $data_Port["ifmac"] = $Netport->fields["ifmac"];
-			$Netport->add($data_Port);
+			$Netport->update($data_Port);
 
-			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
-                       WHERE `ID`='".$discovery_ID."';";
-			$DB->query($query_del);
+			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
 
@@ -204,24 +192,71 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0) {
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
 			$data["name"] = $ptud->fields["name"];
-			$data["serial"] = $ptud->fields["serialnumber"];
-			$data["comments"] = $ptud->fields["descr"];
+         $data["location"] = $ptud->fields["location"];
+			$data["serial"] = $ptud->fields["serial"];
+         $data["otherserial"] = $ptud->fields["otherserial"];
+         $data["contact"] = $ptud->fields["contact"];
+			$data["comments"] = $ptud->fields["comments"];
 			$ID_Device = $Phone->add($data);
 
-			$data_Port['on_device'] = $ID_Device;
+         $data_Port = $Netport->fields;
+         $data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $ptud->fields['type'];
-			$data_Port['name'] = $Netport->fields["name"];
-			$data_Port['ifaddr'] = $Netport->fields["ifaddr"];
-         $data_Port["ifmac"] = $Netport->fields["ifmac"];
-			$Netport->add($data_Port);
+			$Netport->update($data_Port);
 
-			$query_del = "DELETE FROM `glpi_plugin_tracker_discovery`
-                       WHERE `ID`='".$discovery_ID."';";
-			$DB->query($query_del);
+			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
+
+      default:
+         // GENERIC OBJECT : Search types in generic object
+         $typeimported = 0;
+         $plugin = new Plugin;
+         if ($plugin->isActivated('genericobject')) {
+            if (TableExists("glpi_plugin_genericobject_types")) {
+               $query = "SELECT * FROM `glpi_plugin_genericobject_types`
+                  WHERE `status`='1' ";
+               if ($result=$DB->query($query)) {
+                  while ($data=$DB->fetch_array($result)) {
+                     if ($ptud->fields['type'] == $data['device_type']) {
+                        $Netdevice = new Netdevice;
+                        $pgo = new PluginGenericObject;
+                        $pgo->setType($data['device_type']);
+
+                        $data["FK_entities"] = $ptud->fields["FK_entities"];
+                        $data["name"] = $ptud->fields["name"];
+                        $data["location"] = $ptud->fields["location"];
+                        $data["serial"] = $ptud->fields["serial"];
+                        $data["otherserial"] = $ptud->fields["otherserial"];
+                        $data["contact"] = $ptud->fields["contact"];
+                        $data["domain"] = $ptud->fields["domain"];
+                        $data["comments"] = $ptud->fields["comments"];
+                        $ID_Device = $pgo->add($data);
+
+                        if ($pgo->canUseNetworkPorts()) {
+                           $data_Port = $Netport->fields;
+                           $data_Port['on_device'] = $ID_Device;
+                           $data_Port['device_type'] = $ptud->fields['type'];
+                           $Netport->update($data_Port);
+                        } else {
+                           $Netport->deleteFromDB($Netport->fields['ID']);
+                        }
+
+                        $ptud->deleteFromDB($discovery_ID,1);
+                        $Import++;
+                        $typeimported++;
+                     }
+                  }
+               }
+            }
+         }
+         // END GENERIC OBJECT
+
+         if ($typeimported == "0") {
+            $NoImport++;
+         }
 	}
-   return $Import;
+   return array($Import, $NoImport);
 }
 
 function plugin_tracker_discovery_criteria($discovery,$nbcriteria,$typerequest) {

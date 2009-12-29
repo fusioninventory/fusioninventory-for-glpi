@@ -126,6 +126,12 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['name'] = $LANG['plugin_tracker
 $TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['vtpVlanName']['dropdown'] = '';
 
+$TRACKER_MAPPING[NETWORKING_TYPE]['vmvlan']['table'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vmvlan']['field'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vmvlan']['name'] = $LANG['plugin_tracker']["mapping"][430];
+$TRACKER_MAPPING[NETWORKING_TYPE]['vmvlan']['type'] = 'text';
+$TRACKER_MAPPING[NETWORKING_TYPE]['vmvlan']['dropdown'] = '';
+
 $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'glpi_networking';
 $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['field'] = 'model';
 $TRACKER_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANG['plugin_tracker']["mapping"][17];

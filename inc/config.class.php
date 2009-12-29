@@ -89,7 +89,7 @@ class PluginTrackerConfig extends CommonDBTM {
 
 		$ong[1]=$LANG['plugin_tracker']["functionalities"][2];
       $ong[2]=$LANG['plugin_tracker']['config'][1];
-		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
+//		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
 //		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3];
 
       $ong[7]=$LANG['title'][38];

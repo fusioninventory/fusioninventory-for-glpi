@@ -425,7 +425,7 @@ $LANG['plugin_tracker']["mapping"][426]="imprimante > compteur > nombre total de
 $LANG['plugin_tracker']["mapping"][427]="imprimante > compteur > nombre de pages noir et blanc imprimées (copie)";
 $LANG['plugin_tracker']["mapping"][428]="imprimante > compteur > nombre de pages couleur imprimées (copie)";
 $LANG['plugin_tracker']["mapping"][429]="imprimante > compteur > nombre total de pages imprimées (fax)";
-
+$LANG['plugin_tracker']["mapping"][430]="réseaux > port > vlan";
 
 
 $LANG['plugin_tracker']["mapping"][101]="";
@@ -505,6 +505,7 @@ $LANG['plugin_tracker']["discovery"][5]="Nombre de matériels importés";
 $LANG['plugin_tracker']["discovery"][6]="Critères d'existence";
 $LANG['plugin_tracker']["discovery"][7]="Critères d'existence secondaires";
 $LANG['plugin_tracker']["discovery"][8]="Si tous les critères d'existence se confrontent à des champs vides, vous pouvez sélectionner des critères secondaires.";
+$LANG['plugin_tracker']["discovery"][9]="Nombre de matériels non importés car type non défini";
 
 $LANG['plugin_tracker']["rangeip"][0]="Début de la plage IP";
 $LANG['plugin_tracker']["rangeip"][1]="Fin de la plage IP";

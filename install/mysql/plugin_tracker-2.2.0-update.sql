@@ -53,7 +53,7 @@ DROP TABLE `glpi_plugin_tracker_config_discovery` ;
 DROP TABLE `glpi_plugin_tracker_config_snmp_printer` ;
 
 CREATE TABLE `glpi_plugin_tracker_config_modules` (
-   `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+   `ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
    `snmp` INT( 1 ) NOT NULL DEFAULT '0',
    `inventoryocs` INT( 1 ) NOT NULL DEFAULT '0',
    `netdiscovery` INT( 1 ) NOT NULL DEFAULT '0',

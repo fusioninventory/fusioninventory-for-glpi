@@ -175,7 +175,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config_modules`;
 
 CREATE TABLE `glpi_plugin_tracker_config_modules` (
-   `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+   `ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
    `snmp` INT( 1 ) NOT NULL DEFAULT '0',
    `inventoryocs` INT( 1 ) NOT NULL DEFAULT '0',
    `netdiscovery` INT( 1 ) NOT NULL DEFAULT '0',
@@ -702,8 +702,9 @@ INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NUL
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '3', '2', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '5', '3', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '6', '4', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '7', '5', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '8', '6', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '9', '5', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '7', '6', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5159', '8', '7', '0');
 
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5160', '3', '1', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5160', '4', '2', '0');

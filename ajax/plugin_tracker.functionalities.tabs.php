@@ -71,11 +71,6 @@ switch($_POST['glpi_tab']) {
 		$config_modules->showForm($_POST['target'],'1');
 		break;
 
-	case 3 :
-		$config_discovery = new PluginTrackerConfigDiscovery;
-		$config_discovery->showForm($_POST['target'],'1');
-		break;
-
    case 7 :
 		// Historique
       $history = new PluginTrackerSNMPHistory;
