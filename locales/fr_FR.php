@@ -530,10 +530,6 @@ $LANG['plugin_tracker']["unknown"][0]="Nom DNS";
 $LANG['plugin_tracker']["unknown"][1]="Nom port réseau";
 $LANG['plugin_tracker']["unknown"][2]="Matériel approuvé";
 
-$LANG['plugin_tracker']["mapping_fields"][0]="nom";
-$LANG['plugin_tracker']["mapping_fields"][1]="contact";
-$LANG['plugin_tracker']["mapping_fields"][2]="commentaires";
-
 $LANG['plugin_tracker']["task"][0]="Tâche";
 $LANG['plugin_tracker']["task"][1]="Gestion des tâches";
 
