@@ -259,171 +259,189 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0, $NoImport=0) {
    return array($Import, $NoImport);
 }
 
-function plugin_tracker_discovery_criteria($discovery,$nbcriteria,$typerequest) {
-	global $DB,$CFG_GLPI,$LANG;
 
-   $ci = new commonitem;
-   $config_discovery = new PluginTrackerConfigDiscovery;
-   $np=new Netport;
-   $plugin_tracker_unknown = new PluginTrackerUnknownDevice;
 
-   if ($nbcriteria == "1") {
-      $select = "";
-   } else {
-      $select = "2";
-   }
-   $link_ip = $config_discovery->getValue("link".$select."_ip");
-   $link_name = $config_discovery->getValue("link".$select."_name");
-   $link_serial = $config_discovery->getValue("link".$select."_serial");
-   $link_macaddr = $config_discovery->getValue("link".$select."_macaddr");
+function plugin_tracker_discovery_criteria($p_criteria) {
+	global $DB;
 
-   $Array_criteria = array();
-	if ($link_ip == "1") {
-		$Array_criteria[] = "ifaddr='".$discovery->IP."'";
-		$array_search[] = $discovery->IP;
-	}
-	if ($link_name == "1") {
-      if (!empty($discovery->SNMPHOSTNAME)) {
-         $Array_criteria[] = "name='".plugin_tracker_hex_to_string($discovery->SNMPHOSTNAME)."'";
-         $array_search[] = plugin_tracker_hex_to_string($discovery->SNMPHOSTNAME);
-      }
-	}
-	if ($link_serial == "1") {
-      if (!empty($discovery->SERIAL)) {
-         $Array_criteria[] = "serial='".$discovery->SERIAL."'";
-         $array_search[] = $discovery->SERIAL;
-      }
-	}
-   if ($link_macaddr == "1") {
-		$Array_criteria[] = "ifmac='".$discovery->MAC."'";
-		$array_search[] = $discovery->MAC;
-	}
+   $ptc = new PluginTrackerConfig;
 
-   if (count($Array_criteria) == "0") {
-      return 0;
-   } else {
-      $Array_criteria_source = $Array_criteria;
-      if ($typerequest == "0") {
-         if (($discovery->TYPE == NETWORKING_TYPE) OR ($discovery->TYPE == "0")) {
-            $query_search = "SELECT *
-                             FROM `glpi_networking`
-                             WHERE `FK_entities`='".$discovery->ENTITY."'
-                                   AND ".$Array_criteria[0];
-				for ($i=1 ; $i < count($Array_criteria) ; $i++) {
-					$query_search .= " AND ".$Array_criteria[$i];
-            }
-            $result_search = $DB->query($query_search);
-            if ($DB->numrows($result_search) == "0") {
-               if ($discovery->type == NETWORKING_TYPE) {
-                  return 0;
-               }
-            } else {
-               return 1;
-            }
-         } else {
-            $ci->setType($discovery->TYPE,true);
-            for ($i=0; $i<count($Array_criteria); $i++) {
-               if ((!strstr($Array_criteria[$i], "ifaddr")) AND (!strstr($Array_criteria[$i], "ifmac"))) {
-                  $Array_criteria[$i] = $ci->obj->table.".".$Array_criteria[0];
-               }
-            }
-				$query_search = "SELECT ".$ci->obj->table.".`name` AS `name`, `serial`,
-                                    `glpi_networking_ports`.`ifaddr` AS `ifaddr`
-                             FROM ".$ci->obj->table."
-                                  LEFT JOIN `glpi_networking_ports`
-                                            ON `on_device`=".$ci->obj->table.".`ID`
-                                               AND `device_type`='".$discovery->TYPE."'
-                             WHERE `FK_entities`='".$discovery->ENTITY."'
-                                   AND ".$Array_criteria[0];
-				for ($i=1 ; $i < count($Array_criteria) ; $i++) {
-					$query_search .= " AND ".$ci->obj->table.".".$Array_criteria[$i];
-            }
-            $result_search = $DB->query($query_search);
-            if ($DB->numrows($result_search) == "0") {
-               return 0;
-            } else {
-               return 1;
+   $arrayc = array('ip', 'name', 'serial', 'macaddr');
+   $a_criteria = array();
+
+   $CountCriteria1 =   $ptc->getValue('criteria1_ip')
+                     + $ptc->getValue('criteria1_name')
+                     + $ptc->getValue('criteria1_serial')
+                     + $ptc->getValue('criteria1_macaddr');
+   
+   $CountCriteria2 =   $ptc->getValue('criteria2_ip')
+                     + $ptc->getValue('criteria2_name')
+                     + $ptc->getValue('criteria2_serial')
+                     + $ptc->getValue('criteria2_macaddr');
+
+
+   switch ($CountCriteria1) {
+      case 0:
+         return false;
+         break;
+
+      case 1:
+         foreach ($arrayc as $criteria) {
+            if ($ptc->getValue('criteria1_'.$criteria) == "1"){
+               if (empty($p_criteria->$criteria)) {
+                  // Go to criteria2
+               } else {
+                  unset($a_criteria);
+                  $a_criteria[$criteria] = $p_criteria->$criteria;
+                  if (plugin_tracker_find_device($a_criteria)) {
+                     return true;
+                  }
+                  // Else Go to criteria2
+               }               
             }
          }
-         if ($discovery->TYPE == "0") {
-            $types[] = COMPUTER_TYPE;
-            $types[] = PRINTER_TYPE;
-            $types[] = PERIPHERAL_TYPE;
-            $types[] = PHONE_TYPE;
-            foreach($types as $type) {
-               $ci->setType($type,true);
-               $Array_criteria = $Array_criteria_source;
-               for ($i=0; $i<count($Array_criteria); $i++) {
-                  if ((!strstr($Array_criteria[$i], "ifaddr")) AND (!strstr($Array_criteria[$i], "ifmac"))) {
-                     $Array_criteria[$i] = $ci->obj->table.".".$Array_criteria[0];
+         break;
+
+      default: // > 1
+         $i = 0;
+         unset($a_criteria);
+         foreach ($arrayc as $criteria) {
+            if ($ptc->getValue('criteria1_'.$criteria) == "1"){
+               $a_criteria[$criteria] = $p_criteria->$criteria;
+               if (!empty($p_criteria->$criteria)) {                  
+                  $i++;
+               }
+            }
+         }
+         if ($i == 0) {
+            // Go to criteria2
+         } else {
+            if (plugin_tracker_find_device($a_criteria)) {
+               return true;
+            } else {
+               unset($a_criteria);
+               foreach ($arrayc as $criteria) {
+                  if ($ptc->getValue('criteria1_'.$criteria) == "1"){
+                     if (!empty($p_criteria->$criteria)) {
+                        $a_criteria[$criteria] = $p_criteria->$criteria;
+                     }
                   }
                }
-               $query_search = "SELECT ".$ci->obj->table.".`name` AS `name`, `serial`,
-                                       `glpi_networking_ports`.`ifaddr` AS `ifaddr`
-                                FROM ".$ci->obj->table."
-                                     LEFT JOIN `glpi_networking_ports`
-                                               ON `on_device`=".$ci->obj->table.".`ID`
-                                                  AND `device_type`=".$type."
-                                WHERE `FK_entities`='".$discovery->ENTITY."'
-                                      AND ".$Array_criteria[0];
-               for ($i=1 ; $i < count($Array_criteria) ; $i++) {
-                  $query_search .= " AND ".$ci->obj->table.".".$Array_criteria[$i];
-               }
-               $result_search = $DB->query($query_search);
-               if ($DB->numrows($result_search) != "0") {
-                  return 1;
+               if (plugin_tracker_find_device($a_criteria)) {
+                  return true;
                }
             }
          }
-         return 0;
-      } else if ($typerequest == "5153") {
-         // Search in unknown devices
-         $ci->setType(PLUGIN_TRACKER_MAC_UNKNOWN,true);
-         $query_search = "SELECT ".$ci->obj->table.".`ID` AS `ID`,
-                                 `glpi_networking_ports`.`ID` AS `netID`
-                          FROM ".$ci->obj->table."
-                               LEFT JOIN `glpi_networking_ports`
-                                         ON `on_device`=".$ci->obj->table.".`ID`
-                          WHERE `FK_entities`='".$discovery->ENTITY."'
-                                AND `ifmac`='".$discovery->MAC."';";
-         $result_search = $DB->query($query_search);
-         if ($DB->numrows($result_search) == "0") {
-            return 0;
+         break;
+   }
+
+   switch ($CountCriteria2) {
+      case 0:
+         return false;
+         break;
+
+      case 1:
+         foreach ($arrayc as $criteria) {
+            if ($ptc->getValue('criteria2_'.$criteria) == "1"){
+               if (empty($p_criteria->$criteria)) {
+                  return false;
+               } else {
+                  unset($a_criteria);
+                  $a_criteria[$criteria] = $p_criteria->$criteria;
+                  if (plugin_tracker_find_device($a_criteria)) {
+                     return true;
+                  } else {
+                     return false;
+                  }
+               }
+            }
+         }
+         break;
+
+      default: // > 1
+         $i = 0;
+         unset($a_criteria);
+         foreach ($arrayc as $criteria) {
+            if ($ptc->getValue('criteria2_'.$criteria) == "1"){
+               $a_criteria[$criteria] = $p_criteria->$criteria;
+               if (!empty($p_criteria->$criteria)) {
+                  $i++;
+               }
+            }
+         }
+         if ($i == 0) {
+            return false;
          } else {
-            // METTRE A JOUR LES INFORMATIONS
-            $data_query = $DB->fetch_assoc($result_search);
-            $data = array();
-            $data['ID'] = $data_query['ID'];
-            if (!empty($discovery->NETBIOSNAME)) {
-               $data['name'] = $discovery->NETBIOSNAME;
-            } else if (!empty($discovery->SNMPHOSTNAME)) {
-               $data['name'] = $discovery->SNMPHOSTNAME;
+            if (plugin_tracker_find_device($a_criteria)) {               
+               return true;
+            } else {
+               unset($a_criteria);
+               foreach ($arrayc as $criteria) {
+                  if ($ptc->getValue('criteria2_'.$criteria) == "1"){
+                     if (!empty($p_criteria->$criteria)) {
+                        $a_criteria[$criteria] = $p_criteria->$criteria;
+                     }
+                  }
+               }
+               if (plugin_tracker_find_device($a_criteria)) {
+                  return true;
+               } else {
+                  return false;
+               }
             }
-            $data['dnsname'] = $discovery->DNSHOSTNAME;
-            $data['FK_entities'] = $discovery->ENTITY;
-            $data['serial'] = $discovery->SERIAL;
-            $data['contact'] = $discovery->USERSESSION;
-            if (!empty($discovery->WORKGROUP)) {
-               $data['domain'] = externalImportDropdown("glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
-            }
-            $data['comments'] = $discovery->DESCRIPTION;
-            $data['type'] = $discovery->TYPE;
-            $data['FK_model_infos'] = $FK_model;
-            $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
-            if ($discovery->AUTHSNMP != "0") {
-               $data['snmp'] = 1;
-            }
-            $plugin_tracker_unknown->update($data);
-				unset($data);
-            // Update networking port
-            $data["ID"] = $data_query['netID'];
-				$data["ifaddr"] = $discovery->IP;
-            $data['name'] = $discovery->NETPORTVENDOR;
-				$np->update($data);
-            return 1;
          }
+         break;
+   }
+   return false;   
+}
+
+
+function plugin_tracker_find_device($a_criteria) {
+	global $DB,$CFG_GLPI;
+
+   $ci = new commonitem;
+
+   $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
+                     PHONE_TYPE, PLUGIN_TRACKER_MAC_UNKNOWN);
+
+   $condition = "";
+   foreach ($a_criteria as $criteria=>$value) {
+      switch ($criteria) {
+         
+         case 'ip':
+            $condition .= "AND `ifaddr`='".$value."' ";
+            break;
+
+         case 'macaddr':
+            $condition .= "AND `ifmac`='".$value."' ";
+            break;
+
+         case 'name':
+            $condition .= "AND `name`='".$value."' ";
+            break;
+
+         case 'serial':
+            $condition .= "AND `serial`='".$value."' ";
+            break;       
       }
    }
+
+   $found = 0;
+   foreach ($a_types as $type) {
+      $ci->setType($type,true);
+      $query = "SELECT * FROM ".$ci->obj->table;
+      if ($ci->obj->table != "glpi_networking") {
+         $query .= " INNER JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND device_type=".$type;
+      }
+      $query .= " WHERE deleted=0 ".$condition;
+      $result = $DB->query($query);
+		$found += $DB->numrows($result);
+   }
+   if ($found > 0) {
+      return true;
+   } else {
+      return false;
+   }   
 }
 
 ?>

@@ -214,7 +214,8 @@ class PluginTrackerImportExport extends CommonDBTM {
 
 	function import_netdiscovery($p_xml) {
 		global $DB,$LANG;
-$test = '';
+      $test = '';
+      $p_criteria = array();
 
 		$walks = new PluginTrackerWalk;
 
@@ -223,15 +224,7 @@ $test = '';
 
       $ptud = new PluginTrackerUnknownDevice;
 
-		// Load config discovery for existence criteria
-		$link_ip = $config_discovery->getValue("criteria1_ip");
-		$link_name = $config_discovery->getValue("criteria1_name");
-		$link_serial = $config_discovery->getValue("criteria1_serial");
-      $link_macaddr = $config_discovery->getValue("criteria1_macaddr");
-		$link2_ip = $config_discovery->getValue("criteria2_ip");
-		$link2_name = $config_discovery->getValue("criteria2_name");
-		$link2_serial = $config_discovery->getValue("criteria2_serial");
-      $link2_macaddr = $config_discovery->getValue("criteria2_macaddr");
+
 		$walkdata = '';
 		$count_discovery_devices = 0;
 		foreach($p_xml->DEVICE as $discovery) {
@@ -284,17 +277,18 @@ $test = '';
 			if (empty($FK_model)) {
 				$FK_model = 0;
          }
-//			$return = plugin_tracker_discovery_criteria($discovery, 1, 0);
-//         if ($return == "0") {
-//            $return = plugin_tracker_discovery_criteria($discovery, 2, 0);
-//         }
-//         if ($return == "0") {
-//            $return = plugin_tracker_discovery_criteria($discovery, 1, 5153);
-//         }
-//         if ($return == "0") {
-//            $return = plugin_tracker_discovery_criteria($discovery, 2, 5153);
-//         }
-//         if ($return == "0") {
+
+         unset($p_criteria);
+         $p_criteria->ip = $discovery->IP;
+         if (!empty($discovery->NETBIOSNAME)) {
+            $p_criteria->name = $discovery->NETBIOSNAME;
+         } else if (!empty($discovery->SNMPHOSTNAME)) {
+            $p_criteria->name = $discovery->SNMPHOSTNAME;
+         }
+         $p_criteria->serial = $discovery->SERIAL;
+         $p_criteria->macaddr = $discovery->MAC;
+
+         if (!plugin_tracker_discovery_criteria($p_criteria)) {
             // Add in unknown device
             $data = array();
             if (!empty($discovery->NETBIOSNAME)) {
@@ -326,8 +320,8 @@ $test = '';
 				$port_add['ifmac'] = $discovery->MAC;
             $port_add['name'] = $discovery->NETPORTVENDOR;
 				$port_ID = $np->add($port_add);
-				unset($port_add);
-//         }
+            unset($port_add);
+         }
 		}
 	}
 
