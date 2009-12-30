@@ -258,27 +258,27 @@ class PluginTrackerCommunication {
          $sxml_authentication->addAttribute('COMMUNITY', $ptsnmpa->fields['community']);
          $sxml_authentication->addAttribute('VERSION', getDropdownName('glpi_dropdown_plugin_tracker_snmp_version',
                                                                         $ptsnmpa->fields['FK_snmp_version']));
-         $sxml_authentication->addAttribute('SEC_NAME', $ptsnmpa->fields['sec_name']);
+         $sxml_authentication->addAttribute('USERNAME', $ptsnmpa->fields['sec_name']);
          if ($ptsnmpa->fields['sec_level'] == '0') {
-            $sxml_authentication->addAttribute('SEC_LEVEL', '');
+            $sxml_authentication->addAttribute('SECLEVEL', '');
          } else {
-            $sxml_authentication->addAttribute('SEC_LEVEL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_sec_level',
+            $sxml_authentication->addAttribute('SECLEVEL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_sec_level',
                                                                            $ptsnmpa->fields['sec_level']));
          }
          if ($ptsnmpa->fields['auth_protocol'] == '0') {
-            $sxml_authentication->addAttribute('AUTH_PROTOCOLE', '');
+            $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
          } else {
-            $sxml_authentication->addAttribute('AUTH_PROTOCOLE', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol',
+            $sxml_authentication->addAttribute('AUTHPROTOCOL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol',
                                                                            $ptsnmpa->fields['auth_protocol']));
          }
-         $sxml_authentication->addAttribute('AUTH_PASSPHRASE', $ptsnmpa->fields['auth_passphrase']);
+         $sxml_authentication->addAttribute('AUTHPASSPHRASE', $ptsnmpa->fields['auth_passphrase']);
          if ($ptsnmpa->fields['priv_protocol'] == '0') {
-            $sxml_authentication->addAttribute('PRIV_PROTOCOLE', '');
+            $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
          } else {
-            $sxml_authentication->addAttribute('PRIV_PROTOCOLE', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol',
+            $sxml_authentication->addAttribute('PRIVPROTOCOL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol',
                                                                            $ptsnmpa->fields['priv_protocol']));
          }
-         $sxml_authentication->addAttribute('PRIV_PASSPHRASE', $ptsnmpa->fields['priv_passphrase']);
+         $sxml_authentication->addAttribute('PRIVPASSPHRASE', $ptsnmpa->fields['priv_passphrase']);
    }
 
    /**
@@ -376,7 +376,8 @@ class PluginTrackerCommunication {
             $query = "SELECT glpi_networking.ID AS gID, glpi_networking.ifaddr AS gnifaddr,
                   FK_snmp_connection, FK_model_infos FROM glpi_networking
                LEFT JOIN glpi_plugin_tracker_networking on FK_networking=glpi_networking.ID
-               WHERE FK_model_infos!=0
+               WHERE deleted=0
+                  AND FK_model_infos!=0
                   AND FK_snmp_connection!=0
                   AND FK_entities='".$p_entity."'
                   AND inet_aton(`ifaddr`)
@@ -390,7 +391,8 @@ class PluginTrackerCommunication {
                   FK_snmp_connection, FK_model_infos FROM glpi_printers
                LEFT JOIN glpi_plugin_tracker_printers on FK_printers=glpi_printers.ID
                LEFT JOIN glpi_networking_ports on on_device=glpi_printers.ID AND device_type='".PRINTER_TYPE."'
-               WHERE FK_model_infos!=0
+               WHERE deleted=0
+                  AND FK_model_infos!=0
                   AND FK_snmp_connection!=0
                   AND FK_entities='".$p_entity."'
                   AND inet_aton(`ifaddr`)
