@@ -1192,12 +1192,13 @@ function plugin_tracker_getDropdown() {
 
 /* Cron */
 function cron_plugin_tracker() {
-	$ptud = new PluginTrackerUnknownDevice;
-   $ptud->CleanOrphelinsConnections();
-	$ptud->FusionUnknownKnownDevice();
-   #Clean server script processes history
-   $tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
-   $tracker_config_snmp_networking->CleanHistory("history_process");
+   // TODO :Disable for the moment (may be check if functions is good or not
+//	$ptud = new PluginTrackerUnknownDevice;
+//   $ptud->CleanOrphelinsConnections();
+//	$ptud->FusionUnknownKnownDevice();
+//   #Clean server script processes history
+//   $tracker_config_snmp_networking = new PluginTrackerConfigSNMPNetworking;
+//   $tracker_config_snmp_networking->CleanHistory("history_process");
    return 1;
 }
 
