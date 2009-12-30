@@ -622,7 +622,7 @@ class PluginTrackerCommunication {
    function importPort($p_port) {
       $errors='';
       $ptp = new PluginTrackerPort;
-      $portIndex = $this->ptn->getPortIndex($p_port->MAC); //todo ajouter le 2e param (ip) a partir de connections
+      $portIndex = $this->ptn->getPortIndex($p_port->MAC); //TODO ajouter le 2e param (ip) a partir de connections
       if (is_int($portIndex)) {
          $oldPort = $this->ptn->getPort($portIndex);
          $ptp->load($oldPort->getValue('ID'));
@@ -635,7 +635,8 @@ class PluginTrackerCommunication {
             case 'CONNECTIONS' :
                $errors.=$this->importConnections($child, $ptp);
                break;
-            case 'VLANS' : // todo
+            case 'VLANS' :
+               $errors.=$this->importVlans($child, $ptp);
                break;
             case 'IFNAME' :
                $ptp->setValue('name', $child);
@@ -680,7 +681,9 @@ class PluginTrackerCommunication {
       $errors='';
       if (isset($p_connections->CDP)) {
          $cdp = $p_connections->CDP;
-         if ($cdp!=1) {
+         if ($cdp==1) {
+            $p_oPort->setCDP();
+         } else {
             $errors.='Elément invalide dans CONNECTIONS : CDP='.$cdp."\n";
          }
       } else {
@@ -710,10 +713,10 @@ class PluginTrackerCommunication {
     **/
    function importConnection($p_connection, $p_oPort, $p_cdp) {
       $errors='';
-      $portID='';
+      $portID=''; $mac=''; $ip='';
       $ptsnmp= new PluginTrackerSNMP;
       if ($p_cdp==1) {
-         $ip=''; $ifdescr='';
+         $ifdescr='';
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
                case 'IP' :
@@ -731,7 +734,11 @@ class PluginTrackerCommunication {
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
                case 'MAC' :
+                  $mac=$child;
                   $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $p_oPort->getValue('ID'));
+                  break;
+               case 'IP' ://TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info // utile seulement si mac inconnu dans glpi
+                  $ip=$child;
                   break;
                default :
                   $errors.='Elément invalide dans CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
@@ -740,7 +747,57 @@ class PluginTrackerCommunication {
       }
       if ($portID != '') {
          $p_oPort->addConnection($portID);
+      } else {
+         $p_oPort->addUnknownConnection($mac, $ip);
+         //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
       }
+      return $errors;
+   }
+
+   /**
+    * Import VLANS
+    *@param $p_vlans VLANS code to import
+    *@param $p_oPort Port object to connect
+    *
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importVlans($p_vlans, $p_oPort) {
+      $errors='';
+      foreach ($p_vlans->children() as $name=>$child)
+      {
+         switch ($child->getName()) {
+            case 'VLAN' :
+               $errors.=$this->importVlan($child, $p_oPort);
+               break;
+            default :
+               $errors.='Elément invalide dans VLANS : '.$child->getName()."\n";
+         }
+      }
+      return $errors;
+   }
+
+   /**
+    * Import VLAN
+    *@param $p_vlan VLAN code to import
+    *@param $p_oPort Port object to connect
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importVlan($p_vlan, $p_oPort) {
+      $errors='';
+      $number=''; $name='';
+      foreach ($p_vlan->children() as $name=>$child) {
+         switch ($child->getName()) {
+            case 'NUMBER' :
+               $number=$child;
+               break;
+            case 'NAME' :
+               $name=$child;
+               break;
+            default :
+               $errors.='Elément invalide dans VLAN : '.$child->getName()."\n";
+         }
+      }
+      $p_oPort->addVlan($number, $name);
       return $errors;
    }
 
