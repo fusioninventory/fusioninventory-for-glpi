@@ -54,17 +54,6 @@ CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` (
 
 
 
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_tracker_snmp_auth_sec_level`;
-
-CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` (
-  `ID` int(8) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `comments` text NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
 DROP TABLE IF EXISTS `glpi_dropdown_plugin_tracker_snmp_version`;
 
 CREATE TABLE `glpi_dropdown_plugin_tracker_snmp_version` (
@@ -531,7 +520,6 @@ CREATE TABLE `glpi_plugin_tracker_snmp_connection` (
   `FK_snmp_version` int(8) NOT NULL,
   `community` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sec_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sec_level` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `auth_protocol` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `auth_passphrase` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `priv_protocol` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -642,16 +630,12 @@ INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES (4,'AE
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES (5,'AES192','');
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol` VALUES (6,'AES256','');
 
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES (1,'noAuthNoPriv','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES (2,'authNoPriv','');
-INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_sec_level` VALUES (3,'authPriv','');
-
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (1,'1','');
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (2,'2c','');
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_version` VALUES (3,'3','');
 
-INSERT INTO `glpi_plugin_tracker_snmp_connection` VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '0', '', '0', '', '0');
-INSERT INTO `glpi_plugin_tracker_snmp_connection` VALUES (2, 'Communauté Public v2c', '2', 'public', '', '0', '0', '', '0', '', '0');
+INSERT INTO `glpi_plugin_tracker_snmp_connection` VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '', '0', '', '0');
+INSERT INTO `glpi_plugin_tracker_snmp_connection` VALUES (2, 'Communauté Public v2c', '2', 'public', '', '0', '', '0', '', '0');
 
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5150','3','1','0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5150','4','2','0');
@@ -665,11 +649,10 @@ INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NUL
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '3', '1', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '4', '2', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '5', '3', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '6', '4', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '7', '5', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '8', '6', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '9', '7', '0');
-INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '10', '8', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '7', '4', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '8', '5', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '9', '6', '0');
+INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5152', '10', '7', '0');
 
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5153', '2', '1', '0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL, '5153', '4', '2', '0');

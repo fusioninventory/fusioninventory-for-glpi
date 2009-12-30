@@ -199,6 +199,7 @@ class PluginTrackerCommunication {
       $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
       $pxml = @simplexml_load_string($p_xml);
 
+      $ptsnmpa = new PluginTrackerSNMPAuth;
       $pta     = new PluginTrackerAgents;
       $ptrip   = new PluginTrackerRangeIP;
       $ptt     = new PluginTrackerTask;
@@ -236,8 +237,12 @@ class PluginTrackerCommunication {
                   $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["device_type"]);
             }
             
-            $this->addAuth($sxml_option, 2, 'public', '2c');
-            $this->addAuth($sxml_option, 1, 'public', '1');
+            $snmpauthlist=$ptsnmpa->find();
+            if (count($snmpauthlist)){
+               foreach ($snmpauthlist as $snmpauth){
+                  $this->addAuth($sxml_option, $snmpauth['ID']);
+               }
+            }
          $this->sxml->addChild('RESPONSE', 'SEND');
       }
    }
@@ -259,12 +264,6 @@ class PluginTrackerCommunication {
          $sxml_authentication->addAttribute('VERSION', getDropdownName('glpi_dropdown_plugin_tracker_snmp_version',
                                                                         $ptsnmpa->fields['FK_snmp_version']));
          $sxml_authentication->addAttribute('USERNAME', $ptsnmpa->fields['sec_name']);
-         if ($ptsnmpa->fields['sec_level'] == '0') {
-            $sxml_authentication->addAttribute('SECLEVEL', '');
-         } else {
-            $sxml_authentication->addAttribute('SECLEVEL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_sec_level',
-                                                                           $ptsnmpa->fields['sec_level']));
-         }
          if ($ptsnmpa->fields['auth_protocol'] == '0') {
             $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
          } else {

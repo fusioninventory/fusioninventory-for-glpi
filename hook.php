@@ -148,11 +148,6 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['linkfield'] = 'sec_name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][5]['name'] = $LANG['plugin_tracker']["snmpauth"][2];
 
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['table'] = 'glpi_dropdown_plugin_tracker_snmp_auth_sec_level';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['linkfield'] = 'sec_level';
-	$sopt[PLUGIN_TRACKER_SNMP_AUTH][6]['name'] = $LANG['plugin_tracker']["snmpauth"][3];
-
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['table'] = 'glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_AUTH][7]['linkfield'] = 'auth_protocol';

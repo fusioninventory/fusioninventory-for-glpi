@@ -105,3 +105,8 @@ COLLATE=utf8_unicode_ci;
 
 
 ALTER TABLE `glpi_plugin_tracker_profiles` CHANGE `snmp_scripts_infos` `tracker_task` CHAR( 1 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL
+
+
+ALTER TABLE `glpi_plugin_tracker_snmp_connection` DROP `sec_level`;
+
+DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level`;
