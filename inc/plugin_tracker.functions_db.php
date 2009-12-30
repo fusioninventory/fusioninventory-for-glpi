@@ -125,6 +125,13 @@ function plugin_tracker_getDeviceFieldFromId($type, $ID, $field, $return) {
 function plugin_tracker_clean_db() {
 	global $DB;
 	
+   $ptp = new PluginTrackerPort;
+   $pti = new PluginTrackerIfaddr;
+   $ptn = new PluginTrackerNetworking2;
+   $ptpr = new PluginTrackerPrinters;
+   $ptpc = new PluginTrackerPrintersCartridges;
+   $ptph = new PluginTrackerPrintersHistory;
+
 	// * Clean glpi_plugin_tracker_networking_ports
 	$query_select = "SELECT `glpi_plugin_tracker_networking_ports`.`ID`
                     FROM `glpi_plugin_tracker_networking_ports`
@@ -134,9 +141,7 @@ function plugin_tracker_clean_db() {
                     WHERE `glpi_networking`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ports`
-                       WHERE `ID`='".$data["ID"]."'";
-		$DB->query($query_delete);
+      $ptp->deleteFromDB($data["ID"],1);
 	}
 
 	// * Clean glpi_plugin_tracker_networking_ifaddr
@@ -146,9 +151,7 @@ function plugin_tracker_clean_db() {
                     WHERE `glpi_networking`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ifaddr`
-                       WHERE `ID`='".$data["ID"]."'";
-		$DB->query($query_delete);
+      $pti->deleteFromDB($data["ID"],1);
 	}
 
 	// * Clean glpi_plugin_tracker_networking
@@ -158,9 +161,7 @@ function plugin_tracker_clean_db() {
                     WHERE `glpi_networking`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM `glpi_plugin_tracker_networking`
-                       WHERE `ID`='".$data["ID"]."'";
-		$DB->query($query_delete);
+      $ptn->deleteFromDB($data["ID"],1);
 	}
 	
 	// * Clean glpi_plugin_tracker_printers
@@ -170,9 +171,7 @@ function plugin_tracker_clean_db() {
                     WHERE `glpi_printers`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM `glpi_plugin_tracker_printers`
-                       WHERE `ID`='".$data["ID"]."'";
-		$DB->query($query_delete);
+      $ptpr->deleteFromDB($data["ID"],1);
 	}
 
 	// * Clean glpi_plugin_tracker_printers_cartridges
@@ -182,9 +181,7 @@ function plugin_tracker_clean_db() {
                     WHERE `glpi_printers`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM `glpi_plugin_tracker_printers_cartridges`
-                       WHERE `ID`='".$data["ID"]."'";
-		$DB->query($query_delete);
+      $ptpc->deleteFromDB($data["ID"],1);
 	}
 
 	// * Clean glpi_plugin_tracker_printers_history
@@ -194,9 +191,7 @@ function plugin_tracker_clean_db() {
                     WHERE `glpi_printers`.`ID` IS NULL";
 	$result=$DB->query($query_select);
 	while ($data=$DB->fetch_array($result)) {
-		$query_delete = "DELETE FROM `glpi_plugin_tracker_printers_history`
-                       WHERE `ID`='".$data["ID"]."'";
-		$DB->query($query_delete);
+      $ptph->deleteFromDB($data["ID"],1);
 	}
 }
 

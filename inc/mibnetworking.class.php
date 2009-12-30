@@ -298,9 +298,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 		plugin_tracker_checkRight("snmp_models","w");
 		
 		for ($i = 0; $i < count($item_coche); $i++) {
-			$query = "DELETE FROM `glpi_plugin_tracker_mib_networking`
-                   WHERE `ID`='".$item_coche[$i]."';";
-			$DB->query($query);
+         $this->deleteFromDB($item_coche[$i],1);
 		}
 	}
 

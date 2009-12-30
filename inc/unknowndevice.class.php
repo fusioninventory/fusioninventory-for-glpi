@@ -312,14 +312,10 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
                $DB->query($query_update);
 
                // Delete old networking port
-               $query_delete = "DELETE FROM `glpi_networking_ports`
-                                WHERE `ID`='".$data_known["ID"]."';";
-               $DB->query($query_delete);
+               $this->deleteFromDB($data_known["ID"],1);
 
                // Delete unknown device
-               $query_delete = "DELETE FROM `glpi_plugin_tracker_unknown_device`
-                                WHERE `ID`='".$data["on_device"]."';";
-               $DB->query($query_delete);
+               $this->deleteFromDB($data["on_device"],1);
 
                // Modify OCS link of this networking port
                $query = "SELECT *

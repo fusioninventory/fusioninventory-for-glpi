@@ -114,11 +114,6 @@ function plugin_init_tracker() {
 		'tablename' => 'glpi_plugin_tracker_networking_ports'
 		));
 
-   registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_TMP_NETPORTS", 5164, array(
-		'classname' => 'PluginTrackerTmpConnections',
-		'tablename' => 'glpi_plugin_tracker_tmp_netports'
-		));
-
 	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_CONFIG", 5165, array(
 		'classname' => 'PluginTrackerConfig',
 		'tablename' => 'glpi_plugin_tracker_config',
