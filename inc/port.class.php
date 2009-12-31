@@ -185,24 +185,28 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
 	function connect() {
-      if ($this->getCDP() OR count($this->portsToConnect)+count($this->unknownDevicesToConnect)==1){
-         // only one connection
-         if (count($this->portsToConnect)) { // this connection is not on an unknown device
-            $this->connectedPort = $this->portsToConnect[0];
-            $this->connectDB($this->connectedPort);
-         }
+      if (count($this->portsToConnect)+count($this->unknownDevicesToConnect)==0) {
+         // no connections --> don't delete existing connections : the connected device may be powered off
       } else {
-         $index = $this->getConnectionToSwitchIndex();
-         if ($index != '') {
-            $this->connectedPort = $this->portsToConnect[$index];
-            $this->connectDB($this->connectedPort);
+         if ($this->getCDP() OR count($this->portsToConnect)+count($this->unknownDevicesToConnect)==1){
+            // only one connection
+            if (count($this->portsToConnect)) { // this connection is not on an unknown device
+               $this->connectedPort = $this->portsToConnect[0];
+               $this->connectDB($this->connectedPort);
+            }
+         } else {
+            $index = $this->getConnectionToSwitchIndex();
+            if ($index != '') {
+               $this->connectedPort = $this->portsToConnect[$index];
+               $this->connectDB($this->connectedPort);
+            }
          }
-      }
-      // update connections to unknown devices
-      if (!count($this->portsToConnect)) { // if no known connection
-         if (count($this->unknownDevicesToConnect)==1) { // if only one unknown connection
-            $uConnection = $this->unknownDevicesToConnect[0];
-            $this->PortUnknownConnection($uConnection['mac'], $uConnection['ip']);
+         // update connections to unknown devices
+         if (!count($this->portsToConnect)) { // if no known connection
+            if (count($this->unknownDevicesToConnect)==1) { // if only one unknown connection
+               $uConnection = $this->unknownDevicesToConnect[0];
+               $this->PortUnknownConnection($uConnection['mac'], $uConnection['ip']);
+            }
          }
       }
    }
@@ -213,32 +217,31 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     *@param $destination_port ID of destination port
     *@return nothing
     **/
-	function connectDB($destination_port) {
+	function connectDB($destination_port='') {
 		global $DB;
 
-		$netwire = new Netwire;
-
-		$queryVerif = "SELECT *
+      $netwire = new Netwire;
+      $queryVerif = "SELECT *
                      FROM `glpi_networking_wire`
                      WHERE `end1` IN ('".$this->getValue('ID')."', '".$destination_port."')
                            AND `end2` IN ('".$this->getValue('ID')."', '".$destination_port."');";
 
-		if ($resultVerif=$DB->query($queryVerif)) {
-			if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
+      if ($resultVerif=$DB->query($queryVerif)) {
+         if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
             $source_port = $this->getValue('ID');
-				plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($source_port));
-				plugin_tracker_addLogConnection("remove",$source_port);
+            plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($source_port));
+            plugin_tracker_addLogConnection("remove",$source_port);
             removeConnector($source_port); // remove existing connection to this source port
 
-				plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($destination_port));
-				plugin_tracker_addLogConnection("remove",$destination_port);
+            plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($destination_port));
+            plugin_tracker_addLogConnection("remove",$destination_port);
             removeConnector($destination_port); // remove existing connection to this dest port
 
-				makeConnector($source_port,$destination_port); // connect those 2 ports
-				plugin_tracker_addLogConnection("make",$destination_port);
-				plugin_tracker_addLogConnection("make",$source_port);
+            makeConnector($source_port,$destination_port); // connect those 2 ports
+            plugin_tracker_addLogConnection("make",$destination_port);
+            plugin_tracker_addLogConnection("make",$source_port);
          }
-		}
+      }
    }
 
 
@@ -262,13 +265,17 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
    function assignVlans() {
       global $DB;
       
+      if ($this->connectedPort=='') {
+         // no connection to set check existing in DB
+         $this->connectedPort=$this->getConnectedPortInDB($this->getValue('ID'));
+      }
       $FK_vlans = array();
       foreach ($this->portVlans as $vlan) {
          $FK_vlans[] = externalImportDropdown("glpi_dropdown_vlan",$vlan['number'],0, array(), $vlan['name']);
       }
-      if (count($FK_vlans)) {
+      if (count($FK_vlans)) { // vlans to add/update
          $ports[] = $this->getValue('ID');
-         $ports[] = $this->connectedPort;
+         if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
             if ($num==1) { // connected port
                $ptpConnected = new PluginTrackerPort();
@@ -312,7 +319,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
                      }
                   }
                   foreach ($vlansDB as $vlanToUnassign) {
-                     $this->cleanVlan($vlanToUnassign['ID']);
+                     $this->cleanVlan($vlanToUnassign['ID'], $tmp_port);
                   }
                   foreach ($vlansToAssign as $vlanToAssign) {
                      $FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlanToAssign['number'],0, array(), $vlanToAssign['name']);
@@ -320,6 +327,16 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
                   }
                }
             }
+         }
+      } else { // no vlan to add/update --> delete existing
+         $this->cleanVlan('', $this->getValue('ID'));
+         if ($this->connectedPort != '') {
+            $ptpConnected = new PluginTrackerPort();
+            $ptpConnected->load($this->connectedPort);
+            if ($ptpConnected->fields['device_type'] != NETWORKING_TYPE) {
+               // don't update vlan on connected port if connected port on a switch
+               $this->cleanVlan('', $this->connectedPort);
+            }            
          }
       }
    }
@@ -345,11 +362,23 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     *@param $p_vlan Vlan ID
     *@return nothing
     **/
-   function cleanVlan($p_vlan) {
+   function cleanVlan($p_vlan, $p_port='') { //TODO : improve to use an array of vlans to avoid multiple delete queries
 		global $DB;
 
-      $query="DELETE FROM `glpi_networking_vlan`
-              WHERE `FK_vlan`='$p_vlan';";
+      if ($p_vlan != '') {
+         if ($p_port != '') { // delete this vlan for this port
+            $query="DELETE FROM `glpi_networking_vlan`
+                    WHERE `FK_vlan`='$p_vlan'
+                          AND `FK_port`='$p_port';";
+         } else { // delete this vlan for all ports
+            $query="DELETE FROM `glpi_networking_vlan`
+                    WHERE `FK_vlan`='$p_vlan';";
+            // TODO : remove vlan ?
+         }
+      } else { // delete all vlans for this port
+         $query="DELETE FROM `glpi_networking_vlan`
+                 WHERE `FK_port`='$p_port';";
+      }
       $DB->query($query);
 	}
 
@@ -378,6 +407,30 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
             $switch = $DB->fetch_assoc($result);
             return array_search($switch['ifmac'], $ifmac);
          }
+      }
+      return '';
+   }
+
+   /**
+    * Get connected port in DB
+    *
+    *@param $p_portID Port ID of first port
+    *@return Port ID of connected port or '' if no connection
+    **/
+   function getConnectedPortInDB($p_portID) {
+      global $DB;
+
+      $query = "SELECT `end1` AS `ID`
+                FROM `glpi_networking_wire`
+                WHERE `end2`='".$p_portID."'
+                UNION
+                SELECT `end2` AS `ID`
+                FROM `glpi_networking_wire`
+                WHERE `end1`='".$p_portID."';";
+      $result=$DB->query($query);
+      if ($DB->numrows($result) == 1) {
+         $port = $DB->fetch_assoc($result);
+         return $port['ID'];
       }
       return '';
    }
