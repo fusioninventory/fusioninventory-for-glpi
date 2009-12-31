@@ -785,7 +785,7 @@ class PluginTrackerCommunication {
    function importVlan($p_vlan, $p_oPort) {
       $errors='';
       $number=''; $name='';
-      foreach ($p_vlan->children() as $name=>$child) {
+      foreach ($p_vlan->children() as $child) {
          switch ($child->getName()) {
             case 'NUMBER' :
                $number=$child;
