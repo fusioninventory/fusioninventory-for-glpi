@@ -46,7 +46,8 @@ ALTER TABLE `glpi_plugin_tracker_config`
    ADD `criteria2_ip` INT( 1 ) NOT NULL DEFAULT '0',
    ADD `criteria2_name` INT( 1 ) NOT NULL DEFAULT '0',
    ADD `criteria2_serial` INT( 1 ) NOT NULL DEFAULT '0',
-   ADD `criteria2_macaddr` INT( 1 ) NOT NULL DEFAULT '0';
+   ADD `criteria2_macaddr` INT( 1 ) NOT NULL DEFAULT '0',
+   ADD `delete_agent_process` INT( 11 ) NOT NULL DEFAULT '0';
 
 DROP TABLE `glpi_plugin_tracker_config_discovery` ;
 
@@ -110,3 +111,38 @@ ALTER TABLE `glpi_plugin_tracker_profiles` CHANGE `snmp_scripts_infos` `tracker_
 ALTER TABLE `glpi_plugin_tracker_snmp_connection` DROP `sec_level`;
 
 DROP TABLE `glpi_dropdown_plugin_tracker_snmp_auth_sec_level`;
+
+ALTER TABLE `glpi_plugin_tracker_agents_processes`
+  DROP `errors`,
+  DROP `error_msg`,
+  DROP `networking_queries`,
+  DROP `printers_queries`,
+  DROP `discovery_queries`,
+  DROP `discovery_queries_total`,
+  DROP `networking_ports_queries`;
+
+ALTER TABLE `glpi_plugin_tracker_agents_processes`
+   ADD `discovery_core` INT( 11 ) NOT NULL DEFAULT '0' AFTER `end_time_discovery` ,
+   ADD `discovery_threads` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_core` ,
+   ADD `discovery_nb_found` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_threads` ,
+   ADD `discovery_nb_exists` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_nb_found` ,
+   ADD `discovery_nb_import` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_nb_exists`;
+
+ALTER TABLE `glpi_plugin_tracker_agents_processes`
+   ADD `query_core` INT( 11 ) NOT NULL DEFAULT '0' ,
+   ADD `query_threads` INT( 11 ) NOT NULL DEFAULT '0' ,
+   ADD `query_nb_query` INT( 11 ) NOT NULL DEFAULT '0' ,
+   ADD `query_nb_error` INT( 11 ) NOT NULL DEFAULT '0' ,
+   ADD `query_nb_connections_created` INT( 11 ) NOT NULL DEFAULT '0' ,
+   ADD `query_nb_connections_deleted` INT( 11 ) NOT NULL DEFAULT '0';
+
+CREATE TABLE `glpi_plugin_tracker_agents_errors` (
+   `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `process_number` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL,
+   `on_device` INT( 11 ) NOT NULL DEFAULT '0',
+   `device_type` INT( 11 ) NOT NULL DEFAULT '0',
+   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
+   `agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
+   `error_message` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL ,
+   PRIMARY KEY ( `ID` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

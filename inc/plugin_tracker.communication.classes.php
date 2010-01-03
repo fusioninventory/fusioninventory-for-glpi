@@ -142,13 +142,11 @@ class PluginTrackerCommunication {
     *
     *@return nothing
     **/
-   function addQuery() {
-      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      $pxml = @simplexml_load_string($p_xml);
-
+   function addQuery($pxml) {
       $ptmi    = new PluginTrackerModelInfos;
       $ptsnmpa = new PluginTrackerSNMPAuth;
       $pta     = new PluginTrackerAgents;
+      $ptap    = new PluginTrackerAgentsProcesses;
       $ptrip   = new PluginTrackerRangeIP;
       $ptt     = new PluginTrackerTask;
 
@@ -157,12 +155,16 @@ class PluginTrackerCommunication {
       $count_range += $ptt->Counter($agent["ID"], "SNMPQUERY");
 
       if (($count_range > 0) && ($agent["lock"] == 0)) {
+         $a_input['query_core'] = $agent["core_query"];
+         $a_input['query_threads'] = $agent["threads_query"];
+         $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
+
          $sxml_option = $this->sxml->addChild('OPTION');
             $sxml_option->addChild('NAME', 'SNMPQUERY');
             $sxml_param = $sxml_option->addChild('PARAM');
                $sxml_param->addAttribute('CORE_QUERY', $agent["core_query"]);
                $sxml_param->addAttribute('THREADS_QUERY', $agent["threads_query"]);
-               $sxml_param->addAttribute('PID', '03201054001');
+               $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
                $sxml_param->addAttribute('LOGS', $agent["logs"]);
 
                $ranges = $ptrip->ListRange($agent["ID"], "query");
@@ -195,12 +197,10 @@ class PluginTrackerCommunication {
     *
     *@return nothing
     **/
-   function addDiscovery() {
-      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      $pxml = @simplexml_load_string($p_xml);
-
+   function addDiscovery($pxml) {
       $ptsnmpa = new PluginTrackerSNMPAuth;
       $pta     = new PluginTrackerAgents;
+      $ptap    = new PluginTrackerAgentsProcesses;
       $ptrip   = new PluginTrackerRangeIP;
       $ptt     = new PluginTrackerTask;
 
@@ -209,12 +209,16 @@ class PluginTrackerCommunication {
       $count_range += $ptt->Counter($agent["ID"], "NETDISCOVERY");
 
       if (($count_range > 0) && ($agent["lock"] == 0)) {
+         $a_input['discovery_core'] = $agent["core_discovery"];
+         $a_input['discovery_threads'] = $agent["threads_discovery"];
+         $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
+
          $sxml_option = $this->sxml->addChild('OPTION');
             $sxml_option->addChild('NAME', 'NETDISCOVERY');
             $sxml_param = $sxml_option->addChild('PARAM');
                $sxml_param->addAttribute('CORE_DISCOVERY', $agent["core_discovery"]);
                $sxml_param->addAttribute('THREADS_DISCOVERY', $agent["threads_discovery"]);
-               $sxml_param->addAttribute('PID', '03201054001');
+               $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
                $sxml_param->addAttribute('LOGS', $agent["logs"]);
 
             $ranges = $ptrip->ListRange($agent["ID"], "discover");
@@ -433,13 +437,16 @@ class PluginTrackerCommunication {
          case 'SNMPQUERY' :
             $errors.=$this->importContent($this->sxml->CONTENT);
             break;
+         
          case 'NETDISCOVERY' :
             $pti = new PluginTrackerImportExport;
             $errors.=$pti->import_netdiscovery($this->sxml->CONTENT);
-         default :
-            $errors.='QUERY invalide : '.$this->sxml->QUERY."\n";
-      }
+            break;
 
+         default :
+            $errors.='QUERY invalide : *'.$this->sxml->QUERY.'*\n';
+      }
+file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/errors.log".rand(), $errors);
       if ($errors=='') {
          $result=true;
       } else {
@@ -456,13 +463,31 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importContent($p_content) {
+      $ptap = new PluginTrackerAgentsProcesses;
       $errors='';
-      foreach ($p_content->children() as $child)
-      {
+      $nbDevices = 0;
+      $_SESSION['glpi_plugin_tracker_processnumber'] = $this->sxml->CONTENT->PROCESSNUMBER;
+      foreach ($p_content->children() as $child) {
          switch ($child->getName()) {
             case 'DEVICE' :
                $errors.=$this->importDevice($child);
+               $nbDevices++;
                break;
+
+            case 'AGENT' :
+               if (isset($this->sxml->CONTENT->AGENT->START)) {
+                  file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/start.log".rand(), 'Bizarre');
+                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('start_time_query' => date("Y-m-d H:i:s")));
+               } else if (isset($this->sxml->CONTENT->AGENT->END)) {
+                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('end_time_query' => date("Y-m-d H:i:s")));
+               } else if (isset($this->sxml->CONTENT->AGENT->EXIT)) {
+                  $ptap->endProcess($this->sxml->CONTENT->PROCESSNUMBER, date("Y-m-d H:i:s"));
+               }
+               break;
+            
+            case 'PROCESSNUMBER':
+               break;
+            
             default :
                $errors.='Elément invalide dans CONTENT : '.$child->getName()."\n";
          }
@@ -477,23 +502,39 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importDevice($p_device) {
+      $ptap = new PluginTrackerAgentsProcesses;
+      $ptae = new PluginTrackerAgentsErrors;
+
       $errors=''; $this->deviceId='';
-      $errors.=$this->importInfo($p_device->INFO);
-      if ($this->deviceId!='') {
-         foreach ($p_device->children() as $child)
-         {
-            switch ($child->getName()) {
-               case 'INFO' : // already managed
-                  break;
-               case 'PORT' :
-                  $errors.=$this->importPort($child);
-                  break;
-               default :
-                  $errors.='Elément invalide dans DEVICE : '.$child->getName()."\n";
-            }
+      if (isset($p_device->ERROR)) {
+         $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('query_nb_error' => '1'));
+         $a_input['ID'] = $p_device->ERROR->ID;
+         if ($p_device->ERROR->TYPE=='NETWORKING') {
+            $a_input['TYPE'] = NETWORKING_TYPE;
+         } else {
+            $a_input['TYPE'] = PRINTER_TYPE;
          }
-         if (is_object($this->ptn)) {
-            $this->ptn->savePorts();
+         $a_input['MESSAGE'] = $p_device->ERROR->MESSAGE;
+         $a_input['agent_type'] = 'SNMPQUERY';
+         $ptae->addError($a_input);
+      } else {
+         $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('query_nb_query' => '1'));
+         $errors.=$this->importInfo($p_device->INFO);
+         if ($this->deviceId!='') {
+            foreach ($p_device->children() as $child) {
+               switch ($child->getName()) {
+                  case 'INFO' : // already managed
+                     break;
+                  case 'PORT' :
+                     $errors.=$this->importPort($child);
+                     break;
+                  default :
+                     $errors.='Elément invalide dans DEVICE : '.$child->getName()."\n";
+               }
+            }
+            if (is_object($this->ptn)) {
+               $this->ptn->savePorts();
+            }
          }
       }
 
@@ -836,5 +877,10 @@ class PluginTrackerCommunication {
       return $this->sxml->asXML();
    }
 
+
+   function addProcessNumber($p_pid) {
+      $this->sxml->addChild('PROCESSNUMBER', $p_pid);
+      //var_dump($this->sxml);
+   }
 }
 ?>

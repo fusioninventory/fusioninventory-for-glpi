@@ -218,12 +218,22 @@ class PluginTrackerImportExport extends CommonDBTM {
       $p_criteria = array();
 
 		$walks = new PluginTrackerWalk;
+      $ptap = new PluginTrackerAgentsProcesses;
 
 		$config_discovery = new PluginTrackerConfig;
       $np=new Netport;
 
       $ptud = new PluginTrackerUnknownDevice;
 
+      $_SESSION['glpi_plugin_tracker_processnumber'] = $p_xml->PROCESSNUMBER;
+      if (isset($p_xml->AGENT->START)) {
+         file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/start.log".rand(), 'Bizarre'.$p_xml->PROCESSNUMBER);
+         $ptap->updateProcess($p_xml->PROCESSNUMBER, array('start_time_discovery' => date("Y-m-d H:i:s")));
+      } else if (isset($p_xml->AGENT->END)) {
+         $ptap->updateProcess($p_xml->PROCESSNUMBER, array('end_time_discovery' => date("Y-m-d H:i:s")));
+      } else if (isset($p_xml->AGENT->EXIT)) {
+         $ptap->endProcess($p_xml->PROCESSNUMBER, date("Y-m-d H:i:s"));
+      }
 
 		$walkdata = '';
 		$count_discovery_devices = 0;
@@ -240,6 +250,7 @@ class PluginTrackerImportExport extends CommonDBTM {
          } else if ($device->TYPE == PRINTER_TYPE) {
 				$device_queried_printer++;
          }
+         $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('discovery_nb_found' => '1'));
 		}
 //		foreach($p_xml->agent as $agent) {
 //			$agent_version = $agent->version;
@@ -289,6 +300,7 @@ class PluginTrackerImportExport extends CommonDBTM {
          $p_criteria->macaddr = $discovery->MAC;
 
          if (!plugin_tracker_discovery_criteria($p_criteria)) {
+            $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('discovery_nb_import' => '1'));
             // Add in unknown device
             $data = array();
             if (!empty($discovery->NETBIOSNAME)) {
@@ -321,6 +333,8 @@ class PluginTrackerImportExport extends CommonDBTM {
             $port_add['name'] = $discovery->NETPORTVENDOR;
 				$port_ID = $np->add($port_add);
             unset($port_add);
+         } else {
+            $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('discovery_nb_exists' => '1'));
          }
 		}
 	}

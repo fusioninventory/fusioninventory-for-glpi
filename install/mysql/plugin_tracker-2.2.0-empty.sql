@@ -87,26 +87,45 @@ CREATE TABLE `glpi_plugin_tracker_agents` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_agents_errors`;
+
+CREATE TABLE `glpi_plugin_tracker_agents_errors` (
+`ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`process_number` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL,
+`on_device` INT( 11 ) NOT NULL DEFAULT '0',
+`device_type` INT( 11 ) NOT NULL DEFAULT '0',
+`date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
+`agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
+`error_message` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL ,
+PRIMARY KEY ( `ID` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_agents_processes`;
 
 CREATE TABLE `glpi_plugin_tracker_agents_processes` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `process_number` varchar(255) DEFAULT NULL,
+  `process_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `FK_agent` int(11) NOT NULL DEFAULT '0',
   `status` int(1) NOT NULL DEFAULT '0',
   `start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `start_time_discovery` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end_time_discovery` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `discovery_core` int(11) NOT NULL DEFAULT '0',
+  `discovery_threads` int(11) NOT NULL DEFAULT '0',
+  `discovery_nb_found` int(11) NOT NULL DEFAULT '0',
+  `discovery_nb_exists` int(11) NOT NULL DEFAULT '0',
+  `discovery_nb_import` int(11) NOT NULL DEFAULT '0',
   `start_time_query` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end_time_query` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `errors` int(11) NOT NULL DEFAULT '0',
-  `error_msg` varchar(255) NOT NULL DEFAULT '0',
-  `networking_queries` int(11) NOT NULL DEFAULT '0',
-  `printers_queries` int(11) NOT NULL DEFAULT '0',
-  `discovery_queries` int(11) NOT NULL DEFAULT '0',
-  `discovery_queries_total` int(11) NOT NULL DEFAULT '0',
-  `networking_ports_queries` int(11) NOT NULL DEFAULT '0',
+  `query_core` int(11) NOT NULL DEFAULT '0',
+  `query_threads` int(11) NOT NULL DEFAULT '0',
+  `query_nb_query` int(11) NOT NULL DEFAULT '0',
+  `query_nb_error` int(11) NOT NULL DEFAULT '0',
+  `query_nb_connections_created` int(11) NOT NULL DEFAULT '0',
+  `query_nb_connections_deleted` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `process_number` (`process_number`,`FK_agent`),
   KEY `process_number_2` (`process_number`,`FK_agent`)
@@ -143,20 +162,21 @@ CREATE TABLE `glpi_plugin_tracker_computers` (
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config`;
 
 CREATE TABLE `glpi_plugin_tracker_config` (
-  `ID` int(1) NOT NULL AUTO_INCREMENT,
-  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `ssl_only` int(1) NOT NULL DEFAULT '1',
-  `authsnmp` varchar(255) NOT NULL,
-  `inventory_frequence` INT( 11 ) NULL DEFAULT '24',
-  `criteria1_ip` INT( 1 ) NOT NULL DEFAULT '0',
-  `criteria1_name` INT( 1 ) NOT NULL DEFAULT '0',
-  `criteria1_serial` INT( 1 ) NOT NULL DEFAULT '0',
-  `criteria1_macaddr` INT( 1 ) NOT NULL DEFAULT '0',
-  `criteria2_ip` INT( 1 ) NOT NULL DEFAULT '0',
-  `criteria2_name` INT( 1 ) NOT NULL DEFAULT '0',
-  `criteria2_serial` INT( 1 ) NOT NULL DEFAULT '0',
-  `criteria2_macaddr` INT( 1 ) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`)
+   `ID` int(1) NOT NULL AUTO_INCREMENT,
+   `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+   `ssl_only` int(1) NOT NULL DEFAULT '1',
+   `authsnmp` varchar(255) NOT NULL,
+   `inventory_frequence` INT( 11 ) NULL DEFAULT '24',
+   `criteria1_ip` INT( 1 ) NOT NULL DEFAULT '0',
+   `criteria1_name` INT( 1 ) NOT NULL DEFAULT '0',
+   `criteria1_serial` INT( 1 ) NOT NULL DEFAULT '0',
+   `criteria1_macaddr` INT( 1 ) NOT NULL DEFAULT '0',
+   `criteria2_ip` INT( 1 ) NOT NULL DEFAULT '0',
+   `criteria2_name` INT( 1 ) NOT NULL DEFAULT '0',
+   `criteria2_serial` INT( 1 ) NOT NULL DEFAULT '0',
+   `criteria2_macaddr` INT( 1 ) NOT NULL DEFAULT '0',
+   `delete_agent_process` INT( 11 ) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

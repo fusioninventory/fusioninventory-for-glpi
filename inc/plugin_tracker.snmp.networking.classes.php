@@ -682,7 +682,33 @@ function appear_array(id){
 
 						case 14 :
 							echo "<td align='center'>";
-							showPortVLAN($data["ID"],"");
+                     
+                     $canedit = haveRight("networking", "w");
+
+                     $used = array();
+
+                     $query_vlan = "SELECT * FROM glpi_networking_vlan WHERE FK_port='".$data["ID"]."'";
+                     $result_vlan = $DB->query($query_vlan);
+                     if ($DB->numrows($result_vlan) > 0) {
+                        echo "<table cellpadding='0' cellspacing='0'>";
+                        while ($line = $DB->fetch_array($result_vlan)) {
+                           $used[]=$line["FK_vlan"];
+                           $a_vlan = getDropdownName("glpi_dropdown_vlan", $line["FK_vlan"],1);
+                           echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comments']."]";
+                           echo "</td><td>";
+                           if ($canedit) {
+                              echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?unassign_vlan=unassigned&amp;ID=" . $line["ID"] . "'>";
+                              echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete2.png\" alt='" . $LANG['buttons'][6] . "' title='" . $LANG['buttons'][6] . "'></a>";
+                           } else
+                              echo "&nbsp;";
+                           echo "</td></tr>";
+                        }
+                        echo "</table>";
+                     } else {
+                        echo "&nbsp;";
+                     }
+
+
 							echo "</td>";
 							break;
 						

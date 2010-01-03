@@ -41,6 +41,8 @@ $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","mon
 include (GLPI_ROOT."/inc/includes.php");
 //include("agent_communication.php");
 $ptc = new PluginTrackerCommunication();
+$ptap = new PluginTrackerAgentsProcesses;
+
 $res='';
 $errors='';
 file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
@@ -50,7 +52,12 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    if (1) {
       $res .= "1'".$errors."'";
 
-      $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $pxml = @simplexml_load_string($p_xml);
+$pxml->DEVICEID = "nFmai5LYKq59PWk73nXVJlaXREKUOK";
+      if (isset($pxml->DEVICEID)) {
+
+         $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
 <REPLY>
 <OPTION><NAME>DOWNLOAD</NAME>
 <PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" /></OPTION>
@@ -58,15 +65,18 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
 <PROLOG_FREQ>24</PROLOG_FREQ>
 </REPLY>");
 
-   // ******** NETDISCOVERY
-      $ptc->addDiscovery();
+         $ptc->addProcessNumber($ptap->addProcess($pxml));
 
-   // ******** SNMPQUERY
-      $ptc->addQuery();
+      // ******** NETDISCOVERY
+         $ptc->addDiscovery($pxml);
 
-   // ******** Send XML
-      $ptc->setXML($ptc->getXML());
-      echo $ptc->getSend(); // echo response for the agent
+      // ******** SNMPQUERY
+         $ptc->addQuery($pxml);
+
+      // ******** Send XML
+         $ptc->setXML($ptc->getXML());
+         echo $ptc->getSend(); // echo response for the agent
+      }
    } else {
       $res .= "0'".$errors."'";
    }

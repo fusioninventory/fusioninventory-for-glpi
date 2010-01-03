@@ -35,23 +35,18 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker","search");
+$NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
+	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
 
 plugin_tracker_checkRight("snmp_agent_infos","r");
 
-$modif = 0;
-if (empty($_GET)) {
-	$modif = 1;
-}
-
 plugin_tracker_mini_menu();
 
-$ptap = new PluginTrackerAgentsProcesses;
-$ptap->CleanProcesses();
-$ptap->ShowProcesses();
+$ptae = new PluginTrackerAgentsErrors;
+$ptae->ShowErrors($_GET);
 
 commonFooter();
 

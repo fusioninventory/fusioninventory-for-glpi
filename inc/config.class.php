@@ -52,8 +52,8 @@ class PluginTrackerConfig extends CommonDBTM {
                               `ID`, `version`, `ssl_only`, `authsnmp`, `inventory_frequence`,
                               `criteria1_ip`, `criteria1_name`, `criteria1_serial`,
                               `criteria1_macaddr`, `criteria2_ip`, `criteria2_name`,
-                              `criteria2_serial`, `criteria2_macaddr`)
-                VALUES ('1', '".$version."', '1', 'DB', '24', '0', '0', '0', '0', '0', '0', '0', '0');";
+                              `criteria2_serial`, `criteria2_macaddr`, `delete_agent_process`)
+                VALUES ('1', '".$version."', '1', 'DB', '24', '0', '0', '0', '0', '0', '0', '0', '0', '24');";
 
 		$DB->query($query);
 	}
@@ -131,8 +131,10 @@ class PluginTrackerConfig extends CommonDBTM {
 		echo "<td>";
       dropdownInteger("inventory_frequence",$this->getValue('inventory_frequence'),1,240);
 		echo "</td>";
-		echo "<td></td>";
+		echo "<td>".$LANG['plugin_tracker']["functionalities"][32]."</td>";
 		echo "<td>";
+      dropdownInteger("delete_agent_process",$this->getValue('delete_agent_process'),1,240);
+      echo " ".$LANG['gmt'][1];
 		echo "</td>";
       echo "</tr>";
 
