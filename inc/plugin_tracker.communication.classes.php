@@ -446,7 +446,6 @@ class PluginTrackerCommunication {
          default :
             $errors.='QUERY invalide : *'.$this->sxml->QUERY.'*\n';
       }
-file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/errors.log".rand(), $errors);
       if ($errors=='') {
          $result=true;
       } else {
@@ -476,7 +475,6 @@ file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/errors.log".rand(), $errors);
 
             case 'AGENT' :
                if (isset($this->sxml->CONTENT->AGENT->START)) {
-                  file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/start.log".rand(), 'Bizarre');
                   $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('start_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->END)) {
                   $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('end_time_query' => date("Y-m-d H:i:s")));

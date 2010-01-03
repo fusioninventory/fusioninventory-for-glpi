@@ -124,7 +124,8 @@ ALTER TABLE `glpi_plugin_tracker_agents_processes`
 ALTER TABLE `glpi_plugin_tracker_agents_processes`
    ADD `discovery_core` INT( 11 ) NOT NULL DEFAULT '0' AFTER `end_time_discovery` ,
    ADD `discovery_threads` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_core` ,
-   ADD `discovery_nb_found` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_threads` ,
+   ADD `discovery_nb_ip` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_threads`
+   ADD `discovery_nb_found` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_nb_ip` ,
    ADD `discovery_nb_exists` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_nb_found` ,
    ADD `discovery_nb_import` INT( 11 ) NOT NULL DEFAULT '0' AFTER `discovery_nb_exists`;
 

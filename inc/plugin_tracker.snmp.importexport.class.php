@@ -227,13 +227,15 @@ class PluginTrackerImportExport extends CommonDBTM {
 
       $_SESSION['glpi_plugin_tracker_processnumber'] = $p_xml->PROCESSNUMBER;
       if (isset($p_xml->AGENT->START)) {
-         file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/start.log".rand(), 'Bizarre'.$p_xml->PROCESSNUMBER);
          $ptap->updateProcess($p_xml->PROCESSNUMBER, array('start_time_discovery' => date("Y-m-d H:i:s")));
       } else if (isset($p_xml->AGENT->END)) {
          $ptap->updateProcess($p_xml->PROCESSNUMBER, array('end_time_discovery' => date("Y-m-d H:i:s")));
       } else if (isset($p_xml->AGENT->EXIT)) {
          $ptap->endProcess($p_xml->PROCESSNUMBER, date("Y-m-d H:i:s"));
+      } else if (isset($p_xml->AGENT->NBIP)) {
+         $ptap->updateProcess($p_xml->PROCESSNUMBER, array('discovery_nb_ip' => $p_xml->AGENT->NBIP));
       }
+
 
 		$walkdata = '';
 		$count_discovery_devices = 0;

@@ -101,6 +101,10 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
       echo "</th>";
 
       echo "<th>";
+      echo $LANG['plugin_tracker']["processes"][37];
+      echo "</th>";
+
+      echo "<th>";
       echo $LANG['plugin_tracker']["processes"][30];
       echo "</th>";
 
@@ -108,7 +112,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
       echo $LANG['plugin_tracker']["processes"][31];
       echo "</th>";
 
-      echo "<th colspan='2'>";
+      echo "<th>";
       echo $LANG['plugin_tracker']["processes"][32];
       echo "</th>";
 
@@ -261,6 +265,10 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
+            echo $data['discovery_nb_ip'];
+            echo "</td>";
+            
+            echo "<td>";
             echo $data['discovery_nb_found'];
             echo "</td>";
 
@@ -268,7 +276,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
             echo $data['discovery_nb_exists'];
             echo "</td>";
 
-            echo "<td colspan='2'>";
+            echo "<td>";
             echo $data['discovery_nb_import'];
             echo "</td>";
 

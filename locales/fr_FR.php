@@ -303,6 +303,7 @@ $LANG['plugin_tracker']["processes"][33]="Interrogé";
 $LANG['plugin_tracker']["processes"][34]="En erreur";
 $LANG['plugin_tracker']["processes"][35]="Connexions créés";
 $LANG['plugin_tracker']["processes"][36]="Connexions supprimées";
+$LANG['plugin_tracker']["processes"][37]="Total IP";
 
 $LANG['plugin_tracker']["state"][0]="Démarrage de l'ordinateur";
 $LANG['plugin_tracker']["state"][1]="Arrêt de l'ordinateur";

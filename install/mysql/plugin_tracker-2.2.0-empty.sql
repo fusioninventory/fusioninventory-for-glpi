@@ -115,6 +115,7 @@ CREATE TABLE `glpi_plugin_tracker_agents_processes` (
   `end_time_discovery` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `discovery_core` int(11) NOT NULL DEFAULT '0',
   `discovery_threads` int(11) NOT NULL DEFAULT '0',
+  `discovery_nb_ip` INT( 11 ) NOT NULL DEFAULT '0',
   `discovery_nb_found` int(11) NOT NULL DEFAULT '0',
   `discovery_nb_exists` int(11) NOT NULL DEFAULT '0',
   `discovery_nb_import` int(11) NOT NULL DEFAULT '0',
