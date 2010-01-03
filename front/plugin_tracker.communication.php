@@ -54,7 +54,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
 
       $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
       $pxml = @simplexml_load_string($p_xml);
-$pxml->DEVICEID = "nFmai5LYKq59PWk73nXVJlaXREKUOK";
+      
       if (isset($pxml->DEVICEID)) {
 
          $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
