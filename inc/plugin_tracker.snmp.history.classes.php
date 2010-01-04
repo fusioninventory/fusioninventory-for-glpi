@@ -56,33 +56,28 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 	**/
 	function insert_connection($status,$array,$FK_process=0) {
 		global $DB,$CFG_GLPI;
+
+      $pthc = new PluginTrackerHistoryConnections;
+
+      $input['date'] = date("Y-m-d H:i:s");
+      $input['FK_port_source'] = $array['FK_ports'];
+      $input['FK_port_destination'] = $array['FK_port_destination'];
+      $input['process_number'] = $FK_process;
 		if ($status == "remove") {
-			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
-                               `FK_ports`,`old_value`,`old_device_type`,`old_device_ID`,`date_mod`,
-                               `FK_process`)
-                   VALUES('".$array["FK_ports"]."','".$array["value"]."',
-                          '".$array["device_type"]."','".$array["device_ID"]."',
-                          '".date("Y-m-d H:i:s")."','".$FK_process."');";
-		
+         $input['creation'] = '0';
+         $pthc->add($input);
 		} else if ($status == "make") {
-			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
-                               `FK_ports`,`new_value`,`new_device_type`,`new_device_ID`,`date_mod`,
-                               `FK_process`)
-                   VALUES('".$array["FK_ports"]."','".$array["value"]."',
-                          '".$array["device_type"]."','".$array["device_ID"]."',
-                          '".date("Y-m-d H:i:s")."','".$FK_process."');";
-	
+			$input['creation'] = '1';
+         $toto = $pthc->add($input);
 		} else if ($status == "field") {
 			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
                                `FK_ports`,`field`,`old_value`,`new_value`,`date_mod`,`FK_process`)
                    VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."',
                           '".$array["old_value"]."','".$array["new_value"]."',
                           '".date("Y-m-d H:i:s")."','".$FK_process."');";
-	
+         $DB->query($query);
 		}
-		$DB->query($query);
-		return mysql_insert_id();
-	}
+ 	}
 
 
    function showForm($target,$ID) {

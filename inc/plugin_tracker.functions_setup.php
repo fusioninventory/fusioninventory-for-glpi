@@ -105,7 +105,7 @@ function plugin_tracker_update($version) {
 	if ($version == "2.0.2") {
 		// Migrate unknown mac address in unknown device (MySQL table)
 		$ptud = new PluginTrackerUnknownDevice;
-		$ptud->updateFromOldVersion_unknown_mac();
+		$ptud->updateFromOldVersion_unknown_mac;
 		// Delete MySQL table "glpi_plugin_tracker_unknown_mac"
 		$DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
 		$DB->query("UPDATE `glpi_plugin_tracker_config`
@@ -138,6 +138,8 @@ function plugin_tracker_update($version) {
                   SET `version` = '2.2.0'
                   WHERE `ID`=1
                   LIMIT 1 ;");
+      $pthc = new PluginTrackerHistoryConnections;
+      $pthc->migration();
    }
 	plugin_tracker_initSession();
 }

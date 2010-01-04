@@ -234,15 +234,15 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
             $source_port = $this->getValue('ID');
-            plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($source_port));
+//            plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($source_port));
             plugin_tracker_addLogConnection("remove",$source_port);
             if (removeConnector($source_port)) { // remove existing connection to this source port
                $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
                                     array('query_nb_connections_deleted' => '1'));
             }
 
-            plugin_tracker_addLogConnection("remove",
-                                            $netwire->getOppositeContact($destination_port));
+//            plugin_tracker_addLogConnection("remove",
+//                                            $netwire->getOppositeContact($destination_port));
             plugin_tracker_addLogConnection("remove",$destination_port);
             if (removeConnector($destination_port)) { //remove existing connection to this dest port
                $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
@@ -253,7 +253,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
                $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
                                     array('query_nb_connections_created' => '1'));
             }
-            plugin_tracker_addLogConnection("make",$destination_port);
+//            plugin_tracker_addLogConnection("make",$destination_port);
             plugin_tracker_addLogConnection("make",$source_port);
          }
       }

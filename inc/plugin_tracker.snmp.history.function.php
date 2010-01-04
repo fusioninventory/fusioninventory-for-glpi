@@ -76,6 +76,10 @@ function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 	$netport=new Netport;
 	$nw=new Netwire;
 
+   if (($FK_process == '0') AND (isset($_SESSION['glpi_plugin_tracker_processnumber']))) {
+      $FK_process = $_SESSION['glpi_plugin_tracker_processnumber'];
+   }
+
 	// Récupérer le port de la machine associé au port du switch
 
 	// Récupérer le type de matériel
@@ -85,6 +89,7 @@ function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 		return;
    }
 	$netport->getFromDB($opposite_port);
+   $array['FK_port_destination'] = $opposite_port;
 	$array["device_type"] = $netport->fields["device_type"];
 	
 	// Récupérer l'adresse MAC

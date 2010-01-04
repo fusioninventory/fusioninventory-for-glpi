@@ -337,11 +337,21 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            echo $data['query_nb_connections_created'];
+            if ($data['query_nb_connections_created'] > 0) {
+               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.historyconnections.php?process_number=".$data['process_number']."&amp;created=1'>
+                  ".$data['query_nb_connections_created']."</a>";
+            } else {
+               echo $data['query_nb_connections_created'];
+            }
             echo "</td>";
 
             echo "<td>";
-            echo $data['query_nb_connections_deleted'];
+            if ($data['query_nb_connections_deleted'] > 0) {
+               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.historyconnections.php?process_number=".$data['process_number']."&amp;created=0'>
+                  ".$data['query_nb_connections_deleted']."</a>";
+            } else {
+               echo $data['query_nb_connections_deleted'];
+            }
             echo "</td>";
 
             echo "</tr>";

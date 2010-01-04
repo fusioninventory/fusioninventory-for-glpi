@@ -145,3 +145,20 @@ CREATE TABLE `glpi_plugin_tracker_agents_errors` (
    `error_message` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL ,
    PRIMARY KEY ( `ID` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+ALTER TABLE `glpi_plugin_tracker_snmp_history` CHANGE `FK_process` `FK_process` VARCHAR( 255 ) NULL;
+
+DROP TABLE `glpi_plugin_tracker_tmp_connections` ;
+
+DROP TABLE `glpi_plugin_tracker_tmp_netports` ;
+
+CREATE TABLE `glpi_plugin_tracker_snmp_history_connections` (
+   `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `creation` INT( 1 ) NOT NULL DEFAULT '0',
+   `FK_port_source` INT( 11 ) NOT NULL DEFAULT '0',
+   `FK_port_destination` INT( 11 ) NOT NULL DEFAULT '0',
+   `process_number` VARCHAR( 255 ) NULL ,
+   PRIMARY KEY ( `ID` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

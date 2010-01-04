@@ -975,81 +975,6 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
 			}
 			break;
 
-		// * Processes agents list (plugins/tracker/front/plugin_tracker.agents.processes.php)
-		case PLUGIN_TRACKER_AGENTS_PROCESSES :
-			switch ($table.'.'.$field) {
-
-			// ** Display status of agent (finish or in progress)
-			case "glpi_plugin_tracker_agents_processes.status" :
-				$out = "";
-				switch($data["ITEM_$num"]) {
-					case 3 :
-						$out = "<img src='../pics/export.png' />";
-						break;
-
-					case 2 :
-						$out = "<img src='../pics/wait.png' />";
-						break;
-               
-					case 1 :
-						$out = "<img src='../pics/ok2.png' />";
-						break;
-				}
-				return "<center>".$out."</center>";
-				break;
-
-			// ** Counter of devices discovered
-			case "glpi_plugin_tracker_agents_processes.discovery_queries" :
-				$agents_processes = new PluginTrackerAgentsProcesses;
-				$agents_processes->getFromDB($data['ID']);
-				$out = $data["ITEM_$num"]." / ".$agents_processes->fields["discovery_queries_total"];
-				if ($out == "0 / 0") {
-					$out = 0;
-            }
-				return "<center>".$out."</center>";
-				break;
-
-			// ** Counter of devices queried
-			case "glpi_plugin_tracker_agents_processes.networking_queries" :
-				$agents_processes = new PluginTrackerAgentsProcesses;
-				$agents_processes->getFromDB($data['ID']);
-				$out = $data["ITEM_$num"] + $agents_processes->fields["printers_queries"];
-				return "<center>".$out."</center>";
-				break;
-
-			// ** Total time of execution script
-			case "glpi_plugin_tracker_agents_processes.ID" :
-            $agentsprocesses = new PluginTrackerAgentsProcesses;
-            $starttime = $agentsprocesses->getValue('start_time', $data['ID']);
-            $endtime = $agentsprocesses->getValue('end_time', $data['ID']);
-				$duree_timestamp = strtotime($endtime) - strtotime($starttime);
-				$out = timestampToString($duree_timestamp);
-				return "<center>".$out."</center>";
-				break;
-
-			// ** Total time of discovery function
-			case "glpi_plugin_tracker_agents_processes.start_time_discovery" :
-				$agents_processes = new PluginTrackerAgentsProcesses;
-				$agents_processes->getFromDB($data['ID']);
-				$duree_timestamp = strtotime($agents_processes->fields["end_time_discovery"]) - strtotime($data["ITEM_$num"]);
-				$out = timestampToString($duree_timestamp);
-				return "<center>".$out."</center>";
-				break;
-
-			// ** Total time of query function
-			case "glpi_plugin_tracker_agents_processes.start_time_query" :
-				$agents_processes = new PluginTrackerAgentsProcesses;
-				$agents_processes->getFromDB($data['ID']);
-				$duree_timestamp = strtotime($agents_processes->fields["end_time_query"]) - strtotime($data["ITEM_$num"]);
-				$out = timestampToString($duree_timestamp);
-				return "<center>".$out."</center>";
-				$out = "-";
-				return "<center>".$out."</center>";
-				break;
-
-			}
-			break;
-
 		// * Detail of ports history (plugins/tracker/report/plugin_tracker.switch_ports.history.php)
 		case PLUGIN_TRACKER_SNMP_HISTORY :
 			switch ($table.'.'.$field) {
@@ -1194,7 +1119,7 @@ function plugin_tracker_install() {
          }
          if  ($config->getValue('version') == "0") {
             $DB->query("UPDATE `glpi_plugin_tracker_config`
-                        SET `version` = '2.1.3'
+                        SET `version` = '2.2.0'
                         WHERE `ID`='1';");
          }
       }
@@ -2152,18 +2077,6 @@ function plugin_tracker_addOrderBy($type,$ID,$order,$key=0) {
 				case "glpi_plugin_tracker_agents.ID" :
 					return " ORDER BY glpi_plugin_tracker_agents.name $order ";
 					break;
-
-			}
-			break;
-
-		// * Processes agents list (plugins/tracker/front/plugin_tracker.agents.processes.php)
-		case PLUGIN_TRACKER_AGENTS_PROCESSES :
-			switch ($table.".".$field) {
-
-			// ** Agent name and link to form
-			case "glpi_plugin_tracker_agents.ID" :
-				return " ORDER BY glpi_plugin_tracker_agents.name $order ";
-				break;
 
 			}
 			break;

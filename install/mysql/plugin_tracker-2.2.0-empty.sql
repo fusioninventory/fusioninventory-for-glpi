@@ -207,6 +207,20 @@ CREATE TABLE `glpi_plugin_tracker_config_snmp_history` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_tracker_snmp_history_connections`;
+
+CREATE TABLE `glpi_plugin_tracker_snmp_history_connections` (
+   `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `creation` INT( 1 ) NOT NULL DEFAULT '0',
+   `FK_port_source` INT( 11 ) NOT NULL DEFAULT '0',
+   `FK_port_destination` INT( 11 ) NOT NULL DEFAULT '0',
+   `process_number` VARCHAR( 255 ) NULL ,
+   PRIMARY KEY ( `ID` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_tracker_config_snmp_networking`;
 
 CREATE TABLE `glpi_plugin_tracker_config_snmp_networking` (
@@ -566,7 +580,7 @@ CREATE TABLE `glpi_plugin_tracker_snmp_history` (
   `new_value` varchar(255) DEFAULT NULL,
   `new_device_type` int(11) NOT NULL DEFAULT '0',
   `new_device_ID` int(11) NOT NULL DEFAULT '0',
-  `FK_process` int(11) NOT NULL,
+  `FK_process` VARCHAR( 255 ) NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_ports` (`FK_ports`,`date_mod`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -621,29 +635,6 @@ CREATE TABLE `glpi_plugin_tracker_walks` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
-DROP TABLE IF EXISTS `glpi_plugin_tracker_tmp_netports`;
-
-CREATE TABLE `glpi_plugin_tracker_tmp_netports` (
-  `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-  `FK_networking` INT( 11 ) NOT NULL DEFAULT '0',
-  `FK_networking_port` INT( 11 ) NOT NULL DEFAULT '0',
-  `cdp` INT( 1 ) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`),
-  KEY `cdp` (`cdp`),
-  KEY `FK_networking` (`FK_networking`,`FK_networking_port`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `glpi_plugin_tracker_tmp_connections`;
-
-CREATE TABLE `glpi_plugin_tracker_tmp_connections` (
-  `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-  `FK_tmp_netports` INT( 11 ) NOT NULL DEFAULT '0',
-  `macaddress` VARCHAR( 255 ) NULL ,
-  PRIMARY KEY (`ID`),
-  KEY `macaddress` (`macaddress`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 INSERT INTO `glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol` VALUES (1,'MD5','');
