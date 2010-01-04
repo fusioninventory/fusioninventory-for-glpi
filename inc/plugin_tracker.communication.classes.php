@@ -438,9 +438,8 @@ class PluginTrackerCommunication {
     *@return true (import ok) / false (import ko)
     **/
    function import($p_xml, &$p_errors='') {
-
       // TODO : gérer l'encodage, la version
-      // pas gérer le REQUEST (tjs pareil)
+      // Do not manage <REQUEST> element (always the same)
       $this->setXML($p_xml);
       $errors = '';
 
@@ -462,6 +461,11 @@ class PluginTrackerCommunication {
       } else {
          $result=false;
          $p_errors=$errors;
+         if (isset($_SESSION['glpi_plugin_tracker_processnumber'])) {
+            $ptap = new PluginTrackerAgentsProcesses;
+            $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+                                 array('comments' => $errors));
+         }
       }
       return $result;
    }

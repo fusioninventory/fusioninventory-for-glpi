@@ -127,6 +127,7 @@ CREATE TABLE `glpi_plugin_tracker_agents_processes` (
   `query_nb_error` int(11) NOT NULL DEFAULT '0',
   `query_nb_connections_created` int(11) NOT NULL DEFAULT '0',
   `query_nb_connections_deleted` int(11) NOT NULL DEFAULT '0',
+  `comments` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   PRIMARY KEY (`ID`),
   KEY `process_number` (`process_number`,`FK_agent`),
   KEY `process_number_2` (`process_number`,`FK_agent`)
