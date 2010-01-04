@@ -177,7 +177,7 @@ CREATE TABLE `glpi_plugin_tracker_config` (
    `criteria2_name` INT( 1 ) NOT NULL DEFAULT '0',
    `criteria2_serial` INT( 1 ) NOT NULL DEFAULT '0',
    `criteria2_macaddr` INT( 1 ) NOT NULL DEFAULT '0',
-   `delete_agent_process` INT( 11 ) NOT NULL DEFAULT '0',
+   `delete_agent_process` INT( 11 ) NOT NULL DEFAULT '24',
    PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

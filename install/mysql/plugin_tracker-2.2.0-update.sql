@@ -46,7 +46,7 @@ ALTER TABLE `glpi_plugin_tracker_config`
    ADD `criteria2_name` INT( 1 ) NOT NULL DEFAULT '0',
    ADD `criteria2_serial` INT( 1 ) NOT NULL DEFAULT '0',
    ADD `criteria2_macaddr` INT( 1 ) NOT NULL DEFAULT '0',
-   ADD `delete_agent_process` INT( 11 ) NOT NULL DEFAULT '0';
+   ADD `delete_agent_process` INT( 11 ) NOT NULL DEFAULT '24';
 
 DROP TABLE `glpi_plugin_tracker_config_discovery` ;
 
