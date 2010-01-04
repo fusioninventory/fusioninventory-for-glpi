@@ -77,11 +77,15 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
     **/
    function updateDB() {
       if (array_key_exists('model', $this->ptcdUpdates)) {
-         $manufacturer = getDropdownName("glpi_dropdown_manufacturer",$this->getValue('FK_glpi_enterprise'));
-         $this->ptcdUpdates['model'] = externalImportDropdown("glpi_dropdown_model_networking",$this->ptcdUpdates['model'], 0, array('manufacturer'=>$manufacturer));
+         $manufacturer = getDropdownName("glpi_dropdown_manufacturer",
+                                         $this->getValue('FK_glpi_enterprise'));
+         $this->ptcdUpdates['model'] = externalImportDropdown("glpi_dropdown_model_networking",
+                                                   $this->ptcdUpdates['model'], 0,
+                                                   array('manufacturer'=>$manufacturer));
       }
       if (array_key_exists('firmware', $this->ptcdUpdates)) {
-         $this->ptcdUpdates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",$this->ptcdUpdates['firmware']);
+         $this->ptcdUpdates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",
+                                                   $this->ptcdUpdates['firmware']);
       }
       parent::updateDB();
       // update last_tracker_update even if no other update
@@ -100,7 +104,8 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
       $ptp = new PluginTrackerPort();
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
-                WHERE (`on_device` = '".$this->getValue('ID')."' AND `device_type` = '".NETWORKING_TYPE."');";
+                WHERE `on_device` = '".$this->getValue('ID')."'
+                      AND `device_type` = '".NETWORKING_TYPE."';";
       $portsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {

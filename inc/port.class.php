@@ -54,7 +54,8 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 	**/
    function __construct() {
       parent::__construct("glpi_networking_ports");
-      $this->oTracker_networking_ports = new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking_ports");
+      $this->oTracker_networking_ports =
+              new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking_ports");
    }
 
    /**
@@ -186,9 +187,11 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     **/
 	function connect() {
       if (count($this->portsToConnect)+count($this->unknownDevicesToConnect)==0) {
-         // no connections --> don't delete existing connections : the connected device may be powered off
+         // no connections --> don't delete existing connections :
+         // the connected device may be powered off
       } else {
-         if ($this->getCDP() OR count($this->portsToConnect)+count($this->unknownDevicesToConnect)==1){
+         if ($this->getCDP() 
+             OR count($this->portsToConnect)+count($this->unknownDevicesToConnect)==1) {
             // only one connection
             if (count($this->portsToConnect)) { // this connection is not on an unknown device
                $this->connectedPort = $this->portsToConnect[0];
@@ -234,17 +237,21 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
             plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($source_port));
             plugin_tracker_addLogConnection("remove",$source_port);
             if (removeConnector($source_port)) { // remove existing connection to this source port
-               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('query_nb_connections_deleted' => '1'));
+               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+                                    array('query_nb_connections_deleted' => '1'));
             }
 
-            plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($destination_port));
+            plugin_tracker_addLogConnection("remove",
+                                            $netwire->getOppositeContact($destination_port));
             plugin_tracker_addLogConnection("remove",$destination_port);
-            if (removeConnector($destination_port)) { // remove existing connection to this dest port
-               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('query_nb_connections_deleted' => '1'));
+            if (removeConnector($destination_port)) { //remove existing connection to this dest port
+               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+                                    array('query_nb_connections_deleted' => '1'));
             }
 
             if (makeConnector($source_port,$destination_port)) { // connect those 2 ports
-               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('query_nb_connections_created' => '1'));
+               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+                                    array('query_nb_connections_created' => '1'));
             }
             plugin_tracker_addLogConnection("make",$destination_port);
             plugin_tracker_addLogConnection("make",$source_port);
@@ -279,7 +286,8 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
       }
       $FK_vlans = array();
       foreach ($this->portVlans as $vlan) {
-         $FK_vlans[] = externalImportDropdown("glpi_dropdown_vlan",$vlan['number'],0, array(), $vlan['name']);
+         $FK_vlans[] = externalImportDropdown("glpi_dropdown_vlan", $vlan['number'], 0, array(),
+                                              $vlan['name']);
       }
       if (count($FK_vlans)) { // vlans to add/update
          $ports[] = $this->getValue('ID');
@@ -308,7 +316,8 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
                   $vlansToAssign = array();
                   while ($vlanDB=$DB->fetch_assoc($result)) {
                      $vlansDBnumber[] = $vlanDB['name'];
-                     $vlansDB[] = array('number'=>$vlanDB['name'], 'name'=>$vlanDB['comments'], 'ID'=>$vlanDB['ID']);
+                     $vlansDB[] = array('number'=>$vlanDB['name'], 'name'=>$vlanDB['comments'],
+                                        'ID'=>$vlanDB['ID']);
                   }
 
                   foreach ($this->portVlans as $portVlan) {
@@ -330,7 +339,9 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
                      $this->cleanVlan($vlanToUnassign['ID'], $tmp_port);
                   }
                   foreach ($vlansToAssign as $vlanToAssign) {
-                     $FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlanToAssign['number'],0, array(), $vlanToAssign['name']);
+                     $FK_vlan = externalImportDropdown("glpi_dropdown_vlan", 
+                                                       $vlanToAssign['number'], 0, array(),
+                                                       $vlanToAssign['name']);
                      $this->assignVlan($tmp_port, $FK_vlan);
                   }
                }
