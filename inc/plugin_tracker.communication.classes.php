@@ -692,41 +692,51 @@ class PluginTrackerCommunication {
       } else {
          $ptp->load();
       }
-      foreach ($p_port->children() as $name=>$child) {
-         switch ($name) {
-            case 'CONNECTIONS' :
-               $errors.=$this->importConnections($child, $ptp);
-               break;
-            case 'VLANS' :
-               $errors.=$this->importVlans($child, $ptp);
-               break;
-            case 'IFNAME' :
-               $ptp->setValue('name', $child);
-               break;
-            case 'MAC' :
-               $ptp->setValue('ifmac', $child);
-               break;
-            case 'IFNUMBER' :
-               $ptp->setValue('logical_number', $child);
-               break;
+      $ifType = $p_port->IFTYPE;
+      if ( (strstr($ifType, "ethernetCsmacd"))
+            OR ($ifType == "6")
+            OR ($ifType == "ethernet-csmacd(6)")
+            OR (strstr($ifType, "iso88023Csmacd"))
+            OR ($ifType == "7")) { // not virtual port
+         foreach ($p_port->children() as $name=>$child) {
+            switch ($name) {
+               case 'CONNECTIONS' :
+                  $errors.=$this->importConnections($child, $ptp);
+                  break;
+               case 'VLANS' :
+                  $errors.=$this->importVlans($child, $ptp);
+                  break;
+               case 'IFNAME' :
+                  $ptp->setValue('name', $child);
+                  break;
+               case 'MAC' :
+                  $ptp->setValue('ifmac', $child);
+                  break;
+               case 'IFNUMBER' :
+                  $ptp->setValue('logical_number', $child);
+                  break;
+               case 'IFTYPE' : // already managed
+                  break;
 
-            case 'IFDESCR' :
-            case 'IFINERRORS' :
-            case 'IFINOCTETS' :
-            case 'IFINTERNALSTATUS' :
-            case 'IFLASTCHANGE' :
-            case 'IFMTU' :
-            case 'IFOUTERRORS' :
-            case 'IFOUTOCTETS' :
-            case 'IFSPEED' :
-            case 'IFSTATUS' :
-            case 'IFTYPE' :
-            case 'TRUNK' :
-               $ptp->setValue(strtolower($name), $p_port->$name);
-               break;
-            default :
-               $errors.=$LANG['plugin_tracker']["errors"][22].' PORT : '.$name."\n";
+               case 'IFDESCR' :
+               case 'IFINERRORS' :
+               case 'IFINOCTETS' :
+               case 'IFINTERNALSTATUS' :
+               case 'IFLASTCHANGE' :
+               case 'IFMTU' :
+               case 'IFOUTERRORS' :
+               case 'IFOUTOCTETS' :
+               case 'IFSPEED' :
+               case 'IFSTATUS' :
+               case 'TRUNK' :
+                  $ptp->setValue(strtolower($name), $p_port->$name);
+                  break;
+               default :
+                  $errors.=$LANG['plugin_tracker']["errors"][22].' PORT : '.$name."\n";
+            }
          }
+      } else { // virtual port : do not import but delete if exists
+         if ( is_int($ptp->getValue('ID')) ) $ptp->deleteDB();
       }
       $this->ptn->addPort($ptp, $portIndex);
       return $errors;
