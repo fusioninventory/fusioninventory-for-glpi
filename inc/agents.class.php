@@ -201,8 +201,8 @@ class PluginTrackerAgents extends CommonDBTM {
 		$tracker_config->getFromDB(1);
 
 		$this->getFromDB($ID);
-		echo "server=".$tracker_config->fields["URL_agent_conf"]."/plugins/tracker/front/plugin_tracker.agents.diag.php\n";
-		echo "id=".$ID."\n";
+		echo "server=".$tracker_config->fields["URL_agent_conf"]."/plugins/tracker/front/plugin_tracker.communication.php\n";
+//		echo "id=".$ID."\n";
 		echo "key=".$this->fields["key"]."\n";
 	}
 

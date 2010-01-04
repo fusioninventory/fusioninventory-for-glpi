@@ -165,6 +165,7 @@ DROP TABLE IF EXISTS `glpi_plugin_tracker_config`;
 CREATE TABLE `glpi_plugin_tracker_config` (
    `ID` int(1) NOT NULL AUTO_INCREMENT,
    `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+   `URL_agent_conf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `ssl_only` int(1) NOT NULL DEFAULT '1',
    `authsnmp` varchar(255) NOT NULL,
    `inventory_frequence` INT( 11 ) NULL DEFAULT '24',

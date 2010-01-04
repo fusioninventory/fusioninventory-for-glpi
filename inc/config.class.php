@@ -49,11 +49,11 @@ class PluginTrackerConfig extends CommonDBTM {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(
-                              `ID`, `version`, `ssl_only`, `authsnmp`, `inventory_frequence`,
+                              `ID`, `version`, `URL_agent_conf`, `ssl_only`, `authsnmp`, `inventory_frequence`,
                               `criteria1_ip`, `criteria1_name`, `criteria1_serial`,
                               `criteria1_macaddr`, `criteria2_ip`, `criteria2_name`,
                               `criteria2_serial`, `criteria2_macaddr`, `delete_agent_process`)
-                VALUES ('1', '".$version."', '1', 'DB', '24', '0', '0', '0', '0', '0', '0', '0', '0', '24');";
+                VALUES ('1', '".$version."', '".$url."', '1', 'DB', '24', '0', '0', '0', '0', '0', '0', '0', '0', '24');";
 
 		$DB->query($query);
 	}
@@ -136,6 +136,17 @@ class PluginTrackerConfig extends CommonDBTM {
       dropdownInteger("delete_agent_process",$this->getValue('delete_agent_process'),1,240);
       echo " ".$LANG['gmt'][1];
 		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_tracker']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
+      echo "<td>";
+      echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
+      echo "</td>";
+      echo "<td>";
+      echo "</td>";
+      echo "<td>";
+      echo "</td>";
       echo "</tr>";
 
 		echo "<tr>";

@@ -33,8 +33,7 @@ ALTER TABLE `glpi_plugin_tracker_config`
    DROP `activation_snmp_peripheral`,
    DROP `activation_snmp_phone`,
    DROP `activation_snmp_printer`,
-   DROP `authsnmp`,
-   DROP `URL_agent_conf`;
+   DROP `authsnmp;
 
 ALTER TABLE `glpi_plugin_tracker_config` 
    ADD `authsnmp` varchar(255) NOT NULL,

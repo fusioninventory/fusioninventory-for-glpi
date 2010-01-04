@@ -45,7 +45,21 @@ $ptap = new PluginTrackerAgentsProcesses;
 
 $res='';
 $errors='';
-file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+
+// Get conf tu know if SSL is only
+$tracker_config = new PluginTrackerConfig;
+$ssl = $tracker_config->getValue('ssl_only');
+if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
+    OR ($ssl == "0")) {
+	// echo "On continue";
+} else {
+	$out = "No SSL";
+	$gzout = gzencode($out, 9);
+	echo $gzout;
+	exit();
+}
+
+//file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
 $top0 = gettimeofday();
 if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    //if ($ac->connectionOK($errors)) {
