@@ -170,9 +170,9 @@ class PluginTrackerCommunication {
                $ranges = $ptrip->ListRange($agent["ID"], "query");
                foreach ($ranges as $range_id=>$rangeInfos) {
                   $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
-                                    $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
+                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
                   $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
-                                    $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
+                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
                }
 
             $snmpauthlist=$ptsnmpa->find();
@@ -265,21 +265,24 @@ class PluginTrackerCommunication {
       $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
          $sxml_authentication->addAttribute('ID', $p_id);
          $sxml_authentication->addAttribute('COMMUNITY', $ptsnmpa->fields['community']);
-         $sxml_authentication->addAttribute('VERSION', getDropdownName('glpi_dropdown_plugin_tracker_snmp_version',
-                                                                        $ptsnmpa->fields['FK_snmp_version']));
+         $sxml_authentication->addAttribute('VERSION',
+                            getDropdownName('glpi_dropdown_plugin_tracker_snmp_version',
+                                            $ptsnmpa->fields['FK_snmp_version']));
          $sxml_authentication->addAttribute('USERNAME', $ptsnmpa->fields['sec_name']);
          if ($ptsnmpa->fields['auth_protocol'] == '0') {
             $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
          } else {
-            $sxml_authentication->addAttribute('AUTHPROTOCOL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol',
-                                                                           $ptsnmpa->fields['auth_protocol']));
+            $sxml_authentication->addAttribute('AUTHPROTOCOL',
+                            getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol',
+                                            $ptsnmpa->fields['auth_protocol']));
          }
          $sxml_authentication->addAttribute('AUTHPASSPHRASE', $ptsnmpa->fields['auth_passphrase']);
          if ($ptsnmpa->fields['priv_protocol'] == '0') {
             $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
          } else {
-            $sxml_authentication->addAttribute('PRIVPROTOCOL', getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol',
-                                                                           $ptsnmpa->fields['priv_protocol']));
+            $sxml_authentication->addAttribute('PRIVPROTOCOL',
+                    getDropdownName('glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol',
+                                    $ptsnmpa->fields['priv_protocol']));
          }
          $sxml_authentication->addAttribute('PRIVPASSPHRASE', $ptsnmpa->fields['priv_passphrase']);
    }
@@ -376,31 +379,39 @@ class PluginTrackerCommunication {
          
          case "networking":
             $type='NETWORKING';
-            $query = "SELECT glpi_networking.ID AS gID, glpi_networking.ifaddr AS gnifaddr,
-                  FK_snmp_connection, FK_model_infos FROM glpi_networking
-               LEFT JOIN glpi_plugin_tracker_networking on FK_networking=glpi_networking.ID
-               WHERE deleted=0
-                  AND FK_model_infos!=0
-                  AND FK_snmp_connection!=0
-                  AND FK_entities='".$p_entity."'
-                  AND inet_aton(`ifaddr`)
-                     BETWEEN inet_aton('".$p_ipstart."')
-                     AND inet_aton('".$p_ipend."') ";
+            $query = "SELECT `glpi_networking`.`ID` AS `gID`,
+                             `glpi_networking`.`ifaddr` AS `gnifaddr`,
+                             `FK_snmp_connection`, `FK_model_infos`
+                      FROM `glpi_networking`
+                           LEFT JOIN `glpi_plugin_tracker_networking`
+                           ON `FK_networking`=`glpi_networking`.`ID`
+                      WHERE `deleted`='0'
+                           AND `FK_model_infos`!='0'
+                           AND `FK_snmp_connection`!='0'
+                           AND `FK_entities`='".$p_entity."'
+                           AND inet_aton(`ifaddr`)
+                               BETWEEN inet_aton('".$p_ipstart."')
+                               AND inet_aton('".$p_ipend."') ";
             break;
          
          case "printer":
             $type='PRINTER';
-            $query = "SELECT glpi_printers.ID AS gID, glpi_networking_ports.ifaddr AS gnifaddr,
-                  FK_snmp_connection, FK_model_infos FROM glpi_printers
-               LEFT JOIN glpi_plugin_tracker_printers on FK_printers=glpi_printers.ID
-               LEFT JOIN glpi_networking_ports on on_device=glpi_printers.ID AND device_type='".PRINTER_TYPE."'
-               WHERE deleted=0
-                  AND FK_model_infos!=0
-                  AND FK_snmp_connection!=0
-                  AND FK_entities='".$p_entity."'
-                  AND inet_aton(`ifaddr`)
-                     BETWEEN inet_aton('".$p_ipstart."')
-                     AND inet_aton('".$p_ipend."') ";
+            $query = "SELECT `glpi_printers`.`ID` AS `gID`,
+                             `glpi_networking_ports`.`ifaddr` AS `gnifaddr`,
+                             `FK_snmp_connection`, `FK_model_infos`
+                      FROM `glpi_printers`
+                           LEFT JOIN `glpi_plugin_tracker_printers`
+                              ON `FK_printers`=`glpi_printers`.`ID`
+                           LEFT JOIN `glpi_networking_ports`
+                              ON `on_device`=`glpi_printers`.`ID`
+                                 AND `device_type`='".PRINTER_TYPE."'
+                      WHERE `deleted`=0
+                            AND `FK_model_infos`!='0'
+                            AND `FK_snmp_connection`!='0'
+                            AND `FK_entities`='".$p_entity."'
+                            AND inet_aton(`ifaddr`)
+                                BETWEEN inet_aton('".$p_ipstart."')
+                                AND inet_aton('".$p_ipend."') ";
             break;
          
          default: // type non géré
@@ -444,7 +455,7 @@ class PluginTrackerCommunication {
             break;
 
          default :
-            $errors.='QUERY invalide : *'.$this->sxml->QUERY.'*\n';
+            $errors.=$LANG['plugin_tracker']["errors"][22].' QUERY : *'.$this->sxml->QUERY."*\n";
       }
       if ($errors=='') {
          $result=true;
@@ -477,9 +488,11 @@ class PluginTrackerCommunication {
 
             case 'AGENT' :
                if (isset($this->sxml->CONTENT->AGENT->START)) {
-                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('start_time_query' => date("Y-m-d H:i:s")));
+                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER,
+                                       array('start_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->END)) {
-                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('end_time_query' => date("Y-m-d H:i:s")));
+                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER,
+                                       array('end_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->EXIT)) {
                   $ptap->endProcess($this->sxml->CONTENT->PROCESSNUMBER, date("Y-m-d H:i:s"));
                }
@@ -509,7 +522,8 @@ class PluginTrackerCommunication {
 
       $errors=''; $this->deviceId='';
       if (isset($p_device->ERROR)) {
-         $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('query_nb_error' => '1'));
+         $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+                              array('query_nb_error' => '1'));
          $a_input['ID'] = $p_device->ERROR->ID;
          if ($p_device->ERROR->TYPE=='NETWORKING') {
             $a_input['TYPE'] = NETWORKING_TYPE;
@@ -531,7 +545,8 @@ class PluginTrackerCommunication {
                      $errors.=$this->importPort($child);
                      break;
                   default :
-                     $errors.=$LANG['plugin_tracker']["errors"][22].' DEVICE : '.$child->getName()."\n";
+                     $errors.=$LANG['plugin_tracker']["errors"][22].' DEVICE : '
+                              .$child->getName()."\n";
                }
             }
             if (is_object($this->ptn)) {
@@ -638,8 +653,7 @@ class PluginTrackerCommunication {
 
       $errors='';
       $pti = new PluginTrackerIfaddr;
-      foreach ($p_ips->children() as $name=>$child)
-      {
+      foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
                $ifaddrIndex = $this->ptn->getIfaddrIndex($child);
@@ -678,8 +692,7 @@ class PluginTrackerCommunication {
       } else {
          $ptp->load();
       }
-      foreach ($p_port->children() as $name=>$child)
-      {
+      foreach ($p_port->children() as $name=>$child) {
          switch ($name) {
             case 'CONNECTIONS' :
                $errors.=$this->importConnections($child, $ptp);
@@ -709,7 +722,7 @@ class PluginTrackerCommunication {
             case 'IFSTATUS' :
             case 'IFTYPE' :
             case 'TRUNK' :
-               $ptp->setValue(strtolower($name), eval("return \$p_port->$name;")); //todo supprimer le eval ?
+               $ptp->setValue(strtolower($name), $p_port->$name);
                break;
             default :
                $errors.=$LANG['plugin_tracker']["errors"][22].' PORT : '.$name."\n";
@@ -740,8 +753,7 @@ class PluginTrackerCommunication {
       } else {
          $cdp=0;
       }
-      foreach ($p_connections->children() as $name=>$child)
-      {
+      foreach ($p_connections->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'CDP' : // already managed
                break;
@@ -749,7 +761,8 @@ class PluginTrackerCommunication {
                $errors.=$this->importConnection($child, $p_oPort, $cdp);
                break;
             default :
-               $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTIONS : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTIONS : '
+                        .$child->getName()."\n";
          }
       }
       return $errors;
@@ -779,7 +792,8 @@ class PluginTrackerCommunication {
                   $ifdescr=$child;
                   break;
                default :
-                  $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
+                  $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '
+                           .$child->getName()."\n";
             }
          }
          $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
@@ -794,7 +808,8 @@ class PluginTrackerCommunication {
                   $ip=$child;
                   break;
                default :
-                  $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
+                  $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '
+                           .$child->getName()."\n";
             }            
          }
       }
