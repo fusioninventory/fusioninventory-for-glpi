@@ -462,6 +462,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importContent($p_content) {
+      global $LANG;
+
       $ptap = new PluginTrackerAgentsProcesses;
       $errors='';
       $nbDevices = 0;
@@ -487,7 +489,7 @@ class PluginTrackerCommunication {
                break;
             
             default :
-               $errors.='Elément invalide dans CONTENT : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' CONTENT : '.$child->getName()."\n";
          }
       }
       return $errors;
@@ -500,6 +502,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importDevice($p_device) {
+      global $LANG;
+
       $ptap = new PluginTrackerAgentsProcesses;
       $ptae = new PluginTrackerAgentsErrors;
 
@@ -527,7 +531,7 @@ class PluginTrackerCommunication {
                      $errors.=$this->importPort($child);
                      break;
                   default :
-                     $errors.='Elément invalide dans DEVICE : '.$child->getName()."\n";
+                     $errors.=$LANG['plugin_tracker']["errors"][22].' DEVICE : '.$child->getName()."\n";
                }
             }
             if (is_object($this->ptn)) {
@@ -566,6 +570,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importNetworking($p_info) {
+      global $LANG;
+
       $errors='';
       $this->ptn = new PluginTrackerNetworking2;
       $this->ptn->load($p_info->ID);
@@ -611,7 +617,7 @@ class PluginTrackerCommunication {
                $errors.=$this->importIps($child);
                break;
             default :
-               $errors.='Elément invalide dans INFO : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' INFO : '.$child->getName()."\n";
          }
       }
       if ($errors=='') {
@@ -628,6 +634,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importIps($p_ips) {
+      global $LANG;
+
       $errors='';
       $pti = new PluginTrackerIfaddr;
       foreach ($p_ips->children() as $name=>$child)
@@ -645,7 +653,7 @@ class PluginTrackerCommunication {
                $this->ptn->addIfaddr(clone $pti, $ifaddrIndex);
                break;
             default :
-               $errors.='Elément invalide dans IPS : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' IPS : '.$child->getName()."\n";
          }
       }
       $this->ptn->saveIfaddrs();
@@ -659,6 +667,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importPort($p_port) {
+      global $LANG;
+
       $errors='';
       $ptp = new PluginTrackerPort;
       $portIndex = $this->ptn->getPortIndex($p_port->MAC); //TODO ajouter le 2e param (ip) a partir de connections
@@ -702,7 +712,7 @@ class PluginTrackerCommunication {
                $ptp->setValue(strtolower($name), eval("return \$p_port->$name;")); //todo supprimer le eval ?
                break;
             default :
-               $errors.='Elément invalide dans PORT : '.$name."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' PORT : '.$name."\n";
          }
       }
       $this->ptn->addPort($ptp, $portIndex);
@@ -717,13 +727,15 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importConnections($p_connections, $p_oPort) {
+      global $LANG;
+
       $errors='';
       if (isset($p_connections->CDP)) {
          $cdp = $p_connections->CDP;
          if ($cdp==1) {
             $p_oPort->setCDP();
          } else {
-            $errors.='Elément invalide dans CONNECTIONS : CDP='.$cdp."\n";
+            $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTIONS : CDP='.$cdp."\n";
          }
       } else {
          $cdp=0;
@@ -737,7 +749,7 @@ class PluginTrackerCommunication {
                $errors.=$this->importConnection($child, $p_oPort, $cdp);
                break;
             default :
-               $errors.='Elément invalide dans CONNECTIONS : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTIONS : '.$child->getName()."\n";
          }
       }
       return $errors;
@@ -751,6 +763,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importConnection($p_connection, $p_oPort, $p_cdp) {
+      global $LANG;
+
       $errors='';
       $portID=''; $mac=''; $ip='';
       $ptsnmp= new PluginTrackerSNMP;
@@ -765,7 +779,7 @@ class PluginTrackerCommunication {
                   $ifdescr=$child;
                   break;
                default :
-                  $errors.='Elément invalide dans CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
+                  $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
             }
          }
          $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
@@ -780,7 +794,7 @@ class PluginTrackerCommunication {
                   $ip=$child;
                   break;
                default :
-                  $errors.='Elément invalide dans CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
+                  $errors.=$LANG['plugin_tracker']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '.$child->getName()."\n";
             }            
          }
       }
@@ -801,6 +815,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importVlans($p_vlans, $p_oPort) {
+      global $LANG;
+
       $errors='';
       foreach ($p_vlans->children() as $name=>$child)
       {
@@ -809,7 +825,7 @@ class PluginTrackerCommunication {
                $errors.=$this->importVlan($child, $p_oPort);
                break;
             default :
-               $errors.='Elément invalide dans VLANS : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' VLANS : '.$child->getName()."\n";
          }
       }
       return $errors;
@@ -822,6 +838,8 @@ class PluginTrackerCommunication {
     *@return errors string to be alimented if import ko / '' if ok
     **/
    function importVlan($p_vlan, $p_oPort) {
+      global $LANG;
+
       $errors='';
       $number=''; $name='';
       foreach ($p_vlan->children() as $child) {
@@ -833,7 +851,7 @@ class PluginTrackerCommunication {
                $name=$child;
                break;
             default :
-               $errors.='Elément invalide dans VLAN : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' VLAN : '.$child->getName()."\n";
          }
       }
       $p_oPort->addVlan($number, $name);

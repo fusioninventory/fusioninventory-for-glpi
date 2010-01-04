@@ -189,6 +189,7 @@ $LANG['plugin_tracker']["errors"][12]="Unknown IP";
 
 $LANG['plugin_tracker']["errors"][20]="SNMP errors";
 $LANG['plugin_tracker']["errors"][21]="Unable to retrieve information";
+$LANG['plugin_tracker']["errors"][22]="Unattended element in";
 
 $LANG['plugin_tracker']["errors"][30]="Wiring error";
 $LANG['plugin_tracker']["errors"][31]="Wiring problem";
