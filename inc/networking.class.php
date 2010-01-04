@@ -84,6 +84,8 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
          $this->ptcdUpdates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",$this->ptcdUpdates['firmware']);
       }
       parent::updateDB();
+      // update last_tracker_update even if no other update
+      $this->setValue('last_tracker_update', date("Y-m-d H:i:s"));
       $this->oTracker_networking->updateDB();
    }
 
