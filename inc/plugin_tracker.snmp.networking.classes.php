@@ -418,6 +418,8 @@ function appear_array(id){
 		$result_array=$DB->query($query_array);
 		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
 		echo $LANG['plugin_tracker']["snmp"][40];
+      $result=$DB->query($query);
+      echo ' ('.$DB->numrows($result).')';
       if ($_SESSION["glpilanguage"] == "fr_FR") {
          $url_legend = "https://forge.indepnet.net/wiki/tracker/Fr_VI_visualisationsdonnees_2_reseau";
       } else {
@@ -508,8 +510,7 @@ function appear_array(id){
 		echo "</tr>";
 		// Fin de l'entête du tableau
 		
-		
-		if ($result=$DB->query($query)) {
+		if ($result) {
 			while ($data=$DB->fetch_array($result)) {
 				$background_img = "";
 				if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
