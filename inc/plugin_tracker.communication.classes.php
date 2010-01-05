@@ -711,12 +711,33 @@ class PluginTrackerCommunication {
                   $errors.=$this->importVlans($child, $ptp);
                   break;
                case 'IFNAME' :
+                  plugin_tracker_snmp_addLog(
+                     $ptp->getValue('ID'),
+                     strtolower($name),
+                     '',
+                     $p_port->$name,
+                     "2-".strtolower($name),
+                     $_SESSION['glpi_plugin_tracker_processnumber']);
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
+                  plugin_tracker_snmp_addLog(
+                     $ptp->getValue('ID'),
+                     strtolower($name),
+                     '',
+                     $p_port->$name,
+                     "2-".strtolower($name),
+                     $_SESSION['glpi_plugin_tracker_processnumber']);
                   $ptp->setValue('ifmac', $child);
                   break;
                case 'IFNUMBER' :
+                  plugin_tracker_snmp_addLog(
+                     $ptp->getValue('ID'),
+                     strtolower($name),
+                     'toto',
+                     $p_port->$name,
+                     "2-".strtolower($name),
+                     $_SESSION['glpi_plugin_tracker_processnumber']);
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
@@ -733,6 +754,13 @@ class PluginTrackerCommunication {
                case 'IFSPEED' :
                case 'IFSTATUS' :
                case 'TRUNK' :
+                  plugin_tracker_snmp_addLog(
+                     $ptp->getValue('ID'),
+                     strtolower($name),
+                     '',
+                     $p_port->$name,
+                     "2-".strtolower($name),
+                     $_SESSION['glpi_plugin_tracker_processnumber']);
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :

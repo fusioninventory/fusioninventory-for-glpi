@@ -51,7 +51,6 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
 
       $sql_connection = "SELECT * FROM `glpi_plugin_tracker_snmp_history`
                         WHERE `Field`='0'
-                           AND ((`new_device_type`='2') OR (`old_device_type`='2'))
                         ORDER BY `FK_process` DESC, `date_mod` DESC;";
       $result_connection = $DB->query($sql_connection);
       while ($thread_connection = $DB->fetch_array($result_connection)) {

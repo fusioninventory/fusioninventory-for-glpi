@@ -399,19 +399,19 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['name'] = $LANG['plugin_tracker']["agents"][12];
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['datatype']='itemlink';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
-  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['forcegroupby']='1';
+   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][5]['forcegroupby']='1';
   
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['table'] = 'glpi_plugin_tracker_rangeip';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['field'] = 'discover';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['linkfield'] = 'discover';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['name'] = $LANG['plugin_tracker']["discovery"][3];
-  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['datatype']='bool';
+   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][6]['datatype']='bool';
   
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['table'] = 'glpi_plugin_tracker_rangeip';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['field'] = 'query';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['linkfield'] = 'query';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['name'] = $LANG['plugin_tracker']["rangeip"][3];
-  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['datatype']='bool';
+   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][7]['datatype']='bool';
   
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][8]['field'] = 'name';
@@ -420,11 +420,11 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['linkfield'] = '';
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['linkfield'] = '';//FK_tracker_agents_query
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['name'] = $LANG['plugin_tracker']["agents"][13];
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['datatype']='itemlink';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
-   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['forcegroupby']='1';
+//   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['forcegroupby']='1';
 
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY]['common'] = $LANG['plugin_tracker']["title"][2];
 
@@ -883,6 +883,34 @@ function plugin_tracker_giveItem($type,$ID,$data,$num) {
                return "<center>".$out."</center>";
                break;
 
+            case "glpi_plugin_tracker_unknown_device.type" :
+					$out = '<center> ';
+					switch ($data["ITEM_$num"]) {
+						case COMPUTER_TYPE:
+							$out .= $LANG["Menu"][0];
+							break;
+
+						case NETWORKING_TYPE:
+							$out .= $LANG["Menu"][1];
+							break;
+
+						case PRINTER_TYPE:
+							$out .= $LANG["Menu"][2];
+							break;
+
+						case PERIPHERAL_TYPE:
+							$out .= $LANG["Menu"][16];
+							break;
+
+						case PHONE_TYPE:
+							$out .= $LANG["Menu"][34];
+							break;
+					}
+					$out .= '</center>';
+					return $out;
+					break;
+
+
 			}
 			break;
 
@@ -1238,7 +1266,7 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
 			// Non template case
          } else {
 				return array(
-					1 => $LANG['plugin_tracker']["title"][1],
+					1 => $LANG['plugin_tracker']["title"][0],
 					);
          }
 			break;

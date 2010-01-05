@@ -156,8 +156,8 @@ class PluginTrackerProfile extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][21].":</td><td>";
-		dropdownNoneReadWrite("snmp_scripts_infos",$this->fields["snmp_scripts_infos"],1,1,1);
+		echo "<td>".$LANG['plugin_tracker']["task"][0].":</td><td>";
+		dropdownNoneReadWrite("tracker_task",$this->fields["tracker_task"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 

@@ -42,7 +42,6 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,
 	global $DB,$CFG_GLPI;
 
 	$history = new PluginTrackerSNMPHistory;
-
    $doHistory = 1;
    if ($mapping != "") {
       $query = "SELECT *
@@ -55,6 +54,7 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,
    }
 
    if ($doHistory == "1") {
+
       $array["FK_ports"] = $port;
       $array["field"] = $field;
       $array["old_value"] = $old_value;
@@ -182,12 +182,122 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
 	$CommonItem = new CommonItem;
+   $np = new Netport;
 
+   $query = "
+      SELECT * FROM(
+         SELECT * FROM (
+            SELECT date as date, process_number as process_number,
+            FK_port_source, FK_port_destination, creation,
+            'Field', 'old_value', 'new_value'
+
+            FROM glpi_plugin_tracker_snmp_history_connections
+            WHERE `FK_port_source`='".$ID_port."'
+               OR `FK_port_destination`='".$ID_port."'
+            ORDER BY date DESC
+            LIMIT 0,30
+            )
+         AS DerivedTable1
+         UNION ALL
+         SELECT * FROM (
+            SELECT date_mod as date, FK_process as process_number,
+            FK_ports AS FK_port_source, 'FK_port_destination', 'creation',
+            Field, old_value, new_value
+
+            FROM glpi_plugin_tracker_snmp_history
+            WHERE `FK_ports`='".$ID_port."'
+            ORDER BY date DESC
+            LIMIT 0,30
+            )
+         AS DerivedTable2)
+      AS MainTable
+      ORDER BY date DESC
+      LIMIT 0,30";
+//echo $query."<br/>";
+	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
+
+	$text .= "<tr class='tab_bg_1'>";
+	$text .= "<th colspan='8'>";
+	$text .= "Historique";
+	$text .= "</th>";
+	$text .= "</tr>";
+
+	$text .= "<tr class='tab_bg_1'>";
+	$text .= "<th>".$LANG['plugin_tracker']["snmp"][50]."</th>";
+	$text .= "<th>".$LANG["common"][1]."</th>";
+	$text .= "<th>".$LANG["networking"][15]."</th>";
+	$text .= "<th>".$LANG["event"][18]."</th>";
+	$text .= "<th></th>";
+	$text .= "<th></th>";
+	$text .= "<th></th>";
+	$text .= "<th>".$LANG["common"][27]."</th>";
+	$text .= "</tr>";
+
+   if ($result=$DB->query($query)) {
+		while ($data=$DB->fetch_array($result)) {
+			$text .= "<tr class='tab_bg_1'>";
+			if (($data["FK_port_destination"] != "0") AND ($data["FK_port_destination"] != 'FK_port_destination')) {
+				// Connections and disconnections
+            if ($data['creation'] == '1') {
+               $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/tracker/pics/connection_ok.png'/></td>";
+            } else {
+               $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/tracker/pics/connection_notok.png'/></td>";
+            }
+				if ($ID_port == $data["FK_port_source"]) {
+               $np->getFromDB($data["FK_port_destination"]);
+               $CommonItem->getFromDB($np->fields["device_type"],
+                                      $np->fields["on_device"]);
+               $link1 = $CommonItem->getLink(1);
+               $link = str_replace($CommonItem->getName(0), $np->fields["name"],
+                                   $CommonItem->getLink());
+					$text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
+
+				} else if ($ID_port == $data["FK_port_destination"]) {
+               $np->getFromDB($data["FK_port_source"]);
+               $CommonItem->getFromDB($np->fields["device_type"],
+                                      $np->fields["on_device"]);
+               $link1 = $CommonItem->getLink(1);
+               $link = str_replace($CommonItem->getName(0), $np->fields["name"],
+                                   $CommonItem->getLink());
+					$text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
+				}
+				$text .= "<td align='center' colspan='5'></td>";
+				$text .= "<td align='center'>".convDateTime($data["date"])."</td>";
+
+			} else {
+				// Changes values
+				$text .= "<td align='center' colspan='3'></td>";
+				$text .= "<td align='center'>".$data["Field"]."</td>";
+				$text .= "<td align='center'>".$data["old_value"]."</td>";
+				$text .= "<td align='center'>-></td>";
+				$text .= "<td align='center'>".$data["new_value"]."</td>";
+				$text .= "<td align='center'>".convDateTime($data["date"])."</td>";
+			}
+			$text .= "</tr>";
+		}
+
+	}
+
+
+
+
+
+
+
+
+/*
+   $pthc = new PluginTrackerHistoryConnections;
+
+   $data_connections = $pthc->find('`FK_port_source`="'.$ID_port.'"
+                                       OR `FK_port_destination `="'.$ID_port.'"',
+                                    '`date` DESC',
+                                    '0,30');
 	$query = "SELECT *
              FROM `glpi_plugin_tracker_snmp_history`
              WHERE `FK_ports`='".$ID_port."'
              ORDER BY `date_mod` DESC
              LIMIT 0,30;";
+
 
 	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 
@@ -255,6 +365,8 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 			$text .= "</tr>";
 		}
 	}
+
+ */
 	$text .= "<tr class='tab_bg_1'>";
 	$text .= "<th colspan='8'>";
 	$text .= "<a href='".GLPI_ROOT."/plugins/tracker/report/plugin_tracker.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";

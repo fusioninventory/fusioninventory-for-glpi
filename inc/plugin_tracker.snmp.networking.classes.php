@@ -394,12 +394,12 @@ class PluginTrackerNetworking extends CommonDBTM {
 
 		echo "<script  type='text/javascript'>
 function close_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\'
-      onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/collapse.gif\''+
+      'onClick=\'Effect.Fade(\"viewfollowup'+id+'\");appear_array('+id+');\' />';
 } 
 function appear_array(id){
-	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\'
-      onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
+	document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".GLPI_ROOT."/pics/expand.gif\''+
+      'onClick=\'Effect.Appear(\"viewfollowup'+id+'\");close_array('+id+');\' />';
 }		
 		
 		</script>";
