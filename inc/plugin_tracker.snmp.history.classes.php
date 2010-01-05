@@ -68,7 +68,7 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
          $pthc->add($input);
 		} else if ($status == "make") {
 			$input['creation'] = '1';
-         $toto = $pthc->add($input);
+         $pthc->add($input);
 		} else if ($status == "field") {
 			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
                                `FK_ports`,`field`,`old_value`,`new_value`,`date_mod`,`FK_process`)
