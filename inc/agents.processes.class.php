@@ -402,7 +402,8 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
                     || $field == 'query_nb_query'
                     || $field == 'query_nb_error'
                     || $field == 'query_nb_connections_created'
-                    || $field == 'query_nb_connections_deleted') {
+                    || $field == 'query_nb_connections_deleted'
+                    || $field == 'discovery_nb_ip') {
 
                 $input[$field] = $data[$process_id][$field] + $value;
              } else {
