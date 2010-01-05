@@ -100,7 +100,7 @@ function plugin_tracker_update($version) {
 		$importexport = new PluginTrackerImportExport;
 		foreach (glob(GLPI_ROOT.'/plugins/tracker/models/*.xml') as $file) $importexport->import($file,0);
 		// Clean DB (ports in glpi_plugin_tracker_networking_ports..... )
-		plugin_tracker_clean_db();
+		
 	}
 	if ($version == "2.0.2") {
 		// Migrate unknown mac address in unknown device (MySQL table)
@@ -132,14 +132,18 @@ function plugin_tracker_update($version) {
                   SET `version` = '2.1.3'
                   WHERE `ID`=1
                   LIMIT 1 ;");
+      plugin_tracker_clean_db();
    }
    if ($version == "2.1.3") {
       $DB->query("UPDATE `glpi_plugin_tracker_config`
                   SET `version` = '2.2.0'
                   WHERE `ID`=1
                   LIMIT 1 ;");
+      ini_set("memory_limit","-1");
+      ini_set("max_execution_time", "0");
       $pthc = new PluginTrackerHistoryConnections;
       $pthc->migration();
+      plugin_tracker_clean_db();
    }
 	plugin_tracker_initSession();
 }

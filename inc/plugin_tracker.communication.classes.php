@@ -714,7 +714,7 @@ class PluginTrackerCommunication {
                   plugin_tracker_snmp_addLog(
                      $ptp->getValue('ID'),
                      strtolower($name),
-                     '',
+                     $ptp->getValue(strtolower($name)),
                      $p_port->$name,
                      "2-".strtolower($name),
                      $_SESSION['glpi_plugin_tracker_processnumber']);
@@ -724,7 +724,7 @@ class PluginTrackerCommunication {
                   plugin_tracker_snmp_addLog(
                      $ptp->getValue('ID'),
                      strtolower($name),
-                     '',
+                     $ptp->getValue(strtolower($name)),
                      $p_port->$name,
                      "2-".strtolower($name),
                      $_SESSION['glpi_plugin_tracker_processnumber']);
@@ -734,7 +734,7 @@ class PluginTrackerCommunication {
                   plugin_tracker_snmp_addLog(
                      $ptp->getValue('ID'),
                      strtolower($name),
-                     'toto',
+                     $ptp->getValue(strtolower($name)),
                      $p_port->$name,
                      "2-".strtolower($name),
                      $_SESSION['glpi_plugin_tracker_processnumber']);
@@ -757,7 +757,7 @@ class PluginTrackerCommunication {
                   plugin_tracker_snmp_addLog(
                      $ptp->getValue('ID'),
                      strtolower($name),
-                     '',
+                     $ptp->getValue(strtolower($name)),
                      $p_port->$name,
                      "2-".strtolower($name),
                      $_SESSION['glpi_plugin_tracker_processnumber']);
