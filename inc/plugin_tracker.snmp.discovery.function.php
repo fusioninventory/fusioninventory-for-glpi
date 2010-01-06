@@ -279,6 +279,11 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                      + $ptc->getValue('criteria2_serial')
                      + $ptc->getValue('criteria2_macaddr');
 
+   foreach ($arrayc as $criteria) {
+      if (!isset($p_criteria[$criteria])) {
+         $p_criteria[$criteria] = '';
+      }
+   }
 
    switch ($CountCriteria1) {
       case 0:
@@ -288,15 +293,16 @@ function plugin_tracker_discovery_criteria($p_criteria) {
       case 1:
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria1_'.$criteria) == "1"){
-               if (!isset($p_criteria->$criteria) OR $p_criteria->$criteria == '') {
+               if (empty($p_criteria[$criteria])) {
                   // Go to criteria2
                } else {
                   unset($a_criteria);
-                  $a_criteria[$criteria] = $p_criteria->$criteria;
+                  $a_criteria[$criteria] = $p_criteria[$criteria];
                   if (plugin_tracker_find_device($a_criteria)) {
                      return true;
+                  } else {
+                     return false;
                   }
-                  // Else Go to criteria2
                }               
             }
          }
@@ -307,8 +313,8 @@ function plugin_tracker_discovery_criteria($p_criteria) {
          unset($a_criteria);
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria1_'.$criteria) == "1"){
-               $a_criteria[$criteria] = $p_criteria->$criteria;
-               if (isset($p_criteria->$criteria) AND $p_criteria->$criteria != '') {
+               $a_criteria[$criteria] = $p_criteria[$criteria];
+               if (!empty($p_criteria[$criteria])) {
                   $i++;
                }
             }
@@ -322,8 +328,8 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                unset($a_criteria);
                foreach ($arrayc as $criteria) {
                   if ($ptc->getValue('criteria1_'.$criteria) == "1"){
-                     if (isset($p_criteria->$criteria) AND $p_criteria->$criteria != '') {
-                        $a_criteria[$criteria] = $p_criteria->$criteria;
+                     if (!empty($p_criteria[$criteria])) {
+                        $a_criteria[$criteria] = $p_criteria[$criteria];
                      }
                   }
                }
@@ -343,11 +349,11 @@ function plugin_tracker_discovery_criteria($p_criteria) {
       case 1:
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria2_'.$criteria) == "1"){
-               if (!isset($p_criteria->$criteria) OR $p_criteria->$criteria == '') {
+               if (empty($p_criteria[$criteria])) {
                   return false;
                } else {
                   unset($a_criteria);
-                  $a_criteria[$criteria] = $p_criteria->$criteria;
+                  $a_criteria[$criteria] = $p_criteria[$criteria];
                   if (plugin_tracker_find_device($a_criteria)) {
                      return true;
                   } else {
@@ -363,8 +369,8 @@ function plugin_tracker_discovery_criteria($p_criteria) {
          unset($a_criteria);
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria2_'.$criteria) == "1"){
-               $a_criteria[$criteria] = $p_criteria->$criteria;
-               if (isset($p_criteria->$criteria) AND $p_criteria->$criteria != '') {
+               $a_criteria[$criteria] = $p_criteria[$criteria];
+               if (!empty($p_criteria[$criteria])) {
                   $i++;
                }
             }
@@ -372,14 +378,14 @@ function plugin_tracker_discovery_criteria($p_criteria) {
          if ($i == 0) {
             return false;
          } else {
-            if (plugin_tracker_find_device($a_criteria)) {               
+            if (plugin_tracker_find_device($a_criteria)) {
                return true;
             } else {
                unset($a_criteria);
                foreach ($arrayc as $criteria) {
                   if ($ptc->getValue('criteria2_'.$criteria) == "1"){
-                     if (isset($p_criteria->$criteria) AND $p_criteria->$criteria != '') {
-                        $a_criteria[$criteria] = $p_criteria->$criteria;
+                     if (!empty($p_criteria[$criteria])) {
+                        $a_criteria[$criteria] = $p_criteria[$criteria];
                      }
                   }
                }

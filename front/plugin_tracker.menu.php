@@ -35,7 +35,10 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("tracker");
+//$NEEDED_ITEMS=array("tracker");
+$NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
+	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
+
 include (GLPI_ROOT."/inc/includes.php");
 
 if (plugin_tracker_HaveRight("snmp_models","r")

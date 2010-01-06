@@ -292,14 +292,14 @@ class PluginTrackerImportExport extends CommonDBTM {
          }
 
          unset($p_criteria);
-         $p_criteria->ip = $discovery->IP;
+         $p_criteria['ip'] = $discovery->IP;
          if (!empty($discovery->NETBIOSNAME)) {
-            $p_criteria->name = $discovery->NETBIOSNAME;
+            $p_criteria['name'] = $discovery->NETBIOSNAME;
          } else if (!empty($discovery->SNMPHOSTNAME)) {
-            $p_criteria->name = $discovery->SNMPHOSTNAME;
+            $p_criteria['name'] = $discovery->SNMPHOSTNAME;
          }
-         $p_criteria->serial = $discovery->SERIAL;
-         $p_criteria->macaddr = $discovery->MAC;
+         $p_criteria['serial'] = $discovery->SERIAL;
+         $p_criteria['macaddr'] = $discovery->MAC;
 
          if (!plugin_tracker_discovery_criteria($p_criteria)) {
             $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('discovery_nb_import' => '1'));
