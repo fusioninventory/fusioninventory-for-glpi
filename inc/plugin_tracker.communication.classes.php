@@ -450,7 +450,7 @@ class PluginTrackerCommunication {
          
          case 'NETDISCOVERY' :
             $pti = new PluginTrackerImportExport;
-            $errors.=$pti->import_netdiscovery($this->sxml->CONTENT);
+            $errors.=$pti->import_netdiscovery($this->sxml->CONTENT, $this->sxml->DEVICEID);
             break;
 
          default :
@@ -480,9 +480,12 @@ class PluginTrackerCommunication {
       global $LANG;
 
       $ptap = new PluginTrackerAgentsProcesses;
+      $pta  = new PluginTrackerAgents;
+      
       $errors='';
       $nbDevices = 0;
       $_SESSION['glpi_plugin_tracker_processnumber'] = $this->sxml->CONTENT->PROCESSNUMBER;
+
       foreach ($p_content->children() as $child) {
          switch ($child->getName()) {
             case 'DEVICE' :
@@ -499,6 +502,13 @@ class PluginTrackerCommunication {
                                        array('end_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->EXIT)) {
                   $ptap->endProcess($this->sxml->CONTENT->PROCESSNUMBER, date("Y-m-d H:i:s"));
+               }
+               if (isset($this->sxml->CONTENT->AGENT->AGENTVERSION)) {
+                  $agent = $pta->InfosByKey($this->sxml->DEVICEID);
+                  $agent['tracker_agent_version'] = $this->sxml->CONTENT->AGENT->AGENTVERSION;
+                  $agent['last_agent_update'] = date("Y-m-d H:i:s");
+                  $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+                  $pta->update($agent);
                }
                break;
             

@@ -212,13 +212,14 @@ class PluginTrackerImportExport extends CommonDBTM {
 
 
 
-	function import_netdiscovery($p_xml) {
+	function import_netdiscovery($p_xml, $agentKey) {
 		global $DB,$LANG;
       $test = '';
       $p_criteria = array();
 
 		$walks = new PluginTrackerWalk;
       $ptap = new PluginTrackerAgentsProcesses;
+      $pta = new PluginTrackerAgents;
 
 		$config_discovery = new PluginTrackerConfig;
       $np=new Netport;
@@ -235,7 +236,12 @@ class PluginTrackerImportExport extends CommonDBTM {
       } else if (isset($p_xml->AGENT->NBIP)) {
          $ptap->updateProcess($p_xml->PROCESSNUMBER, array('discovery_nb_ip' => $p_xml->AGENT->NBIP));
       }
-
+      if (isset($p_xml->AGENT->AGENTVERSION)) {
+         $agent = $pta->InfosByKey($agentKey);
+         $agent['tracker_agent_version'] = $p_xml->AGENT->AGENTVERSION;
+         $agent['last_agent_update'] = date("Y-m-d H:i:s");
+         $pta->update($agent);
+      }
 
 		$walkdata = '';
 		$count_discovery_devices = 0;
