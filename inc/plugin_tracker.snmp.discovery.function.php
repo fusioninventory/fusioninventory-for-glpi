@@ -293,7 +293,7 @@ function plugin_tracker_discovery_criteria($p_criteria) {
       case 1:
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria1_'.$criteria) == "1"){
-               if (empty($p_criteria[$criteria])) {
+               if ($p_criteria[$criteria] == "") {
                   // Go to criteria2
                } else {
                   unset($a_criteria);
@@ -314,7 +314,7 @@ function plugin_tracker_discovery_criteria($p_criteria) {
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria1_'.$criteria) == "1"){
                $a_criteria[$criteria] = $p_criteria[$criteria];
-               if (!empty($p_criteria[$criteria])) {
+               if ($p_criteria[$criteria] != "") {
                   $i++;
                }
             }
@@ -328,7 +328,7 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                unset($a_criteria);
                foreach ($arrayc as $criteria) {
                   if ($ptc->getValue('criteria1_'.$criteria) == "1"){
-                     if (!empty($p_criteria[$criteria])) {
+                     if ($p_criteria[$criteria] != "") {
                         $a_criteria[$criteria] = $p_criteria[$criteria];
                      }
                   }
@@ -349,7 +349,7 @@ function plugin_tracker_discovery_criteria($p_criteria) {
       case 1:
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria2_'.$criteria) == "1"){
-               if (empty($p_criteria[$criteria])) {
+               if ($p_criteria[$criteria] == "") {
                   return false;
                } else {
                   unset($a_criteria);
@@ -370,7 +370,7 @@ function plugin_tracker_discovery_criteria($p_criteria) {
          foreach ($arrayc as $criteria) {
             if ($ptc->getValue('criteria2_'.$criteria) == "1"){
                $a_criteria[$criteria] = $p_criteria[$criteria];
-               if (!empty($p_criteria[$criteria])) {
+               if ($p_criteria[$criteria] != "") {
                   $i++;
                }
             }
@@ -384,7 +384,7 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                unset($a_criteria);
                foreach ($arrayc as $criteria) {
                   if ($ptc->getValue('criteria2_'.$criteria) == "1"){
-                     if (!empty($p_criteria[$criteria])) {
+                     if ($p_criteria[$criteria] != "") {
                         $a_criteria[$criteria] = $p_criteria[$criteria];
                      }
                   }
