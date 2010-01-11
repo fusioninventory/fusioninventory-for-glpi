@@ -376,7 +376,7 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['field'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['name'] = $LANG["common"][16];
-  $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['datatype']='itemlink';
+   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][1]['datatype']='itemlink';
   
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['table'] = 'glpi_plugin_tracker_rangeip';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][2]['field'] = 'ifaddr_start';
@@ -420,11 +420,11 @@ function plugin_tracker_getSearchOption() {
 
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['table'] = 'glpi_plugin_tracker_agents';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['field'] = 'name';
-	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['linkfield'] = '';//FK_tracker_agents_query
+	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['linkfield'] = 'FK_tracker_agents_query';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['name'] = $LANG['plugin_tracker']["agents"][13];
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['datatype']='itemlink';
 	$sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['itemlink_type']=PLUGIN_TRACKER_SNMP_AGENTS;
-//   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['forcegroupby']='1';
+   $sopt[PLUGIN_TRACKER_SNMP_RANGEIP][9]['forcegroupby']='1';
 
 	$sopt[PLUGIN_TRACKER_SNMP_HISTORY]['common'] = $LANG['plugin_tracker']["title"][2];
 
@@ -1734,6 +1734,15 @@ function plugin_tracker_addSelect($type,$ID,$num) {
 
 			}
 			break;
+
+      case PLUGIN_TRACKER_SNMP_RANGEIP :
+         switch ($table.".".$SEARCH_OPTION[$type][$ID]["linkfield"]) {
+
+            case "glpi_plugin_tracker_agents.FK_tracker_agents_query" :
+               return "GROUP_CONCAT( DISTINCT CONCAT(gpta.name,'$$' ,gpta.ID) SEPARATOR '$$$$') AS ITEM_$num, ";
+               break;
+
+         }
 	}
 	return "";
 }
@@ -1984,6 +1993,11 @@ function plugin_tracker_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$alr
 				case "glpi_plugin_tracker_agents.FK_tracker_agents" :
 					return " LEFT JOIN glpi_plugin_tracker_agents ON (glpi_plugin_tracker_agents.ID = glpi_plugin_tracker_rangeip.FK_tracker_agents) ";
 					break;
+
+            case "glpi_plugin_tracker_agents.FK_tracker_agents_query" :
+               return " LEFT JOIN glpi_plugin_tracker_agents AS gpta ON (glpi_plugin_tracker_rangeip.FK_tracker_agents_query = gpta.ID) ";
+               break;
+            
 
 			}
 			break;
@@ -2381,6 +2395,21 @@ function plugin_tracker_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 			}
+
+         switch ($table.".".$SEARCH_OPTION[$type][$ID]["linkfield"]) {
+
+            case "glpi_plugin_tracker_agents.FK_tracker_agents_query" :
+               $ADD = "";
+					if ($nott=="0"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NULL";
+					} else if ($nott=="1"&&$val=="NULL") {
+						$ADD=" OR $table.name IS NOT NULL";
+					}
+               return $link." (gpta.name  LIKE '%".$val."%' $ADD ) ";
+               break;
+
+         }
+
 			break;
 
 		// * Detail of ports history (plugins/tracker/report/plugin_tracker.switch_ports.history.php)
