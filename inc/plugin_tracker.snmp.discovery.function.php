@@ -411,23 +411,28 @@ function plugin_tracker_find_device($a_criteria) {
                      PHONE_TYPE, PLUGIN_TRACKER_MAC_UNKNOWN);
 
    $condition = "";
+   $select = "";
    foreach ($a_criteria as $criteria=>$value) {
       switch ($criteria) {
          
          case 'ip':
             $condition .= "AND `ifaddr`='".$value."' ";
+            $select .= ", ifaddr";
             break;
 
          case 'macaddr':
             $condition .= "AND `ifmac`='".$value."' ";
+            $select .= ", ifmac";
             break;
 
          case 'name':
             $condition .= "AND `name`='".$value."' ";
+            $select .= ", name";
             break;
 
          case 'serial':
             $condition .= "AND `serial`='".$value."' ";
+            $select .= ", serial";
             break;       
       }
    }
@@ -435,9 +440,9 @@ function plugin_tracker_find_device($a_criteria) {
    $found = 0;
    foreach ($a_types as $type) {
       $ci->setType($type,true);
-      $query = "SELECT * FROM ".$ci->obj->table;
+      $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
       if ($ci->obj->table != "glpi_networking") {
-         $query .= " INNER JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND device_type=".$type;
+         $query .= " LEFT JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND device_type=".$type;
       }
       $query .= " WHERE deleted=0 ".$condition;
       $result = $DB->query($query);
