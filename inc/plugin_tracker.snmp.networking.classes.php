@@ -182,24 +182,20 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
                "/lib/extjs/adapter/prototype/effects.js'></script>";
 		
-		$query = "SELECT *
-                FROM `glpi_plugin_tracker_networking`
-                WHERE `FK_networking`='".$ID."';";
+      if (!$data = $this->find("`FK_networking`='".$ID."'", '', 1)) {
+         // Add in database if not exist
+         $input['FK_networking'];
+         $ID_tn = $this->add($input);
+         $this->getFromDB($ID_tn);
+      } else {
+         foreach ($data as $ID_tn=>$datas) {
+            $this->fields = $data[$ID_tn];
+         }
+      }
 
-		$result = $DB->query($query);		
-		$data = $DB->fetch_assoc($result);
+      $PID = $this->fields['last_PID_update'];
 
-		$PID = $data["last_PID_update"];
-		
-		// Add in database if not exist
-		if ($DB->numrows($result) == "0") {
-			$query_add = "INSERT INTO `glpi_plugin_tracker_networking` (`FK_networking`)
-                       VALUES('".$ID."');";
-			
-			$DB->query($query_add);
-		}
 		// Form networking informations
-//		echo "<br>";
 		echo "<div align='center'>
             <form method='post' name='snmp_form' id='snmp_form' action=\"".$target."\">";
 
@@ -212,7 +208,7 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["model_info"][4]."</td>";
+		echo "<td align='center'>".$LANG['plugin_tracker']["profile"][24]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT * 
                        FROM `glpi_plugin_tracker_model_infos`
@@ -223,26 +219,23 @@ class PluginTrackerNetworking extends CommonDBTM {
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['ID'];		
 		}
-		dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$data["FK_model_infos"],0,-1,'',
+      dropdownValue("glpi_plugin_tracker_model_infos","model_infos",$this->fields['FK_model_infos'],0,-1,'',
                     $exclude_models);
       echo "</td>";
-      echo "<td align='center'>";
-		echo " <input type='submit' name='GetRightModel'
-                    value='".$LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		plugin_tracker_snmp_auth_dropdown($data["FK_snmp_connection"]);
+		plugin_tracker_snmp_auth_dropdown($this->fields['FK_snmp_connection']);
 		echo "</td>";
-      echo "<td>";
-      echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-		echo "<div align='center'>";
+		echo "<tr class='tab_bg_1 center'>";
+      echo "<td>";
+      echo " <input type='submit' name='GetRightModel'
+              value='".$LANG['plugin_tracker']["model_info"][13]."' class='submit'/></td>";
+		echo "<td>";
 		echo "<input type='hidden' name='ID' value='".$ID."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
 		echo "</td>";
@@ -251,9 +244,8 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "</table></form>";
 
 
-
-		echo "<div align='center'>
-            <form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+//		echo "<div align='center'>
+      echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
@@ -263,9 +255,9 @@ class PluginTrackerNetworking extends CommonDBTM {
 		echo "</th>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' colspan='2' height='30'>";
-		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($data["last_tracker_update"]);
+		echo "<tr class='tab_bg_1 center'>";
+		echo "<td colspan='2' height='30'>";
+		echo $LANG['plugin_tracker']["snmp"][52].": ".convDateTime($this->fields['last_tracker_update']);
 		echo "</td>";
 		echo "</tr>";
 
@@ -274,16 +266,15 @@ class PluginTrackerNetworking extends CommonDBTM {
                     $plugin_tracker_snmp->GetLinkOidToFields($ID,NETWORKING_TYPE);
 		$mapping_name=array();
 		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
-//			$explode = explode("||", $mapping_type_name);
 			$mapping_name[$mapping_type_name] = "1";
 		}
 
 		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1")) {
 
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][12]."</td>";
-			echo "<td align='center'>";
-			$sysUpTime = $data["uptime"];
+			echo "<tr class='tab_bg_1 center'>";
+			echo "<td>".$LANG['plugin_tracker']["snmp"][12]."</td>";
+			echo "<td>";
+			$sysUpTime = $this->fields['uptime'];
 			if (strstr($sysUpTime, "days")) {
 				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
          } else if (strstr($sysUpTime, "hours")) {
@@ -317,18 +308,18 @@ class PluginTrackerNetworking extends CommonDBTM {
 				AND ((isset($mapping_name['cpusystem']))  AND ($mapping_name['cpusystem'] == "1"))
 			)) {
             
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][13]."</td>";
-			echo "<td align='center'>";
-			plugin_tracker_Bar($data["cpu"],'','inverse');
+			echo "<tr class='tab_bg_1 center'>";
+			echo "<td>".$LANG['plugin_tracker']["snmp"][13]."</td>";
+			echo "<td>";
+			plugin_tracker_Bar($this->fields['cpu'],'','inverse');
 			echo "</td>";
 			echo "</tr>";
 		}
 
 		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1")) {
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>".$LANG['plugin_tracker']["snmp"][14]."</td>";
-			echo "<td align='center'>";
+			echo "<tr class='tab_bg_1 center'>";
+			echo "<td>".$LANG['plugin_tracker']["snmp"][14]."</td>";
+			echo "<td>";
 			$query2 = "SELECT *
                     FROM `glpi_networking`
                     WHERE `ID`='".$ID."';";
@@ -338,22 +329,13 @@ class PluginTrackerNetworking extends CommonDBTM {
 			if (empty($data2["ram"])) {
 				$ram_pourcentage = 0;
 			} else {
-				$ram_pourcentage = ceil((100 * ($data2["ram"] - $data["memory"])) / $data2["ram"]);
+				$ram_pourcentage = ceil((100 * ($data2["ram"] - $this->fields['memory'])) / $data2["ram"]);
 			}
-			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $data["memory"])." Mo / ".
+			plugin_tracker_Bar($ram_pourcentage," (".($data2["ram"] - $this->fields['memory'])." Mo / ".
                             $data2["ram"]." Mo)",'inverse');
 			echo "</td>";
 			echo "</tr>";
 		}
-
-
-//		echo "<tr class='tab_bg_1'>";
-//		echo "<td colspan='2'>";
-//		echo "<div align='center'>";
-//		echo "<input type='hidden' name='ID' value='".$ID."'>";
-//		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
-//		echo "</td>";
-//		echo "</tr>";
 
 		echo "</table></form>";
 		
@@ -404,9 +386,6 @@ function appear_array(id){
 		
 		</script>";
 
-//		echo "<br>";
-		echo "<div align='center'><!--
-            <form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">-->";
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -525,11 +504,11 @@ function appear_array(id){
 					$background_img = " style='background-image: url(\"".GLPI_ROOT.
                                     "/plugins/tracker/pics/connected_trunk.png\"); '";
             }
-				echo "<tr class='tab_bg_1' height='40'".$background_img.">";
-				echo "<td align='center' id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT.
+				echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
+				echo "<td id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT.
                      "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"].
                      "\");close_array(".$data["ID"].");' /></td>";
-				echo "<td align='center'><a href='networking.port.php?ID=".$data["ID"]."'>".
+				echo "<td><a href='networking.port.php?ID=".$data["ID"]."'>".
                      $data["name"]."</a></td>";
 				
 				$query_array = "SELECT *
@@ -541,15 +520,15 @@ function appear_array(id){
 				while ($data_array=$DB->fetch_array($result_array)) {
 					switch ($data_array['num']) {
 						case 2 :
-							echo "<td align='center'>".$data["ifmtu"]."</td>";
+							echo "<td>".$data["ifmtu"]."</td>";
 							break;
 
 						case 3 :
-							echo "<td align='center'>".ByteSize($data["ifspeed"],1000)."bps</td>";
+							echo "<td>".ByteSize($data["ifspeed"],1000)."bps</td>";
 							break;
 
 						case 4 :
-							echo "<td align='center'>";			
+							echo "<td>";			
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"],"1")) {
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
                      } else if (strstr($data["ifstatus"],"down")
@@ -563,11 +542,11 @@ function appear_array(id){
 							break;
 
 						case 5 :
-							echo "<td align='center'>".$data["iflastchange"]."</td>";
+							echo "<td>".$data["iflastchange"]."</td>";
 							break;
 
 						case 6 :
-							echo "<td align='center'>";
+							echo "<td>";
 							if ($data["ifinoctets"] == "0") {
 								echo "-";
                      } else {
@@ -578,16 +557,16 @@ function appear_array(id){
 
 						case 7 :
 							if ($data["ifinerrors"] == "0") {
-								echo "<td align='center'>-";
+								echo "<td>-";
                      } else {
-								echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>";
+								echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
 								echo $data["ifinerrors"];
 							}
 							echo "</td>";
 							break;
 
 						case 8 : 
-							echo "<td align='center'>";
+							echo "<td>";
 							if ($data["ifinoctets"] == "0") {
 								echo "-";
                      } else {
@@ -598,21 +577,21 @@ function appear_array(id){
 
 						case 9 : 
 							if ($data["ifouterrors"] == "0") {
-								echo "<td align='center'>-";
+								echo "<td>-";
                      } else {
-								echo "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>";
+								echo "<td background='#cf9b9b' class='tab_bg_1_2'>";
 								echo $data["ifouterrors"];
 							}
 							echo "</td>";
 							break;
 
 						case 10 : 
-							echo "<td align='center'>".$data["portduplex"]."</td>";
+							echo "<td>".$data["portduplex"]."</td>";
 							break;
 
 						case 11 : 
 							// ** internal mac
-							echo "<td align='center'>".$data["ifmac"]."</td>";
+							echo "<td>".$data["ifmac"]."</td>";
 							break;
 
 						case 12 :
@@ -635,10 +614,10 @@ function appear_array(id){
                                              $CommonItem->getLink());
 								if ($data_device["device_type"] == PLUGIN_TRACKER_MAC_UNKNOWN) {
                            if ($CommonItem->getField("accepted") == "1") {
-                              echo "<td align='center' style='background:#bfec75'
+                              echo "<td style='background:#bfec75'
                                         class='tab_bg_1_2'>".$link1;
                            } else {
-                              echo "<td align='center' background='#cf9b9b'
+                              echo "<td background='#cf9b9b'
                                         class='tab_bg_1_2'>".$link1;
                            }
                            if (!empty($link)) {
@@ -649,7 +628,7 @@ function appear_array(id){
                            }
                            echo "</td>";
                         } else {
-									echo "<td align='center'>".$link1;
+									echo "<td>".$link1;
                            if (!empty($link)) {
                               echo "<br/>".$link;
                            }
@@ -659,13 +638,13 @@ function appear_array(id){
                            echo "</td>";
                         }
 							} else {
-								echo "<td align='center'></td>";
+								echo "<td></td>";
 							}
 							break;
 
 						case 13 :
 							// ** Connection status
-							echo "<td align='center'>";
+							echo "<td>";
 							if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
 								echo "<img src='".GLPI_ROOT."/pics/greenbutton.png'/>";
                      } else if (strstr($data["ifstatus"], "down")
@@ -682,7 +661,7 @@ function appear_array(id){
 							break;
 
 						case 14 :
-							echo "<td align='center'>";
+							echo "<td>";
                      
                      $canedit = haveRight("networking", "w");
 
@@ -715,7 +694,7 @@ function appear_array(id){
 						
 						case 15 : 
 							//Port description
-							echo "<td align='center'>".$data["ifdescr"]."</td>";
+							echo "<td>".$data["ifdescr"]."</td>";
 							break;
 					}
 				}
