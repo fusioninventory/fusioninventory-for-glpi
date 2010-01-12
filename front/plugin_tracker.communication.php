@@ -39,7 +39,9 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
 	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
 include (GLPI_ROOT."/inc/includes.php");
-//include("agent_communication.php");
+
+$_SESSION["glpi_use_mode"] = 2;
+
 $ptc = new PluginTrackerCommunication();
 $ptap = new PluginTrackerAgentsProcesses;
 
@@ -59,7 +61,7 @@ if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"
 	exit();
 }
 
-//file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
 $top0 = gettimeofday();
 if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    //if ($ac->connectionOK($errors)) {

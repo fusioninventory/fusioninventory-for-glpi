@@ -52,12 +52,20 @@ plugin_tracker_checkRight("snmp_iprange","r");
 plugin_tracker_mini_menu();
 
 if (isset ($_POST["add"])) {
-	plugin_tracker_checkRight("snmp_iprange","w");
-	$rangeip->add($_POST);
+   if ($rangeip->checkip($_POST)) {
+      plugin_tracker_checkRight("snmp_iprange","w");
+      $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
+      $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
+      $rangeip->add($_POST);
+   }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	plugin_tracker_checkRight("snmp_iprange","w");
-	$rangeip->update($_POST);
+   if ($rangeip->checkip($_POST)) {
+      plugin_tracker_checkRight("snmp_iprange","w");
+      $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
+      $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
+      $rangeip->update($_POST);
+   }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
 	plugin_tracker_checkRight("snmp_iprange","w");

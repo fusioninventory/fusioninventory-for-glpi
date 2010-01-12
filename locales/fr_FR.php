@@ -527,6 +527,7 @@ $LANG['plugin_tracker']["rangeip"][0]="Début de la plage IP";
 $LANG['plugin_tracker']["rangeip"][1]="Fin de la plage IP";
 $LANG['plugin_tracker']["rangeip"][2]="Plage IP";
 $LANG['plugin_tracker']["rangeip"][3]="Interrogation";
+$LANG['plugin_tracker']["rangeip"][4]="Adresse IP incorrecte";
 
 $LANG['plugin_tracker']["agents"][0]="Agent SNMP";
 $LANG['plugin_tracker']["agents"][2]="Threads interrogation (par coeur)";

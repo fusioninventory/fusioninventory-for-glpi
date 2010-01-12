@@ -71,14 +71,37 @@ class PluginTrackerRangeIP extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][0] . "</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='ifaddr_start' value='".$this->fields["ifaddr_start"]."'/>";
+      $ipexploded = explode(".", $this->fields["ifaddr_start"]);
+      $i = 0;
+      foreach ($ipexploded as $ipnum) {
+         if ($ipnum > 255) {
+            $ipexploded[$i] = '';
+         }
+         $i++;
+      }
+		echo "<input type='text' value='".$ipexploded[0]."' name='ifaddr_start0' size='3' >.";
+		echo "<input type='text' value='".$ipexploded[1]."' name='ifaddr_start1' size='3' >.";
+		echo "<input type='text' value='".$ipexploded[2]."' name='ifaddr_start2' size='3' >.";
+		echo "<input type='text' value='".$ipexploded[3]."' name='ifaddr_start3' size='3' >";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][1] . "</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='ifaddr_end' value='".$this->fields["ifaddr_end"]."'/>";
+      unset($ipexploded);
+      $ipexploded = explode(".", $this->fields["ifaddr_end"]);
+      $i = 0;
+      foreach ($ipexploded as $ipnum) {
+         if ($ipnum > 255) {
+            $ipexploded[$i] = '';
+         }
+         $i++;
+      }
+		echo "<input type='text' value='".$ipexploded[0]."' name='ifaddr_end0' size='3' >.";
+		echo "<input type='text' value='".$ipexploded[1]."' name='ifaddr_end1' size='3' >.";
+		echo "<input type='text' value='".$ipexploded[2]."' name='ifaddr_end2' size='3' >.";
+		echo "<input type='text' value='".$ipexploded[3]."' name='ifaddr_end3' size='3' >";
 		echo "</td>";
 		echo "</tr>";
 
@@ -188,7 +211,53 @@ class PluginTrackerRangeIP extends CommonDBTM {
       }
       return $ranges;
    }
-   
+
+
+   function checkip($a_input) {
+      global $LANG;
+
+      $count = 0;
+      if ($a_input['ifaddr_start0']>255) {
+         $count++;
+         $a_input['ifaddr_start0'] = "<font color='#ff0000'>".$a_input['ifaddr_start0']."</font>";
+      }
+      if ($a_input['ifaddr_start1']>255) {
+         $count++;
+         $a_input['ifaddr_start1'] = "<font color='#ff0000'>".$a_input['ifaddr_start1']."</font>";
+      }
+      if ($a_input['ifaddr_start2']>255) {
+         $count++;
+         $a_input['ifaddr_start2'] = "<font color='#ff0000'>".$a_input['ifaddr_start2']."</font>";
+      }
+      if ($a_input['ifaddr_start3']>255) {
+         $count++;
+         $a_input['ifaddr_start3'] = "<font color='#ff0000'>".$a_input['ifaddr_start3']."</font>";
+      }
+      if ($a_input['ifaddr_end0']>255) {
+         $count++;
+         $a_input['ifaddr_end0'] = "<font color='#ff0000'>".$a_input['ifaddr_end0']."</font>";
+      }
+      if ($a_input['ifaddr_end1']>255) {
+         $count++;
+         $a_input['ifaddr_end1'] = "<font color='#ff0000'>".$a_input['ifaddr_end1']."</font>";
+      }
+      if ($a_input['ifaddr_end2']>255) {
+         $count++;
+         $a_input['ifaddr_end2'] = "<font color='#ff0000'>".$a_input['ifaddr_end2']."</font>";
+      }
+      if ($a_input['ifaddr_end3']>255) {
+         $count++;
+         $a_input['ifaddr_end3'] = "<font color='#ff0000'>".$a_input['ifaddr_end3']."</font>";
+      }
+      if ($count == '0') {
+         return true;
+      } else {
+         addMessageAfterRedirect("<font color='#ff0000'>IP incorrecte</font><br/>".
+            $LANG['plugin_tracker']["rangeip"][0]." : ".$a_input['ifaddr_start0'].".".$a_input['ifaddr_start1'].".".$a_input['ifaddr_start2'].".".$a_input['ifaddr_start3']."<br/>".
+            $LANG['plugin_tracker']["rangeip"][1]." : ".$a_input['ifaddr_end0'].".".$a_input['ifaddr_end1'].".".$a_input['ifaddr_end2'].".".$a_input['ifaddr_end3']);
+         return false;
+      }
+   }
 }
 
 ?>
