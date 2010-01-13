@@ -114,12 +114,21 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
     * Get field value
     *
     *@param $p_field Field
+    *@param $p_object=NULL Object to update
     *@return Field value / NULL if unknown field
     **/
-   function getValue($p_field) {
-      if (array_key_exists($p_field, $this->ptcdFields)) {
-         return $this->ptcdFields[$p_field];
+   function getValue($p_field, $p_object=NULL) {
+      if (is_null($p_object)) {
+         $p_object=$this;
+      }
+      if (array_key_exists($p_field, $p_object->ptcdFields)) {
+         return $p_object->ptcdFields[$p_field];
       } else {
+         foreach ($p_object->ptcdLinkedObjects as $object) {
+            if ($object->getValue($p_field, $object)) {
+               return $object->ptcdFields[$p_field];
+            }
+         }
          return NULL;
       }
    }
