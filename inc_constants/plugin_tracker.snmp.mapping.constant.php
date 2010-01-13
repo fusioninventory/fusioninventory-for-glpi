@@ -272,12 +272,14 @@ $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['field'] = 'name';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['name'] = $LANG['plugin_tracker']["mapping"][16];
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifName']['dropdown'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['ifname']['name'] = $LANG['plugin_tracker']["mapping"][16];
 
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['table'] = '';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['field'] = '';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['name'] = $LANG['plugin_tracker']["mapping"][18];
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['type'] = 'text';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifType']['dropdown'] = '';
+$TRACKER_MAPPING[NETWORKING_TYPE]['iftype']['name'] = $LANG['plugin_tracker']["mapping"][18];
 
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['table'] = 'glpi_plugin_tracker_networking_ports';
 $TRACKER_MAPPING[NETWORKING_TYPE]['ifdescr']['field'] = 'ifdescr';

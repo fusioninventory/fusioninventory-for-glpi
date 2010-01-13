@@ -40,36 +40,7 @@ include_once(GLPI_ROOT.'/inc/networking.class.php'); // todo a ranger
 include_once(GLPI_ROOT.'/inc/networking.function.php');
 
 class PluginTrackerSNMP extends CommonDBTM {
-	/**
-	 * Get port name and ID of the network materiel from DB
-	 *
-	 * @param $ID_Device : ID of device
-	 * @param $type : type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
-	 *
-	 * @return array with port name and port ID 
-	 *
-	**/
-	function GetPortsID($ID_Device,$type) {
-		global $DB;
-	
-		$PortsID = array();
-		
-		$query = "SELECT `ID`, `name`
-                FROM `glpi_networking_ports`
-                WHERE `on_device`='".$ID_Device."'
-                      AND `device_type`='".$type."'
-                ORDER BY `logical_number`;";
 
-		if ($result=$DB->query($query)) {
-			while ($data=$DB->fetch_array($result)) {
-				$PortsID[$data["name"]] = $data["ID"];
-			}
-		}
-		return $PortsID;
-	}
-	
-	
-	
 	/**
 	 * Get links between oid and fields 
 	 *
@@ -118,56 +89,6 @@ class PluginTrackerSNMP extends CommonDBTM {
 		return $ObjectLink;
 	}
 	
-
-
-	/**
-	 * Description
-	 *
-	 * @param
-	 * @param
-	 *
-	 * @return
-	 *
-	**/
-	function MAC_Rewriting($macadresse) {
-		// If MAC address without : (with space for separate)
-		$macadresse = trim($macadresse);
-		if (substr_count($macadresse, ':') == "0") {
-			$macexplode = explode(" ",$macadresse);
-			$assembledmac = "";
-			for($num = 0 ; $num < count($macexplode) ; $num++) {
-				if ($num > 0) {
-					$assembledmac .= ":";
-            }
-				$assembledmac .= $macexplode[$num];
-			}
-			$macadresse = $assembledmac;
-		}	
-
-		// Rewrite
-		$macexplode = explode(":",$macadresse);
-		$assembledmac = "";
-		for($num = 0 ; $num < count($macexplode) ; $num++) {
-			if ($num > 0) {
-				$assembledmac .= ":";
-         }
-			switch (strlen($macexplode[$num])) {
-			case 0:
-			    $assembledmac .= "00";
-			    break;
-
-			case 1:
-			    $assembledmac .= "0".$macexplode[$num];
-			    break;
-
-			case 2:
-			    $assembledmac .= $macexplode[$num];
-			    break;
-			}
-		}
-		return $assembledmac;
-	}
-
 
 
 	/**

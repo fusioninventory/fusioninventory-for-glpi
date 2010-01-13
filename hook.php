@@ -2503,6 +2503,27 @@ function plugin_pre_item_purge_tracker($parm) {
 	return $parm;
 }
 
+
+
+function plugin_pre_item_delete_tracker($parm) {
+	global $DB;
+
+	if (isset($parm["_item_type_"])) {
+		switch ($parm["_item_type_"]) {
+
+         case NETWORKING_PORT_TYPE :
+            	$query_delete = "DELETE FROM `glpi_plugin_tracker_networking_ports`
+                  WHERE `FK_networking_ports`='".$parm["ID"]."';";
+					$DB->query($query_delete);
+            break;
+
+		}
+   }
+	return $parm;
+}
+
+
+
 /**
  * Hook after updates
  *

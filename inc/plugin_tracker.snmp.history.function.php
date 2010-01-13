@@ -67,6 +67,50 @@ function plugin_tracker_snmp_addLog($port,$field,$old_value,$new_value,$mapping,
 
 
 
+function plugin_tracker_networking_ports_addLog($port_id, $new_value, $field) {
+   include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
+   $ptp = new PluginTrackerPort;
+   $ptsnmph = new PluginTrackerSNMPHistory;
+
+   $db_field = $field;
+   switch ($field) {
+      case 'ifname':
+         $db_field = 'name';
+         $field = 'ifName';
+         break;
+
+      case 'mac':
+         $db_field = 'ifmac';
+         break;
+
+      case 'ifnumber':
+         $db_field = 'logical_number';
+         break;
+
+      case 'trunk':
+         $field = 'vlanTrunkPortDynamicStatus';
+
+      case 'iftype':
+         $field = 'ifType';
+
+      case 'duplex':
+         $field = 'portDuplex';
+      
+   }
+
+   $ptp->load($port_id);
+   echo $ptp->getValue($db_field);
+   if ($ptp->getValue($db_field) != $new_value) {
+      $array["FK_ports"] = $port_id;
+      $array["field"] = $field;
+      $array["old_value"] = $ptp->getValue($db_field);
+      $array["new_value"] = $new_value;
+      $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_tracker_processnumber']);
+   }
+}
+
+
+
 // $status = connection or disconnection	
 function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 	global $DB,$CFG_GLPI;
@@ -181,6 +225,8 @@ function plugin_tracker_addLogConnection_unknown_mac($macaddress,$port,$FK_proce
 function plugin_tracker_snmp_showHistory($ID_port) {
 	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
+   include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
+
 	$CommonItem = new CommonItem;
    $np = new Netport;
 
@@ -267,7 +313,7 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 			} else {
 				// Changes values
 				$text .= "<td align='center' colspan='3'></td>";
-				$text .= "<td align='center'>".$data["Field"]."</td>";
+				$text .= "<td align='center'>".$TRACKER_MAPPING[NETWORKING_TYPE][$data["Field"]]['name']."</td>";
 				$text .= "<td align='center'>".$data["old_value"]."</td>";
 				$text .= "<td align='center'>-></td>";
 				$text .= "<td align='center'>".$data["new_value"]."</td>";
