@@ -137,7 +137,7 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    function getPortIndex($p_mac, $p_ip='') {
       $portIndex = '';
       foreach ($this->ports as $index => $oPort) {
-         if (is_object($oPort)) { //todo pourquoi ne serait ce pas vrai ?
+         if (is_object($oPort)) { // should always be true
             if ($oPort->getValue('ifmac')==$p_mac) {
                $portIndex = $index;
                break;
@@ -164,7 +164,7 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    function getIfaddrIndex($p_ip) {
       $ifaddrIndex = '';
       foreach ($this->ifaddrs as $index => $oIfaddr) {
-         if (is_object($oIfaddr)) { //todo pourquoi ne serait ce pas vrai ?
+         if (is_object($oIfaddr)) { // should always be true
             if ($oIfaddr->getValue('ifaddr')==$p_ip) {
                $ifaddrIndex = $index;
                break;
@@ -190,8 +190,10 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function savePorts() {
-      $CFG_GLPI["deleted_tables"][]="glpi_networking_ports"; // todo : à ranger !
-
+      $CFG_GLPI["deleted_tables"][]="glpi_networking_ports"; // TODO : to clean
+      
+      // TODO : in networking, delete all non recently added ports 
+      // (to remove old and manually added virtual ports)
       foreach ($this->ports as $index=>$ptp) {
          if (!in_array($index, $this->updatesPorts)) {
             $ptp->deleteDB();
@@ -212,7 +214,7 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function saveIfaddrs() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_tracker_networking_ifaddr"; // todo : à ranger !
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_tracker_networking_ifaddr"; // TODO : to clean
 
       foreach ($this->ifaddrs as $index=>$pti) {
          if (!in_array($index, $this->updatesIfaddrs)) {

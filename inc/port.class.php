@@ -114,6 +114,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
          $this->ptcdUpdates['on_device']=$p_id;
          $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
          $portID=parent::add($this->ptcdUpdates);
+         $this->setValue('ID', $portID);
          // update tracker
          if (count($this->oTracker_networking_ports->ptcdUpdates)) {
             $this->oTracker_networking_ports->ptcdUpdates['FK_networking_ports']=$portID;
@@ -131,9 +132,10 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function deleteDB() {
+      $this->cleanVlan('', $this->getValue('ID'));
+      $this->disconnectDB($this->getValue('ID'));
       $this->oTracker_networking_ports->deleteDB(); // tracker
       parent::deleteDB(); // core
-      // TODO : clean vlans and connections
    }
 
    /**
@@ -223,7 +225,6 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 	function connectDB($destination_port='') {
 		global $DB;
 
-      $netwire = new Netwire;
       $ptap = new PluginTrackerAgentsProcesses;
 
       $queryVerif = "SELECT *
@@ -233,33 +234,34 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
-            $source_port = $this->getValue('ID');
-//            plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($source_port));
-            plugin_tracker_addLogConnection("remove",$source_port);
-            if (removeConnector($source_port)) { // remove existing connection to this source port
-               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
-                                    array('query_nb_connections_deleted' => '1'));
-            }
-
-//            plugin_tracker_addLogConnection("remove",
-//                                            $netwire->getOppositeContact($destination_port));
-            plugin_tracker_addLogConnection("remove",$destination_port);
-            if (removeConnector($destination_port)) { //remove existing connection to this dest port
-               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
-                                    array('query_nb_connections_deleted' => '1'));
-            }
-
-            if (makeConnector($source_port,$destination_port)) { // connect those 2 ports
+            $this->disconnectDB($this->getValue('ID')); // disconnect this port
+            $this->disconnectDB($destination_port);     // disconnect destination port
+            if (makeConnector($this->getValue('ID'),$destination_port)) { // connect those 2 ports
                $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
                                     array('query_nb_connections_created' => '1'));
             }
-//            plugin_tracker_addLogConnection("make",$destination_port);
-            plugin_tracker_addLogConnection("make",$source_port);
+            plugin_tracker_addLogConnection("make",$this->getValue('ID'));
          }
       }
    }
 
-
+   /**
+    * Disconnect a port in DB
+    *
+    *@param $p_port='' Port to disconnect
+    *@return nothing
+    **/
+	function disconnectDB($p_port='') {
+      if ($p_port=='') $p_port=$this;
+      $netwire = new Netwire;
+      plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($p_port));
+      plugin_tracker_addLogConnection("remove",$p_port);
+      if (removeConnector($p_port)) {
+         $ptap = new PluginTrackerAgentsProcesses;
+         $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+                              array('query_nb_connections_deleted' => '1'));
+      }
+   }
 
    /**
     * Add vlan
@@ -348,14 +350,21 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
             }
          }
       } else { // no vlan to add/update --> delete existing
-         $this->cleanVlan('', $this->getValue('ID'));
-         if ($this->connectedPort != '') {
-            $ptpConnected = new PluginTrackerPort();
-            $ptpConnected->load($this->connectedPort);
-            if ($ptpConnected->fields['device_type'] != NETWORKING_TYPE) {
-               // don't update vlan on connected port if connected port on a switch
-               $this->cleanVlan('', $this->connectedPort);
-            }            
+         $query = "SELECT *
+                   FROM `glpi_networking_vlan`
+                   WHERE `FK_port`='".$this->getValue('ID')."'";
+         if ($result=$DB->query($query)) {
+            if ($DB->numrows($result) > 0) {// this port has one or more vlan
+               $this->cleanVlan('', $this->getValue('ID'));
+               if ($this->connectedPort != '') {
+                  $ptpConnected = new PluginTrackerPort();
+                  $ptpConnected->load($this->connectedPort);
+                  if ($ptpConnected->fields['device_type'] != NETWORKING_TYPE) {
+                     // don't update vlan on connected port if connected port on a switch
+                     $this->cleanVlan('', $this->connectedPort);
+                  }
+               }
+            }
          }
       }
    }
@@ -379,9 +388,10 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     * Clean vlan
     *
     *@param $p_vlan Vlan ID
+    *@param $p_port='' Port ID
     *@return nothing
     **/
-   function cleanVlan($p_vlan, $p_port='') { //TODO : improve to use an array of vlans to avoid multiple delete queries
+   function cleanVlan($p_vlan, $p_port='') {
 		global $DB;
 
       if ($p_vlan != '') {
@@ -392,7 +402,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
          } else { // delete this vlan for all ports
             $query="DELETE FROM `glpi_networking_vlan`
                     WHERE `FK_vlan`='$p_vlan';";
-            // TODO : remove vlan ?
+            // do not remove vlan in glpi_dropdown_vlan : manual remove
          }
       } else { // delete all vlans for this port
          $query="DELETE FROM `glpi_networking_vlan`

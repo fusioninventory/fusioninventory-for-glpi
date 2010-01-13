@@ -586,7 +586,7 @@ class PluginTrackerCommunication {
          if ($p_info->TYPE=='NETWORKING') {
             $errors.=$this->importNetworking($p_info);
          } elseif ($p_info->TYPE=='PRINTER') {
-            //todo
+            //TODO
          }
       }
       return $errors;
@@ -690,7 +690,7 @@ class PluginTrackerCommunication {
 
    /**
     * Import PORT
-    *@param $p_info PORT code to import
+    *@param $p_port PORT code to import
     *
     *@return errors string to be alimented if import ko / '' if ok
     **/
@@ -699,7 +699,7 @@ class PluginTrackerCommunication {
 
       $errors='';
       $ptp = new PluginTrackerPort;
-      $portIndex = $this->ptn->getPortIndex($p_port->MAC); //TODO ajouter le 2e param (ip) a partir de connections
+      $portIndex = $this->ptn->getPortIndex($p_port->MAC, $this->getConnectionIP($p_port));
       if (is_int($portIndex)) {
          $oldPort = $this->ptn->getPort($portIndex);
          $ptp->load($oldPort->getValue('ID'));
@@ -867,6 +867,7 @@ class PluginTrackerCommunication {
       }
       if ($portID != '') {
          $p_oPort->addConnection($portID);
+         if ($ip != '') $p_oPort->setValue('ifaddr', $ip);
       } else {
          $p_oPort->addUnknownConnection($mac, $ip);
          //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
@@ -964,6 +965,36 @@ class PluginTrackerCommunication {
    function addProcessNumber($p_pid) {
       $this->sxml->addChild('PROCESSNUMBER', $p_pid);
       //var_dump($this->sxml);
+   }
+
+   /**
+    * Get connection IP
+    *
+    *@param $p_port PORT code to import
+    *@return first connection IP or ''
+    **/
+   function getConnectionIP($p_port) {
+      foreach ($p_port->children() as $connectionsName=>$connectionsChild) {
+         switch ($connectionsName) {
+            case 'CONNECTIONS' :
+//               $errors.=$this->importConnections($child, $ptp);
+               foreach ($connectionsChild->children() as $connectionName=>$connectionChild) {
+//                  switch ($child->getName()) {
+                  switch ($connectionName) {
+                     case 'CONNECTION' :
+//                        $errors.=$this->importConnection($child, $p_oPort, $cdp);
+                        foreach ($connectionChild->children() as $ipName=>$ipChild) {
+                           switch ($ipName) {
+                              case 'IP' :
+                                 $ip=$ipChild;
+                                 if ($ipChild != '') return $ipChild;
+                           }
+                        }
+                  }
+               }
+         }
+      }
+      return '';
    }
 }
 ?>
