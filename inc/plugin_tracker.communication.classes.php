@@ -778,7 +778,7 @@ class PluginTrackerCommunication {
             }
          }
       } else { // virtual port : do not import but delete if exists
-         if ( is_int($ptp->getValue('ID')) ) $ptp->deleteDB();
+         if ( is_numeric($ptp->getValue('ID')) ) $ptp->deleteDB();
       }
       $this->ptn->addPort($ptp, $portIndex);
       return $errors;

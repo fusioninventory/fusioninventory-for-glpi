@@ -192,17 +192,15 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    function savePorts() {
       $CFG_GLPI["deleted_tables"][]="glpi_networking_ports"; // TODO : to clean
       
-      // TODO : in networking, delete all non recently added ports 
-      // (to remove old and manually added virtual ports)
       foreach ($this->ports as $index=>$ptp) {
-         if (!in_array($index, $this->updatesPorts)) {
+         if (!in_array($index, $this->updatesPorts)) { // delete ports which don't exist any more
             $ptp->deleteDB();
          }
       }
       foreach ($this->newPorts as $ptp) {
-         if ($ptp->getValue('ID')=='') {
+         if ($ptp->getValue('ID')=='') {               // create existing ports
             $ptp->addDB($this->getValue('ID'));
-         } else {
+         } else {                                      // update existing ports
             $ptp->updateDB();
          }
       }
