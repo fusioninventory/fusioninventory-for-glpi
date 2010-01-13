@@ -261,21 +261,27 @@ function plugin_tracker_discovery_import($discovery_ID,$Import=0, $NoImport=0) {
 
 
 
-function plugin_tracker_discovery_criteria($p_criteria) {
+function plugin_tracker_discovery_criteria($p_criteria, $type=0) {
 	global $DB;
 
    $ptc = new PluginTrackerConfig;
 
-   $arrayc = array('ip', 'name', 'serial', 'macaddr');
    $a_criteria = array();
 
-   $CountCriteria1 =   $ptc->getValue('criteria1_ip')
-                     + $ptc->getValue('criteria1_name')
+   $CountCriteria1 = 0;
+   $CountCriteria2 = 0;
+   if ($type == '0') {
+      $arrayc = array('ip', 'name', 'serial', 'macaddr');
+      $CountCriteria1 = $ptc->getValue('criteria1_ip');
+      $CountCriteria2 = $ptc->getValue('criteria2_ip');
+   } else {
+      $arrayc = array('name', 'serial', 'macaddr');
+   }
+   $CountCriteria1 +=  $ptc->getValue('criteria1_name')
                      + $ptc->getValue('criteria1_serial')
                      + $ptc->getValue('criteria1_macaddr');
    
-   $CountCriteria2 =   $ptc->getValue('criteria2_ip')
-                     + $ptc->getValue('criteria2_name')
+   $CountCriteria2 +=  $ptc->getValue('criteria2_name')
                      + $ptc->getValue('criteria2_serial')
                      + $ptc->getValue('criteria2_macaddr');
 
@@ -298,8 +304,9 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                } else {
                   unset($a_criteria);
                   $a_criteria[$criteria] = $p_criteria[$criteria];
-                  if (plugin_tracker_find_device($a_criteria)) {
-                     return true;
+                  $r_find = plugin_tracker_find_device($a_criteria, $type);
+                  if ($r_find) {
+                     return $r_find;
                   } else {
                      return false;
                   }
@@ -322,8 +329,9 @@ function plugin_tracker_discovery_criteria($p_criteria) {
          if ($i == 0) {
             // Go to criteria2
          } else {
-            if (plugin_tracker_find_device($a_criteria)) {
-               return true;
+            $r_find = plugin_tracker_find_device($a_criteria, $type);
+            if ($r_find) {
+               return $r_find;
             } else {
                unset($a_criteria);
                foreach ($arrayc as $criteria) {
@@ -333,8 +341,9 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                      }
                   }
                }
-               if (plugin_tracker_find_device($a_criteria)) {
-                  return true;
+               $r_find = plugin_tracker_find_device($a_criteria, $type);
+               if ($r_find) {
+                  return $r_find;
                }
             }
          }
@@ -354,8 +363,9 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                } else {
                   unset($a_criteria);
                   $a_criteria[$criteria] = $p_criteria[$criteria];
-                  if (plugin_tracker_find_device($a_criteria)) {
-                     return true;
+                  $r_find = plugin_tracker_find_device($a_criteria, $type);
+                  if ($r_find) {
+                     return $r_find;
                   } else {
                      return false;
                   }
@@ -378,8 +388,9 @@ function plugin_tracker_discovery_criteria($p_criteria) {
          if ($i == 0) {
             return false;
          } else {
-            if (plugin_tracker_find_device($a_criteria)) {
-               return true;
+            $r_find = plugin_tracker_find_device($a_criteria, $type);
+            if ($r_find) {
+               return $r_find;
             } else {
                unset($a_criteria);
                foreach ($arrayc as $criteria) {
@@ -389,8 +400,9 @@ function plugin_tracker_discovery_criteria($p_criteria) {
                      }
                   }
                }
-               if (plugin_tracker_find_device($a_criteria)) {
-                  return true;
+               $r_find = plugin_tracker_find_device($a_criteria, $type);
+               if ($r_find) {
+                  return $r_find;
                } else {
                   return false;
                }
@@ -402,13 +414,17 @@ function plugin_tracker_discovery_criteria($p_criteria) {
 }
 
 
-function plugin_tracker_find_device($a_criteria) {
+function plugin_tracker_find_device($a_criteria, $type=0) {
 	global $DB,$CFG_GLPI;
 
    $ci = new commonitem;
 
-   $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
-                     PHONE_TYPE, PLUGIN_TRACKER_MAC_UNKNOWN);
+   if ($type != '0') {
+      $a_types = array($type);
+   } else {
+      $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
+                        PHONE_TYPE, PLUGIN_TRACKER_MAC_UNKNOWN);
+   }
 
    $condition = "";
    $select = "";
@@ -437,7 +453,6 @@ function plugin_tracker_find_device($a_criteria) {
       }
    }
 
-   $found = 0;
    foreach ($a_types as $type) {
       $ci->setType($type,true);
       $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
@@ -446,13 +461,12 @@ function plugin_tracker_find_device($a_criteria) {
       }
       $query .= " WHERE deleted=0 ".$condition;
       $result = $DB->query($query);
-		$found += $DB->numrows($result);
+      if($DB->numrows($result) > 0) {
+         $data = $DB->fetch_assoc($result);
+         return $data['ID'];
+      }
    }
-   if ($found > 0) {
-      return true;
-   } else {
-      return false;
-   }   
+   return false;
 }
 
 ?>
