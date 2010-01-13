@@ -106,17 +106,18 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     * Add a new port with the instance values
     *
     *@param $p_id Networking ID
+    *@param $p_force=FALSE Force add even if no updates where done
     *@return nothing
     **/
-   function addDB($p_id) {
-      if (count($this->ptcdUpdates)) {
+   function addDB($p_id, $p_force=FALSE) {
+      if (count($this->ptcdUpdates) OR $p_force) {
          // update core
          $this->ptcdUpdates['on_device']=$p_id;
          $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
          $portID=parent::add($this->ptcdUpdates);
          $this->setValue('ID', $portID);
          // update tracker
-         if (count($this->oTracker_networking_ports->ptcdUpdates)) {
+         if (count($this->oTracker_networking_ports->ptcdUpdates) OR $p_force) {
             $this->oTracker_networking_ports->ptcdUpdates['FK_networking_ports']=$portID;
             $this->oTracker_networking_ports->add($this->oTracker_networking_ports->ptcdUpdates);
          }

@@ -704,7 +704,7 @@ class PluginTrackerCommunication {
          $oldPort = $this->ptn->getPort($portIndex);
          $ptp->load($oldPort->getValue('ID'));
       } else {
-         $ptp->load();
+         $ptp->addDB($this->deviceId, TRUE);
       }
       $ifType = $p_port->IFTYPE;
       if ( (strstr($ifType, "ethernetCsmacd"))
@@ -953,12 +953,9 @@ class PluginTrackerCommunication {
       foreach ($p_port->children() as $connectionsName=>$connectionsChild) {
          switch ($connectionsName) {
             case 'CONNECTIONS' :
-//               $errors.=$this->importConnections($child, $ptp);
                foreach ($connectionsChild->children() as $connectionName=>$connectionChild) {
-//                  switch ($child->getName()) {
                   switch ($connectionName) {
                      case 'CONNECTION' :
-//                        $errors.=$this->importConnection($child, $p_oPort, $cdp);
                         foreach ($connectionChild->children() as $ipName=>$ipChild) {
                            switch ($ipName) {
                               case 'IP' :

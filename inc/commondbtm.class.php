@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Class to use networking interface address
+ * Class to manage generic multi-tables objects
  * Adds field management to core CommonDBTM class.
  **/
 class PluginTrackerCommonDBTM extends CommonDBTM {
@@ -55,7 +55,7 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
    }
 
    /**
-    * Load an existing address
+    * Load an existing item
     *
     *@return nothing
     **/
@@ -94,7 +94,7 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
    /**
     * Delete a loaded item
     *
-    *@param $p_id Ifaddr ID
+    *@param $p_id Item ID
     *@return nothing
     **/
    function deleteDB() {
