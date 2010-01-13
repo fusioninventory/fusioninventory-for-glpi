@@ -125,8 +125,9 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
          return $p_object->ptcdFields[$p_field];
       } else {
          foreach ($p_object->ptcdLinkedObjects as $object) {
-            if ($object->getValue($p_field, $object)) {
-               return $object->ptcdFields[$p_field];
+            $value = $object->getValue($p_field, $object);
+            if (!is_null($value)) {
+               return $value;
             }
          }
          return NULL;
