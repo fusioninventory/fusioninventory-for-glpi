@@ -235,13 +235,15 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
+            plugin_tracker_addLogConnection("remove",$this->getValue('ID'));
             $this->disconnectDB($this->getValue('ID')); // disconnect this port
+            plugin_tracker_addLogConnection("remove",$destination_port);
             $this->disconnectDB($destination_port);     // disconnect destination port
             if (makeConnector($this->getValue('ID'),$destination_port)) { // connect those 2 ports
                $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
                                     array('query_nb_connections_created' => '1'));
+               plugin_tracker_addLogConnection("make",$this->getValue('ID'));
             }
-            plugin_tracker_addLogConnection("make",$this->getValue('ID'));
          }
       }
    }

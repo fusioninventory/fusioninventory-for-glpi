@@ -80,21 +80,26 @@ function plugin_tracker_networking_ports_addLog($port_id, $new_value, $field) {
          break;
 
       case 'mac':
-         $db_field = 'ifmac';
+         $db_field = 'ifmac'; 
+         $field = 'macaddr';
          break;
 
       case 'ifnumber':
          $db_field = 'logical_number';
+         $field = 'ifIndex';
          break;
 
       case 'trunk':
          $field = 'vlanTrunkPortDynamicStatus';
+         break;
 
       case 'iftype':
          $field = 'ifType';
+         break;
 
       case 'duplex':
          $field = 'portDuplex';
+         break;
       
    }
 
@@ -271,7 +276,6 @@ function plugin_tracker_snmp_showHistory($ID_port) {
 	$text .= "<tr class='tab_bg_1'>";
 	$text .= "<th>".$LANG['plugin_tracker']["snmp"][50]."</th>";
 	$text .= "<th>".$LANG["common"][1]."</th>";
-	$text .= "<th>".$LANG["networking"][15]."</th>";
 	$text .= "<th>".$LANG["event"][18]."</th>";
 	$text .= "<th></th>";
 	$text .= "<th></th>";
@@ -291,28 +295,36 @@ function plugin_tracker_snmp_showHistory($ID_port) {
             }
 				if ($ID_port == $data["FK_port_source"]) {
                $np->getFromDB($data["FK_port_destination"]);
-               $CommonItem->getFromDB($np->fields["device_type"],
-                                      $np->fields["on_device"]);
-               $link1 = $CommonItem->getLink(1);
-               $link = str_replace($CommonItem->getName(0), $np->fields["name"],
-                                   $CommonItem->getLink());
-					$text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
+               if (isset($np->fields["on_device"])) {
+                  $CommonItem->getFromDB($np->fields["device_type"],
+                                         $np->fields["on_device"]);
+                  $link1 = $CommonItem->getLink(1);
+                  $link = str_replace($CommonItem->getName(0), $np->fields["name"],
+                                      $CommonItem->getLink());
+                  $text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
+               } else {
+                  $text .= "<td align='center'><font color='#ff0000'>".$LANG['common'][28]."</font></td>";
+               }
 
 				} else if ($ID_port == $data["FK_port_destination"]) {
                $np->getFromDB($data["FK_port_source"]);
-               $CommonItem->getFromDB($np->fields["device_type"],
-                                      $np->fields["on_device"]);
-               $link1 = $CommonItem->getLink(1);
-               $link = str_replace($CommonItem->getName(0), $np->fields["name"],
-                                   $CommonItem->getLink());
-					$text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
+               if (isset($np->fields["on_device"])) {
+                  $CommonItem->getFromDB($np->fields["device_type"],
+                                         $np->fields["on_device"]);
+                  $link1 = $CommonItem->getLink(1);
+                  $link = str_replace($CommonItem->getName(0), $np->fields["name"],
+                                      $CommonItem->getLink());
+                  $text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
+               } else {
+                  $text .= "<td align='center'><font color='#ff0000'>".$LANG['common'][28]."</font></td>";
+               }
 				}
-				$text .= "<td align='center' colspan='5'></td>";
+				$text .= "<td align='center' colspan='4'></td>";
 				$text .= "<td align='center'>".convDateTime($data["date"])."</td>";
 
 			} else {
 				// Changes values
-				$text .= "<td align='center' colspan='3'></td>";
+				$text .= "<td align='center' colspan='2'></td>";
 				$text .= "<td align='center'>".$TRACKER_MAPPING[NETWORKING_TYPE][$data["Field"]]['name']."</td>";
 				$text .= "<td align='center'>".$data["old_value"]."</td>";
 				$text .= "<td align='center'>-></td>";

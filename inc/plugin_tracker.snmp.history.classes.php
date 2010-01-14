@@ -61,7 +61,18 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
 
       $input['date'] = date("Y-m-d H:i:s");
       $input['FK_ports'] = $array['FK_ports'];
-		if ($status == "field") {
+
+      $input['FK_port_source'] = $array['FK_ports'];
+      $input['FK_port_destination'] = $array['FK_port_destination'];
+      $input['process_number'] = $FK_process;
+      if ($status == "remove") {
+         $input['creation'] = '0';
+         $pthc->add($input);
+      } else if ($status == "make") {
+         $input['creation'] = '1';
+         $pthc->add($input);
+      } else if ($status == "field") {
+
 			$query = "INSERT INTO `glpi_plugin_tracker_snmp_history` (
                                `FK_ports`,`field`,`old_value`,`new_value`,`date_mod`,`FK_process`)
                    VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."',
