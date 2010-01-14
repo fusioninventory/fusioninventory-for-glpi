@@ -115,14 +115,14 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
          $this->ptcdUpdates['on_device']=$p_id;
          $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
          $portID=parent::add($this->ptcdUpdates);
-         $this->setValue('ID', $portID);
+         $this->load($portID);
          // update tracker
          if (count($this->oTracker_networking_ports->ptcdUpdates) OR $p_force) {
-            $this->oTracker_networking_ports->ptcdUpdates['FK_networking_ports']=$portID;
+            $this->oTracker_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
             $this->oTracker_networking_ports->add($this->oTracker_networking_ports->ptcdUpdates);
          }
-         $this->connect(); // update connections
-         $this->assignVlans(); // update vlans
+         $this->connect();       // update connections
+         $this->assignVlans();   // update vlans
       }
    }
 

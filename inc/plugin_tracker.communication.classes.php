@@ -699,19 +699,19 @@ class PluginTrackerCommunication {
 
       $errors='';
       $ptp = new PluginTrackerPort;
-      $portIndex = $this->ptn->getPortIndex($p_port->MAC, $this->getConnectionIP($p_port));
-      if (is_int($portIndex)) {
-         $oldPort = $this->ptn->getPort($portIndex);
-         $ptp->load($oldPort->getValue('ID'));
-      } else {
-         $ptp->addDB($this->deviceId, TRUE);
-      }
       $ifType = $p_port->IFTYPE;
       if ( (strstr($ifType, "ethernetCsmacd"))
             OR ($ifType == "6")
             OR ($ifType == "ethernet-csmacd(6)")
             OR (strstr($ifType, "iso88023Csmacd"))
             OR ($ifType == "7")) { // not virtual port
+         $portIndex = $this->ptn->getPortIndex($p_port->MAC, $this->getConnectionIP($p_port));
+         if (is_int($portIndex)) {
+            $oldPort = $this->ptn->getPort($portIndex);
+            $ptp->load($oldPort->getValue('ID'));
+         } else {
+            $ptp->addDB($this->deviceId, TRUE);
+         }
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'CONNECTIONS' :
@@ -753,10 +753,10 @@ class PluginTrackerCommunication {
                   $errors.=$LANG['plugin_tracker']["errors"][22].' PORT : '.$name."\n";
             }
          }
+         $this->ptn->addPort($ptp, $portIndex);
       } else { // virtual port : do not import but delete if exists
          if ( is_numeric($ptp->getValue('ID')) ) $ptp->deleteDB();
       }
-      $this->ptn->addPort($ptp, $portIndex);
       return $errors;
    }
 
