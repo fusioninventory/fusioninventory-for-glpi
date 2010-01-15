@@ -224,6 +224,14 @@ $LANG['plugin_tracker']["cpt_history"][3]="User";
 $LANG['plugin_tracker']["cpt_history"][4]="State";
 $LANG['plugin_tracker']["cpt_history"][5]="Date";
 
+$LANG['plugin_tracker']["prt_history"][30]="Display";
+$LANG['plugin_tracker']["prt_history"][31]="Time unit";
+$LANG['plugin_tracker']["prt_history"][32]="Add a printer";
+$LANG['plugin_tracker']["prt_history"][33]="Remove a printer";
+$LANG['plugin_tracker']["prt_history"][34]="day";
+$LANG['plugin_tracker']["prt_history"][35]="week";
+$LANG['plugin_tracker']["prt_history"][36]="month";
+$LANG['plugin_tracker']["prt_history"][37]="year";
 
 $LANG['plugin_tracker']["type"][1]="Computer";
 $LANG['plugin_tracker']["type"][2]="Switch";

@@ -224,6 +224,14 @@ $LANG['plugin_tracker']["prt_history"][20]="Historique des compteurs imprimante"
 $LANG['plugin_tracker']["prt_history"][21]="Date";
 $LANG['plugin_tracker']["prt_history"][22]="Compteur";
 
+$LANG['plugin_tracker']["prt_history"][30]="Affichage";
+$LANG['plugin_tracker']["prt_history"][31]="Unité de temps";
+$LANG['plugin_tracker']["prt_history"][32]="Ajouter une imprimante";
+$LANG['plugin_tracker']["prt_history"][33]="Supprimer une imprimante";
+$LANG['plugin_tracker']["prt_history"][34]="jour";
+$LANG['plugin_tracker']["prt_history"][35]="semaine";
+$LANG['plugin_tracker']["prt_history"][36]="mois";
+$LANG['plugin_tracker']["prt_history"][37]="année";
 
 $LANG['plugin_tracker']["cpt_history"][0]="Historique des sessions";
 $LANG['plugin_tracker']["cpt_history"][1]="Contact";
