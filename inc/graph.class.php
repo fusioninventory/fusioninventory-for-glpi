@@ -229,6 +229,7 @@ class PluginTrackerGraph {
       $i=1;
       $absciseSerie='';
       foreach ($p_series as $serieName=>$serie) {
+         $serie = array_values($serie);
          $this->pData->AddPoint($serie, "Serie".$i);
          if ($serieName != $p_absciseSerie) {
             $this->pData->SetSerieName($serieName, "Serie".$i);
