@@ -111,7 +111,36 @@ for ($i=1 ; $i <= 5 ; $i++) {
       $_SESSION[$value] = $_POST[$value];
 	}
 }
-	
+
+if (isset($_POST['graph_plugin_tracker_printer_period'])) {
+   $fields = array('graph_graphField', 'graph_begin', 'graph_end', 'graph_timeUnit');
+   foreach ($fields as $field) {
+      if (isset($_POST[$field])) {
+         $_SESSION['glpi_plugin_tracker_'.$field] = $_POST[$field];
+      } else {
+         unset($_SESSION['glpi_plugin_tracker_'.$field]);
+      }
+   }
+}
+
+$field = 'graph_printerCompAdd';
+if (isset($_POST['graph_plugin_tracker_printer_add'])) {
+   if (isset($_POST[$field])) {
+      $_SESSION['glpi_plugin_tracker_'.$field] = $_POST[$field];
+   }
+} else {
+   unset($_SESSION['glpi_plugin_tracker_'.$field]);
+}
+
+$field = 'graph_printerCompRemove';
+if (isset($_POST['graph_plugin_tracker_printer_remove'])) {
+   if (isset($_POST[$field])) {
+      $_SESSION['glpi_plugin_tracker_'.$field] = $_POST[$field];
+   }
+} else {
+   unset($_SESSION['glpi_plugin_tracker_'.$field]);
+}
+
 glpi_header($_SERVER['HTTP_REFERER']);
 
 ?>

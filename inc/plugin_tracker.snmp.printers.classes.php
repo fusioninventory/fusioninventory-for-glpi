@@ -227,7 +227,7 @@ class PluginTrackerPrinters extends CommonDBTM {
 		}
 
 		echo "</table></form>";
-		echo "</div>";
+  		echo "</div>";
 	}
 
 
@@ -837,6 +837,157 @@ class PluginTrackerPrinters extends CommonDBTM {
 		$Array['count'] = $page_scanned_counter;
 		return($Array);
 	}
+
+   /**
+    * Show printer graph form
+    *
+    *@param $p_target
+    *@param $p_ID
+    *@return nothing (print the form)
+    **/
+   function showFormPrinter_graph($p_target, $p_ID) {
+      global $TRACKER_MAPPING, $LANG;
+
+      include_once(GLPI_ROOT."/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
+
+      $target = $p_target;
+      $where=''; $begin=''; $end=''; $timeUnit='date'; $graphField='pages_total'; $printersComp = array();
+      if (isset($_SESSION['glpi_plugin_tracker_graph_begin'])) $begin=$_SESSION['glpi_plugin_tracker_graph_begin'];
+      if (isset($_SESSION['glpi_plugin_tracker_graph_end'])) $end=$_SESSION['glpi_plugin_tracker_graph_end'];
+      if (isset($_SESSION['glpi_plugin_tracker_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_tracker_graph_timeUnit'];
+      if (isset($_SESSION['glpi_plugin_tracker_graph_graphField'])) $graphField=$_SESSION['glpi_plugin_tracker_graph_graphField'];
+      if (!isset($_SESSION['glpi_plugin_tracker_graph_printersComp'])) $_SESSION['glpi_plugin_tracker_graph_printersComp']=array();
+      if (isset($_SESSION['glpi_plugin_tracker_graph_printerCompAdd'])) {
+         $printerCompAdd=$_SESSION['glpi_plugin_tracker_graph_printerCompAdd'];
+         if (!key_exists($printerCompAdd, $_SESSION['glpi_plugin_tracker_graph_printersComp'])) {
+            $ci=new CommonItem();
+            if ($ci->getFromDB(PRINTER_TYPE, $printerCompAdd)){
+               $_SESSION['glpi_plugin_tracker_graph_printersComp'][$printerCompAdd] = $ci->getField('name');
+            }
+         }
+      } elseif (isset($_SESSION['glpi_plugin_tracker_graph_printerCompRemove'])) {
+         unset($_SESSION['glpi_plugin_tracker_graph_printersComp'][$_SESSION['glpi_plugin_tracker_graph_printerCompRemove']]);
+      }
+
+      $printers = $_SESSION['glpi_plugin_tracker_graph_printersComp'];
+      $printersView = $printers; // printers without the current printer
+      if (isset($printersView[$p_ID])) {
+         unset($printersView[$p_ID]);
+      } else {
+         $ci=new CommonItem();
+         if ($ci->getFromDB(PRINTER_TYPE, $p_ID)){
+            $printers[$p_ID] = $ci->getField('name');
+         }
+      }
+      
+      $printersList = '';
+      foreach ($printers as $printer) {
+         if ($printersList != '') $printersList .= '<BR>';
+         $printersList .= $printer;
+      }
+      $printersIds = "";
+      foreach (array_keys($printers) as $printerId) {
+         if ($printersIds != '') $printersIds.=', ';
+         $printersIds .= $printerId;
+      }
+
+      $where = " WHERE `FK_printers` IN(".$printersIds.")";
+      if ($begin!='' || $end!='') {
+            $where .= " AND " .getDateRequest("`date`",$begin,$end);
+         }
+      switch ($timeUnit) {
+         case 'date':
+            $group = "GROUP BY `FK_printers`, `year`, `month`, `date`";
+         case 'week':
+            $group = "GROUP BY `FK_printers`, `year`, `month`, `week`";
+            break;
+         case 'month':
+            $group = "GROUP BY `FK_printers`, `year`, `month`";
+            break;
+         case 'year':
+            $group = "GROUP BY `FK_printers`, `year`";
+            break;
+      }
+
+      $query = "SELECT `FK_printers`, `date`, WEEK(`date`) AS `week`,
+                       MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
+                       SUM(`$graphField`) AS `$graphField`
+                FROM `glpi_plugin_tracker_printers_history`"
+                .$where
+                .$group."
+                ORDER BY `date`, `FK_printers`";
+
+      echo "<form method='post' name='printerGraph_form' id='printerGraph_form'
+                  action='".$p_target."'>";
+      echo "<table class='tab_cadre_fixe' cellpadding='2'>";
+
+      echo "<tr>";
+      echo "<th colspan='4'>"."Tracker"."</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_tracker']["prt_history"][30]."&nbsp;:</td><td class='left' colspan='2'>";
+      $elementsField=array('pages_total'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'],
+                      'pages_n_b'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'],
+                      'pages_color'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['shortname'],
+                      'pages_recto_verso'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['shortname'],
+                      'scanned'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'],
+                      'pages_total_print'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['shortname'],
+                      'pages_n_b_print'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['shortname'],
+                      'pages_color_print'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['shortname'],
+                      'pages_total_copy'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['shortname'],
+                      'pages_n_b_copy'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'],
+                      'pages_color_copy'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'],
+                      'pages_total_fax'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname']);
+      dropdownArrayValues('graph_graphField', $elementsField, $graphField);
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][8]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      showDateFormItem("graph_begin", $begin);
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][9]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      showDateFormItem("graph_end", $end);
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_tracker']["prt_history"][31]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      $elementsTime=array('date'=>$LANG['plugin_tracker']["prt_history"][34],
+                          'week'=>$LANG['plugin_tracker']["prt_history"][35],
+                          'month'=>$LANG['plugin_tracker']["prt_history"][36],
+                          'year'=>$LANG['plugin_tracker']["prt_history"][37]);
+      dropdownArrayValues('graph_timeUnit', $elementsTime, $timeUnit);
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['Menu'][2]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      echo $printersList;
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_2'><td class='center' colspan='3'>
+               <input type='submit' class=\"submit\" name='graph_plugin_tracker_printer_period'
+                      value='" . $LANG["buttons"][7] . "'>";
+      echo "</td></tr>\n";
+
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_tracker']["prt_history"][32]."&nbsp;:</td><td class='left'>";
+      dropdownConnect(PRINTER_TYPE,PRINTER_TYPE,"graph_printerCompAdd", -1, 0, array_keys($printers));
+      echo "</td><td class='left'>\n";
+      echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_tracker_printer_add'>";
+      echo "</td></tr>\n";
+
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_tracker']["prt_history"][33]."&nbsp;:</td>
+                                 <td class='left'>";
+      $printersTmp = $printersView;
+      $printersTmp[0] = "-----";
+      asort($printersTmp);
+      dropdownArrayValues('graph_printerCompRemove', $printersTmp);
+      echo "</td><td class='left'>\n";
+      echo "<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_tracker_printer_remove'>";
+      echo "</td></tr>\n";
+      echo "</table>";
+      echo "</form>";
+
+      echo "<div class=center>";
+      $title = $elementsField[$graphField];
+      if (count($printers)) {
+         $ptg = new PluginTrackerGraph($query, $graphField, $timeUnit, $printers, $title);
+      }
+      echo '</div>';
+   }
 }
 
 ?>
