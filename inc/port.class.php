@@ -235,9 +235,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
-            plugin_tracker_addLogConnection("remove",$this->getValue('ID'));
             $this->disconnectDB($this->getValue('ID')); // disconnect this port
-            plugin_tracker_addLogConnection("remove",$destination_port);
             $this->disconnectDB($destination_port);     // disconnect destination port
             if (makeConnector($this->getValue('ID'),$destination_port)) { // connect those 2 ports
                $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
@@ -258,7 +256,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
       if ($p_port=='') $p_port=$this;
       $netwire = new Netwire;
       plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($p_port));
-      plugin_tracker_addLogConnection("remove",$p_port);
+      //plugin_tracker_addLogConnection("remove",$p_port);
       if (removeConnector($p_port)) {
          $ptap = new PluginTrackerAgentsProcesses;
          $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],

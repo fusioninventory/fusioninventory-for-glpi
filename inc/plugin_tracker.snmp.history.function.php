@@ -121,34 +121,32 @@ function plugin_tracker_addLogConnection($status,$port,$FK_process=0) {
 	global $DB,$CFG_GLPI;
 
 	$CommonItem = new CommonItem;
-	$history = new PluginTrackerSNMPHistory;
-	$netport=new Netport;
+	$pthc = new PluginTrackerHistoryConnections;
 	$nw=new Netwire;
 
    if (($FK_process == '0') AND (isset($_SESSION['glpi_plugin_tracker_processnumber']))) {
-      $FK_process = $_SESSION['glpi_plugin_tracker_processnumber'];
+      $input['process_number'] = $_SESSION['glpi_plugin_tracker_processnumber'];
    }
 
 	// Récupérer le port de la machine associé au port du switch
 
 	// Récupérer le type de matériel
-	$array["FK_ports"] = $port;
+	$input["FK_port_source"] = $port;
 	$opposite_port = $nw->getOppositeContact($port);
 	if ($opposite_port == "0") {
 		return;
    }
-	$netport->getFromDB($opposite_port);
-   $array['FK_port_destination'] = $opposite_port;
-	$array["device_type"] = $netport->fields["device_type"];
-	
-	// Récupérer l'adresse MAC
-	$netport->getFromDB($opposite_port);
-	$array["value"] = $netport->fields["ifmac"];
-	
-	// Récupération de l'id du matériel
-	$array["device_ID"] = $netport->fields["on_device"];
-	// Ajouter en DB
-	$history->insert_connection($status,$array,$FK_process);
+   $input['FK_port_destination'] = $opposite_port;
+
+   $input['date'] = date("Y-m-d H:i:s");
+
+   if ($status == 'remove') {
+      $input['creation'] = 0;
+   } else if ($status == 'make') {
+      $input['creation'] = 1;
+   }
+
+   $pthc->add($input);
 }
 
 
@@ -299,8 +297,12 @@ function plugin_tracker_snmp_showHistory($ID_port) {
                   $CommonItem->getFromDB($np->fields["device_type"],
                                          $np->fields["on_device"]);
                   $link1 = $CommonItem->getLink(1);
-                  $link = str_replace($CommonItem->getName(0), $np->fields["name"],
-                                      $CommonItem->getLink());
+                  $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+                  if (rtrim($np->fields["name"]) != "")
+                     $link .= $np->fields["name"];
+                  else
+                     $link .= $LANG['common'][0];
+                  $link .= "</a>";
                   $text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
                } else {
                   $text .= "<td align='center'><font color='#ff0000'>".$LANG['common'][28]."</font></td>";
@@ -312,8 +314,12 @@ function plugin_tracker_snmp_showHistory($ID_port) {
                   $CommonItem->getFromDB($np->fields["device_type"],
                                          $np->fields["on_device"]);
                   $link1 = $CommonItem->getLink(1);
-                  $link = str_replace($CommonItem->getName(0), $np->fields["name"],
-                                      $CommonItem->getLink());
+                  $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+                  if (rtrim($np->fields["name"]) != "")
+                     $link .= $np->fields["name"];
+                  else
+                     $link .= $LANG['common'][0];
+                  $link .= "</a>";
                   $text .= "<td align='center'>".$link." ".$LANG['networking'][25]." ".$link1."</td>";
                } else {
                   $text .= "<td align='center'><font color='#ff0000'>".$LANG['common'][28]."</font></td>";

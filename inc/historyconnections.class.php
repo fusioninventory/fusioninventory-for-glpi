@@ -92,7 +92,7 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
    }
 
    function showForm($input='') {
-      global $DB,$LANG;
+      global $DB,$LANG,$CFG_GLPI,$INFOFORM_PAGES;
 
       $CommonItem = new CommonItem;
       $np = new Netport;
@@ -152,8 +152,13 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
             $CommonItem->getFromDB($np->fields["device_type"],
                                    $np->fields["on_device"]);
             $link1 = $CommonItem->getLink(1);
-            $link = str_replace($CommonItem->getName(0), $np->fields["name"],
-                                $CommonItem->getLink());
+
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+            if (rtrim($np->fields["name"]) != "")
+               $link .= $np->fields["name"];
+            else
+               $link .= $LANG['common'][0];
+            $link .= "</a>";
             echo $link." ".$LANG['networking'][25]." ".$link1;
             echo "</td>";
 
@@ -170,8 +175,12 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
             $CommonItem->getFromDB($np->fields["device_type"],
                                    $np->fields["on_device"]);
             $link1 = $CommonItem->getLink(1);
-            $link = str_replace($CommonItem->getName(0), $np->fields["name"],
-                                $CommonItem->getLink());
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+            if (rtrim($np->fields["name"]) != "")
+               $link .= $np->fields["name"];
+            else
+               $link .= $LANG['common'][0];
+            $link .= "</a>";
             echo $link." ".$LANG['networking'][25]." ".$link1;
             echo "</td>";
 
