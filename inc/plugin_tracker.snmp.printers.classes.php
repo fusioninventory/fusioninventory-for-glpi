@@ -893,7 +893,7 @@ class PluginTrackerPrinters extends CommonDBTM {
 
       $where = " WHERE `FK_printers` IN(".$printersIds.")";
       if ($begin!='' || $end!='') {
-            $where .= " AND " .getDateRequest("`date`",$begin,$end);
+            $where .= " AND " .$this->getDateRequest("`date`",$begin,$end);
          }
       switch ($timeUnit) {
          case 'date':
@@ -987,6 +987,30 @@ class PluginTrackerPrinters extends CommonDBTM {
          $ptg = new PluginTrackerGraph($query, $graphField, $timeUnit, $printers, $title);
       }
       echo '</div>';
+   }
+
+   /**
+    * Add dates for request
+    *
+    * @param $field : table.field to request
+    * @param $begin date : begin date
+    * @param $end date : end date
+    *
+    * @return sql
+    */
+   function getDateRequest($field,$begin, $end) {
+   // TODO : replace in 0.80 by same function in core/inc/db.function.php
+      $sql = '';
+      if (!empty($begin)) {
+            $sql .= " $field >= '$begin' ";
+      }
+      if (!empty($end)) {
+         if (!empty($sql)){
+            $sql.= " AND ";
+         }
+         $sql .= " $field <= ADDDATE('$end' , INTERVAL 1 DAY) ";
+      }
+      return " (".$sql.") ";
    }
 }
 
