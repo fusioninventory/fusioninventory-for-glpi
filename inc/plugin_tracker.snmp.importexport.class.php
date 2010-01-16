@@ -260,25 +260,7 @@ class PluginTrackerImportExport extends CommonDBTM {
          }
          $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('discovery_nb_found' => '1'));
 		}
-//		foreach($p_xml->agent as $agent) {
-//			$agent_version = $agent->version;
-//			$agent_id = $agent->id;
-//			$query = "UPDATE `glpi_plugin_tracker_agents`
-//                   SET `last_agent_update`='".$agent->end_date."',
-//                       `tracker_agent_version`='".$agent_version."'
-//                   WHERE `ID`='".$agent_id."';";
-//			$DB->query($query);
-//
-//			$query = "UPDATE `glpi_plugin_tracker_agents_processes`
-//                   SET `status`='2',
-//                       `start_time_discovery`='".$agent->start_time_discovery."',
-//                       `end_time_discovery`='".$agent->end_time_discovery."',
-//                       `discovery_queries_total`='".$agent->discovery_queries_total."',
-//                       `discovery_queries`='".$count_discovery_devices."'
-//                   WHERE `process_number`='".$agent->pid."'
-//                         AND `FK_agent`='".$agent->id."';";
-//			$DB->query($query);
-//		}
+
 		foreach($p_xml->DEVICE as $discovery) {
 			if ($discovery->MODELSNMP != "") {
 				$query = "SELECT *
@@ -307,7 +289,8 @@ class PluginTrackerImportExport extends CommonDBTM {
          $p_criteria['serial'] = $discovery->SERIAL;
          $p_criteria['macaddr'] = $discovery->MAC;
 
-         if (!plugin_tracker_discovery_criteria($p_criteria)) {
+         $discovery_criteria = plugin_tracker_discovery_criteria($p_criteria);
+         if (!$discovery_criteria) {
             $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('discovery_nb_import' => '1'));
             // Add in unknown device
             $data = array();
@@ -342,6 +325,63 @@ class PluginTrackerImportExport extends CommonDBTM {
 				$port_ID = $np->add($port_add);
             unset($port_add);
          } else {
+            # Update device
+            echo "discovery_criteria :".$discovery_criteria;
+            $a_device = explode("||", $discovery_criteria);
+            // $a_device[0] == id, $a_device[1] = type
+            $ci = new commonitem;
+            $ci->getFromDB($a_device[1], $a_device[0]);
+            $a_lockable = plugin_tracker_lock_getLockFields($a_device[1], $a_device[0]);
+            $data = array();
+            $data['ID'] = $ci->getField('ID');
+
+            if ($ci->getField('name') && !in_array('name', $a_lockable)) {
+               if (!empty($discovery->NETBIOSNAME)) {
+                  $data['name'] = $discovery->NETBIOSNAME;
+               } else if (!empty($discovery->SNMPHOSTNAME)) {
+                  $data['name'] = $discovery->SNMPHOSTNAME;
+               }
+            }
+            if ($ci->getField('dnsname') && !in_array('dnsname', $a_lockable))
+               $data['dnsname'] = $discovery->DNSHOSTNAME;
+            if ($ci->getField('FK_entities') && !in_array('FK_entities', $a_lockable))
+               $data['FK_entities'] = $discovery->ENTITY;
+            if ($ci->getField('serial') && !in_array('serial', $a_lockable))
+               $data['serial'] = $discovery->SERIAL;
+            if ($ci->getField('contact') && !in_array('contact', $a_lockable))
+               $data['contact'] = $discovery->USERSESSION;
+            if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {
+               $data['domain'] = 0;
+               if (!empty($discovery->WORKGROUP)) {
+                  $data['domain'] = externalImportDropdown(
+                                  "glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
+               }
+            }
+            if ($ci->getField('comments') && !in_array('comments', $a_lockable))
+               $data['comments'] = $discovery->DESCRIPTION;
+            if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable));
+               $data['FK_model_infos'] = $FK_model;
+            if ($ci->getField('FK_snmp_connection') && !in_array('FK_entitiessnmp_connection', $a_lockable));
+               $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
+            if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {
+               $data['snmp'] = 0;
+               if ($discovery->AUTHSNMP != "") {
+                  $data['snmp'] = 1;
+               }
+            }
+
+            if ($a_device[1] == NETWORKING_TYPE) {
+               $data["ifaddr"] = $discovery->IP;
+               $data['ifmac'] = $discovery->MAC;
+            } else {
+               $port = array();
+               $port["ifaddr"] = $discovery->IP;
+               $port['ifmac'] = $discovery->MAC;
+               $port['name'] = $discovery->NETPORTVENDOR;
+               // Update port, if many ports, put error on process
+            }
+            $ci->obj->update($data);
+
             $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'], array('discovery_nb_exists' => '1'));
          }
 		}

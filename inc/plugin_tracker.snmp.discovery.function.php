@@ -414,13 +414,13 @@ function plugin_tracker_discovery_criteria($p_criteria, $type=0) {
 }
 
 
-function plugin_tracker_find_device($a_criteria, $type=0) {
+function plugin_tracker_find_device($a_criteria, $p_type=0) {
 	global $DB,$CFG_GLPI;
 
    $ci = new commonitem;
 
-   if ($type != '0') {
-      $a_types = array($type);
+   if ($p_type != '0') {
+      $a_types = array($p_type);
    } else {
       $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
                         PHONE_TYPE, PLUGIN_TRACKER_MAC_UNKNOWN);
@@ -463,7 +463,11 @@ function plugin_tracker_find_device($a_criteria, $type=0) {
       $result = $DB->query($query);
       if($DB->numrows($result) > 0) {
          $data = $DB->fetch_assoc($result);
-         return $data['ID'];
+         if ($p_type == '0') {
+            return $data['ID'].'||'.$type;
+         } else {
+            return $data['ID'];
+         }
       }
    }
    return false;
