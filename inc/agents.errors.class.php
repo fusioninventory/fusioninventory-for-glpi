@@ -48,6 +48,7 @@ class PluginTrackerAgentsErrors extends CommonDBTM {
 
       echo "<th>";
       echo $LANG['plugin_tracker']["processes"][1];
+      echo " <a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";

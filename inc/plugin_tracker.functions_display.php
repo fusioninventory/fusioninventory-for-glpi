@@ -90,7 +90,7 @@ function plugin_tracker_menu() {
 	echo "<td align='center' width='".$width."' height='130'>";
 	if(plugin_tracker_HaveRight("snmp_agent_infos","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"].
-               "/plugins/tracker/front/plugin_tracker.agents.processes.php'>
+               "/plugins/tracker/front/plugin_tracker.agents.processes.form.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_info_agents.png'/>
 		<br/><b>".$LANG['plugin_tracker']["processes"][19]."</b></a>";
    }
@@ -182,7 +182,7 @@ function plugin_tracker_mini_menu() {
 	echo "<td align='center' width='".$width."' height='40'>";
 	if(plugin_tracker_HaveRight("snmp_agent_infos","r")) {
 		echo "<a href='".$CFG_GLPI["root_doc"].
-         "/plugins/tracker/front/plugin_tracker.agents.processes.php'>
+         "/plugins/tracker/front/plugin_tracker.agents.processes.form.php'>
 		<img src='".GLPI_ROOT."/plugins/tracker/pics/menu_mini_info_agents.png'
 				 onmouseout=\"cleanhide('menu_mini_info_agents')\"
              onmouseover=\"cleandisplay('menu_mini_info_agents')\" /></a>";

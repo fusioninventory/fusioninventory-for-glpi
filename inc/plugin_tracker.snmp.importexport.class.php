@@ -361,7 +361,7 @@ class PluginTrackerImportExport extends CommonDBTM {
                $data['comments'] = $discovery->DESCRIPTION;
             if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable));
                $data['FK_model_infos'] = $FK_model;
-            if ($ci->getField('FK_snmp_connection') && !in_array('FK_entitiessnmp_connection', $a_lockable));
+            if ($ci->getField('FK_snmp_connection') && !in_array('FK_snmp_connection', $a_lockable));
                $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
             if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {
                $data['snmp'] = 0;
@@ -371,14 +371,37 @@ class PluginTrackerImportExport extends CommonDBTM {
             }
 
             if ($a_device[1] == NETWORKING_TYPE) {
-               $data["ifaddr"] = $discovery->IP;
-               $data['ifmac'] = $discovery->MAC;
+               if (!in_array('ifaddr', $a_lockable))
+                  $data["ifaddr"] = $discovery->IP;
+               if (!in_array('ifmac', $a_lockable))
+                  $data['ifmac'] = $discovery->MAC;
             } else {
-               $port = array();
-               $port["ifaddr"] = $discovery->IP;
-               $port['ifmac'] = $discovery->MAC;
-               $port['name'] = $discovery->NETPORTVENDOR;
-               // Update port, if many ports, put error on process
+               // TODO: manage ports
+               $np = new Netport;
+               $query = "SELECT ID FROM glpi_networking_ports
+                  WHERE (on_device = '".$a_device[0]."' AND device_type = '".$a_device[1]."')
+                     AND `ifaddr` NOT IN ('', '127.0.0.1')
+                  ORDER BY name, logical_number";
+               if ($result = $DB->query($query)) {
+                  if ($DB->numrows($result) == 1) {
+                     $data = $DB->fetch_assoc($result);
+                     $np->getFromDB($data["ID"]);
+                     $port = array();
+                     $port['ID'] = $data["ID"];
+                     $port["ifaddr"] = $discovery->IP;
+                     $port['ifmac'] = $discovery->MAC;
+                     $port['name'] = $discovery->NETPORTVENDOR;
+                     $np->update($port);
+                  } else if ($DB->numrows($result) > 1) {
+                     $ptae = new PluginTrackerAgentsErrors;
+                     $error_input['ID'] = $a_device[0];
+                     $error_input['TYPE'] = $a_device[1];
+                     $error_input['MESSAGE'] = 'Unable to determine network port of device to update with values : '.$discovery->IP.'(ip),
+                        '.$discovery->MAC.'(mac), '.$discovery->NETPORTVENDOR.'(name)';
+                     $error_input['agent_type'] = 'NETDISCOVERY';
+                     $ptae->addError($error_input);
+                  }
+               }
             }
             $ci->obj->update($data);
 

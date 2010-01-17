@@ -102,6 +102,7 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
 
       echo "<th>";
       echo $LANG['plugin_tracker']["processes"][1];
+      echo " <a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -139,7 +140,7 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.historyconnections.php?process_number=".$data['process_number']."'>".
+            echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?h_process_number=".$data['process_number']."'>".
             $data['process_number']."</a>";
             echo "</td>";
 

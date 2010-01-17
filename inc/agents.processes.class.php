@@ -55,6 +55,17 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 	}
 
 
+   function defineTabs($ID,$withtemplate) {
+		global $LANG,$CFG_GLPI;
+
+		$ong[1]=$LANG['plugin_tracker']["processes"][19];
+      $ong[2]=$LANG['plugin_tracker']["title"][2];
+		$ong[3]=$LANG['plugin_tracker']["errors"][0];
+
+		return $ong;
+	}
+
+
    function ShowHeader() {
       global $LANG;
       
@@ -329,7 +340,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
             echo "<td>";
             if ($data['query_nb_error'] > 0) {
-               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.errors.php?process_number=".$data['process_number']."'>
+               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."'>
                   <font color='#ff0000'>".$data['query_nb_error']."</font></a>";
             } else {
                echo $data['query_nb_error'];
