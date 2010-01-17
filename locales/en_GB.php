@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 $title="Tracker";
-$version="2.1.3";
+$version="2.2.0";
 
 $LANG['plugin_tracker']["title"][0]="$title";
 $LANG['plugin_tracker']["title"][1]="SNMP information";
@@ -42,6 +42,13 @@ $LANG['plugin_tracker']["title"][2]="connections history";
 $LANG['plugin_tracker']["title"][3]="[Trk] Errors";
 $LANG['plugin_tracker']["title"][4]="[Trk] Cron";
 $LANG['plugin_tracker']["title"][5]=" Tracker's locks";
+
+$LANG['plugin_tracker']['config'][0] = "Inventory frequency (in hours)";
+$LANG['plugin_tracker']['config'][1] = "Modules";
+$LANG['plugin_tracker']['config'][2] = "Snmp";
+$LANG['plugin_tracker']['config'][3] = "OCS inventory";
+$LANG['plugin_tracker']['config'][4] = "Devices discovery";
+$LANG['plugin_tracker']['config'][5] = "Manage agent directly from GLPI";
 
 $LANG['plugin_tracker']["profile"][0]="Rights management";
 $LANG['plugin_tracker']["profile"][1]="$title"; //interface
@@ -66,7 +73,6 @@ $LANG['plugin_tracker']["profile"][25]="IP range";
 $LANG['plugin_tracker']["profile"][26]="Agent";
 $LANG['plugin_tracker']["profile"][27]="Agent information";
 $LANG['plugin_tracker']["profile"][28]="Report";
-
 
 $LANG['plugin_tracker']["setup"][2]="Thanks to put all in root entity (see all)";
 $LANG['plugin_tracker']["setup"][3]="Plugin configuration".$title;
@@ -113,6 +119,7 @@ $LANG['plugin_tracker']["functionalities"][29]="List of fields to history";
 
 $LANG['plugin_tracker']["functionalities"][30]="Status of active material";
 $LANG['plugin_tracker']["functionalities"][31]="Management of cartridges and stock";
+$LANG['plugin_tracker']["functionalities"][32]="Delete agents informations processes after";
 $LANG['plugin_tracker']["functionalities"][36]="Frequency of meter reading";
 
 $LANG['plugin_tracker']["functionalities"][40]="Configuration";
@@ -199,6 +206,7 @@ $LANG['plugin_tracker']["errors"][50]="GLPI version not compatible need 0.72.1";
 $LANG['plugin_tracker']["errors"][101]="Timeout";
 $LANG['plugin_tracker']["errors"][102]="No SNMP model assigned";
 $LANG['plugin_tracker']["errors"][103]="No SNMP authentification assigned";
+$LANG['plugin_tracker']["errors"][104]="Error message";
 
 $LANG['plugin_tracker']["history"][0] = "Old";
 $LANG['plugin_tracker']["history"][1] = "New";
@@ -216,14 +224,6 @@ $LANG['plugin_tracker']["prt_history"][20]="History meter printer";
 $LANG['plugin_tracker']["prt_history"][21]="Date";
 $LANG['plugin_tracker']["prt_history"][22]="Meter";
 
-
-$LANG['plugin_tracker']["cpt_history"][0]="History sessions";
-$LANG['plugin_tracker']["cpt_history"][1]="Contact";
-$LANG['plugin_tracker']["cpt_history"][2]="Computer";
-$LANG['plugin_tracker']["cpt_history"][3]="User";
-$LANG['plugin_tracker']["cpt_history"][4]="State";
-$LANG['plugin_tracker']["cpt_history"][5]="Date";
-
 $LANG['plugin_tracker']["prt_history"][30]="Display";
 $LANG['plugin_tracker']["prt_history"][31]="Time unit";
 $LANG['plugin_tracker']["prt_history"][32]="Add a printer";
@@ -232,6 +232,13 @@ $LANG['plugin_tracker']["prt_history"][34]="day";
 $LANG['plugin_tracker']["prt_history"][35]="week";
 $LANG['plugin_tracker']["prt_history"][36]="month";
 $LANG['plugin_tracker']["prt_history"][37]="year";
+
+$LANG['plugin_tracker']["cpt_history"][0]="History sessions";
+$LANG['plugin_tracker']["cpt_history"][1]="Contact";
+$LANG['plugin_tracker']["cpt_history"][2]="Computer";
+$LANG['plugin_tracker']["cpt_history"][3]="User";
+$LANG['plugin_tracker']["cpt_history"][4]="State";
+$LANG['plugin_tracker']["cpt_history"][5]="Date";
 
 $LANG['plugin_tracker']["type"][1]="Computer";
 $LANG['plugin_tracker']["type"][2]="Switch";
@@ -292,12 +299,24 @@ $LANG['plugin_tracker']["processes"][21]="Queried devices";
 $LANG['plugin_tracker']["processes"][22]="Errors";
 $LANG['plugin_tracker']["processes"][23]="Total duration of discovery";
 $LANG['plugin_tracker']["processes"][24]="Total duration of query";
+$LANG['plugin_tracker']["processes"][25]="Agent";
+$LANG['plugin_tracker']["processes"][26]="Discover";
+$LANG['plugin_tracker']["processes"][27]="Query";
+$LANG['plugin_tracker']["processes"][28]="Core";
+$LANG['plugin_tracker']["processes"][29]="Threads";
+$LANG['plugin_tracker']["processes"][30]="Discovered";
+$LANG['plugin_tracker']["processes"][31]="Existent";
+$LANG['plugin_tracker']["processes"][32]="Imported";
+$LANG['plugin_tracker']["processes"][33]="Queried";
+$LANG['plugin_tracker']["processes"][34]="In error";
+$LANG['plugin_tracker']["processes"][35]="Created connections";
+$LANG['plugin_tracker']["processes"][36]="Deleted connections";
+$LANG['plugin_tracker']["processes"][37]="IP total";
 
 $LANG['plugin_tracker']["state"][0]="Computer start";
 $LANG['plugin_tracker']["state"][1]="Computer stop";
 $LANG['plugin_tracker']["state"][2]="User connection";
 $LANG['plugin_tracker']["state"][3]="User disconnection";
-
 
 $LANG['plugin_tracker']["mapping"][1]="networking > location";
 $LANG['plugin_tracker']["mapping"][2]="networking > firmware";
@@ -428,7 +447,7 @@ $LANG['plugin_tracker']["mapping"][426]="printer > meter > total number of print
 $LANG['plugin_tracker']["mapping"][427]="printer > meter > number of printed black and white pages (copy)";
 $LANG['plugin_tracker']["mapping"][428]="printer > meter > number of printed color pages (copy)";
 $LANG['plugin_tracker']["mapping"][429]="printer > meter > total number of printed pages (fax)";
-
+$LANG['plugin_tracker']["mapping"][430]="networking > port > vlan";
 
 
 $LANG['plugin_tracker']["mapping"][101]="";
@@ -489,7 +508,6 @@ $LANG['plugin_tracker']["mapping"][1429]="Total number of printed pages (fax)";
 
 $LANG['plugin_tracker']["printer"][0]="pages";
 
-
 $LANG['plugin_tracker']["menu"][0]="Information about discovered devices";
 $LANG['plugin_tracker']["menu"][1]="Agent configuration";
 $LANG['plugin_tracker']["menu"][2]="IP range configuration";
@@ -509,12 +527,13 @@ $LANG['plugin_tracker']["discovery"][5]="Number of imported devices";
 $LANG['plugin_tracker']["discovery"][6]="Primary criteria for existence";
 $LANG['plugin_tracker']["discovery"][7]="Secondary criteria for existence ";
 $LANG['plugin_tracker']["discovery"][8]="If a device returns empty fields on first ciriteria, second one will be used.";
+$LANG['plugin_tracker']["discovery"][9]="Number of devices not imported because type non defined";
 
 $LANG['plugin_tracker']["rangeip"][0]="Start of IP range";
 $LANG['plugin_tracker']["rangeip"][1]="End of IP range";
 $LANG['plugin_tracker']["rangeip"][2]="IP Ranges";
 $LANG['plugin_tracker']["rangeip"][3]="Query";
-
+$LANG['plugin_tracker']["rangeip"][4]="Incorrect IP address";
 
 $LANG['plugin_tracker']["agents"][0]="SNMP Agent";
 $LANG['plugin_tracker']["agents"][2]="Number of threads used by core for querying devices";
@@ -534,8 +553,9 @@ $LANG['plugin_tracker']["unknown"][0]="DNS Name";
 $LANG['plugin_tracker']["unknown"][1]="Network port name";
 $LANG['plugin_tracker']["unknown"][2]="Approved devices";
 
-$LANG['plugin_tracker']["mapping_fields"][0]="name";
-$LANG['plugin_tracker']["mapping_fields"][1]="contact";
-$LANG['plugin_tracker']["mapping_fields"][2]="comments";
+$LANG['plugin_tracker']["task"][0]="Task";
+$LANG['plugin_tracker']["task"][1]="Task management";
+$LANG['plugin_tracker']["task"][2]="Action";
+$LANG['plugin_tracker']["task"][3]="Unit";
 
 ?>

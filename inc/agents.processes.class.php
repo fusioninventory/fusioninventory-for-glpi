@@ -116,7 +116,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][30];
+      echo $LANG['plugin_tracker']["processes"][30]." / <br/>".$LANG['plugin_tracker']["processes"][34];
       echo "</th>";
 
       echo "<th>";
@@ -281,6 +281,12 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
             
             echo "<td>";
             echo $data['discovery_nb_found'];
+            if ($data['discovery_nb_error'] > 0) {
+               echo " / <a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&agent_type=NETDISCOVERY'>
+                  <font color='#ff0000'>".$data['discovery_nb_error']."</font></a>";
+            } else {
+               echo " / ".$data['discovery_nb_error'];
+            }
             echo "</td>";
 
             echo "<td>";
@@ -340,7 +346,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
             echo "<td>";
             if ($data['query_nb_error'] > 0) {
-               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."'>
+               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&agent_type=SNMPQUERY'>
                   <font color='#ff0000'>".$data['query_nb_error']."</font></a>";
             } else {
                echo $data['query_nb_error'];
@@ -349,7 +355,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
             echo "<td>";
             if ($data['query_nb_connections_created'] > 0) {
-               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.historyconnections.php?process_number=".$data['process_number']."&amp;created=1'>
+               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&amp;created=1'>
                   ".$data['query_nb_connections_created']."</a>";
             } else {
                echo $data['query_nb_connections_created'];
@@ -358,7 +364,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
             echo "<td>";
             if ($data['query_nb_connections_deleted'] > 0) {
-               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.historyconnections.php?process_number=".$data['process_number']."&amp;created=0'>
+               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&amp;created=0'>
                   ".$data['query_nb_connections_deleted']."</a>";
             } else {
                echo $data['query_nb_connections_deleted'];

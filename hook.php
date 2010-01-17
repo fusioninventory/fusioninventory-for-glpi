@@ -584,27 +584,27 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_TASK][4]['table'] = 'glpi_plugin_tracker_task';
 	$sopt[PLUGIN_TRACKER_TASK][4]['field'] = 'action';
 	$sopt[PLUGIN_TRACKER_TASK][4]['linkfield'] = 'action';
-//	$sopt[PLUGIN_TRACKER_TASK][4]['name'] = $LANG["common"][27];
+	$sopt[PLUGIN_TRACKER_TASK][4]['name'] = $LANG['plugin_tracker']["task"][0];
 
 	$sopt[PLUGIN_TRACKER_TASK][5]['table'] = 'glpi_plugin_tracker_task';
 	$sopt[PLUGIN_TRACKER_TASK][5]['field'] = 'param';
 	$sopt[PLUGIN_TRACKER_TASK][5]['linkfield'] = 'param';
-//	$sopt[PLUGIN_TRACKER_TASK][5]['name'] = $LANG["common"][27];
+	$sopt[PLUGIN_TRACKER_TASK][5]['name'] = $LANG['plugin_tracker']["task"][2];
    
 	$sopt[PLUGIN_TRACKER_TASK][6]['table'] = 'glpi_plugin_tracker_task';
 	$sopt[PLUGIN_TRACKER_TASK][6]['field'] = 'device_type';
 	$sopt[PLUGIN_TRACKER_TASK][6]['linkfield'] = 'device_type';
 	$sopt[PLUGIN_TRACKER_TASK][6]['name'] = $LANG["common"][1];
  
-	$sopt[PLUGIN_TRACKER_TASK][7]['table'] = 'glpi_plugin_tracker_task';
-	$sopt[PLUGIN_TRACKER_TASK][7]['field'] = 'on_device';
-	$sopt[PLUGIN_TRACKER_TASK][7]['linkfield'] = 'on_device';
+//	$sopt[PLUGIN_TRACKER_TASK][7]['table'] = 'glpi_plugin_tracker_task';
+//	$sopt[PLUGIN_TRACKER_TASK][7]['field'] = 'on_device';
+//	$sopt[PLUGIN_TRACKER_TASK][7]['linkfield'] = 'on_device';
 //	$sopt[PLUGIN_TRACKER_TASK][7]['name'] = $LANG["common"][27];
 
 	$sopt[PLUGIN_TRACKER_TASK][8]['table'] = 'glpi_plugin_tracker_task';
 	$sopt[PLUGIN_TRACKER_TASK][8]['field'] = 'single';
 	$sopt[PLUGIN_TRACKER_TASK][8]['linkfield'] = 'single';
-//	$sopt[PLUGIN_TRACKER_TASK][8]['name'] = $LANG["common"][27];
+	$sopt[PLUGIN_TRACKER_TASK][8]['name'] = $LANG['plugin_tracker']["task"][3];
 
 	return $sopt;
 }

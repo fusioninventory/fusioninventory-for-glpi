@@ -73,6 +73,9 @@ class PluginTrackerAgentsErrors extends CommonDBTM {
          $condition = '';
       } else {
          $condition = "WHERE `process_number`='".$input['process_number']."'";
+         if (isset($input['agent_type'])) {
+            $condition .= " AND agent_type='".$input['agent_type']."' ";
+         }
       }
       $query = "SELECT * FROM `".$this->table."`
          ".$condition."

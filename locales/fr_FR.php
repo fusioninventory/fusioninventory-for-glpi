@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 $title="Tracker";
-$version="2.1.3";
+$version="2.2.0";
 
 $LANG['plugin_tracker']["title"][0]="$title";
 $LANG['plugin_tracker']["title"][1]="Informations SNMP";
@@ -240,7 +240,6 @@ $LANG['plugin_tracker']["cpt_history"][3]="Utilisateur";
 $LANG['plugin_tracker']["cpt_history"][4]="Etat";
 $LANG['plugin_tracker']["cpt_history"][5]="Date";
 
-
 $LANG['plugin_tracker']["type"][1]="Ordinateur";
 $LANG['plugin_tracker']["type"][2]="Commutateur";
 $LANG['plugin_tracker']["type"][3]="Imprimante";
@@ -318,7 +317,6 @@ $LANG['plugin_tracker']["state"][0]="Démarrage de l'ordinateur";
 $LANG['plugin_tracker']["state"][1]="Arrêt de l'ordinateur";
 $LANG['plugin_tracker']["state"][2]="Connexion de l'utilisateur";
 $LANG['plugin_tracker']["state"][3]="Déconnexion de l'utilisateur";
-
 
 $LANG['plugin_tracker']["mapping"][1]="reseaux > lieu";
 $LANG['plugin_tracker']["mapping"][2]="réseaux > firmware";
@@ -557,5 +555,7 @@ $LANG['plugin_tracker']["unknown"][2]="Matériel approuvé";
 
 $LANG['plugin_tracker']["task"][0]="Tâche";
 $LANG['plugin_tracker']["task"][1]="Gestion des tâches";
+$LANG['plugin_tracker']["task"][2]="Action";
+$LANG['plugin_tracker']["task"][3]="Unitaire";
 
 ?>
