@@ -898,6 +898,7 @@ class PluginTrackerPrinters extends CommonDBTM {
       switch ($timeUnit) {
          case 'date':
             $group = "GROUP BY `FK_printers`, `year`, `month`, `date`";
+            break;
          case 'week':
             $group = "GROUP BY `FK_printers`, `year`, `month`, `week`";
             break;
