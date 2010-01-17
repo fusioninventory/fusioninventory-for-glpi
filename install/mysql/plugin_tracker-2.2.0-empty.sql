@@ -453,46 +453,6 @@ CREATE TABLE `glpi_plugin_tracker_printers_cartridges` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_tracker_processes`;
-
-CREATE TABLE `glpi_plugin_tracker_processes` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `thread_id` int(4) NOT NULL DEFAULT '0',
-  `start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `status` int(4) NOT NULL DEFAULT '0',
-  `error_msg` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `process_id` int(11) NOT NULL DEFAULT '0',
-  `network_queries` int(8) NOT NULL DEFAULT '0',
-  `printer_queries` int(8) NOT NULL DEFAULT '0',
-  `ports_queries` int(8) NOT NULL DEFAULT '0',
-  `discovery_queries` int(8) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`),
-  KEY `end_time` (`end_time`),
-  KEY `process_id` (`process_id`),
-  KEY `network_queries` (`network_queries`,`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_tracker_processes_values`;
-
-CREATE TABLE `glpi_plugin_tracker_processes_values` (
-  `ID` int(8) NOT NULL AUTO_INCREMENT,
-  `FK_processes` int(8) NOT NULL,
-  `device_ID` int(8) NOT NULL DEFAULT '0',
-  `device_type` int(8) NOT NULL DEFAULT '0',
-  `port` int(8) NOT NULL DEFAULT '0',
-  `unknow_mac` varchar(255) DEFAULT NULL,
-  `snmp_errors` varchar(255) DEFAULT NULL,
-  `dropdown_add` varchar(255) DEFAULT NULL,
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`ID`),
-  KEY `unknow_mac` (`unknow_mac`,`FK_processes`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_tracker_task`;
 
 CREATE TABLE `glpi_plugin_tracker_task` (

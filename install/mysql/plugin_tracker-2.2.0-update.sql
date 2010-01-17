@@ -163,3 +163,9 @@ CREATE TABLE `glpi_plugin_tracker_snmp_history_connections` (
    `process_number` VARCHAR( 255 ) NULL ,
    PRIMARY KEY ( `ID` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE `glpi_plugin_tracker_processes` ;
+
+DROP TABLE `glpi_plugin_tracker_processes_values` ;

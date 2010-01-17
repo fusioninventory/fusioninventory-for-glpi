@@ -42,4 +42,5 @@ commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins",
 
 glpi_header(GLPI_ROOT ."/plugins/tracker/front/plugin_tracker.menu.php");
 commonFooter();
+
 ?>
