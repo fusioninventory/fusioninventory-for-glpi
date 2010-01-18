@@ -580,14 +580,26 @@ class PluginTrackerCommunication {
     //@//return errors string to be alimented if import ko / '' if ok
     **/
    function importInfo($p_info) {
+      global $LANG;
+      
       $errors='';
-      if (isset($p_info->TYPE) AND isset($p_info->ID)) {
-         $this->deviceId = $p_info->ID;
-         if ($p_info->TYPE=='NETWORKING') {
+      $criteria['serial'] = $p_info->SERIAL;
+      $criteria['name'] = $p_info->NAME;
+      $criteria['macaddr'] = $p_info->MAC;
+      if ($p_info->TYPE=='NETWORKING') {
+         $this->deviceId = plugin_tracker_discovery_criteria($criteria, NETWORKING_TYPE);
+         if ($this->deviceId != '') {
             $errors.=$this->importNetworking($p_info);
-         } elseif ($p_info->TYPE=='PRINTER') {
-            //TODO
+         } else {
+            $errors.=$LANG['plugin_tracker']["errors"][23].'
+                     type : "'.$p_info->TYPE.'"
+                     ID : "'.$p_info->ID.'"
+                     serial : "'.$p_info->SERIAL.'"
+                     name : "'.$p_info->NAME.'"
+                     macaddress : "'.$p_info->MAC.'"'."\n";
          }
+      } elseif ($p_info->TYPE=='PRINTER') {
+         //TODO
       }
       return $errors;
    }

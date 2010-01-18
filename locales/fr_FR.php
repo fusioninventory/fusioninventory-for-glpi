@@ -197,6 +197,7 @@ $LANG['plugin_tracker']["errors"][12]="IP inconnue";
 $LANG['plugin_tracker']["errors"][20]="Erreur SNMP";
 $LANG['plugin_tracker']["errors"][21]="Impossible de récupérer les informations";
 $LANG['plugin_tracker']["errors"][22]="Elément inattendu dans";
+$LANG['plugin_tracker']["errors"][23]="Impossible d'identifier le matériel";
 
 $LANG['plugin_tracker']["errors"][30]="Erreur Câblage";
 $LANG['plugin_tracker']["errors"][31]="Problème de câblage";
