@@ -71,6 +71,8 @@ class PluginTrackerRangeIP extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][0] . "</td>";
 		echo "<td align='center'>";
+      if (empty($this->fields["ifaddr_start"]))
+         $this->fields["ifaddr_start"] = "...";
       $ipexploded = explode(".", $this->fields["ifaddr_start"]);
       $i = 0;
       foreach ($ipexploded as $ipnum) {
@@ -90,6 +92,8 @@ class PluginTrackerRangeIP extends CommonDBTM {
 		echo "<td align='center'>" . $LANG['plugin_tracker']["rangeip"][1] . "</td>";
 		echo "<td align='center'>";
       unset($ipexploded);
+      if (empty($this->fields["ifaddr_end"]))
+         $this->fields["ifaddr_end"] = "...";
       $ipexploded = explode(".", $this->fields["ifaddr_end"]);
       $i = 0;
       foreach ($ipexploded as $ipnum) {
