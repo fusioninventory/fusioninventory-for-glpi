@@ -819,11 +819,7 @@ class PluginTrackerCommunication {
       $errors='';
       $ptp = new PluginTrackerPort(NETWORKING_TYPE);
       $ifType = $p_port->IFTYPE;
-      if ( (strstr($ifType, "ethernetCsmacd"))
-            OR ($ifType == "6")
-            OR ($ifType == "ethernet-csmacd(6)")
-            OR (strstr($ifType, "iso88023Csmacd"))
-            OR ($ifType == "7")) { // not virtual port
+      if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->MAC, $this->getConnectionIP($p_port));
          if (is_int($portIndex)) {
             $oldPort = $this->ptd->getPort($portIndex);
@@ -891,7 +887,7 @@ class PluginTrackerCommunication {
       $errors='';
       $ptp = new PluginTrackerPort(PRINTER_TYPE);
       $ifType = $p_port->IFTYPE;
-      if ( substr($p_port->IP, 0, 4) != '127') {
+      if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->MAC, $p_port->IP);
          if (is_int($portIndex)) {
             $oldPort = $this->ptd->getPort($portIndex);
