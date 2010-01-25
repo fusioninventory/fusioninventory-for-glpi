@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: MAZZONI Vincent
-// Purpose of file: modelisation of a networking switch
+// Purpose of file: modelisation of a printer
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
@@ -40,20 +40,22 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
-   private $ports=array(), $ifaddrs=array();
-   private $oTracker_networking, $oTracker_networking_ifaddr, $oTracker_networking_ports;
-   private $newPorts=array(), $updatesPorts=array();
-   private $newIfaddrs=array(), $updatesIfaddrs=array();
+class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
+   private $oTracker_printer;
+   private $oTracker_printer_history;
+   private $ports=array(), $newPorts=array(), $updatesPorts=array();
+   private $cartridges=array(), $newCartridges=array(), $updatesCartridges=array();
 
 	/**
 	 * Constructor
 	**/
    function __construct() {
-      parent::__construct("glpi_networking");
+      parent::__construct("glpi_printers");
       $this->dohistory=true;
-      $this->type=NETWORKING_TYPE;
-      $this->oTracker_networking = new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking");
+      $this->type=PRINTER_TYPE;
+      $this->oTracker_printer = new PluginTrackerCommonDBTM("glpi_plugin_tracker_printers");
+      $this->oTracker_printer_history =
+                        new PluginTrackerCommonDBTM("glpi_plugin_tracker_printers_history");
    }
 
    /**
@@ -65,17 +67,36 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
       global $DB;
 
       parent::load($p_id);
-      $this->ifaddrs = $this->getIfaddrsDB();
       $this->ports = $this->getPortsDB();
+      $this->cartridges = $this->getCartridgesDB();
 
       $query = "SELECT `ID`
-                FROM `glpi_plugin_tracker_networking`
-                WHERE `FK_networking` = '".$this->getValue('ID')."';";
+                FROM `glpi_plugin_tracker_printers`
+                WHERE `FK_printers` = '".$this->getValue('ID')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             $tracker = $DB->fetch_assoc($result);
-            $this->oTracker_networking->load($tracker['ID']);
-            $this->ptcdLinkedObjects[]=$this->oTracker_networking;
+            $this->oTracker_printer->load($tracker['ID']);
+            $this->ptcdLinkedObjects[]=$this->oTracker_printer;
+         } else {
+            $this->oTracker_printer->load();
+            $this->oTracker_printer->setValue('FK_printers', $this->getValue('ID'));
+            $this->ptcdLinkedObjects[]=$this->oTracker_printer;
+         }
+
+         $query = "SELECT *
+                   FROM `glpi_plugin_tracker_printers_history`
+                   WHERE `FK_printers` = '".$this->getValue('ID')."'
+                         AND LEFT(`date`, 10)='".date("Y-m-d")."';";
+         if ($result = $DB->query($query)) {
+            if ($DB->numrows($result) != 0) {
+               $history = $DB->fetch_assoc($result);
+               $this->oTracker_printer_history->load($history['ID']);
+            } else {
+               $this->oTracker_printer_history->load();
+               $this->oTracker_printer_history->setValue('FK_printers', $this->getValue('ID'));
+               $this->oTracker_printer_history->setValue('date', date("Y-m-d H:i:s"));
+            }
          }
       }
    }
@@ -86,23 +107,28 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function updateDB() {
+      global $DB;
+
       if (array_key_exists('model', $this->ptcdUpdates)) {
          $manufacturer = getDropdownName("glpi_dropdown_manufacturer",
                                          $this->getValue('FK_glpi_enterprise'));
-         $this->ptcdUpdates['model'] = externalImportDropdown("glpi_dropdown_model_networking",
+         $this->ptcdUpdates['model'] = externalImportDropdown("glpi_dropdown_model_printers",
                                                    $this->ptcdUpdates['model'], 0,
                                                    array('manufacturer'=>$manufacturer));
-      }
-      if (array_key_exists('firmware', $this->ptcdUpdates)) {
-         $this->ptcdUpdates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",
-                                                   $this->ptcdUpdates['firmware']);
       }
       parent::updateDB();
       // update last_tracker_update even if no other update
       $this->setValue('last_tracker_update', date("Y-m-d H:i:s"));
-      $this->oTracker_networking->updateDB();
+      $this->oTracker_printer->updateDB();
       // ports
       $this->savePorts();
+      // cartridges
+      $this->saveCartridges();
+      // history
+      if (is_null($this->oTracker_printer_history->getValue('ID'))) {
+         // update only if counters not already set for today
+         $this->oTracker_printer_history->updateDB();
+      }
    }
 
    /**
@@ -117,7 +143,7 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
-                      AND `device_type` = '".NETWORKING_TYPE."';";
+                      AND `device_type` = '".PRINTER_TYPE."';";
       $portsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -168,22 +194,22 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    }
 
    /**
-    * Get index of ifaddr object
+    * Get index of cartridge object
     *
-    *@param $p_ip='' IP address
-    *@return Index of ifaddr object in ifaddrs array or '' if not found
+    *@param $p_name Cartridge name
+    *@return Index of cartridge object in cartridges array or '' if not found
     **/
-   function getIfaddrIndex($p_ip) {
-      $ifaddrIndex = '';
-      foreach ($this->ifaddrs as $index => $oIfaddr) {
-         if (is_object($oIfaddr)) { // should always be true
-            if ($oIfaddr->getValue('ifaddr')==$p_ip) {
-               $ifaddrIndex = $index;
+   function getCartridgeIndex($p_name) {
+      $cartridgeIndex = '';
+      foreach ($this->cartridges as $index => $oCartridge) {
+         if (is_object($oCartridge)) { // should always be true
+            if ($oCartridge->getValue('object_name')==$p_name) {
+               $cartridgeIndex = $index;
                break;
             }
          }
       }
-      return $ifaddrIndex;
+      return $cartridgeIndex;
    }
 
    /**
@@ -219,23 +245,33 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    }
 
    /**
-    * Save ifadddrs
+    * Get cartridge object
+    *
+    *@param $p_index Index of cartridge object in $cartridges
+    *@return Cartridge object in cartridges array
+    **/
+   function getCartridge($p_index) {
+      return $this->cartridges[$p_index];
+   }
+
+   /**
+    * Save new cartridges
     *
     *@return nothing
     **/
-   function saveIfaddrs() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_tracker_networking_ifaddr"; // TODO : to clean
+   function saveCartridges() {
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_tracker_printers_cartridges"; // TODO : to clean
 
-      foreach ($this->ifaddrs as $index=>$pti) {
-         if (!in_array($index, $this->updatesIfaddrs)) {
-            $pti->deleteDB();
+      foreach ($this->cartridges as $index=>$ptc) {
+         if (!in_array($index, $this->updatesCartridges)) { // delete cartridges which don't exist any more
+            $ptc->deleteDB();
          }
       }
-      foreach ($this->newIfaddrs as $pti) {
-         if ($pti->getValue('ID')=='') {
-            $pti->addDB($this->getValue('ID'));
-         } else {
-            $pti->updateDB();
+      foreach ($this->newCartridges as $ptc) {
+         if ($ptc->getValue('ID')=='') {               // create existing cartridges
+            $ptc->addCommon();
+         } else {                                      // update existing cartridges
+            $ptc->updateDB();
          }
       }
    }
@@ -255,55 +291,53 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    }
 
    /**
-    * Get ips
+    * Get cartridges
     *
-    *@return Array of ips instances
+    *@return Array of cartridges
     **/
-   private function getIfaddrsDB() {
+   private function getCartridgesDB() {
       global $DB;
 
-      $pti = new PluginTrackerIfaddr();
+      $ptc = new PluginTrackerCommonDBTM('glpi_plugin_tracker_printers_cartridges');
       $query = "SELECT `ID`
-                FROM `glpi_plugin_tracker_networking_ifaddr`
-                WHERE `FK_networking` = '".$this->getValue('ID')."';";
-      $ifaddrsIds = array();
+                FROM `glpi_plugin_tracker_printers_cartridges`
+                WHERE `FK_printers` = '".$this->getValue('ID')."';";
+      $cartridgesIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
-            while ($ifaddr = $DB->fetch_assoc($result)) {
-               $pti->load($ifaddr['ID']);
-               $ifaddrsIds[] = clone $pti;
+            while ($cartridge = $DB->fetch_assoc($result)) {
+               $ptc->load($cartridge['ID']);
+               $cartridgesIds[] = clone $ptc;
             }
          }
       }
-      return $ifaddrsIds;
+      return $cartridgesIds;
    }
 
    /**
-    * Get ifaddr object
+    * Add new cartridge
     *
-    *@param $p_index Index of ifaddr object in $ifaddrs
-    *@return Ifaddr object in ifaddrs array
-    **/
-   function getIfaddr($p_index) {
-      return $this->ifaddrs[$p_index];
-   }
-
-   /**
-    * Add IP
-    *
-    *@param $p_oIfaddr Ifaddr object
-    *@param $p_ifaddrIndex='' index of ifaddr in $ifaddrs if already exists
+    *@param $p_oCartridge Cartridge object
+    *@param $p_cartridgeIndex='' index of cartridge in $cartridges if already exists
     *@return nothing
     **/
-   function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
-      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networking.ifaddr
-         $this->setValue('ifaddr', $p_oIfaddr->getValue('ifaddr'));
-      }
-      $this->newIfaddrs[]=$p_oIfaddr;
-      if (is_int($p_ifaddrIndex)) {
-         $this->updatesIfaddrs[]=$p_ifaddrIndex;
+   function addCartridge($p_oCartridge, $p_cartridgeIndex='') {
+      $this->newCartridges[]=$p_oCartridge;
+      if (is_int($p_cartridgeIndex)) {
+         $this->updatesCartridges[]=$p_cartridgeIndex;
       }
    }
 
+   /**
+    * Add new page counter
+    *
+    *@param $p_name Counter name
+    *@param $p_state Counter state
+    *@return nothing
+    **/
+   function addPageCounter($p_name, $p_state) {
+         $this->oTracker_printer_history->setValue($p_name, $p_state,
+                                                   $this->oTracker_printer_history, 0);
+   }
 }
 ?>

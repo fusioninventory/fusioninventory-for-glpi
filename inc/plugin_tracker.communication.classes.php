@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
  * Class to communicate with agents using XML
  **/
 class PluginTrackerCommunication {
-   private $sxml, $deviceId, $ptn;
+   private $sxml, $deviceId, $ptd, $type='';
 
    function __construct() {
       $this->sxml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
@@ -535,13 +535,24 @@ class PluginTrackerCommunication {
       $ptae = new PluginTrackerAgentsErrors;
 
       $errors=''; $this->deviceId='';
+      switch ($p_device->INFO->TYPE) {
+         case 'PRINTER':
+            $this->type = PRINTER_TYPE;
+            break;
+         case 'NETWORKING':
+            $this->type = NETWORKING_TYPE;
+            break;
+         default:
+            $errors.=$LANG['plugin_tracker']["errors"][22].' TYPE : '
+                              .$p_device->INFO->TYPE."\n";
+      }
       if (isset($p_device->ERROR)) {
          $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
                               array('query_nb_error' => '1'));
          $a_input['ID'] = $p_device->ERROR->ID;
          if ($p_device->ERROR->TYPE=='NETWORKING') {
             $a_input['TYPE'] = NETWORKING_TYPE;
-         } else {
+         } elseif ($p_device->ERROR->TYPE=='PRINTER') {
             $a_input['TYPE'] = PRINTER_TYPE;
          }
          $a_input['MESSAGE'] = $p_device->ERROR->MESSAGE;
@@ -555,16 +566,26 @@ class PluginTrackerCommunication {
                switch ($child->getName()) {
                   case 'INFO' : // already managed
                      break;
-                  case 'PORT' :
-                     $errors.=$this->importPort($child);
+                  case 'PORTS' :
+                     $errors.=$this->importPorts($child);
                      break;
+                  case 'CARTRIDGES' :
+                     if ($this->type == PRINTER_TYPE) {
+                        $errors.=$this->importCartridges($child);
+                        break;
+                     }
+                  case 'PAGECOUNTERS' :
+                     if ($this->type == PRINTER_TYPE) {
+                        $errors.=$this->importPageCounters($child);
+                        break;
+                     }
                   default :
                      $errors.=$LANG['plugin_tracker']["errors"][22].' DEVICE : '
                               .$child->getName()."\n";
                }
             }
-            if (is_object($this->ptn)) {
-               $this->ptn->savePorts();
+            if ($errors=='') {
+               $this->ptd->updateDB();
             }
          }
       }
@@ -576,20 +597,19 @@ class PluginTrackerCommunication {
     * Import INFO
     *@param $p_info INFO code to import
     *
-    *@return nothing
-    //@//return errors string to be alimented if import ko / '' if ok
+    *@return errors string to be alimented if import ko / '' if ok
     **/
    function importInfo($p_info) {
       global $LANG;
-      
+
       $errors='';
-      $criteria['serial'] = $p_info->SERIAL;
-      $criteria['name'] = $p_info->NAME;
-      $criteria['macaddr'] = $p_info->MAC;
+      $criteria['serial']  = $p_info->SERIAL;
+      $criteria['name']    = $p_info->NAME;
+      $criteria['macaddr'] = $p_info->MAC; //TODO get mac in PORT for printer
       if ($p_info->TYPE=='NETWORKING') {
          $this->deviceId = plugin_tracker_discovery_criteria($criteria, NETWORKING_TYPE);
          if ($this->deviceId != '') {
-            $errors.=$this->importNetworking($p_info);
+            $errors.=$this->importInfoNetworking($p_info);
          } else {
             $errors.=$LANG['plugin_tracker']["errors"][23].'
                      type : "'.$p_info->TYPE.'"
@@ -600,6 +620,17 @@ class PluginTrackerCommunication {
          }
       } elseif ($p_info->TYPE=='PRINTER') {
          //TODO
+         $this->deviceId = plugin_tracker_discovery_criteria($criteria, PRINTER_TYPE);
+         if ($this->deviceId != '') {
+            $errors.=$this->importInfoPrinter($p_info);
+         } else {
+            $errors.=$LANG['plugin_tracker']["errors"][23].'
+                     type : "'.$p_info->TYPE.'"
+                     ID : "'.$p_info->ID.'"
+                     serial : "'.$p_info->SERIAL.'"
+                     name : "'.$p_info->NAME.'"
+                     macaddress : "'.$p_info->MAC.'"'."\n";
+         }
       }
       return $errors;
    }
@@ -610,12 +641,12 @@ class PluginTrackerCommunication {
     *
     *@return errors string to be alimented if import ko / '' if ok
     **/
-   function importNetworking($p_info) {
+   function importInfoNetworking($p_info) {
       global $LANG;
 
       $errors='';
-      $this->ptn = new PluginTrackerNetworking2;
-      $this->ptn->load($p_info->ID);
+      $this->ptd = new PluginTrackerNetworking2;
+      $this->ptd->load($this->deviceId);
 
       foreach ($p_info->children() as $child)
       {
@@ -625,34 +656,34 @@ class PluginTrackerCommunication {
             case 'TYPE' : // already managed
                break;
             case 'COMMENTS' :
-               $this->ptn->setValue('comments', $p_info->COMMENTS);
+               $this->ptd->setValue('comments', $p_info->COMMENTS);
                break;
             case 'CPU' :
-               $this->ptn->setValue('cpu', $p_info->CPU);
+               $this->ptd->setValue('cpu', $p_info->CPU);
                break;
             case 'FIRMWARE' :
-               $this->ptn->setValue('firmware', $p_info->FIRMWARE);
+               $this->ptd->setValue('firmware', $p_info->FIRMWARE);
                break;
             case 'MAC' :
-               $this->ptn->setValue('ifmac', $p_info->MAC);
+               $this->ptd->setValue('ifmac', $p_info->MAC);
                break;
             case 'MEMORY' :
-               $this->ptn->setValue('memory', $p_info->MEMORY);
+               $this->ptd->setValue('memory', $p_info->MEMORY);
                break;
             case 'MODEL' :
-               $this->ptn->setValue('model', $p_info->MODEL);
+               $this->ptd->setValue('model', $p_info->MODEL);
                break;
             case 'NAME' :
-               $this->ptn->setValue('name', $p_info->NAME);
+               $this->ptd->setValue('name', $p_info->NAME);
                break;
             case 'RAM' :
-               $this->ptn->setValue('ram', $p_info->RAM);
+               $this->ptd->setValue('ram', $p_info->RAM);
                break;
             case 'SERIAL' :
-               $this->ptn->setValue('serial', $p_info->SERIAL);
+               $this->ptd->setValue('serial', $p_info->SERIAL);
                break;
             case 'UPTIME' :
-               $this->ptn->setValue('uptime', $p_info->UPTIME);
+               $this->ptd->setValue('uptime', $p_info->UPTIME);
                break;
             case 'IPS' :
                $errors.=$this->importIps($child);
@@ -661,8 +692,57 @@ class PluginTrackerCommunication {
                $errors.=$LANG['plugin_tracker']["errors"][22].' INFO : '.$child->getName()."\n";
          }
       }
-      if ($errors=='') {
-         $this->ptn->updateDB();
+      return $errors;
+   }
+
+   /**
+    * Import INFO:Printer
+    *@param $p_info INFO code to import
+    *
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importInfoPrinter($p_info) {
+      global $LANG;
+
+      $errors='';
+      $this->ptd = new PluginTrackerPrinter;
+      $this->ptd->load($this->deviceId);
+      foreach ($p_info->children() as $child) {
+         switch ($child->getName()) {
+            case 'ID' : // already managed
+               break;
+            case 'TYPE' : // already managed
+               break;
+            case 'COMMENTS' :
+               $this->ptd->setValue('comments', $p_info->COMMENTS);
+               break;
+            case 'MEMORY' :
+               $this->ptd->setValue('memory', $p_info->MEMORY);
+               break;
+            case 'MODEL' :
+               $this->ptd->setValue('model', $p_info->MODEL);
+               break;
+            case 'NAME' :
+               $this->ptd->setValue('name', $p_info->NAME);
+               break;
+            case 'SERIAL' :
+               $this->ptd->setValue('serial', $p_info->SERIAL);
+               break;
+            case 'OTHERSERIAL' :
+               $this->ptd->setValue('otherserial', $p_info->OTHERSERIAL);
+               break;
+            case 'LOCATION' :
+               $this->ptd->setValue('location', $p_info->LOCATION);
+               break;
+            case 'CONTACT' :
+               $this->ptd->setValue('contact', $p_info->CONTACT);
+               break;
+            case 'MANUFACTURER' :
+               $this->ptd->setValue('manufacturer', $p_info->MANUFACTURER); // TODO : regrouper tout ces cases
+               break;
+            default :
+               $errors.=$LANG['plugin_tracker']["errors"][22].' INFO : '.$child->getName()."\n";
+         }
       }
 
       return $errors;
@@ -682,44 +762,71 @@ class PluginTrackerCommunication {
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
-               $ifaddrIndex = $this->ptn->getIfaddrIndex($child);
+               $ifaddrIndex = $this->ptd->getIfaddrIndex($child);
                if (is_int($ifaddrIndex)) {
-                  $oldIfaddr = $this->ptn->getIfaddr($ifaddrIndex);
+                  $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
                   $pti->load($oldIfaddr->getValue('ID'));
                } else {
                   $pti->load();
                }
                $pti->setValue('ifaddr', $child);
-               $this->ptn->addIfaddr(clone $pti, $ifaddrIndex);
+               $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
                break;
             default :
                $errors.=$LANG['plugin_tracker']["errors"][22].' IPS : '.$child->getName()."\n";
          }
       }
-      $this->ptn->saveIfaddrs();
+      $this->ptd->saveIfaddrs();
       return $errors;
    }
 
    /**
-    * Import PORT
+    * Import PORTS
+    *@param $p_ports PORTS code to import
+    *
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importPorts($p_ports) {
+      global $LANG;
+
+      $errors='';
+      foreach ($p_ports->children() as $name=>$child)
+      {
+         switch ($child->getName()) {
+            case 'PORT' :
+               if ($this->type == PRINTER_TYPE) {
+                  $errors.=$this->importPortPrinter($child);
+               } elseif ($this->type == NETWORKING_TYPE) {
+                  $errors.=$this->importPortNetworking($child);
+               }
+               break;
+            default :
+               $errors.=$LANG['plugin_tracker']["errors"][22].' PORTS : '.$child->getName()."\n";
+         }
+      }
+      return $errors;
+   }
+
+   /**
+    * Import PORT Networking
     *@param $p_port PORT code to import
     *
     *@return errors string to be alimented if import ko / '' if ok
     **/
-   function importPort($p_port) {
+   function importPortNetworking($p_port) {
       global $LANG;
 
       $errors='';
-      $ptp = new PluginTrackerPort;
+      $ptp = new PluginTrackerPort(NETWORKING_TYPE);
       $ifType = $p_port->IFTYPE;
       if ( (strstr($ifType, "ethernetCsmacd"))
             OR ($ifType == "6")
             OR ($ifType == "ethernet-csmacd(6)")
             OR (strstr($ifType, "iso88023Csmacd"))
             OR ($ifType == "7")) { // not virtual port
-         $portIndex = $this->ptn->getPortIndex($p_port->MAC, $this->getConnectionIP($p_port));
+         $portIndex = $this->ptd->getPortIndex($p_port->MAC, $this->getConnectionIP($p_port));
          if (is_int($portIndex)) {
-            $oldPort = $this->ptn->getPort($portIndex);
+            $oldPort = $this->ptd->getPort($portIndex);
             $ptp->load($oldPort->getValue('ID'));
          } else {
             $ptp->addDB($this->deviceId, TRUE);
@@ -765,9 +872,168 @@ class PluginTrackerCommunication {
                   $errors.=$LANG['plugin_tracker']["errors"][22].' PORT : '.$name."\n";
             }
          }
-         $this->ptn->addPort($ptp, $portIndex);
+         $this->ptd->addPort($ptp, $portIndex);
       } else { // virtual port : do not import but delete if exists
          if ( is_numeric($ptp->getValue('ID')) ) $ptp->deleteDB();
+      }
+      return $errors;
+   }
+
+   /**
+    * Import PORT Printer
+    *@param $p_port PORT code to import
+    *
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importPortPrinter($p_port) {
+      global $LANG;
+
+      $errors='';
+      $ptp = new PluginTrackerPort(PRINTER_TYPE);
+      $ifType = $p_port->IFTYPE;
+      if ( substr($p_port->IP, 0, 4) != '127') {
+         $portIndex = $this->ptd->getPortIndex($p_port->MAC, $p_port->IP);
+         if (is_int($portIndex)) {
+            $oldPort = $this->ptd->getPort($portIndex);
+            $ptp->load($oldPort->getValue('ID'));
+         } else {
+            $ptp->addDB($this->deviceId, TRUE);
+         }
+         foreach ($p_port->children() as $name=>$child) {
+            switch ($name) {
+               case 'IFNAME' :
+                  plugin_tracker_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  $ptp->setValue('name', $child);
+                  break;
+               case 'MAC' :
+                  plugin_tracker_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  $ptp->setValue('ifmac', $child);
+                  break;
+               case 'IP' :
+                  plugin_tracker_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  $ptp->setValue('ifaddr', $child);
+                  break;
+               case 'IFNUMBER' :
+                  plugin_tracker_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  $ptp->setValue('logical_number', $child);
+                  break;
+               case 'IFTYPE' : // already managed
+                  break;
+               default :
+                  $errors.=$LANG['plugin_tracker']["errors"][22].' PORT : '.$name."\n";
+            }
+         }
+         $this->ptd->addPort($ptp, $portIndex);
+      }
+      return $errors;
+   }
+
+   /**
+    * Import CARTRIDGES
+    *@param $p_cartridges CARTRIDGES code to import
+    *
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importCartridges($p_cartridges) {
+      global $LANG;
+
+      $errors='';
+      foreach ($p_cartridges->children() as $name=>$child)
+      {
+         switch ($name) {
+            case 'BLACK' :
+            case 'BLACKPHOTO' :
+            case 'CYAN' :
+            case 'CYANLIGHT' :
+            case 'YELLOW' :
+            case 'MAGENTA' :
+            case 'MAGENTALIGHT' :
+            case 'PHOTOCONDUCTOR' :
+            case 'PHOTOCONDUCTORBLACK' :
+            case 'PHOTOCONDUCTORCOLOR' :
+            case 'PHOTOCONDUCTORCYAN' :
+            case 'PHOTOCONDUCTORYELLOW' :
+            case 'PHOTOCONDUCTORMAGENTA' :
+            case 'UNITTRANSFERBLACK' :
+            case 'UNITTRANSFERCYAN' :
+            case 'UNITTRANSFERYELLOW' :
+            case 'UNITTRANSFERMAGENTA' :
+            case 'WASTE' :
+            case 'FUSER' :
+            case 'BELTCLEANER' :
+            case 'MAINTENANCEKIT' :
+               $ptc = new PluginTrackerCommonDBTM("glpi_plugin_tracker_printers_cartridges");
+               $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
+               if (is_int($cartridgeIndex)) {
+                  $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???
+                  $ptc->load($oldCartridge->getValue('ID'));
+               } else {
+                  $ptc->addCommon(TRUE); //TODO ???
+                  $ptc->setValue('FK_printers', $this->deviceId);
+               }
+               $ptc->setValue('object_name', $name);
+               $ptc->setValue('state', $child, $ptc, 0);
+               $this->ptd->addCartridge($ptc, $cartridgeIndex);
+               break;
+            default :
+               $errors.=$LANG['plugin_tracker']["errors"][22].' CARTRIDGES : '.$name()."\n";
+         }
+      }
+      return $errors;
+   }
+
+   /**
+    * Import PAGECOUNTERS
+    *@param $p_pagecounters PAGECOUNTERS code to import
+    *
+    *@return errors string to be alimented if import ko / '' if ok
+    **/
+   function importPageCounters($p_pagecounters) {
+      global $LANG;
+
+      $errors='';
+      foreach ($p_pagecounters->children() as $name=>$child)
+      {
+         switch ($child->getName()) {
+            case 'TOTAL' :
+               $errors.=$this->ptd->addPageCounter('pages_total', $child);
+               break;
+            case 'BLACK' :
+               $errors.=$this->ptd->addPageCounter('pages_n_b', $child);
+               break;
+            case 'COLOR' :
+               $errors.=$this->ptd->addPageCounter('pages_color', $child);
+               break;
+            case 'RECTOVERSO' :
+               $errors.=$this->ptd->addPageCounter('pages_recto_verso', $child);
+               break;
+            case 'SCANNED' :
+               $errors.=$this->ptd->addPageCounter('scanned', $child);
+               break;
+            case 'PRINTTOTAL' :
+               $errors.=$this->ptd->addPageCounter('pages_total_print', $child);
+               break;
+            case 'PRINTBLACK' :
+               $errors.=$this->ptd->addPageCounter('pages_n_b_print', $child);
+               break;
+            case 'PRINTCOLOR' :
+               $errors.=$this->ptd->addPageCounter('pages_color_print', $child);
+               break;
+            case 'COPYTOTAL' :
+               $errors.=$this->ptd->addPageCounter('pages_total_copy', $child);
+               break;
+            case 'COPYBLACK' :
+               $errors.=$this->ptd->addPageCounter('pages_n_b_copy', $child);
+               break;
+            case 'COPYCOLOR' :
+               $errors.=$this->ptd->addPageCounter('pages_color_copy', $child);
+               break;
+            case 'FAXTOTAL' :
+               $errors.=$this->ptd->addPageCounter('pages_total_fax', $child);
+               break;
+            default :
+               $errors.=$LANG['plugin_tracker']["errors"][22].' PAGECOUNTERS : '.$name."\n";
+         }
       }
       return $errors;
    }
@@ -975,6 +1241,29 @@ class PluginTrackerCommunication {
                                  if ($ipChild != '') return $ipChild;
                            }
                         }
+                  }
+               }
+         }
+      }
+      return '';
+   }
+
+   /**
+    * Get printer MAC address
+    *
+    *@param $p_port PORT code to import
+    *@return first connection IP or ''
+    **/
+   function getPrinterMac() {
+      $ports = $this->sxml->CONTENT->DEVICE->PORTS;
+      foreach ($ports->children() as $portName=>$portChild) {
+         switch ($portName) {
+            case 'PORT' :
+               foreach ($portChild->children() as $macName=>$macChild) {
+                  switch ($macName) {
+                     case 'MAC' :
+                        $mac=$macChild;
+                        if ($macChild != '') return $macChild;
                   }
                }
          }

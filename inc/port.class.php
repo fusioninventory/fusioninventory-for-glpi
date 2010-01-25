@@ -48,14 +48,17 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
    private $unknownDevicesToConnect=array(); // IP and/or MAC addresses of unknown connected ports
    private $portVlans=array(); // number and name for each vlan
    private $cdp=false; // true if CDP=1
+   private $glpi_type=NETWORKING_TYPE; // NETWORKING_TYPE, PRINTER_TYPE...
 
 	/**
 	 * Constructor
 	**/
-   function __construct() {
+   function __construct($p_type=NULL) {
+//   function __construct() {
       parent::__construct("glpi_networking_ports");
       $this->oTracker_networking_ports =
               new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking_ports");
+      if ($p_type!=NULL) $this->glpi_type = $p_type;
    }
 
    /**
@@ -113,7 +116,8 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
       if (count($this->ptcdUpdates) OR $p_force) {
          // update core
          $this->ptcdUpdates['on_device']=$p_id;
-         $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
+         $this->ptcdUpdates['device_type']=$this->glpi_type;
+//         $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
          $portID=parent::add($this->ptcdUpdates);
          $this->load($portID);
          // update tracker

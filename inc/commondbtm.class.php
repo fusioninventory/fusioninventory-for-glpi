@@ -80,6 +80,19 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
    }
 
    /**
+    * Add a new item with the instance values
+    *
+    *@param $p_force=FALSE Force add even if no updates where done
+    *@return nothing
+    **/
+   function addCommon($p_force=FALSE) {
+      if (count($this->ptcdUpdates) OR $p_force) {
+         $itemID=parent::add($this->ptcdUpdates);
+         $this->load($itemID);
+      }
+   }
+
+   /**
     * Update an existing preloaded item with the instance values
     *
     *@return nothing
@@ -87,7 +100,11 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
    function updateDB() {
       if (count($this->ptcdUpdates)) {
          $this->ptcdUpdates['ID'] = $this->getValue('ID');
-         $this->update($this->ptcdUpdates);
+         if ($this->ptcdUpdates['ID'] != '') {
+            $this->update($this->ptcdUpdates);
+         } else {
+            $this->add($this->ptcdUpdates);
+         }
       }
    }
 
@@ -142,15 +159,18 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
     *@param $p_object=NULL Object to update
     *@return true if value set / false if unknown field
     **/
-   function setValue($p_field, $p_value, $p_object=NULL) {
+   function setValue($p_field, $p_value, $p_object=NULL, $p_default='') {
+      // TODO : replace $p_default by check default value in DB ?
       if (is_null($p_object)) {
          $p_object=$this;
       }
       if (array_key_exists($p_field, $p_object->ptcdFields)) {
-         if ($p_object->ptcdFields[$p_field]!=$p_value) { // don't update if values are the same
-            if (!in_array($p_field, $this->ptcdLockFields)) { // don't update if field is locked
-               $p_object->ptcdFields[$p_field] = $p_value;
-               $p_object->ptcdUpdates[$p_field] = $p_value;
+         if (!in_array($p_field, $this->ptcdLockFields)) { // don't update if field is locked
+            if ($p_object->ptcdFields[$p_field]!=$p_value) { // don't update if values are the same
+               if (!($p_object->getValue($p_field)==$p_default AND $p_value=="")) { // don't update if both values are empty
+                  $p_object->ptcdFields[$p_field] = $p_value;
+                  $p_object->ptcdUpdates[$p_field] = $p_value;
+               }
             }
          }
          return true;
