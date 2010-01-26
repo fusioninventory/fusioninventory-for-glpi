@@ -2485,6 +2485,18 @@ function plugin_pre_item_purge_tracker($parm) {
 				}
             break;
 
+			case PRINTER_TYPE :
+				$query_delete = "DELETE FROM `glpi_plugin_tracker_printers`
+                             WHERE `FK_printers`='".$parm["ID"]."';";
+				$DB->query($query_delete);
+				$query_delete = "DELETE FROM `glpi_plugin_tracker_printers_cartridges`
+                             WHERE `FK_printers`='".$parm["ID"]."';";
+				$DB->query($query_delete);
+				$query_delete = "DELETE FROM `glpi_plugin_tracker_printers_history`
+                             WHERE `FK_printers`='".$parm["ID"]."';";
+				$DB->query($query_delete);
+            break;
+
          case PLUGIN_TRACKER_MAC_UNKNOWN :
             // Delete ports and connections if exists
             $np=new Netport;
