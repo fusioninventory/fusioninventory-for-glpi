@@ -852,8 +852,14 @@ class PluginTrackerPrinters extends CommonDBTM {
 
       $target = $p_target;
       $where=''; $begin=''; $end=''; $timeUnit='date'; $graphField='pages_total'; $printersComp = array();
-      if (isset($_SESSION['glpi_plugin_tracker_graph_begin'])) $begin=$_SESSION['glpi_plugin_tracker_graph_begin'];
-      if (isset($_SESSION['glpi_plugin_tracker_graph_end'])) $end=$_SESSION['glpi_plugin_tracker_graph_end'];
+      if (isset($_SESSION['glpi_plugin_tracker_graph_begin'])) {
+         $begin=$_SESSION['glpi_plugin_tracker_graph_begin'];
+      }
+      if ( $begin == 'NULL' OR $begin == '' ) $begin=date("Y-m-01"); // first day of current month
+      if (isset($_SESSION['glpi_plugin_tracker_graph_end'])) {
+         $end=$_SESSION['glpi_plugin_tracker_graph_end'];
+      }
+      if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d");; // today
       if (isset($_SESSION['glpi_plugin_tracker_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_tracker_graph_timeUnit'];
       if (isset($_SESSION['glpi_plugin_tracker_graph_graphField'])) $graphField=$_SESSION['glpi_plugin_tracker_graph_graphField'];
       if (!isset($_SESSION['glpi_plugin_tracker_graph_printersComp'])) $_SESSION['glpi_plugin_tracker_graph_printersComp']=array();
