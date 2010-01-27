@@ -249,13 +249,28 @@ class PluginTrackerGraph {
     *@return nothing
     **/
    function render($p_stack=FALSE) {
-      // Initialise the graph
+      // declare the graph
       $Test = new pChart(800,250);
       $Test->tmpFolder=$this->tmpPath;
       $fileId = time().'_'.rand(1,1000);
       $fontFile = "tahoma.ttf";
+      // prepare the map
+      echo '<SCRIPT TYPE="text/javascript" SRC="'.$this->pChartPath.'overlib.js"></SCRIPT>
+      <SCRIPT TYPE="text/javascript" SRC="'.$this->pChartPath.'pMap.js"></SCRIPT>';
       $MapID = "map_".$fileId.".map";
       $Test->setImageMap(TRUE,$MapID);
+      $Map = new pChart(800,250);
+      $Map->tmpFolder=$this->tmpPath;
+      $img = $this->tmpPath."img_".$fileId.".png";
+      echo '<DIV ID="overDiv" STYLE="position:absolute; visibility:hidden; z-index:1000;"></DIV>';
+      echo "<IMG ID='tracker_graph_$fileId' SRC='$img' WIDTH=800 HEIGHT=250 BORDER=0 OnMouseMove='tracker_graph(event);' OnMouseOut='nd();'>";
+      echo '<SCRIPT>
+              function tracker_graph(event) {
+                 LoadImageMap("tracker_graph_'.$fileId.'","'.$Map->tmpFolder.$MapID.'");
+                 getMousePosition(event);
+              }
+            </SCRIPT>';
+      // configure the graph
       $Test->setFontProperties($this->fontsPath.$fontFile,8);
       $Test->setGraphArea(80,30,580,185); // graph size : keep place for titles on X and Y axes
       $Test->drawFilledRoundedRectangle(7,7,793,243,5,240,240,240); // background rectangle
@@ -278,18 +293,7 @@ class PluginTrackerGraph {
       $Test->drawLegend(590,30,$this->pData->GetDataDescription(),255,255,255); // take care of legend text size
       $Test->setFontProperties($this->fontsPath.$fontFile,10);
       $Test->drawTitle(50,22,$this->title.' (/ '.$this->timeUnitName.')',50,50,50,585);
-      $img = $this->tmpPath."img_".$fileId.".png";
       $Test->Render($img);
-      // map link
-      echo '<SCRIPT TYPE="text/javascript" SRC="'.$this->pChartPath.'overlib.js"></SCRIPT>
-      <SCRIPT TYPE="text/javascript" SRC="'.$this->pChartPath.'pMap.js"></SCRIPT>
-      <DIV ID="overDiv" STYLE="position:absolute; visibility:hidden; z-index:1000;"></DIV>';
-      $Map = new pChart(800,250);
-      $Map->tmpFolder=$this->tmpPath;
-      echo "<IMG ID=pChartPicture1 SRC='$img' WIDTH=800 HEIGHT=250 BORDER=0 OnMouseMove='getMousePosition(event);' OnMouseOut='nd();'>";
-      echo '<SCRIPT>
-              LoadImageMap("pChartPicture1","'.$Map->tmpFolder.$MapID.'");
-            </SCRIPT>';
    }
 
    /**
