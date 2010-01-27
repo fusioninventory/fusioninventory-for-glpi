@@ -972,7 +972,7 @@ class PluginTrackerCommunication {
                $this->ptd->addCartridge($ptc, $cartridgeIndex);
                break;
             default :
-               $errors.=$LANG['plugin_tracker']["errors"][22].' CARTRIDGES : '.$name()."\n";
+               $errors.=$LANG['plugin_tracker']["errors"][22].' CARTRIDGES : '.$name."\n";
          }
       }
       return $errors;
