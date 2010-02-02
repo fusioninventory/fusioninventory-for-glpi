@@ -116,6 +116,13 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>Token</td>";
+		echo "<td align='center'>";
+		echo $this->fields["token"];
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr>";
 		echo "<th colspan='2'>";
 		echo "<a href='#' onClick='getSlide(\"optionavance\");'>".$LANG['plugin_tracker']["agents"][9]." :</a>";
@@ -222,6 +229,71 @@ class PluginTrackerAgents extends CommonDBTM {
       }
       return $agent;
    }
+
+
+   function RemoteStartAgent($ID, $ip) {
+      $ptcm = new PluginTrackerConfigModules;
+      if (!$ptcm->isActivated('remotehttpagent')) {
+         return false;
+      }
+      $this->getFromDB($ID);
+      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 3))) {
+         $input = 'Agent don\'t respond';
+         addMessageAfterRedirect($input);
+         return false;
+      } else {
+         $handle = fopen("http://".$ip.":62354/now/".$this->fields['token'], "r");
+         $input = 'Agent run Now';
+         fclose($fp);
+         addMessageAfterRedirect($input);
+         return true;
+      }
+      
+   }
+
+   function RemoteStateAgent($target, $ID) {
+      global $LANG;
+
+      $ptcm = new PluginTrackerConfigModules;
+      if (!$ptcm->isActivated('remotehttpagent')) {
+         return;
+      }
+      $this->getFromDB($ID);
+      
+      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+
+		echo "<table  class='tab_cadre_fixe'>";
+
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_tracker']["agents"][14];
+      echo " : </th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+      if(!($fp = fsockopen("127.0.0.1", 62354, $errno, $errstr, 3))) {
+          echo "<b>".$LANG['plugin_tracker']["task"][9]."</b>";
+      } else {
+         echo "<b>".$LANG['plugin_tracker']["task"][8]."</b>";
+         fclose($fp);
+      }
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_2'>";
+		echo "<td align='center'>";
+      echo "<input type='hidden' name='ID' value='".$ID."'/>";
+      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_tracker']["task"][12]."\" class='submit' >";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
+      echo "</form>";
+      echo "</div>";      
+   }
+
+
 }
 
 ?>

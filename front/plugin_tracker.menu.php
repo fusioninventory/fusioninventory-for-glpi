@@ -112,8 +112,7 @@ if (plugin_tracker_HaveRight("snmp_models","r")
 //   echo "<br/>";
 //}
 
-$_SESSION['glpi_plugin_tracker_processnumber'] = "567890";
-plugin_tracker_networking_ports_addLog('129', '0', 'ifinerrors');
+
 
 commonFooter();
 

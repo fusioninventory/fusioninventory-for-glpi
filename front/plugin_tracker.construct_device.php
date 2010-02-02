@@ -1,5 +1,4 @@
 <?php
-
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -32,52 +31,32 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$NEEDED_ITEMS = array (
-	"setup",
-	"rulesengine",
-	"tracker",
-	"search"
-);
+if (!defined('GLPI_ROOT')) {
+	define('GLPI_ROOT', '../../..');
+}
 
-define('GLPI_ROOT', '../../..');
+$NEEDED_ITEMS=array("tracker","search");
+include (GLPI_ROOT."/inc/includes.php");
 
-include (GLPI_ROOT . "/inc/includes.php");
-
-$agents = new PluginTrackerAgents;
-
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","agents");
-
-plugin_tracker_checkRight("snmp_agent","r");
+commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker","constructdevice");
 
 plugin_tracker_mini_menu();
 
-if (isset ($_POST["add"])) {
-	plugin_tracker_checkRight("snmp_agent","w");
-	$agents->add($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset ($_POST["update"])) {
-	plugin_tracker_checkRight("snmp_agent","w");
-	$agents->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset ($_POST["delete"])) {
-	plugin_tracker_checkRight("snmp_agent","w");
-	$agents->delete($_POST);
-	glpi_header("plugin_tracker.agents.php");
-} else if (isset($_POST['startagent'])) {
-   $agents->RemoteStartAgent($_POST['ID']);
+manageGetValuesInSearch(PLUGIN_TRACKER_CONSTRUCT_DEVICE);
+
+$_GET['target']="plugin_tracker.construct_device.php";
+if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
+   $ptcd = new PluginTrackerConstructDevice;
+   $ptcd->generatemodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>Creation automatique des modèles</a>";
 
+searchForm(PLUGIN_TRACKER_CONSTRUCT_DEVICE,$_GET);
+showList(PLUGIN_TRACKER_CONSTRUCT_DEVICE,$_GET);
 
-
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
-}
-
-$agents->showForm($_SERVER["PHP_SELF"], $ID);
-$agents->RemoteStateAgent($_SERVER["PHP_SELF"], $ID);
 
 commonFooter();
+
 ?>

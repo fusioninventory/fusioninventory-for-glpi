@@ -80,6 +80,9 @@ CREATE TABLE `glpi_plugin_tracker_agents` (
   `logs` int(1) NOT NULL DEFAULT '0',
   `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fragment` int(11) NOT NULL DEFAULT '50',
+  `on_device` int(11) NOT NULL DEFAULT '0',
+  `device_type` smallint(6) NOT NULL DEFAULT '0',
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `name` (`name`),
   KEY `key` (`key`)
@@ -97,6 +100,18 @@ CREATE TABLE `glpi_plugin_tracker_agents_errors` (
 `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
 `agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
 `error_message` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL ,
+PRIMARY KEY ( `ID` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_agents_inventory_state`;
+
+CREATE TABLE `glpi_plugin_tracker_agents_inventory_state` (
+`ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`device_id` INT( 11 ) NOT NULL DEFAULT '0',
+`state` INT( 1 ) NOT NULL DEFAULT '0',
+`date_mod` DATETIME NULL ,
 PRIMARY KEY ( `ID` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -205,6 +220,48 @@ CREATE TABLE `glpi_plugin_tracker_config_snmp_history` (
    PRIMARY KEY ( `id` ) ,
    INDEX ( `field` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_construct_device`;
+
+CREATE TABLE `glpi_plugin_tracker_construct_device` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FK_glpi_enterprise` int(11) NOT NULL DEFAULT '0',
+  `device` varchar(255) DEFAULT NULL,
+  `firmware` varchar(255) DEFAULT NULL,
+  `sysdescr` text,
+  `type` varchar(255) DEFAULT NULL,
+  `snmpmodel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_construct_walks`;
+
+CREATE TABLE `glpi_plugin_tracker_construct_walks` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `construct_device_id` int(11) NOT NULL DEFAULT '0',
+  `log` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_tracker_construct_mibs`;
+
+CREATE TABLE `glpi_plugin_tracker_construct_mibs` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `mib_oid_id` int(11) NOT NULL DEFAULT '0',
+  `construct_device_id` int(11) NOT NULL DEFAULT '0',
+  `mapping_name` varchar(255) DEFAULT NULL,
+  `oid_port_counter` int(1) NOT NULL DEFAULT '0',
+  `oid_port_dyn` int(1) NOT NULL DEFAULT '0',
+  `mapping_type` varchar(255) DEFAULT NULL,
+  `vlan` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 
@@ -456,7 +513,7 @@ CREATE TABLE `glpi_plugin_tracker_printers_cartridges` (
 DROP TABLE IF EXISTS `glpi_plugin_tracker_task`;
 
 CREATE TABLE `glpi_plugin_tracker_task` (
-   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+   `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `date` DATETIME NOT NULL ,
    `agent_id` INT( 11 ) NOT NULL ,
    `action` VARCHAR( 255 ) NOT NULL ,

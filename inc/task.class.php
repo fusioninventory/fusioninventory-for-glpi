@@ -71,14 +71,14 @@ class PluginTrackerTask extends CommonDBTM {
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             while ($data=$DB->fetch_array($result)) {
-               $tasks[$data["id"]] = $data;
+               $tasks[$data["ID"]] = $data;
                $type='';
-               switch ($tasks[$data["id"]]["device_type"]) {
+               switch ($tasks[$data["ID"]]["device_type"]) {
                   case "networking":
-                     $tasks[$data["id"]]["device_type"]='NETWORKING';
+                     $tasks[$data["ID"]]["device_type"]='NETWORKING';
                      break;
                   case "printer":
-                     $tasks[$data["id"]]["device_type"]='PRINTER';
+                     $tasks[$data["ID"]]["device_type"]='PRINTER';
                      break;
                }
             }
@@ -86,6 +86,125 @@ class PluginTrackerTask extends CommonDBTM {
       }
       return $tasks;
    }
+
+
+   function formAddTask($target, $input=array()) {
+      global $LANG;
+
+      $pta = new PluginTrackerAgents;
+      $ptcm = new PluginTrackerConfigModules;
+      if (!$ptcm->isActivated('remotehttpagent')) {
+         return;
+      }
+      // TODO: detect if task yet present in MySQL task table
+
+      echo "<br/><div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+		echo "<table  class='tab_cadre_fixe'>";
+      
+		echo "<tr><th colspan='2'>";
+		echo $LANG['plugin_tracker']["task"][4];
+		echo " :</th></tr>";
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+		echo $LANG['plugin_tracker']["task"][5];
+		echo "</td>";
+      
+		echo "<td align='center'>";
+      dropdownValue($pta->table,'agentocs','',1,1);
+		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+		echo $LANG['plugin_tracker']["task"][7];
+		echo "</td>";
+
+		echo "<td align='center'>";
+      $active_valid = 0;
+      if (isset($input['up']) AND (isset($input['agentocs']))) {
+         
+      }
+      if(!($fp = fsockopen("192.168.0.201", 62354, $errno, $errstr, 5))) {
+          echo "<b>".$LANG['plugin_tracker']["task"][9]."</b>";
+      } else {
+          echo "<b>".$LANG['plugin_tracker']["task"][8]."</b>";
+          $active_valid = 1;
+          fclose($fp);
+      }
+
+
+		echo "</td>";
+      echo "</tr>";
+
+
+      echo "<tr class='tab_bg_2'>";
+		echo "<td align='center'>";
+      echo "<input type='submit' name='up' value=\"".$LANG['plugin_tracker']["task"][6]."\" class='submit'>";
+		echo "</td>";
+      
+		echo "<td align='center'>";
+      if ($active_valid == '1') {
+         echo "<input type='submit' name='add' value=\"".$LANG['buttons'][2]."\" class='submit'>";
+      } else {
+         echo "<input type='submit' name='add' value=\"".$LANG['buttons'][2]."\"
+            STYLE='font-size: 11px; border: 1px solid #888888; cursor:pointer; background:  url(\"".GLPI_ROOT."/plugins/tracker/pics/fond_form_off.png\") repeat-x'
+               disabled='disabled'>";
+      }
+		echo "</td>";
+      echo "</tr>";
+  
+      echo "</table>";
+      echo "</form>";
+      echo "</div>";
+      echo "<br/>";
+      
+   }
+
+
+
+   function addTask($device_id, $device_type, $action, $agent_id) {
+      $ptcm = new PluginTrackerConfigModules;
+      if (!$ptcm->isActivated('remotehttpagent')) {
+         return false;
+      }
+      // Find if task don't exist yet
+      $a_datas = $this->find("`agent_id`='".$agent_id."'
+                     AND `action`='".$action."'
+                     AND `on_device`='".$device_id."'
+                     AND `device_type`='".$device_type."'");
+      if (empty($a_datas)) {
+         $a_input['date'] = date("Y-m-d H:i:s");
+         $a_input['agent_id'] = $agent_id;
+         $a_input['action'] = $action;
+         $a_input['param'] = '';
+         $a_input['on_device'] = $device_id;
+         $a_input['device_type'] = $device_type;
+         $a_input['single'] = 1;
+         $this->add($a_input);
+
+         return true;
+      }
+      return false;
+   }
+
+
+   function getTask($deviceid) {
+      $pta = new PluginTrackerAgents;
+      $ptc = new PluginTrackerCommunication;
+
+      $a_agent = $pta->InfosByKey($deviceid);
+      $a_tasks = $this->find("`agent_id`='".$a_agent['ID']."'", "date");
+      // TODO gest last
+      foreach ($a_tasks as $task_id=>$datas) {
+         if ($a_tasks[$task_id]['action'] == 'INVENTORY') {
+            $ptc->addInventory();
+         }
+      }
+      // If not unique get all in addition ;)
+      
+   }
+
 }
 
 ?>

@@ -120,10 +120,18 @@ function plugin_init_tracker() {
 		'formpage' => 'front/plugin_tracker.functionalities.form.php'
 		));
 
-   	registerPluginType('tracker', "PLUGIN_TRACKER_TASK", 5166, array(
+   registerPluginType('tracker', "PLUGIN_TRACKER_TASK", 5166, array(
 		'classname' => 'PluginTrackerTask',
 		'tablename' => 'glpi_plugin_tracker_task',
       'searchpage' => 'front/plugin_tracker.task.php'
+		));
+
+	registerPluginType('tracker', "PLUGIN_TRACKER_CONSTRUCT_DEVICE", 5167, array(
+		'classname' => 'PluginTrackerConstructDevice',
+		'tablename' => 'glpi_plugin_tracker_construct_device',
+		'formpage' => 'front/plugin_tracker.construct_device.form.php',
+		'searchpage' => 'front/plugin_tracker.construct_device.php',
+		'typename' => $LANG['plugin_tracker']["constructdevice"][0]
 		));
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
@@ -144,6 +152,7 @@ function plugin_init_tracker() {
 		// Define SQL table restriction of entity
 		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_discovery';
 		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_rangeip';
+      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_unknown_device';
 
 		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
 
@@ -193,6 +202,9 @@ function plugin_init_tracker() {
                $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['rangeip'] = 'front/plugin_tracker.rangeip.php';
             }
 
+            $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['constructdevice'] = 'front/plugin_tracker.construct_device.form.php?add=1';
+            $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['constructdevice'] = 'front/plugin_tracker.construct_device.php';
+
             if (plugin_tracker_haveRight("general_config","w")) {
                $PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.functionalities.form.php';
             }
@@ -239,6 +251,5 @@ function plugin_tracker_haveTypeRight($type,$right) {
 	}
 	return true;
 }
-
 
 ?>

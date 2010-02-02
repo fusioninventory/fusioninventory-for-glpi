@@ -438,6 +438,7 @@ class PluginTrackerCommunication {
     *@return true (import ok) / false (import ko)
     **/
    function import($p_xml, &$p_errors='') {
+      global $LANG;
       // TODO : gérer l'encodage, la version
       // Do not manage <REQUEST> element (always the same)
       $this->setXML($p_xml);
@@ -451,6 +452,10 @@ class PluginTrackerCommunication {
          case 'NETDISCOVERY' :
             $pti = new PluginTrackerImportExport;
             $errors.=$pti->import_netdiscovery($this->sxml->CONTENT, $this->sxml->DEVICEID);
+            break;
+         
+         case 'INVENTORY' :
+            $this->sendInventoryToOcsServer($p_xml);
             break;
 
          default :
@@ -586,6 +591,18 @@ class PluginTrackerCommunication {
             }
             if ($errors=='') {
                $this->ptd->updateDB();
+            } else {
+               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+                     array('query_nb_error' => '1'));
+               $a_input['ID'] = $p_device->ERROR->ID;
+               if ($p_device->ERROR->TYPE=='NETWORKING') {
+                  $a_input['TYPE'] = NETWORKING_TYPE;
+               } elseif ($p_device->ERROR->TYPE=='PRINTER') {
+                  $a_input['TYPE'] = PRINTER_TYPE;
+               }
+               $a_input['MESSAGE'] = $errors;
+               $a_input['agent_type'] = 'SNMPQUERY';
+               $ptae->addError($a_input);
             }
          }
       }
@@ -1265,6 +1282,95 @@ class PluginTrackerCommunication {
          }
       }
       return '';
+   }
+
+   function importToken($p_xml) {
+      $this->setXML($p_xml);
+
+      if ((isset($this->sxml->DEVICEID)) AND (isset($this->sxml->TOKEN))) {
+         $pta = new PluginTrackerAgents;
+         $a_agent = $pta->find("`key`='".$this->sxml->DEVICEID."'", "", "1");
+         foreach ($a_agent as $id_agent=>$dataInfos) {
+            $input = array();
+            $input['ID'] = $id_agent;
+            $input['token'] = $this->sxml->TOKEN;
+            $pta->update($input);            
+         }
+      }      
+   }
+
+   function sendInventoryToOcsServer($p_xml) {
+      global $DB;
+
+      $ptais = new PluginTrackerAgentsInventoryState;
+      
+      $this->setXML($p_xml);
+
+      $query = "SELECT *
+		FROM glpi_ocs_link
+		WHERE ocs_deviceid='".$this->sxml->DEVICEID."'";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == 1) {
+         $line = $DB->fetch_assoc($result);
+         $ptais->changeStatus($line['glpi_id'], 3);
+      }        
+      
+      $port = "80";
+      $url = "http://127.0.0.1/ocsinventory";
+      $url = preg_replace("@^http://@i", "", $url);
+      $host = substr($url, 0, strpos($url, "/"));
+      $uri = strstr($url, "/");
+      $reqbody = gzcompress($p_xml);
+
+      $contentlength = strlen($reqbody);
+      $reqheader =  "POST $uri HTTP/1.1\r\n".
+      "Host: $host\n". "User-Agent: OCS_local_5013\r\n".
+      "Content-type: application/x-compress\r\n".
+      "Content-Length: $contentlength\r\n\r\n".
+      "$reqbody\r\n";
+
+      $socket = @fsockopen($host, $port, $errno, $errstr);
+
+      if (!$socket) {
+         $result["errno"] = $errno;
+         $result["errstr"] = $errstr;
+         return $result;
+      }
+      if (isset($line['glpi_id']))
+         $ptais->changeStatus($line['glpi_id'], 4);
+      fputs($socket, $reqheader);
+
+      while (!feof($socket)) {
+         $result[] = fgets($socket, 4096);
+      }
+
+      fclose($socket);
+      $this->synchroOCS($p_xml);
+   }
+
+   function synchroOCS($p_xml) {
+      global $DB;
+
+      $ptais = new PluginTrackerAgentsInventoryState;
+      
+      $this->setXML($p_xml);
+
+      $query = "SELECT *
+		FROM glpi_ocs_link
+		WHERE ocs_deviceid='".$this->sxml->DEVICEID."'";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == 1) {
+         $line = $DB->fetch_assoc($result);
+         $ptais->changeStatus($line['glpi_id'], 5);
+         ocsUpdateComputer($line['ID'], $line['ocs_server_id'], 1);
+         $ptais->changeStatus($line['glpi_id'], 6);
+      }
+   }
+
+   function addInventory() {
+      $ptc = new PluginTrackerConfig;
+      $this->sxml->addAttribute('RESPONSE', "SEND");
+      $this->sxml->addAttribute('PROLOG_FREQ', $ptc->getValue('inventory_frequence'));
    }
 }
 ?>

@@ -32,62 +32,25 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$NEEDED_ITEMS = array (
-	"setup",
-	"rulesengine",
-	"tracker",
-	"search",
-	"device",
-	"networking"
-);
-
 define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-plugin_tracker_checkRight("snmp_networking","r");
+if (isset ($_POST["startagent"])) {
+   $pta = new PluginTrackerAgents;
+   $ptt = new PluginTrackerTask;
+   $ptais = new PluginTrackerAgentsInventoryState;
 
-$ptud = new PluginTrackerUnknownDevice;
-$ptt = new PluginTrackerTask;
-
-commonHeader($LANG['plugin_tracker']["title"][0], $_SERVER["PHP_SELF"], "plugins", "tracker","unknown");
-
-plugin_tracker_mini_menu();
-
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
-}
-
-if (isset($_POST["delete"])) {
-	$ptud->check($_POST['ID'],'w');
-
-	$ptud->delete($_POST,1);
-
-//	logEvent($_POST["ID"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
-	glpi_header($CFG_GLPI["root_doc"]."plugins/tracker/front/plugin_tracker.unknown.php");
-} else if (isset($_POST["restore"])) {
-
-
-} else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
-
-
-} else if (isset($_POST["update"])) {
-	$ptud->check($_POST['ID'],'w');
-	$ptud->update($_POST);
-//	logEvent($_POST["ID"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][21]);
+   if ($ptt->addTask(0, 0, 'INVENTORY', $_POST['agentID'])) {
+      $ptais->changeStatus($_POST['ID'], 1);
+      if ($pta->RemoteStartAgent($_POST['agentID'], $_POST['ip'])) {
+         $ptais->changeStatus($_POST['ID'], 2);
+      }
+   }
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
+$ptais = new PluginTrackerAgentsInventoryState;
+$ptais->computerState($_SERVER["PHP_SELF"], $_GET["ID"]);
 
-
-$ptud->showForm($_SERVER["PHP_SELF"], $ID);
-if (isset($_POST)) {
-   $ptt->formAddTask($_SERVER["PHP_SELF"], $_POST);
-} else {
-   $ptt->formAddTask($_SERVER["PHP_SELF"]);
-}
-showPorts($ID, PLUGIN_TRACKER_MAC_UNKNOWN);
-showHistory(PLUGIN_TRACKER_MAC_UNKNOWN,$ID);
-commonFooter();
 ?>

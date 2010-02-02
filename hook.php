@@ -606,6 +606,53 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_TASK][8]['linkfield'] = 'single';
 	$sopt[PLUGIN_TRACKER_TASK][8]['name'] = $LANG['plugin_tracker']["task"][3];
 
+
+
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE]['common'] = $LANG['plugin_tracker']["constructdevice"][0];
+
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][1]['table'] = 'glpi_plugin_tracker_construct_device';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][1]['field'] = 'ID';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][1]['linkfield'] = 'ID';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][1]['name'] = $LANG["common"][16];
+   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][1]['datatype']='itemlink';
+
+  	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][2]['table'] = 'glpi_dropdown_manufacturer';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][2]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][2]['linkfield'] = 'manufacturer';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][2]['name'] = $LANG['common'][5];
+
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][3]['table'] = 'glpi_plugin_tracker_construct_device';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][3]['field'] = 'device';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][3]['linkfield'] = 'device';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][3]['name'] = $LANG['common'][1];
+   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][3]['datatype']='text';
+
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][4]['table'] = 'glpi_plugin_tracker_construct_device';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][4]['field'] = 'firmware';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][4]['linkfield'] = 'firmware';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][4]['name'] = $LANG['setup'][71];
+   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][4]['datatype']='text';
+
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][5]['table'] = 'glpi_plugin_tracker_construct_device';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][5]['field'] = 'sysdescr';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][5]['linkfield'] = 'sysdescr';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][5]['name'] = $LANG['common'][25];
+   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][5]['datatype']='text';
+
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['table'] = 'glpi_plugin_tracker_construct_device';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['field'] = 'type';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['linkfield'] = 'type';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['name'] = $LANG['common'][17];
+   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['datatype']='text';
+
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][7]['table'] = 'glpi_plugin_tracker_model_infos';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][7]['field'] = 'name';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][7]['linkfield'] = 'snmpmodel_id';
+	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][7]['name'] = $LANG['plugin_tracker']["profile"][24];
+   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][7]['datatype']='itemptype';
+
+   
+
 	return $sopt;
 }
 
@@ -1210,9 +1257,13 @@ function plugin_get_headings_tracker($type,$ID,$withtemplate) {
 			// Non template case
          } else {
 //				if ((plugin_tracker_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
-					return array(
-						1 => $LANG['plugin_tracker']["title"][5]
-					);
+				$array = array ();
+            //return array(
+            $array[1] = $LANG['plugin_tracker']["title"][0];
+				//}
+            $array[2] = $LANG['plugin_tracker']["title"][5];
+
+            return $array;
 //				}
 			}
 			break;
@@ -1282,10 +1333,12 @@ function plugin_headings_actions_tracker($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
+
+   		$array[1] = "plugin_headings_tracker_computerInfo";
+         $array[2] = "plugin_headings_tracker_trackerLocks";
+			return $array;
+
 //			if ((plugin_tracker_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-				$array = array (
-					1 => "plugin_headings_tracker_trackerLocks"
-				);
 //			}
 //			if (plugin_tracker_haveRight("printers_info", "r")) {
 //				$array = array (
@@ -1346,8 +1399,8 @@ function plugin_headings_tracker_computerErrors($type, $ID) {
 }
 
 function plugin_headings_tracker_computerInfo($type, $ID) {
-//	$plugin_tracker_printers = new PluginTrackerPrinters;
-//	$plugin_tracker_printers->showFormPrinter(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $_GET["ID"]);
+   $ptais = new PluginTrackerAgentsInventoryState;
+   $ptais->computerState(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.agents.state.php', $ID);
 }
 
 function plugin_headings_tracker_printerInfo($type, $ID) {

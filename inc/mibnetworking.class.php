@@ -147,7 +147,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 					
 					echo "<td align='center'>";
 					if (isset($TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'])) {
-						echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'];
+						echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name']." ( ".$data["mapping_name"]." )";
 						$linkoid_used[$data['mapping_type']."||".$data["mapping_name"]] = 1;
 					}
 					echo "</td>";

@@ -116,7 +116,13 @@ class PluginTrackerSNMPHistory extends CommonDBTM {
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             list($type,$name) = explode("-", $data['field']);
-            $options[$data['field']]=$TRACKER_MAPPING[$type][$name]["name"];
+            if (!isset($TRACKER_MAPPING[$type][$name]["name"])) {
+               $query_del = "DELETE FROM `glpi_plugin_tracker_config_snmp_history`
+                  WHERE id='".$data['id']."' ";
+                  $DB->query($query_del);
+            } else {
+               $options[$data['field']]=$TRACKER_MAPPING[$type][$name]["name"];
+            }
             unset($listName[$data['field']]);
          }
       }

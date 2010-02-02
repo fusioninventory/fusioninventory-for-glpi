@@ -37,12 +37,17 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
-	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo");
+	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo",
+   "rule.ocs","rule.softwarecategories","rule.dictionnary.software","rule.dictionnary.dropdown","entity");
+
+
 include (GLPI_ROOT."/inc/includes.php");
 
 $_SESSION["glpi_use_mode"] = 2;
 
-$ptc = new PluginTrackerCommunication();
+header('Content-type: application/x-compress');
+
+$ptc = new PluginTrackerCommunication;
 $ptap = new PluginTrackerAgentsProcesses;
 
 $res='';
@@ -62,6 +67,7 @@ if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"
 }
 
 file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+$ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
 $top0 = gettimeofday();
 if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    //if ($ac->connectionOK($errors)) {
@@ -70,28 +76,57 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
 
       $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
       $pxml = @simplexml_load_string($p_xml);
-      
+     
       if (isset($pxml->DEVICEID)) {
 
+         // Get task
+         $ptt = new PluginTrackerTask;
+
+/*
          $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
 <REPLY>
-<OPTION><NAME>DOWNLOAD</NAME>
-<PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" /></OPTION>
+<OPTION>
+<NAME>DOWNLOAD</NAME>
+<PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" />
+</OPTION>
 <RESPONSE>SEND</RESPONSE>
 <PROLOG_FREQ>24</PROLOG_FREQ>
 </REPLY>");
+ 
+ */
+         $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+<REPLY>
+</REPLY>");
+//$ptt->getTask($pxml->DEVICEID);
 
-         $ptc->addProcessNumber($ptap->addProcess($pxml));
+ 
+      $pta = new PluginTrackerAgents;
+      $ptt = new PluginTrackerTask;
+
+      $a_agent = $pta->InfosByKey($pxml->DEVICEID);
+      $a_tasks = $ptt->find("`agent_id`='".$a_agent['ID']."'", "date");
+      // TODO gest last
+      foreach ($a_tasks as $task_id=>$datas) {
+         if ($a_tasks[$task_id]['action'] == 'INVENTORY') {
+            $ptc->addInventory();
+            $input['ID'] = $task_id;
+            $ptt->delete($input);
+         }
+      }
+
+
+         //$ptc->addProcessNumber($ptap->addProcess($pxml));
 
       // ******** NETDISCOVERY
-         $ptc->addDiscovery($pxml);
+         //$ptc->addDiscovery($pxml);
 
       // ******** SNMPQUERY
-         $ptc->addQuery($pxml);
+         //$ptc->addQuery($pxml);
 
       // ******** Send XML
          $ptc->setXML($ptc->getXML());
          echo $ptc->getSend(); // echo response for the agent
+
       }
    } else {
       $res .= "0'".$errors."'";
@@ -105,7 +140,6 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    $duree["sec"]--;
    $duree["usec"]+=1000000;
   }
-
  #  file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/import.log", "Il a fallu ".$duree["sec"]." secondes et ". $duree["usec"]." microsecondes");
 }
 ?>

@@ -498,6 +498,14 @@ $LANG['plugin_tracker']["mapping"][153]="Module de nettoyage";
 $LANG['plugin_tracker']["mapping"][154]="Nombre de pages recto/verso imprimées";
 $LANG['plugin_tracker']["mapping"][155]="Nombre de pages scannées";
 $LANG['plugin_tracker']["mapping"][156]="Kit de maintenance";
+$LANG['plugin_tracker']["mapping"][157]="Toner Noir";
+$LANG['plugin_tracker']["mapping"][158]="Toner Cyan";
+$LANG['plugin_tracker']["mapping"][159]="Toner Magenta";
+$LANG['plugin_tracker']["mapping"][160]="Toner Jaune";
+$LANG['plugin_tracker']["mapping"][161]="Tambour Noir";
+$LANG['plugin_tracker']["mapping"][162]="Tambour Cyan";
+$LANG['plugin_tracker']["mapping"][163]="Tambour Magenta";
+$LANG['plugin_tracker']["mapping"][164]="Tambour Jaune";
 $LANG['plugin_tracker']["mapping"][1423]="Nombre total de pages imprimées (impression)";
 $LANG['plugin_tracker']["mapping"][1424]="Nombre de pages noir et blanc imprimées (impression)";
 $LANG['plugin_tracker']["mapping"][1425]="Nombre de pages couleur imprimées (impression)";
@@ -549,6 +557,15 @@ $LANG['plugin_tracker']["agents"][10]="Coeurs (CPU) interrogation";
 $LANG['plugin_tracker']["agents"][11]="Coeurs (CPU) découverte";
 $LANG['plugin_tracker']["agents"][12]="Agent découverte";
 $LANG['plugin_tracker']["agents"][13]="Agent interrogation";
+$LANG['plugin_tracker']["agents"][14]="Actions de l'agent";
+$LANG['plugin_tracker']["agents"][15]="Statut de l'agent";
+$LANG['plugin_tracker']["agents"][16]="Initialisé";
+$LANG['plugin_tracker']["agents"][17]="L'agent s'exécute";
+$LANG['plugin_tracker']["agents"][18]="L'inventaire a été reçu";
+$LANG['plugin_tracker']["agents"][19]="L'inventaire est envoyé au serveur OCS";
+$LANG['plugin_tracker']["agents"][20]="La synchronisation entre OCS et GLPI est en cours";
+$LANG['plugin_tracker']["agents"][21]="Inventaire terminé";
+$LANG['plugin_tracker']["agents"][22]="En attente";
 
 $LANG['plugin_tracker']["unknown"][0]="Nom DNS";
 $LANG['plugin_tracker']["unknown"][1]="Nom port réseau";
@@ -558,5 +575,16 @@ $LANG['plugin_tracker']["task"][0]="Tâche";
 $LANG['plugin_tracker']["task"][1]="Gestion des tâches";
 $LANG['plugin_tracker']["task"][2]="Action";
 $LANG['plugin_tracker']["task"][3]="Unitaire";
+$LANG['plugin_tracker']["task"][4]="Récupérer maintenant les informations";
+$LANG['plugin_tracker']["task"][5]="Sélectionner l'agent OCS";
+$LANG['plugin_tracker']["task"][6]="Récupérer son état";
+$LANG['plugin_tracker']["task"][7]="Etat";
+$LANG['plugin_tracker']["task"][8]="Prêt";
+$LANG['plugin_tracker']["task"][9]="Ne peut pas être contacté";
+$LANG['plugin_tracker']["task"][10]="En cours d'execution... pas disponible";
+$LANG['plugin_tracker']["task"][11]="L'agent a été notifié et commence son exécution";
+$LANG['plugin_tracker']["task"][12]="Déclencher l'agent";
+
+$LANG['plugin_tracker']["constructdevice"][0]="Gestion des mib de matériel";
 
 ?>
