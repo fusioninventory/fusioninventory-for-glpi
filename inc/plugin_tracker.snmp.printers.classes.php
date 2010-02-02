@@ -929,7 +929,7 @@ class PluginTrackerPrinters extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
 
       echo "<tr>";
-      echo "<th colspan='4'>"."Tracker"."</th>";
+      echo "<th colspan='4'>".$LANG['plugin_tracker']["prt_history"][20]."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_tracker']["prt_history"][30]."&nbsp;:</td><td class='left' colspan='2'>";
       $elementsField=array('pages_total'=>$TRACKER_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'],

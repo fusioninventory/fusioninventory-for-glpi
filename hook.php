@@ -1406,7 +1406,7 @@ function plugin_headings_tracker_computerInfo($type, $ID) {
 function plugin_headings_tracker_printerInfo($type, $ID) {
 	include_once(GLPI_ROOT."/inc/stat.function.php");
 	$plugin_tracker_printers = new PluginTrackerPrinters;
-//	$plugin_tracker_printers->showFormPrinter(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $ID);
+	$plugin_tracker_printers->showFormPrinter(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $ID);
 //	$plugin_tracker_printers->showFormPrinter_pagescounter(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $ID);
 	echo '<div id="overDivYFix" STYLE="visibility:hidden">tracker_1</div>';
    $plugin_tracker_printers->showFormPrinter_graph(GLPI_ROOT . '/plugins/tracker/front/plugin_tracker.printer_info.form.php', $ID);
