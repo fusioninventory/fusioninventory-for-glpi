@@ -166,23 +166,23 @@ class PluginTrackerPrinters extends CommonDBTM {
 			$Array_Object_TypeNameConstant= $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
-				if (strstr($mapping_type_name, "cartridges")) {
+				if (strstr($mapping_type_name, "cartridge")) {
 					$explode[1] = str_replace ("MAX", "", $mapping_type_name);
 					$explode[1] = str_replace ("REMAIN", "", $explode[1]);
                switch($explode[1]) {
-                     CASE "cartridgesblack":
+                     CASE "cartridgeblack":
                         $mapping_name[$explode[1]] = "1";
                         break;
 
-                     CASE "cartridgescyan":
+                     CASE "cartridgecyan":
                         $mapping_name[$explode[1]] = "2";
                         break;
 
-                     CASE "cartridgesmagenta":
+                     CASE "cartridgemagenta":
                         $mapping_name[$explode[1]] = "3";
                         break;
 
-                     CASE "cartridgesyellow":
+                     CASE "cartridgeyellow":
                         $mapping_name[$explode[1]] = "4";
                         break;
 
