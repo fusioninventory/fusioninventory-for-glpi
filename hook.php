@@ -643,7 +643,7 @@ function plugin_tracker_getSearchOption() {
 	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['field'] = 'type';
 	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['linkfield'] = 'type';
 	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['name'] = $LANG['common'][17];
-   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['datatype']='text';
+   $sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][6]['datatype']='number';
 
 	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][7]['table'] = 'glpi_plugin_tracker_model_infos';
 	$sopt[PLUGIN_TRACKER_CONSTRUCT_DEVICE][7]['field'] = 'name';

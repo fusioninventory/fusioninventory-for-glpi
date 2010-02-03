@@ -361,6 +361,9 @@ $TRACKER_MAPPING[PRINTER_TYPE]['location']['name'] = $LANG['plugin_tracker']["ma
 $TRACKER_MAPPING[PRINTER_TYPE]['location']['type'] = 'text';
 $TRACKER_MAPPING[PRINTER_TYPE]['location']['dropdown'] = 'glpi_dropdown_locations';
 
+$TRACKER_MAPPING[PRINTER_TYPE]['informations']['name'] = $LANG['plugin_tracker']["mapping"][165];
+$TRACKER_MAPPING[PRINTER_TYPE]['informations']['shortname'] = $LANG['plugin_tracker']["mapping"][165];
+
 // NEW CARTRIDGE
 $TRACKER_MAPPING[PRINTER_TYPE]['tonerblack']['name'] = $LANG['plugin_tracker']["mapping"][157];
 $TRACKER_MAPPING[PRINTER_TYPE]['tonerblack']['shortname'] = $LANG['plugin_tracker']["mapping"][157];

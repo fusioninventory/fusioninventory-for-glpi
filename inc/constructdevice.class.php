@@ -216,7 +216,8 @@ class PluginTrackerConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3'] = 'pagecountertotalpages_print';
       $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3'] = 'pagecountertotalpages_print';
       $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.4.1.3'] = 'pagecountertotalpages_copy';
-      
+      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.1.1.7.0'] = 'informations';
+
 //      $mapping_pre[3][''] = '';
 
 
@@ -533,36 +534,38 @@ class PluginTrackerConstructDevice extends CommonDBTM {
       //$sxml = simplexml_load_file($xmlstr);
 
       $query = "SELECT * FROM `".$this->table."`
-         WHERE `snmpmodel_id`!='0'";
+         WHERE type NOT IN('', 0) ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             $sxml_device = $sxml->addChild('DEVICE');
             $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
             $sxml_device->addAttribute('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
             $sxml_device->addAttribute('TYPE', $data['type']);
-            $sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
+            if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
+               $sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
 
-            $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
-               WHERE `construct_device_id`='".$data['ID']."'
-                  AND `mapping_name`='serial'
-               LIMIT 1";
-            $result_serial=$DB->query($query_serial);
-            if ($DB->numrows($result_serial)) {
-               $line = mysql_fetch_assoc($result_serial);
-               $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
-                                            $line['mib_oid_id']));            
-            }
+               $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
+                  WHERE `construct_device_id`='".$data['ID']."'
+                     AND `mapping_name`='serial'
+                  LIMIT 1";
+               $result_serial=$DB->query($query_serial);
+               if ($DB->numrows($result_serial)) {
+                  $line = mysql_fetch_assoc($result_serial);
+                  $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
+                                               $line['mib_oid_id']));
+               }
 
-            $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
-               WHERE `construct_device_id`='".$data['ID']."'
-                  AND ((`mapping_name`='macaddr' AND mapping_type='2')
-                        OR ( `mapping_name`='ifPhysAddress' AND mapping_type='3'))
-               LIMIT 1";
-            $result_serial=$DB->query($query_serial);
-            if ($DB->numrows($result_serial)) {
-               $line = mysql_fetch_assoc($result_serial);
-               $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
-                                            $line['mib_oid_id']));
+               $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
+                  WHERE `construct_device_id`='".$data['ID']."'
+                     AND ((`mapping_name`='macaddr' AND mapping_type='2')
+                           OR ( `mapping_name`='ifPhysAddress' AND mapping_type='3'))
+                  LIMIT 1";
+               $result_serial=$DB->query($query_serial);
+               if ($DB->numrows($result_serial)) {
+                  $line = mysql_fetch_assoc($result_serial);
+                  $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
+                                               $line['mib_oid_id']));
+               }
             }
          }
       }

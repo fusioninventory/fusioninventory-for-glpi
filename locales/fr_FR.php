@@ -506,6 +506,7 @@ $LANG['plugin_tracker']["mapping"][161]="Tambour Noir";
 $LANG['plugin_tracker']["mapping"][162]="Tambour Cyan";
 $LANG['plugin_tracker']["mapping"][163]="Tambour Magenta";
 $LANG['plugin_tracker']["mapping"][164]="Tambour Jaune";
+$LANG['plugin_tracker']["mapping"][165]="Informations diverses regroupées";
 $LANG['plugin_tracker']["mapping"][1423]="Nombre total de pages imprimées (impression)";
 $LANG['plugin_tracker']["mapping"][1424]="Nombre de pages noir et blanc imprimées (impression)";
 $LANG['plugin_tracker']["mapping"][1425]="Nombre de pages couleur imprimées (impression)";
