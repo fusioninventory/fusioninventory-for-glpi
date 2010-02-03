@@ -498,7 +498,11 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
             OR ($p_type == "6")
             OR ($p_type == "ethernet-csmacd(6)")
             OR (strstr($p_type, "iso88023Csmacd"))
-            OR ($p_type == "7")) { // not virtual port
+            OR ($p_type == "7")
+            OR ($p_type == "ieee80211(71)")        // wifi
+            OR ($p_type == "ieee80211")            // wifi
+            OR ($p_type == "71")                   // wifi
+         ) { // not virtual port
          $real = true;
       }
       return $real;
