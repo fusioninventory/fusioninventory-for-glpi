@@ -521,5 +521,88 @@ class PluginTrackerConstructDevice extends CommonDBTM {
       }
    }
 
+
+
+   function generateDiscovery() {
+      global $DB;
+      
+      $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
+<SNMPDISCOVERY>
+</SNMPDISCOVERY>";
+      $sxml = new SimpleXMLElement($xmlstr);
+      //$sxml = simplexml_load_file($xmlstr);
+
+      $query = "SELECT * FROM `".$this->table."`
+         WHERE `snmpmodel_id`!='0'";
+      if ($result = $DB->query($query)) {
+			while ($data = $DB->fetch_array($result)) {
+            $sxml_device = $sxml->addChild('DEVICE');
+            $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
+            $sxml_device->addAttribute('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
+            $sxml_device->addAttribute('TYPE', $data['type']);
+            $sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
+
+            $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
+               WHERE `construct_device_id`='".$data['ID']."'
+                  AND `mapping_name`='serial'
+               LIMIT 1";
+            $result_serial=$DB->query($query_serial);
+            if ($DB->numrows($result_serial)) {
+               $line = mysql_fetch_assoc($result_serial);
+               $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
+                                            $line['mib_oid_id']));            
+            }
+
+            $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
+               WHERE `construct_device_id`='".$data['ID']."'
+                  AND ((`mapping_name`='macaddr' AND mapping_type='2')
+                        OR ( `mapping_name`='ifPhysAddress' AND mapping_type='3'))
+               LIMIT 1";
+            $result_serial=$DB->query($query_serial);
+            if ($DB->numrows($result_serial)) {
+               $line = mysql_fetch_assoc($result_serial);
+               $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
+                                            $line['mib_oid_id']));
+            }
+         }
+      }
+      $sxml = $this->formatXmlString($sxml);
+      echo $sxml->asXML();
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/discovery.xml", $sxml->asXML());
+
+   }
+
+
+   function formatXmlString($sxml) {
+      $xml = str_replace("><", ">\n<", $sxml->asXML());
+      $xml = str_replace("^M", "", $xml);
+      $token      = strtok($xml, "\n");
+      $result     = '';
+      $pad        = 0;
+      $matches    = array();
+
+      while ($token !== false) {
+         // 1. open and closing tags on same line - no change
+         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
+            $indent=0;
+         // 2. closing tag - outdent now
+         elseif (preg_match('/^<\/\w/', $token, $matches)) :
+            $pad = $pad-3;
+         // 3. opening tag - don't pad this one, only subsequent tags
+         elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
+            $indent=3;
+         else :
+            $indent = 0;
+         endif;
+
+         $line    = str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
+         $result .= $line . "\n";
+         $token   = strtok("\n");
+         $pad    += $indent;
+      }
+      $sxml = simplexml_load_string($result);
+      return $sxml;
+   }
+
 }
 ?>

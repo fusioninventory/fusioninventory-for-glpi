@@ -97,36 +97,39 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
          $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
 <REPLY>
 </REPLY>");
-//$ptt->getTask($pxml->DEVICEID);
 
+      $ptc->addProcessNumber($ptap->addProcess($pxml));
  
       $pta = new PluginTrackerAgents;
       $ptt = new PluginTrackerTask;
+      $ptcm = new PluginTrackerConfigModules;
+
 
       $a_agent = $pta->InfosByKey($pxml->DEVICEID);
       $a_tasks = $ptt->find("`agent_id`='".$a_agent['ID']."'", "date");
-      // TODO gest last
+
+      $single = 0;
       foreach ($a_tasks as $task_id=>$datas) {
-         if ($a_tasks[$task_id]['action'] == 'INVENTORY') {
-            $ptc->addInventory();
-            $input['ID'] = $task_id;
-            $ptt->delete($input);
+         if ($single == "0") {
+            if (($a_tasks[$task_id]['action'] == 'INVENTORY')
+                    AND ($ptcm->isActivated('inventoryocs'))){
+               $ptc->addInventory();
+               $input['ID'] = $task_id;
+               $ptt->delete($input);
+               if ($a_tasks[$task_id]['single'] == "1") {
+                  $single = 1;
+               }
+            }
          }
       }
-
-
-         //$ptc->addProcessNumber($ptap->addProcess($pxml));
-
-      // ******** NETDISCOVERY
-         //$ptc->addDiscovery($pxml);
-
-      // ******** SNMPQUERY
-         //$ptc->addQuery($pxml);
+      if ($single == "0") {
+         $ptc->addDiscovery($pxml);
+         $ptc->addQuery($pxml);
+      }
 
       // ******** Send XML
          $ptc->setXML($ptc->getXML());
          echo $ptc->getSend(); // echo response for the agent
-
       }
    } else {
       $res .= "0'".$errors."'";
@@ -140,6 +143,5 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    $duree["sec"]--;
    $duree["usec"]+=1000000;
   }
- #  file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/import.log", "Il a fallu ".$duree["sec"]." secondes et ". $duree["usec"]." microsecondes");
 }
 ?>

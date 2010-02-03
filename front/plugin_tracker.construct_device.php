@@ -49,10 +49,15 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd = new PluginTrackerConstructDevice;
    $ptcd->generatemodels();
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_GET['generatediscover']) AND $_GET['generatediscover'] == '1') {
+   $ptcd = new PluginTrackerConstructDevice;
+   $ptcd->generateDiscovery();
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>Creation automatique des modèles</a>";
-
+echo " | ";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>Générer le fichier de découverte</a>";
 searchForm(PLUGIN_TRACKER_CONSTRUCT_DEVICE,$_GET);
 showList(PLUGIN_TRACKER_CONSTRUCT_DEVICE,$_GET);
 

@@ -247,7 +247,7 @@ class PluginTrackerCommunication {
                   $this->addAuth($sxml_option, $snmpauth['ID']);
                }
             }
-         $this->sxml->addChild('RESPONSE', 'SEND');
+         //$this->sxml->addChild('RESPONSE', 'SEND');
       }
    }
 
