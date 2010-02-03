@@ -429,6 +429,18 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
          }
          $this->update($input);
       }
+      // If discovery and query are finished, we will end Process
+      $this->getFromDB($process_id);
+      $doEnd = 1;
+      if (($this->fields['discovery_threads'] != '0') AND ($this->fields['end_time_discovery'] == '0000-00-00 00:00:00')) {
+         $doEnd = 0;
+      }
+      if (($this->fields['query_threads'] != '0') AND ($this->fields['end_time_query'] == '0000-00-00 00:00:00')) {
+         $doEnd = 0;
+      }
+      if ($doEnd == '1') {
+         $this->endProcess($p_number, date("Y-m-d H:i:s"));
+      }
    }
 
    
