@@ -1290,13 +1290,22 @@ class PluginTrackerCommunication {
       if ((isset($this->sxml->DEVICEID)) AND (isset($this->sxml->TOKEN))) {
          $pta = new PluginTrackerAgents;
          $a_agent = $pta->find("`key`='".$this->sxml->DEVICEID."'", "", "1");
-         foreach ($a_agent as $id_agent=>$dataInfos) {
-            $input = array();
-            $input['ID'] = $id_agent;
-            $input['token'] = $this->sxml->TOKEN;
-            $pta->update($input);            
+         if (empty($a_agent)) {
+            $a_input['token'] = $this->sxml->TOKEN;
+            $a_input['name'] = $this->sxml->DEVICEID;
+            $a_input['key'] = $this->sxml->DEVICEID;
+            $pta->add($a_input);
+            return 2;
+         } else {
+            foreach ($a_agent as $id_agent=>$dataInfos) {
+               $input = array();
+               $input['ID'] = $id_agent;
+               $input['token'] = $this->sxml->TOKEN;
+               $pta->update($input);
+            }
          }
-      }      
+      }
+      return 1;
    }
 
    function sendInventoryToOcsServer($p_xml) {

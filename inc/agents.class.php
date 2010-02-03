@@ -178,14 +178,14 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		if ($ID=='') {
 			// Generator of Key
-			$chrs = 30;
-			$chaine = ""; 
-			$list = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-			mt_srand((double)microtime()*1000000);
+//			$chrs = 30;
+//			$chaine = "";
+//			$list = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+//			mt_srand((double)microtime()*1000000);
 			$newstring="";
-			while( strlen( $newstring )< $chrs ) {
-				$newstring .= $list[mt_rand(0, strlen($list)-1)];
-			}
+//			while( strlen( $newstring )< $chrs ) {
+//				$newstring .= $list[mt_rand(0, strlen($list)-1)];
+//			}
 
 			echo "<input type='hidden' name='key' value='".$newstring."'/>";
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
@@ -255,6 +255,8 @@ class PluginTrackerAgents extends CommonDBTM {
       global $LANG;
 
       $ptcm = new PluginTrackerConfigModules;
+      $np = new Netport;
+
       if (!$ptcm->isActivated('remotehttpagent')) {
          return;
       }
@@ -270,20 +272,25 @@ class PluginTrackerAgents extends CommonDBTM {
       echo " : </th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-      if(!($fp = fsockopen("127.0.0.1", 62354, $errno, $errstr, 3))) {
-          echo "<b>".$LANG['plugin_tracker']["task"][9]."</b>";
-      } else {
-         echo "<b>".$LANG['plugin_tracker']["task"][8]."</b>";
-         fclose($fp);
-      }
+      $a_data = $np->find("`on_device`='".$this->fields['on_device']."' AND `device_type`='".$this->fields['device_type']."'");
+      foreach ($a_data as $port_id=>$port) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 3))) {
+             echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][9]."</b>";
+         } else {
+            echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][8]."</b>";
+            $ip = $port['ifaddr'];
+            fclose($fp);
+         }
       echo "</td>";
       echo "</tr>";
+      }
 
       echo "<tr class='tab_bg_2'>";
 		echo "<td align='center'>";
-      echo "<input type='hidden' name='ID' value='".$ID."'/>";
+      echo "<input type='hidden' name='agentID' value='".$ID."'/>";
+      echo "<input type='hidden' name='ip' value='".$ip."'/>";
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_tracker']["task"][12]."\" class='submit' >";
       echo "</td>";
       echo "</tr>";

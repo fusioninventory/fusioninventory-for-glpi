@@ -63,9 +63,10 @@ if (isset ($_POST["add"])) {
 	plugin_tracker_checkRight("snmp_agent","w");
 	$agents->delete($_POST);
 	glpi_header("plugin_tracker.agents.php");
-} else if (isset($_POST['startagent'])) {
-   $agents->RemoteStartAgent($_POST['ID']);
-   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset ($_POST["startagent"])) {
+   $pta = new PluginTrackerAgents;
+   $pta->RemoteStartAgent($_POST['agentID'], $_POST['ip']);
+	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 

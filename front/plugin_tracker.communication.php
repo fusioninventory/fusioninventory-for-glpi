@@ -65,9 +65,12 @@ if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"
 	echo $gzout;
 	exit();
 }
-
+$ocsinventory = '0';
 file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
-$ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+$state = $ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+if ($state == '2') {
+   $ocsinventory = '1';
+}
 $top0 = gettimeofday();
 if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    //if ($ac->connectionOK($errors)) {
@@ -98,8 +101,6 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
 <REPLY>
 </REPLY>");
 
-      $ptc->addProcessNumber($ptap->addProcess($pxml));
- 
       $pta = new PluginTrackerAgents;
       $ptt = new PluginTrackerTask;
       $ptcm = new PluginTrackerConfigModules;
@@ -116,6 +117,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
                $ptc->addInventory();
                $input['ID'] = $task_id;
                $ptt->delete($input);
+               $ocsinventory = '0';
                if ($a_tasks[$task_id]['single'] == "1") {
                   $single = 1;
                }
@@ -123,10 +125,13 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
          }
       }
       if ($single == "0") {
+         $ptc->addProcessNumber($ptap->addProcess($pxml));
          $ptc->addDiscovery($pxml);
          $ptc->addQuery($pxml);
       }
-
+      if ($ocsinventory == '1') {
+         $ptc->addInventory();
+      }
       // ******** Send XML
          $ptc->setXML($ptc->getXML());
          echo $ptc->getSend(); // echo response for the agent

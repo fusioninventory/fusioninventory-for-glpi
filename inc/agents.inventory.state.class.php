@@ -48,6 +48,7 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
       global $DB, $LANG;
 
       $np = new Netport;
+      $pta = new PluginTrackerAgents;
 
       echo "<br/>";
       echo "<div align='center'>";
@@ -118,27 +119,33 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
 
       $ip = "";
       if (($data['state'] == 0) OR ($data['state'] == 6)) {
-      echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-      $a_data = $np->find("`on_device`='".$ID."' AND `device_type`='1'");
-      foreach ($a_data as $port_id=>$port) {
-         if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 3))) {
-             echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][9]."</b>";
-         } else {
-            echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][8]."</b>";
-            $ip = $port['ifaddr'];
-            fclose($fp);
+         $a_data = $np->find("`on_device`='".$ID."' AND `device_type`='1'");
+         foreach ($a_data as $port_id=>$port) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td align='center'>";
+            if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 3))) {
+                echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][9]."</b>";
+            } else {
+               echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][8]."</b>";
+               $ip = $port['ifaddr'];
+               fclose($fp);
+            }
+            echo "</td>";
+            echo "</tr>";
          }
-      }
-      echo "</td>";
-      echo "</tr>";
       }
 
       echo "<tr class='tab_bg_2'>";
 		echo "<td align='center' colspan='2'>";
-      echo "<input type='hidden' name='agentID' value='2'/>";
+      $a_datasagent = $pta->find("`on_device`='".$ID."' AND `device_type`='1' ", "", "1");
+      if (!empty($a_datasagent)) {
+         foreach ($a_datasagent as $agent_id=>$dataagent) {
+            echo "<input type='hidden' name='agentID' value='".$agent_id."'/>";
+         }
+      }
+      
       echo "<input type='hidden' name='ID' value='".$ID."'/>";
-      ECHO "<input type='hidden' name='ip' value='".$ip."'/>";
+      echo "<input type='hidden' name='ip' value='".$ip."'/>";
       
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_tracker']["task"][12]."\" class='submit' >";
       echo "</td>";
