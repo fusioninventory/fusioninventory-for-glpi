@@ -164,8 +164,7 @@ function plugin_tracker_snmp_showHistory($ID_port) {
       SELECT * FROM(
          SELECT * FROM (
             SELECT date as date, process_number as process_number,
-            FK_port_source, FK_port_destination, creation,
-            Field, old_value, new_value
+            FK_port_source, FK_port_destination, creation
 
             FROM glpi_plugin_tracker_snmp_history_connections
             WHERE `FK_port_source`='".$ID_port."'
@@ -177,7 +176,7 @@ function plugin_tracker_snmp_showHistory($ID_port) {
          UNION ALL
          SELECT * FROM (
             SELECT date_mod as date, FK_process as process_number,
-            FK_ports AS FK_port_source, FK_port_destination, creation,
+            FK_ports AS FK_port_source,
             Field, old_value, new_value
 
             FROM glpi_plugin_tracker_snmp_history
