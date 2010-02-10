@@ -36,7 +36,13 @@ $NEEDED_ITEMS = array (
 	"setup",
 	"rulesengine",
 	"tracker",
-	"search"
+	"search",
+   "computer",
+   "device",
+   "printer",
+   "networking",
+   "peripheral",
+   "monitor"
 );
 
 define('GLPI_ROOT', '../../..');

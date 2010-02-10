@@ -57,7 +57,8 @@ CREATE TABLE `glpi_plugin_tracker_config_modules` (
    `snmp` INT( 1 ) NOT NULL DEFAULT '0',
    `inventoryocs` INT( 1 ) NOT NULL DEFAULT '0',
    `netdiscovery` INT( 1 ) NOT NULL DEFAULT '0',
-   `remotehttpagent` INT( 1 ) NOT NULL DEFAULT '0'
+   `remotehttpagent` INT( 1 ) NOT NULL DEFAULT '0',
+   `wol` INT( 1 ) NOT NULL DEFAULT '0'
    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `glpi_plugin_tracker_lock`;

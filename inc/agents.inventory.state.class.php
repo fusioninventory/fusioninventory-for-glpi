@@ -123,7 +123,7 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
          foreach ($a_data as $port_id=>$port) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
-            if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 3))) {
+            if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
                 echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][9]."</b>";
             } else {
                echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][8]."</b>";

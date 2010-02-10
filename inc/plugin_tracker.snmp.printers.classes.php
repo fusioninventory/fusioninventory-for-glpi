@@ -125,19 +125,6 @@ class PluginTrackerPrinters extends CommonDBTM {
       echo "<td>";
       echo "</td>";
       echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["functionalities"][36]."</td>";
-		echo "<td align='center'>";
-		$dropdown[1] = $LANG["planning"][5];
-		$dropdown[7] = $LANG["planning"][6];
-		$dropdown[30] = $LANG["planning"][14];
-		$dropdown[365] = $LANG["financial"][9];
-		dropdownArrayValues("frequence_days",$dropdown, $data["frequence_days"]);
-		echo "</td>";
-      echo "<td>";
-      echo "</td>";
-		echo "</tr>";		
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2' height='30'>";
@@ -166,28 +153,82 @@ class PluginTrackerPrinters extends CommonDBTM {
 			$Array_Object_TypeNameConstant= $plugin_tracker_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
-				if (strstr($mapping_type_name, "cartridge")) {
-					$explode[1] = str_replace ("MAX", "", $mapping_type_name);
-					$explode[1] = str_replace ("REMAIN", "", $explode[1]);
-               switch($explode[1]) {
+				if ((strstr($mapping_type_name, "cartridge")) OR (strstr($mapping_type_name, "toner"))) {
+               switch($mapping_type_name) {
                      CASE "cartridgeblack":
-                        $mapping_name[$explode[1]] = "1";
+                        $mapping_name[$mapping_type_name] = "1";
+                        break;
+                     
+                     CASE "cartridgeblackphoto":
+                        $mapping_name[$mapping_type_name] = "2";
+                        break;
+
+                     CASE "tonerblack" :
+                        $mapping_name[$mapping_type_name] = "3";
+                        break;
+
+                     CASE "tonerblack2" :
+                        $mapping_name[$mapping_type_name] = "4";
                         break;
 
                      CASE "cartridgecyan":
-                        $mapping_name[$explode[1]] = "2";
+                        $mapping_name[$mapping_type_name] = "5";
+                        break;
+
+                     CASE "cartridgecyanlight":
+                        $mapping_name[$mapping_type_name] = "6";
+                        break;
+
+                     CASE "tonercyan" :
+                        $mapping_name[$mapping_type_name] = "7";
                         break;
 
                      CASE "cartridgemagenta":
-                        $mapping_name[$explode[1]] = "3";
+                        $mapping_name[$mapping_type_name] = "8";
+                        break;
+
+                     CASE "cartridgemagentalight":
+                        $mapping_name[$mapping_type_name] = "9";
+                        break;
+
+                     CASE "tonermagenta":
+                        $mapping_name[$mapping_type_name] = "10";
                         break;
 
                      CASE "cartridgeyellow":
-                        $mapping_name[$explode[1]] = "4";
+                        $mapping_name[$mapping_type_name] = "11";
                         break;
 
+                     CASE "toneryellow":
+                        $mapping_name[$mapping_type_name] = "12";
+                        break;
+
+                     CASE "drumblack":
+                        $mapping_name[$mapping_type_name] = "13";
+                        break;
+
+                     CASE "drumcyan":
+                        $mapping_name[$mapping_type_name] = "14";
+                        break;
+
+                     CASE "drummagenta":
+                        $mapping_name[$mapping_type_name] = "15";
+                        break;
+
+                     CASE "drumyellow":
+                        $mapping_name[$mapping_type_name] = "16";
+                        break;
+
+                     CASE "wastetoner":
+                        $mapping_name[$mapping_type_name] = "17";
+                        break;
+
+                     CASE "maintenancekit":
+                        $mapping_name[$mapping_type_name] = "18";
+                        break;
+                     
                      default:
-                        $mapping_name[$explode[1]] = "5";
+                        $mapping_name[$mapping_type_name] = "19";
                }
 				}
 			}

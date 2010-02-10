@@ -1381,5 +1381,15 @@ class PluginTrackerCommunication {
       $this->sxml->addAttribute('RESPONSE', "SEND");
       $this->sxml->addAttribute('PROLOG_FREQ', $ptc->getValue('inventory_frequence'));
    }
+
+
+   function addWakeonlan() {
+      $ptc = new PluginTrackerConfig;
+       $sxml_option = $this->sxml->addChild('OPTION');
+       $sxml_option->addChild('NAME', 'WAKEONLAN');
+       $sxml_param = $sxml_option->addChild('PARAM');
+       $sxml_param->addAttribute('MAC', '00:24:8c:e0:2d:bb');
+       $sxml_param->addAttribute('IP', '192.168.0.201');
+   }
 }
 ?>

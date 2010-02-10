@@ -48,8 +48,8 @@ class PluginTrackerConfigModules extends CommonDBTM {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(
-                              `id`, `snmp`, `inventoryocs`, `netdiscovery`, `remotehttpagent`)
-                VALUES ('1', '0', '0', '0', '0');";
+                              `id`, `snmp`, `inventoryocs`, `netdiscovery`, `remotehttpagent`, `wol`)
+                VALUES ('1', '0', '0', '0', '0', '0');";
 		
 		$DB->query($query);
 	}
@@ -112,6 +112,15 @@ class PluginTrackerConfigModules extends CommonDBTM {
 		echo "<td>".$LANG['plugin_tracker']['config'][5]."&nbsp;:</td>";
 		echo "<td>";
 		dropdownYesNo("remotehttpagent", $this->isActivated('remotehttpagent'));
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['plugin_tracker']['config'][6]."&nbsp;:</td>";
+		echo "<td>";
+		dropdownYesNo("wol", $this->isActivated('wol'));
+		echo "</td>";
+		echo "<td colspan='2'>";
 		echo "</td>";
 		echo "</tr>";
 

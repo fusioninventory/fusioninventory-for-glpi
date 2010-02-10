@@ -336,14 +336,14 @@ class PluginTrackerMibNetworking extends CommonDBTM {
          switch ($data['oid_port_dyn']) {
             case 0:
                $ptc->addGet($p_sxml_node,
-                  getDropdownName('glpi_dropdown_plugin_tracker_mib_object',$data['FK_mib_object']),
+                  $data['mapping_name'],
                   getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']),
                   $data['mapping_name'], $data['vlan']);
                break;
             
             case 1:
                $ptc->addWalk($p_sxml_node,
-                  getDropdownName('glpi_dropdown_plugin_tracker_mib_object',$data['FK_mib_object']),
+                  $data['mapping_name'],
                   getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']),
                   $data['mapping_name'], $data['vlan']);
                break;

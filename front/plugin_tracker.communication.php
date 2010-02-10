@@ -45,7 +45,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 $_SESSION["glpi_use_mode"] = 2;
 
-header('Content-type: application/x-compress');
+//header('Content-type: application/x-compress');
 
 $ptc = new PluginTrackerCommunication;
 $ptap = new PluginTrackerAgentsProcesses;
@@ -132,6 +132,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       if ($ocsinventory == '1') {
          $ptc->addInventory();
       }
+//      $ptc->addWakeonlan();
       // ******** Send XML
          $ptc->setXML($ptc->getXML());
          echo $ptc->getSend(); // echo response for the agent

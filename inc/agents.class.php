@@ -71,6 +71,8 @@ class PluginTrackerAgents extends CommonDBTM {
 			$this->getEmpty();
       }
 
+      $CommonItem = new CommonItem;
+
 		$this->showTabs($ID, "",$_SESSION['glpi_tab']);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
@@ -122,6 +124,15 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo $this->fields["token"];
 		echo "</td>";
 		echo "</tr>";
+      
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center' colspan='2'>";
+      $CommonItem->getFromDB($this->fields["device_type"],
+                                $this->fields["on_device"]);
+      echo $CommonItem->getLink(1);
+		echo "</td>";
+		echo "</tr>";
+
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
@@ -219,7 +230,7 @@ class PluginTrackerAgents extends CommonDBTM {
       global $DB;
 
       $query = "SELECT * FROM `glpi_plugin_tracker_agents`
-      WHERE `key`='".$key."'";
+      WHERE `key`='".$key."' LIMIT 1";
 
       $agent = array();
       if ($result = $DB->query($query)) {
@@ -276,15 +287,15 @@ class PluginTrackerAgents extends CommonDBTM {
       foreach ($a_data as $port_id=>$port) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 3))) {
+         if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
              echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][9]."</b>";
          } else {
             echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][8]."</b>";
             $ip = $port['ifaddr'];
             fclose($fp);
          }
-      echo "</td>";
-      echo "</tr>";
+         echo "</td>";
+         echo "</tr>";
       }
 
       echo "<tr class='tab_bg_2'>";

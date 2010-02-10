@@ -49,6 +49,7 @@ $LANG['plugin_tracker']['config'][2] = "Snmp";
 $LANG['plugin_tracker']['config'][3] = "Inventaire OCS";
 $LANG['plugin_tracker']['config'][4] = "Découverte d'équipements";
 $LANG['plugin_tracker']['config'][5] = "Controle de l'agent à partir de GLPI";
+$LANG['plugin_tracker']['config'][6] = "Wake On Lan";
 
 $LANG['plugin_tracker']["profile"][0]="Gestion des droits";
 $LANG['plugin_tracker']["profile"][1]="$title"; //interface
