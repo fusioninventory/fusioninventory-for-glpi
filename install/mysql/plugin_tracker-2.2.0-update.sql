@@ -204,7 +204,7 @@ CREATE TABLE `glpi_plugin_tracker_construct_mibs` (
 
 ALTER TABLE `glpi_plugin_tracker_agents` ADD `on_device` INT( 11 ) NOT NULL DEFAULT '0',
    ADD `device_type` SMALLINT( 6 ) NOT NULL DEFAULT '0',
-   ADD `token` VARCHAR( 255 ) NOT NULL
+   ADD `token` VARCHAR( 255 ) NOT NULL;
 
 CREATE TABLE `glpi_plugin_tracker_agents_inventory_state` (
 `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
