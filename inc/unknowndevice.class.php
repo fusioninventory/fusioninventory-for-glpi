@@ -31,11 +31,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginTrackerUnknownDevice extends CommonDBTM {
+class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_unknown_device";
-		$this->type = PLUGIN_TRACKER_MAC_UNKNOWN;
+		$this->table = "glpi_plugin_fusioninventory_unknown_device";
+		$this->type = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
 	}
 
 
@@ -43,7 +43,7 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
-		plugin_tracker_checkRight("snmp_networking","r");
+		plugin_fusioninventory_checkRight("snmp_networking","r");
 
 		if ($ID!='') {
 			$this->getFromDB($ID);
@@ -56,7 +56,7 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 		echo "<table  class='tab_cadre_fixe'>";
 
 		echo "<tr><th colspan='4'>";
-		echo $LANG['plugin_tracker']["menu"][4];
+		echo $LANG['plugin_fusioninventory']["menu"][4];
 		echo " :</th></tr>";
 
 		$datestring = $LANG["common"][26].": ";
@@ -86,7 +86,7 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["unknown"][0] . " :</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][0] . " :</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='dnsname' value='" . $this->fields["dnsname"] . "' size='35'/>";
 		echo "</td>";
@@ -145,7 +145,7 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["unknown"][2] . " :</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][2] . " :</td>";
 		echo "<td align='center'>";
       dropdownYesNo("accepted", $this->fields["accepted"]);
 		echo "</td>";
@@ -158,23 +158,23 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["functionalities"][3] . " :</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["functionalities"][3] . " :</td>";
 		echo "<td align='center'>";
       dropdownYesNo("snmp", $this->fields["snmp"]);
 		echo "</td>";
 
       if ($this->fields["snmp"] == "1") {
-         echo "<td align='center'>" . $LANG['plugin_tracker']["model_info"][4] . " : </td>";
+         echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][4] . " : </td>";
          echo "</td>";
          echo "<td align='center'>";
-         dropdownValue("glpi_plugin_tracker_model_infos", "FK_model_infos", $this->fields["FK_model_infos"]);
+         dropdownValue("glpi_plugin_fusioninventory_model_infos", "FK_model_infos", $this->fields["FK_model_infos"]);
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'>" . $LANG['plugin_tracker']["model_info"][3] . " :</td>";
+         echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][3] . " :</td>";
          echo "<td align='center'>";
-         dropdownValue("glpi_plugin_tracker_snmp_connection", "FK_snmp_connection", $this->fields["FK_snmp_connection"]);
+         dropdownValue("glpi_plugin_fusioninventory_snmp_connection", "FK_snmp_connection", $this->fields["FK_snmp_connection"]);
          echo "</td>";
       }
 
@@ -213,18 +213,18 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 	function updateFromOldVersion_unknown_mac() {
 		global $DB,$LANG;
 
-		$snmp_queries = new PluginTrackerSNMP;
+		$snmp_queries = new PluginFusionInventorySNMP;
 		$np=new Netport;
 
 		$query = "SELECT DISTINCT `unknow_mac`,`unknown_ip`,`port`,`end_FK_processes`
-                FROM `glpi_plugin_tracker_unknown_mac`
+                FROM `glpi_plugin_fusioninventory_unknown_mac`
                 WHERE `end_FK_processes`=(
                       SELECT MAX(`end_FK_processes`)
-                      FROM `glpi_plugin_tracker_unknown_mac`); ";
+                      FROM `glpi_plugin_fusioninventory_unknown_mac`); ";
 
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
-				$name_unknown = plugin_tracker_search_name_ocs_servers($data["unknow_mac"]);
+				$name_unknown = plugin_fusioninventory_search_name_ocs_servers($data["unknow_mac"]);
 				// Add unknown device
 				if ($name_unknown == $data["unknown_ip"]) {
 					$unknown_infos["name"] = '';
@@ -235,7 +235,7 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 				unset($unknown_infos);
 				// Add networking_port
 				$port_add["on_device"] = $newID;
-				$port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
+				$port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
 				$port_add["ifaddr"] = $data["unknown_ip"];
 				$port_add['ifmac'] = $data["unknow_mac"];
 				$port_ID = $np->add($port_add);
@@ -254,10 +254,10 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
 
       $query = "SELECT `glpi_networking_ports`.`ID`
                 FROM `glpi_networking_ports`
-                     LEFT JOIN `glpi_plugin_tracker_unknown_device`
-                               ON `on_device`=`glpi_plugin_tracker_unknown_device`.`ID`
-                     WHERE `device_type`=".PLUGIN_TRACKER_MAC_UNKNOWN."
-                           AND `glpi_plugin_tracker_unknown_device`.`ID` IS NULL;";
+                     LEFT JOIN `glpi_plugin_fusioninventory_unknown_device`
+                               ON `on_device`=`glpi_plugin_fusioninventory_unknown_device`.`ID`
+                     WHERE `device_type`=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
+                           AND `glpi_plugin_fusioninventory_unknown_device`.`ID` IS NULL;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             $unknown_infos["name"] = '';
@@ -281,7 +281,7 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
                 FROM `glpi_networking_ports`
                 WHERE `ifmac` != ''
                       AND `ifmac` != '00:00:00:00:00:00'
-                      AND `device_type`=".PLUGIN_TRACKER_MAC_UNKNOWN."
+                      AND `device_type`=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
                 GROUP BY `ifmac`
                 HAVING COUNT(*)>0;";
 		if ($result=$DB->query($query)) {
@@ -291,7 +291,7 @@ class PluginTrackerUnknownDevice extends CommonDBTM {
                             FROM `glpi_networking_ports`
                             WHERE `ifmac` IN ('".$data["ifmac"]."','".strtoupper($data["ifmac"])."',
                                               '".strtolower($data["ifmac"])."')
-                                  AND `device_type`!=".PLUGIN_TRACKER_MAC_UNKNOWN."
+                                  AND `device_type`!=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
                             LIMIT 0,1;";
 				$result_known=$DB->query($query_known);
             if ($DB->numrows($result_known) > 0) {

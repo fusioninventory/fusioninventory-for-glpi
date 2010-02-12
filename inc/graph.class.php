@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to generate graphs using pChart
  **/
-class PluginTrackerGraph {
+class PluginFusionInventoryGraph {
    private $pData;
    private $timeUnit;
    private $timeUnitName;
@@ -60,9 +60,9 @@ class PluginTrackerGraph {
                         $p_printers=array(), $p_title='') {
       global $LANG;
       
-      $this->pChartPath = GLPI_ROOT.'/plugins/tracker/lib/pChart/';
-      $this->fontsPath = GLPI_ROOT.'/plugins/tracker/lib/fonts/';
-      $this->tmpPath = GLPI_ROOT.'/files/_plugins/tracker/tmp/';
+      $this->pChartPath = GLPI_ROOT.'/plugins/fusioninventory/lib/pChart/';
+      $this->fontsPath = GLPI_ROOT.'/plugins/fusioninventory/lib/fonts/';
+      $this->tmpPath = GLPI_ROOT.'/files/_plugins/fusioninventory/tmp/';
       include($this->pChartPath."pData.class");
       include($this->pChartPath."pChart.class");
 
@@ -74,16 +74,16 @@ class PluginTrackerGraph {
       $group='';
       switch ($this->timeUnit) {
          case 'date': // day
-            $this->timeUnitName = $LANG['plugin_tracker']["prt_history"][34];
+            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][34];
             break;
          case 'week':
-            $this->timeUnitName = $LANG['plugin_tracker']["prt_history"][35];
+            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][35];
             break;
          case 'month':
-            $this->timeUnitName = $LANG['plugin_tracker']["prt_history"][36];
+            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][36];
             break;
          case 'year':
-            $this->timeUnitName = $LANG['plugin_tracker']["prt_history"][37];
+            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][37];
             break;
       }
 
@@ -263,10 +263,10 @@ class PluginTrackerGraph {
       $Map->tmpFolder=$this->tmpPath;
       $img = $this->tmpPath."img_".$fileId.".png";
       echo '<DIV ID="overDiv" STYLE="position:absolute; visibility:hidden; z-index:1000;"></DIV>';
-      echo "<IMG ID='tracker_graph_$fileId' SRC='$img' WIDTH=800 HEIGHT=250 BORDER=0 OnMouseMove='tracker_graph(event);' OnMouseOut='nd();'>";
+      echo "<IMG ID='fusioninventory_graph_$fileId' SRC='$img' WIDTH=800 HEIGHT=250 BORDER=0 OnMouseMove='fusioninventory_graph(event);' OnMouseOut='nd();'>";
       echo '<SCRIPT>
-              function tracker_graph(event) {
-                 LoadImageMap("tracker_graph_'.$fileId.'","'.$Map->tmpFolder.$MapID.'");
+              function fusioninventory_graph(event) {
+                 LoadImageMap("fusioninventory_graph_'.$fileId.'","'.$Map->tmpFolder.$MapID.'");
                  getMousePosition(event);
               }
             </SCRIPT>';

@@ -31,10 +31,10 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginTrackerAgentsErrors extends CommonDBTM {
+class PluginFusionInventoryAgentsErrors extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_agents_errors";
+		$this->table = "glpi_plugin_fusioninventory_agents_errors";
 	}
 
 
@@ -47,8 +47,8 @@ class PluginTrackerAgentsErrors extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][1];
-      echo " <a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php'>(".$LANG['common'][66].")</a>";
+      echo $LANG['plugin_fusioninventory']["processes"][1];
+      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -64,7 +64,7 @@ class PluginTrackerAgentsErrors extends CommonDBTM {
       echo "</th>";
       
       echo "<th>";
-      echo $LANG['plugin_tracker']["errors"][104];
+      echo $LANG['plugin_fusioninventory']["errors"][104];
       echo "</th>";
 
       echo "</tr>";
@@ -95,9 +95,9 @@ class PluginTrackerAgentsErrors extends CommonDBTM {
 
             echo "<td>";
             if ($data['agent_type'] == "SNMPQUERY") {
-               echo $LANG['plugin_tracker']["processes"][27];
+               echo $LANG['plugin_fusioninventory']["processes"][27];
             } else if ($data['agent_type'] == "NETDISCOVERY") {
-               echo $LANG['plugin_tracker']["processes"][26];
+               echo $LANG['plugin_fusioninventory']["processes"][26];
             }
             echo "</td>";
 
@@ -122,7 +122,7 @@ class PluginTrackerAgentsErrors extends CommonDBTM {
 
       $input['on_device'] = $a_input['ID'];
       $input['device_type'] = $a_input['TYPE'];
-      $input['process_number'] = $_SESSION['glpi_plugin_tracker_processnumber'];
+      $input['process_number'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       $input['error_message'] = $a_input['MESSAGE'];
       $input['agent_type'] = $a_input['agent_type'];
       $input['date'] = date("Y-m-d H:i:s");

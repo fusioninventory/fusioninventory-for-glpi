@@ -38,17 +38,17 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginTrackerSNMPAuth extends CommonDBTM {
+class PluginFusionInventorySNMPAuth extends CommonDBTM {
    
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_snmp_connection";
-		$this->type = PLUGIN_TRACKER_SNMP_AUTH;
+		$this->table = "glpi_plugin_fusioninventory_snmp_connection";
+		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_AUTH;
 	}
 
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
-		plugin_tracker_checkRight("snmp_authentification","r");
+		plugin_fusioninventory_checkRight("snmp_authentification","r");
 
 		if ($ID!='') {
 			$this->getFromDB($ID);
@@ -59,8 +59,8 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] :
-            $LANG['plugin_tracker']["model_info"][3]);
+		echo ($ID =='' ? $LANG['plugin_fusioninventory']["model_info"][7] :
+            $LANG['plugin_fusioninventory']["model_info"][3]);
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -71,37 +71,37 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["model_info"][2] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][2] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_version", "FK_snmp_version",
+		dropdownValue("glpi_dropdown_plugin_fusioninventory_snmp_version", "FK_snmp_version",
          $this->fields["FK_snmp_version"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][1] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][1] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='community' value='" . $this->fields["community"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][2] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][2] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='sec_name' value='" . $this->fields["sec_name"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][4] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][4] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol", "auth_protocol",
+		dropdownValue("glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol", "auth_protocol",
          $this->fields["auth_protocol"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][5] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][5] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='auth_passphrase'
                    value='".$this->fields["auth_passphrase"]."'/>";
@@ -109,15 +109,15 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][6] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][6] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol", "priv_protocol",
+		dropdownValue("glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol", "priv_protocol",
             $this->fields["priv_protocol"], 0);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["snmpauth"][7] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][7] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='priv_passphrase'
                    value='" . $this->fields["priv_passphrase"] . "'/>";
@@ -152,28 +152,28 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 	
 	
 	
-	function plugin_tracker_snmp_connections($array=0) {
+	function plugin_fusioninventory_snmp_connections($array=0) {
 		global $CFG_GLPI,$LANG;
 
 		$array_auth = array();
 
 		if ($array == '0') {
 			echo "<div align='center'><table class='tab_cadre_fixe'>";
-			echo "<tr><th colspan='10'>".$LANG['plugin_tracker']["model_info"][3]." :</th></tr>";
+			echo "<tr><th colspan='10'>".$LANG['plugin_fusioninventory']["model_info"][3]." :</th></tr>";
 			echo "<tr><th>".$LANG["common"][2]."</th>";
 			echo "<th>".$LANG["common"][16]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["model_info"][2]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["snmpauth"][1]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["snmpauth"][2]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["snmpauth"][3]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["snmpauth"][4]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["snmpauth"][5]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["snmpauth"][6]."</th>";
-			echo "<th>".$LANG['plugin_tracker']["snmpauth"][7]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["model_info"][2]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][1]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][2]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][3]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][4]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][5]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][6]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][7]."</th>";
 			echo "</tr>";
 		}
 
-		$xml = simplexml_load_file(GLPI_ROOT."/plugins/tracker/scripts/auth.xml");
+		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
 		
 		$i = -1;
 		foreach($xml->auth[0] as $num) {
@@ -192,7 +192,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 
 					case 3:
 						$snmp_version[$i] = getDropdownName(
-                                      "glpi_dropdown_plugin_tracker_snmp_version",$item);
+                                      "glpi_dropdown_plugin_fusioninventory_snmp_version",$item);
 						if ($snmp_version[$i] == "&nbsp;") {
 							$snmp_version[$i] = "";
                   }
@@ -208,7 +208,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 
 					case 7:
 						$auth_protocol[$i] = getDropdownName(
-                                    "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+                                    "glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol",$item);
 						if ($auth_protocol[$i] == "&nbsp;") {
 							$auth_protocol[$i] = "";
                   }
@@ -220,7 +220,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 
 					case 9:
 						$priv_protocol[$i] = getDropdownName(
-                                    "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+                                    "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$item);
 						if ($priv_protocol[$i] == "&nbsp;") {
 							$priv_protocol[$i] = "";
                   }
@@ -269,7 +269,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 	
 	function add_xml() {
 		// Get new ID
-		$xml = simplexml_load_file(GLPI_ROOT."/plugins/tracker/scripts/auth.xml");
+		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
 		
 		$ID = $xml->incrementID[0];
 		$ID = $ID + 1;
@@ -345,7 +345,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		$xml_write .= "	</auth>\n";
 		$xml_write .= "</snmp>\n";
 		
-		$myFile = GLPI_ROOT."/plugins/tracker/scripts/auth.xml";
+		$myFile = GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml";
 		$fh = fopen($myFile, 'w') or die("can't open file");
 		fwrite($fh, $xml_write);
 		fclose($fh);
@@ -356,7 +356,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 	
 	
 	function selectbox($selected=0) {
-		$xml = simplexml_load_file(GLPI_ROOT."/plugins/tracker/scripts/auth.xml");
+		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
 		$i = -1;
 		$selectbox = "<select name='FK_snmp_connection' size='1'>\n
                        <option value='0'>-----</option>\n";
@@ -401,19 +401,19 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 	function GetInfos($ID_Device,$xml_auth_rep,$type) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		$config = new PluginTrackerConfig;
+		$config = new PluginFusionInventoryConfig;
 
 		if ($ID_Device != "all") {
 			switch ($type) {
 				case NETWORKING_TYPE :
 					$query = "SELECT *
-                         FROM `glpi_plugin_tracker_networking`
+                         FROM `glpi_plugin_fusioninventory_networking`
                          WHERE `FK_networking`='".$ID_Device."';";
 					break;
 
 				case PRINTER_TYPE :
 					$query = "SELECT *
-                         FROM `glpi_plugin_tracker_printers`
+                         FROM `glpi_plugin_fusioninventory_printers`
                          WHERE `FK_printers`='".$ID_Device."';";
 					break;
 			}		
@@ -477,11 +477,11 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						case 3:
 							if (($recup == "1") AND ($ID_Device != "all")) {
 								$snmp_auth["snmp_version"] = getDropdownName(
-                              "glpi_dropdown_plugin_tracker_snmp_version",$item);
+                              "glpi_dropdown_plugin_fusioninventory_snmp_version",$item);
                      }
 							if ($ID_Device == "all") {
 								$snmp_auth[($i+2)]["snmp_version"] = getDropdownName(
-                              "glpi_dropdown_plugin_tracker_snmp_version",$item);
+                              "glpi_dropdown_plugin_fusioninventory_snmp_version",$item);
                      }
 							break;
 
@@ -506,11 +506,11 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						case 7:
 							if (($recup == "1") AND ($ID_Device != "all")) {
 								$snmp_auth["auth_protocol"] = getDropdownName(
-                              "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+                              "glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol",$item);
                      }
 							if ($ID_Device == "all") {
 								$snmp_auth[($i+2)]["auth_protocol"] = getDropdownName(
-                              "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$item);
+                              "glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol",$item);
                      }
 							break;
 
@@ -526,11 +526,11 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						case 9:
 							if (($recup == "1") AND ($ID_Device != "all")) {
 								$snmp_auth["priv_protocol"] = getDropdownName(
-                              "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+                              "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$item);
                      }
 							if ($ID_Device == "all") {
 									$snmp_auth[($i+2)]["priv_protocol"] = getDropdownName(
-                              "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$item);
+                              "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$item);
                      }
 							break;
 
@@ -548,10 +548,10 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		} else if ($config->getValue("authsnmp") == "DB") {
 			if ($ID_Device == "all") {
 				$query = "SELECT *
-                      FROM `glpi_plugin_tracker_snmp_connection`";
+                      FROM `glpi_plugin_fusioninventory_snmp_connection`";
          } else {
 				$query = "SELECT *
-                      FROM `glpi_plugin_tracker_snmp_connection`
+                      FROM `glpi_plugin_fusioninventory_snmp_connection`
                       WHERE `ID`='".$ID_auth."';";
 			}
 			$result=$DB->query($query);
@@ -567,28 +567,28 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 			} else if ($ID_Device != "all") {
 				$snmp_auth["Name"] = $DB->result($result,0,"name");
 				$snmp_auth["snmp_version"] = getDropdownName(
-               "glpi_dropdown_plugin_tracker_snmp_version",$DB->result($result,0,
+               "glpi_dropdown_plugin_fusioninventory_snmp_version",$DB->result($result,0,
                "FK_snmp_version"));
 				$snmp_auth["community"] = $DB->result($result,0,"community");
 				$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
 				$snmp_auth["auth_protocol"] = getDropdownName(
-               "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$DB->result($result,0,
+               "glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol",$DB->result($result,0,
                "auth_protocol"));
 				$snmp_auth["auth_passphrase"] = $DB->result($result,0,"auth_passphrase");
 				$snmp_auth["priv_protocol"] = getDropdownName(
-               "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$DB->result($result,0,
+               "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$DB->result($result,0,
                "priv_protocol"));
 				$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
 			} else if ($ID_Device == "all") {
 				$i = 2;
 				while ($data=$DB->fetch_array($result)) {
 					if (($snmp_auth[0]["snmp_version"] == getDropdownName(
-                        "glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
+                        "glpi_dropdown_plugin_fusioninventory_snmp_version",$data["FK_snmp_version"]))
                   AND ($snmp_auth[0]["community"] == $data["community"])) {
                   
 						$snmp_auth[0]["ID"] = $data["ID"];
                 } else if (($snmp_auth[1]["snmp_version"] == getDropdownName(
-                         "glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]))
+                         "glpi_dropdown_plugin_fusioninventory_snmp_version",$data["FK_snmp_version"]))
                   AND ($snmp_auth[1]["community"] == $data["community"])) {
 
 						$snmp_auth[1]["ID"] = $data["ID"];
@@ -596,14 +596,14 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 						$snmp_auth[$i]["ID"] = $data["ID"];
 						$snmp_auth[$i]["Name"] = $data["name"];
 						$snmp_auth[$i]["snmp_version"] = getDropdownName(
-                     "glpi_dropdown_plugin_tracker_snmp_version",$data["FK_snmp_version"]);
+                     "glpi_dropdown_plugin_fusioninventory_snmp_version",$data["FK_snmp_version"]);
 						$snmp_auth[$i]["community"] = $data["community"];
 						$snmp_auth[$i]["sec_name"] = $data["sec_name"];
 						$snmp_auth[$i]["auth_protocol"] = getDropdownName(
-                     "glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol",$data["auth_protocol"]);
+                     "glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol",$data["auth_protocol"]);
 						$snmp_auth[$i]["auth_passphrase"] = $data["auth_passphrase"];
 						$snmp_auth[$i]["priv_protocol"] = getDropdownName(
-                     "glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol",$data["priv_protocol"]);
+                     "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$data["priv_protocol"]);
 						$snmp_auth[$i]["priv_passphrase"] = $data["priv_passphrase"];
 						$i++;
 					}
@@ -621,13 +621,13 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT FK_snmp_connection
-				FROM glpi_plugin_tracker_networking 
+				FROM glpi_plugin_fusioninventory_networking 
 				WHERE FK_networking='".$ID_Device."' ";
 				break;
 
 			case PRINTER_TYPE :
 				$query = "SELECT `FK_snmp_connection`
-                      FROM `glpi_plugin_tracker_printers`
+                      FROM `glpi_plugin_fusioninventory_printers`
                       WHERE `FK_printers`='".$ID_Device."';";
 				break;
 		}
@@ -666,7 +666,7 @@ class PluginTrackerSNMPAuth extends CommonDBTM {
 			}
 		}
 		if (isset($snmp_auth_name)) {
-			return "<a href='".GLPI_ROOT . "/plugins/tracker/front/plugin_tracker.snmp_auth.php'>".
+			return "<a href='".GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.php'>".
                 $snmp_auth_name."</a>";
       }
 	}

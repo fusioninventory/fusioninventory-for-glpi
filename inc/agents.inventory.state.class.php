@@ -38,17 +38,17 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginTrackerAgentsInventoryState extends CommonDBTM {
+class PluginFusionInventoryAgentsInventoryState extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_tracker_agents_inventory_state";
+		$this->table = "glpi_plugin_fusioninventory_agents_inventory_state";
 	}
 
    function computerState($target, $ID) {
       global $DB, $LANG;
 
       $np = new Netport;
-      $pta = new PluginTrackerAgents;
+      $pta = new PluginFusionInventoryAgents;
 
       echo "<br/>";
       echo "<div align='center'>";
@@ -57,7 +57,7 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo $LANG['plugin_tracker']["agents"][15];
+      echo $LANG['plugin_fusioninventory']["agents"][15];
       echo "</th>";
       echo "</tr>";
 
@@ -83,31 +83,31 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
       switch ($data['state']) {
          
          case 0:
-            echo $LANG['plugin_tracker']["agents"][16];
+            echo $LANG['plugin_fusioninventory']["agents"][16];
             break;
 
          case 1:
-            echo $LANG['plugin_tracker']["agents"][22];
+            echo $LANG['plugin_fusioninventory']["agents"][22];
             break;
 
          case 2:
-            echo $LANG['plugin_tracker']["agents"][17];
+            echo $LANG['plugin_fusioninventory']["agents"][17];
             break;
 
          case 3:
-            echo $LANG['plugin_tracker']["agents"][18];
+            echo $LANG['plugin_fusioninventory']["agents"][18];
             break;
 
          case 4:
-            echo $LANG['plugin_tracker']["agents"][19];
+            echo $LANG['plugin_fusioninventory']["agents"][19];
             break;
 
          case 5:
-            echo $LANG['plugin_tracker']["agents"][20];
+            echo $LANG['plugin_fusioninventory']["agents"][20];
             break;
 
          case 6:
-            echo $LANG['plugin_tracker']["agents"][21];
+            echo $LANG['plugin_fusioninventory']["agents"][21];
             break;
 
          default:
@@ -124,9 +124,9 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
             if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
-                echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][9]."</b>";
+                echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
             } else {
-               echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][8]."</b>";
+               echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
                $ip = $port['ifaddr'];
                fclose($fp);
             }
@@ -147,7 +147,7 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
       echo "<input type='hidden' name='ID' value='".$ID."'/>";
       echo "<input type='hidden' name='ip' value='".$ip."'/>";
       
-      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_tracker']["task"][12]."\" class='submit' >";
+      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
       echo "</td>";
       echo "</tr>";
       
@@ -155,19 +155,19 @@ class PluginTrackerAgentsInventoryState extends CommonDBTM {
       echo "</form>";
       echo "</div>";
 
-      $glpiroot = GLPI_ROOT."/plugins/tracker/front/";
-      if (strstr($_SERVER["PHP_SELF"], "tracker")) {
-         $glpiroot = '../plugins/tracker/front/';
+      $glpiroot = GLPI_ROOT."/plugins/fusioninventory/front/";
+      if (strstr($_SERVER["PHP_SELF"], "fusioninventory")) {
+         $glpiroot = '../plugins/fusioninventory/front/';
       }
 
       if (($data['state'] > 0) AND ($data['state'] < 6)) {
       echo "<script type='text/javascript'>
-Ext.getCmp('tracker_1').getUpdater().startAutoRefresh(3,'".$glpiroot."plugin_tracker.agents.state.php?ID=".$ID."');
+Ext.getCmp('fusioninventory_1').getUpdater().startAutoRefresh(3,'".$glpiroot."plugin_fusioninventory.agents.state.php?ID=".$ID."');
       
       </script>";
       } else {
       echo "<script type='text/javascript'>
-Ext.getCmp('tracker_1').getUpdater().stopAutoRefresh();
+Ext.getCmp('fusioninventory_1').getUpdater().stopAutoRefresh();
 
       </script>";
       }

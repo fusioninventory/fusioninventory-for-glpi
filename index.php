@@ -38,9 +38,9 @@ if(!defined('GLPI_ROOT')) {
 }
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_tracker']["title"][0],$_SERVER["PHP_SELF"],"plugins","tracker");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-glpi_header(GLPI_ROOT ."/plugins/tracker/front/plugin_tracker.menu.php");
+glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/plugin_fusioninventory.menu.php");
 commonFooter();
 
 ?>

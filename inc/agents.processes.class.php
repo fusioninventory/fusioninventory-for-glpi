@@ -31,11 +31,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginTrackerAgentsProcesses extends CommonDBTM {
+class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_agents_processes";
-		$this->type = PLUGIN_TRACKER_AGENTS_PROCESSES;
+		$this->table = "glpi_plugin_fusioninventory_agents_processes";
+		$this->type = PLUGIN_FUSIONINVENTORY_AGENTS_PROCESSES;
 	}
 
 
@@ -58,9 +58,9 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
    function defineTabs($ID,$withtemplate) {
 		global $LANG,$CFG_GLPI;
 
-		$ong[1]=$LANG['plugin_tracker']["processes"][19];
-      $ong[2]=$LANG['plugin_tracker']["title"][2];
-		$ong[3]=$LANG['plugin_tracker']["errors"][0];
+		$ong[1]=$LANG['plugin_fusioninventory']["processes"][19];
+      $ong[2]=$LANG['plugin_fusioninventory']["title"][2];
+		$ong[3]=$LANG['plugin_fusioninventory']["errors"][0];
 
 		return $ong;
 	}
@@ -72,59 +72,59 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th rowspan='2'>";
-      echo $LANG['plugin_tracker']["processes"][1];
+      echo $LANG['plugin_fusioninventory']["processes"][1];
       echo "</th>";
 
       echo "<th rowspan='2'>";
-      echo $LANG['plugin_tracker']["processes"][25];
+      echo $LANG['plugin_fusioninventory']["processes"][25];
       echo "</th>";
 
       echo "<th rowspan='2'>";
-      echo $LANG['plugin_tracker']["processes"][2];
+      echo $LANG['plugin_fusioninventory']["processes"][2];
       echo "</th>";
 
       echo "<th rowspan='2'>";
-      echo $LANG['plugin_tracker']["processes"][4];
+      echo $LANG['plugin_fusioninventory']["processes"][4];
       echo "</th>";
 
       echo "<th rowspan='2'>";
-      echo $LANG['plugin_tracker']["processes"][10];
+      echo $LANG['plugin_fusioninventory']["processes"][10];
       echo "</th>";
 
       echo "<th height='28'>";
-      echo $LANG['plugin_tracker']["processes"][26].">>";
+      echo $LANG['plugin_fusioninventory']["processes"][26].">>";
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][4];
+      echo $LANG['plugin_fusioninventory']["processes"][4];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][10];
+      echo $LANG['plugin_fusioninventory']["processes"][10];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][28];
+      echo $LANG['plugin_fusioninventory']["processes"][28];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][29];
+      echo $LANG['plugin_fusioninventory']["processes"][29];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][37];
+      echo $LANG['plugin_fusioninventory']["processes"][37];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][30]." / <br/>".$LANG['plugin_tracker']["processes"][34];
+      echo $LANG['plugin_fusioninventory']["processes"][30]." / <br/>".$LANG['plugin_fusioninventory']["processes"][34];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][31];
+      echo $LANG['plugin_fusioninventory']["processes"][31];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][32];
+      echo $LANG['plugin_fusioninventory']["processes"][32];
       echo "</th>";
 
       echo "</tr>";
@@ -132,39 +132,39 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th height='28'>";
-      echo $LANG['plugin_tracker']["processes"][27].">>";
+      echo $LANG['plugin_fusioninventory']["processes"][27].">>";
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][4];
+      echo $LANG['plugin_fusioninventory']["processes"][4];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][10];
+      echo $LANG['plugin_fusioninventory']["processes"][10];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][28];
+      echo $LANG['plugin_fusioninventory']["processes"][28];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][29];
+      echo $LANG['plugin_fusioninventory']["processes"][29];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][33];
+      echo $LANG['plugin_fusioninventory']["processes"][33];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][34];
+      echo $LANG['plugin_fusioninventory']["processes"][34];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][35];
+      echo $LANG['plugin_fusioninventory']["processes"][35];
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][36];
+      echo $LANG['plugin_fusioninventory']["processes"][36];
       echo "</th>";
 
       echo "</tr>";
@@ -201,7 +201,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
             echo "</td>";
 
             echo "<td rowspan='2'>";
-            $ci->getFromDB(PLUGIN_TRACKER_SNMP_AGENTS,$data['FK_agent']);
+            $ci->getFromDB(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$data['FK_agent']);
 				echo $ci->getLink(1);
             echo "</td>";
 
@@ -282,7 +282,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
             echo "<td>";
             echo $data['discovery_nb_found'];
             if ($data['discovery_nb_error'] > 0) {
-               echo " / <a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&agent_type=NETDISCOVERY'>
+               echo " / <a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php?process_number=".$data['process_number']."&agent_type=NETDISCOVERY'>
                   <font color='#ff0000'>".$data['discovery_nb_error']."</font></a>";
             } else {
                echo " / ".$data['discovery_nb_error'];
@@ -346,7 +346,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
             echo "<td>";
             if ($data['query_nb_error'] > 0) {
-               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&agent_type=SNMPQUERY'>
+               echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php?process_number=".$data['process_number']."&agent_type=SNMPQUERY'>
                   <font color='#ff0000'>".$data['query_nb_error']."</font></a>";
             } else {
                echo $data['query_nb_error'];
@@ -355,7 +355,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
             echo "<td>";
             if ($data['query_nb_connections_created'] > 0) {
-               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&amp;created=1'>
+               echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php?process_number=".$data['process_number']."&amp;created=1'>
                   ".$data['query_nb_connections_created']."</a>";
             } else {
                echo $data['query_nb_connections_created'];
@@ -364,7 +364,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
             echo "<td>";
             if ($data['query_nb_connections_deleted'] > 0) {
-               echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?process_number=".$data['process_number']."&amp;created=0'>
+               echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php?process_number=".$data['process_number']."&amp;created=0'>
                   ".$data['query_nb_connections_deleted']."</a>";
             } else {
                echo $data['query_nb_connections_deleted'];
@@ -386,7 +386,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
    function addProcess($pxml) {
 
-      $pta = new PluginTrackerAgents;
+      $pta = new PluginFusionInventoryAgents;
       
       $agent = $pta->InfosByKey($pxml->DEVICEID);
 
@@ -456,7 +456,7 @@ class PluginTrackerAgentsProcesses extends CommonDBTM {
 
 
    function CleanProcesses() {
-      $ptc = new PluginTrackerConfig;
+      $ptc = new PluginFusionInventoryConfig;
       $data = $this->find("`start_time`<DATE_SUB(NOW(), INTERVAL ".$ptc->getValue('delete_agent_process')." HOUR)");
       foreach ($data as $process_id=>$dataInfos) {
          $this->deleteFromDB($process_id,1);

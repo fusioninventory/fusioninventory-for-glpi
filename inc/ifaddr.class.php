@@ -40,12 +40,12 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking interface address
  **/
-class PluginTrackerIfaddr  extends PluginTrackerCommonDBTM {
+class PluginFusionInventoryIfaddr  extends PluginFusionInventoryCommonDBTM {
 	/**
 	 * Constructor
 	**/
    function __construct() {
-      parent::__construct("glpi_plugin_tracker_networking_ifaddr");
+      parent::__construct("glpi_plugin_fusioninventory_networking_ifaddr");
    }
 
    /**

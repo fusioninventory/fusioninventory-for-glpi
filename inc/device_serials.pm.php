@@ -3,8 +3,203 @@
 # Correspondance between Description of device and oid to get serial
 ###########################################
 ################# Switchs #################
-##########ric#################################
+###########################################
+/*
+<SNMPDISCOVERY>
+   <DEVICE>
+      <MANUFACTURER NAME="3Com" SERIAL=".1.3.6.1.4.1.43.29.4.18.2.1.7.1" TYPE="2" MODELSNMP="Networking0004"/>
+      <SYSDESCR>3Com IntelliJack NJ225</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="3Com" SERIAL=".1.3.6.1.4.1.43.10.27.1.1.1.13.1" TYPE="2" MODELSNMP="Networking0002"/>
+      <SYSDESCR>3Com SuperStack</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Alcatel" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.67108992" TYPE="2" MODELSNMP="Networking0002"/>
+      <SYSDESCR>OmniStack LS</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Alvarion" TYPE="2" MODELSNMP="Networking0002"/>
+      <SYSDESCR>Alvarion - BreezeNet B</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Apple" TYPE="2"/>
+      <SYSDESCR>Apple AirPort</SYSDESCR>
+      <SYSDESCR>Apple Base Station</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Avaya" TYPE="2" MODELSNMP="Networking0002"/>
+      <SYSDESCR>Avaya Inc. - P330 Stackable Switch</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Cisco" TYPE="2"/>
+      <SYSDESCR>Cisco IOS Software, C850</SYSDESCR>
+      <SYSDESCR>Cisco IOS Software, C870</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Cisco" TYPE="2" MODELSNMP="Networking0005"/>
+      <SYSDESCR>Cisco Cisco PIX Security Appliance</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Cisco" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" TYPE="2" MODELSNMP="Networking0005"/>
+       <SYSDESCR>IOS (tm) C2950</SYSDESCR>
+      <SYSDESCR>Cisco IOS Software, Catalyst 4000</SYSDESCR>
+      <SYSDESCR>IOS (tm) Catalyst 4000</SYSDESCR>
+      <SYSDESCR>Cisco Systems, Inc. WS-C4003 Cisco Catalyst</SYSDESCR>
+      <SYSDESCR>Cisco IOS Software, Catalyst 4500</SYSDESCR>
+      <SYSDESCR>Cisco Systems, Inc. WS-C4506 Cisco Catalyst</SYSDESCR>
+      <SYSDESCR>Cisco Systems WS-C6006 Cisco Catalyst</SYSDESCR>
+      <SYSDESCR>Cisco IOS Software, s72033_rp Software</SYSDESCR>
+      <SYSDESCR>IOS (tm) s72033</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Cisco" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" TYPE="2" MODELSNMP="Networking0007"/>
+       <SYSDESCR>Cisco IOS Software, 2800 Software</SYSDESCR>
+       <SYSDESCR>IOS (tm) C2900XL</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Cisco" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1001" TYPE="2" MODELSNMP="Networking0001"/>
+       <SYSDESCR>Cisco IOS Software, C2960 Software</SYSDESCR>
+       <SYSDESCR>Cisco IOS Software, C3550 Software</SYSDESCR>
+       <SYSDESCR>Cisco IOS Software, C3560 Software</SYSDESCR>
+       <SYSDESCR>Cisco IOS Software, C3560E Software</SYSDESCR>
+       <SYSDESCR>Cisco IOS Software, C3750 Software</SYSDESCR>
+       <SYSDESCR>Cisco IOS Software, CBS31X0 Software</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Cisco" SERIAL=".1.3.6.1.4.1.9.3.6.3.0" TYPE="2" MODELSNMP="Networking0006"/>
+       <SYSDESCR>Cisco IOS Software, 1841 Software</SYSDESCR>
+       <SYSDESCR>Cisco IOS Software, C1</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Dlink" TYPE="2" MODELSNMP="Networking0002"/>
+       <SYSDESCR>DES-3</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Extreme Networks" TYPE="2"/>
+       <SYSDESCR>Summit200</SYSDESCR>
+       <SYSDESCR>Summit300</SYSDESCR>
+       <SYSDESCR>Summit400</SYSDESCR>
+       <SYSDESCR>BlackDiamond6</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Foundry Networks" TYPE="2" MODELSNMP="Networking0007"/>
+       <SYSDESCR>Foundry Networks</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="HP" SERIAL=".1.3.6.1.4.1.11.2.36.1.1.2.9.0" TYPE="2" MODELSNMP="Networking0003"/>
+       <SYSDESCR>PROCURVE J</SYSDESCR>
+       <SYSDESCR>ProCurve J</SYSDESCR>
+       <SYSDESCR>ProCurve Switch</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="HP" TYPE="2" MODELSNMP="Networking0002"/>
+       <SYSDESCR>HP ProCurve Access Point</SYSDESCR>
+       <SYSDESCR>ProCurve Access Point</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Motorola" TYPE="2"/>
+       <SYSDESCR>Netopia</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="NetGear" TYPE="2" MODELSNMP="Networking0002"/>
+       <SYSDESCR>Linux PA2 2.4.27-devicescape.3 #2 Wed Oct 3 15:02:28 EDT 2007 armv5b</SYSDESCR>
+       <SYSDESCR>ProSafe 802.11b/g Wireless Access Point</SYSDESCR>
+       <SYSDESCR>FS726</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Nortel" TYPE="2" MODELSNMP="Networking0002"/>
+       <SYSDESCR>BayStack </SYSDESCR>
+       <SYSDESCR>Passport-</SYSDESCR>
+       <SYSDESCR>Ethernet Switch 425-24T</SYSDESCR>
+       <SYSDESCR>Ethernet Routing Switch 25</SYSDESCR>
+       <SYSDESCR>Ethernet Routing Switch 55</SYSDESCR>
+       <SYSDESCR>Alteon Application Switch</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="SMC" TYPE="2" MODELSNMP="Networking0002"/>
+       <SYSDESCR>TigerSwitch 10/100 SMC</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="SonicWall" TYPE="2" MODELSNMP="Networking0002"/>
+       <SYSDESCR>SonicWALL</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Zyxel" TYPE="2" MODELSNMP="Networking0002"/>
+       <SYSDESCR>ZyWALL USG</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Zyxel" TYPE="2"/>
+       <SYSDESCR>ZyWALL USG</SYSDESCR>
+       <SYSDESCR>ZyWALL</SYSDESCR>
+       <SYSDESCR>ZyXEL</SYSDESCR>
+       <SYSDESCR>Prestige 3</SYSDESCR>
+       <SYSDESCR>Prestige 6</SYSDESCR>
+       <SYSDESCR>P-660H</SYSDESCR>
+       <SYSDESCR>P-660R</SYSDESCR>
+       <SYSDESCR>P-661H</SYSDESCR>
+       <SYSDESCR>P-662H</SYSDESCR>
+   </DEVICE>
 
+
+
+
+
+   <DEVICE>
+      <MANUFACTURER NAME="Axis" TYPE="3" MODELSNMP="Printer0001"/>
+      <SYSDESCR>AXIS 5000+ Network Print Server</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Brother" SERIAL=".1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0" TYPE="3" MODELSNMP="Printer0001"/>
+      <SYSDESCR>Brother NC-</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Canon" SERIAL=".1.3.6.1.4.1.1602.1.2.1.4.0" TYPE="3" MODELSNMP="Printer0001"/>
+      <SYSDESCR>Canon CLC-iR</SYSDESCR>
+      <SYSDESCR>Canon LBP</SYSDESCR>
+      <SYSDESCR>Canon W8</SYSDESCR>
+      <SYSDESCR></SYSDESCR>
+      <SYSDESCR></SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Canon" SERIAL=".1.3.6.1.4.1.1602.1.2.1.4.0" TYPE="3" MODELSNMP="Printer0004"/>
+      <SYSDESCR>Canon iR C</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Canon" SERIAL=".1.3.6.1.4.1.1602.1.2.1.4.0" TYPE="3" MODELSNMP="Printer0009"/>
+      <SYSDESCR>Canon iR 3180C</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Canon" TYPE="3" MODELSNMP="Printer0001"/>
+      <SYSDESCR>Canon CLC5</SYSDESCR>
+      <SYSDESCR>Canon Inc., LBP</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Dlink" TYPE="3" MODELSNMP="Printer0001"/>
+      <SYSDESCR>D-Link DP-301U Print Server</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Dell" TYPE="3" MODELSNMP="Printer0001"/>
+      <SYSDESCR>DELL NETWORK PRINTER</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Dell" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" TYPE="3" MODELSNMP="Printer0001"/>
+      <SYSDESCR>Dell Laser Printer</SYSDESCR>
+   </DEVICE>
+   <DEVICE>
+      <MANUFACTURER NAME="Dell" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1.1" TYPE="3" MODELSNMP="Printer0007"/>
+      <SYSDESCR>Dell  18</SYSDESCR>
+   </DEVICE>
+
+
+
+
+
+
+
+
+</SNMPDISCOVERY>
+*/
 	#* 3Com
 	$SerialNumberDef['3Com IntelliJack NJ225'] = '.1.3.6.1.4.1.43.29.4.18.2.1.7.1';
 	$TypeDef['3Com IntelliJack NJ225'] = 2;
@@ -399,10 +594,6 @@
 	$SerialNumberDef['Dell  18'] = '.1.3.6.1.2.1.43.5.1.1.17.1.1';
 	$TypeDef['Dell  18'] = 3;
 	$ModelDef['Dell  18'] = 'Printer0007';
-
-	$SerialNumberDef['Dell 18'] = '.1.3.6.1.2.1.43.5.1.1.17.1.1';
-	$TypeDef['Dell 18'] = 3;
-	$ModelDef['Dell 18'] = 'Printer0007';
 
 	$SerialNumberDef['Dell Laser Printer 1720'] = '.1.3.6.1.4.1.674.10898.100.2.1.2.1.6.1';
 	$TypeDef['Dell Laser Printer 1720'] = 3;

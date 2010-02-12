@@ -1,6 +1,6 @@
 #!/usr/local/bin/perl -w
 
-$file = "tracker_fullsync.log";
+$file = "fusioninventory_fullsync.log";
 
 open (LOGSOURCE, $file);
 while(defined($ligne = <LOGSOURCE>))

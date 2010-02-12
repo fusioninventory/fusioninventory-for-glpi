@@ -37,37 +37,37 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginTrackerMibNetworking extends CommonDBTM {
+class PluginFusionInventoryMibNetworking extends CommonDBTM {
    
 	function __construct() {
-		$this->table="glpi_plugin_tracker_mib_networking";
+		$this->table="glpi_plugin_fusioninventory_mib_networking";
 		$this->type = -1;
 	}
 
 
 
 	function showForm($target,$ID) {
-		include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
+		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 
-		global $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
+		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
 		
-		if (!plugin_tracker_haveRight("snmp_models","r")) {
+		if (!plugin_fusioninventory_haveRight("snmp_models","r")) {
 			return false;
       } else if ((isset($ID)) AND (!empty($ID))) {
 			$query = "SELECT `device_type`
-                   FROM `glpi_plugin_tracker_model_infos`
+                   FROM `glpi_plugin_fusioninventory_model_infos`
                    WHERE `ID`='".$ID."';";
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['device_type'];		
 		
-			$query = "SELECT `glpi_plugin_tracker_model_infos`.`device_type`,
-                          `glpi_plugin_tracker_mib_networking`.*
-                   FROM `glpi_plugin_tracker_mib_networking`
-                        LEFT JOIN `glpi_plugin_tracker_model_infos`
-                        ON `glpi_plugin_tracker_mib_networking`.`FK_model_infos`=
-                           `glpi_plugin_tracker_model_infos`.`ID`
-                   WHERE `glpi_plugin_tracker_model_infos`.`ID`='".$ID."';";
+			$query = "SELECT `glpi_plugin_fusioninventory_model_infos`.`device_type`,
+                          `glpi_plugin_fusioninventory_mib_networking`.*
+                   FROM `glpi_plugin_fusioninventory_mib_networking`
+                        LEFT JOIN `glpi_plugin_fusioninventory_model_infos`
+                        ON `glpi_plugin_fusioninventory_mib_networking`.`FK_model_infos`=
+                           `glpi_plugin_fusioninventory_model_infos`.`ID`
+                   WHERE `glpi_plugin_fusioninventory_model_infos`.`ID`='".$ID."';";
 			
 			if ($result = $DB->query($query)) {
 				$object_used = array();
@@ -83,20 +83,20 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 					$nb_col++;
             }
 				echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-				echo $LANG['plugin_tracker']["mib"][5]."</th></tr>";
+				echo $LANG['plugin_fusioninventory']["mib"][5]."</th></tr>";
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<th align='center'></th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][1]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][2]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][3]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][6]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANG['plugin_fusioninventory']["mib"][8]."</th>";
 				if ($data['device_type'] == NETWORKING_TYPE) {
-					echo "<th align='center'>".$LANG['plugin_tracker']["mib"][9]."</th>";
+					echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][9]."</th>";
             }
-				echo "<th align='center'>".$LANG['plugin_tracker']["model_info"][11]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["model_info"][11]."</th>";
 				
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result)) {
@@ -110,17 +110,17 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 					echo "</td>";
 	
 					echo "<td align='center'>";
-					echo getDropdownName("glpi_dropdown_plugin_tracker_mib_label",$data["FK_mib_label"]);
+					echo getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_label",$data["FK_mib_label"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
 					$object_used[] = $data["FK_mib_object"];
-					echo getDropdownName("glpi_dropdown_plugin_tracker_mib_object",
+					echo getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_object",
                                     $data["FK_mib_object"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					echo getDropdownName("glpi_dropdown_plugin_tracker_mib_oid",$data["FK_mib_oid"]);
+					echo getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -129,7 +129,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                   } else if ($data["activation"] == "0") {
 							echo "<img src='".$CFG_GLPI["root_doc"].
-                              "/plugins/tracker/pics/bookmark_off.png'/>";
+                              "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                   }
                }
 					echo "</td>";
@@ -140,14 +140,14 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                   } else if ($data["activation"] == "0") {
 							echo "<img src='".$CFG_GLPI["root_doc"].
-                              "/plugins/tracker/pics/bookmark_off.png'/>";
+                              "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                   }
                }
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					if (isset($TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'])) {
-						echo $TRACKER_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name']." ( ".$data["mapping_name"]." )";
+					if (isset($FUSIONINVENTORY_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'])) {
+						echo $FUSIONINVENTORY_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name']." ( ".$data["mapping_name"]." )";
 						$linkoid_used[$data['mapping_type']."||".$data["mapping_name"]] = 1;
 					}
 					echo "</td>";
@@ -159,7 +159,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 								echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                      } else if ($data["activation"] == "0") {
 								echo "<img src='".$CFG_GLPI["root_doc"].
-                                 "/plugins/tracker/pics/bookmark_off.png'/>";
+                                 "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                      }
                   }
 						echo "</td>";
@@ -171,7 +171,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                } else if ($data["activation"] == "0") {
 						echo "<img src='".$CFG_GLPI["root_doc"].
-                           "/plugins/tracker/pics/bookmark_off.png'/>";
+                           "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                }
 					echo "</a>";
 					echo "</td>";
@@ -201,31 +201,31 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 				echo "<br/>";
 				echo "<table class='tab_cadre_fixe'>";
 				
-				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_tracker']["mib"][4].
+				echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_fusioninventory']["mib"][4].
                      "</th></tr>";
 
 				echo "<tr class='tab_bg_1'>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][1]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][2]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][3]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][6]."</th>";
-				echo "<th align='center'>".$LANG['plugin_tracker']["mib"][7]."</th>";
-				echo "<th align='center' width='250'>".$LANG['plugin_tracker']["mib"][8]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][1]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][2]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][3]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][6]."</th>";
+				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][7]."</th>";
+				echo "<th align='center' width='250'>".$LANG['plugin_fusioninventory']["mib"][8]."</th>";
 				if ($type_model == NETWORKING_TYPE) {
 					echo "<th align='center'>".$LANG["networking"][56]."</th>";
             }
 				echo "</tr>";
 
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_label","FK_mib_label",0,1);
+				dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_label","FK_mib_label",0,1);
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object",0,1,-1,'');
+				dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_object","FK_mib_object",0,1,-1,'');
 				echo "</td>";
 
 				echo "<td align='center'>";
-				dropdownValue("glpi_dropdown_plugin_tracker_mib_oid","FK_mib_oid",0,1);
+				dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_oid","FK_mib_oid",0,1);
 				echo "</td>";
 				
 				echo "<td align='center'>";
@@ -242,11 +242,11 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 				//echo "<select name='links_oid_fields' size='1'>";
 				$types = array();
 				$types[] = "-----";
-				foreach ($TRACKER_MAPPING as $type=>$mapping43) {
+				foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
 					if (($type_model == $type) OR ($type_model == "0")) {
-						if (isset($TRACKER_MAPPING[$type])) {
-							foreach ($TRACKER_MAPPING[$type] as $name=>$mapping) {
-								$types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"];
+						if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+							foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+								$types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
 							}
 						}
 					}
@@ -295,7 +295,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 	function deleteMib($item_coche) {
 		global $DB;
 		
-		plugin_tracker_checkRight("snmp_models","w");
+		plugin_fusioninventory_checkRight("snmp_models","w");
 		
 		for ($i = 0; $i < count($item_coche); $i++) {
          $this->deleteFromDB($item_coche[$i],1);
@@ -307,7 +307,7 @@ class PluginTrackerMibNetworking extends CommonDBTM {
 	function activation($ID) {
 		global $DB;
 		
-		$mib_networking = new PluginTrackerMibNetworking;
+		$mib_networking = new PluginFusionInventoryMibNetworking;
 		
 		$mib_networking->getFromDB($ID);
 		$data['ID'] = $ID;
@@ -324,10 +324,10 @@ class PluginTrackerMibNetworking extends CommonDBTM {
    function oidList($p_sxml_node,$p_id) {
 		global $DB;
 
-      $ptc = new PluginTrackerCommunication();
+      $ptc = new PluginFusionInventoryCommunication();
 
       // oid GET
-      $query = "SELECT * FROM `glpi_plugin_tracker_mib_networking`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_mib_networking`
                    WHERE `FK_model_infos`='".$p_id."'
                      AND `activation`='1'
                      AND `oid_port_counter`='0';";
@@ -337,14 +337,14 @@ class PluginTrackerMibNetworking extends CommonDBTM {
             case 0:
                $ptc->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']),
+                  getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
                   $data['mapping_name'], $data['vlan']);
                break;
             
             case 1:
                $ptc->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']),
+                  getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
                   $data['mapping_name'], $data['vlan']);
                break;
             

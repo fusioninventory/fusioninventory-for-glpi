@@ -33,11 +33,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginTrackerDiscovery extends CommonDBTM {
+class PluginFusionInventoryDiscovery extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_discovery";
-		$this->type = PLUGIN_TRACKER_SNMP_DISCOVERY;
+		$this->table = "glpi_plugin_fusioninventory_discovery";
+		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_DISCOVERY;
 	}
 
 
@@ -63,9 +63,9 @@ class PluginTrackerDiscovery extends CommonDBTM {
 
       // Detect if device exist
       $query_sel = "SELECT *
-                    FROM `glpi_plugin_tracker_discovery`
+                    FROM `glpi_plugin_fusioninventory_discovery`
                     WHERE `ifaddr`='".$Array['ip']."'
-                          AND `name`='".plugin_tracker_hex_to_string($Array['name'])."'
+                          AND `name`='".plugin_fusioninventory_hex_to_string($Array['name'])."'
                           AND `descr`='".$Array['description']."'
                           AND `serialnumber`='".$Array['serial']."'
                           AND `FK_entities`='".$Array['entity']."';";
@@ -75,8 +75,8 @@ class PluginTrackerDiscovery extends CommonDBTM {
          if (!empty($Array['serial'])) {
             // Detect is a device is same but this another IP (like switch)
             $query_sel = "SELECT *
-                          FROM `glpi_plugin_tracker_discovery`
-                          WHERE `name`='".plugin_tracker_hex_to_string($Array['name'])."'
+                          FROM `glpi_plugin_fusioninventory_discovery`
+                          WHERE `name`='".plugin_fusioninventory_hex_to_string($Array['name'])."'
                                 AND `descr`='".$Array['description']."'
                                 AND `serialnumber`='".$Array['serial']."';";
             $result_sel = $DB->query($query_sel);
@@ -85,13 +85,13 @@ class PluginTrackerDiscovery extends CommonDBTM {
             }
          }
          if ($insert == "1") {
-            $query = "INSERT INTO `glpi_plugin_tracker_discovery`
+            $query = "INSERT INTO `glpi_plugin_fusioninventory_discovery`
                                   (`date`, `ifaddr`, `name`, `descr`, `serialnumber`, `type`,
                                    `FK_agents`, `FK_entities`, `FK_model_infos`,
                                    `FK_snmp_connection`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
-                             '".plugin_tracker_hex_to_string($Array['name'])."',
+                             '".plugin_fusioninventory_hex_to_string($Array['name'])."',
                              '".$Array['description']."',
                              '".$Array['serial']."',
                              '".$Array['type']."',

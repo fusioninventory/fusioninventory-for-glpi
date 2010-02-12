@@ -40,9 +40,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking ports
  **/
-class PluginTrackerPort extends PluginTrackerCommonDBTM {
-   private $oTracker_networking_ports; // link tracker table object
-   private $tracker_networking_ports_ID; // ID in link tracker table
+class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
+   private $oFusionInventory_networking_ports; // link fusioninventory table object
+   private $fusioninventory_networking_ports_ID; // ID in link fusioninventory table
    private $portsToConnect=array(); // ID of known connected ports
    private $connectedPort=''; // ID of connected ports
    private $unknownDevicesToConnect=array(); // IP and/or MAC addresses of unknown connected ports
@@ -56,8 +56,8 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
    function __construct($p_type=NULL) {
 //   function __construct() {
       parent::__construct("glpi_networking_ports");
-      $this->oTracker_networking_ports =
-              new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking_ports");
+      $this->oFusionInventory_networking_ports =
+              new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_networking_ports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
    }
 
@@ -72,24 +72,24 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
       parent::load($p_id);
       if (is_numeric($p_id)) { // port exists
          $query = "SELECT `ID`
-                   FROM `glpi_plugin_tracker_networking_ports`
+                   FROM `glpi_plugin_fusioninventory_networking_ports`
                    WHERE `FK_networking_ports` = '".$p_id."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
-               $portTracker = $DB->fetch_assoc($result);
-               $this->tracker_networking_ports_ID = $portTracker['ID'];
-               $this->oTracker_networking_ports->load($this->tracker_networking_ports_ID);
-               $this->ptcdLinkedObjects[]=$this->oTracker_networking_ports;
+               $portFusionInventory = $DB->fetch_assoc($result);
+               $this->fusioninventory_networking_ports_ID = $portFusionInventory['ID'];
+               $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
+               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
             } else {
-               $this->tracker_networking_ports_ID = NULL;
-               $this->oTracker_networking_ports->load();
-               $this->ptcdLinkedObjects[]=$this->oTracker_networking_ports;
+               $this->fusioninventory_networking_ports_ID = NULL;
+               $this->oFusionInventory_networking_ports->load();
+               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
             }
          }
       } else {
-         $this->tracker_networking_ports_ID = NULL;
-         $this->oTracker_networking_ports->load();
-         $this->ptcdLinkedObjects[]=$this->oTracker_networking_ports;
+         $this->fusioninventory_networking_ports_ID = NULL;
+         $this->oFusionInventory_networking_ports->load();
+         $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
       }
    }
 
@@ -100,7 +100,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     **/
    function updateDB() {
       parent::updateDB(); // update core
-      $this->oTracker_networking_ports->updateDB(); // update tracker
+      $this->oFusionInventory_networking_ports->updateDB(); // update fusioninventory
       $this->connect(); // update connections
       $this->assignVlans(); // update vlans
    }
@@ -120,10 +120,10 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 //         $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
          $portID=parent::add($this->ptcdUpdates);
          $this->load($portID);
-         // update tracker
-         if (count($this->oTracker_networking_ports->ptcdUpdates) OR $p_force) {
-            $this->oTracker_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
-            $this->oTracker_networking_ports->add($this->oTracker_networking_ports->ptcdUpdates);
+         // update fusioninventory
+         if (count($this->oFusionInventory_networking_ports->ptcdUpdates) OR $p_force) {
+            $this->oFusionInventory_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
+            $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
          }
          $this->connect();       // update connections
          $this->assignVlans();   // update vlans
@@ -139,7 +139,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
    function deleteDB() {
       $this->cleanVlan('', $this->getValue('ID'));
       $this->disconnectDB($this->getValue('ID'));
-      $this->oTracker_networking_ports->deleteDB(); // tracker
+      $this->oFusionInventory_networking_ports->deleteDB(); // fusioninventory
       parent::deleteDB(); // core
    }
 
@@ -172,17 +172,17 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function PortUnknownConnection($p_mac, $p_ip) {
-      $ptud = new PluginTrackerUnknownDevice;
+      $ptud = new PluginFusionInventoryUnknownDevice;
       $unknown_infos["name"] = '';
       $newID=$ptud->add($unknown_infos);
       // Add networking_port
       $np=new Netport;
       $port_add["on_device"] = $newID;
-      $port_add["device_type"] = PLUGIN_TRACKER_MAC_UNKNOWN;
+      $port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
       $port_add["ifaddr"] = $p_ip;
       $port_add['ifmac'] = $p_mac;
       $dport = $np->add($port_add);
-      $ptsnmp=new PluginTrackerSNMP;
+      $ptsnmp=new PluginFusionInventorySNMP;
       $this->connectDB($dport);
    }
 
@@ -230,7 +230,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 	function connectDB($destination_port='') {
 		global $DB;
 
-      $ptap = new PluginTrackerAgentsProcesses;
+      $ptap = new PluginFusionInventoryAgentsProcesses;
 
       $queryVerif = "SELECT *
                      FROM `glpi_networking_wire`
@@ -242,9 +242,9 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
             $this->disconnectDB($this->getValue('ID')); // disconnect this port
             $this->disconnectDB($destination_port);     // disconnect destination port
             if (makeConnector($this->getValue('ID'),$destination_port)) { // connect those 2 ports
-               $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+               $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                     array('query_nb_connections_created' => '1'));
-               plugin_tracker_addLogConnection("make",$this->getValue('ID'));
+               plugin_fusioninventory_addLogConnection("make",$this->getValue('ID'));
             }
          }
       }
@@ -259,11 +259,11 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
 	function disconnectDB($p_port='') {
       if ($p_port=='') $p_port=$this;
       $netwire = new Netwire;
-      plugin_tracker_addLogConnection("remove",$netwire->getOppositeContact($p_port));
-      //plugin_tracker_addLogConnection("remove",$p_port);
+      plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($p_port));
+      //plugin_fusioninventory_addLogConnection("remove",$p_port);
       if (removeConnector($p_port)) {
-         $ptap = new PluginTrackerAgentsProcesses;
-         $ptap->updateProcess($_SESSION['glpi_plugin_tracker_processnumber'],
+         $ptap = new PluginFusionInventoryAgentsProcesses;
+         $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                               array('query_nb_connections_deleted' => '1'));
       }
    }
@@ -301,7 +301,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
          if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
             if ($num==1) { // connected port
-               $ptpConnected = new PluginTrackerPort();
+               $ptpConnected = new PluginFusionInventoryPort();
                $ptpConnected->load($tmp_port);
                if ($ptpConnected->fields['device_type']==NETWORKING_TYPE) {
                   break; // don't update if port on a switch
@@ -362,7 +362,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
                $this->cleanVlan('', $this->getValue('ID'));
                if ($this->connectedPort != '') {
-                  $ptpConnected = new PluginTrackerPort();
+                  $ptpConnected = new PluginFusionInventoryPort();
                   $ptpConnected->load($this->connectedPort);
                   if ($ptpConnected->fields['device_type'] != NETWORKING_TYPE) {
                      // don't update vlan on connected port if connected port on a switch
@@ -425,7 +425,7 @@ class PluginTrackerPort extends PluginTrackerCommonDBTM {
       global $DB;
 
       $macs='';
-      $ptp = new PluginTrackerPort;
+      $ptp = new PluginFusionInventoryPort;
       foreach($this->portsToConnect as $index=>$portConnection) {
          if ($macs!='') $macs.=', ';
          $ptp->load($portConnection);

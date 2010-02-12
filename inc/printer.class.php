@@ -40,9 +40,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
-   private $oTracker_printer;
-   private $oTracker_printer_history;
+class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
+   private $oFusionInventory_printer;
+   private $oFusionInventory_printer_history;
    private $ports=array(), $newPorts=array(), $updatesPorts=array();
    private $cartridges=array(), $newCartridges=array(), $updatesCartridges=array();
 
@@ -53,9 +53,9 @@ class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
       $this->type=PRINTER_TYPE;
-      $this->oTracker_printer = new PluginTrackerCommonDBTM("glpi_plugin_tracker_printers");
-      $this->oTracker_printer_history =
-                        new PluginTrackerCommonDBTM("glpi_plugin_tracker_printers_history");
+      $this->oFusionInventory_printer = new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $this->oFusionInventory_printer_history =
+                        new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_printers_history");
    }
 
    /**
@@ -71,31 +71,31 @@ class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
       $this->cartridges = $this->getCartridgesDB();
 
       $query = "SELECT `ID`
-                FROM `glpi_plugin_tracker_printers`
+                FROM `glpi_plugin_fusioninventory_printers`
                 WHERE `FK_printers` = '".$this->getValue('ID')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
-            $tracker = $DB->fetch_assoc($result);
-            $this->oTracker_printer->load($tracker['ID']);
-            $this->ptcdLinkedObjects[]=$this->oTracker_printer;
+            $fusioninventory = $DB->fetch_assoc($result);
+            $this->oFusionInventory_printer->load($fusioninventory['ID']);
+            $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
          } else {
-            $this->oTracker_printer->load();
-            $this->oTracker_printer->setValue('FK_printers', $this->getValue('ID'));
-            $this->ptcdLinkedObjects[]=$this->oTracker_printer;
+            $this->oFusionInventory_printer->load();
+            $this->oFusionInventory_printer->setValue('FK_printers', $this->getValue('ID'));
+            $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
          }
 
          $query = "SELECT *
-                   FROM `glpi_plugin_tracker_printers_history`
+                   FROM `glpi_plugin_fusioninventory_printers_history`
                    WHERE `FK_printers` = '".$this->getValue('ID')."'
                          AND LEFT(`date`, 10)='".date("Y-m-d")."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
                $history = $DB->fetch_assoc($result);
-               $this->oTracker_printer_history->load($history['ID']);
+               $this->oFusionInventory_printer_history->load($history['ID']);
             } else {
-               $this->oTracker_printer_history->load();
-               $this->oTracker_printer_history->setValue('FK_printers', $this->getValue('ID'));
-               $this->oTracker_printer_history->setValue('date', date("Y-m-d H:i:s"));
+               $this->oFusionInventory_printer_history->load();
+               $this->oFusionInventory_printer_history->setValue('FK_printers', $this->getValue('ID'));
+               $this->oFusionInventory_printer_history->setValue('date', date("Y-m-d H:i:s"));
             }
          }
       }
@@ -117,17 +117,17 @@ class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
                                                    array('manufacturer'=>$manufacturer));
       }
       parent::updateDB();
-      // update last_tracker_update even if no other update
-      $this->setValue('last_tracker_update', date("Y-m-d H:i:s"));
-      $this->oTracker_printer->updateDB();
+      // update last_fusioninventory_update even if no other update
+      $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
+      $this->oFusionInventory_printer->updateDB();
       // ports
       $this->savePorts();
       // cartridges
       $this->saveCartridges();
       // history
-      if (is_null($this->oTracker_printer_history->getValue('ID'))) {
+      if (is_null($this->oFusionInventory_printer_history->getValue('ID'))) {
          // update only if counters not already set for today
-         $this->oTracker_printer_history->updateDB();
+         $this->oFusionInventory_printer_history->updateDB();
       }
    }
 
@@ -139,7 +139,7 @@ class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginTrackerPort();
+      $ptp = new PluginFusionInventoryPort();
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
@@ -260,7 +260,7 @@ class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function saveCartridges() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_tracker_printers_cartridges"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_printers_cartridges"; // TODO : to clean
 
       foreach ($this->cartridges as $index=>$ptc) {
          if (!in_array($index, $this->updatesCartridges)) { // delete cartridges which don't exist any more
@@ -298,9 +298,9 @@ class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
    private function getCartridgesDB() {
       global $DB;
 
-      $ptc = new PluginTrackerCommonDBTM('glpi_plugin_tracker_printers_cartridges');
+      $ptc = new PluginFusionInventoryCommonDBTM('glpi_plugin_fusioninventory_printers_cartridges');
       $query = "SELECT `ID`
-                FROM `glpi_plugin_tracker_printers_cartridges`
+                FROM `glpi_plugin_fusioninventory_printers_cartridges`
                 WHERE `FK_printers` = '".$this->getValue('ID')."';";
       $cartridgesIds = array();
       if ($result = $DB->query($query)) {
@@ -336,8 +336,8 @@ class PluginTrackerPrinter extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function addPageCounter($p_name, $p_state) {
-         $this->oTracker_printer_history->setValue($p_name, $p_state,
-                                                   $this->oTracker_printer_history, 0);
+         $this->oFusionInventory_printer_history->setValue($p_name, $p_state,
+                                                   $this->oFusionInventory_printer_history, 0);
    }
 }
 ?>

@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginTrackerConfigModules extends CommonDBTM {
+class PluginFusionInventoryConfigModules extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_tracker_config_modules";
+		$this->table="glpi_plugin_fusioninventory_config_modules";
 	}
 
 	function initConfig() {
@@ -89,34 +89,34 @@ class PluginTrackerConfigModules extends CommonDBTM {
 		
 		echo "<tr>";
 		echo "<th colspan='4'>";
-		echo $LANG['plugin_tracker']['config'][1]."&nbsp;:";
+		echo $LANG['plugin_fusioninventory']['config'][1]."&nbsp;:";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td width='30%'>".$LANG['plugin_tracker']['config'][2]."&nbsp;:</td>";
+		echo "<td width='30%'>".$LANG['plugin_fusioninventory']['config'][2]."&nbsp;:</td>";
 		echo "<td>";
 		dropdownYesNo("snmp", $this->isActivated('snmp'));
 		echo "</td>";
-		echo "<td width='20%'>".$LANG['plugin_tracker']['config'][4]."&nbsp;:</td>";
+		echo "<td width='20%'>".$LANG['plugin_fusioninventory']['config'][4]."&nbsp;:</td>";
 		echo "<td>";
 		dropdownYesNo("netdiscovery", $this->isActivated('netdiscovery'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']['config'][3]."&nbsp;:</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']['config'][3]."&nbsp;:</td>";
 		echo "<td>";
 		dropdownYesNo("inventoryocs", $this->isActivated('inventoryocs'));
 		echo "</td>";
-		echo "<td>".$LANG['plugin_tracker']['config'][5]."&nbsp;:</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']['config'][5]."&nbsp;:</td>";
 		echo "<td>";
 		dropdownYesNo("remotehttpagent", $this->isActivated('remotehttpagent'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']['config'][6]."&nbsp;:</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']['config'][6]."&nbsp;:</td>";
 		echo "<td>";
 		dropdownYesNo("wol", $this->isActivated('wol'));
 		echo "</td>";

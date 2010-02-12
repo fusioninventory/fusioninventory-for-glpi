@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
+class PluginFusionInventoryConfigSNMPNetworking extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_tracker_config_snmp_networking";
+		$this->table="glpi_plugin_fusioninventory_config_snmp_networking";
 		$this->type=-1;
 	}	
 
@@ -93,47 +93,47 @@ class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
 		
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["functionalities"][3]." - ".$LANG["Menu"][1]." :";
+		echo $LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG["Menu"][1]." :";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][20]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][20]."</td>";
 		echo "<td>";
 		dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][21]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][21]."</td>";
 		echo "<td>";
 		dropdownInteger("history_wire", $this->getValue('history_wire'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][22]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][22]."</td>";
 		echo "<td>";
 		dropdownInteger("history_ports_state", $this->getValue('history_ports_state'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][23]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][23]."</td>";
 		echo "<td>";
 		dropdownInteger("history_unknown_mac", $this->getValue('history_unknown_mac'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][24]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][24]."</td>";
 		echo "<td>";
 		dropdownInteger("history_snmp_errors", $this->getValue('history_snmp_errors'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][25]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][25]."</td>";
 		echo "<td>";
 		dropdownInteger("history_process", $this->getValue('history_process'),0,100);
 		echo "</td>";
@@ -151,7 +151,7 @@ class PluginTrackerConfigSNMPNetworking extends CommonDBTM {
       switch ($option) {
          case "history_process":
             if ($this->getValue("history_process") != 0) {
-               $query_delete = "DELETE FROM `glpi_plugin_tracker_processes`
+               $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_processes`
                                 WHERE `start_time` < date_add(now(),interval -".
                                        $this->getValue("history_process")." day);";
                $DB->query($query_delete);

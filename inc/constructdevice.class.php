@@ -38,11 +38,11 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginTrackerConstructDevice extends CommonDBTM {
+class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_tracker_construct_device";
-		$this->type = PLUGIN_TRACKER_CONSTRUCT_DEVICE;
+		$this->table = "glpi_plugin_fusioninventory_construct_device";
+		$this->type = PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE;
 	}
 
 
@@ -61,7 +61,7 @@ class PluginTrackerConstructDevice extends CommonDBTM {
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["constructdevice"][0];
+		echo $LANG['plugin_fusioninventory']["constructdevice"][0];
 		echo " :</th>";
 		echo "</tr>";
 
@@ -125,11 +125,11 @@ class PluginTrackerConstructDevice extends CommonDBTM {
 
 
    function manageWalks($target, $ID) {
-      include (GLPI_ROOT . "/plugins/tracker/inc_constants/plugin_tracker.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 
-		global $DB,$CFG_GLPI,$LANG,$TRACKER_MAPPING,$IMPORT_TYPES;
+		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
 
-      $query = "SELECT * FROM glpi_plugin_tracker_construct_device
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_device
          WHERE ID='".$ID."'";
       $result = $DB->query($query);
       $a_device = $DB->fetch_assoc($result);
@@ -226,7 +226,7 @@ class PluginTrackerConstructDevice extends CommonDBTM {
 
       // Used mapping name :
       $a_mapping_used = array();
-      $query = "SELECT * FROM glpi_plugin_tracker_construct_mibs
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_mibs
          WHERE construct_device_id='".$ID."'
             AND mapping_name != ''";
       if ($result = $DB->query($query)) {
@@ -235,15 +235,15 @@ class PluginTrackerConstructDevice extends CommonDBTM {
          }
       }
 
-      $query = "SELECT * FROM glpi_plugin_tracker_construct_walks
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_walks
          WHERE construct_device_id='".$ID."'";
       echo "<div align='center'><form method='post' name='' id=''  action='".$target."' >";
       
       if ($result = $DB->query($query)) {
 			if ($data = $DB->fetch_array($result)) {
-            $file_content = file(GLPI_PLUGIN_DOC_DIR."/tracker/walks/".$data['log']);
+            $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
             echo $data['log']."<br/>";
-            $query_oid = "SELECT * FROM glpi_dropdown_plugin_tracker_mib_oid";
+            $query_oid = "SELECT * FROM glpi_dropdown_plugin_fusioninventory_mib_oid";
             $result_oid = $DB->query($query_oid);
             while ($fields_oid = $DB->fetch_array($result_oid)) {
                if ($fields_oid['comments'] != "") {
@@ -264,28 +264,28 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                            echo "</tr>";
                            echo "<tr>";
                            echo "<th>";
-                           echo $LANG['plugin_tracker']["mib"][2]." : ";
-                           //dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object_".$oid_id_before,0,1,-1,'');
+                           echo $LANG['plugin_fusioninventory']["mib"][2]." : ";
+                           //dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_object","FK_mib_object_".$oid_id_before,0,1,-1,'');
                            echo "</th>";
                            echo "<th>";
-                           echo $LANG['plugin_tracker']["mib"][6]." : ";
+                           echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
                            if (isset($a_mibs['ID'])) {
                               if ($a_mibs["oid_port_counter"] == "1") {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                               } else {
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
                               dropdownYesNo("oid_port_counter_".$oid_id_before);
                            }
                            echo "</th>";
                            echo "<th>";
-                           echo $LANG['plugin_tracker']["mib"][7]." : ";
+                           echo $LANG['plugin_fusioninventory']["mib"][7]." : ";
                            if (isset($a_mibs['ID'])) {
                               if ($a_mibs["oid_port_dyn"] == "1") {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                               } else {
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/tracker/pics/bookmark_off.png'/>";
+                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
                               dropdownYesNo("oid_port_dyn_".$oid_id_before);
@@ -294,19 +294,19 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                            echo "</tr>";
                            echo "<tr>";
                            echo "<th colspan='3'>";
-                           echo $LANG['plugin_tracker']["mib"][8]." : ";
+                           echo $LANG['plugin_fusioninventory']["mib"][8]." : ";
                            if (isset($a_mibs['ID'])) {
                               if ($a_mibs["oid_port_counter"] == "0") {
-                                 echo $TRACKER_MAPPING[$a_mibs['mapping_type']][$a_mibs["mapping_name"]]['name']." ( ".$a_mibs["mapping_name"]." )";
+                                 echo $FUSIONINVENTORY_MAPPING[$a_mibs['mapping_type']][$a_mibs["mapping_name"]]['name']." ( ".$a_mibs["mapping_name"]." )";
                               }
                            } else {
                               $types = array();
                               $types[] = "-----";
-                              foreach ($TRACKER_MAPPING as $type=>$mapping43) {
+                              foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
                                  if (($type_model == $type) OR ($type_model == "0")) {
-                                    if (isset($TRACKER_MAPPING[$type])) {
-                                       foreach ($TRACKER_MAPPING[$type] as $name=>$mapping) {
-                                          $types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"]." (".$name.")";
+                                    if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+                                       foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+                                          $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
                                        }
                                     }
                                  }
@@ -318,7 +318,7 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                            echo "</table>";
                            echo "<br/>";
                         }
-                        $query_oid_mib = "SELECT * FROM glpi_plugin_tracker_construct_mibs
+                        $query_oid_mib = "SELECT * FROM glpi_plugin_fusioninventory_construct_mibs
                            WHERE construct_device_id='".$ID."'
                               AND mib_oid_id='".$a_oids2[$num]."'";
                         $a_mibs = array();
@@ -356,33 +356,33 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                echo "</tr>";
                echo "<tr>";
                echo "<th>";
-               echo $LANG['plugin_tracker']["mib"][2]." : ";
-               //dropdownValue("glpi_dropdown_plugin_tracker_mib_object","FK_mib_object_".$a_oids1[$num],0,1,-1,'');
+               echo $LANG['plugin_fusioninventory']["mib"][2]." : ";
+               //dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_object","FK_mib_object_".$a_oids1[$num],0,1,-1,'');
                echo "</th>";
                echo "<th>";
-               echo $LANG['plugin_tracker']["mib"][6]." : ";
+               echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
                dropdownYesNo("oid_port_counter_".$a_oids2[$num]);
                echo "</th>";
                echo "<th>";
-               echo $LANG['plugin_tracker']["mib"][7]." : ";
+               echo $LANG['plugin_fusioninventory']["mib"][7]." : ";
                dropdownYesNo("oid_port_dyn_".$a_oids2[$num]);
                echo "</th>";
                echo "</tr>";
                echo "<tr>";
                echo "<th colspan='3'>";
-               echo $LANG['plugin_tracker']["mib"][8]." : ";
+               echo $LANG['plugin_fusioninventory']["mib"][8]." : ";
                if (isset($a_mibs['ID'])) {
                   if ($a_mibs["oid_port_counter"] == "0") {
-                        echo $TRACKER_MAPPING[$a_mibs['mapping_type']][$a_mibs["mapping_name"]]['name'];
+                        echo $FUSIONINVENTORY_MAPPING[$a_mibs['mapping_type']][$a_mibs["mapping_name"]]['name'];
                      }
                   } else {
                      $types = array();
                      $types[] = "-----";
-                     foreach ($TRACKER_MAPPING as $type=>$mapping43) {
+                     foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
                         if (($type_model == $type) OR ($type_model == "0")) {
-                           if (isset($TRACKER_MAPPING[$type])) {
-                              foreach ($TRACKER_MAPPING[$type] as $name=>$mapping) {
-                                 $types[$type."||".$name]=$TRACKER_MAPPING[$type][$name]["name"]." (".$name.")";
+                           if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+                              foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+                                 $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
                               }
                            }
                         }
@@ -422,11 +422,11 @@ class PluginTrackerConstructDevice extends CommonDBTM {
    function generatemodels() {
       global $DB;
 
-      $ptmi = new PluginTrackerModelInfos;
-      $ptmn = new PluginTrackerMibNetworking;
+      $ptmi = new PluginFusionInventoryModelInfos;
+      $ptmn = new PluginFusionInventoryMibNetworking;
 
-      $query = "SELECT glpi_plugin_tracker_construct_device.ID, type  FROM glpi_plugin_tracker_construct_device
-         LEFT JOIN glpi_plugin_tracker_construct_walks on glpi_plugin_tracker_construct_device.ID = construct_device_id
+      $query = "SELECT glpi_plugin_fusioninventory_construct_device.ID, type  FROM glpi_plugin_fusioninventory_construct_device
+         LEFT JOIN glpi_plugin_fusioninventory_construct_walks on glpi_plugin_fusioninventory_construct_device.ID = construct_device_id
          WHERE type IN (2,3)
             AND log!=''";
       if ($result = $DB->query($query)) {
@@ -434,7 +434,7 @@ class PluginTrackerConstructDevice extends CommonDBTM {
             // Load mibs
             $a_mib = array();
             $count_mib = 0;
-            $query_mibs = "SELECT * FROM glpi_plugin_tracker_construct_mibs
+            $query_mibs = "SELECT * FROM glpi_plugin_fusioninventory_construct_mibs
                WHERE construct_device_id='".$data["ID"]."' ";
             if ($result_mibs = $DB->query($query_mibs)) {
                while ($data_mibs = $DB->fetch_array($result_mibs)) {
@@ -447,13 +447,13 @@ class PluginTrackerConstructDevice extends CommonDBTM {
             }
 
             // See if model exactly exists
-            $query_models = "SELECT * FROM glpi_plugin_tracker_model_infos";
+            $query_models = "SELECT * FROM glpi_plugin_fusioninventory_model_infos";
             $existent = 0;
             if ($result_models = $DB->query($query_models)) {
                while ($data_models = $DB->fetch_array($result_models)) {
                   if ($existent != '1') {
                      $count_mib_model = 0;
-                     $query_mibs_model = "SELECT * FROM glpi_plugin_tracker_mib_networking
+                     $query_mibs_model = "SELECT * FROM glpi_plugin_fusioninventory_mib_networking
                         WHERE FK_model_infos='".$data_models['ID']."' ";
                      if ($result_mib_model = $DB->query($query_mibs_model)) {
                         while ($data_mib_model = $DB->fetch_array($result_mib_model)) {
@@ -477,7 +477,7 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                      }
                      if (($existent == '0') AND ($count_mib == $count_mib_model)) {
                         // Add number in database
-                        $query_update = "UPDATE glpi_plugin_tracker_construct_device
+                        $query_update = "UPDATE glpi_plugin_fusioninventory_construct_device
                            SET snmpmodel_id='".$data_models['ID']."'
                            WHERE ID='".$data["ID"]."'";
                         $DB->query($query_update);
@@ -496,7 +496,7 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                $a_input['activation'] = 1;
                $id = $ptmi->add($a_input);
                
-               $query_mibs = "SELECT * FROM glpi_plugin_tracker_construct_mibs
+               $query_mibs = "SELECT * FROM glpi_plugin_fusioninventory_construct_mibs
                   WHERE construct_device_id='".$data["ID"]."' ";
                if ($result_mibs = $DB->query($query_mibs)) {
                   while ($data_mibs = $DB->fetch_array($result_mibs)) {
@@ -510,7 +510,7 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                      $ptmn->add($a_input);
                   }
                }
-               $query_update = "UPDATE glpi_plugin_tracker_construct_device
+               $query_update = "UPDATE glpi_plugin_fusioninventory_construct_device
                   SET snmpmodel_id='".$id."'
                   WHERE ID='".$data["ID"]."'";
                $DB->query($query_update);
@@ -544,18 +544,18 @@ class PluginTrackerConstructDevice extends CommonDBTM {
             if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
                $sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
 
-               $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
+               $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
                   WHERE `construct_device_id`='".$data['ID']."'
                      AND `mapping_name`='serial'
                   LIMIT 1";
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
-                  $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
+                  $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                $line['mib_oid_id']));
                }
 
-               $query_serial = "SELECT * FROM `glpi_plugin_tracker_construct_mibs`
+               $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
                   WHERE `construct_device_id`='".$data['ID']."'
                      AND ((`mapping_name`='macaddr' AND mapping_type='2')
                            OR ( `mapping_name`='ifPhysAddress' AND mapping_type='3'))
@@ -563,15 +563,20 @@ class PluginTrackerConstructDevice extends CommonDBTM {
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
-                  $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',
-                                               $line['mib_oid_id']));
+                  if ($line['mapping_name'] == "macaddr") {
+                     $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                                                   $line['mib_oid_id']));
+                  } else {
+                     $sxml_device->addAttribute('MACDYN', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                                                   $line['mib_oid_id']));
+                  }
                }
             }
          }
       }
       $sxml = $this->formatXmlString($sxml);
       echo $sxml->asXML();
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/tracker/discovery.xml", $sxml->asXML());
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml", $sxml->asXML());
 
    }
 
@@ -605,6 +610,26 @@ class PluginTrackerConstructDevice extends CommonDBTM {
       }
       $sxml = simplexml_load_string($result);
       return $sxml;
+   }
+
+   function cleanmodels() {
+      global $DB;
+
+      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_model_infos";
+      if ($result_models = $DB->query($query_models)) {
+         while ($data_models = $DB->fetch_array($result_models)) {
+            $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_device
+               WHERE snmpmodel_id='".$data_models['ID']."' ";
+            if ($result = $DB->query($query)) {
+               if ($DB->numrows($result) == 0) {
+                  // Delete model
+                  $query_delete = "DELETE FROM glpi_plugin_fusioninventory_model_infos
+                     WHERE ID='".$data_models['ID']."'";
+                  $DB->query($query_delete);
+               }
+            }
+         }
+       }
    }
 
 }

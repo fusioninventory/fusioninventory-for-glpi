@@ -40,9 +40,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
+class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
    private $ports=array(), $ifaddrs=array();
-   private $oTracker_networking, $oTracker_networking_ifaddr, $oTracker_networking_ports;
+   private $oFusionInventory_networking, $oFusionInventory_networking_ifaddr, $oFusionInventory_networking_ports;
    private $newPorts=array(), $updatesPorts=array();
    private $newIfaddrs=array(), $updatesIfaddrs=array();
 
@@ -53,7 +53,7 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
       parent::__construct("glpi_networking");
       $this->dohistory=true;
       $this->type=NETWORKING_TYPE;
-      $this->oTracker_networking = new PluginTrackerCommonDBTM("glpi_plugin_tracker_networking");
+      $this->oFusionInventory_networking = new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_networking");
    }
 
    /**
@@ -69,13 +69,13 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
       $this->ports = $this->getPortsDB();
 
       $query = "SELECT `ID`
-                FROM `glpi_plugin_tracker_networking`
+                FROM `glpi_plugin_fusioninventory_networking`
                 WHERE `FK_networking` = '".$this->getValue('ID')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
-            $tracker = $DB->fetch_assoc($result);
-            $this->oTracker_networking->load($tracker['ID']);
-            $this->ptcdLinkedObjects[]=$this->oTracker_networking;
+            $fusioninventory = $DB->fetch_assoc($result);
+            $this->oFusionInventory_networking->load($fusioninventory['ID']);
+            $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking;
          }
       }
    }
@@ -98,9 +98,9 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
                                                    $this->ptcdUpdates['firmware']);
       }
       parent::updateDB();
-      // update last_tracker_update even if no other update
-      $this->setValue('last_tracker_update', date("Y-m-d H:i:s"));
-      $this->oTracker_networking->updateDB();
+      // update last_fusioninventory_update even if no other update
+      $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
+      $this->oFusionInventory_networking->updateDB();
       // ports
       $this->savePorts();
    }
@@ -113,7 +113,7 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginTrackerPort();
+      $ptp = new PluginFusionInventoryPort();
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
@@ -224,7 +224,7 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
     *@return nothing
     **/
    function saveIfaddrs() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_tracker_networking_ifaddr"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_networking_ifaddr"; // TODO : to clean
 
       foreach ($this->ifaddrs as $index=>$pti) {
          if (!in_array($index, $this->updatesIfaddrs)) {
@@ -262,9 +262,9 @@ class PluginTrackerNetworking2 extends PluginTrackerCommonDBTM {
    private function getIfaddrsDB() {
       global $DB;
 
-      $pti = new PluginTrackerIfaddr();
+      $pti = new PluginFusionInventoryIfaddr();
       $query = "SELECT `ID`
-                FROM `glpi_plugin_tracker_networking_ifaddr`
+                FROM `glpi_plugin_fusioninventory_networking_ifaddr`
                 WHERE `FK_networking` = '".$this->getValue('ID')."';";
       $ifaddrsIds = array();
       if ($result = $DB->query($query)) {

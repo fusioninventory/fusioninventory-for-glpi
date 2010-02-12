@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginTrackerProfile extends CommonDBTM {
+class PluginFusionInventoryProfile extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_tracker_profiles";
+		$this->table="glpi_plugin_fusioninventory_profiles";
 		$this->type=-1;
 	}
 	
@@ -49,7 +49,7 @@ class PluginTrackerProfile extends CommonDBTM {
 	function cleanProfiles($ID) {
 		global $DB;
 
-		$query = "DELETE FROM `glpi_plugin_tracker_profiles`
+		$query = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
                 WHERE `ID`='$ID';";
 		$DB->query($query);
 	}
@@ -67,7 +67,7 @@ class PluginTrackerProfile extends CommonDBTM {
 			$onfocus="onfocus=\"this.value=''\"";
 		}
 
-		if (empty($this->fields["interface"])) $this->fields["interface"]="tracker";
+		if (empty($this->fields["interface"])) $this->fields["interface"]="fusioninventory";
 		if (empty($this->fields["name"])) $this->fields["name"]=$LANG["common"][0];
 
 
@@ -81,7 +81,7 @@ class PluginTrackerProfile extends CommonDBTM {
 
 		echo "<th>".$LANG["profiles"][2].":</th>";
 		echo "<th><select name='interface' id='profile_interface'>";
-		echo "<option value='tracker' ".($this->fields["interface"]!="tracker"?"selected":"").">".$LANG['plugin_tracker']["profile"][1]."</option>";
+		echo "<option value='fusioninventory' ".($this->fields["interface"]!="fusioninventory"?"selected":"").">".$LANG['plugin_fusioninventory']["profile"][1]."</option>";
 
 		echo "</select></th>";
 		echo "</tr></table>";
@@ -90,11 +90,11 @@ class PluginTrackerProfile extends CommonDBTM {
 		$params=array('interface'=>'__VALUE__',
 				'ID'=>$ID,
 			);
-		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false);
-		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/tracker/ajax/profiles.php",$params,false,'profile_interface');
-//$prof=new PluginTrackerProfile;
+		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false);
+		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false,'profile_interface');
+//$prof=new PluginFusionInventoryProfile;
 
-//	$prof->showtrackerForm($_POST["ID"]);
+//	$prof->showfusioninventoryForm($_POST["ID"]);
 
 		echo "<br>";
 
@@ -117,70 +117,70 @@ class PluginTrackerProfile extends CommonDBTM {
 		echo "<form action='".$target."' method='post'>";
 		echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$LANG['plugin_tracker']["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
+		echo "<tr><th colspan='2' align='center'><strong>".$LANG['plugin_fusioninventory']["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][16].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][16].":</td><td>";
 		dropdownNoneReadWrite("snmp_networking",$this->fields["snmp_networking"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][18].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][18].":</td><td>";
 		dropdownNoneReadWrite("snmp_printers",$this->fields["snmp_printers"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][19].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][19].":</td><td>";
 		dropdownNoneReadWrite("snmp_models",$this->fields["snmp_models"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][20].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][20].":</td><td>";
 		dropdownNoneReadWrite("snmp_authentification",$this->fields["snmp_authentification"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][25].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][25].":</td><td>";
 		dropdownNoneReadWrite("snmp_iprange",$this->fields["snmp_iprange"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][26].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][26].":</td><td>";
 		dropdownNoneReadWrite("snmp_agent",$this->fields["snmp_agent"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["task"][0].":</td><td>";
-		dropdownNoneReadWrite("tracker_task",$this->fields["tracker_task"],1,1,1);
+		echo "<td>".$LANG['plugin_fusioninventory']["task"][0].":</td><td>";
+		dropdownNoneReadWrite("fusioninventory_task",$this->fields["fusioninventory_task"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][27].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][27].":</td><td>";
 		dropdownNoneReadWrite("snmp_agent_infos",$this->fields["snmp_agent_infos"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][22].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][22].":</td><td>";
 		dropdownNoneReadWrite("snmp_discovery",$this->fields["snmp_discovery"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][28].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][28].":</td><td>";
 		dropdownNoneReadWrite("snmp_report",$this->fields["snmp_report"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["profile"][23].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][23].":</td><td>";
 		dropdownNoneReadWrite("general_config",$this->fields["general_config"],1,1,1);
 		echo "</td>";
 		echo "</tr>";

@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
  * Class to manage generic multi-tables objects
  * Adds field management to core CommonDBTM class.
  **/
-class PluginTrackerCommonDBTM extends CommonDBTM {
+class PluginFusionInventoryCommonDBTM extends CommonDBTM {
    private $ptcdFields=array();
    private $ptcdLockFields=array();
    protected $ptcdUpdates=array();
@@ -67,7 +67,7 @@ class PluginTrackerCommonDBTM extends CommonDBTM {
          $this->ptcdFields=$this->fields;
          $itemtype=array_search($this->table, $LINK_ID_TABLE);
          if ($itemtype) {
-            $this->ptcdLockFields=plugin_tracker_lock_getLockFields($itemtype, $p_id);
+            $this->ptcdLockFields=plugin_fusioninventory_lock_getLockFields($itemtype, $p_id);
          }
       } else { // new item : initialize all fields to NULL
          $query = "SHOW COLUMNS FROM `".$this->table."`";

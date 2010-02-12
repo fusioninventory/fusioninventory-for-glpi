@@ -38,17 +38,17 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginTrackerModelInfos extends CommonDBTM {
+class PluginFusionInventoryModelInfos extends CommonDBTM {
    
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_model_infos";
-		$this->type = PLUGIN_TRACKER_MODEL;
+		$this->table = "glpi_plugin_fusioninventory_model_infos";
+		$this->type = PLUGIN_FUSIONINVENTORY_MODEL;
 	}
 
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
-		plugin_tracker_checkRight("snmp_models","r");
+		plugin_fusioninventory_checkRight("snmp_models","r");
 
 		if ($ID!='') {
 			$this->getFromDB($ID);
@@ -60,8 +60,8 @@ class PluginTrackerModelInfos extends CommonDBTM {
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($ID =='' ? $LANG['plugin_tracker']["model_info"][7] :
-            $LANG['plugin_tracker']["model_info"][6]);
+		echo ($ID =='' ? $LANG['plugin_fusioninventory']["model_info"][7] :
+            $LANG['plugin_fusioninventory']["model_info"][6]);
 		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -135,22 +135,22 @@ class PluginTrackerModelInfos extends CommonDBTM {
 		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT * 
-                      FROM `glpi_plugin_tracker_networking`
-                           LEFT JOIN `glpi_plugin_tracker_mib_networking`
-                           ON `glpi_plugin_tracker_networking`.`FK_model_infos`=
-                              `glpi_plugin_tracker_mib_networking`.`FK_model_infos`
+                      FROM `glpi_plugin_fusioninventory_networking`
+                           LEFT JOIN `glpi_plugin_fusioninventory_mib_networking`
+                           ON `glpi_plugin_fusioninventory_networking`.`FK_model_infos`=
+                              `glpi_plugin_fusioninventory_mib_networking`.`FK_model_infos`
                       WHERE `FK_networking`='".$ID_Device."'
-                            AND `glpi_plugin_tracker_mib_networking`.`activation`='1' ";
+                            AND `glpi_plugin_fusioninventory_mib_networking`.`activation`='1' ";
 				break;
 
 			case PRINTER_TYPE :
 				$query = "SELECT * 
-                      FROM `glpi_plugin_tracker_printers`
-                           LEFT JOIN `glpi_plugin_tracker_mib_networking`
-                           ON `glpi_plugin_tracker_printers`.`FK_model_infos`=
-                              `glpi_plugin_tracker_mib_networking`.`FK_model_infos`
+                      FROM `glpi_plugin_fusioninventory_printers`
+                           LEFT JOIN `glpi_plugin_fusioninventory_mib_networking`
+                           ON `glpi_plugin_fusioninventory_printers`.`FK_model_infos`=
+                              `glpi_plugin_fusioninventory_mib_networking`.`FK_model_infos`
                       WHERE `FK_printers`='".$ID_Device."'
-                            AND `glpi_plugin_tracker_mib_networking`.`activation`='1' ";
+                            AND `glpi_plugin_fusioninventory_mib_networking`.`activation`='1' ";
 				break;
 		}
 		if (!empty($query)) {
@@ -158,7 +158,7 @@ class PluginTrackerModelInfos extends CommonDBTM {
 			$exclude = array();
 			while ($data=$DB->fetch_array($result)) {
 				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
-               getDropdownName('glpi_dropdown_plugin_tracker_mib_oid',$data['FK_mib_oid']);
+               getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']);
          }
 			return $oids;
 		}
@@ -187,7 +187,7 @@ class PluginTrackerModelInfos extends CommonDBTM {
 
       }
       if (!empty($sysdescr)) {
-         include(GLPI_ROOT.'/plugins/tracker/inc/device_serials.pm.php');
+         include(GLPI_ROOT.'/plugins/fusioninventory/inc/device_serials.pm.php');
          foreach ($ModelDef as $desc=>$value) {
             if (strstr($sysdescr, $desc)) {
                $modelgetted = $ModelDef{$desc};
@@ -196,7 +196,7 @@ class PluginTrackerModelInfos extends CommonDBTM {
          }
          if (!empty($modelgetted)) {
             $query = "SELECT * 
-                      FROM `glpi_plugin_tracker_model_infos`
+                      FROM `glpi_plugin_fusioninventory_model_infos`
                       WHERE `discovery_key`='".$modelgetted."'
                       LIMIT 0,1";
 				$result = $DB->query($query);
@@ -206,14 +206,14 @@ class PluginTrackerModelInfos extends CommonDBTM {
             switch($type) {
 
                case NETWORKING_TYPE:
-                  $query = "UPDATE `glpi_plugin_tracker_networking`
+                  $query = "UPDATE `glpi_plugin_fusioninventory_networking`
                             SET `FK_model_infos`='".$FK_model."'
                             WHERE `FK_networking`='".$device_id."'";
                   $DB->query($query);
                   break;
 
                case PRINTER_TYPE:
-                  $query = "UPDATE `glpi_plugin_tracker_printers`
+                  $query = "UPDATE `glpi_plugin_fusioninventory_printers`
                             SET `FK_model_infos`='".$FK_model."'
                             WHERE `FK_printers`='".$device_id."'";
                   $DB->query($query);

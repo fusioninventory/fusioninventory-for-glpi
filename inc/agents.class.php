@@ -38,11 +38,11 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginTrackerAgents extends CommonDBTM {
+class PluginFusionInventoryAgents extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_tracker_agents";
-		$this->type = PLUGIN_TRACKER_SNMP_AGENTS;
+		$this->table = "glpi_plugin_fusioninventory_agents";
+		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
 	}
 
 
@@ -79,7 +79,7 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["agents"][0];
+		echo $LANG['plugin_fusioninventory']["agents"][0];
 		echo " :</th>";
 		echo "</tr>";
 
@@ -91,14 +91,14 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_tracker']["agents"][5]."</td>";
+      echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][5]."</td>";
 		echo "<td align='center'>";
-		echo $this->fields["tracker_agent_version"];
+		echo $this->fields["fusioninventory_agent_version"];
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][6] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][6] . "</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("lock",$this->fields["lock"]);
 		echo "</td>";
@@ -136,7 +136,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo "<a href='#' onClick='getSlide(\"optionavance\");'>".$LANG['plugin_tracker']["agents"][9]." :</a>";
+		echo "<a href='#' onClick='getSlide(\"optionavance\");'>".$LANG['plugin_fusioninventory']["agents"][9]." :</a>";
 		echo "</th>";
 		echo "</tr>";
 
@@ -145,28 +145,28 @@ class PluginTrackerAgents extends CommonDBTM {
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' width='200'>" . $LANG['plugin_tracker']["agents"][11] . "</td>";
+		echo "<td align='center' width='200'>" . $LANG['plugin_fusioninventory']["agents"][11] . "</td>";
 		echo "<td align='center' width='200'>";
 		dropdownInteger("core_discovery", $this->fields["core_discovery"],1,32);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["agents"][3]."</td>";
+		echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][3]."</td>";
 		echo "<td align='center'>";
 		dropdownInteger("threads_discovery", $this->fields["threads_discovery"],1,400);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_tracker']["agents"][10]."</td>";
+		echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][10]."</td>";
 		echo "<td align='center'>";
 		dropdownInteger("core_query", $this->fields["core_query"],1,200);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][2] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][2] . "</td>";
 		echo "<td align='center'>";
 		dropdownInteger("threads_query", $this->fields["threads_query"],1,200);
 		echo "</td>";
@@ -174,7 +174,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_tracker']["agents"][8] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][8] . "</td>";
 		echo "<td align='center'>";
 		if (empty($this->fields["fragment"]))
 			$this->fields["fragment"] = 50;
@@ -215,11 +215,11 @@ class PluginTrackerAgents extends CommonDBTM {
 	function export_config($ID) {
 		global $DB;
 	
-		$tracker_config = new PluginTrackerConfig;
-		$tracker_config->getFromDB(1);
+		$fusioninventory_config = new PluginFusionInventoryConfig;
+		$fusioninventory_config->getFromDB(1);
 
 		$this->getFromDB($ID);
-		echo "server=".$tracker_config->fields["URL_agent_conf"]."/plugins/tracker/front/plugin_tracker.communication.php\n";
+		echo "server=".$fusioninventory_config->fields["URL_agent_conf"]."/plugins/fusioninventory/front/plugin_fusioninventory.communication.php\n";
 //		echo "id=".$ID."\n";
 		echo "key=".$this->fields["key"]."\n";
 	}
@@ -229,7 +229,7 @@ class PluginTrackerAgents extends CommonDBTM {
    function InfosByKey($key) {
       global $DB;
 
-      $query = "SELECT * FROM `glpi_plugin_tracker_agents`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_agents`
       WHERE `key`='".$key."' LIMIT 1";
 
       $agent = array();
@@ -243,7 +243,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
 
    function RemoteStartAgent($ID, $ip) {
-      $ptcm = new PluginTrackerConfigModules;
+      $ptcm = new PluginFusionInventoryConfigModules;
       if (!$ptcm->isActivated('remotehttpagent')) {
          return false;
       }
@@ -265,7 +265,7 @@ class PluginTrackerAgents extends CommonDBTM {
    function RemoteStateAgent($target, $ID) {
       global $LANG;
 
-      $ptcm = new PluginTrackerConfigModules;
+      $ptcm = new PluginFusionInventoryConfigModules;
       $np = new Netport;
 
       if (!$ptcm->isActivated('remotehttpagent')) {
@@ -279,7 +279,7 @@ class PluginTrackerAgents extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo $LANG['plugin_tracker']["agents"][14];
+      echo $LANG['plugin_fusioninventory']["agents"][14];
       echo " : </th>";
       echo "</tr>";
 
@@ -288,9 +288,9 @@ class PluginTrackerAgents extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
-             echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][9]."</b>";
+             echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
          } else {
-            echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_tracker']["task"][8]."</b>";
+            echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
             $ip = $port['ifaddr'];
             fclose($fp);
          }
@@ -302,7 +302,7 @@ class PluginTrackerAgents extends CommonDBTM {
 		echo "<td align='center'>";
       echo "<input type='hidden' name='agentID' value='".$ID."'/>";
       echo "<input type='hidden' name='ip' value='".$ip."'/>";
-      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_tracker']["task"][12]."\" class='submit' >";
+      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
       echo "</td>";
       echo "</tr>";
 

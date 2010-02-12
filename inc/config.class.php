@@ -38,11 +38,11 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginTrackerConfig extends CommonDBTM {
+class PluginFusionInventoryConfig extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_tracker_config";
-		$this->type=PLUGIN_TRACKER_SNMP_CONFIG;
+		$this->table="glpi_plugin_fusioninventory_config";
+		$this->type=PLUGIN_FUSIONINVENTORY_SNMP_CONFIG;
 	}
 
 	function initConfig($version) {
@@ -87,13 +87,13 @@ class PluginTrackerConfig extends CommonDBTM {
 	function defineTabs($ID,$withtemplate) {
 		global $LANG,$CFG_GLPI;
 
-		$ong[1]=$LANG['plugin_tracker']["functionalities"][2];
-      $ong[2]=$LANG['plugin_tracker']['config'][1];
-//		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["functionalities"][5];
-//		$ong[3]=$LANG['plugin_tracker']["functionalities"][3]." - ".$LANG['plugin_tracker']["discovery"][3];
+		$ong[1]=$LANG['plugin_fusioninventory']["functionalities"][2];
+      $ong[2]=$LANG['plugin_fusioninventory']['config'][1];
+//		$ong[3]=$LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG['plugin_fusioninventory']["functionalities"][5];
+//		$ong[3]=$LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG['plugin_fusioninventory']["discovery"][3];
 
       $ong[7]=$LANG['title'][38];
-      $ong[8]=$LANG['plugin_tracker']["functionalities"][7];
+      $ong[8]=$LANG['plugin_fusioninventory']["functionalities"][7];
 
 		return $ong;
 	}
@@ -108,30 +108,30 @@ class PluginTrackerConfig extends CommonDBTM {
 		
 		echo "<tr>";
 		echo "<th colspan='4'>";
-		echo $LANG['plugin_tracker']["functionalities"][2]."&nbsp;:";
+		echo $LANG['plugin_fusioninventory']["functionalities"][2]."&nbsp;:";
 		echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][27]."&nbsp;:</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
 		echo "<td width='20%'>";
 		dropdownYesNo("ssl_only", $this->isActivated('ssl_only'));
 		echo "</td>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][16]."&nbsp;:</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][16]."&nbsp;:</td>";
 		echo "<td width='20%'>";
 		unset($ArrayValues);
-		$ArrayValues['DB']= $LANG['plugin_tracker']["functionalities"][17];
-		$ArrayValues['file']= $LANG['plugin_tracker']["functionalities"][18];
+		$ArrayValues['DB']= $LANG['plugin_fusioninventory']["functionalities"][17];
+		$ArrayValues['file']= $LANG['plugin_fusioninventory']["functionalities"][18];
 		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));
 		echo "</td>";
       echo "</tr>";
 
  		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_tracker']['config'][0]."&nbsp;:</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']['config'][0]."&nbsp;:</td>";
 		echo "<td>";
       dropdownInteger("inventory_frequence",$this->getValue('inventory_frequence'),1,240);
 		echo "</td>";
-		echo "<td>".$LANG['plugin_tracker']["functionalities"][32]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][32]."</td>";
 		echo "<td>";
       dropdownInteger("delete_agent_process",$this->getValue('delete_agent_process'),1,240);
       echo " ".$LANG['gmt'][1];
@@ -139,7 +139,7 @@ class PluginTrackerConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_tracker']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
       echo "<td>";
       echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
       echo "</td>";
@@ -151,10 +151,10 @@ class PluginTrackerConfig extends CommonDBTM {
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["discovery"][6]."&nbsp;:";
+		echo $LANG['plugin_fusioninventory']["discovery"][6]."&nbsp;:";
 		echo "</th>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_tracker']["discovery"][6]." 2&nbsp;:";
+		echo $LANG['plugin_fusioninventory']["discovery"][6]." 2&nbsp;:";
 		echo "</th>";
 		echo "</tr>";
 

@@ -32,11 +32,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginTrackerTask extends CommonDBTM {
+class PluginFusionInventoryTask extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_tracker_task";
-      $this->type = PLUGIN_TRACKER_TASK;
+		$this->table = "glpi_plugin_fusioninventory_task";
+      $this->type = PLUGIN_FUSIONINVENTORY_TASK;
 	}
 
 
@@ -44,7 +44,7 @@ class PluginTrackerTask extends CommonDBTM {
       global $DB;
 
       $count = 0;
-      $query = "SELECT COUNT(*) as count FROM `glpi_plugin_tracker_task`
+      $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_task`
          WHERE `agent_id`='".$agent_id."'
             AND `action`='".$action."' ";
 
@@ -60,11 +60,11 @@ class PluginTrackerTask extends CommonDBTM {
       global $DB;
 
       $tasks = array();
-      $query = "SELECT glpi_plugin_tracker_task.id, param, ifaddr, single,
-            glpi_plugin_tracker_task.on_device, glpi_plugin_tracker_task.device_type
-            FROM `glpi_plugin_tracker_task`
-         INNER JOIN glpi_networking_ports on (glpi_plugin_tracker_task.on_device=glpi_networking_ports.on_device
-                                             AND glpi_plugin_tracker_task.device_type=glpi_networking_ports.device_type)
+      $query = "SELECT glpi_plugin_fusioninventory_task.id, param, ifaddr, single,
+            glpi_plugin_fusioninventory_task.on_device, glpi_plugin_fusioninventory_task.device_type
+            FROM `glpi_plugin_fusioninventory_task`
+         INNER JOIN glpi_networking_ports on (glpi_plugin_fusioninventory_task.on_device=glpi_networking_ports.on_device
+                                             AND glpi_plugin_fusioninventory_task.device_type=glpi_networking_ports.device_type)
          WHERE `agent_id`='".$agent_id."'
             AND `action`='".$action."' ";
 
@@ -91,8 +91,8 @@ class PluginTrackerTask extends CommonDBTM {
    function formAddTask($target, $input=array()) {
       global $LANG;
 
-      $pta = new PluginTrackerAgents;
-      $ptcm = new PluginTrackerConfigModules;
+      $pta = new PluginFusionInventoryAgents;
+      $ptcm = new PluginFusionInventoryConfigModules;
       if (!$ptcm->isActivated('remotehttpagent')) {
          return;
       }
@@ -102,12 +102,12 @@ class PluginTrackerTask extends CommonDBTM {
 		echo "<table  class='tab_cadre_fixe'>";
       
 		echo "<tr><th colspan='2'>";
-		echo $LANG['plugin_tracker']["task"][4];
+		echo $LANG['plugin_fusioninventory']["task"][4];
 		echo " :</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
-		echo $LANG['plugin_tracker']["task"][5];
+		echo $LANG['plugin_fusioninventory']["task"][5];
 		echo "</td>";
       
 		echo "<td align='center'>";
@@ -117,7 +117,7 @@ class PluginTrackerTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
-		echo $LANG['plugin_tracker']["task"][7];
+		echo $LANG['plugin_fusioninventory']["task"][7];
 		echo "</td>";
 
 		echo "<td align='center'>";
@@ -126,9 +126,9 @@ class PluginTrackerTask extends CommonDBTM {
          
       }
       if(!($fp = fsockopen("192.168.0.201", 62354, $errno, $errstr, 5))) {
-          echo "<b>".$LANG['plugin_tracker']["task"][9]."</b>";
+          echo "<b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
       } else {
-          echo "<b>".$LANG['plugin_tracker']["task"][8]."</b>";
+          echo "<b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
           $active_valid = 1;
           fclose($fp);
       }
@@ -140,7 +140,7 @@ class PluginTrackerTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_2'>";
 		echo "<td align='center'>";
-      echo "<input type='submit' name='up' value=\"".$LANG['plugin_tracker']["task"][6]."\" class='submit'>";
+      echo "<input type='submit' name='up' value=\"".$LANG['plugin_fusioninventory']["task"][6]."\" class='submit'>";
 		echo "</td>";
       
 		echo "<td align='center'>";
@@ -148,7 +148,7 @@ class PluginTrackerTask extends CommonDBTM {
          echo "<input type='submit' name='add' value=\"".$LANG['buttons'][2]."\" class='submit'>";
       } else {
          echo "<input type='submit' name='add' value=\"".$LANG['buttons'][2]."\"
-            STYLE='font-size: 11px; border: 1px solid #888888; cursor:pointer; background:  url(\"".GLPI_ROOT."/plugins/tracker/pics/fond_form_off.png\") repeat-x'
+            STYLE='font-size: 11px; border: 1px solid #888888; cursor:pointer; background:  url(\"".GLPI_ROOT."/plugins/fusioninventory/pics/fond_form_off.png\") repeat-x'
                disabled='disabled'>";
       }
 		echo "</td>";
@@ -164,7 +164,7 @@ class PluginTrackerTask extends CommonDBTM {
 
 
    function addTask($device_id, $device_type, $action, $agent_id) {
-      $ptcm = new PluginTrackerConfigModules;
+      $ptcm = new PluginFusionInventoryConfigModules;
       if (!$ptcm->isActivated('remotehttpagent')) {
          return false;
       }
@@ -190,8 +190,8 @@ class PluginTrackerTask extends CommonDBTM {
 
 
    function getTask($deviceid) {
-      $pta = new PluginTrackerAgents;
-      $ptc = new PluginTrackerCommunication;
+      $pta = new PluginFusionInventoryAgents;
+      $ptc = new PluginFusionInventoryCommunication;
 
       $a_agent = $pta->InfosByKey($deviceid);
       $a_tasks = $this->find("`agent_id`='".$a_agent['ID']."'", "date");

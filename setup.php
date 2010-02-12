@@ -33,190 +33,190 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-include_once ("plugin_tracker.includes.php");
+include_once ("plugin_fusioninventory.includes.php");
 
-// Init the hooks of tracker
-function plugin_init_tracker() {
+// Init the hooks of fusioninventory
+function plugin_init_fusioninventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
 	// Params - Register type
-	registerPluginType('tracker', "PLUGIN_TRACKER_ERROR_TYPE", 5150, array(
-		'classname' => 'PluginTrackerErrors',
-		'tablename' => 'glpi_plugin_tracker_errors',
-		'formpage' => 'front/plugin_tracker.errors.form.php'
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_ERROR_TYPE", 5150, array(
+		'classname' => 'PluginFusionInventoryErrors',
+		'tablename' => 'glpi_plugin_fusioninventory_errors',
+		'formpage' => 'front/plugin_fusioninventory.errors.form.php'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_MODEL", 5151, array(
-		'classname' => 'PluginTrackerModelInfos',
-		'tablename' => 'glpi_plugin_tracker_model_infos',
-		'formpage' => 'front/plugin_tracker.models.form.php',
-		'searchpage' => 'front/plugin_tracker.models.php',
-		'typename' => $LANG['plugin_tracker']["model_info"][4]
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_MODEL", 5151, array(
+		'classname' => 'PluginFusionInventoryModelInfos',
+		'tablename' => 'glpi_plugin_fusioninventory_model_infos',
+		'formpage' => 'front/plugin_fusioninventory.models.form.php',
+		'searchpage' => 'front/plugin_fusioninventory.models.php',
+		'typename' => $LANG['plugin_fusioninventory']["model_info"][4]
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_AUTH", 5152, array(
-		'classname' => 'PluginTrackerSNMPAuth',
-		'tablename' => 'glpi_plugin_tracker_snmp_connection',
-		'formpage' => 'front/plugin_tracker.snmp_auth.form.php',
-		'searchpage' => 'front/plugin_tracker.snmp_auth.php',
-		'typename' => $LANG['plugin_tracker']["model_info"][3]
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_AUTH", 5152, array(
+		'classname' => 'PluginFusionInventorySNMPAuth',
+		'tablename' => 'glpi_plugin_fusioninventory_snmp_connection',
+		'formpage' => 'front/plugin_fusioninventory.snmp_auth.form.php',
+		'searchpage' => 'front/plugin_fusioninventory.snmp_auth.php',
+		'typename' => $LANG['plugin_fusioninventory']["model_info"][3]
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_MAC_UNKNOWN", 5153, array(
-		'classname' => 'PluginTrackerUnknownDevice',
-		'tablename' => 'glpi_plugin_tracker_unknown_device',
-      'formpage' => 'front/plugin_tracker.unknown.form.php',
-		'searchpage' => 'front/plugin_tracker.unknown.form.php',
-		'typename' => $LANG['plugin_tracker']["processes"][13],
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN", 5153, array(
+		'classname' => 'PluginFusionInventoryUnknownDevice',
+		'tablename' => 'glpi_plugin_fusioninventory_unknown_device',
+      'formpage' => 'front/plugin_fusioninventory.unknown.form.php',
+		'searchpage' => 'front/plugin_fusioninventory.unknown.form.php',
+		'typename' => $LANG['plugin_fusioninventory']["processes"][13],
 		'deleted_tables' => true,
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_PRINTERS_CARTRIDGES", 5156, array(
-		'classname' => 'PluginTrackerPrinters',
-		'tablename' => 'glpi_plugin_tracker_printers_cartridges',
-		'formpage' => 'front/plugin_tracker.printer_info.form.php',
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES", 5156, array(
+		'classname' => 'PluginFusionInventoryPrinters',
+		'tablename' => 'glpi_plugin_fusioninventory_printers_cartridges',
+		'formpage' => 'front/plugin_fusioninventory.printer_info.form.php',
 		'typename' => $LANG["cartridges"][0]
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS", 5157, array(
-		'classname' => 'PluginTrackerNetworking',
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS", 5157, array(
+		'classname' => 'PluginFusionInventoryNetworking',
 		'tablename' => 'glpi_networking_ports'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_AGENTS", 5158, array(
-		'classname' => 'PluginTrackerAgents',
-		'tablename' => 'glpi_plugin_tracker_agents',
-		'formpage' => 'front/plugin_tracker.agents.form.php',
-		'searchpage' => 'front/plugin_tracker.agents.php'
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_AGENTS", 5158, array(
+		'classname' => 'PluginFusionInventoryAgents',
+		'tablename' => 'glpi_plugin_fusioninventory_agents',
+		'formpage' => 'front/plugin_fusioninventory.agents.form.php',
+		'searchpage' => 'front/plugin_fusioninventory.agents.php'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_RANGEIP", 5159, array(
-		'classname' => 'PluginTrackerRangeIP',
-		'tablename' => 'glpi_plugin_tracker_rangeip',
-		'formpage' => 'front/plugin_tracker.rangeip.form.php',
-		'searchpage' => 'front/plugin_tracker.rangeip.php'
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP", 5159, array(
+		'classname' => 'PluginFusionInventoryRangeIP',
+		'tablename' => 'glpi_plugin_fusioninventory_rangeip',
+		'formpage' => 'front/plugin_fusioninventory.rangeip.form.php',
+		'searchpage' => 'front/plugin_fusioninventory.rangeip.php'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_AGENTS_PROCESSES", 5161, array(
-		'classname' => 'PluginTrackerAgentsProcesses',
-		'tablename' => 'glpi_plugin_tracker_agents_processes',
-		'formpage' => 'front/plugin_tracker.agents.processes.php',
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_AGENTS_PROCESSES", 5161, array(
+		'classname' => 'PluginFusionInventoryAgentsProcesses',
+		'tablename' => 'glpi_plugin_fusioninventory_agents_processes',
+		'formpage' => 'front/plugin_fusioninventory.agents.processes.php',
 		'massiveaction_noupdate' => true
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_HISTORY", 5162, array(
-		'classname' => 'PluginTrackerSNMPHistory',
-		'tablename' => 'glpi_plugin_tracker_snmp_history'
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_HISTORY", 5162, array(
+		'classname' => 'PluginFusionInventorySNMPHistory',
+		'tablename' => 'glpi_plugin_fusioninventory_snmp_history'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_NETWORKING_PORTS2", 5163, array(
-		'classname' => 'PluginTrackerNetworking',
-		'tablename' => 'glpi_plugin_tracker_networking_ports'
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2", 5163, array(
+		'classname' => 'PluginFusionInventoryNetworking',
+		'tablename' => 'glpi_plugin_fusioninventory_networking_ports'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_SNMP_CONFIG", 5165, array(
-		'classname' => 'PluginTrackerConfig',
-		'tablename' => 'glpi_plugin_tracker_config',
-		'formpage' => 'front/plugin_tracker.functionalities.form.php'
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_CONFIG", 5165, array(
+		'classname' => 'PluginFusionInventoryConfig',
+		'tablename' => 'glpi_plugin_fusioninventory_config',
+		'formpage' => 'front/plugin_fusioninventory.functionalities.form.php'
 		));
 
-   registerPluginType('tracker', "PLUGIN_TRACKER_TASK", 5166, array(
-		'classname' => 'PluginTrackerTask',
-		'tablename' => 'glpi_plugin_tracker_task',
-      'searchpage' => 'front/plugin_tracker.task.php'
+   registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_TASK", 5166, array(
+		'classname' => 'PluginFusionInventoryTask',
+		'tablename' => 'glpi_plugin_fusioninventory_task',
+      'searchpage' => 'front/plugin_fusioninventory.task.php'
 		));
 
-	registerPluginType('tracker', "PLUGIN_TRACKER_CONSTRUCT_DEVICE", 5167, array(
-		'classname' => 'PluginTrackerConstructDevice',
-		'tablename' => 'glpi_plugin_tracker_construct_device',
-		'formpage' => 'front/plugin_tracker.construct_device.form.php',
-		'searchpage' => 'front/plugin_tracker.construct_device.php',
-		'typename' => $LANG['plugin_tracker']["constructdevice"][0]
+	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE", 5167, array(
+		'classname' => 'PluginFusionInventoryConstructDevice',
+		'tablename' => 'glpi_plugin_fusioninventory_construct_device',
+		'formpage' => 'front/plugin_fusioninventory.construct_device.form.php',
+		'searchpage' => 'front/plugin_fusioninventory.construct_device.php',
+		'typename' => $LANG['plugin_fusioninventory']["constructdevice"][0]
 		));
 
-	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_tracker_errors");
+	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusioninventory_errors");
 	
-	$PLUGIN_HOOKS['init_session']['tracker'] = 'plugin_tracker_initSession';
-	$PLUGIN_HOOKS['change_profile']['tracker'] = 'plugin_tracker_changeprofile';
+	$PLUGIN_HOOKS['init_session']['fusioninventory'] = 'plugin_fusioninventory_initSession';
+	$PLUGIN_HOOKS['change_profile']['fusioninventory'] = 'plugin_fusioninventory_changeprofile';
 
-	$PLUGIN_HOOKS['cron']['tracker'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
+	$PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
-   $PLUGIN_HOOKS['add_javascript']['tracker']="script.js";
+   $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
 	if (isset($_SESSION["glpiID"])) {
 
 		if (haveRight("config", "w") || haveRight("profile", "w")) {// Config page
-			$PLUGIN_HOOKS['config_page']['tracker'] = 'front/plugin_tracker.functionalities.form.php';
+			$PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/plugin_fusioninventory.functionalities.form.php';
       }
 
 		// Define SQL table restriction of entity
-		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_discovery';
-		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_rangeip';
-      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_tracker_unknown_device';
+		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_discovery';
+		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_rangeip';
+      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_unknown_device';
 
-		if(isset($_SESSION["glpi_plugin_tracker_installed"]) && $_SESSION["glpi_plugin_tracker_installed"]==1) {
+		if(isset($_SESSION["glpi_plugin_fusioninventory_installed"]) && $_SESSION["glpi_plugin_fusioninventory_installed"]==1) {
 
-			$PLUGIN_HOOKS['use_massive_action']['tracker']=1;
-			$PLUGIN_HOOKS['pre_item_purge']['tracker'] = 'plugin_pre_item_purge_tracker';
-			$PLUGIN_HOOKS['item_update']['tracker'] = 'plugin_item_update_tracker';
+			$PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
+			$PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = 'plugin_pre_item_purge_fusioninventory';
+			$PLUGIN_HOOKS['item_update']['fusioninventory'] = 'plugin_item_update_fusioninventory';
 
 			$report_list = array();
-         $report_list["report/plugin_tracker.switch_ports.history.php"] = "Historique des ports de switchs";
-         $report_list["report/plugin_tracker.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
-			$PLUGIN_HOOKS['reports']['tracker'] = $report_list;
+         $report_list["report/plugin_fusioninventory.switch_ports.history.php"] = "Historique des ports de switchs";
+         $report_list["report/plugin_fusioninventory.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
+			$PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
 
 			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r")) {
-				$PLUGIN_HOOKS['menu_entry']['tracker'] = true;
+				$PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
          }
 
          // Tabs for each type
-         $PLUGIN_HOOKS['headings']['tracker'] = 'plugin_get_headings_tracker';
-         $PLUGIN_HOOKS['headings_action']['tracker'] = 'plugin_headings_actions_tracker';
+         $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
+         $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
-         if (plugin_tracker_HaveRight("snmp_models","r")
-            OR plugin_tracker_HaveRight("snmp_authentification","r")
-            OR plugin_tracker_HaveRight("snmp_iprange","r")
-            OR plugin_tracker_HaveRight("snmp_agent","r")
-            OR plugin_tracker_HaveRight("snmp_scripts_infos","r")
-            OR plugin_tracker_HaveRight("snmp_agent_infos","r")
-            OR plugin_tracker_HaveRight("snmp_discovery","r")
-            OR plugin_tracker_HaveRight("snmp_report","r")
+         if (plugin_fusioninventory_HaveRight("snmp_models","r")
+            OR plugin_fusioninventory_HaveRight("snmp_authentification","r")
+            OR plugin_fusioninventory_HaveRight("snmp_iprange","r")
+            OR plugin_fusioninventory_HaveRight("snmp_agent","r")
+            OR plugin_fusioninventory_HaveRight("snmp_scripts_infos","r")
+            OR plugin_fusioninventory_HaveRight("snmp_agent_infos","r")
+            OR plugin_fusioninventory_HaveRight("snmp_discovery","r")
+            OR plugin_fusioninventory_HaveRight("snmp_report","r")
             ) {
 
-            $PLUGIN_HOOKS['menu_entry']['tracker'] = true;
-            if (plugin_tracker_haveRight("snmp_models","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['models'] = 'front/plugin_tracker.models.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['models'] = 'front/plugin_tracker.models.php';
+            $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+            if (plugin_fusioninventory_haveRight("snmp_models","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = 'front/plugin_fusioninventory.models.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = 'front/plugin_fusioninventory.models.php';
             }
-            if (plugin_tracker_haveRight("snmp_authentification","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['snmp_auth'] = 'front/plugin_tracker.snmp_auth.php';
+            if (plugin_fusioninventory_haveRight("snmp_authentification","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['snmp_auth'] = 'front/plugin_fusioninventory.snmp_auth.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/plugin_fusioninventory.snmp_auth.php';
             }
-            if (plugin_tracker_haveRight("snmp_agent","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['agents'] = 'front/plugin_tracker.agents.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['agents'] = 'front/plugin_tracker.agents.php';
-            }
-
-            if (plugin_tracker_haveRight("snmp_iprange","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['rangeip'] = 'front/plugin_tracker.rangeip.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['rangeip'] = 'front/plugin_tracker.rangeip.php';
+            if (plugin_fusioninventory_haveRight("snmp_agent","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/plugin_fusioninventory.agents.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/plugin_fusioninventory.agents.php';
             }
 
-            $PLUGIN_HOOKS['submenu_entry']['tracker']['add']['constructdevice'] = 'front/plugin_tracker.construct_device.form.php?add=1';
-            $PLUGIN_HOOKS['submenu_entry']['tracker']['search']['constructdevice'] = 'front/plugin_tracker.construct_device.php';
+            if (plugin_fusioninventory_haveRight("snmp_iprange","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rangeip'] = 'front/plugin_fusioninventory.rangeip.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rangeip'] = 'front/plugin_fusioninventory.rangeip.php';
+            }
 
-            if (plugin_tracker_haveRight("general_config","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['tracker']['config'] = 'front/plugin_tracker.functionalities.form.php';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['constructdevice'] = 'front/plugin_fusioninventory.construct_device.form.php?add=1';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['constructdevice'] = 'front/plugin_fusioninventory.construct_device.php';
+
+            if (plugin_fusioninventory_haveRight("general_config","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/plugin_fusioninventory.functionalities.form.php';
             }
 			}
-         $PLUGIN_HOOKS['submenu_entry']['tracker']["<img  src='".GLPI_ROOT."/plugins/tracker/pics/books.png' title='".$LANG['plugin_tracker']["setup"][16]."' alt='".$LANG['plugin_tracker']["setup"][16]."'>"] = 'front/plugin_tracker.documentation.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']["<img  src='".GLPI_ROOT."/plugins/fusioninventory/pics/books.png' title='".$LANG['plugin_fusioninventory']["setup"][16]."' alt='".$LANG['plugin_fusioninventory']["setup"][16]."'>"] = 'front/plugin_fusioninventory.documentation.php';
 		}
 	}
 }
 
 // Name and Version of the plugin
-function plugin_version_tracker() {
-	return array( 'name'    => 'Tracker',
+function plugin_version_fusioninventory() {
+	return array( 'name'    => 'FusionInventory',
 		'version' => '2.2.0',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
 		'homepage'=>'https://forge.indepnet.net/projects/show/tracker',
@@ -226,27 +226,27 @@ function plugin_version_tracker() {
 
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
-function plugin_tracker_check_prerequisites() {
+function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
 	if (GLPI_VERSION >= '0.72.1') {
 		return true;
    } else {
-		echo $LANG['plugin_tracker']["errors"][50];
+		echo $LANG['plugin_fusioninventory']["errors"][50];
    }
 }
 
 
 
-function plugin_tracker_check_config() {
+function plugin_fusioninventory_check_config() {
 	return true;
 }
 
 
 
-function plugin_tracker_haveTypeRight($type,$right) {
+function plugin_fusioninventory_haveTypeRight($type,$right) {
 	switch ($type) {
-		case PLUGIN_TRACKER_ERROR_TYPE :
-			return plugin_tracker_haveRight("errors",$right);
+		case PLUGIN_FUSIONINVENTORY_ERROR_TYPE :
+			return plugin_fusioninventory_haveRight("errors",$right);
 			break;
 	}
 	return true;

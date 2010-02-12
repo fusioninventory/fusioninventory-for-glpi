@@ -38,18 +38,18 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginTrackerHistoryConnections extends CommonDBTM {
+class PluginFusionInventoryHistoryConnections extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_tracker_snmp_history_connections";
+		$this->table = "glpi_plugin_fusioninventory_snmp_history_connections";
 	}
 
    function migration() {
       global $DB;
 
-      $ptsnmph = new PluginTrackerSNMPHistory;
+      $ptsnmph = new PluginFusionInventorySNMPHistory;
 
-      $sql_connection = "SELECT * FROM `glpi_plugin_tracker_snmp_history`
+      $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmp_history`
                         WHERE `Field`='0'
                         ORDER BY `FK_process` DESC, `date_mod` DESC;";
       $result_connection = $DB->query($sql_connection);
@@ -101,8 +101,8 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th>";
-      echo $LANG['plugin_tracker']["processes"][1];
-      echo " <a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php'>(".$LANG['common'][66].")</a>";
+      echo $LANG['plugin_fusioninventory']["processes"][1];
+      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -140,7 +140,7 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".GLPI_ROOT."/plugins/tracker/front/plugin_tracker.agents.processes.form.php?h_process_number=".$data['process_number']."'>".
+            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php?h_process_number=".$data['process_number']."'>".
             $data['process_number']."</a>";
             echo "</td>";
 
@@ -165,9 +165,9 @@ class PluginTrackerHistoryConnections extends CommonDBTM {
 
             echo "<td>";
             if ($data['creation'] == '1') {
-               echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/connection_ok.png'/>";
+               echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/>";
             } else {
-               echo "<img src='".GLPI_ROOT."/plugins/tracker/pics/connection_notok.png'/>";
+               echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/>";
             }
             echo "</td>";
 
