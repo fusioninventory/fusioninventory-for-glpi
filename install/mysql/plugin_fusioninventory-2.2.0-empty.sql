@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_FusionInventory_mib_label`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_label`;
 
-CREATE TABLE `glpi_dropdown_plugin_FusionInventory_mib_label` (
+CREATE TABLE `glpi_dropdown_plugin_fusioninventory_mib_label` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
@@ -9,9 +9,9 @@ CREATE TABLE `glpi_dropdown_plugin_FusionInventory_mib_label` (
 
 
 
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_FusionInventory_mib_object`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_object`;
 
-CREATE TABLE `glpi_dropdown_plugin_FusionInventory_mib_object` (
+CREATE TABLE `glpi_dropdown_plugin_fusioninventory_mib_object` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
@@ -20,9 +20,9 @@ CREATE TABLE `glpi_dropdown_plugin_FusionInventory_mib_object` (
 
 
 
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_FusionInventory_mib_oid`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_oid`;
 
-CREATE TABLE `glpi_dropdown_plugin_FusionInventory_mib_oid` (
+CREATE TABLE `glpi_dropdown_plugin_fusioninventory_mib_oid` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
@@ -32,9 +32,9 @@ CREATE TABLE `glpi_dropdown_plugin_FusionInventory_mib_oid` (
 
 
 
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_FusionInventory_snmp_auth_auth_protocol`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`;
 
-CREATE TABLE `glpi_dropdown_plugin_FusionInventory_snmp_auth_auth_protocol` (
+CREATE TABLE `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `comments` text NOT NULL,
@@ -43,9 +43,9 @@ CREATE TABLE `glpi_dropdown_plugin_FusionInventory_snmp_auth_auth_protocol` (
 
 
 
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_FusionInventory_snmp_auth_priv_protocol`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol`;
 
-CREATE TABLE `glpi_dropdown_plugin_FusionInventory_snmp_auth_priv_protocol` (
+CREATE TABLE `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `comments` text NOT NULL,
@@ -54,9 +54,9 @@ CREATE TABLE `glpi_dropdown_plugin_FusionInventory_snmp_auth_priv_protocol` (
 
 
 
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_FusionInventory_snmp_version`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;
 
-CREATE TABLE `glpi_dropdown_plugin_FusionInventory_snmp_version` (
+CREATE TABLE `glpi_dropdown_plugin_fusioninventory_snmp_version` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comments` text COLLATE utf8_unicode_ci,
@@ -65,9 +65,9 @@ CREATE TABLE `glpi_dropdown_plugin_FusionInventory_snmp_version` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_agents`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_agents` (
+CREATE TABLE `glpi_plugin_fusioninventory_agents` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `core_discovery` int(11) NOT NULL DEFAULT '1',
@@ -90,9 +90,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_agents` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_agents_errors`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_errors`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_agents_errors` (
+CREATE TABLE `glpi_plugin_fusioninventory_agents_errors` (
 `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 `process_number` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL,
 `on_device` INT( 11 ) NOT NULL DEFAULT '0',
@@ -105,9 +105,9 @@ PRIMARY KEY ( `ID` )
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_agents_inventory_state`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_inventory_state`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_agents_inventory_state` (
+CREATE TABLE `glpi_plugin_fusioninventory_agents_inventory_state` (
 `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 `device_id` INT( 11 ) NOT NULL DEFAULT '0',
 `state` INT( 1 ) NOT NULL DEFAULT '0',
@@ -117,9 +117,9 @@ PRIMARY KEY ( `ID` )
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_agents_processes`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_processes`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_agents_processes` (
+CREATE TABLE `glpi_plugin_fusioninventory_agents_processes` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `process_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `FK_agent` int(11) NOT NULL DEFAULT '0',
@@ -151,9 +151,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_agents_processes` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_connection_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_history`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_connection_history` (
+CREATE TABLE `glpi_plugin_fusioninventory_connection_history` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_computers` int(11) NOT NULL DEFAULT '0',
   `date` datetime DEFAULT NULL,
@@ -165,9 +165,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_connection_history` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_computers`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computers`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_computers` (
+CREATE TABLE `glpi_plugin_fusioninventory_computers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_computers` int(11) NOT NULL,
   `FK_model_infos` int(8) NOT NULL DEFAULT '0',
@@ -177,9 +177,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_computers` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_config`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_config` (
+CREATE TABLE `glpi_plugin_fusioninventory_config` (
    `ID` int(1) NOT NULL AUTO_INCREMENT,
    `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
    `URL_agent_conf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -200,9 +200,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_config` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_config_modules`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_config_modules` (
+CREATE TABLE `glpi_plugin_fusioninventory_config_modules` (
    `ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
    `snmp` INT( 1 ) NOT NULL DEFAULT '0',
    `inventoryocs` INT( 1 ) NOT NULL DEFAULT '0',
@@ -213,9 +213,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_config_modules` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_config_snmp_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_history`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_config_snmp_history` (
+CREATE TABLE `glpi_plugin_fusioninventory_config_snmp_history` (
    `id` INT( 8 ) NOT NULL AUTO_INCREMENT ,
    `field` VARCHAR( 255 ) NOT NULL ,
    PRIMARY KEY ( `id` ) ,
@@ -224,9 +224,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_config_snmp_history` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_construct_device`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_device`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_construct_device` (
+CREATE TABLE `glpi_plugin_fusioninventory_construct_device` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_glpi_enterprise` int(11) NOT NULL DEFAULT '0',
   `device` varchar(255) DEFAULT NULL,
@@ -239,9 +239,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_construct_device` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_construct_walks`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_walks`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_construct_walks` (
+CREATE TABLE `glpi_plugin_fusioninventory_construct_walks` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `construct_device_id` int(11) NOT NULL DEFAULT '0',
   `log` text,
@@ -250,9 +250,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_construct_walks` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_construct_mibs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_mibs`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_construct_mibs` (
+CREATE TABLE `glpi_plugin_fusioninventory_construct_mibs` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `mib_oid_id` int(11) NOT NULL DEFAULT '0',
   `construct_device_id` int(11) NOT NULL DEFAULT '0',
@@ -266,9 +266,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_construct_mibs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_snmp_history_connections`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history_connections`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_snmp_history_connections` (
+CREATE TABLE `glpi_plugin_fusioninventory_snmp_history_connections` (
    `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    `creation` INT( 1 ) NOT NULL DEFAULT '0',
@@ -280,9 +280,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_snmp_history_connections` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_config_snmp_networking`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_networking`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_config_snmp_networking` (
+CREATE TABLE `glpi_plugin_fusioninventory_config_snmp_networking` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `active_device_state` int(11) NOT NULL DEFAULT '0',
   `history_wire` int(11) NOT NULL DEFAULT '0',
@@ -295,9 +295,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_config_snmp_networking` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_discovery`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_discovery`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_discovery` (
+CREATE TABLE `glpi_plugin_fusioninventory_discovery` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_processes` int(11) NOT NULL DEFAULT '0',
   `FK_agents` int(11) NOT NULL DEFAULT '0',
@@ -315,9 +315,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_discovery` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_errors`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_errors`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_errors` (
+CREATE TABLE `glpi_plugin_fusioninventory_errors` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `ifaddr` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `device_type` smallint(6) NOT NULL,
@@ -332,9 +332,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_errors` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_lock`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_lock` (
+CREATE TABLE `glpi_plugin_fusioninventory_lock` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `itemtype` INT( 11 ) NOT NULL ,
    `items_id` INT( 11 ) NOT NULL ,
@@ -345,9 +345,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_lock` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_lockable`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_lockable` (
+CREATE TABLE `glpi_plugin_fusioninventory_lockable` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `itemtype` INT( 11 ) NOT NULL ,
    `fields` LONGTEXT ,
@@ -360,9 +360,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_lockable` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_mib_networking`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mib_networking`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_mib_networking` (
+CREATE TABLE `glpi_plugin_fusioninventory_mib_networking` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `FK_model_infos` int(8) DEFAULT NULL,
   `FK_mib_label` int(8) DEFAULT NULL,
@@ -385,9 +385,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_mib_networking` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_model_infos`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_model_infos`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_model_infos` (
+CREATE TABLE `glpi_plugin_fusioninventory_model_infos` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `device_type` int(8) NOT NULL DEFAULT '0',
@@ -402,9 +402,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_model_infos` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_networking`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_networking` (
+CREATE TABLE `glpi_plugin_fusioninventory_networking` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `FK_networking` int(8) NOT NULL,
   `FK_model_infos` int(8) NOT NULL DEFAULT '0',
@@ -412,7 +412,7 @@ CREATE TABLE `glpi_plugin_FusionInventory_networking` (
   `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `cpu` int(3) NOT NULL DEFAULT '0',
   `memory` int(8) NOT NULL DEFAULT '0',
-  `last_FusionInventory_update` datetime DEFAULT NULL,
+  `last_fusioninventory_update` datetime DEFAULT NULL,
   `last_PID_update` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `FK_networking` (`FK_networking`),
@@ -421,9 +421,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_networking` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_networking_ifaddr`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ifaddr`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_networking_ifaddr` (
+CREATE TABLE `glpi_plugin_fusioninventory_networking_ifaddr` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_networking` int(11) NOT NULL,
   `ifaddr` varchar(255) NOT NULL,
@@ -433,9 +433,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_networking_ifaddr` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_networking_ports`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ports`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_networking_ports` (
+CREATE TABLE `glpi_plugin_fusioninventory_networking_ports` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `FK_networking_ports` int(8) NOT NULL,
   `ifmtu` int(8) NOT NULL DEFAULT '0',
@@ -459,9 +459,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_networking_ports` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_printers_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers_history`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_printers_history` (
+CREATE TABLE `glpi_plugin_fusioninventory_printers_history` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL DEFAULT '0',
   `date` datetime DEFAULT '0000-00-00 00:00:00',
@@ -482,15 +482,15 @@ CREATE TABLE `glpi_plugin_FusionInventory_printers_history` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_printers`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_printers` (
+CREATE TABLE `glpi_plugin_fusioninventory_printers` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL,
   `FK_model_infos` int(8) NOT NULL DEFAULT '0',
   `FK_snmp_connection` int(8) NOT NULL DEFAULT '0',
   `frequence_days` int(5) NOT NULL DEFAULT '1',
-  `last_FusionInventory_update` datetime DEFAULT NULL,
+  `last_fusioninventory_update` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `FK_printers` (`FK_printers`),
   KEY `FK_snmp_connection` (`FK_snmp_connection`)
@@ -498,9 +498,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_printers` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_printers_cartridges`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers_cartridges`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_printers_cartridges` (
+CREATE TABLE `glpi_plugin_fusioninventory_printers_cartridges` (
   `ID` int(100) NOT NULL AUTO_INCREMENT,
   `FK_printers` int(11) NOT NULL,
   `object_name` varchar(255) NOT NULL,
@@ -511,9 +511,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_printers_cartridges` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_task`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_task` (
+CREATE TABLE `glpi_plugin_fusioninventory_task` (
    `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `date` DATETIME NOT NULL ,
    `agent_id` INT( 11 ) NOT NULL ,
@@ -528,9 +528,9 @@ COLLATE=utf8_unicode_ci;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_profiles`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_profiles`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_FusionInventory_profiles` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_profiles` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `interface` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'FusionInventory',
@@ -551,13 +551,13 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_FusionInventory_profiles` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_rangeip`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rangeip`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_rangeip` (
+CREATE TABLE `glpi_plugin_fusioninventory_rangeip` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `FK_FusionInventory_agents_discover` int(11) NOT NULL DEFAULT '0',
-  `FK_FusionInventory_agents_query` INT( 11 ) NOT NULL DEFAULT '0',
+  `FK_fusioninventory_agents_discover` int(11) NOT NULL DEFAULT '0',
+  `FK_fusioninventory_agents_query` INT( 11 ) NOT NULL DEFAULT '0',
   `ifaddr_start` varchar(255) DEFAULT NULL,
   `ifaddr_end` varchar(255) DEFAULT NULL,
   `discover` int(1) NOT NULL DEFAULT '0',
@@ -568,9 +568,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_rangeip` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_snmp_connection`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_connection`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_snmp_connection` (
+CREATE TABLE `glpi_plugin_fusioninventory_snmp_connection` (
   `ID` int(8) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `FK_snmp_version` int(8) NOT NULL,
@@ -586,9 +586,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_snmp_connection` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_snmp_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_snmp_history` (
+CREATE TABLE `glpi_plugin_fusioninventory_snmp_history` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `FK_ports` int(11) NOT NULL,
   `Field` varchar(255) NOT NULL DEFAULT '0',
@@ -605,9 +605,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_snmp_history` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_unknown_device`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_FusionInventory_unknown_device` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknown_device` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dnsname` VARCHAR( 255 ) NULL DEFAULT NULL,
@@ -629,9 +629,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_FusionInventory_unknown_device` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_connection_stats`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_stats`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_connection_stats` (
+CREATE TABLE `glpi_plugin_fusioninventory_connection_stats` (
   `ID` int(11) NOT NULL auto_increment,
   `device_type` int(11) NOT NULL default '0',
   `item_id` int(11) NOT NULL,
@@ -640,9 +640,9 @@ CREATE TABLE `glpi_plugin_FusionInventory_connection_stats` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_FusionInventory_walks`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;
 
-CREATE TABLE `glpi_plugin_FusionInventory_walks` (
+CREATE TABLE `glpi_plugin_fusioninventory_walks` (
   `ID` int(30) NOT NULL AUTO_INCREMENT,
   `on_device` int(11) NOT NULL DEFAULT '0',
   `device_type` int(11) NOT NULL DEFAULT '0',
@@ -656,19 +656,19 @@ CREATE TABLE `glpi_plugin_FusionInventory_walks` (
 
 
 
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_auth_auth_protocol` VALUES (1,'MD5','');
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_auth_auth_protocol` VALUES (2,'SHA','');
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_auth_priv_protocol` VALUES (3,'DES','');
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_auth_priv_protocol` VALUES (4,'AES128','');
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_auth_priv_protocol` VALUES (5,'AES192','');
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_auth_priv_protocol` VALUES (6,'AES256','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol` VALUES (1,'MD5','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol` VALUES (2,'SHA','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol` VALUES (3,'DES','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol` VALUES (4,'AES128','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol` VALUES (5,'AES192','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol` VALUES (6,'AES256','');
 
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_version` VALUES (1,'1','');
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_version` VALUES (2,'2c','');
-INSERT INTO `glpi_dropdown_plugin_FusionInventory_snmp_version` VALUES (3,'3','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_version` VALUES (1,'1','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_version` VALUES (2,'2c','');
+INSERT INTO `glpi_dropdown_plugin_fusioninventory_snmp_version` VALUES (3,'3','');
 
-INSERT INTO `glpi_plugin_FusionInventory_snmp_connection` VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '', '0', '', '0');
-INSERT INTO `glpi_plugin_FusionInventory_snmp_connection` VALUES (2, 'Communauté Public v2c', '2', 'public', '', '0', '', '0', '', '0');
+INSERT INTO `glpi_plugin_fusioninventory_snmp_connection` VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '', '0', '', '0');
+INSERT INTO `glpi_plugin_fusioninventory_snmp_connection` VALUES (2, 'Communauté Public v2c', '2', 'public', '', '0', '', '0', '', '0');
 
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5150','3','1','0');
 INSERT INTO `glpi_display` (`ID`, `type`, `num`, `rank`, `FK_users`) VALUES (NULL,'5150','4','2','0');
