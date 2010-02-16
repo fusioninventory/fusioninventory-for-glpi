@@ -246,7 +246,7 @@ CREATE TABLE `glpi_plugin_FusionInventory_construct_walks` (
   `construct_device_id` int(11) NOT NULL DEFAULT '0',
   `log` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -262,7 +262,7 @@ CREATE TABLE `glpi_plugin_FusionInventory_construct_mibs` (
   `mapping_type` varchar(255) DEFAULT NULL,
   `vlan` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
