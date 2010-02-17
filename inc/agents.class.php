@@ -248,7 +248,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
          return false;
       }
       $this->getFromDB($ID);
-      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 3))) {
+      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 1))) {
          $input = 'Agent don\'t respond';
          addMessageAfterRedirect($input);
          return false;

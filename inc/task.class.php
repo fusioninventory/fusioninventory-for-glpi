@@ -125,7 +125,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
       if (isset($input['up']) AND (isset($input['agentocs']))) {
          
       }
-      if(!($fp = fsockopen("192.168.0.201", 62354, $errno, $errstr, 5))) {
+      if(!($fp = fsockopen("192.168.0.201", 62354, $errno, $errstr, 1))) {
           echo "<b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
       } else {
           echo "<b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";

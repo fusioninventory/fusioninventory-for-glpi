@@ -601,7 +601,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             $sxml_device->addAttribute('TYPE', $data['type']);
 
             if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
-               $sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
+               //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
 
                $query_modelkey = "SELECT * FROM `glpi_plugin_fusioninventory_model_infos`
                   WHERE ID='".$data['snmpmodel_id']."'
@@ -609,7 +609,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                $result_modelkey=$DB->query($query_modelkey);
                if ($DB->numrows($result_modelkey)) {
                   $line = mysql_fetch_assoc($result_modelkey);
-                  $sxml_device->addAttribute('KEY', $line['discovery_key']);
+                  $sxml_device->addAttribute('MODELSNMP', $line['discovery_key']);
                }               
 
                $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`

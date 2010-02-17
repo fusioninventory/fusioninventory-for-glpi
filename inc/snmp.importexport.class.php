@@ -295,6 +295,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             $data['comments'] = $discovery->DESCRIPTION;
             $data['type'] = $discovery->TYPE;
             $data['FK_model_infos'] = $FK_model;
+
             $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
             if ($discovery->AUTHSNMP != "") {
                $data['snmp'] = 1;
@@ -344,6 +345,8 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             }
             if ($ci->getField('comments') && !in_array('comments', $a_lockable))
                $data['comments'] = $discovery->DESCRIPTION;
+            if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable));
+               $data['FK_model_infos'] = $FK_model;
             if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable));
                $data['FK_model_infos'] = $FK_model;
             if ($ci->getField('FK_snmp_connection') && !in_array('FK_snmp_connection', $a_lockable));
