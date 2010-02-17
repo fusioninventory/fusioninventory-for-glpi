@@ -135,7 +135,7 @@ function plugin_init_fusioninventory() {
 		));
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusioninventory_errors");
-	
+
 	$PLUGIN_HOOKS['init_session']['fusioninventory'] = 'plugin_fusioninventory_initSession';
 	$PLUGIN_HOOKS['change_profile']['fusioninventory'] = 'plugin_fusioninventory_changeprofile';
 

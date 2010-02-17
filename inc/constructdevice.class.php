@@ -520,6 +520,64 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
          }
       }
+
+       // Add Number
+       //key : Networking0006
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+         WHERE discovery_key LIKE 'Networking%'
+         ORDER BY discovery_key DESC
+         LIMIT 1";
+      $result = $DB->query($query);
+      $data = $DB->fetch_assoc($result);
+      if (empty($data['discovery_key'])) {
+         $num = '1';
+      } else {
+         $num = str_replace('Networking', '', $data['discovery_key']);
+         $num++;
+      }
+
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+         WHERE (discovery_key IS NULL OR discovery_key='')
+            AND device_type='".NETWORKING_TYPE."' ";
+      if ($result = $DB->query($query)) {
+			while ($data = $DB->fetch_array($result)) {
+            while(strlen($num) < 4)
+               $num = "0" . $num;
+            $query_update = "UPDATE glpi_plugin_fusioninventory_model_infos
+               SET discovery_key='Networking".$num."'
+                  WHERE ID='".$data['ID']."'";
+            $DB->query($query_update);
+            $num++;
+         }
+      }
+      // Printers
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+         WHERE discovery_key LIKE 'Printer%'
+         ORDER BY discovery_key DESC
+         LIMIT 1";
+      $result = $DB->query($query);
+      $data = $DB->fetch_assoc($result);
+      if (empty($data['discovery_key'])) {
+         $num = '1';
+      } else {
+         $num = str_replace('Networking', '', $data['discovery_key']);
+         $num++;
+      }
+
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+         WHERE (discovery_key IS NULL OR discovery_key='')
+            AND device_type='".PRINTER_TYPE."' ";
+      if ($result = $DB->query($query)) {
+			while ($data = $DB->fetch_array($result)) {
+            while(strlen($num) < 4)
+               $num = "0" . $num;
+            $query_update = "UPDATE glpi_plugin_fusioninventory_model_infos
+               SET discovery_key='Printer".$num."'
+                  WHERE ID='".$data['ID']."'";
+            $DB->query($query_update);
+            $num++;
+         }
+      }
    }
 
 
@@ -541,8 +599,18 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
             $sxml_device->addAttribute('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
             $sxml_device->addAttribute('TYPE', $data['type']);
+
             if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
                $sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
+
+               $query_modelkey = "SELECT * FROM `glpi_plugin_fusioninventory_model_infos`
+                  WHERE ID='".$data['snmpmodel_id']."'
+                     LIMIT 1";
+               $result_modelkey=$DB->query($query_modelkey);
+               if ($DB->numrows($result_modelkey)) {
+                  $line = mysql_fetch_assoc($result_modelkey);
+                  $sxml_device->addAttribute('KEY', $line['discovery_key']);
+               }               
 
                $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
                   WHERE `construct_device_id`='".$data['ID']."'
@@ -630,6 +698,21 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             }
          }
        }
+   }
+
+
+   function exportmodels() {
+      global $DB;
+
+      $pfiie = new PluginFusionInventoryImportExport;
+
+      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_model_infos";
+      if ($result_models = $DB->query($query_models)) {
+         while ($data = $DB->fetch_array($result_models)) {
+            $xml = $pfiie->plugin_fusioninventory_export($data['ID']);
+            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/models/".$data['name'].".xml", $xml);
+         }
+      }
    }
 
 }

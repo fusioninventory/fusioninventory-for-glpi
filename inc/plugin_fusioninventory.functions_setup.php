@@ -76,9 +76,14 @@ function plugin_fusioninventory_installing($version) {
 function plugin_fusioninventory_update($version) {
 	global $DB;
 
-   if (file_exists(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-update.sql")) {
-   	$DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-update.sql";
-   	$DBf_handle = fopen($DB_file, "rt");
+   if ((file_exists(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-update.sql"))
+         OR (file_exists(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-".$version."-update.sql"))){
+   	if (file_exists(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-update.sql")) {
+         $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-update.sql";
+      } else if (file_exists(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-".$version."-update.sql")) {
+         $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-".$version."-update.sql";
+      }
+      $DBf_handle = fopen($DB_file, "rt");
    	$sql_query = fread($DBf_handle, filesize($DB_file));
    	fclose($DBf_handle);
       foreach ( explode(";\n", "$sql_query") as $sql_line) {
@@ -92,50 +97,50 @@ function plugin_fusioninventory_update($version) {
 		if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
 			mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
 		}
-		$config_discovery = new PluginFusionInventoryConfigDiscovery;
-		$config_discovery->initConfig();
-		$config_snmp_script = new PluginFusionInventoryConfigSNMPScript;
-		$config_snmp_script->initConfig();
+//		$config_discovery = new PluginFusionInventoryConfigDiscovery;
+//		$config_discovery->initConfig();
+//		$config_snmp_script = new PluginFusionInventoryConfigSNMPScript;
+//		$config_snmp_script->initConfig();
 		// Import models
-		$importexport = new PluginFusionInventoryImportExport;
-		foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0);
+//		$importexport = new PluginFusionInventoryImportExport;
+//		foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0);
 		// Clean DB (ports in glpi_plugin_fusioninventory_networking_ports..... )
 		
 	}
 	if ($version == "2.0.2") {
 		// Migrate unknown mac address in unknown device (MySQL table)
-		$ptud = new PluginFusionInventoryUnknownDevice;
-		$ptud->updateFromOldVersion_unknown_mac;
+//		$ptud = new PluginFusionInventoryUnknownDevice;
+//		$ptud->updateFromOldVersion_unknown_mac;
 		// Delete MySQL table "glpi_plugin_fusioninventory_unknown_mac"
-		$DB->query("DROP TABLE `glpi_plugin_fusioninventory_unknown_mac`;");
-		$DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+		$DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
+		$DB->query("UPDATE `glpi_plugin_tracker_config`
                   SET `version` = '2.0.2'
                   WHERE `ID`='1'
                   LIMIT 1 ;");
 	}
    if ($version == "2.1.0") {
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_networking`
+      $DB->query("UPDATE `glpi_plugin_tracker_networking`
                   SET `last_PID_update` = '0';");
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
                   SET `version` = '2.1.0'
                   WHERE `ID`='1'
                   LIMIT 1 ;");
    }
    if ($version == "2.1.1") {
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
                   SET `version` = '2.1.1'
                   WHERE `ID`=1
                   LIMIT 1 ;");
    }
    if ($version == "2.1.2") {
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
                   SET `version` = '2.1.3'
                   WHERE `ID`=1
                   LIMIT 1 ;");
-      plugin_fusioninventory_clean_db();
+      //plugin_fusioninventory_clean_db();
    }
    if ($version == "2.1.3") {
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+      $DB->query("UPDATE `glpi_plugin_tracker_config`
                   SET `version` = '2.2.0'
                   WHERE `ID`=1
                   LIMIT 1 ;");
@@ -159,7 +164,7 @@ function plugin_fusioninventory_uninstall() {
 			if($f > '0' and filetype($current_dir.$f) == "file") {
 				unlink($current_dir.$f);
 			} else if ($f > '0' and filetype($current_dir.$f) == "dir") {
-				remove_dir($current_dir.$f."\\");
+				//remove_dir($current_dir.$f."\\");
 			}
 		}
 		closedir($dir);

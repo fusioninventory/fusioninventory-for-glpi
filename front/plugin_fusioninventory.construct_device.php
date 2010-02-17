@@ -57,6 +57,10 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd = new PluginFusionInventoryConstructDevice;
    $ptcd->cleanmodels();
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_GET['exportmodels']) AND $_GET['exportmodels'] == '1') {
+   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd->exportmodels();
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>Creation automatique des modèles</a>";
@@ -64,6 +68,8 @@ echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>Générer le fichier de découverte</a>";
 echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>Supprimer modèles non utilisés</a>";
+echo " | ";
+echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>Exporter tous les modèles</a>";
 
 searchForm(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);

@@ -77,8 +77,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_object",$data["FK_mib_object"]).
                "]]></object>\n";
 				$xml .= "			<oid><![CDATA[".
-               getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."]]>
-               </oid>\n";
+               getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";
 				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
