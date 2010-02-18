@@ -150,6 +150,10 @@ function plugin_fusioninventory_update($version) {
       $pthc->migration();
       plugin_fusioninventory_clean_db();
    }
+   if ($version == "2.2.0") {
+      $config_modules = new PluginFusionInventoryConfigModules;
+   	$config_modules->initConfig();
+   }
 	plugin_fusioninventory_initSession();
 }
 
