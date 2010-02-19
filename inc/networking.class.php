@@ -146,24 +146,24 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
     *@param $p_ip='' IP address
     *@return Index of port object in ports array or '' if not found
     **/
-   function getPortIndex($p_mac, $p_ip='') {
+   function getPortIndex($p_ifnumber, $p_ip='') {
       $portIndex = '';
       foreach ($this->ports as $index => $oPort) {
          if (is_object($oPort)) { // should always be true
-            if ($oPort->getValue('ifmac')==$p_mac) {
+            if ($oPort->getValue('logical_number')==$p_ifnumber) {
                $portIndex = $index;
                break;
             }
          }
       }
-      if ($portIndex == '' AND $p_ip != '') {
-         foreach ($this->ports as $index => $oPort) {
-            if ($oPort->getValue('ifaddr')==$p_ip) {
-               $portIndex = $index;
-               break;
-            }
-         }
-      }
+//      if ($portIndex == '' AND $p_ip != '') {
+//         foreach ($this->ports as $index => $oPort) {
+//            if ($oPort->getValue('ifaddr')==$p_ip) {
+//               $portIndex = $index;
+//               break;
+//            }
+//         }
+//      }
       return $portIndex;
    }
 

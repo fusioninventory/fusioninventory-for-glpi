@@ -837,7 +837,7 @@ class PluginFusionInventoryCommunication {
       $ptp = new PluginFusionInventoryPort(NETWORKING_TYPE);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
-         $portIndex = $this->ptd->getPortIndex($p_port->MAC, $this->getConnectionIP($p_port));
+         $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
          if (is_int($portIndex)) {
             $oldPort = $this->ptd->getPort($portIndex);
             $ptp->load($oldPort->getValue('ID'));

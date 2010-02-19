@@ -125,6 +125,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
             $this->oFusionInventory_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
             $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
          }
+         $this->load($portID);
          $this->connect();       // update connections
          $this->assignVlans();   // update vlans
       }
