@@ -440,7 +440,7 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
       }
       if ($doEnd == '1') {
          $this->endProcess($p_number, date("Y-m-d H:i:s"));
-      }
+      }      
    }
 
    
