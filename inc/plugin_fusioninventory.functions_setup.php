@@ -153,6 +153,11 @@ function plugin_fusioninventory_update($version) {
    if ($version == "2.2.0") {
       $config_modules = new PluginFusionInventoryConfigModules;
    	$config_modules->initConfig();
+      	// Import models
+      $importexport = new PluginFusionInventoryImportExport;
+      include(GLPI_ROOT.'/inc/setup.function.php');
+      include(GLPI_ROOT.'/inc/rulesengine.function.php');
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
    }
 	plugin_fusioninventory_initSession();
 }
