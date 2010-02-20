@@ -283,26 +283,27 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       echo " : </th>";
       echo "</tr>";
 
-      $a_data = $np->find("`on_device`='".$this->fields['on_device']."' AND `device_type`='".$this->fields['device_type']."'");
-      foreach ($a_data as $port_id=>$port) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'>";
-         if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
-             echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
-         } else {
-            echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
-            $ip = $port['ifaddr'];
-            fclose($fp);
+      if ($this->fields['on_device'] > 0) {
+         $a_data = $np->find("`on_device`='".$this->fields['on_device']."' AND `device_type`='".$this->fields['device_type']."'");
+         foreach ($a_data as $port_id=>$port) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td align='center'>";
+            if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
+                echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
+            } else {
+               echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
+               $ip = $port['ifaddr'];
+               fclose($fp);
+            }
+            echo "</td>";
+            echo "</tr>";
          }
-         echo "</td>";
-         echo "</tr>";
+         echo "<tr class='tab_bg_2'>";
+         echo "<td align='center'>";
+         echo "<input type='hidden' name='agentID' value='".$ID."'/>";
+         echo "<input type='hidden' name='ip' value='".$ip."'/>";
+         echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
       }
-
-      echo "<tr class='tab_bg_2'>";
-		echo "<td align='center'>";
-      echo "<input type='hidden' name='agentID' value='".$ID."'/>";
-      echo "<input type='hidden' name='ip' value='".$ip."'/>";
-      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
       echo "</td>";
       echo "</tr>";
 
