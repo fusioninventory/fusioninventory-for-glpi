@@ -76,14 +76,16 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
 		echo "</td>";
-      
-      echo "<td align='center'>" . $LANG['entity'][0] . " : </td>";
-      echo "</td>";
-      echo "<td align='center'>";
-      dropdownvalue("glpi_entities",'FK_entities', $this->fields["FK_entities"]);
-      echo "</td>";
-		echo "</tr>";
-      echo "</tr>";
+
+      if (isMultiEntitiesMode()) {
+         echo "<td align='center'>" . $LANG['entity'][0] . " : </td>";
+         echo "</td>";
+         echo "<td align='center'>";
+         dropdownvalue("glpi_entities",'FK_entities', $this->fields["FK_entities"]);
+         echo "</td>";
+         echo "</tr>";
+         echo "</tr>";
+      }
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][0] . " :</td>";
