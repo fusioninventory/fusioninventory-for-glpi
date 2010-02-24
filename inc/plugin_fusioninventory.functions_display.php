@@ -340,5 +340,24 @@ function plugin_fusioninventory_Bar ($pourcentage, $message="",$order='') {
 				</table>
 			</div>";
 }
-	
+
+
+function plugin_fusioninventory_disableDebug() {
+   error_reporting(0);
+   set_error_handler("plugin_fusioninventory_empty");
+}
+
+function plugin_fusioninventory_reenableusemode() {
+   if ($_SESSION['glpi_use_mode']==DEBUG_MODE){
+      ini_set('display_errors','On');
+      error_reporting(E_ALL | E_STRICT);
+      set_error_handler("userErrorHandler");
+   }
+
+}
+
+function plugin_fusioninventory_empty() {
+   
+}
+
 ?>

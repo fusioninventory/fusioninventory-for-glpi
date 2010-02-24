@@ -85,6 +85,13 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
          echo "</tr>";
+      } else {
+         echo "<td align='center'></td>";
+         echo "</td>";
+         echo "<td align='center'></td>";
+         echo "</tr>";
+         echo "</tr>";
+         
       }
 
 		echo "<tr class='tab_bg_1'>";

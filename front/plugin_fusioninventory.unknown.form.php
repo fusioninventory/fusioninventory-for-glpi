@@ -48,7 +48,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 plugin_fusioninventory_checkRight("snmp_networking","r");
 
 $ptud = new PluginFusionInventoryUnknownDevice;
-$ptt = new PluginFusionInventoryTask;
+$ptt  = new PluginFusionInventoryTask;
+$pfia = new PluginFusionInventoryAgents;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
 
@@ -79,14 +80,16 @@ if (isset($_POST["delete"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-
-
 $ptud->showForm($_SERVER["PHP_SELF"], $ID);
-if (isset($_POST)) {
-   $ptt->formAddTask($_SERVER["PHP_SELF"], $_POST);
-} else {
-   $ptt->formAddTask($_SERVER["PHP_SELF"]);
-}
+$pfia->RemoteStateAgent($_SERVER["PHP_SELF"], $ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+
+
+//if (isset($_POST)) {
+//   $ptt->formAddTask($_SERVER["PHP_SELF"], $_POST);
+//} else {
+//   $ptt->formAddTask($_SERVER["PHP_SELF"]);
+//}
+
 showPorts($ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
 showHistory(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$ID);
 commonFooter();

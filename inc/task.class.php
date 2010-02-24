@@ -125,6 +125,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
       if (isset($input['up']) AND (isset($input['agentocs']))) {
          
       }
+
+      plugin_fusioninventory_disableDebug();
       if(!($fp = fsockopen("192.168.0.201", 62354, $errno, $errstr, 1))) {
           echo "<b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
       } else {
@@ -132,7 +134,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
           $active_valid = 1;
           fclose($fp);
       }
-
+      plugin_fusioninventory_reenableusemode();
 
 		echo "</td>";
       echo "</tr>";
@@ -206,5 +208,6 @@ class PluginFusionInventoryTask extends CommonDBTM {
    }
 
 }
+
 
 ?>

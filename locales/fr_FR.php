@@ -50,6 +50,7 @@ $LANG['plugin_fusioninventory']['config'][3] = "Inventaire OCS";
 $LANG['plugin_fusioninventory']['config'][4] = "Découverte d'équipements";
 $LANG['plugin_fusioninventory']['config'][5] = "Controle de l'agent à partir de GLPI";
 $LANG['plugin_fusioninventory']['config'][6] = "Wake On Lan";
+$LANG['plugin_fusioninventory']['config'][7] = "Interrogation SNMP";
 
 $LANG['plugin_fusioninventory']["profile"][0]="Gestion des droits";
 $LANG['plugin_fusioninventory']["profile"][1]="$title"; //interface
@@ -586,6 +587,7 @@ $LANG['plugin_fusioninventory']["task"][9]="Ne peut pas être contacté";
 $LANG['plugin_fusioninventory']["task"][10]="En cours d'execution... pas disponible";
 $LANG['plugin_fusioninventory']["task"][11]="L'agent a été notifié et commence son exécution";
 $LANG['plugin_fusioninventory']["task"][12]="Déclencher l'agent";
+$LANG['plugin_fusioninventory']["task"][13]="Agent(s) indisponible(s)";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 

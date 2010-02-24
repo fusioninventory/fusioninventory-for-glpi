@@ -215,8 +215,15 @@ ALTER TABLE `glpi_plugin_tracker_snmp_history` CHANGE `FK_process` `FK_process` 
 ALTER TABLE `glpi_plugin_tracker_agents`
    ADD `on_device` INT( 11 ) NOT NULL DEFAULT '0',
    ADD `device_type` SMALLINT( 6 ) NOT NULL DEFAULT '0',
-   ADD `token` VARCHAR( 255 ) NOT NULL;
+   ADD `token` VARCHAR( 255 ) NOT NULL,
+   ADD `module_inventory` INT( 1 ) NOT NULL DEFAULT '0',
+   ADD `module_netdiscovery` INT( 1 ) NOT NULL DEFAULT '0',
+   ADD `module_snmpquery` INT( 1 ) NOT NULL DEFAULT '0',
+   ADD `module_wakeonlan` INT( 1 ) NOT NULL DEFAULT '0';
 
+ALTER TABLE `glpi_plugin_tracker_agents`
+  DROP `logs`,
+  DROP `fragment`;
 
 ############## Rename ###############
 # Rename tracker in fusioninventory #

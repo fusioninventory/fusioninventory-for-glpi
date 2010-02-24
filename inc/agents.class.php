@@ -105,26 +105,40 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["Menu"][30] . "</td>";
-		echo "<td align='center'>";
-		$ArrayValues[]= $LANG["choice"][0];
-		$ArrayValues[]= $LANG["choice"][1];
-		$ArrayValues[]= $LANG["setup"][137];
-		if (empty($this->fields["logs"])) {
-			dropdownArrayValues("logs",$ArrayValues,$ArrayValues[0]);
-      } else {
-			dropdownArrayValues("logs",$ArrayValues,$this->fields["logs"]);
-      }
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>Token</td>";
 		echo "<td align='center'>";
 		echo $this->fields["token"];
 		echo "</td>";
 		echo "</tr>";
-      
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][3]."</td>";
+		echo "<td align='center'>";
+		dropdownYesNo("module_inventory",$this->fields["module_inventory"]);
+		echo "</td>";
+		echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][4]."</td>";
+		echo "<td align='center'>";
+		dropdownYesNo("module_netdiscovery",$this->fields["module_netdiscovery"]);
+		echo "</td>";
+		echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][7]."</td>";
+		echo "<td align='center'>";
+		dropdownYesNo("module_snmpquery",$this->fields["module_snmpquery"]);
+		echo "</td>";
+		echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][6]."</td>";
+		echo "<td align='center'>";
+		dropdownYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);
+		echo "</td>";
+		echo "</tr>";
+
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2'>";
       $CommonItem->getFromDB($this->fields["device_type"],
@@ -169,16 +183,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][2] . "</td>";
 		echo "<td align='center'>";
 		dropdownInteger("threads_query", $this->fields["threads_query"],1,200);
-		echo "</td>";
-		echo "</tr>";
-
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][8] . "</td>";
-		echo "<td align='center'>";
-		if (empty($this->fields["fragment"]))
-			$this->fields["fragment"] = 50;
-		echo "<input type='text' name='fragment' value='".$this->fields["fragment"]."'/>";
 		echo "</td>";
 		echo "</tr>";
 
@@ -262,17 +266,17 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       
    }
 
-   function RemoteStateAgent($target, $ID) {
-      global $LANG;
+   function RemoteStateAgent($target, $ID, $type, $a_modules = array()) {
+      global $LANG,$CFG_GLPI;
 
       $ptcm = new PluginFusionInventoryConfigModules;
-      $np = new Netport;
+      $np   = new Netport;
 
       if (!$ptcm->isActivated('remotehttpagent')) {
          return;
       }
       $this->getFromDB($ID);
-      
+
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table  class='tab_cadre_fixe'>";
@@ -283,27 +287,47 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       echo " : </th>";
       echo "</tr>";
 
-      if ($this->fields['on_device'] > 0) {
-         $a_data = $np->find("`on_device`='".$this->fields['on_device']."' AND `device_type`='".$this->fields['device_type']."'");
-         foreach ($a_data as $port_id=>$port) {
-            echo "<tr class='tab_bg_1'>";
-            echo "<td align='center'>";
-            if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
-                echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
-            } else {
-               echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
-               $ip = $port['ifaddr'];
-               fclose($fp);
-            }
-            echo "</td>";
-            echo "</tr>";
-         }
-         echo "<tr class='tab_bg_2'>";
-         echo "<td align='center'>";
-         echo "<input type='hidden' name='agentID' value='".$ID."'/>";
-         echo "<input type='hidden' name='ip' value='".$ip."'/>";
-         echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+      $array_actions = array();
+      $array_actions[""] = "------";
+      if (isset($a_modules["INVENTORY"])) {
+         $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
       }
+      if (isset($a_modules["NETDISCOVERY"])) {
+         $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
+      }
+      if (isset($a_modules["SNMPQUERY"])) {
+         $array_actions["SNMPQUERY"] = $LANG['plugin_fusioninventory']['config'][7];
+      }
+      if (isset($a_modules["WAKEONLAN"])) {
+         $array_actions["WAKEONLAN"] = $LANG['plugin_fusioninventory']['config'][6];
+      }
+
+      $rand = dropdownArrayValues("agentaction",$array_actions);
+      echo "</td>";
+      echo "</tr>";
+      $params=array('action'=>'__VALUE__', 'on_device'=>$ID, 'device_type'=>$type);
+      ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+      echo "<span id='updateAgentState_$rand'>\n";
+      echo "&nbsp;";
+      echo "</span>\n";
+      echo "</td>";
+      echo "</tr>";
+
+
+
+
+      
+
+      echo "<tr class='tab_bg_2'>";
+      echo "<td align='center'>";
+      echo "<input type='hidden' name='agentID' value='".$ID."'/>";
+      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
+      
       echo "</td>";
       echo "</tr>";
 
@@ -312,6 +336,124 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       echo "</div>";      
    }
 
+  
+
+
+
+
+
+   
+   function showAgentInventory($on_device, $device_type) {
+      global $DB,$LANG;
+      
+      // Recherche de chaque port de l'équipement
+      $np = new Netport;
+      $count_agent_on = 0;
+
+      $a_portsList = $np->find('on_device=$on_device AND device_type=$device_type');
+
+      foreach ($a_portsList as $ID=>$data) {
+         if ($this->getStateAgent($data['ifaddr'])) {
+            $count_agent_on++;
+         }
+      }
+      if ($count_agent_on == 0) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center' colspan='2'>";
+         echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
+         echo "</td>";
+         echo "</tr>";
+      }
+   }
+
+
+   function showAgentNetDiscovery($on_device, $device_type) {
+      global $LANG;
+
+      // Recherche des agents qui ont le NETDISCOVERY à oui
+      $np = new Netport;
+      $count_agent_on = 0;
+      $existantantip = array();
+      
+      $a_agents = $this->find('module_netdiscovery=1');
+      foreach ($a_agents as $IDagent=>$data) {
+         $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+
+         foreach ($a_portsList as $ID=>$datapl) {
+            if (!isset($existantantip[$datapl['ifaddr']])) {
+               $existantantip[$datapl['ifaddr']] = 1;
+               if ($this->getStateAgent($datapl['ifaddr'])) {
+                  $count_agent_on++;
+               }
+            }
+         }
+      }
+      if ($count_agent_on == 0) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center' colspan='2'>";
+         echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
+         echo "</td>";
+         echo "</tr>";
+      }
+   }
+
+   function showAgentSNMPQuery($on_device, $device_type) {
+
+      // Recherche des agents qui ont le SNMPQUERY à oui
+      $np = new Netport;
+      $count_agent_on = 0;
+      $existantantip = array();
+
+      $a_agents = $this->find('module_snmpquery=1');
+      foreach ($a_agents as $IDagent=>$data) {
+         $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+
+         foreach ($a_portsList as $ID=>$datapl) {
+            if (!isset($existantantip[$datapl['ifaddr']])) {
+               $existantantip[$datapl['ifaddr']] = 1;
+               if ($this->getStateAgent($datapl['ifaddr'])) {
+                  $count_agent_on++;
+               }
+            }
+         }
+      }
+      if ($count_agent_on == 0) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center' colspan='2'>";
+         echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
+         echo "</td>";
+         echo "</tr>";
+      }
+   }
+
+   function showAgentWol() {
+
+      
+   }
+
+   function getStateAgent($ip) {
+      global $LANG;
+      
+      plugin_fusioninventory_disableDebug();
+      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 1))) {
+         $state = false;
+      } else {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>".$ip;
+         echo "</td>";
+         echo "<td align='center'>";
+         echo $LANG['plugin_fusioninventory']["task"][8];
+         echo "</td>";
+         echo "</tr>";
+
+         fclose($fp);
+         $state = true;
+      }
+      plugin_fusioninventory_reenableusemode();
+      return $state;
+   }
+
+ 
 
 }
 

@@ -311,7 +311,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['name'] = $LANG["common"][16];
-  $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['datatype']='itemlink';
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['datatype']='itemlink';
   
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['field'] = 'ID';
@@ -338,16 +338,11 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['linkfield'] = 'threads_query';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['name'] = $LANG['plugin_fusioninventory']["agents"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][7]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][7]['field'] = 'fragment';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][7]['linkfield'] = 'fragment';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][7]['name'] = $LANG['plugin_fusioninventory']["agents"][8];
-
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['field'] = 'last_agent_update';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['name'] = $LANG['plugin_fusioninventory']["agents"][4];
-  $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['datatype']='datetime';
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['datatype']='datetime';
   
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][9]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][9]['field'] = 'fusioninventory_agent_version';
@@ -358,17 +353,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['field'] = 'lock';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['linkfield'] = 'lock';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['name'] = $LANG['plugin_fusioninventory']["agents"][6];
-  $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['datatype']='bool';
-  
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['field'] = 'logs';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['linkfield'] = 'logs';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['name'] = $LANG["Menu"][30];
-
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['field'] = 'ID';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['name'] = $LANG['plugin_fusioninventory']["agents"][7];
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['datatype']='bool';
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP]['common'] = $LANG['plugin_fusioninventory']["profile"][25];
 
@@ -1011,27 +996,6 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 		// * FusionInventory Agents list (plugins/fusioninventory/front/plugin_fusioninventory.agents.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS :
-			switch ($table.'.'.$field) {
-
-				// ** Display log activation / level
-				case "glpi_plugin_fusioninventory_agents.logs" :
-					$ArrayValues[]= $LANG["choice"][0];
-					$ArrayValues[]= $LANG["choice"][1];
-					$ArrayValues[]= $LANG["setup"][137];
-					$out = $ArrayValues[$data["ITEM_$num"]];
-					return "<center>".$out."</center>";
-					break;
-				
-				// ** Display pic / link for exporting model
-				case "glpi_plugin_fusioninventory_agents.ID" :
-					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.agents.export.php' target='_blank'>
-					<input type='hidden' name='agent' value='" . $data["ID"] . "' />
-					<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
-					</form></div>";
-					return "<center>".$out."</center>";
-					break;
-
-			}
 			break;
 
 		// * range IP list (plugins/fusioninventory/front/plugin_fusioninventory.rangeip.php)
@@ -1407,8 +1371,12 @@ function plugin_headings_fusioninventory_computerErrors($type, $ID) {
 }
 
 function plugin_headings_fusioninventory_computerInfo($type, $ID) {
-   $ptais = new PluginFusionInventoryAgentsInventoryState;
-   $ptais->computerState(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID);
+//   $ptais = new PluginFusionInventoryAgentsInventoryState;
+//   $ptais->computerState(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID);
+   $pfia = new PluginFusionInventoryAgents;
+   $pfia->RemoteStateAgent($_SERVER["PHP_SELF"], $ID, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+
+
 }
 
 function plugin_headings_fusioninventory_printerInfo($type, $ID) {
