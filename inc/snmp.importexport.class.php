@@ -312,11 +312,12 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             unset($port_add);
          } else {
             # Update device
-            echo "discovery_criteria :".$discovery_criteria;
+            //echo "discovery_criteria :".$discovery_criteria;
             $a_device = explode("||", $discovery_criteria);
             // $a_device[0] == id, $a_device[1] = type
             $ci = new commonitem;
             $ci->getFromDB($a_device[1], $a_device[0]);
+
             $a_lockable = plugin_fusioninventory_lock_getLockFields($a_device[1], $a_device[0]);
             $data = array();
             $data['ID'] = $ci->getField('ID');
@@ -372,10 +373,10 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   ORDER BY name, logical_number";
                if ($result = $DB->query($query)) {
                   if ($DB->numrows($result) == 1) {
-                     $data = $DB->fetch_assoc($result);
-                     $np->getFromDB($data["ID"]);
+                     $data2 = $DB->fetch_assoc($result);
+                     $np->getFromDB($data2["ID"]);
                      $port = array();
-                     $port['ID'] = $data["ID"];
+                     $port['ID'] = $data2["ID"];
                      $port["ifaddr"] = $discovery->IP;
                      $port['ifmac'] = $discovery->MAC;
                      $port['name'] = $discovery->NETPORTVENDOR;
@@ -391,6 +392,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   }
                }
             }
+
             $ci->obj->update($data);
 
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_exists' => '1'));
