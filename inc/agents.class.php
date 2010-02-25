@@ -318,14 +318,10 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-
-
-
-      
-
       echo "<tr class='tab_bg_2'>";
       echo "<td align='center'>";
-      echo "<input type='hidden' name='agentID' value='".$ID."'/>";
+      echo "<input type='hidden' name='on_device' value='".$ID."'/>";
+      echo "<input type='hidden' name='device_type' value='".$type."'/>";
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
       
       echo "</td>";
@@ -336,11 +332,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       echo "</div>";      
    }
 
-  
-
-
-
-
 
    
    function showAgentInventory($on_device, $device_type) {
@@ -349,12 +340,22 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       // Recherche de chaque port de l'équipement
       $np = new Netport;
       $count_agent_on = 0;
+      $agent_id = 0;
 
-      $a_portsList = $np->find('on_device=$on_device AND device_type=$device_type');
+      $a_portsList = $np->find('on_device='.$on_device.' AND device_type='.$device_type);
+      $a_agent = $this->find('on_device='.$on_device.' AND device_type='.$device_type, "", 1);
 
+      foreach ($a_agent as $agent_id=>$data) {
+  
+      }
+      if ($agent_id == "0") {
+         return;
+      }
       foreach ($a_portsList as $ID=>$data) {
-         if ($this->getStateAgent($data['ifaddr'])) {
-            $count_agent_on++;
+         if ($data['ifaddr'] != "127.0.0.1") {
+            if ($this->getStateAgent($data['ifaddr'],$agent_id)) {
+               $count_agent_on++;
+            }
          }
       }
       if ($count_agent_on == 0) {
@@ -374,6 +375,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       $np = new Netport;
       $count_agent_on = 0;
       $existantantip = array();
+      $existantantip["127.0.0.1"] = 1;
       
       $a_agents = $this->find('module_netdiscovery=1');
       foreach ($a_agents as $IDagent=>$data) {
@@ -382,7 +384,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
          foreach ($a_portsList as $ID=>$datapl) {
             if (!isset($existantantip[$datapl['ifaddr']])) {
                $existantantip[$datapl['ifaddr']] = 1;
-               if ($this->getStateAgent($datapl['ifaddr'])) {
+               if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
                   $count_agent_on++;
                }
             }
@@ -403,6 +405,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       $np = new Netport;
       $count_agent_on = 0;
       $existantantip = array();
+      $existantantip["127.0.0.1"] = 1;
 
       $a_agents = $this->find('module_snmpquery=1');
       foreach ($a_agents as $IDagent=>$data) {
@@ -411,7 +414,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
          foreach ($a_portsList as $ID=>$datapl) {
             if (!isset($existantantip[$datapl['ifaddr']])) {
                $existantantip[$datapl['ifaddr']] = 1;
-               if ($this->getStateAgent($datapl['ifaddr'])) {
+               if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
                   $count_agent_on++;
                }
             }
@@ -431,7 +434,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       
    }
 
-   function getStateAgent($ip) {
+   function getStateAgent($ip, $agentid) {
       global $LANG;
       
       plugin_fusioninventory_disableDebug();
@@ -439,6 +442,9 @@ class PluginFusionInventoryAgents extends CommonDBTM {
          $state = false;
       } else {
          echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip'/>";
+         echo "</td>";
          echo "<td align='center'>".$ip;
          echo "</td>";
          echo "<td align='center'>";

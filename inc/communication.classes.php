@@ -165,7 +165,6 @@ class PluginFusionInventoryCommunication {
                $sxml_param->addAttribute('CORE_QUERY', $agent["core_query"]);
                $sxml_param->addAttribute('THREADS_QUERY', $agent["threads_query"]);
                $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
-               $sxml_param->addAttribute('LOGS', $agent["logs"]);
 
                $ranges = $ptrip->ListRange($agent["ID"], "query");
                foreach ($ranges as $range_id=>$rangeInfos) {
@@ -197,7 +196,7 @@ class PluginFusionInventoryCommunication {
     *
     *@return nothing
     **/
-   function addDiscovery($pxml) {
+   function addDiscovery($pxml, $task=0) {
       $ptsnmpa = new PluginFusionInventorySNMPAuth;
       $pta     = new PluginFusionInventoryAgents;
       $ptap    = new PluginFusionInventoryAgentsProcesses;
@@ -207,8 +206,12 @@ class PluginFusionInventoryCommunication {
       $agent = $pta->InfosByKey($pxml->DEVICEID);
       $count_range = $ptrip->Counter($agent["ID"], "discover");
       $count_range += $ptt->Counter($agent["ID"], "NETDISCOVERY");
+      if ($task == "1") {
+         $agent["core_discovery"] = 1;
+         $agent["threads_discovery"] = 1;
+      }
 
-      if (($count_range > 0) && ($agent["lock"] == 0)) {
+      if ((($count_range > 0) && ($agent["lock"] == 0)) OR ($task == "1") ) {
          $a_input['discovery_core'] = $agent["core_discovery"];
          $a_input['discovery_threads'] = $agent["threads_discovery"];
          $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
@@ -219,26 +222,31 @@ class PluginFusionInventoryCommunication {
                $sxml_param->addAttribute('CORE_DISCOVERY', $agent["core_discovery"]);
                $sxml_param->addAttribute('THREADS_DISCOVERY', $agent["threads_discovery"]);
                $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
-               $sxml_param->addAttribute('LOGS', $agent["logs"]);
 
-            $ranges = $ptrip->ListRange($agent["ID"], "discover");
-            foreach ($ranges as $range_id=>$rangeInfos) {
-               $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-                  $sxml_rangeip->addAttribute('ID', $range_id);
-                  $sxml_rangeip->addAttribute('IPSTART', $ranges[$range_id]["ifaddr_start"]);
-                  $sxml_rangeip->addAttribute('IPEND', $ranges[$range_id]["ifaddr_end"]);
-                  $sxml_rangeip->addAttribute('ENTITY', $ranges[$range_id]["FK_entities"]);
-            }
-            
-            $tasks = $ptt->ListTask($agent["ID"], "NETDISCOVERY");
-            foreach ($tasks as $task_id=>$taskInfos) {
-               $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-                  $sxml_rangeip->addAttribute('ID', $task_id);
-                  $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ifaddr"]);
-                  $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ifaddr"]);
-                  $sxml_rangeip->addAttribute('ENTITY', "");
-                  $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["on_device"]);
-                  $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["device_type"]);
+            if ($task == "1") {
+               $tasks = $ptt->ListTask($agent["ID"], "NETDISCOVERY");
+               foreach ($tasks as $task_id=>$taskInfos) {
+                  $sxml_rangeip = $sxml_option->addChild('RANGEIP');
+                     $sxml_rangeip->addAttribute('ID', $task_id);
+                     $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ifaddr"]);
+                     $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ifaddr"]);
+                     $sxml_rangeip->addAttribute('ENTITY', "");
+                     $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["on_device"]);
+                     $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["device_type"]);
+file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/data.log".rand(), $task_id);
+
+                     $ptt->deleteFromDB($task_id);
+               }
+
+            } else {
+               $ranges = $ptrip->ListRange($agent["ID"], "discover");
+               foreach ($ranges as $range_id=>$rangeInfos) {
+                  $sxml_rangeip = $sxml_option->addChild('RANGEIP');
+                     $sxml_rangeip->addAttribute('ID', $range_id);
+                     $sxml_rangeip->addAttribute('IPSTART', $ranges[$range_id]["ifaddr_start"]);
+                     $sxml_rangeip->addAttribute('IPEND', $ranges[$range_id]["ifaddr_end"]);
+                     $sxml_rangeip->addAttribute('ENTITY', $ranges[$range_id]["FK_entities"]);
+               }
             }
             
             $snmpauthlist=$ptsnmpa->find();

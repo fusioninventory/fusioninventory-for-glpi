@@ -66,7 +66,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
          INNER JOIN glpi_networking_ports on (glpi_plugin_fusioninventory_task.on_device=glpi_networking_ports.on_device
                                              AND glpi_plugin_fusioninventory_task.device_type=glpi_networking_ports.device_type)
          WHERE `agent_id`='".$agent_id."'
-            AND `action`='".$action."' ";
+            AND `action`='".$action."'
+            AND `ifaddr`!='127.0.0.1'";
 
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -165,7 +166,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
 
 
-   function addTask($device_id, $device_type, $action, $agent_id) {
+   function addTask($device_id, $device_type, $action, $agent_id, $param="") {
       $ptcm = new PluginFusionInventoryConfigModules;
       if (!$ptcm->isActivated('remotehttpagent')) {
          return false;
@@ -174,17 +175,17 @@ class PluginFusionInventoryTask extends CommonDBTM {
       $a_datas = $this->find("`agent_id`='".$agent_id."'
                      AND `action`='".$action."'
                      AND `on_device`='".$device_id."'
-                     AND `device_type`='".$device_type."'");
+                     AND `device_type`='".$device_type."'
+                     AND `param`='".$param."' ");
       if (empty($a_datas)) {
          $a_input['date'] = date("Y-m-d H:i:s");
          $a_input['agent_id'] = $agent_id;
          $a_input['action'] = $action;
-         $a_input['param'] = '';
+         $a_input['param'] = $param;
          $a_input['on_device'] = $device_id;
          $a_input['device_type'] = $device_type;
          $a_input['single'] = 1;
          $this->add($a_input);
-
          return true;
       }
       return false;
