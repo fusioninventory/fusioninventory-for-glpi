@@ -226,8 +226,6 @@ class PluginFusionInventoryCommunication {
             if ($task == "1") {
                $tasks = $ptt->ListTask($agent["ID"], "NETDISCOVERY");
                foreach ($tasks as $task_id=>$taskInfos) {
-file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/data.log".rand(), $taskInfos);
-
                   $sxml_rangeip = $sxml_option->addChild('RANGEIP');
                      $sxml_rangeip->addAttribute('ID', $task_id);
                      $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ifaddr"]);
