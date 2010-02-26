@@ -47,7 +47,7 @@ $_SESSION["glpi_use_mode"] = 2;
 
 //header('Content-type: application/x-compress');
 
-$ptc = new PluginFusionInventoryCommunication;
+$ptc  = new PluginFusionInventoryCommunication;
 $ptap = new PluginFusionInventoryAgentsProcesses;
 
 $res='';
@@ -82,27 +82,12 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
      
       if (isset($pxml->DEVICEID)) {
 
-         // Get task
-         $ptt = new PluginFusionInventoryTask;
-
-/*
-         $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
-<REPLY>
-<OPTION>
-<NAME>DOWNLOAD</NAME>
-<PARAM FRAG_LATENCY=\"10\" PERIOD_LATENCY=\"10\" TIMEOUT=\"30\" ON=\"1\" TYPE=\"CONF\" CYCLE_LATENCY=\"60\" PERIOD_LENGTH=\"10\" />
-</OPTION>
-<RESPONSE>SEND</RESPONSE>
-<PROLOG_FREQ>24</PROLOG_FREQ>
-</REPLY>");
- 
- */
          $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
 <REPLY>
 </REPLY>");
 
-      $pta = new PluginFusionInventoryAgents;
-      $ptt = new PluginFusionInventoryTask;
+      $pta  = new PluginFusionInventoryAgents;
+      $ptt  = new PluginFusionInventoryTask;
       $ptcm = new PluginFusionInventoryConfigModules;
 
 
@@ -110,20 +95,27 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       $a_tasks = $ptt->find("`agent_id`='".$a_agent['ID']."'", "date");
 
       $single = 0;
+      
       foreach ($a_tasks as $task_id=>$datas) {
-         if ($single == "0") {
+         //if ($single == "0") {
             if (($a_tasks[$task_id]['action'] == 'INVENTORY')
                     AND ($ptcm->isActivated('inventoryocs'))){
                $ptc->addInventory();
                $input['ID'] = $task_id;
                $ptt->delete($input);
                $ocsinventory = '0';
-               if ($a_tasks[$task_id]['single'] == "1") {
+//               if ($a_tasks[$task_id]['single'] == "1") {
                   $single = 1;
-               }
+//               }
             }
-         }
+            if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
+                    AND ($ptcm->isActivated('netdiscovery'))) {
+               $single = 1;
+               $ptc->addDiscovery($pxml, 1);
+            }
+         //}
       }
+      
       if ($single == "0") {
          $ptc->addProcessNumber($ptap->addProcess($pxml));
          $ptc->addDiscovery($pxml);

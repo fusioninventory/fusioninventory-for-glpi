@@ -60,8 +60,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
       global $DB;
 
       $tasks = array();
-      $query = "SELECT glpi_plugin_fusioninventory_task.id, param, ifaddr, single,
-            glpi_plugin_fusioninventory_task.on_device, glpi_plugin_fusioninventory_task.device_type
+      $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
+            glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.device_type as device_type
             FROM `glpi_plugin_fusioninventory_task`
          INNER JOIN glpi_networking_ports on (glpi_plugin_fusioninventory_task.on_device=glpi_networking_ports.on_device
                                              AND glpi_plugin_fusioninventory_task.device_type=glpi_networking_ports.device_type)

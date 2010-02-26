@@ -81,7 +81,7 @@ if (isset($_POST["delete"])) {
 }
 
 $ptud->showForm($_SERVER["PHP_SELF"], $ID);
-$pfia->RemoteStateAgent($_SERVER["PHP_SELF"], $ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+$pfia->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
 
 
 //if (isset($_POST)) {

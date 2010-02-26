@@ -1374,9 +1374,7 @@ function plugin_headings_fusioninventory_computerInfo($type, $ID) {
 //   $ptais = new PluginFusionInventoryAgentsInventoryState;
 //   $ptais->computerState(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID);
    $pfia = new PluginFusionInventoryAgents;
-   $pfia->RemoteStateAgent($_SERVER["PHP_SELF"], $ID, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
-
-
+   $pfia->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 }
 
 function plugin_headings_fusioninventory_printerInfo($type, $ID) {
