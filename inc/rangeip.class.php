@@ -223,38 +223,16 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
       global $LANG;
 
       $count = 0;
-      if ($a_input['ifaddr_start0']>255) {
-         $count++;
-         $a_input['ifaddr_start0'] = "<font color='#ff0000'>".$a_input['ifaddr_start0']."</font>";
+      foreach ($a_input as $num=>$value) {
+         if (strstr($num, "ifaddr_")) {
+            if (($value>255) OR (!is_numeric($value)) OR strstr($value, ".")) {
+               $count++;
+               print $num;
+               $a_input[$num] = "<font color='#ff0000'>".$a_input[$num]."</font>";
+            }
+         }
       }
-      if ($a_input['ifaddr_start1']>255) {
-         $count++;
-         $a_input['ifaddr_start1'] = "<font color='#ff0000'>".$a_input['ifaddr_start1']."</font>";
-      }
-      if ($a_input['ifaddr_start2']>255) {
-         $count++;
-         $a_input['ifaddr_start2'] = "<font color='#ff0000'>".$a_input['ifaddr_start2']."</font>";
-      }
-      if ($a_input['ifaddr_start3']>255) {
-         $count++;
-         $a_input['ifaddr_start3'] = "<font color='#ff0000'>".$a_input['ifaddr_start3']."</font>";
-      }
-      if ($a_input['ifaddr_end0']>255) {
-         $count++;
-         $a_input['ifaddr_end0'] = "<font color='#ff0000'>".$a_input['ifaddr_end0']."</font>";
-      }
-      if ($a_input['ifaddr_end1']>255) {
-         $count++;
-         $a_input['ifaddr_end1'] = "<font color='#ff0000'>".$a_input['ifaddr_end1']."</font>";
-      }
-      if ($a_input['ifaddr_end2']>255) {
-         $count++;
-         $a_input['ifaddr_end2'] = "<font color='#ff0000'>".$a_input['ifaddr_end2']."</font>";
-      }
-      if ($a_input['ifaddr_end3']>255) {
-         $count++;
-         $a_input['ifaddr_end3'] = "<font color='#ff0000'>".$a_input['ifaddr_end3']."</font>";
-      }
+
       if ($count == '0') {
          return true;
       } else {

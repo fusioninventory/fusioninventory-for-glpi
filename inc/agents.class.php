@@ -46,6 +46,18 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 	}
 
 
+	function defineTabs($ID,$withtemplate){
+		global $LANG,$CFG_GLPI;
+
+		if ($ID > 0){
+         $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
+			$ong[2]=$LANG['plugin_fusioninventory']["task"][2];
+      }
+		return $ong;
+	}
+
+
+
 	function PushData($ID, $key) {
 		$this->getFromDB($ID);
 		// Name of server
@@ -73,7 +85,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 
       $CommonItem = new CommonItem;
 
-		$this->showTabs($ID, "",$_SESSION['glpi_tab']);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -277,7 +288,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       }
       $this->getFromDB($ID);
 
-      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+      echo "<div align='center'><form method='post' name='' id=''  action=\"plugin_fusioninventory.agents.state.php\">";
 
 		echo "<table  class='tab_cadre_fixe'>";
 
@@ -376,15 +387,21 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
-      
-      $a_agents = $this->find('module_netdiscovery=1');
+
+      if ($device_type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+         $a_agents = $this->find('module_netdiscovery=1 AND ID='.$on_device);
+         $type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
+      } else {
+         $a_agents = $this->find('module_netdiscovery=1');
+         $type = "";
+      }
       foreach ($a_agents as $IDagent=>$data) {
          $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
 
          foreach ($a_portsList as $ID=>$datapl) {
             if (!isset($existantantip[$datapl['ifaddr']])) {
                $existantantip[$datapl['ifaddr']] = 1;
-               if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
+               if ($this->getStateAgent($datapl['ifaddr'], $IDagent, $type)) {
                   $count_agent_on++;
                }
             }
@@ -429,12 +446,15 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       }
    }
 
-   function showAgentWol() {
+   function showAgentWol($on_device, $device_type) {
+      
+
+
 
       
    }
 
-   function getStateAgent($ip, $agentid) {
+   function getStateAgent($ip, $agentid, $type="") {
       global $LANG;
       
       plugin_fusioninventory_disableDebug();
@@ -443,7 +463,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       } else {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip'/>";
+         echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip-$type'/>";
          echo "</td>";
          echo "<td align='center'>".$ip;
          echo "</td>";

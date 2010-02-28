@@ -97,6 +97,11 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
          $this->ptcdUpdates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",
                                                    $this->ptcdUpdates['firmware']);
       }
+      if (array_key_exists('location', $this->ptcdUpdates)) {
+         $this->ptcdUpdates['location'] = externalImportDropdown("glpi_dropdown_locations",
+                                                   $this->ptcdUpdates['location']);
+      }
+
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));

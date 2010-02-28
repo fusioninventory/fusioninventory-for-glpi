@@ -61,13 +61,17 @@ if (isset($_POST['action'])) {
 
    foreach ($_POST['agent-ip'] as $agentip) {
       $splitinfo = explode("-",$agentip);
+      $param = "";
+      if (isset($splitinfo[2])) {
+         $param = "$splitinfo[2]";
+      }
       // Add a task...
       if ($_POST['action'] == "INVENTORY") {
          $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'INVENTORY', $splitinfo[0]);
       } else if ($_POST['action'] == "NETDISCOVERY") {
-         $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'NETDISCOVERY', $splitinfo[0]);
+         $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'NETDISCOVERY', $splitinfo[0], $param);
       } else if ($_POST['action'] == "SNMPQUERY") {
-         $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'SNMPQUERY', $splitinfo[0]);
+         $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'SNMPQUERY', $splitinfo[0], $param);
       }
       
       $pfia->RemoteStartAgent($splitinfo[0], $splitinfo[1]);

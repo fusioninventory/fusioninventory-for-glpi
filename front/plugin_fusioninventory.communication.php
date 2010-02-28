@@ -60,9 +60,10 @@ if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"
     OR ($ssl == "0")) {
 	// echo "On continue";
 } else {
-	$out = "No SSL";
-	$gzout = gzencode($out, 9);
-	echo $gzout;
+   $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+<REPLY>
+</REPLY>");
+   $ptc->noSSL();
 	exit();
 }
 $ocsinventory = '0';

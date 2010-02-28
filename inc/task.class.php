@@ -171,6 +171,10 @@ class PluginFusionInventoryTask extends CommonDBTM {
       if (!$ptcm->isActivated('remotehttpagent')) {
          return false;
       }
+      if ($param == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+         $on_device = 0;
+         $device_typ = 0;
+      }
       // Find if task don't exist yet
       $a_datas = $this->find("`agent_id`='".$agent_id."'
                      AND `action`='".$action."'

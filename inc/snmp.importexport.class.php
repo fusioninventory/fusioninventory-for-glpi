@@ -55,8 +55,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 			} else {
 				exit();
          }
-		}
-		
+		}	
 		
 		
 		// Construction of XML file
@@ -222,7 +221,6 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
       $np               = new Netport;
       $ptud             = new PluginFusionInventoryUnknownDevice;
 
-      $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_xml->PROCESSNUMBER;
       if (isset($p_xml->AGENT->START)) {
          $ptap->updateProcess($p_xml->PROCESSNUMBER, array('start_time_discovery' => date("Y-m-d H:i:s")));
       } else if (isset($p_xml->AGENT->END)) {

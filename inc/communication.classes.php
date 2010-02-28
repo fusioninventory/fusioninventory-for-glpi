@@ -207,8 +207,16 @@ class PluginFusionInventoryCommunication {
       $count_range = $ptrip->Counter($agent["ID"], "discover");
       $count_range += $ptt->Counter($agent["ID"], "NETDISCOVERY");
       if ($task == "1") {
-         $agent["core_discovery"] = 1;
-         $agent["threads_discovery"] = 1;
+         $tasks = $ptt->ListTask($agent["ID"], "NETDISCOVERY");
+         foreach ($tasks as $task_id=>$taskInfos) {
+            if ($tasks[$task_id]["param"] == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+               $task = "0";
+            }
+         }
+         if ($task == "1") {
+            $agent["core_discovery"] = 1;
+            $agent["threads_discovery"] = 1;
+         }
       }
 
       if ((($count_range > 0) && ($agent["lock"] == 0)) OR ($task == "1") ) {
@@ -224,7 +232,6 @@ class PluginFusionInventoryCommunication {
                $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
 
             if ($task == "1") {
-               $tasks = $ptt->ListTask($agent["ID"], "NETDISCOVERY");
                foreach ($tasks as $task_id=>$taskInfos) {
                   $sxml_rangeip = $sxml_option->addChild('RANGEIP');
                      $sxml_rangeip->addAttribute('ID', $task_id);
@@ -451,6 +458,9 @@ class PluginFusionInventoryCommunication {
       $this->setXML($p_xml);
       $errors = '';
 
+      if (isset($this->sxml->CONTENT->PROCESSNUMBER)) {
+         $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $this->sxml->CONTENT->PROCESSNUMBER;
+      }
       switch ($this->sxml->QUERY) {
          case 'SNMPQUERY' :
             $errors.=$this->importContent($this->sxml->CONTENT);
@@ -471,12 +481,14 @@ class PluginFusionInventoryCommunication {
       if ($errors=='') {
          $result=true;
       } else {
-         $result=false;
-         $p_errors=$errors;
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
+            $result=true;
             $ptap = new PluginFusionInventoryAgentsProcesses;
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                  array('comments' => $errors));
+         } else {
+            // It's PROLOG
+            $result=false;
          }
       }
       return $result;
@@ -496,7 +508,6 @@ class PluginFusionInventoryCommunication {
       
       $errors='';
       $nbDevices = 0;
-      $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $this->sxml->CONTENT->PROCESSNUMBER;
 
       foreach ($p_content->children() as $child) {
          switch ($child->getName()) {
@@ -507,24 +518,22 @@ class PluginFusionInventoryCommunication {
 
             case 'AGENT' :
                if (isset($this->sxml->CONTENT->AGENT->START)) {
-                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER,
+                  $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                        array('start_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->END)) {
-                  $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER,
+                  $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                        array('end_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->EXIT)) {
-                  $ptap->endProcess($this->sxml->CONTENT->PROCESSNUMBER, date("Y-m-d H:i:s"));
+                  $ptap->endProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                                       date("Y-m-d H:i:s"));
                }
                if (isset($this->sxml->CONTENT->AGENT->AGENTVERSION)) {
                   $agent = $pta->InfosByKey($this->sxml->DEVICEID);
                   $agent['fusioninventory_agent_version'] = $this->sxml->CONTENT->AGENT->AGENTVERSION;
                   $agent['last_agent_update'] = date("Y-m-d H:i:s");
-                  $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+                  //$p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
                   $pta->update($agent);
                }
-               break;
-            
-            case 'PROCESSNUMBER':
                break;
             
             default :
@@ -696,6 +705,9 @@ class PluginFusionInventoryCommunication {
                break;
             case 'MODEL' :
                $this->ptd->setValue('model', $p_info->MODEL);
+               break;
+            case 'LOCATION' :
+               $this->ptd->setValue('location', $p_info->LOCATION);
                break;
             case 'NAME' :
                $this->ptd->setValue('name', $p_info->NAME);
@@ -1397,6 +1409,13 @@ class PluginFusionInventoryCommunication {
        $sxml_param = $sxml_option->addChild('PARAM');
        $sxml_param->addAttribute('MAC', '00:24:8c:e0:2d:bb');
        $sxml_param->addAttribute('IP', '192.168.0.201');
+   }
+
+
+   function noSSL() {
+      $this->sxml->addAttribute('RESPONSE', "ERROR : SSL REQUIRED BY SERVER");
+      $this->setXML($this->getXML());
+      echo $this->getSend();
    }
 }
 ?>
