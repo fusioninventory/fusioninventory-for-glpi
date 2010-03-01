@@ -49,6 +49,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 	function defineTabs($ID,$withtemplate){
 		global $LANG,$CFG_GLPI;
 
+      $ong = array();
 		if ($ID > 0){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
 			$ong[2]=$LANG['plugin_fusioninventory']["task"][2];
@@ -158,7 +159,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "<tr class='tab_bg_2'>";
 		if ($ID=='') {
          echo "<td align='center' colspan='4'>";
-			echo "<input type='hidden' name='key' value='".$newstring."'/>";
 			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
          echo "</td>";
 		} else {
