@@ -355,6 +355,30 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['name'] = $LANG['plugin_fusioninventory']["agents"][6];
    $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['datatype']='bool';
 
+ 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['field'] = 'module_inventory';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['linkfield'] = 'module_inventory';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['name'] = $LANG['plugin_fusioninventory']['config'][3];
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['datatype']='bool';
+
+ 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['field'] = 'module_netdiscovery';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['linkfield'] = 'module_netdiscovery';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['name'] = $LANG['plugin_fusioninventory']['config'][4];
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['datatype']='bool';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['field'] = 'module_snmpquery';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['linkfield'] = 'module_snmpquery';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['name'] = $LANG['plugin_fusioninventory']['config'][7];
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['datatype']='bool';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['field'] = 'module_wakeonlan';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['linkfield'] = 'module_wakeonlan';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['name'] = $LANG['plugin_fusioninventory']['config'][6];
+   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['datatype']='bool';
+
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP]['common'] = $LANG['plugin_fusioninventory']["profile"][25];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][1]['table'] = 'glpi_plugin_fusioninventory_rangeip';
