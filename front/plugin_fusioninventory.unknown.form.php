@@ -49,7 +49,6 @@ plugin_fusioninventory_checkRight("snmp_networking","r");
 
 $ptud = new PluginFusionInventoryUnknownDevice;
 $ptt  = new PluginFusionInventoryTask;
-$pfia = new PluginFusionInventoryAgents;
 $ptcm = new PluginFusionInventoryConfigModules;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
@@ -77,22 +76,13 @@ if (isset($_POST["delete"])) {
 } else if (isset($_POST["update"])) {
 	$ptud->check($_POST['ID'],'w');
 	$ptud->update($_POST);
-//	logEvent($_POST["ID"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][21]);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
+$ptud->showTabs($ID, '',$_SESSION['glpi_tab']);
 $ptud->showForm($_SERVER["PHP_SELF"], $ID);
-if ($ptcm->isActivated('remotehttpagent')) {
-   $pfia->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
-}
+echo "<div id='tabcontent'></div>";
+echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-//if (isset($_POST)) {
-//   $ptt->formAddTask($_SERVER["PHP_SELF"], $_POST);
-//} else {
-//   $ptt->formAddTask($_SERVER["PHP_SELF"]);
-//}
-
-showPorts($ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
-showHistory(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$ID);
 commonFooter();
 ?>

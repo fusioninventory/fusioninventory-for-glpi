@@ -40,6 +40,24 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
 
 
+   function defineTabs($ID,$withtemplate){
+		global $LANG,$CFG_GLPI;
+
+      $ptcm = new PluginFusionInventoryConfigModules;
+
+      $ong = array();
+		if ($ID > 0){
+         $ong[1]=$LANG['title'][27];
+         if ($ptcm->isActivated('remotehttpagent')) {
+            $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
+         }
+         $ong[3]=$LANG['title'][38];
+      }
+		return $ong;
+	}
+
+
+
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
@@ -50,8 +68,8 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-      $this->showTabs($ID, "",$_SESSION['glpi_tab']);
-		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+
+      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table  class='tab_cadre_fixe'>";
 
