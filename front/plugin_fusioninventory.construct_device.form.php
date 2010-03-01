@@ -89,11 +89,12 @@ NULL , '".$_POST['ID']."', '".$md5."'
 
       $query_ins = "INSERT INTO glpi_plugin_fusioninventory_construct_mibs
          (`mib_oid_id`, `construct_device_id`, `mapping_name`,
-            `oid_port_counter`, `oid_port_dyn`, `mapping_type`)
+            `oid_port_counter`, `oid_port_dyn`, `mapping_type`, `vlan`)
          VALUES
          ('".$oid."', '".$_POST['ID']."', '".$a_mapping[1]."',
             '".$_POST['oid_port_counter_'.$oid]."',
-            '".$_POST['oid_port_dyn_'.$oid]."', '".$a_mapping[0]."')";
+            '".$_POST['oid_port_dyn_'.$oid]."', '".$a_mapping[0]."',
+              '".$_POST['vlan_'.$oid]."' )";
       $DB->query($query_ins);     
    }
    glpi_header($_SERVER['HTTP_REFERER']);

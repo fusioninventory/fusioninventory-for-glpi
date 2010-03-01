@@ -220,7 +220,11 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
 //      $mapping_pre[3][''] = '';
 
-
+      $mapping_pre_vlan['.1.3.6.1.4.1.9.9.46.1.6.1.1.14'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.1'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.4.22.1.2'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.2'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.17.1.4.1.2'] = '1';
 
 
 
@@ -237,7 +241,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
       $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_walks
          WHERE construct_device_id='".$ID."'";
-      echo "<div align='center'><form method='post' name='' id=''  action='".$target."' >";
+      echo "<div align='center'>
+         <form method='post' name='' id=''  action='".$target."' >";
       
       if ($result = $DB->query($query)) {
 			if ($data = $DB->fetch_array($result)) {
@@ -264,8 +269,20 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                            echo "</tr>";
                            echo "<tr>";
                            echo "<th>";
-                           echo $LANG['plugin_fusioninventory']["mib"][2]." : ";
-                           //dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_object","FK_mib_object_".$oid_id_before,0,1,-1,'');
+                           echo $LANG['plugin_fusioninventory']["mib"][9]." : ";
+                           if (isset($a_mibs['ID'])) {
+                              if ($a_mibs["vlan"] == "1") {
+                                 echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+                              } else {
+                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
+                              }
+                           } else {
+                              if (isset($mapping_pre_vlan[$before])) {
+                                 dropdownYesNo("vlan_".$oid_id_before, 1);
+                              } else {
+                                 dropdownYesNo("vlan_".$oid_id_before);
+                              }
+                           }
                            echo "</th>";
                            echo "<th>";
                            echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
@@ -331,12 +348,15 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                         echo "<th colspan='3'>";
                         if (isset($a_mibs['ID'])) {
                            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                           echo "<font>";
+                           echo "&nbsp;<font>";
                         } else {
                            echo "<input type='checkbox' name='oidsselected[]' value='".$a_oids2[$num]."' />&nbsp;";
-                           echo "<font color='#ff0000'>";
+                           echo "&nbsp;<font color='#ff0000'>";
                         }
                         echo $a_oids1[$num]."</font>";
+                        if (isset($a_mibs['ID'])) {
+                           //echo "&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/delete.png'/>";
+                        }
                         echo "</th>";
                         echo "</tr>";
                         echo "<tr class='tab_bg_1 center'>";
@@ -356,8 +376,20 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                echo "</tr>";
                echo "<tr>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']["mib"][2]." : ";
-               //dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_object","FK_mib_object_".$a_oids1[$num],0,1,-1,'');
+               echo $LANG['plugin_fusioninventory']["mib"][9]." : ";
+               if (isset($a_mibs['ID'])) {
+                  if ($a_mibs["vlan"] == "1") {
+                     echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+                  } else {
+                     echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
+                  }
+               } else {
+                  if (isset($mapping_pre_vlan[$before])) {
+                     dropdownYesNo("vlan_".$oid_id_before, 1);
+                  } else {
+                     dropdownYesNo("vlan_".$oid_id_before);
+                  }
+               }
                echo "</th>";
                echo "<th>";
                echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
