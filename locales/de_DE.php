@@ -41,6 +41,16 @@ $LANG['plugin_fusioninventory']["title"][1]="SNMP information";
 $LANG['plugin_fusioninventory']["title"][2]="Verbindungs Historie";
 $LANG['plugin_fusioninventory']["title"][3]="[Trk] Fehler";
 $LANG['plugin_fusioninventory']["title"][4]="[Trk] Cron";
+$LANG['plugin_fusioninventory']["title"][5]="FusionInventory's locks";
+
+$LANG['plugin_fusioninventory']['config'][0] = "Inventory frequency (in hours)";
+$LANG['plugin_fusioninventory']['config'][1] = "Modules";
+$LANG['plugin_fusioninventory']['config'][2] = "Snmp";
+$LANG['plugin_fusioninventory']['config'][3] = "OCS inventory";
+$LANG['plugin_fusioninventory']['config'][4] = "Devices discovery";
+$LANG['plugin_fusioninventory']['config'][5] = "Manage agent directly from GLPI";
+$LANG['plugin_fusioninventory']['config'][6] = "Wake On Lan";
+$LANG['plugin_fusioninventory']['config'][7] = "SNMP query";
 
 $LANG['plugin_fusioninventory']["profile"][0]="Rechte Management";
 $LANG['plugin_fusioninventory']["profile"][1]="$title"; //interface
@@ -87,6 +97,7 @@ $LANG['plugin_fusioninventory']["functionalities"][3]="SNMP";
 $LANG['plugin_fusioninventory']["functionalities"][4]="Verbindung";
 $LANG['plugin_fusioninventory']["functionalities"][5]="Server script";
 $LANG['plugin_fusioninventory']["functionalities"][6]="Legende";
+$LANG['plugin_fusioninventory']["functionalities"][7]="Lockable fields";
 
 $LANG['plugin_fusioninventory']["functionalities"][10]="Aktiviere Historie";
 $LANG['plugin_fusioninventory']["functionalities"][11]="Aktiviere Verbindungsmodul";
@@ -111,6 +122,7 @@ $LANG['plugin_fusioninventory']["functionalities"][29]="Liste der Felder f&uuml;
 
 $LANG['plugin_fusioninventory']["functionalities"][30]="Status der aktiven Ger&auml;te";
 $LANG['plugin_fusioninventory']["functionalities"][31]="Verwaltung von Patronen und Lagerbestand";
+$LANG['plugin_fusioninventory']["functionalities"][32]="Delete agents informations processes after";
 $LANG['plugin_fusioninventory']["functionalities"][36]="Frequency of meter reading";
 
 $LANG['plugin_fusioninventory']["functionalities"][40]="Konfiguration";
@@ -124,6 +136,13 @@ $LANG['plugin_fusioninventory']["functionalities"][52]="Aktivierung der Log Date
 $LANG['plugin_fusioninventory']["functionalities"][53]="Anzahl der gelichzeitigen Prozesse des Server Scripts";
 
 $LANG['plugin_fusioninventory']["functionalities"][60]="Lösche Historie";
+
+$LANG['plugin_fusioninventory']["functionalities"][70]="Lockable fields configuration";
+$LANG['plugin_fusioninventory']["functionalities"][71]="Unlockable fields";
+$LANG['plugin_fusioninventory']["functionalities"][72]="Table";
+$LANG['plugin_fusioninventory']["functionalities"][73]="Fields";
+$LANG['plugin_fusioninventory']["functionalities"][74]="Values";
+$LANG['plugin_fusioninventory']["functionalities"][75]="Locks";
 
 $LANG['plugin_fusioninventory']["snmp"][0]="SNMP Informationen der Ger&auml;te";
 $LANG['plugin_fusioninventory']["snmp"][1]="Grundlage";
@@ -180,6 +199,8 @@ $LANG['plugin_fusioninventory']["errors"][12]="Unbekannte IP";
 
 $LANG['plugin_fusioninventory']["errors"][20]="SNMP Fehler";
 $LANG['plugin_fusioninventory']["errors"][21]="Keine SNMP Informationen erhalten";
+$LANG['plugin_fusioninventory']["errors"][22]="Unattended element in";
+$LANG['plugin_fusioninventory']["errors"][23]="Unable to identify device";
 
 $LANG['plugin_fusioninventory']["errors"][30]="Verkabelungsfehler";
 $LANG['plugin_fusioninventory']["errors"][31]="Verkabelungsproblem";
@@ -189,6 +210,7 @@ $LANG['plugin_fusioninventory']["errors"][50]="GLPI version not compatible need 
 $LANG['plugin_fusioninventory']["errors"][101]="Timeout";
 $LANG['plugin_fusioninventory']["errors"][102]="Kein SNMP Modell zugeordnet";
 $LANG['plugin_fusioninventory']["errors"][103]="Keine SNMP Authentifzierung zugeordnet";
+$LANG['plugin_fusioninventory']["errors"][104]="Error message";
 
 $LANG['plugin_fusioninventory']["history"][0] = "Alt";
 $LANG['plugin_fusioninventory']["history"][1] = "Neu";
@@ -206,6 +228,14 @@ $LANG['plugin_fusioninventory']["prt_history"][20]="History meter Drucker";
 $LANG['plugin_fusioninventory']["prt_history"][21]="Datum";
 $LANG['plugin_fusioninventory']["prt_history"][22]="Meter";
 
+$LANG['plugin_fusioninventory']["prt_history"][30]="Display";
+$LANG['plugin_fusioninventory']["prt_history"][31]="Time unit";
+$LANG['plugin_fusioninventory']["prt_history"][32]="Add a printer";
+$LANG['plugin_fusioninventory']["prt_history"][33]="Remove a printer";
+$LANG['plugin_fusioninventory']["prt_history"][34]="day";
+$LANG['plugin_fusioninventory']["prt_history"][35]="week";
+$LANG['plugin_fusioninventory']["prt_history"][36]="month";
+$LANG['plugin_fusioninventory']["prt_history"][37]="year";
 
 $LANG['plugin_fusioninventory']["cpt_history"][0]="Historie Sitzungen";
 $LANG['plugin_fusioninventory']["cpt_history"][1]="Kontakt";
@@ -274,6 +304,19 @@ $LANG['plugin_fusioninventory']["processes"][21]="Abgefragte Ger&auml;te";
 $LANG['plugin_fusioninventory']["processes"][22]="Fehler";
 $LANG['plugin_fusioninventory']["processes"][23]="Dauer der gesamten Erkennung";
 $LANG['plugin_fusioninventory']["processes"][24]="Dauer der gesamten Anfrage";
+$LANG['plugin_fusioninventory']["processes"][25]="Agent";
+$LANG['plugin_fusioninventory']["processes"][26]="Discover";
+$LANG['plugin_fusioninventory']["processes"][27]="Query";
+$LANG['plugin_fusioninventory']["processes"][28]="Core";
+$LANG['plugin_fusioninventory']["processes"][29]="Threads";
+$LANG['plugin_fusioninventory']["processes"][30]="Discovered";
+$LANG['plugin_fusioninventory']["processes"][31]="Existent";
+$LANG['plugin_fusioninventory']["processes"][32]="Imported";
+$LANG['plugin_fusioninventory']["processes"][33]="Queried";
+$LANG['plugin_fusioninventory']["processes"][34]="In error";
+$LANG['plugin_fusioninventory']["processes"][35]="Created connections";
+$LANG['plugin_fusioninventory']["processes"][36]="Deleted connections";
+$LANG['plugin_fusioninventory']["processes"][37]="IP total";
 
 $LANG['plugin_fusioninventory']["state"][0]="Computer start";
 $LANG['plugin_fusioninventory']["state"][1]="Computer stop";
@@ -410,7 +453,7 @@ $LANG['plugin_fusioninventory']["mapping"][426]="Drucker > Messung > Gesamtanzah
 $LANG['plugin_fusioninventory']["mapping"][427]="Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seite (Kopie)";
 $LANG['plugin_fusioninventory']["mapping"][428]="Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Kopie)";
 $LANG['plugin_fusioninventory']["mapping"][429]="Drucker > Messung > Gesamtanzahl gedruckter Seiten (Fax)";
-
+$LANG['plugin_fusioninventory']["mapping"][430]="networking > port > vlan";
 
 
 $LANG['plugin_fusioninventory']["mapping"][101]="";
@@ -460,6 +503,15 @@ $LANG['plugin_fusioninventory']["mapping"][153]="Reinigungsmodul";
 $LANG['plugin_fusioninventory']["mapping"][154]="Anzahl gedruckter Duplexseiten";
 $LANG['plugin_fusioninventory']["mapping"][155]="Anzahl gescannter Seiten";
 $LANG['plugin_fusioninventory']["mapping"][156]="Wartungsmodul";
+$LANG['plugin_fusioninventory']["mapping"][157]="Black toner";
+$LANG['plugin_fusioninventory']["mapping"][158]="Cyan toner";
+$LANG['plugin_fusioninventory']["mapping"][159]="Magenta toner";
+$LANG['plugin_fusioninventory']["mapping"][160]="Yellow toner";
+$LANG['plugin_fusioninventory']["mapping"][161]="Black drum";
+$LANG['plugin_fusioninventory']["mapping"][162]="Cyan drum";
+$LANG['plugin_fusioninventory']["mapping"][163]="Magenta drum";
+$LANG['plugin_fusioninventory']["mapping"][164]="Yellow drum";
+$LANG['plugin_fusioninventory']["mapping"][165]="Many informations grouped";
 $LANG['plugin_fusioninventory']["mapping"][1423]="Gesamtanzahl gedruckter Seiten (Druck)";
 $LANG['plugin_fusioninventory']["mapping"][1424]="Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)";
 $LANG['plugin_fusioninventory']["mapping"][1425]="Gesamtanzahl farbig gedruckter Seiten (Druck)";
@@ -469,13 +521,15 @@ $LANG['plugin_fusioninventory']["mapping"][1428]="Gesamtanzahl farbig gedruckter
 $LANG['plugin_fusioninventory']["mapping"][1429]="Gesamtanzahl gedruckter Seiten (Fax)";
 
 
-$LANG['plugin_fusioninventory']["Drucker"][0]="Seiten";
+$LANG['plugin_fusioninventory']["printer"][0]="Seiten";
 
-
+$LANG['plugin_fusioninventory']["menu"][0]="Information about discovered devices";
 $LANG['plugin_fusioninventory']["menu"][1]="Agent Konfiguration";
 $LANG['plugin_fusioninventory']["menu"][2]="IP Bereich Konfiguration";
 $LANG['plugin_fusioninventory']["menu"][3]="Menu";
 $LANG['plugin_fusioninventory']["menu"][4]="Ubekanntes Ger&auml;t";
+$LANG['plugin_fusioninventory']["menu"][5]="Switchs ports history";
+$LANG['plugin_fusioninventory']["menu"][6]="Unused switchs ports";
 
 $LANG['plugin_fusioninventory']["menu"][0]="Informationen &uuml;ber entdeckte Ger&auml;te";
 
@@ -490,12 +544,13 @@ $LANG['plugin_fusioninventory']["discovery"][5]="Anzahl importierter Ger&auml;te
 $LANG['plugin_fusioninventory']["discovery"][6]="Prim&auml;res Kriterium f&uuml;r die Existenz";
 $LANG['plugin_fusioninventory']["discovery"][7]="Sekund&auml;res Kriterium für die Existenz ";
 $LANG['plugin_fusioninventory']["discovery"][8]="Wenn ein Ger&auml;t ein leeres Feld bim ersten Kriterium bringt dann wird das zweite Benutzt.";
+$LANG['plugin_fusioninventory']["discovery"][9]="Number of devices not imported because type non defined";
 
 $LANG['plugin_fusioninventory']["rangeip"][0]="Start des IP Bereichs";
 $LANG['plugin_fusioninventory']["rangeip"][1]="Ende des IP Bereichs";
 $LANG['plugin_fusioninventory']["rangeip"][2]="IP Bereiche";
 $LANG['plugin_fusioninventory']["rangeip"][3]="Abfrage";
-
+$LANG['plugin_fusioninventory']["rangeip"][4]="Incorrect IP address";
 
 $LANG['plugin_fusioninventory']["agents"][0]="SNMP Agent";
 $LANG['plugin_fusioninventory']["agents"][2]="Number of threads used by core for querying devices";
@@ -508,5 +563,38 @@ $LANG['plugin_fusioninventory']["agents"][8]="Fragments en Ko";
 $LANG['plugin_fusioninventory']["agents"][9]="Advanced options";
 $LANG['plugin_fusioninventory']["agents"][10]="Number of core(s) (CPU) used for querying devices";
 $LANG['plugin_fusioninventory']["agents"][11]="Number of core(s) (CPU) used for network discovery";
+$LANG['plugin_fusioninventory']["agents"][12]="Discovery Agent";
+$LANG['plugin_fusioninventory']["agents"][13]="Query Agent";
+$LANG['plugin_fusioninventory']["agents"][14]="Agent actions";
+$LANG['plugin_fusioninventory']["agents"][15]="Agent state";
+$LANG['plugin_fusioninventory']["agents"][16]="Initialized";
+$LANG['plugin_fusioninventory']["agents"][17]="Agent is running";
+$LANG['plugin_fusioninventory']["agents"][18]="Inventory has been received";
+$LANG['plugin_fusioninventory']["agents"][19]="Inventory has been sended to OCS server";
+$LANG['plugin_fusioninventory']["agents"][20]="Synchronisation between OCS and GLPI is running";
+$LANG['plugin_fusioninventory']["agents"][21]="Inventory terminated";
+$LANG['plugin_fusioninventory']["agents"][22]="Wait";
+$LANG['plugin_fusioninventory']["agents"][23]="Computer link";
+
+$LANG['plugin_fusioninventory']["unknown"][0]="DNS Name";
+$LANG['plugin_fusioninventory']["unknown"][1]="Network port name";
+$LANG['plugin_fusioninventory']["unknown"][2]="Approved devices";
+
+$LANG['plugin_fusioninventory']["task"][0]="Task";
+$LANG['plugin_fusioninventory']["task"][1]="Task management";
+$LANG['plugin_fusioninventory']["task"][2]="Action";
+$LANG['plugin_fusioninventory']["task"][3]="Unit";
+$LANG['plugin_fusioninventory']["task"][4]="Get now informations";
+$LANG['plugin_fusioninventory']["task"][5]="Select OCS Agent";
+$LANG['plugin_fusioninventory']["task"][6]="Get state";
+$LANG['plugin_fusioninventory']["task"][7]="State";
+$LANG['plugin_fusioninventory']["task"][8]="Ready";
+$LANG['plugin_fusioninventory']["task"][9]="Not respond";
+$LANG['plugin_fusioninventory']["task"][10]="Running... not available";
+$LANG['plugin_fusioninventory']["task"][11]="Agent has been notified and begin running";
+$LANG['plugin_fusioninventory']["task"][12]="Wake agent";
+$LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
+
+$LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 
 ?>
