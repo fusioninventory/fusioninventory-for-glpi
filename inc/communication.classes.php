@@ -535,6 +535,9 @@ class PluginFusionInventoryCommunication {
                   $pta->update($agent);
                }
                break;
+
+            case 'PROCESSNUMBER' :
+               break;
             
             default :
                $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONTENT : '.$child->getName()."\n";
