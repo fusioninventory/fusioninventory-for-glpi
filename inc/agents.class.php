@@ -89,85 +89,106 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		echo "<tr>";
-		echo "<th colspan='2'>";
+		echo "<th colspan='4'>";
 		echo $LANG['plugin_fusioninventory']["agents"][0];
 		echo " :</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
+		echo "<td>" . $LANG["common"][16] . " :</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
+		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
 		echo "</td>";
-		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][5]."</td>";
-		echo "<td align='center'>";
-		echo $this->fields["fusioninventory_agent_version"];
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][6] . "</td>";
-		echo "<td align='center'>";
-		dropdownYesNo("lock",$this->fields["lock"]);
-		echo "</td>";
-		echo "</tr>";
-		
-		echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>Token</td>";
-		echo "<td align='center'>";
-		echo $this->fields["token"];
-		echo "</td>";
-		echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][3]."</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['config'][3]." :</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("module_inventory",$this->fields["module_inventory"]);
 		echo "</td>";
 		echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][4]."</td>";
+
+		echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']["agents"][5]." :</td>";
+		echo "<td align='center'>";
+		echo $this->fields["fusioninventory_agent_version"];
+		echo "</td>";
+
+      echo "<td>".$LANG['plugin_fusioninventory']['config'][4]." :</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("module_netdiscovery",$this->fields["module_netdiscovery"]);
 		echo "</td>";
 		echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][7]."</td>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>" . $LANG['plugin_fusioninventory']["agents"][6] . " :</td>";
+		echo "<td align='center'>";
+		dropdownYesNo("lock",$this->fields["lock"]);
+		echo "</td>";
+
+      echo "<td>".$LANG['plugin_fusioninventory']['config'][7]." :</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("module_snmpquery",$this->fields["module_snmpquery"]);
 		echo "</td>";
 		echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['plugin_fusioninventory']['config'][6]."</td>";
+      		
+		echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']["agents"][23]." :</td>";
+		echo "<td align='center'>";
+      $CommonItem->getFromDB($this->fields["device_type"],
+                                $this->fields["on_device"]);
+      echo $CommonItem->getLink(1);
+		echo "</td>";
+
+      echo "<td>".$LANG['plugin_fusioninventory']['config'][6]." :</td>";
 		echo "<td align='center'>";
 		dropdownYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);
 		echo "</td>";
 		echo "</tr>";
 
+
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' colspan='2'>";
-      $CommonItem->getFromDB($this->fields["device_type"],
-                                $this->fields["on_device"]);
-      echo $CommonItem->getLink(1);
+      echo "<td>Token :</td>";
+		echo "<td align='center' colspan='3'>";
+		echo $this->fields["token"];
 		echo "</td>";
 		echo "</tr>";
 
+		echo "<tr class='tab_bg_2'>";
+		if ($ID=='') {
+         echo "<td align='center' colspan='4'>";
+			echo "<input type='hidden' name='key' value='".$newstring."'/>";
+			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+         echo "</td>";
+		} else {
+         echo "<td align='center' colspan='2'>";
+			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+         echo "</td>";
+         echo "<td align='center' colspan='2'>";
+			echo "<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
+         echo "</td>";
+		}
+		echo "</tr>";
+		echo "</table></form></div>";
+
+	}
+
+
+
+   function showFormAdvancedOptions($target, $ID = '') {
+      global $DB,$CFG_GLPI,$LANG;
+      
+      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
 		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo "<a href='#' onClick='getSlide(\"optionavance\");'>".$LANG['plugin_fusioninventory']["agents"][9]." :</a>";
-		echo "</th>";
+		echo "<th colspan='4'>";
+		echo $LANG['plugin_fusioninventory']["agents"][9];
+		echo " :</th>";
 		echo "</tr>";
-
-      echo "</table>";
-      echo "<div  id='optionavance' style='display: none;'>";
-      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' width='200'>" . $LANG['plugin_fusioninventory']["agents"][11] . "</td>";
@@ -186,7 +207,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][10]."</td>";
 		echo "<td align='center'>";
-		dropdownInteger("core_query", $this->fields["core_query"],1,200);
+		dropdownInteger("core_query", $this->fields["core_query"],1,32);
 		echo "</td>";
 		echo "</tr>";
 
@@ -197,47 +218,15 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-      echo "</table>";
-      echo "</div>";
-      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+      echo "<tr class='tab_bg_2'>";
+      echo "<td align='center' colspan='4'>";
+      echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+      echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		if ($ID=='') {
-			// Generator of Key
-//			$chrs = 30;
-//			$chaine = "";
-//			$list = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-//			mt_srand((double)microtime()*1000000);
-			$newstring="";
-//			while( strlen( $newstring )< $chrs ) {
-//				$newstring .= $list[mt_rand(0, strlen($list)-1)];
-//			}
-
-			echo "<input type='hidden' name='key' value='".$newstring."'/>";
-			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-		} else {
-			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
-		}
-		echo "</td></tr>";
 		echo "</table></form></div>";
-
-	}
-
-
-	
-	function export_config($ID) {
-		global $DB;
-	
-		$fusioninventory_config = new PluginFusionInventoryConfig;
-		$fusioninventory_config->getFromDB(1);
-
-		$this->getFromDB($ID);
-		echo "server=".$fusioninventory_config->fields["URL_agent_conf"]."/plugins/fusioninventory/front/plugin_fusioninventory.communication.php\n";
-//		echo "id=".$ID."\n";
-		echo "key=".$this->fields["key"]."\n";
-	}
+   }
 
 
 

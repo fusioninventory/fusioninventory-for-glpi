@@ -46,7 +46,7 @@ $LANG['plugin_fusioninventory']["title"][5]="Verrous FusionInventory";
 $LANG['plugin_fusioninventory']['config'][0] = "Fréquence des inventaires (en heures)";
 $LANG['plugin_fusioninventory']['config'][1] = "Modules";
 $LANG['plugin_fusioninventory']['config'][2] = "Snmp";
-$LANG['plugin_fusioninventory']['config'][3] = "Inventaire OCS";
+$LANG['plugin_fusioninventory']['config'][3] = "Inventaire de l'ordinateur";
 $LANG['plugin_fusioninventory']['config'][4] = "Découverte d'équipements";
 $LANG['plugin_fusioninventory']['config'][5] = "Controle de l'agent à partir de GLPI";
 $LANG['plugin_fusioninventory']['config'][6] = "Wake On Lan";
@@ -569,6 +569,7 @@ $LANG['plugin_fusioninventory']["agents"][19]="L'inventaire est envoyé au serve
 $LANG['plugin_fusioninventory']["agents"][20]="La synchronisation entre OCS et GLPI est en cours";
 $LANG['plugin_fusioninventory']["agents"][21]="Inventaire terminé";
 $LANG['plugin_fusioninventory']["agents"][22]="En attente";
+$LANG['plugin_fusioninventory']["agents"][23]="Lié à l'ordinateur";
 
 $LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
 $LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
