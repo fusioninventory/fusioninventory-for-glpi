@@ -50,6 +50,7 @@ plugin_fusioninventory_checkRight("snmp_networking","r");
 $ptud = new PluginFusionInventoryUnknownDevice;
 $ptt  = new PluginFusionInventoryTask;
 $pfia = new PluginFusionInventoryAgents;
+$ptcm = new PluginFusionInventoryConfigModules;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
 
@@ -81,8 +82,9 @@ if (isset($_POST["delete"])) {
 }
 
 $ptud->showForm($_SERVER["PHP_SELF"], $ID);
-$pfia->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
-
+if ($ptcm->isActivated('remotehttpagent')) {
+   $pfia->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+}
 
 //if (isset($_POST)) {
 //   $ptt->formAddTask($_SERVER["PHP_SELF"], $_POST);

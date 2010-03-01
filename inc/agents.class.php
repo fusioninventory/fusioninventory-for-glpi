@@ -49,10 +49,14 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 	function defineTabs($ID,$withtemplate){
 		global $LANG,$CFG_GLPI;
 
+      $ptcm = new PluginFusionInventoryConfigModules;
+
       $ong = array();
 		if ($ID > 0){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
-			$ong[2]=$LANG['plugin_fusioninventory']["task"][2];
+         if ($ptcm->isActivated('remotehttpagent')) {
+            $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
+         }
       }
 		return $ong;
 	}
