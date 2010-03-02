@@ -183,7 +183,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 		
       if (!$data = $this->find("`FK_networking`='".$ID."'", '', 1)) {
          // Add in database if not exist
-         $input['FK_networking'];
+         $input['FK_networking'] = $ID;
          $ID_tn = $this->add($input);
          $this->getFromDB($ID_tn);
       } else {
