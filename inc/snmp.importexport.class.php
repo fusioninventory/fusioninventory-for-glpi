@@ -276,28 +276,51 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
          if (!$discovery_criteria) {
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_import' => '1'));
             // Add in unknown device
-            $data = array();
+            $ptud->getEmpty();
             if (!empty($discovery->NETBIOSNAME)) {
-               $data['name'] = $discovery->NETBIOSNAME;
+               $ptud->fields['name'] = $discovery->NETBIOSNAME;
             } else if (!empty($discovery->SNMPHOSTNAME)) {
-               $data['name'] = $discovery->SNMPHOSTNAME;
+               $ptud->fields['name'] = $discovery->SNMPHOSTNAME;
             }
-            $data['dnsname'] = $discovery->DNSHOSTNAME;
-            $data['FK_entities'] = $discovery->ENTITY;
-            $data['serial'] = $discovery->SERIAL;
-            $data['contact'] = $discovery->USERSESSION;
+            $ptud->fields['dnsname'] = $discovery->DNSHOSTNAME;
+            $ptud->fields['FK_entities'] = $discovery->ENTITY;
+            $ptud->fields['serial'] = $discovery->SERIAL;
+            $ptud->fields['contact'] = $discovery->USERSESSION;
             if (!empty($discovery->WORKGROUP)) {
-               $data['domain'] = externalImportDropdown(
+               $ptud->fields['domain'] = externalImportDropdown(
                                   "glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
             }
-            $data['comments'] = $discovery->DESCRIPTION;
-            $data['type'] = $discovery->TYPE;
-            $data['FK_model_infos'] = $FK_model;
+            $ptud->fields['comments'] = $discovery->DESCRIPTION;
+            $ptud->fields['type'] = $discovery->TYPE;
+            $ptud->fields['FK_model_infos'] = $FK_model;
 
-            $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
+            $ptud->fields['FK_snmp_connection'] = $discovery->AUTHSNMP;
             if ($discovery->AUTHSNMP != "") {
-               $data['snmp'] = 1;
+               $ptud->fields['snmp'] = 1;
             }
+            $ptud->fields['location'] = 0;
+            $ptud->fields['deleted'] = 0;
+            if ($ptud->fields['domain'] == '') {
+               $ptud->fields['domain'] = 0;
+            }
+            if ($ptud->fields['type'] == '') {
+               $ptud->fields['type'] = 0;
+            }
+            if ($ptud->fields['snmp'] == '') {
+               $ptud->fields['snmp'] = 0;
+            }
+            if ($ptud->fields['FK_model_infos'] == '') {
+               $ptud->fields['FK_model_infos'] = 0;
+            }
+            if ($ptud->fields['FK_snmp_connection'] == '') {
+               $ptud->fields['FK_snmp_connection'] = 0;
+            }
+            if ($ptud->fields['accepted'] == '') {
+               $ptud->fields['accepted'] = 0;
+            }
+
+            $data = $ptud->fields;
+            unset($data['ID']);
 				$newID = $ptud->add($data);
 				unset($data);
 				// Add networking_port

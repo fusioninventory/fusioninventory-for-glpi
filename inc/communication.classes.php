@@ -475,6 +475,9 @@ class PluginFusionInventoryCommunication {
             $this->sendInventoryToOcsServer($p_xml);
             break;
 
+         case 'QUERY' :
+            break;
+
          default :
             $errors.=$LANG['plugin_fusioninventory']["errors"][22].' QUERY : *'.$this->sxml->QUERY."*\n";
       }
