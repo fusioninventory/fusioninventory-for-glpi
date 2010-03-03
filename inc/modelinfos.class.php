@@ -186,11 +186,15 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
             break;
 
       }
+      $sysdescr = str_replace("\r", "", $sysdescr);
       if (!empty($sysdescr)) {
-         include(GLPI_ROOT.'/plugins/fusioninventory/inc/device_serials.pm.php');
-         foreach ($ModelDef as $desc=>$value) {
-            if (strstr($sysdescr, $desc)) {
-               $modelgetted = $ModelDef{$desc};
+         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusioninventory/tool/discovery.xml');
+         foreach ($xml->DEVICE as $device) {
+            $device['SYSDESCR'] = str_replace("\r", "", $device['SYSDESCR']);
+            if ($sysdescr == $device['SYSDESCR']) {
+               if (isset($device['MODELSNMP'])) {
+                  $modelgetted = $device['MODELSNMP'];
+               }
                break;
             }
          }
