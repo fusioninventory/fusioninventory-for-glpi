@@ -397,12 +397,14 @@ class PluginFusionInventoryCommunication {
                              `glpi_networking`.`ifaddr` AS `gnifaddr`,
                              `FK_snmp_connection`, `FK_model_infos`
                       FROM `glpi_networking`
-                           LEFT JOIN `glpi_plugin_fusioninventory_networking`
+                      LEFT JOIN `glpi_plugin_fusioninventory_networking`
                            ON `FK_networking`=`glpi_networking`.`ID`
-                      WHERE `deleted`='0'
+                      INNER join `glpi_plugin_fusioninventory_model_infos`
+                           ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                      WHERE `glpi_networking`.`deleted`='0'
                            AND `FK_model_infos`!='0'
                            AND `FK_snmp_connection`!='0'
-                           AND `FK_entities`='".$p_entity."'
+                           AND `glpi_networking`.`FK_entities`='".$p_entity."'
                            AND inet_aton(`ifaddr`)
                                BETWEEN inet_aton('".$p_ipstart."')
                                AND inet_aton('".$p_ipend."') ";
@@ -414,15 +416,17 @@ class PluginFusionInventoryCommunication {
                              `glpi_networking_ports`.`ifaddr` AS `gnifaddr`,
                              `FK_snmp_connection`, `FK_model_infos`
                       FROM `glpi_printers`
-                           LEFT JOIN `glpi_plugin_fusioninventory_printers`
+                      LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `FK_printers`=`glpi_printers`.`ID`
-                           LEFT JOIN `glpi_networking_ports`
+                      LEFT JOIN `glpi_networking_ports`
                               ON `on_device`=`glpi_printers`.`ID`
                                  AND `device_type`='".PRINTER_TYPE."'
-                      WHERE `deleted`=0
+                      INNER join `glpi_plugin_fusioninventory_model_infos`
+                           ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                      WHERE `glpi_printers`.`deleted`=0
                             AND `FK_model_infos`!='0'
                             AND `FK_snmp_connection`!='0'
-                            AND `FK_entities`='".$p_entity."'
+                            AND `glpi_printers`.`FK_entities`='".$p_entity."'
                             AND inet_aton(`ifaddr`)
                                 BETWEEN inet_aton('".$p_ipstart."')
                                 AND inet_aton('".$p_ipend."') ";
