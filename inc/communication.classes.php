@@ -655,11 +655,11 @@ class PluginFusionInventoryCommunication {
             $errors.=$this->importInfoNetworking($p_info);
          } else {
             $errors.=$LANG['plugin_fusioninventory']["errors"][23].'
-                     type : "'.$p_info->TYPE.'"
-                     ID : "'.$p_info->ID.'"
-                     serial : "'.$p_info->SERIAL.'"
+                     type : '.$p_info->TYPE.'
+                     ID : '.$p_info->ID.'
+                     serial : '.$p_info->SERIAL.'
                      name : "'.$p_info->NAME.'"
-                     macaddress : "'.$p_info->MAC.'"'."\n";
+                     macaddress : '.$p_info->MAC.'"\n";
          }
       } elseif ($p_info->TYPE=='PRINTER') {
          //TODO
@@ -668,11 +668,11 @@ class PluginFusionInventoryCommunication {
             $errors.=$this->importInfoPrinter($p_info);
          } else {
             $errors.=$LANG['plugin_fusioninventory']["errors"][23].'
-                     type : "'.$p_info->TYPE.'"
-                     ID : "'.$p_info->ID.'"
-                     serial : "'.$p_info->SERIAL.'"
-                     name : "'.$p_info->NAME.'"
-                     macaddress : "'.$p_info->MAC.'"'."\n";
+                     type : '.$p_info->TYPE.'
+                     ID : '.$p_info->ID.'
+                     serial : '.$p_info->SERIAL.'
+                     name : '.$p_info->NAME.'
+                     macaddress : '.$p_info->MAC."\n";
          }
       }
       return $errors;
