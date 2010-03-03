@@ -630,6 +630,18 @@ class PluginFusionInventoryCommunication {
                $a_input['agent_type'] = 'SNMPQUERY';
                $ptae->addError($a_input);
             }
+         } else {
+            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                  array('query_nb_error' => '1'));
+            $a_input['ID'] = $p_device->ERROR->ID;
+            if ($p_device->ERROR->TYPE=='NETWORKING') {
+               $a_input['TYPE'] = NETWORKING_TYPE;
+            } elseif ($p_device->ERROR->TYPE=='PRINTER') {
+               $a_input['TYPE'] = PRINTER_TYPE;
+            }
+            $a_input['MESSAGE'] = $errors;
+            $a_input['agent_type'] = 'SNMPQUERY';
+            $ptae->addError($a_input);
          }
       }
 
