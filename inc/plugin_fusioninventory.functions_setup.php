@@ -170,6 +170,8 @@ function plugin_fusioninventory_update($version) {
 function plugin_fusioninventory_uninstall() {
    global $DB;
 
+   $np = new Netport;
+
 	if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
       $current_dir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/';
 		while (($f = readdir($dir)) !== false) {
@@ -208,6 +210,12 @@ function plugin_fusioninventory_uninstall() {
                  OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."' ;";
 	$DB->query($query) or die($DB->error());
 
+
+   $a_netports = $np->find("`device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
+   foreach ($a_netports as $netport){
+      $np->cleanDBonPurge($netport['ID']);
+      $np->deleteFromDB($netport['ID']);
+   }
 }
 
 ?>
