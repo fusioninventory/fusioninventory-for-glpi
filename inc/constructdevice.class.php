@@ -751,4 +751,5 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
    }
 
 }
+
 ?>

@@ -53,4 +53,5 @@ $locks = new PluginFusionInventoryLock;
 $locks->showForm($_SERVER["PHP_SELF"], $_POST['type'], $ID);
 
 commonFooter();
+
 ?>

@@ -49,7 +49,6 @@ $_GET['target']="plugin_fusioninventory.task.php";
 searchForm(PLUGIN_FUSIONINVENTORY_TASK,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_TASK,$_GET);
 
-
 commonFooter();
 
 ?>

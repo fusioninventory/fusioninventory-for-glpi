@@ -340,4 +340,5 @@ class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
                                                    $this->oFusionInventory_printer_history, 0);
    }
 }
+
 ?>

@@ -211,8 +211,6 @@ class PluginFusionInventoryTask extends CommonDBTM {
       // If not unique get all in addition ;)
       
    }
-
 }
-
 
 ?>

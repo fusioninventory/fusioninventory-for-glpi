@@ -103,7 +103,6 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
          }
 		}      
    }
-
-
-
 }
+
+?>

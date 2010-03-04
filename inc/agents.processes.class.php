@@ -463,7 +463,6 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
       }
       
    }
-
 }
 
 ?>

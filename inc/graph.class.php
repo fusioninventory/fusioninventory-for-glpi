@@ -340,4 +340,5 @@ class PluginFusionInventoryGraph {
       return $max;
    }
 }
+
 ?>

@@ -591,4 +591,5 @@ $LANG['plugin_fusioninventory']["task"][12]="Wake agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
+
 ?>

@@ -79,4 +79,5 @@ if (isset($_POST['action'])) {
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);
+
 ?>

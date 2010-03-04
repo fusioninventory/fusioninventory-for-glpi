@@ -51,7 +51,6 @@ $_GET['target']="plugin_fusioninventory.models.php";
 searchForm(PLUGIN_FUSIONINVENTORY_MODEL,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_MODEL,$_GET);
 
-
 commonFooter();
 
 ?>

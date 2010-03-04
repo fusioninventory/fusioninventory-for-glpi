@@ -218,7 +218,7 @@ function plugin_init_fusioninventory() {
 function plugin_version_fusioninventory() {
 	return array( 'name'    => 'FusionInventory',
 		'version' => '2.2.0',
-		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>',
+		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a> & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
 		'homepage'=>'https://forge.indepnet.net/projects/show/tracker',
       'minGlpiVersion' => '0.72.1'// For compatibility / no install in version < 0.72
    );

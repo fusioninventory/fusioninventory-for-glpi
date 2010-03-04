@@ -70,5 +70,4 @@ function plugin_fusioninventory_assign($id, $source_type, $source_field, $source
 	}
 }
 
-
 ?>

@@ -311,4 +311,5 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
    }
 
 }
+
 ?>

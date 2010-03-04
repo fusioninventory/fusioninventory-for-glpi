@@ -51,7 +51,6 @@ $_GET['target']="plugin_fusioninventory.rangeip.php";
 searchForm(PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP,$_GET);
 
-
 commonFooter();
 
 ?>

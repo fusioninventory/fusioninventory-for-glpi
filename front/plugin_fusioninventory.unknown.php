@@ -51,7 +51,6 @@ $_GET['target']="plugin_fusioninventory.unknown.php";
 searchForm(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$_GET);
 
-
 commonFooter();
 
 ?>

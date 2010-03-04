@@ -219,4 +219,5 @@ function plugin_fusioninventory_lockable_getLockableSelect($p_itemtype) {
       echo '</SELECT>';
    }
 }
+
 ?>

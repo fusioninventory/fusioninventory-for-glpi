@@ -61,4 +61,5 @@ class PluginFusionInventoryIfaddr  extends PluginFusionInventoryCommonDBTM {
       }
    }
 }
+
 ?>

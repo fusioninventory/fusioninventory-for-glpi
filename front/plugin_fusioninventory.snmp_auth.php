@@ -68,5 +68,4 @@ if ($config->getValue("authsnmp") == "file") {
 
 commonFooter();
 
-
 ?>

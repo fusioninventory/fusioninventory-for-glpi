@@ -161,5 +161,4 @@ class PluginFusionInventoryConfigSNMPNetworking extends CommonDBTM {
    }
 }
 
-
 ?>

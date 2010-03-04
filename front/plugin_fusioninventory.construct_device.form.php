@@ -115,4 +115,5 @@ $ptcd->showForm($_SERVER["PHP_SELF"], $ID);
 $ptcd->manageWalks($_SERVER["PHP_SELF"], $ID);
 
 commonFooter();
+
 ?>

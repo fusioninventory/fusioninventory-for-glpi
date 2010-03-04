@@ -251,25 +251,25 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
-				$name_unknown = plugin_fusioninventory_search_name_ocs_servers($data["unknow_mac"]);
-				// Add unknown device
-				if ($name_unknown == $data["unknown_ip"]) {
-					$unknown_infos["name"] = '';
-            } else {
-					$unknown_infos["name"] = $name_unknown;
-            }
-				$newID=$this->add($unknown_infos);
-				unset($unknown_infos);
-				// Add networking_port
-				$port_add["on_device"] = $newID;
-				$port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-				$port_add["ifaddr"] = $data["unknown_ip"];
-				$port_add['ifmac'] = $data["unknow_mac"];
-				$port_ID = $np->add($port_add);
-				unset($port_add);
-
-				// Connection between ports (wire table in DB)
-				$snmp_queries->PortsConnection($data["port"], $port_ID,$data["end_FK_processes"]);
+//				$name_unknown = plugin_fusioninventory_search_name_ocs_servers($data["unknow_mac"]);
+//				// Add unknown device
+//				if ($name_unknown == $data["unknown_ip"]) {
+//					$unknown_infos["name"] = '';
+//            } else {
+//					$unknown_infos["name"] = $name_unknown;
+//            }
+//				$newID=$this->add($unknown_infos);
+//				unset($unknown_infos);
+//				// Add networking_port
+//				$port_add["on_device"] = $newID;
+//				$port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+//				$port_add["ifaddr"] = $data["unknown_ip"];
+//				$port_add['ifmac'] = $data["unknow_mac"];
+//				$port_ID = $np->add($port_add);
+//				unset($port_add);
+//
+//				// Connection between ports (wire table in DB)
+//				$snmp_queries->PortsConnection($data["port"], $port_ID,$data["end_FK_processes"]);
 			}
 		}
 	}

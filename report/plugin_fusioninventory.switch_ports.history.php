@@ -195,4 +195,5 @@ function resetSearch() {
 	$_GET["dropdown_sup_inf"]="inf";
 	$_GET["dropdown_calendar"]=date("Y-m-d", mktime(0,0,0,date('m')-3,date('d'),date('Y')));
 }
+
 ?>

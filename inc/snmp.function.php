@@ -1202,5 +1202,4 @@ function plugin_fusioninventory_snmp_networking_ifaddr($ID_Device,$type,$oidsMod
 	}
 }
 
-
 ?>

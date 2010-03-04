@@ -68,52 +68,6 @@ if (plugin_fusioninventory_HaveRight("snmp_models","r")
 	displayRightError();
 }
 
-
-//$p_xml = "
-//<REQUEST>
-//    <DEVICE>
-//      <AUTHSNMP>2</AUTHSNMP>
-//      <DESCRIPTION>HP LaserJet 4100 Series</DESCRIPTION>
-//      <IP>172.23.9.62</IP>
-//      <MODELSNMP>Printer0006</MODELSNMP>
-//      <NETBIOSNAME>P077</NETBIOSNAME>
-//      <SERIAL>JPMGD12222</SERIAL>
-//      <SNMPHOSTNAME>P077</SNMPHOSTNAME>
-//      <TYPE>3</TYPE>
-//    </DEVICE>
-//</REQUEST>";
-//
-//$sxml = @simplexml_load_string($p_xml);
-//
-//foreach ($sxml->children() as $child) {
-//
-//      $child->MAC = strtolower($child->MAC);
-//
-//         $p_criteria['ip'] = $child->IP;
-//         if (!empty($discovery->NETBIOSNAME)) {
-//            $p_criteria['name'] = $child->NETBIOSNAME;
-//         } else if (!empty($child->SNMPHOSTNAME)) {
-//            $p_criteria['name'] = $child->SNMPHOSTNAME;
-//         }
-//         $p_criteria['serial'] = $child->SERIAL;
-//         $p_criteria['macaddr'] = $child->MAC;
-//
-//
-//
-//
-//   if (plugin_fusioninventory_discovery_criteria($p_criteria)) {
-//      echo "In base";
-//      echo $p_criteria['serial'] = $child->SERIAL." / ";
-//      echo $p_criteria['ip'] = $child->IP." / ";
-//      echo $p_criteria['macaddr'] = $child->MAC;
-//   } else {
-//      echo "Not in base";
-//   }
-//   echo "<br/>";
-//}
-
-
-
 commonFooter();
 
 ?>

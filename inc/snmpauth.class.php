@@ -671,4 +671,5 @@ class PluginFusionInventorySNMPAuth extends CommonDBTM {
       }
 	}
 }
+
 ?>

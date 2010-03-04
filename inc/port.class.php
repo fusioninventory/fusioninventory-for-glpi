@@ -509,4 +509,5 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       return $real;
    }
 }
+
 ?>

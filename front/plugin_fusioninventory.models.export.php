@@ -54,6 +54,4 @@ header("Content-disposition: attachment; filename=export.xml");
 
 echo $importexport->plugin_fusioninventory_export($_GET["model"]);
 
-//commonFooter();
-
 ?>

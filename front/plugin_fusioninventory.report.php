@@ -48,12 +48,6 @@ echo "<table class='tab_cadre'>";
 
 echo "<th align='center'>".$LANG["Menu"][6]."</th>";
 
-//echo "<tr class='tab_bg_1'>";
-//echo "<td align='center'>";
-//echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.unknown_mac.php'>Adresses MAC inconnues</a>";
-//echo "</td>";
-//echo "</tr>";
-
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
 echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php'>".$LANG['plugin_fusioninventory']["menu"][5]."</a>";

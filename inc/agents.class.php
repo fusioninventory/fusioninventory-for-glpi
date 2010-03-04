@@ -471,9 +471,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       plugin_fusioninventory_reenableusemode();
       return $state;
    }
-
- 
-
 }
 
 ?>

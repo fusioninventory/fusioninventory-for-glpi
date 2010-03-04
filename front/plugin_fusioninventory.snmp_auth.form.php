@@ -77,4 +77,5 @@ if (isset($_GET["ID"])) {
 $plugin_fusioninventory_snmp_auth->showForm($_SERVER["PHP_SELF"], $ID);
 
 commonFooter();
+
 ?>

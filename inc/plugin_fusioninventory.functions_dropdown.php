@@ -47,5 +47,4 @@ function plugin_fusioninventory_dropdownDefaultYesNo($name,$value) {
 	echo "</select>\n";
 }
 
-
 ?>

@@ -184,4 +184,5 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
       }
    }
 }
+
 ?>

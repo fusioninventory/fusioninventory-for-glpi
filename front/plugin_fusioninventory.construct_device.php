@@ -74,7 +74,6 @@ echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>Exporter tous les modèl
 searchForm(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);
 
-
 commonFooter();
 
 ?>

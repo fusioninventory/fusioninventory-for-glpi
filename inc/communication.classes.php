@@ -1440,4 +1440,5 @@ class PluginFusionInventoryCommunication {
       echo $this->getSend();
    }
 }
+
 ?>

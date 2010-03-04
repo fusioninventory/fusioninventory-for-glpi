@@ -97,6 +97,6 @@ if(!empty($_POST["item_coche"])) {
 $plugin_fusioninventory_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
 $plugin_fusioninventory_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
 
-
 commonFooter();
+
 ?>
