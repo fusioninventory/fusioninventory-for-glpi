@@ -1113,17 +1113,22 @@ class PluginFusionInventoryCommunication {
       } else {
          $cdp=0;
       }
+      $count = 0;
       foreach ($p_connections->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'CDP' : // already managed
                break;
             case 'CONNECTION' :
+               $count++;
                $errors.=$this->importConnection($child, $p_oPort, $cdp);
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTIONS : '
                         .$child->getName()."\n";
          }
+      }
+      if ($count > 1) { // MultipleMac
+         $p_oPort->setValue('trunk', '-1');
       }
       return $errors;
    }
