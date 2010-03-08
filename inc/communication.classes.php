@@ -1129,6 +1129,10 @@ class PluginFusionInventoryCommunication {
       }
       if ($count > 1) { // MultipleMac
          $p_oPort->setValue('trunk', '-1');
+      } else {
+         if ($p_oPort->getValue('trunk') == '-1') {
+            $p_oPort->setValue('trunk', '0');
+         }
       }
       return $errors;
    }
