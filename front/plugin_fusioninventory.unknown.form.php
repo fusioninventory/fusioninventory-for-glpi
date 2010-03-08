@@ -38,7 +38,11 @@ $NEEDED_ITEMS = array (
 	"fusioninventory",
 	"search",
 	"device",
-	"networking"
+	"networking",
+   "computer",
+   "infocom",
+   "printer",
+   "peripheral"
 );
 
 define('GLPI_ROOT', '../../..');
@@ -77,6 +81,17 @@ if (isset($_POST["delete"])) {
 	$ptud->check($_POST['ID'],'w');
 	$ptud->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST["import"])) {
+   $Import = 0;
+   $NoImport = 0;
+   list($Import, $NoImport) = plugin_fusioninventory_discovery_import($_POST['ID'],$Import,$NoImport);
+   addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
+   addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
+   if ($Import == "0") {
+      glpi_header($_SERVER['HTTP_REFERER']);
+   } else {
+      glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.unknown.php");
+   }
 }
 
 $ptud->showTabs($ID, '',$_SESSION['glpi_tab']);

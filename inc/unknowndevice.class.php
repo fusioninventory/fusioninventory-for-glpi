@@ -84,7 +84,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 		echo $LANG["common"][2]." ".$this->fields["ID"];
 		echo "</th>";
 	
-		echo "<th align='center' colspan='2'>";
+		echo "<th align='center' colspan='2' width='50'>";
 		echo $datestring.$date;
 		echo "</th>";
 		echo "</tr>";
@@ -212,14 +212,19 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
-
       echo "<tr>";
-      echo "<td class='tab_bg_2' align='center' colspan='2'>\n";
+      echo "<td class='tab_bg_2' align='center' colspan='4'>\n";
+      echo "<table width='100%'>";
+      echo "<tr>";
+      echo "<td width='33%' align='center'>";
+      echo "<input type='hidden' name='ID' value=$ID>";
+      echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
+      echo "</td>";
+      echo "<td width='33%' align='center'>";
       echo "<input type='hidden' name='ID' value=$ID>";
       echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
-      echo "</td>\n";
-
-      echo "<td class='tab_bg_2' colspan='2'  align='center'>\n";
+      echo "</td>";
+      echo "<td width='33%' align='center'>";
       echo "<input type='hidden' name='ID' value=$ID>";
       echo "<div class='center'>";
       if (!$this->fields["deleted"]){
@@ -231,6 +236,10 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       }
       echo "</div>";
       echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      echo "</td>";
+      echo "</tr>";
 
 		echo "</table></form></div>";
 	}
