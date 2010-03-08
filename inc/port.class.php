@@ -48,6 +48,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
    private $unknownDevicesToConnect=array(); // IP and/or MAC addresses of unknown connected ports
    private $portVlans=array(); // number and name for each vlan
    private $cdp=false; // true if CDP=1
+   private $noTrunk=false; // true if call to setNoTrunk()
    private $glpi_type=NETWORKING_TYPE; // NETWORKING_TYPE, PRINTER_TYPE...
 
 	/**
@@ -486,6 +487,25 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
     **/
    function getCDP() {
       return $this->cdp;
+   }
+
+   /**
+    * Get noTrunk
+    *
+    *@return true/false
+    **/
+   function getNoTrunk() {
+      return $this->noTrunk;
+   }
+
+   /**
+    * Set no trunk
+    *
+    *@return nothing
+    **/
+   function setNoTrunk() {
+      $this->noTrunk = true;
+      $this->setValue('trunk', -1);
    }
 
    /**

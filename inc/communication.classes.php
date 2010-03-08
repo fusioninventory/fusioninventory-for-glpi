@@ -919,8 +919,10 @@ class PluginFusionInventoryCommunication {
                case 'IFSPEED' :
                case 'IFSTATUS' :
                case 'TRUNK' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
-                  $ptp->setValue(strtolower($name), $p_port->$name);
+                  if (!$ptp->getNoTrunk()) {
+                     plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                     $ptp->setValue(strtolower($name), $p_port->$name);
+                  }
                   break;
                default :
                   $errors.=$LANG['plugin_fusioninventory']["errors"][22].' PORT : '.$name."\n";
@@ -1127,8 +1129,14 @@ class PluginFusionInventoryCommunication {
                         .$child->getName()."\n";
          }
       }
-      if ($count > 1) { // MultipleMac
-         $p_oPort->setValue('trunk', '-1');
+      if ($p_oPort->getValue('trunk')!=1) {
+         if ($count > 1) { // MultipleMac
+            $p_oPort->setNoTrunk();
+         } else {
+            if (!$p_oPort->getNoTrunk()) {
+               $p_oPort->setValue('trunk', 0);
+            }
+         }
       } else {
          if ($p_oPort->getValue('trunk') == '-1') {
             $p_oPort->setValue('trunk', '0');
