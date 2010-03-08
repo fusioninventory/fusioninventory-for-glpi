@@ -69,7 +69,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents_errors` (
    `device_type` INT( 11 ) NOT NULL DEFAULT '0',
    `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
    `agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
-   `error_message` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL ,
+   `error_message` text collate utf8_unicode_ci,
    PRIMARY KEY ( `ID` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

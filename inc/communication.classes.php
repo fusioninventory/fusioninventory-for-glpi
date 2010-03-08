@@ -493,6 +493,7 @@ class PluginFusionInventoryCommunication {
             $ptap = new PluginFusionInventoryAgentsProcesses;
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                  array('comments' => $errors));
+
          } else {
             // It's PROLOG
             $result=false;
@@ -580,6 +581,7 @@ class PluginFusionInventoryCommunication {
       if (isset($p_device->ERROR)) {
          $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                               array('query_nb_error' => '1'));
+         $a_input = array();
          $a_input['ID'] = $p_device->ERROR->ID;
          if ($p_device->ERROR->TYPE=='NETWORKING') {
             $a_input['TYPE'] = NETWORKING_TYPE;
@@ -666,11 +668,11 @@ class PluginFusionInventoryCommunication {
          if ($this->deviceId != '') {
             $errors.=$this->importInfoNetworking($p_info);
          } else {
-            $errors.=$LANG['plugin_fusioninventory']["errors"][23].'
-                     type : '.$p_info->TYPE.'
-                     ID : '.$p_info->ID.'
-                     serial : '.$p_info->SERIAL.'
-                     name : "'.$p_info->NAME.'
+            $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
+                     type : '.$p_info->TYPE.'<br/>
+                     ID : '.$p_info->ID.'<br/>
+                     serial : '.$p_info->SERIAL.'<br/>
+                     name : '.$p_info->NAME.'<br/>
                      macaddress : '.$p_info->MAC.'\n';
          }
       } elseif ($p_info->TYPE=='PRINTER') {
@@ -679,14 +681,29 @@ class PluginFusionInventoryCommunication {
          if ($this->deviceId != '') {
             $errors.=$this->importInfoPrinter($p_info);
          } else {
-            $errors.=$LANG['plugin_fusioninventory']["errors"][23].'
-                     type : '.$p_info->TYPE.'
-                     ID : '.$p_info->ID.'
-                     serial : '.$p_info->SERIAL.'
-                     name : '.$p_info->NAME.'
+            $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
+                     type : '.$p_info->TYPE.'<br/>
+                     ID : '.$p_info->ID.'<br/>
+                     serial : '.$p_info->SERIAL.'<br/>
+                     name : '.$p_info->NAME.'<br/>
                      macaddress : '.$p_info->MAC.'\n';
          }
       }
+      if (!empty($errors)) {
+         $pfiae = new PluginFusionInventoryAgentsErrors;
+
+         $a_input = array();
+         $a_input['ID'] = $p_info->ID;
+         if ($p_info->TYPE=='NETWORKING') {
+            $a_input['TYPE'] = NETWORKING_TYPE;
+         } elseif ($p_info->TYPE=='PRINTER') {
+            $a_input['TYPE'] = PRINTER_TYPE;
+         }
+         $a_input['MESSAGE'] = $errors;
+         $a_input['agent_type'] = 'SNMPQUERY';
+         $pfiae->addError($a_input);
+      }
+
       return $errors;
    }
 
