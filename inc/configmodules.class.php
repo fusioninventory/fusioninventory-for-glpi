@@ -125,8 +125,12 @@ class PluginFusionInventoryConfigModules extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='4'>";
-		echo "<input type='hidden' name='tabs' value='configmodules' />";
-		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+      if (plugin_fusioninventory_haveRight("configuration","w")) {
+   		echo "<input type='hidden' name='tabs' value='configmodules' />";
+   		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
+      }
+      echo "</td>";
+      echo "</tr>";
 		echo "</table></form>";
 
 	}

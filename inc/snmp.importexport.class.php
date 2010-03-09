@@ -111,11 +111,13 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		echo "		<td align='center'>";
 //		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:fusioninventory:models' target='_blank'>".$LANG['plugin_fusioninventory']["profile"][19]."&nbsp;</a>";
 		echo "</td>";
-		echo "		<td align='center'>";
-		echo "			<input type='file' name='importfile' value=''/>";
-		echo "			<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
-		echo "		</td>";
-		echo "	</tr>";
+		echo "<td align='center'>";
+		echo "<input type='file' name='importfile' value=''/>";
+      if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+         echo "<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
+      }
+		echo "</td>";
+		echo "</tr>";
 		echo "</table>";
 		
 		echo "</form>";		

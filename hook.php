@@ -1260,7 +1260,7 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 //				if ((plugin_fusioninventory_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 				$array = array ();
             //return array(
-            if ($configModules->isActivated('remotehttpagent')) {
+            if (($configModules->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
 				//}
@@ -1337,8 +1337,8 @@ function plugin_headings_actions_fusioninventory($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if ($configModules->isActivated('remotehttpagent')) {
-            $array[1] = "plugin_headings_fusioninventory_computerInfo";
+         if (($configModules->isActivated('remotehttpagent')) AND (plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
+             $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
 			return $array;

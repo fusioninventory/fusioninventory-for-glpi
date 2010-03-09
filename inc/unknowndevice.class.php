@@ -48,7 +48,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $ong = array();
 		if ($ID > 0){
          $ong[1]=$LANG['title'][27];
-         if ($ptcm->isActivated('remotehttpagent')) {
+         if (($ptcm->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
          }
          $ong[3]=$LANG['title'][38];
@@ -227,12 +227,14 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       echo "<td width='33%' align='center'>";
       echo "<input type='hidden' name='ID' value=$ID>";
       echo "<div class='center'>";
-      if (!$this->fields["deleted"]){
-         echo "<input type='submit' name='delete' value=\"".$LANG['buttons'][6]."\" class='submit'>";
-         }else {
-         echo "<input type='submit' name='restore' value=\"".$LANG['buttons'][21]."\" class='submit'>";
+      if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {
+         if (!$this->fields["deleted"]){
+            echo "<input type='submit' name='delete' value=\"".$LANG['buttons'][6]."\" class='submit'>";
+         } else {
+            echo "<input type='submit' name='restore' value=\"".$LANG['buttons'][21]."\" class='submit'>";
 
-         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"".$LANG['buttons'][22]."\" class='submit'>";
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"".$LANG['buttons'][22]."\" class='submit'>";
+         }
       }
       echo "</div>";
       echo "</td>";

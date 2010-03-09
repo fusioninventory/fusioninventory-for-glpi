@@ -82,7 +82,9 @@ if (isset ($_POST["add_oid"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$importexport->showForm($_SERVER["PHP_SELF"]);
+if(plugin_fusioninventory_HaveRight("snmp_models","r")) {
+   $importexport->showForm($_SERVER["PHP_SELF"]);
+}
 $ID = "";
 if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
@@ -94,9 +96,10 @@ if(!empty($_POST["item_coche"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$plugin_fusioninventory_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
-$plugin_fusioninventory_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
-
+if(plugin_fusioninventory_HaveRight("snmp_models","r")) {
+   $plugin_fusioninventory_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
+   $plugin_fusioninventory_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
+}
 commonFooter();
 
 ?>

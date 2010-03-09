@@ -54,7 +54,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       $ong = array();
 		if ($ID > 0){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
-         if ($ptcm->isActivated('remotehttpagent')) {
+         if (($ptcm->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
          }
       }
@@ -161,19 +161,21 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_2'>";
-		if ($ID=='') {
-         echo "<td align='center' colspan='4'>";
-			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-         echo "</td>";
-		} else {
-         echo "<td align='center' colspan='2'>";
-			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-         echo "</td>";
-         echo "<td align='center' colspan='2'>";
-			echo "<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
-         echo "</td>";
-		}
+      if(plugin_fusioninventory_HaveRight("agents","w")) {
+         if ($ID=='') {
+            echo "<td align='center' colspan='4'>";
+            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+            echo "</td>";
+         } else {
+            echo "<td align='center' colspan='2'>";
+            echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+            echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+            echo "</td>";
+            echo "<td align='center' colspan='2'>";
+            echo "<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
+            echo "</td>";
+         }
+      }
 		echo "</tr>";
 		echo "</table></form></div>";
 
@@ -252,7 +254,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 
    function RemoteStartAgent($ID, $ip) {
       $ptcm = new PluginFusionInventoryConfigModules;
-      if (!$ptcm->isActivated('remotehttpagent')) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND(!plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
          return false;
       }
       $this->getFromDB($ID);
@@ -276,7 +278,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       $ptcm = new PluginFusionInventoryConfigModules;
       $np   = new Netport;
 
-      if (!$ptcm->isActivated('remotehttpagent')) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND(!plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
          return;
       }
       $this->getFromDB($ID);

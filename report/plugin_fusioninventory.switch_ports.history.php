@@ -40,7 +40,7 @@ $NEEDED_ITEMS=array("search","computer","infocom","setup","networking");
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-plugin_fusioninventory_checkRight("snmp_report","r");
+plugin_fusioninventory_checkRight("reports","r");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
 

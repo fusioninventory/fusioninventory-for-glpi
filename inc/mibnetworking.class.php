@@ -189,9 +189,11 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 				echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') ) 
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      $LANG["buttons"][19]."</a>";
-				echo "</td><td align='left' colspan='6' width='80%'>"; 
-				echo "<input class='submit' type='submit' name='delete_oid' value='" .
+				echo "</td><td align='left' colspan='6' width='80%'>";
+            if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+   				echo "<input class='submit' type='submit' name='delete_oid' value='" .
                      $LANG["buttons"][6] . "'>";
+            }
 				echo "</td>";
 				echo "</tr>";
 				echo "</table></div>";
@@ -265,10 +267,13 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 				echo "</tr>";
 				
 				echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
-				echo "<input type='hidden' name='FK_model_infos' value='".$ID."'/>";
-				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
+            if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+   				echo "<input type='hidden' name='FK_model_infos' value='".$ID."'/>";
+   				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
                      "\" class='submit' >";
-				echo "</td></tr>";	
+            }
+				echo "</td>";
+            echo "</tr>";
 				
 				echo "</table></form></div>";
 			}		

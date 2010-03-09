@@ -75,7 +75,12 @@ $LANG['plugin_fusioninventory']["profile"][25]="IP Bereich";
 $LANG['plugin_fusioninventory']["profile"][26]="Agent";
 $LANG['plugin_fusioninventory']["profile"][27]="Agent Information";
 $LANG['plugin_fusioninventory']["profile"][28]="Bericht";
-
+$LANG['plugin_fusioninventory']["profile"][29]="Remote control of agents";
+$LANG['plugin_fusioninventory']["profile"][30]="Unknown devices";
+$LANG['plugin_fusioninventory']["profile"][31]="device inventory FusionInventory";
+$LANG['plugin_fusioninventory']["profile"][32]="SNMP query";
+$LANG['plugin_fusioninventory']["profile"][33]="WakeOnLan";
+$LANG['plugin_fusioninventory']["profile"][34]="Actions";
 
 $LANG['plugin_fusioninventory']["setup"][2]="Danke das Sie alles in die Wurzel Entität gesteckt haben (alles sehen)";
 $LANG['plugin_fusioninventory']["setup"][3]="Plugin Konfiguration".$title;

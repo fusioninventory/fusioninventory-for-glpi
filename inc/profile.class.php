@@ -117,74 +117,106 @@ class PluginFusionInventoryProfile extends CommonDBTM {
 		echo "<form action='".$target."' method='post'>";
 		echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$LANG['plugin_fusioninventory']["profile"][0]." ".$this->fields["name"]."</strong></th></tr>";
+		echo "<tr>";
+      echo "<th colspan='4' align='center'>";
+      echo $LANG['plugin_fusioninventory']["profile"][0]." ".$this->fields["name"];
+      echo "</th>";
+      echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][16].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][16]." :</td>";
+      echo "<td>";
 		dropdownNoneReadWrite("snmp_networking",$this->fields["snmp_networking"],1,1,1);
 		echo "</td>";
-		echo "</tr>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][23]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("configuration",$this->fields["configuration"],1,1,1);
+		echo "</td>";
+		echo "</tr>";      
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][18].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][18]." :</td><td>";
 		dropdownNoneReadWrite("snmp_printers",$this->fields["snmp_printers"],1,1,1);
 		echo "</td>";
-		echo "</tr>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusioninventory']["profile"][34]." :";
+      echo "</th>";
+      echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][19].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][19]." :</td>";
+      echo "<td>";
 		dropdownNoneReadWrite("snmp_models",$this->fields["snmp_models"],1,1,1);
 		echo "</td>";
+
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][29]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("remotecontrol",$this->fields["remotecontrol"],1,0,1);
+		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][20].":</td><td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][20]." :</td>";
+      echo "<td>";
 		dropdownNoneReadWrite("snmp_authentification",$this->fields["snmp_authentification"],1,1,1);
 		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][25].":</td><td>";
-		dropdownNoneReadWrite("snmp_iprange",$this->fields["snmp_iprange"],1,1,1);
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][31]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("deviceinventory",$this->fields["deviceinventory"],1,0,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][26].":</td><td>";
-		dropdownNoneReadWrite("snmp_agent",$this->fields["snmp_agent"],1,1,1);
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][25]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("rangeip",$this->fields["rangeip"],1,1,1);
+		echo "</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][22]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("netdiscovery",$this->fields["netdiscovery"],1,0,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["task"][0].":</td><td>";
-		dropdownNoneReadWrite("fusioninventory_task",$this->fields["fusioninventory_task"],1,1,1);
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][26]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("agents",$this->fields["agents"],1,1,1);
+		echo "</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][32]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("snmp_query",$this->fields["snmp_query"],1,0,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][27].":</td><td>";
-		dropdownNoneReadWrite("snmp_agent_infos",$this->fields["snmp_agent_infos"],1,1,1);
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][27]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("agentsprocesses",$this->fields["agentsprocesses"],1,1,0);
+		echo "</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][33]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("wol",$this->fields["wol"],1,0,1);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][22].":</td><td>";
-		dropdownNoneReadWrite("snmp_discovery",$this->fields["snmp_discovery"],1,1,1);
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][30]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("unknowndevices",$this->fields["unknowndevices"],1,1,1);
 		echo "</td>";
+      echo "<td colspan='2'>";
+      echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][28].":</td><td>";
-		dropdownNoneReadWrite("snmp_report",$this->fields["snmp_report"],1,1,1);
+		echo "<td>".$LANG['plugin_fusioninventory']["profile"][28]." :</td>";
+      echo "<td>";
+		dropdownNoneReadWrite("reports",$this->fields["reports"],1,1,0);
 		echo "</td>";
+      echo "<td colspan='2'>";
+      echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["profile"][23].":</td><td>";
-		dropdownNoneReadWrite("general_config",$this->fields["general_config"],1,1,1);
-		echo "</td>";
-		echo "</tr>";
-		
 		if ($canedit) {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td  align='center' colspan='3'>";

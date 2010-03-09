@@ -156,6 +156,14 @@ function plugin_fusioninventory_update($version) {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
+      // Delete old agents
+      $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_agents`";
+      $DB->query($query_delete);
+
+      // Delete models
+      $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_model_infos`";
+      $DB->query($query_delete);
+
       // Import models
       $importexport = new PluginFusionInventoryImportExport;
       include(GLPI_ROOT.'/inc/setup.function.php');

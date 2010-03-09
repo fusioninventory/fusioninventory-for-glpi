@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","rangeip");
 
-plugin_fusioninventory_checkRight("snmp_iprange","r");
+plugin_fusioninventory_checkRight("rangeip","r");
 
 plugin_fusioninventory_mini_menu();
 

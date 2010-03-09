@@ -145,7 +145,7 @@ function plugin_init_fusioninventory() {
 
 	if (isset($_SESSION["glpiID"])) {
 
-		if (haveRight("config", "w") || haveRight("profile", "w")) {// Config page
+		if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
 			$PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/plugin_fusioninventory.functionalities.form.php';
       }
 
@@ -165,7 +165,7 @@ function plugin_init_fusioninventory() {
          $report_list["report/plugin_fusioninventory.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
 
-			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r") || haveRight("snmp_scripts_infos", "r") || haveRight("snmp_discovery", "r")) {
+			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r")) {
 				$PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
          }
 
@@ -175,12 +175,11 @@ function plugin_init_fusioninventory() {
 
          if (plugin_fusioninventory_HaveRight("snmp_models","r")
             OR plugin_fusioninventory_HaveRight("snmp_authentification","r")
-            OR plugin_fusioninventory_HaveRight("snmp_iprange","r")
-            OR plugin_fusioninventory_HaveRight("snmp_agent","r")
-            OR plugin_fusioninventory_HaveRight("snmp_scripts_infos","r")
-            OR plugin_fusioninventory_HaveRight("snmp_agent_infos","r")
-            OR plugin_fusioninventory_HaveRight("snmp_discovery","r")
-            OR plugin_fusioninventory_HaveRight("snmp_report","r")
+            OR plugin_fusioninventory_HaveRight("rangeip","r")
+            OR plugin_fusioninventory_HaveRight("agents","r")
+            OR plugin_fusioninventory_HaveRight("agentsprocesses","r")
+            OR plugin_fusioninventory_HaveRight("unknowndevices","r")
+            OR plugin_fusioninventory_HaveRight("reports","r")
             ) {
 
             $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
@@ -192,12 +191,12 @@ function plugin_init_fusioninventory() {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['snmp_auth'] = 'front/plugin_fusioninventory.snmp_auth.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/plugin_fusioninventory.snmp_auth.php';
             }
-            if (plugin_fusioninventory_haveRight("snmp_agent","w")) {
+            if (plugin_fusioninventory_haveRight("agents","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/plugin_fusioninventory.agents.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/plugin_fusioninventory.agents.php';
             }
 
-            if (plugin_fusioninventory_haveRight("snmp_iprange","w")) {
+            if (plugin_fusioninventory_haveRight("rangeip","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rangeip'] = 'front/plugin_fusioninventory.rangeip.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rangeip'] = 'front/plugin_fusioninventory.rangeip.php';
             }
@@ -205,7 +204,7 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['constructdevice'] = 'front/plugin_fusioninventory.construct_device.form.php?add=1';
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['constructdevice'] = 'front/plugin_fusioninventory.construct_device.php';
 
-            if (plugin_fusioninventory_haveRight("general_config","w")) {
+            if (plugin_fusioninventory_haveRight("configuration","r")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/plugin_fusioninventory.functionalities.form.php';
             }
 			}

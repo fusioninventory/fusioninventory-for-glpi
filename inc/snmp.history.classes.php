@@ -142,13 +142,16 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
       echo "</td><td class='center'>";
 
       if (count($listName)) {
-         echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_add' value='" . $LANG["buttons"][8] . " >>'>";
+         if (plugin_fusioninventory_haveRight("configuration","w")) {
+            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_add' value='" . $LANG["buttons"][8] . " >>'>";
+         }
       }
       echo "<br /><br />";
       if (!empty($options)) {
-         echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . $LANG["buttons"][6] . "'>";
+         if (plugin_fusioninventory_haveRight("configuration","w")) {
+            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . $LANG["buttons"][6] . "'>";
+         }
       }
-
       echo "</td><td class='left'>";
       if (!empty($options)) {
          echo "<select name='plugin_fusioninventory_extraction_to_delete[]' multiple size='15'>";
@@ -172,7 +175,9 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
-      echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
+      if (plugin_fusioninventory_haveRight("configuration","w")) {
+         echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
+      }
       echo "</td>";
       echo "</tr>";
 
@@ -185,8 +190,12 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		echo "<input type='hidden' name='tabs' value='history' />";
-		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
+      if (plugin_fusioninventory_haveRight("configuration","w")) {
+   		echo "<input type='hidden' name='tabs' value='history' />";
+   		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
+      }
+      echo "</td>";
+      echo "</tr>";
 		echo "</table></form>";
 
    }

@@ -148,13 +148,15 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		if ($ID=='') {
-			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-		} else {
-			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
-		}
+      if(plugin_fusioninventory_HaveRight("rangeip","w")) {
+         if ($ID=='') {
+            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+         } else {
+            echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+            echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
+         }
+      }
 		echo "</td></tr>";
 		echo "</table></form></div>";
 	}

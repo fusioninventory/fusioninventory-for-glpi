@@ -94,7 +94,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
       $pta = new PluginFusionInventoryAgents;
       $ptcm = new PluginFusionInventoryConfigModules;
-      if (!$ptcm->isActivated('remotehttpagent')) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND (!plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
          return;
       }
       // TODO: detect if task yet present in MySQL task table
@@ -161,14 +161,13 @@ class PluginFusionInventoryTask extends CommonDBTM {
       echo "</form>";
       echo "</div>";
       echo "<br/>";
-      
    }
 
 
 
    function addTask($device_id, $device_type, $action, $agent_id, $param="") {
       $ptcm = new PluginFusionInventoryConfigModules;
-      if (!$ptcm->isActivated('remotehttpagent')) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND (!plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
          return false;
       }
       if ($param == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {

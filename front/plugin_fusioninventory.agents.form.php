@@ -53,20 +53,20 @@ $agents = new PluginFusionInventoryAgents;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
-plugin_fusioninventory_checkRight("snmp_agent","r");
+plugin_fusioninventory_checkRight("agents","r");
 
 plugin_fusioninventory_mini_menu();
 
 if (isset ($_POST["add"])) {
-	plugin_fusioninventory_checkRight("snmp_agent","w");
+	plugin_fusioninventory_checkRight("agents","w");
 	$agents->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	plugin_fusioninventory_checkRight("snmp_agent","w");
+	plugin_fusioninventory_checkRight("agents","w");
 	$agents->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	plugin_fusioninventory_checkRight("snmp_agent","w");
+	plugin_fusioninventory_checkRight("agents","w");
 	$agents->delete($_POST);
 	glpi_header("plugin_fusioninventory.agents.php");
 } else if (isset ($_POST["startagent"])) {

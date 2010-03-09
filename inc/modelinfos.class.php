@@ -95,24 +95,26 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
-		if ($ID=='') {
-			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
-              "\" class='submit' >";
-		} else {
-			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-			echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
-              "\" class='submit' >";
-			if (!$this->fields["deleted"]) {
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
-                 $LANG["buttons"][6] . "\" class='submit'>";
+      if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+         if ($ID=='') {
+            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
+                 "\" class='submit' >";
          } else {
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" .
-                 $LANG["buttons"][21] . "\" class='submit'>";
+            echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+            echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
+                 "\" class='submit' >";
+            if (!$this->fields["deleted"]) {
+               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
+                    $LANG["buttons"][6] . "\" class='submit'>";
+            } else {
+               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" .
+                    $LANG["buttons"][21] . "\" class='submit'>";
 
-				echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" .
-                 $LANG["buttons"][22] . "\" class='submit'>";
-			}
-		}
+               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" .
+                    $LANG["buttons"][22] . "\" class='submit'>";
+            }
+         }
+      }
 		echo "</td>";
 		echo "</tr>";
 		echo "</table></form></div>";

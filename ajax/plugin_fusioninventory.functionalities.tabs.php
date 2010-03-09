@@ -52,45 +52,46 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 checkRight("config","w");
 
+if (plugin_fusioninventory_haveRight("configuration","r")) {
+   switch($_POST['glpi_tab']) {
+      case -1 :
+         $config = new PluginFusionInventoryConfig;
+         $config->showForm($_POST['target'],'1');
+         $config_modules = new PluginFusionInventoryConfigModules;
+         $config_modules->showForm($_POST['target'],'1');
+         $history = new PluginFusionInventorySNMPHistory;
+         $history->showForm($_POST['target'],'1');
+         $ptLockable = new PluginFusionInventoryLockable;
+         $ptLockable->showForm($_POST['target']);
+         break;
 
-switch($_POST['glpi_tab']) {
-	case -1 :
-		$config = new PluginFusionInventoryConfig;
-		$config->showForm($_POST['target'],'1');
-		$config_modules = new PluginFusionInventoryConfigModules;
-		$config_modules->showForm($_POST['target'],'1');
-//		$config_discovery = new PluginFusionInventoryConfigDiscovery;
-//		$config_discovery->showForm($_POST['target'],'1');
+      case 2 :
+         $config_modules = new PluginFusionInventoryConfigModules;
+         $config_modules->showForm($_POST['target'],'1');
+         break;
 
-      $history = new PluginFusionInventorySNMPHistory;
-      $history->showForm($_POST['target'],'1');
-		break;
+      case 7 :
+         // Historique
+         $history = new PluginFusionInventorySNMPHistory;
+         $history->showForm($_POST['target'],'1');
+         break;
 
-	case 2 :
-		$config_modules = new PluginFusionInventoryConfigModules;
-		$config_modules->showForm($_POST['target'],'1');
-		break;
+      case 8 :
+         // lockables
+         $ptLockable = new PluginFusionInventoryLockable;
+         $ptLockable->showForm($_POST['target']);
+         break;
 
-   case 7 :
-		// Historique
-      $history = new PluginFusionInventorySNMPHistory;
-      $history->showForm($_POST['target'],'1');
-		break;
-
-   case 8 :
-		// lockables
-      $ptLockable = new PluginFusionInventoryLockable;
-      $ptLockable->showForm($_POST['target']);
-		break;
-
-   default :
-		if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
-			$config = new PluginFusionInventoryConfig;
-			$config->showForm($_POST['target'],'1');
-		}
-		break;
+      default :
+         if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
+            $config = new PluginFusionInventoryConfig;
+            $config->showForm($_POST['target'],'1');
+         }
+         break;
+   }
+} else {
+   echo $LANG['common'][83]."<br/>";
 }
-
 ajaxFooter();
 
 ?>

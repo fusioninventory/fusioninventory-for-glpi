@@ -225,6 +225,7 @@ ALTER TABLE `glpi_plugin_tracker_agents`
   DROP `logs`,
   DROP `fragment`;
 
+
 ############## Rename ###############
 # Rename tracker in fusioninventory #
 
@@ -278,4 +279,33 @@ ALTER TABLE `glpi_plugin_fusioninventory_profiles`
 ALTER TABLE `glpi_plugin_fusioninventory_rangeip`
    CHANGE `FK_tracker_agents_discover` `FK_fusioninventory_agents_discover` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `FK_tracker_agents_query` `FK_fusioninventory_agents_query` INT( 11 ) NOT NULL DEFAULT '0';
+
+
+
+
+
+
+## Others
+
+ALTER TABLE `glpi_plugin_fusioninventory_profiles`
+  DROP `fusioninventory_task`,
+  DROP `snmp_discovery`,
+  DROP `general_config`,
+  DROP `snmp_iprange`,
+  DROP `snmp_agent`,
+  DROP `snmp_agent_infos`,
+  DROP `snmp_report`;
+
+
+ALTER TABLE `glpi_plugin_fusioninventory_profiles` ADD `rangeip` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `agents` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `remotecontrol` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `agentsprocesses` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `unknowndevices` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `reports` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `deviceinventory` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `netdiscovery` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `snmp_query` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `wol` CHAR( 1 ) NULL DEFAULT NULL ,
+   ADD `configuration` CHAR( 1 ) NULL DEFAULT NULL;
 
