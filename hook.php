@@ -1562,7 +1562,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 		case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
 			switch ($action) {
 				case "plugin_fusioninventory_discovery_import" :
-               if(plugin_fusioninventory_HaveRight("snmp_discovery","w")) {
+               if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
 					break;
@@ -1627,7 +1627,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 			break;
       
 		case "plugin_fusioninventory_discovery_import" :
-         if(plugin_fusioninventory_HaveRight("snmp_discovery","w")) {
+         if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {
             $Import = 0;
             $NoImport = 0;
             foreach ($data['item'] as $key => $val) {
