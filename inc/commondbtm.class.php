@@ -46,12 +46,21 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
    private $ptcdLockFields=array();
    protected $ptcdUpdates=array();
    protected $ptcdLinkedObjects=array();
+   private $logFile;
 
 	/**
 	 * Constructor
 	**/
-   function __construct($p_table) {
+   function __construct($p_table, $p_logFile='') {
       $this->table=$p_table;
+      if ($p_logFile != '') {
+         $this->logFile = $p_logFile;
+         $this->addLog('New PluginFusionInventoryCommonDBTM object.');
+      } else {
+         $this->logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/commonDBTM_'.
+                                    time().'_'.rand(1,1000);
+         file_put_contents($this->logFile, 'New PluginFusionInventoryCommonDBTM object.');
+      }
    }
 
    /**
@@ -182,6 +191,16 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
          }
          return false;
       }
+   }
+
+   /**
+    * Add logs
+    *
+    *@param $p_logs logs to write
+    *@return nothing (write text in log file)
+    **/
+   function addLog($p_logs) {
+      file_put_contents($this->logFile, "\n".time().' : '.$p_logs, FILE_APPEND);
    }
 }
 

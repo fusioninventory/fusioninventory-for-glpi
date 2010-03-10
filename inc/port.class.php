@@ -54,12 +54,18 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
 	/**
 	 * Constructor
 	**/
-   function __construct($p_type=NULL) {
-//   function __construct() {
-      parent::__construct("glpi_networking_ports");
+   function __construct($p_type=NULL, $p_logFile='') {
+      if ($p_logFile != '') {
+         $logFile = $p_logFile;
+      } else {
+         $logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/communication_port_'.
+                              time().'_'.rand(1,1000);
+      }
+      parent::__construct("glpi_networking_ports", $logFile);
       $this->oFusionInventory_networking_ports =
               new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_networking_ports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
+      $this->addLog('New PluginFusionInventoryPort object.');
    }
 
    /**
@@ -255,11 +261,11 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
    /**
     * Disconnect a port in DB
     *
-    *@param $p_port='' Port to disconnect
+    *@param $p_port='' Port ID to disconnect
     *@return nothing
     **/
 	function disconnectDB($p_port='') {
-      if ($p_port=='') $p_port=$this;
+      if ($p_port=='') $p_port=$this->getValue('ID');
       $netwire = new Netwire;
       plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($p_port));
       //plugin_fusioninventory_addLogConnection("remove",$p_port);
@@ -504,6 +510,9 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
     *@return nothing
     **/
    function setNoTrunk() {
+      $this->portsToConnect=array(); // no connection
+      $this->unknownDevicesToConnect=array(); // no connection
+
       $this->noTrunk = true;
       $this->setValue('trunk', -1);
    }

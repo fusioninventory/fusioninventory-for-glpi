@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
  * Class to communicate with agents using XML
  **/
 class PluginFusionInventoryCommunication {
-   private $sxml, $deviceId, $ptd, $type='';
+   private $sxml, $deviceId, $ptd, $type='', $logFile;
 
    function __construct() {
       $this->sxml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
@@ -61,6 +61,8 @@ class PluginFusionInventoryCommunication {
                $sxml_param->addAttribute('CYCLE_LATENCY', '60');
                $sxml_param->addAttribute('PERIOD_LENGTH', '10');
          $this->sxml->addChild('PROLOG_FREQ', '24'); // a recup dans base config --> pas trouvé
+         $this->logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/communication.log';
+         $this->addLog('New PluginFusionInventoryCommunication object.');
    }
 
    /**
@@ -457,6 +459,8 @@ class PluginFusionInventoryCommunication {
     **/
    function import($p_xml, &$p_errors='') {
       global $LANG;
+
+      $this->addLog('Function import().');
       // TODO : gérer l'encodage, la version
       // Do not manage <REQUEST> element (always the same)
       $this->setXML($p_xml);
@@ -511,6 +515,7 @@ class PluginFusionInventoryCommunication {
    function importContent($p_content) {
       global $LANG;
 
+      $this->addLog('Function importContent().');
       $ptap = new PluginFusionInventoryAgentsProcesses;
       $pta  = new PluginFusionInventoryAgents;
       
@@ -518,6 +523,7 @@ class PluginFusionInventoryCommunication {
       $nbDevices = 0;
 
       foreach ($p_content->children() as $child) {
+         $this->addLog($child->getName());
          switch ($child->getName()) {
             case 'DEVICE' :
                $errors.=$this->importDevice($child);
@@ -563,6 +569,7 @@ class PluginFusionInventoryCommunication {
    function importDevice($p_device) {
       global $LANG;
 
+      $this->addLog('Function importDevice().');
       $ptap = new PluginFusionInventoryAgentsProcesses;
       $ptae = new PluginFusionInventoryAgentsErrors;
 
@@ -659,6 +666,7 @@ class PluginFusionInventoryCommunication {
    function importInfo($p_info) {
       global $LANG;
 
+      $this->addLog('Function importInfo().');
       $errors='';
       $criteria['serial']  = $p_info->SERIAL;
       $criteria['name']    = $p_info->NAME;
@@ -864,6 +872,7 @@ class PluginFusionInventoryCommunication {
    function importPorts($p_ports) {
       global $LANG;
 
+      $this->addLog('Function importPorts().');
       $errors='';
       foreach ($p_ports->children() as $name=>$child)
       {
@@ -891,8 +900,10 @@ class PluginFusionInventoryCommunication {
    function importPortNetworking($p_port) {
       global $LANG;
 
+      $this->addLog('Function importPortNetworking().');
       $errors='';
-      $ptp = new PluginFusionInventoryPort(NETWORKING_TYPE);
+//      $ptp = new PluginFusionInventoryPort(NETWORKING_TYPE);
+      $ptp = new PluginFusionInventoryPort(NETWORKING_TYPE, $this->logFile);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
@@ -924,6 +935,12 @@ class PluginFusionInventoryCommunication {
                   break;
                case 'IFTYPE' : // already managed
                   break;
+               case 'TRUNK' :
+                  if (!$ptp->getNoTrunk()) {
+                     plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                     $ptp->setValue('trunk', $p_port->$name);
+                  }
+                  break;
 
                case 'IFDESCR' :
                case 'IFINERRORS' :
@@ -935,11 +952,8 @@ class PluginFusionInventoryCommunication {
                case 'IFOUTOCTETS' :
                case 'IFSPEED' :
                case 'IFSTATUS' :
-               case 'TRUNK' :
-                  if (!$ptp->getNoTrunk()) {
-                     plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
-                     $ptp->setValue(strtolower($name), $p_port->$name);
-                  }
+                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :
                   $errors.=$LANG['plugin_fusioninventory']["errors"][22].' PORT : '.$name."\n";
@@ -1121,6 +1135,7 @@ class PluginFusionInventoryCommunication {
    function importConnections($p_connections, $p_oPort) {
       global $LANG;
 
+      $this->addLog('Function importConnections().');
       $errors='';
       if (isset($p_connections->CDP)) {
          $cdp = $p_connections->CDP;
@@ -1154,10 +1169,10 @@ class PluginFusionInventoryCommunication {
                $p_oPort->setValue('trunk', 0);
             }
          }
-      } else {
-         if ($p_oPort->getValue('trunk') == '-1') {
-            $p_oPort->setValue('trunk', '0');
-         }
+//      } else {
+//         if ($p_oPort->getValue('trunk') == '-1') {
+//            $p_oPort->setValue('trunk', '0');
+//         }
       }
       return $errors;
    }
@@ -1172,6 +1187,7 @@ class PluginFusionInventoryCommunication {
    function importConnection($p_connection, $p_oPort, $p_cdp) {
       global $LANG;
 
+      $this->addLog('Function importConnection().');
       $errors='';
       $portID=''; $mac=''; $ip='';
       $ptsnmp= new PluginFusionInventorySNMP;
@@ -1386,6 +1402,7 @@ class PluginFusionInventoryCommunication {
    function sendInventoryToOcsServer($p_xml) {
       global $DB;
 
+      $this->addLog('Function sendInventoryToOcsServer().');
       $ptais = new PluginFusionInventoryAgentsInventoryState;
       
       $this->setXML($p_xml);
@@ -1472,6 +1489,16 @@ class PluginFusionInventoryCommunication {
       $this->sxml->addAttribute('RESPONSE', "ERROR : SSL REQUIRED BY SERVER");
       $this->setXML($this->getXML());
       echo $this->getSend();
+   }
+
+   /**
+    * Add logs
+    *
+    *@param $p_logs logs to write
+    *@return nothing (write text in log file)
+    **/
+   function addLog($p_logs) {
+      file_put_contents($this->logFile, "\n".time().' : '.$p_logs, FILE_APPEND);
    }
 }
 
