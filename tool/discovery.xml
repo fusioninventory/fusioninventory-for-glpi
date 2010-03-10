@@ -296,7 +296,7 @@
    <DEVICE SYSDESCR="Brother NC-6400h, Firmware Ver.1.01  (05.08.31),MID 84UZ92" MANUFACTURER="0" TYPE="3"/>
    <DEVICE SYSDESCR="Dell Laser Printer 1720dn version NM.NA.N094a-p1 kernel 2.6.10 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0007" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Dell Color Laser 3110cn; Net 8.43, Controller 200804091041, Engine 05.09.00" MANUFACTURER="0" TYPE="3"/>
-   <DEVICE SYSDESCR="Dell Color Laser 5110cn; Net 8.43, Controller 200707111650, Engine 01.03.00" MANUFACTURER="0" TYPE="3"/>
+   <DEVICE SYSDESCR="Dell Color Laser 5110cn; Net 8.43, Controller 200707111650, Engine 01.03.00" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0128" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Dell Laser Printer 5210n version NS.NP.N224 kernel 2.6.6 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0007" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Xerox WorkCentre 7232;ESS PS1.205.0,IOT 10.3.0,FIN A5.3.0,IIT 20.5.1,ADF 20.0.0,FAX 1.30.58,SJFI3.0.8,SSMI1.7.1" MANUFACTURER="0" TYPE="3"/>
    <DEVICE SYSDESCR="TOSHIBA e-STUDIO 3520C" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0008" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
@@ -316,7 +316,7 @@
    <DEVICE SYSDESCR="Dell Laser Printer 5210n version NS.NP.N212 kernel 2.6.6 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0007" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="ProSafe 802.11b/g Wireless Access Point -WG102 V5.0.0" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0005"/>
    <DEVICE SYSDESCR="SonicWALL PRO 4100 (SonicOS Enhanced 4.0.0.5-1e)" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0006"/>
-   <DEVICE SYSDESCR="3Com IntelliJack NJ225" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0109" SERIAL=".1.3.6.1.4.1.43.29.4.18.2.1.7.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="3Com IntelliJack NJ225" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0121" SERIAL=".1.3.6.1.4.1.43.29.4.18.2.1.7.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="OmniStack LS 6200" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0007" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Avaya Inc. - P330 Stackable Switch, SW version 4.1.1" MANUFACTURER="0" TYPE="2"/>
    <DEVICE SYSDESCR="Foundry Networks, Inc. FastIron SX 800-PREM, IronWare Version 03.2.00fT3e3 Compiled on Sep 10 2007 at 13:27:27 labeled as SXR03200f" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0010" MAC=".1.3.6.1.2.1.17.1.1.0"/>
@@ -426,7 +426,7 @@
    <DEVICE SYSDESCR="Evolution 800" MANUFACTURER="0" TYPE="5"/>
    <DEVICE SYSDESCR="EXtreme 1000C" MANUFACTURER="0" TYPE="5"/>
    <DEVICE SYSDESCR="Evolution 850" MANUFACTURER="0" TYPE="5"/>
-   <DEVICE SYSDESCR="Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)&#13;&#10;Copyright (c) 1986-2009 by Cisco Systems, Inc.&#13;&#10;Compiled Fri 25-Sep-09 08:49 by sasyamal" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0082" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1001" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)&#13;&#10;Copyright (c) 1986-2009 by Cisco Systems, Inc.&#13;&#10;Compiled Fri 25-Sep-09 08:49 by sasyamal" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0088" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1001" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-ENTSERVICESK9-M), Version 12.2(37)SG1, RELEASE SOFTWARE (fc2)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2007 by Cisco Systems, Inc.&#13;&#10;Compiled Mon 30-Jul-07 13:47" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0100" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Photosmart D7200 series" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0088" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="HP P" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0049" MAC=".1.3.6.1.2.1.17.1.1.0"/>
@@ -516,4 +516,14 @@
    <DEVICE SYSDESCR="Cisco Internetwork Operating System Software &#13;&#10;IOS (tm) C2950lre Software (C2950lre-I6L2Q4-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)&#13;&#10;Copyright (c) 1986-2006 by cisco Systems, Inc.&#13;&#10;Compiled Fri 01-Dec-06 18:06 by weiliu" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0119" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Cisco IOS Software, C1100 Software (C1100-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2007 by Cisco Systems, Inc.&#13;&#10;Compiled Thu 25-Oct-07 22:19 by dchih" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0111" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(10b)JDA, RELEASE SOFTWARE (fc1)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2008 by Cisco Systems, Inc.&#13;&#10;Compiled Thu 30-Oct-08 11:45 by prod_rel_team" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0111" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="AL-C4200" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0125" SERIAL=".1.3.6.1.4.1.1248.1.2.2.1.1.1.5.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-ENTSERVICESK9-M), Version 12.2(53)SG, RELEASE SOFTWARE (fc3)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2009 by Cisco Systems, Inc.&#13;&#10;Compiled Thu 16-Jul-09 19:10 b" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0122" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Canon iR2020 /P" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0126" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Dell Laser Printer 5210n version NS.NP.N240 kernel 2.6.6 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0127" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Dell Laser Printer 5310n version NS.NP.N224 kernel 2.6.6 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0127" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Dell Color Laser 3110cn; Net 8.34, Controller 200605261418, Engine 05.03.00" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0128" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Stylus Office BX600FW" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0129" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Xerox WorkCentre 7232;ESS PS1.207.2,IOT 10.6.0,FIN B13.8.0,IIT 20.5.2,ADF 20.0.0,SJFI3.0.8,SSMI1.7.2" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0130" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adobe PostScript 3016.101 (10), PCL 5c Version 5.0" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinter0128" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Xerox Phaser 6280DN; NIC 13.40,ESS 200903261050,IOT 05.04.00,Boot 200805161055" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0050" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
 </SNMPDISCOVERY>
