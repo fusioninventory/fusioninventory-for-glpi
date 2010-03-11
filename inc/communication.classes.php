@@ -1028,27 +1028,24 @@ class PluginFusionInventoryCommunication {
       foreach ($p_cartridges->children() as $name=>$child)
       {
          switch ($name) {
-            case 'BLACK' :
-            case 'BLACKPHOTO' :
-            case 'CYAN' :
-            case 'CYANLIGHT' :
-            case 'YELLOW' :
-            case 'MAGENTA' :
-            case 'MAGENTALIGHT' :
-            case 'PHOTOCONDUCTOR' :
-            case 'PHOTOCONDUCTORBLACK' :
-            case 'PHOTOCONDUCTORCOLOR' :
-            case 'PHOTOCONDUCTORCYAN' :
-            case 'PHOTOCONDUCTORYELLOW' :
-            case 'PHOTOCONDUCTORMAGENTA' :
-            case 'UNITTRANSFERBLACK' :
-            case 'UNITTRANSFERCYAN' :
-            case 'UNITTRANSFERYELLOW' :
-            case 'UNITTRANSFERMAGENTA' :
-            case 'WASTE' :
-            case 'FUSER' :
-            case 'BELTCLEANER' :
+            case 'TONERBLACK' :
+            case 'TONERBLACK2' :
+            case 'TONERCYAN' :
+            case 'TONERMAGENTA' :
+            case 'TONERYELLOW' :
+            case 'WASTETONER' :
+            case 'CARTRIDGEBLACK' :
+            case 'CARTRIDGEBLACKPHOTO' :
+            case 'CARTRIDGECYAN' :
+            case 'CARTRIDGECYANLIGHT' :
+            case 'CARTRIDGEMAGENTA' :
+            case 'CARTRIDGEMAGENTALIGHT' :
+            case 'CARTRIDGEYELLOW' :
             case 'MAINTENANCEKIT' :
+            case 'DRUMBLACK' :
+            case 'DRUMCYAN' :
+            case 'DRUMMAGENTA' :
+            case 'DRUMYELLOW' :
                $ptc = new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_printers_cartridges");
                $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
                if (is_int($cartridgeIndex)) {
