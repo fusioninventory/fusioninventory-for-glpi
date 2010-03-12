@@ -600,7 +600,7 @@ class PluginFusionInventoryCommunication {
          $ptae->addError($a_input);
       } else {
          $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('query_nb_query' => '1'));
-         $errors.=$this->importInfo($p_device->INFO);
+         $errors.=$this->importInfo($p_device->INFO, $p_device);
          if ($this->deviceId!='') {
             foreach ($p_device->children() as $child) {
                switch ($child->getName()) {
@@ -663,7 +663,7 @@ class PluginFusionInventoryCommunication {
     *
     *@return errors string to be alimented if import ko / '' if ok
     **/
-   function importInfo($p_info) {
+   function importInfo($p_info, $p_device) {
       global $LANG;
 
       $this->addLog('Function importInfo().');
@@ -684,8 +684,25 @@ class PluginFusionInventoryCommunication {
                      macaddress : '.$p_info->MAC.'\n';
          }
       } elseif ($p_info->TYPE=='PRINTER') {
-         //TODO
-         $this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, PRINTER_TYPE);
+         //TODO Get MAC address in port
+         foreach ($p_device->children() as $child) {
+            switch ($child->getName()) {
+               case 'PORTS' :
+                  foreach ($child->children() as $child_port) {
+                     switch ($child_port->getName()) {
+                        case 'PORT' :
+                           $criteria['macaddr'] = $child_port->MAC;
+                           if ($this->deviceId == '') {
+                              $this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, PRINTER_TYPE);
+                           }
+                           break;
+                     }
+                  }
+                  break;
+            }
+         }
+
+         //$this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, PRINTER_TYPE);
          if ($this->deviceId != '') {
             $errors.=$this->importInfoPrinter($p_info);
          } else {
