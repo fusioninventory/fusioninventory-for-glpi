@@ -97,7 +97,7 @@ class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
                $this->oFusionInventory_printer_history->setValue('FK_printers', $this->getValue('ID'));
                $this->oFusionInventory_printer_history->setValue('date', date("Y-m-d H:i:s"));
             }
-         }
+         } 
       }
    }
 
