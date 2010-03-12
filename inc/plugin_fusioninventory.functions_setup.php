@@ -54,6 +54,7 @@ function plugin_fusioninventory_installing($version) {
 	plugin_fusioninventory_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
 	if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
 		mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
 	}
 	
 	$config = new PluginFusionInventoryConfig;
@@ -187,6 +188,7 @@ function plugin_fusioninventory_uninstall() {
 				unlink($current_dir.$f);
 			} else if ($f > '0' and filetype($current_dir.$f) == "dir") {
 				//remove_dir($current_dir.$f."\\");
+            rmdir($current_dir.$f);
 			}
 		}
 		closedir($dir);
