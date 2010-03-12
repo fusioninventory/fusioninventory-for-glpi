@@ -102,7 +102,7 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
    }
 
    /**
-    * Update an existing preloaded item with the instance values
+    * Update an existing preloaded item with the instance values or add a new one
     *
     *@return nothing
     **/
@@ -112,6 +112,7 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
          if ($this->ptcdUpdates['ID'] != '') {
             $this->update($this->ptcdUpdates);
          } else {
+            unset($this->ptcdUpdates['ID']);
             $this->add($this->ptcdUpdates);
          }
       }
