@@ -98,31 +98,34 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       $single = 0;
       
       foreach ($a_tasks as $task_id=>$datas) {
-         //if ($single == "0") {
-            if (($a_tasks[$task_id]['action'] == 'INVENTORY')
-                    AND ($ptcm->isActivated('inventoryocs'))){
-               $ptc->addInventory();
-               $input['ID'] = $task_id;
-               $ptt->delete($input);
-               $ocsinventory = '0';
-//               if ($a_tasks[$task_id]['single'] == "1") {
-                  $single = 1;
-//               }
-            }
-            if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
-                    AND ($ptcm->isActivated('netdiscovery'))) {
-               $single = 1;
-               $ptc->addDiscovery($pxml, 1);
-            }
-         //}
+         if (($a_tasks[$task_id]['action'] == 'INVENTORY')
+                 AND ($ptcm->isActivated('inventoryocs'))
+                 AND ($a_agent['module_inventory'] == '1')) {
+            $ptc->addInventory();
+            $input['ID'] = $task_id;
+            $ptt->delete($input);
+            $ocsinventory = '0';
+            $single = 1;
+         }
+         if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
+                 AND ($ptcm->isActivated('netdiscovery'))
+                 AND ($a_agent['module_netdiscovery'] == '1')) {
+            $single = 1;
+            $ptc->addDiscovery($pxml, 1);
+         }
       }
       
       if ($single == "0") {
          $ptc->addProcessNumber($ptap->addProcess($pxml));
-         $ptc->addDiscovery($pxml);
-         $ptc->addQuery($pxml);
+         if ($a_agent['module_netdiscovery'] == '1') {
+            $ptc->addDiscovery($pxml);
+         }
+         if ($a_agent['module_snmpquery'] == '1') {
+            $ptc->addQuery($pxml);
+         }
       }
-      if ($ocsinventory == '1') {
+      if (($ocsinventory == '1')
+              AND ($a_agent['module_inventory'] == '1')) {
          $ptc->addInventory();
       }
 //      $ptc->addWakeonlan();
