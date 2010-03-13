@@ -57,7 +57,7 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
 
    function defineTabs($ID,$withtemplate) {
 		global $LANG,$CFG_GLPI;
-
+      $ong = array();
 		$ong[1]=$LANG['plugin_fusioninventory']["processes"][19];
       $ong[2]=$LANG['plugin_fusioninventory']["title"][2];
 		$ong[3]=$LANG['plugin_fusioninventory']["errors"][0];
@@ -395,8 +395,7 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
       $input['status'] = 2;
       $input['start_time'] = date("Y-m-d H:i:s");
 
-      $process_id = $this->add($input);
-      
+      $this->add($input);
       return $input['process_number'];
    }
 

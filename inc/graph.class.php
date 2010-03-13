@@ -71,7 +71,6 @@ class PluginFusionInventoryGraph {
       $this->field = $p_field;
       $this->printers = $p_printers;
       $this->title = $p_title;
-      $group='';
       switch ($this->timeUnit) {
          case 'date': // day
             $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][34];
@@ -131,6 +130,7 @@ class PluginFusionInventoryGraph {
                $serie[$i][] = $this->getDateSerie($row, $year, $month);
             } else {
                $i=1;
+               $series = array();
                foreach ($this->printers as $printerId=>$printerDesc) {
                   $series[$printerId]=$i;
                   $i++;
@@ -182,7 +182,8 @@ class PluginFusionInventoryGraph {
     **/
    function getDateSerie($p_row, &$p_year, &$p_month) {
       global $LANG;
-      
+
+      $comment = "";
       switch ($this->timeUnit) {
          case 'date':
             $comment = substr($p_row["date"], 8, 2);

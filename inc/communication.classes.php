@@ -131,10 +131,9 @@ class PluginFusionInventoryCommunication {
       if ($sxml_prolog->QUERY!='PROLOG') {
          $errors.="QUERY invalide\n";
       }
+      $result=false;
       if ($errors=='') {
          $result=true;
-      } else {
-         $result=false;
       }
       return $result;
    }
@@ -157,6 +156,7 @@ class PluginFusionInventoryCommunication {
       $count_range += $ptt->Counter($agent["ID"], "SNMPQUERY");
 
       if (($count_range > 0) && ($agent["lock"] == 0)) {
+         $a_input = array();
          $a_input['query_core'] = $agent["core_query"];
          $a_input['query_threads'] = $agent["threads_query"];
          $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
@@ -184,7 +184,6 @@ class PluginFusionInventoryCommunication {
             }
 
             $modelslist=$ptmi->find();
-            $db_plugins=array();
             if (count($modelslist)){
                foreach ($modelslist as $model){
                   $this->addModel($sxml_option, $model['ID']);
@@ -222,6 +221,7 @@ class PluginFusionInventoryCommunication {
       }
 
       if ((($count_range > 0) && ($agent["lock"] == 0)) OR ($task == "1") ) {
+         $a_input = array();
          $a_input['discovery_core'] = $agent["core_discovery"];
          $a_input['discovery_threads'] = $agent["threads_discovery"];
          $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
@@ -489,9 +489,8 @@ class PluginFusionInventoryCommunication {
          default :
             $errors.=$LANG['plugin_fusioninventory']["errors"][22].' QUERY : *'.$this->sxml->QUERY."*\n";
       }
-      if ($errors=='') {
-         $result=true;
-      } else {
+      $result=true;
+      if ($errors != '') {
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
             $result=true;
             $ptap = new PluginFusionInventoryAgentsProcesses;
@@ -629,6 +628,7 @@ class PluginFusionInventoryCommunication {
             } else {
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                      array('query_nb_error' => '1'));
+               $a_input = array();
                $a_input['ID'] = $p_device->ERROR->ID;
                if ($p_device->ERROR->TYPE=='NETWORKING') {
                   $a_input['TYPE'] = NETWORKING_TYPE;
@@ -642,6 +642,7 @@ class PluginFusionInventoryCommunication {
          } else {
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                   array('query_nb_error' => '1'));
+            $a_input = array();
             $a_input['ID'] = $p_device->ERROR->ID;
             if ($p_device->ERROR->TYPE=='NETWORKING') {
                $a_input['TYPE'] = NETWORKING_TYPE;
@@ -1159,7 +1160,7 @@ class PluginFusionInventoryCommunication {
             $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTIONS : CDP='.$cdp."\n";
          }
       } else {
-         $cdp=0;
+         $cdp = 0;
       }
       $count = 0;
       foreach ($p_connections->children() as $name=>$child) {
@@ -1309,6 +1310,7 @@ class PluginFusionInventoryCommunication {
       $result     = '';
       $pad        = 0;
       $matches    = array();
+      $indent     = 0;
 
       while ($token !== false) {
          // 1. open and closing tags on same line - no change
@@ -1355,7 +1357,6 @@ class PluginFusionInventoryCommunication {
                         foreach ($connectionChild->children() as $ipName=>$ipChild) {
                            switch ($ipName) {
                               case 'IP' :
-                                 $ip=$ipChild;
                                  if ($ipChild != '') return $ipChild;
                            }
                         }
@@ -1380,7 +1381,6 @@ class PluginFusionInventoryCommunication {
                foreach ($portChild->children() as $macName=>$macChild) {
                   switch ($macName) {
                      case 'MAC' :
-                        $mac=$macChild;
                         if ($macChild != '') return $macChild;
                   }
                }
@@ -1396,6 +1396,7 @@ class PluginFusionInventoryCommunication {
          $pta = new PluginFusionInventoryAgents;
          $a_agent = $pta->find("`key`='".$this->sxml->DEVICEID."'", "", "1");
          if (empty($a_agent)) {
+            $a_input = array();
             $a_input['token'] = $this->sxml->TOKEN;
             $a_input['name'] = $this->sxml->DEVICEID;
             $a_input['key'] = $this->sxml->DEVICEID;
@@ -1490,7 +1491,6 @@ class PluginFusionInventoryCommunication {
 
 
    function addWakeonlan() {
-      $ptc = new PluginFusionInventoryConfig;
        $sxml_option = $this->sxml->addChild('OPTION');
        $sxml_option->addChild('NAME', 'WAKEONLAN');
        $sxml_param = $sxml_option->addChild('PARAM');

@@ -184,6 +184,7 @@ Ext.getCmp('fusioninventory_1').getUpdater().stopAutoRefresh();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) == 1) {
             $data = $DB->fetch_assoc($result);
+            $a_input = array();
             $a_input['ID'] = $data['ID'];
             $a_input['date_mod'] = date("Y-m-d H:i:s");
             $a_input['state'] = $newstate;

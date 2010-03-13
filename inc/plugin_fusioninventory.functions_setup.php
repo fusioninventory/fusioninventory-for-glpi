@@ -214,10 +214,12 @@ function plugin_fusioninventory_uninstall() {
                  OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
                  OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_AGENTS."'
                  OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP."'
-                 OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_DISCOVERY."'
                  OR `type`='".PLUGIN_FUSIONINVENTORY_AGENTS_PROCESSES."'
                  OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_HISTORY."'
-                 OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."' ;";
+                 OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."'
+                 OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_CONFIG."'
+                 OR `type`='".PLUGIN_FUSIONINVENTORY_TASK."'
+                 OR `type`='".PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE."' ;";
 	$DB->query($query) or die($DB->error());
 
 

@@ -100,6 +100,13 @@ function plugin_fusioninventory_lockable_getLockableFields($p_entities_id='', $p
 function plugin_fusioninventory_lockable_setLockable($p_id, $p_itemtype, $p_fields, $p_entities_id, $p_recursive) {
 	global $DB;
 
+   if (empty($p_entities_id)) {
+      $p_entities_id = 0;
+   }
+   if (empty($p_recursive)) {
+      $p_recursive = 1;
+   }
+
    if (!$p_id) {
       $insert = "INSERT INTO `glpi_plugin_fusioninventory_lockable` (
                   `itemtype`, `fields`, `entities_id`, `recursive` )

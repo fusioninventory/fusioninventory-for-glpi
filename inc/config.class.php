@@ -86,7 +86,7 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 
 	function defineTabs($ID,$withtemplate) {
 		global $LANG,$CFG_GLPI;
-
+      $ong = array();
 		$ong[1]=$LANG['plugin_fusioninventory']["functionalities"][2];
       $ong[2]=$LANG['plugin_fusioninventory']['config'][1];
 //		$ong[3]=$LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG['plugin_fusioninventory']["functionalities"][5];
@@ -119,7 +119,7 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 		echo "</td>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][16]."&nbsp;:</td>";
 		echo "<td width='20%'>";
-		unset($ArrayValues);
+		$ArrayValues = array();
 		$ArrayValues['DB']= $LANG['plugin_fusioninventory']["functionalities"][17];
 		$ArrayValues['file']= $LANG['plugin_fusioninventory']["functionalities"][18];
 		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));

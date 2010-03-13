@@ -883,8 +883,9 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Hidden auth passphrase (SNMP v3)
 				case "glpi_plugin_fusioninventory_snmp_connection.auth_passphrase" :
+               $out = "";
 					if (empty($data["ITEM_$num"])) {
-						$out = "";
+						
                } else {
 						$out = "********";
                }
@@ -893,8 +894,9 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Hidden priv passphrase (SNMP v3)
 				case "glpi_plugin_fusioninventory_snmp_connection.priv_passphrase" :
+               $out = "";
 					if (empty($data["ITEM_$num"])) {
-						$out = "";
+						
                } else {
 						$out = "********";
                }
@@ -1331,7 +1333,6 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_fusioninventory($type) {
 
-	$config = new PluginFusionInventoryConfig;
    $configModules = new PluginFusionInventoryConfigModules;
 
 	switch ($type) {
@@ -1342,29 +1343,13 @@ function plugin_headings_actions_fusioninventory($type) {
          }
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
 			return $array;
-
-//			if ((plugin_fusioninventory_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-//			}
-//			if (plugin_fusioninventory_haveRight("printers_info", "r")) {
-//				$array = array (
-//					2 => "plugin_headings_fusioninventory_computersInfo"
-//				);
-//			}
-//			if ((plugin_fusioninventory_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-//				$array = array (
-//					1 => "plugin_headings_fusioninventory_computerHistory"
-//				);
-//			}
-			return $array;
 			break;
 
 		case MONITOR_TYPE :
-			$array = array ();
-//			if ((plugin_fusioninventory_haveRight("computers_history", "r")) && (($config->isActivated('computers_history')) == true)) {
-				$array = array (
-					1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
-				);
-//			}
+         $array = array ();
+         $array = array (
+            1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
+         );
       case PRINTER_TYPE :
 			$array = array ();
 			if (plugin_fusioninventory_haveRight("snmp_printers", "r")) {
@@ -1661,6 +1646,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_unknown_device.type' :
+         $type_list = array();
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
 			$type_list[] = PRINTER_TYPE;
@@ -1720,6 +1706,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_model_infos.device_type' :
+         $type_list = array();
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
 			$type_list[] = PRINTER_TYPE;

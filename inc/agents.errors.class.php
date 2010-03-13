@@ -69,9 +69,8 @@ class PluginFusionInventoryAgentsErrors extends CommonDBTM {
 
       echo "</tr>";
 
-      if (!isset($input['process_number'])) {
-         $condition = '';
-      } else {
+      $condition = "";
+      if (isset($input['process_number'])) {
          $condition = "WHERE `process_number`='".$input['process_number']."'";
          if (isset($input['agent_type'])) {
             $condition .= " AND agent_type='".$input['agent_type']."' ";

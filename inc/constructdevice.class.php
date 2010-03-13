@@ -86,6 +86,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>" . $LANG['common'][17] . " :</td>";
 		echo "<td>";
+         $type_list = array();
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
 			$type_list[] = PRINTER_TYPE;
@@ -224,7 +225,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
 
 //      $mapping_pre[3][''] = '';
-
+      $mapping_pre_vlan = array();
       $mapping_pre_vlan['.1.3.6.1.4.1.9.9.46.1.6.1.1.14'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.1'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.4.22.1.2'] = '1';
@@ -248,7 +249,11 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
          WHERE construct_device_id='".$ID."'";
       echo "<div align='center'>
          <form method='post' name='' id=''  action='".$target."' >";
-      
+
+      $a_oids = array();
+      $a_oids1 = array();
+      $a_oids2 = array();
+      $a_mibs = array();
       if ($result = $DB->query($query)) {
 			if ($data = $DB->fetch_array($result)) {
             $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
@@ -569,9 +574,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
          LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
-      if (empty($data['discovery_key'])) {
-         $num = '1';
-      } else {
+      $num = 1;
+      if (!empty($data['discovery_key'])) {
          $num = str_replace('Networking', '', $data['discovery_key']);
          $num++;
       }
@@ -696,6 +700,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $result     = '';
       $pad        = 0;
       $matches    = array();
+      $indent     = 0;
 
       while ($token !== false) {
          // 1. open and closing tags on same line - no change

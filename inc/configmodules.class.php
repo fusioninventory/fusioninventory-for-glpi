@@ -46,7 +46,6 @@ class PluginFusionInventoryConfigModules extends CommonDBTM {
 
 	function initConfig() {
 		global $DB,$CFG_GLPI;
-		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(
                               `id`, `snmp`, `inventoryocs`, `netdiscovery`, `remotehttpagent`, `wol`)
                 VALUES ('1', '0', '0', '0', '0', '0');";

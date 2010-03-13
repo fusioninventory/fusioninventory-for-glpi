@@ -49,12 +49,17 @@ function plugin_fusioninventory_createfirstaccess($ID) {
 
 		$query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
 				    `ID`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`, 
-                `snmp_models`, `snmp_authentification`, `fusioninventory_task`, `snmp_discovery`,
-                `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` )
-				    VALUES ('$ID', '$name','fusioninventory','0','w','w','w','w','w','w','w','w','w','w','w');";
+                `snmp_models`, `snmp_authentification`, `rangeip`, `agents`, `remotecontrol`,
+                `agentsprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+                `snmp_query`, `wol`, `configuration` )
+				    VALUES ('$ID', '$name','fusioninventory','0','w','w',
+                  'w','w','w','w','w',
+                  'r','w','r','w','w',
+                  'w','w','w');";
 		$DB->query($query);
 	}
 }
+
 
 function plugin_fusioninventory_createaccess($ID) {
 	global $DB;
@@ -64,11 +69,14 @@ function plugin_fusioninventory_createaccess($ID) {
 	$name=$Profile->fields["name"];
 	
 	$query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
-             `ID`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`, 
-             `snmp_models`, `snmp_authentification`, `fusioninventory_task`, `snmp_discovery`,
-             `general_config`, `snmp_iprange`, `snmp_agent`, `snmp_agent_infos`, `snmp_report` )
-             VALUES ('$ID', '$name','fusioninventory','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
-                     NULL,NULL);";
+                `ID`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
+                `snmp_models`, `snmp_authentification`, `rangeip`, `agents`, `remotecontrol`,
+                `agentsprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+                `snmp_query`, `wol`, `configuration` )
+             VALUES ('$ID', '$name','fusioninventory','0',NULL,NULL,
+                NULL,NULL,NULL,NULL,NULL,
+                NULL,NULL,NULL,NULL,NULL,
+                NULL,NULL,NULL);";
 	$DB->query($query);
 }
 

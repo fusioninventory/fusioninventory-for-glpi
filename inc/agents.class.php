@@ -276,7 +276,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       global $LANG,$CFG_GLPI;
 
       $ptcm = new PluginFusionInventoryConfigModules;
-      $np   = new Netport;
 
       if ((!$ptcm->isActivated('remotehttpagent')) AND(!plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
          return;
@@ -453,9 +452,8 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       global $LANG;
       
       plugin_fusioninventory_disableDebug();
-      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 1))) {
-         $state = false;
-      } else {
+      $state = false;
+      if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip-$type'/>";

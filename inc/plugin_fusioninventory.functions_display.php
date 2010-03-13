@@ -293,7 +293,7 @@ function plugin_fusioninventory_Bar ($pourcentage, $message="",$order='') {
 						<tr>
 							<td>
 								<div>
-								<table>
+								<table cellpadding='0' cellspacing='0'>
 									<tbody>
 										<tr>
 											<td width='400' height='0' colspan='2'></td>										
@@ -327,9 +327,9 @@ function plugin_fusioninventory_Bar ($pourcentage, $message="",$order='') {
       }
 	}
    if ($pourcentage == 0) {
-      echo "									<td width='1'></td>";
+      echo "									<td height='20' width='1'></td>";
    } else {
-      echo "									<td width='".(400 - (4 * $pourcentage))."'></td>";
+      echo "									<td height='20' width='".(400 - (4 * $pourcentage))."'></td>";
    }
    echo "								</tr>
 									</tbody>
