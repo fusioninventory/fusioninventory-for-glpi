@@ -136,15 +136,6 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
    } else {
       $res .= "0'".$errors."'";
    }
-} else {
-   $top1 = gettimeofday();
-   $duree["sec"]  = $top1["sec"]-$top0["sec"];
-  $duree["usec"] = $top1["usec"]-$top0["usec"];
-
-  if ($duree["usec"]<0) {
-   $duree["sec"]--;
-   $duree["usec"]+=1000000;
-  }
 }
 
 ?>

@@ -89,6 +89,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       }
 
       $CommonItem = new CommonItem;
+      $ptcm       = new PluginFusionInventoryConfigModules;
 
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
@@ -105,12 +106,15 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
 		echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']['config'][3]." :</td>";
-		echo "<td align='center'>";
+      if ($ptcm->getValue('inventoryocs') == "1") {
+         echo "<td>".$LANG['plugin_fusioninventory']['config'][3]." :</td>";
+         echo "<td align='center'>";
 		dropdownYesNo("module_inventory",$this->fields["module_inventory"]);
 		echo "</td>";
+      } else {
+         echo "<td colspan='2'></td>";
+      }
 		echo "</tr>";
-
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["agents"][5]." :</td>";
@@ -118,10 +122,14 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo $this->fields["fusioninventory_agent_version"];
 		echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']['config'][4]." :</td>";
-		echo "<td align='center'>";
-		dropdownYesNo("module_netdiscovery",$this->fields["module_netdiscovery"]);
-		echo "</td>";
+      if ($ptcm->getValue('netdiscovery') == "1") {
+         echo "<td>".$LANG['plugin_fusioninventory']['config'][4]." :</td>";
+         echo "<td align='center'>";
+         dropdownYesNo("module_netdiscovery",$this->fields["module_netdiscovery"]);
+         echo "</td>";
+      } else {
+         echo "<td colspan='2'></td>";
+      }
 		echo "</tr>";
 
 
@@ -131,10 +139,14 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		dropdownYesNo("lock",$this->fields["lock"]);
 		echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']['config'][7]." :</td>";
-		echo "<td align='center'>";
-		dropdownYesNo("module_snmpquery",$this->fields["module_snmpquery"]);
-		echo "</td>";
+      if ($ptcm->getValue('snmp') == "1") {
+         echo "<td>".$LANG['plugin_fusioninventory']['config'][7]." :</td>";
+         echo "<td align='center'>";
+         dropdownYesNo("module_snmpquery",$this->fields["module_snmpquery"]);
+         echo "</td>";
+      } else {
+         echo "<td colspan='2'></td>";
+      }
 		echo "</tr>";
 
       		
@@ -146,11 +158,14 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       echo $CommonItem->getLink(1);
 		echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']['config'][6]." :</td>";
-		echo "<td align='center'>";
-		dropdownYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);
-		echo "</td>";
-		echo "</tr>";
+      if ($ptcm->getValue('wol') == "1") {
+         echo "<td>".$LANG['plugin_fusioninventory']['config'][6]." :</td>";
+         echo "<td align='center'>";
+         dropdownYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);
+         echo "</td>";
+		} else {
+         echo "<td colspan='2'></td>";
+      }
 
 
 		echo "<tr class='tab_bg_1'>";
@@ -296,16 +311,16 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       echo "<td colspan='2' align='center'>";
       $array_actions = array();
       $array_actions[""] = "------";
-      if (isset($a_modules["INVENTORY"])) {
+      if ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("inventoryocs") == '1') AND ($this->fields['module_inventory'] == '1')) {
          $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
       }
-      if (isset($a_modules["NETDISCOVERY"])) {
+      if ((isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($this->fields['module_netdiscovery'] == '1')) {
          $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
       }
-      if (isset($a_modules["SNMPQUERY"])) {
+      if ((isset($a_modules["SNMPQUERY"])) AND ($ptcm->getValue("snmp") == '1') AND ($this->fields['module_snmpquery'] == '1')) {
          $array_actions["SNMPQUERY"] = $LANG['plugin_fusioninventory']['config'][7];
       }
-      if (isset($a_modules["WAKEONLAN"])) {
+      if ((isset($a_modules["WAKEONLAN"])) AND ($ptcm->getValue("wol") == '1') AND ($this->fields['module_wakeonlan'] == '1')) {
          $array_actions["WAKEONLAN"] = $LANG['plugin_fusioninventory']['config'][6];
       }
 
