@@ -437,10 +437,10 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY]['common'] = $LANG['plugin_fusioninventory']["title"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][30]['table'] = 'glpi_plugin_fusioninventory_snmp_history';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][30]['field'] = 'ID';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][30]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][30]['name'] = $LANG["common"][2];
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['table'] = 'glpi_plugin_fusioninventory_snmp_history';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['field'] = 'ID';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['linkfield'] = '';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['name'] = $LANG["common"][2];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['table'] = 'glpi_networking_ports';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['field'] = 'ID';
@@ -667,7 +667,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 
 function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
-	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LINK_ID_TABLE,$LANG,$SEARCH_OPTION;
+	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LINK_ID_TABLE,$LANG,$SEARCH_OPTION,$FUSIONINVENTORY_MAPPING;
 
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
@@ -1065,13 +1065,8 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Display GLPI field of device
 				case "glpi_plugin_fusioninventory_snmp_history.Field" :
-					if ($data["ITEM_$num"] == "0") {
-						if (empty($data["ITEM_4"])) {
-							return "<center><b>".$LANG['plugin_fusioninventory']["history"][3]."</b></center>";
-                  } else if (empty($data["ITEM_5"])) {
-							return "<center><b>".$LANG['plugin_fusioninventory']["history"][2]."</b></center>";
-                  }
-					}
+               $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["ITEM_$num"]]['name'];
+               return $out;
 					break;
 
 				// ** Display Old Value (before changement of value)
@@ -2040,6 +2035,11 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
 			}
 			break;
+
+      // * ports updates list (report/switch_ports.history.php)
+		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
+         return " LEFT JOIN `glpi_networking_ports` ON ( `glpi_networking_ports`.`ID` = `glpi_plugin_fusioninventory_snmp_history`.`FK_ports` ) ";
+			break;
 	}
 	return "";
 }
@@ -2476,7 +2476,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					}
 					if (!empty($val)) {
                   include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
-						$val = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$val]['name'];
+						$val = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$val]['field'];
                }
 					return $link." ($table.$field = '".addslashes($val)."' $ADD ) ";
 					break;

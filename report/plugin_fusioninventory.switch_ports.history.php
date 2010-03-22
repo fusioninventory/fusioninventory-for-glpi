@@ -70,13 +70,14 @@ if(isset($_GET["FK_networking_ports"])) {
 	$_GET["field"][1]=3;
 	if ((isset($_GET["Field"])) AND !empty($_GET["Field"])) {
 		$_GET["contains"][1]=$_GET["Field"];
-		//$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$_GET["Field"]]['name'];
 		$_GET["link"][1] = "AND";
 	} else {
 		$_GET["contains"][1] = "";
 		$_GET["link"][1] = "AND";
    }
-
+   if ($_GET["FK_networking_ports"]=='-----') {
+      $_GET["contains"][0]='*';
+   }
 	$_GET["sort"] = 1;
 	$_GET["order"]="DESC";
 
