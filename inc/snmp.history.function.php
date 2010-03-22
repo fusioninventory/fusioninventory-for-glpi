@@ -164,8 +164,8 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
       SELECT * FROM(
          SELECT * FROM (
             SELECT date as date, process_number as process_number,
-            FK_port_source, FK_port_destination, creation,
-            Field, old_value, new_value
+            FK_port_source, FK_port_destination,
+            creation as Field, NULL as old_value, NULL as new_value
 
             FROM glpi_plugin_fusioninventory_snmp_history_connections
             WHERE `FK_port_source`='".$ID_port."'
@@ -177,7 +177,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
          UNION ALL
          SELECT * FROM (
             SELECT date_mod as date, FK_process as process_number,
-            FK_ports AS FK_port_source, FK_port_destination, creation,
+            FK_ports AS FK_port_source, NULL as FK_port_destination,
             Field, old_value, new_value
 
             FROM glpi_plugin_fusioninventory_snmp_history
@@ -211,9 +211,9 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
    if ($result=$DB->query($query)) {
 		while ($data=$DB->fetch_array($result)) {
 			$text .= "<tr class='tab_bg_1'>";
-			if (($data["FK_port_destination"] != "0") AND ($data["FK_port_destination"] != 'FK_port_destination')) {
+			if (!empty($data["FK_port_destination"])) {
 				// Connections and disconnections
-            if ($data['creation'] == '1') {
+            if ($data['Field'] == '1') {
                $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/></td>";
             } else {
                $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
