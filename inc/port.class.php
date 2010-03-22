@@ -532,6 +532,12 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
             OR ($p_type == "ieee80211(71)")        // wifi
             OR ($p_type == "ieee80211")            // wifi
             OR ($p_type == "71")                   // wifi
+            OR ($p_type == "gigabitEthernet(117)")
+            OR ($p_type == "gigabitEthernet")
+            OR ($p_type == "117")
+            OR ($p_type == "fastEther(62)")
+            OR ($p_type == "fastEther")
+            OR ($p_type == "62")
          ) { // not virtual port
          $real = true;
       }
