@@ -104,7 +104,7 @@ function plugin_fusioninventory_networking_ports_addLog($port_id, $new_value, $f
    }
 
    $ptp->load($port_id);
-   echo $ptp->getValue($db_field);
+   //echo $ptp->getValue($db_field);
    if ($ptp->getValue($db_field) != $new_value) {
       $array["FK_ports"] = $port_id;
       $array["field"] = $field;
@@ -148,7 +148,6 @@ function plugin_fusioninventory_addLogConnection($status,$port,$FK_process=0) {
 
    $pthc->add($input);
 }
-
 
 
 // List of history in networking display
