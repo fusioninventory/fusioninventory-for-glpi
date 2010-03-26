@@ -162,7 +162,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
    $query = "
       SELECT * FROM(
          SELECT * FROM (
-            SELECT date as date, process_number as process_number,
+            SELECT ID, date as date, process_number as process_number,
             FK_port_source, FK_port_destination,
             creation as Field, NULL as old_value, NULL as new_value
 
@@ -175,7 +175,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
          AS DerivedTable1
          UNION ALL
          SELECT * FROM (
-            SELECT date_mod as date, FK_process as process_number,
+            SELECT ID, date_mod as date, FK_process as process_number,
             FK_ports AS FK_port_source, NULL as FK_port_destination,
             Field, old_value, new_value
 
@@ -186,7 +186,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
             )
          AS DerivedTable2)
       AS MainTable
-      ORDER BY date DESC
+      ORDER BY date DESC, ID DESC
       LIMIT 0,30";
 //echo $query."<br/>";
 	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
