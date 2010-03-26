@@ -157,6 +157,10 @@ class PluginFusionInventoryCommunication {
 
       if (($count_range > 0) && ($agent["lock"] == 0)) {
          $a_input = array();
+         if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
+            $this->addProcessNumber($ptap->addProcess($pxml));
+            $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
+         }
          $a_input['query_core'] = $agent["core_query"];
          $a_input['query_threads'] = $agent["threads_query"];
          $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
@@ -222,6 +226,10 @@ class PluginFusionInventoryCommunication {
 
       if ((($count_range > 0) && ($agent["lock"] == 0)) OR ($task == "1") ) {
          $a_input = array();
+         if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
+            $this->addProcessNumber($ptap->addProcess($pxml));
+            $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
+         }
          $a_input['discovery_core'] = $agent["core_discovery"];
          $a_input['discovery_threads'] = $agent["threads_discovery"];
          $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
@@ -1485,6 +1493,10 @@ class PluginFusionInventoryCommunication {
 
    function addInventory() {
       $ptc = new PluginFusionInventoryConfig;
+      if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
+         $this->addProcessNumber($ptap->addProcess($pxml));
+         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
+      }
       $this->sxml->addAttribute('RESPONSE', "SEND");
       $this->sxml->addAttribute('PROLOG_FREQ', $ptc->getValue('inventory_frequence'));
    }
@@ -1512,7 +1524,7 @@ class PluginFusionInventoryCommunication {
     *@return nothing (write text in log file)
     **/
    function addLog($p_logs) {
-      file_put_contents($this->logFile, "\n".time().' : '.$p_logs, FILE_APPEND);
+//      file_put_contents($this->logFile, "\n".time().' : '.$p_logs, FILE_APPEND);
    }
 }
 

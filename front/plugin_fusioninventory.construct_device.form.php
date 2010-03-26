@@ -50,7 +50,14 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 plugin_fusioninventory_mini_menu();
 
-if (isset ($_POST["add"])) {
+if (isset($_GET['vlan_update'])) {
+   $query_update = "UPDATE `glpi_plugin_fusioninventory_construct_mibs`
+         SET vlan=0
+      WHERE construct_device_id=".$_GET['ID']."
+         AND mib_oid_id=".$_GET['vlan_update'];
+   $DB->query($query_update);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset ($_POST["add"])) {
    $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_device
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);

@@ -96,6 +96,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       $a_tasks = $ptt->find("`agent_id`='".$a_agent['ID']."'", "date");
 
       $single = 0;
+      $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '0';
       
       foreach ($a_tasks as $task_id=>$datas) {
          if (($a_tasks[$task_id]['action'] == 'INVENTORY')
@@ -116,7 +117,6 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       }
       
       if ($single == "0") {
-         $ptc->addProcessNumber($ptap->addProcess($pxml));
          if ($a_agent['module_netdiscovery'] == '1') {
             $ptc->addDiscovery($pxml);
          }
