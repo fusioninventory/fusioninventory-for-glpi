@@ -153,9 +153,13 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["agents"][23]." :</td>";
 		echo "<td align='center'>";
-      $CommonItem->getFromDB($this->fields["device_type"],
-                                $this->fields["on_device"]);
-      echo $CommonItem->getLink(1);
+      if ($this->fields["on_device"] != "0") {
+         $CommonItem->getFromDB(COMPUTER_TYPE,
+                                   $this->fields["on_device"]);
+         echo $CommonItem->getLink(1);
+      } else {
+         dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'on_device', $_SESSION['glpiactive_entity']);
+      }
 		echo "</td>";
 
       if ($ptcm->getValue('wol') == "1") {
@@ -166,7 +170,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		} else {
          echo "<td colspan='2'></td>";
       }
-
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td>Token :</td>";
@@ -327,7 +330,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       $rand = dropdownArrayValues("agentaction",$array_actions);
       echo "</td>";
       echo "</tr>";
-      $params=array('action'=>'__VALUE__', 'on_device'=>$ID, 'device_type'=>$type);
+      $params=array('action'=>'__VALUE__', 'on_device'=>$this->fields['on_device'], 'device_type'=>COMPUTER_TYPE);
       ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
 
       echo "<tr class='tab_bg_1'>";
@@ -356,17 +359,17 @@ class PluginFusionInventoryAgents extends CommonDBTM {
    
    function showAgentInventory($on_device, $device_type) {
       global $DB,$LANG;
-      
+
       // Recherche de chaque port de l'équipement
       $np = new Netport;
       $count_agent_on = 0;
       $agent_id = 0;
 
       $a_portsList = $np->find('on_device='.$on_device.' AND device_type='.$device_type);
-      $a_agent = $this->find('on_device='.$on_device.' AND device_type='.$device_type, "", 1);
+      $a_agent = $this->find('on_device='.$on_device.' AND device_type IN ('.$device_type.', 0)', "", 1);
 
       foreach ($a_agent as $agent_id=>$data) {
-  
+
       }
       if ($agent_id == "0") {
          return;
@@ -426,7 +429,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
    }
 
    function showAgentSNMPQuery($on_device, $device_type) {
-
+      global $LANG;
       // Recherche des agents qui ont le SNMPQUERY à oui
       $np = new Netport;
       $count_agent_on = 0;
@@ -465,7 +468,6 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 
    function getStateAgent($ip, $agentid, $type="") {
       global $LANG;
-      
       plugin_fusioninventory_disableDebug();
       $state = false;
       if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {

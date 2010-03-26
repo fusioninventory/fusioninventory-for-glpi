@@ -282,7 +282,14 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                            echo $LANG['plugin_fusioninventory']["mib"][9]." : ";
                            if (isset($a_mibs['ID'])) {
                               if ($a_mibs["vlan"] == "1") {
+
+
+echo "<a href='".$target."?ID=".$ID."&vlan_update=".$oid_id_before."'>";
+
+
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+echo "</a>";
+
                               } else {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
@@ -460,6 +467,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       echo "</table>";
       echo "</form></div>";
    }
+
+   
 
    function generatemodels() {
       global $DB;

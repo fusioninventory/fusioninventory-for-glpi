@@ -59,7 +59,7 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
       } else {
          $this->logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/commonDBTM_'.
                                     time().'_'.rand(1,1000);
-         file_put_contents($this->logFile, 'New PluginFusionInventoryCommonDBTM object.');
+//         file_put_contents($this->logFile, 'New PluginFusionInventoryCommonDBTM object.');
       }
    }
 
@@ -201,7 +201,7 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
     *@return nothing (write text in log file)
     **/
    function addLog($p_logs) {
-      file_put_contents($this->logFile, "\n".time().' : '.$p_logs, FILE_APPEND);
+//      file_put_contents($this->logFile, "\n".time().' : '.$p_logs, FILE_APPEND);
    }
 }
 
