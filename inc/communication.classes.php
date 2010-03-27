@@ -173,11 +173,12 @@ class PluginFusionInventoryCommunication {
                $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
 
                $ranges = $ptrip->ListRange($agent["ID"], "query");
+               $modelslistused = array();
                foreach ($ranges as $range_id=>$rangeInfos) {
-                  $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
-                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
-                  $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
-                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"]);
+                  $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
+                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+                  $modelslistused = $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
+                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
                }
 
             $snmpauthlist=$ptsnmpa->find();
@@ -190,7 +191,9 @@ class PluginFusionInventoryCommunication {
             $modelslist=$ptmi->find();
             if (count($modelslist)){
                foreach ($modelslist as $model){
-                  $this->addModel($sxml_option, $model['ID']);
+                  if (isset($modelslistused[$model['ID']])) {
+                     $this->addModel($sxml_option, $model['ID']);
+                  }
                }
             }
       }
@@ -395,7 +398,7 @@ class PluginFusionInventoryCommunication {
     *@param $p_entity Entity of device
     *@return true (device added) / false (unknown type of device)
     **/
-   function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity) {
+   function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity, $modelslistused) {
       global $DB;
 
       $type='';
@@ -443,7 +446,7 @@ class PluginFusionInventoryCommunication {
             break;
          
          default: // type non géré
-            return false;
+            return $modelslistused;
       }
 
       $result=$DB->query($query);
@@ -453,9 +456,10 @@ class PluginFusionInventoryCommunication {
                         $data['gnifaddr'],
                         $data['FK_snmp_connection'],
                         $data['FK_model_infos'],
-                        $type);         
+                        $type);
+         $modelslistused[$data['FK_model_infos']] = 1;
       }
-      return true;
+      return $modelslistused;
    }
 
    /**
