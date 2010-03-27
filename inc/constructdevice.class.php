@@ -221,7 +221,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.674.10898.100.2.1.2.1.6.1'] = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.1602.1.2.1.4.0'] = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.3.0'] = 'serial';
-
+      $mapping_pre[3]['.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0'] = 'serial';
 
 
 //      $mapping_pre[3][''] = '';
