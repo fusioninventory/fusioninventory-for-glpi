@@ -102,6 +102,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
          if (($a_tasks[$task_id]['action'] == 'INVENTORY')
                  AND ($ptcm->isActivated('inventoryocs'))
                  AND ($a_agent['module_inventory'] == '1')) {
+
             $ptc->addInventory();
             $input['ID'] = $task_id;
             $ptt->delete($input);

@@ -50,11 +50,12 @@ if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 $pfia = new PluginFusionInventoryAgents;
+$pfit = new PluginFusionInventoryTask;
 
 switch($_POST['glpi_tab']) {
 	case -1 :
       showPorts($_POST["ID"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
-      $pfia->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $_POST["ID"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $_POST["ID"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
       showHistory(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$_POST["ID"]);
       break;
 
@@ -63,7 +64,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 2 :
-      $pfia->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $_POST["ID"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $_POST["ID"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
    case 3 :

@@ -162,7 +162,7 @@ class PluginFusionInventoryAgentsInventoryState extends CommonDBTM {
 
       if (($data['state'] > 0) AND ($data['state'] < 6)) {
       echo "<script type='text/javascript'>
-Ext.getCmp('fusioninventory_1').getUpdater().startAutoRefresh(3,'".$glpiroot."plugin_fusioninventory.agents.state.php?ID=".$ID."');
+Ext.getCmp('fusioninventory_1').getUpdater().startAutoRefresh(3,'".GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php?ID=".$ID."');
       
       </script>";
       } else {

@@ -57,7 +57,6 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 if (isset($_POST['action'])) {
    $pfit = new PluginFusionInventoryTask;
-   $pfia = new PluginFusionInventoryAgents;
 
    foreach ($_POST['agent-ip'] as $agentip) {
       $splitinfo = explode("-",$agentip);
@@ -74,7 +73,7 @@ if (isset($_POST['action'])) {
          $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'SNMPQUERY', $splitinfo[0], $param);
       }
       
-      $pfia->RemoteStartAgent($splitinfo[0], $splitinfo[1]);
+      $pfit->RemoteStartAgent($splitinfo[0], $splitinfo[1]);
    }
 }
 

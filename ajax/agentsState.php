@@ -39,17 +39,17 @@ include (GLPI_ROOT . "/inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
-$pfia = new PluginFusionInventoryAgents;
+$pfit = new PluginFusionInventoryTask;
 
 if (isset($_POST["action"])) {
    if ($_POST["action"] == "INVENTORY") {
-      $pfia->showAgentInventory($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentInventory($_POST["on_device"], $_POST["device_type"]);
    } else if ($_POST["action"] == "NETDISCOVERY") {
-      $pfia->showAgentNetDiscovery($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentNetDiscovery($_POST["on_device"], $_POST["device_type"]);
    } else if ($_POST["action"] == "SNMPQUERY") {
-      $pfia->showAgentSNMPQuery($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentSNMPQuery($_POST["on_device"], $_POST["device_type"]);
    } else if ($_POST["action"] == "WAKEONLAN") {
-      $pfia->showAgentWol($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentWol($_POST["on_device"], $_POST["device_type"]);
    }
    echo "<input type='hidden' name='action' value='".$_POST["action"]."'/>";
 }

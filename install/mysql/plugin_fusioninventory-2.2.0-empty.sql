@@ -80,7 +80,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
   `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `on_device` int(11) NOT NULL DEFAULT '0',
   `device_type` smallint(6) NOT NULL DEFAULT '0',
-  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NULL,
   `module_inventory` INT( 1 ) NOT NULL DEFAULT '0',
   `module_netdiscovery` INT( 1 ) NOT NULL DEFAULT '0',
   `module_snmpquery` INT( 1 ) NOT NULL DEFAULT '0',

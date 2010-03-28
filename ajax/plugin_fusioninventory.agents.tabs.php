@@ -50,12 +50,14 @@ if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 $pfia = new PluginFusionInventoryAgents;
+$pfit = new PluginFusionInventoryTask;
+
 $pfia->showForm($_POST['target'], $_POST["ID"]);
 
 switch($_POST['glpi_tab']) {
 	case -1 :
       $pfia->showFormAdvancedOptions($_POST['target'], $_POST["ID"]);
-      $pfia->RemoteStateAgent($_POST['target'], $_POST["ID"], PLUGIN_FUSIONINVENTORY_SNMP_AGENTS, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent($_POST['target'], $_POST["ID"], PLUGIN_FUSIONINVENTORY_SNMP_AGENTS, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
 	case 1 :
@@ -63,7 +65,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 2 :
-      $pfia->RemoteStateAgent($_POST['target'], $_POST["ID"], PLUGIN_FUSIONINVENTORY_SNMP_AGENTS, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent($_POST['target'], $_POST["ID"], PLUGIN_FUSIONINVENTORY_SNMP_AGENTS, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
    default :

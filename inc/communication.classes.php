@@ -1496,11 +1496,12 @@ class PluginFusionInventoryCommunication {
    }
 
    function addInventory() {
-      $ptc = new PluginFusionInventoryConfig;
-      if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
-         $this->addProcessNumber($ptap->addProcess($pxml));
-         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
-      }
+      $ptc  = new PluginFusionInventoryConfig;
+      $ptap = new PluginFusionInventoryAgentsProcesses;
+//      if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
+//         $this->addProcessNumber($ptap->addProcess($pxml));
+//         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
+//      }
       $this->sxml->addAttribute('RESPONSE', "SEND");
       $this->sxml->addAttribute('PROLOG_FREQ', $ptc->getValue('inventory_frequence'));
    }
