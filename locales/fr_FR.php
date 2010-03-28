@@ -580,6 +580,7 @@ $LANG['plugin_fusioninventory']["agents"][23]="Lié à l'ordinateur";
 $LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
 $LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
 $LANG['plugin_fusioninventory']["unknown"][2]="Matériel approuvé";
+$LANG['plugin_fusioninventory']["unknown"][3]="Découvert par l'agent";
 
 $LANG['plugin_fusioninventory']["task"][0]="Tâche";
 $LANG['plugin_fusioninventory']["task"][1]="Gestion des tâches";

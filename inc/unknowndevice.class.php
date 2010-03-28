@@ -63,6 +63,8 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
 		plugin_fusioninventory_checkRight("snmp_networking","r");
 
+      $CommonItem = new CommonItem;
+
 		if ($ID!='') {
 			$this->getFromDB($ID);
       } else {
@@ -74,8 +76,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 		echo "<table  class='tab_cadre_fixe'>";
 
 		echo "<tr><th colspan='4'>";
-		echo $LANG['plugin_fusioninventory']["menu"][4];
-		echo " :</th></tr>";
+		echo $LANG['plugin_fusioninventory']["menu"][4]." ( ".$LANG['plugin_fusioninventory']["unknown"][3]." ";
+      $CommonItem->getFromDB(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,
+                          $this->fields["FK_agent"]);
+      echo $CommonItem->getLink(1);
+		echo ") :</th></tr>";
 
 		$datestring = $LANG["common"][26].": ";
 		$date = convDateTime($this->fields["date_mod"]);

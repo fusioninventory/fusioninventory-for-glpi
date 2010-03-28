@@ -320,6 +320,8 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             if ($ptud->fields['accepted'] == '') {
                $ptud->fields['accepted'] = 0;
             }
+            $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
+            $ptud->fields['FK_agent'] = intval($explodeprocess[1]);
 
             $data = $ptud->fields;
             unset($data['ID']);
@@ -381,6 +383,8 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   $data['snmp'] = 1;
                }
             }
+            $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
+            $data['FK_agent'] = intval($explodeprocess[1]);
 
             if ($a_device[1] == NETWORKING_TYPE) {
                if (!in_array('ifaddr', $a_lockable))

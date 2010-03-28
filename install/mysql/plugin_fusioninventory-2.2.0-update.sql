@@ -137,7 +137,8 @@ ALTER TABLE `glpi_plugin_tracker_unknown_device`
    ADD `serial` VARCHAR( 255 ) NULL DEFAULT NULL ,
    ADD `otherserial` VARCHAR( 255 ) NULL DEFAULT NULL ,
    ADD `comments` TEXT NULL DEFAULT NULL ,
-   ADD `accepted` INT( 1 ) NOT NULL DEFAULT '0';
+   ADD `accepted` INT( 1 ) NOT NULL DEFAULT '0',
+   ADD `FK_agent` INT( 11 ) NOT NULL DEFAULT '0';
 
 ALTER TABLE `glpi_plugin_tracker_unknown_device`
    ADD `dnsname` VARCHAR( 255 ) NULL DEFAULT NULL AFTER `name` ;
@@ -152,7 +153,8 @@ ALTER TABLE `glpi_plugin_tracker_unknown_device`
    ADD `contact` VARCHAR( 255 ) NULL DEFAULT NULL AFTER `otherserial` ,
    ADD `domain` INT( 11 ) NOT NULL DEFAULT '0' AFTER `contact`;
 
-ALTER TABLE `glpi_plugin_tracker_rangeip` CHANGE `FK_tracker_agents` `FK_tracker_agents_discover` INT( 11 ) NOT NULL DEFAULT '0';
+ALTER TABLE `glpi_plugin_tracker_rangeip`
+   CHANGE `FK_tracker_agents` `FK_tracker_agents_discover` INT( 11 ) NOT NULL DEFAULT '0';
 
 ALTER TABLE `glpi_plugin_tracker_rangeip`
    ADD `FK_tracker_agents_query` INT( 11 ) NOT NULL DEFAULT '0' AFTER `FK_tracker_agents_discover` ;
