@@ -1444,7 +1444,8 @@ function plugin_fusioninventory_MassiveActions($type) {
 			return array (
             "plugin_fusioninventory_get_model" => $LANG['plugin_fusioninventory']["model_info"][14],
 				"plugin_fusioninventory_assign_model" => $LANG['plugin_fusioninventory']["massiveaction"][1],
-				"plugin_fusioninventory_assign_auth" => $LANG['plugin_fusioninventory']["massiveaction"][2]
+				"plugin_fusioninventory_assign_auth" => $LANG['plugin_fusioninventory']["massiveaction"][2],
+            "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']["functionalities"][75]
 			);
 			break;
 
@@ -1452,7 +1453,8 @@ function plugin_fusioninventory_MassiveActions($type) {
 			return array (
             "plugin_fusioninventory_get_model" => $LANG['plugin_fusioninventory']["model_info"][14],
 				"plugin_fusioninventory_assign_model" => $LANG['plugin_fusioninventory']["massiveaction"][1],
-				"plugin_fusioninventory_assign_auth" => $LANG['plugin_fusioninventory']["massiveaction"][2]
+				"plugin_fusioninventory_assign_auth" => $LANG['plugin_fusioninventory']["massiveaction"][2],
+            "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']["functionalities"][75]
 			);
 			break;
 
@@ -1500,6 +1502,11 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                }
                break;
 
+            case "plugin_fusioninventory_manage_locks" :
+               $pfil = new PluginFusionInventoryLock;
+               $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
+               break;
+
 			}
 			break;
 
@@ -1534,6 +1541,12 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
+
+            case "plugin_fusioninventory_manage_locks" :
+               $pfil = new PluginFusionInventoryLock;
+               $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
+               break;
+
 			}
 			break;
 
@@ -1603,6 +1616,21 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 				}
 			}
 			break;
+
+      case "plugin_fusioninventory_manage_locks" :
+         if (($data['device_type'] == NETWORKING_TYPE) OR ($data['device_type'] == PRINTER_TYPE)) {
+            foreach ($data['item'] as $key => $val) {
+					if ($val == 1) {
+                  if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
+                     $tab=plugin_fusioninventory_exportChecksToArray($data["lockfield_fusioninventory"]);
+                        plugin_fusioninventory_lock_setLockArray($data['type'], $key, $tab);
+                  } else {
+                     plugin_fusioninventory_lock_setLockArray($data['type'], $key, array());
+                  }
+               }
+            }
+         }
+         break;
       
 		case "plugin_fusioninventory_discovery_import" :
          if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {

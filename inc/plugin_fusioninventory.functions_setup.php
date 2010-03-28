@@ -75,7 +75,7 @@ function plugin_fusioninventory_installing($version) {
 
 
 function plugin_fusioninventory_update($version) {
-	global $DB;
+	global $DB,$LANG;
 
    if ((file_exists(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-update.sql"))
          OR (file_exists(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-".$version."-update.sql"))){
