@@ -251,6 +251,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
          foreach ($agentlist as $data){
             $pfia->getFromDB($data['ID']);
          }
+      } else {
+         return;
       }
       
       echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php\">";
@@ -283,7 +285,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
       $rand = dropdownArrayValues("agentaction",$array_actions);
       echo "</td>";
       echo "</tr>";
-      $params=array('action'=>'__VALUE__', 'on_device'=>$pfia->fields['on_device'], 'device_type'=>COMPUTER_TYPE);
+      $params=array('action'=>'__VALUE__', 'on_device'=>$pfia->fields['on_device'], 'device_type'=>$type);
       ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
 
       echo "<tr class='tab_bg_1'>";
@@ -320,8 +322,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
       $count_agent_on = 0;
       $agent_id = 0;
 
-      $a_portsList = $np->find('on_device='.$on_device.' AND device_type='.$device_type);
-      $a_agent = $pfia->find('on_device='.$on_device.' AND device_type IN ('.$device_type.', 0)', "", 1);
+      $a_portsList = $np->find('on_device='.$on_device.' AND device_type="'.COMPUTER_TYPE.'"');
+      $a_agent = $pfia->find('on_device='.$on_device.' AND device_type="'.COMPUTER_TYPE.'"', "", 1);
 
       foreach ($a_agent as $agent_id=>$data) {
 
@@ -351,15 +353,15 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
       // Recherche des agents qui ont le NETDISCOVERY à oui
       $np = new Netport;
+      $pfia = new PluginFusionInventoryAgents;
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
-
-      if ($device_type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
-         $a_agents = $this->find('module_netdiscovery=1 AND ID='.$on_device);
+      if (($device_type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) OR ($device_type == COMPUTER_TYPE)) {
+         $a_agents = $pfia->find('module_netdiscovery=1 AND on_device='.$on_device);
          $type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
       } else {
-         $a_agents = $this->find('module_netdiscovery=1');
+         $a_agents = $pfia->find('module_netdiscovery=1');
          $type = "";
       }
       foreach ($a_agents as $IDagent=>$data) {
@@ -387,11 +389,13 @@ class PluginFusionInventoryTask extends CommonDBTM {
       global $LANG;
       // Recherche des agents qui ont le SNMPQUERY à oui
       $np = new Netport;
+      $pfia = new PluginFusionInventoryAgents;
+
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
 
-      $a_agents = $this->find('module_snmpquery=1');
+      $a_agents = $pfia->find('module_snmpquery=1');
       foreach ($a_agents as $IDagent=>$data) {
          $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
 
