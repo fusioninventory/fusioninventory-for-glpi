@@ -66,8 +66,10 @@ if (isset ($_POST["add"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
 	plugin_fusioninventory_checkRight("agents","w");
-   if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
-      $_POST['device_type'] = '1';
+   if (isset($_POST['on_device'])) {
+      if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
+         $_POST['device_type'] = '1';
+      }
    }
 	$agents->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
