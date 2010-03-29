@@ -155,7 +155,18 @@ class PluginFusionInventoryCommunication {
       $count_range = $ptrip->Counter($agent["ID"], "query");
       $count_range += $ptt->Counter($agent["ID"], "SNMPQUERY");
 
-      if (($count_range > 0) && ($agent["lock"] == 0)) {
+      // Get total number of devices to query
+      $ranges = $ptrip->ListRange($agent["ID"], "query");
+      $modelslistused = array();
+      foreach ($ranges as $range_id=>$rangeInfos) {
+         $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
+                     $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused,0);
+         $modelslistused = $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
+                     $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused,0);
+      }
+
+
+      if (($count_range > 0) && ($agent["lock"] == 0) && (!empty($modelslistused))) {
          $a_input = array();
          if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
             $this->addProcessNumber($ptap->addProcess($pxml));
@@ -398,7 +409,7 @@ class PluginFusionInventoryCommunication {
     *@param $p_entity Entity of device
     *@return true (device added) / false (unknown type of device)
     **/
-   function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity, $modelslistused) {
+   function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity, $modelslistused, $addingdevice=1) {
       global $DB;
 
       $type='';
@@ -448,15 +459,16 @@ class PluginFusionInventoryCommunication {
          default: // type non géré
             return $modelslistused;
       }
-
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         $this->addInfo($p_sxml_node, 
-                        $data['gID'],
-                        $data['gnifaddr'],
-                        $data['FK_snmp_connection'],
-                        $data['FK_model_infos'],
-                        $type);
+         if ($addingdevice == '1') {
+            $this->addInfo($p_sxml_node,
+                           $data['gID'],
+                           $data['gnifaddr'],
+                           $data['FK_snmp_connection'],
+                           $data['FK_model_infos'],
+                           $type);
+         }
          $modelslistused[$data['FK_model_infos']] = 1;
       }
       return $modelslistused;
