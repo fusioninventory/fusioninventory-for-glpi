@@ -55,7 +55,8 @@
    <DEVICE SYSDESCR="Lexmark X644e version NC0.NPS.N048 kernel 2.6.10 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0051" SERIAL=".1.3.6.1.4.1.641.2.1.2.1.6.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Microsoft Windows CE Version 4.20 (Build 0)" MANUFACTURER="0" TYPE="1"/>
    <DEVICE SYSDESCR="Microsoft Windows CE Version 5.0 (Build 1400)" MANUFACTURER="0" TYPE="1"/>
-   <DEVICE SYSDESCR="ProCurve J4903A Switch 2824, revision I.10.43, ROM I.08.07 (/sw/code/build/mako(mkfs))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0171" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="ProCurve J4899B Switch 2650, revision H.08.98, ROM H.08.02 (/sw/code/build/fish(ts_08_5))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0164" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="ProCurve J4903A Switch 2824, revision I.10.43, ROM I.08.07 (/sw/code/build/mako(mkfs))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="hp LaserJet 1320 series" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0087" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="hp LaserJet 2300 series" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0077" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="hp LaserJet 2420" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0077" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
@@ -183,48 +184,48 @@
    <DEVICE SYSDESCR="Lexmark T644 version NS.NP.N118 kernel 2.6.6 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0041" SERIAL=".1.3.6.1.4.1.641.2.1.2.1.6.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Lexmark T644 version NS0.NP.N014 kernel 2.6.6 All-N-1" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="NRG C7535hdn 1.11 / NRG Network Printer C model" MANUFACTURER="" TYPE="3"/>
-   <DEVICE SYSDESCR="NRG MP 161 1.00.1 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
-   <DEVICE SYSDESCR="NRG MP 161 1.01 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
-   <DEVICE SYSDESCR="NRG MP 161 1.02 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="NRG MP 161 1.00.1 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0174" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="NRG MP 161 1.01 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0174" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="NRG MP 161 1.02 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0174" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP 161 1.04 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0067" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP 2510 1.02 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0044" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP 2510 1.02 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0044" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="NRG MP 2550 1.01.3 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
-   <DEVICE SYSDESCR="NRG MP 3010 1.02 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="NRG MP 2550 1.01.3 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0111" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="NRG MP 3010 1.02 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinter0119" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP 3010 1.02 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0044" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP 3350 1.01.3 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0169" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP 3500 1.01 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0044" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="NRG MP 3500 1.01 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="NRG MP 3500 1.01 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinter0119" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP 3500 1.05 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="NRG MP 4500 1.01 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0069" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="NRG MP 5500 2.04 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="NRG MP 5500 2.04 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinter0119" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP C3000 1.58 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0046" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="NRG MP C3000 1.62.1 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="NRG MP C3000 1.62.1 / NRG Network Printer C model / NRG Network Scanner C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0042" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG MP C3500 1.60 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0046" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG SP 4100N 1.01 / NRG Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0171" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="NRG SP 4100N 1.04 / NRG Network Printer C model" MANUFACTURER="" TYPE="3"/>
-   <DEVICE SYSDESCR="NRG SP 4100N 1.05 / NRG Network Printer C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="NRG SP 4100N 1.04 / NRG Network Printer C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0177" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="NRG SP 4100N 1.05 / NRG Network Printer C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0177" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG SP 8100DN 1.05 / NRG Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0071" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="NRG SP C410DN 1.07 / NRG Network Printer C model" MANUFACTURER="" TYPE="3"/>
-   <DEVICE SYSDESCR="NRG SP C410DN 1.10 / NRG Network Printer C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="NRG SP C410DN 1.07 / NRG Network Printer C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0042" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="NRG SP C410DN 1.10 / NRG Network Printer C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0180" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG SP C410DN 1.11 / NRG Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0076" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="NRG SP C811DN 1.02 / NRG Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0072" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Officejet 6300 series" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="ProCurve J4899B Switch 2650, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))" MANUFACTURER="" TYPE="2"/>
    <DEVICE SYSDESCR="ProCurve J4899B Switch 2650, revision H.10.50, ROM H.08.05 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
    <DEVICE SYSDESCR="ProCurve J4899B Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="ProCurve J4899C Switch 2650, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
-   <DEVICE SYSDESCR="ProCurve J4900A Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
+   <DEVICE SYSDESCR="ProCurve J4899C Switch 2650, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2" MODELSNMP="Networking0164" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="ProCurve J4900A Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2" MODELSNMP="Networking0164" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.08.83, ROM H.08.02 (/sw/code/build/fish(ts_08_5))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.08.98, ROM H.08.02 (/sw/code/build/fish(ts_08_5))" MANUFACTURER="" TYPE="2"/>
    <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
    <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.10.50, ROM H.08.02 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
    <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.10.50, ROM H.08.05 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
-   <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
-   <DEVICE SYSDESCR="ProCurve J4900C Switch 2626, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2"/>
+   <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2" MODELSNMP="Networking0182" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="ProCurve J4900C Switch 2626, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(mkfs))" MANUFACTURER="" TYPE="2" MODELSNMP="Networking0182" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="ProCurve J4903A Switch 2824, revision I.08.98, ROM I.08.07 (/sw/code/build/mako(ts_08_5))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0095" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1"/>
    <DEVICE SYSDESCR="PROCURVE J9029A - PA.02.06" MANUFACTURER="" TYPE="2"/>
-   <DEVICE SYSDESCR="ProCurve J9085A Switch 2610-24, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))" MANUFACTURER="" TYPE="2"/>
+   <DEVICE SYSDESCR="ProCurve J9085A Switch 2610-24, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))" MANUFACTURER="" TYPE="2" MODELSNMP="Networking0183" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="RICOH Aficio 1515 0.29.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio 2016 0.40.12 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0012" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
@@ -240,14 +241,14 @@
    <DEVICE SYSDESCR="RICOH Aficio 3235C 1.27 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio 3245C 1.30 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio AP410N 1.05 / RICOH Network Printer C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0071" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="RICOH Aficio MP 161 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP 161 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0174" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 161 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0067" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 2000 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 2000 1.09.1 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0045" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 2510 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0044" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="RICOH Aficio MP 3350 1.01.3 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP 3350 1.01.3 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0111" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 3350 1.08 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinter0121" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="RICOH Aficio MP 3350 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP 3350 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0111" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 4500 1.01 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 5000 1.06 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio MP 7500 1.12 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="" TYPE="3"/>
@@ -260,10 +261,10 @@
    <DEVICE SYSDESCR="RICOH Aficio MP C4000 1.16 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio MP C4500 1.67 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio SP 4100N 1.06 / RICOH Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0172" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="RICOH Aficio SP 4100N 1.08 / RICOH Network Printer C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="RICOH Aficio SP 4100N 1.08 / RICOH Network Printer C model" MANUFACTURER="" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0177" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="RICOH Aficio SP C410DN 1.11 / RICOH Network Printer C model" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="RICOH Aficio SP C420DN 1.00 / RICOH Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinter0122" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="RICOH Aficio SP C420DN 1.03 / RICOH Network Printer C model" MANUFACTURER="" TYPE="3"/>
+   <DEVICE SYSDESCR="RICOH Aficio SP C420DN 1.03 / RICOH Network Printer C model" MANUFACTURER="" TYPE="3" MODELSNMP="Printer0043" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="RICOH Aficio SP C811DN 1.07 / RICOH Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0076" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="SHARP MX-2300N" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="SHARP MX-4101N" MANUFACTURER="" TYPE="3"/>
@@ -276,10 +277,10 @@
    <DEVICE SYSDESCR="Xerox Document Centre 432ST, v3.0 - post-launch, Multi-function System, ESS 3_2_1_3s, DCSYS XCE245, UI S3.69" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="Xerox Phaser 7300 DX v(2.08/15.52.08.29.2002/0.1.22/4.68) Printer 384MB LPM010175" MANUFACTURER="" TYPE="3"/>
    <DEVICE SYSDESCR="Ordinateur CHRP PowerPC IBM&#13;&#10;TCP/IP Client Support version: 05.03.0000.0054" MANUFACTURER="" TYPE="1"/>
-   <DEVICE SYSDESCR="HP J4813A ProCurve Switch 2524, revision F.05.61, ROM F.02.01  (/sw/code/build/info(s02))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0171" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="HP J4812A ProCurve Switch 2512, revision F.05.61, ROM F.01.01  (/sw/code/build/info(s02))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0174" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="HP J4813A ProCurve Switch 2524, revision F.05.61, ROM F.02.01  (/sw/code/build/info(s02))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="HP J4812A ProCurve Switch 2512, revision F.05.61, ROM F.01.01  (/sw/code/build/info(s02))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0158" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Hardware: x86 Family 15 Model 4 Stepping 1 AT/AT COMPATIBLE - Software: Windows 2000 Version 5.0 (Build 2195 Multiprocessor Free)" MANUFACTURER="" TYPE="1"/>
-   <DEVICE SYSDESCR="HP J4819A ProCurve Switch 5308xl, revision E.10.74, ROM E.05.05 (/sw/code/build/alpmo(m35))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0171" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="HP J4819A ProCurve Switch 5308xl, revision E.10.74, ROM E.05.05 (/sw/code/build/alpmo(m35))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="HP LaserJet P4515" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0078" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="KONICA MINOLTA bizhub 420" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0018" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="KONICA MINOLTA bizhub C250" MANUFACTURER="" TYPE="3"/>
@@ -322,14 +323,14 @@
    <DEVICE SYSDESCR="Dell Laser Printer 5210n version NS.NP.N212 kernel 2.6.6 All-N-1" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0007" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="ProSafe 802.11b/g Wireless Access Point -WG102 V5.0.0" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0005"/>
    <DEVICE SYSDESCR="SonicWALL PRO 4100 (SonicOS Enhanced 4.0.0.5-1e)" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0153"/>
-   <DEVICE SYSDESCR="3Com IntelliJack NJ225" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0173" SERIAL=".1.3.6.1.4.1.43.29.4.18.2.1.7.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="OmniStack LS 6200" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0170" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="3Com IntelliJack NJ225" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0194" SERIAL=".1.3.6.1.4.1.43.29.4.18.2.1.7.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="OmniStack LS 6200" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0092" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Avaya Inc. - P330 Stackable Switch, SW version 4.1.1" MANUFACTURER="0" TYPE="2"/>
-   <DEVICE SYSDESCR="Foundry Networks, Inc. FastIron SX 800-PREM, IronWare Version 03.2.00fT3e3 Compiled on Sep 10 2007 at 13:27:27 labeled as SXR03200f" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0169" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="HP J4121A ProCurve Switch 4000M, revision C.09.28, ROM C.06.01 (/sw/code/build/vgro(c09))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0172" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Foundry Networks, Inc. FastIron SX 800-PREM, IronWare Version 03.2.00fT3e3 Compiled on Sep 10 2007 at 13:27:27 labeled as SXR03200f" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0149" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="HP J4121A ProCurve Switch 4000M, revision C.09.28, ROM C.06.01 (/sw/code/build/vgro(c09))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0181" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="HP J4813A ProCurve Switch 2524, revision F.05.60, ROM F.02.01  (/sw/code/build/info(s02))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="HP J4865A ProCurve Switch 4108GL, revision G.07.70, ROM G.05.02 (/sw/code/build/gamo(m03))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0171" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="HP J4899A ProCurve Switch 2650, revision H.08.53, ROM H.08.02 (/sw/code/build/fish(f04))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0171" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="HP J4865A ProCurve Switch 4108GL, revision G.07.70, ROM G.05.02 (/sw/code/build/gamo(m03))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="HP J4899A ProCurve Switch 2650, revision H.08.53, ROM H.08.02 (/sw/code/build/fish(f04))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="HP J4906A ProCurve Switch 3400cl-48G, revision M.08.51, ROM I.08.02 (/sw/code/build/makf(f04))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="GbE2c Ethernet Blade Switch for HP c-Class BladeSystem" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0001"/>
    <DEVICE SYSDESCR="ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0007" MAC=".1.3.6.1.2.1.17.1.1.0"/>
@@ -339,9 +340,9 @@
    <DEVICE SYSDESCR="BayStack 450-24T HW:RevL  FW:V1.47 SW:v3.1.0.22  ISVN:1" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0073" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="ATI AT-8000S" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0090" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Allied Telesyn Ethernet Switch AT-8524M - ATS62 v1.4.0" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0007" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="Allied Telesis AT-9424Ts - ATS63 v3.0.0" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0168" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Allied Telesis AT-9424Ts - ATS63 v3.0.0" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0007" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Summit200-48 - Version 7.3e.2 (Build 4) by Release_Master 02/24/05 19:20:09" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0089" MAC=".1.3.6.1.2.1.17.1.1.0"/>
-   <DEVICE SYSDESCR="SMC 6624M TigerSwitch 10/100, revision F.02.06, ROM F.01.02" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0167" SERIAL=".1.3.6.1.4.1.11.2.36.1.1.2.9.0" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="SMC 6624M TigerSwitch 10/100, revision F.02.06, ROM F.01.02" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0176" SERIAL=".1.3.6.1.4.1.11.2.36.1.1.2.9.0" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Summit300-48 - Version 7.6e.4 (Build 4) by Release_Master 04/27/07 08:31:27" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0089" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="CS131 v 3.77.47" MANUFACTURER="0" TYPE="5"/>
    <DEVICE SYSDESCR="Brother NC-5100h, Firmware Ver.1.50  (04.04.19),MID 84UZ74,FID 1" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0022" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
@@ -390,11 +391,11 @@
    <DEVICE SYSDESCR="Xerox WorkCentre Pro Multifunction System, ESS 0.C03.04.525.01, IOT 9.0.3, UI 0.1.4.525, Scanner 1.4.0" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0053" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Cisco Internetwork Operating System Software &#13;&#10;IOS (tm) C2900XL Software (C2900XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)&#13;&#10;Copyright (c) 1986-2007 by cisco Systems, Inc.&#13;&#10;Compiled Tue 13-Feb-07 15:27 by antonino&#13;&#10;" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0076" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="NRG SP C410DN 1.09 / NRG Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0025" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="HP J4813A ProCurve Switch 2524, revision F.04.08, ROM F.02.01  (/sw/code/build/info(f01))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0164" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="HP J4813A ProCurve Switch 2524, revision F.04.08, ROM F.02.01  (/sw/code/build/info(f01))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0058" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Canon LP17 /P" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0054" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Canon iR5000i /P" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0059" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="BladeCenter Advanced Management Module" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0005"/>
-   <DEVICE SYSDESCR="Cisco Internetwork Operating System Software &#13;&#10;IOS (tm) CIGESM Software (CIGESM-I6Q4L2-M), Version 12.1(22)EA8a, RELEASE SOFTWARE (fc1)&#13;&#10;Copyright (c) 1986-2006 by cisco Systems, Inc.&#13;&#10;Compiled Fri 28-Jul-06 14:55 by weiliu" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0166" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Cisco Internetwork Operating System Software &#13;&#10;IOS (tm) CIGESM Software (CIGESM-I6Q4L2-M), Version 12.1(22)EA8a, RELEASE SOFTWARE (fc1)&#13;&#10;Copyright (c) 1986-2006 by cisco Systems, Inc.&#13;&#10;Compiled Fri 28-Jul-06 14:55 by weiliu" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0178" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="Nortel Networks Layer2-7 GbE Switch Module" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0007" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="ATI 8000S" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0092" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="D-Link Access Point" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0001"/>
@@ -408,7 +409,7 @@
    <DEVICE SYSDESCR="RICOH Aficio 1035 5.25 / RICOH Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0055" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="ProCurve J8773A Switch 4208vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0058" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="ES-2048" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0033"/>
-   <DEVICE SYSDESCR="ES-2108PWR" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0169" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="ES-2108PWR" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0149" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="NWA-3100" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0034"/>
    <DEVICE SYSDESCR="ZyWALL USG 300" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0163"/>
    <DEVICE SYSDESCR="FreeBSD F60-XA307610700202 4.11-RELEASE-p25  NETASQ Secure BSD (NS-BSD)  i386" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0069"/>
@@ -588,9 +589,33 @@
    <DEVICE SYSDESCR="FS-C5030N" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0163" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="TOSHIBA TEC B-EV4" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0019" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="Deskjet 6980 series" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0089" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="BayStack 450-24T HW:RevL  FW:V1.36 SW:v1.3.1.2" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0159" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="BayStack 450-24T HW:RevL  FW:V1.36 SW:v1.3.1.2" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0179" MAC=".1.3.6.1.2.1.17.1.1.0"/>
    <DEVICE SYSDESCR="HP LaserJet 6L" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0093" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="TOSHIBA e-STUDIO4520C" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0162" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
    <DEVICE SYSDESCR="TOSHIBA e-STUDIO167" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0111" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
-   <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish(ts_08_5))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0171" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish(ts_08_5))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0043" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Fluke Networks OptiView (tm) Integrated Network Analyzer" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0033"/>
+   <DEVICE SYSDESCR="ProCurve J4903A Switch 2824, revision I.08.87, ROM I.08.07 (/sw/code/build/mako(ts_08_5))" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0175" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="TigerSwitch 10/100 6726AL2" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0177" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Xerox Phaser 5400 Laser Printer - 2.24" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0099" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Brother NC-6100h, Firmware Ver.1.01  (03.10.09),MID 84UZ51" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0179" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="FS-C5020N" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0176" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Xerox Phaser 4510N; OS 7.64, PS 3.3.0, Eng 2.01.00.00, Net 32.04.12.22.2006" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0063" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Brother NC-6100h, Firmware Ver.1.03  (04.03.29),MID 84UZ51" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0179" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Brother NC-2100h, Firmware Ver. 3.62 (99.02.19" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0178" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Xerox Phaser 7400DN;PS 4.2.0,Net 25.72.10.07.2005,Eng 0.11.2,OS 6.26" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0175" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Xerox Phaser 7400N;PS 4.2.0,Net 25.72.10.07.2005,Eng 0.11.2,OS 6.26" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0175" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA, RELEASE SOFTWARE (fc2)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2006 by Cisco Systems, Inc.&#13;&#10;Compiled Wed 23-Aug-06 16:42 by kellythw" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0111" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2007 by Cisco Systems, Inc.&#13;&#10;Compiled Thu 25-Oct-07 22:24 by dchih" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0111" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP C4000 1.21 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0043" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA1, RELEASE SOFTWARE (fc1)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2007 by Cisco Systems, Inc.&#13;&#10;Compiled Mon 15-Jan-07 23:17 by kellythw" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0116" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="RICOH Aficio SP 4100N 1.11 / RICOH Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0177" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0111" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="NRG SP 4100N 1.06 / NRG Network Printer C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0177" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="NRG MP 3350 1.10 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0111" SERIAL=".1.3.6.1.2.1.43.5.1.1.17.1" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.3(8)JA, RELEASE SOFTWARE (fc2)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2006 by Cisco Systems, Inc.&#13;&#10;Compiled Mon 27-Feb-06 09:17 by ssearch" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0192" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JA2, RELEASE SOFTWARE (fc1)&#13;&#10;Technical Support: http://www.cisco.com/techsupport&#13;&#10;Copyright (c) 1986-2006 by Cisco Systems, Inc.&#13;&#10;Compiled Tue 30-May-06 18:07 by pwade" MANUFACTURER="0" TYPE="2" MODELSNMP="Networking0116" SERIAL=".1.3.6.1.2.1.47.1.1.1.1.11.1" MAC=".1.3.6.1.2.1.17.1.1.0"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP 1100 3.11.3 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0181" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP C3000 1.67 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="0" TYPE="3" MODELSNMP="PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0182" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
+   <DEVICE SYSDESCR="RICOH Aficio MP 3500 1.01 / RICOH Network Printer C model / RICOH Network Scanner C model" MANUFACTURER="0" TYPE="3" MODELSNMP="Printer0044" SERIAL=".1.3.6.1.4.1.367.3.2.1.2.1.4.0" MACDYN=".1.3.6.1.2.1.2.2.1.6"/>
 </SNMPDISCOVERY>
