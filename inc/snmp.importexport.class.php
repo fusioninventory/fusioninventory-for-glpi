@@ -346,6 +346,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             $a_lockable = plugin_fusioninventory_lock_getLockFields($a_device[1], $a_device[0]);
             $data = array();
             $data['ID'] = $ci->getField('ID');
+            $data['FK_snmp_connection'] = 0;
 
             if ($ci->getField('name') && !in_array('name', $a_lockable)) {
                if (!empty($discovery->NETBIOSNAME)) {
