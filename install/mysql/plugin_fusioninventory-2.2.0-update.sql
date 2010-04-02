@@ -10,6 +10,7 @@ DROP TABLE `glpi_plugin_tracker_tmp_connections` ;
 DROP TABLE `glpi_plugin_tracker_tmp_netports` ;
 DROP TABLE `glpi_plugin_tracker_processes` ;
 DROP TABLE `glpi_plugin_tracker_processes_values` ;
+DROP TABLE `glpi_plugin_tracker_unknown_mac` ;
 
 ############## Create ##############
 
