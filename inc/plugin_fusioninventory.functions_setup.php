@@ -152,11 +152,16 @@ function plugin_fusioninventory_update($version) {
       plugin_fusioninventory_clean_db();
    }
    if ($version == "2.2.0") {
+      ini_set("max_execution_time", "0");
+      
       $config_modules = new PluginFusionInventoryConfigModules;
    	$config_modules->initConfig();
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
+      // Update right
+      plugin_fusioninventory_updateaccess($_SESSION['glpiactiveprofile']['ID']);
+
       // Delete old agents
       $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_agents`";
       $DB->query($query_delete);

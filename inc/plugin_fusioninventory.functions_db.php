@@ -80,6 +80,31 @@ function plugin_fusioninventory_createaccess($ID) {
 	$DB->query($query);
 }
 
+
+
+function plugin_fusioninventory_updateaccess($ID) {
+   global $DB;
+
+   $Profile=new Profile;
+	$Profile->GetfromDB($ID);
+	$name=$Profile->fields["name"];
+
+   $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
+               SET `interface`='fusioninventory', `snmp_networking`='w',
+                   `snmp_printers`='w', `snmp_models`='w',
+                   `snmp_authentification`='w', `rangeip`='w',
+                   `agents`='w', `remotecontrol`='w',
+                   `agentsprocesses`='r', `unknowndevices`='w',
+                   `reports`='r', `deviceinventory`='w',
+                   `netdiscovery`='w', `snmp_query`='w',
+                   `wol`='w', `configuration`='w'
+               WHERE `name`='".$name."'";
+	$DB->query($query);
+
+}
+
+
+
 function plugin_fusioninventory_getIdFromUser($name) {
 	
 	global $DB;

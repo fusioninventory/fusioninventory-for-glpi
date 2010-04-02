@@ -263,16 +263,28 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
          $constantsfield[$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$fieldtype]['name']] = $fieldtype;
       }
 
+      echo "<center><table width='500'>";
+      echo "<tr>";
+      echo "<td>";
+      createProgressBar("Update Ports history");
+
       $query = "SELECT *
                 FROM ".$this->table.";";
       if ($result=$DB->query($query)) {
+         $nb = $DB->numrows($result);
+         $i = 0;
 			while ($data=$DB->fetch_array($result)) {
+            $i++;
             if (isset($constantsfield[$data['Field']])) {
                $data['Field'] = $constantsfield[$data['Field']];
                $this->update($data);
+               changeProgressBarPosition($i, $nb, "$i / $nb");
             }
          }
       }
+      echo "</td>";
+      echo "</tr>";
+      echo "</table></center>";
    }
 }
 
