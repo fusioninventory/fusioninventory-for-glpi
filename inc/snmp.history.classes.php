@@ -250,9 +250,30 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
                           WHERE `field`="'.$FUSIONINVENTORY_MAPPING[$type][$name]["name"].'";';
          $DB->query($query_delete);
       }
-
    }
 
+
+
+   function ConvertField() {
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      global $DB, $LANG;
+
+      $constantsfield = array();
+      foreach ($FUSIONINVENTORY_MAPPING[NETWORKING_TYPE] as $fieldtype=>$array) {
+         $constantsfield[$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$fieldtype]['name']] = $fieldtype;
+      }
+
+      $query = "SELECT *
+                FROM ".$this->table.";";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            if (isset($constantsfield[$data['Field']])) {
+               $data['Field'] = $constantsfield[$data['Field']];
+               $this->update($data);
+            }
+         }
+      }
+   }
 }
 
 ?>

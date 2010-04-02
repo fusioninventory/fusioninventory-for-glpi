@@ -310,4 +310,3 @@ ALTER TABLE `glpi_plugin_fusioninventory_profiles` ADD `rangeip` CHAR( 1 ) NULL 
    ADD `snmp_query` CHAR( 1 ) NULL DEFAULT NULL ,
    ADD `wol` CHAR( 1 ) NULL DEFAULT NULL ,
    ADD `configuration` CHAR( 1 ) NULL DEFAULT NULL;
-
