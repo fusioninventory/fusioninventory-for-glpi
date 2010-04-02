@@ -279,7 +279,9 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
             if (isset($constantsfield[$data['Field']])) {
                $data['Field'] = $constantsfield[$data['Field']];
                $this->update($data);
-               changeProgressBarPosition($i, $nb, "$i / $nb");
+               if (preg_match("/00$/", $i)) {
+                  changeProgressBarPosition($i, $nb, "$i / $nb");
+               }
             }
          }
       }
