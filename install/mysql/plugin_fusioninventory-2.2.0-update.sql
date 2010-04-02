@@ -282,11 +282,6 @@ ALTER TABLE `glpi_plugin_fusioninventory_rangeip`
    CHANGE `FK_tracker_agents_discover` `FK_fusioninventory_agents_discover` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `FK_tracker_agents_query` `FK_fusioninventory_agents_query` INT( 11 ) NOT NULL DEFAULT '0';
 
-
-
-
-
-
 ## Others
 
 ALTER TABLE `glpi_plugin_fusioninventory_profiles`
