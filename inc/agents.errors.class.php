@@ -128,6 +128,17 @@ class PluginFusionInventoryAgentsErrors extends CommonDBTM {
 
       $this->add($input);
    }
+
+
+   function CleanErrors() {
+      $ptc = new PluginFusionInventoryConfig;
+      $data = $this->find("`date`<DATE_SUB(NOW(), INTERVAL ".$ptc->getValue('delete_agent_process')." HOUR)");
+      foreach ($data as $process_id=>$dataInfos) {
+         $this->deleteFromDB($process_id,1);
+      }
+   }
+
+
 }
 
 ?>

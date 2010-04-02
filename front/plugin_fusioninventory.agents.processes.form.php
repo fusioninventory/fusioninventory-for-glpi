@@ -50,8 +50,10 @@ if (empty($_GET)) {
 plugin_fusioninventory_mini_menu();
 
 $ptap = new PluginFusionInventoryAgentsProcesses;
+$pfiae  =  new PluginFusionInventoryAgentsErrors;
 $ptap->CleanProcesses();
-//$ptap->ShowProcesses();
+$pfiae->CleanErrors();
+
 
 $a_tab = array();
 if (isset($_GET['process_number'])) {
