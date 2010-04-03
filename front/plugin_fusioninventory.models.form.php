@@ -75,6 +75,10 @@ if (isset ($_POST["add"])) {
 	plugin_fusioninventory_checkRight("snmp_models","w");
 	$plugin_fusioninventory_mib_networking->activation($_GET["activation"]);
 	glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['massimport'])) {
+   plugin_fusioninventory_checkRight("snmp_models","w");
+   $importexport->importMass();
+	glpi_header($_SERVER['HTTP_REFERER']);
 }
 if (isset ($_POST["add_oid"])) {
 	plugin_fusioninventory_checkRight("snmp_models","w");
@@ -84,6 +88,7 @@ if (isset ($_POST["add_oid"])) {
 
 if(plugin_fusioninventory_HaveRight("snmp_models","r")) {
    $importexport->showForm($_SERVER["PHP_SELF"]);
+   $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
 }
 $ID = "";
 if (isset($_GET["ID"])) {

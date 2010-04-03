@@ -272,6 +272,8 @@ $LANG['plugin_fusioninventory']["model_info"][11]="Activation";
 $LANG['plugin_fusioninventory']["model_info"][12]="Clé modèle pour la découverte";
 $LANG['plugin_fusioninventory']["model_info"][13]="Charger le bon modèle";
 $LANG['plugin_fusioninventory']["model_info"][14]="Charger le bon modèle SNMP";
+$LANG['plugin_fusioninventory']["model_info"][15]="Importation en masse de modèles";
+$LANG['plugin_fusioninventory']["model_info"][16]="Import en masse des modèles dans le repertoire plugins/fusioninventory/models/";
 
 $LANG['plugin_fusioninventory']["mib"][1]="Label MIB";
 $LANG['plugin_fusioninventory']["mib"][2]="Objet";

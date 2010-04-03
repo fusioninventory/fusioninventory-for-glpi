@@ -109,12 +109,11 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'>";
-//		echo "<a href='http://glpi-project.org/wiki/doku.php?id=wiki:".substr($_SESSION["glpilanguage"],0,2).":plugins:fusioninventory:models' target='_blank'>".$LANG['plugin_fusioninventory']["profile"][19]."&nbsp;</a>";
 		echo "</td>";
 		echo "<td align='center'>";
 		echo "<input type='file' name='importfile' value=''/>";
       if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
-         echo "<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
+         echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
 		echo "</td>";
 		echo "</tr>";
@@ -122,6 +121,32 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		
 		echo "</form>";		
 	}
+
+
+
+   function showFormMassImport($target) {
+		global $DB,$CFG_GLPI,$LANG;
+
+      plugin_fusioninventory_checkRight("snmp_models","r");
+
+      echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
+
+		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th>";
+		echo $LANG['plugin_fusioninventory']["model_info"][15]." :</th></tr>";
+
+		echo "	<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+      echo $LANG['plugin_fusioninventory']["model_info"][16]."<br/>";
+		echo "<input type='hidden' name='massimport' value='1'/>";
+      if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+         echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
+      }
+		echo "</td>";
+		echo "</tr>";
+		echo "</table>";
+
+		echo "</form>";
+   }
 
 
 
@@ -211,6 +236,12 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 
 
 
+   function importMass() {
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $this->import($file,0,1);
+   }
+
+
+   
 	function import_netdiscovery($p_xml, $agentKey) {
 		global $DB,$LANG;
       $test = '';
