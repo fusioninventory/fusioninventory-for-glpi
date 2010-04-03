@@ -72,8 +72,8 @@ if (plugin_fusioninventory_haveRight("configuration","r")) {
 
       case 7 :
          // Historique
-         $history = new PluginFusionInventorySNMPHistory;
-         $history->showForm($_POST['target'],'1');
+         $history = new PluginFusionInventoryConfigSNMPHistory;
+         $history->showForm($_POST['target']);
          break;
 
       case 8 :

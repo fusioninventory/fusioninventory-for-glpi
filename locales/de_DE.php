@@ -104,6 +104,7 @@ $LANG['plugin_fusioninventory']["functionalities"][5]="Server script";
 $LANG['plugin_fusioninventory']["functionalities"][6]="Legende";
 $LANG['plugin_fusioninventory']["functionalities"][7]="Lockable fields";
 
+$LANG['plugin_fusioninventory']["functionalities"][9]="Retention in days";
 $LANG['plugin_fusioninventory']["functionalities"][10]="Aktiviere Historie";
 $LANG['plugin_fusioninventory']["functionalities"][11]="Aktiviere Verbindungsmodul";
 $LANG['plugin_fusioninventory']["functionalities"][12]="Aktiviere SNMP Netzwerkmodul";

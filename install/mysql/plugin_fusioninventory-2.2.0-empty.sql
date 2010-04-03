@@ -218,8 +218,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_config_modules` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_history`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_config_snmp_history` (
-   `id` INT( 8 ) NOT NULL AUTO_INCREMENT ,
+   `ID` INT( 8 ) NOT NULL AUTO_INCREMENT ,
    `field` VARCHAR( 255 ) NOT NULL ,
+   `days` int(255) NOT NULL DEFAULT '-1',
    PRIMARY KEY ( `id` ) ,
    INDEX ( `field` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

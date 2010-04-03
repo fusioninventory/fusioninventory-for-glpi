@@ -63,6 +63,9 @@ function plugin_fusioninventory_installing($version) {
 	$config_modules->initConfig();
 	$config_snmp_networking = new PluginFusionInventoryConfigSNMPNetworking;
 	$config_snmp_networking->initConfig();
+   $config_history = new PluginFusionInventoryConfigSNMPHistory;
+   $config_history->initConfig();
+
 	// Import models
 	$importexport = new PluginFusionInventoryImportExport;
 	include(GLPI_ROOT.'/inc/setup.function.php');
@@ -179,6 +182,10 @@ function plugin_fusioninventory_update($version) {
       // Update ports history from lang traduction into field constant (MySQL fiel 'Field')
       $pfisnmph = new PluginFusionInventorySNMPHistory;
       $pfisnmph->ConvertField();
+
+      // Delete all values in glpi_plugin_fusioninventory_config_snmp_history
+      $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+      $pficsnmph->updateTrackertoFusion();
 
    }
 	plugin_fusioninventory_initSession();

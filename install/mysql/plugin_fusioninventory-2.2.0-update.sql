@@ -295,7 +295,8 @@ ALTER TABLE `glpi_plugin_fusioninventory_profiles`
   DROP `snmp_report`;
 
 
-ALTER TABLE `glpi_plugin_fusioninventory_profiles` ADD `rangeip` CHAR( 1 ) NULL DEFAULT NULL ,
+ALTER TABLE `glpi_plugin_fusioninventory_profiles`
+   ADD `rangeip` CHAR( 1 ) NULL DEFAULT NULL ,
    ADD `agents` CHAR( 1 ) NULL DEFAULT NULL ,
    ADD `remotecontrol` CHAR( 1 ) NULL DEFAULT NULL ,
    ADD `agentsprocesses` CHAR( 1 ) NULL DEFAULT NULL ,
@@ -306,3 +307,7 @@ ALTER TABLE `glpi_plugin_fusioninventory_profiles` ADD `rangeip` CHAR( 1 ) NULL 
    ADD `snmp_query` CHAR( 1 ) NULL DEFAULT NULL ,
    ADD `wol` CHAR( 1 ) NULL DEFAULT NULL ,
    ADD `configuration` CHAR( 1 ) NULL DEFAULT NULL;
+
+ALTER TABLE `glpi_plugin_fusioninventory_config_snmp_history`
+   ADD `days` INT( 255 ) NOT NULL DEFAULT '-1',
+   CHANGE `id` `ID` INT( 8 ) NOT NULL AUTO_INCREMENT;

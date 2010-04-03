@@ -224,32 +224,53 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
    function CleanHistory($data) {
       global $DB;
 
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      $historyConfig = array();
+      $query = "SELECT *
+                FROM `glpi_plugin_fusioninventory_config_snmp_history`;";
+      $a_num_rows = array();
+      $delete_query = array();
+      $num_rows = 0;
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            if ($data['days'] != "0") {
+               $historyConfig[$data['field']]=$data['days'];
+               $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmp_history`
+                  WHERE `Field`='".$data['field']."'";
+               $delete_query[$data['field']] = "DELETE FROM `glpi_plugin_fusioninventory_snmp_history`
+                  WHERE `Field`='".$data['field']."'";
+               switch ($data['days']) {
 
-      foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-         if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-            foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-               $listName[$type."-".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
+                  case '-1' :
+                     break;
+
+                  default:
+                     $and = " AND DATE_SUB(CURDATE(),INTERVAL ".$data['days']." DAY) >= date_mod ";
+                     $query .= $and;
+                     $delete_query[$data['field']] .= $and;
+                     break;
+
+               }
+               $a_num_rows[$data['field']] = $DB->numrows($DB->query($query));
+               $num_rows += $a_num_rows[$data['field']];
+            }
+         }
+         if ($num_row > 0) {
+            echo "<center><table align='center' width='500'>";
+            echo "<tr>";
+            echo "<td>";
+            createProgressBar("");
+            echo "</td>";
+            echo "</tr>";
+            echo "</table>";
+            $i = 0;
+            foreach ($historyConfig as $field=>$days) {
+               $DB->query($delete_query[$field]);
+               $i += $a_num_rows[$field];
+               changeProgressBarPosition($i, $num_rows, "$i / $num_rows");
             }
          }
       }
 
-      $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_config_snmp_history`;";
-      if ($result=$DB->query($query)) {
-			while ($data=$DB->fetch_array($result)) {
-            list($type,$name) = explode("-", $data['field']);
-            $options[$data['field']]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
-            unset($listName[$data['field']]);
-         }
-      }
-
-      foreach ($listName as $var=>$tmp) {
-         list($type,$name) = explode("-", $var);
-         $query_delete = 'DELETE FROM `glpi_plugin_fusioninventory_snmp_history`
-                          WHERE `field`="'.$FUSIONINVENTORY_MAPPING[$type][$name]["name"].'";';
-         $DB->query($query_delete);
-      }
    }
 
 
@@ -278,7 +299,10 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
             $i++;
             if (isset($constantsfield[$data['Field']])) {
                $data['Field'] = $constantsfield[$data['Field']];
-               $this->update($data);
+               $query_update = "UPDATE `".$this->table."`
+                  SET `Field`='".$data['Field']."'
+                  WHERE `ID`='".$data['ID']."' ";
+               $DB->query($query_update);
                if (preg_match("/00$/", $i)) {
                   changeProgressBarPosition($i, $nb, "$i / $nb");
                }

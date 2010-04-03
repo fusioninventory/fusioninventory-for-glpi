@@ -61,21 +61,31 @@ if (isset($_POST['update'])) {
          $config1 = new PluginFusionInventoryConfigModules;
          break;
 
+      case 'history' :
+         $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+         foreach ($_POST as $key=>$val) {
+            if (is_int($key)) {
+               $input = array();
+               $input['ID']   = $key;
+               $input['days'] = $val;
+               $pficsnmph->update($input);
+            }
+         }
+         break;
+
 	}
 	if (isset($config1)) {
 		$config1->update($_POST);
    }
-} else if ((isset($_POST['plugin_fusioninventory_extraction_add']))
-	OR (isset($_POST['plugin_fusioninventory_extraction_delete']))) {
-
-   $history = new PluginFusionInventorySNMPHistory;
-	$history->UpdateConfigFields($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['Clean_history']))) {
    $history = new PluginFusionInventorySNMPHistory;
    $history->CleanHistory("");
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['plugin_fusioninventory_lockable_add']))
            OR (isset($_POST['plugin_fusioninventory_lockable_delete']))) {
    plugin_fusioninventory_lockable_setLockableForm($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 $config = new PluginFusionInventoryConfig;
