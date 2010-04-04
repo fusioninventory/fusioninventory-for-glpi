@@ -155,6 +155,7 @@ function plugin_fusioninventory_update($version) {
       plugin_fusioninventory_clean_db();
    }
    if ($version == "2.2.0") {
+      ini_set("memory_limit", "-1");
       ini_set("max_execution_time", "0");
       
       $config_modules = new PluginFusionInventoryConfigModules;
