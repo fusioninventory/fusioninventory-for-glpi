@@ -265,11 +265,12 @@ class PluginFusionInventoryGraph {
       $imgName = "img_".$fileId.".png";
       $img = $this->tmpPath.$imgName;
       $imgLink = GLPI_ROOT."/plugins/fusioninventory/front/send.php?file=".urlencode("tmp/".$imgName);
+      $mapLink = GLPI_ROOT."/plugins/fusioninventory/front/send.php?file=".urlencode("tmp/".$MapID);
       echo '<DIV ID="overDiv" STYLE="position:absolute; visibility:hidden; z-index:1000;"></DIV>';
       echo "<IMG ID='fusioninventory_graph_$fileId' SRC='$imgLink' WIDTH=800 HEIGHT=250 BORDER=0 OnMouseMove='fusioninventory_graph(event);' OnMouseOut='nd();'>";
       echo '<SCRIPT>
               function fusioninventory_graph(event) {
-                 LoadImageMap("fusioninventory_graph_'.$fileId.'","'.$Map->tmpFolder.$MapID.'");
+                 LoadImageMap("fusioninventory_graph_'.$fileId.'","'.$mapLink.'");
                  getMousePosition(event);
               }
             </SCRIPT>';
