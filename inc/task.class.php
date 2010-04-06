@@ -350,6 +350,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
    function showAgentInventory($on_device, $device_type) {
       global $DB,$LANG;
 
+      $pfia = new PluginFusionInventoryAgents;
       $computer_ID = 0;
 
       switch ($device_type) {
@@ -358,7 +359,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
             echo "<select name='device'>";
             // afficher la machine associe a l'agent
             echo "<optgroup label=\"".$LANG['help'][25]."\">";
-            $pfia = new PluginFusionInventoryAgents;
+            
             $query = "SELECT glpi_computers.* FROM glpi_plugin_fusioninventory_agents
                LEFT JOIN glpi_computers
                   ON glpi_computers.ID=on_device
@@ -380,6 +381,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
          case COMPUTER_TYPE:
             // afficher la machine ou juste valider
+            echo "<input type='hidden' name='device' value='".COMPUTER_TYPE."-".$on_device."' />";
             $computer_ID = $on_device;
             break;
 
@@ -415,6 +417,14 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
          case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
             $agent_id = $on_device;
+            break;
+
+         case COMPUTER_TYPE:
+            // Search ID of agent
+            $list = $pfia->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
+            foreach ($list as $ID=>$data) {
+               $agent_id = $ID;
+            }
             break;
 
       }
