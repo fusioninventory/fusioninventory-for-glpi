@@ -60,14 +60,33 @@ class PluginFusionInventoryTask extends CommonDBTM {
       global $DB;
 
       $tasks = array();
-      $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
-            glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.device_type as device_type
-            FROM `glpi_plugin_fusioninventory_task`
-         INNER JOIN glpi_networking_ports on (glpi_plugin_fusioninventory_task.on_device=glpi_networking_ports.on_device
-                                             AND glpi_plugin_fusioninventory_task.device_type=glpi_networking_ports.device_type)
-         WHERE `agent_id`='".$agent_id."'
-            AND `action`='".$action."'
-            AND `ifaddr`!='127.0.0.1'";
+      $list = $this->find("`agent_id`='".$agent_id."' AND `action`='".$action."' ");
+      foreach ($list as $task_id=>$data) {
+         switch ($data['device_type']) {
+ 
+            case NETWORKING_TYPE:
+               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
+                           glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.device_type as device_type
+                        FROM `glpi_plugin_fusioninventory_task`
+                        INNER JOIN glpi_networking on glpi_plugin_fusioninventory_task.on_device=glpi_networking.ID
+                        WHERE `agent_id`='".$agent_id."'
+                           AND `action`='".$action."'";
+               break;
+
+            case COMPUTER_TYPE:
+            case PRINTER_TYPE:
+               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
+                           glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.device_type as device_type
+                        FROM `glpi_plugin_fusioninventory_task`
+                        INNER JOIN glpi_networking_ports on (glpi_plugin_fusioninventory_task.on_device=glpi_networking_ports.on_device
+                                                      AND glpi_plugin_fusioninventory_task.device_type=glpi_networking_ports.device_type)
+                        WHERE `agent_id`='".$agent_id."'
+                           AND `action`='".$action."'
+                           AND `ifaddr`!='127.0.0.1'";
+
+               break;
+         }         
+      }
 
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -246,13 +265,13 @@ class PluginFusionInventoryTask extends CommonDBTM {
       }
       if ($type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
          $pfia->getFromDB($ID);
+         $on_device = $ID;
       } else if ($type == COMPUTER_TYPE) {
          $agentlist = $pfia->find("on_device='".$ID."'", "", "1");
          foreach ($agentlist as $data){
             $pfia->getFromDB($data['ID']);
+            $on_device = $pfia->fields['on_device'];
          }
-      } else {
-         return;
       }
       
       echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php\">";
@@ -269,23 +288,39 @@ class PluginFusionInventoryTask extends CommonDBTM {
       echo "<td colspan='2' align='center'>";
       $array_actions = array();
       $array_actions[""] = "------";
-      if ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("inventoryocs") == '1') AND ($pfia->fields['module_inventory'] == '1')) {
-         $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
+      switch($type) {
+
+         case NETWORKING_TYPE :
+         case PRINTER_TYPE :
+            $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
+            break;
+
+         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+         case COMPUTER_TYPE:
+            if ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("inventoryocs") == '1') AND ($pfia->fields['module_inventory'] == '1')) {
+               $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
+            }
+            break;
+
       }
-      if ((isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($pfia->fields['module_netdiscovery'] == '1')) {
-         $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
-      }
-      if ((isset($a_modules["SNMPQUERY"])) AND ($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
-         $array_actions["SNMPQUERY"] = $LANG['plugin_fusioninventory']['config'][7];
-      }
-      if ((isset($a_modules["WAKEONLAN"])) AND ($ptcm->getValue("wol") == '1') AND ($pfia->fields['module_wakeonlan'] == '1')) {
-         $array_actions["WAKEONLAN"] = $LANG['plugin_fusioninventory']['config'][6];
-      }
+
+
+
+      
+//      if ((isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($pfia->fields['module_netdiscovery'] == '1')) {
+//         $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
+//      }
+//      if ((isset($a_modules["SNMPQUERY"])) AND ($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
+//         $array_actions["SNMPQUERY"] = $LANG['plugin_fusioninventory']['config'][7];
+//      }
+//      if ((isset($a_modules["WAKEONLAN"])) AND ($ptcm->getValue("wol") == '1') AND ($pfia->fields['module_wakeonlan'] == '1')) {
+//         $array_actions["WAKEONLAN"] = $LANG['plugin_fusioninventory']['config'][6];
+//      }
 
       $rand = dropdownArrayValues("agentaction",$array_actions);
       echo "</td>";
       echo "</tr>";
-      $params=array('action'=>'__VALUE__', 'on_device'=>$pfia->fields['on_device'], 'device_type'=>$type);
+      $params=array('action'=>'__VALUE__', 'on_device'=>$on_device, 'device_type'=>$type);
       ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
 
       echo "<tr class='tab_bg_1'>";
@@ -315,22 +350,77 @@ class PluginFusionInventoryTask extends CommonDBTM {
    function showAgentInventory($on_device, $device_type) {
       global $DB,$LANG;
 
+      $computer_ID = 0;
+
+      switch ($device_type) {
+
+         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+            echo "<select name='device'>";
+            // afficher la machine associe a l'agent
+            echo "<optgroup label=\"".$LANG['help'][25]."\">";
+            $pfia = new PluginFusionInventoryAgents;
+            $query = "SELECT glpi_computers.* FROM glpi_plugin_fusioninventory_agents
+               LEFT JOIN glpi_computers
+                  ON glpi_computers.ID=on_device
+               WHERE glpi_plugin_fusioninventory_agents.ID='".$on_device."' ";
+            if ($result = $DB->query($query)) {
+               if ($DB->numrows($result) != 0) {
+                  while ($data=$DB->fetch_array($result)) {
+                     $computer_ID = $data['ID'];
+                     echo "<option value='".COMPUTER_TYPE."-".$data['ID']."'>".
+                           $data['name']." - ".$data['serial']." - ".$data['otherserial']."</option>";
+                  }
+               }
+            }
+            echo "</optgroup>";
+            // lister les switch ou imprimante
+            echo $this->dropdownNetworkPrinterSNMP();
+            echo "</select><br/>";
+            break;
+
+         case COMPUTER_TYPE:
+            // afficher la machine ou juste valider
+            $computer_ID = $on_device;
+            break;
+
+         case NETWORKING_TYPE:
+         case PRINTER_TYPE:
+            // lister les agents pour l'inventaire
+
+            break;
+
+      }
+
+
+
+
+
+
+      
+
+
+
+
+    // ********************** EX CODE ********************** //
+
       // Recherche de chaque port de l'équipement
       $np = new Netport;
-      $pfia = new PluginFusionInventoryAgents;
 
       $count_agent_on = 0;
       $agent_id = 0;
 
-      $a_portsList = $np->find('on_device='.$on_device.' AND device_type="'.COMPUTER_TYPE.'"');
-      $a_agent = $pfia->find('on_device='.$on_device.' AND device_type="'.COMPUTER_TYPE.'"', "", 1);
+      $a_portsList = $np->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
 
-      foreach ($a_agent as $agent_id=>$data) {
+      switch ($device_type) {
+
+         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+            $agent_id = $on_device;
+            break;
 
       }
-      if ($agent_id == "0") {
-         return;
-      }
+//      if ($agent_id == "0") {
+//         return;
+//      }
       foreach ($a_portsList as $ID=>$data) {
          if ($data['ifaddr'] != "127.0.0.1") {
             if ($this->getStateAgent($data['ifaddr'],$agent_id)) {
@@ -448,6 +538,69 @@ class PluginFusionInventoryTask extends CommonDBTM {
       return $state;
    }
 
+
+
+
+   // TODO : **************************************************
+
+   function dropdownNetworkPrinterSNMP() {
+      // Dropdown with printer and network devices who have model and auth
+      global $DB,$LANG;
+
+      $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
+      $query = "SELECT `glpi_networking`.`ID` AS `gID`,
+                        `glpi_networking`.`name` AS `name`, `serial`, `otherserial`,
+                             `FK_snmp_connection`, `FK_model_infos`
+                      FROM `glpi_networking`
+                      LEFT JOIN `glpi_plugin_fusioninventory_networking`
+                           ON `FK_networking`=`glpi_networking`.`ID`
+                      INNER join `glpi_plugin_fusioninventory_model_infos`
+                           ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                      WHERE `glpi_networking`.`deleted`='0'
+                           AND `FK_model_infos`!='0'
+                           AND `FK_snmp_connection`!='0'
+                      GROUP BY FK_networking";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $dropdownOptions .= "<option value='".NETWORKING_TYPE."-".$data['gID']."'>".
+            $data['name']." - ".$data['serial']." - ".$data['otherserial']."</option>";
+      }
+      $dropdownOptions .= "</optgroup>";
+
+      // Printers
+      $dropdownOptions .= "<optgroup label=\"".$LANG['help'][27]."\">";
+      $query = "SELECT `glpi_printers`.`ID` AS `gID`,
+                        `glpi_printers`.`name` AS `name`, `serial`, `otherserial`,
+                             `FK_snmp_connection`, `FK_model_infos`
+                      FROM `glpi_printers`
+                      LEFT JOIN `glpi_plugin_fusioninventory_printers`
+                           ON `FK_printers`=`glpi_printers`.`ID`
+                      LEFT JOIN `glpi_networking_ports`
+                              ON `on_device`=`glpi_printers`.`ID`
+                                 AND `device_type`='".PRINTER_TYPE."'
+                      INNER join `glpi_plugin_fusioninventory_model_infos`
+                           ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                      WHERE `glpi_printers`.`deleted`='0'
+                           AND `FK_model_infos`!='0'
+                           AND `FK_snmp_connection`!='0'
+                      GROUP BY FK_printers";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $dropdownOptions .= "<option value='".NETWORKING_TYPE."-".$data['gID']."'>".
+            $data['name']." - ".$data['serial']." - ".$data['otherserial']."</option>";
+      }
+      $dropdownOptions .= "</optgroup>";
+
+
+      return $dropdownOptions;
+   }
+
+
+
+   function dropdownAgentsSNMPQuery() {
+      // Dropdown agent who are ok to SNMPQuery
+      
+   }
 
 }
 

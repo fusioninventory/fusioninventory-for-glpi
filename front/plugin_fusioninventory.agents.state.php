@@ -66,7 +66,23 @@ if (isset($_POST['action'])) {
       }
       // Add a task...
       if ($_POST['action'] == "INVENTORY") {
-         $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'INVENTORY', $splitinfo[0]);
+         $a_device = explode("-", $_POST['device']);
+         switch ($a_device[0]) {
+            
+            case NETWORKING_TYPE;
+            case PRINTER_TYPE;
+               $pfit->addTask($a_device[1], $a_device[0], 'SNMPQUERY', $splitinfo[0], $param);
+               break;
+         
+            case COMPUTER_TYPE;
+               $pfit->addTask($a_device[1], $a_device[0], 'INVENTORY', $splitinfo[0]);
+               break;
+         
+            
+         }
+
+
+         
       } else if ($_POST['action'] == "NETDISCOVERY") {
          $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'NETDISCOVERY', $splitinfo[0], $param);
       } else if ($_POST['action'] == "SNMPQUERY") {

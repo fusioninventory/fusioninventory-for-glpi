@@ -143,7 +143,7 @@ class PluginFusionInventoryCommunication {
     *
     *@return nothing
     **/
-   function addQuery($pxml) {
+   function addQuery($pxml, $task=0) {
       $ptmi    = new PluginFusionInventoryModelInfos;
       $ptsnmpa = new PluginFusionInventorySNMPAuth;
       $pta     = new PluginFusionInventoryAgents;
@@ -154,6 +154,19 @@ class PluginFusionInventoryCommunication {
       $agent = $pta->InfosByKey($pxml->DEVICEID);
       $count_range = $ptrip->Counter($agent["ID"], "query");
       $count_range += $ptt->Counter($agent["ID"], "SNMPQUERY");
+      if ($task == "1") {
+         $tasks = $ptt->ListTask($agent["ID"], "SNMPQUERY");
+         foreach ($tasks as $task_id=>$taskInfos) {
+            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/query.log".rand(), $agent["ID"]);
+            if ($tasks[$task_id]["param"] == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+               $task = "0";
+            }
+         }
+         if ($task == "1") {
+            $agent["core_query"] = 1;
+            $agent["threads_query"] = 1;
+         }
+      }
 
       // Get total number of devices to query
       $ranges = $ptrip->ListRange($agent["ID"], "query");
@@ -166,7 +179,7 @@ class PluginFusionInventoryCommunication {
       }
 
 
-      if (($count_range > 0) && ($agent["lock"] == 0) && (!empty($modelslistused))) {
+      if ((($count_range > 0) AND ($agent["lock"] == 0) AND (!empty($modelslistused))) OR ($task == "1")) {
          $a_input = array();
          if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
             $this->addProcessNumber($ptap->addProcess($pxml));
@@ -183,13 +196,38 @@ class PluginFusionInventoryCommunication {
                $sxml_param->addAttribute('THREADS_QUERY', $agent["threads_query"]);
                $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
 
-               $ranges = $ptrip->ListRange($agent["ID"], "query");
-               $modelslistused = array();
-               foreach ($ranges as $range_id=>$rangeInfos) {
-                  $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
-                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
-                  $modelslistused = $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
-                              $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+
+               if ($task == "1") {
+                  foreach ($tasks as $task_id=>$taskInfos) {
+                     // TODO : envoyer une plage avec juste cette ip ***
+                     switch ($tasks[$task_id]['device_type']) {
+
+                        case NETWORKING_TYPE:
+                           $modelslistused = $this->addDevice($sxml_option, 'networking', 0,
+                                 0, "-1", $modelslistused, 1, $tasks[$task_id]['on_device']);
+                           break;
+
+                        case PRINTER_TYPE:
+
+                           break;
+                        
+                     }
+
+
+                     //
+                     //
+//                     $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
+//                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+                  }
+               } else {
+                  $ranges = $ptrip->ListRange($agent["ID"], "query");
+                  $modelslistused = array();
+                  foreach ($ranges as $range_id=>$rangeInfos) {
+                     $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
+                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+                     $modelslistused = $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
+                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+                  }
                }
 
             $snmpauthlist=$ptsnmpa->find();
@@ -409,7 +447,7 @@ class PluginFusionInventoryCommunication {
     *@param $p_entity Entity of device
     *@return true (device added) / false (unknown type of device)
     **/
-   function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity, $modelslistused, $addingdevice=1) {
+   function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity, $modelslistused, $addingdevice=1, $devide_id=0) {
       global $DB;
 
       $type='';
@@ -427,11 +465,18 @@ class PluginFusionInventoryCommunication {
                            ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                       WHERE `glpi_networking`.`deleted`='0'
                            AND `FK_model_infos`!='0'
-                           AND `FK_snmp_connection`!='0'
-                           AND `glpi_networking`.`FK_entities`='".$p_entity."'
-                           AND inet_aton(`ifaddr`)
+                           AND `FK_snmp_connection`!='0'";
+             if ($p_entity != '-1') {
+               $query .= "AND `glpi_networking`.`FK_entities`='".$p_entity."' ";
+             }
+             if ($p_ipstart == '0') {
+               $query .= " AND `glpi_networking`.`ID`='".$devide_id."'";
+             } else {
+               $query .= " AND inet_aton(`ifaddr`)
                                BETWEEN inet_aton('".$p_ipstart."')
                                AND inet_aton('".$p_ipend."') ";
+             }
+
             break;
          
          case "printer":

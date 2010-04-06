@@ -114,6 +114,16 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
                  AND ($a_agent['module_netdiscovery'] == '1')) {
             $single = 1;
             $ptc->addDiscovery($pxml, 1);
+            $input['ID'] = $task_id;
+            $ptt->delete($input);
+         }
+         if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
+                 AND ($ptcm->isActivated('snmp'))
+                 AND ($a_agent['module_snmpquery'] == '1')) {
+            $single = 1;
+            $ptc->addQuery($pxml, 1);
+            $input['ID'] = $task_id;
+            $ptt->delete($input);
          }
       }
       
