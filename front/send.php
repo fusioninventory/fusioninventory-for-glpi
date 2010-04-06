@@ -39,10 +39,11 @@ if (!defined('GLPI_ROOT')) {
 if (!defined("GLPI_PLUGIN_DOC_DIR")){
 	define("GLPI_PLUGIN_DOC_DIR",GLPI_ROOT . "/files/_plugins");
 }
-$docDir = GLPI_PLUGIN_DOC_DIR.'/files/_plugins/fusioninventory';
+$docDir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory';
 
 if (isset($_GET['file'])) {
    $filename = $_GET['file'];
+//   echo $filename;
 
    // Security test : document in $docDir
    if (strstr($filename,"../") || strstr($filename,"..\\")){
@@ -52,6 +53,7 @@ if (isset($_GET['file'])) {
    }
 
    $file = $docDir.'/'.$filename;
+//   echo $file;
    if (!file_exists($file)){
       echo "Error file $filename does not exist";
       return;
