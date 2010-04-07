@@ -354,6 +354,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
       $pfia = new PluginFusionInventoryAgents;
       $computer_ID = 0;
+      $count_agent_on = 0;
 
       switch ($device_type) {
 
@@ -391,8 +392,9 @@ class PluginFusionInventoryTask extends CommonDBTM {
          case PRINTER_TYPE:
             // Choisir parmi les agents qui repondent et on le SNMP d'activé
             echo "<input type='hidden' name='device' value='".$device_type."-".$on_device."' />";
-            $this->showAgentSNMPQuery($on_device, $device_type);
-
+            echo "<table>";
+            $count_agent_on = $this->showAgentSNMPQuery($on_device, $device_type);
+            echo "</table>";
             break;
 
       }
@@ -401,7 +403,6 @@ class PluginFusionInventoryTask extends CommonDBTM {
       // Recherche de chaque port de l'équipement
       $np = new Netport;
 
-      $count_agent_on = 0;
       $agent_id = 0;
 
       $a_portsList = $np->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
@@ -515,6 +516,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
+      return $count_agent_on;
    }
 
    function showAgentWol($on_device, $device_type) {
