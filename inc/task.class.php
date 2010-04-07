@@ -272,6 +272,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
             $pfia->getFromDB($data['ID']);
             $on_device = $pfia->fields['on_device'];
          }
+      } else if (($type == NETWORKING_TYPE) OR ($type == PRINTER_TYPE)) {
+         $on_device = $ID;
       }
       
       echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php\">";
@@ -387,23 +389,14 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
          case NETWORKING_TYPE:
          case PRINTER_TYPE:
-            // lister les agents pour l'inventaire
+            // Choisir parmi les agents qui repondent et on le SNMP d'activé
+            echo "<input type='hidden' name='device' value='".$device_type."-".$on_device."' />";
+            $this->showAgentSNMPQuery($on_device, $device_type);
 
             break;
 
       }
 
-
-
-
-
-
-      
-
-
-
-
-    // ********************** EX CODE ********************** //
 
       // Recherche de chaque port de l'équipement
       $np = new Netport;
@@ -495,19 +488,26 @@ class PluginFusionInventoryTask extends CommonDBTM {
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
 
-      $a_agents = $pfia->find('module_snmpquery=1');
-      foreach ($a_agents as $IDagent=>$data) {
-         $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+      switch ($device_type) {
 
-         foreach ($a_portsList as $ID=>$datapl) {
-            if (!isset($existantantip[$datapl['ifaddr']])) {
-               $existantantip[$datapl['ifaddr']] = 1;
-               if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
-                  $count_agent_on++;
+         case NETWORKING_TYPE:
+            $a_agents = $pfia->find('module_snmpquery=1');
+            foreach ($a_agents as $IDagent=>$data) {
+               $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+
+               foreach ($a_portsList as $ID=>$datapl) {
+                  if (!isset($existantantip[$datapl['ifaddr']])) {
+                     $existantantip[$datapl['ifaddr']] = 1;
+                     if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
+                        $count_agent_on++;
+                     }
+                  }
                }
             }
-         }
+            break;
       }
+
+
       if ($count_agent_on == 0) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center' colspan='2'>";

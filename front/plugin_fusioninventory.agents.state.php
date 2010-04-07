@@ -76,12 +76,9 @@ if (isset($_POST['action'])) {
          
             case COMPUTER_TYPE;
                $pfit->addTask($a_device[1], $a_device[0], 'INVENTORY', $splitinfo[0]);
-               break;
-         
+               break;         
             
          }
-
-
          
       } else if ($_POST['action'] == "NETDISCOVERY") {
          $pfit->addTask($_POST['on_device'], $_POST['device_type'], 'NETDISCOVERY', $splitinfo[0], $param);

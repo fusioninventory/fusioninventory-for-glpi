@@ -242,7 +242,12 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 
 		echo "</table></form>";
 
+      // Remote action of agent
+      $pfit = new PluginFusionInventoryTask;
+      $pfit->RemoteStateAgent($target, $ID, NETWORKING_TYPE, array('INVENTORY' => 1 ));
 
+
+      // SNMP Informations
 //		echo "<div align='center'>
       echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 
