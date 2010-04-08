@@ -231,6 +231,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0'] = 'serial';
 
 
+
 //      $mapping_pre[3][''] = '';
       $mapping_pre_vlan = array();
       $mapping_pre_vlan['.1.3.6.1.4.1.9.9.46.1.6.1.1.14'] = '1';
@@ -417,11 +418,11 @@ echo "</a>";
                echo "</th>";
                echo "<th>";
                echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
-               dropdownYesNo("oid_port_counter_".$a_oids2[$num]);
+               dropdownYesNo("oid_port_counter_".$oid_id_before);
                echo "</th>";
                echo "<th>";
                echo $LANG['plugin_fusioninventory']["mib"][7]." : ";
-               dropdownYesNo("oid_port_dyn_".$a_oids2[$num]);
+               dropdownYesNo("oid_port_dyn_".$oid_id_before);
                echo "</th>";
                echo "</tr>";
                echo "<tr>";
