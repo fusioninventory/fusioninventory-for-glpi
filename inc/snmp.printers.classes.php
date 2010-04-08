@@ -145,6 +145,11 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 		echo "</table></form>";
 		echo "</div>";
 
+      // Remote action of agent
+      $pfit = new PluginFusionInventoryTask;
+      $pfit->RemoteStateAgent($target, $ID, PRINTER_TYPE, array('INVENTORY' => 1 ));
+
+
 		// ** FORM FOR CARTRIDGES
 
 		// get infos to get visible or not the counters

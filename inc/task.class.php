@@ -492,6 +492,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
       switch ($device_type) {
 
          case NETWORKING_TYPE:
+         case PRINTER_TYPE:
             $a_agents = $pfia->find('module_snmpquery=1');
             foreach ($a_agents as $IDagent=>$data) {
                $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);

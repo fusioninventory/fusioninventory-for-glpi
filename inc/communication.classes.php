@@ -208,7 +208,8 @@ class PluginFusionInventoryCommunication {
                            break;
 
                         case PRINTER_TYPE:
-
+                           $modelslistused = $this->addDevice($sxml_option, 'printer', 0,
+                                 0, "-1", $modelslistused, 1, $tasks[$task_id]['on_device']);
                            break;
                         
                      }
@@ -494,11 +495,19 @@ class PluginFusionInventoryCommunication {
                            ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                       WHERE `glpi_printers`.`deleted`=0
                             AND `FK_model_infos`!='0'
-                            AND `FK_snmp_connection`!='0'
-                            AND `glpi_printers`.`FK_entities`='".$p_entity."'
-                            AND inet_aton(`ifaddr`)
-                                BETWEEN inet_aton('".$p_ipstart."')
-                                AND inet_aton('".$p_ipend."') ";
+                            AND `FK_snmp_connection`!='0'";
+             if ($p_entity != '-1') {
+               $query .= "AND `glpi_printers`.`FK_entities`='".$p_entity."' ";
+             }
+             if ($p_ipstart == '0') {
+               $query .= " AND `glpi_printers`.`ID`='".$devide_id."'";
+             } else {
+               $query .= " AND inet_aton(`ifaddr`)
+                               BETWEEN inet_aton('".$p_ipstart."')
+                               AND inet_aton('".$p_ipend."') ";
+             }
+
+
             break;
          
          default: // type non géré
