@@ -271,8 +271,8 @@ $LANG['plugin_fusioninventory']["model_info"][9]="Import completed successfully"
 $LANG['plugin_fusioninventory']["model_info"][10]="SNMP model import";
 $LANG['plugin_fusioninventory']["model_info"][11]="Activation";
 $LANG['plugin_fusioninventory']["model_info"][12]="Key for model discovery";
-$LANG['plugin_fusioninventory']["model_info"][13]="Load right model";
-$LANG['plugin_fusioninventory']["model_info"][14]="Load right SNMP model";
+$LANG['plugin_fusioninventory']["model_info"][13]="Load the correct model";
+$LANG['plugin_fusioninventory']["model_info"][14]="Load the correct SNMP model";
 $LANG['plugin_fusioninventory']["model_info"][15]="Mass import of models";
 $LANG['plugin_fusioninventory']["model_info"][16]="Mass import of models in folder plugins/fusioninventory/models/";
 
