@@ -311,3 +311,6 @@ ALTER TABLE `glpi_plugin_fusioninventory_profiles`
 ALTER TABLE `glpi_plugin_fusioninventory_config_snmp_history`
    ADD `days` INT( 255 ) NOT NULL DEFAULT '-1',
    CHANGE `id` `ID` INT( 8 ) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `glpi_plugin_fusioninventory_config`
+   CHANGE `ssl_only` `ssl_only` INT( 1 ) NOT NULL DEFAULT '0';
