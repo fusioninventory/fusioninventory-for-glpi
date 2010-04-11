@@ -287,6 +287,11 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
       echo "<center><table align='center' width='500'>";
       echo "<tr>";
       echo "<td>";
+      echo "Converting history port ...";
+      echo "</td>";
+      echo "</tr>";
+      echo "<tr>";
+      echo "<td>";
       createProgressBar("Update Ports history");
 
       $query = "SELECT *
@@ -303,12 +308,138 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
                   SET `Field`='".$data['Field']."'
                   WHERE `ID`='".$data['ID']."' ";
                $DB->query($query_update);
-               if (preg_match("/00$/", $i)) {
+               if (preg_match("/000$/", $i)) {
                   changeProgressBarPosition($i, $nb, "$i / $nb");
                }
             }
          }
       }
+      changeProgressBarPosition($i, $nb, "$i / $nb");
+      echo "</td>";
+      echo "</tr>";
+      echo "</table></center>";
+
+
+      // Move connections from glpi_plugin_fusioninventory_snmp_history to glpi_plugin_fusioninventory_snmp_history_connections
+      $pfihc = new PluginFusionInventoryHistoryConnections;
+
+      echo "<br/><center><table align='center' width='500'>";
+      echo "<tr>";
+      echo "<td>";
+      echo "Moving creation connections history ...";
+      echo "</td>";
+      echo "</tr>";
+      echo "<tr>";
+      echo "<td>";
+      createProgressBar("Move create connections");
+      $query = "SELECT *
+                FROM ".$this->table."
+                WHERE `Field` = '0' 
+                  AND ((`old_value` NOT LIKE '%:%')
+                        OR (`old_value` IS NULL))";
+      if ($result=$DB->query($query)) {
+         $nb = $DB->numrows($result);
+         $i = 0;
+         changeProgressBarPosition($i, $nb, "$i / $nb");
+			while ($data=$DB->fetch_array($result)) {
+            $i++;
+
+            // Search port from mac address
+            $query_port = "SELECT * FROM `glpi_networking_ports`
+               WHERE `ifmac`='".$data['new_value']."' ";
+            if ($result_port=$DB->query($query_port)) {
+               if ($DB->numrows($result_port) == '1') {
+                  $input = array();
+                  $data_port = $DB->fetch_assoc($result_port);
+                  $input['FK_port_source'] = $data_port['ID'];
+
+                  $query_port2 = "SELECT * FROM `glpi_networking_ports`
+                     WHERE `on_device` = '".$data['new_device_ID']."'
+                        AND `device_type` = '".$data['new_device_type']."' ";
+                  if ($result_port2=$DB->query($query_port2)) {
+                     if ($DB->numrows($result_port2) == '1') {
+                        $data_port2 = $DB->fetch_assoc($result_port2);
+                        $input['FK_port_destination'] = $data_port2['ID'];
+
+                        $input['date'] = $data['date_mod'];
+                        $input['creation'] = 1;
+                        $input['process_number'] = $data['FK_process'];
+                        $pfihc->add($input);
+                     }
+                  }
+               }
+            }
+
+            $query_delete = "DELETE FROM `".$this->table."`
+                  WHERE `ID`='".$data['ID']."' ";
+            $DB->query($query_delete);
+            if (preg_match("/00$/", $i)) {
+               changeProgressBarPosition($i, $nb, "$i / $nb");
+            }
+         }
+      }
+      changeProgressBarPosition($i, $nb, "$i / $nb");
+      echo "</td>";
+      echo "</tr>";
+      echo "</table></center>";
+
+
+      echo "<br/><center><table align='center' width='500'>";
+      echo "<tr>";
+      echo "<td>";
+      echo "Moving deleted connections history ...";
+      echo "</td>";
+      echo "</tr>";
+      echo "<tr>";
+      echo "<td>";
+      createProgressBar("Move delete connections");
+      $query = "SELECT *
+                FROM ".$this->table."
+                WHERE `Field` = '0'
+                  AND ((`new_value` NOT LIKE '%:%')
+                        OR (`new_value` IS NULL))";
+      if ($result=$DB->query($query)) {
+         $nb = $DB->numrows($result);
+         $i = 0;
+         changeProgressBarPosition($i, $nb, "$i / $nb");
+			while ($data=$DB->fetch_array($result)) {
+            $i++;
+            
+            // Search port from mac address
+            $query_port = "SELECT * FROM `glpi_networking_ports`
+               WHERE `ifmac`='".$data['old_value']."' ";
+            if ($result_port=$DB->query($query_port)) {
+               if ($DB->numrows($result_port) == '1') {
+                  $input = array();
+                  $data_port = $DB->fetch_assoc($result_port);
+                  $input['FK_port_source'] = $data_port['ID'];
+
+                  $query_port2 = "SELECT * FROM `glpi_networking_ports`
+                     WHERE `on_device` = '".$data['old_device_ID']."'
+                        AND `device_type` = '".$data['old_device_type']."' ";
+                  if ($result_port2=$DB->query($query_port2)) {
+                     if ($DB->numrows($result_port2) == '1') {
+                        $data_port2 = $DB->fetch_assoc($result_port2);
+                        $input['FK_port_destination'] = $data_port2['ID'];
+
+                        $input['date'] = $data['date_mod'];
+                        $input['creation'] = 1;
+                        $input['process_number'] = $data['FK_process'];
+                        $pfihc->add($input);
+                     }
+                  }
+               }
+            }
+
+            $query_delete = "DELETE FROM `".$this->table."`
+                  WHERE `ID`='".$data['ID']."' ";
+            $DB->query($query_delete);
+            if (preg_match("/00$/", $i)) {
+               changeProgressBarPosition($i, $nb, "$i / $nb");
+            }
+         }
+      }
+      changeProgressBarPosition($i, $nb, "$i / $nb");
       echo "</td>";
       echo "</tr>";
       echo "</table></center>";
