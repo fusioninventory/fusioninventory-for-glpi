@@ -78,6 +78,22 @@ class PluginFusionInventoryConfigSNMPHistory extends CommonDBTM {
 	
 
 
+	function getValue($field) {
+		global $DB;
+
+		$query = "SELECT days
+                FROM ".$this->table."
+                WHERE `field`='".$field."'
+                LIMIT 1;";
+		if ($result = $DB->query($query)) {
+			if ($this->fields = $DB->fetch_row($result)) {
+				return $this->fields['0'];
+         }
+		}
+		return false;
+	}
+
+
    function updateTrackertoFusion() {
       global $DB;
 

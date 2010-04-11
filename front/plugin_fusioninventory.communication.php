@@ -45,13 +45,16 @@ include (GLPI_ROOT."/inc/includes.php");
 
 $_SESSION["glpi_use_mode"] = 2;
 
-//header('Content-type: application/x-compress');
-
 $ptc  = new PluginFusionInventoryCommunication;
 $ptap = new PluginFusionInventoryAgentsProcesses;
 
 $res='';
 $errors='';
+
+// ***** For debug only ***** //
+//$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
+// ********** End ********** //
+
 
 // Get conf tu know if SSL is only
 $fusioninventory_config = new PluginFusionInventoryConfig;

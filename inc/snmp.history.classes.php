@@ -313,6 +313,39 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
       echo "</tr>";
       echo "</table></center>";
    }
+
+
+   function cronCleanHistory() {
+      global $DB;
+
+      $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+
+      $a_list = $pficsnmph->find();
+      if (count($a_list)){
+         foreach ($a_list as $data){
+
+            $query_delete = "DELETE FROM `".$this->table."`
+               WHERE `Field`='".$data['field']."' ";
+
+            switch($data['days']) {
+
+               case '-1';
+                  $DB->query($query_delete);
+                  break;
+
+               case '0': // never delete
+                  break;
+
+               default:
+                  $query_delete .= " AND `date_mod` < date_add(now(),interval -".
+                                       $data['days']." day)";
+                  $DB->query($query_delete);
+                  break;
+
+            }
+         }
+      }
+   }
 }
 
 ?>

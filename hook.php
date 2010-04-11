@@ -1115,8 +1115,8 @@ function cron_plugin_fusioninventory() {
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
-//   $fusioninventory_config_snmp_networking = new PluginFusionInventoryConfigSNMPNetworking;
-//   $fusioninventory_config_snmp_networking->CleanHistory("history_process");
+   $pfisnmph = new PluginFusionInventorySNMPHistory;
+   $pfisnmph->cronCleanHistory();
    return 1;
 }
 

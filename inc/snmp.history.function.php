@@ -69,8 +69,10 @@ function plugin_fusioninventory_snmp_addLog($port,$field,$old_value,$new_value,$
 
 function plugin_fusioninventory_networking_ports_addLog($port_id, $new_value, $field) {
    include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+
    $ptp = new PluginFusionInventoryPort;
    $ptsnmph = new PluginFusionInventorySNMPHistory;
+   $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
 
    $db_field = $field;
    switch ($field) {
@@ -106,11 +108,15 @@ function plugin_fusioninventory_networking_ports_addLog($port_id, $new_value, $f
    $ptp->load($port_id);
    //echo $ptp->getValue($db_field);
    if ($ptp->getValue($db_field) != $new_value) {
-      $array["FK_ports"] = $port_id;
-      $array["field"] = $field;
-      $array["old_value"] = $ptp->getValue($db_field);
-      $array["new_value"] = $new_value;
-      $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
+      $days = $pficsnmph->getValue($field);
+
+      if ((isset($days)) AND ($days != '-1')) {
+         $array["FK_ports"] = $port_id;
+         $array["field"] = $field;
+         $array["old_value"] = $ptp->getValue($db_field);
+         $array["new_value"] = $new_value;
+         $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
+      }
    }
 }
 
