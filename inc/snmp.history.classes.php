@@ -425,7 +425,9 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
                         $input['process_number'] = $data['FK_process'];
-                        $pfihc->add($input);
+                        if ($input['FK_port_source'] != $input['FK_port_destination']) {
+                           $pfihc->add($input);
+                        }
                      }
                   }
                }
