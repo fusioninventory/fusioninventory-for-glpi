@@ -125,6 +125,14 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
             $input['ID'] = $task_id;
             $ptt->delete($input);
          }
+         if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
+                 AND ($ptcm->isActivated('wol'))
+                 AND ($a_agent['module_wakeonlan'] == '1')) {
+            $single = 1;
+            $ptc->addWakeonlan($pxml);
+            $input['ID'] = $task_id;
+            $ptt->delete($input);
+         }
       }
       
       if ($single == "0") {

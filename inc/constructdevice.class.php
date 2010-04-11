@@ -137,47 +137,47 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $type_model = $a_device['type'];
 
       // List of OID with relations by default with mapping
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.4'] = 'cdpCacheAddress';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.7'] = 'cdpCacheDevicePort';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.1.0'] = 'comments';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1'] = 'cpu';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.1.4.1.2'] = 'dot1dBasePortIfIndex';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.1'] = 'dot1dTpFdbAddress';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.2'] = 'dot1dTpFdbPort';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1001'] = 'entPhysicalModelName';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1001'] = 'firmware';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.2'] = 'ifdescr';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.1'] = 'ifIndex';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.14'] = 'ifinerrors';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.10'] = 'ifinoctets';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.7'] = 'ifinternalstatus';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.9'] = 'iflastchange';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.4'] = 'ifmtu';
-      $mapping_pre[2]['.1.3.6.1.2.1.31.1.1.1.1'] = 'ifName';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.20'] = 'ifouterrors';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.16'] = 'ifoutoctets';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.6'] = 'ifPhysAddress';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.5'] = 'ifspeed';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.8'] = 'ifstatus';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.3'] = 'ifType';
-      $mapping_pre[2]['.1.3.6.1.2.1.4.20.1.1'] = 'ipAdEntAddr';
-      $mapping_pre[2]['.1.3.6.1.2.1.4.22.1.2'] = 'ipNetToMediaPhysAddress';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.6.0'] = 'location';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.1.1.0'] = 'macaddr';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.2.1.8.0'] = 'memory';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.5.0'] = 'name';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.3.6.6.0'] = 'ram';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001'] = 'serial';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.3.0'] = 'uptime';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.6.1.1.14'] = 'vlanTrunkPortDynamicStatus';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.68.1.2.2.1.2'] = 'vmvlan';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.3.1.1.4.1'] = 'vtpVlanName';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.7.1.4.3.1.1'] = 'vtpVlanName';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001'] = 'serial';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1'] = 'firmware1';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.10.1'] = 'firmware2';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1'] = 'serial';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1'] = 'entPhysicalModelName';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.4']      = 'cdpCacheAddress';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.7']      = 'cdpCacheDevicePort';
+      $mapping_pre[2]['.1.3.6.1.2.1.1.1.0']                 = 'comments';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1']   = 'cpu';
+      $mapping_pre[2]['.1.3.6.1.2.1.17.1.4.1.2']            = 'dot1dBasePortIfIndex';
+      $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.1']            = 'dot1dTpFdbAddress';
+      $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.2']            = 'dot1dTpFdbPort';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1001']    = 'entPhysicalModelName';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1001']     = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.2']               = 'ifdescr';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.1']               = 'ifIndex';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.14']              = 'ifinerrors';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.10']              = 'ifinoctets';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.7']               = 'ifinternalstatus';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.9']               = 'iflastchange';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.4']               = 'ifmtu';
+      $mapping_pre[2]['.1.3.6.1.2.1.31.1.1.1.1']            = 'ifName';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.20']              = 'ifouterrors';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.16']              = 'ifoutoctets';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.6']               = 'ifPhysAddress';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.5']               = 'ifspeed';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.8']               = 'ifstatus';
+      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.3']               = 'ifType';
+      $mapping_pre[2]['.1.3.6.1.2.1.4.20.1.1']              = 'ipAdEntAddr';
+      $mapping_pre[2]['.1.3.6.1.2.1.4.22.1.2']              = 'ipNetToMediaPhysAddress';
+      $mapping_pre[2]['.1.3.6.1.2.1.1.6.0']                 = 'location';
+      $mapping_pre[2]['.1.3.6.1.2.1.17.1.1.0']              = 'macaddr';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.2.1.8.0']             = 'memory';
+      $mapping_pre[2]['.1.3.6.1.2.1.1.5.0']                 = 'name';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.3.6.6.0']             = 'ram';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001']    = 'serial';
+      $mapping_pre[2]['.1.3.6.1.2.1.1.3.0']                 = 'uptime';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.6.1.1.14']     = 'vlanTrunkPortDynamicStatus';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.68.1.2.2.1.2']      = 'vmvlan';
+      $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.3.1.1.4.1']    = 'vtpVlanName';
+      $mapping_pre[2]['.1.3.6.1.2.1.17.7.1.4.3.1.1']        = 'vtpVlanName';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001']    = 'serial';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1']        = 'firmware1';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.10.1']       = 'firmware2';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1']       = 'serial';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1']       = 'entPhysicalModelName';
       // Omnistack LS6200 :
          $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.67108992'] = 'serial';
          /*
@@ -189,48 +189,52 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
 
 
-      $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.2.1'] = 'model';
-      $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.6.1'] = 'serial';
-      $mapping_pre[3]['.1.3.6.1.2.1.25.2.3.1.5.1'] = 'memory';
-      $mapping_pre[3]['.1.3.6.1.2.1.43.8.2.1.14.1.1'] = 'enterprise';
-      $mapping_pre[3]['.1.3.6.1.2.1.4.20.1.2'] = 'ifaddr';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.2'] = 'ifName';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.6'] = 'ifPhysAddress';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.3'] = 'ifType';
-      $mapping_pre[3]['.1.3.6.1.2.1.1.5.0'] = 'name';
-      $mapping_pre[3]['.1.3.6.1.2.1.1.6.0'] = 'location';
-      $mapping_pre[3]['.1.3.6.1.2.1.1.1.0'] = 'comments';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.1'] = 'ifIndex';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.1.4.0'] = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.2'] = 'cartridgescyan';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.1'] = 'cartridgesblack';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.3'] = 'cartridgesmagenta';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.4'] = 'cartridgesyellow';
-      $mapping_pre[3]['.1.3.6.1.2.1.43.10.2.1.4.1.1'] = 'pagecountertotalpages';
-      $mapping_pre[3]['.1.3.6.1.2.1.43.5.1.1.17.1'] = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.13'] = 'pagecountercolorpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.14'] = 'pagecounterblackpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.2'] = 'pagecountertotalpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.3'] = 'pagecounterblackpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.5'] = 'pagecountercolorpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.6'] = 'pagecountertotalpages_fax';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.8'] = 'pagecountertotalpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.20'] = 'pagecounterblackpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.19'] = 'pagecountercolorpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.47'] = 'pagecounterscannedpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.12.0'] = 'otherserial';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.1.1.0'] = 'pagecounterblackpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.3.1.0'] = 'pagecountercolorpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3'] = 'pagecountertotalpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3'] = 'pagecountertotalpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.4.1.3'] = 'pagecountertotalpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.1.1.7.0'] = 'informations';
-      $mapping_pre[3]['.1.3.6.1.4.1.674.10898.100.2.1.2.1.6.1'] = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.1602.1.2.1.4.0'] = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.3.0'] = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0'] = 'serial';
+      $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.2.1']                = 'model';
+      $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.6.1']                = 'serial';
+      $mapping_pre[3]['.1.3.6.1.2.1.25.2.3.1.5.1']                   = 'memory';
+      $mapping_pre[3]['.1.3.6.1.2.1.43.8.2.1.14.1.1']                = 'enterprise';
+      $mapping_pre[3]['.1.3.6.1.2.1.4.20.1.2']                       = 'ifaddr';
+      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.2']                        = 'ifName';
+      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.6']                        = 'ifPhysAddress';
+      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.3']                        = 'ifType';
+      $mapping_pre[3]['.1.3.6.1.2.1.1.5.0']                          = 'name';
+      $mapping_pre[3]['.1.3.6.1.2.1.1.6.0']                          = 'location';
+      $mapping_pre[3]['.1.3.6.1.2.1.1.1.0']                          = 'comments';
+      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.1']                        = 'ifIndex';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.1.4.0']              = 'serial';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.2']         = 'cartridgescyan';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.1']         = 'cartridgesblack';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.3']         = 'cartridgesmagenta';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.4']         = 'cartridgesyellow';
+      $mapping_pre[3]['.1.3.6.1.2.1.43.10.2.1.4.1.1']                = 'pagecountertotalpages';
+      $mapping_pre[3]['.1.3.6.1.2.1.43.5.1.1.17.1']                  = 'serial';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.13']        = 'pagecountercolorpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.14']        = 'pagecounterblackpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.2']         = 'pagecountertotalpages_copy';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.3']         = 'pagecounterblackpages_copy';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.5']         = 'pagecountercolorpages_copy';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.6']         = 'pagecountertotalpages_fax';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.8']         = 'pagecountertotalpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.20']        = 'pagecounterblackpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.19']        = 'pagecountercolorpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.47']        = 'pagecounterscannedpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.12.0']        = 'otherserial';
+      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.1.1.0']  = 'pagecounterblackpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.3.1.0']  = 'pagecountercolorpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3']   = 'pagecountertotalpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3']   = 'pagecountertotalpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.4.1.3']   = 'pagecountertotalpages_copy';
+      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.1.1.7.0']               = 'informations';
+      $mapping_pre[3]['.1.3.6.1.4.1.674.10898.100.2.1.2.1.6.1']      = 'serial';
+      $mapping_pre[3]['.1.3.6.1.4.1.1602.1.2.1.4.0']                 = 'serial';
+      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.3.0']         = 'serial';
+      $mapping_pre[3]['.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0']       = 'serial';
 
 
+
+
+      $mapping_pre[1]['.1.3.6.1.4.1.714.1.2.5.3.5.0'] = 'serial';
+      $mapping_pre[1]['.1.3.6.1.2.1.2.2.1.6']         = 'ifPhysAddress';
 
 //      $mapping_pre[3][''] = '';
       $mapping_pre_vlan = array();
@@ -486,7 +490,7 @@ echo "</a>";
 
       $query = "SELECT glpi_plugin_fusioninventory_construct_device.ID, type  FROM glpi_plugin_fusioninventory_construct_device
          LEFT JOIN glpi_plugin_fusioninventory_construct_walks on glpi_plugin_fusioninventory_construct_device.ID = construct_device_id
-         WHERE type IN (2,3)
+         WHERE type IN (1,2,3)
             AND log!=''";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
@@ -687,7 +691,8 @@ echo "</a>";
                $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
                   WHERE `construct_device_id`='".$data['ID']."'
                      AND ((`mapping_name`='macaddr' AND mapping_type='2')
-                           OR ( `mapping_name`='ifPhysAddress' AND mapping_type='3'))
+                           OR ( `mapping_name`='ifPhysAddress' AND mapping_type='3')
+                           OR ( `mapping_name`='ifPhysAddress' AND mapping_type='1'))
                   LIMIT 1";
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {

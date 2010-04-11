@@ -1573,12 +1573,29 @@ class PluginFusionInventoryCommunication {
    }
 
 
-   function addWakeonlan() {
-       $sxml_option = $this->sxml->addChild('OPTION');
-       $sxml_option->addChild('NAME', 'WAKEONLAN');
-       $sxml_param = $sxml_option->addChild('PARAM');
-       $sxml_param->addAttribute('MAC', '00:24:8c:e0:2d:bb');
-       $sxml_param->addAttribute('IP', '192.168.0.201');
+   function addWakeonlan($pxml) {
+      $pta = new PluginFusionInventoryAgents;
+      $ptt = new PluginFusionInventoryTask;
+      $np  = new Netport;
+
+      $agent = $pta->InfosByKey($pxml->DEVICEID);
+
+      $sxml_option = $this->sxml->addChild('OPTION');
+         $sxml_option->addChild('NAME', 'WAKEONLAN');
+
+      $tasks = $ptt->ListTask($agent["ID"], "WAKEONLAN");
+         foreach ($tasks as $task_id=>$taskInfos) {
+            if ($taskInfos['device_type'] == COMPUTER_TYPE) {
+               $a_portsList = $np->find('on_device='.$taskInfos['on_device'].' AND device_type="'.COMPUTER_TYPE.'"');
+               foreach ($a_portsList as $ID=>$data) {
+                  if ($data['ifaddr'] != "127.0.0.1") {
+                     $sxml_param = $sxml_option->addChild('PARAM');
+                     $sxml_param->addAttribute('MAC', $data['ifmac']);
+                     $sxml_param->addAttribute('IP', $data['ifaddr']);
+                  }
+               }
+            }
+         }
    }
 
 
