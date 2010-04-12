@@ -186,11 +186,12 @@ function plugin_fusioninventory_update($version) {
 
       // Delete all values in glpi_plugin_fusioninventory_config_snmp_history
       $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+      $pficsnmph->initConfig();
       $pficsnmph->updateTrackertoFusion();
-
    }
 	plugin_fusioninventory_initSession();
 }
+
 
 
 // Uninstallation function
