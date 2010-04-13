@@ -189,6 +189,21 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
+      if ((!empty($this->fields["ifaddr"])) OR (!empty($this->fields["ifmac"]))) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>" . $LANG['networking'][14] . " :</td>";
+         echo "<td align='center'>";
+         echo "<input type='text' name='otherserial' value='" . $this->fields["ifaddr"] . "' size='35'/>";
+         echo "</td>";
+
+         echo "<td align='center'>" . $LANG['networking'][15] . " : </td>";
+         echo "</td>";
+         echo "<td align='center'>";
+         echo "<input type='text' name='otherserial' value='" . $this->fields["ifmac"] . "' size='35'/>";
+         echo "</td>";
+         echo "</tr>";
+      }
+      
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["functionalities"][3] . " :</td>";
 		echo "<td align='center'>";
@@ -217,6 +232,15 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][4] . " :</td>";
+		echo "<td align='center'>";
+      echo getYesNo($this->fields["hub"]);
+		echo "</td>";
+
+      echo "<td align='center' colspan='2'></td>";
+		echo "</tr>";
+      
       echo "<tr>";
       echo "<td class='tab_bg_2' align='center' colspan='4'>\n";
       echo "<table width='100%'>";
@@ -382,6 +406,29 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 			}
 		}
 	}
+
+   function convertUnknownToUnknownNetwork($ID) {
+      global $DB;
+
+      $np  = new Netport;
+
+      $this->getFromDB($ID);
+
+      // Get port
+      $a_ports = $np->find('on_device='.$ID.' AND device_type="'.PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN.'"');
+
+      if (count($a_ports) == '1') {
+         // Put mac and ip to unknown
+         $port = current($a_ports);
+         $this->fields['ifaddr'] = $port['ifaddr'];
+         $this->fields['ifmac'] = $port['ifmac'];
+
+         $this->update($this->fields);
+         $np->deleteFromDB($port['ID']);
+         return true;
+      }
+      return false;
+   }
 }
 
 ?>

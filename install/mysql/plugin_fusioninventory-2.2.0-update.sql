@@ -314,3 +314,9 @@ ALTER TABLE `glpi_plugin_fusioninventory_config_snmp_history`
 
 ALTER TABLE `glpi_plugin_fusioninventory_config`
    CHANGE `ssl_only` `ssl_only` INT( 1 ) NOT NULL DEFAULT '0';
+
+
+ALTER TABLE `glpi_plugin_fusioninventory_unknown_device`
+   ADD `ifaddr` VARCHAR( 255 ) NULL ,
+   ADD `ifmac` VARCHAR( 255 ) NULL ,
+   ADD `hub` INT( 1 ) NOT NULL DEFAULT '0';

@@ -588,6 +588,7 @@ $LANG['plugin_fusioninventory']["unknown"][0]="DNS Name";
 $LANG['plugin_fusioninventory']["unknown"][1]="Network port name";
 $LANG['plugin_fusioninventory']["unknown"][2]="Approved devices";
 $LANG['plugin_fusioninventory']["unknown"][3]="Discovered by agent";
+$LANG['plugin_fusioninventory']["unknown"][4]="Network hub";
 
 $LANG['plugin_fusioninventory']["task"][0]="Task";
 $LANG['plugin_fusioninventory']["task"][1]="Task management";

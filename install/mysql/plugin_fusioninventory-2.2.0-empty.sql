@@ -633,6 +633,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknown_device` (
   `FK_snmp_connection` INT( 11 ) NOT NULL DEFAULT '0',
   `accepted` INT( 1 ) NOT NULL DEFAULT '0',
   `FK_agent` int(11) NOT NULL DEFAULT '0',
+  `ifaddr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ifmac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hub` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

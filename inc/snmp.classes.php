@@ -173,6 +173,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 	function getPortIDfromDeviceIP($IP, $ifDescr) {
 		global $DB;
 
+      $pfiud = new PluginFusionInventoryUnknownDevice;
+      $np = new Netport;
+
       $PortID = "";
 		$query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_networking_ifaddr`
@@ -205,6 +208,54 @@ class PluginFusionInventorySNMP extends CommonDBTM {
             $PortID = $dataPort["ID"];
          } else {
             $PortID = $dataPort["FK_networking_ports"];
+         }
+      } else {
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
+            WHERE `ifaddr`='".$IP."'
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            // Search port and add if required
+            $query1 = "SELECT *
+                FROM `glpi_networking_ports`
+                WHERE `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                   AND `on_device`='".$data['ID']."'
+                   AND `name`='".$ifDescr."'
+                LIMIT 1";
+            $result1 = $DB->query($query1);
+            if ($DB->numrows($result1) == "1") {
+               $data1 = $DB->fetch_assoc($result1);
+               $PortID = $data1['ID'];
+            } else {
+               // Add port
+               $np->getEmpty();
+               $np->fields['on_device'] = $data['ID'];
+               $np->fields['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $np->fields['ifaddr'] = $IP;
+               $np->fields['name'] = $ifDescr;
+               $PortID = $np->addToDB();
+            }
+            return $PortID;
+         }
+
+         $query = "SELECT *
+             FROM `glpi_networking_ports`
+             WHERE `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+               AND`ifaddr`='".$IP."'
+             LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            if ($pfiud->convertUnknownToUnknownNetwork($data['on_device'])) {
+               // Add port
+               $np->getEmpty();
+               $np->fields['on_device'] = $data['on_device'];
+               $np->fields['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $np->fields['ifaddr'] = $IP;
+               $np->fields['name'] = $ifDescr;
+               $PortID = $np->addToDB();
+            }
          }
       }
 		return($PortID);
