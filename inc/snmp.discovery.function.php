@@ -428,17 +428,23 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
 
    $condition = "";
    $select = "";
+   $condition_unknown = "";
+   $select_unknown = "";
    foreach ($a_criteria as $criteria=>$value) {
       switch ($criteria) {
          
          case 'ip':
             $condition .= "AND `ifaddr`='".$value."' ";
             $select .= ", ifaddr";
+            $condition_unknown .= "AND `glpi_networking_ports`.`ifaddr`='".$value."' ";
+            $select_unknown .= ", `glpi_networking_ports`.`ifaddr`";
             break;
 
          case 'macaddr':
             $condition .= "AND `ifmac`='".$value."' ";
             $select .= ", ifmac";
+            $condition_unknown .= "AND `glpi_networking_ports`.`ifmac`='".$value."' ";
+            $select_unknown .= ", `glpi_networking_ports`.`ifmac`";
             break;
 
          case 'name':
@@ -455,11 +461,19 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
 
    foreach ($a_types as $type) {
       $ci->setType($type,true);
-      $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
-      if ($ci->obj->table != "glpi_networking") {
+      if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+         $query = "SELECT ".$ci->obj->table.".ID ".$select_unknown." FROM ".$ci->obj->table;
+      } else {
+         $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
+      }
+      if (($ci->obj->table != "glpi_networking") AND ($ci->obj->table != "glpi_plugin_fusioninventory_unknown_device")) {
          $query .= " LEFT JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND device_type=".$type;
       }
-      $query .= " WHERE deleted=0 ".$condition;
+      if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+         $query .= " WHERE deleted=0 ".$condition;
+      } else {
+         $query .= " WHERE deleted=0 ".$condition_unknown;
+      }
       $result = $DB->query($query);
       if($DB->numrows($result) > 0) {
          $data = $DB->fetch_assoc($result);
