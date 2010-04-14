@@ -603,4 +603,6 @@ $LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 
+$LANG['plugin_fusioninventory']["update"][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande a la fin de la mise à jour : ";
+
 ?>

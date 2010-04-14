@@ -301,7 +301,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
          $nb = $DB->numrows($result);
          if (($nb > 300000) AND ($force == '0')) {
             echo $LANG['plugin_fusioninventory']["update"][0]."<br/>";
-            echo "cd glpi/plugins/fusioninventory/front/cli_update.php";
+            echo "cd glpi/plugins/fusioninventory/front/ && php -f cli_update.php";
             echo "<br/>Waiting...";
             file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt", "1");
             sleep(20);
