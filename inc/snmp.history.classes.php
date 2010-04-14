@@ -275,7 +275,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
 
 
 
-   function ConvertField() {
+   function ConvertField($force=0) {
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
       global $DB, $LANG;
 
@@ -299,6 +299,15 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
                 WHERE `Field` != '0';";
       if ($result=$DB->query($query)) {
          $nb = $DB->numrows($result);
+         if (($nb > 300000) AND ($force == '0')) {
+            echo $LANG['plugin_fusioninventory']["update"][0]."<br/>";
+            echo "cd glpi/plugins/fusioninventory/front/cli_update.php";
+            echo "<br/>Waiting...";
+            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt", "1");
+            sleep(20);
+            return;
+         }
+
          $i = 0;
 			while ($data=$DB->fetch_array($result)) {
             $i++;
