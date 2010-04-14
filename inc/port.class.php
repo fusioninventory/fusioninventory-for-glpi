@@ -478,6 +478,17 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
    }
 
    /**
+    * Get ports to connect
+    *
+    *@return array of ports
+    **/
+   function getPortsToConnect($p_portID) {
+      global $DB;
+
+      return $this->portsToConnect;
+   }
+
+   /**
     * Set CDP
     *
     *@return nothing
