@@ -200,19 +200,20 @@ function plugin_fusioninventory_uninstall() {
 
    $np = new Netport;
 
-	if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-      $current_dir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/';
-		while (($f = readdir($dir)) !== false) {
-			if($f > '0' and filetype($current_dir.$f) == "file") {
-				unlink($current_dir.$f);
-			} else if ($f > '0' and filetype($current_dir.$f) == "dir") {
-				//remove_dir($current_dir.$f."\\");
-            rmdir($current_dir.$f);
-			}
-		}
-		closedir($dir);
-		rmdir($current_dir);
-	}
+   if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
+      if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
+         $current_dir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/';
+         while (($f = readdir($dir)) !== false) {
+            if($f > '0' and filetype($current_dir.$f) == "file") {
+               unlink($current_dir.$f);
+            } else if ($f > '0' and filetype($current_dir.$f) == "dir") {
+               delTree($current_dir.$f);
+            }
+         }
+         closedir($dir);
+         rmdir($current_dir);
+      }
+   }
 
 	$query = "SHOW TABLES;";
    $result=$DB->query($query);
@@ -247,6 +248,20 @@ function plugin_fusioninventory_uninstall() {
       $np->cleanDBonPurge($netport['ID']);
       $np->deleteFromDB($netport['ID']);
    }
+}
+
+
+function delTree($dir) {
+    $files = glob( $dir . '*', GLOB_MARK );
+    foreach( $files as $file ){
+        if( is_dir( $file ) )
+            delTree( $file );
+        else
+            unlink( $file );
+    }
+
+    if (is_dir($dir)) rmdir( $dir );
+
 }
 
 ?>

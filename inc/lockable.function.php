@@ -78,11 +78,13 @@ function plugin_fusioninventory_lockable_getLockable($p_entities_id='', $p_itemt
 function plugin_fusioninventory_lockable_getLockableFields($p_entities_id='', $p_itemtype='') {
 	global $DB;
 
-   $db_lockable = $DB->fetch_assoc(plugin_fusioninventory_lockable_getLockable($p_entities_id, $p_itemtype));
-   $lockable_fields = $db_lockable["fields"];
-   $lockable = importArrayFromDB($lockable_fields);
-
-   return $lockable;
+   if (TableExists('glpi_plugin_fusioninventory_lockable')) {
+      $db_lockable = $DB->fetch_assoc(plugin_fusioninventory_lockable_getLockable($p_entities_id, $p_itemtype));
+      $lockable_fields = $db_lockable["fields"];
+      $lockable = importArrayFromDB($lockable_fields);
+   
+      return $lockable;
+   }
 }
 
 /**

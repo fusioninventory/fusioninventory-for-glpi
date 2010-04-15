@@ -2610,13 +2610,16 @@ function plugin_pre_item_delete_fusioninventory($parm) {
 **/
 function plugin_item_update_fusioninventory($parm) {
    if (isset($_SESSION["glpiID"]) AND $_SESSION["glpiID"]!='') { // manual task
-      // lock fields which have been updated
-      $type=$parm['type'];
-      $ID=$parm['ID'];
-      $fieldsToLock=$parm['updates'];
-      $lockables = plugin_fusioninventory_lockable_getLockableFields('', $type);
-      $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
-      plugin_fusioninventory_lock_addLocks($type, $ID, $fieldsToLock);
+      $plugin = new Plugin;
+      if ($plugin->isActivated('fusioninventory')) {
+         // lock fields which have been updated
+         $type=$parm['type'];
+         $ID=$parm['ID'];
+         $fieldsToLock=$parm['updates'];
+         $lockables = plugin_fusioninventory_lockable_getLockableFields('', $type);
+         $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
+         plugin_fusioninventory_lock_addLocks($type, $ID, $fieldsToLock);
+      }
    }
 }
 
