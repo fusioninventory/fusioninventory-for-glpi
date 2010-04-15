@@ -286,68 +286,69 @@ class PluginFusionInventoryTask extends CommonDBTM {
       echo " : </th>";
       echo "</tr>";
 
-      if (isset($pfia->fields['module_inventory'])) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td colspan='2' align='center'>";
-         $array_actions = array();
-         $array_actions[""] = "------";
-         switch($type) {
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+      $array_actions = array();
+      $array_actions[""] = "------";
+      switch($type) {
 
-            case NETWORKING_TYPE :
-            case PRINTER_TYPE :
-               if ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("snmp") == '1')) {
-                  $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
+         case NETWORKING_TYPE :
+         case PRINTER_TYPE :
+            if ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("snmp") == '1')) {
+               $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
+            }
+            break;
+
+         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+         case COMPUTER_TYPE:
+            if (((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("inventoryocs") == '1') AND (isset($pfia->fields['module_inventory'])) AND ($pfia->fields['module_inventory'] == '1'))
+                     OR ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("snmp") == '1') AND (isset($pfia->fields['module_snmpquery'])) AND ($pfia->fields['module_snmpquery'] == '1'))){
+               $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
+            }
+
+            if ((isset($a_modules["WAKEONLAN"])) AND ($ptcm->getValue("wol") == '1')) {
+               // Code for PLUGIN_FUSIONINVENTORY_SNMP_AGENTS if  ($pfia->fields['module_wakeonlan'] == '1')
+               // so :
+               if ($type == COMPUTER_TYPE) {
+                   $array_actions["WAKEONLAN"] = $LANG['plugin_fusioninventory']['config'][6];
                }
-               break;
+            }
+            break;
 
-            case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
-            case COMPUTER_TYPE:
-               if (((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("inventoryocs") == '1') AND ($pfia->fields['module_inventory'] == '1'))
-                        OR ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1'))){
-                  $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
-               }
-
-               if ((isset($a_modules["WAKEONLAN"])) AND ($ptcm->getValue("wol") == '1') AND ($pfia->fields['module_wakeonlan'] == '1')) {
-                  // Code for PLUGIN_FUSIONINVENTORY_SNMP_AGENTS
-                  // so :
-                  if ($type == COMPUTER_TYPE) {
-                      $array_actions["WAKEONLAN"] = $LANG['plugin_fusioninventory']['config'][6];
-                  }
-               }
-               break;
-
-         }
-
-   //      if ((isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($pfia->fields['module_netdiscovery'] == '1')) {
-   //         $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
-   //      }
-   //      if ((isset($a_modules["SNMPQUERY"])) AND ($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
-   //         $array_actions["SNMPQUERY"] = $LANG['plugin_fusioninventory']['config'][7];
-   //      }
-
-         $rand = dropdownArrayValues("agentaction",$array_actions);
-         echo "</td>";
-         echo "</tr>";
-         $params=array('action'=>'__VALUE__', 'on_device'=>$on_device, 'device_type'=>$type);
-         ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td colspan='2' align='center'>";
-         echo "<span id='updateAgentState_$rand'>\n";
-         echo "&nbsp;";
-         echo "</span>\n";
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_2'>";
-         echo "<td align='center'>";
-         echo "<input type='hidden' name='on_device' value='".$ID."'/>";
-         echo "<input type='hidden' name='device_type' value='".$type."'/>";
-         echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
-
-         echo "</td>";
-         echo "</tr>";
       }
+
+//      if ((isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($pfia->fields['module_netdiscovery'] == '1')) {
+//         $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
+//      }
+//      if ((isset($a_modules["SNMPQUERY"])) AND ($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
+//         $array_actions["SNMPQUERY"] = $LANG['plugin_fusioninventory']['config'][7];
+//      }
+
+      $rand = dropdownArrayValues("agentaction",$array_actions);
+      echo "</td>";
+      echo "</tr>";
+      if (!isset($on_device)) {
+         $on_device = $ID;
+      }
+      $params=array('action'=>'__VALUE__', 'on_device'=>$on_device, 'device_type'=>$type);
+      ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+      echo "<span id='updateAgentState_$rand'>\n";
+      echo "&nbsp;";
+      echo "</span>\n";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_2'>";
+      echo "<td align='center'>";
+      echo "<input type='hidden' name='on_device' value='".$ID."'/>";
+      echo "<input type='hidden' name='device_type' value='".$type."'/>";
+      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
+
+      echo "</td>";
+      echo "</tr>";
 
       echo "</table>";
       echo "</form>";
