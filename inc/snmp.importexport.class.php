@@ -353,6 +353,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             }
             $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
             $ptud->fields['FK_agent'] = intval($explodeprocess[1]);
+            $ptud->fields['hub'] = 0;
 
             $data = $ptud->fields;
             unset($data['ID']);
@@ -403,8 +404,6 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             }
             if ($ci->getField('comments') && !in_array('comments', $a_lockable))
                $data['comments'] = $discovery->DESCRIPTION;
-            if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable));
-               $data['FK_model_infos'] = $FK_model;
             if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable));
                $data['FK_model_infos'] = $FK_model;
             if ($ci->getField('FK_snmp_connection') && !in_array('FK_snmp_connection', $a_lockable));
