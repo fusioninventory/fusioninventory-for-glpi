@@ -1290,6 +1290,7 @@ class PluginFusionInventoryCommunication {
             switch ($child->getName()) {
                case 'IP' :
                   $ip=$child;
+                  $p_oPort->addIp($ip);
                   break;
                case 'IFDESCR' :
                   $ifdescr=$child;
@@ -1306,9 +1307,11 @@ class PluginFusionInventoryCommunication {
                case 'MAC' :
                   $mac=$child;
                   $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $p_oPort->getValue('ID'));
+                  $p_oPort->addMac($mac);
                   break;
                case 'IP' ://TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info // utile seulement si mac inconnu dans glpi
                   $ip=$child;
+                  $p_oPort->addIp($ip);
                   break;
                default :
                   $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '

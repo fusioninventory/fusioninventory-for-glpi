@@ -47,6 +47,8 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
    private $connectedPort=''; // ID of connected ports
    private $unknownDevicesToConnect=array(); // IP and/or MAC addresses of unknown connected ports
    private $portVlans=array(); // number and name for each vlan
+   private $portMacs=array();  // MAC addresses
+   private $portIps=array();   // IP addresses
    private $cdp=false; // true if CDP=1
    private $noTrunk=false; // true if call to setNoTrunk()
    private $glpi_type=NETWORKING_TYPE; // NETWORKING_TYPE, PRINTER_TYPE...
@@ -288,6 +290,26 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
    }
 
    /**
+    * Add MAC address
+    *
+    *@param $p_mac MAC address
+    *@return nothing
+    **/
+   function addMac($p_mac) {
+      $this->portMacs[]=$p_mac;
+   }
+
+   /**
+    * Add IP address
+    *
+    *@param $p_ip IP address
+    *@return nothing
+    **/
+   function addIp($p_ip) {
+      $this->portIps[]=$p_ip;
+   }
+
+   /**
     * Assign vlans to this port
     *
     *@return nothing
@@ -482,10 +504,26 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
     *
     *@return array of ports
     **/
-   function getPortsToConnect($p_portID) {
-      global $DB;
-
+   function getPortsToConnect() {
       return $this->portsToConnect;
+   }
+
+   /**
+    * Get MAC addresses to connect
+    *
+    *@return array of MAC addresses
+    **/
+   function getMacsToConnect() {
+      return $this->portMacs;
+   }
+
+   /**
+    * Get IP addresses to connect
+    *
+    *@return array of IP addresses
+    **/
+   function getIpsToConnect() {
+      return $this->portIps;
    }
 
    /**
