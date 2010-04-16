@@ -72,7 +72,7 @@ if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"
 $ocsinventory = '0';
 file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
 $state = $ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
-if ($state == '2') {
+if ($state == '2') { // agent created
    $ocsinventory = '1';
 }
 $top0 = gettimeofday();
@@ -146,8 +146,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
             $ptc->addQuery($pxml);
          }
       }
-      if (($ocsinventory == '1')
-              AND ($a_agent['module_inventory'] == '1')) {
+      if ($ocsinventory == '1') {
          $ptc->addInventory();
       }
 //      $ptc->addWakeonlan();
