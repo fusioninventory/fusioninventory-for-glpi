@@ -414,6 +414,8 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   $data['snmp'] = 1;
                }
             }
+            $data['type'] = $discovery->TYPE;
+            
             $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
             $data['FK_agent'] = intval($explodeprocess[1]);
 
