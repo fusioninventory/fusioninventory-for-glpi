@@ -229,12 +229,12 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                $PortID = $data1['ID'];
             } else {
                // Add port
-               $np->getEmpty();
-               $np->fields['on_device'] = $data['ID'];
-               $np->fields['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-               $np->fields['ifaddr'] = $IP;
-               $np->fields['name'] = $ifDescr;
-               $PortID = $np->addToDB();
+               $input = array();
+               $input['on_device'] = $data['ID'];
+               $input['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $input['ifaddr'] = $IP;
+               $input['name'] = $ifDescr;
+               $PortID = $np->add($input);
             }
             return $PortID;
          }
@@ -249,14 +249,27 @@ class PluginFusionInventorySNMP extends CommonDBTM {
             $data = $DB->fetch_assoc($result);
             if ($pfiud->convertUnknownToUnknownNetwork($data['on_device'])) {
                // Add port
-               $np->getEmpty();
-               $np->fields['on_device'] = $data['on_device'];
-               $np->fields['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-               $np->fields['ifaddr'] = $IP;
-               $np->fields['name'] = $ifDescr;
-               $PortID = $np->addToDB();
+               $input = array();
+               $input['on_device'] = $data['on_device'];
+               $input['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $input['ifaddr'] = $IP;
+               $input['name'] = $ifDescr;
+               $PortID = $np->add($input);
+               return $PortID;
             }
          }
+         // Add unknown device
+         $input = array();
+         $input['ifaddr'] = $IP;
+         $unkonwn_id = $pfiud->add($input);
+         // Add port
+         $input = array();
+         $input['on_device'] = $unkonwn_id;
+         $input['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+         $input['ifaddr'] = $IP;
+         $input['name'] = $ifDescr;
+         $PortID = $np->add($input);
+         return($PortID);
       }
 		return($PortID);
 	}
