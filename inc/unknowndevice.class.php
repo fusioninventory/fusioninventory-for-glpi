@@ -429,6 +429,67 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       }
       return false;
    }
+
+
+   
+   function hubNetwork($p_oPort) {
+      global $DB;
+
+      $nw = new Netwire;
+      $np = new Netport;
+      // List of macs : $p_oPort->getPortsToConnect
+
+      // recherche dans unknown_device table le hub
+      // qui a un port connecte sur le $port_ID
+
+         // Get port connected on switch port
+         if ($ID = $nw->getOppositeContact($p_oPort->getValue('ID'))) {
+            $np->getFromDB($ID);
+            if ($np->fields["device_type"] == $this->type) {
+               $this->getFromDB($np->fields["on_device"]);
+               if ($this->fields["hub"] == "1") {
+                  // We will update ports and wire
+
+
+                  return;
+               }
+            }
+         }
+
+      // sinon on cree un nouveau unknown_device type hub
+      // + creation des ports qui sont connectes aux mac
+      $input = array();
+      $input['hub'] = "1";
+      $input['name'] = "hub";
+      $id_unknown = $this->add($input);
+
+      $input = array();
+      $input["on_device"] = $id_unknown;
+      $input["device_type"] = $this->type;
+      $input["name"] = "Link";
+      $id_port = $np->add($input);
+      makeConnector($p_oPort->getValue('ID'), $id_port);
+
+      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+         $input = array();
+         $input["on_device"] = $id_unknown;
+         $input["device_type"] = $this->type;
+         $id_port = $np->add($input);
+
+         // TODO : recherche le port qui a cet $ifmac
+         $query = "SELECT * FROM `glpi_networking_ports`
+            WHERE `ifmac` = '".$ifmac."' ";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $line = $DB->fetch_assoc($result);
+            makeConnector($line['ID'], $id_port);
+         } else {
+            // Create device inconnu
+
+            
+         }
+      }
+   }
 }
 
 ?>
