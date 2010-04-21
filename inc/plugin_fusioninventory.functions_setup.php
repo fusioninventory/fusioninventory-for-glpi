@@ -242,9 +242,6 @@ function plugin_fusioninventory_uninstall() {
                  OR `type`='".PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE."' ;";
 	$DB->query($query) or die($DB->error());
 
-   $query = "DELETE FROM `glpi_display`
-      WHERE `type` IN (5150, 5151, 5152, 5153, 5157, 5158, 5159, 5160, 5161, 5162, 5163)";
-   $DB->query($query) or die($DB->error());
 
    $a_netports = $np->find("`device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
    foreach ($a_netports as $netport){

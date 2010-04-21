@@ -90,8 +90,11 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
                $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
                $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
             } else {
-               $this->fusioninventory_networking_ports_ID = NULL;
-               $this->oFusionInventory_networking_ports->load();
+//               $this->fusioninventory_networking_ports_ID = NULL;
+//               $this->oFusionInventory_networking_ports->load();
+//               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
+               $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
+               $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
                $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
             }
          }
@@ -131,13 +134,25 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
          $this->load($portID);
          // update fusioninventory
          if (count($this->oFusionInventory_networking_ports->ptcdUpdates) OR $p_force) {
-            $this->oFusionInventory_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
-            $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
+//            $this->oFusionInventory_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
+//            $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
+            $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
          }
          $this->load($portID);
          $this->connect();       // update connections
          $this->assignVlans();   // update vlans
       }
+   }
+
+   /**
+    * Add a new FusionInventory port with the instance values
+    *
+    *@return FusionInventory networking port ID
+    **/
+   function addDBFusionInventory() {
+      $this->oFusionInventory_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
+      $fusioninventory_networking_ports_ID = $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
+      return $fusioninventory_networking_ports_ID;
    }
 
    /**
