@@ -311,6 +311,9 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
          $i = 0;
 			while ($data=$DB->fetch_array($result)) {
             $i++;
+            if ($data['Field'] == 'trunk') {
+               $data['Field'] = 'vlanTrunkPortDynamicStatus';
+            }
             if (isset($constantsfield[$data['Field']])) {
                $data['Field'] = $constantsfield[$data['Field']];
                $query_update = "UPDATE `".$this->table."`
