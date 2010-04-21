@@ -2574,7 +2574,17 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                $np->delete(array("ID"=>$data["ID"]));
             }
             break;
-         
+
+         case COMPUTER_TYPE :
+            // Delete link between computer and agent fusioin
+            $query = "UPDATE `glpi_plugin_fusioninventory_agents`
+                        SET `on_device` = '0'
+                           AND `device_type` = '0'
+                        WHERE `on_device` = '".$parm["ID"]."'
+                           AND `device_type` = '1' ";
+            $DB->query($query);
+            break;
+
 		}
    }
 	return $parm;
