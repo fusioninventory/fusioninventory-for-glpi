@@ -185,6 +185,26 @@ class PluginFusionInventorySNMP extends CommonDBTM {
       if ($DB->numrows($result) == "1") {
          $data = $DB->fetch_assoc($result);
 
+         // Delete CDP device in unknown device
+         $query_unknown = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
+            WHERE `ifaddr`='".$IP."' ";
+         if ($result_unknown=$DB->query($query_unknown)) {
+            while ($data_unknown=$DB->fetch_array($result_unknown)) {
+               // delete ports
+               $a_ports = $np->find("`on_device`='".$data_unknown['ID']."' ");
+               foreach ($a_ports as $id_port=>$dataport) {
+                  // Delete Wire :
+                  removeConnector($id_port);
+                  // Delete port :
+                  $np->deleteFromDB($id_port);
+               }
+               $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_unknown_device`
+                  WHERE `ID`='".$data_unknown['ID']."' ";
+               $DB->query($query_delete);
+            }
+         }                     
+         // End of delete CDP device
+         
          $queryPort = "SELECT *
                        FROM `glpi_plugin_fusioninventory_networking_ports`
                             LEFT JOIN `glpi_networking_ports`
