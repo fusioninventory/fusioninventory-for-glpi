@@ -164,7 +164,7 @@ function plugin_fusioninventory_lockable_setLockableForm($p_post) {
                // TODO add a confirmation request before lockable deletion if locks are defined on this field
                unset($lockable[$fieldToDel]);
                // field is not lockable any more --> delete all locks on this field
-               plugin_fusioninventory_lock_deleteInAllLockArray($tableId, $fieldName);
+               PluginFusioninventoryLock::deleteInAllLockArray($tableId, $fieldName);
             }
          }
       }

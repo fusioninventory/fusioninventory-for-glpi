@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /// Plugin FusionInventory lock class
-class PluginFusionInventoryLock extends CommonDBTM{
+class PluginFusioninventoryLock extends CommonDBTM{
 
 	/**
 	 * Constructor
@@ -66,13 +66,13 @@ class PluginFusionInventoryLock extends CommonDBTM{
 
       echo "<div width='50%'>";
       $lockable_fields = plugin_fusioninventory_lockable_getLockableFields('', $p_itemtype);
-         $locked = plugin_fusioninventory_lock_getLockFields($p_itemtype, $p_items_id);
-         if (count($locked)){
-            foreach ($locked as $key => $val){
-               if (!in_array($val, $lockable_fields)) {
-                  unset($locked[$key]);
-               }
+      $locked = PluginFusioninventoryLock::getLockFields($p_itemtype, $p_items_id);
+      if (count($locked)){
+         foreach ($locked as $key => $val){
+            if (!in_array($val, $lockable_fields)) {
+               unset($locked[$key]);
             }
+         }
       } else {
          $locked = array();
       }
@@ -104,6 +104,190 @@ class PluginFusionInventoryLock extends CommonDBTM{
       echo "</form>";
       echo "</div>";
    }
+
+   /**
+    * Unlock a field for a record.
+    *
+     *@param $p_itemtype Table id.
+     *@param $p_items_id Line id.
+     *@param $p_fieldToDel Field to unlock.
+    *TODO:  check rights and entity
+    *
+    *@return nothing
+    **/
+   static function deleteInLockArray($p_itemtype, $p_items_id, $p_fieldToDel) {
+      global $DB;
+
+      $fieldsToLock = PluginFusioninventoryLock::getLockFields($p_itemtype, $p_items_id);
+      if (count($fieldsToLock)){
+         $fieldToDel=array_search($p_fieldToDel,$fieldsToLock);
+         if (isset($fieldsToLock[$fieldToDel])){
+            unset ($fieldsToLock[$fieldToDel]);
+            // TODO : reindex array $fieldsToLock
+         }
+         if (count($fieldsToLock)) {       // there are still locks
+            $update = "UPDATE `glpi_plugin_fusioninventory_lock`
+                       SET `fields`='" . exportArrayToDB($fieldsToLock) . "'
+                       WHERE `itemtype`='".$p_itemtype."'
+                             AND `items_id`='".$p_items_id."';";
+            $DB->query($update);
+         } else {                            // no locks any more
+            $delete = "DELETE FROM `glpi_plugin_fusioninventory_lock`
+                       WHERE `itemtype`='".$p_itemtype."'
+                             AND `items_id`='".$p_items_id."';";
+                        $DB->query($delete);
+         }
+      }
+   }
+
+   /**
+    * Unlock a field for all records.
+    *
+     *@param $p_itemtype Table id.
+     *@param $p_items_id Line id.
+     *@param $p_fieldToDel Field to unlock.
+    *TODO:  check rights and entity
+    *
+    *@return nothing
+    **/
+   static function deleteInAllLockArray($p_itemtype, $p_fieldToDel) {
+      global $DB;
+
+      $query = "SELECT `items_id`
+                FROM `glpi_plugin_fusioninventory_lock`
+                WHERE `itemtype`='".$p_itemtype."'
+                      AND `fields` LIKE '%=>".$p_fieldToDel." %';";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         // TODO improve the lock deletion by transmiting the old locked fields to the deletion function
+         PluginFusioninventoryLock::deleteInLockArray($p_itemtype, $data['items_id'], $p_fieldToDel);
+      }
+   }
+
+   /**
+    * Set lock fields for a record.
+    *
+     *@param $p_itemtype Table id.
+     *@param $p_items_id Line id.
+     *@param $p_fieldsToLock Array of fields to lock.
+    *TODO:  check rights and entity
+    *
+    *@return nothing
+    **/
+   static function setLockArray($p_itemtype, $p_items_id, $p_fieldsToLock) {
+      global $DB;
+
+      $result = PluginFusioninventoryLock::getLock($p_itemtype, $p_items_id);
+      if ($DB->numrows($result)){
+         if (count($p_fieldsToLock)) {       // old locks --> new locks
+            $update = "UPDATE `glpi_plugin_fusioninventory_lock`
+                       SET `fields`='" . exportArrayToDB($p_fieldsToLock) . "'
+                       WHERE `itemtype`='".$p_itemtype."'
+                             AND `items_id`='".$p_items_id."';";
+            $DB->query($update);
+         } else {                            // old locks --> no locks any more
+            $delete = "DELETE FROM `glpi_plugin_fusioninventory_lock`
+                       WHERE `itemtype`='".$p_itemtype."'
+                             AND `items_id`='".$p_items_id."';";
+                        $DB->query($delete);
+         }
+      } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
+         $insert = "INSERT INTO `glpi_plugin_fusioninventory_lock` (`itemtype`, `items_id`, `fields`)
+                    VALUES ('".$p_itemtype."', '".$p_items_id."' ,
+                            '".exportArrayToDB($p_fieldsToLock) . "');";
+         $DB->query($insert);
+      }
+   }
+
+   /**
+    * Add lock fields for a record.
+    *
+     *@param $p_itemtype Table id.
+     *@param $p_items_id Line id.
+     *@param $p_fieldsToLock Array of fields to lock.
+    *TODO:  check rights and entity
+    *
+    *@return nothing
+    **/
+   static function addLocks($p_itemtype, $p_items_id, $p_fieldsToLock) {
+      global $DB;
+
+      if (TableExists('glpi_plugin_fusioninventory_lockable')) {
+         $result = PluginFusioninventoryLock::getLock($p_itemtype, $p_items_id);
+         if ($DB->numrows($result)){
+            $row = mysql_fetch_assoc($result);
+            $lockedFields = importArrayFromDB($row['fields']);
+            if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
+               $p_fieldsToLock = array_merge($p_fieldsToLock, $lockedFields);
+               $update = "UPDATE `glpi_plugin_fusioninventory_lock`
+                          SET `fields`='" . exportArrayToDB($p_fieldsToLock) . "'
+                          WHERE `itemtype`='".$p_itemtype."'
+                                AND `items_id`='".$p_items_id."';";
+               $DB->query($update);
+            }
+         } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
+            $insert = "INSERT INTO `glpi_plugin_fusioninventory_lock` (`itemtype`, `items_id`, `fields`)
+                       VALUES ('".$p_itemtype."', '".$p_items_id."' ,
+                               '".exportArrayToDB($p_fieldsToLock) . "');";
+            $DB->query($insert);
+         }
+      }
+   }
+
+   /**
+    * Get lock fields for a record.
+    *
+    * @param $p_itemtype Table id.
+    * @param $p_items_id Line id.
+    * TODO:  check rights and entity
+    *
+    *@return result of the query
+    **/
+   static function getLock($p_itemtype, $p_items_id) {
+      global $DB;
+
+      $query = "SELECT `id`, `fields`
+                FROM `glpi_plugin_fusioninventory_lock`
+                WHERE `itemtype`='".$p_itemtype."'
+                      AND `items_id`='".$p_items_id."';";
+      $result = $DB->query($query);
+      return $result;
+   }
+
+   /**
+    * Get lock fields for a record.
+    *
+    * @param $p_itemtype Table id.
+    * @param $p_items_id Line id.
+    * TODO:  check rights
+    *
+    *@return array of locked fields
+    **/
+   static function getLockFields($p_itemtype, $p_items_id) {
+      global $DB;
+
+      $db_lock = $DB->fetch_assoc(PluginFusioninventoryLock::getLock($p_itemtype, $p_items_id));
+      $lock_fields = $db_lock["fields"];
+      $lock = importArrayFromDB($lock_fields);
+
+      return $lock;
+   }
+
+   /*
+    * convert an array resulting from many form checks (0=>on 2=>on 5=>on ...)
+    * into a classical array (0=>0 1=>2 2=>5 ...)
+    *
+    * @param $p_checksArray checkbox array from form
+    * @result classical array
+    */
+   static function exportChecksToArray($p_checksArray) {
+      $array = array();
+      foreach ($p_checksArray as $key => $val) {
+         array_push($array, $key);
+      }
+      return $array;
+   }
+
 }
 
 ?>

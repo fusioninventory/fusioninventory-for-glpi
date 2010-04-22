@@ -76,7 +76,7 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
          $this->ptcdFields=$this->fields;
          $itemtype=array_search($this->table, $LINK_ID_TABLE);
          if ($itemtype) {
-            $this->ptcdLockFields=plugin_fusioninventory_lock_getLockFields($itemtype, $p_id);
+            $this->ptcdLockFields=PluginFusioninventoryLock::getLockFields($itemtype, $p_id);
          }
       } else { // new item : initialize all fields to NULL
          $query = "SHOW COLUMNS FROM `".$this->table."`";

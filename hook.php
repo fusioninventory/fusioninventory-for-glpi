@@ -1622,10 +1622,10 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
-                     $tab=plugin_fusioninventory_exportChecksToArray($data["lockfield_fusioninventory"]);
-                        plugin_fusioninventory_lock_setLockArray($data['type'], $key, $tab);
+                     $tab=PluginFusioninventoryLock::exportChecksToArray($data["lockfield_fusioninventory"]);
+                        PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab);
                   } else {
-                     plugin_fusioninventory_lock_setLockArray($data['type'], $key, array());
+                     PluginFusioninventoryLock::setLockArray($data['type'], $key, array());
                   }
                }
             }
@@ -2618,7 +2618,7 @@ function plugin_item_update_fusioninventory($parm) {
          $fieldsToLock=$parm['updates'];
          $lockables = plugin_fusioninventory_lockable_getLockableFields('', $type);
          $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
-         plugin_fusioninventory_lock_addLocks($type, $ID, $fieldsToLock);
+         PluginFusioninventoryLock::addLocks($type, $ID, $fieldsToLock);
       }
    }
 }

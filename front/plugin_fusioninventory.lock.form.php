@@ -41,10 +41,10 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 if(isset($_POST["unlock_field_fusioninventory"])){
 	if (isset($_POST["lockfield_fusioninventory"])&&count($_POST["lockfield_fusioninventory"])){
-      $tab=plugin_fusioninventory_exportChecksToArray($_POST["lockfield_fusioninventory"]);
-         plugin_fusioninventory_lock_setLockArray($_POST['type'], $_POST["ID"], $tab);
+      $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
+         PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["ID"], $tab);
 	} else {
-      plugin_fusioninventory_lock_setLockArray($_POST['type'], $_POST["ID"], array());
+      PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["ID"], array());
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
