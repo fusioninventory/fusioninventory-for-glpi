@@ -59,8 +59,8 @@ if (plugin_fusioninventory_haveRight("configuration","r")) {
          $config->showForm($_POST['target'],'1');
          $config_modules = new PluginFusionInventoryConfigModules;
          $config_modules->showForm($_POST['target'],'1');
-         $history = new PluginFusionInventorySNMPHistory;
-         $history->showForm($_POST['target'],'1');
+         $history = new PluginFusionInventoryConfigSNMPHistory;
+         $history->showForm($_POST['target']);
          $ptLockable = new PluginFusionInventoryLockable;
          $ptLockable->showForm($_POST['target']);
          break;
