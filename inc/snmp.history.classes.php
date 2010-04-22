@@ -303,8 +303,22 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
             echo $LANG['plugin_fusioninventory']["update"][0]."<br/>";
             echo "cd glpi/plugins/fusioninventory/front/ && php -f cli_update.php";
             echo "<br/>Waiting...";
+            $msg = "<script type=\"text/javascript\">
+        Ext.onReady(function() {
+            Ext.BLANK_IMAGE_URL='app/extjs-2.1/resources/images/default/s.gif';
+            var win = new Ext.Window({
+                title:'Finish installation'
+                ,width       : 600
+                ,height      : 150
+                ,plain       : true
+                ,html       : '".$LANG['plugin_fusioninventory']["update"][0]."<br/>cd glpi/plugins/fusioninventory/front/ && php -f cli_update.php'
+            });
+            win.show();
+        });
+    </script>";
+            addMessageAfterRedirect($msg);
+
             file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt", "1");
-            sleep(20);
             return;
          }
 
