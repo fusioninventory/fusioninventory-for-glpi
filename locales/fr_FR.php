@@ -211,7 +211,7 @@ $LANG['plugin_fusioninventory']["errors"][23]="Impossible d identifier le matér
 $LANG['plugin_fusioninventory']["errors"][30]="Erreur Câblage";
 $LANG['plugin_fusioninventory']["errors"][31]="Problème de câblage";
 
-$LANG['plugin_fusioninventory']["errors"][50]="La version de GLPI n'est pas compatible, vous avez besoin de la version 0.72.1";
+$LANG['plugin_fusioninventory']["errors"][50]="La version de GLPI n'est pas compatible, vous avez besoin de la version 0.78";
 
 $LANG['plugin_fusioninventory']["errors"][101]="Timeout";
 $LANG['plugin_fusioninventory']["errors"][102]="Modele SNMP non assigné";

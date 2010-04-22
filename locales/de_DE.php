@@ -211,7 +211,7 @@ $LANG['plugin_fusioninventory']["errors"][23]="Unable to identify device";
 $LANG['plugin_fusioninventory']["errors"][30]="Verkabelungsfehler";
 $LANG['plugin_fusioninventory']["errors"][31]="Verkabelungsproblem";
 
-$LANG['plugin_fusioninventory']["errors"][50]="GLPI version not compatible need 0.72.1";
+$LANG['plugin_fusioninventory']["errors"][50]="GLPI version not compatible need 0.78";
 
 $LANG['plugin_fusioninventory']["errors"][101]="Timeout";
 $LANG['plugin_fusioninventory']["errors"][102]="Kein SNMP Modell zugeordnet";

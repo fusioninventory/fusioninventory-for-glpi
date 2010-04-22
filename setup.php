@@ -217,10 +217,10 @@ function plugin_init_fusioninventory() {
 // Name and Version of the plugin
 function plugin_version_fusioninventory() {
 	return array( 'name'    => 'FusionInventory',
-		'version' => '2.2.0',
+		'version' => '2.3.0',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a> & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
 		'homepage'=>'https://forge.indepnet.net/projects/show/tracker',
-      'minGlpiVersion' => '0.72.1'// For compatibility / no install in version < 0.72
+      'minGlpiVersion' => '0.78'// For compatibility / no install in version < 0.72
    );
 }
 
@@ -228,7 +228,7 @@ function plugin_version_fusioninventory() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
-	if (GLPI_VERSION >= '0.72.1') {
+	if (GLPI_VERSION >= '0.78') {
 		return true;
    } else {
 		echo $LANG['plugin_fusioninventory']["errors"][50];
