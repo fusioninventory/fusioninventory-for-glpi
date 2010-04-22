@@ -399,7 +399,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
             $query_delete = "DELETE FROM `".$this->table."`
                   WHERE `ID`='".$data['ID']."' ";
             $DB->query($query_delete);
-            if (preg_match("/00$/", $i)) {
+            if (preg_match("/000$/", $i)) {
                changeProgressBarPosition($i, $nb, "$i / $nb");
             }
          }
@@ -462,7 +462,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
             $query_delete = "DELETE FROM `".$this->table."`
                   WHERE `ID`='".$data['ID']."' ";
             $DB->query($query_delete);
-            if (preg_match("/00$/", $i)) {
+            if (preg_match("/000$/", $i)) {
                changeProgressBarPosition($i, $nb, "$i / $nb");
             }
          }
