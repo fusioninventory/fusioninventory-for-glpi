@@ -138,16 +138,16 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 		echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
-      echo "<td>";
-      echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
-      echo "</td>";
-      echo "<td>";
-      echo "</td>";
-      echo "<td>";
-      echo "</td>";
-      echo "</tr>";
+//      echo "<tr class='tab_bg_1'>";
+//      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
+//      echo "<td>";
+//      echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
+//      echo "</td>";
+//      echo "<td>";
+//      echo "</td>";
+//      echo "<td>";
+//      echo "</td>";
+//      echo "</tr>";
 
 		echo "<tr>";
 		echo "<th colspan='2'>";
