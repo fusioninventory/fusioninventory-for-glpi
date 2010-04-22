@@ -625,7 +625,7 @@ echo "</a>";
       if (empty($data['discovery_key'])) {
          $num = '1';
       } else {
-         $num = str_replace('Networking', '', $data['discovery_key']);
+         $num = str_replace('Printer', '', $data['discovery_key']);
          $num++;
       }
 
