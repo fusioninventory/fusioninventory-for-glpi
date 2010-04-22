@@ -84,7 +84,7 @@ if (isset($_POST['update'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['plugin_fusioninventory_lockable_add']))
            OR (isset($_POST['plugin_fusioninventory_lockable_delete']))) {
-   plugin_fusioninventory_lockable_setLockableForm($_POST);
+   PluginFusioninventoryLockable::setLockableForm($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 

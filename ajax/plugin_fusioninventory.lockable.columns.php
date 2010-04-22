@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')){
 }
 
 if (isset($_POST["tableSelect"])) {
-   plugin_fusioninventory_lockable_getColumnSelect($_POST["tableSelect"]);
+   PluginFusioninventoryLockable::getColumnSelect($_POST["tableSelect"]);
 }
 
 ?>

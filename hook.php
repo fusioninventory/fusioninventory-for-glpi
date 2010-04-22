@@ -2616,7 +2616,7 @@ function plugin_item_update_fusioninventory($parm) {
          $type=$parm['type'];
          $ID=$parm['ID'];
          $fieldsToLock=$parm['updates'];
-         $lockables = plugin_fusioninventory_lockable_getLockableFields('', $type);
+         $lockables = PluginFusionInventoryLockable::getLockableFields('', $type);
          $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
          PluginFusioninventoryLock::addLocks($type, $ID, $fieldsToLock);
       }

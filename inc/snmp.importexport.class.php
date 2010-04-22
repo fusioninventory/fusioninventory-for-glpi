@@ -375,7 +375,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             $ci = new commonitem;
             $ci->getFromDB($a_device[1], $a_device[0]);
 
-            $a_lockable = plugin_fusioninventory_lock_getLockFields($a_device[1], $a_device[0]);
+            $a_lockable = PluginFusioninventoryLock::getLockFields($a_device[1], $a_device[0]);
             $data = array();
             $data['ID'] = $ci->getField('ID');
             $data['FK_snmp_connection'] = 0;
