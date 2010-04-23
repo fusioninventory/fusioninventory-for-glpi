@@ -120,6 +120,9 @@ class PluginFusionInventoryAgentsErrors extends CommonDBTM {
    function addError($a_input) {
 
       $input['on_device'] = $a_input['ID'];
+      if (!isset($a_input['TYPE'])) {
+         $a_input['TYPE'] = 0;
+      }
       $input['device_type'] = $a_input['TYPE'];
       $input['process_number'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       $input['error_message'] = $a_input['MESSAGE'];
