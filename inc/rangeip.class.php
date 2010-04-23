@@ -148,7 +148,7 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-      if(plugin_fusioninventory_HaveRight("rangeip","w")) {
+      if(PluginFusioninventory::haveRight("rangeip","w")) {
          if ($ID=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
          } else {

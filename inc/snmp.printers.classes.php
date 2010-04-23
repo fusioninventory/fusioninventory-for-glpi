@@ -58,7 +58,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 	function showFormPrinter($target,$ID) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;	
 	
-		plugin_fusioninventory_checkRight("snmp_printers","r");
+		PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 	
 		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 	

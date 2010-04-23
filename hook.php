@@ -1254,10 +1254,10 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((plugin_fusioninventory_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusioninventory::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 				$array = array ();
             //return array(
-            if (($configModules->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
+            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
 				//}
@@ -1273,7 +1273,7 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((plugin_fusioninventory_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusioninventory::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					return array(
 						1 => $LANG['plugin_fusioninventory']["title"][5]
 					);
@@ -1287,7 +1287,7 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((plugin_fusioninventory_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+				if ((PluginFusioninventory::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusioninventory']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusioninventory']["title"][5];
@@ -1302,7 +1302,7 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((plugin_fusioninventory_haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
+				if ((PluginFusioninventory::haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusioninventory']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusioninventory']["title"][5];
@@ -1333,7 +1333,7 @@ function plugin_headings_actions_fusioninventory($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if (($configModules->isActivated('remotehttpagent')) AND (plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
+         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventory::haveRight("remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -1347,7 +1347,7 @@ function plugin_headings_actions_fusioninventory($type) {
          );
       case PRINTER_TYPE :
 			$array = array ();
-			if (plugin_fusioninventory_haveRight("snmp_printers", "r")) {
+			if (PluginFusioninventory::haveRight("snmp_printers", "r")) {
 				$array[1] = "plugin_headings_fusioninventory_printerInfo";
 			}
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -1355,7 +1355,7 @@ function plugin_headings_actions_fusioninventory($type) {
 			break;
 
 		case NETWORKING_TYPE :
-			if (plugin_fusioninventory_haveRight("snmp_networking", "r")) {
+			if (PluginFusioninventory::haveRight("snmp_networking", "r")) {
 				$array[1] = "plugin_headings_fusioninventory_networkingInfo";
 			}
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -1474,13 +1474,13 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusioninventory_get_model" :
-               if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+               if(PluginFusioninventory::haveRight("snmp_models","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusioninventory_assign_model" :
-               if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+               if(PluginFusioninventory::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusioninventory_model_infos`
                                    WHERE `device_type`!='2'
@@ -1496,7 +1496,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusioninventory_assign_auth" :
-               if(plugin_fusioninventory_HaveRight("snmp_authentification","w")) {
+               if(PluginFusioninventory::haveRight("snmp_authentification","w")) {
                   plugin_fusioninventory_snmp_auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1514,13 +1514,13 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusioninventory_get_model" :
-               if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+               if(PluginFusioninventory::haveRight("snmp_models","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusioninventory_assign_model" :
-               if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+               if(PluginFusioninventory::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusioninventory_model_infos`
                                    WHERE `device_type`!='3'
@@ -1536,7 +1536,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusioninventory_assign_auth" :
-               if(plugin_fusioninventory_HaveRight("snmp_authentification","w")) {
+               if(PluginFusioninventory::haveRight("snmp_authentification","w")) {
                   plugin_fusioninventory_snmp_auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1553,7 +1553,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 		case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
 			switch ($action) {
 				case "plugin_fusioninventory_discovery_import" :
-               if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {
+               if(PluginFusioninventory::haveRight("unknowndevices","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
 					break;
@@ -1633,7 +1633,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          break;
       
 		case "plugin_fusioninventory_discovery_import" :
-         if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {
+         if(PluginFusioninventory::haveRight("unknowndevices","w")) {
             $Import = 0;
             $NoImport = 0;
             foreach ($data['item'] as $key => $val) {

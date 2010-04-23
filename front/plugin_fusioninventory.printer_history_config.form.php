@@ -38,7 +38,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("printer","r");
-plugin_fusioninventory_checkRight("snmp_printers","w");
+PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 
 $print_config = new PluginFusionInventoryPrintersHistoryConfig;
 

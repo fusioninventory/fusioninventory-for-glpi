@@ -160,10 +160,10 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 		
 		$history = new PluginFusionInventorySNMPHistory;
 		
-		if (!plugin_fusioninventory_haveRight("snmp_networking","r")) {
+		if (!PluginFusioninventory::haveRight("snmp_networking","r")) {
 			return false;
       }
-		if (plugin_fusioninventory_haveRight("snmp_networking","w")) {
+		if (PluginFusioninventory::haveRight("snmp_networking","w")) {
 			$canedit = true;
       } else {
 			$canedit = false;

@@ -48,7 +48,7 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
-		plugin_fusioninventory_checkRight("snmp_models","r");
+		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
 		if ($ID!='') {
 			$this->getFromDB($ID);
@@ -95,7 +95,7 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+      if(PluginFusioninventory::haveRight("snmp_models","w")) {
          if ($ID=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
                  "\" class='submit' >";

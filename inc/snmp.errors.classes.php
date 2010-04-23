@@ -347,7 +347,7 @@ class PluginFusionInventoryErrors extends CommonDBTM {
 	function showForm($type, $target, $ID) {
 		global $LANG;
 		
-		if (!plugin_fusioninventory_haveRight("errors","r")) {
+		if (!PluginFusioninventory::haveRight("errors","r")) {
 			return false;
       }
 		
@@ -406,7 +406,7 @@ class PluginFusionInventoryErrors extends CommonDBTM {
 			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['ID']."'>";
 		}
 		
-		if (!plugin_fusioninventory_haveRight("errors","w")) {
+		if (!PluginFusioninventory::haveRight("errors","w")) {
 			return false;
       }
 		echo "<input type='hidden' name='limit' value='".$limit."'>";

@@ -48,7 +48,7 @@ class PluginFusionInventorySNMPAuth extends CommonDBTM {
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
-		plugin_fusioninventory_checkRight("snmp_authentification","r");
+		PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
 
 		if ($ID!='') {
 			$this->getFromDB($ID);
@@ -125,7 +125,7 @@ class PluginFusionInventorySNMPAuth extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(plugin_fusioninventory_HaveRight("snmp_authentification","w")) {
+      if(PluginFusioninventory::haveRight("snmp_authentification","w")) {
          if ($ID=='') {
             echo "<div align='center'><input type='submit' name='add'
                        value=\"" . $LANG["buttons"][8] . "\" class='submit' >";

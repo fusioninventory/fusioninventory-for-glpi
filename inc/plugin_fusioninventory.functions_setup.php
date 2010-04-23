@@ -72,7 +72,7 @@ function plugin_fusioninventory_installing($version) {
 	include(GLPI_ROOT.'/inc/rulesengine.function.php');
 	foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 	
-	plugin_fusioninventory_initSession();
+	PluginFusioninventory::initSession();
    return true;
 }
 
@@ -189,7 +189,7 @@ function plugin_fusioninventory_update($version) {
       $pficsnmph->initConfig();
       $pficsnmph->updateTrackertoFusion();
    }
-	plugin_fusioninventory_initSession();
+	PluginFusioninventory::initSession();
 }
 
 

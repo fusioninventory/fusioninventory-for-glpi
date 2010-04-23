@@ -192,7 +192,7 @@ class PluginFusionInventoryConfigSNMPHistory extends CommonDBTM {
 
       echo "<tr class='tab_bg_2'>";
       echo "<td align='center' colspan='2'>";
-      if (plugin_fusioninventory_haveRight("configuration","w")) {
+      if (PluginFusioninventory::haveRight("configuration","w")) {
    		echo "<input type='hidden' name='tabs' value='history' />";
    		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
       }
@@ -204,7 +204,7 @@ class PluginFusionInventoryConfigSNMPHistory extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
-      if (plugin_fusioninventory_haveRight("configuration","w")) {
+      if (PluginFusioninventory::haveRight("configuration","w")) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
       }
       echo "</td>";

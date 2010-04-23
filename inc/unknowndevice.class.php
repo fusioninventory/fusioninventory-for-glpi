@@ -48,7 +48,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $ong = array();
 		if ($ID > 0){
          $ong[1]=$LANG['title'][27];
-         if (($ptcm->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
+         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
          }
          $ong[3]=$LANG['title'][38];
@@ -61,7 +61,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 	function showForm($target, $ID = '') {
 		global $DB,$CFG_GLPI,$LANG;
 
-		plugin_fusioninventory_checkRight("snmp_networking","r");
+		PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
       $CommonItem = new CommonItem;
 
@@ -256,7 +256,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       echo "<td width='33%' align='center'>";
       echo "<input type='hidden' name='ID' value=$ID>";
       echo "<div class='center'>";
-      if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {
+      if(PluginFusioninventory::haveRight("unknowndevices","w")) {
          if (!$this->fields["deleted"]){
             echo "<input type='submit' name='delete' value=\"".$LANG['buttons'][6]."\" class='submit'>";
          } else {

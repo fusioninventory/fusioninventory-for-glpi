@@ -54,7 +54,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       $ong = array();
 		if ($ID > 0){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
-         if (($ptcm->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
+         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
          }
       }
@@ -180,7 +180,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_2'>";
-      if(plugin_fusioninventory_HaveRight("agents","w")) {
+      if(PluginFusioninventory::haveRight("agents","w")) {
          if ($ID=='') {
             echo "<td align='center' colspan='4'>";
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";

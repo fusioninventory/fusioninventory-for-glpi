@@ -113,7 +113,7 @@ class PluginFusionInventoryLockable extends CommonDBTM{
       ajaxUpdateItemOnSelectEvent($idSelect, 'columnsLockable', GLPI_ROOT."/plugins/fusioninventory/ajax/plugin_fusioninventory.lockable.lockables.php", $params);
       
       echo "</td><td class='center'>";
-      if (plugin_fusioninventory_haveRight("configuration","w")) {
+      if (PluginFusioninventory::haveRight("configuration","w")) {
          echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_add' value='" . $LANG["buttons"][8] . " >>'>";
          echo "<br /><br />";
          echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_delete' value='<< " . $LANG["buttons"][6] . "'>";

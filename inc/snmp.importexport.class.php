@@ -42,7 +42,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 	function plugin_fusioninventory_export($ID_model) {
 		global $DB;
 		
-		plugin_fusioninventory_checkRight("snmp_models","r");
+		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_model_infos`
                 WHERE `ID`='".$ID_model."';";
@@ -99,7 +99,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 	function showForm($target) {
 		global $DB,$CFG_GLPI,$LANG;
 		
-		plugin_fusioninventory_checkRight("snmp_models","r");
+		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 		
 		echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 		
@@ -112,7 +112,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		echo "</td>";
 		echo "<td align='center'>";
 		echo "<input type='file' name='importfile' value=''/>";
-      if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+      if(PluginFusioninventory::haveRight("snmp_models","w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
 		echo "</td>";
@@ -127,7 +127,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
    function showFormMassImport($target) {
 		global $DB,$CFG_GLPI,$LANG;
 
-      plugin_fusioninventory_checkRight("snmp_models","r");
+      PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
@@ -138,7 +138,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		echo "<td align='center'>";
       echo $LANG['plugin_fusioninventory']["model_info"][16]."<br/>";
 		echo "<input type='hidden' name='massimport' value='1'/>";
-      if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+      if(PluginFusioninventory::haveRight("snmp_models","w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
 		echo "</td>";
@@ -154,7 +154,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		global $DB,$LANG;
 
 		if ($installation != 1) {
-			plugin_fusioninventory_checkRight("snmp_models","w");
+			PluginFusioninventoryAuth::checkRight("snmp_models","w");
       }
 		$xml = simplexml_load_file($file);
 

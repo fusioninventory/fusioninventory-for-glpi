@@ -40,10 +40,10 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 
-plugin_fusioninventory_checkRight("snmp_printers","r");
+PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 
 if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
-		plugin_fusioninventory_checkRight("snmp_printers","w");
+		PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 	
 	$plugin_fusioninventory_printers = new PluginFusionInventoryPrinters;
 	
@@ -64,7 +64,7 @@ if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 }
 
 if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
-	plugin_fusioninventory_checkRight("snmp_printers","w");
+	PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 
 	$plugin_fusioninventory_printers_cartridges = new PluginFusionInventoryPrintersCartridges;
 

@@ -47,13 +47,13 @@ $rangeip = new PluginFusionInventoryRangeIP;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","rangeip");
 
-plugin_fusioninventory_checkRight("rangeip","r");
+PluginFusioninventoryAuth::checkRight("rangeip","r");
 
 plugin_fusioninventory_mini_menu();
 
 if (isset ($_POST["add"])) {
    if ($rangeip->checkip($_POST)) {
-      plugin_fusioninventory_checkRight("rangeip","w");
+      PluginFusioninventoryAuth::checkRight("rangeip","w");
       $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
       $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
       $rangeip->add($_POST);
@@ -61,14 +61,14 @@ if (isset ($_POST["add"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
    if ($rangeip->checkip($_POST)) {
-      plugin_fusioninventory_checkRight("rangeip","w");
+      PluginFusioninventoryAuth::checkRight("rangeip","w");
       $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
       $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
       $rangeip->update($_POST);
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	plugin_fusioninventory_checkRight("rangeip","w");
+	PluginFusioninventoryAuth::checkRight("rangeip","w");
 	$agents->rangeip($_POST);
 	glpi_header("plugin_fusioninventory.rangeip.php");
 }

@@ -51,7 +51,7 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
 		
-		if (!plugin_fusioninventory_haveRight("snmp_models","r")) {
+		if (!PluginFusioninventory::haveRight("snmp_models","r")) {
 			return false;
       } else if ((isset($ID)) AND (!empty($ID))) {
 			$query = "SELECT `device_type`
@@ -190,7 +190,7 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      $LANG["buttons"][19]."</a>";
 				echo "</td><td align='left' colspan='6' width='80%'>";
-            if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+            if(PluginFusioninventory::haveRight("snmp_models","w")) {
    				echo "<input class='submit' type='submit' name='delete_oid' value='" .
                      $LANG["buttons"][6] . "'>";
             }
@@ -267,7 +267,7 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 				echo "</tr>";
 				
 				echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
-            if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
+            if(PluginFusioninventory::haveRight("snmp_models","w")) {
    				echo "<input type='hidden' name='FK_model_infos' value='".$ID."'/>";
    				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
                      "\" class='submit' >";
@@ -300,7 +300,7 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 	function deleteMib($item_coche) {
 		global $DB;
 		
-		plugin_fusioninventory_checkRight("snmp_models","w");
+		PluginFusioninventoryAuth::checkRight("snmp_models","w");
 		
 		for ($i = 0; $i < count($item_coche); $i++) {
          $this->deleteFromDB($item_coche[$i],1);

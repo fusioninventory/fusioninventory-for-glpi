@@ -49,7 +49,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-plugin_fusioninventory_checkRight("snmp_networking","r");
+PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
 $ptud = new PluginFusionInventoryUnknownDevice;
 $ptt  = new PluginFusionInventoryTask;

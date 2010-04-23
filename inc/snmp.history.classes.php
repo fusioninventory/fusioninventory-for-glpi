@@ -142,13 +142,13 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
       echo "</td><td class='center'>";
 
       if (count($listName)) {
-         if (plugin_fusioninventory_haveRight("configuration","w")) {
+         if (PluginFusioninventory::haveRight("configuration","w")) {
             echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_add' value='" . $LANG["buttons"][8] . " >>'>";
          }
       }
       echo "<br /><br />";
       if (!empty($options)) {
-         if (plugin_fusioninventory_haveRight("configuration","w")) {
+         if (PluginFusioninventory::haveRight("configuration","w")) {
             echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . $LANG["buttons"][6] . "'>";
          }
       }
@@ -175,7 +175,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
-      if (plugin_fusioninventory_haveRight("configuration","w")) {
+      if (PluginFusioninventory::haveRight("configuration","w")) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
       }
       echo "</td>";
@@ -190,7 +190,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-      if (plugin_fusioninventory_haveRight("configuration","w")) {
+      if (PluginFusioninventory::haveRight("configuration","w")) {
    		echo "<input type='hidden' name='tabs' value='history' />";
    		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
       }

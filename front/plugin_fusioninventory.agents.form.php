@@ -53,19 +53,19 @@ $agents = new PluginFusionInventoryAgents;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
-plugin_fusioninventory_checkRight("agents","r");
+PluginFusioninventoryAuth::checkRight("agents","r");
 
 plugin_fusioninventory_mini_menu();
 
 if (isset ($_POST["add"])) {
-	plugin_fusioninventory_checkRight("agents","w");
+	PluginFusioninventoryAuth::checkRight("agents","w");
    if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
       $_POST['device_type'] = '1';
    }
 	$agents->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	plugin_fusioninventory_checkRight("agents","w");
+	PluginFusioninventoryAuth::checkRight("agents","w");
    if (isset($_POST['on_device'])) {
       if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
          $_POST['device_type'] = '1';
@@ -74,7 +74,7 @@ if (isset ($_POST["add"])) {
 	$agents->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	plugin_fusioninventory_checkRight("agents","w");
+	PluginFusioninventoryAuth::checkRight("agents","w");
 	$agents->delete($_POST);
 	glpi_header("plugin_fusioninventory.agents.php");
 } else if (isset ($_POST["startagent"])) {

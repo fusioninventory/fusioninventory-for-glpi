@@ -41,14 +41,14 @@ $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","mon
 
 include (GLPI_ROOT."/inc/includes.php");
 
-if (plugin_fusioninventory_HaveRight("snmp_models","r")
-	OR plugin_fusioninventory_HaveRight("snmp_authentification","r")
-	OR plugin_fusioninventory_HaveRight("snmp_iprange","r")
-	OR plugin_fusioninventory_HaveRight("snmp_agent","r")
-	OR plugin_fusioninventory_HaveRight("snmp_scripts_infos","r")
-	OR plugin_fusioninventory_HaveRight("snmp_agent_infos","r")
-	OR plugin_fusioninventory_HaveRight("snmp_discovery","r")
-	OR plugin_fusioninventory_HaveRight("snmp_report","r")
+if (PluginFusioninventory::HaveRight("snmp_models","r")
+	OR PluginFusioninventory::HaveRight("snmp_authentification","r")
+	OR PluginFusioninventory::HaveRight("snmp_iprange","r")
+	OR PluginFusioninventory::HaveRight("snmp_agent","r")
+	OR PluginFusioninventory::HaveRight("snmp_scripts_infos","r")
+	OR PluginFusioninventory::HaveRight("snmp_agent_infos","r")
+	OR PluginFusioninventory::HaveRight("snmp_discovery","r")
+	OR PluginFusioninventory::HaveRight("snmp_report","r")
 	) {
 	if (plugin_fusioninventory_needUpdate() == 1) {
 		commonHeader($LANG['plugin_fusioninventory']["setup"][4], $_SERVER["PHP_SELF"],"plugins","fusioninventory");

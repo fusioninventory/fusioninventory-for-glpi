@@ -106,7 +106,7 @@ class PluginFusionInventoryPrintersHistory extends CommonDBTM {
 	function showForm($target, $ID) {
 		global $LANG;
 		
-		if (!plugin_fusioninventory_haveRight("snmp_printers","r")) {
+		if (!PluginFusioninventory::haveRight("snmp_printers","r")) {
 			return false;
       }
 		
@@ -173,7 +173,7 @@ class PluginFusionInventoryPrintersHistory extends CommonDBTM {
 			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['ID']."'>";
 		}
 		
-		if (!plugin_fusioninventory_haveRight("snmp_printers","w")) {
+		if (!PluginFusioninventory::haveRight("snmp_printers","w")) {
 			return false;
       }
 			
@@ -338,7 +338,7 @@ class PluginFusionInventoryPrintersHistoryConfig extends CommonDBTM {
 	function showForm($target,$ID) {
 		global $LANG;
 		
-		if (plugin_fusioninventory_haveRight("snmp_printers","w")) {
+		if (PluginFusioninventory::haveRight("snmp_printers","w")) {
 			echo "<br>";
 			echo "<div align='center'><form method='post' name='printer_history_config_form'
                     id='printer_history_config_form'  action=\"".$target."\">";

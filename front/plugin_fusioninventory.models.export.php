@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 //commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
-plugin_fusioninventory_checkRight("snmp_models","r");
+PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
 $importexport = new PluginFusionInventoryImportExport;
 

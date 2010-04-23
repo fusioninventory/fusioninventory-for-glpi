@@ -204,7 +204,7 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='4'>";
-      if (plugin_fusioninventory_haveRight("configuration","w")) {
+      if (PluginFusioninventory::haveRight("configuration","w")) {
    		echo "<input type='hidden' name='tabs' value='config' />";
    		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
       }
