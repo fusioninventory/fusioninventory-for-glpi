@@ -311,7 +311,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
                 ,width       : 600
                 ,height      : 150
                 ,plain       : true
-                ,html       : '".$LANG['plugin_fusioninventory']["update"][0]."<br/>cd glpi/plugins/fusioninventory/front/ && php -f cli_update.php'
+                ,html       : '".$LANG['plugin_fusioninventory']["update"][0]."<br/>cd glpi/plugins/fusioninventory/front/ && php -f cli-update.php'
             });
             win.show();
         });
