@@ -1034,7 +1034,7 @@ class PluginFusionInventoryCommunication {
                case 'TRUNK' :
                   if (!$ptp->getNoTrunk()) {
                      plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
-                     $ptp->setValue('trunk', $p_port->$name);
+                     $ptp->setValue('vlanTrunkPortDynamicStatus', $p_port->$name);
                   }
                   break;
 

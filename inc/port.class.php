@@ -578,7 +578,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       $this->unknownDevicesToConnect=array(); // no connection
 
       $this->noTrunk = true;
-      $this->setValue('trunk', -1);
+      $this->setValue('vlanTrunkPortDynamicStatus', -1);
    }
 
    /**
