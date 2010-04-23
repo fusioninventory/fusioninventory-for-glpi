@@ -346,7 +346,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
          if (!isset($_SESSION["datetotalpages"])) {
             $_SESSION["datetotalpages"]="";
          }
-         plugin_fusioninventory_printer_calendar($_SESSION["datetotalpages"],"datetotalpages",$target);
+         PluginFusioninventory::printer_calendar($_SESSION["datetotalpages"],"datetotalpages",$target);
          // fin calendrier
 			echo "</td>";
 			echo "</tr>";
@@ -385,7 +385,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
          if (!isset($_SESSION["dateblackpages"])) {
             $_SESSION["dateblackpages"]="";
          }
-         plugin_fusioninventory_printer_calendar($_SESSION["dateblackpages"],"dateblackpages",$target);
+         PluginFusioninventory::printer_calendar($_SESSION["dateblackpages"],"dateblackpages",$target);
          // fin calendrier
          echo "</td>";
          echo "</tr>";
@@ -425,7 +425,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
          if (!isset($_SESSION["datecolorpages"])) {
             $_SESSION["datecolorpages"]="";
          }
-         plugin_fusioninventory_printer_calendar($_SESSION["datecolorpages"],"datecolorpages",$target);
+         PluginFusioninventory::printer_calendar($_SESSION["datecolorpages"],"datecolorpages",$target);
          // fin calendrier
          echo "</td>";
          echo "</tr>";
@@ -465,7 +465,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
          if (!isset($_SESSION["daterectoversopages"])) {
             $_SESSION["daterectoversopages"]="";
          }
-         plugin_fusioninventory_printer_calendar($_SESSION["daterectoversopages"],"daterectoversopages",
+         PluginFusioninventory::printer_calendar($_SESSION["daterectoversopages"],"daterectoversopages",
                                          $target);
          // fin calendrier
          echo "</td>";
@@ -506,7 +506,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 			if (!isset($_SESSION["datescannedpages"])) {
 				$_SESSION["datescannedpages"]="";
          }
-			plugin_fusioninventory_printer_calendar($_SESSION["datescannedpages"],"datescannedpages",$target);
+			PluginFusioninventory::printer_calendar($_SESSION["datescannedpages"],"datescannedpages",$target);
 			// fin calendrier
 			echo "</td>";
 			echo "</tr>";
@@ -843,7 +843,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 	function getPagesCount($id,$frequence,$date_end,$field) {
 		global $DB;	
 		
-		$dates = plugin_fusioninventory_date(9,$frequence,$date_end);
+		$dates = PluginFusioninventory::date(9,$frequence,$date_end);
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers_history`
                 WHERE `FK_printers`=".$id."
