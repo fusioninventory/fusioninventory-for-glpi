@@ -177,7 +177,7 @@ $LANG['plugin_fusioninventory']["snmp"][48]="Nb d'octets envoyés";
 $LANG['plugin_fusioninventory']["snmp"][49]="Nb d'erreurs en réception";
 $LANG['plugin_fusioninventory']["snmp"][50]="Connexion";
 $LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
-$LANG['plugin_fusioninventory']["snmp"][52]="Date dernier inventaire FUSIONINVENTORY";
+$LANG['plugin_fusioninventory']["snmp"][52]="Date dernier inventaire FusionInventory";
 $LANG['plugin_fusioninventory']["snmp"][53]="Dernier inventaire";
 
 $LANG['plugin_fusioninventory']["snmpauth"][1]="Communauté";
