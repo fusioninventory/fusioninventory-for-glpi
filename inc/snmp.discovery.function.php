@@ -86,7 +86,7 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
       $data = $DB->fetch_assoc($result);
       $Netport->getFromDB($data["ID"]);
    }
-
+   $type = $ptud->fields['type'];
 	switch ($ptud->fields['type']) {
 		case PRINTER_TYPE :
 			$Printer = new Printer;
@@ -112,6 +112,13 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$data_fusioninventory["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
 			$tp->add($data_fusioninventory);			
 
+         // Convert history
+         $query_update = "UPDATE `glpi_history`
+         SET `FK_glpi_device`='".$ID_Device."', `device_type`='".$ptud->fields['type']."'
+         WHERE `FK_glpi_device`='".$discovery_ID."'
+            AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+         $DB->query($query_update);
+         
          $ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
@@ -140,6 +147,13 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$data_fusioninventory["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
 			$fusioninventory_networking->add($data_fusioninventory);
 
+         // Convert history
+         $query_update = "UPDATE `glpi_history`
+         SET `FK_glpi_device`='".$ID_Device."', `device_type`='".$ptud->fields['type']."'
+         WHERE `FK_glpi_device`='".$discovery_ID."'
+            AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+         $DB->query($query_update);
+
 			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
@@ -160,7 +174,14 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
          $data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $ptud->fields['type'];
 			$Netport->update($data_Port);
-			
+
+         // Convert history
+         $query_update = "UPDATE `glpi_history`
+         SET `FK_glpi_device`='".$ID_Device."', `device_type`='".$ptud->fields['type']."'
+         WHERE `FK_glpi_device`='".$discovery_ID."'
+            AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+         $DB->query($query_update);
+         
 			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
@@ -183,6 +204,13 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$data_Port['device_type'] = $ptud->fields['type'];
 			$Netport->update($data_Port);
 
+         // Convert history
+         $query_update = "UPDATE `glpi_history`
+         SET `FK_glpi_device`='".$ID_Device."', `device_type`='".$ptud->fields['type']."'
+         WHERE `FK_glpi_device`='".$discovery_ID."'
+            AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+         $DB->query($query_update);
+         
 			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
 			break;
@@ -203,6 +231,13 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
          $data_Port['on_device'] = $ID_Device;
 			$data_Port['device_type'] = $ptud->fields['type'];
 			$Netport->update($data_Port);
+         
+         // Convert history
+         $query_update = "UPDATE `glpi_history`
+         SET `FK_glpi_device`='".$ID_Device."', `device_type`='".$ptud->fields['type']."'
+         WHERE `FK_glpi_device`='".$discovery_ID."'
+            AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+         $DB->query($query_update);
 
 			$ptud->deleteFromDB($discovery_ID,1);
 			$Import++;
@@ -242,6 +277,13 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
                            $Netport->deleteFromDB($Netport->fields['ID']);
                         }
 
+                        // Convert history
+                        $query_update = "UPDATE `glpi_history`
+                        SET `FK_glpi_device`='".$ID_Device."', `device_type`='".$ptud->fields['type']."'
+                        WHERE `FK_glpi_device`='".$discovery_ID."'
+                           AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+                        $DB->query($query_update);
+
                         $ptud->deleteFromDB($discovery_ID,1);
                         $Import++;
                         $typeimported++;
@@ -256,6 +298,15 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
             $NoImport++;
          }
 	}
+
+   if (isset($ID_Device)) {
+      // Add import line in history
+      $changes[0] = 0;
+      $changes[1] = "";
+      $changes[2] = $LANG['plugin_fusioninventory']["unknown"][5];
+      historyLog($ID_Device, $type, $changes);
+   }
+
    return array($Import, $NoImport);
 }
 
