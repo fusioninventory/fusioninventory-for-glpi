@@ -48,10 +48,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $ong = array();
 		if ($ID > 0){
          $ong[1]=$LANG['title'][27];
+         $ong[2]=$LANG['buttons'][37];
          if (($ptcm->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
-            $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
+            $ong[3]=$LANG['plugin_fusioninventory']["task"][2];
          }
-         $ong[3]=$LANG['title'][38];
+         $ong[4]=$LANG['title'][38];
       }
 		return $ong;
 	}
@@ -242,18 +243,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 		echo "</tr>";
       
       echo "<tr>";
-      echo "<td class='tab_bg_2' align='center' colspan='4'>\n";
-      echo "<table width='100%'>";
-      echo "<tr>";
-      echo "<td width='33%' align='center'>";
-      echo "<input type='hidden' name='ID' value=$ID>";
-      echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
-      echo "</td>";
-      echo "<td width='33%' align='center'>";
+      echo "<td class='tab_bg_2' align='center' colspan='2'>";
       echo "<input type='hidden' name='ID' value=$ID>";
       echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
       echo "</td>";
-      echo "<td width='33%' align='center'>";
+      echo "<td class='tab_bg_2' align='center' colspan='2'>";
       echo "<input type='hidden' name='ID' value=$ID>";
       echo "<div class='center'>";
       if(plugin_fusioninventory_HaveRight("unknowndevices","w")) {
@@ -276,7 +270,26 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 	}
 
 
+   
+   function importForm($target,$ID) {
+      global $LANG;
+      
+      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+		echo "<table  class='tab_cadre_fixe'>";
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+      $this->getFromDB($ID);
+      if ($this->fields["type"] != '0') {
+         echo "<input type='hidden' name='ID' value=$ID>";
+         echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
+      }
+      echo "</td>";
+      echo "</table>";
+      echo "</div>";
+   }
 
+
+   
 	function updateFromOldVersion_unknown_mac() {
 		global $DB,$LANG;
 
