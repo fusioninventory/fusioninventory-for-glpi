@@ -116,7 +116,7 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
                  AND ($ptcm->isActivated('netdiscovery'))
                  AND ($a_agent['module_netdiscovery'] == '1')) {
             $single = 1;
-            $ptc->addDiscovery($pxml, 1);
+            $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
             $input['ID'] = $task_id;
             $ptt->delete($input);
          }
