@@ -135,6 +135,10 @@ class PluginFusionInventoryHistoryConnections extends CommonDBTM {
       $query = "SELECT * FROM `".$this->table."`
          ".$condition."
          ORDER BY `date`DESC , `process_number` DESC";
+      if (!isset($input['process_number'])) {
+         $query .= " LIMIT 0,500";
+      }
+
 		if ($result = $DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1 center'>";
