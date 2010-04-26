@@ -1138,17 +1138,17 @@ function plugin_fusioninventory_install() {
     **/
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config"))) {
-      plugin_fusioninventory_installing("2.2.0");
+      PluginFusioninventorySetup::install("2.2.0");
    } else if (TableExists("glpi_plugin_tracker_config")) {
       //$config = new PluginFusionInventoryConfig;
       if (!TableExists("glpi_plugin_tracker_agents")) {
-         plugin_fusioninventory_update("1.1.0");
+         PluginFusioninventorySetup::update("1.1.0");
       }
       if (!TableExists("glpi_plugin_tracker_config_discovery")) {
-         plugin_fusioninventory_update("2.0.0");
+         PluginFusioninventorySetup::update("2.0.0");
       }
       if (!FieldExists("glpi_plugin_tracker_config", "version")) {
-         plugin_fusioninventory_update("2.0.2");
+         PluginFusioninventorySetup::update("2.0.2");
       }
       if (FieldExists("glpi_plugin_tracker_config", "version")) {
          $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
@@ -1167,28 +1167,28 @@ function plugin_fusioninventory_install() {
             $data['version'] = "2.1.0";
          }
          if ($data['version'] == "2.1.0") {
-            plugin_fusioninventory_update("2.1.1");
+            PluginFusioninventorySetup::update("2.1.1");
             $DB->query("UPDATE `glpi_plugin_tracker_config` 
                         SET version = '2.1.1'
                         WHERE ID=1");
             $data['version'] = "2.1.1";
          }
          if ($data['version'] == "2.1.1") {
-            //plugin_fusioninventory_update("2.1.2");
+            //PluginFusioninventorySetup::update("2.1.2");
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.1.2'
                         WHERE `ID`='1';");
             $data['version'] = "2.1.2";
          }
          if ($data['version'] == "2.1.2") {
-            //plugin_fusioninventory_update("2.1.2");
+            //PluginFusioninventorySetup::update("2.1.2");
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.1.3'
                         WHERE `ID`='1';");
             $data['version'] = "2.1.3";
          }
          if ($data['version'] == "2.1.3") {
-            plugin_fusioninventory_update("2.2.0");
+            PluginFusioninventorySetup::update("2.2.0");
             $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
                         SET `version` = '2.2.0'
                         WHERE `ID`='1';");

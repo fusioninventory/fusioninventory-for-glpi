@@ -39,7 +39,7 @@ if (haveRight("config","w") && haveRight("profile","w")) {
 
 	if(TableExists("glpi_plugin_fusioninventory_config")) {
 		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
-		plugin_fusioninventory_uninstall();
+		PluginFusioninventorySetup::uninstall();
 		unset($_SESSION["glpi_plugin_fusioninventory_installed"]);
 	}
 	glpi_header($_SERVER['HTTP_REFERER']);

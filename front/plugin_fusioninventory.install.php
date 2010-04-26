@@ -59,13 +59,13 @@ include (GLPI_ROOT . "/inc/includes.php");
 if (haveRight("config","w") && haveRight("profile","w")) {
    $config = new PluginFusionInventoryConfig;
    if (!TableExists("glpi_plugin_fusioninventory_agents")) {
-		plugin_fusioninventory_update("1.1.0");
+		PluginFusioninventorySetup::update("1.1.0");
    }
    if (!TableExists("glpi_plugin_fusioninventory_config_discovery")) {
-		plugin_fusioninventory_update("2.0.0");
+		PluginFusioninventorySetup::update("2.0.0");
    }
    if (!FieldExists("glpi_plugin_fusioninventory_config", "version")) {
-      plugin_fusioninventory_update("2.0.2");
+      PluginFusioninventorySetup::update("2.0.2");
    }
    if (FieldExists("glpi_plugin_fusioninventory_config", "version")) {
       if ($config->getValue('version') == "2.0.2") {
@@ -78,7 +78,7 @@ if (haveRight("config","w") && haveRight("profile","w")) {
                      SET `version` = '2.1.1'
                      WHERE `ID`=1");
       }
-      plugin_fusioninventory_update("2.0.2");
+      PluginFusioninventorySetup::update("2.0.2");
       if  ($config->getValue('version') == "0") {
          $DB->query("UPDATE `glpi_plugin_fusioninventory_config` 
                      SET `version` = '2.1.1'
