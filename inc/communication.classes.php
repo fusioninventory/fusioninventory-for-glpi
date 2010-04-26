@@ -941,15 +941,17 @@ class PluginFusionInventoryCommunication {
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
-               $ifaddrIndex = $this->ptd->getIfaddrIndex($child);
-               if (is_int($ifaddrIndex)) {
-                  $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
-                  $pti->load($oldIfaddr->getValue('ID'));
-               } else {
-                  $pti->load();
+               if ($child != "127.0.0.1") {
+                  $ifaddrIndex = $this->ptd->getIfaddrIndex($child);
+                  if (is_int($ifaddrIndex)) {
+                     $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
+                     $pti->load($oldIfaddr->getValue('ID'));
+                  } else {
+                     $pti->load();
+                  }
+                  $pti->setValue('ifaddr', $child);
+                  $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
                }
-               $pti->setValue('ifaddr', $child);
-               $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']["errors"][22].' IPS : '.$child->getName()."\n";
