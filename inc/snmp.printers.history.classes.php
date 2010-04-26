@@ -349,7 +349,7 @@ class PluginFusionInventoryPrintersHistoryConfig extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANG['plugin_fusioninventory']["cron"][1]."</td>";
 			echo "<td align='center'>";
-			plugin_fusioninventory_dropdownDefaultYesNo("counter", $this->getCounterValue($ID));
+			PluginFusioninventoryDropdown::showYesNo("counter", $this->getCounterValue($ID));
 			echo "</td>";
 			echo "</tr>";
 			

@@ -3,7 +3,7 @@
  * @version $Id$
  ----------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
- Copynetwork (C) 2003-2006 by the INDEPNET Development Team.
+ Copynetwork (C) 2003-2010 by the INDEPNET Development Team.
 
  http://indepnet.net/   http://glpi-project.org/
  ----------------------------------------------------------------------
@@ -29,7 +29,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
+// Original Author of file: MAZZONI Vincent
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -37,14 +37,16 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-function plugin_fusioninventory_dropdownDefaultYesNo($name,$value) {
-	global $LANG;
-	
-	echo "<select name='$name' id='dropdownyesno_$name'>\n";
-	echo "<option value='-1' ".($value==-1?" selected ":"").">".$LANG['plugin_fusioninventory']["cron"][3]."</option>\n";
-	echo "<option value='0' ".(!$value?" selected ":"").">".$LANG["choice"][0]."</option>\n";
-	echo "<option value='1' ".($value==1?" selected ":"").">".$LANG["choice"][1]."</option>\n";
-	echo "</select>\n";
+class PluginFusioninventoryDropdown extends CommonDBTM {
+   static function defaultYesNo($name,$value) {
+      global $LANG;
+
+      echo "<select name='$name' id='dropdownyesno_$name'>\n";
+      echo "<option value='-1' ".($value==-1?" selected ":"").">".$LANG['plugin_fusioninventory']["cron"][3]."</option>\n";
+      echo "<option value='0' ".(!$value?" selected ":"").">".$LANG["choice"][0]."</option>\n";
+      echo "<option value='1' ".($value==1?" selected ":"").">".$LANG["choice"][1]."</option>\n";
+      echo "</select>\n";
+   }
 }
 
 ?>
