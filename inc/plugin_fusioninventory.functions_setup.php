@@ -51,7 +51,7 @@ function plugin_fusioninventory_installing($version) {
 	}
 
 	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
-	plugin_fusioninventory_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
+	PluginFusioninventory::createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
 	if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
 		mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
@@ -141,7 +141,7 @@ function plugin_fusioninventory_update($version) {
                   SET `version` = '2.1.3'
                   WHERE `ID`=1
                   LIMIT 1 ;");
-      //plugin_fusioninventory_clean_db();
+      //PluginFusioninventoryDb::clean_db();
    }
    if ($version == "2.1.3") {
       $DB->query("UPDATE `glpi_plugin_tracker_config`
@@ -152,7 +152,7 @@ function plugin_fusioninventory_update($version) {
       ini_set("max_execution_time", "0");
       $pthc = new PluginFusionInventoryHistoryConnections;
       $pthc->migration();
-      plugin_fusioninventory_clean_db();
+      PluginFusioninventoryDb::clean_db();
    }
    if ($version == "2.2.0") {
       ini_set("memory_limit", "-1");
@@ -164,7 +164,7 @@ function plugin_fusioninventory_update($version) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
       // Update right
-      plugin_fusioninventory_updateaccess($_SESSION['glpiactiveprofile']['ID']);
+      PluginFusioninventory::updateaccess($_SESSION['glpiactiveprofile']['ID']);
 
       // Delete old agents
       $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_agents`";

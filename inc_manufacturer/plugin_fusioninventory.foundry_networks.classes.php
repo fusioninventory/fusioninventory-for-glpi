@@ -109,7 +109,7 @@ class PluginFusionInventoryManufacturerFoundryNetworks extends CommonDBTM {
          }
 
          if (($queryPortEnd != "")) {
-            plugin_fusioninventory_db_lock_wire_check();
+            PluginFusioninventoryDb::lock_wire_check();
             $resultPortEnd=$DB->query($queryPortEnd);
             $traitement = 1;
             if ($vlan != "") {
@@ -155,12 +155,10 @@ class PluginFusionInventoryManufacturerFoundryNetworks extends CommonDBTM {
                   }
                }
             }
-            plugin_fusioninventory_db_lock_wire_unlock();
+            PluginFusioninventoryDb::lock_wire_unlock();
          }
       }
    }
-
-
 }
 
 ?>

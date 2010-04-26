@@ -793,7 +793,7 @@ function plugin_fusioninventory_UpdateGLPINetworkingPorts(
                   }
                }
                if ($queryUpdate != '') {
-                  plugin_fusioninventory_db_lock_wire_check();
+                  PluginFusioninventoryDb::lock_wire_check();
                   $DB->query($queryUpdate);
                   // Delete port wire if port is internal disable
                   if (($link == "ifinternalstatus")
@@ -811,7 +811,7 @@ function plugin_fusioninventory_UpdateGLPINetworkingPorts(
                      $data[$FUSIONINVENTORY_MAPPING[$type][$link]['field']],
                      $oidvalues[$oid.$data['logical_number']][""],$type."-".$link,
                      $_SESSION['FK_process']);
-                  plugin_fusioninventory_db_lock_wire_unlock();
+                  PluginFusioninventoryDb::lock_wire_unlock();
                }
          	}
 			}
@@ -1082,7 +1082,7 @@ function plugin_fusioninventory_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues
                plugin_fusioninventory_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",
                   $_SESSION['FK_process']);
                // Remove vlan
-               plugin_fusioninventory_db_lock_wire_check();
+               PluginFusioninventoryDb::lock_wire_check();
                plugin_fusioninventory_addLogConnection("remove",
                   $netwire->getOppositeContact($data['FK_networking_ports']),$FK_process);
                plugin_fusioninventory_addLogConnection("remove",$data['FK_networking_ports'],$FK_process);
@@ -1090,7 +1090,7 @@ function plugin_fusioninventory_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues
                $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
                // Remove connection
    				removeConnector($data['FK_networking_ports']);
-               plugin_fusioninventory_db_lock_wire_unlock();
+               PluginFusioninventoryDb::lock_wire_unlock();
             }
          } else if($data['trunk'] != "0") {
             $query_update = "UPDATE `glpi_plugin_fusioninventory_networking_ports`

@@ -229,7 +229,7 @@ class PluginFusionInventoryErrors extends CommonDBTM {
 		global $LANG;
 		
 		$input['device_type'] = $device_type;
-		$input['FK_entities'] = plugin_fusioninventory_getDeviceFieldFromId($device_type, $input['device_id'],
+		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($device_type, $input['device_id'],
                                                                   "FK_entities", false);
 
 		$input['description'] = $LANG['plugin_fusioninventory']["errors"][20]." : ";
@@ -252,7 +252,7 @@ class PluginFusionInventoryErrors extends CommonDBTM {
 		global $LANG;
 		
 		$input['device_type'] = $device_type;
-		$input['FK_entities'] = plugin_fusioninventory_getDeviceFieldFromId($device_type, $input['device_id'],
+		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($device_type, $input['device_id'],
                                                                   "FK_entities", false);
 		
 		$input['description'] = $LANG['plugin_fusioninventory']["errors"][30];

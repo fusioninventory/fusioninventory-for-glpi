@@ -1429,7 +1429,7 @@ function plugin_headings_fusioninventory($type,$ID,$withtemplate=0) {
 		case PROFILE_TYPE :
 			$prof=new PluginFusionInventoryProfile;
 			if (!$prof->GetfromDB($ID)) {
-				plugin_fusioninventory_createaccess($ID);
+				PluginFusioninventory::createaccess($ID);
          }
 			$prof->showForm($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.profile.php",$ID);
 		break;

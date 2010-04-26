@@ -101,7 +101,7 @@ class PluginFusionInventoryManufacturer3com extends CommonDBTM {
                                 WHERE `ifmac` IN ('".$MacAddress."','".strtoupper($MacAddress)."')
                                       AND (`on_device`!='".$ID_Device."'
                                            OR `device_type`!='".NETWORKING_TYPE."');";
-               plugin_fusioninventory_db_lock_wire_check();
+               PluginFusioninventoryDb::lock_wire_check();
                $resultPortEnd=$DB->query($queryPortEnd);
                $sport = $ArrayPortsID[$ifName]; // Networking_Port
                if (($DB->numrows($resultPortEnd) != 0)) {
@@ -140,7 +140,7 @@ class PluginFusionInventoryManufacturer3com extends CommonDBTM {
                      $snmp_queries->PortsConnection($sport, $dport,$_SESSION['FK_process'],$vlan." [".$vlan_name."]");
                   }
                }
-               plugin_fusioninventory_db_lock_wire_unlock();
+               PluginFusioninventoryDb::lock_wire_unlock();
             }
          }
       }
