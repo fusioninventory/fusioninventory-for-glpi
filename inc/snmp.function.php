@@ -517,7 +517,7 @@ function plugin_fusioninventory_snmp_UpdateGLPIDevice(
             }
 
                if ($link == 'macaddr') {
-                  $MacAddress = plugin_fusioninventory_ifmacwalk_ifmacaddress($oidvalues[$oid][""]);
+                  $MacAddress = PluginFusioninventoryIfmac::ifmacwalk_ifmacaddress($oidvalues[$oid][""]);
 
                   $oidvalues[$oid][""] = $MacAddress;
                }
@@ -724,7 +724,7 @@ function plugin_fusioninventory_UpdateGLPINetworkingPorts(
 
 				if (($link == 'ifPhysAddress')
                 AND (!strstr($oidvalues[$oid.$data['logical_number']][""], ":"))) {
-					$MacAddress = plugin_fusioninventory_ifmacwalk_ifmacaddress(
+					$MacAddress = PluginFusioninventoryIfmac::ifmacwalk_ifmacaddress(
                   $oidvalues[$oid.$data['logical_number']][""]);
 
 					$oidvalues[$oid.$data['logical_number']][""] = $MacAddress;

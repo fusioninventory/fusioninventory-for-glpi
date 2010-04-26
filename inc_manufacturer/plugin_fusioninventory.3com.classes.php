@@ -62,7 +62,7 @@ class PluginFusionInventoryManufacturer3com extends CommonDBTM {
             foreach($ArrayBridgePortNumber as $num=>$dynamicdata) {
                $BridgePortifIndexFound = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][""];
                if ($BridgePortifIndexFound == $BridgePortNumber) {
-                  $MacAddress = plugin_fusioninventory_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
+                  $MacAddress = PluginFusioninventoryIfmac::ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][""]);
 
                   if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync","Add TMPConnection = ".$MacAddress."(PortID ".$TMP_ID.")",$type,$ID_Device,1);
                   $tmpc->AddConnections($TMP_ID, $MacAddress);
@@ -91,7 +91,7 @@ class PluginFusionInventoryManufacturer3com extends CommonDBTM {
             $BridgePortNumber = $oidvalues[$oidsModel[0][1]['dot1dTpFdbPort'].".".$dynamicdata][$vlan];
             if ($BridgePortNumber > 1) {
                // Convert MAC HEX in Decimal
-               $MacAddress = plugin_fusioninventory_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
+               $MacAddress = PluginFusioninventoryIfmac::ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['dot1dTpFdbAddress'].".".$dynamicdata][$vlan]);
 
                $BridgePortifIndex = $oidvalues[$oidsModel[0][1]['dot1dBasePortIfIndex'].".".$BridgePortNumber][$vlan];
 

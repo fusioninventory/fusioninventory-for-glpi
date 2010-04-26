@@ -80,7 +80,7 @@ class PluginFusionInventoryManufacturerFoundryNetworks extends CommonDBTM {
          if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync","** Interface = ".$ifName,$type,$ID_Device,1);
 
          // Convert MAC HEX in Decimal
-         $MacAddress = plugin_fusioninventory_ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$dynamicdata][$vlan]);
+         $MacAddress = PluginFusioninventoryIfmac::ifmacwalk_ifmacaddress($oidvalues[$oidsModel[0][1]['ipNetToMediaPhysAddress'].".".$dynamicdata][$vlan]);
 
          if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync","Vlan = ".$vlan,$type,$ID_Device,1);
          if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync","Mac address = ".$MacAddress,$type,$ID_Device,1);
