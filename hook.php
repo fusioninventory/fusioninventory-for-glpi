@@ -1046,7 +1046,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Display switch and Port
 				case "glpi_networking_ports.ID" :
-					$Array_device = plugin_fusioninventory_getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+					$Array_device = PluginFusionInventoryPort::getUniqueObjectfieldsByportID($data["ITEM_$num"]);
 					$CommonItem = new CommonItem;
 					$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
 					$out = "<div align='center'>" . $CommonItem->getLink(1);
