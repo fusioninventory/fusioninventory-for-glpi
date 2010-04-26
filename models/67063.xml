@@ -2,6 +2,17 @@
 	<name><![CDATA[67063]]></name>
 	<type>2</type>
 	<key>Networking0033</key>
+	<comments><![CDATA[3Com SuperStack II
+
+ES-2048
+
+Fluke Networks OptiView (tm) Integrated Network Analyzer
+
+HP J4812A ProCurve Switch 2512, revision F.05.59, ROM F.02.01  (/sw/code/build/info(s02))
+
+WS5100 Wireless Switch, Revision WS.02.3.0.4.0-004R
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

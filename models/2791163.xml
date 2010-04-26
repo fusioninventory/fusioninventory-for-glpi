@@ -2,6 +2,15 @@
 	<name><![CDATA[2791163]]></name>
 	<type>2</type>
 	<key>Networking0073</key>
+	<comments><![CDATA[(c) Intel Corporation, 550T Express 550T Switch, Version 2.32 
+
+BayStack 450-12T HW:RevD  FW:V1.48 SW:v4.3.0.4 ISVN:2
+
+BayStack 450-24T HW:RevL  FW:V1.47 SW:v3.1.0.22  ISVN:1
+
+EthAirNet Wireless LAN
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

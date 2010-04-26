@@ -2,6 +2,9 @@
 	<name><![CDATA[3802712]]></name>
 	<type>3</type>
 	<key>Printer0028</key>
+	<comments><![CDATA[Xerox WorkCentre Pro 123;ESS 1.204.7,IOT 21.46.0,FIN B10.6.0,IIT 11.7.1,ADF 10.3.0,FAX 1.20.20
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

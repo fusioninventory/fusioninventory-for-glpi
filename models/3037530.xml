@@ -1,7 +1,10 @@
 <model>
-	<name><![CDATA[3566521]]></name>
+	<name><![CDATA[3037530]]></name>
 	<type>2</type>
-	<key>Networking0244</key>
+	<key>Networking0246</key>
+	<comments><![CDATA[3Com IntelliJack NJ225
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

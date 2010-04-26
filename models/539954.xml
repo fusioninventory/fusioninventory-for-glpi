@@ -2,6 +2,21 @@
 	<name><![CDATA[539954]]></name>
 	<type>2</type>
 	<key>Networking0124</key>
+	<comments><![CDATA[5150SE
+
+IBM OS/400 V4R5M0
+
+IBM PowerPC CHRP Computer
+
+ITIUM 4030
+
+Microsoft Windows CE Version 5.0 (Build 0)
+
+Microsoft Windows CE Version 5.0 (Build 1400)
+
+ProCurve j9020a Switch 2510-48, revision U.11.08, ROM R.10.06 (/sw/code/build/dosx(ndx))
+
+]]></comments>
 	<oidlist>
 	</oidlist>
 </model>

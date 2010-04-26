@@ -2,6 +2,24 @@
 	<name><![CDATA[5246672]]></name>
 	<type>2</type>
 	<key>Networking0105</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C2940 Software (C2940-I6K2L2Q4-M), Version 12.1(22)EA13, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by cisco Systems, Inc.^M
+Compiled Fri 27-F
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA13, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by cisco Systems, Inc.^M
+Compiled Fri 27-F
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C3550 Software (C3550-I5Q3L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2002 by cisco Systems, Inc.^M
+Compiled Wed 28-Aug-02 10:03 by antonino
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

@@ -2,6 +2,13 @@
 	<name><![CDATA[3283574]]></name>
 	<type>3</type>
 	<key>Printer0039</key>
+	<comments><![CDATA[Lexmark Optra T614  Version 3.14.16  Ethernet 10/100.
+
+Lexmark T620  Version 5.20.26  FaxSCSI-Ethernet.
+
+Lexmark T632 version 55.00.39 kernel 2.4.0-test6 All-N-1
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

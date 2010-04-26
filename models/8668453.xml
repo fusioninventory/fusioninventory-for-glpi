@@ -2,6 +2,9 @@
 	<name><![CDATA[8668453]]></name>
 	<type>2</type>
 	<key>Networking0211</key>
+	<comments><![CDATA[Ethernet Routing Switch 5520-48T-PWR  HW:34       FW:5.0.0.4   SW:v5.1.0.014 BN:14 (c) Nortel Networks
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

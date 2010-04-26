@@ -2,6 +2,15 @@
 	<name><![CDATA[6402168]]></name>
 	<type>3</type>
 	<key>Printer0062</key>
+	<comments><![CDATA[Brother NC-4100h, Firmware Ver.1.01  (02.09.06),MID 84TU07,FID 5
+
+Brother NC-4100h, Firmware Ver.1.10  (02.07.12),MID 84UZ23,FID 4
+
+Brother NC-6200h, Firmware Ver.1.03  (04.11.18),MID 84UZ82,FID 1
+
+OKI OkiLAN 3100e Rev.n252v144 10/100BASE Ethernet Print Server: Attached to OKIPAGE 14i Rev.01.07: (C)2000 Oki UK Limited
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

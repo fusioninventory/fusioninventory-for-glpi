@@ -2,6 +2,9 @@
 	<name><![CDATA[1485438]]></name>
 	<type>2</type>
 	<key>Networking0199</key>
+	<comments><![CDATA[ProCurve J9085A Switch 2610-24, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

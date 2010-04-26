@@ -2,6 +2,29 @@
 	<name><![CDATA[5910705]]></name>
 	<type>2</type>
 	<key>Networking0088</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M  
+IOS (tm) C2970 Software (C2970-I6L2-M), Version 12.1(19)EA1c, RELEASE SOFTWARE (fc2)^M  
+Copyright (c) 1986-2004 by cisco Systems, Inc.^M  
+Compiled Tue 03-Feb-04 02:14 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-2006 by Cisco Systems, Inc.
+Compiled Fri 28-Jul-06 04:33 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Fri 25-Sep-09 08:49 by sasyamal
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Sun 13-Dec-09 15:45 by prod_rel_team
+
+Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 30-Aug-05 15:47 by yenanh
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

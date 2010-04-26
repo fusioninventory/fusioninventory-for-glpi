@@ -2,6 +2,11 @@
 	<name><![CDATA[5715517]]></name>
 	<type>3</type>
 	<key>Printer0040</key>
+	<comments><![CDATA[Lexmark T640 version NS.NP.N219 kernel 2.6.6 All-N-1
+
+Lexmark T644 version NS.NP.N219 kernel 2.6.6 All-N-1
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

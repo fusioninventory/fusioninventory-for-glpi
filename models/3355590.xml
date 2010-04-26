@@ -2,6 +2,9 @@
 	<name><![CDATA[3355590]]></name>
 	<type>2</type>
 	<key>Networking0242</key>
+	<comments><![CDATA[ProCurve J8773A Switch 4208vl, revision L.11.09, ROM L.10.03 (/sw/code/build/rmm(rm11))
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

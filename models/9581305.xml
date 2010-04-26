@@ -2,6 +2,21 @@
 	<name><![CDATA[9581305]]></name>
 	<type>3</type>
 	<key>Printer0146</key>
+	<comments><![CDATA[Xerox WorkCentre M123;ESS PS1.202.0,IOT 11.27.0,IIT 11.7.0,ADF 9.6.0,FAX 1.10.12
+
+Xerox WorkCentre M123;ESS PS1.203.1,IOT 11.27.0,IIT 11.7.0,ADF 9.6.0,FAX 1.10.12
+
+Xerox WorkCentre M123;ESS PS1.203.4,IOT 11.27.0,IIT 11.7.1,ADF 11.6.3,FAX 1.20.20
+
+Xerox WorkCentre M128;ESS 1.203.4,IOT 11.38.0,IIT 11.7.1,ADF 9.10.0,FAX 1.20.20
+
+Xerox WorkCentre Pro 123;ESS PS1.205.3,IOT 11.27.0,IIT 11.7.4,ADF 10.3.0,FAX 1.30.2
+
+Xerox WorkCentre Pro 123;ESS PS1.205.3,IOT 21.46.0,IIT 11.7.4,ADF 10.3.0,FAX 1.30.2
+
+Xerox WorkCentre Pro 128;ESS 1.204.7,IOT 11.38.0,IIT 11.7.1,ADF 10.2.0
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

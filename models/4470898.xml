@@ -2,6 +2,9 @@
 	<name><![CDATA[4470898]]></name>
 	<type>2</type>
 	<key>Networking0215</key>
+	<comments><![CDATA[WS5100 Wireless Switch, Revision WS.02.3.3.2.0-010R MIB=01a
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

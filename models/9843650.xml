@@ -2,6 +2,12 @@
 	<name><![CDATA[9843650]]></name>
 	<type>2</type>
 	<key>Networking0192</key>
+	<comments><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.3(8)JA, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Mon 27-Feb-06 09:17 by ssearch
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

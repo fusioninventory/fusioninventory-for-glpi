@@ -2,6 +2,9 @@
 	<name><![CDATA[6915155]]></name>
 	<type>2</type>
 	<key>Networking0176</key>
+	<comments><![CDATA[SMC 6624M TigerSwitch 10/100, revision F.02.06, ROM F.01.02
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

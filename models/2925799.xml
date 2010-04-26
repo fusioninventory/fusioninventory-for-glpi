@@ -2,6 +2,9 @@
 	<name><![CDATA[2925799]]></name>
 	<type>2</type>
 	<key>Networking0146</key>
+	<comments><![CDATA[DES-3526 Fast-Ethernet Switch
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

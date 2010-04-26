@@ -2,6 +2,12 @@
 	<name><![CDATA[8295590]]></name>
 	<type>2</type>
 	<key>Networking0240</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M  
+IOS (tm) C3750 Software (C3750-I9-M), Version 12.2(20)SE4, RELEASE SOFTWARE (fc1)^M  
+Copyright (c) 1986-2005 by cisco Systems, Inc.^M  
+Compiled Sun 09-Jan-05 00:09 by antonino
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

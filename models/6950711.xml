@@ -2,6 +2,27 @@
 	<name><![CDATA[6950711]]></name>
 	<type>2</type>
 	<key>Networking0221</key>
+	<comments><![CDATA[Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JA2, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Tue 30-May-06 18:07 by pwade
+
+Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA1, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Mon 15-Jan-07 23:17 by kellythw
+
+Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXH4, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Mon 10-Nov-08 07:00 by pr
+
+Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXI3, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Tue 27-Oct-09 11:11 by pr
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
