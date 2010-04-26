@@ -146,7 +146,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
          
       }
 
-      plugin_fusioninventory_disableDebug();
+      PluginFusioninventoryDisplay::disableDebug();
       if(!($fp = fsockopen("192.168.0.201", 62354, $errno, $errstr, 1))) {
           echo "<b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
       } else {
@@ -154,7 +154,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
           $active_valid = 1;
           fclose($fp);
       }
-      plugin_fusioninventory_reenableusemode();
+      PluginFusioninventoryDisplay::reenableusemode();
 
 		echo "</td>";
       echo "</tr>";
@@ -592,7 +592,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
    function getStateAgent($ip, $agentid, $type="") {
       global $LANG;
 
-      plugin_fusioninventory_disableDebug();
+      PluginFusioninventoryDisplay::disableDebug();
       $state = false;
       if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
          echo "<tr class='tab_bg_1'>";
@@ -609,7 +609,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
          fclose($fp);
          $state = true;
       }
-      plugin_fusioninventory_reenableusemode();
+      PluginFusioninventoryDisplay::reenableusemode();
       return $state;
    }
 

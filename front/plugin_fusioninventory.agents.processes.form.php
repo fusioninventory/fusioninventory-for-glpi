@@ -47,7 +47,7 @@ if (empty($_GET)) {
 	$modif = 1;
 }
 
-plugin_fusioninventory_mini_menu();
+PluginFusioninventoryDisplay::mini_menu();
 
 $ptap = new PluginFusionInventoryAgentsProcesses;
 $pfiae  =  new PluginFusionInventoryAgentsErrors;

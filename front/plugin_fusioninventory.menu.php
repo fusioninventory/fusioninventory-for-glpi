@@ -62,7 +62,7 @@ if (PluginFusioninventory::HaveRight("snmp_models","r")
 	} else {
 		commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-		plugin_fusioninventory_menu();
+		PluginFusioninventoryDisplay::menu();
 	}
 } else {
 	displayRightError();

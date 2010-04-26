@@ -52,7 +52,7 @@ $importexport = new PluginFusionInventoryImportExport;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","models");
 
-plugin_fusioninventory_mini_menu();
+PluginFusioninventoryDisplay::mini_menu();
 
 //if (isset ($_POST["add"]) && isset($_POST["ID"])) {
 if (isset ($_POST["add"])) {

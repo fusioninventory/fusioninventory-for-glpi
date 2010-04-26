@@ -55,7 +55,7 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryAuth::checkRight("agents","r");
 
-plugin_fusioninventory_mini_menu();
+PluginFusioninventoryDisplay::mini_menu();
 
 if (isset ($_POST["add"])) {
 	PluginFusioninventoryAuth::checkRight("agents","w");

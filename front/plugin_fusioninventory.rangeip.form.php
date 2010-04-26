@@ -49,7 +49,7 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryAuth::checkRight("rangeip","r");
 
-plugin_fusioninventory_mini_menu();
+PluginFusioninventoryDisplay::mini_menu();
 
 if (isset ($_POST["add"])) {
    if ($rangeip->checkip($_POST)) {

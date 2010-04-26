@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","task");
 
-plugin_fusioninventory_mini_menu();
+PluginFusioninventoryDisplay::mini_menu();
 
 manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_TASK);
 

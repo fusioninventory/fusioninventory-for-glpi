@@ -42,7 +42,7 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryAuth::checkRight("agents","r");
 
-plugin_fusioninventory_mini_menu();
+PluginFusioninventoryDisplay::mini_menu();
 
 manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS);
 

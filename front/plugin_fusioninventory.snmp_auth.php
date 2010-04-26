@@ -44,7 +44,7 @@ PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
 
 $config = new PluginFusionInventoryConfig;
 
-plugin_fusioninventory_mini_menu();
+PluginFusioninventoryDisplay::mini_menu();
 
 // Forms for FILE
 if ($config->getValue("authsnmp") == "file") {

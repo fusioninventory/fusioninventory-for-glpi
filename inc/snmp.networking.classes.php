@@ -315,7 +315,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 			echo "<tr class='tab_bg_1 center'>";
 			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][13]."</td>";
 			echo "<td>";
-			plugin_fusioninventory_Bar($this->fields['cpu'],'','inverse');
+			PluginFusioninventoryDisplay::bar($this->fields['cpu'],'','inverse');
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -335,7 +335,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 			} else {
 				$ram_pourcentage = ceil((100 * ($data2["ram"] - $this->fields['memory'])) / $data2["ram"]);
 			}
-			plugin_fusioninventory_Bar($ram_pourcentage," (".($data2["ram"] - $this->fields['memory'])." Mo / ".
+			PluginFusioninventoryDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->fields['memory'])." Mo / ".
                             $data2["ram"]." Mo)",'inverse');
 			echo "</td>";
 			echo "</tr>";

@@ -267,7 +267,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 //			}
 			echo "</td>";
 			echo "<td align='center'>";
-			plugin_fusioninventory_Bar($state['state']);
+			PluginFusioninventoryDisplay::bar($state['state']);
 			echo "</td>";
 			echo "</tr>";
 		}
