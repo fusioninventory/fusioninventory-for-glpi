@@ -1638,7 +1638,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             $NoImport = 0;
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  list($Import, $NoImport) = plugin_fusioninventory_discovery_import($key,$Import,$NoImport);
+                  list($Import, $NoImport) = PluginFusioninventoryDiscovery::import($key,$Import,$NoImport);
                }
             }
             addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);

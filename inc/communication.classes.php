@@ -751,7 +751,7 @@ class PluginFusionInventoryCommunication {
       $criteria['name']    = $p_info->NAME;
       $criteria['macaddr'] = $p_info->MAC; //TODO get mac in PORT for printer
       if ($p_info->TYPE=='NETWORKING') {
-         $this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, NETWORKING_TYPE);
+         $this->deviceId = PluginFusionInventoryDiscovery::criteria($criteria, NETWORKING_TYPE);
          if ($this->deviceId != '') {
             $errors.=$this->importInfoNetworking($p_info);
          } else {
@@ -772,7 +772,7 @@ class PluginFusionInventoryCommunication {
                         case 'PORT' :
                            $criteria['macaddr'] = $child_port->MAC;
                            if ($this->deviceId == '') {
-                              $this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, PRINTER_TYPE);
+                              $this->deviceId = PluginFusionInventoryDiscovery::criteria($criteria, PRINTER_TYPE);
                            }
                            break;
                      }
@@ -781,7 +781,7 @@ class PluginFusionInventoryCommunication {
             }
          }
 
-         //$this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, PRINTER_TYPE);
+         //$this->deviceId = PluginFusionInventoryDiscovery::criteria($criteria, PRINTER_TYPE);
          if ($this->deviceId != '') {
             $errors.=$this->importInfoPrinter($p_info);
          } else {

@@ -84,7 +84,7 @@ if (isset($_POST["delete"])) {
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = plugin_fusioninventory_discovery_import($_POST['ID'],$Import,$NoImport);
+   list($Import, $NoImport) = PluginFusioninventoryDiscovery::import($_POST['ID'],$Import,$NoImport);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
    if ($Import == "0") {
