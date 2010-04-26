@@ -1589,13 +1589,13 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 			if ($data['device_type'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						plugin_fusioninventory_assign($key, NETWORKING_TYPE, "model", $data["snmp_model"]);
+						PluginFusioninventoryMassiveaction::assign($key, NETWORKING_TYPE, "model", $data["snmp_model"]);
 					}
 				}
 			} else if($data['device_type'] == PRINTER_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						plugin_fusioninventory_assign($key, PRINTER_TYPE, "model", $data["snmp_model"]);
+						PluginFusioninventoryMassiveaction::assign($key, PRINTER_TYPE, "model", $data["snmp_model"]);
 					}
 				}
 			}
@@ -1605,13 +1605,13 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 			if ($data['device_type'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						plugin_fusioninventory_assign($key, NETWORKING_TYPE, "auth", $data["FK_snmp_connection"]);
+						PluginFusioninventoryMassiveaction::assign($key, NETWORKING_TYPE, "auth", $data["FK_snmp_connection"]);
 					}
 				}
 			} else if($data['device_type'] == PRINTER_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						plugin_fusioninventory_assign($key, PRINTER_TYPE, "auth", $data["FK_snmp_connection"]);
+						PluginFusioninventoryMassiveaction::assign($key, PRINTER_TYPE, "auth", $data["FK_snmp_connection"]);
 					}
 				}
 			}
