@@ -218,7 +218,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['ID'];		
 		}
-      dropdownValue("glpi_plugin_fusioninventory_model_infos","model_infos",$this->fields['FK_model_infos'],0,-1,'',
+      dropdownValue("glpi_plugin_fusioninventory_model_infos","model_infos",$this->fields['FK_model_infos'],1,-1,'',
                     $exclude_models);
       echo "</td>";
 		echo "</tr>";

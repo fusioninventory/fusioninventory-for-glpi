@@ -94,6 +94,14 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>" . $LANG['common'][25] . "</td>";
+		echo "<td align='center'>";
+		echo nl2br($this->fields["comments"]);
+		echo "</td>";
+		echo "</tr>";
+
+
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
       if(plugin_fusioninventory_HaveRight("snmp_models","w")) {
          if ($ID=='') {

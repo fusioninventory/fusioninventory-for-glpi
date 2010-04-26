@@ -603,6 +603,11 @@ $LANG['plugin_fusioninventory']["task"][12]="Déclencher l'agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) indisponible(s)";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
+$LANG['plugin_fusioninventory']["constructdevice"][1]="Creation automatique des modèles";
+$LANG['plugin_fusioninventory']["constructdevice"][2]="Générer le fichier de découverte";
+$LANG['plugin_fusioninventory']["constructdevice"][3]="Supprimer modèles non utilisés";
+$LANG['plugin_fusioninventory']["constructdevice"][4]="Exporter tous les modèles";
+$LANG['plugin_fusioninventory']["constructdevice"][5]="Regénérer les commentaires de modèles";
 
 $LANG['plugin_fusioninventory']["update"][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande pour finir la mise à jour : ";
 

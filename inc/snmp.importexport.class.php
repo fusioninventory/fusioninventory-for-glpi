@@ -52,6 +52,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 				$model_name = $DB->result($result, 0, "name");
 				$type = $DB->result($result, 0, "device_type");
 				$discovery_key = $DB->result($result, 0, "discovery_key");
+            $comments = $DB->result($result, 0, "comments");
 			} else {
 				exit();
          }
@@ -63,6 +64,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
 		$xml .= "	<type>".$type."</type>\n";
 		$xml .= "	<key>".$discovery_key."</key>\n";
+      $xml .= "	<comments><![CDATA[".$comments."]]></comments>\n";
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
@@ -171,8 +173,8 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 			return false;
 		} else {
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_model_infos`
-                               (`name`,`device_type`,`discovery_key`)
-                   VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."');";
+                               (`name`,`device_type`,`discovery_key`,`comments`)
+                   VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."','".$xml->comments[0]."');";
 			$DB->query($query);
 			$FK_model = $DB->insert_id();
 			

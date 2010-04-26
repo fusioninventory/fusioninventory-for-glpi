@@ -607,6 +607,11 @@ $LANG['plugin_fusioninventory']["task"][12]="Wake agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
+$LANG['plugin_fusioninventory']["constructdevice"][1]="Automatic creation of models";
+$LANG['plugin_fusioninventory']["constructdevice"][2]="Generate discovery file";
+$LANG['plugin_fusioninventory']["constructdevice"][3]="Delete models non used";
+$LANG['plugin_fusioninventory']["constructdevice"][4]="Export all models";
+$LANG['plugin_fusioninventory']["constructdevice"][5]="Re-create models comments";
 
 $LANG['plugin_fusioninventory']["update"][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 
