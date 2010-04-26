@@ -304,6 +304,9 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
          } else if (!empty($discovery->SNMPHOSTNAME)) {
             $p_criteria['name'] = $discovery->SNMPHOSTNAME;
          }
+         if ($discovery->SERIAL == 'null') {
+            $discovery->SERIAL = "";
+         }
          $p_criteria['serial'] = $discovery->SERIAL;
          $p_criteria['macaddr'] = $discovery->MAC;
 
