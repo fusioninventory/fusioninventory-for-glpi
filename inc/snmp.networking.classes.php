@@ -711,7 +711,7 @@ function appear_array(id){
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
 					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".
-                  plugin_fusioninventory_snmp_showHistory($data["ID"])."</td>
+                  PluginFusionInventorySNMPHistory::showHistory($data["ID"])."</td>
 				</tr>
 				";
 			}

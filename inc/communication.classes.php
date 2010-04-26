@@ -1018,22 +1018,22 @@ class PluginFusionInventoryCommunication {
                   $errors.=$this->importVlans($child, $ptp);
                   break;
                case 'IFNAME' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue('ifmac', $child);
                   break;
                case 'IFNUMBER' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
                   break;
                case 'TRUNK' :
                   if (!$ptp->getNoTrunk()) {
-                     plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                     PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                      $ptp->setValue('trunk', $p_port->$name);
                   }
                   break;
@@ -1048,7 +1048,7 @@ class PluginFusionInventoryCommunication {
                case 'IFOUTOCTETS' :
                case 'IFSPEED' :
                case 'IFSTATUS' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :
@@ -1085,19 +1085,19 @@ class PluginFusionInventoryCommunication {
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'IFNAME' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue('ifmac', $child);
                   break;
                case 'IP' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue('ifaddr', $child);
                   break;
                case 'IFNUMBER' :
-                  plugin_fusioninventory_networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusionInventorySNMPHistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed

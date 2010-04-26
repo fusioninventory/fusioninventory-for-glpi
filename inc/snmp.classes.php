@@ -316,19 +316,19 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 
 		if ($resultVerif=$DB->query($queryVerif)) {
 			if ($DB->numrows($resultVerif) == "0") {
-				plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($source_port),$FK_process);
-				plugin_fusioninventory_addLogConnection("remove",$source_port,$FK_process);
+				PluginFusionInventorySNMPHistory::addLogConnection("remove",$netwire->getOppositeContact($source_port),$FK_process);
+				PluginFusionInventorySNMPHistory::addLogConnection("remove",$source_port,$FK_process);
 				$this->CleanVlan($source_port);
             removeConnector($source_port);
 
-				plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
-				plugin_fusioninventory_addLogConnection("remove",$destination_port,$FK_process);
+				PluginFusionInventorySNMPHistory::addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
+				PluginFusionInventorySNMPHistory::addLogConnection("remove",$destination_port,$FK_process);
             $this->CleanVlan($destination_port);
             removeConnector($destination_port);
 						
 				makeConnector($source_port,$destination_port);
-				plugin_fusioninventory_addLogConnection("make",$destination_port,$FK_process);
-				plugin_fusioninventory_addLogConnection("make",$source_port,$FK_process);
+				PluginFusionInventorySNMPHistory::addLogConnection("make",$destination_port,$FK_process);
+				PluginFusionInventorySNMPHistory::addLogConnection("make",$source_port,$FK_process);
 				
 				if ((!empty($vlan)) AND ($vlan != " []")) {
 					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
@@ -383,8 +383,8 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          }
 		}
 		// Remove all connections if it is
-//		plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
-//      plugin_fusioninventory_addLogConnection("remove",$destination_port,$FK_process);
+//		PluginFusionInventorySNMPHistory::addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
+//      PluginFusionInventorySNMPHistory::addLogConnection("remove",$destination_port,$FK_process);
 //      $this->CleanVlan($destination_port);
 //      removeConnector($destination_port);
 	}
@@ -847,9 +847,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          $result = $DB->query($query);
          $data = $DB->fetch_assoc($result);
 
-         plugin_fusioninventory_addLogConnection(
+         PluginFusionInventorySNMPHistory::addLogConnection(
                  "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
-         plugin_fusioninventory_addLogConnection("remove",$data['ID'],$FK_process);
+         PluginFusionInventorySNMPHistory::addLogConnection("remove",$data['ID'],$FK_process);
          removeConnector($data['ID']);
 
          $ptp->deleteFromDB($data["ID"],1);
@@ -866,9 +866,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                    AND `logical_number` NOT IN ".$logicalnumberlist.";";
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         plugin_fusioninventory_addLogConnection(
+         PluginFusionInventorySNMPHistory::addLogConnection(
                  "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
-         plugin_fusioninventory_addLogConnection("remove",$data['ID'],$FK_process);
+         PluginFusionInventorySNMPHistory::addLogConnection("remove",$data['ID'],$FK_process);
          removeConnector($data['ID']);
          $np->delete($data);
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
@@ -1242,14 +1242,14 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                              AND (($oidvalues[$oid.$data['logical_number']][""] == "2")
                                      OR ($oidvalues[$oid.$data['logical_number']][""] == "down(2)"))) {
                         $netwire=new Netwire;
-                        plugin_fusioninventory_addLogConnection(
+                        PluginFusionInventorySNMPHistory::addLogConnection(
                                 "remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
-                        plugin_fusioninventory_addLogConnection("remove",$data["ID"],$FK_process);
+                        PluginFusionInventorySNMPHistory::addLogConnection("remove",$data["ID"],$FK_process);
                         removeConnector($data["ID"]);
 
                      }
                      // Add log because snmp value change
-                     plugin_fusioninventory_snmp_addLog($data["ID"],$FUSIONINVENTORY_MAPPING[$type][$link]['name'],
+                     PluginFusionInventorySNMPHistory::addLog($data["ID"],$FUSIONINVENTORY_MAPPING[$type][$link]['name'],
                              $data[$FUSIONINVENTORY_MAPPING[$type][$link]['field']],
                              $oidvalues[$oid.$data['logical_number']][""],$type."-".$link,
                              $_SESSION['FK_process']);
@@ -1503,7 +1503,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                                 SET `trunk`='1'
                                 WHERE `ID`='".$data['sid']."';";
                   $DB->query($query_update);
-                  plugin_fusioninventory_snmp_addLog(
+                  PluginFusionInventorySNMPHistory::addLog(
                           $data["FK_networking_ports"],"trunk","0","1","",$_SESSION['FK_process']);
                   // Remove vlan
                   $snmp_queries->CleanVlan($data['FK_networking_ports']);
@@ -1517,13 +1517,13 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                                 SET `trunk`='-1'
                                 WHERE `ID`='".$data['sid']."';";
                   $DB->query($query_update);
-                  plugin_fusioninventory_snmp_addLog($data["FK_networking_ports"],"trunk","0","-1","",
+                  PluginFusionInventorySNMPHistory::addLog($data["FK_networking_ports"],"trunk","0","-1","",
                           $_SESSION['FK_process']);
                   // Remove vlan
                   PluginFusioninventoryDb::lock_wire_check();
-                  plugin_fusioninventory_addLogConnection("remove",
+                  PluginFusionInventorySNMPHistory::addLogConnection("remove",
                           $netwire->getOppositeContact($data['FK_networking_ports']),$FK_process);
-                  plugin_fusioninventory_addLogConnection("remove",$data['FK_networking_ports'],$FK_process);
+                  PluginFusionInventorySNMPHistory::addLogConnection("remove",$data['FK_networking_ports'],$FK_process);
                   $snmp_queries->CleanVlan($data['FK_networking_ports']);
                   $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
                   // Remove connection
@@ -1535,7 +1535,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                              SET `trunk`='0'
                              WHERE `ID`='".$data['sid']."';";
                $DB->query($query_update);
-               plugin_fusioninventory_snmp_addLog($data["FK_networking_ports"],"trunk","1","0","",
+               PluginFusionInventorySNMPHistory::addLog($data["FK_networking_ports"],"trunk","1","0","",
                        $_SESSION['FK_process']);
             }
          }
