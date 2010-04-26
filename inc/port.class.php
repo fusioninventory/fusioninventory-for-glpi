@@ -90,12 +90,12 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
                $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
                $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
             } else {
-//               $this->fusioninventory_networking_ports_ID = NULL;
-//               $this->oFusionInventory_networking_ports->load();
-//               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
-               $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
-               $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
+               $this->fusioninventory_networking_ports_ID = NULL;
+               $this->oFusionInventory_networking_ports->load();
                $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
+//               $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
+//               $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
+//               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
             }
          }
       } else {
