@@ -376,6 +376,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 		LEFT JOIN glpi_networking_ports
 		ON glpi_plugin_fusioninventory_networking_ports.FK_networking_ports = glpi_networking_ports.ID 
 		WHERE glpi_networking_ports.on_device='".$ID."'
+         AND `device_type`='".NETWORKING_TYPE."'
 		ORDER BY logical_number ";
 
 		echo "<script  type='text/javascript'>
