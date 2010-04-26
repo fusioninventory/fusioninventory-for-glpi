@@ -350,7 +350,9 @@ class PluginFusionInventoryTask extends CommonDBTM {
       echo "<td align='center'>";
       echo "<input type='hidden' name='on_device' value='".$ID."'/>";
       echo "<input type='hidden' name='device_type' value='".$type."'/>";
+      echo "<div id='displaybutton' style='visibility:hidden'>";
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
+      echo "</div>";
 
       echo "</td>";
       echo "</tr>";
@@ -451,6 +453,10 @@ class PluginFusionInventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
    }
 
@@ -491,6 +497,10 @@ class PluginFusionInventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
    }
 
@@ -548,6 +558,10 @@ class PluginFusionInventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
       return $count_agent_on;
    }
@@ -592,6 +606,10 @@ class PluginFusionInventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
 
    }
