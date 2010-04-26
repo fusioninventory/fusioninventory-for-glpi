@@ -480,6 +480,19 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 			}
 		}
 	}
+
+   static function auth_dropdown($selected="") {
+      global $DB;
+
+      $plugin_fusioninventory_snmp_auth = new PluginFusionInventorySNMPAuth;
+      $config = new PluginFusionInventoryConfig;
+
+      if ($config->getValue("authsnmp") == "file") {
+         echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
+      } else  if ($config->getValue("authsnmp") == "DB") {
+         dropdownValue("glpi_plugin_fusioninventory_snmp_connection","FK_snmp_connection",$selected,0);
+      }
+   }
 }
 
 ?>

@@ -120,7 +120,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		plugin_fusioninventory_snmp_auth_dropdown($data["FK_snmp_connection"]);
+		PluginFusioninventorySNMP::auth_dropdown($data["FK_snmp_connection"]);
 		echo "</td>";
       echo "<td>";
       echo "</td>";

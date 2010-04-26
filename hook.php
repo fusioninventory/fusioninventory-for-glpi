@@ -1497,7 +1497,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 
 				case "plugin_fusioninventory_assign_auth" :
                if(PluginFusioninventory::haveRight("snmp_authentification","w")) {
-                  plugin_fusioninventory_snmp_auth_dropdown();
+                  PluginFusioninventorySNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
@@ -1537,7 +1537,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 
 				case "plugin_fusioninventory_assign_auth" :
                if(PluginFusioninventory::haveRight("snmp_authentification","w")) {
-                  plugin_fusioninventory_snmp_auth_dropdown();
+                  PluginFusioninventorySNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
