@@ -64,7 +64,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
       $query_sel = "SELECT *
                     FROM `glpi_plugin_fusioninventory_discovery`
                     WHERE `ifaddr`='".$Array['ip']."'
-                          AND `name`='".plugin_fusioninventory_hex_to_string($Array['name'])."'
+                          AND `name`='".PluginFusionInventorySNMP::hex_to_string($Array['name'])."'
                           AND `descr`='".$Array['description']."'
                           AND `serialnumber`='".$Array['serial']."'
                           AND `FK_entities`='".$Array['entity']."';";
@@ -75,7 +75,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
             // Detect is a device is same but this another IP (like switch)
             $query_sel = "SELECT *
                           FROM `glpi_plugin_fusioninventory_discovery`
-                          WHERE `name`='".plugin_fusioninventory_hex_to_string($Array['name'])."'
+                          WHERE `name`='".PluginFusionInventorySNMP::hex_to_string($Array['name'])."'
                                 AND `descr`='".$Array['description']."'
                                 AND `serialnumber`='".$Array['serial']."';";
             $result_sel = $DB->query($query_sel);
@@ -90,7 +90,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
                                    `FK_snmp_connection`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
-                             '".plugin_fusioninventory_hex_to_string($Array['name'])."',
+                             '".PluginFusionInventorySNMP::hex_to_string($Array['name'])."',
                              '".$Array['description']."',
                              '".$Array['serial']."',
                              '".$Array['type']."',
