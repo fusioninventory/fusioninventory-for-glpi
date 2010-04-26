@@ -157,13 +157,18 @@ function plugin_fusioninventory_addLogConnection($status,$port,$FK_process=0) {
 
 
 // List of history in networking display
-function plugin_fusioninventory_snmp_showHistory($ID_port) {
+function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30) {
 	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 
 	$CommonItem = new CommonItem;
    $np = new Netport;
+
+   $sql_limit = "LIMIT 0,".$limit;
+   if ($limit == "0") {
+      $sql_limit = "";
+   }
 
    $query = "
       SELECT * FROM(
@@ -176,7 +181,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
             WHERE `FK_port_source`='".$ID_port."'
                OR `FK_port_destination`='".$ID_port."'
             ORDER BY date DESC
-            LIMIT 0,30
+            ".$sql_limit."
             )
          AS DerivedTable1
          UNION ALL
@@ -188,18 +193,18 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
             FROM glpi_plugin_fusioninventory_snmp_history
             WHERE `FK_ports`='".$ID_port."'
             ORDER BY date DESC
-            LIMIT 0,30
+            ".$sql_limit."
             )
          AS DerivedTable2)
       AS MainTable
       ORDER BY date DESC, ID DESC
-      LIMIT 0,30";
+      ".$sql_limit." ";
 //echo $query."<br/>";
 	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 
 	$text .= "<tr class='tab_bg_1'>";
 	$text .= "<th colspan='8'>";
-	$text .= "Historique";
+	$text .= $LANG['title'][38];
 	$text .= "</th>";
 	$text .= "</tr>";
 
@@ -271,103 +276,15 @@ function plugin_fusioninventory_snmp_showHistory($ID_port) {
 			}
 			$text .= "</tr>";
 		}
-
 	}
 
-
-
-
-
-
-
-
-/*
-   $pthc = new PluginFusionInventoryHistoryConnections;
-
-   $data_connections = $pthc->find('`FK_port_source`="'.$ID_port.'"
-                                       OR `FK_port_destination `="'.$ID_port.'"',
-                                    '`date` DESC',
-                                    '0,30');
-	$query = "SELECT *
-             FROM `glpi_plugin_fusioninventory_snmp_history`
-             WHERE `FK_ports`='".$ID_port."'
-             ORDER BY `date_mod` DESC
-             LIMIT 0,30;";
-
-
-	$text = "<table class='tab_cadre' cellpadding='5' width='950'>";
-
-	$text .= "<tr class='tab_bg_1'>";
-	$text .= "<th colspan='8'>";
-	$text .= "Historique";
-	$text .= "</th>";
-	$text .= "</tr>";
-	
-	$text .= "<tr class='tab_bg_1'>";
-	$text .= "<th>".$LANG['plugin_fusioninventory']["snmp"][50]."</th>";
-	$text .= "<th>".$LANG["common"][1]."</th>";
-	$text .= "<th>".$LANG["networking"][15]."</th>";
-	$text .= "<th>".$LANG["event"][18]."</th>";
-	$text .= "<th></th>";
-	$text .= "<th></th>";
-	$text .= "<th></th>";
-	$text .= "<th>".$LANG["common"][27]."</th>";
-	$text .= "</tr>";
-	
-	if ($result=$DB->query($query)) {
-		while ($data=$DB->fetch_array($result)) {
-			$text .= "<tr class='tab_bg_1'>";
-			
-			if (($data["old_device_ID"] != "0") OR ($data["new_device_ID"] != "0")) {
-				// Connections and disconnections
-				if ($data["old_device_ID"] != "0") {
-					$text .= "<td align='center'>".$LANG['plugin_fusioninventory']["history"][2]."</td>";
-					$CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
-					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";						
-					$text .= "<td align='center'>".$data["old_value"]."</td>";
-				} else if ($data["new_device_ID"] != "0") {
-					$text .= "<td align='center'>".$LANG['plugin_fusioninventory']["history"][3]."</td>";
-					$CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
-					$text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
-					$text .= "<td align='center'>".$data["new_value"]."</td>";
-				}
-				$text .= "<td align='center' colspan='4'></td>";
-				$text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
-
-			} else if (($data["old_device_ID"] == "0") AND ($data["new_device_ID"] == "0") AND ($data["Field"] == "0")) {
-				// Unknown Mac address
-				if (!empty($data["old_value"])) {
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_fusioninventory']["history"][2]."</td>";
-					$CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["old_value"]."</td>";
-				} else if (!empty($data["new_value"])) {
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_fusioninventory']["history"][3]."</td>";
-					$CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
-					$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["new_value"]."</td>";
-				}
-				$text .= "<td align='center' colspan='4' background='#cf9b9b' class='tab_bg_1_2'></td>";
-				$text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".convDateTime($data["date_mod"])."</td>";
-			} else {
-				// Changes values
-				$text .= "<td align='center' colspan='3'></td>";
-				$text .= "<td align='center'>".$data["Field"]."</td>";
-				$text .= "<td align='center'>".$data["old_value"]."</td>";
-				$text .= "<td align='center'>-></td>";
-				$text .= "<td align='center'>".$data["new_value"]."</td>";
-				$text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
-			}
-			$text .= "</tr>";
-		}
-	}
-
- */
-	$text .= "<tr class='tab_bg_1'>";
-	$text .= "<th colspan='8'>";
-	$text .= "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
-	$text .= "</th>";
-	$text .= "</tr>";
+   if ($limit == "30") {
+      $text .= "<tr class='tab_bg_1'>";
+      $text .= "<th colspan='8'>";
+      $text .= "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
+      $text .= "</th>";
+      $text .= "</tr>";
+   }
 	$text .= "</table>";
 	return $text;
 }
