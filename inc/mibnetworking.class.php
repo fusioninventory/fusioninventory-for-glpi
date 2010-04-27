@@ -220,6 +220,9 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 
 				echo "<td align='center'>";
 				dropdownValue("glpi_dropdown_plugin_fusioninventory_mib_label","FK_mib_label",0,1);
+//				Dropdown::show("PluginFusioninventoryMib_Label",
+//                           array('name' => "FK_mib_label",
+//                                 'value' => 0));
 				echo "</td>";
 				
 				echo "<td align='center'>";

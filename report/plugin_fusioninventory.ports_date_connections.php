@@ -124,7 +124,9 @@ function displaySearchForm() {
 
 	echo "<td>".$LANG["common"][15]."</td>";
 	echo "<td>";
-	dropdownValue("glpi_dropdown_locations","location",(isset($_GET["location"])?$_GET["location"]:""));
+	Dropdown::show("Location",
+                  array('name' => "location",
+                        'value' => (isset($_GET["location"])?$_GET["location"]:"")));
 	echo "</td>";
 
 	// Display Reset search

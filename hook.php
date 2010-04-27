@@ -1490,7 +1490,11 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                   while ($data_models=$DB->fetch_array($result_models)) {
                      $exclude_models[] = $data_models['ID'];
                   }
-                  dropdownValue("glpi_plugin_fusioninventory_model_infos", "snmp_model", "name",0,-1,'',$exclude_models);
+                  Dropdown::show("PluginFusionInventoryModelInfos",
+                                 array('name' => "snmp_model",
+                                       'value' => "name",
+                                       'comments' => false,
+                                       'used' => $exclude_models));
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
@@ -1530,7 +1534,11 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                   while ($data_models=$DB->fetch_array($result_models)) {
                      $exclude_models[] = $data_models['ID'];
                   }
-                  dropdownValue("glpi_plugin_fusioninventory_model_infos", "snmp_model", "name",0,-1,'',$exclude_models);
+                  Dropdown::show("PluginFusionInventoryModelInfos",
+                                 array('name' => "snmp_model",
+                                       'value' => "name",
+                                       'comments' => false,
+                                       'used' => $exclude_models));
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
@@ -1657,12 +1665,15 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 	switch ($table.".".$field) {
 
 		case 'glpi_plugin_fusioninventory_snmp_connection.name':
-			dropdownValue("glpi_plugin_fusioninventory_snmp_connection",$linkfield);
+			Dropdown::show("PluginFusionInventorySNMPAuth",
+                        array('name' => $linkfield));
 			return true;
 			break;
 
 		case 'glpi_plugin_fusioninventory_model_infos.name':
-			dropdownValue("glpi_plugin_fusioninventory_model_infos",$linkfield,'',0);
+			Dropdown::show("PluginFusionInventoryModelInfos",
+                        array('name' => $linkfield,
+                              'comments' => false));
 			return true;
 			break;
 
@@ -1678,7 +1689,9 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.ID' :
-			dropdownValue("glpi_plugin_fusioninventory_agents",$linkfield,'',0);
+			Dropdown::show("PluginFusionInventoryAgents",
+                        array('name' => $linkfield,
+                              'comments' => false));
 			return true;
 			break;
 
