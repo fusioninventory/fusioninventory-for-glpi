@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
 $plugin_fusioninventory_model_infos = new PluginFusionInventoryModelInfos;
-$plugin_fusioninventory_mib_networking = new PluginFusionInventoryMibNetworking;
+$plugin_fusioninventory_mib_networking = new PluginFusionInventoryMib;
 
 $importexport = new PluginFusionInventoryImportExport;
 

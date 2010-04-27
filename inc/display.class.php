@@ -230,7 +230,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_mib_networking`
+                FROM `glpi_plugin_fusioninventory_mib`
                 ORDER BY `FK_model_infos`;";
       $result = $DB->query($query);
       $number = $DB->numrows($result);
@@ -250,12 +250,12 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
                ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos",$data["FK_model_infos"]).
                "</b></a></td>";
             echo "<td align='center'>
-               ".Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_label",$data["FK_mib_oid"])."</td>";
+               ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_label",$data["FK_mib_oid"])."</td>";
             echo "<td align='center'>
-               ".Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_object",$data["FK_mib_object"]).
+               ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_object",$data["FK_mib_object"]).
                "</td>";
             echo "<td align='center'>
-               ".Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."</td>";
+               ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."</td>";
             echo "</tr>";
 
          }

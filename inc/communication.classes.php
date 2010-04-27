@@ -373,7 +373,7 @@ class PluginFusionInventoryCommunication {
     **/
    function addModel($p_sxml_node, $p_id) {
       $models = new PluginFusionInventoryModelInfos;
-      $mib_networking = new PluginFusionInventoryMibNetworking;
+      $mib_networking = new PluginFusionInventoryMib;
 
       $models->getFromDB($p_id);
       $sxml_model = $p_sxml_node->addChild('MODEL');

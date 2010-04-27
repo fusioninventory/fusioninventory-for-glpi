@@ -270,7 +270,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 			if ($data = $DB->fetch_array($result)) {
             $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
             echo $data['log']."<br/>";
-            $query_oid = "SELECT * FROM glpi_dropdown_plugin_fusioninventory_mib_oid";
+            $query_oid = "SELECT * FROM glpi_plugin_fusioninventory_mib_oid";
             $result_oid = $DB->query($query_oid);
             while ($fields_oid = $DB->fetch_array($result_oid)) {
                if ($fields_oid['comments'] != "") {
@@ -486,7 +486,7 @@ echo "</a>";
       global $DB;
 
       $ptmi = new PluginFusionInventoryModelInfos;
-      $ptmn = new PluginFusionInventoryMibNetworking;
+      $ptmn = new PluginFusionInventoryMib;
 
       $query = "SELECT glpi_plugin_fusioninventory_construct_device.ID, type  FROM glpi_plugin_fusioninventory_construct_device
          LEFT JOIN glpi_plugin_fusioninventory_construct_walks on glpi_plugin_fusioninventory_construct_device.ID = construct_device_id
@@ -517,7 +517,7 @@ echo "</a>";
                while ($data_models = $DB->fetch_array($result_models)) {
                   if ($existent != '1') {
                      $count_mib_model = 0;
-                     $query_mibs_model = "SELECT * FROM glpi_plugin_fusioninventory_mib_networking
+                     $query_mibs_model = "SELECT * FROM glpi_plugin_fusioninventory_mib
                         WHERE FK_model_infos='".$data_models['ID']."' ";
                      if ($result_mib_model = $DB->query($query_mibs_model)) {
                         while ($data_mib_model = $DB->fetch_array($result_mib_model)) {
@@ -684,7 +684,7 @@ echo "</a>";
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
-                  $sxml_device->addAttribute('SERIAL', Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                  $sxml_device->addAttribute('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',
                                                $line['mib_oid_id']));
                }
 
@@ -698,10 +698,10 @@ echo "</a>";
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
                   if ($line['mapping_name'] == "macaddr") {
-                     $sxml_device->addAttribute('MAC', Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                     $sxml_device->addAttribute('MAC', Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',
                                                    $line['mib_oid_id']));
                   } else {
-                     $sxml_device->addAttribute('MACDYN', Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                     $sxml_device->addAttribute('MACDYN', Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',
                                                    $line['mib_oid_id']));
                   }
                }

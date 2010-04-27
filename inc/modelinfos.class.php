@@ -138,21 +138,21 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 			case NETWORKING_TYPE :
 				$query = "SELECT * 
                       FROM `glpi_plugin_fusioninventory_networking`
-                           LEFT JOIN `glpi_plugin_fusioninventory_mib_networking`
+                           LEFT JOIN `glpi_plugin_fusioninventory_mib`
                            ON `glpi_plugin_fusioninventory_networking`.`FK_model_infos`=
-                              `glpi_plugin_fusioninventory_mib_networking`.`FK_model_infos`
+                              `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
                       WHERE `FK_networking`='".$ID_Device."'
-                            AND `glpi_plugin_fusioninventory_mib_networking`.`activation`='1' ";
+                            AND `glpi_plugin_fusioninventory_mib`.`activation`='1' ";
 				break;
 
 			case PRINTER_TYPE :
 				$query = "SELECT * 
                       FROM `glpi_plugin_fusioninventory_printers`
-                           LEFT JOIN `glpi_plugin_fusioninventory_mib_networking`
+                           LEFT JOIN `glpi_plugin_fusioninventory_mib`
                            ON `glpi_plugin_fusioninventory_printers`.`FK_model_infos`=
-                              `glpi_plugin_fusioninventory_mib_networking`.`FK_model_infos`
+                              `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
                       WHERE `FK_printers`='".$ID_Device."'
-                            AND `glpi_plugin_fusioninventory_mib_networking`.`activation`='1' ";
+                            AND `glpi_plugin_fusioninventory_mib`.`activation`='1' ";
 				break;
 		}
 		if (!empty($query)) {
@@ -160,7 +160,7 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 			$exclude = array();
 			while ($data=$DB->fetch_array($result)) {
 				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
-               Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']);
+               Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']);
          }
 			return $oids;
 		}

@@ -57,26 +57,26 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 		if ($type == NETWORKING_TYPE) {
 			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_networking`
                                  ON `glpi_plugin_fusioninventory_networking`.`FK_model_infos`=
-                                    `glpi_plugin_fusioninventory_mib_networking`.`FK_model_infos`
+                                    `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
                     WHERE `FK_networking`='".$ID_Device."'
                           AND `glpi_plugin_fusioninventory_networking`.`FK_model_infos`!='0' ";
       } else if($type == PRINTER_TYPE) {
 			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_printers`
                                  ON `glpi_plugin_fusioninventory_printers`.`FK_model_infos`=
-                                    `glpi_plugin_fusioninventory_mib_networking`.`FK_model_infos`
+                                    `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
                     WHERE `FK_printers`='".$ID_Device."'
                           AND `glpi_plugin_fusioninventory_printers`.`FK_model_infos`!='0' ";
       }
 			
 		$query = "SELECT `mapping_type`, `mapping_name`, `oid_port_dyn`,
-                       `glpi_dropdown_plugin_fusioninventory_mib_oid`.`name` AS `name`
-                FROM `glpi_plugin_fusioninventory_mib_networking`
-                     LEFT JOIN `glpi_dropdown_plugin_fusioninventory_mib_oid`
-                               ON `glpi_plugin_fusioninventory_mib_networking`.`FK_mib_oid`=
-                                  `glpi_dropdown_plugin_fusioninventory_mib_oid`.`ID`
+                       `glpi_plugin_fusioninventory_mib_oid`.`name` AS `name`
+                FROM `glpi_plugin_fusioninventory_mib`
+                     LEFT JOIN `glpi_plugin_fusioninventory_mib_oid`
+                               ON `glpi_plugin_fusioninventory_mib`.`FK_mib_oid`=
+                                  `glpi_plugin_fusioninventory_mib_oid`.`ID`
                ".$query_add."
                    AND `oid_port_counter`='0'
-                   AND `glpi_plugin_fusioninventory_mib_networking`.`activation`='1';";
+                   AND `glpi_plugin_fusioninventory_mib`.`activation`='1';";
 
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {

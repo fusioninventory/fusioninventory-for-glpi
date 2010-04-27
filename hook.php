@@ -1099,9 +1099,9 @@ function plugin_fusioninventory_getDropdown() {
 	if (isset ($_SESSION["glpi_plugin_fusioninventory_installed"]) && $_SESSION["glpi_plugin_fusioninventory_installed"] == 1) {
 		return array (
 			"glpi_dropdown_plugin_fusioninventory_snmp_version" => "SNMP version",
-			"glpi_dropdown_plugin_fusioninventory_mib_oid" => "OID MIB",
-			"glpi_dropdown_plugin_fusioninventory_mib_object" => "Objet MIB",
-			"glpi_dropdown_plugin_fusioninventory_mib_label" => "Label MIB"
+			"glpi_plugin_fusioninventory_mib_oid" => "OID MIB",
+			"glpi_plugin_fusioninventory_mib_object" => "Objet MIB",
+			"glpi_plugin_fusioninventory_mib_label" => "Label MIB"
 		);
    } else {
 		return array ();

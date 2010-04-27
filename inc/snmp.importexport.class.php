@@ -66,17 +66,17 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
-                FROM `glpi_plugin_fusioninventory_mib_networking` AS `model_t`
+                FROM `glpi_plugin_fusioninventory_mib` AS `model_t`
                 WHERE `FK_model_infos`='".$ID_model."';";
 		
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
 				$xml .= "		<oidobject>\n";
 				$xml .= "			<object><![CDATA[".
-               Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_object",$data["FK_mib_object"]).
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_object",$data["FK_mib_object"]).
                "]]></object>\n";
 				$xml .= "			<oid><![CDATA[".
-               Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";
 				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
@@ -185,12 +185,12 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 					switch ($j) {
 						case 1:
 							$FK_mib_object = externalImportDropdown(
-                                         "glpi_dropdown_plugin_fusioninventory_mib_object",$item);
+                                         "glpi_plugin_fusioninventory_mib_object",$item);
 							break;
 
 						case 2:
 							$FK_mib_oid = externalImportDropdown(
-                                      "glpi_dropdown_plugin_fusioninventory_mib_oid",$item);
+                                      "glpi_plugin_fusioninventory_mib_oid",$item);
 							break;
 
 						case 3:
@@ -219,7 +219,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 					}
 				}
 
-				$query = "INSERT INTO `glpi_plugin_fusioninventory_mib_networking`
+				$query = "INSERT INTO `glpi_plugin_fusioninventory_mib`
                                   (`FK_model_infos`,`FK_mib_oid`,`FK_mib_object`,`oid_port_counter`,
                                    `oid_port_dyn`,`mapping_type`,`mapping_name`,`vlan`,`activation`)
                       VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."',
