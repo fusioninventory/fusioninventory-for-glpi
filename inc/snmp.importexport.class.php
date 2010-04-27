@@ -244,7 +244,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 
 
    
-	function import_netdiscovery($p_xml, $agentKey) {
+	function import_netdiscovery($p_xml, $agentKey, $moduleversion) {
 		global $DB,$LANG;
       $test = '';
       $p_criteria = array();
@@ -280,6 +280,11 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
       $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_found' => $count_discovery_devices));
 
 		foreach($p_xml->DEVICE as $discovery) {
+         // If module version is 1.0, so try to get right model (discovery file in this agent is too old
+         if (($moduleversion == "1.0") AND ($discovery->AUTHSNMP != "")) {
+            $pfimi = new PluginFusionInventoryModelInfos;
+            $discovery->MODELSNMP = $pfimi->getrightmodel(0, 0, $discovery->DESCRIPTION);
+         }
 			if ($discovery->MODELSNMP != "") {
 				$query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_model_infos`

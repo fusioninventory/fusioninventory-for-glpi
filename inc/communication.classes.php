@@ -547,6 +547,11 @@ class PluginFusionInventoryCommunication {
       if (isset($this->sxml->CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $this->sxml->CONTENT->PROCESSNUMBER;
       }
+      if (isset($this->sxml->CONTENT->MODULEVERSION)) {
+         $moduleversion = $this->sxml->CONTENT->PROCESSNUMBER;
+      } else {
+         $moduleversion = "1.0";
+      }
       switch ($this->sxml->QUERY) {
          case 'SNMPQUERY' :
             $errors.=$this->importContent($this->sxml->CONTENT);
@@ -554,7 +559,7 @@ class PluginFusionInventoryCommunication {
          
          case 'NETDISCOVERY' :
             $pti = new PluginFusionInventoryImportExport;
-            $errors.=$pti->import_netdiscovery($this->sxml->CONTENT, $this->sxml->DEVICEID);
+            $errors.=$pti->import_netdiscovery($this->sxml->CONTENT, $this->sxml->DEVICEID, $moduleversion);
             break;
          
          case 'INVENTORY' :

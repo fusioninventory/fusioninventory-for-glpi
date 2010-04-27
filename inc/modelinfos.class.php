@@ -175,26 +175,30 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 	}
 
 
-   function getrightmodel($device_id, $type) {
+   function getrightmodel($device_id, $type, $comments="") {
       global $DB;
 
       // Get description (sysdescr) of device
       // And search in device_serials base
       $sysdescr = '';
-      switch($type) {
+      if ($comments != "") {
+         $sysdescr = $comments;
+      } else {
+         switch($type) {
 
-         case NETWORKING_TYPE:
-            $Netdevice = new Netdevice;
-            $Netdevice->check($device_id,'r');
-            $sysdescr = $Netdevice->fields["comments"];
-            break;
+            case NETWORKING_TYPE:
+               $Netdevice = new Netdevice;
+               $Netdevice->check($device_id,'r');
+               $sysdescr = $Netdevice->fields["comments"];
+               break;
 
-         case PRINTER_TYPE:
-            $Printer = new Printer;
-            $Printer->check($device_id,'r');
-            $sysdescr = $Printer->fields["comments"];
-            break;
+            case PRINTER_TYPE:
+               $Printer = new Printer;
+               $Printer->check($device_id,'r');
+               $sysdescr = $Printer->fields["comments"];
+               break;
 
+         }
       }
       $sysdescr = str_replace("\r", "", $sysdescr);
       if (!empty($sysdescr)) {
@@ -216,23 +220,26 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
 				$result = $DB->query($query);
 				$data = $DB->fetch_assoc($result);
 				$FK_model = $data['ID'];
-            // Udpate Device with this model
-            switch($type) {
+            if ($comments != "") {
+               return $data['discovery_key'];
+            } else {
+               // Udpate Device with this model
+               switch($type) {
 
-               case NETWORKING_TYPE:
-                  $query = "UPDATE `glpi_plugin_fusioninventory_networking`
-                            SET `FK_model_infos`='".$FK_model."'
-                            WHERE `FK_networking`='".$device_id."'";
-                  $DB->query($query);
-                  break;
+                  case NETWORKING_TYPE:
+                     $query = "UPDATE `glpi_plugin_fusioninventory_networking`
+                               SET `FK_model_infos`='".$FK_model."'
+                               WHERE `FK_networking`='".$device_id."'";
+                     $DB->query($query);
+                     break;
 
-               case PRINTER_TYPE:
-                  $query = "UPDATE `glpi_plugin_fusioninventory_printers`
-                            SET `FK_model_infos`='".$FK_model."'
-                            WHERE `FK_printers`='".$device_id."'";
-                  $DB->query($query);
-                  break;
-
+                  case PRINTER_TYPE:
+                     $query = "UPDATE `glpi_plugin_fusioninventory_printers`
+                               SET `FK_model_infos`='".$FK_model."'
+                               WHERE `FK_printers`='".$device_id."'";
+                     $DB->query($query);
+                     break;
+               }
             }
          }
       }
