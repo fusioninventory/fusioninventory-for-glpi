@@ -33,6 +33,9 @@
 // Purpose of file: test of communication class
 // ----------------------------------------------------------------------
 
+ini_set("memory_limit", "-1");
+ini_set("max_execution_time", "0");
+
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
@@ -55,107 +58,108 @@ $errors='';
 //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
 // ********** End ********** //
 
-
-// Get conf tu know if SSL is only
-$fusioninventory_config = new PluginFusionInventoryConfig;
-$ssl = $fusioninventory_config->getValue('ssl_only');
-if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
-    OR ($ssl == "0")) {
-	// echo "On continue";
-} else {
-   $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
-<REPLY>
-</REPLY>");
-   $ptc->noSSL();
-	exit();
-}
-$ocsinventory = '0';
-file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
-$state = $ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
-if ($state == '2') { // agent created
-   $ocsinventory = '1';
-}
-$top0 = gettimeofday();
-if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
-   //if ($ac->connectionOK($errors)) {
-   if (1) {
-      $res .= "1'".$errors."'";
-
-      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-      $pxml = @simplexml_load_string($p_xml);
-     
-      if (isset($pxml->DEVICEID)) {
-
-         $ptc->setXML("<?xml version='1.0' encoding='UTF-8'?>
-<REPLY>
-</REPLY>");
-
-      $pta  = new PluginFusionInventoryAgents;
-      $ptt  = new PluginFusionInventoryTask;
-      $ptcm = new PluginFusionInventoryConfigModules;
-
-
-      $a_agent = $pta->InfosByKey($pxml->DEVICEID);
-      $a_tasks = $ptt->find("`agent_id`='".$a_agent['ID']."'", "date");
-
-      $single = 0;
-      $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '0';
-      
-      foreach ($a_tasks as $task_id=>$datas) {
-         if (($a_tasks[$task_id]['action'] == 'INVENTORY')
-                 AND ($ptcm->isActivated('inventoryocs'))
-                 AND ($a_agent['module_inventory'] == '1')) {
-
-            $ptc->addInventory();
-            $input['ID'] = $task_id;
-            $ptt->delete($input);
-            $ocsinventory = '0';
-            $single = 1;
-         }
-         if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
-                 AND ($ptcm->isActivated('netdiscovery'))
-                 AND ($a_agent['module_netdiscovery'] == '1')) {
-            $single = 1;
-            $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
-            $input['ID'] = $task_id;
-            $ptt->delete($input);
-         }
-         if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
-                 AND ($ptcm->isActivated('snmp'))
-                 AND ($a_agent['module_snmpquery'] == '1')) {
-            $single = 1;
-            $ptc->addQuery($pxml, 1);
-            $input['ID'] = $task_id;
-            $ptt->delete($input);
-         }
-         if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
-                 AND ($ptcm->isActivated('wol'))
-                 AND ($a_agent['module_wakeonlan'] == '1')) {
-            $single = 1;
-            $ptc->addWakeonlan($pxml);
-            $input['ID'] = $task_id;
-            $ptt->delete($input);
-         }
-      }
-      
-      if ($single == "0") {
-         if ($a_agent['module_netdiscovery'] == '1') {
-            $ptc->addDiscovery($pxml);
-         }
-         if ($a_agent['module_snmpquery'] == '1') {
-            $ptc->addQuery($pxml);
-         }
-      }
-      if ($ocsinventory == '1') {
-         $ptc->addInventory();
-      }
-//      $ptc->addWakeonlan();
-      // ******** Send XML
-         $ptc->setXML($ptc->getXML());
-         echo $ptc->getSend(); // echo response for the agent
-      }
+if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+   // Get conf tu know if SSL is only
+   $fusioninventory_config = new PluginFusionInventoryConfig;
+   $ssl = $fusioninventory_config->getValue('ssl_only');
+   if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
+       OR ($ssl == "0")) {
+      // echo "On continue";
    } else {
-      $res .= "0'".$errors."'";
+      $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+<REPLY>
+</REPLY>");
+      $ptc->noSSL();
+      exit();
+   }
+   $ocsinventory = '0';
+   file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+   $state = $ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+   if ($state == '2') { // agent created
+      $ocsinventory = '1';
+   }
+   $top0 = gettimeofday();
+   if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
+      //if ($ac->connectionOK($errors)) {
+      if (1) {
+         $res .= "1'".$errors."'";
+
+         $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+         $pxml = @simplexml_load_string($p_xml);
+
+         if (isset($pxml->DEVICEID)) {
+
+            $ptc->setXML("<?xml version='1.0' encoding='UTF-8'?>
+<REPLY>
+</REPLY>");
+
+         $pta  = new PluginFusionInventoryAgents;
+         $ptt  = new PluginFusionInventoryTask;
+         $ptcm = new PluginFusionInventoryConfigModules;
+
+
+         $a_agent = $pta->InfosByKey($pxml->DEVICEID);
+         $a_tasks = $ptt->find("`agent_id`='".$a_agent['ID']."'", "date");
+
+         $single = 0;
+         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '0';
+
+         foreach ($a_tasks as $task_id=>$datas) {
+            if (($a_tasks[$task_id]['action'] == 'INVENTORY')
+                    AND ($ptcm->isActivated('inventoryocs'))
+                    AND ($a_agent['module_inventory'] == '1')) {
+
+               $ptc->addInventory();
+               $input['ID'] = $task_id;
+               $ptt->delete($input);
+               $ocsinventory = '0';
+               $single = 1;
+            }
+            if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
+                    AND ($ptcm->isActivated('netdiscovery'))
+                    AND ($a_agent['module_netdiscovery'] == '1')) {
+               $single = 1;
+               $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
+               $input['ID'] = $task_id;
+               $ptt->delete($input);
+            }
+            if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
+                    AND ($ptcm->isActivated('snmp'))
+                    AND ($a_agent['module_snmpquery'] == '1')) {
+               $single = 1;
+               $ptc->addQuery($pxml, 1);
+               $input['ID'] = $task_id;
+               $ptt->delete($input);
+            }
+            if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
+                    AND ($ptcm->isActivated('wol'))
+                    AND ($a_agent['module_wakeonlan'] == '1')) {
+               $single = 1;
+               $ptc->addWakeonlan($pxml);
+               $input['ID'] = $task_id;
+               $ptt->delete($input);
+            }
+         }
+
+         if ($single == "0") {
+            if ($a_agent['module_netdiscovery'] == '1') {
+               $ptc->addDiscovery($pxml);
+            }
+            if ($a_agent['module_snmpquery'] == '1') {
+               $ptc->addQuery($pxml);
+            }
+         }
+         if ($ocsinventory == '1') {
+            $ptc->addInventory();
+         }
+   //      $ptc->addWakeonlan();
+         // ******** Send XML
+            $ptc->setXML($ptc->getXML());
+            echo $ptc->getSend(); // echo response for the agent
+         }
+      } else {
+         $res .= "0'".$errors."'";
+      }
    }
 }
 
