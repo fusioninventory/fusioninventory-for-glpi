@@ -40,99 +40,110 @@ function plugin_init_fusioninventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
 	// Params - Register type
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_ERROR_TYPE", 5150, array(
-		'classname' => 'PluginFusionInventoryErrors',
-		'tablename' => 'glpi_plugin_fusioninventory_errors',
-		'formpage' => 'front/plugin_fusioninventory.errors.form.php'
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_ERROR_TYPE", 5150, array(
+//		'classname' => 'PluginFusionInventoryErrors',
+//		'tablename' => 'glpi_plugin_fusioninventory_errors',
+//		'formpage' => 'front/plugin_fusioninventory.errors.form.php'
+//		));
+   Plugin::registerClass('PluginFusionInventoryErrors');
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_MODEL", 5151, array(
+//		'classname' => 'PluginFusionInventoryModelInfos',
+//		'tablename' => 'glpi_plugin_fusioninventory_model_infos',
+//		'formpage' => 'front/plugin_fusioninventory.models.form.php',
+//		'searchpage' => 'front/plugin_fusioninventory.models.php',
+//		'typename' => $LANG['plugin_fusioninventory']["model_info"][4]
+//		));
+   Plugin::registerClass('PluginFusionInventoryModelInfos');
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_AUTH", 5152, array(
+//		'classname' => 'PluginFusionInventorySNMPAuth',
+//		'tablename' => 'glpi_plugin_fusioninventory_snmp_connection',
+//		'formpage' => 'front/plugin_fusioninventory.snmp_auth.form.php',
+//		'searchpage' => 'front/plugin_fusioninventory.snmp_auth.php',
+//		'typename' => $LANG['plugin_fusioninventory']["model_info"][3]
+//		));
+   Plugin::registerClass('PluginFusionInventorySNMPAuth');
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN", 5153, array(
+//		'classname' => 'PluginFusionInventoryUnknownDevice',
+//		'tablename' => 'glpi_plugin_fusioninventory_unknown_device',
+//      'formpage' => 'front/plugin_fusioninventory.unknown.form.php',
+//		'searchpage' => 'front/plugin_fusioninventory.unknown.form.php',
+//		'typename' => $LANG['plugin_fusioninventory']["processes"][13],
+//		'deleted_tables' => true,
+//		));
+   Plugin::registerClass('PluginFusionInventoryUnknownDevice');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_MODEL", 5151, array(
-		'classname' => 'PluginFusionInventoryModelInfos',
-		'tablename' => 'glpi_plugin_fusioninventory_model_infos',
-		'formpage' => 'front/plugin_fusioninventory.models.form.php',
-		'searchpage' => 'front/plugin_fusioninventory.models.php',
-		'typename' => $LANG['plugin_fusioninventory']["model_info"][4]
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES", 5156, array(
+//		'classname' => 'PluginFusionInventoryPrinters',
+//		'tablename' => 'glpi_plugin_fusioninventory_printers_cartridges',
+//		'formpage' => 'front/plugin_fusioninventory.printer_info.form.php',
+//		'typename' => $LANG["cartridges"][0]
+//		));
+   Plugin::registerClass('PluginFusionInventoryPrinters');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_AUTH", 5152, array(
-		'classname' => 'PluginFusionInventorySNMPAuth',
-		'tablename' => 'glpi_plugin_fusioninventory_snmp_connection',
-		'formpage' => 'front/plugin_fusioninventory.snmp_auth.form.php',
-		'searchpage' => 'front/plugin_fusioninventory.snmp_auth.php',
-		'typename' => $LANG['plugin_fusioninventory']["model_info"][3]
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS", 5157, array(
+//		'classname' => 'PluginFusionInventoryNetworking',
+//		'tablename' => 'glpi_networking_ports'
+//		));
+   Plugin::registerClass('PluginFusionInventoryNetworking');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN", 5153, array(
-		'classname' => 'PluginFusionInventoryUnknownDevice',
-		'tablename' => 'glpi_plugin_fusioninventory_unknown_device',
-      'formpage' => 'front/plugin_fusioninventory.unknown.form.php',
-		'searchpage' => 'front/plugin_fusioninventory.unknown.form.php',
-		'typename' => $LANG['plugin_fusioninventory']["processes"][13],
-		'deleted_tables' => true,
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_AGENTS", 5158, array(
+//		'classname' => 'PluginFusionInventoryAgents',
+//		'tablename' => 'glpi_plugin_fusioninventory_agents',
+//		'formpage' => 'front/plugin_fusioninventory.agents.form.php',
+//		'searchpage' => 'front/plugin_fusioninventory.agents.php'
+//		));
+   Plugin::registerClass('PluginFusionInventoryAgents');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES", 5156, array(
-		'classname' => 'PluginFusionInventoryPrinters',
-		'tablename' => 'glpi_plugin_fusioninventory_printers_cartridges',
-		'formpage' => 'front/plugin_fusioninventory.printer_info.form.php',
-		'typename' => $LANG["cartridges"][0]
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP", 5159, array(
+//		'classname' => 'PluginFusionInventoryRangeIP',
+//		'tablename' => 'glpi_plugin_fusioninventory_rangeip',
+//		'formpage' => 'front/plugin_fusioninventory.rangeip.form.php',
+//		'searchpage' => 'front/plugin_fusioninventory.rangeip.php'
+//		));
+   Plugin::registerClass('PluginFusionInventoryRangeIP');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS", 5157, array(
-		'classname' => 'PluginFusionInventoryNetworking',
-		'tablename' => 'glpi_networking_ports'
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_AGENTS_PROCESSES", 5161, array(
+//		'classname' => 'PluginFusionInventoryAgentsProcesses',
+//		'tablename' => 'glpi_plugin_fusioninventory_agents_processes',
+//		'formpage' => 'front/plugin_fusioninventory.agents.processes.php',
+//		'massiveaction_noupdate' => true
+//		));
+   Plugin::registerClass('PluginFusionInventoryAgentsProcesses');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_AGENTS", 5158, array(
-		'classname' => 'PluginFusionInventoryAgents',
-		'tablename' => 'glpi_plugin_fusioninventory_agents',
-		'formpage' => 'front/plugin_fusioninventory.agents.form.php',
-		'searchpage' => 'front/plugin_fusioninventory.agents.php'
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_HISTORY", 5162, array(
+//		'classname' => 'PluginFusionInventorySNMPHistory',
+//		'tablename' => 'glpi_plugin_fusioninventory_snmp_history'
+//		));
+   Plugin::registerClass('PluginFusionInventorySNMPHistory');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP", 5159, array(
-		'classname' => 'PluginFusionInventoryRangeIP',
-		'tablename' => 'glpi_plugin_fusioninventory_rangeip',
-		'formpage' => 'front/plugin_fusioninventory.rangeip.form.php',
-		'searchpage' => 'front/plugin_fusioninventory.rangeip.php'
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2", 5163, array(
+//		'classname' => 'PluginFusionInventoryNetworking',
+//		'tablename' => 'glpi_plugin_fusioninventory_networking_ports'
+//		));
+   Plugin::registerClass('PluginFusionInventoryNetworking');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_AGENTS_PROCESSES", 5161, array(
-		'classname' => 'PluginFusionInventoryAgentsProcesses',
-		'tablename' => 'glpi_plugin_fusioninventory_agents_processes',
-		'formpage' => 'front/plugin_fusioninventory.agents.processes.php',
-		'massiveaction_noupdate' => true
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_CONFIG", 5165, array(
+//		'classname' => 'PluginFusionInventoryConfig',
+//		'tablename' => 'glpi_plugin_fusioninventory_config',
+//		'formpage' => 'front/plugin_fusioninventory.functionalities.form.php'
+//		));
+   Plugin::registerClass('PluginFusionInventoryConfig');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_HISTORY", 5162, array(
-		'classname' => 'PluginFusionInventorySNMPHistory',
-		'tablename' => 'glpi_plugin_fusioninventory_snmp_history'
-		));
+//   registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_TASK", 5166, array(
+//		'classname' => 'PluginFusionInventoryTask',
+//		'tablename' => 'glpi_plugin_fusioninventory_task',
+//      'searchpage' => 'front/plugin_fusioninventory.task.php'
+//		));
+   Plugin::registerClass('PluginFusionInventoryTask');
 
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2", 5163, array(
-		'classname' => 'PluginFusionInventoryNetworking',
-		'tablename' => 'glpi_plugin_fusioninventory_networking_ports'
-		));
-
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_CONFIG", 5165, array(
-		'classname' => 'PluginFusionInventoryConfig',
-		'tablename' => 'glpi_plugin_fusioninventory_config',
-		'formpage' => 'front/plugin_fusioninventory.functionalities.form.php'
-		));
-
-   registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_TASK", 5166, array(
-		'classname' => 'PluginFusionInventoryTask',
-		'tablename' => 'glpi_plugin_fusioninventory_task',
-      'searchpage' => 'front/plugin_fusioninventory.task.php'
-		));
-
-	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE", 5167, array(
-		'classname' => 'PluginFusionInventoryConstructDevice',
-		'tablename' => 'glpi_plugin_fusioninventory_construct_device',
-		'formpage' => 'front/plugin_fusioninventory.construct_device.form.php',
-		'searchpage' => 'front/plugin_fusioninventory.construct_device.php',
-		'typename' => $LANG['plugin_fusioninventory']["constructdevice"][0]
-		));
+//	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE", 5167, array(
+//		'classname' => 'PluginFusionInventoryConstructDevice',
+//		'tablename' => 'glpi_plugin_fusioninventory_construct_device',
+//		'formpage' => 'front/plugin_fusioninventory.construct_device.form.php',
+//		'searchpage' => 'front/plugin_fusioninventory.construct_device.php',
+//		'typename' => $LANG['plugin_fusioninventory']["constructdevice"][0]
+//		));
+   Plugin::registerClass('PluginFusionInventoryConstructDevice');
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusioninventory_errors");
 
