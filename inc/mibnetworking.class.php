@@ -110,17 +110,17 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 					echo "</td>";
 	
 					echo "<td align='center'>";
-					echo getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_label",$data["FK_mib_label"]);
+					echo Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_label",$data["FK_mib_label"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
 					$object_used[] = $data["FK_mib_object"];
-					echo getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_object",
+					echo Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_object",
                                     $data["FK_mib_object"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					echo getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"]);
+					echo Dropdown::getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -342,14 +342,14 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
             case 0:
                $ptc->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
+                  Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
                   $data['mapping_name'], $data['vlan']);
                break;
             
             case 1:
                $ptc->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
+                  Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
                   $data['mapping_name'], $data['vlan']);
                break;
             

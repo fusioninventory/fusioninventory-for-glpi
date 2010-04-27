@@ -87,7 +87,7 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
     **/
    function updateDB() {
       if (array_key_exists('model', $this->ptcdUpdates)) {
-         $manufacturer = getDropdownName("glpi_dropdown_manufacturer",
+         $manufacturer = Dropdown::getDropdownName("glpi_dropdown_manufacturer",
                                          $this->getValue('FK_glpi_enterprise'));
          $this->ptcdUpdates['model'] = externalImportDropdown("glpi_dropdown_model_networking",
                                                    $this->ptcdUpdates['model'], 0,

@@ -739,7 +739,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.models.form.php?ID=" . $FK_model_DB . "\">";
-					$out .= getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -749,7 +749,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMPAuth;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
-					$out .= getDropdownName("glpi_plugin_fusioninventory_snmp_connection", $FK_auth_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmp_connection", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -814,7 +814,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.models.form.php?ID=" . $FK_model_DB . "\">";
-					$out .= getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -824,7 +824,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMPAuth;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
-					$out .= getDropdownName("glpi_plugin_fusioninventory_snmp_connection", $FK_auth_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmp_connection", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -1013,7 +1013,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Location of switch
 				case "glpi_dropdown_locations.ID" :
-					$out = getDropdownName("glpi_dropdown_locations",$data["ITEM_$num"]);
+					$out = Dropdown::getDropdownName("glpi_dropdown_locations",$data["ITEM_$num"]);
 					return "<center>".$out."</center>";
 					break;
 
@@ -1032,7 +1032,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 				// ** Display entity name
 				case "glpi_entities.name" :
 					if ($data["ITEM_$num"] == '') {
-						$out = getDropdownName("glpi_entities",$data["ITEM_$num"]);
+						$out = Dropdown::getDropdownName("glpi_entities",$data["ITEM_$num"]);
 						return "<center>".$out."</center>";
 					}
 					break;

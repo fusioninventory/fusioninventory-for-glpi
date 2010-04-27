@@ -684,7 +684,7 @@ echo "</a>";
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
-                  $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                  $sxml_device->addAttribute('SERIAL', Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                $line['mib_oid_id']));
                }
 
@@ -698,10 +698,10 @@ echo "</a>";
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
                   if ($line['mapping_name'] == "macaddr") {
-                     $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                     $sxml_device->addAttribute('MAC', Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                    $line['mib_oid_id']));
                   } else {
-                     $sxml_device->addAttribute('MACDYN', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                     $sxml_device->addAttribute('MACDYN', Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                    $line['mib_oid_id']));
                   }
                }

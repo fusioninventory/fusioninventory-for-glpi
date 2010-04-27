@@ -677,7 +677,7 @@ function appear_array(id){
                         echo "<table cellpadding='0' cellspacing='0'>";
                         while ($line = $DB->fetch_array($result_vlan)) {
                            $used[]=$line["FK_vlan"];
-                           $a_vlan = getDropdownName("glpi_dropdown_vlan", $line["FK_vlan"],1);
+                           $a_vlan = Dropdown::getDropdownName("glpi_dropdown_vlan", $line["FK_vlan"],1);
                            echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comments']."]";
                            echo "</td><td>";
                            if ($canedit) {
