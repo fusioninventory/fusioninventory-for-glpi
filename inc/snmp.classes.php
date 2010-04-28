@@ -319,12 +319,17 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 				PluginFusionInventorySNMPHistory::addLogConnection("remove",$netwire->getOppositeContact($source_port),$FK_process);
 				PluginFusionInventorySNMPHistory::addLogConnection("remove",$source_port,$FK_process);
 				$this->CleanVlan($source_port);
-            removeConnector($source_port);
+            $nn = new NetworkPort_NetworkPort();
+            if ($nn->getFromDBForNetworkPort($source_port)) {
+               $nn->delete(array('id'=>$source_port));
+            }
 
 				PluginFusionInventorySNMPHistory::addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
 				PluginFusionInventorySNMPHistory::addLogConnection("remove",$destination_port,$FK_process);
             $this->CleanVlan($destination_port);
-            removeConnector($destination_port);
+            if ($nn->getFromDBForNetworkPort($destination_port)) {
+               $nn->delete(array('id'=>$destination_port));
+            }
 						
 				makeConnector($source_port,$destination_port);
 				PluginFusionInventorySNMPHistory::addLogConnection("make",$destination_port,$FK_process);
@@ -838,6 +843,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          $logicalnumberlist .= ")";
       }
       // Delete all ports that will be not here
+      $nn = new NetworkPort_NetworkPort();
       foreach($deleteportname as $id=>$i) {
          $query = "SELECT *
                 FROM `glpi_networking_ports`
@@ -850,7 +856,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          PluginFusionInventorySNMPHistory::addLogConnection(
                  "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
          PluginFusionInventorySNMPHistory::addLogConnection("remove",$data['ID'],$FK_process);
-         removeConnector($data['ID']);
+         if ($nn->getFromDBForNetworkPort($data['ID'])) {
+            $nn->delete($data);
+         }
 
          $ptp->deleteFromDB($data["ID"],1);
          $np->delete($data);
@@ -869,7 +877,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          PluginFusionInventorySNMPHistory::addLogConnection(
                  "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
          PluginFusionInventorySNMPHistory::addLogConnection("remove",$data['ID'],$FK_process);
-         removeConnector($data['ID']);
+         if ($nn->getFromDBForNetworkPort($data['ID'])) {
+            $nn->delete($data);
+         }
          $np->delete($data);
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
                        WHERE `FK_networking_ports`='".$data["ID"]."';";
@@ -1124,6 +1134,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
       if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
       $snmp_queries = new PluginFusionInventorySNMP;
       $walks = new PluginFusionInventoryWalk;
+      $nn = new NetworkPort_NetworkPort();
 
       if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync",
                  ">>>>>>>>>> Update ports device values <<<<<<<<<<",$type,$ID_Device,1);
@@ -1245,7 +1256,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                         PluginFusionInventorySNMPHistory::addLogConnection(
                                 "remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
                         PluginFusionInventorySNMPHistory::addLogConnection("remove",$data["ID"],$FK_process);
-                        removeConnector($data["ID"]);
+                        if ($nn->getFromDBForNetworkPort($data['ID'])) {
+                           $nn->delete($data);
+                        }
 
                      }
                      // Add log because snmp value change
@@ -1349,6 +1362,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
       global $DB;
 
       $netwire=new Netwire;
+      $nn = new NetworkPort_NetworkPort();
       $snmp_queries = new PluginFusionInventorySNMP;
       if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
       $walks = new PluginFusionInventoryWalk;
@@ -1527,7 +1541,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                   $snmp_queries->CleanVlan($data['FK_networking_ports']);
                   $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
                   // Remove connection
-                  removeConnector($data['FK_networking_ports']);
+                  if ($nn->getFromDBForNetworkPort($data['FK_networking_ports'])) {
+                     $nn->delete(array('id'=>$data['FK_networking_ports']));
+                  }
                   PluginFusioninventoryDb::lock_wire_unlock();
                }
             } else if($data['trunk'] != "0") {

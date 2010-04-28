@@ -2578,17 +2578,19 @@ function plugin_pre_item_purge_fusioninventory($parm) {
          case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN :
             // Delete ports and connections if exists
             $np=new Netport;
+            $nn = new NetworkPort_NetworkPort();
             $query = "SELECT `ID`
                       FROM `glpi_networking_ports`
                       WHERE `on_device` = '".$parm["ID"]."'
                             AND `device_type` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
             $result = $DB->query($query);
             while ($data = $DB->fetch_array($result)) {
-               removeConnector($data["ID"]);
+               if ($nn->getFromDBForNetworkPort($data['ID'])) {
+                  $nn->delete($data);
+               }
                $np->delete(array("ID"=>$data["ID"]));
             }
             break;
-         
 		}
    }
 	return $parm;

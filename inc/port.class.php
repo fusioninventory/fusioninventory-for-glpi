@@ -286,10 +286,13 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       $netwire = new Netwire;
       PluginFusionInventorySNMPHistory::addLogConnection("remove",$netwire->getOppositeContact($p_port));
       //PluginFusionInventorySNMPHistory::addLogConnection("remove",$p_port);
-      if (removeConnector($p_port)) {
-         $ptap = new PluginFusionInventoryAgentsProcesses;
-         $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                              array('query_nb_connections_deleted' => '1'));
+      $nn = new NetworkPort_NetworkPort();
+      if ($nn->getFromDBForNetworkPort($p_port)) {
+         if ($nn->delete(array('id'=>$p_port))) {
+            $ptap = new PluginFusionInventoryAgentsProcesses;
+            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                                 array('query_nb_connections_deleted' => '1'));
+         }
       }
    }
 

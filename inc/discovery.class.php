@@ -195,7 +195,10 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
             $data["ifmac"] = $Netport->fields["ifmac"];
             $ID_Device = $Netdevice->add($data);
 
-            removeConnector($Netport->fields["ID"]);
+            $nn = new NetworkPort_NetworkPort();
+            if ($nn->getFromDBForNetworkPort($Netport->fields["ID"])) {
+               $nn->delete($Netport->fields);
+            }
             $Netdevice->deleteFromDB($Netport->fields["ID"]);
 
             $data_fusioninventory["FK_networking"] = $ID_Device;
