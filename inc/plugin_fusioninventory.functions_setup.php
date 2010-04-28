@@ -163,6 +163,9 @@ function plugin_fusioninventory_update($version) {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+      }
       // Update right
       plugin_fusioninventory_updateaccess($_SESSION['glpiactiveprofile']['ID']);
 
