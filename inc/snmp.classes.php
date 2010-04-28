@@ -336,7 +336,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 				PluginFusioninventorySnmphistory::addLogConnection("make",$source_port,$FK_process);
 				
 				if ((!empty($vlan)) AND ($vlan != " []")) {
-					$FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
+					$FK_vlan = Dropdown::importExternal("Vlan",$vlan,0);
 					if ($FK_vlan != "0") {
                   $ports[] = $source_port;
                   $ports[] = $destination_port;
@@ -357,7 +357,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 			} else {
 				if ((!empty($vlan)) AND ($vlan != " []")) {
                // Verify vlan and update it if necessery
-               $FK_vlan = externalImportDropdown("glpi_dropdown_vlan",$vlan,0);
+               $FK_vlan = Dropdown::importExternal("Vlan",$vlan,0);
                if ($FK_vlan != "0") {
                   $ports[] = $source_port;
                   $ports[] = $destination_port;
@@ -937,12 +937,13 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                   $oidvalues[$oid][""] = PluginFusionInventorySNMP::hex_to_string($oidvalues[$oid][""]);
                   if ($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown'] == "glpi_dropdown_model_networking") {
                      $oidvalues[$oid][""] =
-                             externalImportDropdown($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown'],
-                             $oidvalues[$oid][""],0,array("manufacturer"=>$oidvalues[$oid][""]));
+                             Dropdown::importExternal("NetworkEquipmentModel",
+                                $oidvalues[$oid][""],0,array("manufacturer"=>$oidvalues[$oid][""]));
                   } else {
                      $oidvalues[$oid][""] =
-                             externalImportDropdown($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown'],
-                             $oidvalues[$oid][""],0);
+                             Dropdown::importExternal(
+                                getItemTypeForTable($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown']),
+                                $oidvalues[$oid][""],0);
                   }
                }
 

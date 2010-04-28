@@ -184,13 +184,13 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 					$j++;
 					switch ($j) {
 						case 1:
-							$FK_mib_object = externalImportDropdown(
-                                         "glpi_plugin_fusioninventory_mib_object",$item);
+							$FK_mib_object = Dropdown::importExternal(
+                                         "PluginFusioninventoryMib_Object",$item);
 							break;
 
 						case 2:
-							$FK_mib_oid = externalImportDropdown(
-                                      "glpi_plugin_fusioninventory_mib_oid",$item);
+							$FK_mib_oid = Dropdown::importExternal(
+                                      "PluginFusioninventoryMib_Oid",$item);
 							break;
 
 						case 3:
@@ -320,8 +320,8 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             $ptud->fields['serial'] = $discovery->SERIAL;
             $ptud->fields['contact'] = $discovery->USERSESSION;
             if (!empty($discovery->WORKGROUP)) {
-               $ptud->fields['domain'] = externalImportDropdown(
-                                  "glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
+               $ptud->fields['domain'] = Dropdown::importExternal("Domain",
+                                             $discovery->WORKGROUP,$discovery->ENTITY);
             }
             $ptud->fields['comments'] = $discovery->DESCRIPTION;
             $ptud->fields['type'] = $discovery->TYPE;
@@ -399,8 +399,8 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {
                   $data['domain'] = 0;
                   if (!empty($discovery->WORKGROUP)) {
-                     $data['domain'] = externalImportDropdown(
-                                     "glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
+                     $data['domain'] = Dropdown::importExternal("Domain",
+                                             $discovery->WORKGROUP,$discovery->ENTITY);
                   }
                }
                if ($ci->getField('FK_snmp_connection') && !in_array('FK_snmp_connection', $a_lockable))

@@ -89,16 +89,16 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
       if (array_key_exists('model', $this->ptcdUpdates)) {
          $manufacturer = Dropdown::getDropdownName("glpi_dropdown_manufacturer",
                                          $this->getValue('FK_glpi_enterprise'));
-         $this->ptcdUpdates['model'] = externalImportDropdown("glpi_dropdown_model_networking",
+         $this->ptcdUpdates['model'] = Dropdown::importExternal("NetworkEquipmentModel",
                                                    $this->ptcdUpdates['model'], 0,
                                                    array('manufacturer'=>$manufacturer));
       }
       if (array_key_exists('firmware', $this->ptcdUpdates)) {
-         $this->ptcdUpdates['firmware'] = externalImportDropdown("glpi_dropdown_firmware",
+         $this->ptcdUpdates['firmware'] = Dropdown::importExternal("NetworkEquipmentFirmware",
                                                    $this->ptcdUpdates['firmware']);
       }
       if (array_key_exists('location', $this->ptcdUpdates)) {
-         $this->ptcdUpdates['location'] = externalImportDropdown("glpi_dropdown_locations",
+         $this->ptcdUpdates['location'] = Dropdown::importExternal("Location",
                                                    $this->ptcdUpdates['location']);
       }
 

@@ -341,8 +341,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       }
       $FK_vlans = array();
       foreach ($this->portVlans as $vlan) {
-         $FK_vlans[] = externalImportDropdown("glpi_dropdown_vlan", $vlan['number'], 0, array(),
-                                              $vlan['name']);
+         $FK_vlans[] = Dropdown::importExternal("Vlan", $vlan['number'], 0, array(), $vlan['name']);
       }
       if (count($FK_vlans)) { // vlans to add/update
          $ports[] = $this->getValue('ID');
@@ -394,7 +393,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
                      $this->cleanVlan($vlanToUnassign['ID'], $tmp_port);
                   }
                   foreach ($vlansToAssign as $vlanToAssign) {
-                     $FK_vlan = externalImportDropdown("glpi_dropdown_vlan", 
+                     $FK_vlan = Dropdown::importExternal("Vlan",
                                                        $vlanToAssign['number'], 0, array(),
                                                        $vlanToAssign['name']);
                      $this->assignVlan($tmp_port, $FK_vlan);
