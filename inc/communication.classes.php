@@ -350,7 +350,7 @@ class PluginFusionInventoryCommunication {
             $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
          } else {
             $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                            Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol',
+                            Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpprotocolauths',
                                             $ptsnmpa->fields['auth_protocol']));
          }
          $sxml_authentication->addAttribute('AUTHPASSPHRASE', $ptsnmpa->fields['auth_passphrase']);
