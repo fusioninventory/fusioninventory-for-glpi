@@ -424,7 +424,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   $data['snmp'] = 1;
                }
             }
-            if ($discovery->TYPE != "0") {
+            if (($discovery->TYPE != "0") AND ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN)) {
                $data['type'] = $discovery->TYPE;
             }
 
