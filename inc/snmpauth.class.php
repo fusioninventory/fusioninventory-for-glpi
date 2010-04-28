@@ -73,7 +73,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][2] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_fusioninventory_snmp_version", "FK_snmp_version",
+		dropdownValue("glpi_plugin_fusioninventory_snmpversions", "FK_snmp_version",
          $this->fields["FK_snmp_version"], 0);
 		echo "</td>";
 		echo "</tr>";
@@ -194,7 +194,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 
 					case 3:
 						$snmp_version[$i] = Dropdown::getDropdownName(
-                                      "glpi_dropdown_plugin_fusioninventory_snmp_version",$item);
+                                      "glpi_plugin_fusioninventory_snmpversions",$item);
 						if ($snmp_version[$i] == "&nbsp;") {
 							$snmp_version[$i] = "";
                   }
@@ -479,11 +479,11 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 						case 3:
 							if (($recup == "1") AND ($ID_Device != "all")) {
 								$snmp_auth["snmp_version"] = Dropdown::getDropdownName(
-                              "glpi_dropdown_plugin_fusioninventory_snmp_version",$item);
+                              "glpi_plugin_fusioninventory_snmpversions",$item);
                      }
 							if ($ID_Device == "all") {
 								$snmp_auth[($i+2)]["snmp_version"] = Dropdown::getDropdownName(
-                              "glpi_dropdown_plugin_fusioninventory_snmp_version",$item);
+                              "glpi_plugin_fusioninventory_snmpversions",$item);
                      }
 							break;
 
@@ -569,7 +569,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 			} else if ($ID_Device != "all") {
 				$snmp_auth["Name"] = $DB->result($result,0,"name");
 				$snmp_auth["snmp_version"] = Dropdown::getDropdownName(
-               "glpi_dropdown_plugin_fusioninventory_snmp_version",$DB->result($result,0,
+               "glpi_plugin_fusioninventory_snmpversions",$DB->result($result,0,
                "FK_snmp_version"));
 				$snmp_auth["community"] = $DB->result($result,0,"community");
 				$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
@@ -585,12 +585,12 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 				$i = 2;
 				while ($data=$DB->fetch_array($result)) {
 					if (($snmp_auth[0]["snmp_version"] == Dropdown::getDropdownName(
-                        "glpi_dropdown_plugin_fusioninventory_snmp_version",$data["FK_snmp_version"]))
+                        "glpi_plugin_fusioninventory_snmpversions",$data["FK_snmp_version"]))
                   AND ($snmp_auth[0]["community"] == $data["community"])) {
                   
 						$snmp_auth[0]["ID"] = $data["ID"];
                 } else if (($snmp_auth[1]["snmp_version"] == Dropdown::getDropdownName(
-                         "glpi_dropdown_plugin_fusioninventory_snmp_version",$data["FK_snmp_version"]))
+                         "glpi_plugin_fusioninventory_snmpversions",$data["FK_snmp_version"]))
                   AND ($snmp_auth[1]["community"] == $data["community"])) {
 
 						$snmp_auth[1]["ID"] = $data["ID"];
@@ -598,7 +598,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 						$snmp_auth[$i]["ID"] = $data["ID"];
 						$snmp_auth[$i]["Name"] = $data["name"];
 						$snmp_auth[$i]["snmp_version"] = Dropdown::getDropdownName(
-                     "glpi_dropdown_plugin_fusioninventory_snmp_version",$data["FK_snmp_version"]);
+                     "glpi_plugin_fusioninventory_snmpversions",$data["FK_snmp_version"]);
 						$snmp_auth[$i]["community"] = $data["community"];
 						$snmp_auth[$i]["sec_name"] = $data["sec_name"];
 						$snmp_auth[$i]["auth_protocol"] = Dropdown::getDropdownName(

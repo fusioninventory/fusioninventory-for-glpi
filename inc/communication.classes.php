@@ -343,7 +343,7 @@ class PluginFusionInventoryCommunication {
          $sxml_authentication->addAttribute('ID', $p_id);
          $sxml_authentication->addAttribute('COMMUNITY', $ptsnmpa->fields['community']);
          $sxml_authentication->addAttribute('VERSION',
-                            Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_snmp_version',
+                            Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpversions',
                                             $ptsnmpa->fields['FK_snmp_version']));
          $sxml_authentication->addAttribute('USERNAME', $ptsnmpa->fields['sec_name']);
          if ($ptsnmpa->fields['auth_protocol'] == '0') {

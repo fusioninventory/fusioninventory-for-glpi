@@ -133,7 +133,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][30]['linkfield'] = 'ID';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][30]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][3]['table'] = 'glpi_dropdown_plugin_fusioninventory_snmp_version';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][3]['table'] = 'glpi_plugin_fusioninventory_snmpversions';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][3]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][3]['linkfield'] = 'FK_snmp_version';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][3]['name'] = $LANG['plugin_fusioninventory']["model_info"][2];
@@ -1098,7 +1098,7 @@ function plugin_fusioninventory_getDropdown() {
 	global $LANG;
 	if (isset ($_SESSION["glpi_plugin_fusioninventory_installed"]) && $_SESSION["glpi_plugin_fusioninventory_installed"] == 1) {
 		return array (
-			"glpi_dropdown_plugin_fusioninventory_snmp_version" => "SNMP version",
+			"glpi_plugin_fusioninventory_snmpversions" => "SNMP version",
 			"glpi_plugin_fusioninventory_mib_oid" => "OID MIB",
 			"glpi_plugin_fusioninventory_mib_object" => "Objet MIB",
 			"glpi_plugin_fusioninventory_mib_label" => "Label MIB"
