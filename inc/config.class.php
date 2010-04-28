@@ -115,7 +115,7 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
 		echo "<td width='20%'>";
-		dropdownYesNo("ssl_only", $this->isActivated('ssl_only'));
+		Dropdown::showYesNo("ssl_only", $this->isActivated('ssl_only'));
 		echo "</td>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][16]."&nbsp;:</td>";
 		echo "<td width='20%'>";
@@ -162,44 +162,44 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria1_ip", $this->isActivated('criteria1_ip'));
+		Dropdown::showYesNo("criteria1_ip", $this->isActivated('criteria1_ip'));
 		echo "</td>";
 		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria2_ip", $this->isActivated('criteria2_ip'));
+		Dropdown::showYesNo("criteria2_ip", $this->isActivated('criteria2_ip'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria1_name", $this->isActivated('criteria1_name'));
+		Dropdown::showYesNo("criteria1_name", $this->isActivated('criteria1_name'));
 		echo "</td>";
 		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria2_name", $this->isActivated('criteria2_name'));
+		Dropdown::showYesNo("criteria2_name", $this->isActivated('criteria2_name'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria1_serial", $this->isActivated('criteria1_serial'));
+		Dropdown::showYesNo("criteria1_serial", $this->isActivated('criteria1_serial'));
 		echo "</td>";
 		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria2_serial", $this->isActivated('criteria2_serial'));
+		Dropdown::showYesNo("criteria2_serial", $this->isActivated('criteria2_serial'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria1_macaddr", $this->isActivated('criteria1_macaddr'));
+		Dropdown::showYesNo("criteria1_macaddr", $this->isActivated('criteria1_macaddr'));
 		echo "</td>";
 		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("criteria2_macaddr", $this->isActivated('criteria2_macaddr'));
+		Dropdown::showYesNo("criteria2_macaddr", $this->isActivated('criteria2_macaddr'));
 		echo "</td>";
 		echo "</tr>";
 

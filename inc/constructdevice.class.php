@@ -311,9 +311,9 @@ echo "</a>";
                               }
                            } else {
                               if (isset($mapping_pre_vlan[$before])) {
-                                 dropdownYesNo("vlan_".$oid_id_before, 1);
+                                 Dropdown::showYesNo("vlan_".$oid_id_before, 1);
                               } else {
-                                 dropdownYesNo("vlan_".$oid_id_before);
+                                 Dropdown::showYesNo("vlan_".$oid_id_before);
                               }
                            }
                            echo "</th>";
@@ -326,7 +326,7 @@ echo "</a>";
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
-                              dropdownYesNo("oid_port_counter_".$oid_id_before);
+                              Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
                            }
                            echo "</th>";
                            echo "<th>";
@@ -338,7 +338,7 @@ echo "</a>";
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
-                              dropdownYesNo("oid_port_dyn_".$oid_id_before);
+                              Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
                            }
                            echo "</th>";
                            echo "</tr>";
@@ -420,19 +420,19 @@ echo "</a>";
                   }
                } else {
                   if (isset($mapping_pre_vlan[$before])) {
-                     dropdownYesNo("vlan_".$oid_id_before, 1);
+                     Dropdown::showYesNo("vlan_".$oid_id_before, 1);
                   } else {
-                     dropdownYesNo("vlan_".$oid_id_before);
+                     Dropdown::showYesNo("vlan_".$oid_id_before);
                   }
                }
                echo "</th>";
                echo "<th>";
                echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
-               dropdownYesNo("oid_port_counter_".$oid_id_before);
+               Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
                echo "</th>";
                echo "<th>";
                echo $LANG['plugin_fusioninventory']["mib"][7]." : ";
-               dropdownYesNo("oid_port_dyn_".$oid_id_before);
+               Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
                echo "</th>";
                echo "</tr>";
                echo "<tr>";

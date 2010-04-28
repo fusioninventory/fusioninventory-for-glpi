@@ -238,12 +238,12 @@ class PluginFusionInventoryMib extends CommonDBTM {
 				
 				echo "<td align='center'>";
 				//echo "<input name='oid_port_counter' value='0' type='checkbox'>";
-				dropdownYesNo("oid_port_counter");	
+				Dropdown::showYesNo("oid_port_counter");	
 				echo "</td>";
 				
 				echo "<td align='center'>";
 				//echo "<input name='oid_port_dyn' value='0' type='checkbox'>";
-				dropdownYesNo("oid_port_dyn");
+				Dropdown::showYesNo("oid_port_dyn");
 				echo "</td>";
 				
 				echo "<td align='center'>";
@@ -267,7 +267,7 @@ class PluginFusionInventoryMib extends CommonDBTM {
 
 				if ($type_model == NETWORKING_TYPE) {
 					echo "<td align='center'>";
-					dropdownYesNo("vlan");
+					Dropdown::showYesNo("vlan");
 					echo "</td>";
 				}
 				

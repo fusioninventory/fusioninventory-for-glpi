@@ -185,7 +185,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][2] . " :</td>";
 		echo "<td align='center'>";
-      dropdownYesNo("accepted", $this->fields["accepted"]);
+      Dropdown::showYesNo("accepted", $this->fields["accepted"]);
 		echo "</td>";
 
       echo "<td align='center'>" . $LANG['common'][20] . " : </td>";
@@ -213,7 +213,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["functionalities"][3] . " :</td>";
 		echo "<td align='center'>";
-      dropdownYesNo("snmp", $this->fields["snmp"]);
+      Dropdown::showYesNo("snmp", $this->fields["snmp"]);
 		echo "</td>";
 
       if ($this->fields["snmp"] == "1") {

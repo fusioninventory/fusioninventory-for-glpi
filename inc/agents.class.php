@@ -109,7 +109,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       if ($ptcm->getValue('inventoryocs') == "1") {
          echo "<td>".$LANG['plugin_fusioninventory']['config'][3]." :</td>";
          echo "<td align='center'>";
-		dropdownYesNo("module_inventory",$this->fields["module_inventory"]);
+		Dropdown::showYesNo("module_inventory",$this->fields["module_inventory"]);
 		echo "</td>";
       } else {
          echo "<td colspan='2'></td>";
@@ -125,7 +125,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       if ($ptcm->getValue('netdiscovery') == "1") {
          echo "<td>".$LANG['plugin_fusioninventory']['config'][4]." :</td>";
          echo "<td align='center'>";
-         dropdownYesNo("module_netdiscovery",$this->fields["module_netdiscovery"]);
+         Dropdown::showYesNo("module_netdiscovery",$this->fields["module_netdiscovery"]);
          echo "</td>";
       } else {
          echo "<td colspan='2'></td>";
@@ -136,13 +136,13 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>" . $LANG['plugin_fusioninventory']["agents"][6] . " :</td>";
 		echo "<td align='center'>";
-		dropdownYesNo("lock",$this->fields["lock"]);
+		Dropdown::showYesNo("lock",$this->fields["lock"]);
 		echo "</td>";
 
       if ($ptcm->getValue('snmp') == "1") {
          echo "<td>".$LANG['plugin_fusioninventory']['config'][7]." :</td>";
          echo "<td align='center'>";
-         dropdownYesNo("module_snmpquery",$this->fields["module_snmpquery"]);
+         Dropdown::showYesNo("module_snmpquery",$this->fields["module_snmpquery"]);
          echo "</td>";
       } else {
          echo "<td colspan='2'></td>";
@@ -166,7 +166,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       if ($ptcm->getValue('wol') == "1") {
          echo "<td>".$LANG['plugin_fusioninventory']['config'][6]." :</td>";
          echo "<td align='center'>";
-         dropdownYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);
+         Dropdown::showYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);
          echo "</td>";
 		} else {
          echo "<td colspan='2'></td>";

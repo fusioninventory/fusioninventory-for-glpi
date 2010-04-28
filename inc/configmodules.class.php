@@ -95,29 +95,29 @@ class PluginFusionInventoryConfigModules extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td width='30%'>".$LANG['plugin_fusioninventory']['config'][2]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("snmp", $this->isActivated('snmp'));
+		Dropdown::showYesNo("snmp", $this->isActivated('snmp'));
 		echo "</td>";
 		echo "<td width='20%'>".$LANG['plugin_fusioninventory']['config'][4]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("netdiscovery", $this->isActivated('netdiscovery'));
+		Dropdown::showYesNo("netdiscovery", $this->isActivated('netdiscovery'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']['config'][3]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("inventoryocs", $this->isActivated('inventoryocs'));
+		Dropdown::showYesNo("inventoryocs", $this->isActivated('inventoryocs'));
 		echo "</td>";
 		echo "<td>".$LANG['plugin_fusioninventory']['config'][5]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("remotehttpagent", $this->isActivated('remotehttpagent'));
+		Dropdown::showYesNo("remotehttpagent", $this->isActivated('remotehttpagent'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']['config'][6]."&nbsp;:</td>";
 		echo "<td>";
-		dropdownYesNo("wol", $this->isActivated('wol'));
+		Dropdown::showYesNo("wol", $this->isActivated('wol'));
 		echo "</td>";
 		echo "<td colspan='2'>";
 		echo "</td>";

@@ -132,14 +132,14 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["discovery"][3] . "</td>";
 		echo "<td align='center'>";
-		dropdownYesNo("discover",$this->fields["discover"]);
+		Dropdown::showYesNo("discover",$this->fields["discover"]);
 		echo "</td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["rangeip"][3] . "</td>";
 		echo "<td align='center'>";
-		dropdownYesNo("query",$this->fields["query"]);
+		Dropdown::showYesNo("query",$this->fields["query"]);
 		echo "</td>";
 		echo "</tr>";
 
