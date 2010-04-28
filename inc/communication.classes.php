@@ -358,7 +358,7 @@ class PluginFusionInventoryCommunication {
             $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
          } else {
             $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                    Dropdown::getDropdownName('glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol',
+                    Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpprotocolprivs',
                                     $ptsnmpa->fields['priv_protocol']));
          }
          $sxml_authentication->addAttribute('PRIVPASSPHRASE', $ptsnmpa->fields['priv_passphrase']);

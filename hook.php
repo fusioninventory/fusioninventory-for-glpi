@@ -158,7 +158,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][8]['linkfield'] = 'auth_passphrase';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][8]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][5];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][9]['table'] = 'glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][9]['table'] = 'glpi_plugin_fusioninventory_snmpprotocolprivs';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][9]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][9]['linkfield'] = 'priv_protocol';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][9]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][6];

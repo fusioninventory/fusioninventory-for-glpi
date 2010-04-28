@@ -111,7 +111,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][6] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol", "priv_protocol",
+		dropdownValue("glpi_plugin_fusioninventory_snmpprotocolprivs", "priv_protocol",
             $this->fields["priv_protocol"], 0);
 		echo "</td>";
 		echo "</tr>";
@@ -222,7 +222,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 
 					case 9:
 						$priv_protocol[$i] = Dropdown::getDropdownName(
-                                    "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$item);
+                                    "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
 						if ($priv_protocol[$i] == "&nbsp;") {
 							$priv_protocol[$i] = "";
                   }
@@ -528,11 +528,11 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 						case 9:
 							if (($recup == "1") AND ($ID_Device != "all")) {
 								$snmp_auth["priv_protocol"] = Dropdown::getDropdownName(
-                              "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$item);
+                              "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
                      }
 							if ($ID_Device == "all") {
 									$snmp_auth[($i+2)]["priv_protocol"] = Dropdown::getDropdownName(
-                              "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$item);
+                              "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
                      }
 							break;
 
@@ -578,7 +578,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
                "auth_protocol"));
 				$snmp_auth["auth_passphrase"] = $DB->result($result,0,"auth_passphrase");
 				$snmp_auth["priv_protocol"] = Dropdown::getDropdownName(
-               "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$DB->result($result,0,
+               "glpi_plugin_fusioninventory_snmpprotocolprivs",$DB->result($result,0,
                "priv_protocol"));
 				$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
 			} else if ($ID_Device == "all") {
@@ -605,7 +605,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
                      "glpi_plugin_fusioninventory_snmpprotocolauths",$data["auth_protocol"]);
 						$snmp_auth[$i]["auth_passphrase"] = $data["auth_passphrase"];
 						$snmp_auth[$i]["priv_protocol"] = Dropdown::getDropdownName(
-                     "glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol",$data["priv_protocol"]);
+                     "glpi_plugin_fusioninventory_snmpprotocolprivs",$data["priv_protocol"]);
 						$snmp_auth[$i]["priv_passphrase"] = $data["priv_passphrase"];
 						$i++;
 					}
