@@ -107,7 +107,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             }
          }
          // END GENERIC OBJECT
-			dropdownDeviceTypes('type',$this->fields["type"],$type_list);
+			Device::dropdownTypes('type',$this->fields["type"],$type_list);
 		echo "</td>";
       echo "</tr>";
 

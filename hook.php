@@ -1684,7 +1684,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			$type_list[] = PRINTER_TYPE;
 			$type_list[] = PERIPHERAL_TYPE;
 			$type_list[] = PHONE_TYPE;
-			dropdownDeviceTypes('type',$linkfield,$type_list);
+			Device::dropdownTypes('type',$linkfield,$type_list);
 			return true;
 			break;
 
@@ -1746,7 +1746,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			$type_list[] = PRINTER_TYPE;
 			$type_list[] = PERIPHERAL_TYPE;
 			$type_list[] = PHONE_TYPE;
-			dropdownDeviceTypes('type',$linkfield,$type_list);
+			Device::dropdownTypes('type',$linkfield,$type_list);
 			return true;
 			break;
 	}
