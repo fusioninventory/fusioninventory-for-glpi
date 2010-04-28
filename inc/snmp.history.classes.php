@@ -57,7 +57,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
 	function insert_connection($status,$array,$FK_process=0) {
 		global $DB,$CFG_GLPI;
 
-      $pthc = new PluginFusionInventoryHistoryConnections;
+      $pthc = new PluginFusioninventorySnmphistoryconnection;
 
       $input['date'] = date("Y-m-d H:i:s");
       $input['FK_ports'] = $array['FK_ports'];
@@ -329,8 +329,8 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
       echo "</table></center>";
 
 
-      // Move connections from glpi_plugin_fusioninventory_snmp_history to glpi_plugin_fusioninventory_snmp_history_connections
-      $pfihc = new PluginFusionInventoryHistoryConnections;
+      // Move connections from glpi_plugin_fusioninventory_snmp_history to glpi_plugin_fusioninventory_snmphistoryconnections
+      $pfihc = new PluginFusioninventorySnmphistoryconnection;
 
       echo "<br/><center><table align='center' width='500'>";
       echo "<tr>";
@@ -574,7 +574,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
       global $DB,$CFG_GLPI;
 
       $CommonItem = new CommonItem;
-      $pthc = new PluginFusionInventoryHistoryConnections;
+      $pthc = new PluginFusioninventorySnmphistoryconnection;
       $nw=new Netwire;
 
       if (($FK_process == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
@@ -618,7 +618,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
                FK_port_source, FK_port_destination,
                creation as Field, NULL as old_value, NULL as new_value
 
-               FROM glpi_plugin_fusioninventory_snmp_history_connections
+               FROM glpi_plugin_fusioninventory_snmphistoryconnections
                WHERE `FK_port_source`='".$ID_port."'
                   OR `FK_port_destination`='".$ID_port."'
                ORDER BY date DESC
@@ -720,7 +720,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
       }
 
    /*
-      $pthc = new PluginFusionInventoryHistoryConnections;
+      $pthc = new PluginFusioninventorySnmphistoryconnection;
 
       $data_connections = $pthc->find('`FK_port_source`="'.$ID_port.'"
                                           OR `FK_port_destination `="'.$ID_port.'"',

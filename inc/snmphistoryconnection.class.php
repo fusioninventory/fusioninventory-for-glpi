@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryHistoryConnections extends CommonDBTM {
+class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_snmp_history_connections";
+		$this->table = "glpi_plugin_fusioninventory_snmphistoryconnections";
 	}
 
    function migration() {

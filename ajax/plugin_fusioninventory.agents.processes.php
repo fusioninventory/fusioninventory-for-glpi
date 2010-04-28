@@ -52,7 +52,7 @@ switch($_POST['glpi_tab']) {
 	case -1 :
       $ptap = new PluginFusionInventoryAgentsProcesses;
       $ptap->ShowProcesses();
-      $ptac = new PluginFusionInventoryHistoryConnections;
+      $ptac = new PluginFusioninventorySnmphistoryconnection;
       $ptac->showForm($_GET);
       $ptae = new PluginFusionInventoryAgentsErrors;
       $ptae->ShowErrors($_GET);
@@ -64,7 +64,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 2 :
-      $ptac = new PluginFusionInventoryHistoryConnections;
+      $ptac = new PluginFusioninventorySnmphistoryconnection;
       $ptac->showForm($_POST);
 		break;
 
