@@ -48,7 +48,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 // Forms for FILE
 if ($config->getValue("authsnmp") == "file") {
-	$plugin_fusioninventory_snmp_auth = new PluginFusionInventorySNMPAuth;
+	$plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
 	
 	if (!isset($_GET["ID"])) {
 		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();

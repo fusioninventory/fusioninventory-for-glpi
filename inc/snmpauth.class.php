@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventorySNMPAuth extends CommonDBTM {
+class PluginFusioninventorySnmpauth extends CommonDBTM {
    
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_snmp_connection";
+		$this->table = "glpi_plugin_fusioninventory_snmpauths";
 		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_AUTH;
 	}
 
@@ -550,10 +550,10 @@ class PluginFusionInventorySNMPAuth extends CommonDBTM {
 		} else if ($config->getValue("authsnmp") == "DB") {
 			if ($ID_Device == "all") {
 				$query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_snmp_connection`";
+                      FROM `glpi_plugin_fusioninventory_snmpauths`";
          } else {
 				$query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_snmp_connection`
+                      FROM `glpi_plugin_fusioninventory_snmpauths`
                       WHERE `ID`='".$ID_auth."';";
 			}
 			$result=$DB->query($query);

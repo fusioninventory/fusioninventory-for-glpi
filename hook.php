@@ -122,13 +122,13 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH]['common'] = $LANG['plugin_fusioninventory']["profile"][22];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][1]['table'] = 'glpi_plugin_fusioninventory_snmp_connection';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][1]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][1]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][1]['name'] = $LANG["common"][16];
   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][1]['datatype']='itemlink';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][30]['table'] = 'glpi_plugin_fusioninventory_snmp_connection';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][30]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][30]['field'] = 'ID';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][30]['linkfield'] = 'ID';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][30]['name'] = $LANG["common"][2];
@@ -138,12 +138,12 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][3]['linkfield'] = 'FK_snmp_version';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][3]['name'] = $LANG['plugin_fusioninventory']["model_info"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][4]['table'] = 'glpi_plugin_fusioninventory_snmp_connection';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][4]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][4]['field'] = 'community';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][4]['linkfield'] = 'community';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][4]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][1];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][5]['table'] = 'glpi_plugin_fusioninventory_snmp_connection';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][5]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][5]['field'] = 'sec_name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][5]['linkfield'] = 'sec_name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][5]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][2];
@@ -153,7 +153,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][7]['linkfield'] = 'auth_protocol';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][7]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][4];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][8]['table'] = 'glpi_plugin_fusioninventory_snmp_connection';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][8]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][8]['field'] = 'auth_passphrase';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][8]['linkfield'] = 'auth_passphrase';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][8]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][5];
@@ -163,7 +163,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][9]['linkfield'] = 'priv_protocol';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][9]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][6];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][10]['table'] = 'glpi_plugin_fusioninventory_snmp_connection';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][10]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][10]['field'] = 'priv_passphrase';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][10]['linkfield'] = 'priv_passphrase';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][10]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][7];
@@ -232,7 +232,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['linkfield'] = 'FK_model_infos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['name'] = $LANG['plugin_fusioninventory']["model_info"][4];
 
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['table'] = 'glpi_plugin_fusioninventory_snmp_connection';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['field'] = 'name';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['linkfield'] = 'FK_snmp_connection';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['name'] = $LANG['plugin_fusioninventory']["model_info"][3];
@@ -503,7 +503,7 @@ function plugin_fusioninventory_getSearchOption() {
 		$sopt[NETWORKING_TYPE][5191]['linkfield'] = 'ID';
 		$sopt[NETWORKING_TYPE][5191]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
 	} else {
-		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_fusioninventory_snmp_connection';
+		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_fusioninventory_snmpauths';
 		$sopt[NETWORKING_TYPE][5191]['field']='name';
 		$sopt[NETWORKING_TYPE][5191]['linkfield']='ID';
 		$sopt[NETWORKING_TYPE][5191]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
@@ -531,7 +531,7 @@ function plugin_fusioninventory_getSearchOption() {
 		$sopt[PRINTER_TYPE][5191]['linkfield'] = 'ID';
 		$sopt[PRINTER_TYPE][5191]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
 	} else {
-		$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_fusioninventory_snmp_connection';
+		$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_fusioninventory_snmpauths';
 		$sopt[PRINTER_TYPE][5191]['field']='ID';
 		$sopt[PRINTER_TYPE][5191]['linkfield']='ID';
 		$sopt[PRINTER_TYPE][5191]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
@@ -745,11 +745,11 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmp_connection.name" :
-					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMPAuth;
+				case "glpi_plugin_fusioninventory_snmpauths.name" :
+					$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmp_connection", $FK_auth_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpauths", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -820,11 +820,11 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmp_connection.ID" :
-					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMPAuth;
+				case "glpi_plugin_fusioninventory_snmpauths.ID" :
+					$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmp_connection", $FK_auth_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpauths", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -882,7 +882,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			switch ($table.'.'.$field) {
 
 				// ** Hidden auth passphrase (SNMP v3)
-				case "glpi_plugin_fusioninventory_snmp_connection.auth_passphrase" :
+				case "glpi_plugin_fusioninventory_snmpauths.auth_passphrase" :
                $out = "";
 					if (empty($data["ITEM_$num"])) {
 						
@@ -893,7 +893,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** Hidden priv passphrase (SNMP v3)
-				case "glpi_plugin_fusioninventory_snmp_connection.priv_passphrase" :
+				case "glpi_plugin_fusioninventory_snmpauths.priv_passphrase" :
                $out = "";
 					if (empty($data["ITEM_$num"])) {
 						
@@ -1664,8 +1664,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 	//echo $table.".".$field."<br/>";
 	switch ($table.".".$field) {
 
-		case 'glpi_plugin_fusioninventory_snmp_connection.name':
-			Dropdown::show("PluginFusionInventorySNMPAuth",
+		case 'glpi_plugin_fusioninventory_snmpauths.name':
+			Dropdown::show("PluginFusioninventorySnmpauth",
                         array('name' => $linkfield));
 			return true;
 			break;
@@ -1735,7 +1735,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_discovery.FK_snmp_connection' :
-			$plugin_fusioninventory_snmp = new PluginFusionInventorySNMPAuth;
+			$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
 			echo $plugin_fusioninventory_snmp->selectbox();
 			return true;
 			break;
@@ -1915,9 +1915,9 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmp_connection.ID" :
+				case "glpi_plugin_fusioninventory_snmpauths.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_auth ON glpi_networking.ID = gptn_auth.FK_networking ".
-						" LEFT JOIN glpi_plugin_fusioninventory_snmp_connection ON gptn_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmp_connection.ID ";
+						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptn_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmpauths.ID ";
 					break;
 
 			}
@@ -1939,9 +1939,9 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmp_connection.ID" :
+				case "glpi_plugin_fusioninventory_snmpauths.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_auth ON glpi_printers.ID = gptp_auth.FK_printers ".
-						" LEFT JOIN glpi_plugin_fusioninventory_snmp_connection ON gptp_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmp_connection.ID ";
+						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptp_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmpauths.ID ";
 					break;
 
 				// ** FusionInventory - switch
@@ -2144,8 +2144,8 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmp_connection.ID" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmp_connection.name $order ";
+				case "glpi_plugin_fusioninventory_snmpauths.ID" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmpauths.name $order ";
 					break;
 
 				// ** FusionInventory - switch
@@ -2309,11 +2309,11 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 				case "glpi_plugin_fusioninventory_networking.FK_snmp_connection" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
-						$ADD=" OR glpi_plugin_fusioninventory_snmp_connection.name IS NULL";
+						$ADD=" OR glpi_plugin_fusioninventory_snmpauths.name IS NULL";
 					} else if ($nott=="1"&&$val=="NULL") {
-						$ADD=" OR glpi_plugin_fusioninventory_snmp_connection.name IS NOT NULL";
+						$ADD=" OR glpi_plugin_fusioninventory_snmpauths.name IS NOT NULL";
 					}
-					return $link." (glpi_plugin_fusioninventory_snmp_connection.name  LIKE '%".$val."%' $ADD ) ";
+					return $link." (glpi_plugin_fusioninventory_snmpauths.name  LIKE '%".$val."%' $ADD ) ";
 					break;
 
             // ** FusionInventory - CPU
@@ -2351,7 +2351,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmp_connection.ID" :
+				case "glpi_plugin_fusioninventory_snmpauths.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";

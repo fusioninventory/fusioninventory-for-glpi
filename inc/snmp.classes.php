@@ -487,13 +487,13 @@ class PluginFusionInventorySNMP extends CommonDBTM {
    static function auth_dropdown($selected="") {
       global $DB;
 
-      $plugin_fusioninventory_snmp_auth = new PluginFusionInventorySNMPAuth;
+      $plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
       $config = new PluginFusionInventoryConfig;
 
       if ($config->getValue("authsnmp") == "file") {
          echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
       } else  if ($config->getValue("authsnmp") == "DB") {
-         dropdownValue("glpi_plugin_fusioninventory_snmp_connection","FK_snmp_connection",$selected,0);
+         dropdownValue("glpi_plugin_fusioninventory_snmpauths","FK_snmp_connection",$selected,0);
       }
    }
 
@@ -581,7 +581,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
       $ifIP = "";
       $_SESSION['FK_process'] = $FK_process;
 
-      $plugin_fusioninventory_snmp_auth = new PluginFusionInventorySNMPAuth;
+      $plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
       $Threads = new PluginFusionInventoryProcesses;
       $models = new PluginFusionInventoryModelInfos;
       $walks = new PluginFusionInventoryWalk;

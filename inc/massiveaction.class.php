@@ -45,7 +45,7 @@ class PluginFusioninventoryMassiveaction extends CommonDBTM {
 
       if ($source_field == "model") {
          // Get auth
-         $snmp_auth = new PluginFusionInventorySNMPAuth;
+         $snmp_auth = new PluginFusioninventorySnmpauth;
          switch ($source_type) {
             case NETWORKING_TYPE :
                $FK_snmp_auth_DB = $snmp_auth->GetSNMPAuth($id,NETWORKING_TYPE);

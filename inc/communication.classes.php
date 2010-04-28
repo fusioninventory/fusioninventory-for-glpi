@@ -145,7 +145,7 @@ class PluginFusionInventoryCommunication {
     **/
    function addQuery($pxml, $task=0) {
       $ptmi    = new PluginFusionInventoryModelInfos;
-      $ptsnmpa = new PluginFusionInventorySNMPAuth;
+      $ptsnmpa = new PluginFusioninventorySnmpauth;
       $pta     = new PluginFusionInventoryAgents;
       $ptap    = new PluginFusionInventoryAgentsProcesses;
       $ptrip   = new PluginFusionInventoryRangeIP;
@@ -255,7 +255,7 @@ class PluginFusionInventoryCommunication {
     *@return nothing
     **/
    function addDiscovery($pxml, $task=0) {
-      $ptsnmpa = new PluginFusionInventorySNMPAuth;
+      $ptsnmpa = new PluginFusioninventorySnmpauth;
       $pta     = new PluginFusionInventoryAgents;
       $ptap    = new PluginFusionInventoryAgentsProcesses;
       $ptrip   = new PluginFusionInventoryRangeIP;
@@ -336,7 +336,7 @@ class PluginFusionInventoryCommunication {
     *@return nothing
     **/
    function addAuth($p_sxml_node, $p_id) {
-      $ptsnmpa = new PluginFusionInventorySNMPAuth;
+      $ptsnmpa = new PluginFusioninventorySnmpauth;
       $ptsnmpa->getFromDB($p_id);
 
       $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');

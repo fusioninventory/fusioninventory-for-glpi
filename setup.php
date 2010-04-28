@@ -55,13 +55,13 @@ function plugin_init_fusioninventory() {
 //		));
    Plugin::registerClass('PluginFusionInventoryModelInfos');
 //	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_AUTH", 5152, array(
-//		'classname' => 'PluginFusionInventorySNMPAuth',
-//		'tablename' => 'glpi_plugin_fusioninventory_snmp_connection',
+//		'classname' => 'PluginFusioninventorySnmpauth',
+//		'tablename' => 'glpi_plugin_fusioninventory_snmpauths',
 //		'formpage' => 'front/plugin_fusioninventory.snmp_auth.form.php',
 //		'searchpage' => 'front/plugin_fusioninventory.snmp_auth.php',
 //		'typename' => $LANG['plugin_fusioninventory']["model_info"][3]
 //		));
-   Plugin::registerClass('PluginFusionInventorySNMPAuth');
+   Plugin::registerClass('PluginFusioninventorySnmpauth');
 //	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN", 5153, array(
 //		'classname' => 'PluginFusionInventoryUnknownDevice',
 //		'tablename' => 'glpi_plugin_fusioninventory_unknown_device',
