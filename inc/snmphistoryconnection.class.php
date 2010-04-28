@@ -47,9 +47,9 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
    function migration() {
       global $DB;
 
-      $ptsnmph = new PluginFusionInventorySNMPHistory;
+      $ptsnmph = new PluginFusioninventorySnmphistory;
 
-      $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmp_history`
+      $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmphistories`
                         WHERE `Field`='0'
                         ORDER BY `FK_process` DESC, `date_mod` DESC;";
       $result_connection = $DB->query($sql_connection);

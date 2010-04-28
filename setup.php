@@ -111,10 +111,10 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusionInventoryAgentsProcesses');
 
 //	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_HISTORY", 5162, array(
-//		'classname' => 'PluginFusionInventorySNMPHistory',
-//		'tablename' => 'glpi_plugin_fusioninventory_snmp_history'
+//		'classname' => 'PluginFusioninventorySnmphistory',
+//		'tablename' => 'glpi_plugin_fusioninventory_snmphistories'
 //		));
-   Plugin::registerClass('PluginFusionInventorySNMPHistory');
+   Plugin::registerClass('PluginFusioninventorySnmphistory');
 
 //	registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2", 5163, array(
 //		'classname' => 'PluginFusionInventoryNetworking',

@@ -181,7 +181,7 @@ class PluginFusioninventorySetup extends CommonDBTM {
          foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 
          // Update ports history from lang traduction into field constant (MySQL fiel 'Field')
-         $pfisnmph = new PluginFusionInventorySNMPHistory;
+         $pfisnmph = new PluginFusioninventorySnmphistory;
          $pfisnmph->ConvertField();
 
          // Delete all values in glpi_plugin_fusioninventory_config_snmp_history

@@ -437,7 +437,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY]['common'] = $LANG['plugin_fusioninventory']["title"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['table'] = 'glpi_plugin_fusioninventory_snmp_history';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['field'] = 'ID';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['name'] = $LANG["common"][2];
@@ -447,22 +447,22 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['linkfield'] = 'FK_ports';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['name'] = $LANG["setup"][175];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['table'] = 'glpi_plugin_fusioninventory_snmp_history';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['field'] = 'Field';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['linkfield'] = 'Field';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['name'] = $LANG["event"][18];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['table'] = 'glpi_plugin_fusioninventory_snmp_history';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['field'] = 'old_value';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['linkfield'] = 'old_value';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['name'] = $LANG['plugin_fusioninventory']["history"][0];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['table'] = 'glpi_plugin_fusioninventory_snmp_history';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['field'] = 'new_value';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['linkfield'] = 'new_value';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['name'] = $LANG['plugin_fusioninventory']["history"][1];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['table'] = 'glpi_plugin_fusioninventory_snmp_history';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['field'] = 'date_mod';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['linkfield'] = 'date_mod';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['name'] = $LANG["common"][27];
@@ -1064,13 +1064,13 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmp_history.Field" :
+				case "glpi_plugin_fusioninventory_snmphistories.Field" :
                $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["ITEM_$num"]]['name'];
                return $out;
 					break;
 
 				// ** Display Old Value (before changement of value)
-				case "glpi_plugin_fusioninventory_snmp_history.old_value" :
+				case "glpi_plugin_fusioninventory_snmphistories.old_value" :
 					// TODO ADD LINK TO DEVICE
 					if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"]))) {
 						return "<center><b>".$data["ITEM_$num"]."</b></center>";
@@ -1078,7 +1078,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** Display New Value (new value modified)
-				case "glpi_plugin_fusioninventory_snmp_history.new_value" :
+				case "glpi_plugin_fusioninventory_snmphistories.new_value" :
 					if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"]))) {
 						return "<center><b>".$data["ITEM_$num"]."</b></center>";
                }
@@ -1115,7 +1115,7 @@ function cron_plugin_fusioninventory() {
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
-   $pfisnmph = new PluginFusionInventorySNMPHistory;
+   $pfisnmph = new PluginFusioninventorySnmphistory;
    $pfisnmph->cronCleanHistory();
    return 1;
 }
@@ -2078,7 +2078,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
       // * ports updates list (report/switch_ports.history.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
-         return " LEFT JOIN `glpi_networking_ports` ON ( `glpi_networking_ports`.`ID` = `glpi_plugin_fusioninventory_snmp_history`.`FK_ports` ) ";
+         return " LEFT JOIN `glpi_networking_ports` ON ( `glpi_networking_ports`.`ID` = `glpi_plugin_fusioninventory_snmphistories`.`FK_ports` ) ";
 			break;
 	}
 	return "";
@@ -2207,30 +2207,30 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** Display switch and Port
-				case "glpi_plugin_fusioninventory_snmp_history.ID" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmp_history.ID $order ";
+				case "glpi_plugin_fusioninventory_snmphistories.ID" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.ID $order ";
 					break;
 				case "glpi_networking_ports.ID" :
 					return " ORDER BY glpi_networking.name,glpi_networking_ports.name $order ";
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmp_history.Field" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmp_history.Field $order ";
+				case "glpi_plugin_fusioninventory_snmphistories.Field" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.Field $order ";
 					break;
 
 				// ** Display Old Value (before changement of value)
-				case "glpi_plugin_fusioninventory_snmp_history.old_value" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmp_history.old_value $order ";
+				case "glpi_plugin_fusioninventory_snmphistories.old_value" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.old_value $order ";
 					break;
 
 				// ** Display New Value (new value modified)
-				case "glpi_plugin_fusioninventory_snmp_history.new_value" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmp_history.new_value $order ";
+				case "glpi_plugin_fusioninventory_snmphistories.new_value" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.new_value $order ";
 					break;
 
-				case "glpi_plugin_fusioninventory_snmp_history.date_mod" :
-				return " ORDER BY glpi_plugin_fusioninventory_snmp_history.date_mod $order ";
+				case "glpi_plugin_fusioninventory_snmphistories.date_mod" :
+				return " ORDER BY glpi_plugin_fusioninventory_snmphistories.date_mod $order ";
 						break;
 
 			}
@@ -2507,7 +2507,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmp_history.Field" :
+				case "glpi_plugin_fusioninventory_snmphistories.Field" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.$field IS NULL ";

@@ -158,7 +158,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 		
 		global $DB,$CFG_GLPI,$LANG;	
 		
-		$history = new PluginFusionInventorySNMPHistory;
+		$history = new PluginFusioninventorySnmphistory;
 		
 		if (!PluginFusioninventory::haveRight("snmp_networking","r")) {
 			return false;
@@ -714,7 +714,7 @@ function appear_array(id){
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
 					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".
-                  PluginFusionInventorySNMPHistory::showHistory($data["ID"])."</td>
+                  PluginFusioninventorySnmphistory::showHistory($data["ID"])."</td>
 				</tr>
 				";
 			}

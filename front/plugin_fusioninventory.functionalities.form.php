@@ -79,7 +79,7 @@ if (isset($_POST['update'])) {
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['Clean_history']))) {
-   $history = new PluginFusionInventorySNMPHistory;
+   $history = new PluginFusioninventorySnmphistory;
    $history->CleanHistory("");
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['plugin_fusioninventory_lockable_add']))

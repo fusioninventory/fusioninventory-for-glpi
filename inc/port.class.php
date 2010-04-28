@@ -269,7 +269,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
             if (makeConnector($this->getValue('ID'),$destination_port)) { // connect those 2 ports
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                     array('query_nb_connections_created' => '1'));
-               PluginFusionInventorySNMPHistory::addLogConnection("make",$this->getValue('ID'));
+               PluginFusioninventorySnmphistory::addLogConnection("make",$this->getValue('ID'));
             }
          }
       }
@@ -284,8 +284,8 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
 	function disconnectDB($p_port='') {
       if ($p_port=='') $p_port=$this->getValue('ID');
       $netwire = new Netwire;
-      PluginFusionInventorySNMPHistory::addLogConnection("remove",$netwire->getOppositeContact($p_port));
-      //PluginFusionInventorySNMPHistory::addLogConnection("remove",$p_port);
+      PluginFusioninventorySnmphistory::addLogConnection("remove",$netwire->getOppositeContact($p_port));
+      //PluginFusioninventorySnmphistory::addLogConnection("remove",$p_port);
       $nn = new NetworkPort_NetworkPort();
       if ($nn->getFromDBForNetworkPort($p_port)) {
          if ($nn->delete(array('id'=>$p_port))) {
