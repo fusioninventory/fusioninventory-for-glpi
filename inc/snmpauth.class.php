@@ -73,8 +73,10 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][2] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_fusioninventory_snmpversions", "FK_snmp_version",
-         $this->fields["FK_snmp_version"], 0);
+		Dropdown::show("PluginFusioninventorySnmpversion",
+                     array('name' => "FK_snmp_version",
+                           'value' => $this->fields["FK_snmp_version"],
+                           'comments' => false));
 		echo "</td>";
 		echo "</tr>";
 
@@ -95,8 +97,10 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][4] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_fusioninventory_snmpprotocolauths", "auth_protocol",
-         $this->fields["auth_protocol"], 0);
+		Dropdown::show("PluginFusioninventorySnmpprotocolauth",
+                     array('name' => "auth_protocol",
+                           'value' => $this->fields["auth_protocol"],
+                           'comments' => false));
 		echo "</td>";
 		echo "</tr>";
 
@@ -111,8 +115,10 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][6] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_fusioninventory_snmpprotocolprivs", "priv_protocol",
-            $this->fields["priv_protocol"], 0);
+		Dropdown::show("PluginFusioninventorySnmpprotocolpriv",
+                     array('name' => "priv_protocol",
+                           'value' => $this->fields["priv_protocol"],
+                           'comments' => false));
 		echo "</td>";
 		echo "</tr>";
 

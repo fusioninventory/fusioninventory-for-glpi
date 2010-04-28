@@ -493,7 +493,10 @@ class PluginFusionInventorySNMP extends CommonDBTM {
       if ($config->getValue("authsnmp") == "file") {
          echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
       } else  if ($config->getValue("authsnmp") == "DB") {
-         dropdownValue("glpi_plugin_fusioninventory_snmpauths","FK_snmp_connection",$selected,0);
+         Dropdown::show("PluginFusioninventorySnmpauth",
+                        array('name' => "FK_snmp_connection",
+                              'value' => $selected,
+                              'comments' => false));
       }
    }
 

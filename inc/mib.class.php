@@ -219,18 +219,21 @@ class PluginFusionInventoryMib extends CommonDBTM {
 				echo "</tr>";
 
 				echo "<td align='center'>";
-				dropdownValue("glpi_plugin_fusioninventory_mib_label","FK_mib_label",0,1);
-//				Dropdown::show("PluginFusioninventoryMib_Label",
-//                           array('name' => "FK_mib_label",
-//                                 'value' => 0));
+				Dropdown::show("PluginFusioninventoryMib_Label",
+                           array('name' => "FK_mib_label",
+                                 'value' => 0));
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				dropdownValue("glpi_plugin_fusioninventory_mib_object","FK_mib_object",0,1,-1,'');
+				Dropdown::show("PluginFusioninventoryMib_Object",
+                           array('name' => "FK_mib_object",
+                                 'value' => 0));
 				echo "</td>";
 
 				echo "<td align='center'>";
-				dropdownValue("glpi_plugin_fusioninventory_mib_oid","FK_mib_oid",0,1);
+				Dropdown::show("PluginFusioninventoryMib_Oid",
+                           array('name' => "FK_mib_oid",
+                                 'value' => 0));
 				echo "</td>";
 				
 				echo "<td align='center'>";
