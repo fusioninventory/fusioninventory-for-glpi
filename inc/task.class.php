@@ -131,7 +131,9 @@ class PluginFusionInventoryTask extends CommonDBTM {
 		echo "</td>";
       
 		echo "<td align='center'>";
-      dropdownValue($pta->table,'agentocs','',1,1);
+      Dropdown::show("PluginFusionInventoryAgents",
+                     array('name'=>'agentocs',
+                           'entity'=>1)); //TODO : check
 		echo "</td>";
       echo "</tr>";
 

@@ -104,7 +104,9 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          echo "<td align='center'>" . $LANG['entity'][0] . " : </td>";
          echo "</td>";
          echo "<td align='center'>";
-         dropdownvalue("glpi_entities",'FK_entities', $this->fields["FK_entities"]);
+         Dropdown::show("Entity",
+                        array('name'=>'FK_entities',
+                              'value'=>$this->fields["FK_entities"]));
          echo "</td>";
          echo "</tr>";
          echo "</tr>";
@@ -159,14 +161,18 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       echo "<td align='center'>" . $LANG['setup'][89] . " : </td>";
       echo "</td>";
       echo "<td align='center'>";
-      dropdownValue("glpi_dropdown_domain", "domain", $this->fields["domain"]);
+      Dropdown::show("Domain",
+                     array('name'=>"domain",
+                           'value'=>$this->fields["domain"]));
       echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['common'][15] . " :</td>";
 		echo "<td align='center'>";
-      dropdownValue("glpi_dropdown_locations", "location", $this->fields["location"]);
+      Dropdown::show("Location",
+                     array('name'=>"location",
+                           'value'=>$this->fields["location"]));
 		echo "</td>";
 
       echo "<td align='center'>" . $LANG['common'][19] . " : </td>";
@@ -214,14 +220,18 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][4] . " : </td>";
          echo "</td>";
          echo "<td align='center'>";
-         dropdownValue("glpi_plugin_fusioninventory_model_infos", "FK_model_infos", $this->fields["FK_model_infos"]);
+         Dropdown::show("PluginFusionInventoryModelInfos",
+                        array('name'=>"FK_model_infos",
+                              'value'=>$this->fields["FK_model_infos"]));
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][3] . " :</td>";
          echo "<td align='center'>";
-         dropdownValue("glpi_plugin_fusioninventory_snmp_connection", "FK_snmp_connection", $this->fields["FK_snmp_connection"]);
+         Dropdown::show("PluginFusionInventorySNMPAuth",
+                        array('name'=>"FK_snmp_connection",
+                              'value'=>$this->fields["FK_snmp_connection"]));
          echo "</td>";
       }
 

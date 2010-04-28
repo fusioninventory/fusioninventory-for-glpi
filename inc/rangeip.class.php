@@ -112,14 +112,20 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][12] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_fusioninventory_agents","FK_fusioninventory_agents_discover",$this->fields["FK_fusioninventory_agents_discover"],0);
+		Dropdown::show("PluginFusioninventoryAgents",
+                     array('name'=>"FK_fusioninventory_agents_discover",
+                           'value'=>$this->fields["FK_fusioninventory_agents_discover"],
+                           'comments'=>false));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][13] . "</td>";
 		echo "<td align='center'>";
-		dropdownValue("glpi_plugin_fusioninventory_agents","FK_fusioninventory_agents_query",$this->fields["FK_fusioninventory_agents_query"],0);
+		Dropdown::show("PluginFusioninventoryAgents",
+                     array('name'=>"FK_fusioninventory_agents_query",
+                           'value'=>$this->fields["FK_fusioninventory_agents_query"],
+                           'comments'=>false));
 		echo "</td>";
 		echo "</tr>";
 
@@ -141,7 +147,9 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>".$LANG['entity'][0]."</td>";
          echo "<td align='center'>";
-         dropdownValue('glpi_entities', 'FK_entities',$this->fields["FK_entities"]);
+         Dropdown::show('Entity',
+                        array('name'=>'FK_entities',
+                              'value'=>$this->fields["FK_entities"]));
          echo "</td>";
          echo "</tr>";
       }

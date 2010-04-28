@@ -100,7 +100,9 @@ class PluginFusionInventoryConfigSNMPNetworking extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][20]."</td>";
 		echo "<td>";
-		dropdownValue("glpi_dropdown_state", "active_device_state", $this->getValue("active_device_state"));
+		Dropdown::show('State',
+                     array('name' => "active_device_state",
+                           'value' => $this->getValue("active_device_state")));
 		echo "</td>";
 		echo "</tr>";
 

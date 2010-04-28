@@ -67,12 +67,16 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][5].": 	</td><td>";
-      dropdownValue("glpi_dropdown_manufacturer","FK_glpi_enterprise",$this->fields["FK_glpi_enterprise"]);
+      Dropdown::show("Manufacturer",
+                     array('name'=>"FK_glpi_enterprise",
+                           'value'=>$this->fields["FK_glpi_enterprise"]));
       echo "</td>";
 
       echo "<tr>";
       echo "<td>".$LANG['setup'][71].": 	</td><td>\n";
-      dropdownValue("glpi_dropdown_firmware", "firmware", $this->fields["firmware"]);
+      Dropdown::show("NetworkEquipmentFirmware",
+                     array('name'=>"firmware",
+                           'value'=>$this->fields["firmware"]));
       echo "</td>";
       echo "</tr>\n";
 

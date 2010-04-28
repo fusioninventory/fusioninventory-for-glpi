@@ -108,8 +108,11 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['ID'];		
 		}
-		dropdownValue("glpi_plugin_fusioninventory_model_infos","FK_model_infos",$data["FK_model_infos"],
-                     0,-1,'',$exclude_models);
+		Dropdown::show("PluginFusionInventoryModelInfos",
+                     array('name'=>"FK_model_infos",
+                           'value'=>$data["FK_model_infos"],
+                           'comments'=>false,
+                           'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>";
       echo " <input type='submit' name='GetRightModel' value='".
