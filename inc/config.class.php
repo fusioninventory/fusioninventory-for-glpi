@@ -129,11 +129,11 @@ class PluginFusionInventoryConfig extends CommonDBTM {
  		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']['config'][0]."&nbsp;:</td>";
 		echo "<td>";
-      dropdownInteger("inventory_frequence",$this->getValue('inventory_frequence'),1,240);
+      Dropdown::showInteger("inventory_frequence",$this->getValue('inventory_frequence'),1,240);
 		echo "</td>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][32]."</td>";
 		echo "<td>";
-      dropdownInteger("delete_agent_process",$this->getValue('delete_agent_process'),1,240);
+      Dropdown::showInteger("delete_agent_process",$this->getValue('delete_agent_process'),1,240);
       echo " ".$LANG['gmt'][1];
 		echo "</td>";
       echo "</tr>";

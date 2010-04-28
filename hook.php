@@ -1696,12 +1696,12 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.nb_process_query' :
-			dropdownInteger("nb_process_query", $linkfield,1,200);
+			Dropdown::showInteger("nb_process_query", $linkfield,1,200);
 			return true;
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.nb_process_discovery' :
-			dropdownInteger("nb_process_discovery", $linkfield,1,400);
+			Dropdown::showInteger("nb_process_discovery", $linkfield,1,400);
 			return true;
 			break;
 
@@ -1714,22 +1714,22 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.core_discovery' :
-			dropdownInteger("core_discovery", $linkfield,1,32);
+			Dropdown::showInteger("core_discovery", $linkfield,1,32);
 			return true;
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.core_query' :
-			dropdownInteger("core_query", $linkfield,1,32);
+			Dropdown::showInteger("core_query", $linkfield,1,32);
 			return true;
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
-			dropdownInteger("threads_discovery", $linkfield,1,400);
+			Dropdown::showInteger("threads_discovery", $linkfield,1,400);
 			return true;
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.threads_query' :
-			dropdownInteger("threads_query", $linkfield,1,400);
+			Dropdown::showInteger("threads_query", $linkfield,1,400);
 			return true;
 			break;
 

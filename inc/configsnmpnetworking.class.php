@@ -107,35 +107,35 @@ class PluginFusionInventoryConfigSNMPNetworking extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][21]."</td>";
 		echo "<td>";
-		dropdownInteger("history_wire", $this->getValue('history_wire'),0,100);
+		Dropdown::showInteger("history_wire", $this->getValue('history_wire'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][22]."</td>";
 		echo "<td>";
-		dropdownInteger("history_ports_state", $this->getValue('history_ports_state'),0,100);
+		Dropdown::showInteger("history_ports_state", $this->getValue('history_ports_state'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][23]."</td>";
 		echo "<td>";
-		dropdownInteger("history_unknown_mac", $this->getValue('history_unknown_mac'),0,100);
+		Dropdown::showInteger("history_unknown_mac", $this->getValue('history_unknown_mac'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][24]."</td>";
 		echo "<td>";
-		dropdownInteger("history_snmp_errors", $this->getValue('history_snmp_errors'),0,100);
+		Dropdown::showInteger("history_snmp_errors", $this->getValue('history_snmp_errors'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][25]."</td>";
 		echo "<td>";
-		dropdownInteger("history_process", $this->getValue('history_process'),0,100);
+		Dropdown::showInteger("history_process", $this->getValue('history_process'),0,100);
 		echo "</td>";
 		echo "</tr>";
 
