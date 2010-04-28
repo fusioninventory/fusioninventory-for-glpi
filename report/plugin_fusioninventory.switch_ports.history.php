@@ -145,7 +145,8 @@ function displaySearchForm($FK_port) {
 	if (isset($_GET['Field'])) {
 		$default = $_GET['Field'];
    }
-	dropdownArrayValues("Field",$types,$default);
+	Dropdown::showFromArray("Field", $types,
+                           array('value'=>$default));
 
 	echo "</td>";
 	echo "</tr>";

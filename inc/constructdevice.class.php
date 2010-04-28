@@ -357,7 +357,9 @@ echo "</a>";
                                     }
                                  }
                               }
-                              dropdownArrayValues("links_oid_fields_".$oid_id_before,$types, $type_model."||".$mapping_pre[$type_model][$before],$a_mapping_used); //,$linkoid_used
+                              Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
+                                                      array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
+                                                            'used'=>$a_mapping_used)); //,$linkoid_used
                            }
                            echo "</th>";
                            echo "</tr>";
@@ -448,7 +450,9 @@ echo "</a>";
                            }
                         }
                      }
-                     dropdownArrayValues("links_oid_fields_".$oid_id_before,$types, $type_model."||".$mapping_pre[$type_model][$before],$a_mapping_used); //,$linkoid_used
+                     Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
+                                             array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
+                                                   'used'=>$a_mapping_used)); //,$linkoid_used
                   }
                echo "</th>";
                echo "</tr>";

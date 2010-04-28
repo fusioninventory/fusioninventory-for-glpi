@@ -257,7 +257,8 @@ class PluginFusionInventoryMib extends CommonDBTM {
 					}
 				}
 
-				dropdownArrayValues("links_oid_fields",$types,'',$linkoid_used);
+				Dropdown::showFromArray("links_oid_fields",$types,
+                                    array('used'=>$linkoid_used));
 
 				echo "</td>";
 

@@ -324,7 +324,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 //         $array_actions["SNMPQUERY"] = $LANG['plugin_fusioninventory']['config'][7];
 //      }
 
-      $rand = dropdownArrayValues("agentaction",$array_actions);
+      $rand = Dropdown::showFromArray("agentaction",$array_actions);
       echo "</td>";
       echo "</tr>";
       if (!isset($on_device)) {

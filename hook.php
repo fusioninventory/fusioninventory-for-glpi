@@ -1709,7 +1709,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			$ArrayValues[]= $LANG["choice"][0];
 			$ArrayValues[]= $LANG["choice"][1];
 			$ArrayValues[]= $LANG["setup"][137];
-			dropdownArrayValues('logs',$ArrayValues,$linkfield);
+			Dropdown::showFromArray('logs', $ArrayValues,
+                                 array('value'=>$linkfield));
 			return true;
 			break;
 

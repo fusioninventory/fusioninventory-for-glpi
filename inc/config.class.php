@@ -122,7 +122,8 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 		$ArrayValues = array();
 		$ArrayValues['DB']= $LANG['plugin_fusioninventory']["functionalities"][17];
 		$ArrayValues['file']= $LANG['plugin_fusioninventory']["functionalities"][18];
-		dropdownArrayValues('authsnmp', $ArrayValues,$this->getValue('authsnmp'));
+		Dropdown::showFromArray('authsnmp', $ArrayValues,
+                              array('value'=>$this->getValue('authsnmp')));
 		echo "</td>";
       echo "</tr>";
 

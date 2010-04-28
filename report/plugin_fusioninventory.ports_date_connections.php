@@ -116,7 +116,8 @@ function displaySearchForm() {
 			$_GET["contains"][1] = "LIKE '".$_GET["dropdown_calendar"]."%'";
 		}
 	}
-	dropdownArrayValues("dropdown_sup_inf",$values,(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup"));
+	Dropdown::showFromArray("dropdown_sup_inf", $values,
+                           array('value'=>(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup")));
 	echo "</td>
 		<td width='120'>";
 	showDateFormItem("dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));

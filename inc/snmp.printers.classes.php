@@ -990,7 +990,8 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
                       'pages_n_b_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'],
                       'pages_color_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'],
                       'pages_total_fax'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname']);
-      dropdownArrayValues('graph_graphField', $elementsField, $graphField);
+      Dropdown::showFromArray('graph_graphField', $elementsField,
+                              array('value'=>$graphField));
       echo "</td></tr>\n";
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][8]."&nbsp;:</td>
                                  <td class='left' colspan='2'>";
@@ -1005,7 +1006,8 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
                           'week'=>$LANG['plugin_fusioninventory']["prt_history"][35],
                           'month'=>$LANG['plugin_fusioninventory']["prt_history"][36],
                           'year'=>$LANG['plugin_fusioninventory']["prt_history"][37]);
-      dropdownArrayValues('graph_timeUnit', $elementsTime, $timeUnit);
+      Dropdown::showFromArray('graph_timeUnit', $elementsTime,
+                              array('value'=>$timeUnit));
       echo "</td></tr>\n";
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['Menu'][2]."&nbsp;:</td>
                                  <td class='left' colspan='2'>";
@@ -1027,7 +1029,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
       $printersTmp = $printersView;
       $printersTmp[0] = "-----";
       asort($printersTmp);
-      dropdownArrayValues('graph_printerCompRemove', $printersTmp);
+      Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
       echo "</td><td class='left'>\n";
       echo "<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
       echo "</td></tr>\n";

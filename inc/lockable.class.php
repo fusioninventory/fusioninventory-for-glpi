@@ -98,7 +98,9 @@ class PluginFusionInventoryLockable extends CommonDBTM{
             $elements[$data[0]]=$data[0];
          }
       }
-      $idSelect = 'dropdown_tableSelect'.dropdownArrayValues('tableSelect', $elements, $tableSelect);
+      $idSelect = 'dropdown_tableSelect'.
+                  Dropdown::showFromArray('tableSelect', $elements,
+                                          array('value'=>$tableSelect));
       $elements=array();
       echo "</td><td class='right'>";
 
