@@ -51,7 +51,6 @@ class PluginFusioninventorySetup extends CommonDBTM {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
       PluginFusioninventory::createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');

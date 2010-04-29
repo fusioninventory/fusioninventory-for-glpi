@@ -38,7 +38,6 @@ include (GLPI_ROOT."/inc/includes.php");
 if (haveRight("config","w") && haveRight("profile","w")) {
 
 	if(TableExists("glpi_plugin_fusioninventory_config")) {
-		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
 		PluginFusioninventorySetup::uninstall();
 		unset($_SESSION["glpi_plugin_fusioninventory_installed"]);
 	}
