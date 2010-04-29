@@ -205,7 +205,7 @@ class PluginFusioninventorySetup extends CommonDBTM {
                if($f > '0' and filetype($current_dir.$f) == "file") {
                   unlink($current_dir.$f);
                } else if ($f > '0' and filetype($current_dir.$f) == "dir") {
-                  delTree($current_dir.$f);
+                  PluginFusioninventorySetup::delTree($current_dir.$f);
                }
             }
             closedir($dir);
@@ -252,7 +252,7 @@ class PluginFusioninventorySetup extends CommonDBTM {
        $files = glob( $dir . '*', GLOB_MARK );
        foreach( $files as $file ){
            if( is_dir( $file ) )
-               delTree( $file );
+               PluginFusioninventorySetup::delTree( $file );
            else
                unlink( $file );
        }
