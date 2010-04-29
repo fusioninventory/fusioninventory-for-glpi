@@ -70,7 +70,7 @@ if (isset($_POST["delete"])) {
 	$ptud->delete($_POST,1);
 
 //	logEvent($_POST["ID"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
-	glpi_header($CFG_GLPI["root_doc"]."plugins/fusioninventory/front/plugin_fusioninventory.unknown.php");
+	glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.unknown.php");
 } else if (isset($_POST["restore"])) {
 
 
