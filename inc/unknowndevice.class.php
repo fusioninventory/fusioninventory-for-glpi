@@ -447,6 +447,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
       $nw = new Netwire;
       $np = new Netport;
+      $nn = new NetworkPort_NetworkPort();
       // List of macs : $p_oPort->getPortsToConnect
 
       // recherche dans unknown_device table le hub
@@ -478,7 +479,8 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $input["device_type"] = $this->type;
       $input["name"] = "Link";
       $id_port = $np->add($input);
-      makeConnector($p_oPort->getValue('ID'), $id_port);
+      $nn->add(array('networkports_id_1'=> $p_oPort->getValue('ID'),
+                     'networkports_id_2' => $id_port));
 
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
          $input = array();
@@ -492,7 +494,8 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
             $line = $DB->fetch_assoc($result);
-            makeConnector($line['ID'], $id_port);
+            $nn->add(array('networkports_id_1'=> $line['ID'],
+                           'networkports_id_2' => $id_port));
          } else {
             // Create device inconnu
 

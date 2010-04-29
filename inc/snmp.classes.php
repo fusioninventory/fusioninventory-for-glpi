@@ -331,7 +331,8 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                $nn->delete(array('id'=>$destination_port));
             }
 						
-				makeConnector($source_port,$destination_port);
+            $nn->add(array('networkports_id_1'=> $source_port,
+                           'networkports_id_2' => $destination_port));
 				PluginFusioninventorySnmphistory::addLogConnection("make",$destination_port,$FK_process);
 				PluginFusioninventorySnmphistory::addLogConnection("make",$source_port,$FK_process);
 				

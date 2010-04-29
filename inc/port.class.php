@@ -266,7 +266,9 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
             $this->disconnectDB($this->getValue('ID')); // disconnect this port
             $this->disconnectDB($destination_port);     // disconnect destination port
-            if (makeConnector($this->getValue('ID'),$destination_port)) { // connect those 2 ports
+            $nn = new NetworkPort_NetworkPort();
+            if ($nn->add(array('networkports_id_1'=> $this->getValue('ID'),
+                               'networkports_id_2' => $destination_port))) { //connect those 2 ports
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                     array('query_nb_connections_created' => '1'));
                PluginFusioninventorySnmphistory::addLogConnection("make",$this->getValue('ID'));
