@@ -807,7 +807,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                      $array["device_type"] = $type;
 
                      $IDport = $np->add($array);
-                     logEvent(0, "networking", 5, "inventory", "FusionInventory ".$LANG["log"][70]);
+                     Event::log(0, "networking", 5, "inventory", "FusionInventory ".$LANG["log"][70]);
                      if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync",
                                 "Add port in DB (glpi_networking_ports) : ".
                                 $ArrayPort_LogicalNum_SNMPName[$i],$type,$ID_Device,1);

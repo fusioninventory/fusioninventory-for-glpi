@@ -47,7 +47,8 @@ if (isset($_GET['file'])) {
    // Security test : document in $docDir
    if (strstr($filename,"../") || strstr($filename,"..\\")){
       echo "Security attack !!!";
-      logEvent($filename, "sendFile", 1, "security", $_SESSION["glpiname"]." try to get a non standard file.");
+      Event::log($filename, "sendFile", 1, "security",
+                 $_SESSION["glpiname"]." tries to get a non standard file.");
       return;
    }
 
