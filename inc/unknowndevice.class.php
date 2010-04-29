@@ -245,7 +245,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][4] . " :</td>";
 		echo "<td align='center'>";
-      echo getYesNo($this->fields["hub"]);
+      echo Dropdown::getYesNo($this->fields["hub"]);
 		echo "</td>";
 
       echo "<td align='center' colspan='2'></td>";
