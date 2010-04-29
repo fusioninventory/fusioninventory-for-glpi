@@ -390,26 +390,31 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             $data['ID'] = $ci->getField('ID');
             $data['FK_snmp_connection'] = 0;
 
-            if ($ci->getField('name') && !in_array('name', $a_lockable)) {
-               if (!empty($discovery->NETBIOSNAME)) {
-                  $data['name'] = $discovery->NETBIOSNAME;
-               } else if (!empty($discovery->SNMPHOSTNAME)) {
-                  $data['name'] = $discovery->SNMPHOSTNAME;
+            if ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+               if ($ci->getField('name') && !in_array('name', $a_lockable)) {
+                  if (!empty($discovery->NETBIOSNAME)) {
+                     $data['name'] = $discovery->NETBIOSNAME;
+                  } else if (!empty($discovery->SNMPHOSTNAME)) {
+                     $data['name'] = $discovery->SNMPHOSTNAME;
+                  }
                }
-            }
-            if ($ci->getField('dnsname') && !in_array('dnsname', $a_lockable))
-               $data['dnsname'] = $discovery->DNSHOSTNAME;
-            if ($ci->getField('FK_entities') && !in_array('FK_entities', $a_lockable))
-               $data['FK_entities'] = $discovery->ENTITY;
-            if ($ci->getField('serial') && !in_array('serial', $a_lockable))
-               $data['serial'] = $discovery->SERIAL;
-            if ($ci->getField('contact') && !in_array('contact', $a_lockable))
-               $data['contact'] = $discovery->USERSESSION;
-            if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {
-               $data['domain'] = 0;
-               if (!empty($discovery->WORKGROUP)) {
-                  $data['domain'] = externalImportDropdown(
-                                  "glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
+               if ($ci->getField('dnsname') && !in_array('dnsname', $a_lockable))
+                  $data['dnsname'] = $discovery->DNSHOSTNAME;
+               if ($ci->getField('FK_entities') && !in_array('FK_entities', $a_lockable))
+                  $data['FK_entities'] = $discovery->ENTITY;
+               if ($ci->getField('serial') && !in_array('serial', $a_lockable))
+                  $data['serial'] = $discovery->SERIAL;
+               if ($ci->getField('contact') && !in_array('contact', $a_lockable))
+                  $data['contact'] = $discovery->USERSESSION;
+               if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {
+                  $data['domain'] = 0;
+                  if (!empty($discovery->WORKGROUP)) {
+                     $data['domain'] = externalImportDropdown(
+                                     "glpi_dropdown_domain",$discovery->WORKGROUP,$discovery->ENTITY);
+                  }
+               }
+               if ($discovery->TYPE != "0") {
+                  $data['type'] = $discovery->TYPE;
                }
             }
             if ($ci->getField('comments') && !in_array('comments', $a_lockable))
@@ -423,9 +428,6 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                if ($discovery->AUTHSNMP != "") {
                   $data['snmp'] = 1;
                }
-            }
-            if (($discovery->TYPE != "0") AND ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN)) {
-               $data['type'] = $discovery->TYPE;
             }
 
             $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
