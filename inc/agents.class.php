@@ -159,7 +159,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
          echo $CommonItem->getLink(1);
          echo "<input type='hidden' name='on_device' value='".$this->fields["on_device"]."'/>";
       } else {
-         dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'on_device', $_SESSION['glpiactive_entity']);
+         Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'on_device', $_SESSION['glpiactive_entity']);
       }
 		echo "</td>";
 

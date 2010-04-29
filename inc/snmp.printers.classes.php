@@ -1022,7 +1022,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][32]."&nbsp;:</td><td class='left'>";
-      dropdownConnect(PRINTER_TYPE,PRINTER_TYPE,"graph_printerCompAdd", -1, 0, array_keys($printers));
+      Computer_Item::dropdownConnect(PRINTER_TYPE,PRINTER_TYPE,"graph_printerCompAdd", -1, 0, array_keys($printers));
       echo "</td><td class='left'>\n";
       echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
       echo "</td></tr>\n";
