@@ -312,7 +312,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
          if ($discovery->SERIAL == 'null') {
             $discovery->SERIAL = "";
          }
-         $p_criteria['serial'] = $discovery->SERIAL;
+         $p_criteria['serial'] = trim($discovery->SERIAL);
          $p_criteria['macaddr'] = $discovery->MAC;
 
          $discovery_criteria = plugin_fusioninventory_discovery_criteria($p_criteria);
@@ -327,7 +327,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
             }
             $ptud->fields['dnsname'] = $discovery->DNSHOSTNAME;
             $ptud->fields['FK_entities'] = $discovery->ENTITY;
-            $ptud->fields['serial'] = $discovery->SERIAL;
+            $ptud->fields['serial'] = trim($discovery->SERIAL);
             $ptud->fields['contact'] = $discovery->USERSESSION;
             if (!empty($discovery->WORKGROUP)) {
                $ptud->fields['domain'] = externalImportDropdown(
@@ -403,7 +403,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                if ($ci->getField('FK_entities') && !in_array('FK_entities', $a_lockable))
                   $data['FK_entities'] = $discovery->ENTITY;
                if ($ci->getField('serial') && !in_array('serial', $a_lockable))
-                  $data['serial'] = $discovery->SERIAL;
+                  $data['serial'] = trim($discovery->SERIAL);
                if ($ci->getField('contact') && !in_array('contact', $a_lockable))
                   $data['contact'] = $discovery->USERSESSION;
                if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {

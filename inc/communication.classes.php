@@ -752,9 +752,10 @@ class PluginFusionInventoryCommunication {
 
       $this->addLog('Function importInfo().');
       $errors='';
-      $criteria['serial']  = $p_info->SERIAL;
+      $criteria['serial']  = trim($p_info->SERIAL);
       $criteria['name']    = $p_info->NAME;
       $criteria['macaddr'] = $p_info->MAC; //TODO get mac in PORT for printer
+      $error_criteria = 0;
       if ($p_info->TYPE=='NETWORKING') {
          $this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, NETWORKING_TYPE);
          if ($this->deviceId != '') {
@@ -763,9 +764,10 @@ class PluginFusionInventoryCommunication {
             $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
                      type : '.$p_info->TYPE.'<br/>
                      ID : '.$p_info->ID.'<br/>
-                     serial : '.$p_info->SERIAL.'<br/>
+                     serial : '.trim($p_info->SERIAL).'<br/>
                      name : '.$p_info->NAME.'<br/>
                      macaddress : '.$p_info->MAC.'\n';
+            $error_criteria = 1;
          }
       } elseif ($p_info->TYPE=='PRINTER') {
          //TODO Get MAC address in port
@@ -790,12 +792,14 @@ class PluginFusionInventoryCommunication {
          if ($this->deviceId != '') {
             $errors.=$this->importInfoPrinter($p_info);
          } else {
-            $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
-                     type : '.$p_info->TYPE.'<br/>
-                     ID : '.$p_info->ID.'<br/>
-                     serial : '.$p_info->SERIAL.'<br/>
-                     name : '.$p_info->NAME.'<br/>
-                     macaddress : '.$p_info->MAC.'\n';
+            if ($error_criteria == 0) {
+               $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
+                        type : '.$p_info->TYPE.'<br/>
+                        ID : '.$p_info->ID.'<br/>
+                        serial : '.trim($p_info->SERIAL).'<br/>
+                        name : '.$p_info->NAME.'<br/>
+                        macaddress : '.$p_info->MAC.'\n';
+            }
          }
       }
       if (!empty($errors)) {
