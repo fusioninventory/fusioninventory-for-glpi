@@ -66,7 +66,7 @@ $LANG['plugin_fusioninventory']["profile"][16]="SNMP networking";
 $LANG['plugin_fusioninventory']["profile"][17]="SNMP peripheral";
 $LANG['plugin_fusioninventory']["profile"][18]="SNMP printers";
 $LANG['plugin_fusioninventory']["profile"][19]="SNMP models";
-$LANG['plugin_fusioninventory']["profile"][20]="SNMP authentification";
+$LANG['plugin_fusioninventory']["profile"][20]="SNMP authentication";
 $LANG['plugin_fusioninventory']["profile"][21]="Script information";
 $LANG['plugin_fusioninventory']["profile"][22]="Network discovery";
 $LANG['plugin_fusioninventory']["profile"][23]="General configuration";
@@ -111,10 +111,10 @@ $LANG['plugin_fusioninventory']["functionalities"][12]="SNMP networking module a
 $LANG['plugin_fusioninventory']["functionalities"][13]="SNMP peripheral module activation";
 $LANG['plugin_fusioninventory']["functionalities"][14]="SNMP phones module activation";
 $LANG['plugin_fusioninventory']["functionalities"][15]="SNMP printers module activation";
-$LANG['plugin_fusioninventory']["functionalities"][16]="SNMP authentification";
+$LANG['plugin_fusioninventory']["functionalities"][16]="SNMP authentication";
 $LANG['plugin_fusioninventory']["functionalities"][17]="Database";
 $LANG['plugin_fusioninventory']["functionalities"][18]="Files";
-$LANG['plugin_fusioninventory']["functionalities"][19]="Please configure the SNMP authentification in the setup of the plugin";
+$LANG['plugin_fusioninventory']["functionalities"][19]="Please configure the SNMP authentication in the setup of the plugin";
 $LANG['plugin_fusioninventory']["functionalities"][20]="Status of active devices";
 $LANG['plugin_fusioninventory']["functionalities"][21]="Retention of the historical interconnections between material in days (0 = infinity)";
 $LANG['plugin_fusioninventory']["functionalities"][22]="Retention of the historic changes to the state of ports (0 = infinity)";
@@ -134,7 +134,7 @@ $LANG['plugin_fusioninventory']["functionalities"][36]="Frequency of meter readi
 $LANG['plugin_fusioninventory']["functionalities"][40]="Configuration";
 $LANG['plugin_fusioninventory']["functionalities"][41]="Status of active material";
 $LANG['plugin_fusioninventory']["functionalities"][42]="Switch";
-$LANG['plugin_fusioninventory']["functionalities"][43]="SNMP authentification";
+$LANG['plugin_fusioninventory']["functionalities"][43]="SNMP authentication";
 
 $LANG['plugin_fusioninventory']["functionalities"][50]="Number of simultaneous processes for the network discovery";
 $LANG['plugin_fusioninventory']["functionalities"][51]="Number of simultaneous processes for SNMP queries";
@@ -215,7 +215,7 @@ $LANG['plugin_fusioninventory']["errors"][50]="GLPI version not compatible need 
 
 $LANG['plugin_fusioninventory']["errors"][101]="Timeout";
 $LANG['plugin_fusioninventory']["errors"][102]="No SNMP model assigned";
-$LANG['plugin_fusioninventory']["errors"][103]="No SNMP authentification assigned";
+$LANG['plugin_fusioninventory']["errors"][103]="No SNMP authentication assigned";
 $LANG['plugin_fusioninventory']["errors"][104]="Error message";
 
 $LANG['plugin_fusioninventory']["history"][0] = "Old";
@@ -257,11 +257,11 @@ $LANG['plugin_fusioninventory']["type"][3]="Printer";
 $LANG['plugin_fusioninventory']["rules"][1]="Rules";
 
 $LANG['plugin_fusioninventory']["massiveaction"][1]="Assign SNMP model";
-$LANG['plugin_fusioninventory']["massiveaction"][2]="Assign SNMP authentification";
+$LANG['plugin_fusioninventory']["massiveaction"][2]="Assign SNMP authentication";
 
 $LANG['plugin_fusioninventory']["model_info"][1]="SNMP information";
 $LANG['plugin_fusioninventory']["model_info"][2]="SNMP version";
-$LANG['plugin_fusioninventory']["model_info"][3]="SNMP authentification";
+$LANG['plugin_fusioninventory']["model_info"][3]="SNMP authentication";
 $LANG['plugin_fusioninventory']["model_info"][4]="SNMP models";
 $LANG['plugin_fusioninventory']["model_info"][5]="MIB management";
 $LANG['plugin_fusioninventory']["model_info"][6]="Edit SNMP model";
