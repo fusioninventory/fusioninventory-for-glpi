@@ -323,20 +323,10 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['field'] = 'core_discovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['linkfield'] = 'core_discovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['name'] = $LANG['plugin_fusioninventory']["agents"][11];
-
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['field'] = 'threads_discovery';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['linkfield'] = 'threads_discovery';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['name'] = $LANG['plugin_fusioninventory']["agents"][3];
-
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['field'] = 'core_query';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['linkfield'] = 'threads_query';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['name'] = $LANG['plugin_fusioninventory']["agents"][10];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['field'] = 'threads_query';
