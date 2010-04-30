@@ -56,36 +56,36 @@ if (PluginFusioninventory::haveRight("configuration","r")) {
    switch($_POST['glpi_tab']) {
       case -1 :
          $config = new PluginFusioninventoryConfig;
-         $config->showForm($_POST['target'],'1');
+         $config->showForm('1', array('target'=>$_POST['target']));
          $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm($_POST['target'],'1');
+         $config_modules->showForm('1', array('target'=>$_POST['target']));
          $history = new PluginFusioninventorySnmphistory;
-         $history->showForm($_POST['target'],'1');
+         $history->showForm('1', array('target'=>$_POST['target']));
          $ptLockable = new PluginFusioninventoryLockable;
-         $ptLockable->showForm($_POST['target']);
+         $ptLockable->showForm(array('target'=>$_POST['target']));
          break;
 
       case 2 :
          $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm($_POST['target'],'1');
+         $config_modules->showForm('1', array('target'=>$_POST['target']));
          break;
 
       case 7 :
          // Historique
          $history = new PluginFusioninventoryConfigSNMPHistory;
-         $history->showForm($_POST['target']);
+         $history->showForm(array('target'=>$_POST['target']));
          break;
 
       case 8 :
          // lockables
          $ptLockable = new PluginFusioninventoryLockable;
-         $ptLockable->showForm($_POST['target']);
+         $ptLockable->showForm(array('target'=>$_POST['target']));
          break;
 
       default :
          if (!displayPluginAction(COMPUTER_TYPE,$_POST["ID"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
             $config = new PluginFusioninventoryConfig;
-            $config->showForm($_POST['target'],'1');
+            $config->showForm('1', array('target'=>$_POST['target']));
          }
          break;
    }

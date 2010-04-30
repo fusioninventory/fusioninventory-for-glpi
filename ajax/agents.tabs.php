@@ -52,16 +52,16 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 $pfia = new PluginFusioninventoryAgents;
 $pfit = new PluginFusioninventoryTask;
 
-$pfia->showForm($_POST['target'], $_POST["ID"]);
+$pfia->showForm($_POST["ID"]);
 
 switch($_POST['glpi_tab']) {
 	case -1 :
-      $pfia->showFormAdvancedOptions($_POST['target'], $_POST["ID"]);
+      $pfia->showFormAdvancedOptions($_POST["ID"]);
       $pfit->RemoteStateAgent($_POST['target'], $_POST["ID"], PLUGIN_FUSIONINVENTORY_SNMP_AGENTS, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
 	case 1 :
-      $pfia->showFormAdvancedOptions($_POST['target'], $_POST["ID"]);
+      $pfia->showFormAdvancedOptions($_POST["ID"]);
 		break;
 
    case 2 :
@@ -69,7 +69,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    default :
-      $pfia->showFormAdvancedOptions($_POST['target'], $_POST["ID"]);
+      $pfia->showFormAdvancedOptions($_POST["ID"]);
 		break;
 }
 

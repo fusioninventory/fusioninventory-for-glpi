@@ -46,7 +46,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 	}
 
 
-	function showForm($target, $ID = '') {
+	function showForm($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		if ($ID!='') {
@@ -54,12 +54,8 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-		$this->showTabs($ID, "",$_SESSION['glpi_tab']);
-		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
-
-		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["rangeip"][2];
-		echo " :</th></tr>";
+		$this->showTabs($options);
+      $this->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
@@ -154,19 +150,12 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
          echo "</tr>";
       }
 
+		$this->showFormButtons($options);
 
-		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-      if(PluginFusioninventory::haveRight("rangeip","w")) {
-         if ($ID=='') {
-            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-         } else {
-            echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-            echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
-         }
-      }
-		echo "</td></tr>";
-		echo "</table></form></div>";
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
 	}
 
 

@@ -88,7 +88,7 @@ $ID = "";
 if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
 } else {
-   $agents->showForm($_SERVER["PHP_SELF"], $ID);
+   $agents->showForm($ID);
 }
 
 $agents->showTabs($ID, '',$_SESSION['glpi_tab']);

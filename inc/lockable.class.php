@@ -59,7 +59,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     *@return nothing (print the form)
     **/
    // si suppr du lockable --> suppr les locks
-   function showForm($p_target) {
+   function showForm($options=array()) {
       global $LANG, $DB, $LINK_ID_TABLE;
 
       $tableSelect='';
@@ -70,13 +70,8 @@ class PluginFusioninventoryLockable extends CommonDBTM{
          }
       }
 
-      echo "<form method='post' name='setLockable_form' id='setLockable_form'
-                  action='".$p_target."'>";
-      echo "<table class='tab_cadre_fixe' cellpadding='2'>";
-
-      echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']["functionalities"][70]."</th>";
-      echo "</tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][72]." :</td>";

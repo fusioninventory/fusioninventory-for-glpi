@@ -149,14 +149,8 @@ class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
       
 		global $LANG,$DB,$FUSIONINVENTORY_MAPPING;
 
-      echo "<form method='post' name='functionalities_form' id='functionalities_form' action='".$target."'>";
-		echo "<table class='tab_cadre_fixe' cellpadding='2'>";
-
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["functionalities"][28]." :";
-		echo "</th>";
-		echo "</tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
 		echo "<tr>";
 		echo "<th>";
@@ -191,15 +185,8 @@ class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
          }
       }
 
-      echo "<tr class='tab_bg_2'>";
-      echo "<td align='center' colspan='2'>";
-      if (PluginFusioninventory::haveRight("configuration","w")) {
-   		echo "<input type='hidden' name='tabs' value='history' />";
-   		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
-      }
-      echo "</td>";
-      echo "</tr>";
-		echo "</table>";
+      $this->showFormButtons($options);
+
 
       echo "<br/>";
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
@@ -212,8 +199,10 @@ class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
 
-      echo "</form>";
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
+      return true;
 	}
 }
 

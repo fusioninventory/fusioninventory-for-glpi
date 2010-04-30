@@ -1386,15 +1386,17 @@ function plugin_headings_fusioninventory_computerInfo($type, $ID) {
 function plugin_headings_fusioninventory_printerInfo($type, $ID) {
 	include_once(GLPI_ROOT."/inc/stat.function.php");
 	$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
-	$plugin_fusioninventory_printers->showFormPrinter(GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php', $ID);
-//	$plugin_fusioninventory_printers->showFormPrinter_pagescounter(GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php', $ID);
+	$plugin_fusioninventory_printers->showFormPrinter($ID, 
+               array('target'=>GLPI_ROOT.'/plugins/fusioninventory/front/printer_info.form.php'));
 	echo '<div id="overDivYFix" STYLE="visibility:hidden">fusioninventory_1</div>';
-   $plugin_fusioninventory_printers->showFormPrinter_graph(GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php', $ID);
+   $plugin_fusioninventory_printers->showFormPrinter_graph($ID, 
+               array('target'=>GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php'));
 }
 
 function plugin_headings_fusioninventory_printerHistory($type, $ID) {
 	$print_history = new PluginFusioninventoryPrintersHistory;
-	$print_history->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/printer_history.form.php', $_GET["ID"]);
+	$print_history->showForm($_GET["ID"],
+               array('target'=>GLPI_ROOT.'/plugins/fusioninventory/front/printer_history.form.php'));
 }
 
 function plugin_headings_fusioninventory_printerErrors($type, $ID) {
@@ -1404,7 +1406,8 @@ function plugin_headings_fusioninventory_printerErrors($type, $ID) {
 
 function plugin_headings_fusioninventory_networkingInfo($type, $ID) {
 	$snmp = new PluginFusioninventoryNetworking;
-	$snmp->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/switch_info.form.php', $ID);
+	$snmp->showForm($ID, 
+           array('target'=>GLPI_ROOT.'/plugins/fusioninventory/front/switch_info.form.php'));
 }
 
 function plugin_headings_fusioninventory_networkingErrors($type, $ID) {
@@ -1426,7 +1429,8 @@ function plugin_headings_fusioninventory($type,$ID,$withtemplate=0) {
 			if (!$prof->GetfromDB($ID)) {
 				PluginFusioninventory::createaccess($ID);
          }
-			$prof->showForm($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php",$ID);
+			$prof->showForm($ID, 
+              array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php"));
 		break;
 	}
 }

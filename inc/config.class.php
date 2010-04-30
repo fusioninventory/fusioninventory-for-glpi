@@ -100,17 +100,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 	
 
 	
-	function showForm($target,$ID) {
+	function showForm($ID, $options=array()) {
 		global $LANG,$CFG_GLPI;
 
-		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
-		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
-		
-		echo "<tr>";
-		echo "<th colspan='4'>";
-		echo $LANG['plugin_fusioninventory']["functionalities"][2]."&nbsp;:";
-		echo "</th>";
-		echo "</tr>";
+		$this->showTabs($options);
+      $this->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
@@ -203,16 +197,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='4'>";
-      if (PluginFusioninventory::haveRight("configuration","w")) {
-   		echo "<input type='hidden' name='tabs' value='config' />";
-   		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
-      }
-      echo "</td>";
-      echo "</tr>";
-		echo "</table></form>";
+		$this->showFormButtons($options);
 
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
 	}
 }
 

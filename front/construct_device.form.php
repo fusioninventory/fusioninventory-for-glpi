@@ -118,7 +118,7 @@ if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
 }
 
-$ptcd->showForm($_SERVER["PHP_SELF"], $ID);
+$ptcd->showForm($ID);
 $ptcd->manageWalks($_SERVER["PHP_SELF"], $ID);
 
 commonFooter();

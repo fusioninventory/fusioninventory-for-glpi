@@ -58,7 +58,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
-	function showForm($target, $ID = '') {
+	function showForm($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		PluginFusioninventoryAuth::checkRight("snmp_networking","r");
@@ -71,16 +71,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 			$this->getEmpty();
       }
 
-      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
-
-		echo "<table  class='tab_cadre_fixe'>";
-
-		echo "<tr><th colspan='4'>";
-		echo $LANG['plugin_fusioninventory']["menu"][4]." ( ".$LANG['plugin_fusioninventory']["unknown"][3]." ";
-      $CommonItem->getFromDB(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,
-                          $this->fields["FK_agent"]);
-      echo $CommonItem->getLink(1);
-		echo ") :</th></tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
 		$datestring = $LANG["common"][26].": ";
 		$date = convDateTime($this->fields["date_mod"]);
@@ -251,38 +243,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<td align='center' colspan='2'></td>";
 		echo "</tr>";
       
-      echo "<tr>";
-      echo "<td class='tab_bg_2' align='center' colspan='4'>\n";
-      echo "<table width='100%'>";
-      echo "<tr>";
-      echo "<td width='33%' align='center'>";
-      echo "<input type='hidden' name='ID' value=$ID>";
-      echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
-      echo "</td>";
-      echo "<td width='33%' align='center'>";
-      echo "<input type='hidden' name='ID' value=$ID>";
-      echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
-      echo "</td>";
-      echo "<td width='33%' align='center'>";
-      echo "<input type='hidden' name='ID' value=$ID>";
-      echo "<div class='center'>";
-      if(PluginFusioninventory::haveRight("unknowndevices","w")) {
-         if (!$this->fields["deleted"]){
-            echo "<input type='submit' name='delete' value=\"".$LANG['buttons'][6]."\" class='submit'>";
-         } else {
-            echo "<input type='submit' name='restore' value=\"".$LANG['buttons'][21]."\" class='submit'>";
+      $this->showFormButtons($options);
 
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"".$LANG['buttons'][22]."\" class='submit'>";
-         }
-      }
-      echo "</div>";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-      echo "</td>";
-      echo "</tr>";
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-		echo "</table></form></div>";
+      return true;
 	}
 
 

@@ -83,19 +83,11 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
       }
 	}
 
-
-	
-	function showForm($target,$ID) {
+	function showForm($ID, $options=array()) {
 		global $LANG;
 		
-		echo "<form method='post' name='functionalities_form' id='functionalities_form'  action='".$target."'>";
-		echo "<table class='tab_cadre_fixe' cellpadding='5'>";
-		
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG["Menu"][1]." :";
-		echo "</th>";
-		echo "</tr>";
+		$this->showTabs($options);
+      $this->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][20]."</td>";
@@ -141,10 +133,14 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
 		echo "<input type='hidden' name='tabs' value='snmp_networking' />";
-		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' ></div></td></tr>";
-		echo "</table></form>";	
+      
+		$this->showFormButtons($options);
+
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
 	}
 
    function CleanHistory($option) {

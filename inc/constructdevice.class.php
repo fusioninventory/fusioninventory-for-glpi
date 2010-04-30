@@ -46,7 +46,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
 	}
 
 
-      function showForm($target, $ID = '') {
+   function showForm($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		if ($ID!='') {
@@ -55,15 +55,8 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
 			$this->getEmpty();
       }
 
-		$this->showTabs($ID, "",$_SESSION['glpi_tab']);
-		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
-
-		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["constructdevice"][0];
-		echo " :</th>";
-		echo "</tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][5].": 	</td><td>";
@@ -115,17 +108,12 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
 		echo "</td>";
       echo "</tr>";
 
-		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-		if ($ID=='') {
-			echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-		} else {
-			echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-			echo "<div align='center'><input type='submit' name='update' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-			echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" . $LANG["buttons"][6] . "\" class='submit'>";
-		}
-		echo "</td></tr>";
-		echo "</table></form></div>";
+		$this->showFormButtons($options);
 
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
 	}
 
 

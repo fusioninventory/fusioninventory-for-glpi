@@ -55,7 +55,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 
 
-	function showFormPrinter($target,$ID) {
+	function showFormPrinter($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;	
 	
 		PluginFusioninventoryAuth::checkRight("snmp_printers","r");
@@ -84,18 +84,9 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		}
 		
 		// Form printer informations
-//		echo "<br>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
-                 action=\"".$target."\">";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
-		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']["snmp"][11];
-		echo "</th>";
-		echo "</tr>";
-		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["model_info"][4]."</td>";
 		echo "<td align='center'>";
@@ -281,7 +272,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 
 
-	function showFormPrinter_pagescounter($target,$ID) {
+	function showFormPrinter_pagescounter($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;	
 		
 		$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
@@ -324,15 +315,8 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			}	
 		
 		// Form pages counter
-//		echo "<br>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
-                 action=\"".$target."\">";
-		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANG["cartridges"][39];
-		echo "</th>";
-		echo "</tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
 		if ( (isset($mapping_name['pagecountertotalpages']))
            AND ($mapping_name['pagecountertotalpages'] == "1") ) {
@@ -889,17 +873,12 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
    /**
     * Show printer graph form
-    *
-    *@param $p_target
-    *@param $p_ID
-    *@return nothing (print the form)
     **/
-   function showFormPrinter_graph($p_target, $p_ID) {
+   function showFormPrinter_graph($ID, $options=array()) {
       global $FUSIONINVENTORY_MAPPING, $LANG;
 
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
-      $target = $p_target;
       $where=''; $begin=''; $end=''; $timeUnit='date'; $graphField='pages_total'; $printersComp = array();
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
@@ -973,13 +952,9 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
                 .$group."
                 ORDER BY `date`, `FK_printers`";
 
-      echo "<form method='post' name='printerGraph_form' id='printerGraph_form'
-                  action='".$p_target."'>";
-      echo "<table class='tab_cadre_fixe' cellpadding='2'>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
-      echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']["prt_history"][20]."</th>";
-      echo "</tr>";
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][30]."&nbsp;:</td><td class='left' colspan='2'>";
       $elementsField=array('pages_total'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'],
                       'pages_n_b'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'],

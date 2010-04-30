@@ -79,7 +79,7 @@ if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
 }
 
-$rangeip->showForm($_SERVER["PHP_SELF"], $ID);
+$rangeip->showForm($ID);
 
 commonFooter();
 

@@ -87,7 +87,7 @@ if (isset ($_POST["add_oid"])) {
 }
 
 if(PluginFusioninventory::HaveRight("snmp_models","r")) {
-   $importexport->showForm($_SERVER["PHP_SELF"]);
+   $importexport->showForm('');
    $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
 }
 $ID = "";
@@ -102,8 +102,8 @@ if(!empty($_POST["item_coche"])) {
 }
 
 if(PluginFusioninventory::HaveRight("snmp_models","r")) {
-   $plugin_fusioninventory_model_infos->showForm($_SERVER["PHP_SELF"], $ID);
-   $plugin_fusioninventory_mib_networking->showForm($_SERVER["PHP_SELF"], $ID);
+   $plugin_fusioninventory_model_infos->showForm($ID);
+   $plugin_fusioninventory_mib_networking->showForm($ID);
 }
 commonFooter();
 

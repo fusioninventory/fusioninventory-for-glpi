@@ -74,18 +74,11 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
  	}
 
 
-   function showForm($target,$ID) {
+   function showForm($ID, $options=array()) {
       global $LANG, $DB;
 
-      echo "<form method='post' name='functionalities_form' id='functionalities_form'
-                  action='".$target."'>";
-		echo "<table class='tab_cadre_fixe' cellpadding='2'>";
-
-		echo "<tr>";
-		echo "<th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']["functionalities"][28]." :";
-		echo "</th>";
-		echo "</tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='3'>";
@@ -188,16 +181,12 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 		echo "</th>";
 		echo "</tr>";
 
+		$this->showFormButtons($options);
 
-		echo "<tr class='tab_bg_1'><td align='center' colspan='3'>";
-      if (PluginFusioninventory::haveRight("configuration","w")) {
-   		echo "<input type='hidden' name='tabs' value='history' />";
-   		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][2]."\" class='submit' >";
-      }
-      echo "</td>";
-      echo "</tr>";
-		echo "</table></form>";
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
+      return true;
    }
 
    function UpdateConfigFields($data) {

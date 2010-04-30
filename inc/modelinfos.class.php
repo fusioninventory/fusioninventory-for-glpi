@@ -45,7 +45,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 		$this->type = PLUGIN_FUSIONINVENTORY_MODEL;
 	}
 
-	function showForm($target, $ID = '') {
+	function showForm($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
@@ -56,13 +56,8 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 			$this->getEmpty();	
       }
 
-      $this->showTabs($ID, "",$_SESSION['glpi_tab']);
-		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
-
-		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($ID =='' ? $LANG['plugin_fusioninventory']["model_info"][7] :
-            $LANG['plugin_fusioninventory']["model_info"][6]);
-		echo " :</th></tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
@@ -94,30 +89,12 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventory::haveRight("snmp_models","w")) {
-         if ($ID=='') {
-            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
-                 "\" class='submit' >";
-         } else {
-            echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-            echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
-                 "\" class='submit' >";
-            if (!$this->fields["deleted"]) {
-               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
-                    $LANG["buttons"][6] . "\" class='submit'>";
-            } else {
-               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" .
-                    $LANG["buttons"][21] . "\" class='submit'>";
+		$this->showFormButtons($options);
 
-               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" .
-                    $LANG["buttons"][22] . "\" class='submit'>";
-            }
-         }
-      }
-		echo "</td>";
-		echo "</tr>";
-		echo "</table></form></div>";
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
 	}
 	
 	

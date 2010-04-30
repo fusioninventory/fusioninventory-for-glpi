@@ -94,10 +94,7 @@ if (isset($_POST["delete"])) {
    }
 }
 
-$ptud->showTabs($ID, '',$_SESSION['glpi_tab']);
-$ptud->showForm($_SERVER["PHP_SELF"], $ID);
-echo "<div id='tabcontent'></div>";
-echo "<script type='text/javascript'>loadDefaultTab();</script>";
+$ptud->showForm($ID);
 
 commonFooter();
 

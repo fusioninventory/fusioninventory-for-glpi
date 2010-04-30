@@ -103,7 +103,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 		return false;
 	}
 	
-	function showForm($target, $ID) {
+	function showForm($ID, $options=array()) {
 		global $LANG;
 		
 		if (!PluginFusioninventory::haveRight("snmp_printers","r")) {
@@ -113,10 +113,8 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 		// display stats
 		if ($stats = $this->stats($ID)) {
 				
-			echo "<br><div align = 'center'>";
-			echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-			echo $LANG['plugin_fusioninventory']["prt_history"][10]." ".$stats["num_days"]." ".
-                 $LANG['plugin_fusioninventory']["prt_history"][11]."</th></tr>";
+			$this->showTabs($options);
+         $this->showFormHeader($options);
 			
 			echo "<tr class='tab_bg_1'>";
 			echo "<td>".$LANG['plugin_fusioninventory']["prt_history"][12]." : </td>";

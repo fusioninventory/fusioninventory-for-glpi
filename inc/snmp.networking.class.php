@@ -154,7 +154,7 @@ class PluginFusioninventoryNetworking extends CommonDBTM {
 	}
 	
 	
-	function showForm($target,$ID) {
+	function showForm($ID, $options=array()) {
 		
 		global $DB,$CFG_GLPI,$LANG;	
 		
@@ -195,16 +195,8 @@ class PluginFusioninventoryNetworking extends CommonDBTM {
       $PID = $this->fields['last_PID_update'];
 
 		// Form networking informations
-		echo "<div align='center'>
-            <form method='post' name='snmp_form' id='snmp_form' action=\"".$target."\">";
-
-		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']["snmp"][11];
-		echo "</th>";
-		echo "</tr>";
+		$this->showTabs($options);
+      $this->showFormHeader($options);
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["profile"][24]."</td>";

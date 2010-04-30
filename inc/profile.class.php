@@ -105,7 +105,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 	}
 	
-	function showForm($target,$ID) {
+	function showForm($ID, $options=array()) {
 		global $LANG;
 
 		if (!haveRight("profile","r")) return false;
@@ -114,14 +114,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 			$this->getFromDB($ID);
 		}
 
-		echo "<form action='".$target."' method='post'>";
-		echo "<table class='tab_cadre_fixe'>";
-
-		echo "<tr>";
-      echo "<th colspan='4' align='center'>";
-      echo $LANG['plugin_fusioninventory']["profile"][0]." ".$this->fields["name"];
-      echo "</th>";
-      echo "</tr>";
+		$this->showTabs($options);
+      $this->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["profile"][16]." :</td>";
@@ -217,15 +211,12 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
-		if ($canedit) {
-			echo "<tr class='tab_bg_1'>";
-			echo "<td  align='center' colspan='3'>";
-			echo "<input type='hidden' name='ID' value=$ID>";
-			echo "<input type='submit' name='update_user_profile' value=\"".$LANG["buttons"][7]."\" class='submit'>";
-			echo "</td></tr>\n";
-		}
-		echo "</table>";
+		$this->showFormButtons($options);
 
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
 	}
 	
 }

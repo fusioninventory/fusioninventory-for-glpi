@@ -96,30 +96,26 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 	
 	
 	
-	function showForm($target) {
+	function showForm($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 		
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 		
-		echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
-		
-		echo "<br>";
-		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["model_info"][10]." :</th></tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 		
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'>";
 		echo "</td>";
 		echo "<td align='center'>";
 		echo "<input type='file' name='importfile' value=''/>";
-      if(PluginFusioninventory::haveRight("snmp_models","w")) {
-         echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
-      }
-		echo "</td>";
-		echo "</tr>";
-		echo "</table>";
-		
-		echo "</form>";		
+
+      $this->showFormButtons($options);
+
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
 	}
 
 

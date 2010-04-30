@@ -46,7 +46,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 
 
 
-	function showForm($target,$ID) {
+	function showForm($ID, $options=array()) {
 		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
@@ -74,16 +74,8 @@ class PluginFusioninventoryMib extends CommonDBTM {
 				$linkoid_used = array();
 				
 				echo "<br>";
-				echo "<div align='center'><form method='post' name='odi_list' id='oid_list'
-                       action=\"".$target."\">";
-		
-				//echo "<table class='tab_cadre' cellpadding='5' width='800'><tr><th colspan='7'>";
-				$nb_col = 8;
-				if ($data['device_type'] == NETWORKING_TYPE) {
-					$nb_col++;
-            }
-				echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-				echo $LANG['plugin_fusioninventory']["mib"][5]."</th></tr>";
+				$this->showTabs($options);
+            $this->showFormHeader($options);
 				
 				echo "<tr class='tab_bg_1'>";
 				echo "<th align='center'></th>";
@@ -273,16 +265,12 @@ class PluginFusioninventoryMib extends CommonDBTM {
 				
 				echo "</tr>";
 				
-				echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
-            if(PluginFusioninventory::haveRight("snmp_models","w")) {
-   				echo "<input type='hidden' name='FK_model_infos' value='".$ID."'/>";
-   				echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
-                     "\" class='submit' >";
-            }
-				echo "</td>";
-            echo "</tr>";
-				
-				echo "</table></form></div>";
+				$this->showFormButtons($options);
+
+            echo "<div id='tabcontent'></div>";
+            echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+            return true;
 			}		
 		}
 	}
