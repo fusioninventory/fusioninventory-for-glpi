@@ -567,7 +567,6 @@ $LANG['plugin_fusioninventory']["agents"][4]="Last scan";
 $LANG['plugin_fusioninventory']["agents"][5]="Agent version";
 $LANG['plugin_fusioninventory']["agents"][6]="Lock";
 $LANG['plugin_fusioninventory']["agents"][7]="Export agent configuration";
-$LANG['plugin_fusioninventory']["agents"][8]="Fragments en Ko";
 $LANG['plugin_fusioninventory']["agents"][9]="Advanced options";
 $LANG['plugin_fusioninventory']["agents"][10]="Number of core(s) (CPU) used for querying devices";
 $LANG['plugin_fusioninventory']["agents"][11]="Number of core(s) (CPU) used for network discovery";

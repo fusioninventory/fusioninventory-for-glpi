@@ -563,7 +563,6 @@ $LANG['plugin_fusioninventory']["agents"][4]="Dernière remontée";
 $LANG['plugin_fusioninventory']["agents"][5]="Version de l'agent";
 $LANG['plugin_fusioninventory']["agents"][6]="Verrouillage";
 $LANG['plugin_fusioninventory']["agents"][7]="Export config agent";
-$LANG['plugin_fusioninventory']["agents"][8]="Fragments en Ko";
 $LANG['plugin_fusioninventory']["agents"][9]="Options avancées";
 $LANG['plugin_fusioninventory']["agents"][10]="Coeurs (CPU) interrogation";
 $LANG['plugin_fusioninventory']["agents"][11]="Coeurs (CPU) découverte";
