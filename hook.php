@@ -2638,4 +2638,122 @@ function plugin_item_update_fusioninventory($parm) {
    }
 }
 
+
+function plugin_item_add_fusioninventory($parm) {
+	global $DB;
+
+	if (isset($parm["type"])) {
+		switch ($parm["type"]) {
+
+         case NETWORKING_PORT_TYPE :
+            // Verify when add networking port on object (not unknown device) if port
+            // of an unknown device exist.
+            if ($parm["input"]["device_type"] != "PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN") {
+               // Search in DB
+               $np = new Netport;
+               $nw = new Netwire;
+               $pfiud = new PluginFusionInventoryUnknownDevice;
+               $a_ports = $np->find("`ifmac`='".$parm["input"]["ifmac"]."' AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
+               if (count($a_ports) == "1") {
+                  foreach ($a_ports as $port_infos) {
+                     // Get wire
+                     $opposite_ID = $nw->getOppositeContact($port_infos['ID']);
+                     if (isset($opposite_ID)) {
+                        // Modify wire
+                        removeConnector($port_infos['ID']);
+                        makeConnector($parm['ID'], $opposite_ID);
+                     }
+                     // Delete port
+                     $np->deleteFromDB($port_infos['ID']);
+                     // Delete unknown device (if it has no port)
+                     if (count($np->find("`on_device`='".$port_infos['on_device']."' AND `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ")) == "0") {
+                        $pfiud->deleteFromDB($port_infos['on_device']);
+                     }
+                  }
+               }
+            }
+            break;
+
+      }
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
