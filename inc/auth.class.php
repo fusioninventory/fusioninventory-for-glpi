@@ -70,18 +70,6 @@ class PluginFusioninventoryAuth extends CommonDBTM {
       }
    }
 
-   static function changeprofile() {
-      if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])
-               && $_SESSION["glpi_plugin_fusioninventory_installed"]==1) {
-         $prof=new PluginFusionInventoryProfile;
-         if($prof->getFromDB($_SESSION['glpiactiveprofile']['ID'])) {
-            $_SESSION["glpi_plugin_fusioninventory_profile"]=$prof->fields;
-         } else {
-            unset($_SESSION["glpi_plugin_fusioninventory_profile"]);
-         }
-      }
-   }
-
    static function haveRight($module,$right) {
    // echo $_SESSION["glpiactive_entity"];
       $matches=array(

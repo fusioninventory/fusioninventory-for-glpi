@@ -226,51 +226,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
    }
 
-   static function mib_management() {
-      global $DB,$CFG_GLPI,$LANG;
-
-      $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_mib`
-                ORDER BY `FK_model_infos`;";
-      $result = $DB->query($query);
-      $number = $DB->numrows($result);
-
-      if($number !="0") {
-         echo "<div align='center'><table class='tab_cadre_fixe'>";
-         echo "<tr><th colspan='4'>".$LANG['plugin_fusioninventory']["model_info"][5]." :</th></tr>";
-         echo "<tr><th>".$LANG["common"][16]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']["mib"][1]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']["mib"][2]."</th>";
-         echo "<th>".$LANG['plugin_fusioninventory']["mib"][3]."</th>";
-         echo "</tr>";
-
-         while ($data=$DB->fetch_array($result)) {
-            echo "<tr class='tab_bg_1'>";
-            echo "<td align='center'><a href=''><b>
-               ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos",$data["FK_model_infos"]).
-               "</b></a></td>";
-            echo "<td align='center'>
-               ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_label",$data["FK_mib_oid"])."</td>";
-            echo "<td align='center'>
-               ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_object",$data["FK_mib_object"]).
-               "</td>";
-            echo "<td align='center'>
-               ".Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."</td>";
-            echo "</tr>";
-
-         }
-         echo "</table></div>";
-      } else {
-         echo "<div align='center'><table class='tab_cadre_fixe'>";
-         echo "<tr><th colspan='3'>".$LANG['plugin_fusioninventory']["model_info"][5].":</th></tr>";
-         echo "<tr><th>".$LANG["common"][16]."</th>";
-         echo "<th>".$LANG["login"][6]."</th>";
-         echo "<th>".$LANG["login"][7]."</th>";
-         echo "</tr>";
-         echo "</table></div>";
-      }
-   }
-
    static function bar($pourcentage, $message="",$order='') {
       if ((!empty($pourcentage)) AND ($pourcentage < 0)) {
          $pourcentage = "";
@@ -351,10 +306,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
          error_reporting(E_ALL | E_STRICT);
          set_error_handler("userErrorHandler");
       }
-   }
-
-   static function emptyDisplay() {
-
    }
 }
 

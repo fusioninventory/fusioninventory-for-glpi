@@ -100,20 +100,6 @@ class PluginFusioninventoryDb extends CommonDBTM {
 
    }
 
-   static function getIdFromUser($name) {
-
-      global $DB;
-
-      $query = "SELECT `ID` ".
-               "FROM `glpi_users` ".
-               "WHERE `name` = '".$name."';";
-
-      if (($result = $DB->query($query))) {
-         return $DB->result($result,0,"ID");
-      }
-      return false;
-   }
-
    static function getDeviceFieldFromId($type, $ID, $field, $return) {
       global $DB;
       switch($type) {

@@ -58,58 +58,6 @@ class PluginFusioninventoryIfmac extends CommonDBTM {
       }
    }
 
-   /* To convert a string to a MAC address... Return false if not a MAC */
-   static function stringToIfmac($string) {
-      if ($string == "") {
-         return false;
-      }
-      // if MAC adress without any separation character : 12 characters
-      if (strlen($string) == 12) {
-         $string = str_split($string, 2);
-      } else {
-         // to seperate each element of the MAC address in an array
-         $string = preg_split("/[ :-]/", $string);
-         for ($i=0 ; $i<count($string) ; $i++) {
-            // if value like "0" or "x" instead of "00" or "0x", put "0" before
-            if (strlen($string["$i"]) == 1) {
-               $string["$i"] = "0".$string["$i"];
-            // if length not equal to 2, not a correct value => unset
-            } else if (strlen($string["$i"]) != 2) {
-               unset($string["$i"]);
-            }
-         }
-         if (count($string) != 6) {
-            return false;
-         }
-      }
-      // check if mac address not equal to : "00:00:00:00:00:00" and if each value is hexadecimal
-      $i=0;
-      $null=0;
-      while (($i<6)  && ( ($is_hex = PluginFusioninventoryIfmac::is_hex($string["$i"])) != false )) {
-         if ($string["$i"] == "00") {
-            $null++;
-         }
-         $i++;
-      }
-      if (($null != 6) && ($is_hex != false)) {
-         $ifmac = implode (':', $string);
-         $ifmac = strtoupper($ifmac); // uppercase
-         return $ifmac;
-      } else {
-         return false;
-      }
-   }
-
-   /* transforms an hexadecimal MAC address to a decimal MAC address, like "%d.%d.%d.%d.%d.%d" */
-   static function ifmacToDecimal($ifmac) {
-      $decimal = explode(":", $ifmac);
-      for($i=0 ; $i<6 ; $i++) {
-         $decimal["$i"] = hexdec($decimal["$i"]);
-      }
-      $decimal = implode(".", $decimal);
-      return $decimal;
-   }
-
    static function ifmacwalk_ifmacaddress($mac) {
       $MacAddress = str_replace("0x","",$mac);
       $MacAddress_tmp = str_split($MacAddress, 2);
