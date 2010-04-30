@@ -66,7 +66,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
 	PluginFusioninventoryAuth::checkRight("snmp_models","w");
 	$plugin_fusioninventory_model_infos->delete($_POST);
-	glpi_header("plugin_fusioninventory.models.php");
+	glpi_header("models.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
 	PluginFusioninventoryAuth::checkRight("snmp_models","w");
 	$importexport->import($_FILES['importfile']['tmp_name']);

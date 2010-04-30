@@ -38,34 +38,18 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("fusioninventory","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
-PluginFusioninventoryAuth::checkRight("reports","r");
+PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-echo "<table class='tab_cadre'>";
+manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_MODEL);
 
-echo "<th align='center'>".$LANG["Menu"][6]."</th>";
+$_GET['target']="models.php";
 
-echo "<tr class='tab_bg_1'>";
-echo "<td align='center'>";
-echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php'>".$LANG['plugin_fusioninventory']["menu"][5]."</a>";
-echo "</td>";
-echo "</tr>";
-
-echo "<tr class='tab_bg_1'>";
-echo "<td align='center'>";
-echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.ports_date_connections.php'>".$LANG['plugin_fusioninventory']["menu"][6]."</a>";
-echo "</td>";
-echo "</tr>";
-/*
-echo "<tr class='tab_bg_1'>";
-echo "<td align='center'>";
-echo "Liste des équipements prêts à être interrogés mais non associés à un agent";
-echo "</td>";
-*/
-echo "</table>";
+searchForm(PLUGIN_FUSIONINVENTORY_MODEL,$_GET);
+showList(PLUGIN_FUSIONINVENTORY_MODEL,$_GET);
 
 commonFooter();
 

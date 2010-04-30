@@ -738,7 +738,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.models.form.php?ID=" . $FK_model_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/models.form.php?ID=" . $FK_model_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -748,7 +748,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_fusioninventory_snmpauths.name" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["ID"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpauths", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -813,7 +813,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.models.form.php?ID=" . $FK_model_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/models.form.php?ID=" . $FK_model_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -823,7 +823,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_fusioninventory_snmpauths.ID" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["ID"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/snmp_auth.form.php?ID=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpauths", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -832,7 +832,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			}
 			break;
 
-		// * Model List (plugins/fusioninventory/front/plugin_fusioninventory.models.php)
+		// * Model List (plugins/fusioninventory/front/models.php)
 		case PLUGIN_FUSIONINVENTORY_MODEL :
 			switch ($table.'.'.$field) {
 
@@ -866,7 +866,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Display pic / link for exporting model
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
-					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.models.export.php' target='_blank'>
+					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/fusioninventory/front/models.export.php' target='_blank'>
 						<input type='hidden' name='model' value='" . $data["ID"] . "' />
 						<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
 						</form></div>";
@@ -877,7 +877,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			break;
 
 
-		// * Authentification List (plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.php)
+		// * Authentification List (plugins/fusioninventory/front/snmp_auth.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_AUTH :
 			switch ($table.'.'.$field) {
 
@@ -905,7 +905,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			}
 			break;
 
-		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/plugin_fusioninventory.unknown_mac.php)
+		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
 		case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN :
 			switch ($table.'.'.$field) {
 
@@ -979,7 +979,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			}
 			break;
 
-		// * Ports date connection - report (plugins/fusioninventory/report/plugin_fusioninventory.ports_date_connections.php)
+		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
 			switch ($table.'.'.$field) {
 
@@ -1020,11 +1020,11 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			}
 			break;
 
-		// * FusionInventory Agents list (plugins/fusioninventory/front/plugin_fusioninventory.agents.php)
+		// * FusionInventory Agents list (plugins/fusioninventory/front/agents.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS :
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/plugin_fusioninventory.rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/rangeip.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP :
 			switch ($table.'.'.$field) {
 
@@ -1040,7 +1040,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			}
 			break;
 
-		// * Detail of ports history (plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php)
+		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
 			switch ($table.'.'.$field) {
 
@@ -1375,46 +1375,46 @@ function plugin_headings_actions_fusioninventory($type) {
 
 function plugin_headings_fusioninventory_computerErrors($type, $ID) {
 	$errors = new PluginFusioninventoryErrors;
-	$errors->showForm(COMPUTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.errors.form.php', $_GET["ID"]);
+	$errors->showForm(COMPUTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_computerInfo($type, $ID) {
    $pfit = new PluginFusioninventoryTask;
-   $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+   $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $ID, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 }
 
 function plugin_headings_fusioninventory_printerInfo($type, $ID) {
 	include_once(GLPI_ROOT."/inc/stat.function.php");
 	$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
-	$plugin_fusioninventory_printers->showFormPrinter(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_info.form.php', $ID);
-//	$plugin_fusioninventory_printers->showFormPrinter_pagescounter(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_info.form.php', $ID);
+	$plugin_fusioninventory_printers->showFormPrinter(GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php', $ID);
+//	$plugin_fusioninventory_printers->showFormPrinter_pagescounter(GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php', $ID);
 	echo '<div id="overDivYFix" STYLE="visibility:hidden">fusioninventory_1</div>';
-   $plugin_fusioninventory_printers->showFormPrinter_graph(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_info.form.php', $ID);
+   $plugin_fusioninventory_printers->showFormPrinter_graph(GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php', $ID);
 }
 
 function plugin_headings_fusioninventory_printerHistory($type, $ID) {
 	$print_history = new PluginFusioninventoryPrintersHistory;
-	$print_history->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_history.form.php', $_GET["ID"]);
+	$print_history->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/printer_history.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_printerErrors($type, $ID) {
 	$errors = new PluginFusioninventoryErrors;
-	$errors->showForm(PRINTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.errors.form.php', $_GET["ID"]);
+	$errors->showForm(PRINTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_networkingInfo($type, $ID) {
 	$snmp = new PluginFusioninventoryNetworking;
-	$snmp->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.switch_info.form.php', $ID);
+	$snmp->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/switch_info.form.php', $ID);
 }
 
 function plugin_headings_fusioninventory_networkingErrors($type, $ID) {
 	$errors = new PluginFusioninventoryErrors;
-	$errors->showForm(NETWORKING_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.errors.form.php', $_GET["ID"]);
+	$errors->showForm(NETWORKING_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_fusioninventoryLocks($type, $ID) {
 	$fusioninventory_locks = new PluginFusioninventoryLock();
-	$fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.lock.form.php', $type, $ID);
+	$fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/lock.form.php', $type, $ID);
 }
 
 function plugin_headings_fusioninventory($type,$ID,$withtemplate=0) {
@@ -1426,7 +1426,7 @@ function plugin_headings_fusioninventory($type,$ID,$withtemplate=0) {
 			if (!$prof->GetfromDB($ID)) {
 				PluginFusioninventory::createaccess($ID);
          }
-			$prof->showForm($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.profile.php",$ID);
+			$prof->showForm($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php",$ID);
 		break;
 	}
 }
@@ -1987,7 +1987,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			}
 			break;
 
-		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/plugin_fusioninventory.unknown_mac.php)
+		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
 		case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN :
 			switch ($new_table.".".$linkfield) {
 
@@ -2040,7 +2040,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			break;
 
 
-		// * Ports date connection - report (plugins/fusioninventory/report/plugin_fusioninventory.ports_date_connections.php)
+		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
 			switch ($new_table.".".$linkfield) {
 
@@ -2054,7 +2054,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			}
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/plugin_fusioninventory.rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/rangeip.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP :
 			switch ($new_table.".".$linkfield) {
 
@@ -2156,7 +2156,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			}
 			break;
 
-		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/plugin_fusioninventory.unknown_mac.php)
+		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
 		case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN :
 			switch ($table.".".$field) {
 
@@ -2173,7 +2173,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			}
 			break;
 
-		// * Ports date connection - report (plugins/fusioninventory/report/plugin_fusioninventory.ports_date_connections.php)
+		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
 			switch ($table.".".$field) {
 
@@ -2185,7 +2185,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			}
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/plugin_fusioninventory.rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/rangeip.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP :
 			switch ($table.".".$field) {
 			
@@ -2197,7 +2197,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			}
 			break;
 
-		// * Detail of ports history (plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php)
+		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
 			switch ($table.".".$field) {
 
@@ -2381,7 +2381,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 			}
 			break;
 
-		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/plugin_fusioninventory.unknown_mac.php)
+		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
 		case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN :
 			switch ($table.".".$field) {
 
@@ -2409,7 +2409,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 			}
 			break;
 
-		// * Ports date connection - report (plugins/fusioninventory/report/plugin_fusioninventory.ports_date_connections.php)
+		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
 			switch ($table.".".$field) {
 
@@ -2449,7 +2449,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 			}
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/plugin_fusioninventory.rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/rangeip.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP :
 			switch ($table.".".$field) {
 
@@ -2486,7 +2486,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 
 			break;
 
-		// * Detail of ports history (plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php)
+		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
 			switch ($table.".".$field) {
 
@@ -2510,7 +2510,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 						$ADD=" OR $table.$field IS NOT NULL ";
 					}
 					if (!empty($val)) {
-                  include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+                  include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 						$val = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$val]['field'];
                }
 					return $link." ($table.$field = '".addslashes($val)."' $ADD ) ";

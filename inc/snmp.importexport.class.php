@@ -229,7 +229,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 			}
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
-               " : <a href='plugin_fusioninventory.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+               " : <a href='models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
          }
 		}
 	}

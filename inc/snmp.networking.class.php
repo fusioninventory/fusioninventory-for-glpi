@@ -168,7 +168,7 @@ class PluginFusioninventoryNetworking extends CommonDBTM {
       } else {
 			$canedit = false;
       }
-		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 		
 		$this->ID = $ID;
 		

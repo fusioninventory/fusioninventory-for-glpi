@@ -35,36 +35,37 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("fusioninventory","search","setup","rulesengine");
+$NEEDED_ITEMS=array("fusioninventory","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
-
-$config = new PluginFusioninventoryConfig;
+PluginFusioninventoryAuth::checkRight("reports","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-// Forms for FILE
-if ($config->getValue("authsnmp") == "file") {
-	$plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
-	
-	if (!isset($_GET["ID"])) {
-		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
-	}
-} else if ($config->getValue("authsnmp") == "DB") {
-	// Forms for DB
-	
-	$_GET['target']="plugin_fusioninventory.snmp_auth.php";
-	
-	manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_AUTH);
+echo "<table class='tab_cadre'>";
 
-	searchForm(PLUGIN_FUSIONINVENTORY_SNMP_AUTH,$_GET);
-	showList(PLUGIN_FUSIONINVENTORY_SNMP_AUTH,$_GET);
-} else {
-	echo $LANG['plugin_fusioninventory']["functionalities"][19];
-}
+echo "<th align='center'>".$LANG["Menu"][6]."</th>";
+
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/switch_ports.history.php'>".$LANG['plugin_fusioninventory']["menu"][5]."</a>";
+echo "</td>";
+echo "</tr>";
+
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/ports_date_connections.php'>".$LANG['plugin_fusioninventory']["menu"][6]."</a>";
+echo "</td>";
+echo "</tr>";
+/*
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "Liste des équipements prêts à être interrogés mais non associés à un agent";
+echo "</td>";
+*/
+echo "</table>";
 
 commonFooter();
 

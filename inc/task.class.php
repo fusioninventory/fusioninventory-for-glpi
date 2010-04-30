@@ -278,7 +278,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $on_device = $ID;
       }
       
-      echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php\">";
+      echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php\">";
 
 		echo "<table  class='tab_cadre_fixe'>";
 

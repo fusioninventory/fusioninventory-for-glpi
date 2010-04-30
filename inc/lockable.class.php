@@ -87,7 +87,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
 
       echo "<tr class='tab_bg_1'>";
 
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $options="";
 
@@ -111,8 +111,8 @@ class PluginFusioninventoryLockable extends CommonDBTM{
       echo "</span>\n";
 
       $params = array('tableSelect' => '__VALUE__');
-      ajaxUpdateItemOnSelectEvent($idSelect, 'columnsSelect', GLPI_ROOT."/plugins/fusioninventory/ajax/plugin_fusioninventory.lockable.columns.php", $params);
-      ajaxUpdateItemOnSelectEvent($idSelect, 'columnsLockable', GLPI_ROOT."/plugins/fusioninventory/ajax/plugin_fusioninventory.lockable.lockables.php", $params);
+      ajaxUpdateItemOnSelectEvent($idSelect, 'columnsSelect', GLPI_ROOT."/plugins/fusioninventory/ajax/lockable.columns.php", $params);
+      ajaxUpdateItemOnSelectEvent($idSelect, 'columnsLockable', GLPI_ROOT."/plugins/fusioninventory/ajax/lockable.lockables.php", $params);
       
       echo "</td><td class='center'>";
       if (PluginFusioninventory::haveRight("configuration","w")) {
@@ -277,7 +277,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
 
       $query = "SHOW COLUMNS FROM `".$p_itemtype."`";
       if ($result=$DB->query($query)) {
-         include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.mapping.fields.constant.php");
+         include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/mapping.fields.constant.php");
          $tableId = array_search($p_itemtype, $LINK_ID_TABLE);
          if ($tableId != 0) {
             $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $tableId);
@@ -309,7 +309,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
       $tableId = array_search($p_itemtype, $LINK_ID_TABLE);
       if ($tableId != 0) {
          $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $tableId);
-         include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.mapping.fields.constant.php");
+         include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/mapping.fields.constant.php");
          echo '<SELECT NAME="columnLockable[]" MULTIPLE SIZE="15">';
          if (count($lockable_fields)){
             foreach ($lockable_fields as $key => $val){

@@ -145,7 +145,7 @@ class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
 
 		
 	function showForm($target) {
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
       
 		global $LANG,$DB,$FUSIONINVENTORY_MAPPING;
 

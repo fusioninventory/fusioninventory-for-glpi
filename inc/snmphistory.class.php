@@ -95,7 +95,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
 
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $options="";
 
@@ -276,7 +276,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
 
    function ConvertField($force=0) {
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
       global $DB, $LANG;
 
       $constantsfield = array();
@@ -517,7 +517,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
    }
 
    static function networking_ports_addLog($port_id, $new_value, $field) {
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $ptp = new PluginFusioninventoryPort;
       $ptsnmph = new PluginFusioninventorySnmphistory;
@@ -606,7 +606,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
    static function showHistory($ID_port) {
       global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $CommonItem = new CommonItem;
       $np = new Netport;
@@ -802,7 +802,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
     */
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th colspan='8'>";
-      $text .= "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
+      $text .= "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
       $text .= "</th>";
       $text .= "</tr>";
       $text .= "</table>";

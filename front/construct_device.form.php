@@ -110,7 +110,7 @@ NULL , '".$_POST['ID']."', '".$md5."'
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
 	$ptcd->delete($_POST);
-	glpi_header("plugin_fusioninventory.construct_device.php");
+	glpi_header("construct_device.php");
 }
 
 $ID = "";

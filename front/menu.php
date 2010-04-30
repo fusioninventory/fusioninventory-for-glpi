@@ -57,7 +57,7 @@ if (PluginFusioninventory::HaveRight("snmp_models","r")
 		echo "<tr><th>".$LANG['plugin_fusioninventory']["setup"][3];
 		echo "</th></tr>";
 		echo "<tr class='tab_bg_1'><td>";
-		echo "<a href='plugin_fusioninventory.install.php'>".$LANG['plugin_fusioninventory']["setup"][5]."</a></td></tr>";
+		echo "<a href='install.php'>".$LANG['plugin_fusioninventory']["setup"][5]."</a></td></tr>";
 		echo "</table></div>";
 	} else {
 		commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");

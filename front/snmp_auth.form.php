@@ -43,44 +43,39 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$rangeip = new PluginFusioninventoryRangeIP;
+PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","rangeip");
+$plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
+$config = new PluginFusioninventoryConfig;
 
-PluginFusioninventoryAuth::checkRight("rangeip","r");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
 
 PluginFusioninventoryDisplay::mini_menu();
 
+
 if (isset ($_POST["add"])) {
-   if ($rangeip->checkip($_POST)) {
-      PluginFusioninventoryAuth::checkRight("rangeip","w");
-      $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
-      $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
-      $rangeip->add($_POST);
+	PluginFusioninventoryAuth::checkRight("snmp_authentification","w");
+	if ($config->getValue("authsnmp") == "file") {
+		$new_ID = $plugin_fusioninventory_snmp_auth->add_xml();
+   } else if ($config->getValue("authsnmp") == "DB") {
+		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
    }
+	
+	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='snmp_auth.php?ID=".$new_ID."'>".$_POST["name"]."</a>";
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-   if ($rangeip->checkip($_POST)) {
-      PluginFusioninventoryAuth::checkRight("rangeip","w");
-      $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
-      $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
-      $rangeip->update($_POST);
-   }
+	PluginFusioninventoryAuth::checkRight("snmp_authentification","w");
+	$plugin_fusioninventory_snmp_auth->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryAuth::checkRight("rangeip","w");
-	$agents->rangeip($_POST);
-	glpi_header("plugin_fusioninventory.rangeip.php");
 }
-
 
 $ID = "";
 if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
 }
-
-$rangeip->showForm($_SERVER["PHP_SELF"], $ID);
-
+if(PluginFusioninventory::HaveRight("snmp_authentification","r")) {
+   $plugin_fusioninventory_snmp_auth->showForm($_SERVER["PHP_SELF"], $ID);
+}
 commonFooter();
 
 ?>

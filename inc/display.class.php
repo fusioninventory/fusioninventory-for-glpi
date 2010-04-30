@@ -51,7 +51,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("snmp_models","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.models.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/models.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_models.png'/>
             <br/><b>".$LANG['plugin_fusioninventory']["model_info"][4]."</b></a>";
       }
@@ -59,7 +59,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("snmp_authentification","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmp_auth.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_authentification.png'/>
             <br/><b>".$LANG['plugin_fusioninventory']["model_info"][3]."</b></a>";
       }
@@ -67,7 +67,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("rangeip","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.rangeip.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/rangeip.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_rangeip.png'/>
          <br/><b>".$LANG['plugin_fusioninventory']["menu"][2]."</b></a>";
       }
@@ -75,7 +75,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("agents","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.agents.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agents.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png'/><br/>
          <b>".$LANG['plugin_fusioninventory']["menu"][1]."</b></a>";
       }
@@ -86,7 +86,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("remotecontrol","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.task.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png'/>
             <br/><b>".$LANG['plugin_fusioninventory']["task"][1]."</b></a>";
       }
@@ -95,7 +95,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("agentsprocesses","r")) {
          echo "<a href='".$CFG_GLPI["root_doc"].
-                  "/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php'>
+                  "/plugins/fusioninventory/front/agents.processes.form.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_info_agents.png'/>
          <br/><b>".$LANG['plugin_fusioninventory']["processes"][19]."</b></a>";
       }
@@ -103,7 +103,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("unknowndevices","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.unknown.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknown.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_unknown_device.png'/>
             <br/><b>".$LANG['plugin_fusioninventory']["menu"][4]."</b></a>";
       }
@@ -111,7 +111,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventory::haveRight("reports","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.report.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/report.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_rapports.png'/>
          <br/><b>".$LANG['plugin_fusioninventory']["processes"][20]."</b></a>";
       }
@@ -134,7 +134,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("snmp_models","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.models.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/models.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_models.png'
                 onmouseout=\"cleanhide('menu_mini_models')\"
                 onmouseover=\"cleandisplay('menu_mini_models')\" /></a>";
@@ -144,7 +144,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("snmp_authentification","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.snmp_auth.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmp_auth.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_authentification.png'
                 onmouseout=\"cleanhide('menu_mini_authentification')\"
                 onmouseover=\"cleandisplay('menu_mini_authentification')\" /></a>";
@@ -154,7 +154,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("rangeip","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.rangeip.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/rangeip.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_rangeip.png'
                 onmouseout=\"cleanhide('menu_mini_rangeip')\"
                 onmouseover=\"cleandisplay('menu_mini_rangeip')\" /></a>";
@@ -164,7 +164,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("agents","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.agents.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agents.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_agents.png'
                 onmouseout=\"cleanhide('menu_mini_agents')\"
                 onmouseover=\"cleandisplay('menu_mini_agents')\" /></a>";
@@ -174,7 +174,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("remotecontrol","r")){
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.task.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_task.png'
                 onmouseout=\"cleanhide('menu_mini_task')\"
                 onmouseover=\"cleandisplay('menu_mini_task')\" /></a>";
@@ -185,7 +185,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("agentsprocesses","r")) {
          echo "<a href='".$CFG_GLPI["root_doc"].
-            "/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php'>
+            "/plugins/fusioninventory/front/agents.processes.form.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_info_agents.png'
                 onmouseout=\"cleanhide('menu_mini_info_agents')\"
                 onmouseover=\"cleandisplay('menu_mini_info_agents')\" /></a>";
@@ -195,7 +195,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("unknowndevices","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.unknown.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknown.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_unknown_device.png'
                 onmouseout=\"cleanhide('menu_mini_unknown')\"
                 onmouseover=\"cleandisplay('menu_mini_unknown')\" /></a>";
@@ -205,7 +205,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventory::haveRight("reports","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/plugin_fusioninventory.report.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/report.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_rapports.png'
                 onmouseout=\"cleanhide('menu_mini_rapports')\"
                 onmouseover=\"cleandisplay('menu_mini_rapports')\" /></a>";

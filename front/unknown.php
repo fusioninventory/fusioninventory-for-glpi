@@ -46,7 +46,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
 
-$_GET['target']="plugin_fusioninventory.unknown.php";
+$_GET['target']="unknown.php";
 
 searchForm(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$_GET);

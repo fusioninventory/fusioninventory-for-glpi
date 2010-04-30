@@ -38,18 +38,19 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("fusioninventory","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
-PluginFusioninventoryAuth::checkRight("snmp_models","r");
+PluginFusioninventoryAuth::checkRight("agents","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_MODEL);
+manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS);
 
-$_GET['target']="plugin_fusioninventory.models.php";
+$_GET['target']="agents.php";
 
-searchForm(PLUGIN_FUSIONINVENTORY_MODEL,$_GET);
-showList(PLUGIN_FUSIONINVENTORY_MODEL,$_GET);
+searchForm(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$_GET);
+showList(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$_GET);
+
 
 commonFooter();
 

@@ -35,22 +35,36 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("fusioninventory","search");
+$NEEDED_ITEMS=array("fusioninventory","search","setup","rulesengine");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
 
-PluginFusioninventoryAuth::checkRight("agents","r");
+PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
+
+$config = new PluginFusioninventoryConfig;
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS);
+// Forms for FILE
+if ($config->getValue("authsnmp") == "file") {
+	$plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
+	
+	if (!isset($_GET["ID"])) {
+		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
+	}
+} else if ($config->getValue("authsnmp") == "DB") {
+	// Forms for DB
+	
+	$_GET['target']="snmp_auth.php";
+	
+	manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_AUTH);
 
-$_GET['target']="plugin_fusioninventory.agents.php";
-
-searchForm(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$_GET);
-showList(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$_GET);
-
+	searchForm(PLUGIN_FUSIONINVENTORY_SNMP_AUTH,$_GET);
+	showList(PLUGIN_FUSIONINVENTORY_SNMP_AUTH,$_GET);
+} else {
+	echo $LANG['plugin_fusioninventory']["functionalities"][19];
+}
 
 commonFooter();
 

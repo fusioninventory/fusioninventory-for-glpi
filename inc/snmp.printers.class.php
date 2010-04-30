@@ -60,7 +60,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 	
 		PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 	
-		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 	
 		$this->ID = $ID;
 		
@@ -897,7 +897,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
    function showFormPrinter_graph($p_target, $p_ID) {
       global $FUSIONINVENTORY_MAPPING, $LANG;
 
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+      include_once(GLPI_ROOT."/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $target = $p_target;
       $where=''; $begin=''; $end=''; $timeUnit='date'; $graphField='pages_total'; $printersComp = array();

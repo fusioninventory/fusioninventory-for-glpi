@@ -38,16 +38,18 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("fusioninventory","search");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","task");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","rangeip");
+
+PluginFusioninventoryAuth::checkRight("rangeip","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_TASK);
+manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP);
 
-$_GET['target']="plugin_fusioninventory.task.php";
+$_GET['target']="rangeip.php";
 
-searchForm(PLUGIN_FUSIONINVENTORY_TASK,$_GET);
-showList(PLUGIN_FUSIONINVENTORY_TASK,$_GET);
+searchForm(PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP,$_GET);
+showList(PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP,$_GET);
 
 commonFooter();
 

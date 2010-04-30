@@ -102,7 +102,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
       echo "<th>";
       echo $LANG['plugin_fusioninventory']["processes"][1];
-      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php'>(".$LANG['common'][66].")</a>";
+      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/agents.processes.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -140,7 +140,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.agents.processes.form.php?h_process_number=".$data['process_number']."'>".
+            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agents.processes.form.php?h_process_number=".$data['process_number']."'>".
             $data['process_number']."</a>";
             echo "</td>";
 

@@ -35,7 +35,7 @@
 
 
 // Direct access to file
-if(strstr($_SERVER['PHP_SELF'],"plugin_fusioninventory.lockable.lockables.php")){
+if(strstr($_SERVER['PHP_SELF'],"lockable.lockables.php")){
 	define('GLPI_ROOT','../../..');
 	include (GLPI_ROOT."/inc/includes.php");
 	header("Content-Type: text/html; charset=UTF-8");

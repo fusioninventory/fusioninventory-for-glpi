@@ -36,46 +36,65 @@ $NEEDED_ITEMS = array (
 	"setup",
 	"rulesengine",
 	"fusioninventory",
-	"search"
+	"search",
+   "computer",
+   "device",
+   "printer",
+   "networking",
+   "peripheral",
+   "monitor"
 );
 
 define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
+$agents = new PluginFusioninventoryAgents;
 
-$plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
-$config = new PluginFusioninventoryConfig;
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
+PluginFusioninventoryAuth::checkRight("agents","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_authentification","w");
-	if ($config->getValue("authsnmp") == "file") {
-		$new_ID = $plugin_fusioninventory_snmp_auth->add_xml();
-   } else if ($config->getValue("authsnmp") == "DB") {
-		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
+	PluginFusioninventoryAuth::checkRight("agents","w");
+   if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
+      $_POST['device_type'] = '1';
    }
-	
-	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='plugin_fusioninventory.snmp_auth.php?ID=".$new_ID."'>".$_POST["name"]."</a>";
+	$agents->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_authentification","w");
-	$plugin_fusioninventory_snmp_auth->update($_POST);
+	PluginFusioninventoryAuth::checkRight("agents","w");
+   if (isset($_POST['on_device'])) {
+      if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
+         $_POST['device_type'] = '1';
+      }
+   }
+	$agents->update($_POST);
+	glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset ($_POST["delete"])) {
+	PluginFusioninventoryAuth::checkRight("agents","w");
+	$agents->delete($_POST);
+	glpi_header("agents.php");
+} else if (isset ($_POST["startagent"])) {
+   $pta = new PluginFusioninventoryAgents;
+   $pta->RemoteStartAgent($_POST['agentID'], $_POST['ip']);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
+
 
 $ID = "";
 if (isset($_GET["ID"])) {
 	$ID = $_GET["ID"];
+} else {
+   $agents->showForm($_SERVER["PHP_SELF"], $ID);
 }
-if(PluginFusioninventory::HaveRight("snmp_authentification","r")) {
-   $plugin_fusioninventory_snmp_auth->showForm($_SERVER["PHP_SELF"], $ID);
-}
+
+$agents->showTabs($ID, '',$_SESSION['glpi_tab']);
+echo "<div id='tabcontent'></div>";
+echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
 commonFooter();
 
 ?>

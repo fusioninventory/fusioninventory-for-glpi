@@ -44,7 +44,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE);
 
-$_GET['target']="plugin_fusioninventory.construct_device.php";
+$_GET['target']="construct_device.php";
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd = new PluginFusioninventoryConstructDevice;
    $ptcd->generatemodels();

@@ -77,7 +77,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $locked = array();
       }
 
-      include_once(GLPI_ROOT.'/plugins/fusioninventory/inc_constants/plugin_fusioninventory.mapping.fields.constant.php');
+      include_once(GLPI_ROOT.'/plugins/fusioninventory/inc_constants/mapping.fields.constant.php');
       $CommonItem = new CommonItem;
       $CommonItem->getFromDB($p_itemtype, $p_items_id);
 

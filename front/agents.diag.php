@@ -1,12 +1,13 @@
 <?php
-/*
- * @version $Id:
- -------------------------------------------------------------------------
- GLPI - Gestionnaire Libre de Parc Informatique
- Copyright (C) 2003-2009 by the INDEPNET Development Team.
 
- http://indepnet.net/   http://glpi-project.org
- -------------------------------------------------------------------------
+/*
+ * @version $Id$
+ ----------------------------------------------------------------------
+ GLPI - Gestionnaire Libre de Parc Informatique
+ Copynetwork (C) 2003-2006 by the INDEPNET Development Team.
+
+ http://indepnet.net/   http://glpi-project.org/
+ ----------------------------------------------------------------------
 
  LICENSE
 
@@ -25,29 +26,15 @@
  You should have received a copy of the GNU General Public License
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+ ------------------------------------------------------------------------
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
+// Original Author of file: DURIEUX David
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-
-// Direct access to file
-if(strstr($_SERVER['PHP_SELF'],"plugin_fusioninventory.lockable.columns.php")){
-	define('GLPI_ROOT','../../..');
-	include (GLPI_ROOT."/inc/includes.php");
-	header("Content-Type: text/html; charset=UTF-8");
-	header_nocache();
-};
-
-if (!defined('GLPI_ROOT')){
-	die("Can not acces directly to this file");
-}
-
-if (isset($_POST["tableSelect"])) {
-   PluginFusioninventoryLockable::getColumnSelect($_POST["tableSelect"]);
-}
+// For compatibility
+include('communication.php');
 
 ?>
