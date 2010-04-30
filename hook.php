@@ -1402,11 +1402,6 @@ function plugin_headings_fusioninventory_printerErrors($type, $ID) {
 	$errors->showForm(PRINTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.errors.form.php', $_GET["ID"]);
 }
 
-function plugin_headings_fusioninventory_printerCronConfig($type, $ID) {
-	$print_config = new PluginFusionInventoryPrintersHistoryConfig;
-	$print_config->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_history_config.form.php', $_GET["ID"]);
-}
-
 function plugin_headings_fusioninventory_networkingInfo($type, $ID) {
 	$snmp = new PluginFusionInventoryNetworking;
 	$snmp->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.switch_info.form.php', $ID);

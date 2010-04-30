@@ -41,9 +41,6 @@ checkRight("config","w");
 
 commonHeader($LANG['plugin_fusioninventory']["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","summary");
 
-//$config = new PluginFusionInventoryConfig;
-//$print_config = new PluginFusionInventoryPrintersHistoryConfig;
-
 if (isset($_POST['update'])) {
 
 	if (empty($_POST['cleaning_days'])) {
