@@ -45,7 +45,7 @@ class PluginFusioninventoryAuth extends CommonDBTM {
       if(TableExists("glpi_plugin_fusioninventory_config")) {
 
          if (FieldExists("glpi_plugin_fusioninventory_config","ID")) {
-            $profile=new PluginFusionInventoryProfile;
+            $profile=new PluginFusioninventoryProfile;
 
             $query = "SELECT DISTINCT `glpi_profiles`.*
                       FROM `glpi_users_profiles` INNER JOIN `glpi_profiles`

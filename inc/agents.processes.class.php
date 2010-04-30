@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
+class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_agents_processes";
@@ -386,7 +386,7 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
 
    function addProcess($pxml) {
 
-      $pta = new PluginFusionInventoryAgents;
+      $pta = new PluginFusioninventoryAgents;
       
       $agent = $pta->InfosByKey($pxml->DEVICEID);
 
@@ -455,7 +455,7 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
 
 
    function CleanProcesses() {
-      $ptc = new PluginFusionInventoryConfig;
+      $ptc = new PluginFusioninventoryConfig;
       $data = $this->find("`start_time`<DATE_SUB(NOW(), INTERVAL ".$ptc->getValue('delete_agent_process')." HOUR)");
       foreach ($data as $process_id=>$dataInfos) {
          $this->deleteFromDB($process_id,1);

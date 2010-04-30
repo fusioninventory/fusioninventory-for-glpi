@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryMib extends CommonDBTM {
+class PluginFusioninventoryMib extends CommonDBTM {
    
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_mib";
@@ -319,7 +319,7 @@ class PluginFusionInventoryMib extends CommonDBTM {
 	function activation($ID) {
 		global $DB;
 		
-		$mib_networking = new PluginFusionInventoryMib;
+		$mib_networking = new PluginFusioninventoryMib;
 		
 		$mib_networking->getFromDB($ID);
 		$data['ID'] = $ID;
@@ -336,7 +336,7 @@ class PluginFusionInventoryMib extends CommonDBTM {
    function oidList($p_sxml_node,$p_id) {
 		global $DB;
 
-      $ptc = new PluginFusionInventoryCommunication();
+      $ptc = new PluginFusioninventoryCommunication();
 
       // oid GET
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_mib`

@@ -49,8 +49,8 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pfia = new PluginFusionInventoryAgents;
-$pfit = new PluginFusionInventoryTask;
+$pfia = new PluginFusioninventoryAgents;
+$pfit = new PluginFusioninventoryTask;
 
 switch($_POST['glpi_tab']) {
 	case -1 :

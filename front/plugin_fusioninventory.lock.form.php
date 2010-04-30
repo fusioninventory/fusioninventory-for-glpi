@@ -49,7 +49,7 @@ if(isset($_POST["unlock_field_fusioninventory"])){
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$locks = new PluginFusionInventoryLock;
+$locks = new PluginFusioninventoryLock;
 $locks->showForm($_SERVER["PHP_SELF"], $_POST['type'], $ID);
 
 commonFooter();

@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to communicate with agents using XML
  **/
-class PluginFusionInventoryCommunication {
+class PluginFusioninventoryCommunication {
    private $sxml, $deviceId, $ptd, $type='', $logFile;
 
    function __construct() {
@@ -62,7 +62,7 @@ class PluginFusionInventoryCommunication {
                $sxml_param->addAttribute('PERIOD_LENGTH', '10');
          $this->sxml->addChild('PROLOG_FREQ', '24'); // a recup dans base config --> pas trouvé
          $this->logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/communication.log';
-         $this->addLog('New PluginFusionInventoryCommunication object.');
+         $this->addLog('New PluginFusioninventoryCommunication object.');
    }
 
    /**
@@ -144,12 +144,12 @@ class PluginFusionInventoryCommunication {
     *@return nothing
     **/
    function addQuery($pxml, $task=0) {
-      $ptmi    = new PluginFusionInventoryModelInfos;
+      $ptmi    = new PluginFusioninventoryModelInfos;
       $ptsnmpa = new PluginFusioninventorySnmpauth;
-      $pta     = new PluginFusionInventoryAgents;
-      $ptap    = new PluginFusionInventoryAgentsProcesses;
-      $ptrip   = new PluginFusionInventoryRangeIP;
-      $ptt     = new PluginFusionInventoryTask;
+      $pta     = new PluginFusioninventoryAgents;
+      $ptap    = new PluginFusioninventoryAgentsProcesses;
+      $ptrip   = new PluginFusioninventoryRangeIP;
+      $ptt     = new PluginFusioninventoryTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
       $count_range = $ptrip->Counter($agent["ID"], "query");
@@ -256,10 +256,10 @@ class PluginFusionInventoryCommunication {
     **/
    function addDiscovery($pxml, $task=0) {
       $ptsnmpa = new PluginFusioninventorySnmpauth;
-      $pta     = new PluginFusionInventoryAgents;
-      $ptap    = new PluginFusionInventoryAgentsProcesses;
-      $ptrip   = new PluginFusionInventoryRangeIP;
-      $ptt     = new PluginFusionInventoryTask;
+      $pta     = new PluginFusioninventoryAgents;
+      $ptap    = new PluginFusioninventoryAgentsProcesses;
+      $ptrip   = new PluginFusioninventoryRangeIP;
+      $ptt     = new PluginFusioninventoryTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
       $count_range = $ptrip->Counter($agent["ID"], "discover");
@@ -372,8 +372,8 @@ class PluginFusionInventoryCommunication {
     *@return nothing
     **/
    function addModel($p_sxml_node, $p_id) {
-      $models = new PluginFusionInventoryModelInfos;
-      $mib_networking = new PluginFusionInventoryMib;
+      $models = new PluginFusioninventoryModelInfos;
+      $mib_networking = new PluginFusioninventoryMib;
 
       $models->getFromDB($p_id);
       $sxml_model = $p_sxml_node->addChild('MODEL');
@@ -553,7 +553,7 @@ class PluginFusionInventoryCommunication {
             break;
          
          case 'NETDISCOVERY' :
-            $pti = new PluginFusionInventoryImportExport;
+            $pti = new PluginFusioninventoryImportExport;
             $errors.=$pti->import_netdiscovery($this->sxml->CONTENT, $this->sxml->DEVICEID);
             break;
          
@@ -571,7 +571,7 @@ class PluginFusionInventoryCommunication {
       if ($errors != '') {
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
             $result=true;
-            $ptap = new PluginFusionInventoryAgentsProcesses;
+            $ptap = new PluginFusioninventoryAgentsProcesses;
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                  array('comments' => $errors));
 
@@ -593,8 +593,8 @@ class PluginFusionInventoryCommunication {
       global $LANG;
 
       $this->addLog('Function importContent().');
-      $ptap = new PluginFusionInventoryAgentsProcesses;
-      $pta  = new PluginFusionInventoryAgents;
+      $ptap = new PluginFusioninventoryAgentsProcesses;
+      $pta  = new PluginFusioninventoryAgents;
       
       $errors='';
       $nbDevices = 0;
@@ -647,8 +647,8 @@ class PluginFusionInventoryCommunication {
       global $LANG;
 
       $this->addLog('Function importDevice().');
-      $ptap = new PluginFusionInventoryAgentsProcesses;
-      $ptae = new PluginFusionInventoryAgentsErrors;
+      $ptap = new PluginFusioninventoryAgentsProcesses;
+      $ptae = new PluginFusioninventoryAgentsErrors;
 
       $errors=''; $this->deviceId='';
       switch ($p_device->INFO->TYPE) {
@@ -751,7 +751,7 @@ class PluginFusionInventoryCommunication {
       $criteria['name']    = $p_info->NAME;
       $criteria['macaddr'] = $p_info->MAC; //TODO get mac in PORT for printer
       if ($p_info->TYPE=='NETWORKING') {
-         $this->deviceId = PluginFusionInventoryDiscovery::criteria($criteria, NETWORKING_TYPE);
+         $this->deviceId = PluginFusioninventoryDiscovery::criteria($criteria, NETWORKING_TYPE);
          if ($this->deviceId != '') {
             $errors.=$this->importInfoNetworking($p_info);
          } else {
@@ -772,7 +772,7 @@ class PluginFusionInventoryCommunication {
                         case 'PORT' :
                            $criteria['macaddr'] = $child_port->MAC;
                            if ($this->deviceId == '') {
-                              $this->deviceId = PluginFusionInventoryDiscovery::criteria($criteria, PRINTER_TYPE);
+                              $this->deviceId = PluginFusioninventoryDiscovery::criteria($criteria, PRINTER_TYPE);
                            }
                            break;
                      }
@@ -781,7 +781,7 @@ class PluginFusionInventoryCommunication {
             }
          }
 
-         //$this->deviceId = PluginFusionInventoryDiscovery::criteria($criteria, PRINTER_TYPE);
+         //$this->deviceId = PluginFusioninventoryDiscovery::criteria($criteria, PRINTER_TYPE);
          if ($this->deviceId != '') {
             $errors.=$this->importInfoPrinter($p_info);
          } else {
@@ -794,7 +794,7 @@ class PluginFusionInventoryCommunication {
          }
       }
       if (!empty($errors)) {
-         $pfiae = new PluginFusionInventoryAgentsErrors;
+         $pfiae = new PluginFusioninventoryAgentsErrors;
 
          $a_input = array();
          $a_input['ID'] = $p_info->ID;
@@ -821,7 +821,7 @@ class PluginFusionInventoryCommunication {
       global $LANG;
 
       $errors='';
-      $this->ptd = new PluginFusionInventoryNetworking2;
+      $this->ptd = new PluginFusioninventoryNetworking2;
       $this->ptd->load($this->deviceId);
 
       foreach ($p_info->children() as $child)
@@ -884,7 +884,7 @@ class PluginFusionInventoryCommunication {
       global $LANG;
 
       $errors='';
-      $this->ptd = new PluginFusionInventoryPrinter;
+      $this->ptd = new PluginFusioninventoryPrinter;
       $this->ptd->load($this->deviceId);
       foreach ($p_info->children() as $child) {
          switch ($child->getName()) {
@@ -937,7 +937,7 @@ class PluginFusionInventoryCommunication {
       global $LANG;
 
       $errors='';
-      $pti = new PluginFusionInventoryIfaddr;
+      $pti = new PluginFusioninventoryIfaddr;
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
@@ -998,8 +998,8 @@ class PluginFusionInventoryCommunication {
 
       $this->addLog('Function importPortNetworking().');
       $errors='';
-//      $ptp = new PluginFusionInventoryPort(NETWORKING_TYPE);
-      $ptp = new PluginFusionInventoryPort(NETWORKING_TYPE, $this->logFile);
+//      $ptp = new PluginFusioninventoryPort(NETWORKING_TYPE);
+      $ptp = new PluginFusioninventoryPort(NETWORKING_TYPE, $this->logFile);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
@@ -1072,7 +1072,7 @@ class PluginFusionInventoryCommunication {
       global $LANG;
 
       $errors='';
-      $ptp = new PluginFusionInventoryPort(PRINTER_TYPE);
+      $ptp = new PluginFusioninventoryPort(PRINTER_TYPE);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->MAC, $p_port->IP);
@@ -1142,7 +1142,7 @@ class PluginFusionInventoryCommunication {
             case 'DRUMCYAN' :
             case 'DRUMMAGENTA' :
             case 'DRUMYELLOW' :
-               $ptc = new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_printers_cartridges");
+               $ptc = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers_cartridges");
                $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
                if (is_int($cartridgeIndex)) {
                   $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???
@@ -1257,7 +1257,7 @@ class PluginFusionInventoryCommunication {
       if ($p_oPort->getValue('trunk')!=1) {
          if ($count > 1) { // MultipleMac
             $p_oPort->setNoTrunk();
-            $pfiud = new PluginFusionInventoryUnknownDevice;
+            $pfiud = new PluginFusioninventoryUnknownDevice;
             $pfiud->hubNetwork($p_oPort);
          } else {
             if (!$p_oPort->getNoTrunk()) {
@@ -1285,7 +1285,7 @@ class PluginFusionInventoryCommunication {
       $this->addLog('Function importConnection().');
       $errors='';
       $portID=''; $mac=''; $ip='';
-      $ptsnmp= new PluginFusionInventorySNMP;
+      $ptsnmp= new PluginFusioninventorySNMP;
       if ($p_cdp==1) {
          $ifdescr='';
          foreach ($p_connection->children() as $name=>$child) {
@@ -1476,7 +1476,7 @@ class PluginFusionInventoryCommunication {
       $this->setXML($p_xml);
 
       if ((isset($this->sxml->DEVICEID)) AND (isset($this->sxml->TOKEN))) {
-         $pta = new PluginFusionInventoryAgents;
+         $pta = new PluginFusioninventoryAgents;
          $a_agent = $pta->find("`key`='".$this->sxml->DEVICEID."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
@@ -1501,7 +1501,7 @@ class PluginFusionInventoryCommunication {
       global $DB;
 
       $this->addLog('Function sendInventoryToOcsServer().');
-      $ptais = new PluginFusionInventoryAgentsInventoryState;
+      $ptais = new PluginFusioninventoryAgentsInventoryState;
       
       $this->setXML($p_xml);
 
@@ -1550,7 +1550,7 @@ class PluginFusionInventoryCommunication {
    function synchroOCS($p_xml) {
       global $DB;
 
-      $ptais = new PluginFusionInventoryAgentsInventoryState;
+      $ptais = new PluginFusioninventoryAgentsInventoryState;
       
       $this->setXML($p_xml);
 
@@ -1567,8 +1567,8 @@ class PluginFusionInventoryCommunication {
    }
 
    function addInventory() {
-      $ptc  = new PluginFusionInventoryConfig;
-      $ptap = new PluginFusionInventoryAgentsProcesses;
+      $ptc  = new PluginFusioninventoryConfig;
+      $ptap = new PluginFusioninventoryAgentsProcesses;
 //      if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
 //         $this->addProcessNumber($ptap->addProcess($pxml));
 //         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
@@ -1579,8 +1579,8 @@ class PluginFusionInventoryCommunication {
 
 
    function addWakeonlan($pxml) {
-      $pta = new PluginFusionInventoryAgents;
-      $ptt = new PluginFusionInventoryTask;
+      $pta = new PluginFusioninventoryAgents;
+      $ptt = new PluginFusioninventoryTask;
       $np  = new Netport;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);

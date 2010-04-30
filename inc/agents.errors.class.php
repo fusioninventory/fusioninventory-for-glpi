@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusionInventoryAgentsErrors extends CommonDBTM {
+class PluginFusioninventoryAgentsErrors extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_agents_errors";
@@ -131,7 +131,7 @@ class PluginFusionInventoryAgentsErrors extends CommonDBTM {
 
 
    function CleanErrors() {
-      $ptc = new PluginFusionInventoryConfig;
+      $ptc = new PluginFusioninventoryConfig;
       $data = $this->find("`date`<DATE_SUB(NOW(), INTERVAL ".$ptc->getValue('delete_agent_process')." HOUR)");
       foreach ($data as $process_id=>$dataInfos) {
          $this->deleteFromDB($process_id,1);

@@ -38,7 +38,7 @@ function plugin_fusioninventory_getSearchOption() {
 	global $LANG;
 	$sopt = array ();
 
-	$config = new PluginFusionInventoryConfig;
+	$config = new PluginFusioninventoryConfig;
 
 	// Part header
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE]['common'] = $LANG['plugin_fusioninventory']["errors"][0];
@@ -736,7 +736,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** FusionInventory - SNMP models
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
-					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
+					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.models.form.php?ID=" . $FK_model_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
@@ -811,7 +811,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** FusionInventory - SNMP models
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
-					$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
+					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/plugin_fusioninventory.models.form.php?ID=" . $FK_model_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
@@ -1046,7 +1046,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Display switch and Port
 				case "glpi_networking_ports.ID" :
-					$Array_device = PluginFusionInventoryPort::getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+					$Array_device = PluginFusioninventoryPort::getUniqueObjectfieldsByportID($data["ITEM_$num"]);
 					$CommonItem = new CommonItem;
 					$CommonItem->getFromDB($Array_device["device_type"], $Array_device["on_device"]);
 					$out = "<div align='center'>" . $CommonItem->getLink(1);
@@ -1111,7 +1111,7 @@ function plugin_fusioninventory_getDropdown() {
 /* Cron */
 function cron_plugin_fusioninventory() {
    // TODO :Disable for the moment (may be check if functions is good or not
-//	$ptud = new PluginFusionInventoryUnknownDevice;
+//	$ptud = new PluginFusioninventoryUnknownDevice;
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
@@ -1140,7 +1140,7 @@ function plugin_fusioninventory_install() {
       (!TableExists("glpi_plugin_fusioninventory_config"))) {
       PluginFusioninventorySetup::install("2.2.0");
    } else if (TableExists("glpi_plugin_tracker_config")) {
-      //$config = new PluginFusionInventoryConfig;
+      //$config = new PluginFusioninventoryConfig;
       if (!TableExists("glpi_plugin_tracker_agents")) {
          PluginFusioninventorySetup::update("1.1.0");
       }
@@ -1230,7 +1230,7 @@ function plugin_fusioninventory_needUpdate() {
    } else if (!FieldExists("glpi_plugin_fusioninventory_config", "version")) {
       return 1; // Update
    } else if (FieldExists("glpi_plugin_fusioninventory_config", "version")) {
-      $config = new PluginFusionInventoryConfig;
+      $config = new PluginFusioninventoryConfig;
       if ($config->getValue('version') != "2.1.3") {
          return 1;
       } else {
@@ -1246,7 +1246,7 @@ function plugin_fusioninventory_needUpdate() {
 // Define headings added by the plugin //
 function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 	global $LANG;
-	$configModules = new PluginFusionInventoryConfigModules;
+	$configModules = new PluginFusioninventoryConfigModules;
 
 	switch ($type) {
 		case COMPUTER_TYPE :
@@ -1328,7 +1328,7 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_fusioninventory($type) {
 
-   $configModules = new PluginFusionInventoryConfigModules;
+   $configModules = new PluginFusioninventoryConfigModules;
 
 	switch ($type) {
 		case COMPUTER_TYPE :
@@ -1374,18 +1374,18 @@ function plugin_headings_actions_fusioninventory($type) {
 
 
 function plugin_headings_fusioninventory_computerErrors($type, $ID) {
-	$errors = new PluginFusionInventoryErrors;
+	$errors = new PluginFusioninventoryErrors;
 	$errors->showForm(COMPUTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_computerInfo($type, $ID) {
-   $pfit = new PluginFusionInventoryTask;
+   $pfit = new PluginFusioninventoryTask;
    $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.agents.state.php', $ID, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 }
 
 function plugin_headings_fusioninventory_printerInfo($type, $ID) {
 	include_once(GLPI_ROOT."/inc/stat.function.php");
-	$plugin_fusioninventory_printers = new PluginFusionInventoryPrinters;
+	$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
 	$plugin_fusioninventory_printers->showFormPrinter(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_info.form.php', $ID);
 //	$plugin_fusioninventory_printers->showFormPrinter_pagescounter(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_info.form.php', $ID);
 	echo '<div id="overDivYFix" STYLE="visibility:hidden">fusioninventory_1</div>';
@@ -1393,27 +1393,27 @@ function plugin_headings_fusioninventory_printerInfo($type, $ID) {
 }
 
 function plugin_headings_fusioninventory_printerHistory($type, $ID) {
-	$print_history = new PluginFusionInventoryPrintersHistory;
+	$print_history = new PluginFusioninventoryPrintersHistory;
 	$print_history->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.printer_history.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_printerErrors($type, $ID) {
-	$errors = new PluginFusionInventoryErrors;
+	$errors = new PluginFusioninventoryErrors;
 	$errors->showForm(PRINTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_networkingInfo($type, $ID) {
-	$snmp = new PluginFusionInventoryNetworking;
+	$snmp = new PluginFusioninventoryNetworking;
 	$snmp->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.switch_info.form.php', $ID);
 }
 
 function plugin_headings_fusioninventory_networkingErrors($type, $ID) {
-	$errors = new PluginFusionInventoryErrors;
+	$errors = new PluginFusioninventoryErrors;
 	$errors->showForm(NETWORKING_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.errors.form.php', $_GET["ID"]);
 }
 
 function plugin_headings_fusioninventory_fusioninventoryLocks($type, $ID) {
-	$fusioninventory_locks = new PluginFusionInventoryLock();
+	$fusioninventory_locks = new PluginFusioninventoryLock();
 	$fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.lock.form.php', $type, $ID);
 }
 
@@ -1422,7 +1422,7 @@ function plugin_headings_fusioninventory($type,$ID,$withtemplate=0) {
 
 	switch ($type) {
 		case PROFILE_TYPE :
-			$prof=new PluginFusionInventoryProfile;
+			$prof=new PluginFusioninventoryProfile;
 			if (!$prof->GetfromDB($ID)) {
 				PluginFusioninventory::createaccess($ID);
          }
@@ -1485,7 +1485,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                   while ($data_models=$DB->fetch_array($result_models)) {
                      $exclude_models[] = $data_models['ID'];
                   }
-                  Dropdown::show("PluginFusionInventoryModelInfos",
+                  Dropdown::show("PluginFusioninventoryModelInfos",
                                  array('name' => "snmp_model",
                                        'value' => "name",
                                        'comments' => false,
@@ -1502,7 +1502,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                break;
 
             case "plugin_fusioninventory_manage_locks" :
-               $pfil = new PluginFusionInventoryLock;
+               $pfil = new PluginFusioninventoryLock;
                $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
                break;
 
@@ -1529,7 +1529,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                   while ($data_models=$DB->fetch_array($result_models)) {
                      $exclude_models[] = $data_models['ID'];
                   }
-                  Dropdown::show("PluginFusionInventoryModelInfos",
+                  Dropdown::show("PluginFusioninventoryModelInfos",
                                  array('name' => "snmp_model",
                                        'value' => "name",
                                        'comments' => false,
@@ -1546,7 +1546,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                break;
 
             case "plugin_fusioninventory_manage_locks" :
-               $pfil = new PluginFusionInventoryLock;
+               $pfil = new PluginFusioninventoryLock;
                $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
                break;
 
@@ -1574,15 +1574,15 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          if ($data['device_type'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-                  $PluginFusionInventoryModelInfos = new PluginFusionInventoryModelInfos;
-                  $PluginFusionInventoryModelInfos->getrightmodel($key, NETWORKING_TYPE);
+                  $PluginFusioninventoryModelInfos = new PluginFusioninventoryModelInfos;
+                  $PluginFusioninventoryModelInfos->getrightmodel($key, NETWORKING_TYPE);
 					}
 				}
          } else if($data['device_type'] == PRINTER_TYPE) {
             foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-                  $PluginFusionInventoryModelInfos = new PluginFusionInventoryModelInfos;
-                  $PluginFusionInventoryModelInfos->getrightmodel($key, PRINTER_TYPE);
+                  $PluginFusioninventoryModelInfos = new PluginFusioninventoryModelInfos;
+                  $PluginFusioninventoryModelInfos->getrightmodel($key, PRINTER_TYPE);
 					}
 				}
          }
@@ -1666,7 +1666,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_model_infos.name':
-			Dropdown::show("PluginFusionInventoryModelInfos",
+			Dropdown::show("PluginFusioninventoryModelInfos",
                         array('name' => $linkfield,
                               'comments' => false));
 			return true;
@@ -1684,7 +1684,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.ID' :
-			Dropdown::show("PluginFusionInventoryAgents",
+			Dropdown::show("PluginFusioninventoryAgents",
                         array('name' => $linkfield,
                               'comments' => false));
 			return true;
@@ -2627,7 +2627,7 @@ function plugin_item_update_fusioninventory($parm) {
          $type=$parm['type'];
          $ID=$parm['ID'];
          $fieldsToLock=$parm['updates'];
-         $lockables = PluginFusionInventoryLockable::getLockableFields('', $type);
+         $lockables = PluginFusioninventoryLockable::getLockableFields('', $type);
          $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
          PluginFusioninventoryLock::addLocks($type, $ID, $fieldsToLock);
       }

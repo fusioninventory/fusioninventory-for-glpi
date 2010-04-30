@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusionInventoryConfigSNMPHistory extends CommonDBTM {
+class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_config_snmp_history";

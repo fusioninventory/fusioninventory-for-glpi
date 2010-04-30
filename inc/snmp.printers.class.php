@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryPrintersCartridges extends CommonDBTM {
+class PluginFusioninventoryPrintersCartridges extends CommonDBTM {
    
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_printers_cartridges";
@@ -46,7 +46,7 @@ class PluginFusionInventoryPrintersCartridges extends CommonDBTM {
 	}
 }
 
-class PluginFusionInventoryPrinters extends CommonDBTM {
+class PluginFusioninventoryPrinters extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_printers";
@@ -64,9 +64,9 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 	
 		$this->ID = $ID;
 		
-		$plugin_fusioninventory_printers = new PluginFusionInventoryPrinters;
-//		$config_snmp_printer = new PluginFusionInventoryConfigSNMPPrinter;
-		$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
+		$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
+//		$config_snmp_printer = new PluginFusioninventoryConfigSNMPPrinter;
+		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers`
@@ -108,7 +108,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['ID'];		
 		}
-		Dropdown::show("PluginFusionInventoryModelInfos",
+		Dropdown::show("PluginFusioninventoryModelInfos",
                      array('name'=>"FK_model_infos",
                            'value'=>$data["FK_model_infos"],
                            'comments'=>false,
@@ -149,7 +149,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 		echo "</div>";
 
       // Remote action of agent
-      $pfit = new PluginFusionInventoryTask;
+      $pfit = new PluginFusioninventoryTask;
       $pfit->RemoteStateAgent($target, $ID, PRINTER_TYPE, array('INVENTORY' => 1 ));
 
 
@@ -284,8 +284,8 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 	function showFormPrinter_pagescounter($target,$ID) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;	
 		
-		$plugin_fusioninventory_printers = new PluginFusionInventoryPrinters;
-		$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
+		$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
+		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 	
 		$this->ID = $ID;
 		
@@ -1042,7 +1042,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
       echo "<div class=center>";
       $title = $elementsField[$graphField];
       if (count($printers)) {
-         $ptg = new PluginFusionInventoryGraph($query, $graphField, $timeUnit, $printers, $title);
+         $ptg = new PluginFusioninventoryGraph($query, $graphField, $timeUnit, $printers, $title);
       }
       echo '</div>';
    }

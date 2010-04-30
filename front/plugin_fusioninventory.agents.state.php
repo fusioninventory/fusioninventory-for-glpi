@@ -37,9 +37,9 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
 //if (isset ($_POST["startagent"])) {
-//   $pta = new PluginFusionInventoryAgents;
-//   $ptt = new PluginFusionInventoryTask;
-//   $ptais = new PluginFusionInventoryAgentsInventoryState;
+//   $pta = new PluginFusioninventoryAgents;
+//   $ptt = new PluginFusioninventoryTask;
+//   $ptais = new PluginFusioninventoryAgentsInventoryState;
 //
 //   if ($ptt->addTask(0, 0, 'INVENTORY', $_POST['agentID'])) {
 //      $ptais->changeStatus($_POST['ID'], 1);
@@ -50,13 +50,13 @@ include (GLPI_ROOT . "/inc/includes.php");
 //	glpi_header($_SERVER['HTTP_REFERER']);
 //}
 //
-//$ptais = new PluginFusionInventoryAgentsInventoryState;
+//$ptais = new PluginFusioninventoryAgentsInventoryState;
 //$ptais->computerState($_SERVER["PHP_SELF"], $_GET["ID"]);
 
 
 
 if (isset($_POST['action'])) {
-   $pfit = new PluginFusionInventoryTask;
+   $pfit = new PluginFusioninventoryTask;
 
    foreach ($_POST['agent-ip'] as $agentip) {
       $splitinfo = explode("-",$agentip);

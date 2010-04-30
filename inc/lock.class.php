@@ -65,7 +65,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       global $DB, $LANG, $SEARCH_OPTION;
 
       echo "<div width='50%'>";
-      $lockable_fields = PluginFusionInventoryLockable::getLockableFields('', $p_itemtype);
+      $lockable_fields = PluginFusioninventoryLockable::getLockableFields('', $p_itemtype);
       $locked = PluginFusioninventoryLock::getLockFields($p_itemtype, $p_items_id);
       if (count($locked)){
          foreach ($locked as $key => $val){

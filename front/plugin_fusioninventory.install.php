@@ -57,7 +57,7 @@ include (GLPI_ROOT . "/inc/includes.php");
  **/
 
 if (haveRight("config","w") && haveRight("profile","w")) {
-   $config = new PluginFusionInventoryConfig;
+   $config = new PluginFusioninventoryConfig;
    if (!TableExists("glpi_plugin_fusioninventory_agents")) {
 		PluginFusioninventorySetup::update("1.1.0");
    }

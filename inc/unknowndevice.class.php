@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusionInventoryUnknownDevice extends CommonDBTM {
+class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_unknown_device";
@@ -43,7 +43,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
    function defineTabs($ID,$withtemplate){
 		global $LANG,$CFG_GLPI;
 
-      $ptcm = new PluginFusionInventoryConfigModules;
+      $ptcm = new PluginFusioninventoryConfigModules;
 
       $ong = array();
 		if ($ID > 0){
@@ -220,7 +220,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][4] . " : </td>";
          echo "</td>";
          echo "<td align='center'>";
-         Dropdown::show("PluginFusionInventoryModelInfos",
+         Dropdown::show("PluginFusioninventoryModelInfos",
                         array('name'=>"FK_model_infos",
                               'value'=>$this->fields["FK_model_infos"]));
          echo "</td>";
@@ -290,7 +290,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 	function updateFromOldVersion_unknown_mac() {
 		global $DB,$LANG;
 
-		$snmp_queries = new PluginFusionInventorySNMP;
+		$snmp_queries = new PluginFusioninventorySNMP;
 		$np=new Netport;
 
 		$query = "SELECT DISTINCT `unknow_mac`,`unknown_ip`,`port`,`end_FK_processes`

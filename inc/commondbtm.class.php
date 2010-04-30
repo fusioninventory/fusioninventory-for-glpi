@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
  * Class to manage generic multi-tables objects
  * Adds field management to core CommonDBTM class.
  **/
-class PluginFusionInventoryCommonDBTM extends CommonDBTM {
+class PluginFusioninventoryCommonDBTM extends CommonDBTM {
    private $ptcdFields=array();
    private $ptcdLockFields=array();
    protected $ptcdUpdates=array();
@@ -55,11 +55,11 @@ class PluginFusionInventoryCommonDBTM extends CommonDBTM {
       $this->table=$p_table;
       if ($p_logFile != '') {
          $this->logFile = $p_logFile;
-         $this->addLog('New PluginFusionInventoryCommonDBTM object.');
+         $this->addLog('New PluginFusioninventoryCommonDBTM object.');
       } else {
          $this->logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/commonDBTM_'.
                                     time().'_'.rand(1,1000);
-//         file_put_contents($this->logFile, 'New PluginFusionInventoryCommonDBTM object.');
+//         file_put_contents($this->logFile, 'New PluginFusioninventoryCommonDBTM object.');
       }
    }
 

@@ -45,10 +45,10 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
-$plugin_fusioninventory_model_infos = new PluginFusionInventoryModelInfos;
-$plugin_fusioninventory_mib_networking = new PluginFusionInventoryMib;
+$plugin_fusioninventory_model_infos = new PluginFusioninventoryModelInfos;
+$plugin_fusioninventory_mib_networking = new PluginFusioninventoryMib;
 
-$importexport = new PluginFusionInventoryImportExport;
+$importexport = new PluginFusioninventoryImportExport;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","models");
 

@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryNetworking extends CommonDBTM {
+class PluginFusioninventoryNetworking extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_networking";
@@ -84,7 +84,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 	function isActive() {
 		global $DB;
 		
-		$config = new PluginFusionInventoryConfig;
+		$config = new PluginFusioninventoryConfig;
 		
 		// state number for an active device
 		if (!($active_device_state = $config->getValue("active_device_state"))) {
@@ -174,7 +174,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 		
 		$nw=new Netwire;
 		$CommonItem = new CommonItem;
-		$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
+		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
                "/lib/extjs/adapter/prototype/prototype.js'></script>";
@@ -246,7 +246,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 		echo "</table></form>";
 
       // Remote action of agent
-      $pfit = new PluginFusionInventoryTask;
+      $pfit = new PluginFusioninventoryTask;
       $pfit->RemoteStateAgent($target, $ID, NETWORKING_TYPE, array('INVENTORY' => 1 ));
 
 

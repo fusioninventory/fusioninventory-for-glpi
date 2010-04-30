@@ -32,7 +32,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusionInventoryTask extends CommonDBTM {
+class PluginFusioninventoryTask extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_task";
@@ -111,8 +111,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
    function formAddTask($target, $input=array()) {
       global $LANG;
 
-      $pta = new PluginFusionInventoryAgents;
-      $ptcm = new PluginFusionInventoryConfigModules;
+      $pta = new PluginFusioninventoryAgents;
+      $ptcm = new PluginFusioninventoryConfigModules;
       if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return;
       }
@@ -131,7 +131,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 		echo "</td>";
       
 		echo "<td align='center'>";
-      Dropdown::show("PluginFusionInventoryAgents",
+      Dropdown::show("PluginFusioninventoryAgents",
                      array('name'=>'agentocs',
                            'entity'=>1)); //TODO : check
 		echo "</td>";
@@ -187,7 +187,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
 
    function addTask($device_id, $device_type, $action, $agent_id, $param="") {
-      $ptcm = new PluginFusionInventoryConfigModules;
+      $ptcm = new PluginFusioninventoryConfigModules;
       if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return false;
       }
@@ -217,8 +217,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
 
    function getTask($deviceid) {
-      $pta = new PluginFusionInventoryAgents;
-      $ptc = new PluginFusionInventoryCommunication;
+      $pta = new PluginFusioninventoryAgents;
+      $ptc = new PluginFusioninventoryCommunication;
 
       $a_agent = $pta->InfosByKey($deviceid);
       $a_tasks = $this->find("`agent_id`='".$a_agent['ID']."'", "date");
@@ -235,8 +235,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
 
    function RemoteStartAgent($ID, $ip) {
-      $ptcm = new PluginFusionInventoryConfigModules;
-      $pfia = new PluginFusionInventoryAgents;
+      $ptcm = new PluginFusioninventoryConfigModules;
+      $pfia = new PluginFusioninventoryAgents;
 
       if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return false;
@@ -259,8 +259,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
    function RemoteStateAgent($target, $ID, $type, $a_modules = array()) {
       global $LANG,$CFG_GLPI;
 
-      $ptcm = new PluginFusionInventoryConfigModules;
-      $pfia = new PluginFusionInventoryAgents;
+      $ptcm = new PluginFusioninventoryConfigModules;
+      $pfia = new PluginFusioninventoryAgents;
 
       if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return;
@@ -362,7 +362,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
    function showAgentInventory($on_device, $device_type) {
       global $DB,$LANG;
 
-      $pfia = new PluginFusionInventoryAgents;
+      $pfia = new PluginFusioninventoryAgents;
       $computer_ID = 0;
       $count_agent_on = 0;
 
@@ -457,7 +457,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
       // Recherche des agents qui ont le NETDISCOVERY à oui
       $np = new Netport;
-      $pfia = new PluginFusionInventoryAgents;
+      $pfia = new PluginFusioninventoryAgents;
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
@@ -493,7 +493,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
       global $LANG;
       // Recherche des agents qui ont le SNMPQUERY à oui
       $np = new Netport;
-      $pfia = new PluginFusionInventoryAgents;
+      $pfia = new PluginFusioninventoryAgents;
 
       $count_agent_on = 0;
       $existantantip = array();
@@ -551,7 +551,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
       global $LANG;
 
       $np = new Netport;
-      $pfia = new PluginFusionInventoryAgents;
+      $pfia = new PluginFusioninventoryAgents;
 
       $count_agent_on = 0;
       $existantantip = array();
@@ -624,8 +624,8 @@ class PluginFusionInventoryTask extends CommonDBTM {
       // Dropdown with printer and network devices who have model and auth
       global $DB,$LANG;
 
-      $ptcm = new PluginFusionInventoryConfigModules;
-      $pfia = new PluginFusionInventoryAgents;
+      $ptcm = new PluginFusioninventoryConfigModules;
+      $pfia = new PluginFusioninventoryAgents;
 
       $dropdownOptions = "";
 

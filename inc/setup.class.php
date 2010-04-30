@@ -57,17 +57,17 @@ class PluginFusioninventorySetup extends CommonDBTM {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
       }
 
-      $config = new PluginFusionInventoryConfig;
+      $config = new PluginFusioninventoryConfig;
       $config->initConfig($version);
-      $config_modules = new PluginFusionInventoryConfigModules;
+      $config_modules = new PluginFusioninventoryConfigModules;
       $config_modules->initConfig();
-      $config_snmp_networking = new PluginFusionInventoryConfigSNMPNetworking;
+      $config_snmp_networking = new PluginFusioninventoryConfigSNMPNetworking;
       $config_snmp_networking->initConfig();
-      $config_history = new PluginFusionInventoryConfigSNMPHistory;
+      $config_history = new PluginFusioninventoryConfigSNMPHistory;
       $config_history->initConfig();
 
       // Import models
-      $importexport = new PluginFusionInventoryImportExport;
+      $importexport = new PluginFusioninventoryImportExport;
       include(GLPI_ROOT.'/inc/setup.function.php');
       include(GLPI_ROOT.'/inc/rulesengine.function.php');
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
@@ -100,19 +100,19 @@ class PluginFusioninventorySetup extends CommonDBTM {
          if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
             mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
          }
-   //		$config_discovery = new PluginFusionInventoryConfigDiscovery;
+   //		$config_discovery = new PluginFusioninventoryConfigDiscovery;
    //		$config_discovery->initConfig();
-   //		$config_snmp_script = new PluginFusionInventoryConfigSNMPScript;
+   //		$config_snmp_script = new PluginFusioninventoryConfigSNMPScript;
    //		$config_snmp_script->initConfig();
          // Import models
-   //		$importexport = new PluginFusionInventoryImportExport;
+   //		$importexport = new PluginFusioninventoryImportExport;
    //		foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0);
          // Clean DB (ports in glpi_plugin_fusioninventory_networking_ports..... )
 
       }
       if ($version == "2.0.2") {
          // Migrate unknown mac address in unknown device (MySQL table)
-   //		$ptud = new PluginFusionInventoryUnknownDevice;
+   //		$ptud = new PluginFusioninventoryUnknownDevice;
    //		$ptud->updateFromOldVersion_unknown_mac;
          // Delete MySQL table "glpi_plugin_fusioninventory_unknown_mac"
          $DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
@@ -157,7 +157,7 @@ class PluginFusioninventorySetup extends CommonDBTM {
          ini_set("memory_limit", "-1");
          ini_set("max_execution_time", "0");
 
-         $config_modules = new PluginFusionInventoryConfigModules;
+         $config_modules = new PluginFusioninventoryConfigModules;
          $config_modules->initConfig();
          if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
             mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
@@ -174,7 +174,7 @@ class PluginFusioninventorySetup extends CommonDBTM {
          $DB->query($query_delete);
 
          // Import models
-         $importexport = new PluginFusionInventoryImportExport;
+         $importexport = new PluginFusioninventoryImportExport;
          include(GLPI_ROOT.'/inc/setup.function.php');
          include(GLPI_ROOT.'/inc/rulesengine.function.php');
          foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
@@ -184,7 +184,7 @@ class PluginFusioninventorySetup extends CommonDBTM {
          $pfisnmph->ConvertField();
 
          // Delete all values in glpi_plugin_fusioninventory_config_snmp_history
-         $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+         $pficsnmph = new PluginFusioninventoryConfigSNMPHistory;
          $pficsnmph->initConfig();
          $pficsnmph->updateTrackertoFusion();
       }

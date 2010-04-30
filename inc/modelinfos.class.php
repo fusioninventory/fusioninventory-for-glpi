@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryModelInfos extends CommonDBTM {
+class PluginFusioninventoryModelInfos extends CommonDBTM {
    
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_model_infos";

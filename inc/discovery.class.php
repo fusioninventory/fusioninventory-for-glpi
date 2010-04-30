@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusionInventoryDiscovery extends CommonDBTM {
+class PluginFusioninventoryDiscovery extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_discovery";
@@ -64,7 +64,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
       $query_sel = "SELECT *
                     FROM `glpi_plugin_fusioninventory_discovery`
                     WHERE `ifaddr`='".$Array['ip']."'
-                          AND `name`='".PluginFusionInventorySNMP::hex_to_string($Array['name'])."'
+                          AND `name`='".PluginFusioninventorySNMP::hex_to_string($Array['name'])."'
                           AND `descr`='".$Array['description']."'
                           AND `serialnumber`='".$Array['serial']."'
                           AND `FK_entities`='".$Array['entity']."';";
@@ -75,7 +75,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
             // Detect is a device is same but this another IP (like switch)
             $query_sel = "SELECT *
                           FROM `glpi_plugin_fusioninventory_discovery`
-                          WHERE `name`='".PluginFusionInventorySNMP::hex_to_string($Array['name'])."'
+                          WHERE `name`='".PluginFusioninventorySNMP::hex_to_string($Array['name'])."'
                                 AND `descr`='".$Array['description']."'
                                 AND `serialnumber`='".$Array['serial']."';";
             $result_sel = $DB->query($query_sel);
@@ -90,7 +90,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
                                    `FK_snmp_connection`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
-                             '".PluginFusionInventorySNMP::hex_to_string($Array['name'])."',
+                             '".PluginFusioninventorySNMP::hex_to_string($Array['name'])."',
                              '".$Array['description']."',
                              '".$Array['serial']."',
                              '".$Array['type']."',
@@ -115,7 +115,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $Netport = new Netport;
-      $ptud = new PluginFusionInventoryUnknownDevice;
+      $ptud = new PluginFusioninventoryUnknownDevice;
 
       $ptud->getFromDB($discovery_ID);
       $query = "SELECT `ID`
@@ -130,7 +130,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
       switch ($ptud->fields['type']) {
          case PRINTER_TYPE :
             $Printer = new Printer;
-            $tp = new PluginFusionInventoryPrinters;
+            $tp = new PluginFusioninventoryPrinters;
 
             $data["FK_entities"] = $ptud->fields["FK_entities"];
             $data["name"] = $ptud->fields["name"];
@@ -158,7 +158,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
 
          case NETWORKING_TYPE :
             $Netdevice = new Netdevice;
-            $fusioninventory_networking = new PluginFusionInventoryNetworking;
+            $fusioninventory_networking = new PluginFusioninventoryNetworking;
 
             $data["FK_entities"] = $ptud->fields["FK_entities"];
             $data["name"] = $ptud->fields["name"];
@@ -305,7 +305,7 @@ class PluginFusionInventoryDiscovery extends CommonDBTM {
    static function criteria($p_criteria, $type=0) {
       global $DB;
 
-      $ptc = new PluginFusionInventoryConfig;
+      $ptc = new PluginFusioninventoryConfig;
 
       $a_criteria = array();
 

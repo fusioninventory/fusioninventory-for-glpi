@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryPrintersHistory extends CommonDBTM {
+class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_printers_history";

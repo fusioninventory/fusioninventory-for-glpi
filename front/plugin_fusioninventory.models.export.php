@@ -42,7 +42,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
-$importexport = new PluginFusionInventoryImportExport;
+$importexport = new PluginFusioninventoryImportExport;
 
 header("Expires: 0");
 header("Cache-control: private");

@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
+class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    private $oFusionInventory_printer;
    private $oFusionInventory_printer_history;
    private $ports=array(), $newPorts=array(), $updatesPorts=array();
@@ -53,9 +53,9 @@ class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
       $this->type=PRINTER_TYPE;
-      $this->oFusionInventory_printer = new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $this->oFusionInventory_printer = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers");
       $this->oFusionInventory_printer_history =
-                        new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_printers_history");
+                        new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers_history");
    }
 
    /**
@@ -139,7 +139,7 @@ class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginFusionInventoryPort();
+      $ptp = new PluginFusioninventoryPort();
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
@@ -298,7 +298,7 @@ class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
    private function getCartridgesDB() {
       global $DB;
 
-      $ptc = new PluginFusionInventoryCommonDBTM('glpi_plugin_fusioninventory_printers_cartridges');
+      $ptc = new PluginFusioninventoryCommonDBTM('glpi_plugin_fusioninventory_printers_cartridges');
       $query = "SELECT `ID`
                 FROM `glpi_plugin_fusioninventory_printers_cartridges`
                 WHERE `FK_printers` = '".$this->getValue('ID')."';";

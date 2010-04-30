@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryConstructDevice extends CommonDBTM {
+class PluginFusioninventoryConstructDevice extends CommonDBTM {
 
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_construct_device";
@@ -493,8 +493,8 @@ echo "</a>";
    function generatemodels() {
       global $DB;
 
-      $ptmi = new PluginFusionInventoryModelInfos;
-      $ptmn = new PluginFusionInventoryMib;
+      $ptmi = new PluginFusioninventoryModelInfos;
+      $ptmn = new PluginFusioninventoryMib;
 
       $query = "SELECT glpi_plugin_fusioninventory_construct_device.ID, type  FROM glpi_plugin_fusioninventory_construct_device
          LEFT JOIN glpi_plugin_fusioninventory_construct_walks on glpi_plugin_fusioninventory_construct_device.ID = construct_device_id
@@ -779,7 +779,7 @@ echo "</a>";
    function exportmodels() {
       global $DB;
 
-      $pfiie = new PluginFusionInventoryImportExport;
+      $pfiie = new PluginFusioninventoryImportExport;
 
       $query_models = "SELECT * FROM glpi_plugin_fusioninventory_model_infos";
       if ($result_models = $DB->query($query_models)) {

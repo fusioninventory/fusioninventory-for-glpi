@@ -51,9 +51,9 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
-$ptud = new PluginFusionInventoryUnknownDevice;
-$ptt  = new PluginFusionInventoryTask;
-$ptcm = new PluginFusionInventoryConfigModules;
+$ptud = new PluginFusioninventoryUnknownDevice;
+$ptt  = new PluginFusioninventoryTask;
+$ptcm = new PluginFusioninventoryConfigModules;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
 

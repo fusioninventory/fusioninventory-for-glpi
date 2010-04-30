@@ -41,7 +41,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
    static function createfirstaccess($ID) {
       global $DB;
 
-      $plugin_fusioninventory_Profile=new PluginFusionInventoryProfile;
+      $plugin_fusioninventory_Profile=new PluginFusioninventoryProfile;
       if (!$plugin_fusioninventory_Profile->GetfromDB($ID)) {
          $Profile=new Profile;
          $Profile->GetfromDB($ID);
@@ -138,12 +138,12 @@ class PluginFusioninventoryDb extends CommonDBTM {
    static function clean_db() {
       global $DB;
 
-      $ptp = new PluginFusionInventoryPort;
-      $pti = new PluginFusionInventoryIfaddr;
-      $ptn = new PluginFusionInventoryNetworking2;
-      $ptpr = new PluginFusionInventoryPrinters;
-      $ptpc = new PluginFusionInventoryPrintersCartridges;
-      $ptph = new PluginFusionInventoryPrintersHistory;
+      $ptp = new PluginFusioninventoryPort;
+      $pti = new PluginFusioninventoryIfaddr;
+      $ptn = new PluginFusioninventoryNetworking2;
+      $ptpr = new PluginFusioninventoryPrinters;
+      $ptpc = new PluginFusioninventoryPrintersCartridges;
+      $ptph = new PluginFusioninventoryPrintersHistory;
 
       // * Clean glpi_plugin_fusioninventory_networking_ports
       $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`ID`

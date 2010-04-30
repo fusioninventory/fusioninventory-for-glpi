@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 include_once(GLPI_ROOT.'/inc/networking.class.php'); // todo a ranger
 include_once(GLPI_ROOT.'/inc/networking.function.php');
 
-class PluginFusionInventorySNMP extends CommonDBTM {
+class PluginFusioninventorySNMP extends CommonDBTM {
 
 	/**
 	 * Get links between oid and fields 
@@ -173,7 +173,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 	function getPortIDfromDeviceIP($IP, $ifDescr) {
 		global $DB;
 
-      $pfiud = new PluginFusionInventoryUnknownDevice;
+      $pfiud = new PluginFusioninventoryUnknownDevice;
       $np = new Netport;
 
       $PortID = "";
@@ -387,7 +387,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
       global $DB;
 
       $plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
-      $config = new PluginFusionInventoryConfig;
+      $config = new PluginFusioninventoryConfig;
 
       if ($config->getValue("authsnmp") == "file") {
          echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
@@ -416,11 +416,11 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                                $ArrayPort_LogicalNum_SNMPName,$ArrayPort_LogicalNum_SNMPNum) {
       global $DB,$LANG;
 
-      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
-      $manufCisco = new PluginFusionInventoryManufacturerCisco;
+      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusioninventoryLogs;
+      $manufCisco = new PluginFusioninventoryManufacturerCisco;
       $netwire=new Netwire;
       $np=new Netport;
-      $ptp = new PluginFusionInventoryPort;
+      $ptp = new PluginFusioninventoryPort;
 
       if ($_SESSION['fusioninventory_logs'] == "1")
          $logs->write("fusioninventory_fullsync",
@@ -600,7 +600,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                                     $Array_Object_TypeNameConstant) {
       global $DB,$LANG,$CFG_GLPI,$FUSIONINVENTORY_MAPPING;
 
-      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
+      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusioninventoryLogs;
 
       if ($_SESSION['fusioninventory_logs'] == "1")
          $logs->write("fusioninventory_fullsync",">>>>>>>>>> Update devices values <<<<<<<<<<",$type,
@@ -626,7 +626,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
             if (isset($oidvalues[$oid][""])) {
                if ((isset($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown']))
                        AND (!empty($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown']))) {
-                  $oidvalues[$oid][""] = PluginFusionInventorySNMP::hex_to_string($oidvalues[$oid][""]);
+                  $oidvalues[$oid][""] = PluginFusioninventorySNMP::hex_to_string($oidvalues[$oid][""]);
                   if ($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown'] == "glpi_dropdown_model_networking") {
                      $oidvalues[$oid][""] =
                              Dropdown::importExternal("NetworkEquipmentModel",
@@ -673,7 +673,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                }
 
                // Convert hexa in string
-               $oidvalues[$oid][""] = PluginFusionInventorySNMP::hex_to_string($oidvalues[$oid][""]);
+               $oidvalues[$oid][""] = PluginFusioninventorySNMP::hex_to_string($oidvalues[$oid][""]);
 
                if (strstr($oidvalues[$oid][""], "noSuchName")) {
                   // NO Update field in GLPI
@@ -827,9 +827,9 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                                              $Array_Object_TypeNameConstant) {
       global $DB,$LANG,$FUSIONINVENTORY_MAPPING;
 
-      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
-      $snmp_queries = new PluginFusionInventorySNMP;
-      $walks = new PluginFusionInventoryWalk;
+      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusioninventoryLogs;
+      $snmp_queries = new PluginFusioninventorySNMP;
+      $walks = new PluginFusioninventoryWalk;
       $nn = new NetworkPort_NetworkPort();
 
       if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync",
@@ -989,12 +989,12 @@ class PluginFusionInventorySNMP extends CommonDBTM {
            $ArrayPortsID,$vlan="",$Array_trunk_ifIndex=array()) {
       global $DB;
 
-      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
+      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusioninventoryLogs;
       # * Manufacturers
-      $manuf3com = new PluginFusionInventoryManufacturer3com;
-      $manufCisco = new PluginFusionInventoryManufacturerCisco;
-      $manufFoundryNetworks = new PluginFusionInventoryManufacturerFoundryNetworks;
-      $manufHP = new PluginFusionInventoryManufacturerHP;
+      $manuf3com = new PluginFusioninventoryManufacturer3com;
+      $manufCisco = new PluginFusioninventoryManufacturerCisco;
+      $manufFoundryNetworks = new PluginFusioninventoryManufacturerFoundryNetworks;
+      $manufHP = new PluginFusioninventoryManufacturerHP;
 
       switch (!false) {
 
@@ -1059,14 +1059,14 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 
       $netwire=new Netwire;
       $nn = new NetworkPort_NetworkPort();
-      $snmp_queries = new PluginFusionInventorySNMP;
-      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
-      $walks = new PluginFusionInventoryWalk;
-      $Threads = new PluginFusionInventoryProcesses;
-      $tmpc = new PluginFusionInventoryTmpConnections;
-      $manuf3com = new PluginFusionInventoryManufacturer3com;
-      $manufCisco = new PluginFusionInventoryManufacturerCisco;
-      $manufHP = new PluginFusionInventoryManufacturerHP;
+      $snmp_queries = new PluginFusioninventorySNMP;
+      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusioninventoryLogs;
+      $walks = new PluginFusioninventoryWalk;
+      $Threads = new PluginFusioninventoryProcesses;
+      $tmpc = new PluginFusioninventoryTmpConnections;
+      $manuf3com = new PluginFusioninventoryManufacturer3com;
+      $manufCisco = new PluginFusioninventoryManufacturerCisco;
+      $manufHP = new PluginFusioninventoryManufacturerHP;
 
       $Array_cdp_ifIndex = array();
       $Array_trunk_ifIndex = array();
@@ -1308,8 +1308,8 @@ class PluginFusionInventorySNMP extends CommonDBTM {
    static function networking_ifaddr($ID_Device,$type,$oidsModel,$oidvalues) {
       global $DB;
 
-      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusionInventoryLogs;
-      $walks = new PluginFusionInventoryWalk;
+      if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusioninventoryLogs;
+      $walks = new PluginFusioninventoryWalk;
 
       if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync",
                  ">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type,$ID_Device,1);

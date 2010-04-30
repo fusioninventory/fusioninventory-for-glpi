@@ -42,7 +42,7 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
 
-$config = new PluginFusionInventoryConfig;
+$config = new PluginFusioninventoryConfig;
 
 PluginFusioninventoryDisplay::mini_menu();
 

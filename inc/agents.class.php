@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryAgents extends CommonDBTM {
+class PluginFusioninventoryAgents extends CommonDBTM {
 
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_agents";
@@ -49,7 +49,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
 	function defineTabs($ID,$withtemplate){
 		global $LANG,$CFG_GLPI;
 
-      $ptcm = new PluginFusionInventoryConfigModules;
+      $ptcm = new PluginFusioninventoryConfigModules;
 
       $ong = array();
 		if ($ID > 0){
@@ -89,7 +89,7 @@ class PluginFusionInventoryAgents extends CommonDBTM {
       }
 
       $CommonItem = new CommonItem;
-      $ptcm       = new PluginFusionInventoryConfigModules;
+      $ptcm       = new PluginFusioninventoryConfigModules;
 
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 

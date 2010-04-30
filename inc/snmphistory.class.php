@@ -460,7 +460,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
    function cronCleanHistory() {
       global $DB;
 
-      $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+      $pficsnmph = new PluginFusioninventoryConfigSNMPHistory;
 
       $a_list = $pficsnmph->find();
       if (count($a_list)){
@@ -519,9 +519,9 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
    static function networking_ports_addLog($port_id, $new_value, $field) {
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 
-      $ptp = new PluginFusionInventoryPort;
+      $ptp = new PluginFusioninventoryPort;
       $ptsnmph = new PluginFusioninventorySnmphistory;
-      $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+      $pficsnmph = new PluginFusioninventoryConfigSNMPHistory;
 
       $db_field = $field;
       switch ($field) {

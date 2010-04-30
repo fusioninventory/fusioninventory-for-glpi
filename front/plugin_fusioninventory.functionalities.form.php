@@ -51,15 +51,15 @@ if (isset($_POST['update'])) {
 	switch ($_POST['tabs']) {
       
 		case 'config' :
-			$config1 = new PluginFusionInventoryConfig;
+			$config1 = new PluginFusioninventoryConfig;
 			break;
 
       case 'configmodules' :
-         $config1 = new PluginFusionInventoryConfigModules;
+         $config1 = new PluginFusioninventoryConfigModules;
          break;
 
       case 'history' :
-         $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
+         $pficsnmph = new PluginFusioninventoryConfigSNMPHistory;
          foreach ($_POST as $key=>$val) {
             if (is_int($key)) {
                $input = array();
@@ -85,7 +85,7 @@ if (isset($_POST['update'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$config = new PluginFusionInventoryConfig;
+$config = new PluginFusioninventoryConfig;
 
 $config->showTabs('1', '',$_SESSION['glpi_tab']);
 echo "<div id='tabcontent'></div>";

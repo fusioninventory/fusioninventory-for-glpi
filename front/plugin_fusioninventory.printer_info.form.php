@@ -45,7 +45,7 @@ PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 		PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 	
-	$plugin_fusioninventory_printers = new PluginFusionInventoryPrinters;
+	$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
 	
 	$_POST['FK_printers'] = $_POST['ID'];
 	unset($_POST['ID']);
@@ -59,14 +59,14 @@ if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	$plugin_fusioninventory_printers->update($_POST);
 	
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['ID']))) {
-   $plugin_fusioninventory_model_infos = new PluginFusionInventoryModelInfos;
+   $plugin_fusioninventory_model_infos = new PluginFusioninventoryModelInfos;
    $plugin_fusioninventory_model_infos->getrightmodel($_POST['ID'], PRINTER_TYPE);
 }
 
 if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
 	PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 
-	$plugin_fusioninventory_printers_cartridges = new PluginFusionInventoryPrintersCartridges;
+	$plugin_fusioninventory_printers_cartridges = new PluginFusioninventoryPrintersCartridges;
 
 	$query = "SELECT * 
              FROM `glpi_plugin_fusioninventory_printers_cartridges`

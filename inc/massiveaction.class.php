@@ -41,7 +41,7 @@ class PluginFusioninventoryMassiveaction extends CommonDBTM {
    static function assign($id, $source_type, $source_field, $source_value) {
       global $DB;
 
-      $plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
+      $plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 
       if ($source_field == "model") {
          // Get auth

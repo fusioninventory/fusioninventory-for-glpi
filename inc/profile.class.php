@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusionInventoryProfile extends CommonDBTM {
+class PluginFusioninventoryProfile extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_profiles";
@@ -92,7 +92,7 @@ class PluginFusionInventoryProfile extends CommonDBTM {
 			);
 		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false);
 		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false,'profile_interface');
-//$prof=new PluginFusionInventoryProfile;
+//$prof=new PluginFusioninventoryProfile;
 
 //	$prof->showfusioninventoryForm($_POST["ID"]);
 

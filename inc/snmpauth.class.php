@@ -409,7 +409,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 	function GetInfos($ID_Device,$xml_auth_rep,$type) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		$config = new PluginFusionInventoryConfig;
+		$config = new PluginFusioninventoryConfig;
 
 		if ($ID_Device != "all") {
 			switch ($type) {

@@ -46,19 +46,19 @@ manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE);
 
 $_GET['target']="plugin_fusioninventory.construct_device.php";
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
-   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd = new PluginFusioninventoryConstructDevice;
    $ptcd->generatemodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['generatediscover']) AND $_GET['generatediscover'] == '1') {
-   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd = new PluginFusioninventoryConstructDevice;
    $ptcd->generateDiscovery();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['cleanmodels']) AND $_GET['cleanmodels'] == '1') {
-   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd = new PluginFusioninventoryConstructDevice;
    $ptcd->cleanmodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['exportmodels']) AND $_GET['exportmodels'] == '1') {
-   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd = new PluginFusioninventoryConstructDevice;
    $ptcd->exportmodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 }

@@ -45,8 +45,8 @@ include (GLPI_ROOT."/inc/includes.php");
 
 $_SESSION["glpi_use_mode"] = 2;
 
-$ptc  = new PluginFusionInventoryCommunication;
-$ptap = new PluginFusionInventoryAgentsProcesses;
+$ptc  = new PluginFusioninventoryCommunication;
+$ptap = new PluginFusioninventoryAgentsProcesses;
 
 $res='';
 $errors='';
@@ -57,7 +57,7 @@ $errors='';
 
 
 // Get conf tu know if SSL is only
-$fusioninventory_config = new PluginFusionInventoryConfig;
+$fusioninventory_config = new PluginFusioninventoryConfig;
 $ssl = $fusioninventory_config->getValue('ssl_only');
 if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
     OR ($ssl == "0")) {
@@ -90,9 +90,9 @@ if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
 <REPLY>
 </REPLY>");
 
-      $pta  = new PluginFusionInventoryAgents;
-      $ptt  = new PluginFusionInventoryTask;
-      $ptcm = new PluginFusionInventoryConfigModules;
+      $pta  = new PluginFusioninventoryAgents;
+      $ptt  = new PluginFusioninventoryTask;
+      $ptcm = new PluginFusioninventoryConfigModules;
 
 
       $a_agent = $pta->InfosByKey($pxml->DEVICEID);

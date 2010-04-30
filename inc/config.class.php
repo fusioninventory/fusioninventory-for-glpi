@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusionInventoryConfig extends CommonDBTM {
+class PluginFusioninventoryConfig extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_config";

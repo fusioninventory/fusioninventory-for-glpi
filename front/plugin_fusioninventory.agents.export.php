@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_agent","r");
 
-$agents = new PluginFusionInventoryAgents;
+$agents = new PluginFusioninventoryAgents;
 
 header("Expires: 0");
 header("Cache-control: private");

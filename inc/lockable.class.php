@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /// Plugin FusionInventory lock class
-class PluginFusionInventoryLockable extends CommonDBTM{
+class PluginFusioninventoryLockable extends CommonDBTM{
 
 	/**
 	 * Constructor
@@ -170,7 +170,7 @@ class PluginFusionInventoryLockable extends CommonDBTM{
       global $DB;
 
       if (TableExists('glpi_plugin_fusioninventory_lockable')) {
-         $db_lockable = $DB->fetch_assoc(PluginFusionInventoryLockable::getLockable($p_entities_id, $p_itemtype));
+         $db_lockable = $DB->fetch_assoc(PluginFusioninventoryLockable::getLockable($p_entities_id, $p_itemtype));
          $lockable_fields = $db_lockable["fields"];
          $lockable = importArrayFromDB($lockable_fields);
 
@@ -235,7 +235,7 @@ class PluginFusionInventoryLockable extends CommonDBTM{
 
       if ( (isset($p_post['plugin_fusioninventory_lockable_add']) AND isset($p_post['columnSelect'])) // add AND columns to add
             OR (isset($_POST['plugin_fusioninventory_lockable_delete']) AND isset($p_post['columnLockable'])) ) {  // delete AND columns to delete
-         $db_lockable = $DB->fetch_assoc(PluginFusionInventoryLockable::getLockable('', $tableId));
+         $db_lockable = $DB->fetch_assoc(PluginFusioninventoryLockable::getLockable('', $tableId));
          $lockable_id = $db_lockable["id"];
          $lockable_fields = $db_lockable["fields"];
          $lockable = importArrayFromDB($lockable_fields);
@@ -280,7 +280,7 @@ class PluginFusionInventoryLockable extends CommonDBTM{
          include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.mapping.fields.constant.php");
          $tableId = array_search($p_itemtype, $LINK_ID_TABLE);
          if ($tableId != 0) {
-            $lockable_fields=PluginFusionInventoryLockable::getLockableFields('', $tableId);
+            $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $tableId);
             echo '<SELECT NAME="columnSelect[]" MULTIPLE SIZE="15">'."\n";
             while ($data=$DB->fetch_array($result)) {
                $column=$data[0];
@@ -308,7 +308,7 @@ class PluginFusionInventoryLockable extends CommonDBTM{
 
       $tableId = array_search($p_itemtype, $LINK_ID_TABLE);
       if ($tableId != 0) {
-         $lockable_fields=PluginFusionInventoryLockable::getLockableFields('', $tableId);
+         $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $tableId);
          include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.mapping.fields.constant.php");
          echo '<SELECT NAME="columnLockable[]" MULTIPLE SIZE="15">';
          if (count($lockable_fields)){

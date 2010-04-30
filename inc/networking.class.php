@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
+class PluginFusioninventoryNetworking2 extends PluginFusioninventoryCommonDBTM {
    private $ports=array(), $ifaddrs=array();
    private $oFusionInventory_networking, $oFusionInventory_networking_ifaddr, $oFusionInventory_networking_ports;
    private $newPorts=array(), $updatesPorts=array();
@@ -53,7 +53,7 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
       parent::__construct("glpi_networking");
       $this->dohistory=true;
       $this->type=NETWORKING_TYPE;
-      $this->oFusionInventory_networking = new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_networking");
+      $this->oFusionInventory_networking = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networking");
    }
 
    /**
@@ -118,7 +118,7 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginFusionInventoryPort();
+      $ptp = new PluginFusioninventoryPort();
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
@@ -267,7 +267,7 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
    private function getIfaddrsDB() {
       global $DB;
 
-      $pti = new PluginFusionInventoryIfaddr();
+      $pti = new PluginFusioninventoryIfaddr();
       $query = "SELECT `ID`
                 FROM `glpi_plugin_fusioninventory_networking_ifaddr`
                 WHERE `FK_networking` = '".$this->getValue('ID')."';";

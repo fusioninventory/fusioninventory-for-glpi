@@ -42,13 +42,13 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("networking","r");
 PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
-$plugin_fusioninventory_snmp = new PluginFusionInventorySNMP;
+$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 
 if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	PluginFusioninventoryAuth::checkRight("snmp_networking","w");
 	$plugin_fusioninventory_snmp->update_network_infos($_POST['ID'], $_POST['model_infos'], $_POST['FK_snmp_connection']);
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['ID']))) {
-   $plugin_fusioninventory_model_infos = new PluginFusionInventoryModelInfos;
+   $plugin_fusioninventory_model_infos = new PluginFusioninventoryModelInfos;
    $plugin_fusioninventory_model_infos->getrightmodel($_POST['ID'], NETWORKING_TYPE);
 }
 

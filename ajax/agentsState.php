@@ -39,7 +39,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
-$pfit = new PluginFusionInventoryTask;
+$pfit = new PluginFusioninventoryTask;
 
 if (isset($_POST["action"])) {
    if ($_POST["action"] == "INVENTORY") {

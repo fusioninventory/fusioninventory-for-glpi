@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking ports
  **/
-class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
+class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    private $oFusionInventory_networking_ports; // link fusioninventory table object
    private $fusioninventory_networking_ports_ID; // ID in link fusioninventory table
    private $portsToConnect=array(); // ID of known connected ports
@@ -65,9 +65,9 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       }
       parent::__construct("glpi_networking_ports", $logFile);
       $this->oFusionInventory_networking_ports =
-              new PluginFusionInventoryCommonDBTM("glpi_plugin_fusioninventory_networking_ports");
+              new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networking_ports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
-      $this->addLog('New PluginFusionInventoryPort object.');
+      $this->addLog('New PluginFusioninventoryPort object.');
    }
 
    /**
@@ -197,7 +197,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
     *@return nothing
     **/
    function PortUnknownConnection($p_mac, $p_ip) {
-      $ptud = new PluginFusionInventoryUnknownDevice;
+      $ptud = new PluginFusioninventoryUnknownDevice;
       $unknown_infos["name"] = '';
       $newID=$ptud->add($unknown_infos);
       // Add networking_port
@@ -207,7 +207,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       $port_add["ifaddr"] = $p_ip;
       $port_add['ifmac'] = $p_mac;
       $dport = $np->add($port_add);
-      $ptsnmp=new PluginFusionInventorySNMP;
+      $ptsnmp=new PluginFusioninventorySNMP;
       $this->connectDB($dport);
    }
 
@@ -255,7 +255,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
 	function connectDB($destination_port='') {
 		global $DB;
 
-      $ptap = new PluginFusionInventoryAgentsProcesses;
+      $ptap = new PluginFusioninventoryAgentsProcesses;
 
       $queryVerif = "SELECT *
                      FROM `glpi_networking_wire`
@@ -291,7 +291,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       $nn = new NetworkPort_NetworkPort();
       if ($nn->getFromDBForNetworkPort($p_port)) {
          if ($nn->delete(array('id'=>$p_port))) {
-            $ptap = new PluginFusionInventoryAgentsProcesses;
+            $ptap = new PluginFusioninventoryAgentsProcesses;
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                  array('query_nb_connections_deleted' => '1'));
          }
@@ -350,7 +350,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
          if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
             if ($num==1) { // connected port
-               $ptpConnected = new PluginFusionInventoryPort();
+               $ptpConnected = new PluginFusioninventoryPort();
                $ptpConnected->load($tmp_port);
                if ($ptpConnected->fields['device_type']==NETWORKING_TYPE) {
                   break; // don't update if port on a switch
@@ -411,7 +411,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
                $this->cleanVlan('', $this->getValue('ID'));
                if ($this->connectedPort != '') {
-                  $ptpConnected = new PluginFusionInventoryPort();
+                  $ptpConnected = new PluginFusioninventoryPort();
                   $ptpConnected->load($this->connectedPort);
                   if ($ptpConnected->fields['device_type'] != NETWORKING_TYPE) {
                      // don't update vlan on connected port if connected port on a switch
@@ -474,7 +474,7 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       global $DB;
 
       $macs='';
-      $ptp = new PluginFusionInventoryPort;
+      $ptp = new PluginFusioninventoryPort;
       foreach($this->portsToConnect as $index=>$portConnection) {
          if ($macs!='') $macs.=', ';
          $ptp->load($portConnection);

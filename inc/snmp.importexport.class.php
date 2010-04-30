@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusionInventoryImportExport extends CommonDBTM {
+class PluginFusioninventoryImportExport extends CommonDBTM {
 
 	function plugin_fusioninventory_export($ID_model) {
 		global $DB;
@@ -247,12 +247,12 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
       $test = '';
       $p_criteria = array();
 
-		$walks            = new PluginFusionInventoryWalk;
-      $ptap             = new PluginFusionInventoryAgentsProcesses;
-      $pta              = new PluginFusionInventoryAgents;
-		$config_discovery = new PluginFusionInventoryConfig;
+		$walks            = new PluginFusioninventoryWalk;
+      $ptap             = new PluginFusioninventoryAgentsProcesses;
+      $pta              = new PluginFusioninventoryAgents;
+		$config_discovery = new PluginFusioninventoryConfig;
       $np               = new Netport;
-      $ptud             = new PluginFusionInventoryUnknownDevice;
+      $ptud             = new PluginFusioninventoryUnknownDevice;
 
       if (isset($p_xml->AGENT->START)) {
          $ptap->updateProcess($p_xml->PROCESSNUMBER, array('start_time_discovery' => date("Y-m-d H:i:s")));
@@ -305,7 +305,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
          $p_criteria['serial'] = $discovery->SERIAL;
          $p_criteria['macaddr'] = $discovery->MAC;
 
-         $discovery_criteria = PluginFusionInventoryDiscovery::criteria($p_criteria);
+         $discovery_criteria = PluginFusioninventoryDiscovery::criteria($p_criteria);
          if (!$discovery_criteria) {
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_import' => '1'));
             // Add in unknown device
@@ -444,7 +444,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                      $port['name'] = $discovery->NETPORTVENDOR;
                      $np->update($port);
                   } else if ($DB->numrows($result) > 1) {
-                     $ptae = new PluginFusionInventoryAgentsErrors;
+                     $ptae = new PluginFusioninventoryAgentsErrors;
                      $error_input['ID'] = $a_device[0];
                      $error_input['TYPE'] = $a_device[1];
                      $error_input['MESSAGE'] = 'Unable to determine network port of device to update with values : '.$discovery->IP.'(ip),
