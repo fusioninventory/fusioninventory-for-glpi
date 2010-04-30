@@ -1561,7 +1561,7 @@ class PluginFusionInventoryCommunication {
       if ($DB->numrows($result) == 1) {
          $line = $DB->fetch_assoc($result);
          $ptais->changeStatus($line['glpi_id'], 5);
-         ocsUpdateComputer($line['ID'], $line['ocs_server_id'], 1);
+         OcsServer::updateComputer($line['ID'], $line['ocs_server_id'], 1);
          $ptais->changeStatus($line['glpi_id'], 6);
       }
    }
