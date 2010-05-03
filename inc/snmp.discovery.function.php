@@ -501,11 +501,15 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
          case 'name':
             $condition .= "AND `name`='".$value."' ";
             $select .= ", name";
+            $condition_unknown .= "AND `name`='".$value."' ";
+            $select_unknown .= ", name";
             break;
 
          case 'serial':
             $condition .= "AND `serial`='".$value."' ";
             $select .= ", serial";
+            $condition_unknown .= "AND `serial`='".$value."' ";
+            $select_unknown .= ", serial";
             break;       
       }
    }
