@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventorySetup extends CommonDBTM {
+class PluginFusioninventorySetup {
    // Installation function
    static function install($version) {
       global $DB,$LANG;
