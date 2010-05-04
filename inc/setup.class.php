@@ -192,7 +192,7 @@ class PluginFusioninventorySetup extends CommonDBTM {
    }
 
    // Uninstallation function
-   static function PluginFusioninventorySetup::uninstall() {
+   static function uninstall() {
       global $DB;
 
       $np = new Netport;
