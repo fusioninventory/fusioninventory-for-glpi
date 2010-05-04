@@ -39,20 +39,18 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryAgents extends CommonDBTM {
-
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_agents";
 		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
 	}
 
-
-	function defineTabs($ID,$withtemplate){
+   function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
 
       $ptcm = new PluginFusioninventoryConfigModules;
 
       $ong = array();
-		if ($ID > 0){
+		if ($this->fields['id'] > 0){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
          if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
@@ -60,8 +58,6 @@ class PluginFusioninventoryAgents extends CommonDBTM {
       }
 		return $ong;
 	}
-
-
 
 	function PushData($ID, $key) {
 		$this->getFromDB($ID);

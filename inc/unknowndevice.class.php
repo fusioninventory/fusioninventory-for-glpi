@@ -38,15 +38,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		$this->type = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
 	}
 
-
-
-   function defineTabs($ID,$withtemplate){
+   function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
 
       $ptcm = new PluginFusioninventoryConfigModules;
 
       $ong = array();
-		if ($ID > 0){
+		if ($this->fields['id'] > 0){
          $ong[1]=$LANG['title'][27];
          if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
@@ -55,8 +53,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
 		return $ong;
 	}
-
-
 
 	function showForm($ID, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;

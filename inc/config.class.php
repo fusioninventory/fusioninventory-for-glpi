@@ -75,7 +75,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 	// Confirm if the functionality is activated, or not
 	function isActivated($functionality) {
-		
 		if (!($this->getValue($functionality))) {
 			return false;
       } else {
@@ -83,9 +82,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       }
 	}
 
-
-	function defineTabs($ID,$withtemplate) {
+   function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
+
       $ong = array();
 		$ong[1]=$LANG['plugin_fusioninventory']["functionalities"][2];
       $ong[2]=$LANG['plugin_fusioninventory']['config'][1];
@@ -97,9 +96,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 		return $ong;
 	}
-	
 
-	
 	function showForm($ID, $options=array()) {
 		global $LANG,$CFG_GLPI;
 

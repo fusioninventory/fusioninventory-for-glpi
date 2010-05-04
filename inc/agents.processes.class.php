@@ -55,8 +55,9 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
 	}
 
 
-   function defineTabs($ID,$withtemplate) {
+   function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
+
       $ong = array();
 		$ong[1]=$LANG['plugin_fusioninventory']["processes"][19];
       $ong[2]=$LANG['plugin_fusioninventory']["title"][2];
