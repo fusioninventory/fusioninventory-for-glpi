@@ -36,8 +36,6 @@
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
-include_once(GLPI_ROOT.'/inc/networking.class.php'); // todo a ranger
-include_once(GLPI_ROOT.'/inc/networking.function.php');
 
 class PluginFusioninventorySNMP extends CommonDBTM {
 
