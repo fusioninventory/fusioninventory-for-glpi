@@ -111,7 +111,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
     * @return nothing
     *
    **/
-   static function PluginFusioninventoryDiscovery::import($discovery_ID,$Import=0, $NoImport=0) {
+   static function import($discovery_ID,$Import=0, $NoImport=0) {
       global $DB,$CFG_GLPI,$LANG;
 
       $Netport = new Netport;
