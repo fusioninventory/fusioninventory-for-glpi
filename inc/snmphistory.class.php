@@ -209,8 +209,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       }
    }
 
-
-   function CleanHistory($data) {
+   function clean_history($data) {
       global $DB;
 
       $historyConfig = array();

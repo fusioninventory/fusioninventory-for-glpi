@@ -143,7 +143,7 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
       return true;
 	}
 
-   function CleanHistory($option) {
+   function clean_history($option) {
       global $DB;
 
       switch ($option) {
