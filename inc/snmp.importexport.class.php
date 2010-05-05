@@ -418,7 +418,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   }
                } else {
                   if ($ci->getField('name') && !in_array('name', $a_lockable)) {
-                     if (empty($ci->getField('name'))) {
+                     if ($ci->getField('name') != "") {
                         if (!empty($discovery->NETBIOSNAME)) {
                            $data['name'] = $discovery->NETBIOSNAME;
                         } else if (!empty($discovery->SNMPHOSTNAME)) {
@@ -427,7 +427,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                            $data['name'] = $discovery->DNSHOSTNAME;
                         }
                      }
-                  }                  
+                  }
                }
                if ($ci->getField('comments') && !in_array('comments', $a_lockable))
                   $data['comments'] = $discovery->DESCRIPTION;
