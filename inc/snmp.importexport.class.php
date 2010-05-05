@@ -417,15 +417,13 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                      $data['type'] = $discovery->TYPE;
                   }
                } else {
-                  if ($ci->getField('name') && !in_array('name', $a_lockable)) {
-                     if ($ci->getField('name') != "") {
-                        if (!empty($discovery->NETBIOSNAME)) {
-                           $data['name'] = $discovery->NETBIOSNAME;
-                        } else if (!empty($discovery->SNMPHOSTNAME)) {
-                           $data['name'] = $discovery->SNMPHOSTNAME;
-                        }else if (!empty($discovery->DNSHOSTNAME)) {
-                           $data['name'] = $discovery->DNSHOSTNAME;
-                        }
+                  if (!$ci->getField('name') && !in_array('name', $a_lockable)) {
+                     if (!empty($discovery->NETBIOSNAME)) {
+                        $data['name'] = $discovery->NETBIOSNAME;
+                     } else if (!empty($discovery->SNMPHOSTNAME)) {
+                        $data['name'] = $discovery->SNMPHOSTNAME;
+                     }else if (!empty($discovery->DNSHOSTNAME)) {
+                        $data['name'] = $discovery->DNSHOSTNAME;
                      }
                   }
                }
