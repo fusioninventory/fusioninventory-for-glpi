@@ -47,7 +47,7 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
    function computerState($target, $ID) {
       global $DB, $LANG;
 
-      $np = new Netport;
+      $np = new Networkport;
       $pta = new PluginFusioninventoryAgents;
 
       echo "<br/>";

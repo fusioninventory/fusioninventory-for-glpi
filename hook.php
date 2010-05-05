@@ -682,13 +682,13 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 				case "glpi_plugin_fusioninventory_networking.ID" :
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
-					$netport = new Netport;
+					$Networkport = new Networkport;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $netport->getDeviceData($vartmp,NETWORKING_TYPE);
+                  $Networkport->getDeviceData($vartmp,NETWORKING_TYPE);
 
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?ID=".$vartmp."\">";
-                  $out .=  $netport->device_name;
+                  $out .=  $Networkport->device_name;
                   $out .= $vartmp;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
@@ -702,7 +702,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					include_once(GLPI_ROOT."/inc/networking.class.php");
 					if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
-                  $np = new Netport;
+                  $np = new Networkport;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
                      $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$vartmp."'>".$np->fields["name"]."</a><br/>";
@@ -764,13 +764,13 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
             case "glpi_plugin_fusioninventory_networking.ID" :
                $out = '';
                include_once(GLPI_ROOT."/inc/networking.class.php");
-               $netport = new Netport;
+               $Networkport = new Networkport;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $netport->getDeviceData($vartmp,NETWORKING_TYPE);
+                  $Networkport->getDeviceData($vartmp,NETWORKING_TYPE);
 
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?ID=".$vartmp."\">";
-                  $out .=  $netport->device_name;
+                  $out .=  $Networkport->device_name;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
                }
@@ -783,7 +783,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
                include_once(GLPI_ROOT."/inc/networking.class.php");
                if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
-                  $np = new Netport;
+                  $np = new Networkport;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
                      $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$vartmp."'>".$np->fields["name"]."</a><br/>";
@@ -913,13 +913,13 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
             case "glpi_plugin_fusioninventory_networking.ID" :
                $out = '';
                include_once(GLPI_ROOT."/inc/networking.class.php");
-               $netport = new Netport;
+               $Networkport = new Networkport;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $netport->getDeviceData($vartmp,PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
+                  $Networkport->getDeviceData($vartmp,PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
 
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN]."?ID=".$vartmp."\">";
-                  $out .=  $netport->device_name;
+                  $out .=  $Networkport->device_name;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
                }
@@ -932,7 +932,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
                include_once(GLPI_ROOT."/inc/networking.class.php");
                if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
-                  $np = new Netport;
+                  $np = new Networkport;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
                      $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$vartmp."'>".$np->fields["name"]."</a><br/>";
@@ -1001,11 +1001,11 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 
 				// ** Name and link of port of networking device (port of switch)
 				case "glpi_plugin_fusioninventory_networking_ports.FK_networking_ports" :
-					$netport=new Netport;
-					$netport->getFromDB($data["ITEM_$num"]);
+					$Networkport=new Networkport;
+					$Networkport->getFromDB($data["ITEM_$num"]);
                $name = "";
-               if (isset($netport->fields["name"])) {
-                  $name = $netport->fields["name"];
+               if (isset($Networkport->fields["name"])) {
+                  $name = $Networkport->fields["name"];
                }
 					$out = "<a href='".GLPI_ROOT."/front/networking.port.php?ID=".$data["ITEM_$num"]."'>".$name."</a>";
 					return "<center>".$out."</center>";
@@ -1804,7 +1804,7 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
 					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_12.on_device SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
-				case "glpi_networking_ports.netport" :
+				case "glpi_networking_ports.Networkport" :
 					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_22.".$field." SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
@@ -2579,7 +2579,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 
          case PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN :
             // Delete ports and connections if exists
-            $np=new Netport;
+            $np=new Networkport;
             $nn = new NetworkPort_NetworkPort();
             $query = "SELECT `ID`
                       FROM `glpi_networking_ports`

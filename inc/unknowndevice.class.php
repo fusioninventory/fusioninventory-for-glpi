@@ -253,7 +253,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		global $DB,$LANG;
 
 		$snmp_queries = new PluginFusioninventorySNMP;
-		$np=new Netport;
+		$np=new Networkport;
 
 		$query = "SELECT DISTINCT `unknow_mac`,`unknown_ip`,`port`,`end_FK_processes`
                 FROM `glpi_plugin_fusioninventory_unknown_mac`
@@ -382,7 +382,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function convertUnknownToUnknownNetwork($ID) {
       global $DB;
 
-      $np  = new Netport;
+      $np  = new Networkport;
 
       $this->getFromDB($ID);
 
@@ -408,7 +408,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       global $DB;
 
       $nw = new Netwire;
-      $np = new Netport;
+      $np = new Networkport;
       $nn = new NetworkPort_NetworkPort();
       // List of macs : $p_oPort->getPortsToConnect
 

@@ -95,7 +95,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
       global $DB,$LANG,$CFG_GLPI,$INFOFORM_PAGES;
 
       $CommonItem = new CommonItem;
-      $np = new Netport;
+      $np = new Networkport;
 
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1'>";

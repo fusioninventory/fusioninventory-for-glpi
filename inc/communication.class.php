@@ -1581,7 +1581,7 @@ class PluginFusioninventoryCommunication {
    function addWakeonlan($pxml) {
       $pta = new PluginFusioninventoryAgents;
       $ptt = new PluginFusioninventoryTask;
-      $np  = new Netport;
+      $np  = new Networkport;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
 

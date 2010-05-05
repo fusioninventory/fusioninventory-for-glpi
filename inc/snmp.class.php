@@ -172,7 +172,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		global $DB;
 
       $pfiud = new PluginFusioninventoryUnknownDevice;
-      $np = new Netport;
+      $np = new Networkport;
 
       $PortID = "";
 		$query = "SELECT *
@@ -345,7 +345,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			$DB->query($query);
 
 			// Delete Contact VLAN if set
-			$np=new NetPort;
+			$np=new Networkport;
 			if ($np->getContact($data['FK_port'])) {
 				$query="DELETE FROM `glpi_networking_vlan`
                     WHERE `FK_port`='".$np->contact_id."'
@@ -371,7 +371,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			$DB->query($query);
 
 			// Delete Contact VLAN if set
-			$np=new NetPort;
+			$np=new Networkport;
 			if ($np->getContact($data['FK_port'])) {
 				$query="DELETE FROM `glpi_networking_vlan`
                     WHERE `FK_port`='".$np->contact_id."'
@@ -417,7 +417,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       if ($_SESSION['fusioninventory_logs'] == "1") $logs = new PluginFusioninventoryLogs;
       $manufCisco = new PluginFusioninventoryManufacturerCisco;
       $netwire=new Netwire;
-      $np=new Netport;
+      $np=new Networkport;
       $ptp = new PluginFusioninventoryPort;
 
       if ($_SESSION['fusioninventory_logs'] == "1")

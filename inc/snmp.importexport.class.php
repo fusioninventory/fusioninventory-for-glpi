@@ -247,7 +247,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
       $ptap             = new PluginFusioninventoryAgentsProcesses;
       $pta              = new PluginFusioninventoryAgents;
 		$config_discovery = new PluginFusioninventoryConfig;
-      $np               = new Netport;
+      $np               = new Networkport;
       $ptud             = new PluginFusioninventoryUnknownDevice;
 
       if (isset($p_xml->AGENT->START)) {
@@ -424,7 +424,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                   $data['ifmac'] = $discovery->MAC;
             } else {
                // TODO: manage ports
-               $np = new Netport;
+               $np = new Networkport;
                $query = "SELECT ID FROM glpi_networking_ports
                   WHERE (on_device = '".$a_device[0]."' AND device_type = '".$a_device[1]."')
                      AND `ifaddr` NOT IN ('', '127.0.0.1')

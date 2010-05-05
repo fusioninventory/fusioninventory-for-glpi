@@ -411,7 +411,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
       // Recherche de chaque port de l'équipement
-      $np = new Netport;
+      $np = new Networkport;
 
       $agent_id = 0;
 
@@ -456,7 +456,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG;
 
       // Recherche des agents qui ont le NETDISCOVERY à oui
-      $np = new Netport;
+      $np = new Networkport;
       $pfia = new PluginFusioninventoryAgents;
       $count_agent_on = 0;
       $existantantip = array();
@@ -492,7 +492,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function showAgentSNMPQuery($on_device, $device_type) {
       global $LANG;
       // Recherche des agents qui ont le SNMPQUERY à oui
-      $np = new Netport;
+      $np = new Networkport;
       $pfia = new PluginFusioninventoryAgents;
 
       $count_agent_on = 0;
@@ -550,7 +550,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function showAgentWol($on_device, $device_type) {
       global $LANG;
 
-      $np = new Netport;
+      $np = new Networkport;
       $pfia = new PluginFusioninventoryAgents;
 
       $count_agent_on = 0;
