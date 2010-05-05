@@ -2,7 +2,9 @@
 	<name><![CDATA[2127172]]></name>
 	<type>3</type>
 	<key>Printer0130</key>
-	<comments><![CDATA[Xerox WorkCentre 7232;ESS PS1.207.2,IOT 10.6.0,FIN B13.8.0,IIT 20.5.2,ADF 20.0.0,SJFI3.0.8,SSMI1.7.2
+	<comments><![CDATA[Xerox WorkCentre 7232;ESS PS1.205.0,IOT 10.3.0,FIN B13.3.0,IIT 20.5.1,ADF 20.0.0,FAX 1.30.58,SJFI3.0.8,SSMI1.7.1
+
+Xerox WorkCentre 7232;ESS PS1.207.2,IOT 10.6.0,FIN B13.8.0,IIT 20.5.2,ADF 20.0.0,SJFI3.0.8,SSMI1.7.2
 
 ]]></comments>
 	<oidlist>
