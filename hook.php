@@ -1200,7 +1200,10 @@ function plugin_fusioninventory_install() {
    return true;
 }
 
-
+// Uninstall process for plugin : need to return true if succeeded
+function plugin_fusioninventory_uninstall() {
+   return PluginFusioninventorySetup::uninstall();
+}
 
 /**
 * Check if FusionInventory need to be updated

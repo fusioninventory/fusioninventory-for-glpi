@@ -245,6 +245,8 @@ class PluginFusioninventorySetup {
          $np->cleanDBonPurge($netport['ID']);
          $np->deleteFromDB($netport['ID']);
       }
+
+      return true;
    }
 
    static function delTree($dir) {
