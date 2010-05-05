@@ -821,7 +821,7 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $errors='';
-      $this->ptd = new PluginFusioninventoryNetworking2;
+      $this->ptd = new PluginFusioninventoryNetworking;
       $this->ptd->load($this->deviceId);
 
       foreach ($p_info->children() as $child)
