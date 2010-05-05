@@ -93,7 +93,11 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$tp = new PluginFusionInventoryPrinters;
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
-			$data["name"] = $ptud->fields["name"];
+         if (!empty($ptud->fields["name"])) {
+            $data["name"] = $ptud->fields["name"];
+         } else {
+            $data["name"] = $ptud->fields["dnsname"];
+         }
          $data["location"] = $ptud->fields["location"];
 			$data["serial"] = $ptud->fields["serial"];
          $data["otherserial"] = $ptud->fields["otherserial"];
@@ -128,7 +132,11 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$fusioninventory_networking = new PluginFusionInventoryNetworking;
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
-			$data["name"] = $ptud->fields["name"];
+         if (!empty($ptud->fields["name"])) {
+            $data["name"] = $ptud->fields["name"];
+         } else {
+            $data["name"] = $ptud->fields["dnsname"];
+         }
          $data["location"] = $ptud->fields["location"];
 			$data["serial"] = $ptud->fields["serial"];
          $data["otherserial"] = $ptud->fields["otherserial"];
@@ -162,7 +170,11 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$Peripheral = new Peripheral;
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
-			$data["name"] = $ptud->fields["name"];
+         if (!empty($ptud->fields["name"])) {
+            $data["name"] = $ptud->fields["name"];
+         } else {
+            $data["name"] = $ptud->fields["dnsname"];
+         }
          $data["location"] = $ptud->fields["location"];
 			$data["serial"] = $ptud->fields["serial"];
          $data["otherserial"] = $ptud->fields["otherserial"];
@@ -190,7 +202,11 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$Computer = new Computer;
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
-			$data["name"] = $ptud->fields["name"];
+         if (!empty($ptud->fields["name"])) {
+            $data["name"] = $ptud->fields["name"];
+         } else {
+            $data["name"] = $ptud->fields["dnsname"];
+         }
          $data["location"] = $ptud->fields["location"];
 			$data["serial"] = $ptud->fields["serial"];
          $data["otherserial"] = $ptud->fields["otherserial"];
@@ -219,7 +235,11 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$Phone = new Phone;
 
 			$data["FK_entities"] = $ptud->fields["FK_entities"];
-			$data["name"] = $ptud->fields["name"];
+         if (!empty($ptud->fields["name"])) {
+            $data["name"] = $ptud->fields["name"];
+         } else {
+            $data["name"] = $ptud->fields["dnsname"];
+         }
          $data["location"] = $ptud->fields["location"];
 			$data["serial"] = $ptud->fields["serial"];
          $data["otherserial"] = $ptud->fields["otherserial"];
@@ -259,7 +279,11 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
                         $pgo->setType($data['device_type']);
 
                         $data["FK_entities"] = $ptud->fields["FK_entities"];
-                        $data["name"] = $ptud->fields["name"];
+                        if (!empty($ptud->fields["name"])) {
+                           $data["name"] = $ptud->fields["name"];
+                        } else {
+                           $data["name"] = $ptud->fields["dnsname"];
+                        }
                         $data["location"] = $ptud->fields["location"];
                         $data["serial"] = $ptud->fields["serial"];
                         $data["otherserial"] = $ptud->fields["otherserial"];
