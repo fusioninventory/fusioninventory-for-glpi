@@ -504,7 +504,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		FROM glpi_plugin_fusioninventory_networking_ports
 
 		LEFT JOIN glpi_networking_ports
-		ON glpi_plugin_fusioninventory_networking_ports.FK_networking_ports = glpi_networking_ports.ID
+		ON glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networking_ports.ID
 		WHERE glpi_networking_ports.on_device='".$ID."'
 		ORDER BY logical_number ";
 
@@ -730,7 +730,7 @@ function appear_array(id){
 
 						case 12 :
 							// ** Mac address and link to device which are connected to this port
-							$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
+							$opposite_port = $nw->getOppositeContact($data["networkports_id"]);
 							if ($opposite_port != "") {
 								$query_device = "SELECT *
                                          FROM `glpi_networking_ports`

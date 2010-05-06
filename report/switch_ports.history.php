@@ -53,8 +53,8 @@ if (!isset($_GET["start"])) {
 }
 $_GET=getValues($_GET,$_POST);
 $ports_id = "";
-if (isset($_GET["FK_networking_ports"])) {
-	$ports_id = $_GET["FK_networking_ports"];
+if (isset($_GET["networkports_id"])) {
+	$ports_id = $_GET["networkports_id"];
 }
 if (isset($_GET["contains"][0])) {
 	$ports_id = $_GET["contains"][0];
@@ -63,10 +63,10 @@ displaySearchForm($ports_id);
 
 manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_HISTORY);
 
-if(isset($_GET["FK_networking_ports"])) {
+if(isset($_GET["networkports_id"])) {
 
 	$_GET["field"][0]=2;
-	$_GET["contains"][0]=$_GET["FK_networking_ports"];
+	$_GET["contains"][0]=$_GET["networkports_id"];
 	$_GET["field"][1]=3;
 	if ((isset($_GET["Field"])) AND !empty($_GET["Field"])) {
 		$_GET["contains"][1]=$_GET["Field"];
@@ -75,7 +75,7 @@ if(isset($_GET["FK_networking_ports"])) {
 		$_GET["contains"][1] = "";
 		$_GET["link"][1] = "AND";
    }
-   if ($_GET["FK_networking_ports"]=='-----') {
+   if ($_GET["networkports_id"]=='-----') {
       $_GET["contains"][0]='*';
    }
 	$_GET["sort"] = 1;
@@ -111,7 +111,7 @@ function displaySearchForm($ports_id) {
              WHERE `itemtype`=".NETWORKING_TYPE."
              ORDER BY `glpi_networking`.`name`, `glpi_networking_ports`.`logical_number`;";
 
-	echo "<select name='FK_networking_ports'>";
+	echo "<select name='networkports_id'>";
 	echo "<option>-----</option>";
 	$result=$DB->query($query);
 	while ($data=$DB->fetch_array($result)) {
@@ -166,7 +166,7 @@ function getValues($get,$post) {
 		foreach ($get["field"] as $index => $value) {
 			switch($index) {
 				case 0:
-					$get["FK_networking_ports"] = $_GET["contains"][0];
+					$get["networkports_id"] = $_GET["contains"][0];
 					break;
             
 				case 1:

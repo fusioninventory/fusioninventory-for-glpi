@@ -82,7 +82,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       if (is_numeric($p_id)) { // port exists
          $query = "SELECT `ID`
                    FROM `glpi_plugin_fusioninventory_networking_ports`
-                   WHERE `FK_networking_ports` = '".$p_id."';";
+                   WHERE `networkports_id` = '".$p_id."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
                $portFusionInventory = $DB->fetch_assoc($result);
@@ -134,7 +134,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          $this->load($portID);
          // update fusioninventory
          if (count($this->oFusionInventory_networking_ports->ptcdUpdates) OR $p_force) {
-//            $this->oFusionInventory_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
+//            $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('ID');
 //            $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
             $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
          }
@@ -150,7 +150,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
     *@return FusionInventory networking port ID
     **/
    function addDBFusionInventory() {
-      $this->oFusionInventory_networking_ports->ptcdUpdates['FK_networking_ports']=$this->getValue('ID');
+      $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('ID');
       $fusioninventory_networking_ports_ID = $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
       return $fusioninventory_networking_ports_ID;
    }

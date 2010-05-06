@@ -186,7 +186,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          $queryPort = "SELECT *
                        FROM `glpi_plugin_fusioninventory_networking_ports`
                             LEFT JOIN `glpi_networking_ports`
-                                      ON `glpi_plugin_fusioninventory_networking_ports`.`FK_networking_ports`=
+                                      ON `glpi_plugin_fusioninventory_networking_ports`.`networkports_id`=
                                          `glpi_networking_ports`.`ID`
                        WHERE (`ifdescr`='".$ifDescr."'
                                 OR `glpi_networking_ports`.`name`='".$ifDescr."')
@@ -205,7 +205,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
             $dataPort = $DB->fetch_assoc($resultPort);
             $PortID = $dataPort["ID"];
          } else {
-            $PortID = $dataPort["FK_networking_ports"];
+            $PortID = $dataPort["networkports_id"];
          }
       } else {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
@@ -517,12 +517,12 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                   if ($type == NETWORKING_TYPE) {
                      $queryFusionInventoryPort = "SELECT `ID`
                                        FROM `glpi_plugin_fusioninventory_networking_ports`
-                                       WHERE `FK_networking_ports`='".$IDport."';";
+                                       WHERE `networkports_id`='".$IDport."';";
 
                      $resultFusionInventoryPort = $DB->query($queryFusionInventoryPort);
                      if ($DB->numrows($resultFusionInventoryPort) == 0) {
                         $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_networking_ports`
-                                                 (`FK_networking_ports`)
+                                                 (`networkports_id`)
                                      VALUES ('".$IDport."');";
                         $DB->query($queryInsert);
                         if ($_SESSION['fusioninventory_logs'] == "1") $logs->write("fusioninventory_fullsync",
@@ -575,7 +575,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          }
          $np->delete($data);
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
-                       WHERE `FK_networking_ports`='".$data["ID"]."';";
+                       WHERE `networkports_id`='".$data["ID"]."';";
          $DB->query($query_delete);
       }
 
@@ -844,7 +844,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                              `glpi_networking_ports`.`ifmac` as `ifmac`
                       FROM `glpi_networking_ports`
                            LEFT JOIN `glpi_plugin_fusioninventory_networking_ports`
-                                     ON `FK_networking_ports`=`glpi_networking_ports`.`ID`
+                                     ON `networkports_id`=`glpi_networking_ports`.`ID`
                       WHERE `on_device`='".$ID_Device."'
                             AND `itemtype`='".$type."'
                       ORDER BY `logical_number`;";
@@ -853,7 +853,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                        $FUSIONINVENTORY_MAPPING[$type][$link]['field']."
                       FROM `glpi_networking_ports`
                             LEFT JOIN `glpi_plugin_fusioninventory_networking_ports`
-                                       ON `FK_networking_ports`=`glpi_networking_ports`.`ID`
+                                       ON `networkports_id`=`glpi_networking_ports`.`ID`
             			 WHERE `on_device`='".$ID_Device."'
                             AND `itemtype`='".$type."'
                       ORDER BY `logical_number`;";
@@ -865,7 +865,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                if (($link == 'ifstatus') AND ($oidvalues[$oid.$data['logical_number']][""] == "1")) {
                   $query_update = "UPDATE `glpi_plugin_fusioninventory_networking_ports`
                                 SET `lastup`='".date("Y-m-d H:i:s")."'
-                                WHERE `FK_networking_ports`='".$data["ID"]."';";
+                                WHERE `networkports_id`='".$data["ID"]."';";
                   $DB->query($query_update);
                }
 
@@ -914,13 +914,13 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                      if ($FUSIONINVENTORY_MAPPING[$type][$link]['table'] == "glpi_networking_ports") {
                         $ID_field = "ID";
                      } else {
-                        $ID_field = "FK_networking_ports";
+                        $ID_field = "networkports_id";
                      }
                   } else {
                      if ($FUSIONINVENTORY_MAPPING[$type][$link]['table'] == "glpi_networking_ports") {
                         $ID_field = "ID";
                      } else {
-                        $ID_field = "FK_networking_ports";
+                        $ID_field = "networkports_id";
                      }
                   }
                   $queryUpdate = '';
@@ -1197,7 +1197,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          $query = "SELECT *, `glpi_plugin_fusioninventory_networking_ports`.`ID` AS `sid`
                 FROM `glpi_networking_ports`
                      LEFT JOIN `glpi_plugin_fusioninventory_networking_ports`
-                               ON `glpi_plugin_fusioninventory_networking_ports`.`FK_networking_ports` =
+                               ON `glpi_plugin_fusioninventory_networking_ports`.`networkports_id` =
                                   `glpi_networking_ports`.`ID`
                 WHERE `itemtype`='2'
                       AND `on_device`='".$ID_Device."'
@@ -1212,10 +1212,10 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                                 WHERE `ID`='".$data['sid']."';";
                   $DB->query($query_update);
                   PluginFusioninventorySnmphistory::addLog(
-                          $data["FK_networking_ports"],"trunk","0","1","",$_SESSION['FK_process']);
+                          $data["networkports_id"],"trunk","0","1","",$_SESSION['FK_process']);
                   // Remove vlan
-                  $snmp_queries->CleanVlan($data['FK_networking_ports']);
-                  $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
+                  $snmp_queries->CleanVlan($data['networkports_id']);
+                  $snmp_queries->CleanVlan($netwire->getOppositeContact($data['networkports_id']));
                }
                // If multiple => -1
             } else if (isset($Array_multiplemac_ifIndex[$ifIndex])
@@ -1225,18 +1225,18 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                                 SET `trunk`='-1'
                                 WHERE `ID`='".$data['sid']."';";
                   $DB->query($query_update);
-                  PluginFusioninventorySnmphistory::addLog($data["FK_networking_ports"],"trunk","0","-1","",
+                  PluginFusioninventorySnmphistory::addLog($data["networkports_id"],"trunk","0","-1","",
                           $_SESSION['FK_process']);
                   // Remove vlan
                   PluginFusioninventoryDb::lock_wire_check();
                   PluginFusioninventorySnmphistory::addLogConnection("remove",
-                          $netwire->getOppositeContact($data['FK_networking_ports']),$FK_process);
-                  PluginFusioninventorySnmphistory::addLogConnection("remove",$data['FK_networking_ports'],$FK_process);
-                  $snmp_queries->CleanVlan($data['FK_networking_ports']);
-                  $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
+                          $netwire->getOppositeContact($data['networkports_id']),$FK_process);
+                  PluginFusioninventorySnmphistory::addLogConnection("remove",$data['networkports_id'],$FK_process);
+                  $snmp_queries->CleanVlan($data['networkports_id']);
+                  $snmp_queries->CleanVlan($netwire->getOppositeContact($data['networkports_id']));
                   // Remove connection
-                  if ($nn->getFromDBForNetworkPort($data['FK_networking_ports'])) {
-                     $nn->delete(array('id'=>$data['FK_networking_ports']));
+                  if ($nn->getFromDBForNetworkPort($data['networkports_id'])) {
+                     $nn->delete(array('id'=>$data['networkports_id']));
                   }
                   PluginFusioninventoryDb::lock_wire_unlock();
                }
@@ -1245,7 +1245,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                              SET `trunk`='0'
                              WHERE `ID`='".$data['sid']."';";
                $DB->query($query_update);
-               PluginFusioninventorySnmphistory::addLog($data["FK_networking_ports"],"trunk","1","0","",
+               PluginFusioninventorySnmphistory::addLog($data["networkports_id"],"trunk","1","0","",
                        $_SESSION['FK_process']);
             }
          }

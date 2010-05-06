@@ -477,13 +477,13 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][30]['name'] = $LANG["reports"][52];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['table'] = 'glpi_plugin_fusioninventory_networking_ports';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['field'] = 'FK_networking_ports';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['linkfield'] = 'FK_networking_ports';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['field'] = 'networkports_id';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['linkfield'] = 'networkports_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['name'] = $LANG["setup"][175];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['table'] = 'glpi_dropdown_locations';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['field'] = 'ID';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['linkfield'] = 'FK_networking_ports';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['linkfield'] = 'networkports_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['name'] = $LANG["common"][15];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][3]['table'] = 'glpi_plugin_fusioninventory_networking_ports';
@@ -990,7 +990,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
                               LEFT JOIN `glpi_networking_ports`
                                         ON `on_device` = `glpi_networking`.`ID`
                               LEFT JOIN `glpi_plugin_fusioninventory_networking_ports`
-                                        ON `glpi_networking_ports`.`ID`=`FK_networking_ports`
+                                        ON `glpi_networking_ports`.`ID`=`networkports_id`
                          WHERE `glpi_plugin_fusioninventory_networking_ports`.`ID`='".$data["ITEM_$num"]."'
                          LIMIT 0,1;";
 					$result = $DB->query($query);
@@ -1000,7 +1000,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 				break;
 
 				// ** Name and link of port of networking device (port of switch)
-				case "glpi_plugin_fusioninventory_networking_ports.FK_networking_ports" :
+				case "glpi_plugin_fusioninventory_networking_ports.networkports_id" :
 					$Networkport=new Networkport;
 					$Networkport->getFromDB($data["ITEM_$num"]);
                $name = "";
@@ -2052,8 +2052,8 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			switch ($new_table.".".$linkfield) {
 
 				// ** Location of switch
-				case "glpi_dropdown_locations.FK_networking_ports" :
-					return " LEFT JOIN glpi_networking_ports ON (glpi_plugin_fusioninventory_networking_ports.FK_networking_ports = glpi_networking_ports.ID) ".
+				case "glpi_dropdown_locations.networkports_id" :
+					return " LEFT JOIN glpi_networking_ports ON (glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networking_ports.ID) ".
 						" LEFT JOIN glpi_networking ON glpi_networking_ports.on_device = glpi_networking.ID".
 						" LEFT JOIN glpi_dropdown_locations ON glpi_dropdown_locations.ID = glpi_networking.location";
 					break;
@@ -2425,7 +2425,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 				break;
 
 				// ** Name and link of port of networking device (port of switch)
-				case "glpi_plugin_fusioninventory_networking_ports.FK_networking_ports" :
+				case "glpi_plugin_fusioninventory_networking_ports.networkports_id" :
 					break;
 
 				// ** Location of switch
@@ -2542,7 +2542,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 				$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`ID`
                              FROM `glpi_plugin_fusioninventory_networking_ports`
                                   LEFT JOIN `glpi_networking_ports`
-                                            ON `glpi_networking_ports`.`ID` = `FK_networking_ports`
+                                            ON `glpi_networking_ports`.`ID` = `networkports_id`
                              WHERE `on_device`='".$parm["ID"]."'
                                    AND `itemtype`='".NETWORKING_TYPE."';";
 				$result=$DB->query($query_select);
@@ -2608,7 +2608,7 @@ function plugin_pre_item_delete_fusioninventory($parm) {
 
          case NETWORKING_PORT_TYPE :
             	$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
-                  WHERE `FK_networking_ports`='".$parm["ID"]."';";
+                  WHERE `networkports_id`='".$parm["ID"]."';";
 					$DB->query($query_delete);
             break;
 
