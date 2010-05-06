@@ -75,8 +75,8 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][2] . "</td>";
 		echo "<td align='center'>";
 		Dropdown::show("PluginFusioninventorySnmpversion",
-                     array('name' => "FK_snmp_version",
-                           'value' => $this->fields["FK_snmp_version"],
+                     array('name' => "plugin_fusioninventory_snmpversions_id",
+                           'value' => $this->fields["plugin_fusioninventory_snmpversions_id"],
                            'comments' => false));
 		echo "</td>";
 		echo "</tr>";
@@ -320,7 +320,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		$xml_write .= "		<conf>\n";
 		$xml_write .= "			<Num>".$ID."</Num>\n";
 		$xml_write .= "			<Name><![CDATA[".$_POST["name"]."]]></Name>\n";
-		$xml_write .= "			<snmp_version>".$_POST["FK_snmp_version"]."</snmp_version>\n";
+		$xml_write .= "			<snmp_version>".$_POST["plugin_fusioninventory_snmpversions_id"]."</snmp_version>\n";
 		$xml_write .= "			<community><![CDATA[".$_POST["community"]."]]></community>\n";
 		$xml_write .= "			<sec_name><![CDATA[".$_POST["sec_name"]."]]></sec_name>\n";
 		$xml_write .= "			<auth_protocol>".$_POST["auth_protocol"]."</auth_protocol>\n";
@@ -557,7 +557,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 				$snmp_auth["Name"] = $DB->result($result,0,"name");
 				$snmp_auth["snmp_version"] = Dropdown::getDropdownName(
                "glpi_plugin_fusioninventory_snmpversions",$DB->result($result,0,
-               "FK_snmp_version"));
+               "plugin_fusioninventory_snmpversions_id"));
 				$snmp_auth["community"] = $DB->result($result,0,"community");
 				$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
 				$snmp_auth["auth_protocol"] = Dropdown::getDropdownName(
@@ -572,12 +572,12 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 				$i = 2;
 				while ($data=$DB->fetch_array($result)) {
 					if (($snmp_auth[0]["snmp_version"] == Dropdown::getDropdownName(
-                        "glpi_plugin_fusioninventory_snmpversions",$data["FK_snmp_version"]))
+                        "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]))
                   AND ($snmp_auth[0]["community"] == $data["community"])) {
                   
 						$snmp_auth[0]["ID"] = $data["ID"];
                 } else if (($snmp_auth[1]["snmp_version"] == Dropdown::getDropdownName(
-                         "glpi_plugin_fusioninventory_snmpversions",$data["FK_snmp_version"]))
+                         "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]))
                   AND ($snmp_auth[1]["community"] == $data["community"])) {
 
 						$snmp_auth[1]["ID"] = $data["ID"];
@@ -585,7 +585,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 						$snmp_auth[$i]["ID"] = $data["ID"];
 						$snmp_auth[$i]["Name"] = $data["name"];
 						$snmp_auth[$i]["snmp_version"] = Dropdown::getDropdownName(
-                     "glpi_plugin_fusioninventory_snmpversions",$data["FK_snmp_version"]);
+                     "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]);
 						$snmp_auth[$i]["community"] = $data["community"];
 						$snmp_auth[$i]["sec_name"] = $data["sec_name"];
 						$snmp_auth[$i]["auth_protocol"] = Dropdown::getDropdownName(
