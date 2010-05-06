@@ -102,7 +102,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 					echo "</td>";
 	
 					echo "<td align='center'>";
-					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_label",$data["FK_mib_label"]);
+					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_label",$data["plugin_fusioninventory_mib_label_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -212,7 +212,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusioninventoryMib_Label",
-                           array('name' => "FK_mib_label",
+                           array('name' => "plugin_fusioninventory_mib_label_id",
                                  'value' => 0));
 				echo "</td>";
 				
