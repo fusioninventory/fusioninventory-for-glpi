@@ -173,9 +173,9 @@ class PluginFusioninventoryCommunication {
       $modelslistused = array();
       foreach ($ranges as $range_id=>$rangeInfos) {
          $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
-                     $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused,0);
+                     $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["entities_id"], $modelslistused,0);
          $modelslistused = $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
-                     $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused,0);
+                     $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["entities_id"], $modelslistused,0);
       }
 
 
@@ -218,16 +218,16 @@ class PluginFusioninventoryCommunication {
                      //
                      //
 //                     $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
-//                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+//                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["entities_id"], $modelslistused);
                   }
                } else {
                   $ranges = $ptrip->ListRange($agent["ID"], "query");
                   $modelslistused = array();
                   foreach ($ranges as $range_id=>$rangeInfos) {
                      $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
-                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["entities_id"], $modelslistused);
                      $modelslistused = $this->addDevice($sxml_option, 'printer', $ranges[$range_id]["ifaddr_start"],
-                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["FK_entities"], $modelslistused);
+                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["entities_id"], $modelslistused);
                   }
                }
 
@@ -314,7 +314,7 @@ class PluginFusioninventoryCommunication {
                      $sxml_rangeip->addAttribute('ID', $range_id);
                      $sxml_rangeip->addAttribute('IPSTART', $ranges[$range_id]["ifaddr_start"]);
                      $sxml_rangeip->addAttribute('IPEND', $ranges[$range_id]["ifaddr_end"]);
-                     $sxml_rangeip->addAttribute('ENTITY', $ranges[$range_id]["FK_entities"]);
+                     $sxml_rangeip->addAttribute('ENTITY', $ranges[$range_id]["entities_id"]);
                }
             }
             
@@ -468,7 +468,7 @@ class PluginFusioninventoryCommunication {
                            AND `FK_model_infos`!='0'
                            AND `FK_snmp_connection`!='0'";
              if ($p_entity != '-1') {
-               $query .= "AND `glpi_networking`.`FK_entities`='".$p_entity."' ";
+               $query .= "AND `glpi_networking`.`entities_id`='".$p_entity."' ";
              }
              if ($p_ipstart == '0') {
                $query .= " AND `glpi_networking`.`ID`='".$devide_id."'";
@@ -497,7 +497,7 @@ class PluginFusioninventoryCommunication {
                             AND `FK_model_infos`!='0'
                             AND `FK_snmp_connection`!='0'";
              if ($p_entity != '-1') {
-               $query .= "AND `glpi_printers`.`FK_entities`='".$p_entity."' ";
+               $query .= "AND `glpi_printers`.`entities_id`='".$p_entity."' ";
              }
              if ($p_ipstart == '0') {
                $query .= " AND `glpi_printers`.`ID`='".$devide_id."'";

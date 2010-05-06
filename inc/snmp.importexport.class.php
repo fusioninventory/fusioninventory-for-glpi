@@ -312,7 +312,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $ptud->fields['name'] = $discovery->SNMPHOSTNAME;
             }
             $ptud->fields['dnsname'] = $discovery->DNSHOSTNAME;
-            $ptud->fields['FK_entities'] = $discovery->ENTITY;
+            $ptud->fields['entities_id'] = $discovery->ENTITY;
             $ptud->fields['serial'] = $discovery->SERIAL;
             $ptud->fields['contact'] = $discovery->USERSESSION;
             if (!empty($discovery->WORKGROUP)) {
@@ -386,8 +386,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                }
                if ($ci->getField('dnsname') && !in_array('dnsname', $a_lockable))
                   $data['dnsname'] = $discovery->DNSHOSTNAME;
-               if ($ci->getField('FK_entities') && !in_array('FK_entities', $a_lockable))
-                  $data['FK_entities'] = $discovery->ENTITY;
+               if ($ci->getField('entities_id') && !in_array('entities_id', $a_lockable))
+                  $data['entities_id'] = $discovery->ENTITY;
                if ($ci->getField('serial') && !in_array('serial', $a_lockable))
                   $data['serial'] = $discovery->SERIAL;
                if ($ci->getField('contact') && !in_array('contact', $a_lockable))

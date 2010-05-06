@@ -127,19 +127,19 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			
 		// Trying to find ID by IP
 		$query = "SELECT `pc`.`ID` AS `ID`, `pc`.`name` AS `name`,
-                       `pc`.`otherserial` AS `otherserial`, `pc`.`FK_entities` AS `FK_entities`
+                       `pc`.`otherserial` AS `otherserial`, `pc`.`entities_id` AS `entities_id`
                 FROM `glpi_computers` AS `pc`, `glpi_networking_ports` AS `port`
 	   			 WHERE `port`.`itemtype` = ".$itemtype." ".
                       "AND `port`.`ifaddr` = '".$input['ifaddr']."' ".
                       "AND `port`.`on_device` = `pc`.`ID`;";
 		
 		// else, find ID by name
-		$query2 = "SELECT `ID`, `otherserial`, `FK_entities` ".
+		$query2 = "SELECT `ID`, `otherserial`, `entities_id` ".
 				    "FROM `glpi_computers` AS `pc` ".
 				    "WHERE `pc`.`name` = '".$input['name']."';";
 		
 		// else, find ID by otherserial
-		$query3 = "SELECT `ID`, `FK_entities` ".
+		$query3 = "SELECT `ID`, `entities_id` ".
 				    "FROM `glpi_computers` AS `pc` ".
 	   			 "WHERE `pc`.`otherserial` = '".$input['otherserial']."';";
 	
@@ -194,10 +194,10 @@ class PluginFusioninventoryErrors extends CommonDBTM {
       } else {
 			$input['device_id'] = NULL;
       }
-		if (isset($fields['FK_entities'])) {
-			$input['FK_entities'] = $fields['FK_entities'];
+		if (isset($fields['entities_id'])) {
+			$input['entities_id'] = $fields['entities_id'];
       } else {
-			$input['FK_entities'] = 0;
+			$input['entities_id'] = 0;
       }
 		// if no description => unknown IP
 		if (!isset($input['description'])) {
@@ -229,8 +229,8 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		global $LANG;
 		
 		$input['itemtype'] = $itemtype;
-		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($itemtype, $input['device_id'],
-                                                                  "FK_entities", false);
+		$input['entities_id'] = PluginFusioninventory::getDeviceFieldFromId($itemtype, $input['device_id'],
+                                                                  "entities_id", false);
 
 		$input['description'] = $LANG['plugin_fusioninventory']["errors"][20]." : ";
 		$input['description'].= $LANG['plugin_fusioninventory']["errors"][21];
@@ -252,8 +252,8 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		global $LANG;
 		
 		$input['itemtype'] = $itemtype;
-		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($itemtype, $input['device_id'],
-                                                                  "FK_entities", false);
+		$input['entities_id'] = PluginFusioninventory::getDeviceFieldFromId($itemtype, $input['device_id'],
+                                                                  "entities_id", false);
 		
 		$input['description'] = $LANG['plugin_fusioninventory']["errors"][30];
 		

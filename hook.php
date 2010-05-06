@@ -83,7 +83,7 @@ function plugin_fusioninventory_getSearchOption() {
   
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['field'] = 'completename';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['linkfield'] = 'FK_entities';
+	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['linkfield'] = 'entities_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['name'] = $LANG["entity"][0];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL]['common'] = $LANG['plugin_fusioninventory']["profile"][19];
@@ -188,7 +188,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][4]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][4]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][4]['linkfield'] = 'FK_entities';
+	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][4]['linkfield'] = 'entities_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][4]['name'] = $LANG["entity"][0];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][5]['table'] = 'glpi_plugin_fusioninventory_unknown_device';
@@ -424,7 +424,7 @@ function plugin_fusioninventory_getSearchOption() {
   
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][8]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][8]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][8]['linkfield'] = 'FK_entities';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][8]['linkfield'] = 'entities_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][8]['name'] = $LANG["entity"][0];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['table'] = 'glpi_plugin_fusioninventory_agents';

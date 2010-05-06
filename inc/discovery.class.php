@@ -67,7 +67,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                           AND `name`='".PluginFusioninventorySNMP::hex_to_string($Array['name'])."'
                           AND `descr`='".$Array['description']."'
                           AND `serialnumber`='".$Array['serial']."'
-                          AND `FK_entities`='".$Array['entity']."';";
+                          AND `entities_id`='".$Array['entity']."';";
 		$result_sel = $DB->query($query_sel);
 		if ($DB->numrows($result_sel) == "0") {
          $insert = 1;
@@ -86,7 +86,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if ($insert == "1") {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_discovery`
                                   (`date`, `ifaddr`, `name`, `descr`, `serialnumber`, `type`,
-                                   `FK_agents`, `FK_entities`, `FK_model_infos`,
+                                   `FK_agents`, `entities_id`, `FK_model_infos`,
                                    `FK_snmp_connection`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
@@ -132,7 +132,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $Printer = new Printer;
             $tp = new PluginFusioninventoryPrinters;
 
-            $data["FK_entities"] = $ptud->fields["FK_entities"];
+            $data["entities_id"] = $ptud->fields["entities_id"];
             $data["name"] = $ptud->fields["name"];
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
@@ -160,7 +160,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $Netdevice = new Netdevice;
             $fusioninventory_networking = new PluginFusioninventoryNetworking;
 
-            $data["FK_entities"] = $ptud->fields["FK_entities"];
+            $data["entities_id"] = $ptud->fields["entities_id"];
             $data["name"] = $ptud->fields["name"];
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
@@ -190,7 +190,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          case PERIPHERAL_TYPE :
             $Peripheral = new Peripheral;
 
-            $data["FK_entities"] = $ptud->fields["FK_entities"];
+            $data["entities_id"] = $ptud->fields["entities_id"];
             $data["name"] = $ptud->fields["name"];
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
@@ -211,7 +211,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          case COMPUTER_TYPE :
             $Computer = new Computer;
 
-            $data["FK_entities"] = $ptud->fields["FK_entities"];
+            $data["entities_id"] = $ptud->fields["entities_id"];
             $data["name"] = $ptud->fields["name"];
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
@@ -233,7 +233,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          case PHONE_TYPE :
             $Phone = new Phone;
 
-            $data["FK_entities"] = $ptud->fields["FK_entities"];
+            $data["entities_id"] = $ptud->fields["entities_id"];
             $data["name"] = $ptud->fields["name"];
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
@@ -266,7 +266,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                            $pgo = new PluginGenericObject;
                            $pgo->setType($data['itemtype']);
 
-                           $data["FK_entities"] = $ptud->fields["FK_entities"];
+                           $data["entities_id"] = $ptud->fields["entities_id"];
                            $data["name"] = $ptud->fields["name"];
                            $data["location"] = $ptud->fields["location"];
                            $data["serial"] = $ptud->fields["serial"];
