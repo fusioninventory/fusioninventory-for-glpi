@@ -112,7 +112,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"]);
+					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["plugin_fusioninventory_mib_oid_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -224,7 +224,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusioninventoryMib_Oid",
-                           array('name' => "FK_mib_oid",
+                           array('name' => "plugin_fusioninventory_mib_oid_id",
                                  'value' => 0));
 				echo "</td>";
 				
@@ -337,14 +337,14 @@ class PluginFusioninventoryMib extends CommonDBTM {
             case 0:
                $ptc->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['plugin_fusioninventory_mib_oid_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             
             case 1:
                $ptc->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['plugin_fusioninventory_mib_oid_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             

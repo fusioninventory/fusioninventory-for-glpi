@@ -137,7 +137,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 			$exclude = array();
 			while ($data=$DB->fetch_array($result)) {
 				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
-               Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['FK_mib_oid']);
+               Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['plugin_fusioninventory_mib_oid_id']);
          }
 			return $oids;
 		}

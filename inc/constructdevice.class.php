@@ -519,13 +519,13 @@ echo "</a>";
                         while ($data_mib_model = $DB->fetch_array($result_mib_model)) {
                            $count_mib_model++;
                            if ($existent != '-1') {
-                              if (isset($a_mib[$data_mib_model['FK_mib_oid']]['mapping_type'])) {
+                              if (isset($a_mib[$data_mib_model['plugin_fusioninventory_mib_oid_id']]['mapping_type'])) {
                                  // Oid Existe, on vérifie si tous les paramètres sont pareils
-                                 if ($a_mib[$data_mib_model['FK_mib_oid']]['mapping_type'] == $data_mib_model['mapping_type'] AND
-                                    $a_mib[$data_mib_model['FK_mib_oid']]['mapping_name'] == $data_mib_model['mapping_name'] AND
-                                    $a_mib[$data_mib_model['FK_mib_oid']]['oid_port_counter'] == $data_mib_model['oid_port_counter'] AND
-                                    $a_mib[$data_mib_model['FK_mib_oid']]['oid_port_dyn'] == $data_mib_model['oid_port_dyn'] AND
-                                    $a_mib[$data_mib_model['FK_mib_oid']]['vlan'] == $data_mib_model['vlan']) {
+                                 if ($a_mib[$data_mib_model['plugin_fusioninventory_mib_oid_id']]['mapping_type'] == $data_mib_model['mapping_type'] AND
+                                    $a_mib[$data_mib_model['plugin_fusioninventory_mib_oid_id']]['mapping_name'] == $data_mib_model['mapping_name'] AND
+                                    $a_mib[$data_mib_model['plugin_fusioninventory_mib_oid_id']]['oid_port_counter'] == $data_mib_model['oid_port_counter'] AND
+                                    $a_mib[$data_mib_model['plugin_fusioninventory_mib_oid_id']]['oid_port_dyn'] == $data_mib_model['oid_port_dyn'] AND
+                                    $a_mib[$data_mib_model['plugin_fusioninventory_mib_oid_id']]['vlan'] == $data_mib_model['vlan']) {
 
                                  } else {
                                     $existent = '-1';
@@ -563,7 +563,7 @@ echo "</a>";
                   while ($data_mibs = $DB->fetch_array($result_mibs)) {
                      $a_input = array();
                      $a_input['plugin_fusioninventory_modelinfos_id'] = $id;
-                     $a_input['FK_mib_oid'] = $data_mibs['mib_oid_id'];
+                     $a_input['plugin_fusioninventory_mib_oid_id'] = $data_mibs['mib_oid_id'];
                      $a_input['oid_port_counter'] = $data_mibs['oid_port_counter'];
                      $a_input['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
                      $a_input['vlan'] = $data_mibs['vlan'];

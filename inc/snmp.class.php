@@ -70,7 +70,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                        `glpi_plugin_fusioninventory_mib_oid`.`name` AS `name`
                 FROM `glpi_plugin_fusioninventory_mib`
                      LEFT JOIN `glpi_plugin_fusioninventory_mib_oid`
-                               ON `glpi_plugin_fusioninventory_mib`.`FK_mib_oid`=
+                               ON `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_mib_oid_id`=
                                   `glpi_plugin_fusioninventory_mib_oid`.`ID`
                ".$query_add."
                    AND `oid_port_counter`='0'

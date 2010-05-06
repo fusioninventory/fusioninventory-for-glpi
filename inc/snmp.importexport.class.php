@@ -76,7 +76,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_object",$data["FK_mib_object"]).
                "]]></object>\n";
 				$xml .= "			<oid><![CDATA[".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["FK_mib_oid"])."]]></oid>\n";
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["plugin_fusioninventory_mib_oid_id"])."]]></oid>\n";
 				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
@@ -185,7 +185,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 							break;
 
 						case 2:
-							$FK_mib_oid = Dropdown::importExternal(
+							$plugin_fusioninventory_mib_oid_id = Dropdown::importExternal(
                                       "PluginFusioninventoryMib_Oid",$item);
 							break;
 
@@ -216,9 +216,9 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 				}
 
 				$query = "INSERT INTO `glpi_plugin_fusioninventory_mib`
-                                  (`plugin_fusioninventory_modelinfos_id`,`FK_mib_oid`,`FK_mib_object`,`oid_port_counter`,
+                                  (`plugin_fusioninventory_modelinfos_id`,`plugin_fusioninventory_mib_oid_id`,`FK_mib_object`,`oid_port_counter`,
                                    `oid_port_dyn`,`mapping_type`,`mapping_name`,`vlan`,`activation`)
-                      VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."',
+                      VALUES('".$FK_model."','".$plugin_fusioninventory_mib_oid_id."','".$FK_mib_object."',
                              '".$oid_port_counter."', '".$oid_port_dyn."', '".$mapping_type."',
                              '".$mapping_name."', '".$vlan."', '".$activation."');";
 				$DB->query($query);
