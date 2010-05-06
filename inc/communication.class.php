@@ -200,7 +200,7 @@ class PluginFusioninventoryCommunication {
                if ($task == "1") {
                   foreach ($tasks as $task_id=>$taskInfos) {
                      // TODO : envoyer une plage avec juste cette ip ***
-                     switch ($tasks[$task_id]['device_type']) {
+                     switch ($tasks[$task_id]['itemtype']) {
 
                         case NETWORKING_TYPE:
                            $modelslistused = $this->addDevice($sxml_option, 'networking', 0,
@@ -302,7 +302,7 @@ class PluginFusioninventoryCommunication {
                      $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ifaddr"]);
                      $sxml_rangeip->addAttribute('ENTITY', "");
                      $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["on_device"]);
-                     $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["device_type"]);
+                     $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["itemtype"]);
 
                      $ptt->deleteFromDB($task_id);
                }
@@ -490,7 +490,7 @@ class PluginFusioninventoryCommunication {
                               ON `FK_printers`=`glpi_printers`.`ID`
                       LEFT JOIN `glpi_networking_ports`
                               ON `on_device`=`glpi_printers`.`ID`
-                                 AND `device_type`='".PRINTER_TYPE."'
+                                 AND `itemtype`='".PRINTER_TYPE."'
                       INNER join `glpi_plugin_fusioninventory_model_infos`
                            ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                       WHERE `glpi_printers`.`deleted`=0
@@ -1590,8 +1590,8 @@ class PluginFusioninventoryCommunication {
 
       $tasks = $ptt->ListTask($agent["ID"], "WAKEONLAN");
          foreach ($tasks as $task_id=>$taskInfos) {
-            if ($taskInfos['device_type'] == COMPUTER_TYPE) {
-               $a_portsList = $np->find('on_device='.$taskInfos['on_device'].' AND device_type="'.COMPUTER_TYPE.'"');
+            if ($taskInfos['itemtype'] == COMPUTER_TYPE) {
+               $a_portsList = $np->find('on_device='.$taskInfos['on_device'].' AND itemtype="'.COMPUTER_TYPE.'"');
                foreach ($a_portsList as $ID=>$data) {
                   if ($data['ifaddr'] != "127.0.0.1") {
                      $sxml_param = $sxml_option->addChild('PARAM');

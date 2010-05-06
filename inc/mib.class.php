@@ -54,14 +54,14 @@ class PluginFusioninventoryMib extends CommonDBTM {
 		if (!PluginFusioninventory::haveRight("snmp_models","r")) {
 			return false;
       } else if ((isset($ID)) AND (!empty($ID))) {
-			$query = "SELECT `device_type`
+			$query = "SELECT `itemtype`
                    FROM `glpi_plugin_fusioninventory_model_infos`
                    WHERE `ID`='".$ID."';";
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
-			$type_model = $data['device_type'];		
+			$type_model = $data['itemtype'];		
 		
-			$query = "SELECT `glpi_plugin_fusioninventory_model_infos`.`device_type`,
+			$query = "SELECT `glpi_plugin_fusioninventory_model_infos`.`itemtype`,
                           `glpi_plugin_fusioninventory_mib`.*
                    FROM `glpi_plugin_fusioninventory_mib`
                         LEFT JOIN `glpi_plugin_fusioninventory_model_infos`
@@ -85,7 +85,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][6]."</th>";
 				echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][7]."</th>";
 				echo "<th align='center' width='250'>".$LANG['plugin_fusioninventory']["mib"][8]."</th>";
-				if ($data['device_type'] == NETWORKING_TYPE) {
+				if ($data['itemtype'] == NETWORKING_TYPE) {
 					echo "<th align='center'>".$LANG['plugin_fusioninventory']["mib"][9]."</th>";
             }
 				echo "<th align='center'>".$LANG['plugin_fusioninventory']["model_info"][11]."</th>";
@@ -144,7 +144,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 					}
 					echo "</td>";
 					
-					if ($data['device_type'] == NETWORKING_TYPE) {
+					if ($data['itemtype'] == NETWORKING_TYPE) {
 						echo "<td align='center'>";
 						if ($data["vlan"] == "1") {
 							if ($data["activation"] == "1") {

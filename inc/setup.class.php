@@ -240,7 +240,7 @@ class PluginFusioninventorySetup {
       $DB->query($query) or die($DB->error());
 
 
-      $a_netports = $np->find("`device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
+      $a_netports = $np->find("`itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
       foreach ($a_netports as $Networkport){
          $np->cleanDBonPurge($Networkport['ID']);
          $np->deleteFromDB($Networkport['ID']);

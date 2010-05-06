@@ -98,7 +98,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                   WHERE `status`='1' ";
                if ($result=$DB->query($query)) {
                   while ($data=$DB->fetch_array($result)) {
-                     $type_list[] = $data['device_type'];
+                     $type_list[] = $data['itemtype'];
                   }
                }
             }
@@ -553,7 +553,7 @@ echo "</a>";
                // Create model
                $a_input = array();
                $a_input['name'] = rand(10000, 10000000);
-               $a_input['device_type'] = $data["type"];
+               $a_input['itemtype'] = $data["type"];
                $a_input['activation'] = 1;
                $id = $ptmi->add($a_input);
                
@@ -599,7 +599,7 @@ echo "</a>";
 
       $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
          WHERE (discovery_key IS NULL OR discovery_key='')
-            AND device_type='".NETWORKING_TYPE."' ";
+            AND itemtype='".NETWORKING_TYPE."' ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
@@ -627,7 +627,7 @@ echo "</a>";
 
       $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
          WHERE (discovery_key IS NULL OR discovery_key='')
-            AND device_type='".PRINTER_TYPE."' ";
+            AND itemtype='".PRINTER_TYPE."' ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)

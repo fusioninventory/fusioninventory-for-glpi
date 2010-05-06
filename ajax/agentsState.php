@@ -43,13 +43,13 @@ $pfit = new PluginFusioninventoryTask;
 
 if (isset($_POST["action"])) {
    if ($_POST["action"] == "INVENTORY") {
-      $pfit->showAgentInventory($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentInventory($_POST["on_device"], $_POST["itemtype"]);
    } else if ($_POST["action"] == "NETDISCOVERY") {
-      $pfit->showAgentNetDiscovery($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentNetDiscovery($_POST["on_device"], $_POST["itemtype"]);
    } else if ($_POST["action"] == "SNMPQUERY") {
-      $pfit->showAgentSNMPQuery($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentSNMPQuery($_POST["on_device"], $_POST["itemtype"]);
    } else if ($_POST["action"] == "WAKEONLAN") {
-      $pfit->showAgentWol($_POST["on_device"], $_POST["device_type"]);
+      $pfit->showAgentWol($_POST["on_device"], $_POST["itemtype"]);
    }
    echo "<input type='hidden' name='action' value='".$_POST["action"]."'/>";
 }

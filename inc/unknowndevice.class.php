@@ -137,7 +137,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                   WHERE `status`='1' ";
                if ($result=$DB->query($query)) {
                   while ($data=$DB->fetch_array($result)) {
-                     $type_list[] = $data['device_type'];
+                     $type_list[] = $data['itemtype'];
                   }
                }
             }
@@ -274,7 +274,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 //				unset($unknown_infos);
 //				// Add networking_port
 //				$port_add["on_device"] = $newID;
-//				$port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+//				$port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
 //				$port_add["ifaddr"] = $data["unknown_ip"];
 //				$port_add['ifmac'] = $data["unknow_mac"];
 //				$port_ID = $np->add($port_add);
@@ -295,7 +295,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                 FROM `glpi_networking_ports`
                      LEFT JOIN `glpi_plugin_fusioninventory_unknown_device`
                                ON `on_device`=`glpi_plugin_fusioninventory_unknown_device`.`ID`
-                     WHERE `device_type`=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
+                     WHERE `itemtype`=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
                            AND `glpi_plugin_fusioninventory_unknown_device`.`ID` IS NULL;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
@@ -320,7 +320,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                 FROM `glpi_networking_ports`
                 WHERE `ifmac` != ''
                       AND `ifmac` != '00:00:00:00:00:00'
-                      AND `device_type`=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
+                      AND `itemtype`=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
                 GROUP BY `ifmac`
                 HAVING COUNT(*)>0;";
 		if ($result=$DB->query($query)) {
@@ -330,7 +330,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                             FROM `glpi_networking_ports`
                             WHERE `ifmac` IN ('".$data["ifmac"]."','".strtoupper($data["ifmac"])."',
                                               '".strtolower($data["ifmac"])."')
-                                  AND `device_type`!=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
+                                  AND `itemtype`!=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
                             LIMIT 0,1;";
 				$result_known=$DB->query($query_known);
             if ($DB->numrows($result_known) > 0) {
@@ -338,7 +338,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
                $query_update = "UPDATE `glpi_networking_ports`
                                 SET `on_device`='".$data_known["on_device"]."',
-                                    `device_type='".$data_known["device_type"]."',
+                                    `itemtype='".$data_known["itemtype"]."',
                                     `logical_number`='".$data_known["logical_number"]."',
                                     `name`='".$data_known["name"]."',
                                     `ifaddr`='".$data_known["ifaddr"]."',
@@ -387,7 +387,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->getFromDB($ID);
 
       // Get port
-      $a_ports = $np->find('on_device='.$ID.' AND device_type="'.PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN.'"');
+      $a_ports = $np->find('on_device='.$ID.' AND itemtype="'.PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN.'"');
 
       if (count($a_ports) == '1') {
          // Put mac and ip to unknown
@@ -418,7 +418,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          // Get port connected on switch port
          if ($ID = $nw->getOppositeContact($p_oPort->getValue('ID'))) {
             $np->getFromDB($ID);
-            if ($np->fields["device_type"] == $this->type) {
+            if ($np->fields["itemtype"] == $this->type) {
                $this->getFromDB($np->fields["on_device"]);
                if ($this->fields["hub"] == "1") {
                   // We will update ports and wire
@@ -438,7 +438,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $input = array();
       $input["on_device"] = $id_unknown;
-      $input["device_type"] = $this->type;
+      $input["itemtype"] = $this->type;
       $input["name"] = "Link";
       $id_port = $np->add($input);
       $nn->add(array('networkports_id_1'=> $p_oPort->getValue('ID'),
@@ -447,7 +447,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
          $input = array();
          $input["on_device"] = $id_unknown;
-         $input["device_type"] = $this->type;
+         $input["itemtype"] = $this->type;
          $id_port = $np->add($input);
 
          // TODO : recherche le port qui a cet $ifmac

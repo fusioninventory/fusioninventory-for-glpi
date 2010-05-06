@@ -62,11 +62,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $tasks = array();
       $list = $this->find("`agent_id`='".$agent_id."' AND `action`='".$action."' ");
       foreach ($list as $task_id=>$data) {
-         switch ($data['device_type']) {
+         switch ($data['itemtype']) {
  
             case NETWORKING_TYPE:
                $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
-                           glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.device_type as device_type
+                           glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
                         INNER JOIN glpi_networking on glpi_plugin_fusioninventory_task.on_device=glpi_networking.ID
                         WHERE `agent_id`='".$agent_id."'
@@ -76,10 +76,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
             case COMPUTER_TYPE:
             case PRINTER_TYPE:
                $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
-                           glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.device_type as device_type
+                           glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
                         INNER JOIN glpi_networking_ports on (glpi_plugin_fusioninventory_task.on_device=glpi_networking_ports.on_device
-                                                      AND glpi_plugin_fusioninventory_task.device_type=glpi_networking_ports.device_type)
+                                                      AND glpi_plugin_fusioninventory_task.itemtype=glpi_networking_ports.itemtype)
                         WHERE `agent_id`='".$agent_id."'
                            AND `action`='".$action."'
                            AND `ifaddr`!='127.0.0.1'";
@@ -93,12 +93,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
             while ($data=$DB->fetch_array($result)) {
                $tasks[$data["ID"]] = $data;
                $type='';
-               switch ($tasks[$data["ID"]]["device_type"]) {
+               switch ($tasks[$data["ID"]]["itemtype"]) {
                   case "networking":
-                     $tasks[$data["ID"]]["device_type"]='NETWORKING';
+                     $tasks[$data["ID"]]["itemtype"]='NETWORKING';
                      break;
                   case "printer":
-                     $tasks[$data["ID"]]["device_type"]='PRINTER';
+                     $tasks[$data["ID"]]["itemtype"]='PRINTER';
                      break;
                }
             }
@@ -186,7 +186,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
-   function addTask($device_id, $device_type, $action, $agent_id, $param="") {
+   function addTask($device_id, $itemtype, $action, $agent_id, $param="") {
       $ptcm = new PluginFusioninventoryConfigModules;
       if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return false;
@@ -199,7 +199,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $a_datas = $this->find("`agent_id`='".$agent_id."'
                      AND `action`='".$action."'
                      AND `on_device`='".$device_id."'
-                     AND `device_type`='".$device_type."'
+                     AND `itemtype`='".$itemtype."'
                      AND `param`='".$param."' ");
       if (empty($a_datas)) {
          $a_input['date'] = date("Y-m-d H:i:s");
@@ -207,7 +207,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $a_input['action'] = $action;
          $a_input['param'] = $param;
          $a_input['on_device'] = $device_id;
-         $a_input['device_type'] = $device_type;
+         $a_input['itemtype'] = $itemtype;
          $a_input['single'] = 1;
          $this->add($a_input);
          return true;
@@ -332,7 +332,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if (!isset($on_device)) {
          $on_device = $ID;
       }
-      $params=array('action'=>'__VALUE__', 'on_device'=>$on_device, 'device_type'=>$type);
+      $params=array('action'=>'__VALUE__', 'on_device'=>$on_device, 'itemtype'=>$type);
       ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
 
       echo "<tr class='tab_bg_1'>";
@@ -346,7 +346,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<tr class='tab_bg_2'>";
       echo "<td align='center'>";
       echo "<input type='hidden' name='on_device' value='".$ID."'/>";
-      echo "<input type='hidden' name='device_type' value='".$type."'/>";
+      echo "<input type='hidden' name='itemtype' value='".$type."'/>";
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
 
       echo "</td>";
@@ -359,14 +359,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
-   function showAgentInventory($on_device, $device_type) {
+   function showAgentInventory($on_device, $itemtype) {
       global $DB,$LANG;
 
       $pfia = new PluginFusioninventoryAgents;
       $computer_ID = 0;
       $count_agent_on = 0;
 
-      switch ($device_type) {
+      switch ($itemtype) {
 
          case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
             echo "<select name='device'>";
@@ -401,9 +401,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
          case NETWORKING_TYPE:
          case PRINTER_TYPE:
             // Choisir parmi les agents qui repondent et on le SNMP d'activé
-            echo "<input type='hidden' name='device' value='".$device_type."-".$on_device."' />";
+            echo "<input type='hidden' name='device' value='".$itemtype."-".$on_device."' />";
             echo "<table>";
-            $count_agent_on = $this->showAgentSNMPQuery($on_device, $device_type);
+            $count_agent_on = $this->showAgentSNMPQuery($on_device, $itemtype);
             echo "</table>";
             break;
 
@@ -415,9 +415,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $agent_id = 0;
 
-      $a_portsList = $np->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
+      $a_portsList = $np->find('on_device='.$computer_ID.' AND itemtype="'.COMPUTER_TYPE.'"');
 
-      switch ($device_type) {
+      switch ($itemtype) {
 
          case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
             $agent_id = $on_device;
@@ -425,7 +425,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
          case COMPUTER_TYPE:
             // Search ID of agent
-            $list = $pfia->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
+            $list = $pfia->find('on_device='.$computer_ID.' AND itemtype="'.COMPUTER_TYPE.'"');
             foreach ($list as $ID=>$data) {
                $agent_id = $ID;
             }
@@ -452,7 +452,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    }
 
 
-   function showAgentNetDiscovery($on_device, $device_type) {
+   function showAgentNetDiscovery($on_device, $itemtype) {
       global $LANG;
 
       // Recherche des agents qui ont le NETDISCOVERY à oui
@@ -461,7 +461,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
-      if (($device_type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) OR ($device_type == COMPUTER_TYPE)) {
+      if (($itemtype == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) OR ($itemtype == COMPUTER_TYPE)) {
          $a_agents = $pfia->find('module_netdiscovery=1 AND on_device='.$on_device);
          $type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
       } else {
@@ -469,7 +469,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $type = "";
       }
       foreach ($a_agents as $IDagent=>$data) {
-         $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+         $a_portsList = $np->find('on_device='.$data['on_device'].' AND itemtype='.$data['itemtype']);
 
          foreach ($a_portsList as $ID=>$datapl) {
             if (!isset($existantantip[$datapl['ifaddr']])) {
@@ -489,7 +489,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       }
    }
 
-   function showAgentSNMPQuery($on_device, $device_type) {
+   function showAgentSNMPQuery($on_device, $itemtype) {
       global $LANG;
       // Recherche des agents qui ont le SNMPQUERY à oui
       $np = new Networkport;
@@ -499,13 +499,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
 
-      switch ($device_type) {
+      switch ($itemtype) {
 
          case NETWORKING_TYPE:
          case PRINTER_TYPE:
             $a_agents = $pfia->find('module_snmpquery=1');
             foreach ($a_agents as $IDagent=>$data) {
-               $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+               $a_portsList = $np->find('on_device='.$data['on_device'].' AND itemtype='.$data['itemtype']);
 
                foreach ($a_portsList as $ID=>$datapl) {
                   if (!isset($existantantip[$datapl['ifaddr']])) {
@@ -521,7 +521,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          case COMPUTER_TYPE:
             $a_agents = $pfia->find('module_wakeonlan=1');
             foreach ($a_agents as $IDagent=>$data) {
-               $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+               $a_portsList = $np->find('on_device='.$data['on_device'].' AND itemtype='.$data['itemtype']);
 
                foreach ($a_portsList as $ID=>$datapl) {
                   if (!isset($existantantip[$datapl['ifaddr']])) {
@@ -547,7 +547,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return $count_agent_on;
    }
 
-   function showAgentWol($on_device, $device_type) {
+   function showAgentWol($on_device, $itemtype) {
       global $LANG;
 
       $np = new Networkport;
@@ -557,16 +557,16 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
 
-      switch ($device_type) {
+      switch ($itemtype) {
 
          case COMPUTER_TYPE:
             // Choisir parmi les agents qui repondent et on le SNMP d'activé
-            echo "<input type='hidden' name='device' value='".$device_type."-".$on_device."' />";
+            echo "<input type='hidden' name='device' value='".$itemtype."-".$on_device."' />";
             echo "<table>";
 
             $a_agents = $pfia->find('module_wakeonlan=1');
             foreach ($a_agents as $IDagent=>$data) {
-               $a_portsList = $np->find('on_device='.$data['on_device'].' AND device_type='.$data['device_type']);
+               $a_portsList = $np->find('on_device='.$data['on_device'].' AND itemtype='.$data['itemtype']);
                foreach ($a_portsList as $ID=>$datapl) {
                   if (!isset($existantantip[$datapl['ifaddr']])) {
                      $existantantip[$datapl['ifaddr']] = 1;
@@ -662,7 +662,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                               ON `FK_printers`=`glpi_printers`.`ID`
                          LEFT JOIN `glpi_networking_ports`
                                  ON `on_device`=`glpi_printers`.`ID`
-                                    AND `device_type`='".PRINTER_TYPE."'
+                                    AND `itemtype`='".PRINTER_TYPE."'
                          INNER join `glpi_plugin_fusioninventory_model_infos`
                               ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                          WHERE `glpi_printers`.`deleted`='0'

@@ -119,7 +119,7 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
 
       $ip = "";
       if (($data['state'] == 0) OR ($data['state'] == 6)) {
-         $a_data = $np->find("`on_device`='".$ID."' AND `device_type`='1'");
+         $a_data = $np->find("`on_device`='".$ID."' AND `itemtype`='1'");
          foreach ($a_data as $port_id=>$port) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
@@ -137,7 +137,7 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
 
       echo "<tr class='tab_bg_2'>";
 		echo "<td align='center' colspan='2'>";
-      $a_datasagent = $pta->find("`on_device`='".$ID."' AND `device_type`='1' ", "", "1");
+      $a_datasagent = $pta->find("`on_device`='".$ID."' AND `itemtype`='1' ", "", "1");
       if (!empty($a_datasagent)) {
          foreach ($a_datasagent as $agent_id=>$dataagent) {
             echo "<input type='hidden' name='agentID' value='".$agent_id."'/>";

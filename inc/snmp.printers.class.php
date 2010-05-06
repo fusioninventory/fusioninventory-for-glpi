@@ -92,8 +92,8 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		echo "<td align='center'>";
 		$query_models = "SELECT * 
                        FROM `glpi_plugin_fusioninventory_model_infos`
-                       WHERE `device_type`!=3
-                             AND `device_type`!=0";
+                       WHERE `itemtype`!=3
+                             AND `itemtype`!=0";
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {

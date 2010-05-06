@@ -121,7 +121,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
                 WHERE `on_device` = '".$discovery_ID."'
-                      AND `device_type` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
+                      AND `itemtype` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
          $Networkport->getFromDB($data["ID"]);
@@ -144,7 +144,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
             $data_Port = $Networkport->fields;
             $data_Port['on_device'] = $ID_Device;
-            $data_Port['device_type'] = $ptud->fields['type'];
+            $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
             $data_fusioninventory["FK_printers"] = $ID_Device;
@@ -201,7 +201,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
             $data_Port = $Networkport->fields;
             $data_Port['on_device'] = $ID_Device;
-            $data_Port['device_type'] = $ptud->fields['type'];
+            $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
             $ptud->deleteFromDB($discovery_ID,1);
@@ -223,7 +223,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
             $data_Port = $Networkport->fields;
             $data_Port['on_device'] = $ID_Device;
-            $data_Port['device_type'] = $ptud->fields['type'];
+            $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
             $ptud->deleteFromDB($discovery_ID,1);
@@ -244,7 +244,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
             $data_Port = $Networkport->fields;
             $data_Port['on_device'] = $ID_Device;
-            $data_Port['device_type'] = $ptud->fields['type'];
+            $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
             $ptud->deleteFromDB($discovery_ID,1);
@@ -261,10 +261,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                      WHERE `status`='1' ";
                   if ($result=$DB->query($query)) {
                      while ($data=$DB->fetch_array($result)) {
-                        if ($ptud->fields['type'] == $data['device_type']) {
+                        if ($ptud->fields['type'] == $data['itemtype']) {
                            $Netdevice = new Netdevice;
                            $pgo = new PluginGenericObject;
-                           $pgo->setType($data['device_type']);
+                           $pgo->setType($data['itemtype']);
 
                            $data["FK_entities"] = $ptud->fields["FK_entities"];
                            $data["name"] = $ptud->fields["name"];
@@ -279,7 +279,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                            if ($pgo->canUseNetworkPorts()) {
                               $data_Port = $Networkport->fields;
                               $data_Port['on_device'] = $ID_Device;
-                              $data_Port['device_type'] = $ptud->fields['type'];
+                              $data_Port['itemtype'] = $ptud->fields['type'];
                               $Networkport->update($data_Port);
                            } else {
                               $Networkport->deleteFromDB($Networkport->fields['ID']);
@@ -507,7 +507,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
          }
          if ($ci->obj->table != "glpi_networking") {
-            $query .= " LEFT JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND device_type=".$type;
+            $query .= " LEFT JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND itemtype=".$type;
          }
          if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
             $query .= " WHERE deleted=0 ".$condition_unknown;

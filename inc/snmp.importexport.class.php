@@ -50,7 +50,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) != 0) {
 				$model_name = $DB->result($result, 0, "name");
-				$type = $DB->result($result, 0, "device_type");
+				$type = $DB->result($result, 0, "itemtype");
 				$discovery_key = $DB->result($result, 0, "discovery_key");
 			} else {
 				exit();
@@ -167,7 +167,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 			return false;
 		} else {
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_model_infos`
-                               (`name`,`device_type`,`discovery_key`)
+                               (`name`,`itemtype`,`discovery_key`)
                    VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."');";
 			$DB->query($query);
 			$FK_model = $DB->insert_id();
@@ -357,7 +357,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 				unset($data);
 				// Add networking_port
 				$port_add["on_device"] = $newID;
-				$port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+				$port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
 				$port_add["ifaddr"] = $discovery->IP;
 				$port_add['ifmac'] = $discovery->MAC;
             $port_add['name'] = $discovery->NETPORTVENDOR;
@@ -426,7 +426,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                // TODO: manage ports
                $np = new Networkport;
                $query = "SELECT ID FROM glpi_networking_ports
-                  WHERE (on_device = '".$a_device[0]."' AND device_type = '".$a_device[1]."')
+                  WHERE (on_device = '".$a_device[0]."' AND itemtype = '".$a_device[1]."')
                      AND `ifaddr` NOT IN ('', '127.0.0.1')
                   ORDER BY name, logical_number";
                if ($result = $DB->query($query)) {

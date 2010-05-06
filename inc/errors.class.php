@@ -46,10 +46,10 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	}
 	
 	/* Useful function for : getIDandNewDescrFromDevice */
-	function getIDandDescrFromDevice($device_type, $value) {
+	function getIDandDescrFromDevice($itemtype, $value) {
 		global $DB;
 		
-		if ($device_type == COMPUTER_TYPE) {
+		if ($itemtype == COMPUTER_TYPE) {
 			$field = 'ifaddr';
       } else { // networking or printer
 			$field = 'device_id';
@@ -57,7 +57,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		$query = "SELECT `ID`, `description` ".
                "FROM ".$this->table." ".
                "WHERE ".$field." = '".$value."'
-                       AND `device_type` = '".$device_type."';";
+                       AND `itemtype` = '".$itemtype."';";
 		
 		if (($result = $DB->query($query))) {
 			if (($this->fields = $DB->fetch_assoc($result))) {
@@ -72,16 +72,16 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	 * Returns new description error and ID if an entry already exists, else : false.
 	 * 
 	 * $identifiant : ip for a computer, device ID for the others
-	 * $device_type : type of the device
+	 * $itemtype : type of the device
 	 * $error_type : type of error : snmp, entries in GLPI DB, etc...
 	 * $new_error : description of the new error
 	 * 
 	 * => Puts ID and description into $this->fields
 	 */
-	function getIDandNewDescrFromDevice($device_type, $identifiant, $error_type, $new_error) {
+	function getIDandNewDescrFromDevice($itemtype, $identifiant, $error_type, $new_error) {
 		global $LANG;
 
-		if (!($this->getIDandDescrFromDevice($device_type, $identifiant))) {
+		if (!($this->getIDandDescrFromDevice($itemtype, $identifiant))) {
 				return false;
       }
 
@@ -117,7 +117,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	
 	/* returns false if can't find computer (by IP, name or otherserial),
     * else returns the ID of the computer */
-	function writeComputerDbError($device_type, $input) {
+	function writeComputerDbError($itemtype, $input) {
 		global $LANG;
 		global $DB;
 		
@@ -129,7 +129,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		$query = "SELECT `pc`.`ID` AS `ID`, `pc`.`name` AS `name`,
                        `pc`.`otherserial` AS `otherserial`, `pc`.`FK_entities` AS `FK_entities`
                 FROM `glpi_computers` AS `pc`, `glpi_networking_ports` AS `port`
-	   			 WHERE `port`.`device_type` = ".$device_type." ".
+	   			 WHERE `port`.`itemtype` = ".$itemtype." ".
                       "AND `port`.`ifaddr` = '".$input['ifaddr']."' ".
                       "AND `port`.`on_device` = `pc`.`ID`;";
 		
@@ -187,7 +187,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
       }
 		
 		/// Get all inputs for DB
-		$input['device_type'] = $device_type;
+		$input['itemtype'] = $itemtype;
 
 		if (isset($fields['ID'])) {
 			$input['device_id'] = $fields['ID'];
@@ -208,7 +208,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 
 
 		/// Check if this IP has already an entry in errors DB
-		if ($this->getIDandNewDescrFromDevice($device_type, $input['ifaddr'], 'db',
+		if ($this->getIDandNewDescrFromDevice($itemtype, $input['ifaddr'], 'db',
                                             $input['description'])) {
 			$input['ID'] = $this->fields['ID'];
 			$input['description'] = $this->fields['description'];
@@ -225,18 +225,18 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	}
 	
 	/* needs : ifaddr, device_id */
-	function writeSnmpError($device_type, $input) {
+	function writeSnmpError($itemtype, $input) {
 		global $LANG;
 		
-		$input['device_type'] = $device_type;
-		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($device_type, $input['device_id'],
+		$input['itemtype'] = $itemtype;
+		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($itemtype, $input['device_id'],
                                                                   "FK_entities", false);
 
 		$input['description'] = $LANG['plugin_fusioninventory']["errors"][20]." : ";
 		$input['description'].= $LANG['plugin_fusioninventory']["errors"][21];
 		
 		// if there is already an error entry for the device
-		if ($this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'snmp',
+		if ($this->getIDandNewDescrFromDevice($itemtype, $input['device_id'], 'snmp',
                                             $input['description'])) {
 			$input['ID'] = $this->fields['ID'];
 			$input['description'] = $this->fields['description'];
@@ -248,17 +248,17 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	}
 	
 	/* needs : ifaddr, device_id */
-	function writeWireError($device_type, $input) {
+	function writeWireError($itemtype, $input) {
 		global $LANG;
 		
-		$input['device_type'] = $device_type;
-		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($device_type, $input['device_id'],
+		$input['itemtype'] = $itemtype;
+		$input['FK_entities'] = PluginFusioninventory::getDeviceFieldFromId($itemtype, $input['device_id'],
                                                                   "FK_entities", false);
 		
 		$input['description'] = $LANG['plugin_fusioninventory']["errors"][30];
 		
 		// if there is already an error entry for the device
-		if ($this->getIDandNewDescrFromDevice($device_type, $input['device_id'], 'wire',
+		if ($this->getIDandNewDescrFromDevice($itemtype, $input['device_id'], 'wire',
                                             $input['description'])) {
 			$input['ID'] = $this->fields['ID'];
 			$input['description'] = $this->fields['description'];
@@ -278,15 +278,15 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	 * - ifaddr, name and otherserial in case of db control for a computer 
 	 * - device_id and ifaddr for another device
 	 */
-	function writeError($device_type, $error_type, $input, $date) {
+	function writeError($itemtype, $error_type, $input, $date) {
 		$input['last_pb_date'] = $date;
 
 		if ($error_type == 'db') {
-			return $this->writeComputerDbError($device_type, $input);
+			return $this->writeComputerDbError($itemtype, $input);
       } else if ($error_type == 'snmp') {
-			$this->writeSnmpError($device_type, $input);
+			$this->writeSnmpError($itemtype, $input);
       } else if ( $error_type == 'wire' ) {
-			$this->writeWireError($device_type, $input);
+			$this->writeWireError($itemtype, $input);
       }
 	}
 
@@ -298,11 +298,11 @@ class PluginFusioninventoryErrors extends CommonDBTM {
                "FROM ".$this->table." ";
 		
 		if ($type == COMPUTER_TYPE) {
-			$query .="WHERE `device_type` = '".COMPUTER_TYPE."' ";
+			$query .="WHERE `itemtype` = '".COMPUTER_TYPE."' ";
       } else if ($type == NETWORKING_TYPE) {
-			$query .="WHERE `device_type` = '".NETWORKING_TYPE."' ";
+			$query .="WHERE `itemtype` = '".NETWORKING_TYPE."' ";
       } else { // $type == PRINTER_TYPE
-			$query .="WHERE `device_type` = '".PRINTER_TYPE."' ";
+			$query .="WHERE `itemtype` = '".PRINTER_TYPE."' ";
       }
 		$query .= "AND `device_id` = '".$ID."';";
 		
@@ -322,11 +322,11 @@ class PluginFusioninventoryErrors extends CommonDBTM {
                 FROM ".$this->table." ";
 		
 		if ($type == COMPUTER_TYPE) {
-			$query .= "WHERE `device_type` = '".COMPUTER_TYPE."' ";
+			$query .= "WHERE `itemtype` = '".COMPUTER_TYPE."' ";
       } else if ($type == NETWORKING_TYPE) {
-			$query .= "WHERE `device_type` = '".NETWORKING_TYPE."' ";
+			$query .= "WHERE `itemtype` = '".NETWORKING_TYPE."' ";
       } else { // $type == PRINTER_TYPE
-			$query .= "WHERE `device_type` = '".PRINTER_TYPE."' ";
+			$query .= "WHERE `itemtype` = '".PRINTER_TYPE."' ";
       }
 		$query .= "AND `device_id` = '".$ID."' ".
                 "LIMIT ".$begin.", ".$limit.";";

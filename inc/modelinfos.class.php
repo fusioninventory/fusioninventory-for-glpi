@@ -70,8 +70,8 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 		echo "<td align='center'>".$LANG["common"][17]."</td>";
 		echo "<td align='center'>";
 
-		$selected_value = $this->fields["device_type"];
-		echo "<select name='device_type'>\n";
+		$selected_value = $this->fields["itemtype"];
+		echo "<select name='itemtype'>\n";
 		if ($selected_value == "0"){$selected = 'selected';}else{$selected = '';}
 		echo "<option value='0' ".$selected.">-----</option>\n";
 		if ($selected_value == COMPUTER_TYPE){$selected = 'selected';}else{$selected = '';}

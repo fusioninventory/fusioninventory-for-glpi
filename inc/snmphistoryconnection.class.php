@@ -150,7 +150,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
             echo "<td>";
             $np->getFromDB($data['FK_port_source']);
-            $CommonItem->getFromDB($np->fields["device_type"],
+            $CommonItem->getFromDB($np->fields["itemtype"],
                                    $np->fields["on_device"]);
             $link1 = $CommonItem->getLink(1);
 
@@ -173,7 +173,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
             echo "<td>";
             $np->getFromDB($data['FK_port_destination']);
-            $CommonItem->getFromDB($np->fields["device_type"],
+            $CommonItem->getFromDB($np->fields["itemtype"],
                                    $np->fields["on_device"]);
             $link1 = $CommonItem->getLink(1);
             $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";

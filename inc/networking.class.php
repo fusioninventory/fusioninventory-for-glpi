@@ -122,7 +122,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       $query = "SELECT `ID`
                 FROM `glpi_networking_ports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
-                      AND `device_type` = '".NETWORKING_TYPE."';";
+                      AND `itemtype` = '".NETWORKING_TYPE."';";
       $portsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -358,8 +358,8 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusioninventory_model_infos`
-                       WHERE `device_type`!='2'
-                             AND `device_type`!='0';";
+                       WHERE `itemtype`!='2'
+                             AND `itemtype`!='0';";
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {
@@ -739,14 +739,14 @@ function appear_array(id){
 								$result_device = $DB->query($query_device);
 								$data_device = $DB->fetch_assoc($result_device);
 
-								$CommonItem->getFromDB($data_device["device_type"],
+								$CommonItem->getFromDB($data_device["itemtype"],
                                                $data_device["on_device"]);
 								$link1 = $CommonItem->getLink(1);
 								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],
                                             $CommonItem->getLink());
                         $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],
                                              $CommonItem->getLink());
-								if ($data_device["device_type"] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+								if ($data_device["itemtype"] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
                            if ($CommonItem->getField("accepted") == "1") {
                               echo "<td style='background:#bfec75'
                                         class='tab_bg_1_2'>".$link1;

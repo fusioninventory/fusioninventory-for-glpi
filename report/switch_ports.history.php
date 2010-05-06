@@ -108,7 +108,7 @@ function displaySearchForm($FK_port) {
                     `glpi_networking_ports`.`ID` as `ID`
              FROM `glpi_networking`
                   LEFT JOIN `glpi_networking_ports` ON `on_device` = `glpi_networking`.`ID`
-             WHERE `device_type`=".NETWORKING_TYPE."
+             WHERE `itemtype`=".NETWORKING_TYPE."
              ORDER BY `glpi_networking`.`name`, `glpi_networking_ports`.`logical_number`;";
 
 	echo "<select name='FK_networking_ports'>";

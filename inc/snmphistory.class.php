@@ -49,7 +49,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 	 * Insert port history with connection and disconnection
 	 *
 	 * @param $status status of port ('make' or 'remove')
-	 * @param $array with values : $array["FK_ports"], $array["value"], $array["device_type"] and $array["device_ID"]
+	 * @param $array with values : $array["FK_ports"], $array["value"], $array["itemtype"] and $array["device_ID"]
 	 *
 	 * @return ID of inserted line
 	 *
@@ -352,7 +352,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
                   $query_port2 = "SELECT * FROM `glpi_networking_ports`
                      WHERE `on_device` = '".$data['new_device_ID']."'
-                        AND `device_type` = '".$data['new_device_type']."' ";
+                        AND `itemtype` = '".$data['new_itemtype']."' ";
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
@@ -413,7 +413,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
                   $query_port2 = "SELECT * FROM `glpi_networking_ports`
                      WHERE `on_device` = '".$data['old_device_ID']."'
-                        AND `device_type` = '".$data['old_device_type']."' ";
+                        AND `itemtype` = '".$data['old_itemtype']."' ";
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
@@ -660,7 +660,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                if ($ID_port == $data["FK_port_source"]) {
                   $np->getFromDB($data["FK_port_destination"]);
                   if (isset($np->fields["on_device"])) {
-                     $CommonItem->getFromDB($np->fields["device_type"],
+                     $CommonItem->getFromDB($np->fields["itemtype"],
                                             $np->fields["on_device"]);
                      $link1 = $CommonItem->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
@@ -677,7 +677,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                } else if ($ID_port == $data["FK_port_destination"]) {
                   $np->getFromDB($data["FK_port_source"]);
                   if (isset($np->fields["on_device"])) {
-                     $CommonItem->getFromDB($np->fields["device_type"],
+                     $CommonItem->getFromDB($np->fields["itemtype"],
                                             $np->fields["on_device"]);
                      $link1 = $CommonItem->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
@@ -748,12 +748,12 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                // Connections and disconnections
                if ($data["old_device_ID"] != "0") {
                   $text .= "<td align='center'>".$LANG['plugin_fusioninventory']["history"][2]."</td>";
-                  $CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
+                  $CommonItem->getFromDB($data["old_itemtype"],$data["old_device_ID"]);
                   $text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
                   $text .= "<td align='center'>".$data["old_value"]."</td>";
                } else if ($data["new_device_ID"] != "0") {
                   $text .= "<td align='center'>".$LANG['plugin_fusioninventory']["history"][3]."</td>";
-                  $CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
+                  $CommonItem->getFromDB($data["new_itemtype"],$data["new_device_ID"]);
                   $text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
                   $text .= "<td align='center'>".$data["new_value"]."</td>";
                }
@@ -764,12 +764,12 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                // Unknown Mac address
                if (!empty($data["old_value"])) {
                   $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_fusioninventory']["history"][2]."</td>";
-                  $CommonItem->getFromDB($data["old_device_type"],$data["old_device_ID"]);
+                  $CommonItem->getFromDB($data["old_itemtype"],$data["old_device_ID"]);
                   $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
                   $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["old_value"]."</td>";
                } else if (!empty($data["new_value"])) {
                   $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_fusioninventory']["history"][3]."</td>";
-                  $CommonItem->getFromDB($data["new_device_type"],$data["new_device_ID"]);
+                  $CommonItem->getFromDB($data["new_itemtype"],$data["new_device_ID"]);
                   $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
                   $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["new_value"]."</td>";
                }

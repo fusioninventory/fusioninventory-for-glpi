@@ -60,7 +60,7 @@ PluginFusioninventoryDisplay::mini_menu();
 if (isset ($_POST["add"])) {
 	PluginFusioninventoryAuth::checkRight("agents","w");
    if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
-      $_POST['device_type'] = '1';
+      $_POST['itemtype'] = '1';
    }
 	$agents->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
@@ -68,7 +68,7 @@ if (isset ($_POST["add"])) {
 	PluginFusioninventoryAuth::checkRight("agents","w");
    if (isset($_POST['on_device'])) {
       if (($_POST['on_device'] != "0") AND ($_POST['on_device'] != "")) {
-         $_POST['device_type'] = '1';
+         $_POST['itemtype'] = '1';
       }
    }
 	$agents->update($_POST);

@@ -101,7 +101,7 @@ class PluginFusioninventoryAgentsErrors extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $ci->getFromDB($data['device_type'],$data['on_device']);
+            $ci->getFromDB($data['itemtype'],$data['on_device']);
 				echo $ci->getLink(1);
             echo "</td>";
 
@@ -120,7 +120,7 @@ class PluginFusioninventoryAgentsErrors extends CommonDBTM {
    function addError($a_input) {
 
       $input['on_device'] = $a_input['ID'];
-      $input['device_type'] = $a_input['TYPE'];
+      $input['itemtype'] = $a_input['TYPE'];
       $input['process_number'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       $input['error_message'] = $a_input['MESSAGE'];
       $input['agent_type'] = $a_input['agent_type'];

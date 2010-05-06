@@ -128,8 +128,8 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       if (count($this->ptcdUpdates) OR $p_force) {
          // update core
          $this->ptcdUpdates['on_device']=$p_id;
-         $this->ptcdUpdates['device_type']=$this->glpi_type;
-//         $this->ptcdUpdates['device_type']=NETWORKING_TYPE;
+         $this->ptcdUpdates['itemtype']=$this->glpi_type;
+//         $this->ptcdUpdates['itemtype']=NETWORKING_TYPE;
          $portID=parent::add($this->ptcdUpdates);
          $this->load($portID);
          // update fusioninventory
@@ -203,7 +203,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       // Add networking_port
       $np=new Networkport;
       $port_add["on_device"] = $newID;
-      $port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+      $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
       $port_add["ifaddr"] = $p_ip;
       $port_add['ifmac'] = $p_mac;
       $dport = $np->add($port_add);
@@ -352,7 +352,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
             if ($num==1) { // connected port
                $ptpConnected = new PluginFusioninventoryPort();
                $ptpConnected->load($tmp_port);
-               if ($ptpConnected->fields['device_type']==NETWORKING_TYPE) {
+               if ($ptpConnected->fields['itemtype']==NETWORKING_TYPE) {
                   break; // don't update if port on a switch
                }
             }
@@ -413,7 +413,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                if ($this->connectedPort != '') {
                   $ptpConnected = new PluginFusioninventoryPort();
                   $ptpConnected->load($this->connectedPort);
-                  if ($ptpConnected->fields['device_type'] != NETWORKING_TYPE) {
+                  if ($ptpConnected->fields['itemtype'] != NETWORKING_TYPE) {
                      // don't update vlan on connected port if connected port on a switch
                      $this->cleanVlan('', $this->connectedPort);
                   }
@@ -622,13 +622,13 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       if ($result=$DB->query($query)) {
          $data = $DB->fetch_array($result);
          $array["on_device"] = $data["on_device"];
-         $array["device_type"] = $data["device_type"];
+         $array["itemtype"] = $data["itemtype"];
       }
-      switch($array["device_type"]) {
+      switch($array["itemtype"]) {
          case NETWORKING_TYPE:
             $query = "SELECT *
                       FROM `glpi_networking`
-                      WHERE `ID`='".$array["device_type"]."'
+                      WHERE `ID`='".$array["itemtype"]."'
                       LIMIT 0,1;";
             if ($result=$DB->query($query)) {
                $data = $DB->fetch_array($result);
