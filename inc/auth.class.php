@@ -49,7 +49,7 @@ class PluginFusioninventoryAuth extends CommonDBTM {
 
             $query = "SELECT DISTINCT `glpi_profiles`.*
                       FROM `glpi_users_profiles` INNER JOIN `glpi_profiles`
-                           ON (`glpi_users_profiles`.`FK_profiles` = `glpi_profiles`.`ID`)
+                           ON (`glpi_users_profiles`.`profiles_id` = `glpi_profiles`.`ID`)
                       WHERE `glpi_users_profiles`.`users_id`='".$_SESSION["glpiID"]."'";
             $result = $DB->query($query);
             $_SESSION['glpi_plugin_fusioninventory_profile'] = array ();
