@@ -160,7 +160,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_networking_ifaddr
       $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`ID`
                        FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                             LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
+                             LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `networkequipments_id`
                        WHERE `glpi_networking`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
@@ -170,7 +170,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_networking
       $query_select = "SELECT `glpi_plugin_fusioninventory_networking`.`ID`
                        FROM `glpi_plugin_fusioninventory_networking`
-                             LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `FK_networking`
+                             LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `networkequipments_id`
                        WHERE `glpi_networking`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {

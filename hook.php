@@ -510,7 +510,7 @@ function plugin_fusioninventory_getSearchOption() {
 	}
 
 	$sopt[NETWORKING_TYPE][5194]['table']='glpi_plugin_fusioninventory_networking';
-	$sopt[NETWORKING_TYPE][5194]['field']='FK_networking';
+	$sopt[NETWORKING_TYPE][5194]['field']='networkequipments_id';
 	$sopt[NETWORKING_TYPE][5194]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5194]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["snmp"][53];
 
@@ -718,10 +718,10 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			switch ($table.'.'.$field) {
 
 				// ** FusionInventory - last inventory
-				case "glpi_plugin_fusioninventory_networking.FK_networking" :
+				case "glpi_plugin_fusioninventory_networking.networkequipments_id" :
 					$query = "SELECT *
                          FROM `glpi_plugin_fusioninventory_networking`
-                         WHERE `FK_networking` = '".$data["ID"]."';";
+                         WHERE `networkequipments_id` = '".$data["ID"]."';";
 					if ($result = $DB->query($query)) {
 						$data2=$DB->fetch_array($result);
                }
@@ -1907,18 +1907,18 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
 				// ** FusionInventory - last inventory
 				case "glpi_plugin_fusioninventory_networking.ID" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_networking ON (glpi_networking.ID = glpi_plugin_fusioninventory_networking.FK_networking) ";
+					return " LEFT JOIN glpi_plugin_fusioninventory_networking ON (glpi_networking.ID = glpi_plugin_fusioninventory_networking.networkequipments_id) ";
 					break;
 
 				// ** FusionInventory - SNMP models
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_model ON (glpi_networking.ID = gptn_model.FK_networking) ".
+					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_model ON (glpi_networking.ID = gptn_model.networkequipments_id) ".
 						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptn_model.FK_model_infos = glpi_plugin_fusioninventory_model_infos.ID) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusioninventory_snmpauths.ID" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_auth ON glpi_networking.ID = gptn_auth.FK_networking ".
+					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_auth ON glpi_networking.ID = gptn_auth.networkequipments_id ".
 						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptn_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmpauths.ID ";
 					break;
 
@@ -2119,7 +2119,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - last inventory
-				case "glpi_plugin_fusioninventory_networking.FK_networking" :
+				case "glpi_plugin_fusioninventory_networking.networkequipments_id" :
 					return " ORDER BY glpi_plugin_fusioninventory_networking.last_fusioninventory_update $order ";
 					break;
 
@@ -2286,7 +2286,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 			switch ($table.".".$field) {
 
          // ** FusionInventory - last inventory
-				case "glpi_plugin_fusioninventory_networking.FK_networking" :
+				case "glpi_plugin_fusioninventory_networking.networkequipments_id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.last_fusioninventory_update IS NULL";
@@ -2536,7 +2536,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 			case NETWORKING_TYPE :
 				// Delete all ports
 				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking`
-                             WHERE `FK_networking`='".$parm["ID"]."';";
+                             WHERE `networkequipments_id`='".$parm["ID"]."';";
 				$DB->query($query_delete);
 
 				$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`ID`
@@ -2555,8 +2555,8 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 				$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`ID`
                              FROM `glpi_plugin_fusioninventory_networking_ifaddr`
                                   LEFT JOIN `glpi_networking`
-                                            ON `glpi_networking`.`ID` = `FK_networking`
-                             WHERE `FK_networking`='".$parm["ID"]."';";
+                                            ON `glpi_networking`.`ID` = `networkequipments_id`
+                             WHERE `networkequipments_id`='".$parm["ID"]."';";
 				$result=$DB->query($query_select);
 				while ($data=$DB->fetch_array($result)) {
 					$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`

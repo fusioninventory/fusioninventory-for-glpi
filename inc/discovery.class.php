@@ -178,7 +178,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             }
             $Netdevice->deleteFromDB($Networkport->fields["ID"]);
 
-            $data_fusioninventory["FK_networking"] = $ID_Device;
+            $data_fusioninventory["networkequipments_id"] = $ID_Device;
             $data_fusioninventory["FK_model_infos"] = $ptud->fields["FK_model_infos"];
             $data_fusioninventory["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
             $fusioninventory_networking->add($data_fusioninventory);

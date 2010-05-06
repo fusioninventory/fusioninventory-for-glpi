@@ -56,7 +56,7 @@ class PluginFusioninventoryIfaddr  extends PluginFusioninventoryCommonDBTM {
     **/
    function addDB($p_id) {
       if (count($this->ptcdUpdates)) {
-         $this->ptcdUpdates['FK_networking']=$p_id;
+         $this->ptcdUpdates['networkequipments_id']=$p_id;
          $this->add($this->ptcdUpdates);
       }
    }

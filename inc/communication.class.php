@@ -461,7 +461,7 @@ class PluginFusioninventoryCommunication {
                              `FK_snmp_connection`, `FK_model_infos`
                       FROM `glpi_networking`
                       LEFT JOIN `glpi_plugin_fusioninventory_networking`
-                           ON `FK_networking`=`glpi_networking`.`ID`
+                           ON `networkequipments_id`=`glpi_networking`.`ID`
                       INNER join `glpi_plugin_fusioninventory_model_infos`
                            ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                       WHERE `glpi_networking`.`deleted`='0'

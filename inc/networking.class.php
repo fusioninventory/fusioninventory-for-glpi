@@ -70,7 +70,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
       $query = "SELECT `ID`
                 FROM `glpi_plugin_fusioninventory_networking`
-                WHERE `FK_networking` = '".$this->getValue('ID')."';";
+                WHERE `networkequipments_id` = '".$this->getValue('ID')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             $fusioninventory = $DB->fetch_assoc($result);
@@ -270,7 +270,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       $pti = new PluginFusioninventoryIfaddr();
       $query = "SELECT `ID`
                 FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                WHERE `FK_networking` = '".$this->getValue('ID')."';";
+                WHERE `networkequipments_id` = '".$this->getValue('ID')."';";
       $ifaddrsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -336,9 +336,9 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
                "/lib/extjs/adapter/prototype/effects.js'></script>";
 
-      if (!$data = $this->find("`FK_networking`='".$ID."'", '', 1)) {
+      if (!$data = $this->find("`networkequipments_id`='".$ID."'", '', 1)) {
          // Add in database if not exist
-         $input['FK_networking'] = $ID;
+         $input['networkequipments_id'] = $ID;
          $ID_tn = $this->add($input);
          $this->getFromDB($ID_tn);
       } else {
