@@ -360,7 +360,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                       FROM `glpi_networking_vlan`
                            LEFT JOIN `glpi_dropdown_vlan`
                               ON `glpi_networking_vlan`.`FK_vlan`=`glpi_dropdown_vlan`.`ID`
-                      WHERE `FK_port`='$tmp_port'";
+                      WHERE `ports_id`='$tmp_port'";
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "0") { // this port has no vlan
                   foreach ($FK_vlans as $FK_vlan) {
@@ -406,7 +406,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       } else { // no vlan to add/update --> delete existing
          $query = "SELECT *
                    FROM `glpi_networking_vlan`
-                   WHERE `FK_port`='".$this->getValue('ID')."'";
+                   WHERE `ports_id`='".$this->getValue('ID')."'";
          if ($result=$DB->query($query)) {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
                $this->cleanVlan('', $this->getValue('ID'));
@@ -433,7 +433,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    function assignVlan($p_port, $p_vlan) {
       global $DB;
 
-      $query = "INSERT INTO glpi_networking_vlan (FK_port,FK_vlan)
+      $query = "INSERT INTO glpi_networking_vlan (ports_id,FK_vlan)
                 VALUES ('$p_port','$p_vlan')";
       $DB->query($query);
    }
@@ -452,7 +452,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          if ($p_port != '') { // delete this vlan for this port
             $query="DELETE FROM `glpi_networking_vlan`
                     WHERE `FK_vlan`='$p_vlan'
-                          AND `FK_port`='$p_port';";
+                          AND `ports_id`='$p_port';";
          } else { // delete this vlan for all ports
             $query="DELETE FROM `glpi_networking_vlan`
                     WHERE `FK_vlan`='$p_vlan';";
@@ -460,7 +460,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          }
       } else { // delete all vlans for this port
          $query="DELETE FROM `glpi_networking_vlan`
-                 WHERE `FK_port`='$p_port';";
+                 WHERE `ports_id`='$p_port';";
       }
       $DB->query($query);
 	}

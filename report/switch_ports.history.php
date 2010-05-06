@@ -52,14 +52,14 @@ if (!isset($_GET["start"])) {
 	$_GET["start"] = 0;
 }
 $_GET=getValues($_GET,$_POST);
-$FK_port = "";
+$ports_id = "";
 if (isset($_GET["FK_networking_ports"])) {
-	$FK_port = $_GET["FK_networking_ports"];
+	$ports_id = $_GET["FK_networking_ports"];
 }
 if (isset($_GET["contains"][0])) {
-	$FK_port = $_GET["contains"][0];
+	$ports_id = $_GET["contains"][0];
 }
-displaySearchForm($FK_port);
+displaySearchForm($ports_id);
 
 manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_HISTORY);
 
@@ -92,7 +92,7 @@ echo "</form>";
 
 commonFooter(); 
 
-function displaySearchForm($FK_port) {
+function displaySearchForm($ports_id) {
 	global $DB,$_SERVER,$_GET,$GEDIFFREPORTLANG,$LANG,$CFG_GLPI,$FUSIONINVENTORY_MAPPING;
 
 	include_once(GLPI_ROOT.'/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php');
@@ -116,7 +116,7 @@ function displaySearchForm($FK_port) {
 	$result=$DB->query($query);
 	while ($data=$DB->fetch_array($result)) {
 		$selected = '';
-		if ((isset($FK_port)) AND ($data['ID'] == $FK_port)) {
+		if ((isset($ports_id)) AND ($data['ID'] == $ports_id)) {
 			$selected = "selected";
       }
 		echo "<option value='".$data['ID']."' ".$selected.">".$data['name']." - ".$data['pname']."</option>";

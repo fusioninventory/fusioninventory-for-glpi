@@ -329,26 +329,26 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
 
 
-	function CleanVlan($FK_port) {
+	function CleanVlan($ports_id) {
 		global $DB;
 
 		$query="SELECT *
               FROM `glpi_networking_vlan`
-              WHERE `FK_port`='$FK_port'
+              WHERE `ports_id`='$ports_id'
               LIMIT 0,1;";
 		if ($result=$DB->query($query)) {
 			$data=$DB->fetch_array($result);
 
 			// Delete VLAN
 			$query="DELETE FROM `glpi_networking_vlan`
-                 WHERE `FK_port`='$FK_port';";
+                 WHERE `ports_id`='$ports_id';";
 			$DB->query($query);
 
 			// Delete Contact VLAN if set
 			$np=new Networkport;
-			if ($np->getContact($data['FK_port'])) {
+			if ($np->getContact($data['ports_id'])) {
 				$query="DELETE FROM `glpi_networking_vlan`
-                    WHERE `FK_port`='".$np->contact_id."'
+                    WHERE `ports_id`='".$np->contact_id."'
                           AND `FK_vlan`='".$data['FK_vlan']."';";
 				$DB->query($query);
 			}
@@ -372,9 +372,9 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
 			// Delete Contact VLAN if set
 			$np=new Networkport;
-			if ($np->getContact($data['FK_port'])) {
+			if ($np->getContact($data['ports_id'])) {
 				$query="DELETE FROM `glpi_networking_vlan`
-                    WHERE `FK_port`='".$np->contact_id."'
+                    WHERE `ports_id`='".$np->contact_id."'
                           AND `FK_vlan`='".$data['FK_vlan']."';";
 				$DB->query($query);
 			}

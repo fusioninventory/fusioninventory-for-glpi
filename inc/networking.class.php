@@ -801,7 +801,7 @@ function appear_array(id){
 
                      $used = array();
 
-                     $query_vlan = "SELECT * FROM glpi_networking_vlan WHERE FK_port='".$data["ID"]."'";
+                     $query_vlan = "SELECT * FROM glpi_networking_vlan WHERE ports_id='".$data["ID"]."'";
                      $result_vlan = $DB->query($query_vlan);
                      if ($DB->numrows($result_vlan) > 0) {
                         echo "<table cellpadding='0' cellspacing='0'>";
