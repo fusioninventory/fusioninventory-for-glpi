@@ -429,7 +429,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['linkfield'] = 'FK_fusioninventory_agents_query';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['linkfield'] = 'plugin_fusioninventory_agents_id_query';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['name'] = $LANG['plugin_fusioninventory']["agents"][13];
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['datatype']='itemlink';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['itemlink_type']=PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
@@ -1814,7 +1814,7 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
       case PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP :
          switch ($table.".".$SEARCH_OPTION[$type][$ID]["linkfield"]) {
 
-            case "glpi_plugin_fusioninventory_agents.FK_fusioninventory_agents_query" :
+            case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_query" :
                return "GROUP_CONCAT( DISTINCT CONCAT(gpta.name,'$$' ,gpta.ID) SEPARATOR '$$$$') AS ITEM_$num, ";
                break;
 
@@ -2070,8 +2070,8 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 					return " LEFT JOIN glpi_plugin_fusioninventory_agents ON (glpi_plugin_fusioninventory_agents.ID = glpi_plugin_fusioninventory_rangeip.FK_fusioninventory_agents) ";
 					break;
 
-            case "glpi_plugin_fusioninventory_agents.FK_fusioninventory_agents_query" :
-               return " LEFT JOIN glpi_plugin_fusioninventory_agents AS gpta ON (glpi_plugin_fusioninventory_rangeip.FK_fusioninventory_agents_query = gpta.ID) ";
+            case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_query" :
+               return " LEFT JOIN glpi_plugin_fusioninventory_agents AS gpta ON (glpi_plugin_fusioninventory_rangeip.plugin_fusioninventory_agents_id_query = gpta.ID) ";
                break;
             
 
@@ -2479,7 +2479,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 
          switch ($table.".".$SEARCH_OPTION[$type][$ID]["linkfield"]) {
 
-            case "glpi_plugin_fusioninventory_agents.FK_fusioninventory_agents_query" :
+            case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_query" :
                $ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";

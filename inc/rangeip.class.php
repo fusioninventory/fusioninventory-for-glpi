@@ -119,8 +119,8 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][13] . "</td>";
 		echo "<td align='center'>";
 		Dropdown::show("PluginFusioninventoryAgents",
-                     array('name'=>"FK_fusioninventory_agents_query",
-                           'value'=>$this->fields["FK_fusioninventory_agents_query"],
+                     array('name'=>"plugin_fusioninventory_agents_id_query",
+                           'value'=>$this->fields["plugin_fusioninventory_agents_id_query"],
                            'comments'=>false));
 		echo "</td>";
 		echo "</tr>";
@@ -174,7 +174,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 
          case "query":
             $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_rangeip`
-               WHERE `FK_fusioninventory_agents_query`='".$agent_id."'
+               WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
                   AND `query`='1' ";
             break;
 
@@ -202,7 +202,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 
          case "query":
             $query = "SELECT * FROM `glpi_plugin_fusioninventory_rangeip`
-               WHERE `FK_fusioninventory_agents_query`='".$agent_id."'
+               WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
                   AND `query`='1' ";
             break;
 
