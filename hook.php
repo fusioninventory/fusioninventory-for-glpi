@@ -2066,8 +2066,8 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			switch ($new_table.".".$linkfield) {
 
 				// ** Agent name associed to IP range and link to agent form
-				case "glpi_plugin_fusioninventory_agents.FK_fusioninventory_agents" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_agents ON (glpi_plugin_fusioninventory_agents.ID = glpi_plugin_fusioninventory_rangeip.FK_fusioninventory_agents) ";
+				case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_discovery" :
+					return " LEFT JOIN glpi_plugin_fusioninventory_agents ON (glpi_plugin_fusioninventory_agents.ID = glpi_plugin_fusioninventory_rangeip.plugin_fusioninventory_agents_id_discovery) ";
 					break;
 
             case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_query" :
