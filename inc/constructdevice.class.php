@@ -514,7 +514,7 @@ echo "</a>";
                   if ($existent != '1') {
                      $count_mib_model = 0;
                      $query_mibs_model = "SELECT * FROM glpi_plugin_fusioninventory_mib
-                        WHERE FK_model_infos='".$data_models['ID']."' ";
+                        WHERE plugin_fusioninventory_modelinfos_id='".$data_models['ID']."' ";
                      if ($result_mib_model = $DB->query($query_mibs_model)) {
                         while ($data_mib_model = $DB->fetch_array($result_mib_model)) {
                            $count_mib_model++;
@@ -562,7 +562,7 @@ echo "</a>";
                if ($result_mibs = $DB->query($query_mibs)) {
                   while ($data_mibs = $DB->fetch_array($result_mibs)) {
                      $a_input = array();
-                     $a_input['FK_model_infos'] = $id;
+                     $a_input['plugin_fusioninventory_modelinfos_id'] = $id;
                      $a_input['FK_mib_oid'] = $data_mibs['mib_oid_id'];
                      $a_input['oid_port_counter'] = $data_mibs['oid_port_counter'];
                      $a_input['oid_port_dyn'] = $data_mibs['oid_port_dyn'];

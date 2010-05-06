@@ -67,7 +67,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_mib` AS `model_t`
-                WHERE `FK_model_infos`='".$ID_model."';";
+                WHERE `plugin_fusioninventory_modelinfos_id`='".$ID_model."';";
 		
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
@@ -216,7 +216,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 				}
 
 				$query = "INSERT INTO `glpi_plugin_fusioninventory_mib`
-                                  (`FK_model_infos`,`FK_mib_oid`,`FK_mib_object`,`oid_port_counter`,
+                                  (`plugin_fusioninventory_modelinfos_id`,`FK_mib_oid`,`FK_mib_object`,`oid_port_counter`,
                                    `oid_port_dyn`,`mapping_type`,`mapping_name`,`vlan`,`activation`)
                       VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."',
                              '".$oid_port_counter."', '".$oid_port_dyn."', '".$mapping_type."',
@@ -321,7 +321,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
             }
             $ptud->fields['comments'] = $discovery->DESCRIPTION;
             $ptud->fields['type'] = $discovery->TYPE;
-            $ptud->fields['FK_model_infos'] = $FK_model;
+            $ptud->fields['plugin_fusioninventory_modelinfos_id'] = $FK_model;
 
             $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
             if ($discovery->AUTHSNMP != "") {
@@ -338,8 +338,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
             if ($ptud->fields['snmp'] == '') {
                $ptud->fields['snmp'] = 0;
             }
-            if ($ptud->fields['FK_model_infos'] == '') {
-               $ptud->fields['FK_model_infos'] = 0;
+            if ($ptud->fields['plugin_fusioninventory_modelinfos_id'] == '') {
+               $ptud->fields['plugin_fusioninventory_modelinfos_id'] = 0;
             }
             if ($ptud->fields['plugin_fusioninventory_snmpauths_id'] == '') {
                $ptud->fields['plugin_fusioninventory_snmpauths_id'] = 0;
@@ -412,8 +412,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
                $data['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
             }
-            if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable))
-               $data['FK_model_infos'] = $FK_model;
+            if ($ci->getField('plugin_fusioninventory_modelinfos_id') && !in_array('plugin_fusioninventory_modelinfos_id', $a_lockable))
+               $data['plugin_fusioninventory_modelinfos_id'] = $FK_model;
             if ($ci->getField('comments') && !in_array('comments', $a_lockable))
                $data['comments'] = $discovery->DESCRIPTION;
             

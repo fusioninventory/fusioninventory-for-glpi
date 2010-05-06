@@ -54,16 +54,16 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
 		if ($type == NETWORKING_TYPE) {
 			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_networking`
-                                 ON `glpi_plugin_fusioninventory_networking`.`FK_model_infos`=
-                                    `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
+                                 ON `glpi_plugin_fusioninventory_networking`.`plugin_fusioninventory_modelinfos_id`=
+                                    `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`
                     WHERE `networkequipments_id`='".$ID_Device."'
-                          AND `glpi_plugin_fusioninventory_networking`.`FK_model_infos`!='0' ";
+                          AND `glpi_plugin_fusioninventory_networking`.`plugin_fusioninventory_modelinfos_id`!='0' ";
       } else if($type == PRINTER_TYPE) {
 			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_printers`
-                                 ON `glpi_plugin_fusioninventory_printers`.`FK_model_infos`=
-                                    `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
+                                 ON `glpi_plugin_fusioninventory_printers`.`plugin_fusioninventory_modelinfos_id`=
+                                    `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`
                     WHERE `printers_id`='".$ID_Device."'
-                          AND `glpi_plugin_fusioninventory_printers`.`FK_model_infos`!='0' ";
+                          AND `glpi_plugin_fusioninventory_printers`.`plugin_fusioninventory_modelinfos_id`!='0' ";
       }
 			
 		$query = "SELECT `mapping_type`, `mapping_name`, `oid_port_dyn`,
@@ -98,7 +98,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_network_infos($ID, $FK_model_infos, $plugin_fusioninventory_snmpauths_id) {
+	function update_network_infos($ID, $plugin_fusioninventory_modelinfos_id, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 		
 		$query = "SELECT *
@@ -115,7 +115,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			$plugin_fusioninventory_snmpauths_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusioninventory_networking`
-                SET `FK_model_infos`='".$FK_model_infos."',
+                SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."',
                     `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `networkequipments_id`='".$ID."';";
 	
@@ -133,7 +133,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_printer_infos($ID, $FK_model_infos, $plugin_fusioninventory_snmpauths_id) {
+	function update_printer_infos($ID, $plugin_fusioninventory_modelinfos_id, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 
 		$query = "SELECT *
@@ -150,7 +150,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			$plugin_fusioninventory_snmpauths_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusioninventory_printers`
-                SET `FK_model_infos`='".$FK_model_infos."',
+                SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."',
                     `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `printers_id`='".$ID."';";
 	
@@ -307,13 +307,13 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
 		switch ($type) {
 			case NETWORKING_TYPE :
-				$query = "SELECT FK_model_infos
+				$query = "SELECT plugin_fusioninventory_modelinfos_id
 				FROM glpi_plugin_fusioninventory_networking 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 
 			case PRINTER_TYPE :
-				$query = "SELECT `FK_model_infos`
+				$query = "SELECT `plugin_fusioninventory_modelinfos_id`
                       FROM `glpi_plugin_fusioninventory_printers`
                       WHERE `printers_id`='".$ID_Device."';";
 				break;
@@ -321,7 +321,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		if (isset($query)) {
 			if (($result = $DB->query($query))) {
 				if ($DB->numrows($result) != 0) {
-					return $DB->result($result, 0, "FK_model_infos");
+					return $DB->result($result, 0, "plugin_fusioninventory_modelinfos_id");
             }
 			}
 		}

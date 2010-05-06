@@ -116,8 +116,8 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 				$query = "SELECT * 
                       FROM `glpi_plugin_fusioninventory_networking`
                            LEFT JOIN `glpi_plugin_fusioninventory_mib`
-                           ON `glpi_plugin_fusioninventory_networking`.`FK_model_infos`=
-                              `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
+                           ON `glpi_plugin_fusioninventory_networking`.`plugin_fusioninventory_modelinfos_id`=
+                              `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`
                       WHERE `networkequipments_id`='".$ID_Device."'
                             AND `glpi_plugin_fusioninventory_mib`.`activation`='1' ";
 				break;
@@ -126,8 +126,8 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 				$query = "SELECT * 
                       FROM `glpi_plugin_fusioninventory_printers`
                            LEFT JOIN `glpi_plugin_fusioninventory_mib`
-                           ON `glpi_plugin_fusioninventory_printers`.`FK_model_infos`=
-                              `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
+                           ON `glpi_plugin_fusioninventory_printers`.`plugin_fusioninventory_modelinfos_id`=
+                              `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`
                       WHERE `printers_id`='".$ID_Device."'
                             AND `glpi_plugin_fusioninventory_mib`.`activation`='1' ";
 				break;
@@ -190,14 +190,14 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 
                case NETWORKING_TYPE:
                   $query = "UPDATE `glpi_plugin_fusioninventory_networking`
-                            SET `FK_model_infos`='".$FK_model."'
+                            SET `plugin_fusioninventory_modelinfos_id`='".$FK_model."'
                             WHERE `networkequipments_id`='".$device_id."'";
                   $DB->query($query);
                   break;
 
                case PRINTER_TYPE:
                   $query = "UPDATE `glpi_plugin_fusioninventory_printers`
-                            SET `FK_model_infos`='".$FK_model."'
+                            SET `plugin_fusioninventory_modelinfos_id`='".$FK_model."'
                             WHERE `printers_id`='".$device_id."'";
                   $DB->query($query);
                   break;

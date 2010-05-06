@@ -86,7 +86,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if ($insert == "1") {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_discovery`
                                   (`date`, `ifaddr`, `name`, `descr`, `serialnumber`, `type`,
-                                   `FK_agents`, `entities_id`, `FK_model_infos`,
+                                   `FK_agents`, `entities_id`, `plugin_fusioninventory_modelinfos_id`,
                                    `plugin_fusioninventory_snmpauths_id`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
@@ -148,7 +148,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $Networkport->update($data_Port);
 
             $data_fusioninventory["printers_id"] = $ID_Device;
-            $data_fusioninventory["FK_model_infos"] = $ptud->fields["FK_model_infos"];
+            $data_fusioninventory["plugin_fusioninventory_modelinfos_id"] = $ptud->fields["plugin_fusioninventory_modelinfos_id"];
             $data_fusioninventory["plugin_fusioninventory_snmpauths_id"] = $ptud->fields["plugin_fusioninventory_snmpauths_id"];
             $tp->add($data_fusioninventory);
 
@@ -179,7 +179,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $Netdevice->deleteFromDB($Networkport->fields["ID"]);
 
             $data_fusioninventory["networkequipments_id"] = $ID_Device;
-            $data_fusioninventory["FK_model_infos"] = $ptud->fields["FK_model_infos"];
+            $data_fusioninventory["plugin_fusioninventory_modelinfos_id"] = $ptud->fields["plugin_fusioninventory_modelinfos_id"];
             $data_fusioninventory["plugin_fusioninventory_snmpauths_id"] = $ptud->fields["plugin_fusioninventory_snmpauths_id"];
             $fusioninventory_networking->add($data_fusioninventory);
 

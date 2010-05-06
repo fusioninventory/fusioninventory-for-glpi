@@ -65,7 +65,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
                           `glpi_plugin_fusioninventory_mib`.*
                    FROM `glpi_plugin_fusioninventory_mib`
                         LEFT JOIN `glpi_plugin_fusioninventory_model_infos`
-                        ON `glpi_plugin_fusioninventory_mib`.`FK_model_infos`=
+                        ON `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`=
                            `glpi_plugin_fusioninventory_model_infos`.`ID`
                    WHERE `glpi_plugin_fusioninventory_model_infos`.`ID`='".$ID."';";
 			
@@ -328,7 +328,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 
       // oid GET
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_mib`
-                   WHERE `FK_model_infos`='".$p_id."'
+                   WHERE `plugin_fusioninventory_modelinfos_id`='".$p_id."'
                      AND `activation`='1'
                      AND `oid_port_counter`='0';";
       $result=$DB->query($query);

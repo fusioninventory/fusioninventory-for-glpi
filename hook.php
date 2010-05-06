@@ -229,7 +229,7 @@ function plugin_fusioninventory_getSearchOption() {
    
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['table'] = 'glpi_plugin_fusioninventory_model_infos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['linkfield'] = 'FK_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['linkfield'] = 'plugin_fusioninventory_modelinfos_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['name'] = $LANG['plugin_fusioninventory']["model_info"][4];
 
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
@@ -1913,7 +1913,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 				// ** FusionInventory - SNMP models
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_model ON (glpi_networking.ID = gptn_model.networkequipments_id) ".
-						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptn_model.FK_model_infos = glpi_plugin_fusioninventory_model_infos.ID) ";
+						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptn_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_model_infos.ID) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
@@ -1937,7 +1937,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 				// ** FusionInventory - SNMP models
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_model ON (glpi_printers.ID = gptp_model.printers_id) ".
-						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptp_model.FK_model_infos = glpi_plugin_fusioninventory_model_infos.ID) ";
+						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptp_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_model_infos.ID) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification

@@ -635,14 +635,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
          $query = "SELECT `glpi_networking`.`ID` AS `gID`,
                            `glpi_networking`.`name` AS `name`, `serial`, `otherserial`,
-                                `plugin_fusioninventory_snmpauths_id`, `FK_model_infos`
+                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                          FROM `glpi_networking`
                          LEFT JOIN `glpi_plugin_fusioninventory_networking`
                               ON `networkequipments_id`=`glpi_networking`.`ID`
                          INNER join `glpi_plugin_fusioninventory_model_infos`
-                              ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                          WHERE `glpi_networking`.`deleted`='0'
-                              AND `FK_model_infos`!='0'
+                              AND `plugin_fusioninventory_modelinfos_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY networkequipments_id";
          $result=$DB->query($query);
@@ -656,7 +656,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $dropdownOptions .= "<optgroup label=\"".$LANG['help'][27]."\">";
          $query = "SELECT `glpi_printers`.`ID` AS `gID`,
                            `glpi_printers`.`name` AS `name`, `serial`, `otherserial`,
-                                `plugin_fusioninventory_snmpauths_id`, `FK_model_infos`
+                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                          FROM `glpi_printers`
                          LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `printers_id`=`glpi_printers`.`ID`
@@ -664,9 +664,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
                                  ON `on_device`=`glpi_printers`.`ID`
                                     AND `itemtype`='".PRINTER_TYPE."'
                          INNER join `glpi_plugin_fusioninventory_model_infos`
-                              ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                          WHERE `glpi_printers`.`deleted`='0'
-                              AND `FK_model_infos`!='0'
+                              AND `plugin_fusioninventory_modelinfos_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY printers_id";
          $result=$DB->query($query);

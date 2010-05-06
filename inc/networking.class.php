@@ -367,7 +367,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		}
       Dropdown::show("PluginFusioninventoryModelInfos",
                      array('name'=>"model_infos",
-                           'value'=>$this->fields['FK_model_infos'],
+                           'value'=>$this->fields['plugin_fusioninventory_modelinfos_id'],
                            'comments'=>0,
                            'used'=>$exclude_models));
       echo "</td>";

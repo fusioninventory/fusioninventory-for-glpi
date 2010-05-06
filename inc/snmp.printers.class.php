@@ -100,8 +100,8 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			$exclude_models[] = $data_models['ID'];		
 		}
 		Dropdown::show("PluginFusioninventoryModelInfos",
-                     array('name'=>"FK_model_infos",
-                           'value'=>$data["FK_model_infos"],
+                     array('name'=>"plugin_fusioninventory_modelinfos_id",
+                           'value'=>$data["plugin_fusioninventory_modelinfos_id"],
                            'comments'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
@@ -522,11 +522,11 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			
 		
 		
-	function update_printers_infos($ID, $FK_model_infos, $plugin_fusioninventory_snmpauths_id) {
+	function update_printers_infos($ID, $plugin_fusioninventory_modelinfos_id, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 		
 		$query = "UPDATE `glpi_plugin_fusioninventory_printers`
-                SET `FK_model_infos`='".$FK_model_infos."',
+                SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."',
                     `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `printers_id`='".$ID."' ";
 	

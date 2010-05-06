@@ -209,8 +209,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "<td align='center'>";
          Dropdown::show("PluginFusioninventoryModelInfos",
-                        array('name'=>"FK_model_infos",
-                              'value'=>$this->fields["FK_model_infos"]));
+                        array('name'=>"plugin_fusioninventory_modelinfos_id",
+                              'value'=>$this->fields["plugin_fusioninventory_modelinfos_id"]));
          echo "</td>";
          echo "</tr>";
 
