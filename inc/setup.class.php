@@ -51,7 +51,7 @@ class PluginFusioninventorySetup {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      PluginFusioninventory::createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
+      PluginFusioninventoryDb::createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
