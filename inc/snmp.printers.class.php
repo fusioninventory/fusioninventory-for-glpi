@@ -252,7 +252,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			echo "<td align='center'>";
 //			if ($config_snmp_printer->getValue('manage_cartridges') == "1") {
 //				echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
-//				dropdownValue("glpi_cartridges_type","FK_cartridges",$state['FK_cartridges'],0);
+//				dropdownValue("glpi_cartridges_type","cartridges_id",$state['cartridges_id'],0);
 //				echo "<input type='hidden' name='ID' value='".$ID."' />";
 //				echo "<input type='hidden' name='object_name' value='".$cartridge_name."' />";
 //				echo "<input name='update_cartridges' value='update_cartridges' src='".GLPI_ROOT.
@@ -811,11 +811,11 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
                       AND `object_name`='".$object_name."' ";
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) == "0") {
-				$datas['FK_cartridges'] = "";
+				$datas['cartridges_id'] = "";
 				$datas['state'] = "";
 			} else {
 				$data = $DB->fetch_assoc($result);
-				$datas['FK_cartridges'] = $data['FK_cartridges'];
+				$datas['cartridges_id'] = $data['cartridges_id'];
 				$datas['state'] = $data['state'];
 				if (($datas['state']) < 0) {
 					$datas['state'] = "0";
