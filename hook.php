@@ -1731,6 +1731,13 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			dropdownDeviceTypes('type',$linkfield,$type_list);
 			return true;
 			break;
+
+      case 'glpi_entities.name' :
+         if (isMultiEntitiesMode()) {
+            dropdownvalue("glpi_entities",'FK_entities', $_SESSION["glpiactive_entity"]);
+         }
+         return true;
+         break;
 	}
 	return false;
 }
