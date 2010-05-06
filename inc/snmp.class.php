@@ -349,7 +349,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			if ($np->getContact($data['ports_id'])) {
 				$query="DELETE FROM `glpi_networking_vlan`
                     WHERE `ports_id`='".$np->contact_id."'
-                          AND `FK_vlan`='".$data['FK_vlan']."';";
+                          AND `vlans_id`='".$data['vlans_id']."';";
 				$DB->query($query);
 			}
 		}
@@ -375,7 +375,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			if ($np->getContact($data['ports_id'])) {
 				$query="DELETE FROM `glpi_networking_vlan`
                     WHERE `ports_id`='".$np->contact_id."'
-                          AND `FK_vlan`='".$data['FK_vlan']."';";
+                          AND `vlans_id`='".$data['vlans_id']."';";
 				$DB->query($query);
 			}
 		}
