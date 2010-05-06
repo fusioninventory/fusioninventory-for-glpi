@@ -341,11 +341,11 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          // no connection to set check existing in DB
          $this->connectedPort=$this->getConnectedPortInDB($this->getValue('ID'));
       }
-      $FK_vlans = array();
+      $vlans = array();
       foreach ($this->portVlans as $vlan) {
-         $FK_vlans[] = Dropdown::importExternal("Vlan", $vlan['number'], 0, array(), $vlan['name']);
+         $vlans[] = Dropdown::importExternal("Vlan", $vlan['number'], 0, array(), $vlan['name']);
       }
-      if (count($FK_vlans)) { // vlans to add/update
+      if (count($vlans)) { // vlans to add/update
          $ports[] = $this->getValue('ID');
          if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
@@ -363,7 +363,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                       WHERE `ports_id`='$tmp_port'";
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "0") { // this port has no vlan
-                  foreach ($FK_vlans as $vlans_id) {
+                  foreach ($vlans as $vlans_id) {
                      $this->assignVlan($tmp_port, $vlans_id);
                   }
                } else { // this port has one or more vlans
