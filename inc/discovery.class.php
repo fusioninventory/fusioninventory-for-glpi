@@ -52,7 +52,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
     *  - type
     *  - agent_id
     *  - entity
-    *  - FK_model
+    *  - plugin_fusioninventory_modelinfos_id
     *  - authSNMP
     *
     *@return Nothing (displays)
@@ -96,7 +96,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                              '".$Array['type']."',
                              '".$Array['agent_id']."',
                              '".$Array['entity']."',
-                             '".$Array['FK_model']."',
+                             '".$Array['plugin_fusioninventory_modelinfos_id']."',
                              '".$Array['authSNMP']."');";
             $DB->query($query);
          }

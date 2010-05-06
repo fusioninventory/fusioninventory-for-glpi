@@ -170,7 +170,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                                (`name`,`itemtype`,`discovery_key`)
                    VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."');";
 			$DB->query($query);
-			$FK_model = $DB->insert_id();
+			$plugin_fusioninventory_modelinfos_id = $DB->insert_id();
 			
 			$i = -1;
 			foreach($xml->oidlist[0] as $num) {
@@ -218,14 +218,14 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 				$query = "INSERT INTO `glpi_plugin_fusioninventory_mib`
                                   (`plugin_fusioninventory_modelinfos_id`,`plugin_fusioninventory_mib_oid_id`,`plugin_fusioninventory_mib_object_id`,`oid_port_counter`,
                                    `oid_port_dyn`,`mapping_type`,`mapping_name`,`vlan`,`activation`)
-                      VALUES('".$FK_model."','".$plugin_fusioninventory_mib_oid_id."','".$plugin_fusioninventory_mib_object_id."',
+                      VALUES('".$plugin_fusioninventory_modelinfos_id."','".$plugin_fusioninventory_mib_oid_id."','".$plugin_fusioninventory_mib_object_id."',
                              '".$oid_port_counter."', '".$oid_port_dyn."', '".$mapping_type."',
                              '".$mapping_name."', '".$vlan."', '".$activation."');";
 				$DB->query($query);
 			}
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
-               " : <a href='models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
+               " : <a href='models.form.php?ID=".$plugin_fusioninventory_modelinfos_id."'>".$xml->name[0]."</a>";
          }
 		}
 	}
@@ -281,14 +281,14 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                       LIMIT 0,1;";
 				$result = $DB->query($query);		
 				$data = $DB->fetch_assoc($result);
-				$FK_model = $data['ID'];
+				$plugin_fusioninventory_modelinfos_id = $data['ID'];
 			} else {
-				$FK_model = 0;
+				$plugin_fusioninventory_modelinfos_id = 0;
          }
          $discovery->MAC = strtolower($discovery->MAC);
 
-			if (empty($FK_model)) {
-				$FK_model = 0;
+			if (empty($plugin_fusioninventory_modelinfos_id)) {
+				$plugin_fusioninventory_modelinfos_id = 0;
          }
 
          unset($p_criteria);
@@ -321,7 +321,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
             }
             $ptud->fields['comments'] = $discovery->DESCRIPTION;
             $ptud->fields['type'] = $discovery->TYPE;
-            $ptud->fields['plugin_fusioninventory_modelinfos_id'] = $FK_model;
+            $ptud->fields['plugin_fusioninventory_modelinfos_id'] = $plugin_fusioninventory_modelinfos_id;
 
             $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
             if ($discovery->AUTHSNMP != "") {
@@ -413,7 +413,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $data['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
             }
             if ($ci->getField('plugin_fusioninventory_modelinfos_id') && !in_array('plugin_fusioninventory_modelinfos_id', $a_lockable))
-               $data['plugin_fusioninventory_modelinfos_id'] = $FK_model;
+               $data['plugin_fusioninventory_modelinfos_id'] = $plugin_fusioninventory_modelinfos_id;
             if ($ci->getField('comments') && !in_array('comments', $a_lockable))
                $data['comments'] = $discovery->DESCRIPTION;
             

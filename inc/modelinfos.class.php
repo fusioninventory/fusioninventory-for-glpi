@@ -184,20 +184,20 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
                       LIMIT 0,1";
 				$result = $DB->query($query);
 				$data = $DB->fetch_assoc($result);
-				$FK_model = $data['ID'];
+				$plugin_fusioninventory_modelinfos_id = $data['ID'];
             // Udpate Device with this model
             switch($type) {
 
                case NETWORKING_TYPE:
                   $query = "UPDATE `glpi_plugin_fusioninventory_networking`
-                            SET `plugin_fusioninventory_modelinfos_id`='".$FK_model."'
+                            SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."'
                             WHERE `networkequipments_id`='".$device_id."'";
                   $DB->query($query);
                   break;
 
                case PRINTER_TYPE:
                   $query = "UPDATE `glpi_plugin_fusioninventory_printers`
-                            SET `plugin_fusioninventory_modelinfos_id`='".$FK_model."'
+                            SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."'
                             WHERE `printers_id`='".$device_id."'";
                   $DB->query($query);
                   break;
