@@ -444,7 +444,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['table'] = 'glpi_networking_ports';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['field'] = 'ID';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['linkfield'] = 'FK_ports';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['linkfield'] = 'networkports_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['name'] = $LANG["setup"][175];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
@@ -2080,7 +2080,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
       // * ports updates list (report/switch_ports.history.php)
 		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
-         return " LEFT JOIN `glpi_networking_ports` ON ( `glpi_networking_ports`.`ID` = `glpi_plugin_fusioninventory_snmphistories`.`FK_ports` ) ";
+         return " LEFT JOIN `glpi_networking_ports` ON ( `glpi_networking_ports`.`ID` = `glpi_plugin_fusioninventory_snmphistories`.`networkports_id` ) ";
 			break;
 	}
 	return "";

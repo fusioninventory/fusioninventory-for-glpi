@@ -49,7 +49,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 	 * Insert port history with connection and disconnection
 	 *
 	 * @param $status status of port ('make' or 'remove')
-	 * @param $array with values : $array["FK_ports"], $array["value"], $array["itemtype"] and $array["device_ID"]
+	 * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"] and $array["device_ID"]
 	 *
 	 * @return ID of inserted line
 	 *
@@ -60,13 +60,13 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       $pthc = new PluginFusioninventorySnmphistoryconnection;
 
       $input['date'] = date("Y-m-d H:i:s");
-      $input['FK_ports'] = $array['FK_ports'];
+      $input['networkports_id'] = $array['networkports_id'];
 
       if ($status == "field") {
 
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_snmphistories` (
-                               `FK_ports`,`field`,`old_value`,`new_value`,`date_mod`,`FK_process`)
-                   VALUES('".$array["FK_ports"]."','".addslashes($array["field"])."',
+                               `networkports_id`,`field`,`old_value`,`new_value`,`date_mod`,`FK_process`)
+                   VALUES('".$array["networkports_id"]."','".addslashes($array["field"])."',
                           '".$array["old_value"]."','".$array["new_value"]."',
                           '".date("Y-m-d H:i:s")."','".$FK_process."');";
          $DB->query($query);
@@ -494,7 +494,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
       if ($doHistory == "1") {
 
-         $array["FK_ports"] = $port;
+         $array["networkports_id"] = $port;
          $array["field"] = $field;
          $array["old_value"] = $old_value;
          $array["new_value"] = $new_value;
@@ -548,7 +548,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
          $days = $pficsnmph->getValue($field);
 
          if ((isset($days)) AND ($days != '-1')) {
-            $array["FK_ports"] = $port_id;
+            $array["networkports_id"] = $port_id;
             $array["field"] = $field;
             $array["old_value"] = $ptp->getValue($db_field);
             $array["new_value"] = $new_value;
@@ -616,11 +616,11 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             UNION ALL
             SELECT * FROM (
                SELECT ID, date_mod as date, FK_process as process_number,
-               FK_ports AS FK_port_source, NULL as FK_port_destination,
+               networkports_id AS FK_port_source, NULL as FK_port_destination,
                Field, old_value, new_value
 
                FROM glpi_plugin_fusioninventory_snmphistories
-               WHERE `FK_ports`='".$ID_port."'
+               WHERE `networkports_id`='".$ID_port."'
                ORDER BY date DESC
                LIMIT 0,30
                )
@@ -716,7 +716,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                                        '0,30');
       $query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_snmphistories`
-                WHERE `FK_ports`='".$ID_port."'
+                WHERE `networkports_id`='".$ID_port."'
                 ORDER BY `date_mod` DESC
                 LIMIT 0,30;";
 

@@ -67,7 +67,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
                // connection
                $input['creation'] = '1';
             }
-            $input['FK_port_source'] = $thread_connection["FK_ports"];
+            $input['FK_port_source'] = $thread_connection["networkports_id"];
 
             if ($thread_connection["old_device_ID"] != "0") {
                $queryPort = "SELECT *
