@@ -84,7 +84,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             }
-            $input['FK_port_destination'] = $dataPort['ID'];
+            $input['networkports_id_2'] = $dataPort['ID'];
             $this->add($input);
             $ptsnmph->deleteFromDB($thread_connection['ID'], 1);
          }
@@ -172,7 +172,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $np->getFromDB($data['FK_port_destination']);
+            $np->getFromDB($data['networkports_id_2']);
             $CommonItem->getFromDB($np->fields["itemtype"],
                                    $np->fields["on_device"]);
             $link1 = $CommonItem->getLink(1);

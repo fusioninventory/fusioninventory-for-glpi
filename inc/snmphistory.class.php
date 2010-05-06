@@ -356,7 +356,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['FK_port_destination'] = $data_port2['ID'];
+                        $input['networkports_id_2'] = $data_port2['ID'];
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
@@ -417,12 +417,12 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['FK_port_destination'] = $data_port2['ID'];
+                        $input['networkports_id_2'] = $data_port2['ID'];
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
                         $input['process_number'] = $data['FK_process'];
-                        if ($input['networkports_id_1'] != $input['FK_port_destination']) {
+                        if ($input['networkports_id_1'] != $input['networkports_id_2']) {
                            $pfihc->add($input);
                         }
                      }
@@ -577,7 +577,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       if ($opposite_port == "0") {
          return;
       }
-      $input['FK_port_destination'] = $opposite_port;
+      $input['networkports_id_2'] = $opposite_port;
 
       $input['date'] = date("Y-m-d H:i:s");
 
@@ -603,12 +603,12 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
          SELECT * FROM(
             SELECT * FROM (
                SELECT ID, date as date, process_number as process_number,
-               networkports_id_1, FK_port_destination,
+               networkports_id_1, networkports_id_2,
                creation as Field, NULL as old_value, NULL as new_value
 
                FROM glpi_plugin_fusioninventory_snmphistoryconnections
                WHERE `networkports_id_1`='".$ID_port."'
-                  OR `FK_port_destination`='".$ID_port."'
+                  OR `networkports_id_2`='".$ID_port."'
                ORDER BY date DESC
                LIMIT 0,30
                )
@@ -616,7 +616,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             UNION ALL
             SELECT * FROM (
                SELECT ID, date_mod as date, FK_process as process_number,
-               networkports_id AS networkports_id_1, NULL as FK_port_destination,
+               networkports_id AS networkports_id_1, NULL as networkports_id_2,
                Field, old_value, new_value
 
                FROM glpi_plugin_fusioninventory_snmphistories
@@ -650,7 +650,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       if ($result=$DB->query($query)) {
          while ($data=$DB->fetch_array($result)) {
             $text .= "<tr class='tab_bg_1'>";
-            if (!empty($data["FK_port_destination"])) {
+            if (!empty($data["networkports_id_2"])) {
                // Connections and disconnections
                if ($data['Field'] == '1') {
                   $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/></td>";
@@ -658,7 +658,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
                }
                if ($ID_port == $data["networkports_id_1"]) {
-                  $np->getFromDB($data["FK_port_destination"]);
+                  $np->getFromDB($data["networkports_id_2"]);
                   if (isset($np->fields["on_device"])) {
                      $CommonItem->getFromDB($np->fields["itemtype"],
                                             $np->fields["on_device"]);
@@ -674,7 +674,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                      $text .= "<td align='center'><font color='#ff0000'>".$LANG['common'][28]."</font></td>";
                   }
 
-               } else if ($ID_port == $data["FK_port_destination"]) {
+               } else if ($ID_port == $data["networkports_id_2"]) {
                   $np->getFromDB($data["networkports_id_1"]);
                   if (isset($np->fields["on_device"])) {
                      $CommonItem->getFromDB($np->fields["itemtype"],
@@ -711,7 +711,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       $pthc = new PluginFusioninventorySnmphistoryconnection;
 
       $data_connections = $pthc->find('`networkports_id_1`="'.$ID_port.'"
-                                          OR `FK_port_destination `="'.$ID_port.'"',
+                                          OR `networkports_id_2 `="'.$ID_port.'"',
                                        '`date` DESC',
                                        '0,30');
       $query = "SELECT *
