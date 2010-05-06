@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryModelInfos extends CommonDBTM {
    
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_model_infos";
+		$this->table = "glpi_plugin_fusioninventory_modelinfos";
 		$this->type = PLUGIN_FUSIONINVENTORY_MODEL;
 	}
 
@@ -179,7 +179,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
          }
          if (!empty($modelgetted)) {
             $query = "SELECT * 
-                      FROM `glpi_plugin_fusioninventory_model_infos`
+                      FROM `glpi_plugin_fusioninventory_modelinfos`
                       WHERE `discovery_key`='".$modelgetted."'
                       LIMIT 0,1";
 				$result = $DB->query($query);

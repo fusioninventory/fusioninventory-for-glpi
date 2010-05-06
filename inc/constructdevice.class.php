@@ -507,7 +507,7 @@ echo "</a>";
             }
 
             // See if model exactly exists
-            $query_models = "SELECT * FROM glpi_plugin_fusioninventory_model_infos";
+            $query_models = "SELECT * FROM glpi_plugin_fusioninventory_modelinfos";
             $existent = 0;
             if ($result_models = $DB->query($query_models)) {
                while ($data_models = $DB->fetch_array($result_models)) {
@@ -585,7 +585,7 @@ echo "</a>";
 
        // Add Number
        //key : Networking0006
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_modelinfos
          WHERE discovery_key LIKE 'Networking%'
          ORDER BY discovery_key DESC
          LIMIT 1";
@@ -597,14 +597,14 @@ echo "</a>";
          $num++;
       }
 
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_modelinfos
          WHERE (discovery_key IS NULL OR discovery_key='')
             AND itemtype='".NETWORKING_TYPE."' ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
                $num = "0" . $num;
-            $query_update = "UPDATE glpi_plugin_fusioninventory_model_infos
+            $query_update = "UPDATE glpi_plugin_fusioninventory_modelinfos
                SET discovery_key='Networking".$num."'
                   WHERE ID='".$data['ID']."'";
             $DB->query($query_update);
@@ -612,7 +612,7 @@ echo "</a>";
          }
       }
       // Printers
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_modelinfos
          WHERE discovery_key LIKE 'Printer%'
          ORDER BY discovery_key DESC
          LIMIT 1";
@@ -625,14 +625,14 @@ echo "</a>";
          $num++;
       }
 
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_model_infos
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_modelinfos
          WHERE (discovery_key IS NULL OR discovery_key='')
             AND itemtype='".PRINTER_TYPE."' ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
                $num = "0" . $num;
-            $query_update = "UPDATE glpi_plugin_fusioninventory_model_infos
+            $query_update = "UPDATE glpi_plugin_fusioninventory_modelinfos
                SET discovery_key='Printer".$num."'
                   WHERE ID='".$data['ID']."'";
             $DB->query($query_update);
@@ -664,7 +664,7 @@ echo "</a>";
             if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
                //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
 
-               $query_modelkey = "SELECT * FROM `glpi_plugin_fusioninventory_model_infos`
+               $query_modelkey = "SELECT * FROM `glpi_plugin_fusioninventory_modelinfos`
                   WHERE ID='".$data['snmpmodel_id']."'
                      LIMIT 1";
                $result_modelkey=$DB->query($query_modelkey);
@@ -746,7 +746,7 @@ echo "</a>";
    function cleanmodels() {
       global $DB;
 
-      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_model_infos";
+      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_modelinfos";
       if ($result_models = $DB->query($query_models)) {
          while ($data_models = $DB->fetch_array($result_models)) {
             $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_device
@@ -754,7 +754,7 @@ echo "</a>";
             if ($result = $DB->query($query)) {
                if ($DB->numrows($result) == 0) {
                   // Delete model
-                  $query_delete = "DELETE FROM glpi_plugin_fusioninventory_model_infos
+                  $query_delete = "DELETE FROM glpi_plugin_fusioninventory_modelinfos
                      WHERE ID='".$data_models['ID']."'";
                   $DB->query($query_delete);
                }
@@ -769,7 +769,7 @@ echo "</a>";
 
       $pfiie = new PluginFusioninventoryImportExport;
 
-      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_model_infos";
+      $query_models = "SELECT * FROM glpi_plugin_fusioninventory_modelinfos";
       if ($result_models = $DB->query($query_models)) {
          while ($data = $DB->fetch_array($result_models)) {
             $xml = $pfiie->plugin_fusioninventory_export($data['ID']);

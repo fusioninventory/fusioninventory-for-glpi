@@ -88,34 +88,34 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL]['common'] = $LANG['plugin_fusioninventory']["profile"][19];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][1]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][1]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][1]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][1]['name'] = $LANG["common"][16];
   $sopt[PLUGIN_FUSIONINVENTORY_MODEL][1]['datatype']='itemlink';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][30]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][30]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][30]['field'] = 'ID';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][30]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][30]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][3]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][3]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][3]['field'] = 'itemtype';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][3]['linkfield'] = 'itemtype';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][3]['name'] = $LANG["common"][17];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][5]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][5]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][5]['field'] = 'ID';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][5]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][5]['name'] = $LANG["buttons"][31];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][6]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][6]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][6]['field'] = 'activation';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][6]['linkfield'] = 'activation';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][6]['name'] = $LANG['plugin_fusioninventory']["model_info"][11];
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][6]['datatype']='bool';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['field'] = 'discovery_key';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['linkfield'] = 'discovery_key';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['name'] = $LANG['plugin_fusioninventory']["model_info"][12];
@@ -227,7 +227,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][11]['name'] = $LANG['plugin_fusioninventory']["functionalities"][3];
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][11]['datatype']='bool';
    
-	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['linkfield'] = 'plugin_fusioninventory_modelinfos_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][12]['name'] = $LANG['plugin_fusioninventory']["model_info"][4];
@@ -492,7 +492,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][3]['name'] = $LANG["login"][0];
 
 
-	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusioninventory_model_infos';
+	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusioninventory_modelinfos';
 	$sopt[NETWORKING_TYPE][5190]['field']='ID';
 	$sopt[NETWORKING_TYPE][5190]['linkfield']='ID';
 	$sopt[NETWORKING_TYPE][5190]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][19];
@@ -520,7 +520,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[NETWORKING_TYPE][5195]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["snmp"][13];
 
 
-	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_fusioninventory_model_infos';
+	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PRINTER_TYPE][5190]['field']='ID';
 	$sopt[PRINTER_TYPE][5190]['linkfield']='ID';
 	$sopt[PRINTER_TYPE][5190]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][19];
@@ -654,7 +654,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][6]['name'] = $LANG['common'][17];
    $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][6]['datatype']='number';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['linkfield'] = 'snmpmodel_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['name'] = $LANG['plugin_fusioninventory']["profile"][24];
@@ -735,11 +735,11 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/models.form.php?ID=" . $FK_model_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_modelinfos", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -810,11 +810,11 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["ID"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/models.form.php?ID=" . $FK_model_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_model_infos", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_modelinfos", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -837,7 +837,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			switch ($table.'.'.$field) {
 
 				// ** Name of type of model (network, printer...)
-				case "glpi_plugin_fusioninventory_model_infos.itemtype" :
+				case "glpi_plugin_fusioninventory_modelinfos.itemtype" :
 					$out = '<center> ';
 					switch ($data["ITEM_$num"]) {
 						case COMPUTER_TYPE:
@@ -865,7 +865,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 					break;
 
 				// ** Display pic / link for exporting model
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
 					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/fusioninventory/front/models.export.php' target='_blank'>
 						<input type='hidden' name='model' value='" . $data["ID"] . "' />
 						<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
@@ -1484,7 +1484,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 				case "plugin_fusioninventory_assign_model" :
                if(PluginFusioninventory::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusioninventory_model_infos`
+                                   FROM `glpi_plugin_fusioninventory_modelinfos`
                                    WHERE `itemtype`!='2'
                                          AND `itemtype`!='0';";
                   $result_models=$DB->query($query_models);
@@ -1528,7 +1528,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 				case "plugin_fusioninventory_assign_model" :
                if(PluginFusioninventory::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusioninventory_model_infos`
+                                   FROM `glpi_plugin_fusioninventory_modelinfos`
                                    WHERE `itemtype`!='3'
                                          AND `itemtype`!='0';";
                   $result_models=$DB->query($query_models);
@@ -1672,7 +1672,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			return true;
 			break;
 
-		case 'glpi_plugin_fusioninventory_model_infos.name':
+		case 'glpi_plugin_fusioninventory_modelinfos.name':
 			Dropdown::show("PluginFusioninventoryModelInfos",
                         array('name' => $linkfield,
                               'comments' => false));
@@ -1742,7 +1742,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			return true;
 			break;
 
-		case 'glpi_plugin_fusioninventory_model_infos.itemtype' :
+		case 'glpi_plugin_fusioninventory_modelinfos.itemtype' :
          $type_list = array();
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
@@ -1911,9 +1911,9 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_model ON (glpi_networking.ID = gptn_model.networkequipments_id) ".
-						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptn_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_model_infos.ID) ";
+						" LEFT JOIN glpi_plugin_fusioninventory_modelinfos ON (gptn_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_modelinfos.ID) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
@@ -1935,9 +1935,9 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_model ON (glpi_printers.ID = gptp_model.printers_id) ".
-						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptp_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_model_infos.ID) ";
+						" LEFT JOIN glpi_plugin_fusioninventory_modelinfos ON (gptp_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_modelinfos.ID) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
@@ -2124,8 +2124,8 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
-					return " ORDER BY glpi_plugin_fusioninventory_model_infos.name $order ";
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
+					return " ORDER BY glpi_plugin_fusioninventory_modelinfos.name $order ";
 					break;
 
 			}
@@ -2141,8 +2141,8 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
-					return " ORDER BY glpi_plugin_fusioninventory_model_infos.name $order ";
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
+					return " ORDER BY glpi_plugin_fusioninventory_modelinfos.name $order ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
@@ -2297,7 +2297,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";
@@ -2342,7 +2342,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_model_infos.ID" :
+				case "glpi_plugin_fusioninventory_modelinfos.ID" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";

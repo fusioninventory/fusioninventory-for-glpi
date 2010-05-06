@@ -639,8 +639,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
                          FROM `glpi_networking`
                          LEFT JOIN `glpi_plugin_fusioninventory_networking`
                               ON `networkequipments_id`=`glpi_networking`.`ID`
-                         INNER join `glpi_plugin_fusioninventory_model_infos`
-                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                         INNER join `glpi_plugin_fusioninventory_modelinfos`
+                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
                          WHERE `glpi_networking`.`deleted`='0'
                               AND `plugin_fusioninventory_modelinfos_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
@@ -663,8 +663,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
                          LEFT JOIN `glpi_networking_ports`
                                  ON `on_device`=`glpi_printers`.`ID`
                                     AND `itemtype`='".PRINTER_TYPE."'
-                         INNER join `glpi_plugin_fusioninventory_model_infos`
-                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                         INNER join `glpi_plugin_fusioninventory_modelinfos`
+                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
                          WHERE `glpi_printers`.`deleted`='0'
                               AND `plugin_fusioninventory_modelinfos_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'

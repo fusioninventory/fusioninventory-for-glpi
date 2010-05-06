@@ -44,7 +44,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 		$query = "SELECT * 
-                FROM `glpi_plugin_fusioninventory_model_infos`
+                FROM `glpi_plugin_fusioninventory_modelinfos`
                 WHERE `ID`='".$ID_model."';";
 
 		if ($result=$DB->query($query)) {
@@ -156,7 +156,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 
 		// Verify same model exist
 		$query = "SELECT ID
-                FROM `glpi_plugin_fusioninventory_model_infos`
+                FROM `glpi_plugin_fusioninventory_modelinfos`
                 WHERE `name`='".$xml->name[0]."';";
 		$result = $DB->query($query);
 		
@@ -166,7 +166,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
          }
 			return false;
 		} else {
-			$query = "INSERT INTO `glpi_plugin_fusioninventory_model_infos`
+			$query = "INSERT INTO `glpi_plugin_fusioninventory_modelinfos`
                                (`name`,`itemtype`,`discovery_key`)
                    VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."');";
 			$DB->query($query);
@@ -276,7 +276,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		foreach($p_xml->DEVICE as $discovery) {
 			if ($discovery->MODELSNMP != "") {
 				$query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_model_infos`
+                      FROM `glpi_plugin_fusioninventory_modelinfos`
                       WHERE `discovery_key`='".$discovery->MODELSNMP."'
                       LIMIT 0,1;";
 				$result = $DB->query($query);		

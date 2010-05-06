@@ -357,7 +357,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["profile"][24]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_model_infos`
+                       FROM `glpi_plugin_fusioninventory_modelinfos`
                        WHERE `itemtype`!='2'
                              AND `itemtype`!='0';";
 		$result_models=$DB->query($query_models);

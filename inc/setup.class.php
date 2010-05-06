@@ -170,7 +170,7 @@ class PluginFusioninventorySetup {
          $DB->query($query_delete);
 
          // Delete models
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_model_infos`";
+         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_modelinfos`";
          $DB->query($query_delete);
 
          // Import models

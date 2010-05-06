@@ -55,19 +55,19 @@ class PluginFusioninventoryMib extends CommonDBTM {
 			return false;
       } else if ((isset($ID)) AND (!empty($ID))) {
 			$query = "SELECT `itemtype`
-                   FROM `glpi_plugin_fusioninventory_model_infos`
+                   FROM `glpi_plugin_fusioninventory_modelinfos`
                    WHERE `ID`='".$ID."';";
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['itemtype'];		
 		
-			$query = "SELECT `glpi_plugin_fusioninventory_model_infos`.`itemtype`,
+			$query = "SELECT `glpi_plugin_fusioninventory_modelinfos`.`itemtype`,
                           `glpi_plugin_fusioninventory_mib`.*
                    FROM `glpi_plugin_fusioninventory_mib`
-                        LEFT JOIN `glpi_plugin_fusioninventory_model_infos`
+                        LEFT JOIN `glpi_plugin_fusioninventory_modelinfos`
                         ON `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`=
-                           `glpi_plugin_fusioninventory_model_infos`.`ID`
-                   WHERE `glpi_plugin_fusioninventory_model_infos`.`ID`='".$ID."';";
+                           `glpi_plugin_fusioninventory_modelinfos`.`ID`
+                   WHERE `glpi_plugin_fusioninventory_modelinfos`.`ID`='".$ID."';";
 			
 			if ($result = $DB->query($query)) {
 				$object_used = array();

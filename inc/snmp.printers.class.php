@@ -91,7 +91,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT * 
-                       FROM `glpi_plugin_fusioninventory_model_infos`
+                       FROM `glpi_plugin_fusioninventory_modelinfos`
                        WHERE `itemtype`!=3
                              AND `itemtype`!=0";
 		$result_models=$DB->query($query_models);
