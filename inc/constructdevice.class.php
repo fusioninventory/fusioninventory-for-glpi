@@ -61,8 +61,8 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][5].": 	</td><td>";
       Dropdown::show("Manufacturer",
-                     array('name'=>"FK_glpi_enterprise",
-                           'value'=>$this->fields["FK_glpi_enterprise"]));
+                     array('name'=>"manufacturers_id",
+                           'value'=>$this->fields["manufacturers_id"]));
       echo "</td>";
 
       echo "<tr>";
@@ -658,7 +658,7 @@ echo "</a>";
 			while ($data = $DB->fetch_array($result)) {
             $sxml_device = $sxml->addChild('DEVICE');
             $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
-            $sxml_device->addAttribute('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
+            $sxml_device->addAttribute('MANUFACTURER', $data['manufacturers_id']); //dropdown
             $sxml_device->addAttribute('TYPE', $data['type']);
 
             if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
