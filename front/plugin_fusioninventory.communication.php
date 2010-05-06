@@ -50,6 +50,7 @@ $_SESSION["glpi_use_mode"] = 2;
 
 $ptc  = new PluginFusionInventoryCommunication;
 $ptap = new PluginFusionInventoryAgentsProcesses;
+$ptcm = new PluginFusionInventoryConfigModules;
 
 $res='';
 $errors='';
@@ -76,7 +77,9 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
    $state = $ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
    if ($state == '2') { // agent created
-      $ocsinventory = '1';
+      if ($ptcm->isActivated('inventoryocs')) {
+         $ocsinventory = '1';
+      }
    }
    $top0 = gettimeofday();
    if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
@@ -95,7 +98,6 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
          $pta  = new PluginFusionInventoryAgents;
          $ptt  = new PluginFusionInventoryTask;
-         $ptcm = new PluginFusionInventoryConfigModules;
 
 
          $a_agent = $pta->InfosByKey($pxml->DEVICEID);
