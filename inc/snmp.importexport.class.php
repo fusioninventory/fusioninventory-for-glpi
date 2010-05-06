@@ -323,7 +323,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
             $ptud->fields['type'] = $discovery->TYPE;
             $ptud->fields['FK_model_infos'] = $FK_model;
 
-            $ptud->fields['FK_snmp_connection'] = $discovery->AUTHSNMP;
+            $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
             if ($discovery->AUTHSNMP != "") {
                $ptud->fields['snmp'] = 1;
             }
@@ -341,8 +341,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
             if ($ptud->fields['FK_model_infos'] == '') {
                $ptud->fields['FK_model_infos'] = 0;
             }
-            if ($ptud->fields['FK_snmp_connection'] == '') {
-               $ptud->fields['FK_snmp_connection'] = 0;
+            if ($ptud->fields['plugin_fusioninventory_snmpauths_id'] == '') {
+               $ptud->fields['plugin_fusioninventory_snmpauths_id'] = 0;
             }
             if ($ptud->fields['accepted'] == '') {
                $ptud->fields['accepted'] = 0;
@@ -375,7 +375,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
             $data = array();
             $data['ID'] = $ci->getField('ID');
             if ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
-               $data['FK_snmp_connection'] = 0;
+               $data['plugin_fusioninventory_snmpauths_id'] = 0;
 
                if ($ci->getField('name') && !in_array('name', $a_lockable)) {
                   if (!empty($discovery->NETBIOSNAME)) {
@@ -399,8 +399,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                                              $discovery->WORKGROUP,$discovery->ENTITY);
                   }
                }
-               if ($ci->getField('FK_snmp_connection') && !in_array('FK_snmp_connection', $a_lockable))
-                  $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
+               if ($ci->getField('plugin_fusioninventory_snmpauths_id') && !in_array('plugin_fusioninventory_snmpauths_id', $a_lockable))
+                  $data['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
                if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {
                   $data['snmp'] = 0;
                   if ($discovery->AUTHSNMP != "") {

@@ -347,7 +347,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 	function selectbox($selected=0) {
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
 		$i = -1;
-		$selectbox = "<select name='FK_snmp_connection' size='1'>\n
+		$selectbox = "<select name='plugin_fusioninventory_snmpauths_id' size='1'>\n
                        <option value='0'>-----</option>\n";
 		foreach($xml->auth[0] as $num) {
 			$i++;
@@ -408,7 +408,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 			}		
 			$result=$DB->query($query);
 			if ($DB->numrows($result) > 0) {
-				$ID_auth = $DB->result($result,0,"FK_snmp_connection");
+				$ID_auth = $DB->result($result,0,"plugin_fusioninventory_snmpauths_id");
          } else {
 				return;
          }
@@ -609,13 +609,13 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 
 		switch ($type) {
 			case NETWORKING_TYPE :
-				$query = "SELECT FK_snmp_connection
+				$query = "SELECT plugin_fusioninventory_snmpauths_id
 				FROM glpi_plugin_fusioninventory_networking 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 
 			case PRINTER_TYPE :
-				$query = "SELECT `FK_snmp_connection`
+				$query = "SELECT `plugin_fusioninventory_snmpauths_id`
                       FROM `glpi_plugin_fusioninventory_printers`
                       WHERE `printers_id`='".$ID_Device."';";
 				break;
@@ -623,7 +623,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		
 		if ((isset($query)) && ($result = $DB->query($query))) {
 			if ($DB->numrows($result) != 0) {
-				return $DB->result($result, 0, "FK_snmp_connection");
+				return $DB->result($result, 0, "plugin_fusioninventory_snmpauths_id");
          }
 		}	
 	}

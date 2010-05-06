@@ -218,8 +218,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][3] . " :</td>";
          echo "<td align='center'>";
          Dropdown::show("PluginFusioninventorySnmpauth",
-                        array('name'=>"FK_snmp_connection",
-                              'value'=>$this->fields["FK_snmp_connection"]));
+                        array('name'=>"plugin_fusioninventory_snmpauths_id",
+                              'value'=>$this->fields["plugin_fusioninventory_snmpauths_id"]));
          echo "</td>";
       }
 

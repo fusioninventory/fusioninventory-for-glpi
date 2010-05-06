@@ -98,7 +98,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_network_infos($ID, $FK_model_infos, $FK_snmp_connection) {
+	function update_network_infos($ID, $FK_model_infos, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 		
 		$query = "SELECT *
@@ -111,12 +111,12 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
 			$DB->query($queryInsert);
 		}		
-		if (empty($FK_snmp_connection)) {
-			$FK_snmp_connection = 0;
+		if (empty($plugin_fusioninventory_snmpauths_id)) {
+			$plugin_fusioninventory_snmpauths_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusioninventory_networking`
                 SET `FK_model_infos`='".$FK_model_infos."',
-                    `FK_snmp_connection`='".$FK_snmp_connection."'
+                    `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `networkequipments_id`='".$ID."';";
 	
 		$DB->query($query);
@@ -133,7 +133,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_printer_infos($ID, $FK_model_infos, $FK_snmp_connection) {
+	function update_printer_infos($ID, $FK_model_infos, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 
 		$query = "SELECT *
@@ -146,12 +146,12 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
 			$DB->query($queryInsert);
 		}
-		if (empty($FK_snmp_connection)) {
-			$FK_snmp_connection = 0;
+		if (empty($plugin_fusioninventory_snmpauths_id)) {
+			$plugin_fusioninventory_snmpauths_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusioninventory_printers`
                 SET `FK_model_infos`='".$FK_model_infos."',
-                    `FK_snmp_connection`='".$FK_snmp_connection."'
+                    `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `printers_id`='".$ID."';";
 	
 		$DB->query($query);
@@ -391,7 +391,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
       } else  if ($config->getValue("authsnmp") == "DB") {
          Dropdown::show("PluginFusioninventorySnmpauth",
-                        array('name' => "FK_snmp_connection",
+                        array('name' => "plugin_fusioninventory_snmpauths_id",
                               'value' => $selected,
                               'comments' => false));
       }

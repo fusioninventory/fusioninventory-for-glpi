@@ -635,7 +635,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
          $query = "SELECT `glpi_networking`.`ID` AS `gID`,
                            `glpi_networking`.`name` AS `name`, `serial`, `otherserial`,
-                                `FK_snmp_connection`, `FK_model_infos`
+                                `plugin_fusioninventory_snmpauths_id`, `FK_model_infos`
                          FROM `glpi_networking`
                          LEFT JOIN `glpi_plugin_fusioninventory_networking`
                               ON `networkequipments_id`=`glpi_networking`.`ID`
@@ -643,7 +643,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                               ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                          WHERE `glpi_networking`.`deleted`='0'
                               AND `FK_model_infos`!='0'
-                              AND `FK_snmp_connection`!='0'
+                              AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY networkequipments_id";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
@@ -656,7 +656,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $dropdownOptions .= "<optgroup label=\"".$LANG['help'][27]."\">";
          $query = "SELECT `glpi_printers`.`ID` AS `gID`,
                            `glpi_printers`.`name` AS `name`, `serial`, `otherserial`,
-                                `FK_snmp_connection`, `FK_model_infos`
+                                `plugin_fusioninventory_snmpauths_id`, `FK_model_infos`
                          FROM `glpi_printers`
                          LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `printers_id`=`glpi_printers`.`ID`
@@ -667,7 +667,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                               ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
                          WHERE `glpi_printers`.`deleted`='0'
                               AND `FK_model_infos`!='0'
-                              AND `FK_snmp_connection`!='0'
+                              AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY printers_id";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {

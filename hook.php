@@ -234,7 +234,7 @@ function plugin_fusioninventory_getSearchOption() {
 
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['field'] = 'name';
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['linkfield'] = 'FK_snmp_connection';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['linkfield'] = 'plugin_fusioninventory_snmpauths_id';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['name'] = $LANG['plugin_fusioninventory']["model_info"][3];
 
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['table'] = 'glpi_networking_ports';
@@ -499,7 +499,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	if ($config->getValue("authsnmp") == "file") {
 		$sopt[NETWORKING_TYPE][5191]['table'] = 'glpi_plugin_fusioninventory_networking';
-		$sopt[NETWORKING_TYPE][5191]['field'] = 'FK_snmp_connection';
+		$sopt[NETWORKING_TYPE][5191]['field'] = 'plugin_fusioninventory_snmpauths_id';
 		$sopt[NETWORKING_TYPE][5191]['linkfield'] = 'ID';
 		$sopt[NETWORKING_TYPE][5191]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
 	} else {
@@ -527,7 +527,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	if ($config->getValue("authsnmp") == "file") {
 		$sopt[PRINTER_TYPE][5191]['table'] = 'glpi_plugin_fusioninventory_printers';
-		$sopt[PRINTER_TYPE][5191]['field'] = 'FK_snmp_connection';
+		$sopt[PRINTER_TYPE][5191]['field'] = 'plugin_fusioninventory_snmpauths_id';
 		$sopt[PRINTER_TYPE][5191]['linkfield'] = 'ID';
 		$sopt[PRINTER_TYPE][5191]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
 	} else {
@@ -1615,13 +1615,13 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 			if ($data['itemtype'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						PluginFusioninventoryMassiveaction::assign($key, NETWORKING_TYPE, "auth", $data["FK_snmp_connection"]);
+						PluginFusioninventoryMassiveaction::assign($key, NETWORKING_TYPE, "auth", $data["plugin_fusioninventory_snmpauths_id"]);
 					}
 				}
 			} else if($data['itemtype'] == PRINTER_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						PluginFusioninventoryMassiveaction::assign($key, PRINTER_TYPE, "auth", $data["FK_snmp_connection"]);
+						PluginFusioninventoryMassiveaction::assign($key, PRINTER_TYPE, "auth", $data["plugin_fusioninventory_snmpauths_id"]);
 					}
 				}
 			}
@@ -1736,7 +1736,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			return true;
 			break;
 
-		case 'glpi_plugin_fusioninventory_discovery.FK_snmp_connection' :
+		case 'glpi_plugin_fusioninventory_discovery.plugin_fusioninventory_snmpauths_id' :
 			$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
 			echo $plugin_fusioninventory_snmp->selectbox();
 			return true;
@@ -1919,7 +1919,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusioninventory_snmpauths.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_networking AS gptn_auth ON glpi_networking.ID = gptn_auth.networkequipments_id ".
-						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptn_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmpauths.ID ";
+						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptn_auth.plugin_fusioninventory_snmpauths_id = glpi_plugin_fusioninventory_snmpauths.ID ";
 					break;
 
 			}
@@ -1943,7 +1943,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusioninventory_snmpauths.ID" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_auth ON glpi_printers.ID = gptp_auth.printers_id ".
-						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptp_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmpauths.ID ";
+						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptp_auth.plugin_fusioninventory_snmpauths_id = glpi_plugin_fusioninventory_snmpauths.ID ";
 					break;
 
 				// ** FusionInventory - switch
@@ -2308,7 +2308,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_networking.FK_snmp_connection" :
+				case "glpi_plugin_fusioninventory_networking.plugin_fusioninventory_snmpauths_id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR glpi_plugin_fusioninventory_snmpauths.name IS NULL";

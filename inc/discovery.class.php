@@ -87,7 +87,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_discovery`
                                   (`date`, `ifaddr`, `name`, `descr`, `serialnumber`, `type`,
                                    `FK_agents`, `entities_id`, `FK_model_infos`,
-                                   `FK_snmp_connection`)
+                                   `plugin_fusioninventory_snmpauths_id`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
                              '".PluginFusioninventorySNMP::hex_to_string($Array['name'])."',
@@ -149,7 +149,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
             $data_fusioninventory["printers_id"] = $ID_Device;
             $data_fusioninventory["FK_model_infos"] = $ptud->fields["FK_model_infos"];
-            $data_fusioninventory["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
+            $data_fusioninventory["plugin_fusioninventory_snmpauths_id"] = $ptud->fields["plugin_fusioninventory_snmpauths_id"];
             $tp->add($data_fusioninventory);
 
             $ptud->deleteFromDB($discovery_ID,1);
@@ -180,7 +180,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
             $data_fusioninventory["networkequipments_id"] = $ID_Device;
             $data_fusioninventory["FK_model_infos"] = $ptud->fields["FK_model_infos"];
-            $data_fusioninventory["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
+            $data_fusioninventory["plugin_fusioninventory_snmpauths_id"] = $ptud->fields["plugin_fusioninventory_snmpauths_id"];
             $fusioninventory_networking->add($data_fusioninventory);
 
             $ptud->deleteFromDB($discovery_ID,1);

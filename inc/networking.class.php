@@ -376,7 +376,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		PluginFusioninventorySNMP::auth_dropdown($this->fields['FK_snmp_connection']);
+		PluginFusioninventorySNMP::auth_dropdown($this->fields['plugin_fusioninventory_snmpauths_id']);
 		echo "</td>";
 		echo "</tr>";
 

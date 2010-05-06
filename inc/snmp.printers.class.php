@@ -114,7 +114,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		PluginFusioninventorySNMP::auth_dropdown($data["FK_snmp_connection"]);
+		PluginFusioninventorySNMP::auth_dropdown($data["plugin_fusioninventory_snmpauths_id"]);
 		echo "</td>";
       echo "<td>";
       echo "</td>";
@@ -522,12 +522,12 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			
 		
 		
-	function update_printers_infos($ID, $FK_model_infos, $FK_snmp_connection) {
+	function update_printers_infos($ID, $FK_model_infos, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 		
 		$query = "UPDATE `glpi_plugin_fusioninventory_printers`
                 SET `FK_model_infos`='".$FK_model_infos."',
-                    `FK_snmp_connection`='".$FK_snmp_connection."'
+                    `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `printers_id`='".$ID."' ";
 	
 		$DB->query($query);
