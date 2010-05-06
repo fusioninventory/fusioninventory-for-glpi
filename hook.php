@@ -404,7 +404,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['linkfield'] = 'FK_fusioninventory_agents_discover';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['linkfield'] = 'plugin_fusioninventory_agents_id_discover';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['name'] = $LANG['plugin_fusioninventory']["agents"][12];
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['datatype']='itemlink';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['itemlink_type']=PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
