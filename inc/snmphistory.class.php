@@ -54,7 +54,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 	 * @return ID of inserted line
 	 *
 	**/
-	function insert_connection($status,$array,$FK_process=0) {
+	function insert_connection($status,$array,$plugin_fusioninventory_processes_id=0) {
 		global $DB,$CFG_GLPI;
 
       $pthc = new PluginFusioninventorySnmphistoryconnection;
@@ -65,10 +65,10 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       if ($status == "field") {
 
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_snmphistories` (
-                               `networkports_id`,`field`,`old_value`,`new_value`,`date_mod`,`FK_process`)
+                               `networkports_id`,`field`,`old_value`,`new_value`,`date_mod`,`plugin_fusioninventory_processes_id`)
                    VALUES('".$array["networkports_id"]."','".addslashes($array["field"])."',
                           '".$array["old_value"]."','".$array["new_value"]."',
-                          '".date("Y-m-d H:i:s")."','".$FK_process."');";
+                          '".date("Y-m-d H:i:s")."','".$plugin_fusioninventory_processes_id."');";
          $DB->query($query);
 		}
  	}
@@ -360,7 +360,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
-                        $input['process_number'] = $data['FK_process'];
+                        $input['process_number'] = $data['plugin_fusioninventory_processes_id'];
                         $pfihc->add($input);
                      }
                   }
@@ -421,7 +421,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
-                        $input['process_number'] = $data['FK_process'];
+                        $input['process_number'] = $data['plugin_fusioninventory_processes_id'];
                         if ($input['networkports_id_1'] != $input['networkports_id_2']) {
                            $pfihc->add($input);
                         }
@@ -477,7 +477,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       }
    }
 
-   static function addLog($port,$field,$old_value,$new_value,$mapping,$FK_process=0) {
+   static function addLog($port,$field,$old_value,$new_value,$mapping,$plugin_fusioninventory_processes_id=0) {
       global $DB,$CFG_GLPI;
 
       $history = new PluginFusioninventorySnmphistory;
@@ -500,7 +500,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
          $array["new_value"] = $new_value;
 
          // Ajouter en DB
-         $history->insert_connection("field",$array,$FK_process);
+         $history->insert_connection("field",$array,$plugin_fusioninventory_processes_id);
       }
    }
 
@@ -558,14 +558,14 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
    }
 
    // $status = connection or disconnection
-   static function addLogConnection($status,$port,$FK_process=0) {
+   static function addLogConnection($status,$port,$plugin_fusioninventory_processes_id=0) {
       global $DB,$CFG_GLPI;
 
       $CommonItem = new CommonItem;
       $pthc = new PluginFusioninventorySnmphistoryconnection;
       $nw=new Netwire;
 
-      if (($FK_process == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
+      if (($plugin_fusioninventory_processes_id == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
          $input['process_number'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       }
 
@@ -615,7 +615,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             AS DerivedTable1
             UNION ALL
             SELECT * FROM (
-               SELECT ID, date_mod as date, FK_process as process_number,
+               SELECT ID, date_mod as date, plugin_fusioninventory_processes_id as process_number,
                networkports_id AS networkports_id_1, NULL as networkports_id_2,
                Field, old_value, new_value
 

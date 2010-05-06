@@ -51,11 +51,11 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
       $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmphistories`
                         WHERE `Field`='0'
-                        ORDER BY `FK_process` DESC, `date_mod` DESC;";
+                        ORDER BY `plugin_fusioninventory_processes_id` DESC, `date_mod` DESC;";
       $result_connection = $DB->query($sql_connection);
       while ($thread_connection = $DB->fetch_array($result_connection)) {
          $input = array();
-         $input['process_number'] = $thread_connection['FK_process'];
+         $input['process_number'] = $thread_connection['plugin_fusioninventory_processes_id'];
          $input['date'] = $thread_connection['date_mod'];
          if (($thread_connection["old_device_ID"] != "0")
                  OR ($thread_connection["new_device_ID"] != "0")) {

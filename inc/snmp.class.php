@@ -547,8 +547,8 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          $data = $DB->fetch_assoc($result);
 
          PluginFusioninventorySnmphistory::addLogConnection(
-                 "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
-         PluginFusioninventorySnmphistory::addLogConnection("remove",$data['ID'],$FK_process);
+                 "remove",$netwire->getOppositeContact($data['ID']),$plugin_fusioninventory_processes_id);
+         PluginFusioninventorySnmphistory::addLogConnection("remove",$data['ID'],$plugin_fusioninventory_processes_id);
          if ($nn->getFromDBForNetworkPort($data['ID'])) {
             $nn->delete($data);
          }
@@ -568,8 +568,8 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          PluginFusioninventorySnmphistory::addLogConnection(
-                 "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
-         PluginFusioninventorySnmphistory::addLogConnection("remove",$data['ID'],$FK_process);
+                 "remove",$netwire->getOppositeContact($data['ID']),$plugin_fusioninventory_processes_id);
+         PluginFusioninventorySnmphistory::addLogConnection("remove",$data['ID'],$plugin_fusioninventory_processes_id);
          if ($nn->getFromDBForNetworkPort($data['ID'])) {
             $nn->delete($data);
          }
@@ -609,7 +609,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       if ($type == NETWORKING_TYPE) {
          $query .= "`glpi_plugin_fusioninventory_networking`
              SET `last_fusioninventory_update`='".date("Y-m-d H:i:s")."',
-                 `last_PID_update`='".$_SESSION['FK_process']."'
+                 `last_PID_update`='".$_SESSION['plugin_fusioninventory_processes_id']."'
              WHERE `networkequipments_id`='".$ID_Device."';";
       }
       if ($type == PRINTER_TYPE) {
@@ -948,8 +948,8 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                                      OR ($oidvalues[$oid.$data['logical_number']][""] == "down(2)"))) {
                         $netwire=new Netwire;
                         PluginFusioninventorySnmphistory::addLogConnection(
-                                "remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
-                        PluginFusioninventorySnmphistory::addLogConnection("remove",$data["ID"],$FK_process);
+                                "remove",$netwire->getOppositeContact($data["ID"]),$plugin_fusioninventory_processes_id);
+                        PluginFusioninventorySnmphistory::addLogConnection("remove",$data["ID"],$plugin_fusioninventory_processes_id);
                         if ($nn->getFromDBForNetworkPort($data['ID'])) {
                            $nn->delete($data);
                         }
@@ -959,7 +959,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                      PluginFusioninventorySnmphistory::addLog($data["ID"],$FUSIONINVENTORY_MAPPING[$type][$link]['name'],
                              $data[$FUSIONINVENTORY_MAPPING[$type][$link]['field']],
                              $oidvalues[$oid.$data['logical_number']][""],$type."-".$link,
-                             $_SESSION['FK_process']);
+                             $_SESSION['plugin_fusioninventory_processes_id']);
                      PluginFusioninventoryDb::lock_wire_unlock();
                   }
                }
@@ -1212,7 +1212,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                                 WHERE `ID`='".$data['sid']."';";
                   $DB->query($query_update);
                   PluginFusioninventorySnmphistory::addLog(
-                          $data["networkports_id"],"trunk","0","1","",$_SESSION['FK_process']);
+                          $data["networkports_id"],"trunk","0","1","",$_SESSION['plugin_fusioninventory_processes_id']);
                   // Remove vlan
                   $snmp_queries->CleanVlan($data['networkports_id']);
                   $snmp_queries->CleanVlan($netwire->getOppositeContact($data['networkports_id']));
@@ -1226,12 +1226,12 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                                 WHERE `ID`='".$data['sid']."';";
                   $DB->query($query_update);
                   PluginFusioninventorySnmphistory::addLog($data["networkports_id"],"trunk","0","-1","",
-                          $_SESSION['FK_process']);
+                          $_SESSION['plugin_fusioninventory_processes_id']);
                   // Remove vlan
                   PluginFusioninventoryDb::lock_wire_check();
                   PluginFusioninventorySnmphistory::addLogConnection("remove",
-                          $netwire->getOppositeContact($data['networkports_id']),$FK_process);
-                  PluginFusioninventorySnmphistory::addLogConnection("remove",$data['networkports_id'],$FK_process);
+                          $netwire->getOppositeContact($data['networkports_id']),$plugin_fusioninventory_processes_id);
+                  PluginFusioninventorySnmphistory::addLogConnection("remove",$data['networkports_id'],$plugin_fusioninventory_processes_id);
                   $snmp_queries->CleanVlan($data['networkports_id']);
                   $snmp_queries->CleanVlan($netwire->getOppositeContact($data['networkports_id']));
                   // Remove connection
@@ -1246,7 +1246,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                              WHERE `ID`='".$data['sid']."';";
                $DB->query($query_update);
                PluginFusioninventorySnmphistory::addLog($data["networkports_id"],"trunk","1","0","",
-                       $_SESSION['FK_process']);
+                       $_SESSION['plugin_fusioninventory_processes_id']);
             }
          }
       }
