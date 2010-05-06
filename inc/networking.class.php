@@ -526,7 +526,7 @@ function appear_array(id){
 		$query_array = "SELECT *
                       FROM `glpi_displayprefs`
                       WHERE `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
-                            AND `FK_users`='0'
+                            AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
 		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
@@ -555,7 +555,7 @@ function appear_array(id){
 		$query_array = "SELECT *
                       FROM `glpi_displayprefs`
                       WHERE `type`='5157'
-                             AND `FK_users`='0'
+                             AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
 		while ($data_array=$DB->fetch_array($result_array)) {
@@ -648,7 +648,7 @@ function appear_array(id){
 				$query_array = "SELECT *
                             FROM `glpi_displayprefs`
                             WHERE `type`='5157'
-                                  AND `FK_users`='0'
+                                  AND `users_id`='0'
                             ORDER BY `rank`;";
 				$result_array=$DB->query($query_array);
 				while ($data_array=$DB->fetch_array($result_array)) {
