@@ -70,22 +70,22 @@ class PluginFusioninventoryAgentsErrors extends CommonDBTM {
       echo "</tr>";
 
       $condition = "";
-      if (isset($input['process_number'])) {
-         $condition = "WHERE `process_number`='".$input['process_number']."'";
+      if (isset($input['plugin_fusioninventory_processes_id'])) {
+         $condition = "WHERE `plugin_fusioninventory_processes_id`='".$input['plugin_fusioninventory_processes_id']."'";
          if (isset($input['agent_type'])) {
             $condition .= " AND agent_type='".$input['agent_type']."' ";
          }
       }
       $query = "SELECT * FROM `".$this->table."`
          ".$condition."
-         ORDER BY `process_number` DESC";
+         ORDER BY `plugin_fusioninventory_processes_id` DESC";
 		if ($result = $DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
 
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo $data['process_number'];
+            echo $data['plugin_fusioninventory_processes_id'];
             echo "</td>";
 
             echo "<td>";
@@ -121,7 +121,7 @@ class PluginFusioninventoryAgentsErrors extends CommonDBTM {
 
       $input['on_device'] = $a_input['ID'];
       $input['itemtype'] = $a_input['TYPE'];
-      $input['process_number'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
+      $input['plugin_fusioninventory_processes_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       $input['error_message'] = $a_input['MESSAGE'];
       $input['agent_type'] = $a_input['agent_type'];
       $input['date'] = date("Y-m-d H:i:s");

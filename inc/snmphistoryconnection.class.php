@@ -55,7 +55,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
       $result_connection = $DB->query($sql_connection);
       while ($thread_connection = $DB->fetch_array($result_connection)) {
          $input = array();
-         $input['process_number'] = $thread_connection['plugin_fusioninventory_processes_id'];
+         $input['plugin_fusioninventory_processes_id'] = $thread_connection['plugin_fusioninventory_processes_id'];
          $input['date'] = $thread_connection['date_mod'];
          if (($thread_connection["old_device_ID"] != "0")
                  OR ($thread_connection["new_device_ID"] != "0")) {
@@ -124,24 +124,24 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
       echo "</tr>";
 
-      if (!isset($input['process_number'])) {
+      if (!isset($input['plugin_fusioninventory_processes_id'])) {
          $condition = '';
       } else {
-         $condition = "WHERE `process_number`='".$input['process_number']."'";
+         $condition = "WHERE `plugin_fusioninventory_processes_id`='".$input['plugin_fusioninventory_processes_id']."'";
          if (isset($input['created'])) {
             $condition .= " AND `creation`='".$input['created']."' ";
          }
       }
       $query = "SELECT * FROM `".$this->table."`
          ".$condition."
-         ORDER BY `date`DESC , `process_number` DESC";
+         ORDER BY `date`DESC , `plugin_fusioninventory_processes_id` DESC";
 		if ($result = $DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agents.processes.form.php?h_process_number=".$data['process_number']."'>".
-            $data['process_number']."</a>";
+            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agents.processes.form.php?h_process_number=".$data['plugin_fusioninventory_processes_id']."'>".
+            $data['plugin_fusioninventory_processes_id']."</a>";
             echo "</td>";
 
             echo "<td>";

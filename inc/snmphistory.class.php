@@ -360,7 +360,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
-                        $input['process_number'] = $data['plugin_fusioninventory_processes_id'];
+                        $input['plugin_fusioninventory_processes_id'] = $data['plugin_fusioninventory_processes_id'];
                         $pfihc->add($input);
                      }
                   }
@@ -421,7 +421,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
-                        $input['process_number'] = $data['plugin_fusioninventory_processes_id'];
+                        $input['plugin_fusioninventory_processes_id'] = $data['plugin_fusioninventory_processes_id'];
                         if ($input['networkports_id_1'] != $input['networkports_id_2']) {
                            $pfihc->add($input);
                         }
@@ -566,7 +566,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       $nw=new Netwire;
 
       if (($plugin_fusioninventory_processes_id == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
-         $input['process_number'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
+         $input['plugin_fusioninventory_processes_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       }
 
       // Récupérer le port de la machine associé au port du switch
@@ -602,7 +602,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       $query = "
          SELECT * FROM(
             SELECT * FROM (
-               SELECT ID, date as date, process_number as process_number,
+               SELECT ID, date as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
                networkports_id_1, networkports_id_2,
                creation as Field, NULL as old_value, NULL as new_value
 
@@ -615,7 +615,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             AS DerivedTable1
             UNION ALL
             SELECT * FROM (
-               SELECT ID, date_mod as date, plugin_fusioninventory_processes_id as process_number,
+               SELECT ID, date_mod as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
                networkports_id AS networkports_id_1, NULL as networkports_id_2,
                Field, old_value, new_value
 
