@@ -67,7 +67,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
                // connection
                $input['creation'] = '1';
             }
-            $input['FK_port_source'] = $thread_connection["networkports_id"];
+            $input['networkports_id_1'] = $thread_connection["networkports_id"];
 
             if ($thread_connection["old_device_ID"] != "0") {
                $queryPort = "SELECT *
@@ -149,7 +149,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $np->getFromDB($data['FK_port_source']);
+            $np->getFromDB($data['networkports_id_1']);
             $CommonItem->getFromDB($np->fields["itemtype"],
                                    $np->fields["on_device"]);
             $link1 = $CommonItem->getLink(1);
