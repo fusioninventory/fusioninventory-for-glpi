@@ -86,7 +86,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if ($insert == "1") {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_discovery`
                                   (`date`, `ifaddr`, `name`, `descr`, `serialnumber`, `type`,
-                                   `FK_agents`, `entities_id`, `plugin_fusioninventory_modelinfos_id`,
+                                   `plugin_fusioninventory_agents_id`, `entities_id`, `plugin_fusioninventory_modelinfos_id`,
                                    `plugin_fusioninventory_snmpauths_id`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
