@@ -202,7 +202,7 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
             echo "</td>";
 
             echo "<td rowspan='2'>";
-            $ci->getFromDB(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$data['FK_agent']);
+            $ci->getFromDB(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$data['plugin_fusioninventory_agents_id']);
 				echo $ci->getLink(1);
             echo "</td>";
 
@@ -391,8 +391,8 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
       
       $agent = $pta->InfosByKey($pxml->DEVICEID);
 
-      $input['FK_agent'] = $agent["ID"];
-      $input['process_number'] = time()."/".sprintf('%03d', $input['FK_agent']);
+      $input['plugin_fusioninventory_agents_id'] = $agent["ID"];
+      $input['process_number'] = time()."/".sprintf('%03d', $input['plugin_fusioninventory_agents_id']);
       $input['status'] = 2;
       $input['start_time'] = date("Y-m-d H:i:s");
 

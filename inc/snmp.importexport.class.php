@@ -348,7 +348,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $ptud->fields['accepted'] = 0;
             }
             $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
-            $ptud->fields['FK_agent'] = intval($explodeprocess[1]);
+            $ptud->fields['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
             $ptud->fields['hub'] = 0;
 
             $data = $ptud->fields;
@@ -410,7 +410,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $data['type'] = $discovery->TYPE;
 
                $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
-               $data['FK_agent'] = intval($explodeprocess[1]);
+               $data['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
             }
             if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable))
                $data['FK_model_infos'] = $FK_model;
@@ -518,7 +518,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                        `start_time_query`='".$agent->start_time_query."',
                        `end_time_query`='".$agent->end_time_query."'
                    WHERE `process_number`='".$agent->pid."'
-                        AND `FK_agent`='".$agent->id."';";
+                        AND `plugin_fusioninventory_agents_id`='".$agent->id."';";
 			$DB->query($query);           
 		}		
 	}
