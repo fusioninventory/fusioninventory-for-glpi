@@ -47,12 +47,12 @@ if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
 	
 	$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
 	
-	$_POST['FK_printers'] = $_POST['ID'];
+	$_POST['printers_id'] = $_POST['ID'];
 	unset($_POST['ID']);
 	
 	$query = "SELECT * 
              FROM `glpi_plugin_fusioninventory_printers`
-             WHERE `FK_printers`='".$_POST['FK_printers']."' ";
+             WHERE `printers_id`='".$_POST['printers_id']."' ";
 	$result = $DB->query($query);		
 	$data = $DB->fetch_assoc($result);	
 	$_POST['ID'] = $data['ID'];
@@ -70,11 +70,11 @@ if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
 
 	$query = "SELECT * 
              FROM `glpi_plugin_fusioninventory_printers_cartridges`
-             WHERE `FK_printers`='".$_POST['ID']."'
+             WHERE `printers_id`='".$_POST['ID']."'
                    AND `object_name`='".$_POST['object_name']."' ";
 	$result = $DB->query($query);		
 	if ($DB->numrows($result) == "0") {
-		$_POST['FK_printers'] = $_POST['ID'];
+		$_POST['printers_id'] = $_POST['ID'];
 		unset($_POST['ID']);
 		$plugin_fusioninventory_printers_cartridges->add($_POST);
 	} else {

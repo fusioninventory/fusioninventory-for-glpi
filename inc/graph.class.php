@@ -136,8 +136,8 @@ class PluginFusioninventoryGraph {
                   $i++;
                }
                foreach ($series as $index=>$serieVals) {
-                  if ($index==$row["FK_printers"]) {
-                     $serie[$row["FK_printers"]][$timeKey] = $row[$this->field];
+                  if ($index==$row["printers_id"]) {
+                     $serie[$row["printers_id"]][$timeKey] = $row[$this->field];
                   } else {
                      if (!isset($serie[$index][$timeKey])) {
                         $serie[$index][$timeKey] = 0;

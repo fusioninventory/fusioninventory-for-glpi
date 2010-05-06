@@ -538,7 +538,7 @@ function plugin_fusioninventory_getSearchOption() {
 	}
 
 	$sopt[PRINTER_TYPE][5194]['table']='glpi_plugin_fusioninventory_printers';
-	$sopt[PRINTER_TYPE][5194]['field']='FK_printers';
+	$sopt[PRINTER_TYPE][5194]['field']='printers_id';
 	$sopt[PRINTER_TYPE][5194]['linkfield']='ID';
 	$sopt[PRINTER_TYPE][5194]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["snmp"][53];
 
@@ -793,10 +793,10 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
                break;
 
 				// ** FusionInventory - last inventory
-				case "glpi_plugin_fusioninventory_printers.FK_printers" :
+				case "glpi_plugin_fusioninventory_printers.printers_id" :
 					$query = "SELECT *
                          FROM `glpi_plugin_fusioninventory_printers`
-                         WHERE `FK_printers` = '".$data["ID"]."';";
+                         WHERE `printers_id` = '".$data["ID"]."';";
 					if ($result = $DB->query($query)) {
 						$data2=$DB->fetch_array($result);
                }
@@ -1931,18 +1931,18 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
 				// ** FusionInventory - last inventory
 				case "glpi_plugin_fusioninventory_printers.ID" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_printers ON (glpi_printers.ID = glpi_plugin_fusioninventory_printers.FK_printers) ";
+					return " LEFT JOIN glpi_plugin_fusioninventory_printers ON (glpi_printers.ID = glpi_plugin_fusioninventory_printers.printers_id) ";
 					break;
 
 				// ** FusionInventory - SNMP models
 				case "glpi_plugin_fusioninventory_model_infos.ID" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_model ON (glpi_printers.ID = gptp_model.FK_printers) ".
+					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_model ON (glpi_printers.ID = gptp_model.printers_id) ".
 						" LEFT JOIN glpi_plugin_fusioninventory_model_infos ON (gptp_model.FK_model_infos = glpi_plugin_fusioninventory_model_infos.ID) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusioninventory_snmpauths.ID" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_auth ON glpi_printers.ID = gptp_auth.FK_printers ".
+					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_auth ON glpi_printers.ID = gptp_auth.printers_id ".
 						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptp_auth.FK_snmp_connection = glpi_plugin_fusioninventory_snmpauths.ID ";
 					break;
 
@@ -2136,7 +2136,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - last inventory
-				case "glpi_plugin_fusioninventory_printers.FK_printers" :
+				case "glpi_plugin_fusioninventory_printers.printers_id" :
 					return " ORDER BY glpi_plugin_fusioninventory_printers.last_fusioninventory_update $order ";
 					break;
 
@@ -2331,7 +2331,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - last inventory
-				case "glpi_plugin_fusioninventory_printers.FK_printers" :
+				case "glpi_plugin_fusioninventory_printers.printers_id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.last_fusioninventory_update IS NULL";
@@ -2567,13 +2567,13 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 
 			case PRINTER_TYPE :
 				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers`
-                             WHERE `FK_printers`='".$parm["ID"]."';";
+                             WHERE `printers_id`='".$parm["ID"]."';";
 				$DB->query($query_delete);
 				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                             WHERE `FK_printers`='".$parm["ID"]."';";
+                             WHERE `printers_id`='".$parm["ID"]."';";
 				$DB->query($query_delete);
 				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers_history`
-                             WHERE `FK_printers`='".$parm["ID"]."';";
+                             WHERE `printers_id`='".$parm["ID"]."';";
 				$DB->query($query_delete);
             break;
 

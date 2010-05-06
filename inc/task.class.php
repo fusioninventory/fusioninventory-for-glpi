@@ -659,7 +659,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                                 `FK_snmp_connection`, `FK_model_infos`
                          FROM `glpi_printers`
                          LEFT JOIN `glpi_plugin_fusioninventory_printers`
-                              ON `FK_printers`=`glpi_printers`.`ID`
+                              ON `printers_id`=`glpi_printers`.`ID`
                          LEFT JOIN `glpi_networking_ports`
                                  ON `on_device`=`glpi_printers`.`ID`
                                     AND `itemtype`='".PRINTER_TYPE."'
@@ -668,7 +668,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                          WHERE `glpi_printers`.`deleted`='0'
                               AND `FK_model_infos`!='0'
                               AND `FK_snmp_connection`!='0'
-                         GROUP BY FK_printers";
+                         GROUP BY printers_id";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $dropdownOptions .= "<option value='".NETWORKING_TYPE."-".$data['gID']."'>".

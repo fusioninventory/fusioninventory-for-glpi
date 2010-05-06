@@ -72,7 +72,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 
       $query = "SELECT `ID`
                 FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `FK_printers` = '".$this->getValue('ID')."';";
+                WHERE `printers_id` = '".$this->getValue('ID')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             $fusioninventory = $DB->fetch_assoc($result);
@@ -80,13 +80,13 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
          } else {
             $this->oFusionInventory_printer->load();
-            $this->oFusionInventory_printer->setValue('FK_printers', $this->getValue('ID'));
+            $this->oFusionInventory_printer->setValue('printers_id', $this->getValue('ID'));
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
          }
 
          $query = "SELECT *
                    FROM `glpi_plugin_fusioninventory_printers_history`
-                   WHERE `FK_printers` = '".$this->getValue('ID')."'
+                   WHERE `printers_id` = '".$this->getValue('ID')."'
                          AND LEFT(`date`, 10)='".date("Y-m-d")."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
@@ -94,7 +94,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
                $this->oFusionInventory_printer_history->load($history['ID']);
             } else {
                $this->oFusionInventory_printer_history->load();
-               $this->oFusionInventory_printer_history->setValue('FK_printers', $this->getValue('ID'));
+               $this->oFusionInventory_printer_history->setValue('printers_id', $this->getValue('ID'));
                $this->oFusionInventory_printer_history->setValue('date', date("Y-m-d H:i:s"));
             }
          } 
@@ -301,7 +301,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $ptc = new PluginFusioninventoryCommonDBTM('glpi_plugin_fusioninventory_printers_cartridges');
       $query = "SELECT `ID`
                 FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                WHERE `FK_printers` = '".$this->getValue('ID')."';";
+                WHERE `printers_id` = '".$this->getValue('ID')."';";
       $cartridgesIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {

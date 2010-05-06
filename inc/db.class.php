@@ -180,7 +180,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_printers
       $query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`ID`
                        FROM `glpi_plugin_fusioninventory_printers`
-                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
+                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `printers_id`
                        WHERE `glpi_printers`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
@@ -190,7 +190,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_printers_cartridges
       $query_select = "SELECT `glpi_plugin_fusioninventory_printers_cartridges`.`ID`
                        FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
+                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `printers_id`
                        WHERE `glpi_printers`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
@@ -200,7 +200,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_printers_history
       $query_select = "SELECT `glpi_plugin_fusioninventory_printers_history`.`ID`
                        FROM `glpi_plugin_fusioninventory_printers_history`
-                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `FK_printers`
+                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `printers_id`
                        WHERE `glpi_printers`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {

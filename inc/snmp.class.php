@@ -62,7 +62,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_printers`
                                  ON `glpi_plugin_fusioninventory_printers`.`FK_model_infos`=
                                     `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
-                    WHERE `FK_printers`='".$ID_Device."'
+                    WHERE `printers_id`='".$ID_Device."'
                           AND `glpi_plugin_fusioninventory_printers`.`FK_model_infos`!='0' ";
       }
 			
@@ -138,10 +138,10 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
 		$query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `FK_printers`='".$ID."';";
+                WHERE `printers_id`='".$ID."';";
 		$result = $DB->query($query);
 		if ($DB->numrows($result) == "0") {
-			$queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_printers`(`FK_printers`)
+			$queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_printers`(`printers_id`)
                          VALUES('".$ID."');";
 
 			$DB->query($queryInsert);
@@ -152,7 +152,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		$query = "UPDATE `glpi_plugin_fusioninventory_printers`
                 SET `FK_model_infos`='".$FK_model_infos."',
                     `FK_snmp_connection`='".$FK_snmp_connection."'
-                WHERE `FK_printers`='".$ID."';";
+                WHERE `printers_id`='".$ID."';";
 	
 		$DB->query($query);
 	}
@@ -315,7 +315,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 			case PRINTER_TYPE :
 				$query = "SELECT `FK_model_infos`
                       FROM `glpi_plugin_fusioninventory_printers`
-                      WHERE `FK_printers`='".$ID_Device."';";
+                      WHERE `printers_id`='".$ID_Device."';";
 				break;
 		}
 		if (isset($query)) {
@@ -615,7 +615,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       if ($type == PRINTER_TYPE) {
          $query .= "`glpi_plugin_fusioninventory_printers`
              SET `last_fusioninventory_update`='".date("Y-m-d H:i:s")."'
-             WHERE `FK_printers`='".$ID_Device."';";
+             WHERE `printers_id`='".$ID_Device."';";
       }
       $DB->query($query);
 
@@ -647,7 +647,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                      break;
 
                   case PRINTER_TYPE :
-                     $Field = "FK_printers";
+                     $Field = "printers_id";
                      if ($FUSIONINVENTORY_MAPPING[$type][$link]['table'] == "glpi_printers") {
                         $Field = "ID";
                      }
@@ -743,7 +743,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                   $query_line = "SELECT *
                               FROM `glpi_plugin_fusioninventory_printers_history`
                               WHERE `date` LIKE '".$today."%'
-                                    AND `FK_printers`='".$ID_Device."';";
+                                    AND `printers_id`='".$ID_Device."';";
                   $result_line = $DB->query($query_line);
                   if ($DB->numrows($result_line) == "0") {
                      if (empty($oidvalues[$oid][""])) {

@@ -487,7 +487,7 @@ class PluginFusioninventoryCommunication {
                              `FK_snmp_connection`, `FK_model_infos`
                       FROM `glpi_printers`
                       LEFT JOIN `glpi_plugin_fusioninventory_printers`
-                              ON `FK_printers`=`glpi_printers`.`ID`
+                              ON `printers_id`=`glpi_printers`.`ID`
                       LEFT JOIN `glpi_networking_ports`
                               ON `on_device`=`glpi_printers`.`ID`
                                  AND `itemtype`='".PRINTER_TYPE."'
@@ -1149,7 +1149,7 @@ class PluginFusioninventoryCommunication {
                   $ptc->load($oldCartridge->getValue('ID'));
                } else {
                   $ptc->addCommon(TRUE); //TODO ???
-                  $ptc->setValue('FK_printers', $this->deviceId);
+                  $ptc->setValue('printers_id', $this->deviceId);
                }
                $ptc->setValue('object_name', $name);
                $ptc->setValue('state', $child, $ptc, 0);

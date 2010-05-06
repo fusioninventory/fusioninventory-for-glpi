@@ -403,7 +403,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 				case PRINTER_TYPE :
 					$query = "SELECT *
                          FROM `glpi_plugin_fusioninventory_printers`
-                         WHERE `FK_printers`='".$ID_Device."';";
+                         WHERE `printers_id`='".$ID_Device."';";
 					break;
 			}		
 			$result=$DB->query($query);
@@ -617,7 +617,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 			case PRINTER_TYPE :
 				$query = "SELECT `FK_snmp_connection`
                       FROM `glpi_plugin_fusioninventory_printers`
-                      WHERE `FK_printers`='".$ID_Device."';";
+                      WHERE `printers_id`='".$ID_Device."';";
 				break;
 		}
 		

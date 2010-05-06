@@ -147,7 +147,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
-            $data_fusioninventory["FK_printers"] = $ID_Device;
+            $data_fusioninventory["printers_id"] = $ID_Device;
             $data_fusioninventory["FK_model_infos"] = $ptud->fields["FK_model_infos"];
             $data_fusioninventory["FK_snmp_connection"] = $ptud->fields["FK_snmp_connection"];
             $tp->add($data_fusioninventory);

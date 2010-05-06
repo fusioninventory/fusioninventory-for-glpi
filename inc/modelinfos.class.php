@@ -128,7 +128,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
                            LEFT JOIN `glpi_plugin_fusioninventory_mib`
                            ON `glpi_plugin_fusioninventory_printers`.`FK_model_infos`=
                               `glpi_plugin_fusioninventory_mib`.`FK_model_infos`
-                      WHERE `FK_printers`='".$ID_Device."'
+                      WHERE `printers_id`='".$ID_Device."'
                             AND `glpi_plugin_fusioninventory_mib`.`activation`='1' ";
 				break;
 		}
@@ -198,7 +198,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
                case PRINTER_TYPE:
                   $query = "UPDATE `glpi_plugin_fusioninventory_printers`
                             SET `FK_model_infos`='".$FK_model."'
-                            WHERE `FK_printers`='".$device_id."'";
+                            WHERE `printers_id`='".$device_id."'";
                   $DB->query($query);
                   break;
 

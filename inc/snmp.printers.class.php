@@ -70,14 +70,14 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `FK_printers`=".$ID." ";
+                WHERE `printers_id`=".$ID." ";
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
 		
 		// Add in database if not exist
 		if ($DB->numrows($result) == "0") {
-			$query_add = "INSERT INTO `glpi_plugin_fusioninventory_printers` (`FK_printers`)
+			$query_add = "INSERT INTO `glpi_plugin_fusioninventory_printers` (`printers_id`)
                               VALUES('".$ID."') ";
 			
 			$DB->query($query_add);
@@ -282,7 +282,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `FK_printers`=".$ID." ";
+                WHERE `printers_id`=".$ID." ";
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
@@ -528,7 +528,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		$query = "UPDATE `glpi_plugin_fusioninventory_printers`
                 SET `FK_model_infos`='".$FK_model_infos."',
                     `FK_snmp_connection`='".$FK_snmp_connection."'
-                WHERE `FK_printers`='".$ID."' ";
+                WHERE `printers_id`='".$ID."' ";
 	
 		$DB->query($query);
 	}	
@@ -801,13 +801,13 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 
 	
-	function cartridges_state($FK_printers, $object_name) {
+	function cartridges_state($printers_id, $object_name) {
 		global $DB;
 		
 		$datas = array();
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                WHERE `FK_printers`='".$FK_printers."'
+                WHERE `printers_id`='".$printers_id."'
                       AND `object_name`='".$object_name."' ";
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) == "0") {
@@ -833,7 +833,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		$dates = PluginFusioninventory::date(9,$frequence,$date_end);
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers_history`
-                WHERE `FK_printers`=".$id."
+                WHERE `printers_id`=".$id."
                       AND `date` IN ('".$dates[0]." 00:00:00'";
 		for ($i = 1 ; $i < count($dates) ; $i++) {
 			$query .= ",'".$dates[$i]." 00:00:00'";
@@ -925,32 +925,32 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
          $printersIds .= $printerId;
       }
 
-      $where = " WHERE `FK_printers` IN(".$printersIds.")";
+      $where = " WHERE `printers_id` IN(".$printersIds.")";
       if ($begin!='' || $end!='') {
             $where .= " AND " .$this->getDateRequest("`date`",$begin,$end);
          }
       switch ($timeUnit) {
          case 'date':
-            $group = "GROUP BY `FK_printers`, `year`, `month`, `date`";
+            $group = "GROUP BY `printers_id`, `year`, `month`, `date`";
             break;
          case 'week':
-            $group = "GROUP BY `FK_printers`, `year`, `month`, `week`";
+            $group = "GROUP BY `printers_id`, `year`, `month`, `week`";
             break;
          case 'month':
-            $group = "GROUP BY `FK_printers`, `year`, `month`";
+            $group = "GROUP BY `printers_id`, `year`, `month`";
             break;
          case 'year':
-            $group = "GROUP BY `FK_printers`, `year`";
+            $group = "GROUP BY `printers_id`, `year`";
             break;
       }
 
-      $query = "SELECT `FK_printers`, `date`, WEEK(`date`) AS `week`,
+      $query = "SELECT `printers_id`, `date`, WEEK(`date`) AS `week`,
                        MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
                        SUM(`$graphField`) AS `$graphField`
                 FROM `glpi_plugin_fusioninventory_printers_history`"
                 .$where
                 .$group."
-                ORDER BY `date`, `FK_printers`";
+                ORDER BY `date`, `printers_id`";
 
       $this->showTabs($options);
       $this->showFormHeader($options);

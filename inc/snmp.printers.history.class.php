@@ -50,7 +50,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 		$num = 0;
 		$query = "SELECT count(DISTINCT `ID`)
                 FROM ".$this->table."
-                WHERE `FK_printers` = '".$ID."';";
+                WHERE `printers_id` = '".$ID."';";
 		if ($result_num=$DB->query($query)) {
 			if ($field = $DB->result($result_num,0,0)) {
 				$num += $field;
@@ -66,7 +66,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 		$datas=array();
 		$query = "SELECT *
                 FROM ".$this->table."
-				    WHERE `FK_printers` = '".$ID."'
+				    WHERE `printers_id` = '".$ID."'
                 LIMIT ".$begin.", ".$limit.";";
 
 		if ($result=$DB->query($query)) {
@@ -89,7 +89,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 		$query = "SELECT MIN(`date`) AS `min_date`, MIN(`pages`) AS `min_pages`, ".
 				 		"MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
                 FROM ".$this->table."
-                WHERE `FK_printers` = '".$ID."';";
+                WHERE `printers_id` = '".$ID."';";
 
 		if ($result = $DB->query($query)) {
 			if ($fields = $DB->fetch_assoc($result)) {
