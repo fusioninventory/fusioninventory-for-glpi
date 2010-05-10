@@ -73,7 +73,7 @@ if (isset($_GET['created'])) {
    $a_tab['created'] = $_GET['created'];
 }
 
-$ptap->showTabs('1', '',$_SESSION['glpi_tab'],$a_tab);
+$ptap->showTabs('0', '',$_SESSION['glpi_tab'],$a_tab);
 echo "<div id='tabcontent'></div>";
 echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
