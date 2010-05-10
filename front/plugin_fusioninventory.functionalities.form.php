@@ -90,7 +90,7 @@ if (isset($_POST['update'])) {
 
 $config = new PluginFusionInventoryConfig;
 
-$config->showTabs('1', '',$_SESSION['glpi_tab']);
+$config->showTabs('0', '',$_SESSION['glpi_tab']);
 echo "<div id='tabcontent'></div>";
 echo "<script type='text/javascript'>loadDefaultTab();</script>";
 commonFooter();
