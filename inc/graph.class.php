@@ -56,7 +56,7 @@ class PluginFusionInventoryGraph {
    /**
 	 * Constructor
 	**/
-   function __construct($p_query='', $p_field='pages_total', $p_timeUnit='date',
+   function __construct($p_query='', $p_field='pages_total', $p_timeUnit='day',
                         $p_printers=array(), $p_title='') {
       global $LANG;
       
@@ -72,7 +72,7 @@ class PluginFusionInventoryGraph {
       $this->printers = $p_printers;
       $this->title = $p_title;
       switch ($this->timeUnit) {
-         case 'date': // day
+         case 'day':
             $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][34];
             break;
          case 'week':
@@ -106,8 +106,8 @@ class PluginFusionInventoryGraph {
       if ($DB->numrows($result)!=0) {
          while ($row = $DB->fetch_array($result)) {
             switch ($this->timeUnit) {
-               case 'date': // day
-                  $timeKey = $row["date"].'/'.$row["month"].'/'.$row["year"];
+               case 'day':
+                  $timeKey = $row["day"].'/'.$row["month"].'/'.$row["year"];
                   break;
                case 'week':
                   $timeKey = $row["week"].'/'.$row["year"];
@@ -185,8 +185,8 @@ class PluginFusionInventoryGraph {
 
       $comment = "";
       switch ($this->timeUnit) {
-         case 'date':
-            $comment = substr($p_row["date"], 8, 2);
+         case 'day':
+            $comment = $p_row["day"];
             $this->datePrecise($comment, $p_month, $p_row["month"]);
             $this->datePrecise($comment, $p_year, $p_row["year"]);
             break;

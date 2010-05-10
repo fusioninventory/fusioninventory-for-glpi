@@ -897,7 +897,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 
       $target = $p_target;
-      $where=''; $begin=''; $end=''; $timeUnit='date'; $graphField='pages_total'; $printersComp = array();
+      $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $printersComp = array();
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
@@ -948,8 +948,8 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
             $where .= " AND " .$this->getDateRequest("`date`",$begin,$end);
          }
       switch ($timeUnit) {
-         case 'date':
-            $group = "GROUP BY `FK_printers`, `year`, `month`, `date`";
+         case 'day':
+            $group = "GROUP BY `FK_printers`, `year`, `month`, `day`";
             break;
          case 'week':
             $group = "GROUP BY `FK_printers`, `year`, `month`, `week`";
@@ -962,13 +962,13 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
             break;
       }
 
-      $query = "SELECT `FK_printers`, `date`, WEEK(`date`) AS `week`,
+      $query = "SELECT `FK_printers`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
                        MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
                        SUM(`$graphField`) AS `$graphField`
                 FROM `glpi_plugin_fusioninventory_printers_history`"
                 .$where
                 .$group."
-                ORDER BY `date`, `FK_printers`";
+                ORDER BY `year`, `month`, `day`, `FK_printers`";
 
       echo "<form method='post' name='printerGraph_form' id='printerGraph_form'
                   action='".$p_target."'>";
@@ -1001,7 +1001,7 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
       showDateFormItem("graph_end", $end);
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][31]."&nbsp;:</td>
                                  <td class='left' colspan='2'>";
-      $elementsTime=array('date'=>$LANG['plugin_fusioninventory']["prt_history"][34],
+      $elementsTime=array('day'=>$LANG['plugin_fusioninventory']["prt_history"][34],
                           'week'=>$LANG['plugin_fusioninventory']["prt_history"][35],
                           'month'=>$LANG['plugin_fusioninventory']["prt_history"][36],
                           'year'=>$LANG['plugin_fusioninventory']["prt_history"][37]);
