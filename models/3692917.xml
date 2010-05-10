@@ -1,7 +1,12 @@
 <model>
 	<name><![CDATA[3692917]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0179</key>
+	<key>Printer0179</key>
+	<comments><![CDATA[Brother NC-6100h, Firmware Ver.1.01  (03.10.09),MID 84UZ51
+
+Brother NC-6100h, Firmware Ver.1.03  (04.03.29),MID 84UZ51
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

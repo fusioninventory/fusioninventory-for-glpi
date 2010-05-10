@@ -1,7 +1,10 @@
 <model>
 	<name><![CDATA[7051162]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinter0132</key>
+	<key>Printer0132</key>
+	<comments><![CDATA[KYOCERA Printer I/F IB-21G Ver 1.3.3
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

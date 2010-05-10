@@ -2,6 +2,12 @@
 	<name><![CDATA[4133305]]></name>
 	<type>2</type>
 	<key>Networking0178</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) CIGESM Software (CIGESM-I6Q4L2-M), Version 12.1(22)EA8a, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by cisco Systems, Inc.^M
+Compiled Fri 28-Jul-06 14:55 by weiliu
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

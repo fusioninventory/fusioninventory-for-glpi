@@ -2,6 +2,17 @@
 	<name><![CDATA[6136377]]></name>
 	<type>2</type>
 	<key>Networking0100</key>
+	<comments><![CDATA[Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-ENTSERVICES-M), Version 12.2(52)SG, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Tue 12-May-09 17:58 by
+
+Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500-ENTSERVICESK9-M), Version 12.2(37)SG1, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Mon 30-Jul-07 13:47
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

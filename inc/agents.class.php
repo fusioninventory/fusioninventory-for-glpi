@@ -186,23 +186,9 @@ class PluginFusioninventoryAgents extends CommonDBTM {
       $this->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' width='200'>" . $LANG['plugin_fusioninventory']["agents"][11] . "</td>";
-		echo "<td align='center' width='200'>";
-		Dropdown::showInteger("core_discovery", $this->fields["core_discovery"],1,32);
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][3]."</td>";
 		echo "<td align='center'>";
 		Dropdown::showInteger("threads_discovery", $this->fields["threads_discovery"],1,400);
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][10]."</td>";
-		echo "<td align='center'>";
-		Dropdown::showInteger("core_query", $this->fields["core_query"],1,32);
 		echo "</td>";
 		echo "</tr>";
 

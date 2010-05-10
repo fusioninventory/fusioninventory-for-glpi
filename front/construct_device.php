@@ -61,15 +61,27 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd = new PluginFusioninventoryConstructDevice;
    $ptcd->exportmodels();
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_GET['generatecomments']) AND $_GET['generatecomments'] == '1') {
+   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd->generatecomments();
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>Creation automatique des modèles</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>Générer le fichier de découverte</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][1]."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>Supprimer modèles non utilisés</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][3]."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>Exporter tous les modèles</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatecomments=1'>".$LANG['plugin_fusioninventory']["constructdevice"][5]."</a>";
+echo " | ";
+
+echo "<br/>";
+
+echo " | ";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>".$LANG['plugin_fusioninventory']["constructdevice"][2]."</a>";
+echo " | ";
+echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][4]."</a>";
+echo " | ";
 
 searchForm(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);
 showList(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);

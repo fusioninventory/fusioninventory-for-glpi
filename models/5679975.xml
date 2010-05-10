@@ -1,7 +1,10 @@
 <model>
 	<name><![CDATA[5679975]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0164</key>
+	<key>Printer0164</key>
+	<comments><![CDATA[TOSHIBA e-STUDIO350
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

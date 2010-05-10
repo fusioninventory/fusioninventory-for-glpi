@@ -1,7 +1,10 @@
 <model>
 	<name><![CDATA[1614677]]></name>
 	<type>3</type>
-	<key>PrinterPrinter0112</key>
+	<key>Printer0112</key>
+	<comments><![CDATA[EPL-5900
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

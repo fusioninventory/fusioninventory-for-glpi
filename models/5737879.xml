@@ -1,7 +1,10 @@
 <model>
 	<name><![CDATA[5737879]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinterPrinterPrinter0140</key>
+	<key>Printer0140</key>
+	<comments><![CDATA[HP LaserJet P3010 Series
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

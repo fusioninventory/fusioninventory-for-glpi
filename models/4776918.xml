@@ -2,6 +2,27 @@
 	<name><![CDATA[4776918]]></name>
 	<type>2</type>
 	<key>Networking0223</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software^M
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(13)EA1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2003 by cisco Systems, Inc.^M
+Compiled Tue 04-Mar-03 02:14 by yenanh
+
+Cisco Internetwork Operating System Software^M 
+IOS (tm) C2900XL Software (C2900XL-C3H2S-M), Version 12.0(5)WC17, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2007 by cisco Systems, Inc.^M
+Compiled Tue 13-Feb-07 15:27 by antonino
+
+Cisco Internetwork Operating System Software^M 
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2002 by cisco Systems, Inc.^M
+Compiled Wed 28-Aug-02 10:25 by antonino
+
+Cisco Internetwork Operating System Software^M 
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(12c)EA1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2002 by cisco Systems, Inc.^M
+Compiled Sun 24-Nov-02 23:31 by antonino
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

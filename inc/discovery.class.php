@@ -133,7 +133,11 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $tp = new PluginFusioninventoryPrinters;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
-            $data["name"] = $ptud->fields["name"];
+            if (!empty($ptud->fields["name"])) {
+               $data["name"] = $ptud->fields["name"];
+            } else {
+               $data["name"] = $ptud->fields["dnsname"];
+            }
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
             $data["otherserial"] = $ptud->fields["otherserial"];
@@ -161,7 +165,11 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $fusioninventory_networking = new PluginFusioninventoryNetworking;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
-            $data["name"] = $ptud->fields["name"];
+            if (!empty($ptud->fields["name"])) {
+               $data["name"] = $ptud->fields["name"];
+            } else {
+               $data["name"] = $ptud->fields["dnsname"];
+            }
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
             $data["otherserial"] = $ptud->fields["otherserial"];
@@ -191,7 +199,11 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $Peripheral = new Peripheral;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
-            $data["name"] = $ptud->fields["name"];
+            if (!empty($ptud->fields["name"])) {
+               $data["name"] = $ptud->fields["name"];
+            } else {
+               $data["name"] = $ptud->fields["dnsname"];
+            }
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
             $data["otherserial"] = $ptud->fields["otherserial"];
@@ -212,7 +224,11 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $Computer = new Computer;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
-            $data["name"] = $ptud->fields["name"];
+            if (!empty($ptud->fields["name"])) {
+               $data["name"] = $ptud->fields["name"];
+            } else {
+               $data["name"] = $ptud->fields["dnsname"];
+            }
             $data["location"] = $ptud->fields["location"];
             $data["serial"] = $ptud->fields["serial"];
             $data["otherserial"] = $ptud->fields["otherserial"];
@@ -267,7 +283,11 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                            $pgo->setType($data['itemtype']);
 
                            $data["entities_id"] = $ptud->fields["entities_id"];
-                           $data["name"] = $ptud->fields["name"];
+                           if (!empty($ptud->fields["name"])) {
+                              $data["name"] = $ptud->fields["name"];
+                           } else {
+                              $data["name"] = $ptud->fields["dnsname"];
+                           }
                            $data["location"] = $ptud->fields["location"];
                            $data["serial"] = $ptud->fields["serial"];
                            $data["otherserial"] = $ptud->fields["otherserial"];
@@ -490,11 +510,15 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             case 'name':
                $condition .= "AND `name`='".$value."' ";
                $select .= ", name";
+               $condition_unknown .= "AND `name`='".$value."' ";
+               $select_unknown .= ", name";
                break;
 
             case 'serial':
                $condition .= "AND `serial`='".$value."' ";
                $select .= ", serial";
+               $condition_unknown .= "AND `serial`='".$value."' ";
+               $select_unknown .= ", serial";
                break;
          }
       }

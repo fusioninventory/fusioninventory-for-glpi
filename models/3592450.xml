@@ -2,6 +2,11 @@
 	<name><![CDATA[3592450]]></name>
 	<type>2</type>
 	<key>Networking0152</key>
+	<comments><![CDATA[Optical Access OptiSwitch-200. classifier version 3.68
+
+Optical Access OptiSwitch-400 classifier version 3.61 
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

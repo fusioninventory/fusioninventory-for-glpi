@@ -2,6 +2,13 @@
 	<name><![CDATA[6145894]]></name>
 	<type>3</type>
 	<key>Printer0094</key>
+	<comments><![CDATA[Brother NC-6400h, Firmware Ver.1.12  (06.04.20),MID 8C5-B35,FID 2
+
+Brother NC-6400h, Firmware Ver.1.15  (07.01.23),MID 8C5-B43,FID 2
+
+Xerox WorkCentre 4250; System Software Version 15.002.30.000, Main Controller 2.50.02.30, Network Controller 4.01.15, Image Output Terminal 0.01.18, User Interface 0.045.15.014, Finisher 4.04.07, DADF 1.01, Tray2 1.01.04
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

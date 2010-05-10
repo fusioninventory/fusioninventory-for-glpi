@@ -1,7 +1,12 @@
 <model>
 	<name><![CDATA[1248040]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinter0123</key>
+	<key>Printer0123</key>
+	<comments><![CDATA[RICOH Aficio MP 4000 1.02 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model
+
+RICOH Aficio MP 4000 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

@@ -308,6 +308,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
                $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
             }
 
+            if (($type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) AND (isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($pfia->fields['module_netdiscovery'] == '1')) {
+               $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
+            }
+
+
             if ((isset($a_modules["WAKEONLAN"])) AND ($ptcm->getValue("wol") == '1')) {
                // Code for PLUGIN_FUSIONINVENTORY_SNMP_AGENTS if  ($pfia->fields['module_wakeonlan'] == '1')
                // so :
@@ -347,7 +352,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td align='center'>";
       echo "<input type='hidden' name='on_device' value='".$ID."'/>";
       echo "<input type='hidden' name='itemtype' value='".$type."'/>";
+      echo "<div id='displaybutton' style='visibility:hidden'>";
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
+      echo "</div>";
 
       echo "</td>";
       echo "</tr>";
@@ -448,6 +455,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
    }
 
@@ -461,9 +472,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
-      if (($itemtype == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) OR ($itemtype == COMPUTER_TYPE)) {
-         $a_agents = $pfia->find('module_netdiscovery=1 AND on_device='.$on_device);
+      if ($device_type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+         $a_agents = $pfia->find('module_netdiscovery=1 AND id='.$on_device);
          $type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
+      } else if ($device_type == COMPUTER_TYPE) {
+
       } else {
          $a_agents = $pfia->find('module_netdiscovery=1');
          $type = "";
@@ -486,6 +499,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
    }
 
@@ -543,6 +560,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
       return $count_agent_on;
    }
@@ -587,6 +608,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
          echo "</td>";
          echo "</tr>";
+      } else {
+         echo "<script>
+            document.getElementById('displaybutton').style.visibility='visible';
+         </script>";
       }
 
    }

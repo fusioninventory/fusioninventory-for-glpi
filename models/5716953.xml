@@ -1,7 +1,10 @@
 <model>
 	<name><![CDATA[5716953]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0171</key>
+	<key>Printer0171</key>
+	<comments><![CDATA[NRG SP 4100N 1.01 / NRG Network Printer C model
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

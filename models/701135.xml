@@ -2,6 +2,9 @@
 	<name><![CDATA[701135]]></name>
 	<type>2</type>
 	<key>Networking0181</key>
+	<comments><![CDATA[HP J4121A ProCurve Switch 4000M, revision C.09.28, ROM C.06.01 (/sw/code/build/vgro(c09))
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

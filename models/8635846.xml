@@ -2,6 +2,9 @@
 	<name><![CDATA[8635846]]></name>
 	<type>2</type>
 	<key>Networking0200</key>
+	<comments><![CDATA[ProCurve J4903A Switch 2824, revision I.08.87, ROM I.08.07 (/sw/code/build/mako(ts_08_5))
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

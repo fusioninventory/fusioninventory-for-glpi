@@ -216,7 +216,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       }
       foreach ($this->newPorts as $ptp) {
          if ($ptp->getValue('ID')=='') {               // create existing ports
-            $ptp->addDB($this->getValue('ID'));
+            $ptp->addDB($this->getValue('ID'), true);
          } else {                                      // update existing ports
             $ptp->updateDB();
          }

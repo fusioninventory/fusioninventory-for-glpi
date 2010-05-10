@@ -2,6 +2,19 @@
 	<name><![CDATA[9858195]]></name>
 	<type>2</type>
 	<key>Networking0034</key>
+	<comments><![CDATA[Apple AirPort - Apple Computer, 2006.  All rights Reserved
+
+HPJ3188A 10Base-T Hub-16M SNMP Module, ROM A.01.00, EEPROM A.01.00, HW A.01.00
+
+IP-Console-Switch-4x1x16 01.03.25.00
+
+NWA-3100
+
+TD-8816 2.0
+
+ZyWALL 10W
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

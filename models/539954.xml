@@ -2,6 +2,49 @@
 	<name><![CDATA[539954]]></name>
 	<type>2</type>
 	<key>Networking0124</key>
+	<comments><![CDATA[5150SE
+
+6.3.4.514.R01 Service Release, October 29, 2009.
+
+IBM OS/400 V4R5M0
+
+IBM PowerPC CHRP Computer
+
+ITIUM 4030
+
+Lexmark E120n version LE.ULN.P108 kernel 2.4.0-test6 All-N-1
+
+Lexmark Optra W810  Version 3.14.16  Ethernet 10/100.
+
+Lexmark T520 version 54.10.33 kernel 2.4.0-test6 All-N-1
+
+Lexmark T650 version NR.APS.N368 kernel 2.6.18.5 All-N-1
+
+Lexmark W812 version 62.00.22 kernel 2.4.0-test6 All-N-1
+
+Microsoft Windows CE Version 5.0 (Build 0)
+
+Microsoft Windows CE Version 5.0 (Build 1400)
+
+Nortel Application Switch 3408 E
+
+ProCurve j9020a Switch 2510-48, revision U.11.08, ROM R.10.06 (/sw/code/build/dosx(ndx))
+
+RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model
+
+RICOH Aficio MP 4000 1.06 / RICOH Network Printer C model / RICOH Network Scanner C model
+
+RICOH Aficio MP 4000 1.10 / RICOH Network Printer C model / RICOH Network Scanner C model
+
+RICOH Aficio MP C3000 1.70 / RICOH Network Printer C model / RICOH Network Scanner C model
+
+RICOH Aficio SP C311N V1.00 / RICOH Network Printer C model
+
+TallyGenicom Ultima 65;TGNet  Version: 1.0
+
+Xerox WorkCentre 7232;ESS PS1.205.0,IOT 10.3.0,FIN A5.3.0,IIT 20.5.1,ADF 20.0.0,FAX 1.30.58,SJFI3.0.8,SSMI1.7.1
+
+]]></comments>
 	<oidlist>
 	</oidlist>
 </model>

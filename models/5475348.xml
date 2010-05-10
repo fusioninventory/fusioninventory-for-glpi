@@ -2,6 +2,15 @@
 	<name><![CDATA[5475348]]></name>
 	<type>2</type>
 	<key>Networking0104</key>
+	<comments><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE3, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Mon 29-Sep-08 00:59 by nachen
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 06-Apr-09 08:36 by amvarma
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

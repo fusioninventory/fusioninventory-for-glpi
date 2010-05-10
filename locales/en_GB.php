@@ -66,7 +66,7 @@ $LANG['plugin_fusioninventory']["profile"][16]="SNMP networking";
 $LANG['plugin_fusioninventory']["profile"][17]="SNMP peripheral";
 $LANG['plugin_fusioninventory']["profile"][18]="SNMP printers";
 $LANG['plugin_fusioninventory']["profile"][19]="SNMP models";
-$LANG['plugin_fusioninventory']["profile"][20]="SNMP authentification";
+$LANG['plugin_fusioninventory']["profile"][20]="SNMP authentication";
 $LANG['plugin_fusioninventory']["profile"][21]="Script information";
 $LANG['plugin_fusioninventory']["profile"][22]="Network discovery";
 $LANG['plugin_fusioninventory']["profile"][23]="General configuration";
@@ -111,10 +111,10 @@ $LANG['plugin_fusioninventory']["functionalities"][12]="SNMP networking module a
 $LANG['plugin_fusioninventory']["functionalities"][13]="SNMP peripheral module activation";
 $LANG['plugin_fusioninventory']["functionalities"][14]="SNMP phones module activation";
 $LANG['plugin_fusioninventory']["functionalities"][15]="SNMP printers module activation";
-$LANG['plugin_fusioninventory']["functionalities"][16]="SNMP authentification";
+$LANG['plugin_fusioninventory']["functionalities"][16]="SNMP authentication";
 $LANG['plugin_fusioninventory']["functionalities"][17]="Database";
 $LANG['plugin_fusioninventory']["functionalities"][18]="Files";
-$LANG['plugin_fusioninventory']["functionalities"][19]="Please configure the SNMP authentification in the setup of the plugin";
+$LANG['plugin_fusioninventory']["functionalities"][19]="Please configure the SNMP authentication in the setup of the plugin";
 $LANG['plugin_fusioninventory']["functionalities"][20]="Status of active devices";
 $LANG['plugin_fusioninventory']["functionalities"][21]="Retention of the historical interconnections between material in days (0 = infinity)";
 $LANG['plugin_fusioninventory']["functionalities"][22]="Retention of the historic changes to the state of ports (0 = infinity)";
@@ -134,7 +134,7 @@ $LANG['plugin_fusioninventory']["functionalities"][36]="Frequency of meter readi
 $LANG['plugin_fusioninventory']["functionalities"][40]="Configuration";
 $LANG['plugin_fusioninventory']["functionalities"][41]="Status of active material";
 $LANG['plugin_fusioninventory']["functionalities"][42]="Switch";
-$LANG['plugin_fusioninventory']["functionalities"][43]="SNMP authentification";
+$LANG['plugin_fusioninventory']["functionalities"][43]="SNMP authentication";
 
 $LANG['plugin_fusioninventory']["functionalities"][50]="Number of simultaneous processes for the network discovery";
 $LANG['plugin_fusioninventory']["functionalities"][51]="Number of simultaneous processes for SNMP queries";
@@ -177,7 +177,7 @@ $LANG['plugin_fusioninventory']["snmp"][48]="Number of bytes sent";
 $LANG['plugin_fusioninventory']["snmp"][49]="Number of errors in reception";
 $LANG['plugin_fusioninventory']["snmp"][50]="Connection";
 $LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
-$LANG['plugin_fusioninventory']["snmp"][52]="Date of last FUSIONINVENTORY inventory";
+$LANG['plugin_fusioninventory']["snmp"][52]="Date of last FusionInventory inventory";
 $LANG['plugin_fusioninventory']["snmp"][53]="Last inventory";
 
 $LANG['plugin_fusioninventory']["snmpauth"][1]="Community";
@@ -215,7 +215,7 @@ $LANG['plugin_fusioninventory']["errors"][50]="GLPI version not compatible need 
 
 $LANG['plugin_fusioninventory']["errors"][101]="Timeout";
 $LANG['plugin_fusioninventory']["errors"][102]="No SNMP model assigned";
-$LANG['plugin_fusioninventory']["errors"][103]="No SNMP authentification assigned";
+$LANG['plugin_fusioninventory']["errors"][103]="No SNMP authentication assigned";
 $LANG['plugin_fusioninventory']["errors"][104]="Error message";
 
 $LANG['plugin_fusioninventory']["history"][0] = "Old";
@@ -257,11 +257,11 @@ $LANG['plugin_fusioninventory']["type"][3]="Printer";
 $LANG['plugin_fusioninventory']["rules"][1]="Rules";
 
 $LANG['plugin_fusioninventory']["massiveaction"][1]="Assign SNMP model";
-$LANG['plugin_fusioninventory']["massiveaction"][2]="Assign SNMP authentification";
+$LANG['plugin_fusioninventory']["massiveaction"][2]="Assign SNMP authentication";
 
 $LANG['plugin_fusioninventory']["model_info"][1]="SNMP information";
 $LANG['plugin_fusioninventory']["model_info"][2]="SNMP version";
-$LANG['plugin_fusioninventory']["model_info"][3]="SNMP authentification";
+$LANG['plugin_fusioninventory']["model_info"][3]="SNMP authentication";
 $LANG['plugin_fusioninventory']["model_info"][4]="SNMP models";
 $LANG['plugin_fusioninventory']["model_info"][5]="MIB management";
 $LANG['plugin_fusioninventory']["model_info"][6]="Edit SNMP model";
@@ -440,7 +440,7 @@ $LANG['plugin_fusioninventory']["mapping"][407]="printer > port > IP address";
 $LANG['plugin_fusioninventory']["mapping"][408]="networking > port > numÃ©ro index";
 $LANG['plugin_fusioninventory']["mapping"][409]="networking > Adress CDP";
 $LANG['plugin_fusioninventory']["mapping"][410]="networking > Port CDP";
-$LANG['plugin_fusioninventory']["mapping"][411]="networking > Trunk port status";
+$LANG['plugin_fusioninventory']["mapping"][411]="networking > port > trunk/tagged";
 $LANG['plugin_fusioninventory']["mapping"][412]="networking > MAC address filters (dot1dTpFdbAddress)";
 $LANG['plugin_fusioninventory']["mapping"][413]="networking > Physical addresses in memory (ipNetToMediaPhysAddress)";
 $LANG['plugin_fusioninventory']["mapping"][414]="networking > instances de ports (dot1dTpFdbPort)";
@@ -563,10 +563,7 @@ $LANG['plugin_fusioninventory']["agents"][4]="Last scan";
 $LANG['plugin_fusioninventory']["agents"][5]="Agent version";
 $LANG['plugin_fusioninventory']["agents"][6]="Lock";
 $LANG['plugin_fusioninventory']["agents"][7]="Export agent configuration";
-$LANG['plugin_fusioninventory']["agents"][8]="Fragments en Ko";
 $LANG['plugin_fusioninventory']["agents"][9]="Advanced options";
-$LANG['plugin_fusioninventory']["agents"][10]="Number of core(s) (CPU) used for querying devices";
-$LANG['plugin_fusioninventory']["agents"][11]="Number of core(s) (CPU) used for network discovery";
 $LANG['plugin_fusioninventory']["agents"][12]="Discovery Agent";
 $LANG['plugin_fusioninventory']["agents"][13]="Query Agent";
 $LANG['plugin_fusioninventory']["agents"][14]="Agent actions";
@@ -585,6 +582,7 @@ $LANG['plugin_fusioninventory']["unknown"][1]="Network port name";
 $LANG['plugin_fusioninventory']["unknown"][2]="Approved devices";
 $LANG['plugin_fusioninventory']["unknown"][3]="Discovered by agent";
 $LANG['plugin_fusioninventory']["unknown"][4]="Network hub";
+$LANG['plugin_fusioninventory']["unknown"][5]="Imported from unknown devices (FusionInventory)";
 
 $LANG['plugin_fusioninventory']["task"][0]="Task";
 $LANG['plugin_fusioninventory']["task"][1]="Task management";
@@ -602,7 +600,12 @@ $LANG['plugin_fusioninventory']["task"][12]="Wake agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
+$LANG['plugin_fusioninventory']["constructdevice"][1]="Automatic creation of models";
+$LANG['plugin_fusioninventory']["constructdevice"][2]="Generate discovery file";
+$LANG['plugin_fusioninventory']["constructdevice"][3]="Delete models non used";
+$LANG['plugin_fusioninventory']["constructdevice"][4]="Export all models";
+$LANG['plugin_fusioninventory']["constructdevice"][5]="Re-create models comments";
 
-$LANG['plugin_fusioninventory']["update"][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande a la fin de la mise à jour : ";
+$LANG['plugin_fusioninventory']["update"][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 
 ?>

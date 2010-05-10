@@ -621,7 +621,7 @@ echo "</a>";
       if (empty($data['discovery_key'])) {
          $num = '1';
       } else {
-         $num = str_replace('Networking', '', $data['discovery_key']);
+         $num = str_replace('Printer', '', $data['discovery_key']);
          $num++;
       }
 
@@ -778,6 +778,32 @@ echo "</a>";
       }
    }
 
+   
+
+   function generatecomments() {
+      global $DB;
+
+      $query_clean = "UPDATE `glpi_plugin_fusioninventory_model_infos`
+         SET comments='' ";
+      $DB->query($query_clean);
+
+      $a_devices = $this->find("snmpmodel_id > 0", "sysdescr");
+      $a_comments = array();
+      if (count($a_devices)){
+         foreach ($a_devices as $device){
+            if (!isset($a_comments[$device['snmpmodel_id']])) {
+               $a_comments[$device['snmpmodel_id']] = "";
+            }
+            $a_comments[$device['snmpmodel_id']] .= $device['sysdescr']."\n\n";
+         }
+      }
+      foreach ($a_comments as $model_id=>$comments) {
+         $query_update = "UPDATE `glpi_plugin_fusioninventory_model_infos`
+            SET comments='".$comments."'
+            WHERE ID='".$model_id."' ";
+         $DB->query($query_update);
+      }      
+   }
 }
 
 ?>

@@ -2,6 +2,12 @@
 	<name><![CDATA[9474397]]></name>
 	<type>2</type>
 	<key>Networking0222</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software^M 
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(14)EA1a, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2003 by cisco Systems, Inc.^M
+Compiled Tue 02-Sep-03 03:33 by antonino
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

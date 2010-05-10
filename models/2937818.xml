@@ -1,7 +1,12 @@
 <model>
 	<name><![CDATA[2937818]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinter0131</key>
+	<key>Printer0131</key>
+	<comments><![CDATA[KONICA MINOLTA 350
+
+KONICA MINOLTA 362
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

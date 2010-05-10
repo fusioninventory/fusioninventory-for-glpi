@@ -62,7 +62,6 @@ class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
       $rights['ifstatus'] = '-1';
 //      $rights['ifnumber'] = '-1';
 //      $rights['mac'] = '-1';
-      $rights['trunk'] = '-1';
       $rights['vlanTrunkPortDynamicStatus'] = '-1';
       $rights['portDuplex'] = '-1';
       $rights['ifIndex'] = '-1';

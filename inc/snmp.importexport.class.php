@@ -52,6 +52,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 				$model_name = $DB->result($result, 0, "name");
 				$type = $DB->result($result, 0, "itemtype");
 				$discovery_key = $DB->result($result, 0, "discovery_key");
+            $comments = $DB->result($result, 0, "comments");
 			} else {
 				exit();
          }
@@ -63,6 +64,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
 		$xml .= "	<type>".$type."</type>\n";
 		$xml .= "	<key>".$discovery_key."</key>\n";
+      $xml .= "	<comments><![CDATA[".$comments."]]></comments>\n";
 		$xml .= "	<oidlist>\n";
 
 		$query = "SELECT * 
@@ -167,8 +169,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 			return false;
 		} else {
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_modelinfos`
-                               (`name`,`itemtype`,`discovery_key`)
-                   VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."');";
+                               (`name`,`itemtype`,`discovery_key`,`comments`)
+                   VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."','".$xml->comments[0]."');";
 			$DB->query($query);
 			$plugin_fusioninventory_modelinfos_id = $DB->insert_id();
 			
@@ -238,7 +240,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 
 
    
-	function import_netdiscovery($p_xml, $agentKey) {
+	function import_netdiscovery($p_xml, $agentKey, $moduleversion) {
 		global $DB,$LANG;
       $test = '';
       $p_criteria = array();
@@ -268,138 +270,164 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 
 		$walkdata = '';
 		$count_discovery_devices = 0;
-		foreach($p_xml->DEVICE as $discovery) {
+   	foreach($p_xml->DEVICE as $discovery) {
 			$count_discovery_devices++;
   		}
-      $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_found' => $count_discovery_devices));
-
-		foreach($p_xml->DEVICE as $discovery) {
-			if ($discovery->MODELSNMP != "") {
-				$query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_modelinfos`
-                      WHERE `discovery_key`='".$discovery->MODELSNMP."'
-                      LIMIT 0,1;";
-				$result = $DB->query($query);		
-				$data = $DB->fetch_assoc($result);
-				$plugin_fusioninventory_modelinfos_id = $data['ID'];
-			} else {
+      if ($count_discovery_devices != "0") {
+         $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_found' => $count_discovery_devices));
+         foreach($p_xml->DEVICE as $discovery) {
+            // If module version is 1.0, so try to get right model (discovery file in this agent is too old
+            if (($moduleversion == "1.0") AND ($discovery->AUTHSNMP != "")) {
+               $pfimi = new PluginFusionInventoryModelInfos;
+               $discovery->MODELSNMP = $pfimi->getrightmodel(0, 0, $discovery->DESCRIPTION);
+            }
+            if ($discovery->MODELSNMP != "") {
+               $query = "SELECT *
+                         FROM `glpi_plugin_fusioninventory_modelinfos`
+                         WHERE `discovery_key`='".$discovery->MODELSNMP."'
+                         LIMIT 0,1;";
+               $result = $DB->query($query);
+               $data = $DB->fetch_assoc($result);
+				$plugin_fusioninventory_modelinfos_id = $data['id'];
+            } else {
 				$plugin_fusioninventory_modelinfos_id = 0;
-         }
-         $discovery->MAC = strtolower($discovery->MAC);
+            }
+            $discovery->MAC = strtolower($discovery->MAC);
 
 			if (empty($plugin_fusioninventory_modelinfos_id)) {
 				$plugin_fusioninventory_modelinfos_id = 0;
-         }
-
-         unset($p_criteria);
-         $p_criteria['ip'] = $discovery->IP;
-         if (!empty($discovery->NETBIOSNAME)) {
-            $p_criteria['name'] = $discovery->NETBIOSNAME;
-         } else if (!empty($discovery->SNMPHOSTNAME)) {
-            $p_criteria['name'] = $discovery->SNMPHOSTNAME;
-         }
-         $p_criteria['serial'] = $discovery->SERIAL;
-         $p_criteria['macaddr'] = $discovery->MAC;
-
-         $discovery_criteria = PluginFusioninventoryDiscovery::criteria($p_criteria);
-         if (!$discovery_criteria) {
-            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_import' => '1'));
-            // Add in unknown device
-            $ptud->getEmpty();
-            if (!empty($discovery->NETBIOSNAME)) {
-               $ptud->fields['name'] = $discovery->NETBIOSNAME;
-            } else if (!empty($discovery->SNMPHOSTNAME)) {
-               $ptud->fields['name'] = $discovery->SNMPHOSTNAME;
             }
-            $ptud->fields['dnsname'] = $discovery->DNSHOSTNAME;
-            $ptud->fields['entities_id'] = $discovery->ENTITY;
-            $ptud->fields['serial'] = $discovery->SERIAL;
-            $ptud->fields['contact'] = $discovery->USERSESSION;
-            if (!empty($discovery->WORKGROUP)) {
+
+            unset($p_criteria);
+            $p_criteria['ip'] = $discovery->IP;
+            if (!empty($discovery->NETBIOSNAME)) {
+               $p_criteria['name'] = $discovery->NETBIOSNAME;
+            } else if (!empty($discovery->SNMPHOSTNAME)) {
+               $p_criteria['name'] = $discovery->SNMPHOSTNAME;
+            }
+            if ($discovery->SERIAL == 'null') {
+               $discovery->SERIAL = "";
+            }
+            $p_criteria['serial'] = trim($discovery->SERIAL);
+            $p_criteria['macaddr'] = $discovery->MAC;
+
+            $discovery_criteria = plugin_fusioninventory_discovery_criteria($p_criteria);
+            if (!$discovery_criteria) {
+               $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_import' => '1'));
+               // Add in unknown device
+               $ptud->getEmpty();
+               if (!empty($discovery->NETBIOSNAME)) {
+                  $ptud->fields['name'] = $discovery->NETBIOSNAME;
+               } else if (!empty($discovery->SNMPHOSTNAME)) {
+                  $ptud->fields['name'] = $discovery->SNMPHOSTNAME;
+               }
+               $ptud->fields['dnsname'] = $discovery->DNSHOSTNAME;
+               $ptud->fields['entities_id'] = $discovery->ENTITY;
+               $ptud->fields['serial'] = trim($discovery->SERIAL);
+               $ptud->fields['contact'] = $discovery->USERSESSION;
+               if (!empty($discovery->WORKGROUP)) {
                $ptud->fields['domain'] = Dropdown::importExternal("Domain",
                                              $discovery->WORKGROUP,$discovery->ENTITY);
-            }
-            $ptud->fields['comments'] = $discovery->DESCRIPTION;
-            $ptud->fields['type'] = $discovery->TYPE;
+               }
+               $ptud->fields['comments'] = $discovery->DESCRIPTION;
+               $ptud->fields['type'] = $discovery->TYPE;
             $ptud->fields['plugin_fusioninventory_modelinfos_id'] = $plugin_fusioninventory_modelinfos_id;
 
-            $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
-            if ($discovery->AUTHSNMP != "") {
-               $ptud->fields['snmp'] = 1;
-            }
-            $ptud->fields['location'] = 0;
-            $ptud->fields['deleted'] = 0;
-            if ($ptud->fields['domain'] == '') {
-               $ptud->fields['domain'] = 0;
-            }
-            if ($ptud->fields['type'] == '') {
-               $ptud->fields['type'] = 0;
-            }
-            if ($ptud->fields['snmp'] == '') {
-               $ptud->fields['snmp'] = 0;
-            }
+               $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
+               if ($discovery->AUTHSNMP != "") {
+                  $ptud->fields['snmp'] = 1;
+               }
+               $ptud->fields['location'] = 0;
+               $ptud->fields['deleted'] = 0;
+               if ($ptud->fields['domain'] == '') {
+                  $ptud->fields['domain'] = 0;
+               }
+               if ($ptud->fields['type'] == '') {
+                  $ptud->fields['type'] = 0;
+               }
+               if ($ptud->fields['snmp'] == '') {
+                  $ptud->fields['snmp'] = 0;
+               }
             if ($ptud->fields['plugin_fusioninventory_modelinfos_id'] == '') {
                $ptud->fields['plugin_fusioninventory_modelinfos_id'] = 0;
-            }
-            if ($ptud->fields['plugin_fusioninventory_snmpauths_id'] == '') {
-               $ptud->fields['plugin_fusioninventory_snmpauths_id'] = 0;
-            }
-            if ($ptud->fields['accepted'] == '') {
-               $ptud->fields['accepted'] = 0;
-            }
-            $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
-            $ptud->fields['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
-            $ptud->fields['hub'] = 0;
+               }
+               if ($ptud->fields['plugin_fusioninventory_snmpauths_id'] == '') {
+                  $ptud->fields['plugin_fusioninventory_snmpauths_id'] = 0;
+               }
+               if ($ptud->fields['accepted'] == '') {
+                  $ptud->fields['accepted'] = 0;
+               }
+               $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
+               $ptud->fields['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
+               $ptud->fields['hub'] = 0;
 
-            $data = $ptud->fields;
-            unset($data['ID']);
-				$newID = $ptud->add($data);
-				unset($data);
-				// Add networking_port
-				$port_add["on_device"] = $newID;
-				$port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-				$port_add["ifaddr"] = $discovery->IP;
-				$port_add['ifmac'] = $discovery->MAC;
-            $port_add['name'] = $discovery->NETPORTVENDOR;
-				$port_ID = $np->add($port_add);
-            unset($port_add);
-         } else {
-            # Update device
-            //echo "discovery_criteria :".$discovery_criteria;
-            $a_device = explode("||", $discovery_criteria);
-            // $a_device[0] == id, $a_device[1] = type
-            $ci = new commonitem;
-            $ci->getFromDB($a_device[1], $a_device[0]);
+               $data = $ptud->fields;
+               unset($data['id']);
+               $newID = $ptud->add($data);
+               unset($data);
+               // Add networking_port
+               $port_add["items_id"] = $newID;
+               $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $port_add["ifaddr"] = $discovery->IP;
+               $port_add['ifmac'] = $discovery->MAC;
+               $port_add['name'] = $discovery->NETPORTVENDOR;
+               $port_ID = $np->add($port_add);
+               unset($port_add);
+            } else {
+               # Update device
+               //echo "discovery_criteria :".$discovery_criteria;
+               $a_device = explode("||", $discovery_criteria);
+               // $a_device[0] == id, $a_device[1] = type
+               $ci = new commonitem;
+               $ci->getFromDB($a_device[1], $a_device[0]);
 
-            $a_lockable = PluginFusioninventoryLock::getLockFields($a_device[1], $a_device[0]);
-            $data = array();
-            $data['ID'] = $ci->getField('ID');
-            if ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+               $a_lockable = PluginFusioninventoryLock::getLockFields($a_device[1], $a_device[0]);
+               $data = array();
+               $data['id'] = $ci->getField('id');
                $data['plugin_fusioninventory_snmpauths_id'] = 0;
 
-               if ($ci->getField('name') && !in_array('name', $a_lockable)) {
-                  if (!empty($discovery->NETBIOSNAME)) {
-                     $data['name'] = $discovery->NETBIOSNAME;
-                  } else if (!empty($discovery->SNMPHOSTNAME)) {
-                     $data['name'] = $discovery->SNMPHOSTNAME;
+               if ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+                  if ($ci->getField('name') && !in_array('name', $a_lockable)) {
+                     if (!empty($discovery->NETBIOSNAME)) {
+                        $data['name'] = $discovery->NETBIOSNAME;
+                     } else if (!empty($discovery->SNMPHOSTNAME)) {
+                        $data['name'] = $discovery->SNMPHOSTNAME;
+                     }
                   }
-               }
-               if ($ci->getField('dnsname') && !in_array('dnsname', $a_lockable))
-                  $data['dnsname'] = $discovery->DNSHOSTNAME;
-               if ($ci->getField('entities_id') && !in_array('entities_id', $a_lockable))
-                  $data['entities_id'] = $discovery->ENTITY;
-               if ($ci->getField('serial') && !in_array('serial', $a_lockable))
-                  $data['serial'] = $discovery->SERIAL;
-               if ($ci->getField('contact') && !in_array('contact', $a_lockable))
-                  $data['contact'] = $discovery->USERSESSION;
-               if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {
-                  $data['domain'] = 0;
-                  if (!empty($discovery->WORKGROUP)) {
+                  if ($ci->getField('dnsname') && !in_array('dnsname', $a_lockable))
+                     $data['dnsname'] = $discovery->DNSHOSTNAME;
+                  if ($ci->getField('entities_id') && !in_array('entities_id', $a_lockable))
+                     $data['entities_id'] = $discovery->ENTITY;
+                  if ($ci->getField('serial') && !in_array('serial', $a_lockable))
+                     $data['serial'] = trim($discovery->SERIAL);
+                  if ($ci->getField('contact') && !in_array('contact', $a_lockable))
+                     $data['contact'] = $discovery->USERSESSION;
+                  if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {
+                     $data['domain'] = 0;
+                     if (!empty($discovery->WORKGROUP)) {
                      $data['domain'] = Dropdown::importExternal("Domain",
                                              $discovery->WORKGROUP,$discovery->ENTITY);
+                     }
+                  }
+                  if ($discovery->TYPE != "0") {
+                     $data['type'] = $discovery->TYPE;
+                  }
+               } else {
+                  if (!$ci->getField('name') && !in_array('name', $a_lockable)) {
+                     if (!empty($discovery->NETBIOSNAME)) {
+                        $data['name'] = $discovery->NETBIOSNAME;
+                     } else if (!empty($discovery->SNMPHOSTNAME)) {
+                        $data['name'] = $discovery->SNMPHOSTNAME;
+                     }else if (!empty($discovery->DNSHOSTNAME)) {
+                        $data['name'] = $discovery->DNSHOSTNAME;
+                     }
                   }
                }
-               if ($ci->getField('plugin_fusioninventory_snmpauths_id') && !in_array('plugin_fusioninventory_snmpauths_id', $a_lockable))
+               if ($ci->getField('comments') && !in_array('comments', $a_lockable))
+                  $data['comments'] = $discovery->DESCRIPTION;
+               if ($ci->getField('plugin_fusioninventory_modelinfos_id') && !in_array('plugin_fusioninventory_modelinfos_id', $a_lockable));
+                  $data['plugin_fusioninventory_modelinfos_id'] = $FK_model;
+               if ($ci->getField('plugin_fusioninventory_snmpauths_id') && !in_array('plugin_fusioninventory_snmpauths_id', $a_lockable));
                   $data['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
                if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {
                   $data['snmp'] = 0;
@@ -407,55 +435,50 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                      $data['snmp'] = 1;
                   }
                }
-               $data['type'] = $discovery->TYPE;
 
                $explodeprocess = explode("/", $_SESSION['glpi_plugin_fusioninventory_processnumber']);
                $data['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
-            }
-            if ($ci->getField('plugin_fusioninventory_modelinfos_id') && !in_array('plugin_fusioninventory_modelinfos_id', $a_lockable))
-               $data['plugin_fusioninventory_modelinfos_id'] = $plugin_fusioninventory_modelinfos_id;
-            if ($ci->getField('comments') && !in_array('comments', $a_lockable))
-               $data['comments'] = $discovery->DESCRIPTION;
-            
-            if ($a_device[1] == NETWORKING_TYPE) {
-               if (!in_array('ifaddr', $a_lockable))
-                  $data["ifaddr"] = $discovery->IP;
-               if (!in_array('ifmac', $a_lockable))
-                  $data['ifmac'] = $discovery->MAC;
-            } else {
-               // TODO: manage ports
-               $np = new Networkport;
-               $query = "SELECT ID FROM glpi_networking_ports
-                  WHERE (on_device = '".$a_device[0]."' AND itemtype = '".$a_device[1]."')
-                     AND `ifaddr` NOT IN ('', '127.0.0.1')
-                  ORDER BY name, logical_number";
-               if ($result = $DB->query($query)) {
-                  if ($DB->numrows($result) == 1) {
-                     $data2 = $DB->fetch_assoc($result);
-                     $np->getFromDB($data2["ID"]);
-                     $port = array();
-                     $port['ID'] = $data2["ID"];
-                     $port["ifaddr"] = $discovery->IP;
-                     $port['ifmac'] = $discovery->MAC;
-                     $port['name'] = $discovery->NETPORTVENDOR;
-                     $np->update($port);
-                  } else if ($DB->numrows($result) > 1) {
-                     $ptae = new PluginFusioninventoryAgentsErrors;
-                     $error_input['ID'] = $a_device[0];
-                     $error_input['TYPE'] = $a_device[1];
-                     $error_input['MESSAGE'] = 'Unable to determine network port of device to update with values : '.$discovery->IP.'(ip),
-                        '.$discovery->MAC.'(mac), '.$discovery->NETPORTVENDOR.'(name)';
-                     $error_input['agent_type'] = 'NETDISCOVERY';
-                     $ptae->addError($error_input);
+
+               if ($a_device[1] == NETWORKING_TYPE) {
+                  if (!in_array('ifaddr', $a_lockable))
+                     $data["ifaddr"] = $discovery->IP;
+                  if (!in_array('ifmac', $a_lockable))
+                     $data['ifmac'] = $discovery->MAC;
+               } else {
+                  // TODO: manage ports
+                  $np = new Networkport;
+                  $query = "SELECT `id` FROM `glpi_networkports`
+                     WHERE (`items_id` = '".$a_device[0]."' AND `itemtype` = '".$a_device[1]."')
+                        AND `ifaddr` NOT IN ('', '127.0.0.1')
+                     ORDER BY `name`, `logical_number`";
+                  if ($result = $DB->query($query)) {
+                     if ($DB->numrows($result) == 1) {
+                        $data2 = $DB->fetch_assoc($result);
+                        $np->getFromDB($data2["id"]);
+                        $port = array();
+                        $port['id'] = $data2["id"];
+                        $port["ifaddr"] = $discovery->IP;
+                        $port['ifmac'] = $discovery->MAC;
+                        $port['name'] = $discovery->NETPORTVENDOR;
+                        $np->update($port);
+                     } else if ($DB->numrows($result) > 1) {
+                        $ptae = new PluginFusionInventoryAgentsErrors;
+                        $error_input['id'] = $a_device[0];
+                        $error_input['TYPE'] = $a_device[1];
+                        $error_input['MESSAGE'] = 'Unable to determine network port of device to update with values : '.$discovery->IP.'(ip),
+                           '.$discovery->MAC.'(mac), '.$discovery->NETPORTVENDOR.'(name)';
+                        $error_input['agent_type'] = 'NETDISCOVERY';
+                        $ptae->addError($error_input);
+                     }
                   }
                }
+
+               $ci->obj->update($data);
+
+               $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_exists' => '1'));
             }
-
-            $ci->obj->update($data);
-
-            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_exists' => '1'));
          }
-		}
+      }
 	}
 
 
@@ -507,7 +530,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 			$query = "UPDATE `glpi_plugin_fusioninventory_agents`
                    SET `last_agent_update`='".$agent->end_date."',
                        `fusioninventory_agent_version`='".$agent_version."'
-                   WHERE `ID`='".$agent_id."';";
+                   WHERE `id`='".$agent_id."';";
 			$DB->query($query);
  	            
 			$query = "UPDATE `glpi_plugin_fusioninventory_agents_processes`

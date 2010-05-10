@@ -1,7 +1,10 @@
 <model>
 	<name><![CDATA[6788219]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinterPrinter0172</key>
+	<key>Printer0172</key>
+	<comments><![CDATA[RICOH Aficio SP 4100N 1.06 / RICOH Network Printer C model
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

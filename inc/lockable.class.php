@@ -81,6 +81,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+      echo "<td>";
 
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 

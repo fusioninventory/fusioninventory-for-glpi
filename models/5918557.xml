@@ -1,7 +1,14 @@
 <model>
 	<name><![CDATA[5918557]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinter0137</key>
+	<key>Printer0137</key>
+	<comments><![CDATA[Canon iR1022 /P
+
+Canon iR1024 /P
+
+Canon iR2016 /P
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

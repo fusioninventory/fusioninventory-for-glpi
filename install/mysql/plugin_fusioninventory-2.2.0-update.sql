@@ -320,3 +320,6 @@ ALTER TABLE `glpi_plugin_fusioninventory_unknown_device`
    ADD `ifaddr` VARCHAR( 255 ) NULL ,
    ADD `ifmac` VARCHAR( 255 ) NULL ,
    ADD `hub` INT( 1 ) NOT NULL DEFAULT '0';
+
+ALTER TABLE `glpi_plugin_fusioninventory_model_infos`
+   ADD `comments` TEXT NULL;

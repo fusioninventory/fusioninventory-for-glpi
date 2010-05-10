@@ -1,7 +1,12 @@
 <model>
 	<name><![CDATA[4141487]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinter0127</key>
+	<key>Printer0127</key>
+	<comments><![CDATA[Dell Laser Printer 5210n version NS.NP.N240 kernel 2.6.6 All-N-1
+
+Dell Laser Printer 5310n version NS.NP.N224 kernel 2.6.6 All-N-1
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

@@ -2,6 +2,12 @@
 	<name><![CDATA[533006]]></name>
 	<type>2</type>
 	<key>Networking0144</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C2940 Software (C2940-I6Q4L2-M), Version 12.1(22)EA12, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2008 by cisco Systems, Inc.^M
+Compiled Mon 07-Jul-08 23:44 by amvarma
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

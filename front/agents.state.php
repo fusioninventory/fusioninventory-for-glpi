@@ -58,37 +58,38 @@ include (GLPI_ROOT . "/inc/includes.php");
 if (isset($_POST['action'])) {
    $pfit = new PluginFusioninventoryTask;
 
-   foreach ($_POST['agent-ip'] as $agentip) {
-      $splitinfo = explode("-",$agentip);
-      $param = "";
-      if (isset($splitinfo[2])) {
-         $param = "$splitinfo[2]";
-      }
-      // Add a task...
-      if ($_POST['action'] == "INVENTORY") {
-         $a_device = explode("-", $_POST['device']);
-         switch ($a_device[0]) {
-            
-            case NETWORKING_TYPE;
-            case PRINTER_TYPE;
-               $pfit->addTask($a_device[1], $a_device[0], 'SNMPQUERY', $splitinfo[0], $param);
-               break;
-         
-            case COMPUTER_TYPE;
-               $pfit->addTask($a_device[1], $a_device[0], 'INVENTORY', $splitinfo[0]);
-               break;         
-            
+   if (isset($_POST['agent-ip'])) {
+      foreach ($_POST['agent-ip'] as $agentip) {
+         $splitinfo = explode("-",$agentip);
+         $param = "";
+         if (isset($splitinfo[2])) {
+            $param = "$splitinfo[2]";
          }
-         
-      } else if ($_POST['action'] == "NETDISCOVERY") {
-         $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'NETDISCOVERY', $splitinfo[0], $param);
-      } else if ($_POST['action'] == "SNMPQUERY") {
-         $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'SNMPQUERY', $splitinfo[0], $param);
-      } else if ($_POST['action'] == "WAKEONLAN") {
-         $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'WAKEONLAN', $splitinfo[0], $param);
+         // Add a task...
+         if ($_POST['action'] == "INVENTORY") {
+            $a_device = explode("-", $_POST['device']);
+            switch ($a_device[0]) {
+
+               case NETWORKING_TYPE;
+               case PRINTER_TYPE;
+                  $pfit->addTask($a_device[1], $a_device[0], 'SNMPQUERY', $splitinfo[0], $param);
+                  break;
+
+               case COMPUTER_TYPE;
+                  $pfit->addTask($a_device[1], $a_device[0], 'INVENTORY', $splitinfo[0]);
+                  break;
+
+            }
+
+         } else if ($_POST['action'] == "NETDISCOVERY") {
+            $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'NETDISCOVERY', $splitinfo[0], $param);
+         } else if ($_POST['action'] == "SNMPQUERY") {
+            $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'SNMPQUERY', $splitinfo[0], $param);
+         } else if ($_POST['action'] == "WAKEONLAN") {
+            $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'WAKEONLAN', $splitinfo[0], $param);
+         }
+         $pfit->RemoteStartAgent($splitinfo[0], $splitinfo[1]);
       }
-      
-      $pfit->RemoteStartAgent($splitinfo[0], $splitinfo[1]);
    }
 }
 

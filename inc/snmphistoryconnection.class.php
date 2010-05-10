@@ -135,6 +135,10 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
       $query = "SELECT * FROM `".$this->table."`
          ".$condition."
          ORDER BY `date`DESC , `plugin_fusioninventory_processes_id` DESC";
+      if (!isset($input['process_number'])) {
+         $query .= " LIMIT 0,500";
+      }
+
 		if ($result = $DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1 center'>";

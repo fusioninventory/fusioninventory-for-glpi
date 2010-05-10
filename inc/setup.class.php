@@ -162,6 +162,9 @@ class PluginFusioninventorySetup {
          if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
             mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
          }
+         if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
+            mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+         }
          // Update right
          PluginFusioninventory::updateaccess($_SESSION['glpiactiveprofile']['ID']);
 

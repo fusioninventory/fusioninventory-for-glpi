@@ -2,6 +2,13 @@
 	<name><![CDATA[3080441]]></name>
 	<type>3</type>
 	<key>Printer0007</key>
+	<comments><![CDATA[Dell Laser Printer 1720dn version NM.NA.N094a-p1 kernel 2.6.10 All-N-1
+
+Dell Laser Printer 5210n version NS.NP.N212 kernel 2.6.6 All-N-1
+
+Dell Laser Printer 5210n version NS.NP.N224 kernel 2.6.6 All-N-1
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

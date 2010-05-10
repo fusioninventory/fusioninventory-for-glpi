@@ -2,6 +2,21 @@
 	<name><![CDATA[2183293]]></name>
 	<type>3</type>
 	<key>Printer0041</key>
+	<comments><![CDATA[Dell Laser Printer M5200 version 55.10.61 kernel 2.4.0-test6 All-N-1
+
+Lexmark T430 version JX.JU.P101 kernel 2.4.0-test6 All-N-1
+
+Lexmark T630 version 55.10.19 kernel 2.4.0-test6 All-N-1
+
+Lexmark T632 version 55.10.20 kernel 2.4.0-test6 All-N-1
+
+Lexmark T642 version NS.NP.N219 kernel 2.6.6 All-N-1
+
+Lexmark T644 version NS.NP.N118 kernel 2.6.6 All-N-1
+
+Lexmark T654 version NR.APS.N368 kernel 2.6.18.5 All-N-1
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

@@ -547,6 +547,11 @@ class PluginFusioninventoryCommunication {
       if (isset($this->sxml->CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $this->sxml->CONTENT->PROCESSNUMBER;
       }
+      if (isset($this->sxml->CONTENT->MODULEVERSION)) {
+         $moduleversion = $this->sxml->CONTENT->PROCESSNUMBER;
+      } else {
+         $moduleversion = "1.0";
+      }
       switch ($this->sxml->QUERY) {
          case 'SNMPQUERY' :
             $errors.=$this->importContent($this->sxml->CONTENT);
@@ -554,7 +559,7 @@ class PluginFusioninventoryCommunication {
          
          case 'NETDISCOVERY' :
             $pti = new PluginFusioninventoryImportExport;
-            $errors.=$pti->import_netdiscovery($this->sxml->CONTENT, $this->sxml->DEVICEID);
+            $errors.=$pti->import_netdiscovery($this->sxml->CONTENT, $this->sxml->DEVICEID, $moduleversion);
             break;
          
          case 'INVENTORY' :
@@ -747,9 +752,10 @@ class PluginFusioninventoryCommunication {
 
       $this->addLog('Function importInfo().');
       $errors='';
-      $criteria['serial']  = $p_info->SERIAL;
+      $criteria['serial']  = trim($p_info->SERIAL);
       $criteria['name']    = $p_info->NAME;
       $criteria['macaddr'] = $p_info->MAC; //TODO get mac in PORT for printer
+      $error_criteria = 0;
       if ($p_info->TYPE=='NETWORKING') {
          $this->deviceId = PluginFusioninventoryDiscovery::criteria($criteria, NETWORKING_TYPE);
          if ($this->deviceId != '') {
@@ -758,9 +764,10 @@ class PluginFusioninventoryCommunication {
             $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
                      type : '.$p_info->TYPE.'<br/>
                      ID : '.$p_info->ID.'<br/>
-                     serial : '.$p_info->SERIAL.'<br/>
+                     serial : '.trim($p_info->SERIAL).'<br/>
                      name : '.$p_info->NAME.'<br/>
                      macaddress : '.$p_info->MAC.'\n';
+            $error_criteria = 1;
          }
       } elseif ($p_info->TYPE=='PRINTER') {
          //TODO Get MAC address in port
@@ -785,12 +792,14 @@ class PluginFusioninventoryCommunication {
          if ($this->deviceId != '') {
             $errors.=$this->importInfoPrinter($p_info);
          } else {
-            $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
-                     type : '.$p_info->TYPE.'<br/>
-                     ID : '.$p_info->ID.'<br/>
-                     serial : '.$p_info->SERIAL.'<br/>
-                     name : '.$p_info->NAME.'<br/>
-                     macaddress : '.$p_info->MAC.'\n';
+            if ($error_criteria == 0) {
+               $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
+                        type : '.$p_info->TYPE.'<br/>
+                        ID : '.$p_info->ID.'<br/>
+                        serial : '.trim($p_info->SERIAL).'<br/>
+                        name : '.$p_info->NAME.'<br/>
+                        macaddress : '.$p_info->MAC.'\n';
+            }
          }
       }
       if (!empty($errors)) {
@@ -941,15 +950,17 @@ class PluginFusioninventoryCommunication {
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
-               $ifaddrIndex = $this->ptd->getIfaddrIndex($child);
-               if (is_int($ifaddrIndex)) {
-                  $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
-                  $pti->load($oldIfaddr->getValue('ID'));
-               } else {
-                  $pti->load();
+               if ($child != "127.0.0.1") {
+                  $ifaddrIndex = $this->ptd->getIfaddrIndex($child);
+                  if (is_int($ifaddrIndex)) {
+                     $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
+                     $pti->load($oldIfaddr->getValue('ID'));
+                  } else {
+                     $pti->load();
+                  }
+                  $pti->setValue('ifaddr', $child);
+                  $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
                }
-               $pti->setValue('ifaddr', $child);
-               $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']["errors"][22].' IPS : '.$child->getName()."\n";
@@ -1034,7 +1045,7 @@ class PluginFusioninventoryCommunication {
                case 'TRUNK' :
                   if (!$ptp->getNoTrunk()) {
                      PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
-                     $ptp->setValue('trunk', $p_port->$name);
+                     $ptp->setValue('vlanTrunkPortDynamicStatus', $p_port->$name);
                   }
                   break;
 

@@ -398,6 +398,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_model_infos` (
   `FK_entities` int(11) NOT NULL DEFAULT '0',
   `activation` int(1) NOT NULL DEFAULT '1',
   `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comments` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`ID`),
   KEY `name` (`name`),
   KEY `device_type` (`device_type`)

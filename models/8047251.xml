@@ -2,6 +2,12 @@
 	<name><![CDATA[8047251]]></name>
 	<type>2</type>
 	<key>Networking0179</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.2)XU, MAINTENANCE INTERIM SOFTWARE^M
+Copyright (c) 1986-2000 by cisco Systems, Inc.^M
+Compiled Mon 17-Jul-00 18:29 by ayounes
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

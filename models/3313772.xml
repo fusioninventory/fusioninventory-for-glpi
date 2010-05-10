@@ -2,6 +2,47 @@
 	<name><![CDATA[3313772]]></name>
 	<type>2</type>
 	<key>Networking0111</key>
+	<comments><![CDATA[Cisco IOS Software, C1100 Software (C1100-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Thu 25-Oct-07 22:19 by dchih
+
+Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(10b)JDA, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 30-Oct-08 11:45 by prod_rel_team
+
+Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(10b)JDA3, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Sun 07-Jun-09 02:59 by prod_rel_team
+
+Cisco IOS Software, C1130 Software (C1130-K9W7-M), Version 12.4(3g)JA1, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Thu 19-Jul-07 23:19 by kellythw
+
+Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEA, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Wed 23-Aug-06 16:42 by kellythw
+
+Cisco IOS Software, C1200 Software (C1200-K9W7-M), Version 12.3(8)JEC, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Thu 25-Oct-07 22:24 by dchih
+
+Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(10b)JDA2, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Mon 24-Nov-08 17:45 by prod_rel_team
+
+Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXI, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Fri 07-Nov-08 04:00 by pro
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

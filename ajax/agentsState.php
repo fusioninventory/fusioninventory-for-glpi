@@ -41,6 +41,10 @@ header_nocache();
 
 $pfit = new PluginFusioninventoryTask;
 
+echo "<script>
+   document.getElementById('displaybutton').style.visibility='hidden';
+</script>";
+
 if (isset($_POST["action"])) {
    if ($_POST["action"] == "INVENTORY") {
       $pfit->showAgentInventory($_POST["on_device"], $_POST["itemtype"]);

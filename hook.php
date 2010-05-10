@@ -120,6 +120,11 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['linkfield'] = 'discovery_key';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['name'] = $LANG['plugin_fusioninventory']["model_info"][12];
 
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['field'] = 'comments';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['linkfield'] = 'comments';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['name'] = $LANG['common'][25];
+
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH]['common'] = $LANG['plugin_fusioninventory']["profile"][22];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH][1]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
@@ -249,11 +254,11 @@ function plugin_fusioninventory_getSearchOption() {
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['name'] = $LANG["networking"][15];
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['forcegroupby']='1';
 
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['table'] = 'glpi_plugin_fusioninventory_networking';
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['field'] = 'ID';
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['table'] = 'glpi_networking';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['field'] = 'device';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['linkfield'] = 'device';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG["reports"][52];
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['forcegroupby'] = '1';
+   //$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][16]['forcegroupby'] = '1';
 
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][17]['table'] = 'glpi_plugin_fusioninventory_networking_ports';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][17]['field'] = 'ID';
@@ -318,20 +323,10 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['field'] = 'core_discovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['linkfield'] = 'core_discovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][3]['name'] = $LANG['plugin_fusioninventory']["agents"][11];
-
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['field'] = 'threads_discovery';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['linkfield'] = 'threads_discovery';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['name'] = $LANG['plugin_fusioninventory']["agents"][3];
-
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['field'] = 'core_query';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['linkfield'] = 'threads_query';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][5]['name'] = $LANG['plugin_fusioninventory']["agents"][10];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['table'] = 'glpi_plugin_fusioninventory_agents';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['field'] = 'threads_query';
@@ -1752,6 +1747,15 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			Device::dropdownTypes('type',$linkfield,$type_list);
 			return true;
 			break;
+
+      case 'glpi_entities.name' :
+         if (isMultiEntitiesMode()) {
+            Dropdown::show("Entities",
+		                     array('name' => "FK_entities",
+                           'value' => $_SESSION["glpiactive_entity"]));
+         }
+         return true;
+         break;
 	}
 	return false;
 }
@@ -2593,6 +2597,17 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                $np->delete(array("ID"=>$data["ID"]));
             }
             break;
+
+         case COMPUTER_TYPE :
+            // Delete link between computer and agent fusion
+            $query = "UPDATE `glpi_plugin_fusioninventory_agents`
+                        SET `items_id` = '0'
+                           AND `itemtype` = '0'
+                        WHERE `items_id` = '".$parm["ID"]."'
+                           AND `itemtype` = '1' ";
+            $DB->query($query);
+            break;
+
 		}
    }
 	return $parm;
@@ -2637,6 +2652,46 @@ function plugin_item_update_fusioninventory($parm) {
          $lockables = PluginFusioninventoryLockable::getLockableFields('', $type);
          $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
          PluginFusioninventoryLock::addLocks($type, $ID, $fieldsToLock);
+      }
+   }
+}
+
+
+function plugin_item_add_fusioninventory($parm) {
+	global $DB;
+
+	if (isset($parm["type"])) {
+		switch ($parm["type"]) {
+
+         case NETWORKING_PORT_TYPE :
+            // Verify when add networking port on object (not unknown device) if port
+            // of an unknown device exist.
+            if ($parm["input"]["itemtype"] != PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+               // Search in DB
+               $np = new Netport;
+               $nw = new Netwire;
+               $pfiud = new PluginFusionInventoryUnknownDevice;
+               $a_ports = $np->find("`ifmac`='".$parm["input"]["ifmac"]."' AND `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
+               if (count($a_ports) == "1") {
+                  foreach ($a_ports as $port_infos) {
+                     // Get wire
+                     $opposite_ID = $nw->getOppositeContact($port_infos['id']);
+                     if (isset($opposite_ID)) {
+                        // Modify wire
+                        removeConnector($port_infos['id']);
+                        makeConnector($parm['id'], $opposite_ID);
+                     }
+                     // Delete port
+                     $np->deleteFromDB($port_infos['id']);
+                     // Delete unknown device (if it has no port)
+                     if (count($np->find("`items_id`='".$port_infos['items_id']."' AND `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ")) == "0") {
+                        $pfiud->deleteFromDB($port_infos['items_id']);
+                     }
+                  }
+               }
+            }
+            break;
+
       }
    }
 }

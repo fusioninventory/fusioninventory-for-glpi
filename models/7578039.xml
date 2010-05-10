@@ -2,6 +2,13 @@
 	<name><![CDATA[7578039]]></name>
 	<type>3</type>
 	<key>Printer0105</key>
+	<comments><![CDATA[Lexmark E342n version BR.H.P026 kernel 2.4.0-test6 All-N-1
+
+Lexmark W820 version 61.30.03 kernel 2.4.0-test6 All-N-1
+
+Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

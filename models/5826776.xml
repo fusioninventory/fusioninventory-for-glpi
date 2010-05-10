@@ -2,6 +2,15 @@
 	<name><![CDATA[5826776]]></name>
 	<type>2</type>
 	<key>Networking0001</key>
+	<comments><![CDATA[D-Link Access Point
+
+EMC DS-4400M Model 001 Fibre Channel Switch, firmware 08.01.01 4
+
+GbE2c Ethernet Blade Switch for HP c-Class BladeSystem
+
+ZebraNet Wireless PS
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

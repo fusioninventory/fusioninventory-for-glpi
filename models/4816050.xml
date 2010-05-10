@@ -2,6 +2,11 @@
 	<name><![CDATA[4816050]]></name>
 	<type>2</type>
 	<key>Networking0114</key>
+	<comments><![CDATA[Cisco IOS Software, C3550 Software (C3550-IPSERVICESK9-M), Version 12.2(25)SEC, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Fri 15-Jul-05 01:40 by antonino
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

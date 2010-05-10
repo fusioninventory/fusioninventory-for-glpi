@@ -177,7 +177,7 @@ $LANG['plugin_fusioninventory']["snmp"][48]="Anzahl gesendeter Bytes";
 $LANG['plugin_fusioninventory']["snmp"][49]="Anzahl von Fehlern beim Empfang";
 $LANG['plugin_fusioninventory']["snmp"][50]="Verbindung";
 $LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
-$LANG['plugin_fusioninventory']["snmp"][52]="Datum des letzen FUSIONINVENTORY Inventarisierung";
+$LANG['plugin_fusioninventory']["snmp"][52]="Datum des letzen FusionInventory Inventarisierung";
 $LANG['plugin_fusioninventory']["snmp"][53]="Letzte Inventarisierung";
 
 $LANG['plugin_fusioninventory']["snmpauth"][1]="Gemeinschaft";
@@ -442,7 +442,7 @@ $LANG['plugin_fusioninventory']["mapping"][407]="Drucker > Port > IP Adresse";
 $LANG['plugin_fusioninventory']["mapping"][408]="Netzwerk > Port > Nummerischer Index";
 $LANG['plugin_fusioninventory']["mapping"][409]="Netzwerk > Adresse CDP";
 $LANG['plugin_fusioninventory']["mapping"][410]="Netzwerk > Port CDP";
-$LANG['plugin_fusioninventory']["mapping"][411]="Netzwerk > Trunk Port Status";
+$LANG['plugin_fusioninventory']["mapping"][411]="Netzwerk > Port > trunk/tagged";
 $LANG['plugin_fusioninventory']["mapping"][412]="Netzwerk > MAC Adressen Filter (dot1dTpFdbAddress)";
 $LANG['plugin_fusioninventory']["mapping"][413]="Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)";
 $LANG['plugin_fusioninventory']["mapping"][414]="Netzwerk > Instanzen des Ports (dot1dTpFdbPort)";
@@ -567,10 +567,7 @@ $LANG['plugin_fusioninventory']["agents"][4]="Last scan";
 $LANG['plugin_fusioninventory']["agents"][5]="Agent version";
 $LANG['plugin_fusioninventory']["agents"][6]="Lock";
 $LANG['plugin_fusioninventory']["agents"][7]="Export agent configuration";
-$LANG['plugin_fusioninventory']["agents"][8]="Fragments en Ko";
 $LANG['plugin_fusioninventory']["agents"][9]="Advanced options";
-$LANG['plugin_fusioninventory']["agents"][10]="Number of core(s) (CPU) used for querying devices";
-$LANG['plugin_fusioninventory']["agents"][11]="Number of core(s) (CPU) used for network discovery";
 $LANG['plugin_fusioninventory']["agents"][12]="Discovery Agent";
 $LANG['plugin_fusioninventory']["agents"][13]="Query Agent";
 $LANG['plugin_fusioninventory']["agents"][14]="Agent actions";
@@ -589,6 +586,7 @@ $LANG['plugin_fusioninventory']["unknown"][1]="Network port name";
 $LANG['plugin_fusioninventory']["unknown"][2]="Approved devices";
 $LANG['plugin_fusioninventory']["unknown"][3]="Discovered by agent";
 $LANG['plugin_fusioninventory']["unknown"][4]="Network hub";
+$LANG['plugin_fusioninventory']["unknown"][5]="Imported from unknown devices (FusionInventory)";
 
 $LANG['plugin_fusioninventory']["task"][0]="Task";
 $LANG['plugin_fusioninventory']["task"][1]="Task management";
@@ -606,7 +604,12 @@ $LANG['plugin_fusioninventory']["task"][12]="Wake agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
+$LANG['plugin_fusioninventory']["constructdevice"][1]="Automatic creation of models";
+$LANG['plugin_fusioninventory']["constructdevice"][2]="Generate discovery file";
+$LANG['plugin_fusioninventory']["constructdevice"][3]="Delete models non used";
+$LANG['plugin_fusioninventory']["constructdevice"][4]="Export all models";
+$LANG['plugin_fusioninventory']["constructdevice"][5]="Re-create models comments";
 
-$LANG['plugin_fusioninventory']["update"][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande a la fin de la mise à jour : ";
+$LANG['plugin_fusioninventory']["update"][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 
 ?>

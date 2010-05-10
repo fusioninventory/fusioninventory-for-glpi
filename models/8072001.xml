@@ -1,7 +1,10 @@
 <model>
 	<name><![CDATA[8072001]]></name>
 	<type>3</type>
-	<key>PrinterPrinterPrinterPrinterPrinterPrinterPrinter0142</key>
+	<key>Printer0142</key>
+	<comments><![CDATA[ZTC Z4MPlus-200 dpi
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

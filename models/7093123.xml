@@ -2,6 +2,12 @@
 	<name><![CDATA[7093123]]></name>
 	<type>2</type>
 	<key>Networking0068</key>
+	<comments><![CDATA[Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(10b)JA1, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Wed 30-Jan-08 12:18 by prod_rel_team
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

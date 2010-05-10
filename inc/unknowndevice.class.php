@@ -36,6 +36,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_unknown_device";
 		$this->type = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+      $this->dohistory=true;
 	}
 
    function defineTabs($options=array()){
@@ -46,10 +47,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $ong = array();
 		if ($this->fields['id'] > 0){
          $ong[1]=$LANG['title'][27];
+         $ong[2]=$LANG['buttons'][37];
          if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
-            $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
+            $ong[3]=$LANG['plugin_fusioninventory']["task"][2];
          }
-         $ong[3]=$LANG['title'][38];
+         $ong[4]=$LANG['title'][38];
       }
 		return $ong;
 	}
@@ -248,7 +250,26 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 	}
 
 
+   
+   function importForm($target,$id) {
+      global $LANG;
+      
+      echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+		echo "<table  class='tab_cadre_fixe'>";
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>";
+      $this->getFromDB($id);
+      if ($this->fields["type"] != '0') {
+         echo "<input type='hidden' name='id' value=$id>";
+         echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
+      }
+      echo "</td>";
+      echo "</table>";
+      echo "</div>";
+   }
 
+
+   
 	function updateFromOldVersion_unknown_mac() {
 		global $DB,$LANG;
 

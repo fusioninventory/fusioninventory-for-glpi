@@ -2,6 +2,19 @@
 	<name><![CDATA[8328709]]></name>
 	<type>3</type>
 	<key>Printer0022</key>
+	<comments><![CDATA[Brother NC-3100h, Firmware Ver.1.20  (02.07.12),MID 84UZ34,FID 3
+
+Brother NC-3100h, Firmware Ver.3.20  (00.08.31)
+
+Brother NC-5100h, Firmware Ver.1.50  (04.04.19),MID 84UZ74,FID 1
+
+Brother NC-6400h, Firmware Ver.1.04  (05.11.10),MID 84UZ92
+
+Brother NC-6400h, Firmware Ver.1.11b  (07.05.16),MID 84UZ92
+
+Brother NC-6800h, Firmware Ver.1.01  (08.12.12),MID 84UB03
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>

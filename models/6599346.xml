@@ -2,6 +2,12 @@
 	<name><![CDATA[6599346]]></name>
 	<type>2</type>
 	<key>Networking0102</key>
+	<comments><![CDATA[Cisco IOS Software, Catalyst 4000 L3 Switch Software (cat4000-I5K91S-M), Version 12.2(25)EWA3, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 23-Aug-05 13:41 by dch
+
+]]></comments>
 	<oidlist>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
