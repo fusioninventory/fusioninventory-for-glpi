@@ -228,7 +228,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<td align='center'>" . $LANG['common'][25] . " : </td>";
       echo "</td>";
       echo "<td align='middle'>";
-      echo "<textarea  cols='50' rows='5' name='comments' >".$this->fields["comments"]."</textarea>";
+      echo "<textarea  cols='50' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
 		echo "</tr>";
 

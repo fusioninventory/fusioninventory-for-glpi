@@ -72,11 +72,11 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['name'] = $LANG['plugin_fus
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comments']['table'] = 'glpi_networking';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comments']['field'] = 'comments';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comments']['name'] = $LANG['plugin_fusioninventory']["mapping"][404];
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comments']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comments']['dropdown'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['field'] = 'comment';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['name'] = $LANG['plugin_fusioninventory']["mapping"][404];
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['dropdown'] = '';
 
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['table'] = 'glpi_plugin_fusioninventory_networking';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['field'] = 'uptime';
@@ -331,11 +331,11 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['contact']['name'] = $LANG['plugin_fusion
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['contact']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['contact']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comments']['table'] = 'glpi_printers';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comments']['field'] = 'comments';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comments']['name'] = $LANG['plugin_fusioninventory']["mapping"][406];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comments']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comments']['dropdown'] = '';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comment']['table'] = 'glpi_printers';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comment']['field'] = 'comment';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comment']['name'] = $LANG['plugin_fusioninventory']["mapping"][406];
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comment']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['comment']['dropdown'] = '';
 
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['name']['table'] = 'glpi_printers';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['name']['field'] = 'name';

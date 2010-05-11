@@ -578,7 +578,7 @@ class PluginFusioninventoryCommunication {
             $result=true;
             $ptap = new PluginFusioninventoryAgentsProcesses;
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                                 array('comments' => $errors));
+                                 array('comment' => $errors));
 
          } else {
             // It's PROLOG
@@ -841,7 +841,7 @@ class PluginFusioninventoryCommunication {
             case 'TYPE' : // already managed
                break;
             case 'COMMENTS' :
-               $this->ptd->setValue('comments', $p_info->COMMENTS);
+               $this->ptd->setValue('comment', $p_info->COMMENTS);
                break;
             case 'CPU' :
                $this->ptd->setValue('cpu', $p_info->CPU);
@@ -902,7 +902,7 @@ class PluginFusioninventoryCommunication {
             case 'TYPE' : // already managed
                break;
             case 'COMMENTS' :
-               $this->ptd->setValue('comments', $p_info->COMMENTS);
+               $this->ptd->setValue('comment', $p_info->COMMENTS);
                break;
             case 'MEMORY' :
                $this->ptd->setValue('memory', $p_info->MEMORY);

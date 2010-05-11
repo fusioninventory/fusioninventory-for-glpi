@@ -179,7 +179,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     *
     *@param $p_id Lockable id. If 0 creates a new lockable record, else update.
     *@param $p_itemtype Table name.
-    *@param $p_fields Array of fields to set to lockable (ex : "0=>name 1=>comments 2=>contact").
+    *@param $p_fields Array of fields to set to lockable (ex : "0=>name 1=>comment 2=>contact").
     *@param $p_entities_id Entity id.
     *@param $p_recursive Recursive lock (0/1).
     *TODO:  check rights
@@ -216,7 +216,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     *
     *@param $p_id Lockable id. If 0 creates a new lockable record, else update.
     *@param $p_itemtype Table name.
-    *@param $p_fields Array of fields to set to lockable (ex : "0=>name 1=>comments 2=>contact").
+    *@param $p_fields Array of fields to set to lockable (ex : "0=>name 1=>comment 2=>contact").
     *@param $p_entities_id Entity id.
     *@param $p_recursive Recursive lock (0/1).
     *TODO:  check rights

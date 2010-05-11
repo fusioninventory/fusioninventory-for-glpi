@@ -131,7 +131,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
       // List of OID with relations by default with mapping
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.4']      = 'cdpCacheAddress';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.7']      = 'cdpCacheDevicePort';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.1.0']                 = 'comments';
+      $mapping_pre[2]['.1.3.6.1.2.1.1.1.0']                 = 'comment';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1']   = 'cpu';
       $mapping_pre[2]['.1.3.6.1.2.1.17.1.4.1.2']            = 'dot1dBasePortIfIndex';
       $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.1']            = 'dot1dTpFdbAddress';
@@ -191,7 +191,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.3']                        = 'ifType';
       $mapping_pre[3]['.1.3.6.1.2.1.1.5.0']                          = 'name';
       $mapping_pre[3]['.1.3.6.1.2.1.1.6.0']                          = 'location';
-      $mapping_pre[3]['.1.3.6.1.2.1.1.1.0']                          = 'comments';
+      $mapping_pre[3]['.1.3.6.1.2.1.1.1.0']                          = 'comment';
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.1']                        = 'ifIndex';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.1.4.0']              = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.2']         = 'cartridgescyan';
@@ -265,8 +265,8 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
             $query_oid = "SELECT * FROM glpi_plugin_fusioninventory_mib_oid";
             $result_oid = $DB->query($query_oid);
             while ($fields_oid = $DB->fetch_array($result_oid)) {
-               if ($fields_oid['comments'] != "") {
-                  $a_oids[] = $fields_oid['comments'];
+               if ($fields_oid['comment'] != "") {
+                  $a_oids[] = $fields_oid['comment'];
                   $a_oids1[] = $fields_oid['name'];
                   $a_oids2[] = $fields_oid['ID'];
                }
@@ -784,7 +784,7 @@ echo "</a>";
       global $DB;
 
       $query_clean = "UPDATE `glpi_plugin_fusioninventory_model_infos`
-         SET comments='' ";
+         SET comment='' ";
       $DB->query($query_clean);
 
       $a_devices = $this->find("snmpmodel_id > 0", "sysdescr");
@@ -797,9 +797,9 @@ echo "</a>";
             $a_comments[$device['snmpmodel_id']] .= $device['sysdescr']."\n\n";
          }
       }
-      foreach ($a_comments as $model_id=>$comments) {
+      foreach ($a_comments as $model_id=>$comment) {
          $query_update = "UPDATE `glpi_plugin_fusioninventory_model_infos`
-            SET comments='".$comments."'
+            SET comment='".$comment."'
             WHERE ID='".$model_id."' ";
          $DB->query($query_update);
       }      

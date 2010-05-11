@@ -368,7 +368,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       Dropdown::show("PluginFusioninventoryModelInfos",
                      array('name'=>"model_infos",
                            'value'=>$this->fields['plugin_fusioninventory_modelinfos_id'],
-                           'comments'=>0,
+                           'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";
 		echo "</tr>";
@@ -808,7 +808,7 @@ function appear_array(id){
                         while ($line = $DB->fetch_array($result_vlan)) {
                            $used[]=$line["vlans_id"];
                            $a_vlan = Dropdown::getDropdownName("glpi_dropdown_vlan", $line["vlans_id"],1);
-                           echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comments']."]";
+                           echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comment']."]";
                            echo "</td><td>";
                            if ($canedit) {
                               echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?unassign_vlan=unassigned&amp;ID=" . $line["ID"] . "'>";

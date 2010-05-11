@@ -393,7 +393,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          Dropdown::show("PluginFusioninventorySnmpauth",
                         array('name' => "plugin_fusioninventory_snmpauths_id",
                               'value' => $selected,
-                              'comments' => false));
+                              'comment' => false));
       }
    }
 

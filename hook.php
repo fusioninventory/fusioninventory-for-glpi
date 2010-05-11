@@ -121,8 +121,8 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['name'] = $LANG['plugin_fusioninventory']["model_info"][12];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['table'] = 'glpi_plugin_fusioninventory_model_infos';
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['field'] = 'comments';
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['linkfield'] = 'comments';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['field'] = 'comment';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['linkfield'] = 'comment';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['name'] = $LANG['common'][25];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AUTH]['common'] = $LANG['plugin_fusioninventory']["profile"][22];
@@ -217,8 +217,8 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][8]['name'] = $LANG["setup"][89];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][9]['table'] = 'glpi_plugin_fusioninventory_unknown_device';
-	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][9]['field'] = 'comments';
-	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][9]['linkfield'] = 'comments';
+	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][9]['field'] = 'comment';
+	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][9]['linkfield'] = 'comment';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][9]['name'] = $LANG['common'][25];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][10]['table'] = 'glpi_plugin_fusioninventory_unknown_device';
@@ -1490,7 +1490,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                   Dropdown::show("PluginFusioninventoryModelInfos",
                                  array('name' => "snmp_model",
                                        'value' => "name",
-                                       'comments' => false,
+                                       'comment' => false,
                                        'used' => $exclude_models));
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1534,7 +1534,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                   Dropdown::show("PluginFusioninventoryModelInfos",
                                  array('name' => "snmp_model",
                                        'value' => "name",
-                                       'comments' => false,
+                                       'comment' => false,
                                        'used' => $exclude_models));
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1670,7 +1670,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 		case 'glpi_plugin_fusioninventory_modelinfos.name':
 			Dropdown::show("PluginFusioninventoryModelInfos",
                         array('name' => $linkfield,
-                              'comments' => false));
+                              'comment' => false));
 			return true;
 			break;
 
@@ -1688,7 +1688,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 		case 'glpi_plugin_fusioninventory_agents.ID' :
 			Dropdown::show("PluginFusioninventoryAgents",
                         array('name' => $linkfield,
-                              'comments' => false));
+                              'comment' => false));
 			return true;
 			break;
 

@@ -372,7 +372,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                   $vlansToAssign = array();
                   while ($vlanDB=$DB->fetch_assoc($result)) {
                      $vlansDBnumber[] = $vlanDB['name'];
-                     $vlansDB[] = array('number'=>$vlanDB['name'], 'name'=>$vlanDB['comments'],
+                     $vlansDB[] = array('number'=>$vlanDB['name'], 'name'=>$vlanDB['comment'],
                                         'ID'=>$vlanDB['ID']);
                   }
 

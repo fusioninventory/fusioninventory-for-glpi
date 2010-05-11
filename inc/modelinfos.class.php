@@ -92,7 +92,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['common'][25] . "</td>";
 		echo "<td align='center'>";
-		echo nl2br($this->fields["comments"]);
+		echo nl2br($this->fields["comment"]);
 		echo "</td>";
 		echo "</tr>";
 
@@ -170,27 +170,27 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 	}
 
 
-   function getrightmodel($device_id, $type, $comments="") {
+   function getrightmodel($device_id, $type, $comment="") {
       global $DB;
 
       // Get description (sysdescr) of device
       // And search in device_serials base
       $sysdescr = '';
-      if ($comments != "") {
-         $sysdescr = $comments;
+      if ($comment != "") {
+         $sysdescr = $comment;
       } else {
          switch($type) {
 
             case NETWORKING_TYPE:
                $Netdevice = new Netdevice;
                $Netdevice->check($device_id,'r');
-               $sysdescr = $Netdevice->fields["comments"];
+               $sysdescr = $Netdevice->fields["comment"];
                break;
 
             case PRINTER_TYPE:
                $Printer = new Printer;
                $Printer->check($device_id,'r');
-               $sysdescr = $Printer->fields["comments"];
+               $sysdescr = $Printer->fields["comment"];
                break;
 
          }
@@ -215,7 +215,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 				$result = $DB->query($query);
 				$data = $DB->fetch_assoc($result);
 				$plugin_fusioninventory_modelinfos_id = $data['ID'];
-            if ($comments != "") {
+            if ($comment != "") {
                return $data['discovery_key'];
             } else {
                // Udpate Device with this model

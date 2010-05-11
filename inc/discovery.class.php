@@ -143,7 +143,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["otherserial"] = $ptud->fields["otherserial"];
             $data["contact"] = $ptud->fields["contact"];
             $data["domain"] = $ptud->fields["domain"];
-            $data["comments"] = $ptud->fields["comments"];
+            $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Printer->add($data);
 
             $data_Port = $Networkport->fields;
@@ -175,7 +175,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["otherserial"] = $ptud->fields["otherserial"];
             $data["contact"] = $ptud->fields["contact"];
             $data["domain"] = $ptud->fields["domain"];
-            $data["comments"] = $ptud->fields["comments"];
+            $data["comment"] = $ptud->fields["comment"];
             $data["ifaddr"] = $Networkport->fields["ifaddr"];
             $data["ifmac"] = $Networkport->fields["ifmac"];
             $ID_Device = $Netdevice->add($data);
@@ -208,7 +208,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["serial"] = $ptud->fields["serial"];
             $data["otherserial"] = $ptud->fields["otherserial"];
             $data["contact"] = $ptud->fields["contact"];
-            $data["comments"] = $ptud->fields["comments"];
+            $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Peripheral->add($data);
 
             $data_Port = $Networkport->fields;
@@ -234,7 +234,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["otherserial"] = $ptud->fields["otherserial"];
             $data["contact"] = $ptud->fields["contact"];
             $data["domain"] = $ptud->fields["domain"];
-            $data["comments"] = $ptud->fields["comments"];
+            $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Computer->add($data);
 
             $data_Port = $Networkport->fields;
@@ -255,7 +255,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["serial"] = $ptud->fields["serial"];
             $data["otherserial"] = $ptud->fields["otherserial"];
             $data["contact"] = $ptud->fields["contact"];
-            $data["comments"] = $ptud->fields["comments"];
+            $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Phone->add($data);
 
             $data_Port = $Networkport->fields;
@@ -293,7 +293,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                            $data["otherserial"] = $ptud->fields["otherserial"];
                            $data["contact"] = $ptud->fields["contact"];
                            $data["domain"] = $ptud->fields["domain"];
-                           $data["comments"] = $ptud->fields["comments"];
+                           $data["comment"] = $ptud->fields["comment"];
                            $ID_Device = $pgo->add($data);
 
                            if ($pgo->canUseNetworkPorts()) {

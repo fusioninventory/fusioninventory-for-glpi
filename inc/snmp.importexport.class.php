@@ -52,7 +52,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 				$model_name = $DB->result($result, 0, "name");
 				$type = $DB->result($result, 0, "itemtype");
 				$discovery_key = $DB->result($result, 0, "discovery_key");
-            $comments = $DB->result($result, 0, "comments");
+            $comment = $DB->result($result, 0, "comment");
 			} else {
 				exit();
          }
@@ -169,7 +169,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 			return false;
 		} else {
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_modelinfos`
-                               (`name`,`itemtype`,`discovery_key`,`comments`)
+                               (`name`,`itemtype`,`discovery_key`,`comment`)
                    VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."','".$xml->comments[0]."');";
 			$DB->query($query);
 			$plugin_fusioninventory_modelinfos_id = $DB->insert_id();
@@ -329,7 +329,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $ptud->fields['domain'] = Dropdown::importExternal("Domain",
                                              $discovery->WORKGROUP,$discovery->ENTITY);
                }
-               $ptud->fields['comments'] = $discovery->DESCRIPTION;
+               $ptud->fields['comment'] = $discovery->DESCRIPTION;
                $ptud->fields['type'] = $discovery->TYPE;
             $ptud->fields['plugin_fusioninventory_modelinfos_id'] = $plugin_fusioninventory_modelinfos_id;
 
@@ -423,8 +423,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                      }
                   }
                }
-               if ($ci->getField('comments') && !in_array('comments', $a_lockable))
-                  $data['comments'] = $discovery->DESCRIPTION;
+               if ($ci->getField('comment') && !in_array('comment', $a_lockable))
+                  $data['comment'] = $discovery->DESCRIPTION;
                if ($ci->getField('plugin_fusioninventory_modelinfos_id') && !in_array('plugin_fusioninventory_modelinfos_id', $a_lockable));
                   $data['plugin_fusioninventory_modelinfos_id'] = $FK_model;
                if ($ci->getField('plugin_fusioninventory_snmpauths_id') && !in_array('plugin_fusioninventory_snmpauths_id', $a_lockable));

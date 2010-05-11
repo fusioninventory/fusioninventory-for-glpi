@@ -111,7 +111,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 		Dropdown::show("PluginFusioninventoryAgents",
                      array('name'=>"plugin_fusioninventory_agents_id_discover",
                            'value'=>$this->fields["plugin_fusioninventory_agents_id_discover"],
-                           'comments'=>false));
+                           'comment'=>false));
 		echo "</td>";
 		echo "</tr>";
 
@@ -121,7 +121,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 		Dropdown::show("PluginFusioninventoryAgents",
                      array('name'=>"plugin_fusioninventory_agents_id_query",
                            'value'=>$this->fields["plugin_fusioninventory_agents_id_query"],
-                           'comments'=>false));
+                           'comment'=>false));
 		echo "</td>";
 		echo "</tr>";
 

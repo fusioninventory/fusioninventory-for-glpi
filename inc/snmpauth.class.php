@@ -77,7 +77,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		Dropdown::show("PluginFusioninventorySnmpversion",
                      array('name' => "plugin_fusioninventory_snmpversions_id",
                            'value' => $this->fields["plugin_fusioninventory_snmpversions_id"],
-                           'comments' => false));
+                           'comment' => false));
 		echo "</td>";
 		echo "</tr>";
 
@@ -101,7 +101,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		Dropdown::show("PluginFusioninventorySnmpprotocolauth",
                      array('name' => "auth_protocol",
                            'value' => $this->fields["auth_protocol"],
-                           'comments' => false));
+                           'comment' => false));
 		echo "</td>";
 		echo "</tr>";
 
@@ -119,7 +119,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		Dropdown::show("PluginFusioninventorySnmpprotocolpriv",
                      array('name' => "priv_protocol",
                            'value' => $this->fields["priv_protocol"],
-                           'comments' => false));
+                           'comment' => false));
 		echo "</td>";
 		echo "</tr>";
 

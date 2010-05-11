@@ -102,7 +102,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		Dropdown::show("PluginFusioninventoryModelInfos",
                      array('name'=>"plugin_fusioninventory_modelinfos_id",
                            'value'=>$data["plugin_fusioninventory_modelinfos_id"],
-                           'comments'=>false,
+                           'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>";
