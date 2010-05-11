@@ -1751,7 +1751,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
       case 'glpi_entities.name' :
          if (isMultiEntitiesMode()) {
             Dropdown::show("Entities",
-		                     array('name' => "FK_entities",
+		                     array('name' => "entities_id",
                            'value' => $_SESSION["glpiactive_entity"]));
          }
          return true;
