@@ -120,7 +120,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       $ptud->getFromDB($discovery_ID);
       $query = "SELECT `ID`
                 FROM `glpi_networkports`
-                WHERE `on_device` = '".$discovery_ID."'
+                WHERE `items_id` = '".$discovery_ID."'
                       AND `itemtype` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
@@ -147,7 +147,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $ID_Device = $Printer->add($data);
 
             $data_Port = $Networkport->fields;
-            $data_Port['on_device'] = $ID_Device;
+            $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
@@ -212,7 +212,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $ID_Device = $Peripheral->add($data);
 
             $data_Port = $Networkport->fields;
-            $data_Port['on_device'] = $ID_Device;
+            $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
@@ -238,7 +238,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $ID_Device = $Computer->add($data);
 
             $data_Port = $Networkport->fields;
-            $data_Port['on_device'] = $ID_Device;
+            $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
@@ -259,7 +259,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $ID_Device = $Phone->add($data);
 
             $data_Port = $Networkport->fields;
-            $data_Port['on_device'] = $ID_Device;
+            $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
             $Networkport->update($data_Port);
 
@@ -298,7 +298,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
                            if ($pgo->canUseNetworkPorts()) {
                               $data_Port = $Networkport->fields;
-                              $data_Port['on_device'] = $ID_Device;
+                              $data_Port['items_id'] = $ID_Device;
                               $data_Port['itemtype'] = $ptud->fields['type'];
                               $Networkport->update($data_Port);
                            } else {
@@ -531,7 +531,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
          }
          if ($ci->obj->table != "glpi_networkequipments") {
-            $query .= " LEFT JOIN glpi_networkports on on_device=".$ci->obj->table.".ID AND itemtype=".$type;
+            $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".ID AND itemtype=".$type;
          }
          if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;

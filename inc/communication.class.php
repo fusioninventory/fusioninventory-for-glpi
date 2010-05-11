@@ -204,12 +204,12 @@ class PluginFusioninventoryCommunication {
 
                         case NETWORKING_TYPE:
                            $modelslistused = $this->addDevice($sxml_option, 'networking', 0,
-                                 0, "-1", $modelslistused, 1, $tasks[$task_id]['on_device']);
+                                 0, "-1", $modelslistused, 1, $tasks[$task_id]['items_id']);
                            break;
 
                         case PRINTER_TYPE:
                            $modelslistused = $this->addDevice($sxml_option, 'printer', 0,
-                                 0, "-1", $modelslistused, 1, $tasks[$task_id]['on_device']);
+                                 0, "-1", $modelslistused, 1, $tasks[$task_id]['items_id']);
                            break;
                         
                      }
@@ -301,7 +301,7 @@ class PluginFusioninventoryCommunication {
                      $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ifaddr"]);
                      $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ifaddr"]);
                      $sxml_rangeip->addAttribute('ENTITY', "");
-                     $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["on_device"]);
+                     $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["items_id"]);
                      $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["itemtype"]);
 
                      $ptt->deleteFromDB($task_id);
@@ -489,7 +489,7 @@ class PluginFusioninventoryCommunication {
                       LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `printers_id`=`glpi_printers`.`ID`
                       LEFT JOIN `glpi_networkports`
-                              ON `on_device`=`glpi_printers`.`ID`
+                              ON `items_id`=`glpi_printers`.`ID`
                                  AND `itemtype`='".PRINTER_TYPE."'
                       INNER join `glpi_plugin_fusioninventory_modelinfos`
                            ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
@@ -1602,7 +1602,7 @@ class PluginFusioninventoryCommunication {
       $tasks = $ptt->ListTask($agent["ID"], "WAKEONLAN");
          foreach ($tasks as $task_id=>$taskInfos) {
             if ($taskInfos['itemtype'] == COMPUTER_TYPE) {
-               $a_portsList = $np->find('on_device='.$taskInfos['on_device'].' AND itemtype="'.COMPUTER_TYPE.'"');
+               $a_portsList = $np->find('items_id='.$taskInfos['items_id'].' AND itemtype="'.COMPUTER_TYPE.'"');
                foreach ($a_portsList as $ID=>$data) {
                   if ($data['ifaddr'] != "127.0.0.1") {
                      $sxml_param = $sxml_option->addChild('PARAM');

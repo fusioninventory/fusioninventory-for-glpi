@@ -142,7 +142,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $ptp = new PluginFusioninventoryPort();
       $query = "SELECT `ID`
                 FROM `glpi_networkports`
-                WHERE `on_device` = '".$this->getValue('ID')."'
+                WHERE `items_id` = '".$this->getValue('ID')."'
                       AND `itemtype` = '".PRINTER_TYPE."';";
       $portsIds = array();
       if ($result = $DB->query($query)) {

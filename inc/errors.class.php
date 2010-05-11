@@ -131,7 +131,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
                 FROM `glpi_computers` AS `pc`, `glpi_networkports` AS `port`
 	   			 WHERE `port`.`itemtype` = ".$itemtype." ".
                       "AND `port`.`ifaddr` = '".$input['ifaddr']."' ".
-                      "AND `port`.`on_device` = `pc`.`ID`;";
+                      "AND `port`.`items_id` = `pc`.`ID`;";
 		
 		// else, find ID by name
 		$query2 = "SELECT `ID`, `otherserial`, `entities_id` ".

@@ -127,7 +127,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    function addDB($p_id, $p_force=FALSE) {
       if (count($this->ptcdUpdates) OR $p_force) {
          // update core
-         $this->ptcdUpdates['on_device']=$p_id;
+         $this->ptcdUpdates['items_id']=$p_id;
          $this->ptcdUpdates['itemtype']=$this->glpi_type;
 //         $this->ptcdUpdates['itemtype']=NETWORKING_TYPE;
          $portID=parent::add($this->ptcdUpdates);
@@ -202,7 +202,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       $newID=$ptud->add($unknown_infos);
       // Add networking_port
       $np=new Networkport;
-      $port_add["on_device"] = $newID;
+      $port_add["items_id"] = $newID;
       $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
       $port_add["ifaddr"] = $p_ip;
       $port_add['ifmac'] = $p_mac;
@@ -621,7 +621,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                 WHERE `ID`='".$id."';";
       if ($result=$DB->query($query)) {
          $data = $DB->fetch_array($result);
-         $array["on_device"] = $data["on_device"];
+         $array["items_id"] = $data["items_id"];
          $array["itemtype"] = $data["itemtype"];
       }
       switch($array["itemtype"]) {

@@ -190,7 +190,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                                          `glpi_networkports`.`ID`
                        WHERE (`ifdescr`='".$ifDescr."'
                                 OR `glpi_networkports`.`name`='".$ifDescr."')
-                             AND `glpi_networkports`.`on_device`='".$data["networkequipments_id"]."'
+                             AND `glpi_networkports`.`items_id`='".$data["networkequipments_id"]."'
                              AND `glpi_networkports`.`itemtype`='2';";
          $resultPort = $DB->query($queryPort);
          $dataPort = $DB->fetch_assoc($resultPort);
@@ -218,7 +218,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
             $query1 = "SELECT *
                 FROM `glpi_networkports`
                 WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
-                   AND `on_device`='".$data['ID']."'
+                   AND `items_id`='".$data['ID']."'
                    AND `name`='".$ifDescr."'
                 LIMIT 1";
             $result1 = $DB->query($query1);
@@ -228,7 +228,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
             } else {
                // Add port
                $input = array();
-               $input['on_device'] = $data['ID'];
+               $input['items_id'] = $data['ID'];
                $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
                $input['ifaddr'] = $IP;
                $input['name'] = $ifDescr;
@@ -245,10 +245,10 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
-            if ($pfiud->convertUnknownToUnknownNetwork($data['on_device'])) {
+            if ($pfiud->convertUnknownToUnknownNetwork($data['items_id'])) {
                // Add port
                $input = array();
-               $input['on_device'] = $data['on_device'];
+               $input['items_id'] = $data['items_id'];
                $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
                $input['ifaddr'] = $IP;
                $input['name'] = $ifDescr;
@@ -262,7 +262,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          $unkonwn_id = $pfiud->add($input);
          // Add port
          $input = array();
-         $input['on_device'] = $unkonwn_id;
+         $input['items_id'] = $unkonwn_id;
          $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
          $input['ifaddr'] = $IP;
          $input['name'] = $ifDescr;
@@ -445,7 +445,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          foreach ($ArrayPort_LogicalNum_SNMPNum as $num=>$ifIndex) {
             $query_update = "UPDATE `glpi_networkports`
                           SET `logical_number`='".$ifIndex."'
-                          WHERE `on_device`='".$ID_Device."'
+                          WHERE `items_id`='".$ID_Device."'
                                 AND `itemtype`='".$type."'
                                 AND `name`='".$ArrayPort_LogicalNum_SNMPName[$num]."';";
             $DB->query($query_update);
@@ -484,7 +484,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                if ($goodname == 1) {
                   $query = "SELECT `ID`, `name`
                          FROM `glpi_networkports`
-                         WHERE `on_device`='".$ID_Device."'
+                         WHERE `items_id`='".$ID_Device."'
                                AND `itemtype`='".$type."'
                                AND `logical_number`='".$ifIndex."';";
                   $result = $DB->query($query);
@@ -492,7 +492,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                      unset($array);
                      $array["logical_number"] = $ifIndex;
                      $array["name"] = $ArrayPort_LogicalNum_SNMPName[$num];
-                     $array["on_device"] = $ID_Device;
+                     $array["items_id"] = $ID_Device;
                      $array["itemtype"] = $type;
 
                      $IDport = $np->add($array);
@@ -540,7 +540,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       foreach($deleteportname as $id=>$i) {
          $query = "SELECT *
                 FROM `glpi_networkports`
-                WHERE `on_device`='".$ID_Device."'
+                WHERE `items_id`='".$ID_Device."'
                       AND `itemtype`='".$type."'
                       AND `logical_number`='".$i."';";
          $result = $DB->query($query);
@@ -562,7 +562,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       $logicalnumberlist = str_replace(",)", ")", $logicalnumberlist);
       $query = "SELECT *
              FROM `glpi_networkports`
-             WHERE `on_device`='".$ID_Device."'
+             WHERE `items_id`='".$ID_Device."'
                    AND `itemtype`='".$type."'
                    AND `logical_number` NOT IN ".$logicalnumberlist.";";
       $result=$DB->query($query);
@@ -845,7 +845,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                       FROM `glpi_networkports`
                            LEFT JOIN `glpi_plugin_fusioninventory_networking_ports`
                                      ON `networkports_id`=`glpi_networkports`.`ID`
-                      WHERE `on_device`='".$ID_Device."'
+                      WHERE `items_id`='".$ID_Device."'
                             AND `itemtype`='".$type."'
                       ORDER BY `logical_number`;";
             } else {
@@ -854,7 +854,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                       FROM `glpi_networkports`
                             LEFT JOIN `glpi_plugin_fusioninventory_networking_ports`
                                        ON `networkports_id`=`glpi_networkports`.`ID`
-            			 WHERE `on_device`='".$ID_Device."'
+            			 WHERE `items_id`='".$ID_Device."'
                             AND `itemtype`='".$type."'
                       ORDER BY `logical_number`;";
             }
@@ -1200,7 +1200,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                                ON `glpi_plugin_fusioninventory_networking_ports`.`networkports_id` =
                                   `glpi_networkports`.`ID`
                 WHERE `itemtype`='2'
-                      AND `on_device`='".$ID_Device."'
+                      AND `items_id`='".$ID_Device."'
                       AND `logical_number`='".$ifIndex."';";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {

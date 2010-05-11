@@ -101,7 +101,7 @@ class PluginFusioninventoryAgentsErrors extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $ci->getFromDB($data['itemtype'],$data['on_device']);
+            $ci->getFromDB($data['itemtype'],$data['items_id']);
 				echo $ci->getLink(1);
             echo "</td>";
 
@@ -119,7 +119,7 @@ class PluginFusioninventoryAgentsErrors extends CommonDBTM {
 
    function addError($a_input) {
 
-      $input['on_device'] = $a_input['ID'];
+      $input['items_id'] = $a_input['ID'];
       if (!isset($a_input['TYPE'])) {
          $a_input['TYPE'] = 0;
       }

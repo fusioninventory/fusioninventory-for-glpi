@@ -143,13 +143,13 @@ class PluginFusioninventoryAgents extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["agents"][23]." :</td>";
 		echo "<td align='center'>";
-      if (($this->fields["on_device"] != "0") AND ($this->fields["on_device"] != "")) {
+      if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
          $CommonItem->getFromDB(COMPUTER_TYPE,
-                                   $this->fields["on_device"]);
+                                   $this->fields["items_id"]);
          echo $CommonItem->getLink(1);
-         echo "<input type='hidden' name='on_device' value='".$this->fields["on_device"]."'/>";
+         echo "<input type='hidden' name='items_id' value='".$this->fields["items_id"]."'/>";
       } else {
-         Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'on_device', $_SESSION['glpiactive_entity']);
+         Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'items_id', $_SESSION['glpiactive_entity']);
       }
 		echo "</td>";
 

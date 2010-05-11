@@ -121,7 +121,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       $ptp = new PluginFusioninventoryPort();
       $query = "SELECT `ID`
                 FROM `glpi_networkports`
-                WHERE `on_device` = '".$this->getValue('ID')."'
+                WHERE `items_id` = '".$this->getValue('ID')."'
                       AND `itemtype` = '".NETWORKING_TYPE."';";
       $portsIds = array();
       if ($result = $DB->query($query)) {
@@ -505,7 +505,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
 		LEFT JOIN glpi_networkports
 		ON glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networkports.ID
-		WHERE glpi_networkports.on_device='".$ID."'
+		WHERE glpi_networkports.items_id='".$ID."'
 		ORDER BY logical_number ";
 
 		echo "<script  type='text/javascript'>
@@ -740,7 +740,7 @@ function appear_array(id){
 								$data_device = $DB->fetch_assoc($result_device);
 
 								$CommonItem->getFromDB($data_device["itemtype"],
-                                               $data_device["on_device"]);
+                                               $data_device["items_id"]);
 								$link1 = $CommonItem->getLink(1);
 								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],
                                             $CommonItem->getLink());

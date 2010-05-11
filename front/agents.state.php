@@ -82,11 +82,11 @@ if (isset($_POST['action'])) {
             }
 
          } else if ($_POST['action'] == "NETDISCOVERY") {
-            $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'NETDISCOVERY', $splitinfo[0], $param);
+            $pfit->addTask($_POST['items_id'], $_POST['itemtype'], 'NETDISCOVERY', $splitinfo[0], $param);
          } else if ($_POST['action'] == "SNMPQUERY") {
-            $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'SNMPQUERY', $splitinfo[0], $param);
+            $pfit->addTask($_POST['items_id'], $_POST['itemtype'], 'SNMPQUERY', $splitinfo[0], $param);
          } else if ($_POST['action'] == "WAKEONLAN") {
-            $pfit->addTask($_POST['on_device'], $_POST['itemtype'], 'WAKEONLAN', $splitinfo[0], $param);
+            $pfit->addTask($_POST['items_id'], $_POST['itemtype'], 'WAKEONLAN', $splitinfo[0], $param);
          }
          $pfit->RemoteStartAgent($splitinfo[0], $splitinfo[1]);
       }

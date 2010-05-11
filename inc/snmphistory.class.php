@@ -351,7 +351,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   $input['networkports_id_1'] = $data_port['ID'];
 
                   $query_port2 = "SELECT * FROM `glpi_networkports`
-                     WHERE `on_device` = '".$data['new_device_ID']."'
+                     WHERE `items_id` = '".$data['new_device_ID']."'
                         AND `itemtype` = '".$data['new_itemtype']."' ";
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
@@ -412,7 +412,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   $input['networkports_id_1'] = $data_port['ID'];
 
                   $query_port2 = "SELECT * FROM `glpi_networkports`
-                     WHERE `on_device` = '".$data['old_device_ID']."'
+                     WHERE `items_id` = '".$data['old_device_ID']."'
                         AND `itemtype` = '".$data['old_itemtype']."' ";
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
@@ -659,9 +659,9 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                }
                if ($ID_port == $data["networkports_id_1"]) {
                   $np->getFromDB($data["networkports_id_2"]);
-                  if (isset($np->fields["on_device"])) {
+                  if (isset($np->fields["items_id"])) {
                      $CommonItem->getFromDB($np->fields["itemtype"],
-                                            $np->fields["on_device"]);
+                                            $np->fields["items_id"]);
                      $link1 = $CommonItem->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
                      if (rtrim($np->fields["name"]) != "")
@@ -676,9 +676,9 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
                } else if ($ID_port == $data["networkports_id_2"]) {
                   $np->getFromDB($data["networkports_id_1"]);
-                  if (isset($np->fields["on_device"])) {
+                  if (isset($np->fields["items_id"])) {
                      $CommonItem->getFromDB($np->fields["itemtype"],
-                                            $np->fields["on_device"]);
+                                            $np->fields["items_id"]);
                      $link1 = $CommonItem->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
                      if (rtrim($np->fields["name"]) != "")
