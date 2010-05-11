@@ -137,7 +137,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
    static function getLockable($p_entities_id='', $p_itemtype='') {
       global $DB;
 
-      $query = "SELECT `id`, `itemtype`, `fields`, `entities_id`, `recursive`
+      $query = "SELECT `id`, `itemtype`, `fields`, `entities_id`, `is_recursive`
                 FROM `glpi_plugin_fusioninventory_lockable`";
       $where = '';
       if ($p_entities_id != '') {
@@ -198,7 +198,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
 
       if (!$p_id) {
          $insert = "INSERT INTO `glpi_plugin_fusioninventory_lockable` (
-                     `itemtype`, `fields`, `entities_id`, `recursive` )
+                     `itemtype`, `fields`, `entities_id`, `is_recursive` )
                     VALUES ('$p_itemtype','$p_fields','$p_entities_id','$p_recursive');";
          $DB->query($insert);
       } else {
