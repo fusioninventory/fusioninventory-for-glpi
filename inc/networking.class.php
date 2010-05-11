@@ -50,7 +50,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 	 * Constructor
 	**/
    function __construct() {
-      parent::__construct("glpi_networking");
+      parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
       $this->type=NETWORKING_TYPE;
       $this->oFusionInventory_networking = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networking");
@@ -301,7 +301,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
     *@return nothing
     **/
    function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
-      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networking.ifaddr
+      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networkequipments.ifaddr
          $this->setValue('ifaddr', $p_oIfaddr->getValue('ifaddr'));
       }
       $this->newIfaddrs[]=$p_oIfaddr;
@@ -475,7 +475,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][14]."</td>";
 			echo "<td>";
 			$query2 = "SELECT *
-                    FROM `glpi_networking`
+                    FROM `glpi_networkequipments`
                     WHERE `ID`='".$ID."';";
 			$result2 = $DB->query($query2);
 			$data2 = $DB->fetch_assoc($result2);

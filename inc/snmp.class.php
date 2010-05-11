@@ -641,7 +641,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                switch ($type) {
                   case NETWORKING_TYPE :
                      $Field = "networkequipments_id";
-                     if ($FUSIONINVENTORY_MAPPING[$type][$link]['table'] == "glpi_networking") {
+                     if ($FUSIONINVENTORY_MAPPING[$type][$link]['table'] == "glpi_networkequipments") {
                         $Field = "ID";
                      }
                      break;

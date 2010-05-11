@@ -483,7 +483,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       }
       if ($macs!='') {
          $query = "SELECT `ifmac`
-                   FROM `glpi_networking`
+                   FROM `glpi_networkequipments`
                    WHERE `ifmac` IN (".$macs.");";
          $result=$DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -627,7 +627,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       switch($array["itemtype"]) {
          case NETWORKING_TYPE:
             $query = "SELECT *
-                      FROM `glpi_networking`
+                      FROM `glpi_networkequipments`
                       WHERE `ID`='".$array["itemtype"]."'
                       LIMIT 0,1;";
             if ($result=$DB->query($query)) {

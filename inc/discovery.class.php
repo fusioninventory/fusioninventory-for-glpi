@@ -530,7 +530,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          } else {
             $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
          }
-         if ($ci->obj->table != "glpi_networking") {
+         if ($ci->obj->table != "glpi_networkequipments") {
             $query .= " LEFT JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND itemtype=".$type;
          }
          if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {

@@ -42,13 +42,13 @@ global $LANG,$FUSIONINVENTORY_MAPPING,$FUSIONINVENTORY_MAPPING_DISCOVERY;
 // ----------------------------------------------------------------------
 //NETWORK MAPPING MAPPING
 // ----------------------------------------------------------------------
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['field'] = 'location';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['name'] = $LANG['plugin_fusioninventory']["mapping"][1];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['dropdown'] = 'glpi_dropdown_locations';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['field'] = 'firmware';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['name'] = $LANG['plugin_fusioninventory']["mapping"][2];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['type'] = 'text';
@@ -66,13 +66,13 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware2']['name'] = $LANG['plugin_f
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware2']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware2']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['field'] = 'contact';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['name'] = $LANG['plugin_fusioninventory']["mapping"][403];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['contact']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['field'] = 'comment';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['name'] = $LANG['plugin_fusioninventory']["mapping"][404];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['type'] = 'text';
@@ -102,25 +102,25 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['name'] = $LANG['plugin_f
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['serial']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['serial']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['serial']['field'] = 'serial';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['serial']['name'] = $LANG['plugin_fusioninventory']["mapping"][13];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['serial']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['serial']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['otherserial']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['otherserial']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['otherserial']['field'] = 'otherserial';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['otherserial']['name'] = $LANG['plugin_fusioninventory']["mapping"][419];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['otherserial']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['otherserial']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['name']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['name']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['name']['field'] = 'name';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['name']['name'] = $LANG['plugin_fusioninventory']["mapping"][20];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['name']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['name']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['field'] = 'ram';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['name'] = $LANG['plugin_fusioninventory']["mapping"][21];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['type'] = 'text';
@@ -144,13 +144,13 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['vmvlan']['name'] = $LANG['plugin_fusi
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['vmvlan']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['vmvlan']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['field'] = 'model';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANG['plugin_fusioninventory']["mapping"][17];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['field'] = 'ifmac';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['name'] = $LANG['plugin_fusioninventory']["mapping"][417];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['type'] = 'text';

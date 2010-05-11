@@ -456,22 +456,22 @@ class PluginFusioninventoryCommunication {
          
          case "networking":
             $type='NETWORKING';
-            $query = "SELECT `glpi_networking`.`ID` AS `gID`,
-                             `glpi_networking`.`ifaddr` AS `gnifaddr`,
+            $query = "SELECT `glpi_networkequipments`.`ID` AS `gID`,
+                             `glpi_networkequipments`.`ifaddr` AS `gnifaddr`,
                              `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
-                      FROM `glpi_networking`
+                      FROM `glpi_networkequipments`
                       LEFT JOIN `glpi_plugin_fusioninventory_networking`
-                           ON `networkequipments_id`=`glpi_networking`.`ID`
+                           ON `networkequipments_id`=`glpi_networkequipments`.`ID`
                       INNER join `glpi_plugin_fusioninventory_modelinfos`
                            ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
-                      WHERE `glpi_networking`.`is_deleted`='0'
+                      WHERE `glpi_networkequipments`.`is_deleted`='0'
                            AND `plugin_fusioninventory_modelinfos_id`!='0'
                            AND `plugin_fusioninventory_snmpauths_id`!='0'";
              if ($p_entity != '-1') {
-               $query .= "AND `glpi_networking`.`entities_id`='".$p_entity."' ";
+               $query .= "AND `glpi_networkequipments`.`entities_id`='".$p_entity."' ";
              }
              if ($p_ipstart == '0') {
-               $query .= " AND `glpi_networking`.`ID`='".$devide_id."'";
+               $query .= " AND `glpi_networkequipments`.`ID`='".$devide_id."'";
              } else {
                $query .= " AND inet_aton(`ifaddr`)
                                BETWEEN inet_aton('".$p_ipstart."')

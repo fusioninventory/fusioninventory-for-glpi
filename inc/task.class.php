@@ -68,7 +68,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
                            glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
-                        INNER JOIN glpi_networking on glpi_plugin_fusioninventory_task.on_device=glpi_networking.ID
+                        INNER JOIN glpi_networkequipments on glpi_plugin_fusioninventory_task.on_device=glpi_networkequipments.ID
                         WHERE `agent_id`='".$agent_id."'
                            AND `action`='".$action."'";
                break;
@@ -658,15 +658,15 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if (($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
          // Networking
          $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
-         $query = "SELECT `glpi_networking`.`ID` AS `gID`,
-                           `glpi_networking`.`name` AS `name`, `serial`, `otherserial`,
+         $query = "SELECT `glpi_networkequipments`.`ID` AS `gID`,
+                           `glpi_networkequipments`.`name` AS `name`, `serial`, `otherserial`,
                                 `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
-                         FROM `glpi_networking`
+                         FROM `glpi_networkequipments`
                          LEFT JOIN `glpi_plugin_fusioninventory_networking`
-                              ON `networkequipments_id`=`glpi_networking`.`ID`
+                              ON `networkequipments_id`=`glpi_networkequipments`.`ID`
                          INNER join `glpi_plugin_fusioninventory_modelinfos`
                               ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
-                         WHERE `glpi_networking`.`is_deleted`='0'
+                         WHERE `glpi_networkequipments`.`is_deleted`='0'
                               AND `plugin_fusioninventory_modelinfos_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY networkequipments_id";

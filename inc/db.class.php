@@ -108,7 +108,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
             break;
 
          case NETWORKING_TYPE:
-            $table = "`glpi_networking`";
+            $table = "`glpi_networkequipments`";
             break;
 
          case PRINTER_TYPE:
@@ -150,8 +150,8 @@ class PluginFusioninventoryDb extends CommonDBTM {
                        FROM `glpi_plugin_fusioninventory_networking_ports`
                              LEFT JOIN `glpi_networking_ports`
                                        ON `glpi_networking_ports`.`ID` = `networkports_id`
-                             LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `on_device`
-                       WHERE `glpi_networking`.`ID` IS NULL";
+                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`ID` = `on_device`
+                       WHERE `glpi_networkequipments`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
          $ptp->deleteFromDB($data["ID"],1);
@@ -160,8 +160,8 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_networking_ifaddr
       $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`ID`
                        FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                             LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `networkequipments_id`
-                       WHERE `glpi_networking`.`ID` IS NULL";
+                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`ID` = `networkequipments_id`
+                       WHERE `glpi_networkequipments`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
          $pti->deleteFromDB($data["ID"],1);
@@ -170,8 +170,8 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_networking
       $query_select = "SELECT `glpi_plugin_fusioninventory_networking`.`ID`
                        FROM `glpi_plugin_fusioninventory_networking`
-                             LEFT JOIN `glpi_networking` ON `glpi_networking`.`ID` = `networkequipments_id`
-                       WHERE `glpi_networking`.`ID` IS NULL";
+                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`ID` = `networkequipments_id`
+                       WHERE `glpi_networkequipments`.`ID` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
          $ptn->deleteFromDB($data["ID"],1);
