@@ -120,7 +120,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
       $ptp = new PluginFusioninventoryPort();
       $query = "SELECT `ID`
-                FROM `glpi_networking_ports`
+                FROM `glpi_networkports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
                       AND `itemtype` = '".NETWORKING_TYPE."';";
       $portsIds = array();
@@ -207,7 +207,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
     *@return nothing
     **/
    function savePorts() {
-      $CFG_GLPI["deleted_tables"][]="glpi_networking_ports"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_networkports"; // TODO : to clean
       
       foreach ($this->ports as $index=>$ptp) {
          if (!in_array($index, $this->updatesPorts)) { // delete ports which don't exist any more
@@ -503,9 +503,9 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
 		FROM glpi_plugin_fusioninventory_networking_ports
 
-		LEFT JOIN glpi_networking_ports
-		ON glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networking_ports.ID
-		WHERE glpi_networking_ports.on_device='".$ID."'
+		LEFT JOIN glpi_networkports
+		ON glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networkports.ID
+		WHERE glpi_networkports.on_device='".$ID."'
 		ORDER BY logical_number ";
 
 		echo "<script  type='text/javascript'>
@@ -733,7 +733,7 @@ function appear_array(id){
 							$opposite_port = $nw->getOppositeContact($data["networkports_id"]);
 							if ($opposite_port != "") {
 								$query_device = "SELECT *
-                                         FROM `glpi_networking_ports`
+                                         FROM `glpi_networkports`
                                          WHERE `ID`='".$opposite_port."';";
 
 								$result_device = $DB->query($query_device);

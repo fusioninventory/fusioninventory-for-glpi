@@ -78,8 +78,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
                $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
                            glpi_plugin_fusioninventory_task.on_device as on_device, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
-                        INNER JOIN glpi_networking_ports on (glpi_plugin_fusioninventory_task.on_device=glpi_networking_ports.on_device
-                                                      AND glpi_plugin_fusioninventory_task.itemtype=glpi_networking_ports.itemtype)
+                        INNER JOIN glpi_networkports on (glpi_plugin_fusioninventory_task.on_device=glpi_networkports.on_device
+                                                      AND glpi_plugin_fusioninventory_task.itemtype=glpi_networkports.itemtype)
                         WHERE `agent_id`='".$agent_id."'
                            AND `action`='".$action."'
                            AND `ifaddr`!='127.0.0.1'";
@@ -685,7 +685,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                          FROM `glpi_printers`
                          LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `printers_id`=`glpi_printers`.`ID`
-                         LEFT JOIN `glpi_networking_ports`
+                         LEFT JOIN `glpi_networkports`
                                  ON `on_device`=`glpi_printers`.`ID`
                                     AND `itemtype`='".PRINTER_TYPE."'
                          INNER join `glpi_plugin_fusioninventory_modelinfos`

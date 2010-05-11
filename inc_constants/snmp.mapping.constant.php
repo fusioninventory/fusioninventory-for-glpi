@@ -273,13 +273,13 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifstatus']['name'] = $LANG['plugin_fu
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifstatus']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifstatus']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['table'] = 'glpi_networking_ports';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['table'] = 'glpi_networkports';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['field'] = 'ifmac';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][15];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifName']['table'] = 'glpi_networking_ports';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifName']['table'] = 'glpi_networkports';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifName']['field'] = 'name';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifName']['name'] = $LANG['plugin_fusioninventory']["mapping"][16];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifName']['type'] = 'text';
@@ -508,19 +508,19 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['dropdown'] 
 
 // Printers : Networking
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['table'] = 'glpi_networking_ports';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['table'] = 'glpi_networkports';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['field'] = 'ifmac';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][58];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['table'] = 'glpi_networking_ports';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['table'] = 'glpi_networkports';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['field'] = 'name';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['name'] = $LANG['plugin_fusioninventory']["mapping"][57];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['table'] = 'glpi_networking_ports';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['table'] = 'glpi_networkports';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['field'] = 'ifaddr';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['name'] = $LANG['plugin_fusioninventory']["mapping"][407];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['type'] = 'text';

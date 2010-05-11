@@ -483,12 +483,12 @@ class PluginFusioninventoryCommunication {
          case "printer":
             $type='PRINTER';
             $query = "SELECT `glpi_printers`.`ID` AS `gID`,
-                             `glpi_networking_ports`.`ifaddr` AS `gnifaddr`,
+                             `glpi_networkports`.`ifaddr` AS `gnifaddr`,
                              `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                       FROM `glpi_printers`
                       LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `printers_id`=`glpi_printers`.`ID`
-                      LEFT JOIN `glpi_networking_ports`
+                      LEFT JOIN `glpi_networkports`
                               ON `on_device`=`glpi_printers`.`ID`
                                  AND `itemtype`='".PRINTER_TYPE."'
                       INNER join `glpi_plugin_fusioninventory_modelinfos`

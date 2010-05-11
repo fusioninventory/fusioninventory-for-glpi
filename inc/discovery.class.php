@@ -119,7 +119,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
       $ptud->getFromDB($discovery_ID);
       $query = "SELECT `ID`
-                FROM `glpi_networking_ports`
+                FROM `glpi_networkports`
                 WHERE `on_device` = '".$discovery_ID."'
                       AND `itemtype` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
       if ($result = $DB->query($query)) {
@@ -496,15 +496,15 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             case 'ip':
                $condition .= "AND `ifaddr`='".$value."' ";
                $select .= ", ifaddr";
-               $condition_unknown .= "AND `glpi_networking_ports`.`ifaddr`='".$value."' ";
-               $select_unknown .= ", `glpi_networking_ports`.`ifaddr`";
+               $condition_unknown .= "AND `glpi_networkports`.`ifaddr`='".$value."' ";
+               $select_unknown .= ", `glpi_networkports`.`ifaddr`";
                break;
 
             case 'macaddr':
                $condition .= "AND `ifmac`='".$value."' ";
                $select .= ", ifmac";
-               $condition_unknown .= "AND `glpi_networking_ports`.`ifmac`='".$value."' ";
-               $select_unknown .= ", `glpi_networking_ports`.`ifmac`";
+               $condition_unknown .= "AND `glpi_networkports`.`ifmac`='".$value."' ";
+               $select_unknown .= ", `glpi_networkports`.`ifmac`";
                break;
 
             case 'name':
@@ -531,7 +531,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
          }
          if ($ci->obj->table != "glpi_networkequipments") {
-            $query .= " LEFT JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND itemtype=".$type;
+            $query .= " LEFT JOIN glpi_networkports on on_device=".$ci->obj->table.".ID AND itemtype=".$type;
          }
          if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;

@@ -71,14 +71,14 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
             if ($thread_connection["old_device_ID"] != "0") {
                $queryPort = "SELECT *
-                             FROM `glpi_networking_ports`
+                             FROM `glpi_networkports`
                              WHERE `ifmac`='".$thread_connection['old_value']."'
                              LIMIT 0,1;";
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             } else if ($thread_connection["new_device_ID"] != "0") {
                $queryPort = "SELECT *
-                             FROM `glpi_networking_ports`
+                             FROM `glpi_networkports`
                              WHERE `ifmac`='".$thread_connection['new_value']."'
                              LIMIT 0,1;";
                $resultPort = $DB->query($queryPort);

@@ -141,7 +141,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 
       $ptp = new PluginFusioninventoryPort();
       $query = "SELECT `ID`
-                FROM `glpi_networking_ports`
+                FROM `glpi_networkports`
                 WHERE `on_device` = '".$this->getValue('ID')."'
                       AND `itemtype` = '".PRINTER_TYPE."';";
       $portsIds = array();
@@ -228,7 +228,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
     *@return nothing
     **/
    function savePorts() {
-      $CFG_GLPI["deleted_tables"][]="glpi_networking_ports"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_networkports"; // TODO : to clean
       
       foreach ($this->ports as $index=>$ptp) {
          if (!in_array($index, $this->updatesPorts)) { // delete ports which don't exist any more

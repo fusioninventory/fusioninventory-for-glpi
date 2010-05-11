@@ -128,7 +128,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		// Trying to find ID by IP
 		$query = "SELECT `pc`.`ID` AS `ID`, `pc`.`name` AS `name`,
                        `pc`.`otherserial` AS `otherserial`, `pc`.`entities_id` AS `entities_id`
-                FROM `glpi_computers` AS `pc`, `glpi_networking_ports` AS `port`
+                FROM `glpi_computers` AS `pc`, `glpi_networkports` AS `port`
 	   			 WHERE `port`.`itemtype` = ".$itemtype." ".
                       "AND `port`.`ifaddr` = '".$input['ifaddr']."' ".
                       "AND `port`.`on_device` = `pc`.`ID`;";

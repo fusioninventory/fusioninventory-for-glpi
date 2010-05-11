@@ -342,7 +342,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             $i++;
 
             // Search port from mac address
-            $query_port = "SELECT * FROM `glpi_networking_ports`
+            $query_port = "SELECT * FROM `glpi_networkports`
                WHERE `ifmac`='".$data['new_value']."' ";
             if ($result_port=$DB->query($query_port)) {
                if ($DB->numrows($result_port) == '1') {
@@ -350,7 +350,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   $data_port = $DB->fetch_assoc($result_port);
                   $input['networkports_id_1'] = $data_port['ID'];
 
-                  $query_port2 = "SELECT * FROM `glpi_networking_ports`
+                  $query_port2 = "SELECT * FROM `glpi_networkports`
                      WHERE `on_device` = '".$data['new_device_ID']."'
                         AND `itemtype` = '".$data['new_itemtype']."' ";
                   if ($result_port2=$DB->query($query_port2)) {
@@ -403,7 +403,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             $i++;
             
             // Search port from mac address
-            $query_port = "SELECT * FROM `glpi_networking_ports`
+            $query_port = "SELECT * FROM `glpi_networkports`
                WHERE `ifmac`='".$data['old_value']."' ";
             if ($result_port=$DB->query($query_port)) {
                if ($DB->numrows($result_port) == '1') {
@@ -411,7 +411,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   $data_port = $DB->fetch_assoc($result_port);
                   $input['networkports_id_1'] = $data_port['ID'];
 
-                  $query_port2 = "SELECT * FROM `glpi_networking_ports`
+                  $query_port2 = "SELECT * FROM `glpi_networkports`
                      WHERE `on_device` = '".$data['old_device_ID']."'
                         AND `itemtype` = '".$data['old_itemtype']."' ";
                   if ($result_port2=$DB->query($query_port2)) {

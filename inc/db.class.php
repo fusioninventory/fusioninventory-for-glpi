@@ -148,8 +148,8 @@ class PluginFusioninventoryDb extends CommonDBTM {
       // * Clean glpi_plugin_fusioninventory_networking_ports
       $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`ID`
                        FROM `glpi_plugin_fusioninventory_networking_ports`
-                             LEFT JOIN `glpi_networking_ports`
-                                       ON `glpi_networking_ports`.`ID` = `networkports_id`
+                             LEFT JOIN `glpi_networkports`
+                                       ON `glpi_networkports`.`ID` = `networkports_id`
                              LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`ID` = `on_device`
                        WHERE `glpi_networkequipments`.`ID` IS NULL";
       $result=$DB->query($query_select);

@@ -63,7 +63,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          $logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/communication_port_'.
                               time().'_'.rand(1,1000);
       }
-      parent::__construct("glpi_networking_ports", $logFile);
+      parent::__construct("glpi_networkports", $logFile);
       $this->oFusionInventory_networking_ports =
               new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networking_ports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
@@ -617,7 +617,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
 
       $array = array();
       $query = "SELECT *
-                FROM `glpi_networking_ports`
+                FROM `glpi_networkports`
                 WHERE `ID`='".$id."';";
       if ($result=$DB->query($query)) {
          $data = $DB->fetch_array($result);
