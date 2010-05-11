@@ -384,7 +384,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       echo "<br/><center><table align='center' width='500'>";
       echo "<tr>";
       echo "<td>";
-      echo "Moving deleted connections history ...";
+      echo "Moving deleted connections history ..."; //TODO : translate
       echo "</td>";
       echo "</tr>";
       echo "<tr>";
