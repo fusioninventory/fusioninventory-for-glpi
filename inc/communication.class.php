@@ -464,7 +464,7 @@ class PluginFusioninventoryCommunication {
                            ON `networkequipments_id`=`glpi_networking`.`ID`
                       INNER join `glpi_plugin_fusioninventory_modelinfos`
                            ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
-                      WHERE `glpi_networking`.`deleted`='0'
+                      WHERE `glpi_networking`.`is_deleted`='0'
                            AND `plugin_fusioninventory_modelinfos_id`!='0'
                            AND `plugin_fusioninventory_snmpauths_id`!='0'";
              if ($p_entity != '-1') {
@@ -493,7 +493,7 @@ class PluginFusioninventoryCommunication {
                                  AND `itemtype`='".PRINTER_TYPE."'
                       INNER join `glpi_plugin_fusioninventory_modelinfos`
                            ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
-                      WHERE `glpi_printers`.`deleted`=0
+                      WHERE `glpi_printers`.`is_deleted`=0
                             AND `plugin_fusioninventory_modelinfos_id`!='0'
                             AND `plugin_fusioninventory_snmpauths_id`!='0'";
              if ($p_entity != '-1') {

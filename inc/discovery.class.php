@@ -534,9 +534,9 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $query .= " LEFT JOIN glpi_networking_ports on on_device=".$ci->obj->table.".ID AND itemtype=".$type;
          }
          if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
-            $query .= " WHERE deleted=0 ".$condition_unknown;
+            $query .= " WHERE is_deleted=0 ".$condition_unknown;
          } else {
-            $query .= " WHERE deleted=0 ".$condition;
+            $query .= " WHERE is_deleted=0 ".$condition;
          }
          $result = $DB->query($query);
          if($DB->numrows($result) > 0) {
@@ -552,7 +552,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       // Search in PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN when ifaddr in not empty (so when it's a switch)
       $ci->setType(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,true);
       $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
-      $query .= " WHERE deleted=0 ".$condition;
+      $query .= " WHERE is_deleted=0 ".$condition;
       $result = $DB->query($query);
       if($DB->numrows($result) > 0) {
          $data = $DB->fetch_assoc($result);

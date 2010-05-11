@@ -199,7 +199,7 @@ function getValues($get,$post) {
 function resetSearch() {
 	$_GET["start"]=0;
 	$_GET["order"]="ASC";
-	$_GET["deleted"]=0;
+	$_GET["is_deleted"]=0;
 	$_GET["distinct"]="N";
 	$_GET["link"]=array();
 	$_GET["field"]=array(0=>"view");

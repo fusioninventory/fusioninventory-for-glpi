@@ -338,7 +338,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                   $ptud->fields['snmp'] = 1;
                }
                $ptud->fields['location'] = 0;
-               $ptud->fields['deleted'] = 0;
+               $ptud->fields['is_deleted'] = 0;
                if ($ptud->fields['domain'] == '') {
                   $ptud->fields['domain'] = 0;
                }

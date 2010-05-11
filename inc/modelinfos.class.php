@@ -106,7 +106,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
             echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
             echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
                  "\" class='submit' >";
-            if (!$this->fields["deleted"]) {
+            if (!$this->fields["is_deleted"]) {
                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
                     $LANG["buttons"][6] . "\" class='submit'>";
             } else {
