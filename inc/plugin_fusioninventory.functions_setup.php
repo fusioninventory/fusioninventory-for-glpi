@@ -191,6 +191,20 @@ function plugin_fusioninventory_update($version) {
       $pficsnmph = new PluginFusionInventoryConfigSNMPHistory;
       $pficsnmph->initConfig();
       $pficsnmph->updateTrackertoFusion();
+
+      // Delete all ports present in fusion but deleted in glpi_networking
+      $query = "SELECT glpi_plugin_fusioninventory_networking_ports.ID AS fusinvID FROM `glpi_plugin_fusioninventory_networking_ports`
+         LEFT JOIN `glpi_networking_ports` ON FK_networking_ports=glpi_networking_ports.ID
+         WHERE glpi_networking_ports.ID IS NULL";
+      if ($result=$DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ports`
+               WHERE `ID`='".$data['fusinvID']."' ";
+            $DB->query($query_delete);
+
+         }
+      }
+
    }
 	plugin_fusioninventory_initSession();
 }
