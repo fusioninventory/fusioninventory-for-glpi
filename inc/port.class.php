@@ -357,9 +357,9 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                }
             }
             $query = "SELECT *
-                      FROM `glpi_networking_vlan`
+                      FROM `glpi_networkports_vlans`
                            LEFT JOIN `glpi_dropdown_vlan`
-                              ON `glpi_networking_vlan`.`vlans_id`=`glpi_dropdown_vlan`.`ID`
+                              ON `glpi_networkports_vlans`.`vlans_id`=`glpi_dropdown_vlan`.`ID`
                       WHERE `ports_id`='$tmp_port'";
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "0") { // this port has no vlan
@@ -405,7 +405,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          }
       } else { // no vlan to add/update --> delete existing
          $query = "SELECT *
-                   FROM `glpi_networking_vlan`
+                   FROM `glpi_networkports_vlans`
                    WHERE `ports_id`='".$this->getValue('ID')."'";
          if ($result=$DB->query($query)) {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
@@ -433,7 +433,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    function assignVlan($p_port, $p_vlan) {
       global $DB;
 
-      $query = "INSERT INTO glpi_networking_vlan (ports_id,vlans_id)
+      $query = "INSERT INTO glpi_networkports_vlans (ports_id,vlans_id)
                 VALUES ('$p_port','$p_vlan')";
       $DB->query($query);
    }
@@ -450,16 +450,16 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
 
       if ($p_vlan != '') {
          if ($p_port != '') { // delete this vlan for this port
-            $query="DELETE FROM `glpi_networking_vlan`
+            $query="DELETE FROM `glpi_networkports_vlans`
                     WHERE `vlans_id`='$p_vlan'
                           AND `ports_id`='$p_port';";
          } else { // delete this vlan for all ports
-            $query="DELETE FROM `glpi_networking_vlan`
+            $query="DELETE FROM `glpi_networkports_vlans`
                     WHERE `vlans_id`='$p_vlan';";
             // do not remove vlan in glpi_dropdown_vlan : manual remove
          }
       } else { // delete all vlans for this port
-         $query="DELETE FROM `glpi_networking_vlan`
+         $query="DELETE FROM `glpi_networkports_vlans`
                  WHERE `ports_id`='$p_port';";
       }
       $DB->query($query);
