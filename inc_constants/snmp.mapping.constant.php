@@ -350,7 +350,7 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['otherserial']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['otherserial']['dropdown'] = '';
 
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['memory']['table'] = 'glpi_printers';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['memory']['field'] = 'ramSize';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['memory']['field'] = 'memory_size';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['memory']['name'] = $LANG['plugin_fusioninventory']["mapping"][26];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['memory']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['memory']['dropdown'] = '';
