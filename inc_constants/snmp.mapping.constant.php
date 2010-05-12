@@ -148,7 +148,7 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['table'] = 'gl
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['field'] = 'model';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['name'] = $LANG['plugin_fusioninventory']["mapping"][17];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_networkequipmentsmodels';
 
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['field'] = 'mac';

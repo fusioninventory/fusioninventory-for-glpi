@@ -625,7 +625,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                if ((isset($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown']))
                        AND (!empty($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown']))) {
                   $oidvalues[$oid][""] = PluginFusioninventorySNMP::hex_to_string($oidvalues[$oid][""]);
-                  if ($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown'] == "glpi_dropdown_model_networking") {
+                  if ($FUSIONINVENTORY_MAPPING[$type][$link]['dropdown'] == "glpi_networkequipmentsmodels") {
                      $oidvalues[$oid][""] =
                              Dropdown::importExternal("NetworkEquipmentModel",
                                 $oidvalues[$oid][""],0,array("manufacturer"=>$oidvalues[$oid][""]));
