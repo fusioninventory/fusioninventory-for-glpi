@@ -53,6 +53,10 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
 			$this->getFromDB($ID);
       } else {
 			$this->getEmpty();
+         if (isset($_SESSION['glpi_plugin_fusioninventory_addrangeip'])) {
+            $this->fields = $_SESSION['glpi_plugin_fusioninventory_addrangeip'];
+            unset($_SESSION['glpi_plugin_fusioninventory_addrangeip']);
+         }
       }
 		$this->showTabs($ID, "",$_SESSION['glpi_tab']);
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
@@ -229,7 +233,7 @@ class PluginFusionInventoryRangeIP extends CommonDBTM {
          if (strstr($num, "ifaddr_")) {
             if (($value>255) OR (!is_numeric($value)) OR strstr($value, ".")) {
                $count++;
-               print $num;
+               //print $num;
                $a_input[$num] = "<font color='#ff0000'>".$a_input[$num]."</font>";
             }
          }
