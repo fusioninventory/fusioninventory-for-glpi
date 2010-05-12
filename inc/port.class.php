@@ -65,7 +65,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       }
       parent::__construct("glpi_networkports", $logFile);
       $this->oFusionInventory_networking_ports =
-              new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networking_ports");
+              new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
       $this->addLog('New PluginFusioninventoryPort object.');
    }
@@ -81,7 +81,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       parent::load($p_id);
       if (is_numeric($p_id)) { // port exists
          $query = "SELECT `id`
-                   FROM `glpi_plugin_fusioninventory_networking_ports`
+                   FROM `glpi_plugin_fusioninventory_networkports`
                    WHERE `networkports_id` = '".$p_id."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {

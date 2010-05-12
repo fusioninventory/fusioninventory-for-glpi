@@ -107,7 +107,7 @@ class PluginFusioninventorySetup {
          // Import models
    //		$importexport = new PluginFusioninventoryImportExport;
    //		foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0);
-         // Clean DB (ports in glpi_plugin_fusioninventory_networking_ports..... )
+         // Clean DB (ports in glpi_plugin_fusioninventory_networkports..... )
 
       }
       if ($version == "2.0.2") {

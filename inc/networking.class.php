@@ -499,12 +499,12 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 // ********************************************************************************************** //
 
 		$query = "
-		SELECT *,glpi_plugin_fusioninventory_networking_ports.mac as ifmacinternal
+		SELECT *,glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
 
-		FROM glpi_plugin_fusioninventory_networking_ports
+		FROM glpi_plugin_fusioninventory_networkports
 
 		LEFT JOIN glpi_networkports
-		ON glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networkports.id
+		ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
 		WHERE glpi_networkports.items_id='".$id."'
 		ORDER BY logical_number ";
 

@@ -145,9 +145,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
       $ptpc = new PluginFusioninventoryPrintersCartridges;
       $ptph = new PluginFusioninventoryPrintersHistory;
 
-      // * Clean glpi_plugin_fusioninventory_networking_ports
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`id`
-                       FROM `glpi_plugin_fusioninventory_networking_ports`
+      // * Clean glpi_plugin_fusioninventory_networkports
+      $query_select = "SELECT `glpi_plugin_fusioninventory_networkports`.`id`
+                       FROM `glpi_plugin_fusioninventory_networkports`
                              LEFT JOIN `glpi_networkports`
                                        ON `glpi_networkports`.`id` = `networkports_id`
                              LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `items_id`

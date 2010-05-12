@@ -184,9 +184,9 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          $data = $DB->fetch_assoc($result);
 
          $queryPort = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_networking_ports`
+                       FROM `glpi_plugin_fusioninventory_networkports`
                             LEFT JOIN `glpi_networkports`
-                                      ON `glpi_plugin_fusioninventory_networking_ports`.`networkports_id`=
+                                      ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
                                          `glpi_networkports`.`id`
                        WHERE (`ifdescr`='".$ifDescr."'
                                 OR `glpi_networkports`.`name`='".$ifDescr."')
