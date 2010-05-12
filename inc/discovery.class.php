@@ -37,7 +37,6 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_discovery";
-		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_DISCOVERY;
 	}
 
    /**
