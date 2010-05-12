@@ -190,6 +190,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][3]['field'] = 'date_mod';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][3]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][3]['name'] = $LANG["common"][26];
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][3]['datatype'] = 'datetime';
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][4]['table'] = 'glpi_entities';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][4]['field'] = 'name';
