@@ -110,7 +110,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       if (array_key_exists('model', $this->ptcdUpdates)) {
-         $manufacturer = Dropdown::getDropdownName("glpi_dropdown_manufacturer",
+         $manufacturer = Dropdown::getDropdownName("glpi_manufacturers",
                                          $this->getValue('manufacturers_id'));
          $this->ptcdUpdates['model'] = Dropdown::importExternal("PrinterModel",
                                                    $this->ptcdUpdates['model'], 0,

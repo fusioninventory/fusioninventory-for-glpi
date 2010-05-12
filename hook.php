@@ -620,7 +620,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][1]['name'] = $LANG["common"][16];
    $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][1]['datatype']='itemlink';
 
-  	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['table'] = 'glpi_dropdown_manufacturer';
+  	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['table'] = 'glpi_manufacturers';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['linkfield'] = 'manufacturer';
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['name'] = $LANG['common'][5];
