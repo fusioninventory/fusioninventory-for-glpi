@@ -140,9 +140,9 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT * 
-                      FROM `glpi_plugin_fusioninventory_networking`
+                      FROM `glpi_plugin_fusioninventory_networkequipments`
                            LEFT JOIN `glpi_plugin_fusioninventory_mib`
-                           ON `glpi_plugin_fusioninventory_networking`.`plugin_fusioninventory_modelinfos_id`=
+                           ON `glpi_plugin_fusioninventory_networkequipments`.`plugin_fusioninventory_modelinfos_id`=
                               `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`
                       WHERE `networkequipments_id`='".$ID_Device."'
                             AND `glpi_plugin_fusioninventory_mib`.`activation`='1' ";
@@ -222,7 +222,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
                switch($type) {
 
                   case NETWORKING_TYPE:
-                     $query = "UPDATE `glpi_plugin_fusioninventory_networking`
+                     $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                                SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."'
                                WHERE `networkequipments_id`='".$device_id."'";
                      $DB->query($query);

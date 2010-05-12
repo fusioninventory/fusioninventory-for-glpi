@@ -662,7 +662,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
                            `glpi_networkequipments`.`name` AS `name`, `serial`, `otherserial`,
                                 `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                          FROM `glpi_networkequipments`
-                         LEFT JOIN `glpi_plugin_fusioninventory_networking`
+                         LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                               ON `networkequipments_id`=`glpi_networkequipments`.`id`
                          INNER join `glpi_plugin_fusioninventory_modelinfos`
                               ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`

@@ -53,7 +53,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
       $this->type=NETWORKING_TYPE;
-      $this->oFusionInventory_networking = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networking");
+      $this->oFusionInventory_networking = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
    }
 
    /**
@@ -69,7 +69,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       $this->ports = $this->getPortsDB();
 
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_networking`
+                FROM `glpi_plugin_fusioninventory_networkequipments`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {

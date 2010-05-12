@@ -78,25 +78,25 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['name'] = $LANG['plugin_fus
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['comment']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['table'] = 'glpi_plugin_fusioninventory_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['table'] = 'glpi_plugin_fusioninventory_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['field'] = 'uptime';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['name'] = $LANG['plugin_fusioninventory']["mapping"][3];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['uptime']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpu']['table'] = 'glpi_plugin_fusioninventory_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpu']['table'] = 'glpi_plugin_fusioninventory_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpu']['field'] = 'cpu';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpu']['name'] = $LANG['plugin_fusioninventory']["mapping"][12];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpu']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpu']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpuuser']['table'] = 'glpi_plugin_fusioninventory_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpuuser']['table'] = 'glpi_plugin_fusioninventory_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpuuser']['field'] = 'cpu';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpuuser']['name'] = $LANG['plugin_fusioninventory']["mapping"][401];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpuuser']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpuuser']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['table'] = 'glpi_plugin_fusioninventory_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['table'] = 'glpi_plugin_fusioninventory_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['field'] = 'cpu';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['name'] = $LANG['plugin_fusioninventory']["mapping"][402];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cpusystem']['type'] = 'text';
@@ -126,7 +126,7 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['name'] = $LANG['plugin_fusioni
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ram']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['memory']['table'] = 'glpi_plugin_fusioninventory_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['memory']['table'] = 'glpi_plugin_fusioninventory_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['memory']['field'] = 'memory';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['memory']['name'] = $LANG['plugin_fusioninventory']["mapping"][22];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['memory']['type'] = 'text';

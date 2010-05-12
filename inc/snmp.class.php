@@ -53,11 +53,11 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		$ObjectLink = array();
 
 		if ($type == NETWORKING_TYPE) {
-			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_networking`
-                                 ON `glpi_plugin_fusioninventory_networking`.`plugin_fusioninventory_modelinfos_id`=
+			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
+                                 ON `glpi_plugin_fusioninventory_networkequipments`.`plugin_fusioninventory_modelinfos_id`=
                                     `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`
                     WHERE `networkequipments_id`='".$ID_Device."'
-                          AND `glpi_plugin_fusioninventory_networking`.`plugin_fusioninventory_modelinfos_id`!='0' ";
+                          AND `glpi_plugin_fusioninventory_networkequipments`.`plugin_fusioninventory_modelinfos_id`!='0' ";
       } else if($type == PRINTER_TYPE) {
 			$query_add = "LEFT JOIN `glpi_plugin_fusioninventory_printers`
                                  ON `glpi_plugin_fusioninventory_printers`.`plugin_fusioninventory_modelinfos_id`=
@@ -102,11 +102,11 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		global $DB;
 		
 		$query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_networking`
+                FROM `glpi_plugin_fusioninventory_networkequipments`
                 WHERE `networkequipments_id`='".$id."';";
 		$result = $DB->query($query);
 		if ($DB->numrows($result) == "0") {
-			$queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_networking`(`networkequipments_id`)
+			$queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_networkequipments`(`networkequipments_id`)
                          VALUES('".$id."');";
 
 			$DB->query($queryInsert);
@@ -114,7 +114,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		if (empty($plugin_fusioninventory_snmpauths_id)) {
 			$plugin_fusioninventory_snmpauths_id = 0;
       }
-		$query = "UPDATE `glpi_plugin_fusioninventory_networking`
+		$query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                 SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."',
                     `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `networkequipments_id`='".$id."';";
@@ -308,7 +308,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT plugin_fusioninventory_modelinfos_id
-				FROM glpi_plugin_fusioninventory_networking 
+				FROM glpi_plugin_fusioninventory_networkequipments 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 

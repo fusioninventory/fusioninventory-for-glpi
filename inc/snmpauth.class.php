@@ -396,7 +396,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 			switch ($type) {
 				case NETWORKING_TYPE :
 					$query = "SELECT *
-                         FROM `glpi_plugin_fusioninventory_networking`
+                         FROM `glpi_plugin_fusioninventory_networkequipments`
                          WHERE `networkequipments_id`='".$ID_Device."';";
 					break;
 
@@ -610,7 +610,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT plugin_fusioninventory_snmpauths_id
-				FROM glpi_plugin_fusioninventory_networking 
+				FROM glpi_plugin_fusioninventory_networkequipments 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 
