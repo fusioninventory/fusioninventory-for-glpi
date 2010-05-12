@@ -208,7 +208,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
             $PortID = $dataPort["networkports_id"];
          }
       } else {
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
             WHERE `ip`='".$IP."'
             LIMIT 1";
          $result = $DB->query($query);

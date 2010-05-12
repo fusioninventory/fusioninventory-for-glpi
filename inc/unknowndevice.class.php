@@ -34,7 +34,7 @@
 class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_unknown_device";
+		$this->table = "glpi_plugin_fusioninventory_unknowndevices";
 		$this->type = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
       $this->dohistory=true;
 	}
@@ -273,10 +273,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $query = "SELECT `glpi_networkports`.`id`
                 FROM `glpi_networkports`
-                     LEFT JOIN `glpi_plugin_fusioninventory_unknown_device`
-                               ON `items_id`=`glpi_plugin_fusioninventory_unknown_device`.`id`
+                     LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
+                               ON `items_id`=`glpi_plugin_fusioninventory_unknowndevices`.`id`
                      WHERE `itemtype`=".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."
-                           AND `glpi_plugin_fusioninventory_unknown_device`.`id` IS NULL;";
+                           AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             $unknown_infos["name"] = '';

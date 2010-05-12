@@ -71,7 +71,7 @@ function plugin_init_fusioninventory() {
 		// Define SQL table restriction of entity
 		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_discovery';
 		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
-      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_unknown_device';
+      $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_unknowndevices';
 
 		if(isset($_SESSION["glpi_plugin_fusioninventory_installed"]) && $_SESSION["glpi_plugin_fusioninventory_installed"]==1) {
 
