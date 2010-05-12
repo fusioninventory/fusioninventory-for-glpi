@@ -946,7 +946,7 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $errors='';
-      $pti = new PluginFusioninventoryIfaddr;
+      $pti = new PluginFusioninventoryNetworkequipmentsIp;
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :

@@ -267,7 +267,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
    private function getIfaddrsDB() {
       global $DB;
 
-      $pti = new PluginFusioninventoryIfaddr();
+      $pti = new PluginFusioninventoryNetworkequipmentsIp();
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusioninventory_networkequipments_ips`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
