@@ -35,7 +35,7 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_agents_processes";
-		$this->type = PLUGIN_FUSIONINVENTORY_AGENTS_PROCESSES;
+		$this->type = 'PluginFusioninventoryAgentsProcess';
 	}
 
 
