@@ -476,7 +476,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['linkfield'] = 'networkports_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['name'] = $LANG["setup"][175];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['table'] = 'glpi_dropdown_locations';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['table'] = 'glpi_locations';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['field'] = 'id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['linkfield'] = 'networkports_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['name'] = $LANG["common"][15];
@@ -1007,8 +1007,8 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** Location of switch
-				case "glpi_dropdown_locations.id" :
-					$out = Dropdown::getDropdownName("glpi_dropdown_locations",$data["ITEM_$num"]);
+				case "glpi_locations.id" :
+					$out = Dropdown::getDropdownName("glpi_locations",$data["ITEM_$num"]);
 					return "<center>".$out."</center>";
 					break;
 
@@ -2056,10 +2056,10 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			switch ($new_table.".".$linkfield) {
 
 				// ** Location of switch
-				case "glpi_dropdown_locations.networkports_id" :
+				case "glpi_locations.networkports_id" :
 					return " LEFT JOIN glpi_networkports ON (glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networkports.id) ".
 						" LEFT JOIN glpi_networkequipments ON glpi_networkports.items_id = glpi_networkequipments.id".
-						" LEFT JOIN glpi_dropdown_locations ON glpi_dropdown_locations.id = glpi_networkequipments.location";
+						" LEFT JOIN glpi_locations ON glpi_locations.id = glpi_networkequipments.location";
 					break;
 
 			}
@@ -2189,8 +2189,8 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** Location of switch
-				case "glpi_dropdown_locations.id" :
-					return " ORDER BY glpi_dropdown_locations.name $order ";
+				case "glpi_locations.id" :
+					return " ORDER BY glpi_locations.name $order ";
 					break;
 
 			}
@@ -2433,7 +2433,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** Location of switch
-				case "glpi_dropdown_locations.id" :
+				case "glpi_locations.id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR glpi_networkequipments.location IS NULL";

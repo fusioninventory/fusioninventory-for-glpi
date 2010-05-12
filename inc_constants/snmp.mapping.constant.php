@@ -46,7 +46,7 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['table'] = 'glpi_networkeq
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['field'] = 'location';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['name'] = $LANG['plugin_fusioninventory']["mapping"][1];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['dropdown'] = 'glpi_dropdown_locations';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['location']['dropdown'] = 'glpi_locations';
 
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['table'] = 'glpi_networkequipments';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['field'] = 'firmware';
@@ -359,7 +359,7 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['location']['table'] = 'glpi_printers';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['location']['field'] = 'location';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['location']['name'] = $LANG['plugin_fusioninventory']["mapping"][56];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['location']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['location']['dropdown'] = 'glpi_dropdown_locations';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['location']['dropdown'] = 'glpi_locations';
 
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['informations']['name'] = $LANG['plugin_fusioninventory']["mapping"][165];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['informations']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][165];
