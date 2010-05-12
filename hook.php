@@ -2123,7 +2123,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
-            case "glpi_plugin_fusioninventory_networking.ID" :
+            case "glpi_networking.device" :
                return " ORDER BY FUSIONINVENTORY_12.on_device $order ";
                break;
 
@@ -2348,7 +2348,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
-            case "glpi_plugin_fusioninventory_networking.ID" :
+            case "glpi_networking.device" :
                $ADD = "";
                if ($nott=="0"&&$val=="NULL") {
                   $ADD=" OR FUSIONINVENTORY_12.on_device IS NULL";
