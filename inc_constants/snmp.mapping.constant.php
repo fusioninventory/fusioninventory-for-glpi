@@ -311,7 +311,7 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['model']['table'] = 'glpi_printers';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['model']['field'] = 'model';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['model']['name'] = $LANG['plugin_fusioninventory']["mapping"][25];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['model']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['model']['dropdown'] = 'glpi_dropdown_model_printers';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['model']['dropdown'] = 'glpi_printersmodels';
 
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['enterprise']['table'] = 'glpi_printers';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['enterprise']['field'] = 'manufacturers_id';
