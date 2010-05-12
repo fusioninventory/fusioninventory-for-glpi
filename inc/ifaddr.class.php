@@ -45,7 +45,7 @@ class PluginFusioninventoryIfaddr  extends PluginFusioninventoryCommonDBTM {
 	 * Constructor
 	**/
    function __construct() {
-      parent::__construct("glpi_plugin_fusioninventory_networking_ifaddr");
+      parent::__construct("glpi_plugin_fusioninventory_networkequipments_ips");
    }
 
    /**

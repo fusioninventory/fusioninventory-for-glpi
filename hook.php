@@ -2556,14 +2556,14 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 					$DB->query($query_delete);
 				}
 
-				$query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`id`
-                             FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+				$query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments_ips`.`id`
+                             FROM `glpi_plugin_fusioninventory_networkequipments_ips`
                                   LEFT JOIN `glpi_networkequipments`
                                             ON `glpi_networkequipments`.`id` = `networkequipments_id`
                              WHERE `networkequipments_id`='".$parm["id"]."';";
 				$result=$DB->query($query_select);
 				while ($data=$DB->fetch_array($result)) {
-					$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+					$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipments_ips`
                                 WHERE `id`='".$data["id"]."';";
 					$DB->query($query_delete);
 				}

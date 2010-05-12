@@ -229,7 +229,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
     *@return nothing
     **/
    function saveIfaddrs() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_networking_ifaddr"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_networkequipments_ips"; // TODO : to clean
 
       foreach ($this->ifaddrs as $index=>$pti) {
          if (!in_array($index, $this->updatesIfaddrs)) {
@@ -269,7 +269,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
       $pti = new PluginFusioninventoryIfaddr();
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+                FROM `glpi_plugin_fusioninventory_networkequipments_ips`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       $ifaddrsIds = array();
       if ($result = $DB->query($query)) {

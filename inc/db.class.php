@@ -157,9 +157,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptp->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_networking_ifaddr
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`id`
-                       FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+      // * Clean glpi_plugin_fusioninventory_networkequipments_ips
+      $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments_ips`.`id`
+                       FROM `glpi_plugin_fusioninventory_networkequipments_ips`
                              LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                        WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
