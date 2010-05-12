@@ -120,7 +120,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['linkfield'] = 'discovery_key';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][7]['name'] = $LANG['plugin_fusioninventory']["model_info"][12];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['table'] = 'glpi_plugin_fusioninventory_model_infos';
+	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['field'] = 'comment';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['linkfield'] = 'comment';
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL][8]['name'] = $LANG['common'][25];

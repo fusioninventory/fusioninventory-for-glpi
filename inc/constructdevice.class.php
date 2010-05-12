@@ -783,7 +783,7 @@ echo "</a>";
    function generatecomments() {
       global $DB;
 
-      $query_clean = "UPDATE `glpi_plugin_fusioninventory_model_infos`
+      $query_clean = "UPDATE `glpi_plugin_fusioninventory_modelinfos`
          SET comment='' ";
       $DB->query($query_clean);
 
@@ -798,7 +798,7 @@ echo "</a>";
          }
       }
       foreach ($a_comments as $model_id=>$comment) {
-         $query_update = "UPDATE `glpi_plugin_fusioninventory_model_infos`
+         $query_update = "UPDATE `glpi_plugin_fusioninventory_modelinfos`
             SET comment='".$comment."'
             WHERE id='".$model_id."' ";
          $DB->query($query_update);
