@@ -139,7 +139,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
       global $DB;
 
       $ptp = new PluginFusioninventoryPort;
-      $pti = new PluginFusioninventoryNetworkequipmentsIp;
+      $pti = new PluginFusioninventoryNetworkequipment_Ip;
       $ptn = new PluginFusioninventoryNetworking;
       $ptpr = new PluginFusioninventoryPrinters;
       $ptpc = new PluginFusioninventoryPrintersCartridges;

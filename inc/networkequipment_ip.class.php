@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking interface address
  **/
-class PluginFusioninventoryNetworkequipmentsIp  extends PluginFusioninventoryCommonDBTM {
+class PluginFusioninventoryNetworkequipment_Ip  extends PluginFusioninventoryCommonDBTM {
 	/**
 	 * Constructor
 	**/
