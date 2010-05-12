@@ -524,7 +524,7 @@ function appear_array(id){
 
 		echo "<tr class='tab_bg_1'>";
 		$query_array = "SELECT *
-                      FROM `glpi_displayprefs`
+                      FROM `glpi_displaypreferences`
                       WHERE `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
                             AND `users_id`='0'
                       ORDER BY `rank`;";
@@ -553,7 +553,7 @@ function appear_array(id){
 		echo "<th>".$LANG["common"][16]."</th>";
 
 		$query_array = "SELECT *
-                      FROM `glpi_displayprefs`
+                      FROM `glpi_displaypreferences`
                       WHERE `type`='5157'
                              AND `users_id`='0'
                       ORDER BY `rank`;";
@@ -646,7 +646,7 @@ function appear_array(id){
                      $data["name"]."</a></td>";
 
 				$query_array = "SELECT *
-                            FROM `glpi_displayprefs`
+                            FROM `glpi_displaypreferences`
                             WHERE `type`='5157'
                                   AND `users_id`='0'
                             ORDER BY `rank`;";

@@ -221,7 +221,7 @@ class PluginFusioninventorySetup {
          }
       }
 
-      $query="DELETE FROM `glpi_displayprefs`
+      $query="DELETE FROM `glpi_displaypreferences`
               WHERE `type`='".PLUGIN_FUSIONINVENTORY_ERROR_TYPE."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_MODEL."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_AUTH."'
