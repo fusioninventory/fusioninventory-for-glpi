@@ -211,7 +211,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][7]['linkfield'] = 'contact';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][7]['name'] = $LANG['common'][18];
  
-	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][8]['table'] = 'glpi_dropdown_domain';
+	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][8]['table'] = 'glpi_domains';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][8]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][8]['linkfield'] = 'domain';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][8]['name'] = $LANG["setup"][89];
