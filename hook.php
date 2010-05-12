@@ -612,48 +612,48 @@ function plugin_fusioninventory_getSearchOption() {
 
 
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE]['common'] = $LANG['plugin_fusioninventory']["constructdevice"][0];
+	$sopt['PluginFusioninventoryConstructDevices']['common'] = $LANG['plugin_fusioninventory']["constructdevice"][0];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][1]['table'] = 'glpi_plugin_fusioninventory_construct_device';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][1]['field'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][1]['linkfield'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][1]['name'] = $LANG["common"][16];
-   $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][1]['datatype']='itemlink';
+	$sopt['PluginFusioninventoryConstructDevices'][1]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][1]['field'] = 'id';
+	$sopt['PluginFusioninventoryConstructDevices'][1]['linkfield'] = 'id';
+	$sopt['PluginFusioninventoryConstructDevices'][1]['name'] = $LANG["common"][16];
+   $sopt['PluginFusioninventoryConstructDevices'][1]['datatype']='itemlink';
 
-  	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['table'] = 'glpi_manufacturers';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['linkfield'] = 'manufacturer';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][2]['name'] = $LANG['common'][5];
+  	$sopt['PluginFusioninventoryConstructDevices'][2]['table'] = 'glpi_manufacturers';
+	$sopt['PluginFusioninventoryConstructDevices'][2]['field'] = 'name';
+	$sopt['PluginFusioninventoryConstructDevices'][2]['linkfield'] = 'manufacturer';
+	$sopt['PluginFusioninventoryConstructDevices'][2]['name'] = $LANG['common'][5];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][3]['table'] = 'glpi_plugin_fusioninventory_construct_device';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][3]['field'] = 'device';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][3]['linkfield'] = 'device';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][3]['name'] = $LANG['common'][1];
-   $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][3]['datatype']='text';
+	$sopt['PluginFusioninventoryConstructDevices'][3]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][3]['field'] = 'device';
+	$sopt['PluginFusioninventoryConstructDevices'][3]['linkfield'] = 'device';
+	$sopt['PluginFusioninventoryConstructDevices'][3]['name'] = $LANG['common'][1];
+   $sopt['PluginFusioninventoryConstructDevices'][3]['datatype']='text';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][4]['table'] = 'glpi_plugin_fusioninventory_construct_device';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][4]['field'] = 'firmware';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][4]['linkfield'] = 'firmware';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][4]['name'] = $LANG['setup'][71];
-   $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][4]['datatype']='text';
+	$sopt['PluginFusioninventoryConstructDevices'][4]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][4]['field'] = 'firmware';
+	$sopt['PluginFusioninventoryConstructDevices'][4]['linkfield'] = 'firmware';
+	$sopt['PluginFusioninventoryConstructDevices'][4]['name'] = $LANG['setup'][71];
+   $sopt['PluginFusioninventoryConstructDevices'][4]['datatype']='text';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][5]['table'] = 'glpi_plugin_fusioninventory_construct_device';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][5]['field'] = 'sysdescr';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][5]['linkfield'] = 'sysdescr';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][5]['name'] = $LANG['common'][25];
-   $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][5]['datatype']='text';
+	$sopt['PluginFusioninventoryConstructDevices'][5]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][5]['field'] = 'sysdescr';
+	$sopt['PluginFusioninventoryConstructDevices'][5]['linkfield'] = 'sysdescr';
+	$sopt['PluginFusioninventoryConstructDevices'][5]['name'] = $LANG['common'][25];
+   $sopt['PluginFusioninventoryConstructDevices'][5]['datatype']='text';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][6]['table'] = 'glpi_plugin_fusioninventory_construct_device';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][6]['field'] = 'type';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][6]['linkfield'] = 'type';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][6]['name'] = $LANG['common'][17];
-   $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][6]['datatype']='number';
+	$sopt['PluginFusioninventoryConstructDevices'][6]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][6]['field'] = 'type';
+	$sopt['PluginFusioninventoryConstructDevices'][6]['linkfield'] = 'type';
+	$sopt['PluginFusioninventoryConstructDevices'][6]['name'] = $LANG['common'][17];
+   $sopt['PluginFusioninventoryConstructDevices'][6]['datatype']='number';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['linkfield'] = 'snmpmodel_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['name'] = $LANG['plugin_fusioninventory']["profile"][24];
-   $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['datatype']='itemptype';
+	$sopt['PluginFusioninventoryConstructDevices'][7]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryConstructDevices'][7]['field'] = 'name';
+	$sopt['PluginFusioninventoryConstructDevices'][7]['linkfield'] = 'snmpmodel_id';
+	$sopt['PluginFusioninventoryConstructDevices'][7]['name'] = $LANG['plugin_fusioninventory']["profile"][24];
+   $sopt['PluginFusioninventoryConstructDevices'][7]['datatype']='itemptype';
 
    
 

@@ -42,7 +42,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
 
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_construct_device";
-		$this->type = PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE;
+		$this->type = 'PluginFusioninventoryConstructDevices';
 	}
 
 

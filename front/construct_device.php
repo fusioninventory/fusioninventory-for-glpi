@@ -41,7 +41,7 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE);
+manageGetValuesInSearch('PluginFusioninventoryConstructDevices');
 
 $_GET['target']="construct_device.php";
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
@@ -82,8 +82,8 @@ echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][4]."</a>";
 echo " | ";
 
-searchForm(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);
-showList(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);
+searchForm('PluginFusioninventoryConstructDevices',$_GET);
+showList('PluginFusioninventoryConstructDevices',$_GET);
 
 commonFooter();
 
