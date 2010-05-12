@@ -35,8 +35,6 @@
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 
-$NEEDED_ITEMS=array("search","computer","networking");
-
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 

@@ -39,11 +39,6 @@ ini_set("max_execution_time", "0");
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
-$NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
-	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo",
-   "rule.ocs","rule.softwarecategories","rule.dictionnary.software","rule.dictionnary.dropdown","entity");
-
-
 include (GLPI_ROOT."/inc/includes.php");
 
 $_SESSION["glpi_use_mode"] = 2;
