@@ -233,7 +233,7 @@ class PluginFusioninventorySetup {
                     OR `type`='PluginFusioninventoryAgentsProcess'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_HISTORY."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."'
-                    OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_CONFIG."'
+                    OR `type`='PluginFusioninventoryConfig'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_TASK."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE."' ;";
       $DB->query($query) or die($DB->error());
