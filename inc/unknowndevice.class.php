@@ -364,7 +364,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                                     `name`='".$data_known["name"]."',
                                     `ip`='".$data_known["ip"]."',
                                     `networkinterfaces_id`='".$data_known["networkinterfaces_id"]."',
-                                    `netpoint`='".$data_known["netpoint"]."',
+                                    `netpoints_id`='".$data_known["netpoints_id"]."',
                                     `netmask`='".$data_known["netmask"]."',
                                     `gateway`='".$data_known["gateway"]."',
                                     `subnet`='".$data_known["subnet"]."'
