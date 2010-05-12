@@ -369,7 +369,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $port_add["items_id"] = $newID;
                $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
                $port_add["ip"] = $discovery->IP;
-               $port_add['ifmac'] = $discovery->MAC;
+               $port_add['mac'] = $discovery->MAC;
                $port_add['name'] = $discovery->NETPORTVENDOR;
                $port_ID = $np->add($port_add);
                unset($port_add);
@@ -442,8 +442,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                if ($a_device[1] == NETWORKING_TYPE) {
                   if (!in_array('ip', $a_lockable))
                      $data["ip"] = $discovery->IP;
-                  if (!in_array('ifmac', $a_lockable))
-                     $data['ifmac'] = $discovery->MAC;
+                  if (!in_array('mac', $a_lockable))
+                     $data['mac'] = $discovery->MAC;
                } else {
                   // TODO: manage ports
                   $np = new Networkport;
@@ -458,7 +458,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                         $port = array();
                         $port['id'] = $data2["id"];
                         $port["ip"] = $discovery->IP;
-                        $port['ifmac'] = $discovery->MAC;
+                        $port['mac'] = $discovery->MAC;
                         $port['name'] = $discovery->NETPORTVENDOR;
                         $np->update($port);
                      } else if ($DB->numrows($result) > 1) {

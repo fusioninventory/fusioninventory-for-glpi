@@ -343,7 +343,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
             // Search port from mac address
             $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `ifmac`='".$data['new_value']."' ";
+               WHERE `mac`='".$data['new_value']."' ";
             if ($result_port=$DB->query($query_port)) {
                if ($DB->numrows($result_port) == '1') {
                   $input = array();
@@ -404,7 +404,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             
             // Search port from mac address
             $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `ifmac`='".$data['old_value']."' ";
+               WHERE `mac`='".$data['old_value']."' ";
             if ($result_port=$DB->query($query_port)) {
                if ($DB->numrows($result_port) == '1') {
                   $input = array();
@@ -519,7 +519,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             break;
 
          case 'mac':
-            $db_field = 'ifmac';
+            $db_field = 'mac';
             $field = 'macaddr';
             break;
 

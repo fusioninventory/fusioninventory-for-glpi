@@ -249,7 +249,7 @@ function plugin_fusioninventory_getSearchOption() {
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['forcegroupby']='1';
 
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['table'] = 'glpi_networkports';
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['field'] = 'ifmac';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['field'] = 'mac';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['linkfield'] = 'ID';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['name'] = $LANG["networking"][15];
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][15]['forcegroupby']='1';
@@ -2671,7 +2671,7 @@ function plugin_item_add_fusioninventory($parm) {
                $np = new Netport;
                $nw = new Netwire;
                $pfiud = new PluginFusionInventoryUnknownDevice;
-               $a_ports = $np->find("`ifmac`='".$parm["input"]["ifmac"]."' AND `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
+               $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
                if (count($a_ports) == "1") {
                   foreach ($a_ports as $port_infos) {
                      // Get wire

@@ -499,7 +499,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 // ********************************************************************************************** //
 
 		$query = "
-		SELECT *,glpi_plugin_fusioninventory_networking_ports.ifmac as ifmacinternal
+		SELECT *,glpi_plugin_fusioninventory_networking_ports.mac as ifmacinternal
 
 		FROM glpi_plugin_fusioninventory_networking_ports
 
@@ -725,7 +725,7 @@ function appear_array(id){
 
 						case 11 :
 							// ** internal mac
-							echo "<td>".$data["ifmac"]."</td>";
+							echo "<td>".$data["mac"]."</td>";
 							break;
 
 						case 12 :
@@ -742,7 +742,7 @@ function appear_array(id){
 								$CommonItem->getFromDB($data_device["itemtype"],
                                                $data_device["items_id"]);
 								$link1 = $CommonItem->getLink(1);
-								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],
+								$link = str_replace($CommonItem->getName(0), $data_device["mac"],
                                             $CommonItem->getLink());
                         $link2 = str_replace($CommonItem->getName(0), $data_device["ip"],
                                              $CommonItem->getLink());

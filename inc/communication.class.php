@@ -850,7 +850,7 @@ class PluginFusioninventoryCommunication {
                $this->ptd->setValue('firmware', $p_info->FIRMWARE);
                break;
             case 'MAC' :
-               $this->ptd->setValue('ifmac', $p_info->MAC);
+               $this->ptd->setValue('mac', $p_info->MAC);
                break;
             case 'MEMORY' :
                $this->ptd->setValue('memory', $p_info->MEMORY);
@@ -1034,7 +1034,7 @@ class PluginFusioninventoryCommunication {
                   break;
                case 'MAC' :
                   PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
-                  $ptp->setValue('ifmac', $child);
+                  $ptp->setValue('mac', $child);
                   break;
                case 'IFNUMBER' :
                   PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
@@ -1101,7 +1101,7 @@ class PluginFusioninventoryCommunication {
                   break;
                case 'MAC' :
                   PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
-                  $ptp->setValue('ifmac', $child);
+                  $ptp->setValue('mac', $child);
                   break;
                case 'IP' :
                   PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
@@ -1606,7 +1606,7 @@ class PluginFusioninventoryCommunication {
                foreach ($a_portsList as $ID=>$data) {
                   if ($data['ip'] != "127.0.0.1") {
                      $sxml_param = $sxml_option->addChild('PARAM');
-                     $sxml_param->addAttribute('MAC', $data['ifmac']);
+                     $sxml_param->addAttribute('MAC', $data['mac']);
                      $sxml_param->addAttribute('IP', $data['ip']);
                   }
                }

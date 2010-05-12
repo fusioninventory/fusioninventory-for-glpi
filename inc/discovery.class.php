@@ -177,7 +177,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["domain"] = $ptud->fields["domain"];
             $data["comment"] = $ptud->fields["comment"];
             $data["ip"] = $Networkport->fields["ip"];
-            $data["ifmac"] = $Networkport->fields["ifmac"];
+            $data["mac"] = $Networkport->fields["mac"];
             $ID_Device = $Netdevice->add($data);
 
             $nn = new NetworkPort_NetworkPort();
@@ -501,10 +501,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                break;
 
             case 'macaddr':
-               $condition .= "AND `ifmac`='".$value."' ";
-               $select .= ", ifmac";
-               $condition_unknown .= "AND `glpi_networkports`.`ifmac`='".$value."' ";
-               $select_unknown .= ", `glpi_networkports`.`ifmac`";
+               $condition .= "AND `mac`='".$value."' ";
+               $select .= ", mac";
+               $condition_unknown .= "AND `glpi_networkports`.`mac`='".$value."' ";
+               $select_unknown .= ", `glpi_networkports`.`mac`";
                break;
 
             case 'name':

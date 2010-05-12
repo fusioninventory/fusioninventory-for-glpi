@@ -151,7 +151,7 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['type'] = 'tex
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['entPhysicalModelName']['dropdown'] = 'glpi_dropdown_model_networking';
 
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['table'] = 'glpi_networkequipments';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['field'] = 'ifmac';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['field'] = 'mac';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['name'] = $LANG['plugin_fusioninventory']["mapping"][417];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['macaddr']['dropdown'] = '';
@@ -274,7 +274,7 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifstatus']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifstatus']['dropdown'] = '';
 
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['table'] = 'glpi_networkports';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['field'] = 'ifmac';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['field'] = 'mac';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][15];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['ifPhysAddress']['dropdown'] = '';
@@ -509,7 +509,7 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['dropdown'] 
 // Printers : Networking
 
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['table'] = 'glpi_networkports';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['field'] = 'ifmac';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['field'] = 'mac';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][58];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifPhysAddress']['dropdown'] = '';
@@ -545,7 +545,7 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifIndex']['dropdown'] = '';
 $FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['serial']['field'] = 'serial';
 $FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['serial']['name'] = $LANG['plugin_fusioninventory']["mapping"][13];
 
-$FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['ifPhysAddress']['field'] = 'ifmac';
+$FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['ifPhysAddress']['field'] = 'mac';
 $FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['ifPhysAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][15];
 
 

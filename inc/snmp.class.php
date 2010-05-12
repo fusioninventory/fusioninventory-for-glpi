@@ -285,7 +285,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
       $query = "SELECT ID
                 FROM `glpi_networkports`
-                WHERE `ifmac` IN ('".$p_mac."',
+                WHERE `mac` IN ('".$p_mac."',
                                   '".strtoupper($p_mac)."')
                       AND `ID`!='".$p_fromPortID."';"; // do not get the link port
 		$result = $DB->query($query);
@@ -839,9 +839,9 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 //			print "OID : ".$oid."\n";
 
             // For each port
-            if ($FUSIONINVENTORY_MAPPING[$type][$link]['field'] == 'ifmac') {
+            if ($FUSIONINVENTORY_MAPPING[$type][$link]['field'] == 'mac') {
                $query = "SELECT `glpi_networkports`.`ID`, `logical_number`,
-                             `glpi_networkports`.`ifmac` as `ifmac`
+                             `glpi_networkports`.`mac` as `mac`
                       FROM `glpi_networkports`
                            LEFT JOIN `glpi_plugin_fusioninventory_networking_ports`
                                      ON `networkports_id`=`glpi_networkports`.`ID`

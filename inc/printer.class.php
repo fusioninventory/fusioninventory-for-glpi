@@ -176,7 +176,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $portIndex = '';
       foreach ($this->ports as $index => $oPort) {
          if (is_object($oPort)) { // should always be true
-            if ($oPort->getValue('ifmac')==$p_mac) {
+            if ($oPort->getValue('mac')==$p_mac) {
                $portIndex = $index;
                break;
             }

@@ -205,7 +205,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       $port_add["items_id"] = $newID;
       $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
       $port_add["ip"] = $p_ip;
-      $port_add['ifmac'] = $p_mac;
+      $port_add['mac'] = $p_mac;
       $dport = $np->add($port_add);
       $ptsnmp=new PluginFusioninventorySNMP;
       $this->connectDB($dport);
@@ -478,17 +478,17 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       foreach($this->portsToConnect as $index=>$portConnection) {
          if ($macs!='') $macs.=', ';
          $ptp->load($portConnection);
-         $macs.="'".$ptp->getValue('ifmac')."'";
-         $ifmac[$index]=$ptp->getValue('ifmac');
+         $macs.="'".$ptp->getValue('mac')."'";
+         $mac[$index]=$ptp->getValue('mac');
       }
       if ($macs!='') {
-         $query = "SELECT `ifmac`
+         $query = "SELECT `mac`
                    FROM `glpi_networkequipments`
-                   WHERE `ifmac` IN (".$macs.");";
+                   WHERE `mac` IN (".$macs.");";
          $result=$DB->query($query);
          if ($DB->numrows($result) == 1) {
             $switch = $DB->fetch_assoc($result);
-            return array_search($switch['ifmac'], $ifmac);
+            return array_search($switch['mac'], $mac);
          }
       }
       return '';
