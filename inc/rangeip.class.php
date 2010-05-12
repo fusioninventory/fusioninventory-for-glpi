@@ -46,11 +46,11 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 	}
 
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		if ($ID!='') {
-			$this->getFromDB($ID);
+		if ($id!='') {
+			$this->getFromDB($id);
       } else {
 			$this->getEmpty();
       }
@@ -210,7 +210,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             while ($data=$DB->fetch_array($result)) {
-               $ranges[$data["ID"]] = $data;
+               $ranges[$data["id"]] = $data;
             }
          }
       }

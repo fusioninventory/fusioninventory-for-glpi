@@ -51,7 +51,7 @@ class PluginFusioninventoryIfaddr  extends PluginFusioninventoryCommonDBTM {
    /**
     * Add a new ip with the instance values
     *
-    *@param $p_id Networking ID
+    *@param $p_id Networking id
     *@return nothing
     **/
    function addDB($p_id) {

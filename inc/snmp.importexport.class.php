@@ -45,7 +45,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_modelinfos`
-                WHERE `ID`='".$ID_model."';";
+                WHERE `id`='".$ID_model."';";
 
 		if ($result=$DB->query($query)) {
 			if ($DB->numrows($result) != 0) {
@@ -98,7 +98,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 	
 	
 	
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 		
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
@@ -157,7 +157,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		$xml = simplexml_load_file($file);
 
 		// Verify same model exist
-		$query = "SELECT ID
+		$query = "SELECT id
                 FROM `glpi_plugin_fusioninventory_modelinfos`
                 WHERE `name`='".$xml->name[0]."';";
 		$result = $DB->query($query);
@@ -227,7 +227,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 			}
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
-               " : <a href='models.form.php?ID=".$plugin_fusioninventory_modelinfos_id."'>".$xml->name[0]."</a>";
+               " : <a href='models.form.php?id=".$plugin_fusioninventory_modelinfos_id."'>".$xml->name[0]."</a>";
          }
 		}
 	}

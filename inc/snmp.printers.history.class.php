@@ -44,13 +44,13 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 		$this->type=-1;
 	}
 	
-	function countAllEntries($ID) {
+	function countAllEntries($id) {
 		global $DB;
 		
 		$num = 0;
-		$query = "SELECT count(DISTINCT `ID`)
+		$query = "SELECT count(DISTINCT `id`)
                 FROM ".$this->table."
-                WHERE `printers_id` = '".$ID."';";
+                WHERE `printers_id` = '".$id."';";
 		if ($result_num=$DB->query($query)) {
 			if ($field = $DB->result($result_num,0,0)) {
 				$num += $field;
@@ -60,13 +60,13 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 	}
 
 	/* Gets history (and the number of entries) of one printer */
-	function getEntries($ID, $begin, $limit) {
+	function getEntries($id, $begin, $limit) {
 		global $DB;
 		
 		$datas=array();
 		$query = "SELECT *
                 FROM ".$this->table."
-				    WHERE `printers_id` = '".$ID."'
+				    WHERE `printers_id` = '".$id."'
                 LIMIT ".$begin.", ".$limit.";";
 
 		if ($result=$DB->query($query)) {
@@ -83,13 +83,13 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 	
 
 	
-	function stats($ID) {
+	function stats($id) {
 		global $DB;
 		
 		$query = "SELECT MIN(`date`) AS `min_date`, MIN(`pages`) AS `min_pages`, ".
 				 		"MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
                 FROM ".$this->table."
-                WHERE `printers_id` = '".$ID."';";
+                WHERE `printers_id` = '".$id."';";
 
 		if ($result = $DB->query($query)) {
 			if ($fields = $DB->fetch_assoc($result)) {
@@ -103,7 +103,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 		return false;
 	}
 	
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $LANG;
 		
 		if (!PluginFusioninventory::haveRight("snmp_printers","r")) {
@@ -111,7 +111,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
       }
 		
 		// display stats
-		if ($stats = $this->stats($ID)) {
+		if ($stats = $this->stats($id)) {
 				
 			$this->showTabs($options);
          $this->showFormHeader($options);
@@ -133,8 +133,8 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 			$_GET['start'] = 0;
       }
 		
-		$numrows = $this->countAllEntries($ID);
-		$parameters = "ID=".$_GET["ID"]."&onglet=".$_SESSION["glpi_onglet"];	
+		$numrows = $this->countAllEntries($id);
+		$parameters = "id=".$_GET["id"]."&onglet=".$_SESSION["glpi_onglet"];	
 		
 		echo "<br>";
 		printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
@@ -145,7 +145,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 			$limit = $numrows;
       }
 		// Get history
-		if (!($data = $this->getEntries($ID, $_GET['start'], $limit))) {
+		if (!($data = $this->getEntries($id, $_GET['start'], $limit))) {
 			return false;
       }
 
@@ -168,7 +168,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 			echo "<td align='center'>".$data["$i"]['date']."</td>";
 			echo "<td align='center'>".$data["$i"]['pages']."</td>";
 			echo "</td></tr>";
-			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['ID']."'>";
+			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
 		}
 		
 		if (!PluginFusioninventory::haveRight("snmp_printers","w")) {

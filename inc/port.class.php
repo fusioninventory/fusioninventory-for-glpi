@@ -42,9 +42,9 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    private $oFusionInventory_networking_ports; // link fusioninventory table object
-   private $fusioninventory_networking_ports_ID; // ID in link fusioninventory table
-   private $portsToConnect=array(); // ID of known connected ports
-   private $connectedPort=''; // ID of connected ports
+   private $fusioninventory_networking_ports_ID; // id in link fusioninventory table
+   private $portsToConnect=array(); // id of known connected ports
+   private $connectedPort=''; // id of connected ports
    private $unknownDevicesToConnect=array(); // IP and/or MAC addresses of unknown connected ports
    private $portVlans=array(); // number and name for each vlan
    private $portMacs=array();  // MAC addresses
@@ -80,13 +80,13 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
 
       parent::load($p_id);
       if (is_numeric($p_id)) { // port exists
-         $query = "SELECT `ID`
+         $query = "SELECT `id`
                    FROM `glpi_plugin_fusioninventory_networking_ports`
                    WHERE `networkports_id` = '".$p_id."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
                $portFusionInventory = $DB->fetch_assoc($result);
-               $this->fusioninventory_networking_ports_ID = $portFusionInventory['ID'];
+               $this->fusioninventory_networking_ports_ID = $portFusionInventory['id'];
                $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
                $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
             } else {
@@ -120,7 +120,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Add a new port with the instance values
     *
-    *@param $p_id Networking ID
+    *@param $p_id Networking id
     *@param $p_force=FALSE Force add even if no updates where done
     *@return nothing
     **/
@@ -134,7 +134,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          $this->load($portID);
          // update fusioninventory
          if (count($this->oFusionInventory_networking_ports->ptcdUpdates) OR $p_force) {
-//            $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('ID');
+//            $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('id');
 //            $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
             $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
          }
@@ -147,10 +147,10 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Add a new FusionInventory port with the instance values
     *
-    *@return FusionInventory networking port ID
+    *@return FusionInventory networking port id
     **/
    function addDBFusionInventory() {
-      $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('ID');
+      $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('id');
       $fusioninventory_networking_ports_ID = $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
       return $fusioninventory_networking_ports_ID;
    }
@@ -158,12 +158,12 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Delete a loaded port
     *
-    *@param $p_id Port ID
+    *@param $p_id Port id
     *@return nothing
     **/
    function deleteDB() {
-      $this->cleanVlan('', $this->getValue('ID'));
-      $this->disconnectDB($this->getValue('ID'));
+      $this->cleanVlan('', $this->getValue('id'));
+      $this->disconnectDB($this->getValue('id'));
       $this->oFusionInventory_networking_ports->deleteDB(); // fusioninventory
       parent::deleteDB(); // core
    }
@@ -214,7 +214,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Connect this port to another one in DB
     *
-    *@param $destination_port ID of destination port
+    *@param $destination_port id of destination port
     *@return nothing
     **/
 	function connect() {
@@ -249,7 +249,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
     /**
     * Connect this port to another one in DB
     *
-    *@param $destination_port ID of destination port
+    *@param $destination_port id of destination port
     *@return nothing
     **/
 	function connectDB($destination_port='') {
@@ -259,19 +259,19 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
 
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
-                     WHERE `end1` IN ('".$this->getValue('ID')."', '".$destination_port."')
-                           AND `end2` IN ('".$this->getValue('ID')."', '".$destination_port."');";
+                     WHERE `end1` IN ('".$this->getValue('id')."', '".$destination_port."')
+                           AND `end2` IN ('".$this->getValue('id')."', '".$destination_port."');";
 
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
-            $this->disconnectDB($this->getValue('ID')); // disconnect this port
+            $this->disconnectDB($this->getValue('id')); // disconnect this port
             $this->disconnectDB($destination_port);     // disconnect destination port
             $nn = new NetworkPort_NetworkPort();
-            if ($nn->add(array('networkports_id_1'=> $this->getValue('ID'),
+            if ($nn->add(array('networkports_id_1'=> $this->getValue('id'),
                                'networkports_id_2' => $destination_port))) { //connect those 2 ports
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                     array('query_nb_connections_created' => '1'));
-               PluginFusioninventorySnmphistory::addLogConnection("make",$this->getValue('ID'));
+               PluginFusioninventorySnmphistory::addLogConnection("make",$this->getValue('id'));
             }
          }
       }
@@ -280,11 +280,11 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Disconnect a port in DB
     *
-    *@param $p_port='' Port ID to disconnect
+    *@param $p_port='' Port id to disconnect
     *@return nothing
     **/
 	function disconnectDB($p_port='') {
-      if ($p_port=='') $p_port=$this->getValue('ID');
+      if ($p_port=='') $p_port=$this->getValue('id');
       $netwire = new Netwire;
       PluginFusioninventorySnmphistory::addLogConnection("remove",$netwire->getOppositeContact($p_port));
       //PluginFusioninventorySnmphistory::addLogConnection("remove",$p_port);
@@ -339,14 +339,14 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       
       if ($this->connectedPort=='') {
          // no connection to set check existing in DB
-         $this->connectedPort=$this->getConnectedPortInDB($this->getValue('ID'));
+         $this->connectedPort=$this->getConnectedPortInDB($this->getValue('id'));
       }
       $vlans = array();
       foreach ($this->portVlans as $vlan) {
          $vlans[] = Dropdown::importExternal("Vlan", $vlan['number'], 0, array(), $vlan['name']);
       }
       if (count($vlans)) { // vlans to add/update
-         $ports[] = $this->getValue('ID');
+         $ports[] = $this->getValue('id');
          if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
             if ($num==1) { // connected port
@@ -359,7 +359,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
             $query = "SELECT *
                       FROM `glpi_networkports_vlans`
                            LEFT JOIN `glpi_dropdown_vlan`
-                              ON `glpi_networkports_vlans`.`vlans_id`=`glpi_dropdown_vlan`.`ID`
+                              ON `glpi_networkports_vlans`.`vlans_id`=`glpi_dropdown_vlan`.`id`
                       WHERE `ports_id`='$tmp_port'";
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "0") { // this port has no vlan
@@ -373,7 +373,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                   while ($vlanDB=$DB->fetch_assoc($result)) {
                      $vlansDBnumber[] = $vlanDB['name'];
                      $vlansDB[] = array('number'=>$vlanDB['name'], 'name'=>$vlanDB['comment'],
-                                        'ID'=>$vlanDB['ID']);
+                                        'id'=>$vlanDB['id']);
                   }
 
                   foreach ($this->portVlans as $portVlan) {
@@ -392,7 +392,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                      }
                   }
                   foreach ($vlansDB as $vlanToUnassign) {
-                     $this->cleanVlan($vlanToUnassign['ID'], $tmp_port);
+                     $this->cleanVlan($vlanToUnassign['id'], $tmp_port);
                   }
                   foreach ($vlansToAssign as $vlanToAssign) {
                      $vlans_id = Dropdown::importExternal("Vlan",
@@ -406,10 +406,10 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       } else { // no vlan to add/update --> delete existing
          $query = "SELECT *
                    FROM `glpi_networkports_vlans`
-                   WHERE `ports_id`='".$this->getValue('ID')."'";
+                   WHERE `ports_id`='".$this->getValue('id')."'";
          if ($result=$DB->query($query)) {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
-               $this->cleanVlan('', $this->getValue('ID'));
+               $this->cleanVlan('', $this->getValue('id'));
                if ($this->connectedPort != '') {
                   $ptpConnected = new PluginFusioninventoryPort();
                   $ptpConnected->load($this->connectedPort);
@@ -426,8 +426,8 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Assign vlan
     *
-    *@param $p_port Port ID
-    *@param $p_vlan Vlan ID
+    *@param $p_port Port id
+    *@param $p_vlan Vlan id
     *@return nothing
     **/
    function assignVlan($p_port, $p_vlan) {
@@ -441,8 +441,8 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Clean vlan
     *
-    *@param $p_vlan Vlan ID
-    *@param $p_port='' Port ID
+    *@param $p_vlan Vlan id
+    *@param $p_port='' Port id
     *@return nothing
     **/
    function cleanVlan($p_vlan, $p_port='') {
@@ -497,23 +497,23 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    /**
     * Get connected port in DB
     *
-    *@param $p_portID Port ID of first port
-    *@return Port ID of connected port or '' if no connection
+    *@param $p_portID Port id of first port
+    *@return Port id of connected port or '' if no connection
     **/
    function getConnectedPortInDB($p_portID) {
       global $DB;
 
-      $query = "SELECT `end1` AS `ID`
+      $query = "SELECT `end1` AS `id`
                 FROM `glpi_networkports_networkports`
                 WHERE `end2`='".$p_portID."'
                 UNION
-                SELECT `end2` AS `ID`
+                SELECT `end2` AS `id`
                 FROM `glpi_networkports_networkports`
                 WHERE `end1`='".$p_portID."';";
       $result=$DB->query($query);
       if ($DB->numrows($result) == 1) {
          $port = $DB->fetch_assoc($result);
-         return $port['ID'];
+         return $port['id'];
       }
       return '';
    }
@@ -618,7 +618,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       $array = array();
       $query = "SELECT *
                 FROM `glpi_networkports`
-                WHERE `ID`='".$id."';";
+                WHERE `id`='".$id."';";
       if ($result=$DB->query($query)) {
          $data = $DB->fetch_array($result);
          $array["items_id"] = $data["items_id"];
@@ -628,7 +628,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          case NETWORKING_TYPE:
             $query = "SELECT *
                       FROM `glpi_networkequipments`
-                      WHERE `ID`='".$array["itemtype"]."'
+                      WHERE `id`='".$array["itemtype"]."'
                       LIMIT 0,1;";
             if ($result=$DB->query($query)) {
                $data = $DB->fetch_array($result);

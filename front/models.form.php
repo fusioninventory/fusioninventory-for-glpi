@@ -54,7 +54,7 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], 
 
 PluginFusioninventoryDisplay::mini_menu();
 
-//if (isset ($_POST["add"]) && isset($_POST["ID"])) {
+//if (isset ($_POST["add"]) && isset($_POST["id"])) {
 if (isset ($_POST["add"])) {
 	PluginFusioninventoryAuth::checkRight("snmp_models","w");
 	$plugin_fusioninventory_model_infos->add($_POST);
@@ -90,9 +90,9 @@ if(PluginFusioninventory::HaveRight("snmp_models","r")) {
    $importexport->showForm('');
    $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
 }
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
 }
 
 if(!empty($_POST["item_coche"])) {
@@ -102,8 +102,8 @@ if(!empty($_POST["item_coche"])) {
 }
 
 if(PluginFusioninventory::HaveRight("snmp_models","r")) {
-   $plugin_fusioninventory_model_infos->showForm($ID);
-   $plugin_fusioninventory_mib_networking->showForm($ID);
+   $plugin_fusioninventory_model_infos->showForm($id);
+   $plugin_fusioninventory_mib_networking->showForm($id);
 }
 commonFooter();
 

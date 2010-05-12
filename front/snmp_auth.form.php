@@ -61,7 +61,7 @@ if (isset ($_POST["add"])) {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
    }
 	
-	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='snmp_auth.php?ID=".$new_ID."'>".$_POST["name"]."</a>";
+	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='snmp_auth.php?id=".$new_ID."'>".$_POST["name"]."</a>";
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
 	PluginFusioninventoryAuth::checkRight("snmp_authentification","w");
@@ -69,12 +69,12 @@ if (isset ($_POST["add"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
 }
 if(PluginFusioninventory::HaveRight("snmp_authentification","r")) {
-   $plugin_fusioninventory_snmp_auth->showForm($ID);
+   $plugin_fusioninventory_snmp_auth->showForm($id);
 }
 commonFooter();
 

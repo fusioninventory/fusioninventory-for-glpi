@@ -50,7 +50,7 @@ if ((isset($_POST['delete']))) {
 		for ($i=0 ; $i<$_POST['limit'] ; $i++) {
 			if ((isset($_POST["checked_$i"])) && ($_POST["checked_$i"] == 1)) {
 				if (isset($_POST["ID_$i"])) {
-   				$input['ID'] = $_POST["ID_$i"];
+   				$input['id'] = $_POST["ID_$i"];
             }
 				$printer_history->delete($input);
 			}

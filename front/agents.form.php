@@ -84,14 +84,14 @@ if (isset ($_POST["add"])) {
 }
 
 
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
 } else {
-   $agents->showForm($ID);
+   $agents->showForm($id);
 }
 
-$agents->showTabs($ID, '',$_SESSION['glpi_tab']);
+$agents->showTabs($id, '',$_SESSION['glpi_tab']);
 echo "<div id='tabcontent'></div>";
 echo "<script type='text/javascript'>loadDefaultTab();</script>";
 

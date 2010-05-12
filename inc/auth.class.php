@@ -44,23 +44,23 @@ class PluginFusioninventoryAuth extends CommonDBTM {
 
       if(TableExists("glpi_plugin_fusioninventory_config")) {
 
-         if (FieldExists("glpi_plugin_fusioninventory_config","ID")) {
+         if (FieldExists("glpi_plugin_fusioninventory_config","id")) {
             $profile=new PluginFusioninventoryProfile;
 
             $query = "SELECT DISTINCT `glpi_profiles`.*
                       FROM `glpi_users_profiles` INNER JOIN `glpi_profiles`
-                           ON (`glpi_users_profiles`.`profiles_id` = `glpi_profiles`.`ID`)
+                           ON (`glpi_users_profiles`.`profiles_id` = `glpi_profiles`.`id`)
                       WHERE `glpi_users_profiles`.`users_id`='".$_SESSION["glpiID"]."'";
             $result = $DB->query($query);
             $_SESSION['glpi_plugin_fusioninventory_profile'] = array ();
             if ($DB->numrows($result)) {
                while ($data = $DB->fetch_assoc($result)) {
                   $profile->fields = array ();
-                  if(isset($_SESSION["glpiactiveprofile"]["ID"])) {
-                     $profile->getFromDB($_SESSION["glpiactiveprofile"]["ID"]);
+                  if(isset($_SESSION["glpiactiveprofile"]["id"])) {
+                     $profile->getFromDB($_SESSION["glpiactiveprofile"]["id"]);
                      $_SESSION['glpi_plugin_fusioninventory_profile'] = $profile->fields;
                   } else {
-                     $profile->getFromDB($data['ID']);
+                     $profile->getFromDB($data['id']);
                      $_SESSION['glpi_plugin_fusioninventory_profile'] = $profile->fields;
                   }
                   $_SESSION["glpi_plugin_fusioninventory_installed"]=1;

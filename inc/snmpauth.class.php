@@ -45,13 +45,13 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_AUTH;
 	}
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		PluginFusioninventoryAuth::checkRight("snmp_authentification","r");
 
-		if ($ID!='') {
-			$this->getFromDB($ID);
+		if ($id!='') {
+			$this->getFromDB($id);
       } else {
 			$this->getEmpty();	
       }
@@ -60,7 +60,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 //		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 //		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-//		echo ($ID =='' ? $LANG['plugin_fusioninventory']["model_info"][7] :
+//		echo ($id =='' ? $LANG['plugin_fusioninventory']["model_info"][7] :
 //            $LANG['plugin_fusioninventory']["model_info"][3]);
 //		echo " :</th></tr>";
 
@@ -257,15 +257,15 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 
 	
 	function add_xml() {
-		// Get new ID
+		// Get new id
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
 		
-		$ID = $xml->incrementID[0];
-		$ID = $ID + 1;
+		$id = $xml->incrementID[0];
+		$id = $id + 1;
 
 		// Write XML file
 		$xml_write = "<snmp>\n";
-		$xml_write .= "	<incrementID>".$ID."</incrementID>\n";
+		$xml_write .= "	<incrementID>".$id."</incrementID>\n";
 		$xml_write .= "	<auth>\n";
 		$i = -1;
 		foreach($xml->auth[0] as $num) {
@@ -318,7 +318,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		}
 		// Write new Line
 		$xml_write .= "		<conf>\n";
-		$xml_write .= "			<Num>".$ID."</Num>\n";
+		$xml_write .= "			<Num>".$id."</Num>\n";
 		$xml_write .= "			<Name><![CDATA[".$_POST["name"]."]]></Name>\n";
 		$xml_write .= "			<snmp_version>".$_POST["plugin_fusioninventory_snmpversions_id"]."</snmp_version>\n";
 		$xml_write .= "			<community><![CDATA[".$_POST["community"]."]]></community>\n";
@@ -339,7 +339,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 		fwrite($fh, $xml_write);
 		fclose($fh);
 		
-		return $ID;
+		return $id;
 	}
 	
 	
@@ -380,7 +380,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 	/**
 	 * Get SNMP version and authentification 
 	 *
-	 * @param $ID_Device ID of the device ("all" if we want to get all snmp auth)
+	 * @param $ID_Device id of the device ("all" if we want to get all snmp auth)
 	 * @param $xml_auth_rep folder where as stocked authxml file (if the management is by FILE)
 	 * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
 	 *
@@ -422,7 +422,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 			$snmp_auth[0]["auth_passphrase"] = "";
 			$snmp_auth[0]["priv_protocol"] = "";
 			$snmp_auth[0]["priv_passphrase"] = "";			
-			$snmp_auth[0]["ID"] = 0;
+			$snmp_auth[0]["id"] = 0;
 			$snmp_auth[1]["Name"] = "Public-v1";
 			$snmp_auth[1]["snmp_version"] = "1";
 			$snmp_auth[1]["community"] = "public";
@@ -431,7 +431,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 			$snmp_auth[1]["auth_passphrase"] = "";
 			$snmp_auth[1]["priv_protocol"] = "";
 			$snmp_auth[1]["priv_passphrase"] = "";		
-			$snmp_auth[1]["ID"] = 0;
+			$snmp_auth[1]["id"] = 0;
 		}
 
 		if ($config->getValue("authsnmp") == "file") {
@@ -448,7 +448,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
 						case 1:
 							if ($ID_Device == "all") {
 								$recup = 1;
-								$snmp_auth[($i+2)]["ID"] = $item;
+								$snmp_auth[($i+2)]["id"] = $item;
 							} else if ($item == $ID_auth) {
 								$recup = 1;
                      }
@@ -541,7 +541,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
          } else {
 				$query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_snmpauths`
-                      WHERE `ID`='".$ID_auth."';";
+                      WHERE `id`='".$ID_auth."';";
 			}
 			$result=$DB->query($query);
 			if (($DB->numrows($result) == "0") AND ($ID_Device != "all")) {
@@ -575,14 +575,14 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
                         "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]))
                   AND ($snmp_auth[0]["community"] == $data["community"])) {
                   
-						$snmp_auth[0]["ID"] = $data["ID"];
+						$snmp_auth[0]["id"] = $data["id"];
                 } else if (($snmp_auth[1]["snmp_version"] == Dropdown::getDropdownName(
                          "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]))
                   AND ($snmp_auth[1]["community"] == $data["community"])) {
 
-						$snmp_auth[1]["ID"] = $data["ID"];
+						$snmp_auth[1]["id"] = $data["id"];
                } else {
-						$snmp_auth[$i]["ID"] = $data["ID"];
+						$snmp_auth[$i]["id"] = $data["id"];
 						$snmp_auth[$i]["Name"] = $data["name"];
 						$snmp_auth[$i]["snmp_version"] = Dropdown::getDropdownName(
                      "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]);

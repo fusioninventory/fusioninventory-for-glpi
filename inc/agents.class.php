@@ -59,8 +59,8 @@ class PluginFusioninventoryAgents extends CommonDBTM {
 		return $ong;
 	}
 
-	function PushData($ID, $key) {
-		$this->getFromDB($ID);
+	function PushData($id, $key) {
+		$this->getFromDB($id);
 		// Name of server
 		// $this->fields["name"];
 		
@@ -75,11 +75,11 @@ class PluginFusioninventoryAgents extends CommonDBTM {
 	}
 
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		if ($ID!='') {
-			$this->getFromDB($ID);
+		if ($id!='') {
+			$this->getFromDB($id);
       } else {
 			$this->getEmpty();
       }
@@ -179,7 +179,7 @@ class PluginFusioninventoryAgents extends CommonDBTM {
 
 
 
-   function showFormAdvancedOptions($ID, $options=array()) {
+   function showFormAdvancedOptions($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
       
       $this->showTabs($options);

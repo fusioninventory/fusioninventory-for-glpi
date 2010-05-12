@@ -50,7 +50,7 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
 		global $DB;
 		
 		$query = "INSERT INTO ".$this->table."(
-                            `ID`, `active_device_state`, `history_wire`, `history_ports_state`,
+                            `id`, `active_device_state`, `history_wire`, `history_ports_state`,
                             `history_unknown_mac`, `history_snmp_errors`, `history_process`)
                 VALUES ('1', '0', '0', '0', '0', '0', '0');";
 		
@@ -64,7 +64,7 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
 
 		$query = "SELECT ".$field."
                 FROM ".$this->table."
-                WHERE `ID` = '1';";
+                WHERE `id` = '1';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -83,7 +83,7 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
       }
 	}
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $LANG;
 		
 		$this->showTabs($options);

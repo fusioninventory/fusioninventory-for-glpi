@@ -99,7 +99,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
 
          $a_agent = $pta->InfosByKey($pxml->DEVICEID);
-         $a_tasks = $ptt->find("`agent_id`='".$a_agent['ID']."'", "date");
+         $a_tasks = $ptt->find("`agent_id`='".$a_agent['id']."'", "date");
 
          $single = 0;
          $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '0';
@@ -110,7 +110,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                     AND ($a_agent['module_inventory'] == '1')) {
 
                $ptc->addInventory();
-               $input['ID'] = $task_id;
+               $input['id'] = $task_id;
                $ptt->delete($input);
                $ocsinventory = '0';
                $single = 1;
@@ -120,7 +120,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                     AND ($a_agent['module_netdiscovery'] == '1')) {
                $single = 1;
                $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
-               $input['ID'] = $task_id;
+               $input['id'] = $task_id;
                $ptt->delete($input);
             }
             if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
@@ -128,7 +128,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                     AND ($a_agent['module_snmpquery'] == '1')) {
                $single = 1;
                $ptc->addQuery($pxml, 1);
-               $input['ID'] = $task_id;
+               $input['id'] = $task_id;
                $ptt->delete($input);
             }
             if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
@@ -136,7 +136,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                     AND ($a_agent['module_wakeonlan'] == '1')) {
                $single = 1;
                $ptc->addWakeonlan($pxml);
-               $input['ID'] = $task_id;
+               $input['id'] = $task_id;
                $ptt->delete($input);
             }
          }

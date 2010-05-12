@@ -177,7 +177,7 @@ class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
             echo "</td>";
 
             echo "<td align='center'>";
-            Dropdown::showFromArray($data['ID'], $days,
+            Dropdown::showFromArray($data['id'], $days,
                                     array('value'=>$data['days']));
             echo "</td>";
             echo "</tr>";

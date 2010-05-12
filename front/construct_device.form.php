@@ -53,7 +53,7 @@ PluginFusioninventoryDisplay::mini_menu();
 if (isset($_GET['vlan_update'])) {
    $query_update = "UPDATE `glpi_plugin_fusioninventory_construct_mibs`
          SET vlan=0
-      WHERE construct_device_id=".$_GET['ID']."
+      WHERE construct_device_id=".$_GET['id']."
          AND mib_oid_id=".$_GET['vlan_update'];
    $DB->query($query_update);
    glpi_header($_SERVER['HTTP_REFERER']);
@@ -80,12 +80,12 @@ if (isset($_GET['vlan_update'])) {
    }
 
    $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_construct_walks` (
-`ID` ,
+`id` ,
 `construct_device_id` ,
 `log`
 )
 VALUES (
-NULL , '".$_POST['ID']."', '".$md5."'
+NULL , '".$_POST['id']."', '".$md5."'
 )";
    $id_ins = $DB->query($query_ins);
    move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
@@ -98,7 +98,7 @@ NULL , '".$_POST['ID']."', '".$md5."'
          (`mib_oid_id`, `construct_device_id`, `mapping_name`,
             `oid_port_counter`, `oid_port_dyn`, `mapping_type`, `vlan`)
          VALUES
-         ('".$oid."', '".$_POST['ID']."', '".$a_mapping[1]."',
+         ('".$oid."', '".$_POST['id']."', '".$a_mapping[1]."',
             '".$_POST['oid_port_counter_'.$oid]."',
             '".$_POST['oid_port_dyn_'.$oid]."', '".$a_mapping[0]."',
               '".$_POST['vlan_'.$oid]."' )";
@@ -113,13 +113,13 @@ NULL , '".$_POST['ID']."', '".$md5."'
 	glpi_header("construct_device.php");
 }
 
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
 }
 
-$ptcd->showForm($ID);
-$ptcd->manageWalks($_SERVER["PHP_SELF"], $ID);
+$ptcd->showForm($id);
+$ptcd->manageWalks($_SERVER["PHP_SELF"], $id);
 
 commonFooter();
 

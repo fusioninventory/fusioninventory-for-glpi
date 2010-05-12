@@ -59,7 +59,7 @@ class PluginFusioninventoryConfigModules extends CommonDBTM {
 
 		$query = "SELECT ".$field."
                 FROM ".$this->table."
-                WHERE `ID` = '1';";
+                WHERE `id` = '1';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -80,7 +80,7 @@ class PluginFusioninventoryConfigModules extends CommonDBTM {
 
 
 		
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $LANG,$CFG_GLPI;
 
 		$this->showTabs($options);

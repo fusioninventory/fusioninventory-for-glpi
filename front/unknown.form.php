@@ -60,17 +60,17 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], 
 
 PluginFusioninventoryDisplay::mini_menu();
 
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
 }
 
 if (isset($_POST["delete"])) {
-	$ptud->check($_POST['ID'],'w');
+	$ptud->check($_POST['id'],'w');
 
 	$ptud->delete($_POST,1);
 
-//	logEvent($_POST["ID"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
+//	logEvent($_POST["id"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
 	glpi_header($CFG_GLPI["root_doc"]."plugins/fusioninventory/front/unknown.php");
 } else if (isset($_POST["restore"])) {
 
@@ -79,13 +79,13 @@ if (isset($_POST["delete"])) {
 
 
 } else if (isset($_POST["update"])) {
-	$ptud->check($_POST['ID'],'w');
+	$ptud->check($_POST['id'],'w');
 	$ptud->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = PluginFusioninventoryDiscovery::import($_POST['ID'],$Import,$NoImport);
+   list($Import, $NoImport) = PluginFusioninventoryDiscovery::import($_POST['id'],$Import,$NoImport);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
    if ($Import == "0") {
@@ -95,7 +95,7 @@ if (isset($_POST["delete"])) {
    }
 }
 
-$ptud->showForm($ID);
+$ptud->showForm($id);
 
 commonFooter();
 

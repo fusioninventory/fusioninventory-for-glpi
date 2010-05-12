@@ -49,7 +49,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		global $DB,$CFG_GLPI;
 		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
 		$query = "INSERT INTO ".$this->table."(
-                              `ID`, `version`, `URL_agent_conf`, `ssl_only`, `authsnmp`, `inventory_frequence`,
+                              `id`, `version`, `URL_agent_conf`, `ssl_only`, `authsnmp`, `inventory_frequence`,
                               `criteria1_ip`, `criteria1_name`, `criteria1_serial`,
                               `criteria1_macaddr`, `criteria2_ip`, `criteria2_name`,
                               `criteria2_serial`, `criteria2_macaddr`, `delete_agent_process`)
@@ -64,7 +64,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 		$query = "SELECT ".$field."
                 FROM ".$this->table."
-                WHERE `ID` = '1';";
+                WHERE `id` = '1';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -97,7 +97,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		return $ong;
 	}
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $LANG,$CFG_GLPI;
 
 		$this->showTabs($options);

@@ -38,21 +38,21 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryDb extends CommonDBTM {
-   static function createfirstaccess($ID) {
+   static function createfirstaccess($id) {
       global $DB;
 
       $plugin_fusioninventory_Profile=new PluginFusioninventoryProfile;
-      if (!$plugin_fusioninventory_Profile->GetfromDB($ID)) {
+      if (!$plugin_fusioninventory_Profile->GetfromDB($id)) {
          $Profile=new Profile;
-         $Profile->GetfromDB($ID);
+         $Profile->GetfromDB($id);
          $name=$Profile->fields["name"];
 
          $query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
-                   `ID`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
+                   `id`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
                    `snmp_models`, `snmp_authentification`, `rangeip`, `agents`, `remotecontrol`,
                    `agentsprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
                    `snmp_query`, `wol`, `configuration` )
-                   VALUES ('$ID', '$name','fusioninventory','0','w','w',
+                   VALUES ('$id', '$name','fusioninventory','0','w','w',
                      'w','w','w','w','w',
                      'r','w','r','w','w',
                      'w','w','w');";
@@ -60,30 +60,30 @@ class PluginFusioninventoryDb extends CommonDBTM {
       }
    }
 
-   static function createaccess($ID) {
+   static function createaccess($id) {
       global $DB;
 
       $Profile=new Profile;
-      $Profile->GetfromDB($ID);
+      $Profile->GetfromDB($id);
       $name=$Profile->fields["name"];
 
       $query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
-                   `ID`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
+                   `id`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
                    `snmp_models`, `snmp_authentification`, `rangeip`, `agents`, `remotecontrol`,
                    `agentsprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
                    `snmp_query`, `wol`, `configuration` )
-                VALUES ('$ID', '$name','fusioninventory','0',NULL,NULL,
+                VALUES ('$id', '$name','fusioninventory','0',NULL,NULL,
                    NULL,NULL,NULL,NULL,NULL,
                    NULL,NULL,NULL,NULL,NULL,
                    NULL,NULL,NULL);";
       $DB->query($query);
    }
 
-   static function updateaccess($ID) {
+   static function updateaccess($id) {
       global $DB;
 
       $Profile=new Profile;
-      $Profile->GetfromDB($ID);
+      $Profile->GetfromDB($id);
       $name=$Profile->fields["name"];
 
       $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
@@ -100,7 +100,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
 
    }
 
-   static function getDeviceFieldFromId($type, $ID, $field, $return) {
+   static function getDeviceFieldFromId($type, $id, $field, $return) {
       global $DB;
       switch($type) {
          case COMPUTER_TYPE:
@@ -126,7 +126,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
 
       $query = "SELECT ".$field.
                "FROM ".$table." ".
-               "WHERE `ID` = '".$ID."';";
+               "WHERE `id` = '".$id."';";
       if ($result = $DB->query($query)) {
          if (($fields=$DB->fetch_row($result)) && ($fields['0'] != NULL)) {
             return $fields['0'];
@@ -146,65 +146,65 @@ class PluginFusioninventoryDb extends CommonDBTM {
       $ptph = new PluginFusioninventoryPrintersHistory;
 
       // * Clean glpi_plugin_fusioninventory_networking_ports
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`ID`
+      $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ports`.`id`
                        FROM `glpi_plugin_fusioninventory_networking_ports`
                              LEFT JOIN `glpi_networkports`
-                                       ON `glpi_networkports`.`ID` = `networkports_id`
-                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`ID` = `items_id`
-                       WHERE `glpi_networkequipments`.`ID` IS NULL";
+                                       ON `glpi_networkports`.`id` = `networkports_id`
+                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `items_id`
+                       WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
-         $ptp->deleteFromDB($data["ID"],1);
+         $ptp->deleteFromDB($data["id"],1);
       }
 
       // * Clean glpi_plugin_fusioninventory_networking_ifaddr
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`ID`
+      $query_select = "SELECT `glpi_plugin_fusioninventory_networking_ifaddr`.`id`
                        FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`ID` = `networkequipments_id`
-                       WHERE `glpi_networkequipments`.`ID` IS NULL";
+                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
+                       WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
-         $pti->deleteFromDB($data["ID"],1);
+         $pti->deleteFromDB($data["id"],1);
       }
 
       // * Clean glpi_plugin_fusioninventory_networking
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networking`.`ID`
+      $query_select = "SELECT `glpi_plugin_fusioninventory_networking`.`id`
                        FROM `glpi_plugin_fusioninventory_networking`
-                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`ID` = `networkequipments_id`
-                       WHERE `glpi_networkequipments`.`ID` IS NULL";
+                             LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
+                       WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
-         $ptn->deleteFromDB($data["ID"],1);
+         $ptn->deleteFromDB($data["id"],1);
       }
 
       // * Clean glpi_plugin_fusioninventory_printers
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`ID`
+      $query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
                        FROM `glpi_plugin_fusioninventory_printers`
-                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `printers_id`
-                       WHERE `glpi_printers`.`ID` IS NULL";
+                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
+                       WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
-         $ptpr->deleteFromDB($data["ID"],1);
+         $ptpr->deleteFromDB($data["id"],1);
       }
 
       // * Clean glpi_plugin_fusioninventory_printers_cartridges
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printers_cartridges`.`ID`
+      $query_select = "SELECT `glpi_plugin_fusioninventory_printers_cartridges`.`id`
                        FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `printers_id`
-                       WHERE `glpi_printers`.`ID` IS NULL";
+                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
+                       WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
-         $ptpc->deleteFromDB($data["ID"],1);
+         $ptpc->deleteFromDB($data["id"],1);
       }
 
       // * Clean glpi_plugin_fusioninventory_printers_history
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printers_history`.`ID`
+      $query_select = "SELECT `glpi_plugin_fusioninventory_printers_history`.`id`
                        FROM `glpi_plugin_fusioninventory_printers_history`
-                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`ID` = `printers_id`
-                       WHERE `glpi_printers`.`ID` IS NULL";
+                             LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
+                       WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);
       while ($data=$DB->fetch_array($result)) {
-         $ptph->deleteFromDB($data["ID"],1);
+         $ptph->deleteFromDB($data["id"],1);
       }
    }
 

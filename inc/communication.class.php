@@ -152,12 +152,12 @@ class PluginFusioninventoryCommunication {
       $ptt     = new PluginFusioninventoryTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
-      $count_range = $ptrip->Counter($agent["ID"], "query");
-      $count_range += $ptt->Counter($agent["ID"], "SNMPQUERY");
+      $count_range = $ptrip->Counter($agent["id"], "query");
+      $count_range += $ptt->Counter($agent["id"], "SNMPQUERY");
       if ($task == "1") {
-         $tasks = $ptt->ListTask($agent["ID"], "SNMPQUERY");
+         $tasks = $ptt->ListTask($agent["id"], "SNMPQUERY");
          foreach ($tasks as $task_id=>$taskInfos) {
-            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/query.log".rand(), $agent["ID"]);
+            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/query.log".rand(), $agent["id"]);
             if ($tasks[$task_id]["param"] == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
                $task = "0";
             }
@@ -169,7 +169,7 @@ class PluginFusioninventoryCommunication {
       }
 
       // Get total number of devices to query
-      $ranges = $ptrip->ListRange($agent["ID"], "query");
+      $ranges = $ptrip->ListRange($agent["id"], "query");
       $modelslistused = array();
       foreach ($ranges as $range_id=>$rangeInfos) {
          $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
@@ -221,7 +221,7 @@ class PluginFusioninventoryCommunication {
 //                                 $ranges[$range_id]["ifaddr_end"], $ranges[$range_id]["entities_id"], $modelslistused);
                   }
                } else {
-                  $ranges = $ptrip->ListRange($agent["ID"], "query");
+                  $ranges = $ptrip->ListRange($agent["id"], "query");
                   $modelslistused = array();
                   foreach ($ranges as $range_id=>$rangeInfos) {
                      $modelslistused = $this->addDevice($sxml_option, 'networking', $ranges[$range_id]["ifaddr_start"],
@@ -234,15 +234,15 @@ class PluginFusioninventoryCommunication {
             $snmpauthlist=$ptsnmpa->find();
             if (count($snmpauthlist)){
                foreach ($snmpauthlist as $snmpauth){
-                  $this->addAuth($sxml_option, $snmpauth['ID']);
+                  $this->addAuth($sxml_option, $snmpauth['id']);
                }
             }
 
             $modelslist=$ptmi->find();
             if (count($modelslist)){
                foreach ($modelslist as $model){
-                  if (isset($modelslistused[$model['ID']])) {
-                     $this->addModel($sxml_option, $model['ID']);
+                  if (isset($modelslistused[$model['id']])) {
+                     $this->addModel($sxml_option, $model['id']);
                   }
                }
             }
@@ -262,10 +262,10 @@ class PluginFusioninventoryCommunication {
       $ptt     = new PluginFusioninventoryTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
-      $count_range = $ptrip->Counter($agent["ID"], "discover");
-      $count_range += $ptt->Counter($agent["ID"], "NETDISCOVERY");
+      $count_range = $ptrip->Counter($agent["id"], "discover");
+      $count_range += $ptt->Counter($agent["id"], "NETDISCOVERY");
       if ($task == "1") {
-         $tasks = $ptt->ListTask($agent["ID"], "NETDISCOVERY");
+         $tasks = $ptt->ListTask($agent["id"], "NETDISCOVERY");
          foreach ($tasks as $task_id=>$taskInfos) {
             if ($tasks[$task_id]["param"] == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
                $task = "0";
@@ -308,7 +308,7 @@ class PluginFusioninventoryCommunication {
                }
 
             } else {
-               $ranges = $ptrip->ListRange($agent["ID"], "discover");
+               $ranges = $ptrip->ListRange($agent["id"], "discover");
                foreach ($ranges as $range_id=>$rangeInfos) {
                   $sxml_rangeip = $sxml_option->addChild('RANGEIP');
                      $sxml_rangeip->addAttribute('ID', $range_id);
@@ -321,7 +321,7 @@ class PluginFusioninventoryCommunication {
             $snmpauthlist=$ptsnmpa->find();
             if (count($snmpauthlist)){
                foreach ($snmpauthlist as $snmpauth){
-                  $this->addAuth($sxml_option, $snmpauth['ID']);
+                  $this->addAuth($sxml_option, $snmpauth['id']);
                }
             }
          //$this->sxml->addChild('RESPONSE', 'SEND');
@@ -456,14 +456,14 @@ class PluginFusioninventoryCommunication {
          
          case "networking":
             $type='NETWORKING';
-            $query = "SELECT `glpi_networkequipments`.`ID` AS `gID`,
+            $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                              `glpi_networkequipments`.`ip` AS `gnifaddr`,
                              `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                       FROM `glpi_networkequipments`
                       LEFT JOIN `glpi_plugin_fusioninventory_networking`
-                           ON `networkequipments_id`=`glpi_networkequipments`.`ID`
+                           ON `networkequipments_id`=`glpi_networkequipments`.`id`
                       INNER join `glpi_plugin_fusioninventory_modelinfos`
-                           ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
+                           ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
                       WHERE `glpi_networkequipments`.`is_deleted`='0'
                            AND `plugin_fusioninventory_modelinfos_id`!='0'
                            AND `plugin_fusioninventory_snmpauths_id`!='0'";
@@ -471,7 +471,7 @@ class PluginFusioninventoryCommunication {
                $query .= "AND `glpi_networkequipments`.`entities_id`='".$p_entity."' ";
              }
              if ($p_ipstart == '0') {
-               $query .= " AND `glpi_networkequipments`.`ID`='".$devide_id."'";
+               $query .= " AND `glpi_networkequipments`.`id`='".$devide_id."'";
              } else {
                $query .= " AND inet_aton(`ip`)
                                BETWEEN inet_aton('".$p_ipstart."')
@@ -482,17 +482,17 @@ class PluginFusioninventoryCommunication {
          
          case "printer":
             $type='PRINTER';
-            $query = "SELECT `glpi_printers`.`ID` AS `gID`,
+            $query = "SELECT `glpi_printers`.`id` AS `gID`,
                              `glpi_networkports`.`ip` AS `gnifaddr`,
                              `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                       FROM `glpi_printers`
                       LEFT JOIN `glpi_plugin_fusioninventory_printers`
-                              ON `printers_id`=`glpi_printers`.`ID`
+                              ON `printers_id`=`glpi_printers`.`id`
                       LEFT JOIN `glpi_networkports`
-                              ON `items_id`=`glpi_printers`.`ID`
+                              ON `items_id`=`glpi_printers`.`id`
                                  AND `itemtype`='".PRINTER_TYPE."'
                       INNER join `glpi_plugin_fusioninventory_modelinfos`
-                           ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
+                           ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
                       WHERE `glpi_printers`.`is_deleted`=0
                             AND `plugin_fusioninventory_modelinfos_id`!='0'
                             AND `plugin_fusioninventory_snmpauths_id`!='0'";
@@ -500,7 +500,7 @@ class PluginFusioninventoryCommunication {
                $query .= "AND `glpi_printers`.`entities_id`='".$p_entity."' ";
              }
              if ($p_ipstart == '0') {
-               $query .= " AND `glpi_printers`.`ID`='".$devide_id."'";
+               $query .= " AND `glpi_printers`.`id`='".$devide_id."'";
              } else {
                $query .= " AND inet_aton(`ip`)
                                BETWEEN inet_aton('".$p_ipstart."')
@@ -671,7 +671,7 @@ class PluginFusioninventoryCommunication {
          $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                               array('query_nb_error' => '1'));
          $a_input = array();
-         $a_input['ID'] = $p_device->ERROR->ID;
+         $a_input['id'] = $p_device->ERROR->ID;
          if ($p_device->ERROR->TYPE=='NETWORKING') {
             $a_input['TYPE'] = NETWORKING_TYPE;
          } elseif ($p_device->ERROR->TYPE=='PRINTER') {
@@ -712,7 +712,7 @@ class PluginFusioninventoryCommunication {
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                      array('query_nb_error' => '1'));
                $a_input = array();
-               $a_input['ID'] = $p_device->ERROR->ID;
+               $a_input['id'] = $p_device->ERROR->ID;
                if ($p_device->ERROR->TYPE=='NETWORKING') {
                   $a_input['TYPE'] = NETWORKING_TYPE;
                } elseif ($p_device->ERROR->TYPE=='PRINTER') {
@@ -726,7 +726,7 @@ class PluginFusioninventoryCommunication {
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                   array('query_nb_error' => '1'));
             $a_input = array();
-            $a_input['ID'] = $p_device->ERROR->ID;
+            $a_input['id'] = $p_device->ERROR->ID;
             if ($p_device->ERROR->TYPE=='NETWORKING') {
                $a_input['TYPE'] = NETWORKING_TYPE;
             } elseif ($p_device->ERROR->TYPE=='PRINTER') {
@@ -763,7 +763,7 @@ class PluginFusioninventoryCommunication {
          } else {
             $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
                      type : '.$p_info->TYPE.'<br/>
-                     ID : '.$p_info->ID.'<br/>
+                     id : '.$p_info->ID.'<br/>
                      serial : '.trim($p_info->SERIAL).'<br/>
                      name : '.$p_info->NAME.'<br/>
                      macaddress : '.$p_info->MAC.'\n';
@@ -795,7 +795,7 @@ class PluginFusioninventoryCommunication {
             if ($error_criteria == 0) {
                $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
                         type : '.$p_info->TYPE.'<br/>
-                        ID : '.$p_info->ID.'<br/>
+                        id : '.$p_info->ID.'<br/>
                         serial : '.trim($p_info->SERIAL).'<br/>
                         name : '.$p_info->NAME.'<br/>
                         macaddress : '.$p_info->MAC.'\n';
@@ -806,7 +806,7 @@ class PluginFusioninventoryCommunication {
          $pfiae = new PluginFusioninventoryAgentsErrors;
 
          $a_input = array();
-         $a_input['ID'] = $p_info->ID;
+         $a_input['id'] = $p_info->ID;
          if ($p_info->TYPE=='NETWORKING') {
             $a_input['TYPE'] = NETWORKING_TYPE;
          } elseif ($p_info->TYPE=='PRINTER') {
@@ -954,7 +954,7 @@ class PluginFusioninventoryCommunication {
                   $ifaddrIndex = $this->ptd->getIfaddrIndex($child);
                   if (is_int($ifaddrIndex)) {
                      $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
-                     $pti->load($oldIfaddr->getValue('ID'));
+                     $pti->load($oldIfaddr->getValue('id'));
                   } else {
                      $pti->load();
                   }
@@ -1016,7 +1016,7 @@ class PluginFusioninventoryCommunication {
          $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
          if (is_int($portIndex)) {
             $oldPort = $this->ptd->getPort($portIndex);
-            $ptp->load($oldPort->getValue('ID'));
+            $ptp->load($oldPort->getValue('id'));
          } else {
             $ptp->addDB($this->deviceId, TRUE);
          }
@@ -1029,22 +1029,22 @@ class PluginFusioninventoryCommunication {
                   $errors.=$this->importVlans($child, $ptp);
                   break;
                case 'IFNAME' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('mac', $child);
                   break;
                case 'IFNUMBER' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
                   break;
                case 'TRUNK' :
                   if (!$ptp->getNoTrunk()) {
-                     PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                     PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                      $ptp->setValue('vlanTrunkPortDynamicStatus', $p_port->$name);
                   }
                   break;
@@ -1059,7 +1059,7 @@ class PluginFusioninventoryCommunication {
                case 'IFOUTOCTETS' :
                case 'IFSPEED' :
                case 'IFSTATUS' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :
@@ -1068,7 +1068,7 @@ class PluginFusioninventoryCommunication {
          }
          $this->ptd->addPort($ptp, $portIndex);
       } else { // virtual port : do not import but delete if exists
-         if ( is_numeric($ptp->getValue('ID')) ) $ptp->deleteDB();
+         if ( is_numeric($ptp->getValue('id')) ) $ptp->deleteDB();
       }
       return $errors;
    }
@@ -1089,26 +1089,26 @@ class PluginFusioninventoryCommunication {
          $portIndex = $this->ptd->getPortIndex($p_port->MAC, $p_port->IP);
          if (is_int($portIndex)) {
             $oldPort = $this->ptd->getPort($portIndex);
-            $ptp->load($oldPort->getValue('ID'));
+            $ptp->load($oldPort->getValue('id'));
          } else {
             $ptp->addDB($this->deviceId, TRUE);
          }
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'IFNAME' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('mac', $child);
                   break;
                case 'IP' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('ip', $child);
                   break;
                case 'IFNUMBER' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
@@ -1157,7 +1157,7 @@ class PluginFusioninventoryCommunication {
                $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
                if (is_int($cartridgeIndex)) {
                   $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???
-                  $ptc->load($oldCartridge->getValue('ID'));
+                  $ptc->load($oldCartridge->getValue('id'));
                } else {
                   $ptc->addCommon(TRUE); //TODO ???
                   $ptc->setValue('printers_id', $this->deviceId);
@@ -1319,7 +1319,7 @@ class PluginFusioninventoryCommunication {
             switch ($child->getName()) {
                case 'MAC' :
                   $mac=$child;
-                  $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $p_oPort->getValue('ID'));
+                  $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $p_oPort->getValue('id'));
                   $p_oPort->addMac($mac);
                   break;
                case 'IP' ://TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info // utile seulement si mac inconnu dans glpi
@@ -1499,7 +1499,7 @@ class PluginFusioninventoryCommunication {
          } else {
             foreach ($a_agent as $id_agent=>$dataInfos) {
                $input = array();
-               $input['ID'] = $id_agent;
+               $input['id'] = $id_agent;
                $input['token'] = $this->sxml->TOKEN;
                $pta->update($input);
             }
@@ -1572,7 +1572,7 @@ class PluginFusioninventoryCommunication {
       if ($DB->numrows($result) == 1) {
          $line = $DB->fetch_assoc($result);
          $ptais->changeStatus($line['glpi_id'], 5);
-         OcsServer::updateComputer($line['ID'], $line['ocs_server_id'], 1);
+         OcsServer::updateComputer($line['id'], $line['ocs_server_id'], 1);
          $ptais->changeStatus($line['glpi_id'], 6);
       }
    }
@@ -1599,11 +1599,11 @@ class PluginFusioninventoryCommunication {
       $sxml_option = $this->sxml->addChild('OPTION');
          $sxml_option->addChild('NAME', 'WAKEONLAN');
 
-      $tasks = $ptt->ListTask($agent["ID"], "WAKEONLAN");
+      $tasks = $ptt->ListTask($agent["id"], "WAKEONLAN");
          foreach ($tasks as $task_id=>$taskInfos) {
             if ($taskInfos['itemtype'] == COMPUTER_TYPE) {
                $a_portsList = $np->find('items_id='.$taskInfos['items_id'].' AND itemtype="'.COMPUTER_TYPE.'"');
-               foreach ($a_portsList as $ID=>$data) {
+               foreach ($a_portsList as $id=>$data) {
                   if ($data['ip'] != "127.0.0.1") {
                      $sxml_param = $sxml_option->addChild('PARAM');
                      $sxml_param->addAttribute('MAC', $data['mac']);

@@ -106,7 +106,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
    /**
     * Function to import discovered device
     *
-    * @param $discovery_ID ID of the device to import
+    * @param $discovery_ID id of the device to import
     *
     * @return nothing
     *
@@ -118,13 +118,13 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       $ptud = new PluginFusioninventoryUnknownDevice;
 
       $ptud->getFromDB($discovery_ID);
-      $query = "SELECT `ID`
+      $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$discovery_ID."'
                       AND `itemtype` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
-         $Networkport->getFromDB($data["ID"]);
+         $Networkport->getFromDB($data["id"]);
       }
 
       switch ($ptud->fields['type']) {
@@ -181,10 +181,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $ID_Device = $Netdevice->add($data);
 
             $nn = new NetworkPort_NetworkPort();
-            if ($nn->getFromDBForNetworkPort($Networkport->fields["ID"])) {
+            if ($nn->getFromDBForNetworkPort($Networkport->fields["id"])) {
                $nn->delete($Networkport->fields);
             }
-            $Netdevice->deleteFromDB($Networkport->fields["ID"]);
+            $Netdevice->deleteFromDB($Networkport->fields["id"]);
 
             $data_fusioninventory["networkequipments_id"] = $ID_Device;
             $data_fusioninventory["plugin_fusioninventory_modelinfos_id"] = $ptud->fields["plugin_fusioninventory_modelinfos_id"];
@@ -302,7 +302,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                               $data_Port['itemtype'] = $ptud->fields['type'];
                               $Networkport->update($data_Port);
                            } else {
-                              $Networkport->deleteFromDB($Networkport->fields['ID']);
+                              $Networkport->deleteFromDB($Networkport->fields['id']);
                            }
 
                            $ptud->deleteFromDB($discovery_ID,1);
@@ -526,12 +526,12 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       foreach ($a_types as $type) {
          $ci->setType($type,true);
          if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
-            $query = "SELECT ".$ci->obj->table.".ID ".$select_unknown." FROM ".$ci->obj->table;
+            $query = "SELECT ".$ci->obj->table.".id ".$select_unknown." FROM ".$ci->obj->table;
          } else {
-            $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
+            $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
          }
          if ($ci->obj->table != "glpi_networkequipments") {
-            $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".ID AND itemtype=".$type;
+            $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".id AND itemtype=".$type;
          }
          if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;
@@ -542,24 +542,24 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if($DB->numrows($result) > 0) {
             $data = $DB->fetch_assoc($result);
             if ($p_type == '0') {
-               return $data['ID'].'||'.$type;
+               return $data['id'].'||'.$type;
             } else {
-               return $data['ID'];
+               return $data['id'];
             }
          }
       }
 
       // Search in PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN when ip in not empty (so when it's a switch)
       $ci->setType(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,true);
-      $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
+      $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
       $query .= " WHERE is_deleted=0 ".$condition;
       $result = $DB->query($query);
       if($DB->numrows($result) > 0) {
          $data = $DB->fetch_assoc($result);
          if ($p_type == '0') {
-            return $data['ID'].'||'.$type;
+            return $data['id'].'||'.$type;
          } else {
-            return $data['ID'];
+            return $data['id'];
          }
       }
 

@@ -70,31 +70,31 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $this->ports = $this->getPortsDB();
       $this->cartridges = $this->getCartridgesDB();
 
-      $query = "SELECT `ID`
+      $query = "SELECT `id`
                 FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `printers_id` = '".$this->getValue('ID')."';";
+                WHERE `printers_id` = '".$this->getValue('id')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             $fusioninventory = $DB->fetch_assoc($result);
-            $this->oFusionInventory_printer->load($fusioninventory['ID']);
+            $this->oFusionInventory_printer->load($fusioninventory['id']);
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
          } else {
             $this->oFusionInventory_printer->load();
-            $this->oFusionInventory_printer->setValue('printers_id', $this->getValue('ID'));
+            $this->oFusionInventory_printer->setValue('printers_id', $this->getValue('id'));
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
          }
 
          $query = "SELECT *
                    FROM `glpi_plugin_fusioninventory_printers_history`
-                   WHERE `printers_id` = '".$this->getValue('ID')."'
+                   WHERE `printers_id` = '".$this->getValue('id')."'
                          AND LEFT(`date`, 10)='".date("Y-m-d")."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
                $history = $DB->fetch_assoc($result);
-               $this->oFusionInventory_printer_history->load($history['ID']);
+               $this->oFusionInventory_printer_history->load($history['id']);
             } else {
                $this->oFusionInventory_printer_history->load();
-               $this->oFusionInventory_printer_history->setValue('printers_id', $this->getValue('ID'));
+               $this->oFusionInventory_printer_history->setValue('printers_id', $this->getValue('id'));
                $this->oFusionInventory_printer_history->setValue('date', date("Y-m-d H:i:s"));
             }
          } 
@@ -125,7 +125,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       // cartridges
       $this->saveCartridges();
       // history
-      if (is_null($this->oFusionInventory_printer_history->getValue('ID'))) {
+      if (is_null($this->oFusionInventory_printer_history->getValue('id'))) {
          // update only if counters not already set for today
          $this->oFusionInventory_printer_history->updateDB();
       }
@@ -140,15 +140,15 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       $ptp = new PluginFusioninventoryPort();
-      $query = "SELECT `ID`
+      $query = "SELECT `id`
                 FROM `glpi_networkports`
-                WHERE `items_id` = '".$this->getValue('ID')."'
+                WHERE `items_id` = '".$this->getValue('id')."'
                       AND `itemtype` = '".PRINTER_TYPE."';";
       $portsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             while ($port = $DB->fetch_assoc($result)) {
-               $ptp->load($port['ID']);
+               $ptp->load($port['id']);
                $portsIds[] = clone $ptp;
             }
          }
@@ -236,8 +236,8 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
          }
       }
       foreach ($this->newPorts as $ptp) {
-         if ($ptp->getValue('ID')=='') {               // create existing ports
-            $ptp->addDB($this->getValue('ID'));
+         if ($ptp->getValue('id')=='') {               // create existing ports
+            $ptp->addDB($this->getValue('id'));
          } else {                                      // update existing ports
             $ptp->updateDB();
          }
@@ -268,7 +268,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
          }
       }
       foreach ($this->newCartridges as $ptc) {
-         if ($ptc->getValue('ID')=='') {               // create existing cartridges
+         if ($ptc->getValue('id')=='') {               // create existing cartridges
             $ptc->addCommon();
          } else {                                      // update existing cartridges
             $ptc->updateDB();
@@ -299,14 +299,14 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       $ptc = new PluginFusioninventoryCommonDBTM('glpi_plugin_fusioninventory_printers_cartridges');
-      $query = "SELECT `ID`
+      $query = "SELECT `id`
                 FROM `glpi_plugin_fusioninventory_printers_cartridges`
-                WHERE `printers_id` = '".$this->getValue('ID')."';";
+                WHERE `printers_id` = '".$this->getValue('id')."';";
       $cartridgesIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             while ($cartridge = $DB->fetch_assoc($result)) {
-               $ptc->load($cartridge['ID']);
+               $ptc->load($cartridge['id']);
                $cartridgesIds[] = clone $ptc;
             }
          }

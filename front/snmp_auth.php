@@ -50,7 +50,7 @@ PluginFusioninventoryDisplay::mini_menu();
 if ($config->getValue("authsnmp") == "file") {
 	$plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
 	
-	if (!isset($_GET["ID"])) {
+	if (!isset($_GET["id"])) {
 		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
 	}
 } else if ($config->getValue("authsnmp") == "DB") {

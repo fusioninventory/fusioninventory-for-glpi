@@ -55,14 +55,14 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 
 
-	function showFormPrinter($ID, $options=array()) {
+	function showFormPrinter($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;	
 	
 		PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 	
 		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 	
-		$this->ID = $ID;
+		$this->id = $id;
 		
 		$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
 //		$config_snmp_printer = new PluginFusioninventoryConfigSNMPPrinter;
@@ -70,7 +70,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `printers_id`=".$ID." ";
+                WHERE `printers_id`=".$id." ";
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
@@ -78,7 +78,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		// Add in database if not exist
 		if ($DB->numrows($result) == "0") {
 			$query_add = "INSERT INTO `glpi_plugin_fusioninventory_printers` (`printers_id`)
-                              VALUES('".$ID."') ";
+                              VALUES('".$id."') ";
 			
 			$DB->query($query_add);
 		}
@@ -97,7 +97,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {
-			$exclude_models[] = $data_models['ID'];		
+			$exclude_models[] = $data_models['id'];		
 		}
 		Dropdown::show("PluginFusioninventoryModelInfos",
                      array('name'=>"plugin_fusioninventory_modelinfos_id",
@@ -131,7 +131,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='3'>";
 		echo "<div align='center'>";
-		echo "<input type='hidden' name='ID' value='".$ID."'>";
+		echo "<input type='hidden' name='id' value='".$id."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
 		echo "</td>";
 		echo "</tr>";
@@ -141,15 +141,15 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
       // Remote action of agent
       $pfit = new PluginFusioninventoryTask;
-      $pfit->RemoteStateAgent($target, $ID, PRINTER_TYPE, array('INVENTORY' => 1 ));
+      $pfit->RemoteStateAgent($target, $id, PRINTER_TYPE, array('INVENTORY' => 1 ));
 
 
 		// ** FORM FOR CARTRIDGES
 
 		// get infos to get visible or not the counters
-			$snmp_model_ID = $plugin_fusioninventory_snmp->GetSNMPModel($ID,PRINTER_TYPE);
+			$snmp_model_ID = $plugin_fusioninventory_snmp->GetSNMPModel($id,PRINTER_TYPE);
 			// ** Get link OID fields
-			$Array_Object_TypeNameConstant= $plugin_fusioninventory_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
+			$Array_Object_TypeNameConstant= $plugin_fusioninventory_snmp->GetLinkOidToFields($id,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
 				if ((strstr($mapping_type_name, "cartridge")) OR (strstr($mapping_type_name, "toner"))) {
@@ -243,7 +243,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 		asort($mapping_name);
 		foreach ($mapping_name as $cartridge_name=>$val) {
-			$state = $plugin_fusioninventory_printers->cartridges_state($ID, $cartridge_name);
+			$state = $plugin_fusioninventory_printers->cartridges_state($id, $cartridge_name);
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>";
 			echo $FUSIONINVENTORY_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
@@ -253,7 +253,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 //			if ($config_snmp_printer->getValue('manage_cartridges') == "1") {
 //				echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
 //				dropdownValue("glpi_cartridges_type","cartridges_id",$state['cartridges_id'],0);
-//				echo "<input type='hidden' name='ID' value='".$ID."' />";
+//				echo "<input type='hidden' name='id' value='".$id."' />";
 //				echo "<input type='hidden' name='object_name' value='".$cartridge_name."' />";
 //				echo "<input name='update_cartridges' value='update_cartridges' src='".GLPI_ROOT.
 //                 "/pics/actualiser.png' class='calendrier' type='image'>";
@@ -272,17 +272,17 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 
 
-	function showFormPrinter_pagescounter($ID, $options=array()) {
+	function showFormPrinter_pagescounter($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;	
 		
 		$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
 		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 	
-		$this->ID = $ID;
+		$this->id = $id;
 		
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `printers_id`=".$ID." ";
+                WHERE `printers_id`=".$id." ";
 
 		$result = $DB->query($query);		
 		$data = $DB->fetch_assoc($result);
@@ -305,9 +305,9 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 				break;
 		} 
 		// get infos to get visible or not the counters
-			$snmp_model_ID = $plugin_fusioninventory_snmp->GetSNMPModel($ID,PRINTER_TYPE);
+			$snmp_model_ID = $plugin_fusioninventory_snmp->GetSNMPModel($id,PRINTER_TYPE);
 			// ** Get link OID fields
-			$Array_Object_TypeNameConstant= $plugin_fusioninventory_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
+			$Array_Object_TypeNameConstant= $plugin_fusioninventory_snmp->GetLinkOidToFields($id,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
 				//$explode = explode("||", $mapping_type_name);
@@ -341,7 +341,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
 			$Array = $plugin_fusioninventory_printers->
-                     getPagesCount($ID,$frequence,$_SESSION["datetotalpages"],'pages_total');
+                     getPagesCount($id,$frequence,$_SESSION["datetotalpages"],'pages_total');
 
 			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
 			$plugin_fusioninventory_printers->
@@ -380,7 +380,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
          $Array = $plugin_fusioninventory_printers->
-                  getPagesCount($ID,$frequence,$_SESSION["dateblackpages"],'pages_n_b');
+                  getPagesCount($id,$frequence,$_SESSION["dateblackpages"],'pages_n_b');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
          $plugin_fusioninventory_printers->
@@ -420,7 +420,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
          $Array = $plugin_fusioninventory_printers->
-                  getPagesCount($ID,$frequence,$_SESSION["datecolorpages"],'pages_color');
+                  getPagesCount($id,$frequence,$_SESSION["datecolorpages"],'pages_color');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
          $plugin_fusioninventory_printers->
@@ -461,7 +461,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
          $Array= $plugin_fusioninventory_printers->
-                 getPagesCount($ID,$frequence,$_SESSION["daterectoversopages"],'pages_recto_verso');
+                 getPagesCount($id,$frequence,$_SESSION["daterectoversopages"],'pages_recto_verso');
 
          echo "<table class='tab_cadre' cellpadding='5' width='900'>";
          $plugin_fusioninventory_printers->
@@ -501,7 +501,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			echo "<tr class='tab_bg_1'>";
 			echo "<td colspan='3'>";
 			$Array = $plugin_fusioninventory_printers->
-                  getPagesCount($ID,$frequence,$_SESSION["datescannedpages"],'scanned');
+                  getPagesCount($id,$frequence,$_SESSION["datescannedpages"],'scanned');
 		
 			echo "<table class='tab_cadre' cellpadding='5' width='900'>";
 			$plugin_fusioninventory_printers->
@@ -522,13 +522,13 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 			
 		
 		
-	function update_printers_infos($ID, $plugin_fusioninventory_modelinfos_id, $plugin_fusioninventory_snmpauths_id) {
+	function update_printers_infos($id, $plugin_fusioninventory_modelinfos_id, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 		
 		$query = "UPDATE `glpi_plugin_fusioninventory_printers`
                 SET `plugin_fusioninventory_modelinfos_id`='".$plugin_fusioninventory_modelinfos_id."',
                     `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
-                WHERE `printers_id`='".$ID."' ";
+                WHERE `printers_id`='".$id."' ";
 	
 		$DB->query($query);
 	}	
@@ -874,7 +874,7 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
    /**
     * Show printer graph form
     **/
-   function showFormPrinter_graph($ID, $options=array()) {
+   function showFormPrinter_graph($id, $options=array()) {
       global $FUSIONINVENTORY_MAPPING, $LANG;
 
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");

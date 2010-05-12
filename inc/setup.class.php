@@ -51,7 +51,7 @@ class PluginFusioninventorySetup {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      PluginFusioninventoryDb::createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
+      PluginFusioninventoryDb::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
@@ -118,7 +118,7 @@ class PluginFusioninventorySetup {
          $DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
          $DB->query("UPDATE `glpi_plugin_tracker_config`
                      SET `version` = '2.0.2'
-                     WHERE `ID`='1'
+                     WHERE `id`='1'
                      LIMIT 1 ;");
       }
       if ($version == "2.1.0") {
@@ -126,26 +126,26 @@ class PluginFusioninventorySetup {
                      SET `last_PID_update` = '0';");
          $DB->query("UPDATE `glpi_plugin_tracker_config`
                      SET `version` = '2.1.0'
-                     WHERE `ID`='1'
+                     WHERE `id`='1'
                      LIMIT 1 ;");
       }
       if ($version == "2.1.1") {
          $DB->query("UPDATE `glpi_plugin_tracker_config`
                      SET `version` = '2.1.1'
-                     WHERE `ID`=1
+                     WHERE `id`=1
                      LIMIT 1 ;");
       }
       if ($version == "2.1.2") {
          $DB->query("UPDATE `glpi_plugin_tracker_config`
                      SET `version` = '2.1.3'
-                     WHERE `ID`=1
+                     WHERE `id`=1
                      LIMIT 1 ;");
          //PluginFusioninventoryDb::clean_db();
       }
       if ($version == "2.1.3") {
          $DB->query("UPDATE `glpi_plugin_tracker_config`
                      SET `version` = '2.2.0'
-                     WHERE `ID`=1
+                     WHERE `id`=1
                      LIMIT 1 ;");
          ini_set("memory_limit","-1");
          ini_set("max_execution_time", "0");
@@ -166,7 +166,7 @@ class PluginFusioninventorySetup {
             mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
          }
          // Update right
-         PluginFusioninventory::updateaccess($_SESSION['glpiactiveprofile']['ID']);
+         PluginFusioninventory::updateaccess($_SESSION['glpiactiveprofile']['id']);
 
          // Delete old agents
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_agents`";
@@ -245,8 +245,8 @@ class PluginFusioninventorySetup {
 
       $a_netports = $np->find("`itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
       foreach ($a_netports as $Networkport){
-         $np->cleanDBonPurge($Networkport['ID']);
-         $np->deleteFromDB($Networkport['ID']);
+         $np->cleanDBonPurge($Networkport['id']);
+         $np->deleteFromDB($Networkport['id']);
       }
 
       return true;

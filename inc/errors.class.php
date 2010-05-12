@@ -54,7 +54,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
       } else { // networking or printer
 			$field = 'device_id';
       }
-		$query = "SELECT `ID`, `description` ".
+		$query = "SELECT `id`, `description` ".
                "FROM ".$this->table." ".
                "WHERE ".$field." = '".$value."'
                        AND `itemtype` = '".$itemtype."';";
@@ -69,14 +69,14 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	
 	/**
 	 * Function that finds if there is already an entry for a device in errors table.
-	 * Returns new description error and ID if an entry already exists, else : false.
+	 * Returns new description error and id if an entry already exists, else : false.
 	 * 
-	 * $identifiant : ip for a computer, device ID for the others
+	 * $identifiant : ip for a computer, device id for the others
 	 * $itemtype : type of the device
 	 * $error_type : type of error : snmp, entries in GLPI DB, etc...
 	 * $new_error : description of the new error
 	 * 
-	 * => Puts ID and description into $this->fields
+	 * => Puts id and description into $this->fields
 	 */
 	function getIDandNewDescrFromDevice($itemtype, $identifiant, $error_type, $new_error) {
 		global $LANG;
@@ -116,7 +116,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	}
 	
 	/* returns false if can't find computer (by IP, name or otherserial),
-    * else returns the ID of the computer */
+    * else returns the id of the computer */
 	function writeComputerDbError($itemtype, $input) {
 		global $LANG;
 		global $DB;
@@ -125,21 +125,21 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			return false;
       }
 			
-		// Trying to find ID by IP
-		$query = "SELECT `pc`.`ID` AS `ID`, `pc`.`name` AS `name`,
+		// Trying to find id by IP
+		$query = "SELECT `pc`.`id` AS `id`, `pc`.`name` AS `name`,
                        `pc`.`otherserial` AS `otherserial`, `pc`.`entities_id` AS `entities_id`
                 FROM `glpi_computers` AS `pc`, `glpi_networkports` AS `port`
 	   			 WHERE `port`.`itemtype` = ".$itemtype." ".
                       "AND `port`.`ip` = '".$input['ip']."' ".
-                      "AND `port`.`items_id` = `pc`.`ID`;";
+                      "AND `port`.`items_id` = `pc`.`id`;";
 		
-		// else, find ID by name
-		$query2 = "SELECT `ID`, `otherserial`, `entities_id` ".
+		// else, find id by name
+		$query2 = "SELECT `id`, `otherserial`, `entities_id` ".
 				    "FROM `glpi_computers` AS `pc` ".
 				    "WHERE `pc`.`name` = '".$input['name']."';";
 		
-		// else, find ID by otherserial
-		$query3 = "SELECT `ID`, `entities_id` ".
+		// else, find id by otherserial
+		$query3 = "SELECT `id`, `entities_id` ".
 				    "FROM `glpi_computers` AS `pc` ".
 	   			 "WHERE `pc`.`otherserial` = '".$input['otherserial']."';";
 	
@@ -162,9 +162,9 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 				$input['otherserial'] = 'ok';
 				$error--;
 			}
-			// if no error => end and returns the ID of the device
+			// if no error => end and returns the id of the device
 			if ($error == 0) {
-				return $fields['ID'];
+				return $fields['id'];
          } else {
 				$input['description'] .= "IP : ok, ";
          }
@@ -181,7 +181,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			return false;
       } else if ($fields = $DB->fetch_assoc($result)) {
 			$input['otherserial'] = 'ok';
-      // can't find computer ID
+      // can't find computer id
       } else {
 			$input['description'] .= $LANG['plugin_fusioninventory']["errors"][11]." ,";
       }
@@ -189,8 +189,8 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		/// Get all inputs for DB
 		$input['itemtype'] = $itemtype;
 
-		if (isset($fields['ID'])) {
-			$input['device_id'] = $fields['ID'];
+		if (isset($fields['id'])) {
+			$input['device_id'] = $fields['id'];
       } else {
 			$input['device_id'] = NULL;
       }
@@ -210,7 +210,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		/// Check if this IP has already an entry in errors DB
 		if ($this->getIDandNewDescrFromDevice($itemtype, $input['ip'], 'db',
                                             $input['description'])) {
-			$input['ID'] = $this->fields['ID'];
+			$input['id'] = $this->fields['id'];
 			$input['description'] = $this->fields['description'];
 			$this->update($input);
 		} else {
@@ -218,8 +218,8 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			$this->add($input);
 		}
 		
-		if (isset($fields['ID'])) {
-			return $fields['ID'];
+		if (isset($fields['id'])) {
+			return $fields['id'];
       }
    	return false;
 	}
@@ -238,7 +238,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		// if there is already an error entry for the device
 		if ($this->getIDandNewDescrFromDevice($itemtype, $input['device_id'], 'snmp',
                                             $input['description'])) {
-			$input['ID'] = $this->fields['ID'];
+			$input['id'] = $this->fields['id'];
 			$input['description'] = $this->fields['description'];
 			$this->update($input);	
 		} else {
@@ -260,7 +260,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		// if there is already an error entry for the device
 		if ($this->getIDandNewDescrFromDevice($itemtype, $input['device_id'], 'wire',
                                             $input['description'])) {
-			$input['ID'] = $this->fields['ID'];
+			$input['id'] = $this->fields['id'];
 			$input['description'] = $this->fields['description'];
 			$this->update($input);	
 		} else {
@@ -290,11 +290,11 @@ class PluginFusioninventoryErrors extends CommonDBTM {
       }
 	}
 
-	function countEntries($type, $ID) {
+	function countEntries($type, $id) {
 		global $DB;
 		
 		$num = 0;
-		$query = "SELECT count(DISTINCT `ID`) ".
+		$query = "SELECT count(DISTINCT `id`) ".
                "FROM ".$this->table." ";
 		
 		if ($type == COMPUTER_TYPE) {
@@ -304,7 +304,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
       } else { // $type == PRINTER_TYPE
 			$query .="WHERE `itemtype` = '".PRINTER_TYPE."' ";
       }
-		$query .= "AND `device_id` = '".$ID."';";
+		$query .= "AND `device_id` = '".$id."';";
 		
 		if ($result_num=$DB->query($query)) {
 			if ($field = $DB->result($result_num,0,0)) {
@@ -314,7 +314,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		return $num;
 	}
 
-	function getEntries($type, $ID, $begin, $limit) {
+	function getEntries($type, $id, $begin, $limit) {
 		global $DB;
 		
 		$datas=array();
@@ -328,7 +328,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
       } else { // $type == PRINTER_TYPE
 			$query .= "WHERE `itemtype` = '".PRINTER_TYPE."' ";
       }
-		$query .= "AND `device_id` = '".$ID."' ".
+		$query .= "AND `device_id` = '".$id."' ".
                 "LIMIT ".$begin.", ".$limit.";";
 		
 		if ($result=$DB->query($query)) {
@@ -344,7 +344,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		return false;
 	}
 	
-	function showForm($type, $target, $ID) {
+	function showForm($type, $target, $id) {
 		global $LANG;
 		
 		if (!PluginFusioninventory::haveRight("errors","r")) {
@@ -356,8 +356,8 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			$_GET['start'] = 0;
       }
 		
-		$numrows = $this->countEntries($type, $ID);
-		$parameters = "ID=".$_GET["ID"]."&onglet=".$_SESSION["glpi_onglet"];	
+		$numrows = $this->countEntries($type, $id);
+		$parameters = "id=".$_GET["id"]."&onglet=".$_SESSION["glpi_onglet"];	
 		
 		echo "<br>";
 		printPager($_GET['start'], $numrows, $_SERVER['PHP_SELF'], $parameters);
@@ -368,7 +368,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			$limit = $numrows;
       }
 		// Get history
-		if (!($data = $this->getEntries($type, $ID, $_GET['start'], $limit))) {
+		if (!($data = $this->getEntries($type, $id, $_GET['start'], $limit))) {
 			return false;
       }
 
@@ -403,7 +403,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			echo "<td align='center'>".$data["$i"]['first_pb_date']."</td>";
 			echo "<td align='center'>".$data["$i"]['last_pb_date']."</td>";
 			echo "</td></tr>";
-			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['ID']."'>";
+			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
 		}
 		
 		if (!PluginFusioninventory::haveRight("errors","w")) {

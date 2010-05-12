@@ -42,40 +42,40 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 
-if ((isset($_POST['update'])) && (isset($_POST['ID']))) {
+if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 		PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 	
 	$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
 	
-	$_POST['printers_id'] = $_POST['ID'];
-	unset($_POST['ID']);
+	$_POST['printers_id'] = $_POST['id'];
+	unset($_POST['id']);
 	
 	$query = "SELECT * 
              FROM `glpi_plugin_fusioninventory_printers`
              WHERE `printers_id`='".$_POST['printers_id']."' ";
 	$result = $DB->query($query);		
 	$data = $DB->fetch_assoc($result);	
-	$_POST['ID'] = $data['ID'];
+	$_POST['id'] = $data['id'];
 	$plugin_fusioninventory_printers->update($_POST);
 	
-} else if ((isset($_POST["GetRightModel"])) && (isset($_POST['ID']))) {
+} else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
    $plugin_fusioninventory_model_infos = new PluginFusioninventoryModelInfos;
-   $plugin_fusioninventory_model_infos->getrightmodel($_POST['ID'], PRINTER_TYPE);
+   $plugin_fusioninventory_model_infos->getrightmodel($_POST['id'], PRINTER_TYPE);
 }
 
-if ((isset($_POST['update_cartridges'])) && (isset($_POST['ID']))) {
+if ((isset($_POST['update_cartridges'])) && (isset($_POST['id']))) {
 	PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 
 	$plugin_fusioninventory_printers_cartridges = new PluginFusioninventoryPrintersCartridges;
 
 	$query = "SELECT * 
              FROM `glpi_plugin_fusioninventory_printers_cartridges`
-             WHERE `printers_id`='".$_POST['ID']."'
+             WHERE `printers_id`='".$_POST['id']."'
                    AND `object_name`='".$_POST['object_name']."' ";
 	$result = $DB->query($query);		
 	if ($DB->numrows($result) == "0") {
-		$_POST['printers_id'] = $_POST['ID'];
-		unset($_POST['ID']);
+		$_POST['printers_id'] = $_POST['id'];
+		unset($_POST['id']);
 		$plugin_fusioninventory_printers_cartridges->add($_POST);
 	} else {
 		$data = $DB->fetch_assoc($result);

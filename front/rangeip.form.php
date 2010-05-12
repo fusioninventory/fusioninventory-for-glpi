@@ -74,12 +74,12 @@ if (isset ($_POST["add"])) {
 }
 
 
-$ID = "";
-if (isset($_GET["ID"])) {
-	$ID = $_GET["ID"];
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
 }
 
-$rangeip->showForm($ID);
+$rangeip->showForm($id);
 
 commonFooter();
 

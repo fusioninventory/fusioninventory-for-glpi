@@ -84,9 +84,9 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             }
-            $input['networkports_id_2'] = $dataPort['ID'];
+            $input['networkports_id_2'] = $dataPort['id'];
             $this->add($input);
-            $ptsnmph->deleteFromDB($thread_connection['ID'], 1);
+            $ptsnmph->deleteFromDB($thread_connection['id'], 1);
          }
       }
    }
@@ -158,7 +158,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
                                    $np->fields["items_id"]);
             $link1 = $CommonItem->getLink(1);
 
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
             if (rtrim($np->fields["name"]) != "")
                $link .= $np->fields["name"];
             else
@@ -180,7 +180,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
             $CommonItem->getFromDB($np->fields["itemtype"],
                                    $np->fields["items_id"]);
             $link1 = $CommonItem->getLink(1);
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
             if (rtrim($np->fields["name"]) != "")
                $link .= $np->fields["name"];
             else

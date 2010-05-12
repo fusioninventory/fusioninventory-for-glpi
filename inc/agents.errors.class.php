@@ -119,7 +119,7 @@ class PluginFusioninventoryAgentsErrors extends CommonDBTM {
 
    function addError($a_input) {
 
-      $input['items_id'] = $a_input['ID'];
+      $input['items_id'] = $a_input['id'];
       if (!isset($a_input['TYPE'])) {
          $a_input['TYPE'] = 0;
       }

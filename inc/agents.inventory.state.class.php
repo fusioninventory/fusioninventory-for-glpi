@@ -44,7 +44,7 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
 		$this->table = "glpi_plugin_fusioninventory_agents_inventory_state";
 	}
 
-   function computerState($target, $ID) {
+   function computerState($target, $id) {
       global $DB, $LANG;
 
       $np = new Networkport;
@@ -61,12 +61,12 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $a_datas = $this->find("`device_id`='".$ID."'", "", "1");
+      $a_datas = $this->find("`device_id`='".$id."'", "", "1");
       if (empty($a_datas)) {
          // Ajouter une entrée
-         $this->fields['device_id'] = $ID;
+         $this->fields['device_id'] = $id;
          $this->fields['date_mod'] = date("Y-m-d H:i:s");
-         $data['ID'] = $this->addToDB();
+         $data['id'] = $this->addToDB();
          $data['date_mod'] = $this->fields['date_mod'];
          $data['state'] = 0;
       } else {
@@ -119,7 +119,7 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
 
       $ip = "";
       if (($data['state'] == 0) OR ($data['state'] == 6)) {
-         $a_data = $np->find("`items_id`='".$ID."' AND `itemtype`='1'");
+         $a_data = $np->find("`items_id`='".$id."' AND `itemtype`='1'");
          foreach ($a_data as $port_id=>$port) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
@@ -137,14 +137,14 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
 
       echo "<tr class='tab_bg_2'>";
 		echo "<td align='center' colspan='2'>";
-      $a_datasagent = $pta->find("`items_id`='".$ID."' AND `itemtype`='1' ", "", "1");
+      $a_datasagent = $pta->find("`items_id`='".$id."' AND `itemtype`='1' ", "", "1");
       if (!empty($a_datasagent)) {
          foreach ($a_datasagent as $agent_id=>$dataagent) {
             echo "<input type='hidden' name='agentID' value='".$agent_id."'/>";
          }
       }
       
-      echo "<input type='hidden' name='ID' value='".$ID."'/>";
+      echo "<input type='hidden' name='id' value='".$id."'/>";
       echo "<input type='hidden' name='ip' value='".$ip."'/>";
       
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
@@ -162,7 +162,7 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
 
       if (($data['state'] > 0) AND ($data['state'] < 6)) {
       echo "<script type='text/javascript'>
-Ext.getCmp('fusioninventory_1').getUpdater().startAutoRefresh(3,'".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php?ID=".$ID."');
+Ext.getCmp('fusioninventory_1').getUpdater().startAutoRefresh(3,'".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php?id=".$id."');
       
       </script>";
       } else {
@@ -185,7 +185,7 @@ Ext.getCmp('fusioninventory_1').getUpdater().stopAutoRefresh();
          if ($DB->numrows($result) == 1) {
             $data = $DB->fetch_assoc($result);
             $a_input = array();
-            $a_input['ID'] = $data['ID'];
+            $a_input['id'] = $data['id'];
             $a_input['date_mod'] = date("Y-m-d H:i:s");
             $a_input['state'] = $newstate;
             $this->update($a_input);

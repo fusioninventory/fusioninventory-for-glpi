@@ -45,13 +45,13 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 		$this->type = PLUGIN_FUSIONINVENTORY_MODEL;
 	}
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
-		if ($ID!='') {
-			$this->getFromDB($ID);
+		if ($id!='') {
+			$this->getFromDB($id);
       } else {
 			$this->getEmpty();	
       }
@@ -99,11 +99,11 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
       if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
-         if ($ID=='') {
+         if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
                  "\" class='submit' >";
          } else {
-            echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+            echo "<input type='hidden' name='id' value='" . $id . "'/>";
             echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
                  "\" class='submit' >";
             if (!$this->fields["is_deleted"]) {
@@ -128,7 +128,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
 	/**
 	 * Get all OIDs from model 
 	 *
-	 * @param $ID_Device ID of the device
+	 * @param $ID_Device id of the device
 	 * @param $type type of device (NETWORKING_TYPE, PRINTER_TYPE ...)
 	 *
 	 * @return OID list in array
@@ -214,7 +214,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
                       LIMIT 0,1";
 				$result = $DB->query($query);
 				$data = $DB->fetch_assoc($result);
-				$plugin_fusioninventory_modelinfos_id = $data['ID'];
+				$plugin_fusioninventory_modelinfos_id = $data['id'];
             if ($comment != "") {
                return $data['discovery_key'];
             } else {

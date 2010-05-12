@@ -42,16 +42,16 @@ include (GLPI_ROOT . "/inc/includes.php");
 //   $ptais = new PluginFusioninventoryAgentsInventoryState;
 //
 //   if ($ptt->addTask(0, 0, 'INVENTORY', $_POST['agentID'])) {
-//      $ptais->changeStatus($_POST['ID'], 1);
+//      $ptais->changeStatus($_POST['id'], 1);
 //      if ($pta->RemoteStartAgent($_POST['agentID'], $_POST['ip'])) {
-//         $ptais->changeStatus($_POST['ID'], 2);
+//         $ptais->changeStatus($_POST['id'], 2);
 //      }
 //   }
 //	glpi_header($_SERVER['HTTP_REFERER']);
 //}
 //
 //$ptais = new PluginFusioninventoryAgentsInventoryState;
-//$ptais->computerState($_SERVER["PHP_SELF"], $_GET["ID"]);
+//$ptais->computerState($_SERVER["PHP_SELF"], $_GET["id"]);
 
 
 

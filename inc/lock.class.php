@@ -82,7 +82,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $CommonItem->getFromDB($p_itemtype, $p_items_id);
 
       echo "<form method='post' action=\"$p_target\">";
-      echo "<input type='hidden' name='ID' value='$p_items_id'>";
+      echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
       echo "<tr><th>&nbsp;".$LANG['plugin_fusioninventory']["functionalities"][73]."&nbsp;</th>";

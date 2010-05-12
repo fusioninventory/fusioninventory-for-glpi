@@ -46,17 +46,17 @@ class PluginFusioninventoryMib extends CommonDBTM {
 
 
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
 		
 		if (!PluginFusioninventory::haveRight("snmp_models","r")) {
 			return false;
-      } else if ((isset($ID)) AND (!empty($ID))) {
+      } else if ((isset($id)) AND (!empty($id))) {
 			$query = "SELECT `itemtype`
                    FROM `glpi_plugin_fusioninventory_modelinfos`
-                   WHERE `ID`='".$ID."';";
+                   WHERE `id`='".$id."';";
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['itemtype'];		
@@ -66,8 +66,8 @@ class PluginFusioninventoryMib extends CommonDBTM {
                    FROM `glpi_plugin_fusioninventory_mib`
                         LEFT JOIN `glpi_plugin_fusioninventory_modelinfos`
                         ON `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`=
-                           `glpi_plugin_fusioninventory_modelinfos`.`ID`
-                   WHERE `glpi_plugin_fusioninventory_modelinfos`.`ID`='".$ID."';";
+                           `glpi_plugin_fusioninventory_modelinfos`.`id`
+                   WHERE `glpi_plugin_fusioninventory_modelinfos`.`id`='".$id."';";
 			
 			if ($result = $DB->query($query)) {
 				$object_used = array();
@@ -98,7 +98,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 						echo "<tr class='tab_bg_1'>";
                }
 					echo "<td align='center'>";
-					echo "<input name='item_coche[]' value='".$data["ID"]."' type='checkbox'>";
+					echo "<input name='item_coche[]' value='".$data["id"]."' type='checkbox'>";
 					echo "</td>";
 	
 					echo "<td align='center'>";
@@ -158,7 +158,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 					}
 					
 					echo "<td align='center'>";
-					echo "<a href='".$target."?ID=".$ID."&activation=".$data["ID"]."'>";
+					echo "<a href='".$target."?id=".$id."&activation=".$data["id"]."'>";
 					if ($data["activation"] == "1") {
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                } else if ($data["activation"] == "0") {
@@ -304,13 +304,13 @@ class PluginFusioninventoryMib extends CommonDBTM {
 
 
 
-	function activation($ID) {
+	function activation($id) {
 		global $DB;
 		
 		$mib_networking = new PluginFusioninventoryMib;
 		
-		$mib_networking->getFromDB($ID);
-		$data['ID'] = $ID;
+		$mib_networking->getFromDB($id);
+		$data['id'] = $id;
 		$data = $mib_networking->fields;
 		if ($mib_networking->fields["activation"] == "1") {
 			$data['activation'] = 0;

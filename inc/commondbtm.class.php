@@ -108,11 +108,11 @@ class PluginFusioninventoryCommonDBTM extends CommonDBTM {
     **/
    function updateDB() {
       if (count($this->ptcdUpdates)) {
-         $this->ptcdUpdates['ID'] = $this->getValue('ID');
-         if ($this->ptcdUpdates['ID'] != '') {
+         $this->ptcdUpdates['id'] = $this->getValue('id');
+         if ($this->ptcdUpdates['id'] != '') {
             $this->update($this->ptcdUpdates);
          } else {
-            unset($this->ptcdUpdates['ID']);
+            unset($this->ptcdUpdates['id']);
             $this->add($this->ptcdUpdates);
          }
       }
@@ -121,11 +121,11 @@ class PluginFusioninventoryCommonDBTM extends CommonDBTM {
    /**
     * Delete a loaded item
     *
-    *@param $p_id Item ID
+    *@param $p_id Item id
     *@return nothing
     **/
    function deleteDB() {
-      $this->deleteFromDB($this->ptcdFields['ID'], 1);
+      $this->deleteFromDB($this->ptcdFields['id'], 1);
    }
 
    /**

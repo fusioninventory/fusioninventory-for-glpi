@@ -40,12 +40,12 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
 
 
 	/* Function to get the value of a field */
-	function getValue($field,$ID) {
+	function getValue($field,$id) {
 		global $DB;
 
 		$query = "SELECT ".$field."
                 FROM ".$this->table."
-                WHERE `ID` = '".$ID."';";
+                WHERE `id` = '".$id."';";
 		if ($result = $DB->query($query)) {
 			if ($this->fields = $DB->fetch_row($result)) {
 				return $this->fields['0'];
@@ -391,7 +391,7 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
       
       $agent = $pta->InfosByKey($pxml->DEVICEID);
 
-      $input['plugin_fusioninventory_agents_id'] = $agent["ID"];
+      $input['plugin_fusioninventory_agents_id'] = $agent["id"];
       $input['process_number'] = time()."/".sprintf('%03d', $input['plugin_fusioninventory_agents_id']);
       $input['status'] = 2;
       $input['start_time'] = date("Y-m-d H:i:s");
@@ -411,7 +411,7 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
    function updateProcess($p_number, $a_input) {
       $data = $this->find("`process_number`='".$p_number."'");
       foreach ($data as $process_id=>$dataInfos) {
-         $input['ID'] = $process_id;
+         $input['id'] = $process_id;
          foreach ($a_input as $field=>$value) {
             if ($field == 'discovery_nb_found'
                     || $field == 'discovery_nb_exists'
@@ -447,7 +447,7 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
    function endProcess($p_number, $date_end) {
       $data = $this->find("`process_number`='".$p_number."'");
       foreach ($data as $process_id=>$dataInfos) {
-         $input['ID'] = $process_id;
+         $input['id'] = $process_id;
          $input['end_time'] = $date_end;
          $input['status'] = '3';
          $this->update($input);

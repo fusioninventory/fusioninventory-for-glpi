@@ -65,17 +65,17 @@ class PluginFusioninventoryTask extends CommonDBTM {
          switch ($data['itemtype']) {
  
             case NETWORKING_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ip, single,
+               $query = "SELECT glpi_plugin_fusioninventory_task.id as id, param, ip, single,
                            glpi_plugin_fusioninventory_task.items_id as items_id, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
-                        INNER JOIN glpi_networkequipments on glpi_plugin_fusioninventory_task.items_id=glpi_networkequipments.ID
+                        INNER JOIN glpi_networkequipments on glpi_plugin_fusioninventory_task.items_id=glpi_networkequipments.id
                         WHERE `agent_id`='".$agent_id."'
                            AND `action`='".$action."'";
                break;
 
             case COMPUTER_TYPE:
             case PRINTER_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ip, single,
+               $query = "SELECT glpi_plugin_fusioninventory_task.id as id, param, ip, single,
                            glpi_plugin_fusioninventory_task.items_id as items_id, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
                         INNER JOIN glpi_networkports on (glpi_plugin_fusioninventory_task.items_id=glpi_networkports.items_id
@@ -91,14 +91,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             while ($data=$DB->fetch_array($result)) {
-               $tasks[$data["ID"]] = $data;
+               $tasks[$data["id"]] = $data;
                $type='';
-               switch ($tasks[$data["ID"]]["itemtype"]) {
+               switch ($tasks[$data["id"]]["itemtype"]) {
                   case "networking":
-                     $tasks[$data["ID"]]["itemtype"]='NETWORKING';
+                     $tasks[$data["id"]]["itemtype"]='NETWORKING';
                      break;
                   case "printer":
-                     $tasks[$data["ID"]]["itemtype"]='PRINTER';
+                     $tasks[$data["id"]]["itemtype"]='PRINTER';
                      break;
                }
             }
@@ -221,7 +221,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $ptc = new PluginFusioninventoryCommunication;
 
       $a_agent = $pta->InfosByKey($deviceid);
-      $a_tasks = $this->find("`agent_id`='".$a_agent['ID']."'", "date");
+      $a_tasks = $this->find("`agent_id`='".$a_agent['id']."'", "date");
       // TODO gest last
       foreach ($a_tasks as $task_id=>$datas) {
          if ($a_tasks[$task_id]['action'] == 'INVENTORY') {
@@ -234,14 +234,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
-   function RemoteStartAgent($ID, $ip) {
+   function RemoteStartAgent($id, $ip) {
       $ptcm = new PluginFusioninventoryConfigModules;
       $pfia = new PluginFusioninventoryAgents;
 
       if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return false;
       }
-      $pfia->getFromDB($ID);
+      $pfia->getFromDB($id);
       if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 1))) {
          $input = 'Agent don\'t respond';
          addMessageAfterRedirect($input);
@@ -256,7 +256,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
    }
 
-   function RemoteStateAgent($target, $ID, $type, $a_modules = array()) {
+   function RemoteStateAgent($target, $id, $type, $a_modules = array()) {
       global $LANG,$CFG_GLPI;
 
       $ptcm = new PluginFusioninventoryConfigModules;
@@ -266,16 +266,16 @@ class PluginFusioninventoryTask extends CommonDBTM {
          return;
       }
       if ($type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
-         $pfia->getFromDB($ID);
-         $items_id = $ID;
+         $pfia->getFromDB($id);
+         $items_id = $id;
       } else if ($type == COMPUTER_TYPE) {
-         $agentlist = $pfia->find("items_id='".$ID."'", "", "1");
+         $agentlist = $pfia->find("items_id='".$id."'", "", "1");
          foreach ($agentlist as $data){
-            $pfia->getFromDB($data['ID']);
+            $pfia->getFromDB($data['id']);
             $items_id = $pfia->fields['items_id'];
          }
       } else if (($type == NETWORKING_TYPE) OR ($type == PRINTER_TYPE)) {
-         $items_id = $ID;
+         $items_id = $id;
       }
       
       echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php\">";
@@ -335,7 +335,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       if (!isset($items_id)) {
-         $items_id = $ID;
+         $items_id = $id;
       }
       $params=array('action'=>'__VALUE__', 'items_id'=>$items_id, 'itemtype'=>$type);
       ajaxUpdateItemOnSelectEvent("dropdown_agentaction$rand","updateAgentState_$rand",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/agentsState.php",$params,false);
@@ -350,7 +350,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_2'>";
       echo "<td align='center'>";
-      echo "<input type='hidden' name='items_id' value='".$ID."'/>";
+      echo "<input type='hidden' name='items_id' value='".$id."'/>";
       echo "<input type='hidden' name='itemtype' value='".$type."'/>";
       echo "<div id='displaybutton' style='visibility:hidden'>";
       echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
@@ -382,13 +382,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
             
             $query = "SELECT glpi_computers.* FROM glpi_plugin_fusioninventory_agents
                LEFT JOIN glpi_computers
-                  ON glpi_computers.ID=items_id
-               WHERE glpi_plugin_fusioninventory_agents.ID='".$items_id."' ";
+                  ON glpi_computers.id=items_id
+               WHERE glpi_plugin_fusioninventory_agents.id='".$items_id."' ";
             if ($result = $DB->query($query)) {
                if ($DB->numrows($result) != 0) {
                   while ($data=$DB->fetch_array($result)) {
-                     $computer_ID = $data['ID'];
-                     echo "<option value='".COMPUTER_TYPE."-".$data['ID']."'>".
+                     $computer_ID = $data['id'];
+                     echo "<option value='".COMPUTER_TYPE."-".$data['id']."'>".
                            $data['name']." - ".$data['serial']." - ".$data['otherserial']."</option>";
                   }
                }
@@ -431,10 +431,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
             break;
 
          case COMPUTER_TYPE:
-            // Search ID of agent
+            // Search id of agent
             $list = $pfia->find('items_id='.$computer_ID.' AND itemtype="'.COMPUTER_TYPE.'"');
-            foreach ($list as $ID=>$data) {
-               $agent_id = $ID;
+            foreach ($list as $id=>$data) {
+               $agent_id = $id;
             }
             break;
 
@@ -442,7 +442,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 //      if ($agent_id == "0") {
 //         return;
 //      }
-      foreach ($a_portsList as $ID=>$data) {
+      foreach ($a_portsList as $id=>$data) {
          if ($data['ip'] != "127.0.0.1") {
             if ($this->getStateAgent($data['ip'],$agent_id)) {
                $count_agent_on++;
@@ -484,7 +484,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       foreach ($a_agents as $IDagent=>$data) {
          $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
 
-         foreach ($a_portsList as $ID=>$datapl) {
+         foreach ($a_portsList as $id=>$datapl) {
             if (!isset($existantantip[$datapl['ip']])) {
                $existantantip[$datapl['ip']] = 1;
                if ($this->getStateAgent($datapl['ip'], $IDagent, $type)) {
@@ -524,7 +524,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             foreach ($a_agents as $IDagent=>$data) {
                $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
 
-               foreach ($a_portsList as $ID=>$datapl) {
+               foreach ($a_portsList as $id=>$datapl) {
                   if (!isset($existantantip[$datapl['ip']])) {
                      $existantantip[$datapl['ip']] = 1;
                      if ($this->getStateAgent($datapl['ip'], $IDagent)) {
@@ -540,7 +540,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             foreach ($a_agents as $IDagent=>$data) {
                $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
 
-               foreach ($a_portsList as $ID=>$datapl) {
+               foreach ($a_portsList as $id=>$datapl) {
                   if (!isset($existantantip[$datapl['ip']])) {
                      $existantantip[$datapl['ip']] = 1;
                      if ($this->getStateAgent($datapl['ip'], $IDagent)) {
@@ -588,7 +588,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             $a_agents = $pfia->find('module_wakeonlan=1');
             foreach ($a_agents as $IDagent=>$data) {
                $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
-               foreach ($a_portsList as $ID=>$datapl) {
+               foreach ($a_portsList as $id=>$datapl) {
                   if (!isset($existantantip[$datapl['ip']])) {
                      $existantantip[$datapl['ip']] = 1;
                      if ($this->getStateAgent($datapl['ip'], $IDagent)) {
@@ -658,14 +658,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if (($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
          // Networking
          $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
-         $query = "SELECT `glpi_networkequipments`.`ID` AS `gID`,
+         $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                            `glpi_networkequipments`.`name` AS `name`, `serial`, `otherserial`,
                                 `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                          FROM `glpi_networkequipments`
                          LEFT JOIN `glpi_plugin_fusioninventory_networking`
-                              ON `networkequipments_id`=`glpi_networkequipments`.`ID`
+                              ON `networkequipments_id`=`glpi_networkequipments`.`id`
                          INNER join `glpi_plugin_fusioninventory_modelinfos`
-                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
+                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
                          WHERE `glpi_networkequipments`.`is_deleted`='0'
                               AND `plugin_fusioninventory_modelinfos_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
@@ -679,17 +679,17 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
          // Printers
          $dropdownOptions .= "<optgroup label=\"".$LANG['help'][27]."\">";
-         $query = "SELECT `glpi_printers`.`ID` AS `gID`,
+         $query = "SELECT `glpi_printers`.`id` AS `gID`,
                            `glpi_printers`.`name` AS `name`, `serial`, `otherserial`,
                                 `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                          FROM `glpi_printers`
                          LEFT JOIN `glpi_plugin_fusioninventory_printers`
-                              ON `printers_id`=`glpi_printers`.`ID`
+                              ON `printers_id`=`glpi_printers`.`id`
                          LEFT JOIN `glpi_networkports`
-                                 ON `items_id`=`glpi_printers`.`ID`
+                                 ON `items_id`=`glpi_printers`.`id`
                                     AND `itemtype`='".PRINTER_TYPE."'
                          INNER join `glpi_plugin_fusioninventory_modelinfos`
-                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`ID`
+                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
                          WHERE `glpi_printers`.`is_deleted`='0'
                               AND `plugin_fusioninventory_modelinfos_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'

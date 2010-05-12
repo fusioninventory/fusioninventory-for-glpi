@@ -51,7 +51,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 	 * @param $status status of port ('make' or 'remove')
 	 * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"] and $array["device_ID"]
 	 *
-	 * @return ID of inserted line
+	 * @return id of inserted line
 	 *
 	**/
 	function insert_connection($status,$array,$plugin_fusioninventory_processes_id=0) {
@@ -74,7 +74,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
  	}
 
 
-   function showForm($ID, $options=array()) {
+   function showForm($id, $options=array()) {
       global $LANG, $DB;
 
       $this->showTabs($options);
@@ -303,7 +303,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                $data['Field'] = $constantsfield[$data['Field']];
                $query_update = "UPDATE `".$this->table."`
                   SET `Field`='".$data['Field']."'
-                  WHERE `ID`='".$data['ID']."' ";
+                  WHERE `id`='".$data['id']."' ";
                $DB->query($query_update);
                if (preg_match("/000$/", $i)) {
                   changeProgressBarPosition($i, $nb, "$i / $nb");
@@ -348,7 +348,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                if ($DB->numrows($result_port) == '1') {
                   $input = array();
                   $data_port = $DB->fetch_assoc($result_port);
-                  $input['networkports_id_1'] = $data_port['ID'];
+                  $input['networkports_id_1'] = $data_port['id'];
 
                   $query_port2 = "SELECT * FROM `glpi_networkports`
                      WHERE `items_id` = '".$data['new_device_ID']."'
@@ -356,7 +356,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['networkports_id_2'] = $data_port2['ID'];
+                        $input['networkports_id_2'] = $data_port2['id'];
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
@@ -368,7 +368,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             }
 
             $query_delete = "DELETE FROM `".$this->table."`
-                  WHERE `ID`='".$data['ID']."' ";
+                  WHERE `id`='".$data['id']."' ";
             $DB->query($query_delete);
             if (preg_match("/00$/", $i)) {
                changeProgressBarPosition($i, $nb, "$i / $nb");
@@ -409,7 +409,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                if ($DB->numrows($result_port) == '1') {
                   $input = array();
                   $data_port = $DB->fetch_assoc($result_port);
-                  $input['networkports_id_1'] = $data_port['ID'];
+                  $input['networkports_id_1'] = $data_port['id'];
 
                   $query_port2 = "SELECT * FROM `glpi_networkports`
                      WHERE `items_id` = '".$data['old_device_ID']."'
@@ -417,7 +417,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['networkports_id_2'] = $data_port2['ID'];
+                        $input['networkports_id_2'] = $data_port2['id'];
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
@@ -431,7 +431,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             }
 
             $query_delete = "DELETE FROM `".$this->table."`
-                  WHERE `ID`='".$data['ID']."' ";
+                  WHERE `id`='".$data['id']."' ";
             $DB->query($query_delete);
             if (preg_match("/00$/", $i)) {
                changeProgressBarPosition($i, $nb, "$i / $nb");
@@ -602,7 +602,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       $query = "
          SELECT * FROM(
             SELECT * FROM (
-               SELECT ID, date as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
+               SELECT id, date as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
                networkports_id_1, networkports_id_2,
                creation as Field, NULL as old_value, NULL as new_value
 
@@ -615,7 +615,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             AS DerivedTable1
             UNION ALL
             SELECT * FROM (
-               SELECT ID, date_mod as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
+               SELECT id, date_mod as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
                networkports_id AS networkports_id_1, NULL as networkports_id_2,
                Field, old_value, new_value
 
@@ -626,7 +626,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                )
             AS DerivedTable2)
          AS MainTable
-         ORDER BY date DESC, ID DESC
+         ORDER BY date DESC, id DESC
          LIMIT 0,30";
    //echo $query."<br/>";
       $text = "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -663,7 +663,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                      $CommonItem->getFromDB($np->fields["itemtype"],
                                             $np->fields["items_id"]);
                      $link1 = $CommonItem->getLink(1);
-                     $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+                     $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
                      if (rtrim($np->fields["name"]) != "")
                         $link .= $np->fields["name"];
                      else
@@ -680,7 +680,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                      $CommonItem->getFromDB($np->fields["itemtype"],
                                             $np->fields["items_id"]);
                      $link1 = $CommonItem->getLink(1);
-                     $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+                     $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
                      if (rtrim($np->fields["name"]) != "")
                         $link .= $np->fields["name"];
                      else

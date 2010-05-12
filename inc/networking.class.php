@@ -68,13 +68,13 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       $this->ifaddrs = $this->getIfaddrsDB();
       $this->ports = $this->getPortsDB();
 
-      $query = "SELECT `ID`
+      $query = "SELECT `id`
                 FROM `glpi_plugin_fusioninventory_networking`
-                WHERE `networkequipments_id` = '".$this->getValue('ID')."';";
+                WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             $fusioninventory = $DB->fetch_assoc($result);
-            $this->oFusionInventory_networking->load($fusioninventory['ID']);
+            $this->oFusionInventory_networking->load($fusioninventory['id']);
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking;
          }
       }
@@ -119,15 +119,15 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       $ptp = new PluginFusioninventoryPort();
-      $query = "SELECT `ID`
+      $query = "SELECT `id`
                 FROM `glpi_networkports`
-                WHERE `items_id` = '".$this->getValue('ID')."'
+                WHERE `items_id` = '".$this->getValue('id')."'
                       AND `itemtype` = '".NETWORKING_TYPE."';";
       $portsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             while ($port = $DB->fetch_assoc($result)) {
-               $ptp->load($port['ID']);
+               $ptp->load($port['id']);
                $portsIds[] = clone $ptp;
             }
          }
@@ -215,8 +215,8 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
          }
       }
       foreach ($this->newPorts as $ptp) {
-         if ($ptp->getValue('ID')=='') {               // create existing ports
-            $ptp->addDB($this->getValue('ID'), true);
+         if ($ptp->getValue('id')=='') {               // create existing ports
+            $ptp->addDB($this->getValue('id'), true);
          } else {                                      // update existing ports
             $ptp->updateDB();
          }
@@ -237,8 +237,8 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
          }
       }
       foreach ($this->newIfaddrs as $pti) {
-         if ($pti->getValue('ID')=='') {
-            $pti->addDB($this->getValue('ID'));
+         if ($pti->getValue('id')=='') {
+            $pti->addDB($this->getValue('id'));
          } else {
             $pti->updateDB();
          }
@@ -268,14 +268,14 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       $pti = new PluginFusioninventoryIfaddr();
-      $query = "SELECT `ID`
+      $query = "SELECT `id`
                 FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                WHERE `networkequipments_id` = '".$this->getValue('ID')."';";
+                WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       $ifaddrsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             while ($ip = $DB->fetch_assoc($result)) {
-               $pti->load($ip['ID']);
+               $pti->load($ip['id']);
                $ifaddrsIds[] = clone $pti;
             }
          }
@@ -310,7 +310,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       }
    }
 
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
 		$history = new PluginFusioninventorySnmphistory;
@@ -325,7 +325,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       }
 		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
-		$this->ID = $ID;
+		$this->id = $id;
 
 		$nw=new Netwire;
 		$CommonItem = new CommonItem;
@@ -336,9 +336,9 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
                "/lib/extjs/adapter/prototype/effects.js'></script>";
 
-      if (!$data = $this->find("`networkequipments_id`='".$ID."'", '', 1)) {
+      if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
          // Add in database if not exist
-         $input['networkequipments_id'] = $ID;
+         $input['networkequipments_id'] = $id;
          $ID_tn = $this->add($input);
          $this->getFromDB($ID_tn);
       } else {
@@ -363,7 +363,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {
-			$exclude_models[] = $data_models['ID'];
+			$exclude_models[] = $data_models['id'];
 		}
       Dropdown::show("PluginFusioninventoryModelInfos",
                      array('name'=>"model_infos",
@@ -385,7 +385,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       echo " <input type='submit' name='GetRightModel'
               value='".$LANG['plugin_fusioninventory']["model_info"][13]."' class='submit'/></td>";
 		echo "<td>";
-		echo "<input type='hidden' name='ID' value='".$ID."'>";
+		echo "<input type='hidden' name='id' value='".$id."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
 		echo "</td>";
 		echo "</tr>";
@@ -394,7 +394,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
       // Remote action of agent
       $pfit = new PluginFusioninventoryTask;
-      $pfit->RemoteStateAgent($target, $ID, NETWORKING_TYPE, array('INVENTORY' => 1 ));
+      $pfit->RemoteStateAgent($target, $id, NETWORKING_TYPE, array('INVENTORY' => 1 ));
 
 
       // SNMP Informations
@@ -417,7 +417,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
 		// Get link field to detect if cpu, memory and uptime are get onthis network device
 		$Array_Object_TypeNameConstant =
-                    $plugin_fusioninventory_snmp->GetLinkOidToFields($ID,NETWORKING_TYPE);
+                    $plugin_fusioninventory_snmp->GetLinkOidToFields($id,NETWORKING_TYPE);
 		$mapping_name=array();
 		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
 			$mapping_name[$mapping_type_name] = "1";
@@ -476,7 +476,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 			echo "<td>";
 			$query2 = "SELECT *
                     FROM `glpi_networkequipments`
-                    WHERE `ID`='".$ID."';";
+                    WHERE `id`='".$id."';";
 			$result2 = $DB->query($query2);
 			$data2 = $DB->fetch_assoc($result2);
 
@@ -504,8 +504,8 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		FROM glpi_plugin_fusioninventory_networking_ports
 
 		LEFT JOIN glpi_networkports
-		ON glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networkports.ID
-		WHERE glpi_networkports.items_id='".$ID."'
+		ON glpi_plugin_fusioninventory_networking_ports.networkports_id = glpi_networkports.id
+		WHERE glpi_networkports.items_id='".$id."'
 		ORDER BY logical_number ";
 
 		echo "<script  type='text/javascript'>
@@ -639,10 +639,10 @@ function appear_array(id){
                                     "/plugins/fusioninventory/pics/connected_trunk.png\"); '";
             }
 				echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
-				echo "<td id='plusmoins".$data["ID"]."'><img src='".GLPI_ROOT.
-                     "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["ID"].
-                     "\");close_array(".$data["ID"].");' /></td>";
-				echo "<td><a href='networking.port.php?ID=".$data["ID"]."'>".
+				echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
+                     "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["id"].
+                     "\");close_array(".$data["id"].");' /></td>";
+				echo "<td><a href='networking.port.php?id=".$data["id"]."'>".
                      $data["name"]."</a></td>";
 
 				$query_array = "SELECT *
@@ -734,7 +734,7 @@ function appear_array(id){
 							if ($opposite_port != "") {
 								$query_device = "SELECT *
                                          FROM `glpi_networkports`
-                                         WHERE `ID`='".$opposite_port."';";
+                                         WHERE `id`='".$opposite_port."';";
 
 								$result_device = $DB->query($query_device);
 								$data_device = $DB->fetch_assoc($result_device);
@@ -801,7 +801,7 @@ function appear_array(id){
 
                      $used = array();
 
-                     $query_vlan = "SELECT * FROM glpi_networkports_vlans WHERE ports_id='".$data["ID"]."'";
+                     $query_vlan = "SELECT * FROM glpi_networkports_vlans WHERE ports_id='".$data["id"]."'";
                      $result_vlan = $DB->query($query_vlan);
                      if ($DB->numrows($result_vlan) > 0) {
                         echo "<table cellpadding='0' cellspacing='0'>";
@@ -811,7 +811,7 @@ function appear_array(id){
                            echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comment']."]";
                            echo "</td><td>";
                            if ($canedit) {
-                              echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?unassign_vlan=unassigned&amp;ID=" . $line["ID"] . "'>";
+                              echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?unassign_vlan=unassigned&amp;id=" . $line["id"] . "'>";
                               echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete2.png\" alt='" . $LANG['buttons'][6] . "' title='" . $LANG['buttons'][6] . "'></a>";
                            } else
                               echo "&nbsp;";
@@ -839,9 +839,9 @@ function appear_array(id){
 				// Historique
 
 				echo "
-				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
+				<tr style='display: none;' id='viewfollowup".$data["id"]."'>
 					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".
-                  PluginFusioninventorySnmphistory::showHistory($data["ID"])."</td>
+                  PluginFusioninventorySnmphistory::showHistory($data["id"])."</td>
 				</tr>
 				";
 			}

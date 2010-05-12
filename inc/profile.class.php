@@ -46,22 +46,22 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 	}
 	
 	//if profile deleted
-	function cleanProfiles($ID) {
+	function cleanProfiles($id) {
 		global $DB;
 
 		$query = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
-                WHERE `ID`='$ID';";
+                WHERE `id`='$id';";
 		$DB->query($query);
 	}
 		
-	function showprofileForm($target,$ID) {
+	function showprofileForm($target,$id) {
 		global $LANG,$CFG_GLPI;
 
 		if (!haveRight("profile","r")) return false;
 
 		$onfocus="";
-		if ($ID) {
-			$this->getFromDB($ID);
+		if ($id) {
+			$this->getFromDB($id);
 		} else {
 			$this->getEmpty();
 			$onfocus="onfocus=\"this.value=''\"";
@@ -88,13 +88,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 		echo "</div>";
 		
 		$params=array('interface'=>'__VALUE__',
-				'ID'=>$ID,
+				'id'=>$id,
 			);
 		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false);
 		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false,'profile_interface');
 //$prof=new PluginFusioninventoryProfile;
 
-//	$prof->showfusioninventoryForm($_POST["ID"]);
+//	$prof->showfusioninventoryForm($_POST["id"]);
 
 		echo "<br>";
 
@@ -105,13 +105,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 	}
 	
-	function showForm($ID, $options=array()) {
+	function showForm($id, $options=array()) {
 		global $LANG;
 
 		if (!haveRight("profile","r")) return false;
 		$canedit=haveRight("profile","w");
-		if ($ID) {
-			$this->getFromDB($ID);
+		if ($id) {
+			$this->getFromDB($id);
 		}
 
 		$this->showTabs($options);

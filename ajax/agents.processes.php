@@ -41,7 +41,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
-if(!isset($_POST["ID"])) {
+if(!isset($_POST["id"])) {
 	exit();
 }
 if(!isset($_POST["sort"])) $_POST["sort"] = "";

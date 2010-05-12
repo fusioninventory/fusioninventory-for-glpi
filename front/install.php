@@ -71,18 +71,18 @@ if (haveRight("config","w") && haveRight("profile","w")) {
       if ($config->getValue('version') == "2.0.2") {
          $DB->query("UPDATE `glpi_plugin_fusioninventory_config` 
                      SET `version` = '2.1.1'
-                     WHERE `ID`=1");
+                     WHERE `id`=1");
       }
       if ($config->getValue('version') == "2.1.0") {
          $DB->query("UPDATE `glpi_plugin_fusioninventory_config` 
                      SET `version` = '2.1.1'
-                     WHERE `ID`=1");
+                     WHERE `id`=1");
       }
       PluginFusioninventorySetup::update("2.0.2");
       if  ($config->getValue('version') == "0") {
          $DB->query("UPDATE `glpi_plugin_fusioninventory_config` 
                      SET `version` = '2.1.1'
-                     WHERE `ID`=1");
+                     WHERE `id`=1");
       }
    }
 

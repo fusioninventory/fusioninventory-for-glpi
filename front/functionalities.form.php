@@ -47,7 +47,7 @@ if (isset($_POST['update'])) {
 		$_POST['cleaning_days'] = 0;
    }
 
-   $_POST['ID']=1;
+   $_POST['id']=1;
 	switch ($_POST['tabs']) {
       
 		case 'config' :
@@ -63,7 +63,7 @@ if (isset($_POST['update'])) {
          foreach ($_POST as $key=>$val) {
             if (is_int($key)) {
                $input = array();
-               $input['ID']   = $key;
+               $input['id']   = $key;
                $input['days'] = $val;
                $pficsnmph->update($input);
             }
