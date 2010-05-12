@@ -104,7 +104,6 @@ $LANG['plugin_fusioninventory']["functionalities"][5]="Server script";
 $LANG['plugin_fusioninventory']["functionalities"][6]="Legend";
 $LANG['plugin_fusioninventory']["functionalities"][7]="Lockable fields";
 $LANG['plugin_fusioninventory']["functionalities"][8]="Never";
-$LANG['plugin_fusioninventory']["functionalities"][9]="Always";
 $LANG['plugin_fusioninventory']["functionalities"][9]="Retention in days";
 $LANG['plugin_fusioninventory']["functionalities"][10]="History activation";
 $LANG['plugin_fusioninventory']["functionalities"][11]="Connection module activation";
@@ -143,6 +142,7 @@ $LANG['plugin_fusioninventory']["functionalities"][52]="Log files activation";
 $LANG['plugin_fusioninventory']["functionalities"][53]="Number of simultanous processes to be used by server script";
 
 $LANG['plugin_fusioninventory']["functionalities"][60]="Clean history";
+$LANG['plugin_fusioninventory']["functionalities"][61]="Always";
 
 $LANG['plugin_fusioninventory']["functionalities"][70]="Lockable fields configuration";
 $LANG['plugin_fusioninventory']["functionalities"][71]="Unlockable fields";

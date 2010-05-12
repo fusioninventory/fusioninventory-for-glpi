@@ -168,7 +168,7 @@ class PluginFusionInventoryConfigSNMPHistory extends CommonDBTM {
 
       $days = array();
       $days[-1] = $LANG['plugin_fusioninventory']["functionalities"][8];
-      $days[0]  = $LANG['plugin_fusioninventory']["functionalities"][9];
+      $days[0]  = $LANG['plugin_fusioninventory']["functionalities"][61];
       for ($i = 1 ; $i < 366 ; $i++) {
          $days[$i]  = "$i";
       }
