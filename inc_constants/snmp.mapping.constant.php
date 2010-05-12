@@ -52,7 +52,7 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['table'] = 'glpi_networkeq
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['field'] = 'firmware';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['name'] = $LANG['plugin_fusioninventory']["mapping"][2];
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['dropdown'] = 'glpi_dropdown_firmware';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware']['dropdown'] = 'glpi_networkequipmentsfirmwares';
 
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware1']['table'] = '';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['firmware1']['field'] = '';
