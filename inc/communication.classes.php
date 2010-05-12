@@ -1484,6 +1484,8 @@ class PluginFusionInventoryCommunication {
    }
 
    function importToken($p_xml) {
+      global $DB;
+
       $this->setXML($p_xml);
 
       if ((isset($this->sxml->DEVICEID)) AND (isset($this->sxml->TOKEN))) {
@@ -1494,6 +1496,16 @@ class PluginFusionInventoryCommunication {
             $a_input['token'] = $this->sxml->TOKEN;
             $a_input['name'] = $this->sxml->DEVICEID;
             $a_input['key'] = $this->sxml->DEVICEID;
+            // Search deviceid of an inventory
+            $query = "SELECT * FROM `glpi_ocs_link`
+               WHERE `ocs_deviceid`='".$this->sxml->DEVICEID."'
+               LIMIT 1";
+            if ($result=$DB->query($query)) {
+               if ($DB->numrows($result) != 0) {
+                  $a_input['on_device'] = $DB->result($result, 0, "glpi_id");
+                  $a_input['device_type'] = COMPUTER_TYPE;
+               }
+            }
             $pta->add($a_input);
             return 2;
          } else {
