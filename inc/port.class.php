@@ -112,7 +112,11 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
     **/
    function updateDB() {
       parent::updateDB(); // update core
-      $this->oFusionInventory_networking_ports->updateDB(); // update fusioninventory
+      if (!is_null($this->fusioninventory_networking_ports_ID)) {
+         $this->oFusionInventory_networking_ports->updateDB(); // update fusioninventory
+      } else {
+         $this->addDBFusionInventory(); // add fusioninventory if not exist (for compatibility)
+      }
       $this->connect(); // update connections
       $this->assignVlans(); // update vlans
    }
