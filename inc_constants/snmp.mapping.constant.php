@@ -520,11 +520,11 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['name'] = $LANG['plugin_fusioni
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifName']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['table'] = 'glpi_networkports';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['field'] = 'ifaddr';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['name'] = $LANG['plugin_fusioninventory']["mapping"][407];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifaddr']['dropdown'] = '';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ip']['table'] = 'glpi_networkports';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ip']['field'] = 'ip';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ip']['name'] = $LANG['plugin_fusioninventory']["mapping"][407];
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ip']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ip']['dropdown'] = '';
 
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifType']['table'] = '';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['ifType']['field'] = '';

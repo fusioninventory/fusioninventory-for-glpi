@@ -50,7 +50,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		global $DB;
 		
 		if ($itemtype == COMPUTER_TYPE) {
-			$field = 'ifaddr';
+			$field = 'ip';
       } else { // networking or printer
 			$field = 'device_id';
       }
@@ -121,7 +121,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		global $LANG;
 		global $DB;
 		
-		if (!($input['ifaddr'] && $input['name'])) {
+		if (!($input['ip'] && $input['name'])) {
 			return false;
       }
 			
@@ -130,7 +130,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
                        `pc`.`otherserial` AS `otherserial`, `pc`.`entities_id` AS `entities_id`
                 FROM `glpi_computers` AS `pc`, `glpi_networkports` AS `port`
 	   			 WHERE `port`.`itemtype` = ".$itemtype." ".
-                      "AND `port`.`ifaddr` = '".$input['ifaddr']."' ".
+                      "AND `port`.`ip` = '".$input['ip']."' ".
                       "AND `port`.`items_id` = `pc`.`ID`;";
 		
 		// else, find ID by name
@@ -208,7 +208,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 
 
 		/// Check if this IP has already an entry in errors DB
-		if ($this->getIDandNewDescrFromDevice($itemtype, $input['ifaddr'], 'db',
+		if ($this->getIDandNewDescrFromDevice($itemtype, $input['ip'], 'db',
                                             $input['description'])) {
 			$input['ID'] = $this->fields['ID'];
 			$input['description'] = $this->fields['description'];
@@ -224,7 +224,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
    	return false;
 	}
 	
-	/* needs : ifaddr, device_id */
+	/* needs : ip, device_id */
 	function writeSnmpError($itemtype, $input) {
 		global $LANG;
 		
@@ -247,7 +247,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 		}
 	}
 	
-	/* needs : ifaddr, device_id */
+	/* needs : ip, device_id */
 	function writeWireError($itemtype, $input) {
 		global $LANG;
 		
@@ -274,9 +274,9 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 	 * 
 	 * $input is an array
 	 * $input has to contain :
-	 * - ifaddr for a computer for a wire control
-	 * - ifaddr, name and otherserial in case of db control for a computer 
-	 * - device_id and ifaddr for another device
+	 * - ip for a computer for a wire control
+	 * - ip, name and otherserial in case of db control for a computer 
+	 * - device_id and ip for another device
 	 */
 	function writeError($itemtype, $error_type, $input, $date) {
 		$input['last_pb_date'] = $date;
@@ -398,7 +398,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 			echo "<td align='center'>";
 			echo "<input type='checkbox' name='checked_$i' value='1'>";
 			echo "</td>";
-			echo "<td align='center'>".$data["$i"]['ifaddr']."</td>";
+			echo "<td align='center'>".$data["$i"]['ip']."</td>";
 			echo "<td align='center'>".$data["$i"]['description']."</td>";
 			echo "<td align='center'>".$data["$i"]['first_pb_date']."</td>";
 			echo "<td align='center'>".$data["$i"]['last_pb_date']."</td>";

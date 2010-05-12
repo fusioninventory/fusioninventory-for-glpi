@@ -298,8 +298,8 @@ class PluginFusioninventoryCommunication {
                foreach ($tasks as $task_id=>$taskInfos) {
                   $sxml_rangeip = $sxml_option->addChild('RANGEIP');
                      $sxml_rangeip->addAttribute('ID', $task_id);
-                     $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ifaddr"]);
-                     $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ifaddr"]);
+                     $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ip"]);
+                     $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ip"]);
                      $sxml_rangeip->addAttribute('ENTITY', "");
                      $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["items_id"]);
                      $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["itemtype"]);
@@ -457,7 +457,7 @@ class PluginFusioninventoryCommunication {
          case "networking":
             $type='NETWORKING';
             $query = "SELECT `glpi_networkequipments`.`ID` AS `gID`,
-                             `glpi_networkequipments`.`ifaddr` AS `gnifaddr`,
+                             `glpi_networkequipments`.`ip` AS `gnifaddr`,
                              `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                       FROM `glpi_networkequipments`
                       LEFT JOIN `glpi_plugin_fusioninventory_networking`
@@ -473,7 +473,7 @@ class PluginFusioninventoryCommunication {
              if ($p_ipstart == '0') {
                $query .= " AND `glpi_networkequipments`.`ID`='".$devide_id."'";
              } else {
-               $query .= " AND inet_aton(`ifaddr`)
+               $query .= " AND inet_aton(`ip`)
                                BETWEEN inet_aton('".$p_ipstart."')
                                AND inet_aton('".$p_ipend."') ";
              }
@@ -483,7 +483,7 @@ class PluginFusioninventoryCommunication {
          case "printer":
             $type='PRINTER';
             $query = "SELECT `glpi_printers`.`ID` AS `gID`,
-                             `glpi_networkports`.`ifaddr` AS `gnifaddr`,
+                             `glpi_networkports`.`ip` AS `gnifaddr`,
                              `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
                       FROM `glpi_printers`
                       LEFT JOIN `glpi_plugin_fusioninventory_printers`
@@ -502,7 +502,7 @@ class PluginFusioninventoryCommunication {
              if ($p_ipstart == '0') {
                $query .= " AND `glpi_printers`.`ID`='".$devide_id."'";
              } else {
-               $query .= " AND inet_aton(`ifaddr`)
+               $query .= " AND inet_aton(`ip`)
                                BETWEEN inet_aton('".$p_ipstart."')
                                AND inet_aton('".$p_ipend."') ";
              }
@@ -958,7 +958,7 @@ class PluginFusioninventoryCommunication {
                   } else {
                      $pti->load();
                   }
-                  $pti->setValue('ifaddr', $child);
+                  $pti->setValue('ip', $child);
                   $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
                }
                break;
@@ -1105,7 +1105,7 @@ class PluginFusioninventoryCommunication {
                   break;
                case 'IP' :
                   PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
-                  $ptp->setValue('ifaddr', $child);
+                  $ptp->setValue('ip', $child);
                   break;
                case 'IFNUMBER' :
                   PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('ID'), $child, strtolower($name));
@@ -1334,7 +1334,7 @@ class PluginFusioninventoryCommunication {
       }
       if ($portID != '') {
          $p_oPort->addConnection($portID);
-         if ($ip != '') $p_oPort->setValue('ifaddr', $ip);
+         if ($ip != '') $p_oPort->setValue('ip', $ip);
       } else {
          $p_oPort->addUnknownConnection($mac, $ip);
          //TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info
@@ -1604,10 +1604,10 @@ class PluginFusioninventoryCommunication {
             if ($taskInfos['itemtype'] == COMPUTER_TYPE) {
                $a_portsList = $np->find('items_id='.$taskInfos['items_id'].' AND itemtype="'.COMPUTER_TYPE.'"');
                foreach ($a_portsList as $ID=>$data) {
-                  if ($data['ifaddr'] != "127.0.0.1") {
+                  if ($data['ip'] != "127.0.0.1") {
                      $sxml_param = $sxml_option->addChild('PARAM');
                      $sxml_param->addAttribute('MAC', $data['ifmac']);
-                     $sxml_param->addAttribute('IP', $data['ifaddr']);
+                     $sxml_param->addAttribute('IP', $data['ip']);
                   }
                }
             }

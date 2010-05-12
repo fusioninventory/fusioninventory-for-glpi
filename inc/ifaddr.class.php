@@ -49,7 +49,7 @@ class PluginFusioninventoryIfaddr  extends PluginFusioninventoryCommonDBTM {
    }
 
    /**
-    * Add a new ifaddr with the instance values
+    * Add a new ip with the instance values
     *
     *@param $p_id Networking ID
     *@return nothing

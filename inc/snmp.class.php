@@ -177,7 +177,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       $PortID = "";
 		$query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_networking_ifaddr`
-                WHERE `ifaddr`='".$IP."';";
+                WHERE `ip`='".$IP."';";
 		
 		$result = $DB->query($query);
       if ($DB->numrows($result) == "1") {
@@ -198,7 +198,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
             // Search in other devices
             $queryPort = "SELECT *
                           FROM `glpi_networkports`
-                          WHERE `ifaddr`='".$IP."'
+                          WHERE `ip`='".$IP."'
                           ORDER BY `itemtype`
                           LIMIT 0,1;";
             $resultPort = $DB->query($queryPort);
@@ -209,7 +209,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          }
       } else {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
-            WHERE `ifaddr`='".$IP."'
+            WHERE `ip`='".$IP."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
@@ -230,7 +230,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                $input = array();
                $input['items_id'] = $data['ID'];
                $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-               $input['ifaddr'] = $IP;
+               $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $PortID = $np->add($input);
             }
@@ -240,7 +240,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          $query = "SELECT *
              FROM `glpi_networkports`
              WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
-               AND`ifaddr`='".$IP."'
+               AND`ip`='".$IP."'
              LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
@@ -250,7 +250,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                $input = array();
                $input['items_id'] = $data['items_id'];
                $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-               $input['ifaddr'] = $IP;
+               $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $PortID = $np->add($input);
                return $PortID;
@@ -258,13 +258,13 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          }
          // Add unknown device
          $input = array();
-         $input['ifaddr'] = $IP;
+         $input['ip'] = $IP;
          $unkonwn_id = $pfiud->add($input);
          // Add port
          $input = array();
          $input['items_id'] = $unkonwn_id;
          $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-         $input['ifaddr'] = $IP;
+         $input['ip'] = $IP;
          $input['name'] = $ifDescr;
          $PortID = $np->add($input);
          return($PortID);
@@ -891,9 +891,9 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                   $oidvalues[$oid.$data['logical_number']][""] =
                           $snmp_queries->MAC_Rewriting($oidvalues[$oid.$data['logical_number']][""]);
                }
-               if ($link == "ifaddr") {
+               if ($link == "ip") {
                   $Arrayifaddr = $walks->GetoidValuesFromWalk(
-                          $oidvalues,$oidsModel[0][1]['ifaddr'],1);
+                          $oidvalues,$oidsModel[0][1]['ip'],1);
                   for($j=0 ; $j < count($Arrayifaddr) ; $j++) {
                      if ($oidvalues[$oid.$Arrayifaddr[$j]][""] == $data['logical_number']) {
                         $data['logical_number'] = $Arrayifaddr[$j];
@@ -924,7 +924,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                      }
                   }
                   $queryUpdate = '';
-                  if ($link == "ifaddr") {
+                  if ($link == "ip") {
                      if ($data[$FUSIONINVENTORY_MAPPING[$type][$link]['field']] != $data['logical_number']) {
                         $queryUpdate = "UPDATE ".$FUSIONINVENTORY_MAPPING[$type][$link]['table']."
                      SET ".$FUSIONINVENTORY_MAPPING[$type][$link]['field']."='".$data['logical_number']."'
@@ -1313,36 +1313,36 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                  ">>>>>>>>>> List of IP addresses of device <<<<<<<<<<",$type,$ID_Device,1);
 
       $ifaddr_add = array();
-      $ifaddr = array();
+      $ip = array();
 
       $query = "SELECT *
              FROM `glpi_plugin_fusioninventory_networking_ifaddr`
              WHERE `networkequipments_id`='".$ID_Device."';";
       if ($result=$DB->query($query)) {
          while ($data=$DB->fetch_array($result)) {
-            $ifaddr[$data["ifaddr"]] = $data["networkequipments_id"];
+            $ip[$data["ip"]] = $data["networkequipments_id"];
          }
       }
 
       $ifaddr_switch = $walks->GetoidValuesFromWalk($oidvalues,$oidsModel[0][1]['ipAdEntAddr']);
 
-      foreach($ifaddr as $ifIP=>$networkequipments_id) {
+      foreach($ip as $ifIP=>$networkequipments_id) {
          foreach($ifaddr_switch as $num_switch=>$ifIP_switch) {
             if ($ifIP == $ifIP_switch) {
-               unset ($ifaddr[$ifIP]);
+               unset ($ip[$ifIP]);
                unset ($ifaddr_switch[$num_switch]);
             }
          }
       }
 
-      foreach($ifaddr as $ifaddr_snmp=>$networkequipments_id) {
+      foreach($ip as $ifaddr_snmp=>$networkequipments_id) {
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networking_ifaddr`
                        WHERE `networkequipments_id`='".$ID_Device."'
-                             AND `ifaddr`='".$ifaddr_snmp."';";
+                             AND `ip`='".$ifaddr_snmp."';";
          $DB->query($query_delete);
       }
       foreach($ifaddr_switch as $num_snmp=>$ifaddr_snmp) {
-         $query_insert = "INSERT INTO `glpi_plugin_fusioninventory_networking_ifaddr`(`networkequipments_id`,`ifaddr`)
+         $query_insert = "INSERT INTO `glpi_plugin_fusioninventory_networking_ifaddr`(`networkequipments_id`,`ip`)
                        VALUES('".$ID_Device."','".$ifaddr_snmp."');";
          $DB->query($query_insert);
       }

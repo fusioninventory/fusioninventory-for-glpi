@@ -185,7 +185,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.6.1']                = 'serial';
       $mapping_pre[3]['.1.3.6.1.2.1.25.2.3.1.5.1']                   = 'memory';
       $mapping_pre[3]['.1.3.6.1.2.1.43.8.2.1.14.1.1']                = 'enterprise';
-      $mapping_pre[3]['.1.3.6.1.2.1.4.20.1.2']                       = 'ifaddr';
+      $mapping_pre[3]['.1.3.6.1.2.1.4.20.1.2']                       = 'ip';
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.2']                        = 'ifName';
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.6']                        = 'ifPhysAddress';
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.3']                        = 'ifType';

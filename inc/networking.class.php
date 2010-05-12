@@ -163,7 +163,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       }
 //      if ($portIndex == '' AND $p_ip != '') {
 //         foreach ($this->ports as $index => $oPort) {
-//            if ($oPort->getValue('ifaddr')==$p_ip) {
+//            if ($oPort->getValue('ip')==$p_ip) {
 //               $portIndex = $index;
 //               break;
 //            }
@@ -173,16 +173,16 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
    }
 
    /**
-    * Get index of ifaddr object
+    * Get index of ip object
     *
     *@param $p_ip='' IP address
-    *@return Index of ifaddr object in ifaddrs array or '' if not found
+    *@return Index of ip object in ifaddrs array or '' if not found
     **/
    function getIfaddrIndex($p_ip) {
       $ifaddrIndex = '';
       foreach ($this->ifaddrs as $index => $oIfaddr) {
          if (is_object($oIfaddr)) { // should always be true
-            if ($oIfaddr->getValue('ifaddr')==$p_ip) {
+            if ($oIfaddr->getValue('ip')==$p_ip) {
                $ifaddrIndex = $index;
                break;
             }
@@ -274,8 +274,8 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       $ifaddrsIds = array();
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
-            while ($ifaddr = $DB->fetch_assoc($result)) {
-               $pti->load($ifaddr['ID']);
+            while ($ip = $DB->fetch_assoc($result)) {
+               $pti->load($ip['ID']);
                $ifaddrsIds[] = clone $pti;
             }
          }
@@ -284,9 +284,9 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
    }
 
    /**
-    * Get ifaddr object
+    * Get ip object
     *
-    *@param $p_index Index of ifaddr object in $ifaddrs
+    *@param $p_index Index of ip object in $ifaddrs
     *@return Ifaddr object in ifaddrs array
     **/
    function getIfaddr($p_index) {
@@ -297,12 +297,12 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
     * Add IP
     *
     *@param $p_oIfaddr Ifaddr object
-    *@param $p_ifaddrIndex='' index of ifaddr in $ifaddrs if already exists
+    *@param $p_ifaddrIndex='' index of ip in $ifaddrs if already exists
     *@return nothing
     **/
    function addIfaddr($p_oIfaddr, $p_ifaddrIndex='') {
-      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networkequipments.ifaddr
-         $this->setValue('ifaddr', $p_oIfaddr->getValue('ifaddr'));
+      if (count($this->newIfaddrs)==0) { // the first IP goes in glpi_networkequipments.ip
+         $this->setValue('ip', $p_oIfaddr->getValue('ip'));
       }
       $this->newIfaddrs[]=$p_oIfaddr;
       if (is_int($p_ifaddrIndex)) {
@@ -744,7 +744,7 @@ function appear_array(id){
 								$link1 = $CommonItem->getLink(1);
 								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],
                                             $CommonItem->getLink());
-                        $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],
+                        $link2 = str_replace($CommonItem->getName(0), $data_device["ip"],
                                              $CommonItem->getLink());
 								if ($data_device["itemtype"] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
                            if ($CommonItem->getField("accepted") == "1") {

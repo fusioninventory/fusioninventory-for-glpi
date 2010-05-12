@@ -184,7 +184,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       }
       if ($portIndex == '' AND $p_ip != '') {
          foreach ($this->ports as $index => $oPort) {
-            if ($oPort->getValue('ifaddr')==$p_ip) {
+            if ($oPort->getValue('ip')==$p_ip) {
                $portIndex = $index;
                break;
             }

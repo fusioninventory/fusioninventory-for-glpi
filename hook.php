@@ -44,8 +44,8 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE]['common'] = $LANG['plugin_fusioninventory']["errors"][0];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['field'] = 'ifaddr';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['linkfield'] = 'ifaddr';
+	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['field'] = 'ip';
+	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['linkfield'] = 'ip';
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['name'] = $LANG['plugin_fusioninventory']["errors"][1];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][30]['table'] = 'glpi_plugin_fusioninventory_errors';
@@ -243,7 +243,7 @@ function plugin_fusioninventory_getSearchOption() {
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][13]['name'] = $LANG['plugin_fusioninventory']["model_info"][3];
 
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['table'] = 'glpi_networkports';
-   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['field'] = 'ifaddr';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['field'] = 'ip';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['linkfield'] = 'ID';
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['name'] = $LANG["networking"][14];
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][14]['forcegroupby']='1';

@@ -368,7 +368,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                // Add networking_port
                $port_add["items_id"] = $newID;
                $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-               $port_add["ifaddr"] = $discovery->IP;
+               $port_add["ip"] = $discovery->IP;
                $port_add['ifmac'] = $discovery->MAC;
                $port_add['name'] = $discovery->NETPORTVENDOR;
                $port_ID = $np->add($port_add);
@@ -440,8 +440,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $data['plugin_fusioninventory_agents_id'] = intval($explodeprocess[1]);
 
                if ($a_device[1] == NETWORKING_TYPE) {
-                  if (!in_array('ifaddr', $a_lockable))
-                     $data["ifaddr"] = $discovery->IP;
+                  if (!in_array('ip', $a_lockable))
+                     $data["ip"] = $discovery->IP;
                   if (!in_array('ifmac', $a_lockable))
                      $data['ifmac'] = $discovery->MAC;
                } else {
@@ -449,7 +449,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                   $np = new Networkport;
                   $query = "SELECT `id` FROM `glpi_networkports`
                      WHERE (`items_id` = '".$a_device[0]."' AND `itemtype` = '".$a_device[1]."')
-                        AND `ifaddr` NOT IN ('', '127.0.0.1')
+                        AND `ip` NOT IN ('', '127.0.0.1')
                      ORDER BY `name`, `logical_number`";
                   if ($result = $DB->query($query)) {
                      if ($DB->numrows($result) == 1) {
@@ -457,7 +457,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                         $np->getFromDB($data2["id"]);
                         $port = array();
                         $port['id'] = $data2["id"];
-                        $port["ifaddr"] = $discovery->IP;
+                        $port["ip"] = $discovery->IP;
                         $port['ifmac'] = $discovery->MAC;
                         $port['name'] = $discovery->NETPORTVENDOR;
                         $np->update($port);

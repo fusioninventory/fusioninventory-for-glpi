@@ -63,7 +63,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       // Detect if device exist
       $query_sel = "SELECT *
                     FROM `glpi_plugin_fusioninventory_discovery`
-                    WHERE `ifaddr`='".$Array['ip']."'
+                    WHERE `ip`='".$Array['ip']."'
                           AND `name`='".PluginFusioninventorySNMP::hex_to_string($Array['name'])."'
                           AND `descr`='".$Array['description']."'
                           AND `serialnumber`='".$Array['serial']."'
@@ -85,7 +85,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          }
          if ($insert == "1") {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_discovery`
-                                  (`date`, `ifaddr`, `name`, `descr`, `serialnumber`, `type`,
+                                  (`date`, `ip`, `name`, `descr`, `serialnumber`, `type`,
                                    `plugin_fusioninventory_agents_id`, `entities_id`, `plugin_fusioninventory_modelinfos_id`,
                                    `plugin_fusioninventory_snmpauths_id`)
                       VALUES('".$Array['date']."',
@@ -176,7 +176,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["contact"] = $ptud->fields["contact"];
             $data["domain"] = $ptud->fields["domain"];
             $data["comment"] = $ptud->fields["comment"];
-            $data["ifaddr"] = $Networkport->fields["ifaddr"];
+            $data["ip"] = $Networkport->fields["ip"];
             $data["ifmac"] = $Networkport->fields["ifmac"];
             $ID_Device = $Netdevice->add($data);
 
@@ -494,10 +494,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          switch ($criteria) {
 
             case 'ip':
-               $condition .= "AND `ifaddr`='".$value."' ";
-               $select .= ", ifaddr";
-               $condition_unknown .= "AND `glpi_networkports`.`ifaddr`='".$value."' ";
-               $select_unknown .= ", `glpi_networkports`.`ifaddr`";
+               $condition .= "AND `ip`='".$value."' ";
+               $select .= ", ip";
+               $condition_unknown .= "AND `glpi_networkports`.`ip`='".$value."' ";
+               $select_unknown .= ", `glpi_networkports`.`ip`";
                break;
 
             case 'macaddr':
@@ -549,7 +549,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          }
       }
 
-      // Search in PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN when ifaddr in not empty (so when it's a switch)
+      // Search in PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN when ip in not empty (so when it's a switch)
       $ci->setType(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,true);
       $query = "SELECT ".$ci->obj->table.".ID ".$select." FROM ".$ci->obj->table;
       $query .= " WHERE is_deleted=0 ".$condition;

@@ -123,11 +123,11 @@ class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
          foreach ($a_data as $port_id=>$port) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
-            if(!($fp = fsockopen($port['ifaddr'], 62354, $errno, $errstr, 1))) {
-                echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
+            if(!($fp = fsockopen($port['ip'], 62354, $errno, $errstr, 1))) {
+                echo $port['ip']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
             } else {
-               echo $port['ifaddr']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
-               $ip = $port['ifaddr'];
+               echo $port['ip']." : </td><td align='center'><b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
+               $ip = $port['ip'];
                fclose($fp);
             }
             echo "</td>";

@@ -65,7 +65,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          switch ($data['itemtype']) {
  
             case NETWORKING_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
+               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ip, single,
                            glpi_plugin_fusioninventory_task.items_id as items_id, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
                         INNER JOIN glpi_networkequipments on glpi_plugin_fusioninventory_task.items_id=glpi_networkequipments.ID
@@ -75,14 +75,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
             case COMPUTER_TYPE:
             case PRINTER_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ifaddr, single,
+               $query = "SELECT glpi_plugin_fusioninventory_task.id as ID, param, ip, single,
                            glpi_plugin_fusioninventory_task.items_id as items_id, glpi_plugin_fusioninventory_task.itemtype as itemtype
                         FROM `glpi_plugin_fusioninventory_task`
                         INNER JOIN glpi_networkports on (glpi_plugin_fusioninventory_task.items_id=glpi_networkports.items_id
                                                       AND glpi_plugin_fusioninventory_task.itemtype=glpi_networkports.itemtype)
                         WHERE `agent_id`='".$agent_id."'
                            AND `action`='".$action."'
-                           AND `ifaddr`!='127.0.0.1'";
+                           AND `ip`!='127.0.0.1'";
 
                break;
          }         
@@ -443,8 +443,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 //         return;
 //      }
       foreach ($a_portsList as $ID=>$data) {
-         if ($data['ifaddr'] != "127.0.0.1") {
-            if ($this->getStateAgent($data['ifaddr'],$agent_id)) {
+         if ($data['ip'] != "127.0.0.1") {
+            if ($this->getStateAgent($data['ip'],$agent_id)) {
                $count_agent_on++;
             }
          }
@@ -485,9 +485,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
 
          foreach ($a_portsList as $ID=>$datapl) {
-            if (!isset($existantantip[$datapl['ifaddr']])) {
-               $existantantip[$datapl['ifaddr']] = 1;
-               if ($this->getStateAgent($datapl['ifaddr'], $IDagent, $type)) {
+            if (!isset($existantantip[$datapl['ip']])) {
+               $existantantip[$datapl['ip']] = 1;
+               if ($this->getStateAgent($datapl['ip'], $IDagent, $type)) {
                   $count_agent_on++;
                }
             }
@@ -525,9 +525,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
                $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
 
                foreach ($a_portsList as $ID=>$datapl) {
-                  if (!isset($existantantip[$datapl['ifaddr']])) {
-                     $existantantip[$datapl['ifaddr']] = 1;
-                     if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
+                  if (!isset($existantantip[$datapl['ip']])) {
+                     $existantantip[$datapl['ip']] = 1;
+                     if ($this->getStateAgent($datapl['ip'], $IDagent)) {
                         $count_agent_on++;
                      }
                   }
@@ -541,9 +541,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
                $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
 
                foreach ($a_portsList as $ID=>$datapl) {
-                  if (!isset($existantantip[$datapl['ifaddr']])) {
-                     $existantantip[$datapl['ifaddr']] = 1;
-                     if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
+                  if (!isset($existantantip[$datapl['ip']])) {
+                     $existantantip[$datapl['ip']] = 1;
+                     if ($this->getStateAgent($datapl['ip'], $IDagent)) {
                         $count_agent_on++;
                      }
                   }
@@ -589,9 +589,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
             foreach ($a_agents as $IDagent=>$data) {
                $a_portsList = $np->find('items_id='.$data['items_id'].' AND itemtype='.$data['itemtype']);
                foreach ($a_portsList as $ID=>$datapl) {
-                  if (!isset($existantantip[$datapl['ifaddr']])) {
-                     $existantantip[$datapl['ifaddr']] = 1;
-                     if ($this->getStateAgent($datapl['ifaddr'], $IDagent)) {
+                  if (!isset($existantantip[$datapl['ip']])) {
+                     $existantantip[$datapl['ip']] = 1;
+                     if ($this->getStateAgent($datapl['ip'], $IDagent)) {
                         $count_agent_on++;
                      }
                   }

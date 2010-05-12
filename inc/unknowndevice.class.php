@@ -185,11 +185,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
-      if ((!empty($this->fields["ifaddr"])) OR (!empty($this->fields["ifmac"]))) {
+      if ((!empty($this->fields["ip"])) OR (!empty($this->fields["ifmac"]))) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . $LANG['networking'][14] . " :</td>";
          echo "<td align='center'>";
-         echo "<input type='text' name='otherserial' value='" . $this->fields["ifaddr"] . "' size='35'/>";
+         echo "<input type='text' name='otherserial' value='" . $this->fields["ip"] . "' size='35'/>";
          echo "</td>";
 
          echo "<td align='center'>" . $LANG['networking'][15] . " : </td>";
@@ -296,7 +296,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 //				// Add networking_port
 //				$port_add["items_id"] = $newID;
 //				$port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-//				$port_add["ifaddr"] = $data["unknown_ip"];
+//				$port_add["ip"] = $data["unknown_ip"];
 //				$port_add['ifmac'] = $data["unknow_mac"];
 //				$port_ID = $np->add($port_add);
 //				unset($port_add);
@@ -362,7 +362,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                                     `itemtype='".$data_known["itemtype"]."',
                                     `logical_number`='".$data_known["logical_number"]."',
                                     `name`='".$data_known["name"]."',
-                                    `ifaddr`='".$data_known["ifaddr"]."',
+                                    `ip`='".$data_known["ip"]."',
                                     `iface`='".$data_known["iface"]."',
                                     `netpoint`='".$data_known["netpoint"]."',
                                     `netmask`='".$data_known["netmask"]."',
@@ -413,7 +413,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (count($a_ports) == '1') {
          // Put mac and ip to unknown
          $port = current($a_ports);
-         $this->fields['ifaddr'] = $port['ifaddr'];
+         $this->fields['ip'] = $port['ip'];
          $this->fields['ifmac'] = $port['ifmac'];
 
          $this->update($this->fields);
