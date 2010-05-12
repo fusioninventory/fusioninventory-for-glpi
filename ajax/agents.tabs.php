@@ -54,7 +54,7 @@ $pfia->showForm($_POST["id"]);
 switch($_POST['glpi_tab']) {
 	case -1 :
       $pfia->showFormAdvancedOptions($_POST["id"]);
-      $pfit->RemoteStateAgent($_POST['target'], $_POST["id"], PLUGIN_FUSIONINVENTORY_SNMP_AGENTS, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent($_POST['target'], $_POST["id"], 'PluginFusioninventoryAgent', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
 	case 1 :
@@ -62,7 +62,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 2 :
-      $pfit->RemoteStateAgent($_POST['target'], $_POST["id"], PLUGIN_FUSIONINVENTORY_SNMP_AGENTS, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent($_POST['target'], $_POST["id"], 'PluginFusioninventoryAgent', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
    default :

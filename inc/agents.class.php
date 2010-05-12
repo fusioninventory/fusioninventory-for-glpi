@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryAgents extends CommonDBTM {
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_agents";
-		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
+		$this->type = 'PluginFusioninventoryAgent';
 	}
 
    function defineTabs($options=array()){

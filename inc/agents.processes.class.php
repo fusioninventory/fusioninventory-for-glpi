@@ -202,7 +202,7 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
             echo "</td>";
 
             echo "<td rowspan='2'>";
-            $ci->getFromDB(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$data['plugin_fusioninventory_agents_id']);
+            $ci->getFromDB('PluginFusioninventoryAgent',$data['plugin_fusioninventory_agents_id']);
 				echo $ci->getLink(1);
             echo "</td>";
 

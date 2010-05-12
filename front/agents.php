@@ -43,12 +43,12 @@ PluginFusioninventoryAuth::checkRight("agents","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS);
+manageGetValuesInSearch('PluginFusioninventoryAgent');
 
 $_GET['target']="agents.php";
 
-searchForm(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$_GET);
-showList(PLUGIN_FUSIONINVENTORY_SNMP_AGENTS,$_GET);
+searchForm('PluginFusioninventoryAgent',$_GET);
+showList('PluginFusioninventoryAgent',$_GET);
 
 
 commonFooter();

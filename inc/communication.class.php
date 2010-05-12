@@ -158,7 +158,7 @@ class PluginFusioninventoryCommunication {
          $tasks = $ptt->ListTask($agent["id"], "SNMPQUERY");
          foreach ($tasks as $task_id=>$taskInfos) {
             file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/query.log".rand(), $agent["id"]);
-            if ($tasks[$task_id]["param"] == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+            if ($tasks[$task_id]["param"] == 'PluginFusioninventoryAgent') {
                $task = "0";
             }
          }
@@ -267,7 +267,7 @@ class PluginFusioninventoryCommunication {
       if ($task == "1") {
          $tasks = $ptt->ListTask($agent["id"], "NETDISCOVERY");
          foreach ($tasks as $task_id=>$taskInfos) {
-            if ($tasks[$task_id]["param"] == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+            if ($tasks[$task_id]["param"] == 'PluginFusioninventoryAgent') {
                $task = "0";
             }
          }

@@ -310,69 +310,69 @@ function plugin_fusioninventory_getSearchOption() {
 
    $sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][15]['name'] = $LANG['plugin_fusioninventory']["snmp"][41];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS]['common'] = $LANG['plugin_fusioninventory']["profile"][26];
+	$sopt['PluginFusioninventoryAgent']['common'] = $LANG['plugin_fusioninventory']["profile"][26];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['field'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['linkfield'] = 'name';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['name'] = $LANG["common"][16];
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][1]['datatype']='itemlink';
+	$sopt['PluginFusioninventoryAgent'][1]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][1]['field'] = 'name';
+	$sopt['PluginFusioninventoryAgent'][1]['linkfield'] = 'name';
+	$sopt['PluginFusioninventoryAgent'][1]['name'] = $LANG["common"][16];
+   $sopt['PluginFusioninventoryAgent'][1]['datatype']='itemlink';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['field'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][30]['name'] = $LANG["common"][2];
+	$sopt['PluginFusioninventoryAgent'][30]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][30]['field'] = 'id';
+	$sopt['PluginFusioninventoryAgent'][30]['linkfield'] = '';
+	$sopt['PluginFusioninventoryAgent'][30]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['field'] = 'threads_discovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['linkfield'] = 'threads_discovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][4]['name'] = $LANG['plugin_fusioninventory']["agents"][3];
+	$sopt['PluginFusioninventoryAgent'][4]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][4]['field'] = 'threads_discovery';
+	$sopt['PluginFusioninventoryAgent'][4]['linkfield'] = 'threads_discovery';
+	$sopt['PluginFusioninventoryAgent'][4]['name'] = $LANG['plugin_fusioninventory']["agents"][3];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['field'] = 'threads_query';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['linkfield'] = 'threads_query';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][6]['name'] = $LANG['plugin_fusioninventory']["agents"][2];
+	$sopt['PluginFusioninventoryAgent'][6]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][6]['field'] = 'threads_query';
+	$sopt['PluginFusioninventoryAgent'][6]['linkfield'] = 'threads_query';
+	$sopt['PluginFusioninventoryAgent'][6]['name'] = $LANG['plugin_fusioninventory']["agents"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['field'] = 'last_agent_update';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['name'] = $LANG['plugin_fusioninventory']["agents"][4];
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][8]['datatype']='datetime';
+	$sopt['PluginFusioninventoryAgent'][8]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][8]['field'] = 'last_agent_update';
+	$sopt['PluginFusioninventoryAgent'][8]['linkfield'] = '';
+	$sopt['PluginFusioninventoryAgent'][8]['name'] = $LANG['plugin_fusioninventory']["agents"][4];
+   $sopt['PluginFusioninventoryAgent'][8]['datatype']='datetime';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][9]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][9]['field'] = 'fusioninventory_agent_version';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][9]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][9]['name'] = $LANG['plugin_fusioninventory']["agents"][5];
+	$sopt['PluginFusioninventoryAgent'][9]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][9]['field'] = 'fusioninventory_agent_version';
+	$sopt['PluginFusioninventoryAgent'][9]['linkfield'] = '';
+	$sopt['PluginFusioninventoryAgent'][9]['name'] = $LANG['plugin_fusioninventory']["agents"][5];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['field'] = 'lock';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['linkfield'] = 'lock';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['name'] = $LANG['plugin_fusioninventory']["agents"][6];
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][10]['datatype']='bool';
+	$sopt['PluginFusioninventoryAgent'][10]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][10]['field'] = 'lock';
+	$sopt['PluginFusioninventoryAgent'][10]['linkfield'] = 'lock';
+	$sopt['PluginFusioninventoryAgent'][10]['name'] = $LANG['plugin_fusioninventory']["agents"][6];
+   $sopt['PluginFusioninventoryAgent'][10]['datatype']='bool';
 
- 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['field'] = 'module_inventory';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['linkfield'] = 'module_inventory';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['name'] = $LANG['plugin_fusioninventory']['config'][3];
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][11]['datatype']='bool';
+ 	$sopt['PluginFusioninventoryAgent'][11]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][11]['field'] = 'module_inventory';
+	$sopt['PluginFusioninventoryAgent'][11]['linkfield'] = 'module_inventory';
+	$sopt['PluginFusioninventoryAgent'][11]['name'] = $LANG['plugin_fusioninventory']['config'][3];
+   $sopt['PluginFusioninventoryAgent'][11]['datatype']='bool';
 
- 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['field'] = 'module_netdiscovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['linkfield'] = 'module_netdiscovery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['name'] = $LANG['plugin_fusioninventory']['config'][4];
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][12]['datatype']='bool';
+ 	$sopt['PluginFusioninventoryAgent'][12]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][12]['field'] = 'module_netdiscovery';
+	$sopt['PluginFusioninventoryAgent'][12]['linkfield'] = 'module_netdiscovery';
+	$sopt['PluginFusioninventoryAgent'][12]['name'] = $LANG['plugin_fusioninventory']['config'][4];
+   $sopt['PluginFusioninventoryAgent'][12]['datatype']='bool';
 
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['field'] = 'module_snmpquery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['linkfield'] = 'module_snmpquery';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['name'] = $LANG['plugin_fusioninventory']['config'][7];
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][13]['datatype']='bool';
+   $sopt['PluginFusioninventoryAgent'][13]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][13]['field'] = 'module_snmpquery';
+	$sopt['PluginFusioninventoryAgent'][13]['linkfield'] = 'module_snmpquery';
+	$sopt['PluginFusioninventoryAgent'][13]['name'] = $LANG['plugin_fusioninventory']['config'][7];
+   $sopt['PluginFusioninventoryAgent'][13]['datatype']='bool';
 
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['field'] = 'module_wakeonlan';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['linkfield'] = 'module_wakeonlan';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['name'] = $LANG['plugin_fusioninventory']['config'][6];
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_AGENTS][14]['datatype']='bool';
+   $sopt['PluginFusioninventoryAgent'][14]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryAgent'][14]['field'] = 'module_wakeonlan';
+	$sopt['PluginFusioninventoryAgent'][14]['linkfield'] = 'module_wakeonlan';
+	$sopt['PluginFusioninventoryAgent'][14]['name'] = $LANG['plugin_fusioninventory']['config'][6];
+   $sopt['PluginFusioninventoryAgent'][14]['datatype']='bool';
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP]['common'] = $LANG['plugin_fusioninventory']["profile"][25];
 
@@ -402,7 +402,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['linkfield'] = 'plugin_fusioninventory_agents_id_discover';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['name'] = $LANG['plugin_fusioninventory']["agents"][12];
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['datatype']='itemlink';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['itemlink_type']=PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['itemlink_type']='PluginFusioninventoryAgent';
    $sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['forcegroupby']='1';
   
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][6]['table'] = 'glpi_plugin_fusioninventory_rangeip';
@@ -427,7 +427,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['linkfield'] = 'plugin_fusioninventory_agents_id_query';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['name'] = $LANG['plugin_fusioninventory']["agents"][13];
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['datatype']='itemlink';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['itemlink_type']=PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['itemlink_type']='PluginFusioninventoryAgent';
    $sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][9]['forcegroupby']='1';
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY]['common'] = $LANG['plugin_fusioninventory']["title"][2];
@@ -582,7 +582,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_TASK][3]['linkfield'] = 'agent_id';
 	$sopt[PLUGIN_FUSIONINVENTORY_TASK][3]['name'] = $LANG['plugin_fusioninventory']["agents"][13];
 	$sopt[PLUGIN_FUSIONINVENTORY_TASK][3]['datatype']='itemlink';
-	$sopt[PLUGIN_FUSIONINVENTORY_TASK][3]['itemlink_type']=PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
+	$sopt[PLUGIN_FUSIONINVENTORY_TASK][3]['itemlink_type']='PluginFusioninventoryAgent';
    $sopt[PLUGIN_FUSIONINVENTORY_TASK][3]['forcegroupby']='1';
 
 	$sopt[PLUGIN_FUSIONINVENTORY_TASK][4]['table'] = 'glpi_plugin_fusioninventory_task';
@@ -1016,7 +1016,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * FusionInventory Agents list (plugins/fusioninventory/front/agents.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS :
+		case 'PluginFusioninventoryAgent' :
 			break;
 
 		// * range IP list (plugins/fusioninventory/front/rangeip.php)

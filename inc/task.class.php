@@ -191,7 +191,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return false;
       }
-      if ($param == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+      if ($param == 'PluginFusioninventoryAgent') {
          $items_id = 0;
          $device_typ = 0;
       }
@@ -265,7 +265,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventory::haveRight("remotecontrol","w"))) {
          return;
       }
-      if ($type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+      if ($type == 'PluginFusioninventoryAgent') {
          $pfia->getFromDB($id);
          $items_id = $id;
       } else if ($type == COMPUTER_TYPE) {
@@ -301,20 +301,20 @@ class PluginFusioninventoryTask extends CommonDBTM {
             }
             break;
 
-         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+         case 'PluginFusioninventoryAgent':
          case COMPUTER_TYPE:
             if (((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("inventoryocs") == '1') AND (isset($pfia->fields['module_inventory'])) AND ($pfia->fields['module_inventory'] == '1'))
                      OR ((isset($a_modules["INVENTORY"])) AND ($ptcm->getValue("snmp") == '1') AND (isset($pfia->fields['module_snmpquery'])) AND ($pfia->fields['module_snmpquery'] == '1'))){
                $array_actions["INVENTORY"] = $LANG['plugin_fusioninventory']['config'][3];
             }
 
-            if (($type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) AND (isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($pfia->fields['module_netdiscovery'] == '1')) {
+            if (($type == 'PluginFusioninventoryAgent') AND (isset($a_modules["NETDISCOVERY"])) AND ($ptcm->getValue("netdiscovery") == '1') AND ($pfia->fields['module_netdiscovery'] == '1')) {
                $array_actions["NETDISCOVERY"] = $LANG['plugin_fusioninventory']['config'][4];
             }
 
 
             if ((isset($a_modules["WAKEONLAN"])) AND ($ptcm->getValue("wol") == '1')) {
-               // Code for PLUGIN_FUSIONINVENTORY_SNMP_AGENTS if  ($pfia->fields['module_wakeonlan'] == '1')
+               // Code for 'PluginFusioninventoryAgent' if  ($pfia->fields['module_wakeonlan'] == '1')
                // so :
                if ($type == COMPUTER_TYPE) {
                    $array_actions["WAKEONLAN"] = $LANG['plugin_fusioninventory']['config'][6];
@@ -375,7 +375,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       switch ($itemtype) {
 
-         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+         case 'PluginFusioninventoryAgent':
             echo "<select name='device'>";
             // afficher la machine associe a l'agent
             echo "<optgroup label=\"".$LANG['help'][25]."\">";
@@ -426,7 +426,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       switch ($itemtype) {
 
-         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+         case 'PluginFusioninventoryAgent':
             $agent_id = $items_id;
             break;
 
@@ -472,9 +472,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
-      if ($itemtype == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+      if ($itemtype == 'PluginFusioninventoryAgent') {
          $a_agents = $pfia->find('module_netdiscovery=1 AND id='.$items_id);
-         $type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
+         $type = 'PluginFusioninventoryAgent';
       } else if ($itemtype == COMPUTER_TYPE) {
 
       } else {
