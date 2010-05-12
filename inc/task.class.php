@@ -472,10 +472,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
-      if ($device_type == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
+      if ($itemtype == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
          $a_agents = $pfia->find('module_netdiscovery=1 AND id='.$items_id);
          $type = PLUGIN_FUSIONINVENTORY_SNMP_AGENTS;
-      } else if ($device_type == COMPUTER_TYPE) {
+      } else if ($itemtype == COMPUTER_TYPE) {
 
       } else {
          $a_agents = $pfia->find('module_netdiscovery=1');
