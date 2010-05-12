@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_agents_inventory_state";
+		$this->table = "glpi_plugin_fusioninventory_agentsinvstates";
 	}
 
    function computerState($target, $id) {
