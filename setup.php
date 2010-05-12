@@ -166,7 +166,7 @@ function plugin_fusioninventory_check_config() {
 
 function plugin_fusioninventory_haveTypeRight($type,$right) {
 	switch ($type) {
-		case PLUGIN_FUSIONINVENTORY_ERROR_TYPE :
+		case 'PluginFusioninventoryError' :
 			return PluginFusioninventory::haveRight("errors",$right);
 			break;
 	}

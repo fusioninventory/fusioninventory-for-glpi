@@ -41,50 +41,50 @@ function plugin_fusioninventory_getSearchOption() {
 	$config = new PluginFusioninventoryConfig;
 
 	// Part header
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE]['common'] = $LANG['plugin_fusioninventory']["errors"][0];
+	$sopt['PluginFusioninventoryError']['common'] = $LANG['plugin_fusioninventory']["errors"][0];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['field'] = 'ip';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['linkfield'] = 'ip';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][1]['name'] = $LANG['plugin_fusioninventory']["errors"][1];
+	$sopt['PluginFusioninventoryError'][1]['table'] = 'glpi_plugin_fusioninventory_errors';
+	$sopt['PluginFusioninventoryError'][1]['field'] = 'ip';
+	$sopt['PluginFusioninventoryError'][1]['linkfield'] = 'ip';
+	$sopt['PluginFusioninventoryError'][1]['name'] = $LANG['plugin_fusioninventory']["errors"][1];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][30]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][30]['field'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][30]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][30]['name'] = $LANG["common"][2];
+	$sopt['PluginFusioninventoryError'][30]['table'] = 'glpi_plugin_fusioninventory_errors';
+	$sopt['PluginFusioninventoryError'][30]['field'] = 'id';
+	$sopt['PluginFusioninventoryError'][30]['linkfield'] = '';
+	$sopt['PluginFusioninventoryError'][30]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][3]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][3]['field'] = 'itemtype';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][3]['linkfield'] = 'itemtype';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][3]['name'] = $LANG["common"][1];
+	$sopt['PluginFusioninventoryError'][3]['table'] = 'glpi_plugin_fusioninventory_errors';
+	$sopt['PluginFusioninventoryError'][3]['field'] = 'itemtype';
+	$sopt['PluginFusioninventoryError'][3]['linkfield'] = 'itemtype';
+	$sopt['PluginFusioninventoryError'][3]['name'] = $LANG["common"][1];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][4]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][4]['field'] = 'device_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][4]['linkfield'] = 'device_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][4]['name'] = $LANG["common"][16];
+	$sopt['PluginFusioninventoryError'][4]['table'] = 'glpi_plugin_fusioninventory_errors';
+	$sopt['PluginFusioninventoryError'][4]['field'] = 'device_id';
+	$sopt['PluginFusioninventoryError'][4]['linkfield'] = 'device_id';
+	$sopt['PluginFusioninventoryError'][4]['name'] = $LANG["common"][16];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][6]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][6]['field'] = 'description';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][6]['linkfield'] = 'description';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][6]['name'] = $LANG['plugin_fusioninventory']["errors"][2];
-  $sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][6]['datatype']='text';
+	$sopt['PluginFusioninventoryError'][6]['table'] = 'glpi_plugin_fusioninventory_errors';
+	$sopt['PluginFusioninventoryError'][6]['field'] = 'description';
+	$sopt['PluginFusioninventoryError'][6]['linkfield'] = 'description';
+	$sopt['PluginFusioninventoryError'][6]['name'] = $LANG['plugin_fusioninventory']["errors"][2];
+  $sopt['PluginFusioninventoryError'][6]['datatype']='text';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][7]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][7]['field'] = 'first_pb_date';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][7]['linkfield'] = 'first_pb_date';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][7]['name'] = $LANG['plugin_fusioninventory']["errors"][3];
-  $sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][7]['datatype']='datetime';
+	$sopt['PluginFusioninventoryError'][7]['table'] = 'glpi_plugin_fusioninventory_errors';
+	$sopt['PluginFusioninventoryError'][7]['field'] = 'first_pb_date';
+	$sopt['PluginFusioninventoryError'][7]['linkfield'] = 'first_pb_date';
+	$sopt['PluginFusioninventoryError'][7]['name'] = $LANG['plugin_fusioninventory']["errors"][3];
+  $sopt['PluginFusioninventoryError'][7]['datatype']='datetime';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][8]['table'] = 'glpi_plugin_fusioninventory_errors';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][8]['field'] = 'last_pb_date';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][8]['linkfield'] = 'last_pb_date';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][8]['name'] = $LANG['plugin_fusioninventory']["errors"][4];
-  $sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][8]['datatype']='datetime';
+	$sopt['PluginFusioninventoryError'][8]['table'] = 'glpi_plugin_fusioninventory_errors';
+	$sopt['PluginFusioninventoryError'][8]['field'] = 'last_pb_date';
+	$sopt['PluginFusioninventoryError'][8]['linkfield'] = 'last_pb_date';
+	$sopt['PluginFusioninventoryError'][8]['name'] = $LANG['plugin_fusioninventory']["errors"][4];
+  $sopt['PluginFusioninventoryError'][8]['datatype']='datetime';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['table'] = 'glpi_entities';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['field'] = 'completename';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['linkfield'] = 'entities_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_ERROR_TYPE][80]['name'] = $LANG["entity"][0];
+	$sopt['PluginFusioninventoryError'][80]['table'] = 'glpi_entities';
+	$sopt['PluginFusioninventoryError'][80]['field'] = 'completename';
+	$sopt['PluginFusioninventoryError'][80]['linkfield'] = 'entities_id';
+	$sopt['PluginFusioninventoryError'][80]['name'] = $LANG["entity"][0];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MODEL]['common'] = $LANG['plugin_fusioninventory']["profile"][19];
 

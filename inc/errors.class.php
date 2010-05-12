@@ -41,7 +41,7 @@ class PluginFusioninventoryErrors extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_errors";
-		$this->type=PLUGIN_FUSIONINVENTORY_ERROR_TYPE;
+		$this->type='PluginFusioninventoryError';
 		$this->entity_assign = true;
 	}
 	
