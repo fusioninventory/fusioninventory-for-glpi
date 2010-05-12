@@ -35,7 +35,7 @@
 class PluginFusioninventoryTask extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_task";
+		$this->table = "glpi_plugin_fusioninventory_tasks";
       $this->type = PLUGIN_FUSIONINVENTORY_TASK;
 	}
 
@@ -44,7 +44,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB;
 
       $count = 0;
-      $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_task`
+      $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_tasks`
          WHERE `agent_id`='".$agent_id."'
             AND `action`='".$action."' ";
 
@@ -65,21 +65,21 @@ class PluginFusioninventoryTask extends CommonDBTM {
          switch ($data['itemtype']) {
  
             case NETWORKING_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_task.id as id, param, ip, single,
-                           glpi_plugin_fusioninventory_task.items_id as items_id, glpi_plugin_fusioninventory_task.itemtype as itemtype
-                        FROM `glpi_plugin_fusioninventory_task`
-                        INNER JOIN glpi_networkequipments on glpi_plugin_fusioninventory_task.items_id=glpi_networkequipments.id
+               $query = "SELECT glpi_plugin_fusioninventory_tasks.id as id, param, ip, single,
+                           glpi_plugin_fusioninventory_tasks.items_id as items_id, glpi_plugin_fusioninventory_tasks.itemtype as itemtype
+                        FROM `glpi_plugin_fusioninventory_tasks`
+                        INNER JOIN glpi_networkequipments on glpi_plugin_fusioninventory_tasks.items_id=glpi_networkequipments.id
                         WHERE `agent_id`='".$agent_id."'
                            AND `action`='".$action."'";
                break;
 
             case COMPUTER_TYPE:
             case PRINTER_TYPE:
-               $query = "SELECT glpi_plugin_fusioninventory_task.id as id, param, ip, single,
-                           glpi_plugin_fusioninventory_task.items_id as items_id, glpi_plugin_fusioninventory_task.itemtype as itemtype
-                        FROM `glpi_plugin_fusioninventory_task`
-                        INNER JOIN glpi_networkports on (glpi_plugin_fusioninventory_task.items_id=glpi_networkports.items_id
-                                                      AND glpi_plugin_fusioninventory_task.itemtype=glpi_networkports.itemtype)
+               $query = "SELECT glpi_plugin_fusioninventory_tasks.id as id, param, ip, single,
+                           glpi_plugin_fusioninventory_tasks.items_id as items_id, glpi_plugin_fusioninventory_tasks.itemtype as itemtype
+                        FROM `glpi_plugin_fusioninventory_tasks`
+                        INNER JOIN glpi_networkports on (glpi_plugin_fusioninventory_tasks.items_id=glpi_networkports.items_id
+                                                      AND glpi_plugin_fusioninventory_tasks.itemtype=glpi_networkports.itemtype)
                         WHERE `agent_id`='".$agent_id."'
                            AND `action`='".$action."'
                            AND `ip`!='127.0.0.1'";
