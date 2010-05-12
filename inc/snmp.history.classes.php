@@ -334,9 +334,14 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
                   SET `Field`='".$data['Field']."'
                   WHERE `ID`='".$data['ID']."' ";
                $DB->query($query_update);
-               if (preg_match("/000$/", $i)) {
-                  changeProgressBarPosition($i, $nb, "$i / $nb");
-               }
+            } else {
+               $query_update = "UPDATE `".$this->table."`
+                  SET `Field`='".$data['Field']."'
+                  WHERE `ID`='".$data['ID']."' ";
+               $DB->query($query_update);
+            }
+            if (preg_match("/000$/", $i)) {
+               changeProgressBarPosition($i, $nb, "$i / $nb");
             }
          }
       }
