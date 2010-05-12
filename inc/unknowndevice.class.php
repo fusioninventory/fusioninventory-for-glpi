@@ -268,47 +268,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</div>";
    }
 
-
-   
-	function updateFromOldVersion_unknown_mac() {
-		global $DB,$LANG;
-
-		$snmp_queries = new PluginFusioninventorySNMP;
-		$np=new Networkport;
-
-		$query = "SELECT DISTINCT `unknow_mac`,`unknown_ip`,`port`,`end_FK_processes`
-                FROM `glpi_plugin_fusioninventory_unknown_mac`
-                WHERE `end_FK_processes`=(
-                      SELECT MAX(`end_FK_processes`)
-                      FROM `glpi_plugin_fusioninventory_unknown_mac`); ";
-
-		if ($result=$DB->query($query)) {
-			while ($data=$DB->fetch_array($result)) {
-//				$name_unknown = plugin_fusioninventory_search_name_ocs_servers($data["unknow_mac"]);
-//				// Add unknown device
-//				if ($name_unknown == $data["unknown_ip"]) {
-//					$unknown_infos["name"] = '';
-//            } else {
-//					$unknown_infos["name"] = $name_unknown;
-//            }
-//				$newID=$this->add($unknown_infos);
-//				unset($unknown_infos);
-//				// Add networking_port
-//				$port_add["items_id"] = $newID;
-//				$port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-//				$port_add["ip"] = $data["unknown_ip"];
-//				$port_add['mac'] = $data["unknow_mac"];
-//				$port_ID = $np->add($port_add);
-//				unset($port_add);
-//
-//				// Connection between ports (wire table in DB)
-//				$snmp_queries->PortsConnection($data["port"], $port_ID,$data["end_FK_processes"]);
-			}
-		}
-	}
-
-
-
    function CleanOrphelinsConnections() {
       global $DB;
 

@@ -111,9 +111,6 @@ class PluginFusioninventorySetup {
 
       }
       if ($version == "2.0.2") {
-         // Migrate unknown mac address in unknown device (MySQL table)
-   //		$ptud = new PluginFusioninventoryUnknownDevice;
-   //		$ptud->updateFromOldVersion_unknown_mac;
          // Delete MySQL table "glpi_plugin_fusioninventory_unknown_mac"
          $DB->query("DROP TABLE `glpi_plugin_tracker_unknown_mac`;");
          $DB->query("UPDATE `glpi_plugin_tracker_config`
