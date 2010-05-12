@@ -42,7 +42,6 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_config_snmp_networking";
-		$this->type=-1;
 	}	
 
 
