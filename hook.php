@@ -443,8 +443,8 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['name'] = $LANG["setup"][175];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['field'] = 'Field';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['linkfield'] = 'Field';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['field'] = 'field';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['linkfield'] = 'field';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['name'] = $LANG["event"][18];
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
@@ -1059,7 +1059,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmphistories.Field" :
+				case "glpi_plugin_fusioninventory_snmphistories.field" :
                $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["ITEM_$num"]]['name'];
                return $out;
 					break;
@@ -2221,8 +2221,8 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmphistories.Field" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.Field $order ";
+				case "glpi_plugin_fusioninventory_snmphistories.field" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.field $order ";
 					break;
 
 				// ** Display Old Value (before changement of value)
@@ -2513,7 +2513,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmphistories.Field" :
+				case "glpi_plugin_fusioninventory_snmphistories.field" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.$field IS NULL ";

@@ -110,7 +110,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     *
      *@param $p_itemtype Table id.
      *@param $p_items_id Line id.
-     *@param $p_fieldToDel Field to unlock.
+     *@param $p_fieldToDel field to unlock.
     *TODO:  check rights and entity
     *
     *@return nothing
@@ -145,7 +145,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     *
      *@param $p_itemtype Table id.
      *@param $p_items_id Line id.
-     *@param $p_fieldToDel Field to unlock.
+     *@param $p_fieldToDel field to unlock.
     *TODO:  check rights and entity
     *
     *@return nothing

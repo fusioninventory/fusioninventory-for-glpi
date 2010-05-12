@@ -223,9 +223,9 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             if ($data['days'] != "0") {
                $historyConfig[$data['field']]=$data['days'];
                $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmphistories`
-                  WHERE `Field`='".$data['field']."'";
+                  WHERE `field`='".$data['field']."'";
                $delete_query[$data['field']] = "DELETE FROM `glpi_plugin_fusioninventory_snmphistories`
-                  WHERE `Field`='".$data['field']."'";
+                  WHERE `field`='".$data['field']."'";
                switch ($data['days']) {
 
                   case '-1' :
@@ -284,7 +284,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
       $query = "SELECT *
                 FROM ".$this->table."
-                WHERE `Field` != '0';";
+                WHERE `field` != '0';";
       if ($result=$DB->query($query)) {
          $nb = $DB->numrows($result);
          if (($nb > 300000) AND ($force == '0')) {
@@ -299,10 +299,10 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
          $i = 0;
 			while ($data=$DB->fetch_array($result)) {
             $i++;
-            if (isset($constantsfield[$data['Field']])) {
-               $data['Field'] = $constantsfield[$data['Field']];
+            if (isset($constantsfield[$data['field']])) {
+               $data['field'] = $constantsfield[$data['field']];
                $query_update = "UPDATE `".$this->table."`
-                  SET `Field`='".$data['Field']."'
+                  SET `field`='".$data['field']."'
                   WHERE `id`='".$data['id']."' ";
                $DB->query($query_update);
                if (preg_match("/000$/", $i)) {
@@ -331,7 +331,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       createProgressBar("Move create connections");
       $query = "SELECT *
                 FROM ".$this->table."
-                WHERE `Field` = '0' 
+                WHERE `field` = '0' 
                   AND ((`old_value` NOT LIKE '%:%')
                         OR (`old_value` IS NULL))";
       if ($result=$DB->query($query)) {
@@ -392,7 +392,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       createProgressBar("Move delete connections");
       $query = "SELECT *
                 FROM ".$this->table."
-                WHERE `Field` = '0'
+                WHERE `field` = '0'
                   AND ((`new_value` NOT LIKE '%:%')
                         OR (`new_value` IS NULL))";
       if ($result=$DB->query($query)) {
@@ -455,7 +455,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
          foreach ($a_list as $data){
 
             $query_delete = "DELETE FROM `".$this->table."`
-               WHERE `Field`='".$data['field']."' ";
+               WHERE `field`='".$data['field']."' ";
 
             switch($data['days']) {
 
@@ -604,7 +604,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             SELECT * FROM (
                SELECT id, date as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
                networkports_id_1, networkports_id_2,
-               creation as Field, NULL as old_value, NULL as new_value
+               creation as field, NULL as old_value, NULL as new_value
 
                FROM glpi_plugin_fusioninventory_snmphistoryconnections
                WHERE `networkports_id_1`='".$ID_port."'
@@ -617,7 +617,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             SELECT * FROM (
                SELECT id, date_mod as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
                networkports_id AS networkports_id_1, NULL as networkports_id_2,
-               Field, old_value, new_value
+               field, old_value, new_value
 
                FROM glpi_plugin_fusioninventory_snmphistories
                WHERE `networkports_id`='".$ID_port."'
@@ -652,7 +652,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_2"])) {
                // Connections and disconnections
-               if ($data['Field'] == '1') {
+               if ($data['field'] == '1') {
                   $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/></td>";
                } else {
                   $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
@@ -697,7 +697,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             } else {
                // Changes values
                $text .= "<td align='center' colspan='2'></td>";
-               $text .= "<td align='center'>".$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["Field"]]['name']."</td>";
+               $text .= "<td align='center'>".$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
                $text .= "<td align='center'>".$data["old_value"]."</td>";
                $text .= "<td align='center'>-></td>";
                $text .= "<td align='center'>".$data["new_value"]."</td>";
@@ -760,7 +760,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                $text .= "<td align='center' colspan='4'></td>";
                $text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
 
-            } else if (($data["old_device_ID"] == "0") AND ($data["new_device_ID"] == "0") AND ($data["Field"] == "0")) {
+            } else if (($data["old_device_ID"] == "0") AND ($data["new_device_ID"] == "0") AND ($data["field"] == "0")) {
                // Unknown Mac address
                if (!empty($data["old_value"])) {
                   $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_fusioninventory']["history"][2]."</td>";
@@ -778,7 +778,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
             } else {
                // Changes values
                $text .= "<td align='center' colspan='3'></td>";
-               $text .= "<td align='center'>".$data["Field"]."</td>";
+               $text .= "<td align='center'>".$data["field"]."</td>";
                $text .= "<td align='center'>".$data["old_value"]."</td>";
                $text .= "<td align='center'>-></td>";
                $text .= "<td align='center'>".$data["new_value"]."</td>";

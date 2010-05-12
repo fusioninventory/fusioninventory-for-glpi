@@ -140,9 +140,9 @@ class PluginFusioninventoryCommonDBTM extends CommonDBTM {
    /**
     * Get field value
     *
-    *@param $p_field Field
+    *@param $p_field field
     *@param $p_object=NULL Object to update
-    *@return Field value / NULL if unknown field
+    *@return field value / NULL if unknown field
     **/
    function getValue($p_field, $p_object=NULL) {
       if (is_null($p_object)) {
@@ -164,7 +164,7 @@ class PluginFusioninventoryCommonDBTM extends CommonDBTM {
    /**
     * Set field value
     *
-    *@param $p_field Field
+    *@param $p_field field
     *@param $p_value Value
     *@param $p_object=NULL Object to update
     *@return true if value set / false if unknown field

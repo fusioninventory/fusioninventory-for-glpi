@@ -50,7 +50,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
       $ptsnmph = new PluginFusioninventorySnmphistory;
 
       $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmphistories`
-                        WHERE `Field`='0'
+                        WHERE `field`='0'
                         ORDER BY `plugin_fusioninventory_processes_id` DESC, `date_mod` DESC;";
       $result_connection = $DB->query($sql_connection);
       while ($thread_connection = $DB->fetch_array($result_connection)) {
