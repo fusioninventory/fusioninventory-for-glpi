@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfig extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_config";
+		$this->table="glpi_plugin_fusioninventory_configs";
 		$this->type=PLUGIN_FUSIONINVENTORY_SNMP_CONFIG;
 	}
 

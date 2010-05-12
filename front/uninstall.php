@@ -37,7 +37,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 if (haveRight("config","w") && haveRight("profile","w")) {
 
-	if(TableExists("glpi_plugin_fusioninventory_config")) {
+	if(TableExists("glpi_plugin_fusioninventory_configs")) {
 		PluginFusioninventorySetup::uninstall();
 		unset($_SESSION["glpi_plugin_fusioninventory_installed"]);
 	}

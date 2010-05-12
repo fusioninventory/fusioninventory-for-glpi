@@ -42,9 +42,9 @@ class PluginFusioninventoryAuth extends CommonDBTM {
    static function initSession() {
       global $DB;
 
-      if(TableExists("glpi_plugin_fusioninventory_config")) {
+      if(TableExists("glpi_plugin_fusioninventory_configs")) {
 
-         if (FieldExists("glpi_plugin_fusioninventory_config","id")) {
+         if (FieldExists("glpi_plugin_fusioninventory_configs","id")) {
             $profile=new PluginFusioninventoryProfile;
 
             $query = "SELECT DISTINCT `glpi_profiles`.*

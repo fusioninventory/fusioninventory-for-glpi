@@ -1132,7 +1132,7 @@ function plugin_fusioninventory_install() {
     *    2.1.1 config version field 2.1.1
     **/
    if ((!TableExists("glpi_plugin_tracker_config")) &&
-      (!TableExists("glpi_plugin_fusioninventory_config"))) {
+      (!TableExists("glpi_plugin_fusioninventory_configs"))) {
       PluginFusioninventorySetup::install("2.2.0");
    } else if (TableExists("glpi_plugin_tracker_config")) {
       //$config = new PluginFusioninventoryConfig;
@@ -1184,12 +1184,12 @@ function plugin_fusioninventory_install() {
          }
          if ($data['version'] == "2.1.3") {
             PluginFusioninventorySetup::update("2.2.0");
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
                         SET `version` = '2.2.0'
                         WHERE `id`='1';");
          }
       }
-   } else if (TableExists("glpi_plugin_fusioninventory_config")) {
+   } else if (TableExists("glpi_plugin_fusioninventory_configs")) {
 
    }
    return true;
@@ -1219,15 +1219,15 @@ function plugin_fusioninventory_needUpdate() {
     *    2.1.0 config version field 2.1.0
     *    2.1.1 config version field 2.1.1
     **/
-	if (!TableExists("glpi_plugin_fusioninventory_config")) {
+	if (!TableExists("glpi_plugin_fusioninventory_configs")) {
 		return 0; // Installation
    } else if (!TableExists("glpi_plugin_fusioninventory_agents")) {
 		return 1; //Update
    } else if (!TableExists("glpi_plugin_fusioninventory_config_discovery")) {
 //		return 1; // Update (Bug with new version SVN 2.1.4
-   } else if (!FieldExists("glpi_plugin_fusioninventory_config", "version")) {
+   } else if (!FieldExists("glpi_plugin_fusioninventory_configs", "version")) {
       return 1; // Update
-   } else if (FieldExists("glpi_plugin_fusioninventory_config", "version")) {
+   } else if (FieldExists("glpi_plugin_fusioninventory_configs", "version")) {
       $config = new PluginFusioninventoryConfig;
       if ($config->getValue('version') != "2.1.3") {
          return 1;
