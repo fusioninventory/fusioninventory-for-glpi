@@ -65,7 +65,7 @@ class PluginFusionInventoryConfigSNMPHistory extends CommonDBTM {
       $rights['vlanTrunkPortDynamicStatus'] = '-1';
       $rights['portDuplex'] = '-1';
       $rights['ifIndex'] = '-1';
-      $rights['macaddr'] = '-1';
+      $rights['ifPhysAddress'] = '-1';
 
       foreach ($rights as $field=>$value){
          $input = array();
@@ -111,11 +111,10 @@ class PluginFusionInventoryConfigSNMPHistory extends CommonDBTM {
       $rights['ifstatus'] = '-1';
 //      $rights['ifnumber'] = '-1';
 //      $rights['mac'] = '-1';
-//      $rights['trunk'] = '-1';
       $rights['vlanTrunkPortDynamicStatus'] = '-1';
       $rights['portDuplex'] = '-1';
       $rights['ifIndex'] = '-1';
-      $rights['macaddr'] = '-1';
+      $rights['ifPhysAddress'] = '-1';
 
       $query = "SELECT *
                 FROM ".$this->table.";";
