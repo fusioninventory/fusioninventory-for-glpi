@@ -258,7 +258,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       $ptap = new PluginFusioninventoryAgentsProcesses;
 
       $queryVerif = "SELECT *
-                     FROM `glpi_networking_wire`
+                     FROM `glpi_networkports_networkports`
                      WHERE `end1` IN ('".$this->getValue('ID')."', '".$destination_port."')
                            AND `end2` IN ('".$this->getValue('ID')."', '".$destination_port."');";
 
@@ -504,11 +504,11 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       $query = "SELECT `end1` AS `ID`
-                FROM `glpi_networking_wire`
+                FROM `glpi_networkports_networkports`
                 WHERE `end2`='".$p_portID."'
                 UNION
                 SELECT `end2` AS `ID`
-                FROM `glpi_networking_wire`
+                FROM `glpi_networkports_networkports`
                 WHERE `end1`='".$p_portID."';";
       $result=$DB->query($query);
       if ($DB->numrows($result) == 1) {
