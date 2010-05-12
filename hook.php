@@ -376,23 +376,23 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP]['common'] = $LANG['plugin_fusioninventory']["profile"][25];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][1]['table'] = 'glpi_plugin_fusioninventory_rangeip';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][1]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][1]['field'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][1]['name'] = $LANG["common"][16];
    $sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][1]['datatype']='itemlink';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][2]['table'] = 'glpi_plugin_fusioninventory_rangeip';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][2]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][2]['field'] = 'ifaddr_start';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][2]['linkfield'] = 'ifaddr_start';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][2]['name'] = $LANG['plugin_fusioninventory']["rangeip"][0];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][3]['table'] = 'glpi_plugin_fusioninventory_rangeip';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][3]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][3]['field'] = 'ifaddr_end';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][3]['linkfield'] = 'ifaddr_end';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][3]['name'] = $LANG['plugin_fusioninventory']["rangeip"][1];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][30]['table'] = 'glpi_plugin_fusioninventory_rangeip';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][30]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][30]['field'] = 'id';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][30]['linkfield'] = '';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][30]['name'] = $LANG["common"][2];
@@ -405,13 +405,13 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['itemlink_type']='PluginFusioninventoryAgent';
    $sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][5]['forcegroupby']='1';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][6]['table'] = 'glpi_plugin_fusioninventory_rangeip';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][6]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][6]['field'] = 'discover';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][6]['linkfield'] = 'discover';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][6]['name'] = $LANG['plugin_fusioninventory']["discovery"][3];
    $sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][6]['datatype']='bool';
   
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][7]['table'] = 'glpi_plugin_fusioninventory_rangeip';
+	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][7]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][7]['field'] = 'query';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][7]['linkfield'] = 'query';
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP][7]['name'] = $LANG['plugin_fusioninventory']["rangeip"][3];
@@ -2071,11 +2071,11 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
 				// ** Agent name associed to IP range and link to agent form
 				case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_discovery" :
-					return " LEFT JOIN glpi_plugin_fusioninventory_agents ON (glpi_plugin_fusioninventory_agents.id = glpi_plugin_fusioninventory_rangeip.plugin_fusioninventory_agents_id_discovery) ";
+					return " LEFT JOIN glpi_plugin_fusioninventory_agents ON (glpi_plugin_fusioninventory_agents.id = glpi_plugin_fusioninventory_ipranges.plugin_fusioninventory_agents_id_discovery) ";
 					break;
 
             case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_query" :
-               return " LEFT JOIN glpi_plugin_fusioninventory_agents AS gpta ON (glpi_plugin_fusioninventory_rangeip.plugin_fusioninventory_agents_id_query = gpta.id) ";
+               return " LEFT JOIN glpi_plugin_fusioninventory_agents AS gpta ON (glpi_plugin_fusioninventory_ipranges.plugin_fusioninventory_agents_id_query = gpta.id) ";
                break;
             
 
@@ -2465,7 +2465,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 			switch ($table.".".$field) {
 
 				// ** Name of range IP and link to form
-				case "glpi_plugin_fusioninventory_rangeip.name" :
+				case "glpi_plugin_fusioninventory_ipranges.name" :
 					break;
 
 				// ** Agent name associed to IP range and link to agent form

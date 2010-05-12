@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryRangeIP extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_rangeip";
+		$this->table = "glpi_plugin_fusioninventory_ipranges";
 		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP;
 	}
 
@@ -167,13 +167,13 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
       switch ($type) {
 
          case "discover":
-            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_rangeip`
+            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_ipranges`
                WHERE `plugin_fusioninventory_agents_id_discover`='".$agent_id."'
                   AND `discover`='1' ";
             break;
 
          case "query":
-            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_rangeip`
+            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_ipranges`
                WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
                   AND `query`='1' ";
             break;
@@ -195,13 +195,13 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
       switch ($type) {
 
          case "discover":
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_rangeip`
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_ipranges`
                WHERE `plugin_fusioninventory_agents_id_discover`='".$agent_id."'
                   AND `discover`='1' ";
             break;
 
          case "query":
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_rangeip`
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_ipranges`
                WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
                   AND `query`='1' ";
             break;
