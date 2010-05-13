@@ -504,6 +504,34 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          }
       }
    }
+
+
+   function cleanUnknownSwitch() {
+      global $DB;
+
+      $query = "SELECT `glpi_plugin_fusioninventory_unknown_device`.* FROM `glpi_plugin_fusioninventory_unknown_device`
+         INNER JOIN `glpi_plugin_fusioninventory_networking_ifaddr` ON `glpi_plugin_fusioninventory_unknown_device`.`ifaddr` = `glpi_plugin_fusioninventory_networking_ifaddr`.`ifaddr`
+         WHERE `glpi_plugin_fusioninventory_unknown_device`.`ifaddr` IS NOT NULL
+            AND `glpi_plugin_fusioninventory_unknown_device`.`ifaddr` != '' ";
+      if ($result=$DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            $query_port = "SELECT * FROM `glpi_networking_ports`
+               WHERE on_device='".$data['ID']."'
+               device_type='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+            if ($result_port=$DB->query($query_port)) {
+               while ($data_port=$DB->fetch_array($result_port)) {
+                  removeConnector($data_port['ID']);
+                  $np = new Netport();
+                  $np->deleteFromDB($data_port['ID']);
+               }
+            }
+            $this->deleteFromDB($data['ID']);
+         }
+      }
+
+
+
+   }
 }
 
 ?>

@@ -619,6 +619,8 @@ class PluginFusionInventoryCommunication {
                } else if (isset($this->sxml->CONTENT->AGENT->END)) {
                   $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                        array('end_time_query' => date("Y-m-d H:i:s")));
+                  $pfud = new PluginFusionInventoryUnknownDevice;
+                  $pfud->cleanUnknownSwitch();
                } else if (isset($this->sxml->CONTENT->AGENT->EXIT)) {
                   $ptap->endProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                        date("Y-m-d H:i:s"));
