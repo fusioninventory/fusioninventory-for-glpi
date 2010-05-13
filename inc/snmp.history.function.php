@@ -229,6 +229,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30) {
                $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
             }
 				if ($ID_port == $data["FK_port_source"]) {
+               $np = new Netport;
                $np->getFromDB($data["FK_port_destination"]);
                if (isset($np->fields["on_device"])) {
                   $CommonItem->getFromDB($np->fields["device_type"],
@@ -246,6 +247,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30) {
                }
 
 				} else if ($ID_port == $data["FK_port_destination"]) {
+               $np = new Netport;
                $np->getFromDB($data["FK_port_source"]);
                if (isset($np->fields["on_device"])) {
                   $CommonItem->getFromDB($np->fields["device_type"],
