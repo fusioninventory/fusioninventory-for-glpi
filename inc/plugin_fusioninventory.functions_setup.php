@@ -204,7 +204,20 @@ function plugin_fusioninventory_update($version) {
 
          }
       }
-
+      // Add IP of switch in table glpi_plugin_fusioninventory_networking_ifaddr if not present
+      $query = "SELECT * FROM glpi_networking";
+      if ($result=$DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            $query_ifaddr = "SELECT * FROM `glpi_plugin_fusioninventory_networking_ifaddr`
+               WHERE `ifaddr`='".$data['ifaddr']."' ";
+            $result_ifaddr = $DB->query($query_ifaddr);
+            if ($DB->numrows($result_ifaddr) == "0") {
+               $query_add = "INSERT INTO `glpi_plugin_fusioninventory_networking_ifaddr`
+                  (`FK_networking`, `ifaddr`) VALUES ('".$data['ID']."', '".$data['ifaddr']."')";
+               $DB->query($query_add);
+            }
+         }
+      }
    }
 	plugin_fusioninventory_initSession();
 }
