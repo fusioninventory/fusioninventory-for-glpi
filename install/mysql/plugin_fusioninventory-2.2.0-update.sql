@@ -71,7 +71,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents_errors` (
    `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
    `agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
    `error_message` text collate utf8_unicode_ci,
-   PRIMARY KEY ( `ID` )
+  PRIMARY KEY (`ID`),
+  KEY `process_number` (`process_number`,`agent_type`),
+  KEY `date` (`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -83,7 +85,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmp_history_connections` (
    `FK_port_source` INT( 11 ) NOT NULL DEFAULT '0',
    `FK_port_destination` INT( 11 ) NOT NULL DEFAULT '0',
    `process_number` VARCHAR( 255 ) NULL ,
-   PRIMARY KEY ( `ID` )
+   PRIMARY KEY ( `ID` ),
+   KEY `FK_port_source` (`FK_port_source`,`FK_port_destination`),
+   KEY `process_number` (`process_number`,`creation`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -323,3 +327,19 @@ ALTER TABLE `glpi_plugin_fusioninventory_unknown_device`
 
 ALTER TABLE `glpi_plugin_fusioninventory_model_infos`
    ADD `comments` TEXT NULL;
+
+ALTER TABLE `glpi072_temp`.`glpi_plugin_fusioninventory_snmp_history`
+   ADD INDEX `Field` ( `Field` , `old_value` ),
+   ADD INDEX `Field_2` ( `Field` , `new_value` ),
+   ADD INDEX ( `Field` );
+
+ALTER TABLE `glpi_plugin_fusioninventory_networking_ifaddr`
+   ADD INDEX ( `FK_networking` );
+
+ALTER TABLE `glpi_plugin_fusioninventory_agents_processes`
+   ADD INDEX ( `process_number` ),
+   ADD INDEX ( `start_time` );
+
+ALTER TABLE `glpi_plugin_fusioninventory_printers_history`
+   ADD INDEX ( `FK_printers` ),
+   ADD INDEX `FK_printers_2` ( `FK_printers` , `date` );

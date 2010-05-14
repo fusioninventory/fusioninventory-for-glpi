@@ -102,7 +102,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents_errors` (
 `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
 `agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
 `error_message` text collate utf8_unicode_ci,
-PRIMARY KEY ( `ID` )
+  PRIMARY KEY (`ID`),
+  KEY `process_number` (`process_number`,`agent_type`),
+  KEY `date` (`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -148,7 +150,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents_processes` (
   `comments` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   PRIMARY KEY (`ID`),
   KEY `process_number` (`process_number`,`FK_agent`),
-  KEY `process_number_2` (`process_number`,`FK_agent`)
+  KEY `process_number_2` (`process_number`,`FK_agent`),
+  KEY `process_number_3` (`process_number`),
+  KEY `start_time` (`start_time`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -278,7 +282,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmp_history_connections` (
    `FK_port_source` INT( 11 ) NOT NULL DEFAULT '0',
    `FK_port_destination` INT( 11 ) NOT NULL DEFAULT '0',
    `process_number` VARCHAR( 255 ) NULL ,
-   PRIMARY KEY ( `ID` )
+   PRIMARY KEY ( `ID` ),
+   KEY `FK_port_source` (`FK_port_source`,`FK_port_destination`),
+   KEY `process_number` (`process_number`,`creation`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -432,7 +438,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_networking_ifaddr` (
   `FK_networking` int(11) NOT NULL,
   `ifaddr` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `ifaddr` (`ifaddr`)
+  KEY `ifaddr` (`ifaddr`),
+  KEY `FK_networking` (`FK_networking`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -481,7 +488,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers_history` (
   `pages_n_b_copy` int(11) NOT NULL DEFAULT '0',
   `pages_color_copy` int(11) NOT NULL DEFAULT '0',
   `pages_total_fax` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `FK_printers` (`FK_printers`),
+  KEY `FK_printers_2` (`FK_printers`,`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -609,7 +618,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmp_history` (
   `new_device_ID` int(11) NOT NULL DEFAULT '0',
   `FK_process` VARCHAR( 255 ) NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_ports` (`FK_ports`,`date_mod`)
+  KEY `FK_ports` (`FK_ports`,`date_mod`),
+  KEY `Field` (`Field`,`old_value`),
+  KEY `Field_2` (`Field`,`new_value`),
+  KEY `Field_3` (`Field`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
