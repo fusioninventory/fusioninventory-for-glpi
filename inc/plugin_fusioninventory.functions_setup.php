@@ -219,6 +219,14 @@ function plugin_fusioninventory_update($version) {
          }
       }
    }
+
+   // Remote IP of switch ports
+   $query = "UPDATE `glpi_networking_ports`
+      SET `ifaddr` = NULL
+      WHERE device_type =2
+         AND ifaddr IS NOT NULL ";
+   $DB->query($query);
+   
 	plugin_fusioninventory_initSession();
 }
 
