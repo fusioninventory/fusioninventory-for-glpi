@@ -636,6 +636,9 @@ class PluginFusionInventoryCommunication {
 
             case 'PROCESSNUMBER' :
                break;
+
+            case 'MODULEVERSION' :
+               break;
             
             default :
                $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONTENT : '.$child->getName()."\n";
