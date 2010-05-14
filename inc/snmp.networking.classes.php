@@ -603,20 +603,30 @@ function appear_array(id){
 							// ** Mac address and link to device which are connected to this port
 							$opposite_port = $nw->getOppositeContact($data["FK_networking_ports"]);
 							if ($opposite_port != "") {
-								$query_device = "SELECT * 
+								$query_device = "SELECT *
                                          FROM `glpi_networking_ports`
                                          WHERE `ID`='".$opposite_port."';";
 				
 								$result_device = $DB->query($query_device);		
 								$data_device = $DB->fetch_assoc($result_device);				
-								
+
 								$CommonItem->getFromDB($data_device["device_type"],
                                                $data_device["on_device"]);
 								$link1 = $CommonItem->getLink(1);
-								$link = str_replace($CommonItem->getName(0), $data_device["ifmac"],
-                                            $CommonItem->getLink());
-                        $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],
+                        if ($data_device["ifmac"] != "") {
+                           $link = str_replace($CommonItem->getName(0), $data_device["ifmac"],
                                              $CommonItem->getLink());
+                        } else {
+                           $link = str_replace($CommonItem->getName(0), $CommonItem->getField("ifmac"),
+                                             $CommonItem->getLink());
+                        }
+                        if ($CommonItem->getField("ifaddr") != "") {
+                           $link2 = str_replace($CommonItem->getName(0), $CommonItem->getField("ifaddr"),
+                                                $CommonItem->getLink());
+                        } else {
+                           $link2 = str_replace($CommonItem->getName(0), $data_device["ifaddr"],
+                                                $CommonItem->getLink());
+                        }
 								if ($data_device["device_type"] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
                            if ($CommonItem->getField("accepted") == "1") {
                               echo "<td style='background:#bfec75'
