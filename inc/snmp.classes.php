@@ -207,25 +207,27 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          
          $queryPort = "SELECT *
                        FROM `glpi_plugin_fusioninventory_networking_ports`
-                            LEFT JOIN `glpi_networking_ports`
+                            INNER JOIN `glpi_networking_ports`
                                       ON `glpi_plugin_fusioninventory_networking_ports`.`FK_networking_ports`=
                                          `glpi_networking_ports`.`ID`
                        WHERE (`ifdescr`='".$ifDescr."'
                                 OR `glpi_networking_ports`.`name`='".$ifDescr."')
                              AND `glpi_networking_ports`.`on_device`='".$data["FK_networking"]."'
-                             AND `glpi_networking_ports`.`device_type`='2';";
+                             AND `glpi_networking_ports`.`device_type`='2'
+                       LIMIT 0,1;";
          $resultPort = $DB->query($queryPort);
          $dataPort = $DB->fetch_assoc($resultPort);
          if ($DB->numrows($resultPort) == "0") {
             // Search in other devices
-            $queryPort = "SELECT *
-                          FROM `glpi_networking_ports`
-                          WHERE `ifaddr`='".$IP."'
-                          ORDER BY `device_type`
-                          LIMIT 0,1;";
-            $resultPort = $DB->query($queryPort);
-            $dataPort = $DB->fetch_assoc($resultPort);
-            $PortID = $dataPort["ID"];
+//            $queryPort = "SELECT *
+//                          FROM `glpi_networking_ports`
+//                          WHERE `ifaddr`='".$IP."'
+//                             AND
+//                          ORDER BY `device_type`
+//                          LIMIT 0,1;";
+//            $resultPort = $DB->query($queryPort);
+//            $dataPort = $DB->fetch_assoc($resultPort);
+//            $PortID = $dataPort["ID"];
          } else {
             $PortID = $dataPort["FK_networking_ports"];
          }
