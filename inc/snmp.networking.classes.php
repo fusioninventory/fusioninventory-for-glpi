@@ -718,11 +718,10 @@ function appear_array(id){
 				
 				
 				// Historique
-				
+				ajaxUpdateItemOnEvent("plusmoins".$data["ID"], "viewfollowup2-".$data["ID"], GLPI_ROOT."/plugins/fusioninventory/front/plugin_fusioninventory.ports_history.php", array('ID' => $data["ID"]), $events=array("click"));
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["ID"]."'>
-					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".
-                  plugin_fusioninventory_snmp_showHistory($data["ID"])."</td>
+					<td colspan='".(mysql_num_rows($result_array) + 2)."' id='viewfollowup2-".$data["ID"]."'></td>
 				</tr>
 				";
 			}
