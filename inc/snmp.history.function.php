@@ -157,10 +157,15 @@ function plugin_fusioninventory_addLogConnection($status,$port,$FK_process=0) {
 
 
 // List of history in networking display
-function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30) {
+function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30,$ajax=0) {
 	global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
+
+   $path = GLPI_ROOT;
+   if ($ajax == "1") {
+      $path = "..";
+   }
 
 	$CommonItem = new CommonItem;
    $np = new Netport;
@@ -222,11 +227,13 @@ function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30) {
 		while ($data=$DB->fetch_array($result)) {
 			$text .= "<tr class='tab_bg_1'>";
 			if (!empty($data["FK_port_destination"])) {
+            $data["FK_port_destination"] = intval($data["FK_port_destination"]);
+            $data["FK_port_source"] = intval($data["FK_port_source"]);
 				// Connections and disconnections
             if ($data['Field'] == '1') {
-               $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/></td>";
+               $text .= "<td align='center'><img src='".$path."/plugins/fusioninventory/pics/connection_ok.png'/></td>";
             } else {
-               $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
+               $text .= "<td align='center'><img src='".$path."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
             }
 				if ($ID_port == $data["FK_port_source"]) {
                $np = new Netport;
@@ -283,7 +290,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30) {
    if ($limit == "30") {
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th colspan='8'>";
-      $text .= "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
+      $text .= "<a href='".$path."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
       $text .= "</th>";
       $text .= "</tr>";
    }
