@@ -20,136 +20,6 @@ Xerox WorkCentre 7345;ESS1.231.5,IOT 3.0.4,FIN B3.1.3,IIT 20.4.1,ADF 20.0.0,SJFI
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.1.5.0]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[name]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[location]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.2.1.0]]></oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name><![CDATA[]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.25.2.3.1.5.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[memory]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.25.3.2.1.3.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[model]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.5.1.1.17.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[serial]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.8.2.1.14.1.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[enterprise]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.10.2.1.4.1.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[pagecountertotalpages]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[tonerblack]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.2]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[toneryellow]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.3]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[tonermagenta]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.4]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[tonercyan]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.5]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[wastetoner]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.6]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
@@ -160,11 +30,11 @@ Xerox WorkCentre 7345;ESS1.231.5,IOT 3.0.4,FIN B3.1.3,IIT 20.4.1,ADF 20.0.0,SJFI
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.7]]></oid>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.9]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[drumyellow]]></mapping_name>
+ 			<mapping_name><![CDATA[drumcyan]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -180,11 +50,31 @@ Xerox WorkCentre 7345;ESS1.231.5,IOT 3.0.4,FIN B3.1.3,IIT 20.4.1,ADF 20.0.0,SJFI
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.9]]></oid>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.7]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[drumcyan]]></mapping_name>
+ 			<mapping_name><![CDATA[drumyellow]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.8.2.1.14.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[enterprise]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifaddr]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
@@ -210,16 +100,6 @@ Xerox WorkCentre 7345;ESS1.231.5,IOT 3.0.4,FIN B3.1.3,IIT 20.4.1,ADF 20.0.0,SJFI
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.3]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[ifType]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.6]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
@@ -230,11 +110,131 @@ Xerox WorkCentre 7345;ESS1.231.5,IOT 3.0.4,FIN B3.1.3,IIT 20.4.1,ADF 20.0.0,SJFI
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.2]]></oid>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.3]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
 			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[ifaddr]]></mapping_name>
+ 			<mapping_name><![CDATA[ifType]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[location]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.25.2.3.1.5.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[memory]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.25.3.2.1.3.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[model]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.5.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[name]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.10.2.1.4.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[pagecountertotalpages]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.5.1.1.17.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[serial]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[tonerblack]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.4]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[tonercyan]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.3]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[tonermagenta]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[toneryellow]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.5]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[wastetoner]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.1.0]]></oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name><![CDATA[]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

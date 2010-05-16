@@ -1,11 +1,21 @@
 <model>
-	<name><![CDATA[607203]]></name>
+	<name><![CDATA[9642868]]></name>
 	<type>2</type>
-	<key>Networking0274</key>
+	<key>Networking0279</key>
 	<comments><![CDATA[3Com IntelliJack NJ225
 
 ]]></comments>
 	<oidlist>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.1.0]]></oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name><![CDATA[]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.1.1.0]]></oid>
@@ -243,16 +253,6 @@
 			<dynamicport>0</dynamicport>
 			<mapping_type>2</mapping_type>
  			<mapping_name><![CDATA[uptime]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.2.1.0]]></oid>
-			<portcounter>1</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>0</mapping_type>
- 			<mapping_name><![CDATA[]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
