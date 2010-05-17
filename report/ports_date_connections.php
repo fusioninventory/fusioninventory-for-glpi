@@ -52,7 +52,7 @@ if (!isset($_GET["start"])) {
 $_GET=getValues($_GET,$_POST);
 displaySearchForm();
 
-manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2);
+manageGetValuesInSearch('PluginFusioninventoryNetworkport2');
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 		
@@ -63,10 +63,10 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 		$_GET["contains"][1] = $_POST['location'];
 		$_GET["link"][1] = "AND";
 
-		$_SESSION["glpisearchcount"][PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2] = 1;
-		showList(PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2,$_GET);
+		$_SESSION["glpisearchcount"]['PluginFusioninventoryNetworkport2'] = 1;
+		showList('PluginFusioninventoryNetworkport2',$_GET);
 } else {
-	showList(PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2,$_GET);
+	showList('PluginFusioninventoryNetworkport2',$_GET);
 }
 commonFooter(); 
 
@@ -136,7 +136,7 @@ function displaySearchForm() {
 	echo "<td>";
 	//Add parameters to uri to be saved as bookmarks
 	$_SERVER["REQUEST_URI"] = buildBookmarkUrl($_SERVER["REQUEST_URI"],$_GET);
-	showSaveBookmarkButton(BOOKMARK_SEARCH,PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2);
+	showSaveBookmarkButton(BOOKMARK_SEARCH,'PluginFusioninventoryNetworkport2');
 	echo "</td>";
 
 	echo "<td>";

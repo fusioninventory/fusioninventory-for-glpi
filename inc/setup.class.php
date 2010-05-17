@@ -227,11 +227,11 @@ class PluginFusioninventorySetup {
                     OR `type`='PluginFusioninventorySnmpauth'
                     OR `type`='PluginFusioninventoryUnknowndevice'
                     OR `type`='PluginFusioninventoryNetworkport'
+                    OR `type`='PluginFusioninventoryNetworkport2'
                     OR `type`='PluginFusioninventoryAgent'
                     OR `type`='PluginFusioninventoryIprange'
                     OR `type`='PluginFusioninventoryAgentsProcess'
                     OR `type`='PluginFusioninventorySnmphistory'
-                    OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."'
                     OR `type`='PluginFusioninventoryConfig'
                     OR `type`='PluginFusioninventoryTask'
                     OR `type`='PluginFusioninventoryConstructDevices' ;";

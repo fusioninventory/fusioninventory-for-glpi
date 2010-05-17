@@ -52,6 +52,8 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventorySnmphistory');
    Plugin::registerClass('PluginFusioninventoryTask');
    Plugin::registerClass('PluginFusioninventoryUnknownDevice');
+   Plugin::registerClass('PluginFusioninventoryNetworkport2',
+                         array('classname'=>'glpi_networkports'));
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusioninventory_errors");
 

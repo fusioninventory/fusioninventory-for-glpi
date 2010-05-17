@@ -464,27 +464,27 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventorySnmphistory'][6]['datatype']='datetime';
 
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2]['common'] = $LANG['plugin_fusioninventory']["profile"][28];
+	$sopt['PluginFusioninventoryNetworkport2']['common'] = $LANG['plugin_fusioninventory']["profile"][28];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][30]['table'] = 'glpi_plugin_fusioninventory_networkports';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][30]['field'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][30]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][30]['name'] = $LANG["reports"][52];
+	$sopt['PluginFusioninventoryNetworkport2'][30]['table'] = 'glpi_plugin_fusioninventory_networkports';
+	$sopt['PluginFusioninventoryNetworkport2'][30]['field'] = 'id';
+	$sopt['PluginFusioninventoryNetworkport2'][30]['linkfield'] = '';
+	$sopt['PluginFusioninventoryNetworkport2'][30]['name'] = $LANG["reports"][52];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['table'] = 'glpi_plugin_fusioninventory_networkports';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['field'] = 'networkports_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['linkfield'] = 'networkports_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][1]['name'] = $LANG["setup"][175];
+	$sopt['PluginFusioninventoryNetworkport2'][1]['table'] = 'glpi_plugin_fusioninventory_networkports';
+	$sopt['PluginFusioninventoryNetworkport2'][1]['field'] = 'networkports_id';
+	$sopt['PluginFusioninventoryNetworkport2'][1]['linkfield'] = 'networkports_id';
+	$sopt['PluginFusioninventoryNetworkport2'][1]['name'] = $LANG["setup"][175];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['table'] = 'glpi_locations';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['field'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['linkfield'] = 'networkports_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][2]['name'] = $LANG["common"][15];
+	$sopt['PluginFusioninventoryNetworkport2'][2]['table'] = 'glpi_locations';
+	$sopt['PluginFusioninventoryNetworkport2'][2]['field'] = 'id';
+	$sopt['PluginFusioninventoryNetworkport2'][2]['linkfield'] = 'networkports_id';
+	$sopt['PluginFusioninventoryNetworkport2'][2]['name'] = $LANG["common"][15];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][3]['table'] = 'glpi_plugin_fusioninventory_networkports';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][3]['field'] = 'lastup';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][3]['linkfield'] = 'lastup';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2][3]['name'] = $LANG["login"][0];
+	$sopt['PluginFusioninventoryNetworkport2'][3]['table'] = 'glpi_plugin_fusioninventory_networkports';
+	$sopt['PluginFusioninventoryNetworkport2'][3]['field'] = 'lastup';
+	$sopt['PluginFusioninventoryNetworkport2'][3]['linkfield'] = 'lastup';
+	$sopt['PluginFusioninventoryNetworkport2'][3]['name'] = $LANG["login"][0];
 
 
 	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusioninventory_modelinfos';
@@ -975,7 +975,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
+		case 'PluginFusioninventoryNetworkport2' :
 			switch ($table.'.'.$field) {
 
 				// ** Name and link of networking device (switch)
@@ -2052,7 +2052,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
 
 		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
+		case 'PluginFusioninventoryNetworkport2' :
 			switch ($new_table.".".$linkfield) {
 
 				// ** Location of switch
@@ -2185,7 +2185,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			break;
 
 		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
+		case 'PluginFusioninventoryNetworkport2' :
 			switch ($table.".".$field) {
 
 				// ** Location of switch
@@ -2421,7 +2421,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 			break;
 
 		// * Ports date connection - report (plugins/fusioninventory/report/ports_date_connections.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2 :
+		case 'PluginFusioninventoryNetworkport2' :
 			switch ($table.".".$field) {
 
 				// ** Name and link of networking device (switch)
