@@ -78,7 +78,7 @@ if (isset($_GET["id"])) {
    $agents->showForm($id);
 }
 
-$agents->showTabs($id, '',$_SESSION['glpi_tab']);
+$agents->showTabs($id, '',$_SESSION['glpi_tabs']);
 echo "<div id='tabcontent'></div>";
 echo "<script type='text/javascript'>loadDefaultTab();</script>";
 

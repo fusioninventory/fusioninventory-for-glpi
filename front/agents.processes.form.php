@@ -56,23 +56,23 @@ $pfiae->CleanErrors();
 
 $a_tab = array();
 if (isset($_GET['process_number'])) {
-   $_SESSION['glpi_tab'] = 3;
+   $_SESSION['glpi_tabs'] = 3;
    $a_tab['process_number'] = $_GET['process_number'];
 }
 if (isset($_GET['h_process_number'])) {
-   $_SESSION['glpi_tab'] = 2;
+   $_SESSION['glpi_tabs'] = 2;
    $a_tab['process_number'] = $_GET['h_process_number'];
 }
 if (isset($_GET['agent_type'])) {
-   $_SESSION['glpi_tab'] = 3;
+   $_SESSION['glpi_tabs'] = 3;
    $a_tab['agent_type'] = $_GET['agent_type'];
 }
 if (isset($_GET['created'])) {
-   $_SESSION['glpi_tab'] = 2;
+   $_SESSION['glpi_tabs'] = 2;
    $a_tab['created'] = $_GET['created'];
 }
 
-$ptap->showTabs('1', '',$_SESSION['glpi_tab'],$a_tab);
+$ptap->showTabs('1', '',$_SESSION['glpi_tabs'],$a_tab);
 echo "<div id='tabcontent'></div>";
 echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
