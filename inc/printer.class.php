@@ -52,7 +52,6 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
-      $this->type=PRINTER_TYPE;
       $this->oFusionInventory_printer = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers");
       $this->oFusionInventory_printer_history =
                         new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers_history");
