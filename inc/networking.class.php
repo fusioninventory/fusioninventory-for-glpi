@@ -52,7 +52,6 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
    function __construct() {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
-      $this->type=NETWORKING_TYPE;
       $this->oFusionInventory_networking = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
    }
 
