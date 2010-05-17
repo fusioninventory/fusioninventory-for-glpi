@@ -243,6 +243,20 @@ function plugin_fusioninventory_update($version) {
             }
          }
       }
+      // If glpi_plugin_fusioninventory_agents_errors not created because : Error: Specified key was too long; max key length is 1000 bytes
+      $query = "CREATE TABLE IF NOT EXISTS  `glpi_plugin_fusioninventory_agents_errors` (
+      `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+      `process_number` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL,
+      `on_device` INT( 11 ) NOT NULL DEFAULT '0',
+      `device_type` INT( 11 ) NOT NULL DEFAULT '0',
+      `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
+      `agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
+      `error_message` text collate utf8_unicode_ci,
+        PRIMARY KEY (`ID`),
+        KEY `process_number` (`process_number`),
+        KEY `date` (`date`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      $DB->query($query);
 
    }
 
