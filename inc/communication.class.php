@@ -1153,7 +1153,7 @@ class PluginFusioninventoryCommunication {
             case 'DRUMCYAN' :
             case 'DRUMMAGENTA' :
             case 'DRUMYELLOW' :
-               $ptc = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers_cartridges");
+               $ptc = new PluginFusioninventoryPrinter_Cartridge();
                $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
                if (is_int($cartridgeIndex)) {
                   $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???

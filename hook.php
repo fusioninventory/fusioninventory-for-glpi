@@ -1383,11 +1383,11 @@ function plugin_headings_fusioninventory_computerInfo($type, $id) {
 
 function plugin_headings_fusioninventory_printerInfo($type, $id) {
 	include_once(GLPI_ROOT."/inc/stat.function.php");
-	$plugin_fusioninventory_printers = new PluginFusioninventoryPrinters;
-	$plugin_fusioninventory_printers->showFormPrinter($id, 
+	$plugin_fusioninventory_printer = new PluginFusioninventoryPrinter;
+	$plugin_fusioninventory_printer->showFormPrinter($id, 
                array('target'=>GLPI_ROOT.'/plugins/fusioninventory/front/printer_info.form.php'));
 	echo '<div id="overDivYFix" STYLE="visibility:hidden">fusioninventory_1</div>';
-   $plugin_fusioninventory_printers->showFormPrinter_graph($id, 
+   $plugin_fusioninventory_printer->showFormPrinter_graph($id, 
                array('target'=>GLPI_ROOT . '/plugins/fusioninventory/front/printer_info.form.php'));
 }
 

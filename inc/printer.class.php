@@ -297,7 +297,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    private function getCartridgesDB() {
       global $DB;
 
-      $ptc = new PluginFusioninventoryCommonDBTM('glpi_plugin_fusioninventory_printers_cartridges');
+      $ptc = new PluginFusioninventoryPrinter_Cartridge();
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusioninventory_printers_cartridges`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
@@ -337,6 +337,363 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    function addPageCounter($p_name, $p_state) {
          $this->oFusionInventory_printer_history->setValue($p_name, $p_state,
                                                    $this->oFusionInventory_printer_history, 0);
+   }
+   
+	function showFormPrinter($id, $options=array()) {
+		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;
+
+		PluginFusioninventoryAuth::checkRight("snmp_printers","r");
+
+		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
+
+		$this->id = $id;
+
+		$plugin_fusioninventory_printer = new PluginFusioninventoryPrinter;
+		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
+
+		$query = "SELECT *
+                FROM `glpi_plugin_fusioninventory_printers`
+                WHERE `printers_id`=".$id." ";
+
+		$result = $DB->query($query);
+		$data = $DB->fetch_assoc($result);
+
+		// Add in database if not exist
+		if ($DB->numrows($result) == "0") {
+			$query_add = "INSERT INTO `glpi_plugin_fusioninventory_printers` (`printers_id`)
+                              VALUES('".$id."') ";
+
+			$DB->query($query_add);
+		}
+
+		// Form printer informations
+      $this->showTabs($options);
+      $this->showFormHeader($options);
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANG['plugin_fusioninventory']["model_info"][4]."</td>";
+		echo "<td align='center'>";
+		$query_models = "SELECT *
+                       FROM `glpi_plugin_fusioninventory_modelinfos`
+                       WHERE `itemtype`!=3
+                             AND `itemtype`!=0";
+		$result_models=$DB->query($query_models);
+		$exclude_models = array();
+		while ($data_models=$DB->fetch_array($result_models)) {
+			$exclude_models[] = $data_models['id'];
+		}
+		Dropdown::show("PluginFusioninventoryModelInfos",
+                     array('name'=>"plugin_fusioninventory_modelinfos_id",
+                           'value'=>$data["plugin_fusioninventory_modelinfos_id"],
+                           'comment'=>false,
+                           'used'=>$exclude_models));
+      echo "</td>";
+      echo "<td align='center'>";
+      echo " <input type='submit' name='GetRightModel' value='".
+             $LANG['plugin_fusioninventory']["model_info"][13]."' class='submit'/></td>";
+      echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
+		echo "<td align='center'>";
+		PluginFusioninventorySNMP::auth_dropdown($data["plugin_fusioninventory_snmpauths_id"]);
+		echo "</td>";
+      echo "<td>";
+      echo "</td>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td align='center' colspan='2' height='30'>";
+		echo $LANG['plugin_fusioninventory']["snmp"][52].": ".convDateTime($data["last_fusioninventory_update"]);
+		echo "</td>";
+      echo "<td>";
+      echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='3'>";
+		echo "<div align='center'>";
+		echo "<input type='hidden' name='id' value='".$id."'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "</table></form>";
+		echo "</div>";
+
+      // Remote action of agent
+      $pfit = new PluginFusioninventoryTask;
+      $pfit->RemoteStateAgent($target, $id, PRINTER_TYPE, array('INVENTORY' => 1 ));
+
+
+		// ** FORM FOR CARTRIDGES
+
+		// get infos to get visible or not the counters
+			$snmp_model_ID = $plugin_fusioninventory_snmp->GetSNMPModel($id,PRINTER_TYPE);
+			// ** Get link OID fields
+			$Array_Object_TypeNameConstant= $plugin_fusioninventory_snmp->GetLinkOidToFields($id,PRINTER_TYPE);
+			$mapping_name=array();
+			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
+				if ((strstr($mapping_type_name, "cartridge")) OR (strstr($mapping_type_name, "toner"))) {
+               switch($mapping_type_name) {
+                     CASE "cartridgeblack":
+                        $mapping_name[$mapping_type_name] = "1";
+                        break;
+
+                     CASE "cartridgeblackphoto":
+                        $mapping_name[$mapping_type_name] = "2";
+                        break;
+
+                     CASE "tonerblack" :
+                        $mapping_name[$mapping_type_name] = "3";
+                        break;
+
+                     CASE "tonerblack2" :
+                        $mapping_name[$mapping_type_name] = "4";
+                        break;
+
+                     CASE "cartridgecyan":
+                        $mapping_name[$mapping_type_name] = "5";
+                        break;
+
+                     CASE "cartridgecyanlight":
+                        $mapping_name[$mapping_type_name] = "6";
+                        break;
+
+                     CASE "tonercyan" :
+                        $mapping_name[$mapping_type_name] = "7";
+                        break;
+
+                     CASE "cartridgemagenta":
+                        $mapping_name[$mapping_type_name] = "8";
+                        break;
+
+                     CASE "cartridgemagentalight":
+                        $mapping_name[$mapping_type_name] = "9";
+                        break;
+
+                     CASE "tonermagenta":
+                        $mapping_name[$mapping_type_name] = "10";
+                        break;
+
+                     CASE "cartridgeyellow":
+                        $mapping_name[$mapping_type_name] = "11";
+                        break;
+
+                     CASE "toneryellow":
+                        $mapping_name[$mapping_type_name] = "12";
+                        break;
+
+                     CASE "drumblack":
+                        $mapping_name[$mapping_type_name] = "13";
+                        break;
+
+                     CASE "drumcyan":
+                        $mapping_name[$mapping_type_name] = "14";
+                        break;
+
+                     CASE "drummagenta":
+                        $mapping_name[$mapping_type_name] = "15";
+                        break;
+
+                     CASE "drumyellow":
+                        $mapping_name[$mapping_type_name] = "16";
+                        break;
+
+                     CASE "wastetoner":
+                        $mapping_name[$mapping_type_name] = "17";
+                        break;
+
+                     CASE "maintenancekit":
+                        $mapping_name[$mapping_type_name] = "18";
+                        break;
+
+                     default:
+                        $mapping_name[$mapping_type_name] = "19";
+               }
+				}
+			}
+
+		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
+                 action=\"".$target."\">";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+		echo "<tr class='tab_bg_1'>";
+		echo "<th align='center' colspan='3'>";
+		echo $LANG["cartridges"][16];
+		echo "</th>";
+		echo "</tr>";
+
+		asort($mapping_name);
+		foreach ($mapping_name as $cartridge_name=>$val) {
+			$state = $plugin_fusioninventory_printer->cartridges_state($id, $cartridge_name);
+			echo "<tr class='tab_bg_1'>";
+			echo "<td align='center'>";
+			echo $FUSIONINVENTORY_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
+			echo " : ";
+			echo "</td>";
+			echo "<td align='center'>";
+			echo "</td>";
+			echo "<td align='center'>";
+			PluginFusioninventoryDisplay::bar($state['state']);
+			echo "</td>";
+			echo "</tr>";
+		}
+
+		echo "</table></form>";
+  		echo "</div>";
+	}
+
+
+   /**
+    * Show printer graph form
+    **/
+   function showFormPrinter_graph($id, $options=array()) {
+      global $FUSIONINVENTORY_MAPPING, $LANG, $DB;
+
+      include_once(GLPI_ROOT."/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
+
+      $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $printersComp = array();
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
+         $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
+      }
+      if ( $begin == 'NULL' OR $begin == '' ) $begin=date("Y-m-01"); // first day of current month
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
+         $end=$_SESSION['glpi_plugin_fusioninventory_graph_end'];
+      }
+      if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d");; // today
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_graphField'])) $graphField=$_SESSION['glpi_plugin_fusioninventory_graph_graphField'];
+      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
+         $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
+         if (!key_exists($printerCompAdd, $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
+            $ci=new CommonItem();
+            if ($ci->getFromDB(PRINTER_TYPE, $printerCompAdd)){
+               $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] = $ci->getField('name');
+            }
+         }
+      } elseif (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
+         unset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove']]);
+      }
+
+      $printers = $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'];
+      $printersView = $printers; // printers without the current printer
+      if (isset($printersView[$p_ID])) {
+         unset($printersView[$p_ID]);
+      } else {
+         $ci=new CommonItem();
+         if ($ci->getFromDB(PRINTER_TYPE, $p_ID)){
+            $printers[$p_ID] = $ci->getField('name');
+         }
+      }
+
+      $printersList = '';
+      foreach ($printers as $printer) {
+         if ($printersList != '') $printersList .= '<BR>';
+         $printersList .= $printer;
+      }
+      $printersIds = "";
+      foreach (array_keys($printers) as $printerId) {
+         if ($printersIds != '') $printersIds.=', ';
+         $printersIds .= $printerId;
+      }
+
+      $where = " WHERE `printers_id` IN(".$printersIds.")";
+      if ($begin!='' || $end!='') {
+            $where .= " AND " .$DB->getDateRequest("`date`",$begin,$end);
+         }
+      switch ($timeUnit) {
+         case 'day':
+            $group = "GROUP BY `printers_id`, `year`, `month`, `day`";
+            break;
+         case 'week':
+            $group = "GROUP BY `printers_id`, `year`, `month`, `week`";
+            break;
+         case 'month':
+            $group = "GROUP BY `printers_id`, `year`, `month`";
+            break;
+         case 'year':
+            $group = "GROUP BY `printers_id`, `year`";
+            break;
+      }
+
+      $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
+                       MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
+                       SUM(`$graphField`) AS `$graphField`
+                FROM `glpi_plugin_fusioninventory_printers_history`"
+                .$where
+                .$group."
+                ORDER BY `year`, `month`, `day`, `printers_id`";
+
+      $this->showTabs($options);
+      $this->showFormHeader($options);
+
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][30]."&nbsp;:</td><td class='left' colspan='2'>";
+      $elementsField=array('pages_total'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'],
+                      'pages_n_b'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'],
+                      'pages_color'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['shortname'],
+                      'pages_recto_verso'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['shortname'],
+                      'scanned'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'],
+                      'pages_total_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['shortname'],
+                      'pages_n_b_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['shortname'],
+                      'pages_color_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['shortname'],
+                      'pages_total_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['shortname'],
+                      'pages_n_b_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'],
+                      'pages_color_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'],
+                      'pages_total_fax'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname']);
+      Dropdown::showFromArray('graph_graphField', $elementsField,
+                              array('value'=>$graphField));
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][8]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      showDateFormItem("graph_begin", $begin);
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][9]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      showDateFormItem("graph_end", $end);
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][31]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      $elementsTime=array('day'=>$LANG['plugin_fusioninventory']["prt_history"][34],
+                          'week'=>$LANG['plugin_fusioninventory']["prt_history"][35],
+                          'month'=>$LANG['plugin_fusioninventory']["prt_history"][36],
+                          'year'=>$LANG['plugin_fusioninventory']["prt_history"][37]);
+      Dropdown::showFromArray('graph_timeUnit', $elementsTime,
+                              array('value'=>$timeUnit));
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['Menu'][2]."&nbsp;:</td>
+                                 <td class='left' colspan='2'>";
+      echo $printersList;
+      echo "</td></tr>\n";
+      echo "<tr class='tab_bg_2'><td class='center' colspan='3'>
+               <input type='submit' class=\"submit\" name='graph_plugin_fusioninventory_printer_period'
+                      value='" . $LANG["buttons"][7] . "'>";
+      echo "</td></tr>\n";
+
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][32]."&nbsp;:</td><td class='left'>";
+      Computer_Item::dropdownConnect(PRINTER_TYPE,PRINTER_TYPE,"graph_printerCompAdd", -1, 0, array_keys($printers));
+      echo "</td><td class='left'>\n";
+      echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
+      echo "</td></tr>\n";
+
+      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][33]."&nbsp;:</td>
+                                 <td class='left'>";
+      $printersTmp = $printersView;
+      $printersTmp[0] = "-----";
+      asort($printersTmp);
+      Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
+      echo "</td><td class='left'>\n";
+      echo "<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+      echo "</td></tr>\n";
+      echo "</table>";
+      echo "</form>";
+
+      echo "<div class=center>";
+      $title = $elementsField[$graphField];
+      if (count($printers)) {
+         $ptg = new PluginFusioninventoryGraph($query, $graphField, $timeUnit, $printers, $title);
+      }
+      echo '</div>';
    }
 }
 

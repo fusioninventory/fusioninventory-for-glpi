@@ -129,7 +129,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       switch ($ptud->fields['type']) {
          case PRINTER_TYPE :
             $Printer = new Printer;
-            $tp = new PluginFusioninventoryPrinters;
+            $tp = new PluginFusioninventoryPrinter;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
             if (!empty($ptud->fields["name"])) {
