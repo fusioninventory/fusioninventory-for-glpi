@@ -41,7 +41,6 @@ class PluginFusioninventoryMib extends CommonDBTM {
    
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_mib";
-		$this->type = -1;
 	}
 
 
