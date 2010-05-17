@@ -229,7 +229,7 @@ class PluginFusioninventorySetup {
                     OR `type`='".PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
                     OR `type`='PluginFusioninventoryAgent'
-                    OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP."'
+                    OR `type`='PluginFusioninventoryIprange'
                     OR `type`='PluginFusioninventoryAgentsProcess'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_HISTORY."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."'

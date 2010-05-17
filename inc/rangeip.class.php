@@ -42,7 +42,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_ipranges";
-		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP;
+		$this->type = 'PluginFusioninventoryIprange';
 	}
 
 
