@@ -553,6 +553,10 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
       } else {
          $query .= " WHERE deleted=0 ".$condition;
       }
+      // Replace name with table.name because Column 'name' in field list is ambiguous
+      $query = str_replace(" name", $ci->obj->table.".name", $query);
+      $query = str_replace("`name`", $ci->obj->table.".`name`", $query);
+
       $result = $DB->query($query);
       if($DB->numrows($result) > 0) {
          $data = $DB->fetch_assoc($result);
