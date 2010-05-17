@@ -219,7 +219,7 @@ class PluginFusionInventoryProfile extends CommonDBTM {
 
 		if ($canedit) {
 			echo "<tr class='tab_bg_1'>";
-			echo "<td  align='center' colspan='3'>";
+			echo "<td  align='center' colspan='4'>";
 			echo "<input type='hidden' name='ID' value=$ID>";
 			echo "<input type='submit' name='update_user_profile' value=\"".$LANG["buttons"][7]."\" class='submit'>";
 			echo "</td></tr>\n";
