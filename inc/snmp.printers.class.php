@@ -42,7 +42,6 @@ class PluginFusioninventoryPrintersCartridges extends CommonDBTM {
    
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_printers_cartridges";
-		//$this->type = PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES;
 	}
 }
 
@@ -50,7 +49,6 @@ class PluginFusioninventoryPrinters extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_printers";
-		//$this->type = PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES;
 	}
 
 
