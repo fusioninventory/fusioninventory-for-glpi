@@ -42,7 +42,7 @@ class PluginFusioninventoryModelInfos extends CommonDBTM {
    
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_modelinfos";
-		$this->type = PLUGIN_FUSIONINVENTORY_MODEL;
+		$this->type = 'PluginFusioninventoryModelinfo';
 	}
 
 	function showForm($id, $options=array()) {
