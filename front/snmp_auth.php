@@ -57,10 +57,10 @@ if ($config->getValue("authsnmp") == "file") {
 	
 	$_GET['target']="snmp_auth.php";
 	
-	manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_SNMP_AUTH);
+	manageGetValuesInSearch('PluginFusioninventorySnmpauth');
 
-	searchForm(PLUGIN_FUSIONINVENTORY_SNMP_AUTH,$_GET);
-	showList(PLUGIN_FUSIONINVENTORY_SNMP_AUTH,$_GET);
+	searchForm('PluginFusioninventorySnmpauth',$_GET);
+	showList('PluginFusioninventorySnmpauth',$_GET);
 } else {
 	echo $LANG['plugin_fusioninventory']["functionalities"][19];
 }

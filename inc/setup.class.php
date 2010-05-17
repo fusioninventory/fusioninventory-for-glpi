@@ -224,7 +224,7 @@ class PluginFusioninventorySetup {
       $query="DELETE FROM `glpi_displaypreferences`
               WHERE `type`='PluginFusioninventoryError'
                     OR `type`='PluginFusioninventoryModelinfo'
-                    OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_AUTH."'
+                    OR `type`='PluginFusioninventorySnmpauth'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'

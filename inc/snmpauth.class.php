@@ -42,7 +42,7 @@ class PluginFusioninventorySnmpauth extends CommonDBTM {
    
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_snmpauths";
-		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_AUTH;
+		$this->type = 'PluginFusioninventorySnmpauth';
 	}
 
 	function showForm($id, $options=array()) {
