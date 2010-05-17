@@ -36,7 +36,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_tasks";
-      $this->type = PLUGIN_FUSIONINVENTORY_TASK;
+      $this->type = 'PluginFusioninventoryTask';
 	}
 
 

@@ -41,12 +41,12 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch(PLUGIN_FUSIONINVENTORY_TASK);
+manageGetValuesInSearch('PluginFusioninventoryTask');
 
 $_GET['target']="task.php";
 
-searchForm(PLUGIN_FUSIONINVENTORY_TASK,$_GET);
-showList(PLUGIN_FUSIONINVENTORY_TASK,$_GET);
+searchForm('PluginFusioninventoryTask',$_GET);
+showList('PluginFusioninventoryTask',$_GET);
 
 commonFooter();
 
