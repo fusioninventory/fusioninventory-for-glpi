@@ -41,7 +41,6 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_printers_history";
-		$this->type=-1;
 	}
 	
 	function countAllEntries($id) {
