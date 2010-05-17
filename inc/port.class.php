@@ -68,6 +68,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
               new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
       $this->addLog('New PluginFusioninventoryPort object.');
+      $this->type='PluginFusioninventoryNetworkport';
    }
 
    /**

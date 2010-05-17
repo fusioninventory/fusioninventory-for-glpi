@@ -524,7 +524,7 @@ function appear_array(id){
 		echo "<tr class='tab_bg_1'>";
 		$query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
+                      WHERE `type`='PluginFusioninventoryNetworkport'
                             AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
@@ -542,6 +542,7 @@ function appear_array(id){
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
+      // TODO : translate
 		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut"
                      title="Sélectionnez les éléments à afficher par défaut"
                      src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"

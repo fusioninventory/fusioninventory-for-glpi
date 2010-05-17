@@ -278,37 +278,37 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryUnknowndevice'][19]['name'] = $LANG['plugin_fusioninventory']["unknown"][2];
    $sopt['PluginFusioninventoryUnknowndevice'][19]['datatype']='bool';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS]['common'] = $LANG['plugin_fusioninventory']["errors"][0];
+	$sopt['PluginFusioninventoryNetworkport']['common'] = $LANG['plugin_fusioninventory']["errors"][0];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][1]['name'] = $LANG["common"][16];
+	$sopt['PluginFusioninventoryNetworkport'][1]['name'] = $LANG["common"][16];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][2]['name'] = $LANG['plugin_fusioninventory']["snmp"][42];
+	$sopt['PluginFusioninventoryNetworkport'][2]['name'] = $LANG['plugin_fusioninventory']["snmp"][42];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][3]['name'] = $LANG['plugin_fusioninventory']["snmp"][43];
+	$sopt['PluginFusioninventoryNetworkport'][3]['name'] = $LANG['plugin_fusioninventory']["snmp"][43];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][4]['name'] = $LANG['plugin_fusioninventory']["snmp"][44];
+	$sopt['PluginFusioninventoryNetworkport'][4]['name'] = $LANG['plugin_fusioninventory']["snmp"][44];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][5]['name'] = $LANG['plugin_fusioninventory']["snmp"][45];
+	$sopt['PluginFusioninventoryNetworkport'][5]['name'] = $LANG['plugin_fusioninventory']["snmp"][45];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][6]['name'] = $LANG['plugin_fusioninventory']["snmp"][46];
+	$sopt['PluginFusioninventoryNetworkport'][6]['name'] = $LANG['plugin_fusioninventory']["snmp"][46];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][7]['name'] = $LANG['plugin_fusioninventory']["snmp"][47];
+	$sopt['PluginFusioninventoryNetworkport'][7]['name'] = $LANG['plugin_fusioninventory']["snmp"][47];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][8]['name'] = $LANG['plugin_fusioninventory']["snmp"][48];
+	$sopt['PluginFusioninventoryNetworkport'][8]['name'] = $LANG['plugin_fusioninventory']["snmp"][48];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][9]['name'] = $LANG['plugin_fusioninventory']["snmp"][49];
+	$sopt['PluginFusioninventoryNetworkport'][9]['name'] = $LANG['plugin_fusioninventory']["snmp"][49];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][10]['name'] = $LANG['plugin_fusioninventory']["snmp"][51];
+	$sopt['PluginFusioninventoryNetworkport'][10]['name'] = $LANG['plugin_fusioninventory']["snmp"][51];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][11]['name'] = $LANG['plugin_fusioninventory']["mapping"][115];
+	$sopt['PluginFusioninventoryNetworkport'][11]['name'] = $LANG['plugin_fusioninventory']["mapping"][115];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][12]['name'] = $LANG["networking"][17];
+	$sopt['PluginFusioninventoryNetworkport'][12]['name'] = $LANG["networking"][17];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][13]['name'] = $LANG['plugin_fusioninventory']["snmp"][50];
+	$sopt['PluginFusioninventoryNetworkport'][13]['name'] = $LANG['plugin_fusioninventory']["snmp"][50];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][14]['name'] = $LANG["networking"][56];
+	$sopt['PluginFusioninventoryNetworkport'][14]['name'] = $LANG["networking"][56];
 
-   $sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS][15]['name'] = $LANG['plugin_fusioninventory']["snmp"][41];
+   $sopt['PluginFusioninventoryNetworkport'][15]['name'] = $LANG['plugin_fusioninventory']["snmp"][41];
 
 	$sopt['PluginFusioninventoryAgent']['common'] = $LANG['plugin_fusioninventory']["profile"][26];
 
@@ -968,7 +968,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// *
-		case PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS :
+		case 'PluginFusioninventoryNetworkport' :
 			switch ($table.'.'.$field) {
 
 			}
