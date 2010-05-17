@@ -219,6 +219,32 @@ function plugin_fusioninventory_update($version) {
          }
       }
    }
+   if ($version == "2.2.1") {
+      // Clean ifaddr fusion when FK_networking has been delete (bug from Tracker 2.1.3 and before)
+      $query = "SELECT glpi_plugin_fusioninventory_networking_ifaddr.*
+      FROM glpi_plugin_fusioninventory_networking_ifaddr
+      left join glpi_networking on FK_networking=glpi_networking.ID
+      WHERE glpi_networking.ID is null";
+      if ($result=$DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            $query_delete = "DELETE FROM glpi_plugin_fusioninventory_networking_ifaddr
+               WHERE ID='".$data['ID']."' ";
+            $DB->query($query_delete);
+         }
+      }
+      // delete when ifaddr not weel valid (bug from Tracker 2.1.3 and before)
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_networking_ifaddr";
+      if ($result=$DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            if (!preg_match("/^((25[0-5]|2[0-4]\d|1?\d?\d).){3}(25[0-5]|2[0-4]\d|1?\d?\d)$/",$data['ifaddr'])) {
+               $query_delete = "DELETE FROM glpi_plugin_fusioninventory_networking_ifaddr
+                  WHERE ID='".$data['ID']."' ";
+               $DB->query($query_delete);
+            }
+         }
+      }
+
+   }
 
    // Remote IP of switch ports
    $query = "UPDATE `glpi_networking_ports`
