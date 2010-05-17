@@ -42,7 +42,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_snmphistories";
-		$this->type = PLUGIN_FUSIONINVENTORY_SNMP_HISTORY;
+		$this->type = 'PluginFusioninventorySnmphistory';
 	}
 
 	/**

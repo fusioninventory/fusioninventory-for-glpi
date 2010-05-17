@@ -430,38 +430,38 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryIprange'][9]['itemlink_type']='PluginFusioninventoryAgent';
    $sopt['PluginFusioninventoryIprange'][9]['forcegroupby']='1';
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY]['common'] = $LANG['plugin_fusioninventory']["title"][2];
+	$sopt['PluginFusioninventorySnmphistory']['common'] = $LANG['plugin_fusioninventory']["title"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['field'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['linkfield'] = '';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][1]['name'] = $LANG["common"][2];
+	$sopt['PluginFusioninventorySnmphistory'][1]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
+	$sopt['PluginFusioninventorySnmphistory'][1]['field'] = 'id';
+	$sopt['PluginFusioninventorySnmphistory'][1]['linkfield'] = '';
+	$sopt['PluginFusioninventorySnmphistory'][1]['name'] = $LANG["common"][2];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['table'] = 'glpi_networkports';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['field'] = 'id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['linkfield'] = 'networkports_id';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][2]['name'] = $LANG["setup"][175];
+	$sopt['PluginFusioninventorySnmphistory'][2]['table'] = 'glpi_networkports';
+	$sopt['PluginFusioninventorySnmphistory'][2]['field'] = 'id';
+	$sopt['PluginFusioninventorySnmphistory'][2]['linkfield'] = 'networkports_id';
+	$sopt['PluginFusioninventorySnmphistory'][2]['name'] = $LANG["setup"][175];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['field'] = 'field';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['linkfield'] = 'field';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][3]['name'] = $LANG["event"][18];
+	$sopt['PluginFusioninventorySnmphistory'][3]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
+	$sopt['PluginFusioninventorySnmphistory'][3]['field'] = 'field';
+	$sopt['PluginFusioninventorySnmphistory'][3]['linkfield'] = 'field';
+	$sopt['PluginFusioninventorySnmphistory'][3]['name'] = $LANG["event"][18];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['field'] = 'old_value';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['linkfield'] = 'old_value';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][4]['name'] = $LANG['plugin_fusioninventory']["history"][0];
+	$sopt['PluginFusioninventorySnmphistory'][4]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
+	$sopt['PluginFusioninventorySnmphistory'][4]['field'] = 'old_value';
+	$sopt['PluginFusioninventorySnmphistory'][4]['linkfield'] = 'old_value';
+	$sopt['PluginFusioninventorySnmphistory'][4]['name'] = $LANG['plugin_fusioninventory']["history"][0];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['field'] = 'new_value';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['linkfield'] = 'new_value';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][5]['name'] = $LANG['plugin_fusioninventory']["history"][1];
+	$sopt['PluginFusioninventorySnmphistory'][5]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
+	$sopt['PluginFusioninventorySnmphistory'][5]['field'] = 'new_value';
+	$sopt['PluginFusioninventorySnmphistory'][5]['linkfield'] = 'new_value';
+	$sopt['PluginFusioninventorySnmphistory'][5]['name'] = $LANG['plugin_fusioninventory']["history"][1];
 
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['field'] = 'date_mod';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['linkfield'] = 'date_mod';
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['name'] = $LANG["common"][27];
-	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_HISTORY][6]['datatype']='datetime';
+	$sopt['PluginFusioninventorySnmphistory'][6]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
+	$sopt['PluginFusioninventorySnmphistory'][6]['field'] = 'date_mod';
+	$sopt['PluginFusioninventorySnmphistory'][6]['linkfield'] = 'date_mod';
+	$sopt['PluginFusioninventorySnmphistory'][6]['name'] = $LANG["common"][27];
+	$sopt['PluginFusioninventorySnmphistory'][6]['datatype']='datetime';
 
 
 	$sopt[PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2]['common'] = $LANG['plugin_fusioninventory']["profile"][28];
@@ -1036,7 +1036,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
+		case 'PluginFusioninventorySnmphistory' :
 			switch ($table.'.'.$field) {
 
 				// ** Display switch and Port
@@ -2083,7 +2083,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			break;
 
       // * ports updates list (report/switch_ports.history.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
+		case 'PluginFusioninventorySnmphistory' :
          return " LEFT JOIN `glpi_networkports` ON ( `glpi_networkports`.`id` = `glpi_plugin_fusioninventory_snmphistories`.`networkports_id` ) ";
 			break;
 	}
@@ -2209,7 +2209,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			break;
 
 		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
+		case 'PluginFusioninventorySnmphistory' :
 			switch ($table.".".$field) {
 
 				// ** Display switch and Port
@@ -2498,7 +2498,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 			break;
 
 		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
-		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
+		case 'PluginFusioninventorySnmphistory' :
 			switch ($table.".".$field) {
 
 				// ** Display switch and Port
