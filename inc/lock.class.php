@@ -46,7 +46,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
 	**/
 	function __construct () {
 		$this->table="glpi_plugin_fusioninventory_lock";
-		$this->type=-1;
 	}
 
 
