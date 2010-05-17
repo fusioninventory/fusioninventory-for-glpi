@@ -51,15 +51,15 @@ $pfit = new PluginFusioninventoryTask;
 
 switch($_POST['glpi_tab']) {
 	case -1 :
-      showPorts($_POST["id"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
+      showPorts($_POST["id"], 'PluginFusioninventoryUnknowndevice');
       $pfiud = new PluginFusionInventoryUnknownDevice;
       $pfiud->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/unknown.form.php?id='.$_POST["id"],$_POST["id"]);
-      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
-      showHistory(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$_POST["id"]);
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknowndevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      showHistory('PluginFusioninventoryUnknowndevice',$_POST["id"]);
       break;
 
 	case 1 :
-      showPorts($_POST["id"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
+      showPorts($_POST["id"], 'PluginFusioninventoryUnknowndevice');
 		break;
 
    case 2 :
@@ -68,15 +68,15 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 3 :
-      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknowndevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
    case 4 :
-      showHistory(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,$_POST["id"]);
+      showHistory('PluginFusioninventoryUnknowndevice',$_POST["id"]);
       break;
 
    default :
-      showPorts($_POST["id"], PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
+      showPorts($_POST["id"], 'PluginFusioninventoryUnknowndevice');
 		break;
 }
 

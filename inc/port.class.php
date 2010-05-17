@@ -203,7 +203,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       // Add networking_port
       $np=new Networkport;
       $port_add["items_id"] = $newID;
-      $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+      $port_add["itemtype"] = 'PluginFusioninventoryUnknowndevice';
       $port_add["ip"] = $p_ip;
       $port_add['mac'] = $p_mac;
       $dport = $np->add($port_add);

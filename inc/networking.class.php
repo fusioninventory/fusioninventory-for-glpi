@@ -745,7 +745,7 @@ function appear_array(id){
                                             $CommonItem->getLink());
                         $link2 = str_replace($CommonItem->getName(0), $data_device["ip"],
                                              $CommonItem->getLink());
-								if ($data_device["itemtype"] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+								if ($data_device["itemtype"] == 'PluginFusioninventoryUnknowndevice') {
                            if ($CommonItem->getField("accepted") == "1") {
                               echo "<td style='background:#bfec75'
                                         class='tab_bg_1_2'>".$link1;

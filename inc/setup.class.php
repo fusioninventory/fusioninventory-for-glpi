@@ -225,7 +225,7 @@ class PluginFusioninventorySetup {
               WHERE `type`='PluginFusioninventoryError'
                     OR `type`='PluginFusioninventoryModelinfo'
                     OR `type`='PluginFusioninventorySnmpauth'
-                    OR `type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                    OR `type`='PluginFusioninventoryUnknowndevice'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_PRINTERS_CARTRIDGES."'
                     OR `type`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
                     OR `type`='PluginFusioninventoryAgent'
@@ -239,7 +239,7 @@ class PluginFusioninventorySetup {
       $DB->query($query) or die($DB->error());
 
 
-      $a_netports = $np->find("`itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ");
+      $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknowndevice' ");
       foreach ($a_netports as $Networkport){
          $np->cleanDBonPurge($Networkport['id']);
          $np->deleteFromDB($Networkport['id']);

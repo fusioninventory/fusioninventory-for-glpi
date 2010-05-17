@@ -120,7 +120,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$discovery_ID."'
-                      AND `itemtype` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
+                      AND `itemtype` = 'PluginFusioninventoryUnknowndevice';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
          $Networkport->getFromDB($data["id"]);
@@ -482,7 +482,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          $a_types = array($p_type);
       } else {
          $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
-                           PHONE_TYPE, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
+                           PHONE_TYPE, 'PluginFusioninventoryUnknowndevice');
       }
 
       $condition = "";
@@ -524,7 +524,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
       foreach ($a_types as $type) {
          $ci->setType($type,true);
-         if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+         if ($type == 'PluginFusioninventoryUnknowndevice') {
             $query = "SELECT ".$ci->obj->table.".id ".$select_unknown." FROM ".$ci->obj->table;
          } else {
             $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
@@ -532,7 +532,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if ($ci->obj->table != "glpi_networkequipments") {
             $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".id AND itemtype=".$type;
          }
-         if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+         if ($type == 'PluginFusioninventoryUnknowndevice') {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;
          } else {
             $query .= " WHERE is_deleted=0 ".$condition;
@@ -548,8 +548,8 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          }
       }
 
-      // Search in PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN when ip in not empty (so when it's a switch)
-      $ci->setType(PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN,true);
+      // Search in 'PluginFusioninventoryUnknowndevice' when ip in not empty (so when it's a switch)
+      $ci->setType('PluginFusioninventoryUnknowndevice',true);
       $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
       $query .= " WHERE is_deleted=0 ".$condition;
       $result = $DB->query($query);

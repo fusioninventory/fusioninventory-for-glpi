@@ -217,7 +217,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
             // Search port and add if required
             $query1 = "SELECT *
                 FROM `glpi_networkports`
-                WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                WHERE `itemtype`='PluginFusioninventoryUnknowndevice'
                    AND `items_id`='".$data['id']."'
                    AND `name`='".$ifDescr."'
                 LIMIT 1";
@@ -229,7 +229,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                // Add port
                $input = array();
                $input['items_id'] = $data['id'];
-               $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $input['itemtype'] = 'PluginFusioninventoryUnknowndevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $PortID = $np->add($input);
@@ -239,7 +239,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 
          $query = "SELECT *
              FROM `glpi_networkports`
-             WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+             WHERE `itemtype`='PluginFusioninventoryUnknowndevice'
                AND`ip`='".$IP."'
              LIMIT 1";
          $result = $DB->query($query);
@@ -249,7 +249,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                // Add port
                $input = array();
                $input['items_id'] = $data['items_id'];
-               $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $input['itemtype'] = 'PluginFusioninventoryUnknowndevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $PortID = $np->add($input);
@@ -263,7 +263,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
          // Add port
          $input = array();
          $input['items_id'] = $unkonwn_id;
-         $input['itemtype'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+         $input['itemtype'] = 'PluginFusioninventoryUnknowndevice';
          $input['ip'] = $IP;
          $input['name'] = $ifDescr;
          $PortID = $np->add($input);

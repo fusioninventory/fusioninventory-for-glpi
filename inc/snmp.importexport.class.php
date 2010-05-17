@@ -367,7 +367,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                unset($data);
                // Add networking_port
                $port_add["items_id"] = $newID;
-               $port_add["itemtype"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $port_add["itemtype"] = 'PluginFusioninventoryUnknowndevice';
                $port_add["ip"] = $discovery->IP;
                $port_add['mac'] = $discovery->MAC;
                $port_add['name'] = $discovery->NETPORTVENDOR;
@@ -386,7 +386,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $data['id'] = $ci->getField('id');
                $data['plugin_fusioninventory_snmpauths_id'] = 0;
 
-               if ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
+               if ($a_device[1] == 'PluginFusioninventoryUnknowndevice') {
                   if ($ci->getField('name') && !in_array('name', $a_lockable)) {
                      if (!empty($discovery->NETBIOSNAME)) {
                         $data['name'] = $discovery->NETBIOSNAME;
