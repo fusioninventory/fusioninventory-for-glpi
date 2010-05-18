@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Class to use networking switches
+ * Class to use printers
  **/
 class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    private $oFusionInventory_printer;
@@ -58,7 +58,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    }
 
    /**
-    * Load an existing networking switch
+    * Load an existing networking printer
     *
     *@return nothing
     **/
@@ -101,7 +101,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    }
 
    /**
-    * Update an existing preloaded switch with the instance values
+    * Update an existing preloaded printer with the instance values
     *
     *@return nothing
     **/
@@ -114,6 +114,12 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
          $this->ptcdUpdates['model'] = Dropdown::importExternal("PrinterModel",
                                                    $this->ptcdUpdates['model'], 0,
                                                    array('manufacturer'=>$manufacturer));
+      }
+      if (array_key_exists('location', $this->ptcdUpdates)) {
+         $entity = $this->getValue('FK_entities');
+         $this->ptcdUpdates['location'] = Dropdown::importExternal("Location",
+                                                   $this->ptcdUpdates['location'],
+                                                   $entity);
       }
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
