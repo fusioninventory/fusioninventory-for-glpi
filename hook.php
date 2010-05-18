@@ -2668,7 +2668,7 @@ function plugin_item_add_fusioninventory($parm) {
             // of an unknown device exist.
             if ($parm["input"]["itemtype"] != 'PluginFusioninventoryUnknowndevice') {
                // Search in DB
-               $np = new Netport;
+               $np = new Networkport;
                $nw = new Netwire;
                $pfiud = new PluginFusionInventoryUnknownDevice;
                $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusioninventoryUnknowndevice' ");
