@@ -387,7 +387,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function hubNetwork($p_oPort) {
       global $DB;
 
-      $nw = new Netwire;
+      $nw = new NetworkPort_NetworkPort;
       $np = new Networkport;
       $nn = new NetworkPort_NetworkPort();
       // List of macs : $p_oPort->getPortsToConnect

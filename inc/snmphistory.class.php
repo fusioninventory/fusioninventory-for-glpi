@@ -563,7 +563,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
       $CommonItem = new CommonItem;
       $pthc = new PluginFusioninventorySnmphistoryconnection;
-      $nw=new Netwire;
+      $nw=new NetworkPort_NetworkPort;
 
       if (($plugin_fusioninventory_processes_id == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
          $input['plugin_fusioninventory_processes_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];

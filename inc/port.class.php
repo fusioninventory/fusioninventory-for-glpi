@@ -286,7 +286,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
     **/
 	function disconnectDB($p_port='') {
       if ($p_port=='') $p_port=$this->getValue('id');
-      $netwire = new Netwire;
+      $netwire = new NetworkPort_NetworkPort;
       PluginFusioninventorySnmphistory::addLogConnection("remove",$netwire->getOppositeContact($p_port));
       //PluginFusioninventorySnmphistory::addLogConnection("remove",$p_port);
       $nn = new NetworkPort_NetworkPort();

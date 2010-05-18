@@ -326,7 +326,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 
 		$this->id = $id;
 
-		$nw=new Netwire;
+		$nw=new NetworkPort_NetworkPort();
 		$CommonItem = new CommonItem;
 		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 
