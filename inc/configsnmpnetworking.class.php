@@ -142,20 +142,6 @@ class PluginFusioninventoryConfigSNMPNetworking extends CommonDBTM {
       return true;
 	}
 
-   function clean_history($option) {
-      global $DB;
-
-      switch ($option) {
-         case "history_process":
-            if ($this->getValue("history_process") != 0) {
-               $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_processes`
-                                WHERE `start_time` < date_add(now(),interval -".
-                                       $this->getValue("history_process")." day);";
-               $DB->query($query_delete);
-            }
-            break;
-      }
-   }
 }
 
 ?>

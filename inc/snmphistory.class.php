@@ -209,60 +209,6 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       }
    }
 
-   function clean_history($data) {
-      global $DB;
-
-      $historyConfig = array();
-      $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_config_snmp_history`;";
-      $a_num_rows = array();
-      $delete_query = array();
-      $num_rows = 0;
-      if ($result=$DB->query($query)) {
-			while ($data=$DB->fetch_array($result)) {
-            if ($data['days'] != "0") {
-               $historyConfig[$data['field']]=$data['days'];
-               $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmphistories`
-                  WHERE `field`='".$data['field']."'";
-               $delete_query[$data['field']] = "DELETE FROM `glpi_plugin_fusioninventory_snmphistories`
-                  WHERE `field`='".$data['field']."'";
-               switch ($data['days']) {
-
-                  case '-1' :
-                     break;
-
-                  default:
-                     $and = " AND DATE_SUB(CURDATE(),INTERVAL ".$data['days']." DAY) >= date_mod ";
-                     $query .= $and;
-                     $delete_query[$data['field']] .= $and;
-                     break;
-
-               }
-               $a_num_rows[$data['field']] = $DB->numrows($DB->query($query));
-               $num_rows += $a_num_rows[$data['field']];
-            }
-         }
-         if ($num_row > 0) {
-            echo "<center><table align='center' width='500'>";
-            echo "<tr>";
-            echo "<td>";
-            createProgressBar("");
-            echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-            $i = 0;
-            foreach ($historyConfig as $field=>$days) {
-               $DB->query($delete_query[$field]);
-               $i += $a_num_rows[$field];
-               changeProgressBarPosition($i, $num_rows, "$i / $num_rows");
-            }
-         }
-      }
-
-   }
-
-
-
    function ConvertField($force=0) {
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
       global $DB, $LANG;
