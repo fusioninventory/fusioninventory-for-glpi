@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 $title="FusionInventory";
-$version="2.1.3";
+$version="2.3.0";
 
 $LANG['plugin_fusioninventory']["title"][0]="$title";
 $LANG['plugin_fusioninventory']["title"][1]="SNMP information";
