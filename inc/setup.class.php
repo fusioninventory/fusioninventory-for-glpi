@@ -195,7 +195,7 @@ class PluginFusioninventorySetup {
    static function uninstall() {
       global $DB;
 
-      $np = new Networkport;
+      $np = new NetworkPort;
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
@@ -239,9 +239,9 @@ class PluginFusioninventorySetup {
 
 
       $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknowndevice' ");
-      foreach ($a_netports as $Networkport){
-         $np->cleanDBonPurge($Networkport['id']);
-         $np->deleteFromDB($Networkport['id']);
+      foreach ($a_netports as $NetworkPort){
+         $np->cleanDBonPurge($NetworkPort['id']);
+         $np->deleteFromDB($NetworkPort['id']);
       }
 
       return true;

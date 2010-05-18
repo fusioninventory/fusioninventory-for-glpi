@@ -113,7 +113,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
    static function import($discovery_ID,$Import=0, $NoImport=0) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $Networkport = new Networkport;
+      $NetworkPort = new NetworkPort;
       $ptud = new PluginFusioninventoryUnknownDevice;
 
       $ptud->getFromDB($discovery_ID);
@@ -123,7 +123,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                       AND `itemtype` = 'PluginFusioninventoryUnknowndevice';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
-         $Networkport->getFromDB($data["id"]);
+         $NetworkPort->getFromDB($data["id"]);
       }
 
       switch ($ptud->fields['type']) {
@@ -145,10 +145,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Printer->add($data);
 
-            $data_Port = $Networkport->fields;
+            $data_Port = $NetworkPort->fields;
             $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
-            $Networkport->update($data_Port);
+            $NetworkPort->update($data_Port);
 
             $data_fusioninventory["printers_id"] = $ID_Device;
             $data_fusioninventory["plugin_fusioninventory_modelinfos_id"] = $ptud->fields["plugin_fusioninventory_modelinfos_id"];
@@ -175,15 +175,15 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["contact"] = $ptud->fields["contact"];
             $data["domain"] = $ptud->fields["domain"];
             $data["comment"] = $ptud->fields["comment"];
-            $data["ip"] = $Networkport->fields["ip"];
-            $data["mac"] = $Networkport->fields["mac"];
+            $data["ip"] = $NetworkPort->fields["ip"];
+            $data["mac"] = $NetworkPort->fields["mac"];
             $ID_Device = $Netdevice->add($data);
 
             $nn = new NetworkPort_NetworkPort();
-            if ($nn->getFromDBForNetworkPort($Networkport->fields["id"])) {
-               $nn->delete($Networkport->fields);
+            if ($nn->getFromDBForNetworkPort($NetworkPort->fields["id"])) {
+               $nn->delete($NetworkPort->fields);
             }
-            $Netdevice->deleteFromDB($Networkport->fields["id"]);
+            $Netdevice->deleteFromDB($NetworkPort->fields["id"]);
 
             $data_fusioninventory["networkequipments_id"] = $ID_Device;
             $data_fusioninventory["plugin_fusioninventory_modelinfos_id"] = $ptud->fields["plugin_fusioninventory_modelinfos_id"];
@@ -210,10 +210,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Peripheral->add($data);
 
-            $data_Port = $Networkport->fields;
+            $data_Port = $NetworkPort->fields;
             $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
-            $Networkport->update($data_Port);
+            $NetworkPort->update($data_Port);
 
             $ptud->deleteFromDB($discovery_ID,1);
             $Import++;
@@ -236,10 +236,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Computer->add($data);
 
-            $data_Port = $Networkport->fields;
+            $data_Port = $NetworkPort->fields;
             $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
-            $Networkport->update($data_Port);
+            $NetworkPort->update($data_Port);
 
             $ptud->deleteFromDB($discovery_ID,1);
             $Import++;
@@ -257,10 +257,10 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $data["comment"] = $ptud->fields["comment"];
             $ID_Device = $Phone->add($data);
 
-            $data_Port = $Networkport->fields;
+            $data_Port = $NetworkPort->fields;
             $data_Port['items_id'] = $ID_Device;
             $data_Port['itemtype'] = $ptud->fields['type'];
-            $Networkport->update($data_Port);
+            $NetworkPort->update($data_Port);
 
             $ptud->deleteFromDB($discovery_ID,1);
             $Import++;
@@ -296,12 +296,12 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                            $ID_Device = $pgo->add($data);
 
                            if ($pgo->canUseNetworkPorts()) {
-                              $data_Port = $Networkport->fields;
+                              $data_Port = $NetworkPort->fields;
                               $data_Port['items_id'] = $ID_Device;
                               $data_Port['itemtype'] = $ptud->fields['type'];
-                              $Networkport->update($data_Port);
+                              $NetworkPort->update($data_Port);
                            } else {
-                              $Networkport->deleteFromDB($Networkport->fields['id']);
+                              $NetworkPort->deleteFromDB($NetworkPort->fields['id']);
                            }
 
                            $ptud->deleteFromDB($discovery_ID,1);

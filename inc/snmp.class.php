@@ -172,7 +172,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
 		global $DB;
 
       $pfiud = new PluginFusioninventoryUnknownDevice;
-      $np = new Networkport;
+      $np = new NetworkPort;
 
       $PortID = "";
 		$query = "SELECT *

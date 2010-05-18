@@ -362,7 +362,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function convertUnknownToUnknownNetwork($id) {
       global $DB;
 
-      $np  = new Networkport;
+      $np  = new NetworkPort;
 
       $this->getFromDB($id);
 
@@ -388,7 +388,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       global $DB;
 
       $nw = new NetworkPort_NetworkPort;
-      $np = new Networkport;
+      $np = new NetworkPort;
       $nn = new NetworkPort_NetworkPort();
       // List of macs : $p_oPort->getPortsToConnect
 

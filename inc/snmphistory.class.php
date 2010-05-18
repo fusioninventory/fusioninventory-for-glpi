@@ -597,7 +597,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $CommonItem = new CommonItem;
-      $np = new Networkport;
+      $np = new NetworkPort;
 
       $query = "
          SELECT * FROM(

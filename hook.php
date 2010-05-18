@@ -677,13 +677,13 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 				case "glpi_plugin_fusioninventory_networkequipments.id" :
 					$out = '';
 					include_once(GLPI_ROOT."/inc/networking.class.php");
-					$Networkport = new Networkport;
+					$NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $Networkport->getDeviceData($vartmp,NETWORKING_TYPE);
+                  $NetworkPort->getDeviceData($vartmp,NETWORKING_TYPE);
 
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?id=".$vartmp."\">";
-                  $out .=  $Networkport->device_name;
+                  $out .=  $NetworkPort->device_name;
                   $out .= $vartmp;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
@@ -697,7 +697,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					include_once(GLPI_ROOT."/inc/networking.class.php");
 					if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
-                  $np = new Networkport;
+                  $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
                      $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
@@ -759,13 +759,13 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             case "glpi_plugin_fusioninventory_networkequipments.id" :
                $out = '';
                include_once(GLPI_ROOT."/inc/networking.class.php");
-               $Networkport = new Networkport;
+               $NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $Networkport->getDeviceData($vartmp,NETWORKING_TYPE);
+                  $NetworkPort->getDeviceData($vartmp,NETWORKING_TYPE);
 
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES[NETWORKING_TYPE]."?id=".$vartmp."\">";
-                  $out .=  $Networkport->device_name;
+                  $out .=  $NetworkPort->device_name;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
                }
@@ -778,7 +778,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
                include_once(GLPI_ROOT."/inc/networking.class.php");
                if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
-                  $np = new Networkport;
+                  $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
                      $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
@@ -908,13 +908,13 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             case "glpi_plugin_fusioninventory_networkequipments.id" :
                $out = '';
                include_once(GLPI_ROOT."/inc/networking.class.php");
-               $Networkport = new Networkport;
+               $NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $Networkport->getDeviceData($vartmp,'PluginFusioninventoryUnknowndevice');
+                  $NetworkPort->getDeviceData($vartmp,'PluginFusioninventoryUnknowndevice');
 
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES['PluginFusioninventoryUnknowndevice']."?id=".$vartmp."\">";
-                  $out .=  $Networkport->device_name;
+                  $out .=  $NetworkPort->device_name;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
                }
@@ -927,7 +927,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
                include_once(GLPI_ROOT."/inc/networking.class.php");
                if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
-                  $np = new Networkport;
+                  $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
                      $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
@@ -996,11 +996,11 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 
 				// ** Name and link of port of networking device (port of switch)
 				case "glpi_plugin_fusioninventory_networkports.networkports_id" :
-					$Networkport=new Networkport;
-					$Networkport->getFromDB($data["ITEM_$num"]);
+					$NetworkPort=new NetworkPort;
+					$NetworkPort->getFromDB($data["ITEM_$num"]);
                $name = "";
-               if (isset($Networkport->fields["name"])) {
-                  $name = $Networkport->fields["name"];
+               if (isset($NetworkPort->fields["name"])) {
+                  $name = $NetworkPort->fields["name"];
                }
 					$out = "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$data["ITEM_$num"]."'>".$name."</a>";
 					return "<center>".$out."</center>";
@@ -1808,7 +1808,7 @@ function plugin_fusioninventory_addSelect($type,$id,$num) {
 					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_12.items_id SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
-				case "glpi_networkports.Networkport" :
+				case "glpi_networkports.NetworkPort" :
 					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_22.".$field." SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
@@ -2583,7 +2583,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 
          case 'PluginFusioninventoryUnknowndevice' :
             // Delete ports and connections if exists
-            $np=new Networkport;
+            $np=new NetworkPort;
             $nn = new NetworkPort_NetworkPort();
             $query = "SELECT `id`
                       FROM `glpi_networkports`
@@ -2668,7 +2668,7 @@ function plugin_item_add_fusioninventory($parm) {
             // of an unknown device exist.
             if ($parm["input"]["itemtype"] != 'PluginFusioninventoryUnknowndevice') {
                // Search in DB
-               $np = new Networkport;
+               $np = new NetworkPort;
                $nw = new NetworkPort_NetworkPort;
                $pfiud = new PluginFusionInventoryUnknownDevice;
                $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusioninventoryUnknowndevice' ");
