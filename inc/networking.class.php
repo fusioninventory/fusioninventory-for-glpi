@@ -97,7 +97,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
                                                    $this->ptcdUpdates['firmware']);
       }
       if (array_key_exists('location', $this->ptcdUpdates)) {
-         $entity = $this->getValue('FK_entities');
+         $entity = $this->getValue('entities_id');
          $this->ptcdUpdates['location'] = Dropdown::importExternal("Location",
                                                    $this->ptcdUpdates['location'],
                                                    $entity);

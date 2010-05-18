@@ -116,7 +116,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
                                                    array('manufacturer'=>$manufacturer));
       }
       if (array_key_exists('location', $this->ptcdUpdates)) {
-         $entity = $this->getValue('FK_entities');
+         $entity = $this->getValue('entities_id');
          $this->ptcdUpdates['location'] = Dropdown::importExternal("Location",
                                                    $this->ptcdUpdates['location'],
                                                    $entity);
