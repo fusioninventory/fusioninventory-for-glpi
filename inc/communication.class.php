@@ -1009,8 +1009,8 @@ class PluginFusioninventoryCommunication {
 
       $this->addLog('Function importPortNetworking().');
       $errors='';
-//      $ptp = new PluginFusioninventoryPort(NETWORKING_TYPE);
-      $ptp = new PluginFusioninventoryPort(NETWORKING_TYPE, $this->logFile);
+//      $ptp = new PluginFusioninventoryNetworkport(NETWORKING_TYPE);
+      $ptp = new PluginFusioninventoryNetworkport(NETWORKING_TYPE, $this->logFile);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
@@ -1083,7 +1083,7 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $errors='';
-      $ptp = new PluginFusioninventoryPort(PRINTER_TYPE);
+      $ptp = new PluginFusioninventoryNetworkport(PRINTER_TYPE);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->MAC, $p_port->IP);

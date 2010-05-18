@@ -40,9 +40,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking ports
  **/
-class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
-   private $oFusionInventory_networking_ports; // link fusioninventory table object
-   private $fusioninventory_networking_ports_ID; // id in link fusioninventory table
+class PluginFusioninventoryNetworkport extends PluginFusioninventoryCommonDBTM {
+   private $oFusioninventory_networkport; // link fusioninventory table object
+   private $fusioninventory_networkports_id; // id in link fusioninventory table
    private $portsToConnect=array(); // id of known connected ports
    private $connectedPort=''; // id of connected ports
    private $unknownDevicesToConnect=array(); // IP and/or MAC addresses of unknown connected ports
@@ -64,10 +64,10 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
                               time().'_'.rand(1,1000);
       }
       parent::__construct("glpi_networkports", $logFile);
-      $this->oFusionInventory_networking_ports =
+      $this->oFusioninventory_networkport =
               new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
-      $this->addLog('New PluginFusioninventoryPort object.');
+      $this->addLog('New PluginFusioninventoryNetworkport object.');
       $this->type='PluginFusioninventoryNetworkport';
    }
 
@@ -87,22 +87,22 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
                $portFusionInventory = $DB->fetch_assoc($result);
-               $this->fusioninventory_networking_ports_ID = $portFusionInventory['id'];
-               $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
-               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
+               $this->fusioninventory_networkports_id = $portFusionInventory['id'];
+               $this->oFusioninventory_networkport->load($this->fusioninventory_networkports_id);
+               $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
             } else {
-               $this->fusioninventory_networking_ports_ID = NULL;
-               $this->oFusionInventory_networking_ports->load();
-               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
-//               $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
-//               $this->oFusionInventory_networking_ports->load($this->fusioninventory_networking_ports_ID);
-//               $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
+               $this->fusioninventory_networkports_id = NULL;
+               $this->oFusioninventory_networkport->load();
+               $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
+//               $this->fusioninventory_networkports_id = $this->addDBFusionInventory();
+//               $this->oFusioninventory_networkport->load($this->fusioninventory_networkports_id);
+//               $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
             }
          }
       } else {
-         $this->fusioninventory_networking_ports_ID = NULL;
-         $this->oFusionInventory_networking_ports->load();
-         $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking_ports;
+         $this->fusioninventory_networkports_id = NULL;
+         $this->oFusioninventory_networkport->load();
+         $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
       }
    }
 
@@ -113,7 +113,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
     **/
    function updateDB() {
       parent::updateDB(); // update core
-      $this->oFusionInventory_networking_ports->updateDB(); // update fusioninventory
+      $this->oFusioninventory_networkport->updateDB(); // update fusioninventory
       $this->connect(); // update connections
       $this->assignVlans(); // update vlans
    }
@@ -134,10 +134,10 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          $portID=parent::add($this->ptcdUpdates);
          $this->load($portID);
          // update fusioninventory
-         if (count($this->oFusionInventory_networking_ports->ptcdUpdates) OR $p_force) {
-//            $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('id');
-//            $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
-            $this->fusioninventory_networking_ports_ID = $this->addDBFusionInventory();
+         if (count($this->oFusioninventory_networkport->ptcdUpdates) OR $p_force) {
+//            $this->oFusioninventory_networkport->ptcdUpdates['networkports_id']=$this->getValue('id');
+//            $this->oFusioninventory_networkport->add($this->oFusioninventory_networkport->ptcdUpdates);
+            $this->fusioninventory_networkports_id = $this->addDBFusionInventory();
          }
          $this->load($portID);
          $this->connect();       // update connections
@@ -151,9 +151,9 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
     *@return FusionInventory networking port id
     **/
    function addDBFusionInventory() {
-      $this->oFusionInventory_networking_ports->ptcdUpdates['networkports_id']=$this->getValue('id');
-      $fusioninventory_networking_ports_ID = $this->oFusionInventory_networking_ports->add($this->oFusionInventory_networking_ports->ptcdUpdates);
-      return $fusioninventory_networking_ports_ID;
+      $this->oFusioninventory_networkport->ptcdUpdates['networkports_id']=$this->getValue('id');
+      $fusioninventory_networkports_id = $this->oFusioninventory_networkport->add($this->oFusioninventory_networkport->ptcdUpdates);
+      return $fusioninventory_networkports_id;
    }
 
    /**
@@ -165,7 +165,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
    function deleteDB() {
       $this->cleanVlan('', $this->getValue('id'));
       $this->disconnectDB($this->getValue('id'));
-      $this->oFusionInventory_networking_ports->deleteDB(); // fusioninventory
+      $this->oFusioninventory_networkport->deleteDB(); // fusioninventory
       parent::deleteDB(); // core
    }
 
@@ -351,7 +351,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
          if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
             if ($num==1) { // connected port
-               $ptpConnected = new PluginFusioninventoryPort();
+               $ptpConnected = new PluginFusioninventoryNetworkport();
                $ptpConnected->load($tmp_port);
                if ($ptpConnected->fields['itemtype']==NETWORKING_TYPE) {
                   break; // don't update if port on a switch
@@ -412,7 +412,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
                $this->cleanVlan('', $this->getValue('id'));
                if ($this->connectedPort != '') {
-                  $ptpConnected = new PluginFusioninventoryPort();
+                  $ptpConnected = new PluginFusioninventoryNetworkport();
                   $ptpConnected->load($this->connectedPort);
                   if ($ptpConnected->fields['itemtype'] != NETWORKING_TYPE) {
                      // don't update vlan on connected port if connected port on a switch
@@ -475,7 +475,7 @@ class PluginFusioninventoryPort extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       $macs='';
-      $ptp = new PluginFusioninventoryPort;
+      $ptp = new PluginFusioninventoryNetworkport;
       foreach($this->portsToConnect as $index=>$portConnection) {
          if ($macs!='') $macs.=', ';
          $ptp->load($portConnection);

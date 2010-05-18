@@ -138,7 +138,7 @@ class PluginFusioninventoryDb extends CommonDBTM {
    static function clean_db() {
       global $DB;
 
-      $ptp = new PluginFusioninventoryPort;
+      $ptp = new PluginFusioninventoryNetworkport;
       $pti = new PluginFusioninventoryNetworkequipment_Ip;
       $ptn = new PluginFusioninventoryNetworkequipment;
       $ptpr = new PluginFusioninventoryPrinter;

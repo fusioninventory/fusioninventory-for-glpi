@@ -144,7 +144,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginFusioninventoryPort();
+      $ptp = new PluginFusioninventoryNetworkport();
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$this->getValue('id')."'
