@@ -1189,6 +1189,12 @@ function plugin_fusioninventory_install() {
                         SET `version` = '2.2.0'
                         WHERE `ID`='1';");
          }
+         if ($data['version'] == "2.2.0") {
+            plugin_fusioninventory_update("2.2.1");
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+                        SET `version` = '2.2.1'
+                        WHERE `ID`='1';");
+         }
       }
    } else if (TableExists("glpi_plugin_fusioninventory_config")) {
 
