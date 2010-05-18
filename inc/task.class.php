@@ -370,6 +370,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
       $pfia = new PluginFusionInventoryAgents;
       $computer_ID = 0;
       $count_agent_on = 0;
+      $verifagent = 0;
 
       switch ($device_type) {
 
@@ -410,6 +411,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
             echo "<table>";
             $count_agent_on = $this->showAgentSNMPQuery($on_device, $device_type);
             echo "</table>";
+            $verifagent = 1;
             break;
 
       }
@@ -440,23 +442,26 @@ class PluginFusionInventoryTask extends CommonDBTM {
 //      if ($agent_id == "0") {
 //         return;
 //      }
-      foreach ($a_portsList as $ID=>$data) {
-         if ($data['ifaddr'] != "127.0.0.1") {
-            if ($this->getStateAgent($data['ifaddr'],$agent_id)) {
-               $count_agent_on++;
+      if ($verifagent == '0') {
+         foreach ($a_portsList as $ID=>$data) {
+            if ($data['ifaddr'] != "127.0.0.1") {
+               if ($this->getStateAgent($data['ifaddr'],$agent_id)) {
+                  $count_agent_on++;
+               }
             }
          }
-      }
-      if ($count_agent_on == 0) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td align='center' colspan='2'>";
-         echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
-         echo "</td>";
-         echo "</tr>";
-      } else {
-         echo "<script>
-            document.getElementById('displaybutton').style.visibility='visible';
-         </script>";
+
+         if ($count_agent_on == 0) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td align='center' colspan='2'>";
+            echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
+            echo "</td>";
+            echo "</tr>";
+         } else {
+            echo "<script>
+               document.getElementById('displaybutton').style.visibility='visible';
+            </script>";
+         }
       }
    }
 
