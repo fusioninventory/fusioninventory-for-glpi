@@ -116,6 +116,12 @@ class PluginFusionInventoryPrinter extends PluginFusionInventoryCommonDBTM {
                                                    $this->ptcdUpdates['model'], 0,
                                                    array('manufacturer'=>$manufacturer));
       }
+      if (array_key_exists('location', $this->ptcdUpdates)) {
+         $entity = $this->getValue('FK_entities');
+         $this->ptcdUpdates['location'] = externalImportDropdown("glpi_dropdown_locations",
+                                                   $this->ptcdUpdates['location'],
+                                                   $entity);
+      }
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));

@@ -98,8 +98,10 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
                                                    $this->ptcdUpdates['firmware']);
       }
       if (array_key_exists('location', $this->ptcdUpdates)) {
+         $entity = $this->getValue('FK_entities');
          $this->ptcdUpdates['location'] = externalImportDropdown("glpi_dropdown_locations",
-                                                   $this->ptcdUpdates['location']);
+                                                   $this->ptcdUpdates['location'],
+                                                   $entity);
       }
 
       parent::updateDB();
