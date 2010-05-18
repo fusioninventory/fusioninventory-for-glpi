@@ -161,7 +161,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
          case NETWORKING_TYPE :
             $Netdevice = new Netdevice;
-            $fusioninventory_networking = new PluginFusioninventoryNetworking;
+            $fusioninventory_networking = new PluginFusioninventoryNetworkequipment;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
             if (!empty($ptud->fields["name"])) {

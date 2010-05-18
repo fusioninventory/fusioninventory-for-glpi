@@ -1397,7 +1397,7 @@ function plugin_headings_fusioninventory_printerErrors($type, $id) {
 }
 
 function plugin_headings_fusioninventory_networkingInfo($type, $id) {
-	$snmp = new PluginFusioninventoryNetworking;
+	$snmp = new PluginFusioninventoryNetworkequipment;
 	$snmp->showForm($id, 
            array('target'=>GLPI_ROOT.'/plugins/fusioninventory/front/switch_info.form.php'));
 }

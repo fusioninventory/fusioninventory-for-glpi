@@ -45,7 +45,7 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventoryConstructDevice');
    Plugin::registerClass('PluginFusioninventoryErrors');
    Plugin::registerClass('PluginFusioninventoryModelInfos');
-   Plugin::registerClass('PluginFusioninventoryNetworking');
+   Plugin::registerClass('PluginFusioninventoryNetworkequipment');
    Plugin::registerClass('PluginFusioninventoryPrinter');
    Plugin::registerClass('PluginFusioninventoryRangeIP');
    Plugin::registerClass('PluginFusioninventorySnmpauth');

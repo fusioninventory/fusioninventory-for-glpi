@@ -40,9 +40,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
+class PluginFusioninventoryNetworkequipment extends PluginFusioninventoryCommonDBTM {
    private $ports=array(), $ifaddrs=array();
-   private $oFusionInventory_networking, $oFusionInventory_networking_ifaddr, $oFusionInventory_networking_ports;
+   private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
    private $newIfaddrs=array(), $updatesIfaddrs=array();
 
@@ -52,7 +52,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
    function __construct() {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
-      $this->oFusionInventory_networking = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+      $this->oFusionInventory_networkequipment = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
    }
 
    /**
@@ -73,8 +73,8 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
             $fusioninventory = $DB->fetch_assoc($result);
-            $this->oFusionInventory_networking->load($fusioninventory['id']);
-            $this->ptcdLinkedObjects[]=$this->oFusionInventory_networking;
+            $this->oFusionInventory_networkequipment->load($fusioninventory['id']);
+            $this->ptcdLinkedObjects[]=$this->oFusionInventory_networkequipment;
          }
       }
    }
@@ -106,7 +106,7 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
-      $this->oFusionInventory_networking->updateDB();
+      $this->oFusionInventory_networkequipment->updateDB();
       // ports
       $this->savePorts();
    }
