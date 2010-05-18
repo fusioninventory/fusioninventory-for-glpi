@@ -66,7 +66,7 @@ $id = "";
 if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
-if(PluginFusioninventory::HaveRight("snmp_authentification","r")) {
+if(PluginFusioninventoryAuth::haveRight("snmp_authentification","r")) {
    $plugin_fusioninventory_snmp_auth->showForm($id);
 }
 commonFooter();

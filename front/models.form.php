@@ -79,7 +79,7 @@ if (isset ($_POST["add_oid"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-if(PluginFusioninventory::HaveRight("snmp_models","r")) {
+if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
    $importexport->showForm('');
    $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
 }
@@ -94,7 +94,7 @@ if(!empty($_POST["item_coche"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-if(PluginFusioninventory::HaveRight("snmp_models","r")) {
+if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
    $plugin_fusioninventory_model_infos->showForm($id);
    $plugin_fusioninventory_mib->showForm($id);
 }

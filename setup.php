@@ -96,13 +96,13 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
          $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
-         if (PluginFusioninventory::HaveRight("snmp_models","r")
-            OR PluginFusioninventory::HaveRight("snmp_authentification","r")
-            OR PluginFusioninventory::HaveRight("rangeip","r")
-            OR PluginFusioninventory::HaveRight("agents","r")
-            OR PluginFusioninventory::HaveRight("agentsprocesses","r")
-            OR PluginFusioninventory::HaveRight("unknowndevices","r")
-            OR PluginFusioninventory::HaveRight("reports","r")
+         if (PluginFusioninventoryAuth::haveRight("snmp_models","r")
+            OR PluginFusioninventoryAuth::haveRight("snmp_authentification","r")
+            OR PluginFusioninventoryAuth::haveRight("rangeip","r")
+            OR PluginFusioninventoryAuth::haveRight("agents","r")
+            OR PluginFusioninventoryAuth::haveRight("agentsprocesses","r")
+            OR PluginFusioninventoryAuth::haveRight("unknowndevices","r")
+            OR PluginFusioninventoryAuth::haveRight("reports","r")
             ) {
 
             $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;

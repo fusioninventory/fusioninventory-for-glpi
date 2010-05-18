@@ -37,14 +37,14 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-if (PluginFusioninventory::HaveRight("snmp_models","r")
-	OR PluginFusioninventory::HaveRight("snmp_authentification","r")
-	OR PluginFusioninventory::HaveRight("snmp_iprange","r")
-	OR PluginFusioninventory::HaveRight("snmp_agent","r")
-	OR PluginFusioninventory::HaveRight("snmp_scripts_infos","r")
-	OR PluginFusioninventory::HaveRight("snmp_agent_infos","r")
-	OR PluginFusioninventory::HaveRight("snmp_discovery","r")
-	OR PluginFusioninventory::HaveRight("snmp_report","r")
+if (PluginFusioninventoryAuth::haveRight("snmp_models","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_authentification","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_iprange","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_agent","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_scripts_infos","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_agent_infos","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_discovery","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_report","r")
 	) {
 	if (plugin_fusioninventory_needUpdate() == 1) {
 		commonHeader($LANG['plugin_fusioninventory']["setup"][4], $_SERVER["PHP_SELF"],"plugins","fusioninventory");
