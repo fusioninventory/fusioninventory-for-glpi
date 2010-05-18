@@ -676,7 +676,6 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 				// ** FusionInventory - switch
 				case "glpi_plugin_fusioninventory_networkequipments.id" :
 					$out = '';
-					include_once(GLPI_ROOT."/inc/networking.class.php");
 					$NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
@@ -694,7 +693,6 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 				// ** FusionInventory - switch port
 				case "glpi_plugin_fusioninventory_networkports.id" :
 					$out = '';
-					include_once(GLPI_ROOT."/inc/networking.class.php");
 					if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
                   $np = new NetworkPort;
@@ -758,7 +756,6 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 				// ** FusionInventory - switch
             case "glpi_plugin_fusioninventory_networkequipments.id" :
                $out = '';
-               include_once(GLPI_ROOT."/inc/networking.class.php");
                $NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
@@ -775,7 +772,6 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             // ** FusionInventory - switch port
             case "glpi_plugin_fusioninventory_networkports.id" :
                $out = '';
-               include_once(GLPI_ROOT."/inc/networking.class.php");
                if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
                   $np = new NetworkPort;
@@ -907,7 +903,6 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 				// ** FusionInventory - switch
             case "glpi_plugin_fusioninventory_networkequipments.id" :
                $out = '';
-               include_once(GLPI_ROOT."/inc/networking.class.php");
                $NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
@@ -924,7 +919,6 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             // ** FusionInventory - switch port
             case "glpi_plugin_fusioninventory_networkports.id" :
                $out = '';
-               include_once(GLPI_ROOT."/inc/networking.class.php");
                if (!empty($data["ITEM_$num"])) {
                   $list = explode("$$$$",$data["ITEM_$num"]);
                   $np = new NetworkPort;
