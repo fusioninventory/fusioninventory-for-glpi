@@ -643,7 +643,7 @@ function appear_array(id){
 				echo "<td id='plusmoins".$data["id"]."'><img src='".GLPI_ROOT.
                      "/pics/expand.gif' onClick='Effect.Appear(\"viewfollowup".$data["id"].
                      "\");close_array(".$data["id"].");' /></td>";
-				echo "<td><a href='networking.port.php?id=".$data["id"]."'>".
+				echo "<td><a href='networkport.php?id=".$data["id"]."'>".
                      $data["name"]."</a></td>";
 
 				$query_array = "SELECT *
