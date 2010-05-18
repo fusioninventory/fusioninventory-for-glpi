@@ -94,7 +94,6 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
    function showForm($input='') {
       global $DB,$LANG,$CFG_GLPI,$INFOFORM_PAGES;
 
-      $CommonItem = new CommonItem;
       $np = new NetworkPort;
 
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -154,9 +153,9 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
             echo "<td>";
             $np->getFromDB($data['networkports_id_1']);
-            $CommonItem->getFromDB($np->fields["itemtype"],
-                                   $np->fields["items_id"]);
-            $link1 = $CommonItem->getLink(1);
+            $item = new $np->fields["itemtype"];
+            $item->getFromDB($np->fields["items_id"]);
+            $link1 = $item->getLink(1);
 
             $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
             if (rtrim($np->fields["name"]) != "")
@@ -177,9 +176,9 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
 
             echo "<td>";
             $np->getFromDB($data['networkports_id_2']);
-            $CommonItem->getFromDB($np->fields["itemtype"],
-                                   $np->fields["items_id"]);
-            $link1 = $CommonItem->getLink(1);
+            $item = new $np->fields["itemtype"];
+            $item->getFromDB($np->fields["items_id"]);
+            $link1 = $item->getLink(1);
             $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
             if (rtrim($np->fields["name"]) != "")
                $link .= $np->fields["name"];

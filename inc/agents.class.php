@@ -84,7 +84,6 @@ class PluginFusioninventoryAgents extends CommonDBTM {
 			$this->getEmpty();
       }
 
-      $CommonItem = new CommonItem;
       $ptcm       = new PluginFusioninventoryConfigModules;
 
 		$this->showTabs($options);
@@ -144,9 +143,9 @@ class PluginFusioninventoryAgents extends CommonDBTM {
       echo "<td>".$LANG['plugin_fusioninventory']["agents"][23]." :</td>";
 		echo "<td align='center'>";
       if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
-         $CommonItem->getFromDB(COMPUTER_TYPE,
-                                   $this->fields["items_id"]);
-         echo $CommonItem->getLink(1);
+         $oComputer = new Computer();
+         $oComputer->getFromDB($this->fields["items_id"]);
+         echo $oComputer->getLink(1);
          echo "<input type='hidden' name='items_id' value='".$this->fields["items_id"]."'/>";
       } else {
          Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'items_id', $_SESSION['glpiactive_entity']);

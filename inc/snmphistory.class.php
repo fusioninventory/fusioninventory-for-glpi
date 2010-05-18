@@ -507,7 +507,6 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
    static function addLogConnection($status,$port,$plugin_fusioninventory_processes_id=0) {
       global $DB,$CFG_GLPI;
 
-      $CommonItem = new CommonItem;
       $pthc = new PluginFusioninventorySnmphistoryconnection;
       $nw=new NetworkPort_NetworkPort;
 
@@ -542,7 +541,6 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
 
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
-      $CommonItem = new CommonItem;
       $np = new NetworkPort;
 
       $query = "
@@ -606,9 +604,9 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                if ($ID_port == $data["networkports_id_1"]) {
                   $np->getFromDB($data["networkports_id_2"]);
                   if (isset($np->fields["items_id"])) {
-                     $CommonItem->getFromDB($np->fields["itemtype"],
-                                            $np->fields["items_id"]);
-                     $link1 = $CommonItem->getLink(1);
+                     $item = new $np->fields["itemtype"];
+                     $item->getFromDB($np->fields["items_id"]);
+                     $link1 = $item->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
                      if (rtrim($np->fields["name"]) != "")
                         $link .= $np->fields["name"];
@@ -623,9 +621,9 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
                } else if ($ID_port == $data["networkports_id_2"]) {
                   $np->getFromDB($data["networkports_id_1"]);
                   if (isset($np->fields["items_id"])) {
-                     $CommonItem->getFromDB($np->fields["itemtype"],
-                                            $np->fields["items_id"]);
-                     $link1 = $CommonItem->getLink(1);
+                     $item = new $np->fields["itemtype"];
+                     $item->getFromDB($np->fields["items_id"]);
+                     $link1 = $item->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
                      if (rtrim($np->fields["name"]) != "")
                         $link .= $np->fields["name"];
@@ -653,87 +651,6 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
          }
       }
 
-   /*
-      $pthc = new PluginFusioninventorySnmphistoryconnection;
-
-      $data_connections = $pthc->find('`networkports_id_1`="'.$ID_port.'"
-                                          OR `networkports_id_2 `="'.$ID_port.'"',
-                                       '`date` DESC',
-                                       '0,30');
-      $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_snmphistories`
-                WHERE `networkports_id`='".$ID_port."'
-                ORDER BY `date_mod` DESC
-                LIMIT 0,30;";
-
-
-      $text = "<table class='tab_cadre' cellpadding='5' width='950'>";
-
-      $text .= "<tr class='tab_bg_1'>";
-      $text .= "<th colspan='8'>";
-      $text .= "Historique";
-      $text .= "</th>";
-      $text .= "</tr>";
-
-      $text .= "<tr class='tab_bg_1'>";
-      $text .= "<th>".$LANG['plugin_fusioninventory']["snmp"][50]."</th>";
-      $text .= "<th>".$LANG["common"][1]."</th>";
-      $text .= "<th>".$LANG["networking"][15]."</th>";
-      $text .= "<th>".$LANG["event"][18]."</th>";
-      $text .= "<th></th>";
-      $text .= "<th></th>";
-      $text .= "<th></th>";
-      $text .= "<th>".$LANG["common"][27]."</th>";
-      $text .= "</tr>";
-
-      if ($result=$DB->query($query)) {
-         while ($data=$DB->fetch_array($result)) {
-            $text .= "<tr class='tab_bg_1'>";
-
-            if (($data["old_device_ID"] != "0") OR ($data["new_device_ID"] != "0")) {
-               // Connections and disconnections
-               if ($data["old_device_ID"] != "0") {
-                  $text .= "<td align='center'>".$LANG['plugin_fusioninventory']["history"][2]."</td>";
-                  $CommonItem->getFromDB($data["old_itemtype"],$data["old_device_ID"]);
-                  $text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
-                  $text .= "<td align='center'>".$data["old_value"]."</td>";
-               } else if ($data["new_device_ID"] != "0") {
-                  $text .= "<td align='center'>".$LANG['plugin_fusioninventory']["history"][3]."</td>";
-                  $CommonItem->getFromDB($data["new_itemtype"],$data["new_device_ID"]);
-                  $text .= "<td align='center'>".$CommonItem->getLink(1)."</td>";
-                  $text .= "<td align='center'>".$data["new_value"]."</td>";
-               }
-               $text .= "<td align='center' colspan='4'></td>";
-               $text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
-
-            } else if (($data["old_device_ID"] == "0") AND ($data["new_device_ID"] == "0") AND ($data["field"] == "0")) {
-               // Unknown Mac address
-               if (!empty($data["old_value"])) {
-                  $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_fusioninventory']["history"][2]."</td>";
-                  $CommonItem->getFromDB($data["old_itemtype"],$data["old_device_ID"]);
-                  $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
-                  $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["old_value"]."</td>";
-               } else if (!empty($data["new_value"])) {
-                  $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$LANG['plugin_fusioninventory']["history"][3]."</td>";
-                  $CommonItem->getFromDB($data["new_itemtype"],$data["new_device_ID"]);
-                  $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$CommonItem->getLink(1)."</td>";
-                  $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".$data["new_value"]."</td>";
-               }
-               $text .= "<td align='center' colspan='4' background='#cf9b9b' class='tab_bg_1_2'></td>";
-               $text .= "<td align='center' background='#cf9b9b' class='tab_bg_1_2'>".convDateTime($data["date_mod"])."</td>";
-            } else {
-               // Changes values
-               $text .= "<td align='center' colspan='3'></td>";
-               $text .= "<td align='center'>".$data["field"]."</td>";
-               $text .= "<td align='center'>".$data["old_value"]."</td>";
-               $text .= "<td align='center'>-></td>";
-               $text .= "<td align='center'>".$data["new_value"]."</td>";
-               $text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
-            }
-            $text .= "</tr>";
-         }
-      }
-    */
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th colspan='8'>";
       $text .= "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";

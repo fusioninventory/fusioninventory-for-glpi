@@ -329,7 +329,6 @@ class PluginFusioninventoryNetworking extends PluginFusioninventoryCommonDBTM {
 		$this->id = $id;
 
 		$nw=new NetworkPort_NetworkPort();
-		$CommonItem = new CommonItem;
 		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
@@ -741,15 +740,15 @@ function appear_array(id){
 								$result_device = $DB->query($query_device);
 								$data_device = $DB->fetch_assoc($result_device);
 
-								$CommonItem->getFromDB($data_device["itemtype"],
-                                               $data_device["items_id"]);
-								$link1 = $CommonItem->getLink(1);
-								$link = str_replace($CommonItem->getName(0), $data_device["mac"],
-                                            $CommonItem->getLink());
-                        $link2 = str_replace($CommonItem->getName(0), $data_device["ip"],
-                                             $CommonItem->getLink());
+								$item = new $data_device["itemtype"];
+                        $item->getFromDB($data_device["items_id"]);
+								$link1 = $item->getLink(1);
+								$link = str_replace($item->getName(0), $data_device["mac"],
+                                            $item->getLink());
+                        $link2 = str_replace($item->getName(0), $data_device["ip"],
+                                             $item->getLink());
 								if ($data_device["itemtype"] == 'PluginFusioninventoryUnknowndevice') {
-                           if ($CommonItem->getField("accepted") == "1") {
+                           if ($item->getField("accepted") == "1") {
                               echo "<td style='background:#bfec75'
                                         class='tab_bg_1_2'>".$link1;
                            } else {

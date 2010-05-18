@@ -77,8 +77,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
 
       include_once(GLPI_ROOT.'/plugins/fusioninventory/inc_constants/mapping.fields.constant.php');
-      $CommonItem = new CommonItem;
-      $CommonItem->getFromDB($p_itemtype, $p_items_id);
+      $item = new $p_itemtype;
+      $item->getFromDB($p_items_id);
 
       echo "<form method='post' action=\"$p_target\">";
       echo "<input type='hidden' name='id' value='$p_items_id'>";
@@ -94,7 +94,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
             $checked = '';
          }
          echo "<tr class='tab_bg_1'><td>" . $FUSIONINVENTORY_MAPPING_FIELDS[$val] . "</td>
-                  <td>".$CommonItem->getField($val)."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
+                  <td>".$item->getField($val)."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
       }
       echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
                <input class='submit' type='submit' name='unlock_field_fusioninventory'

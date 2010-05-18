@@ -61,8 +61,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 		PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
-      $CommonItem = new CommonItem;
-
 		if ($id!='') {
 			$this->getFromDB($id);
       } else {

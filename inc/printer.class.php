@@ -574,9 +574,9 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
          $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
          if (!key_exists($printerCompAdd, $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
-            $ci=new CommonItem();
-            if ($ci->getFromDB(PRINTER_TYPE, $printerCompAdd)){
-               $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] = $ci->getField('name');
+            $oPrinter = new Printer();
+            if ($oPrinter->getFromDB($printerCompAdd)){
+               $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] = $oPrinter->getField('name');
             }
          }
       } elseif (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
@@ -588,9 +588,9 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       if (isset($printersView[$p_ID])) {
          unset($printersView[$p_ID]);
       } else {
-         $ci=new CommonItem();
-         if ($ci->getFromDB(PRINTER_TYPE, $p_ID)){
-            $printers[$p_ID] = $ci->getField('name');
+         $oPrinter = new Printer();
+         if ($oPrinter->getFromDB($p_ID)){
+            $printers[$p_ID] = $oPrinter->getField('name');
          }
       }
 
