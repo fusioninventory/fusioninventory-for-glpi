@@ -157,7 +157,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
             $item->getFromDB($np->fields["items_id"]);
             $link1 = $item->getLink(1);
 
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $np->fields["id"] . "\">";
             if (rtrim($np->fields["name"]) != "")
                $link .= $np->fields["name"];
             else
@@ -179,7 +179,7 @@ class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
             $item = new $np->fields["itemtype"];
             $item->getFromDB($np->fields["items_id"]);
             $link1 = $item->getLink(1);
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?id=" . $np->fields["id"] . "\">";
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $np->fields["id"] . "\">";
             if (rtrim($np->fields["name"]) != "")
                $link .= $np->fields["name"];
             else

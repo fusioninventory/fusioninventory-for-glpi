@@ -700,7 +700,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
                   $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
-                     $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
+                     $out .= "<a href='".GLPI_ROOT."/front/networkport.form.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
                   }
 					}
 					return "<center>".$out."</center>";
@@ -781,7 +781,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
                   $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
-                     $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
+                     $out .= "<a href='".GLPI_ROOT."/front/networkport.form.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
                   }
                }
                return "<center>".$out."</center>";
@@ -930,7 +930,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
                   $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
-                     $out .= "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
+                     $out .= "<a href='".GLPI_ROOT."/front/networkport.form.php?id=".$vartmp."'>".$np->fields["name"]."</a><br/>";
                   }
                }
                return "<center>".$out."</center>";
@@ -1002,7 +1002,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
                if (isset($NetworkPort->fields["name"])) {
                   $name = $NetworkPort->fields["name"];
                }
-					$out = "<a href='".GLPI_ROOT."/front/networking.port.php?id=".$data["ITEM_$num"]."'>".$name."</a>";
+					$out = "<a href='".GLPI_ROOT."/front/networkport.form.php?id=".$data["ITEM_$num"]."'>".$name."</a>";
 					return "<center>".$out."</center>";
 					break;
 
@@ -1052,7 +1052,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					$result = $DB->query($query);
 
 					if ($DB->numrows($result) != "0") {
-						$out .= "<br/><a href='".GLPI_ROOT."/front/networking.port.php?id=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+						$out .= "<br/><a href='".GLPI_ROOT."/front/networkport.form.php?id=".$data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
                }
 					$out .= "</td>";
 					return $out;

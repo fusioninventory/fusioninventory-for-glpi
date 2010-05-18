@@ -812,7 +812,7 @@ function appear_array(id){
                            echo "<tr><td>" . $a_vlan['name']." [".$a_vlan['comment']."]";
                            echo "</td><td>";
                            if ($canedit) {
-                              echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?unassign_vlan=unassigned&amp;id=" . $line["id"] . "'>";
+                              echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?unassign_vlan=unassigned&amp;id=" . $line["id"] . "'>";
                               echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete2.png\" alt='" . $LANG['buttons'][6] . "' title='" . $LANG['buttons'][6] . "'></a>";
                            } else
                               echo "&nbsp;";
