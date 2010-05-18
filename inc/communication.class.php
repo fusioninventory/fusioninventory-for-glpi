@@ -1029,22 +1029,22 @@ class PluginFusioninventoryCommunication {
                   $errors.=$this->importVlans($child, $ptp);
                   break;
                case 'IFNAME' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('mac', $child);
                   break;
                case 'IFNUMBER' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
                   break;
                case 'TRUNK' :
                   if (!$ptp->getNoTrunk()) {
-                     PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                     PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                      $ptp->setValue('vlanTrunkPortDynamicStatus', $p_port->$name);
                   }
                   break;
@@ -1059,7 +1059,7 @@ class PluginFusioninventoryCommunication {
                case 'IFOUTOCTETS' :
                case 'IFSPEED' :
                case 'IFSTATUS' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :
@@ -1096,19 +1096,19 @@ class PluginFusioninventoryCommunication {
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'IFNAME' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('mac', $child);
                   break;
                case 'IP' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('ip', $child);
                   break;
                case 'IFNUMBER' :
-                  PluginFusioninventorySnmphistory::networking_ports_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed

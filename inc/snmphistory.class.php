@@ -450,7 +450,7 @@ class PluginFusioninventorySnmphistory extends CommonDBTM {
       }
    }
 
-   static function networking_ports_addLog($port_id, $new_value, $field) {
+   static function networkport_addLog($port_id, $new_value, $field) {
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $ptp = new PluginFusioninventoryPort;
