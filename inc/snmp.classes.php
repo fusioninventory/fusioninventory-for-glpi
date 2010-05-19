@@ -231,7 +231,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          } else {
             $PortID = $dataPort["FK_networking_ports"];
          }
-      } if ($DB->numrows($result) == "1") {
+      } else if ($DB->numrows($result) == "0") {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
             WHERE `ifaddr`='".$IP."'
             LIMIT 1";
