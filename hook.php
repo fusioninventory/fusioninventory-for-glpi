@@ -180,6 +180,8 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][1]['linkfield'] = 'name';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][1]['name'] = $LANG["common"][16];
    $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][1]['datatype']='itemlink';
+   $sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][1]['forcegroupby']='1';
+
 
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][2]['table'] = 'glpi_plugin_fusioninventory_unknown_device';
 	$sopt[PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN][2]['field'] = 'dnsname';
@@ -1825,10 +1827,10 @@ function plugin_fusioninventory_forceGroupBy($type) {
          return "GROUP BY glpi_computers.id";
          break;
 
-        case PRINTER_TYPE :
-            // ** FusionInventory - switch
-            return "GROUP BY glpi_printers.id";
-            break;
+     case PRINTER_TYPE :
+         // ** FusionInventory - switch
+         return "GROUP BY glpi_printers.id";
+         break;
 
     }
     return false;
