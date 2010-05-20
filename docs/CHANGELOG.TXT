@@ -33,6 +33,56 @@
 // ----------------------------------------------------------------------
 
 
+Version 2.2.1
+
+FRANCAIS :
+- Correction des ip Fusioninventory des switchs (issu de Tracker)
+- Correction du formulaire du profil (erreur de html)
+- Correction de pbolèmes de CDP
+- Correction de recherche de matériel en CDP
+- Correction de recherche de matériel inconnu en CDP
+- Correction de table lors de la creation de glpi_plugin_fusioninventory_agents_errors
+- Correction de table lors de la creation de glpi_plugin_fusioninventory_snmp_history
+- Correction de find_device avec le critère nom (embiguité du champs sur 2 tables)
+- Correction de l'entité des lieux
+- Correction de la version de la langue ALlemand (de)
+- Correction du javascript pour afficher les collonnes dans l'onglet fusioninventory des switchs
+- Correction de l'action à distance qui affiche 2 fois indisponible
+- Correction de problemes SQL dans la liste du matériel inconnu (issu de Tracker)
+- Correction : Ajout de l'erreur lors de l'interrogation quand les critères ne sont pastrouvés
+- Ajout des fichiers SQL et des fonctions pour la mise à jour
+
+
+ENGLISH :
+- Fix for fusion IP switchs (issue from Tracker version)
+- Fix profil form (html error)
+- Fix CDP problems
+- Fix search device in CDP
+- Fix CDP search in unknown devices
+- Fix table creation glpi_plugin_fusioninventory_agents_errors
+- Fix table creation glpi_plugin_fusioninventory_snmp_history
+- Fix find_device with criteria name (ambigious field in 2 tables)
+- Fix on location entity
+- Fix version for de lang
+- Fix javascript to select collumns to display in networking ports in tab fusioninventory
+- Fix action display 2 time agent unavailable
+- Fix SQL error in unknown devices display (issue from Tracker version)
+- Fix : add error when snmpquery can't match with criteria
+- Add update sql files and functions
+
+
+
+Version 2.2.0
+
+FRANCAIS :
+Le plugin a été tout réécrit
+
+
+ENGLISH
+The plugin has been all rewriten
+
+
+
 Version 2.1.3
 
 FRANCAIS :
