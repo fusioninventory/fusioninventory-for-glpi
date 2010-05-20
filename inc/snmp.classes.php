@@ -269,16 +269,8 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
-            if ($pfiud->convertUnknownToUnknownNetwork($data['on_device'])) {
-               // Add port
-               $input = array();
-               $input['on_device'] = $data['on_device'];
-               $input['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
-               $input['ifaddr'] = $IP;
-               $input['name'] = $ifDescr;
-               $PortID = $np->add($input);
-               return $PortID;
-            }
+            $PortID = $data['ID'];
+            return $PortID;
          }
          // Add unknown device
          $input = array();
