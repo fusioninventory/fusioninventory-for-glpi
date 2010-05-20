@@ -1136,22 +1136,38 @@ function plugin_fusioninventory_install() {
     **/
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config"))) {
-      plugin_fusioninventory_installing("2.2.0");
-   } else if (TableExists("glpi_plugin_tracker_config")) {
+      plugin_fusioninventory_installing("2.2.1");
+   } else if ((TableExists("glpi_plugin_tracker_config")) ||
+         (TableExists("glpi_plugin_fusioninventory_config"))) {
       //$config = new PluginFusionInventoryConfig;
-      if (!TableExists("glpi_plugin_tracker_agents")) {
+      if ((!TableExists("glpi_plugin_tracker_agents")) &&
+         (!TableExists("glpi_plugin_fusioninventory_agents"))) {
          plugin_fusioninventory_update("1.1.0");
       }
-      if (!TableExists("glpi_plugin_tracker_config_discovery")) {
+      if ((!TableExists("glpi_plugin_tracker_config_discovery")) &&
+         (!TableExists("glpi_plugin_fusioninventory_config"))) {
          plugin_fusioninventory_update("2.0.0");
       }
-      if (!FieldExists("glpi_plugin_tracker_config", "version")) {
+      if (((TableExists("glpi_plugin_tracker_agents")) &&
+           (!FieldExists("glpi_plugin_tracker_config", "version"))) &&
+         (!TableExists("glpi_plugin_fusioninventory_config"))) {
          plugin_fusioninventory_update("2.0.2");
       }
-      if (FieldExists("glpi_plugin_tracker_config", "version")) {
-         $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
-         $result = $DB->query($query);
-			$data = $DB->fetch_assoc($result);
+      if (((TableExists("glpi_plugin_tracker_agents")) &&
+           (FieldExists("glpi_plugin_tracker_config", "version"))) ||
+         (TableExists("glpi_plugin_fusioninventory_config"))) {
+
+         if (TableExists("glpi_plugin_tracker_agents")) {
+            $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
+         } else if (TableExists("glpi_plugin_fusioninventory_config")) {
+            $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
+         }
+         if ($result=$DB->query($query)) {
+            if ($DB->numrows($result) == "1") {
+               $data = $DB->fetch_assoc($result);
+            }
+         } 
+         
          if  ($data['version'] == "0") {
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.0.2'

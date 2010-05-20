@@ -243,21 +243,45 @@ function plugin_fusioninventory_update($version) {
             }
          }
       }
-      // If glpi_plugin_fusioninventory_agents_errors not created because : Error: Specified key was too long; max key length is 1000 bytes
-      $query = "CREATE TABLE IF NOT EXISTS  `glpi_plugin_fusioninventory_agents_errors` (
-      `ID` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-      `process_number` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL,
-      `on_device` INT( 11 ) NOT NULL DEFAULT '0',
-      `device_type` INT( 11 ) NOT NULL DEFAULT '0',
-      `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ,
-      `agent_type` VARCHAR( 255 ) COLLATE utf8_unicode_ci DEFAULT NULL ,
-      `error_message` text collate utf8_unicode_ci,
-        PRIMARY KEY (`ID`),
-        KEY `process_number` (`process_number`),
-        KEY `date` (`date`)
-      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+
+      // locations with entity -1 (bad code)
+      $query = "DELETE FROM glpi_dropdown_locations
+         WHERE FK_entities='-1' ";
       $DB->query($query);
 
+      //CLean glpi_display
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_MODEL."'
+         AND num NOT IN (1, 30, 3, 5, 6, 7, 8)";
+      $DB->query($query);
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_SNMP_AUTH."'
+         AND num NOT IN (1, 30, 3, 4, 5, 7, 8, 9, 10)";
+      $DB->query($query);
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+         AND num NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)";
+      $DB->query($query);
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
+         AND num NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)";
+      $DB->query($query);
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_SNMP_AGENTS."'
+         AND num NOT IN (1, 30, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15)";
+      $DB->query($query);
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP."'
+         AND num NOT IN (1, 2, 3, 30, 5, 6, 7, 8, 9)";
+      $DB->query($query);
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_SNMP_HISTORY."'
+         AND num NOT IN (1, 2, 3, 4, 5, 6)";
+      $DB->query($query);
+      $query = "DELETE FROM glpi_display
+         WHERE type='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."'
+         AND num NOT IN (30, 1, 2, 3)";
+      $DB->query($query);
    }
 
    // Remote IP of switch ports
