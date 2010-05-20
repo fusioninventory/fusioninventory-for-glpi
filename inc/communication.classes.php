@@ -811,7 +811,10 @@ class PluginFusionInventoryCommunication {
       }
       if (!empty($errors)) {
          $pfiae = new PluginFusionInventoryAgentsErrors;
+         $ptap = new PluginFusionInventoryAgentsProcesses;
 
+         $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+               array('query_nb_error' => '1'));
          $a_input = array();
          $a_input['ID'] = $p_info->ID;
          if ($p_info->TYPE=='NETWORKING') {
