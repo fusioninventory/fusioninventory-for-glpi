@@ -188,6 +188,14 @@ class PluginFusioninventorySetup {
          $pficsnmph->initConfig();
          $pficsnmph->updateTrackertoFusion();
       }
+      if ($version == "2.2.1") {
+         //TODO
+      }
+      if ($version == "2.3.0") {
+         //TODO
+//         Plugin::migrateItemType();
+
+      }
       PluginFusioninventory::initSession();
    }
 
