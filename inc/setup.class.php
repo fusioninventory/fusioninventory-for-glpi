@@ -72,7 +72,7 @@ class PluginFusioninventorySetup {
       include(GLPI_ROOT.'/inc/rulesengine.function.php');
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      PluginFusioninventory::initSession();
+      PluginFusioninventoryAuth::initSession();
       return true;
    }
 
@@ -187,16 +187,111 @@ class PluginFusioninventorySetup {
          $pficsnmph = new PluginFusioninventoryConfigSNMPHistory;
          $pficsnmph->initConfig();
          $pficsnmph->updateTrackertoFusion();
+         // Delete all ports present in fusion but deleted in glpi_networking
+         $query = "SELECT `glpi_plugin_fusioninventory_networkports`.`id` AS `fusinvId`
+                   FROM `glpi_plugin_fusioninventory_networkports`
+                        LEFT JOIN `glpi_networkports`
+                           ON `networkports_id`=`glpi_networkports`.`id`
+                   WHERE `glpi_networkports`.`id` IS NULL";
+         if ($result=$DB->query($query)) {
+            while ($data=$DB->fetch_array($result)) {
+               $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkports`
+                  WHERE `id`='".$data['fusinvId']."' ";
+               $DB->query($query_delete);
+            }
+         }
+         // Add IP of switch in table glpi_plugin_fusioninventory_networkequimentips if not present
+         $query = "SELECT * FROM glpi_networkequipments";
+         if ($result=$DB->query($query)) {
+            while ($data=$DB->fetch_array($result)) {
+               $query_ip = "SELECT * FROM `glpi_plugin_fusioninventory_networkequipmentips`
+                  WHERE `ip`='".$data['ip']."' ";
+               $result_ip = $DB->query($query_ip);
+               if ($DB->numrows($result_ip) == "0") {
+                  $query_add = "INSERT INTO `glpi_plugin_fusioninventory_networkequipmentips`
+                     (`networkequipments_id`, `ip`) VALUES ('".$data['id']."', '".$data['ip']."')";
+                  $DB->query($query_add);
+               }
+            }
+         }
       }
       if ($version == "2.2.1") {
-         //TODO
+         // Clean fusion IP when networkequipments_id has been deleted
+         // (bug from Tracker 2.1.3 and before)
+         $query = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.*
+                   FROM `glpi_plugin_fusioninventory_networkequipmentips`
+                        LEFT JOIN `glpi_networkequipments`
+                           ON `networkequipments_id`=`glpi_networkequipments`.`id`
+                   WHERE `glpi_networkequipments`.`id` is null";
+         if ($result=$DB->query($query)) {
+            while ($data=$DB->fetch_array($result)) {
+               $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
+                                WHERE `id`='".$data['id']."' ";
+               $DB->query($query_delete);
+            }
+         }
+         // delete when IP not valid (bug from Tracker 2.1.3 and before)
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkequipmentsips`";
+         if ($result=$DB->query($query)) {
+            while ($data=$DB->fetch_array($result)) {
+               if (!preg_match("/^((25[0-5]|2[0-4]\d|1?\d?\d).){3}(25[0-5]|2[0-4]\d|1?\d?\d)$/",$data['ip'])) {
+                  $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
+                                   WHERE id='".$data['id']."' ";
+                  $DB->query($query_delete);
+               }
+            }
+         }
+         // locations with entity -1 (bad code)
+         $query = "DELETE FROM `glpi_locations`
+                   WHERE `entities_id`='-1' ";
+         $DB->query($query);
+         //CLean glpi_display
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MODEL."'
+                         AND `num` NOT IN (1, 30, 3, 5, 6, 7, 8)";
+         $DB->query($query);
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_AUTH."'
+                         AND `num` NOT IN (1, 30, 3, 4, 5, 7, 8, 9, 10)";
+         $DB->query($query);
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                         AND `num` NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)";
+         $DB->query($query);
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
+                         AND `num` NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)";
+         $DB->query($query);
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_AGENTS."'
+                         AND `num` NOT IN (1, 30, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15)";
+         $DB->query($query);
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP."'
+                         AND `num` NOT IN (1, 2, 3, 30, 5, 6, 7, 8, 9)";
+         $DB->query($query);
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_HISTORY."'
+                         AND `num` NOT IN (1, 2, 3, 4, 5, 6)";
+         $DB->query($query);
+         $query = "DELETE FROM `glpi_displaypreferences`
+                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."'
+                         AND `num` NOT IN (30, 1, 2, 3)";
+         $DB->query($query);
       }
+      // Remote IP of switch ports
+      $query = "UPDATE `glpi_networkports`
+                SET `ip` = NULL
+                WHERE `itemtype` ='NetworkEquipment'
+                   AND `ip` IS NOT NULL ";
+      $DB->query($query);
+
       if ($version == "2.3.0") {
          //TODO
 //         Plugin::migrateItemType();
 
       }
-      PluginFusioninventory::initSession();
+      PluginFusioninventoryAuth::initSession();
    }
 
    // Uninstallation function

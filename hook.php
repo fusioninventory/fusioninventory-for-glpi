@@ -180,6 +180,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryUnknowndevice'][1]['linkfield'] = 'name';
 	$sopt['PluginFusioninventoryUnknowndevice'][1]['name'] = $LANG["common"][16];
    $sopt['PluginFusioninventoryUnknowndevice'][1]['datatype']='itemlink';
+   $sopt['PluginFusioninventoryUnknowndevice'][1]['forcegroupby']='1';
 
 	$sopt['PluginFusioninventoryUnknowndevice'][2]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
 	$sopt['PluginFusioninventoryUnknowndevice'][2]['field'] = 'dnsname';
@@ -190,6 +191,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryUnknowndevice'][3]['field'] = 'date_mod';
 	$sopt['PluginFusioninventoryUnknowndevice'][3]['linkfield'] = '';
 	$sopt['PluginFusioninventoryUnknowndevice'][3]['name'] = $LANG["common"][26];
+   $sopt['PluginFusioninventoryUnknowndevice'][3]['datatype'] = 'datetime';
 
 	$sopt['PluginFusioninventoryUnknowndevice'][4]['table'] = 'glpi_entities';
 	$sopt['PluginFusioninventoryUnknowndevice'][4]['field'] = 'name';
@@ -1126,67 +1128,81 @@ function plugin_fusioninventory_install() {
     *    2.1.1 config version field 2.1.1
     **/
    if ((!TableExists("glpi_plugin_tracker_config")) &&
-      (!TableExists("glpi_plugin_fusioninventory_configs"))) {
-      PluginFusioninventorySetup::install("2.2.0");
-   } else if (TableExists("glpi_plugin_tracker_config")) {
+      (!TableExists("glpi_plugin_fusioninventory_config"))) {
+         PluginFusioninventorySetup::install("2.3.0");
+   } else if ((TableExists("glpi_plugin_tracker_config")) ||
+         (TableExists("glpi_plugin_fusioninventory_config"))) {
       //$config = new PluginFusioninventoryConfig;
-      if (!TableExists("glpi_plugin_tracker_agents")) {
+      if ((!TableExists("glpi_plugin_tracker_agents")) &&
+         (!TableExists("glpi_plugin_fusioninventory_agents"))) {
          PluginFusioninventorySetup::update("1.1.0");
       }
-      if (!TableExists("glpi_plugin_tracker_config_discovery")) {
+      if ((!TableExists("glpi_plugin_tracker_config_discovery")) &&
+         (!TableExists("glpi_plugin_fusioninventory_config"))) {
          PluginFusioninventorySetup::update("2.0.0");
       }
-      if (!FieldExists("glpi_plugin_tracker_config", "version")) {
+      if ((TableExists("glpi_plugin_tracker_agents")) &&
+         (!FieldExists("glpi_plugin_tracker_config", "version")) &&
+         (!TableExists("glpi_plugin_fusioninventory_config"))) {
          PluginFusioninventorySetup::update("2.0.2");
       }
-      if (FieldExists("glpi_plugin_tracker_config", "version")) {
-         $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
-         $result = $DB->query($query);
-			$data = $DB->fetch_assoc($result);
+      if (((TableExists("glpi_plugin_tracker_agents")) &&
+           (FieldExists("glpi_plugin_tracker_config", "version"))) ||
+         (TableExists("glpi_plugin_fusioninventory_config"))) {
+         if (TableExists("glpi_plugin_tracker_agents")) {
+            $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
+         } else if (TableExists("glpi_plugin_fusioninventory_config")) {
+            $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
+         }
+         if ($result=$DB->query($query)) {
+            if ($DB->numrows($result) == "1") {
+               $data = $DB->fetch_assoc($result);
+            }
+         }
          if  ($data['version'] == "0") {
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.0.2'
-                        WHERE `id`='1';");
+                        WHERE `ID`='1';");
             $data['version'] = "2.0.2";
          }
          if ($data['version'] == "2.0.2") {
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.1.0'
-                        WHERE `id`='1';");
+                        WHERE `ID`='1';");
             $data['version'] = "2.1.0";
          }
          if ($data['version'] == "2.1.0") {
             PluginFusioninventorySetup::update("2.1.1");
             $DB->query("UPDATE `glpi_plugin_tracker_config` 
                         SET version = '2.1.1'
-                        WHERE id=1");
+                        WHERE ID=1");
             $data['version'] = "2.1.1";
          }
          if ($data['version'] == "2.1.1") {
             //PluginFusioninventorySetup::update("2.1.2");
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.1.2'
-                        WHERE `id`='1';");
+                        WHERE `ID`='1';");
             $data['version'] = "2.1.2";
          }
          if ($data['version'] == "2.1.2") {
             //PluginFusioninventorySetup::update("2.1.2");
             $DB->query("UPDATE `glpi_plugin_tracker_config`
                         SET `version` = '2.1.3'
-                        WHERE `id`='1';");
+                        WHERE `ID`='1';");
             $data['version'] = "2.1.3";
          }
          if ($data['version'] == "2.1.3") {
             PluginFusioninventorySetup::update("2.2.0");
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
                         SET `version` = '2.2.0'
-                        WHERE `id`='1';");
+                        WHERE `ID`='1';");
          }
          if ($data['version'] == "2.2.0") {
             PluginFusioninventorySetup::update("2.2.1");
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
                         SET `version` = '2.2.1'
-                        WHERE `id`='1';");
+                        WHERE `ID`='1';");
          }
          if ($data['version'] == "2.2.1") {
             PluginFusioninventorySetup::update("2.3.0");
@@ -1835,18 +1851,16 @@ function plugin_fusioninventory_addSelect($type,$id,$num) {
 
 
 function plugin_fusioninventory_forceGroupBy($type) {
-    switch ($type) {
-
+   switch ($type) {
       case COMPUTER_TYPE :
          // ** FusionInventory - switch
          return "GROUP BY glpi_computers.id";
          break;
 
-        case PRINTER_TYPE :
-            // ** FusionInventory - switch
-            return "GROUP BY glpi_printers.id";
-            break;
-
+      case PRINTER_TYPE :
+         // ** FusionInventory - switch
+         return "GROUP BY glpi_printers.id";
+         break;
     }
     return false;
 }
@@ -2112,7 +2126,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
-				case "glpi_plugin_fusioninventory_networkequipments.id" :
+				case "glpi_networkequipments.device" :
 					return " ORDER BY FUSIONINVENTORY_12.items_id $order ";
 					break;
 
@@ -2178,7 +2192,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
-            case "glpi_plugin_fusioninventory_networkequipments.id" :
+            case "glpi_networkequipments.device" :
                return " ORDER BY FUSIONINVENTORY_12.items_id $order ";
                break;
 
