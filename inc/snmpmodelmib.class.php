@@ -219,7 +219,7 @@ class PluginFusioninventorySNMPModelMib extends CommonDBTM {
 				echo "</td>";
 				
 				echo "<td align='center'>";
-				Dropdown::show("PluginFusioninventoryMib_Object",
+				Dropdown::show("PluginFusioninventoryMibObject",
                            array('name' => "plugin_fusioninventory_mibobjects_id",
                                  'value' => 0));
 				echo "</td>";

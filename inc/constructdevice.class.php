@@ -292,14 +292,9 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                            echo $LANG['plugin_fusioninventory']["mib"][9]." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["vlan"] == "1") {
-
-
-echo "<a href='".$target."?id=".$id."&vlan_update=".$oid_id_before."'>";
-
-
+                                 echo "<a href='".$target."?id=".$id."&vlan_update=".$oid_id_before."'>";
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-echo "</a>";
-
+                                 echo "</a>";
                               } else {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
@@ -367,7 +362,8 @@ echo "</a>";
                            echo "</table>";
                            echo "<br/>";
                         }
-                        $query_oid_mib = "SELECT * FROM glpi_plugin_fusioninventory_constructdevice_miboids
+                        $query_oid_mib = "SELECT *
+                           FROM glpi_plugin_fusioninventory_constructdevice_miboids
                            WHERE plugin_fusioninventory_constructdevices_id='".$id."'
                               AND plugin_fusioninventory_miboids_id='".$a_oids2[$num]."'";
                         $a_mibs = array();
@@ -443,22 +439,23 @@ echo "</a>";
                      if ($mappings) {
                         echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']];
                      }
-                  } else {
-                     $types = array();
-                     $types[] = "-----";
-                     foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-                        if (($type_model == $type) OR ($type_model == "0")) {
-                           if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-                              foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-                                 $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
-                              }
+                  }
+               } else {
+                  $types = array();
+                  $types[] = "-----";
+                  foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
+                     if (($type_model == $type) OR ($type_model == "0")) {
+                        if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+                           foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+                              $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
                            }
                         }
                      }
-                     Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
-                                             array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
-                                                   'used'=>$a_mapping_used)); //,$linkoid_used
                   }
+                  Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
+                                          array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
+                                                'used'=>$a_mapping_used)); //,$linkoid_used
+               }
                echo "</th>";
                echo "</tr>";
                echo "</table>";
@@ -497,7 +494,8 @@ echo "</a>";
       $ptmi = new PluginFusioninventoryModelInfos;
       $ptmn = new PluginFusioninventoryMib;
 
-      $query = "SELECT glpi_plugin_fusioninventory_constructdevices.id, type  FROM glpi_plugin_fusioninventory_constructdevices
+      $query = "SELECT glpi_plugin_fusioninventory_constructdevices.id, type
+         FROM glpi_plugin_fusioninventory_constructdevices
          LEFT JOIN glpi_plugin_fusioninventory_constructdevicewalks on glpi_plugin_fusioninventory_constructdevices.id = plugin_fusioninventory_constructdevices_id
          WHERE type IN (1,2,3)
             AND log!=''";
@@ -616,10 +614,11 @@ echo "</a>";
 
        // Add Number
        //key : Networking0006
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels
-         WHERE discovery_key LIKE 'Networking%'
-         ORDER BY discovery_key DESC
-         LIMIT 1";
+      $query = "SELECT *
+               FROM glpi_plugin_fusioninventory_snmpmodels
+               WHERE discovery_key LIKE 'Networking%'
+               ORDER BY discovery_key DESC
+               LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
       $num = 1;
@@ -628,9 +627,10 @@ echo "</a>";
          $num++;
       }
 
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels
-         WHERE (discovery_key IS NULL OR discovery_key='')
-            AND itemtype='".NETWORKING_TYPE."' ";
+      $query = "SELECT *
+               FROM glpi_plugin_fusioninventory_snmpmodels
+               WHERE (discovery_key IS NULL OR discovery_key='')
+                  AND itemtype='".NETWORKING_TYPE."' ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
@@ -643,10 +643,11 @@ echo "</a>";
          }
       }
       // Printers
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels
-         WHERE discovery_key LIKE 'Printer%'
-         ORDER BY discovery_key DESC
-         LIMIT 1";
+      $query = "SELECT *
+               FROM glpi_plugin_fusioninventory_snmpmodels
+               WHERE discovery_key LIKE 'Printer%'
+               ORDER BY discovery_key DESC
+               LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
       if (empty($data['discovery_key'])) {
@@ -656,9 +657,10 @@ echo "</a>";
          $num++;
       }
 
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels
-         WHERE (discovery_key IS NULL OR discovery_key='')
-            AND itemtype='".PRINTER_TYPE."' ";
+      $query = "SELECT *
+               FROM glpi_plugin_fusioninventory_snmpmodels
+               WHERE (discovery_key IS NULL OR discovery_key='')
+                  AND itemtype='".PRINTER_TYPE."' ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             while(strlen($num) < 4)
@@ -683,8 +685,9 @@ echo "</a>";
       $sxml = new SimpleXMLElement($xmlstr);
       //$sxml = simplexml_load_file($xmlstr);
 
-      $query = "SELECT * FROM `".$this->table."`
-         WHERE type NOT IN('', 0) ";
+      $query = "SELECT *
+               FROM `".$this->table."`
+               WHERE type NOT IN('', 0) ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             $sxml_device = $sxml->addChild('DEVICE');
@@ -695,9 +698,10 @@ echo "</a>";
             if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
                //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
 
-               $query_modelkey = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodels`
-                  WHERE id='".$data['snmpmodel_id']."'
-                     LIMIT 1";
+               $query_modelkey = "SELECT *
+                                 FROM `glpi_plugin_fusioninventory_snmpmodels`
+                                 WHERE id='".$data['snmpmodel_id']."'
+                                 LIMIT 1";
                $result_modelkey=$DB->query($query_modelkey);
                if ($DB->numrows($result_modelkey)) {
                   $line = mysql_fetch_assoc($result_modelkey);
@@ -713,7 +717,6 @@ echo "</a>";
                   WHERE `plugin_fusioninventory_constructdevices_id`='".$data['id']."'
                      AND `mapping_name`='serial'
                   LIMIT 1";
-
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
@@ -733,8 +736,6 @@ echo "</a>";
                            OR ( `mapping_name`='ifPhysAddress' AND mapping_type='Printer')
                            OR ( `mapping_name`='ifPhysAddress' AND mapping_type='Computer'))
                   LIMIT 1";
-
-
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);

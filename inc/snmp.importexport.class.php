@@ -188,7 +188,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 					switch ($j) {
 						case 1:
 							$plugin_fusioninventory_mibobjects_id = Dropdown::importExternal(
-                                         "PluginFusioninventoryMib_Object",$item);
+                                         "PluginFusioninventoryMibObject",$item);
 							break;
 
 						case 2:
