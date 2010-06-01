@@ -518,6 +518,7 @@ $LANG['plugin_fusioninventory']["mapping"][162]="Tambour Cyan";
 $LANG['plugin_fusioninventory']["mapping"][163]="Tambour Magenta";
 $LANG['plugin_fusioninventory']["mapping"][164]="Tambour Jaune";
 $LANG['plugin_fusioninventory']["mapping"][165]="Informations diverses regroupées";
+$LANG['plugin_fusioninventory']["mapping"][166]="Toner Noir 2";
 $LANG['plugin_fusioninventory']["mapping"][1423]="Nombre total de pages imprimées (impression)";
 $LANG['plugin_fusioninventory']["mapping"][1424]="Nombre de pages noir et blanc imprimées (impression)";
 $LANG['plugin_fusioninventory']["mapping"][1425]="Nombre de pages couleur imprimées (impression)";
