@@ -138,7 +138,7 @@ class PluginFusioninventorySNMPModelMib extends CommonDBTM {
 					
 					echo "<td align='center'>";
                $mapping = new PluginFusioninventoryMapping;
-               $mappings = $mapping->find("`type`='".$data['mapping_type']."'
+               $mappings = $mapping->find("`itemtype`='".$data['mapping_type']."'
                                           AND `name`='".$data['mapping_name']."'");
                if ($mappings) {
                   echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']]." ( ".$data["mapping_name"]." )";

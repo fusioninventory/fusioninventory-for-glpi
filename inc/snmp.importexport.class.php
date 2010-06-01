@@ -68,7 +68,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		$xml .= "	<oidlist>\n";
 
       $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
-            `glpi_plugin_fusioninventory_mappings`.`type` AS `mapping_type`,
+            `glpi_plugin_fusioninventory_mappings`.`itemtype` AS `mapping_type`,
             `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
          FROM `glpi_plugin_fusioninventory_snmpmodelmibs` AS `model_t`
             LEFT JOIN `glpi_plugin_fusioninventory_mappings`
@@ -222,7 +222,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 					}
 				}
             $mapping = new PluginFusioninventoryMapping;
-            $mappings = $mapping->find("`type`='".$mapping_type."'
+            $mappings = $mapping->find("`itemtype`='".$mapping_type."'
                                        AND `name`='".$mapping_name."'");
             $mappings_id = $mappings->fields['id'];
 				$query = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelmibs`
