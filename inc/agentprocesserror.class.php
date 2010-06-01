@@ -31,10 +31,10 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusioninventoryAgentsErrors extends CommonDBTM {
+class PluginFusioninventoryAgentProcessError extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_agents_errors";
+		$this->table = "glpi_plugin_fusioninventory_agentprocesserrors";
 	}
 
 

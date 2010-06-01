@@ -47,7 +47,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 // Forms for FILE
 if ($config->getValue("authsnmp") == "file") {
-	$plugin_fusioninventory_snmp_auth = new PluginFusioninventorySnmpauth;
+	$plugin_fusioninventory_snmp_auth = new PluginFusioninventoryConfigSNMPSecurity;
 	
 	if (!isset($_GET["id"])) {
 		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
@@ -57,10 +57,10 @@ if ($config->getValue("authsnmp") == "file") {
 	
 	$_GET['target']="snmp_auth.php";
 	
-	manageGetValuesInSearch('PluginFusioninventorySnmpauth');
+	manageGetValuesInSearch('PluginFusioninventoryConfigSNMPSecurity');
 
-	searchForm('PluginFusioninventorySnmpauth',$_GET);
-	showList('PluginFusioninventorySnmpauth',$_GET);
+	searchForm('PluginFusioninventoryConfigSNMPSecurity',$_GET);
+	showList('PluginFusioninventoryConfigSNMPSecurity',$_GET);
 } else {
 	echo $LANG['plugin_fusioninventory']["functionalities"][19];
 }

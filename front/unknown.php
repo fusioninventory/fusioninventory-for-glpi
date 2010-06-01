@@ -43,12 +43,12 @@ PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch('PluginFusioninventoryUnknowndevice');
+manageGetValuesInSearch('PluginFusioninventoryUnknownDevice');
 
 $_GET['target']="unknown.php";
 
-searchForm('PluginFusioninventoryUnknowndevice',$_GET);
-showList('PluginFusioninventoryUnknowndevice',$_GET);
+searchForm('PluginFusioninventoryUnknownDevice',$_GET);
+showList('PluginFusioninventoryUnknownDevice',$_GET);
 
 commonFooter();
 

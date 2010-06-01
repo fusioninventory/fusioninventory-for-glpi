@@ -37,10 +37,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryPrintersHistory extends CommonDBTM {
+class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_printers_history";
+		$this->table="glpi_plugin_fusioninventory_printerlogs";
 	}
 	
 	function countAllEntries($id) {
@@ -105,7 +105,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $LANG;
 		
-		if (!PluginFusioninventory::haveRight("snmp_printers","r")) {
+		if (!PluginFusioninventoryAuth::haveRight("snmp_printers","r")) {
 			return false;
       }
 		
@@ -170,7 +170,7 @@ class PluginFusioninventoryPrintersHistory extends CommonDBTM {
 			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
 		}
 		
-		if (!PluginFusioninventory::haveRight("snmp_printers","w")) {
+		if (!PluginFusioninventoryAuth::haveRight("snmp_printers","w")) {
 			return false;
       }
 			

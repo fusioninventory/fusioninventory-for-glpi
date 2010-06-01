@@ -46,7 +46,7 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pfia = new PluginFusioninventoryAgents;
+$pfia = new PluginFusioninventoryAgent;
 $pfit = new PluginFusioninventoryTask;
 
 $pfia->showForm($_POST["id"]);

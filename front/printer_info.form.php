@@ -67,7 +67,7 @@ if ((isset($_POST['update_cartridges'])) && (isset($_POST['id']))) {
 	$plugin_fusioninventory_printer_cartridge = new PluginFusioninventoryPrinter_Cartridge;
 
 	$query = "SELECT * 
-             FROM `glpi_plugin_fusioninventory_printers_cartridges`
+             FROM `glpi_plugin_fusioninventory_printercartridges`
              WHERE `printers_id`='".$_POST['id']."'
                    AND `object_name`='".$_POST['object_name']."' ";
 	$result = $DB->query($query);		

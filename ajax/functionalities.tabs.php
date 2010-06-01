@@ -50,14 +50,14 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 checkRight("config","w");
 
-if (PluginFusioninventory::haveRight("configuration","r")) {
+if (PluginFusioninventoryAuth::haveRight("configuration","r")) {
    switch($_POST['glpi_tab']) {
       case -1 :
          $config = new PluginFusioninventoryConfig;
          $config->showForm('1', array('target'=>$_POST['target']));
          $config_modules = new PluginFusioninventoryConfigModules;
          $config_modules->showForm('1', array('target'=>$_POST['target']));
-         $history = new PluginFusioninventorySnmphistory;
+         $history = new PluginFusioninventoryNetworkPortLog;
          $history->showForm('1', array('target'=>$_POST['target']));
          $ptLockable = new PluginFusioninventoryLockable;
          $ptLockable->showForm(array('target'=>$_POST['target']));
@@ -70,8 +70,8 @@ if (PluginFusioninventory::haveRight("configuration","r")) {
 
       case 7 :
          // Historique
-         $history = new PluginFusioninventoryConfigSNMPHistory;
-         $history->showForm(array('target'=>$_POST['target']));
+         $configLogField = new PluginFusioninventoryConfigLogField();
+         $configLogField->showForm(array('target'=>$_POST['target']));
          break;
 
       case 8 :

@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-PluginFusioninventoryAuth::checkRight("agentsprocesses","r");
+PluginFusioninventoryAuth::checkRight("agentprocesses","r");
 
 $modif = 0;
 if (empty($_GET)) {
@@ -48,8 +48,8 @@ if (empty($_GET)) {
 
 PluginFusioninventoryDisplay::mini_menu();
 
-$ptap = new PluginFusioninventoryAgentsProcesses;
-$pfiae  =  new PluginFusioninventoryAgentsErrors;
+$ptap = new PluginFusioninventoryAgentProcess;
+$pfiae  =  new PluginFusioninventoryAgentProcessError;
 $ptap->CleanProcesses();
 $pfiae->CleanErrors();
 

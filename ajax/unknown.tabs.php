@@ -46,37 +46,37 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pfia = new PluginFusioninventoryAgents;
+$pfia = new PluginFusioninventoryAgent;
 $pfit = new PluginFusioninventoryTask;
 
 switch($_POST['glpi_tab']) {
 	case -1 :
-      showPorts($_POST["id"], 'PluginFusioninventoryUnknowndevice');
-      $pfiud = new PluginFusionInventoryUnknownDevice;
+      showPorts($_POST["id"], 'PluginFusioninventoryUnknownDevice');
+      $pfiud = new PluginFusioninventoryUnknownDevice;
       $pfiud->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/unknown.form.php?id='.$_POST["id"],$_POST["id"]);
-      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknowndevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
-      showHistory('PluginFusioninventoryUnknowndevice',$_POST["id"]);
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      showHistory('PluginFusioninventoryUnknownDevice',$_POST["id"]);
       break;
 
 	case 1 :
-      showPorts($_POST["id"], 'PluginFusioninventoryUnknowndevice');
+      showPorts($_POST["id"], 'PluginFusioninventoryUnknownDevice');
 		break;
 
    case 2 :
-      $pfiud = new PluginFusionInventoryUnknownDevice;
+      $pfiud = new PluginFusioninventoryUnknownDevice;
       $pfiud->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.unknown.form.php?id='.$_POST["id"],$_POST["id"]);
       break;
 
    case 3 :
-      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknowndevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
    case 4 :
-      showHistory('PluginFusioninventoryUnknowndevice',$_POST["id"]);
+      showHistory('PluginFusioninventoryUnknownDevice',$_POST["id"]);
       break;
 
    default :
-      showPorts($_POST["id"], 'PluginFusioninventoryUnknowndevice');
+      showPorts($_POST["id"], 'PluginFusioninventoryUnknownDevice');
 		break;
 }
 

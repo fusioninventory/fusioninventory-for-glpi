@@ -37,10 +37,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryMib extends CommonDBTM {
+class PluginFusioninventorySNMPModelMib extends CommonDBTM {
    
 	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_mib";
+		$this->table="glpi_plugin_fusioninventory_snmpmodelmibs";
 	}
 
 
@@ -50,23 +50,23 @@ class PluginFusioninventoryMib extends CommonDBTM {
 
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
 		
-		if (!PluginFusioninventory::haveRight("snmp_models","r")) {
+		if (!PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
 			return false;
       } else if ((isset($id)) AND (!empty($id))) {
 			$query = "SELECT `itemtype`
-                   FROM `glpi_plugin_fusioninventory_modelinfos`
+                   FROM `glpi_plugin_fusioninventory_snmpmodels`
                    WHERE `id`='".$id."';";
 			$result = $DB->query($query);		
 			$data = $DB->fetch_assoc($result);
 			$type_model = $data['itemtype'];		
 		
-			$query = "SELECT `glpi_plugin_fusioninventory_modelinfos`.`itemtype`,
-                          `glpi_plugin_fusioninventory_mib`.*
-                   FROM `glpi_plugin_fusioninventory_mib`
-                        LEFT JOIN `glpi_plugin_fusioninventory_modelinfos`
-                        ON `glpi_plugin_fusioninventory_mib`.`plugin_fusioninventory_modelinfos_id`=
-                           `glpi_plugin_fusioninventory_modelinfos`.`id`
-                   WHERE `glpi_plugin_fusioninventory_modelinfos`.`id`='".$id."';";
+			$query = "SELECT `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`,
+                          `glpi_plugin_fusioninventory_snmpmodelmibs`.*
+                   FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
+                        LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_snmpmodels_id`=
+                           `glpi_plugin_fusioninventory_snmpmodels`.`id`
+                   WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id`='".$id."';";
 			
 			if ($result = $DB->query($query)) {
 				$object_used = array();
@@ -101,17 +101,17 @@ class PluginFusioninventoryMib extends CommonDBTM {
 					echo "</td>";
 	
 					echo "<td align='center'>";
-					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_label",$data["plugin_fusioninventory_mib_label_id"]);
+					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_miblabels",$data["plugin_fusioninventory_mib_label_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					$object_used[] = $data["plugin_fusioninventory_mib_object_id"];
-					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_object",
-                                    $data["plugin_fusioninventory_mib_object_id"]);
+					$object_used[] = $data["plugin_fusioninventory_mibobjects_id"];
+					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mibobjects",
+                                    $data["plugin_fusioninventory_mibobjects_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["plugin_fusioninventory_mib_oid_id"]);
+					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_miboids",$data["plugin_fusioninventory_miboids_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -137,10 +137,13 @@ class PluginFusioninventoryMib extends CommonDBTM {
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					if (isset($FUSIONINVENTORY_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name'])) {
-						echo $FUSIONINVENTORY_MAPPING[$data['mapping_type']][$data["mapping_name"]]['name']." ( ".$data["mapping_name"]." )";
+               $mapping = new PluginFusioninventoryMapping;
+               $mappings = $mapping->find("`type`='".$data['mapping_type']."'
+                                          AND `name`='".$data['mapping_name']."'");
+               if ($mappings) {
+                  echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']]." ( ".$data["mapping_name"]." )";
 						$linkoid_used[$data['mapping_type']."||".$data["mapping_name"]] = 1;
-					}
+               }
 					echo "</td>";
 					
 					if ($data['itemtype'] == NETWORKING_TYPE) {
@@ -181,7 +184,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      $LANG["buttons"][19]."</a>";
 				echo "</td><td align='left' colspan='6' width='80%'>";
-            if(PluginFusioninventory::haveRight("snmp_models","w")) {
+            if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
    				echo "<input class='submit' type='submit' name='delete_oid' value='" .
                      $LANG["buttons"][6] . "'>";
             }
@@ -210,20 +213,20 @@ class PluginFusioninventoryMib extends CommonDBTM {
 				echo "</tr>";
 
 				echo "<td align='center'>";
-				Dropdown::show("PluginFusioninventoryMib_Label",
+				Dropdown::show("PluginFusioninventoryMibLabel",
                            array('name' => "plugin_fusioninventory_mib_label_id",
                                  'value' => 0));
 				echo "</td>";
 				
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusioninventoryMib_Object",
-                           array('name' => "plugin_fusioninventory_mib_object_id",
+                           array('name' => "plugin_fusioninventory_mibobjects_id",
                                  'value' => 0));
 				echo "</td>";
 
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusioninventoryMib_Oid",
-                           array('name' => "plugin_fusioninventory_mib_oid_id",
+                           array('name' => "plugin_fusioninventory_miboids_id",
                                  'value' => 0));
 				echo "</td>";
 				
@@ -306,7 +309,7 @@ class PluginFusioninventoryMib extends CommonDBTM {
 	function activation($id) {
 		global $DB;
 		
-		$mib_networking = new PluginFusioninventoryMib;
+		$mib_networking = new PluginFusioninventorySNMPModelMib;
 		
 		$mib_networking->getFromDB($id);
 		$data['id'] = $id;
@@ -316,7 +319,6 @@ class PluginFusioninventoryMib extends CommonDBTM {
       } else {
 			$data['activation'] = 1;
       }
-		$data["links_oid_fields"]=$data["mapping_type"]."||".$data["mapping_name"];
 		$mib_networking->update($data);
 	}
 
@@ -326,24 +328,30 @@ class PluginFusioninventoryMib extends CommonDBTM {
       $ptc = new PluginFusioninventoryCommunication();
 
       // oid GET
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_mib`
-                   WHERE `plugin_fusioninventory_modelinfos_id`='".$p_id."'
-                     AND `activation`='1'
-                     AND `oid_port_counter`='0';";
+		$query = "SELECT `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
+                       `glpi_plugin_fusioninventory_miboids`.*
+                FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
+                     LEFT JOIN `glpi_plugin_fusioninventory_mappings`
+                               ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
+                                  `glpi_plugin_fusioninventory_mappings`.`id`
+                WHERE `plugin_fusioninventory_snmpmodels_id`='".$p_id."'
+                  AND `activation`='1'
+                  AND `oid_port_counter`='0';";
+
       $result=$DB->query($query);
 		while ($data=$DB->fetch_array($result)) {
          switch ($data['oid_port_dyn']) {
             case 0:
                $ptc->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['plugin_fusioninventory_mib_oid_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_miboids',$data['plugin_fusioninventory_miboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             
             case 1:
                $ptc->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_mib_oid',$data['plugin_fusioninventory_mib_oid_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_miboids',$data['plugin_fusioninventory_miboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             

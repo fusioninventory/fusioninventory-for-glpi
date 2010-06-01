@@ -49,7 +49,7 @@ RENAME TABLE `glpi_plugin_fusioninventory_config_snmp_history` TO `glpi_plugin_f
 RENAME TABLE `glpi_plugin_fusioninventory_config_modules` TO `glpi_plugin_fusioninventory_configmodules`;
 RENAME TABLE `glpi_plugin_fusioninventory_config` TO `glpi_plugin_fusioninventory_configs`;
 RENAME TABLE `glpi_plugin_fusioninventory_snmp_connection` TO `glpi_plugin_fusioninventory_configsnmpsecurities`;
-RENAME TABLE `glpi_plugin_fusioninventory_construct_mibs` TO `glpi_plugin_fusioninventory_constructdevices_miboids`;
+RENAME TABLE `glpi_plugin_fusioninventory_construct_mibs` TO `glpi_plugin_fusioninventory_constructdevice_miboids`;
 RENAME TABLE `glpi_plugin_fusioninventory_construct_device` TO `glpi_plugin_fusioninventory_constructdevices`;
 RENAME TABLE `glpi_plugin_fusioninventory_construct_walks` TO `glpi_plugin_fusioninventory_constructdevicewalks`;
 RENAME TABLE `glpi_plugin_fusioninventory_rangeip` TO `glpi_plugin_fusioninventory_ipranges`;
@@ -114,7 +114,7 @@ ALTER TABLE `glpi_plugin_fusioninventory_configsnmpsecurities`
    CHANGE `priv_protocole` `encryption` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `deleted` `is_deleted` INT( 1 ) NOT NULL DEFAULT '0';
 
-ALTER TABLE `glpi_plugin_fusioninventory_constructdevices_miboids`
+ALTER TABLE `glpi_plugin_fusioninventory_constructdevice_miboids`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `mapping_type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `mapping_name` `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',

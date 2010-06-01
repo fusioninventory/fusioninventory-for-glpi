@@ -111,9 +111,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function formAddTask($target, $input=array()) {
       global $LANG;
 
-      $pta = new PluginFusioninventoryAgents;
+      $pta = new PluginFusioninventoryAgent;
       $ptcm = new PluginFusioninventoryConfigModules;
-      if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventory::haveRight("remotecontrol","w"))) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
          return;
       }
       // TODO: detect if task yet present in MySQL task table
@@ -131,7 +131,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 		echo "</td>";
       
 		echo "<td align='center'>";
-      Dropdown::show("PluginFusioninventoryAgents",
+      Dropdown::show("PluginFusioninventoryAgent",
                      array('name'=>'agentocs',
                            'entity'=>1)); //TODO : check
 		echo "</td>";
@@ -188,7 +188,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
    function addTask($device_id, $itemtype, $action, $agent_id, $param="") {
       $ptcm = new PluginFusioninventoryConfigModules;
-      if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventory::haveRight("remotecontrol","w"))) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND (!PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
          return false;
       }
       if ($param == 'PluginFusioninventoryAgent') {
@@ -217,7 +217,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    function getTask($deviceid) {
-      $pta = new PluginFusioninventoryAgents;
+      $pta = new PluginFusioninventoryAgent;
       $ptc = new PluginFusioninventoryCommunication;
 
       $a_agent = $pta->InfosByKey($deviceid);
@@ -236,9 +236,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
    function RemoteStartAgent($id, $ip) {
       $ptcm = new PluginFusioninventoryConfigModules;
-      $pfia = new PluginFusioninventoryAgents;
+      $pfia = new PluginFusioninventoryAgent;
 
-      if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventory::haveRight("remotecontrol","w"))) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
          return false;
       }
       $pfia->getFromDB($id);
@@ -260,9 +260,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG,$CFG_GLPI;
 
       $ptcm = new PluginFusioninventoryConfigModules;
-      $pfia = new PluginFusioninventoryAgents;
+      $pfia = new PluginFusioninventoryAgent;
 
-      if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventory::haveRight("remotecontrol","w"))) {
+      if ((!$ptcm->isActivated('remotehttpagent')) AND(!PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
          return;
       }
       if ($type == 'PluginFusioninventoryAgent') {
@@ -369,7 +369,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function showAgentInventory($items_id, $itemtype) {
       global $DB,$LANG;
 
-      $pfia = new PluginFusioninventoryAgents;
+      $pfia = new PluginFusioninventoryAgent;
       $computer_ID = 0;
       $count_agent_on = 0;
 
@@ -468,7 +468,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       // Recherche des agents qui ont le NETDISCOVERY à oui
       $np = new NetworkPort;
-      $pfia = new PluginFusioninventoryAgents;
+      $pfia = new PluginFusioninventoryAgent;
       $count_agent_on = 0;
       $existantantip = array();
       $existantantip["127.0.0.1"] = 1;
@@ -510,7 +510,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG;
       // Recherche des agents qui ont le SNMPQUERY à oui
       $np = new NetworkPort;
-      $pfia = new PluginFusioninventoryAgents;
+      $pfia = new PluginFusioninventoryAgent;
 
       $count_agent_on = 0;
       $existantantip = array();
@@ -572,7 +572,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG;
 
       $np = new NetworkPort;
-      $pfia = new PluginFusioninventoryAgents;
+      $pfia = new PluginFusioninventoryAgent;
 
       $count_agent_on = 0;
       $existantantip = array();
@@ -650,7 +650,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $DB,$LANG;
 
       $ptcm = new PluginFusioninventoryConfigModules;
-      $pfia = new PluginFusioninventoryAgents;
+      $pfia = new PluginFusioninventoryAgent;
 
       $dropdownOptions = "";
 
@@ -660,14 +660,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                            `glpi_networkequipments`.`name` AS `name`, `serial`, `otherserial`,
-                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
+                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_snmpmodels_id`
                          FROM `glpi_networkequipments`
                          LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                               ON `networkequipments_id`=`glpi_networkequipments`.`id`
-                         INNER join `glpi_plugin_fusioninventory_modelinfos`
-                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
+                         INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                              ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                          WHERE `glpi_networkequipments`.`is_deleted`='0'
-                              AND `plugin_fusioninventory_modelinfos_id`!='0'
+                              AND `plugin_fusioninventory_snmpmodels_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY networkequipments_id";
          $result=$DB->query($query);
@@ -681,17 +681,17 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $dropdownOptions .= "<optgroup label=\"".$LANG['help'][27]."\">";
          $query = "SELECT `glpi_printers`.`id` AS `gID`,
                            `glpi_printers`.`name` AS `name`, `serial`, `otherserial`,
-                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
+                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_snmpmodels_id`
                          FROM `glpi_printers`
                          LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `printers_id`=`glpi_printers`.`id`
                          LEFT JOIN `glpi_networkports`
                                  ON `items_id`=`glpi_printers`.`id`
                                     AND `itemtype`='".PRINTER_TYPE."'
-                         INNER join `glpi_plugin_fusioninventory_modelinfos`
-                              ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
+                         INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                              ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                          WHERE `glpi_printers`.`is_deleted`='0'
-                              AND `plugin_fusioninventory_modelinfos_id`!='0'
+                              AND `plugin_fusioninventory_snmpmodels_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY printers_id";
          $result=$DB->query($query);

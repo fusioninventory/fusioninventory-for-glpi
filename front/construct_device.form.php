@@ -44,14 +44,14 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 PluginFusioninventoryDisplay::mini_menu();
 
 if (isset($_GET['vlan_update'])) {
-   $query_update = "UPDATE `glpi_plugin_fusioninventory_construct_mibs`
+   $query_update = "UPDATE `glpi_plugin_fusioninventory_constructdevice_miboids`
          SET vlan=0
-      WHERE construct_device_id=".$_GET['id']."
-         AND mib_oid_id=".$_GET['vlan_update'];
+      WHERE plugin_fusioninventory_constructdevices_id=".$_GET['id']."
+         AND plugin_fusioninventory_miboids_id=".$_GET['vlan_update'];
    $DB->query($query_update);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["add"])) {
-   $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_device
+   $query = "SELECT * FROM glpi_plugin_fusioninventory_constructdevices
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);
 	if ($DB->numrows($result) == '0') {
@@ -64,7 +64,7 @@ if (isset($_GET['vlan_update'])) {
    $i = 1;
    while ($i == '1') {
       $md5 = md5(rand(1, 1000000));
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_constructdevicewalks`
          WHERE log='".$md5."' ";
       $result = $DB->query($query);
       if ($DB->numrows($result) == "0") {
@@ -72,9 +72,9 @@ if (isset($_GET['vlan_update'])) {
       }   
    }
 
-   $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_construct_walks` (
+   $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_constructdevicewalks` (
 `id` ,
-`construct_device_id` ,
+`plugin_fusioninventory_constructdevices_id` ,
 `log`
 )
 VALUES (
@@ -87,13 +87,18 @@ NULL , '".$_POST['id']."', '".$md5."'
    foreach($_POST['oidsselected'] as $oid) {
       $a_mapping = explode('||', $_POST['links_oid_fields_'.$oid]);
 
-      $query_ins = "INSERT INTO glpi_plugin_fusioninventory_construct_mibs
-         (`mib_oid_id`, `construct_device_id`, `mapping_name`,
-            `oid_port_counter`, `oid_port_dyn`, `mapping_type`, `vlan`)
+      $mapping = new PluginFusioninventoryMapping;
+      $mappings = $mapping->find("`type`='".$a_mapping[0]."'
+                                 AND `name`='".$a_mapping[1]."'");
+      $mappings_id = $mappings->fields['id'];
+      $query_ins = "INSERT INTO glpi_plugin_fusioninventory_constructdevice_miboids
+         (`plugin_fusioninventory_miboids_id`, `plugin_fusioninventory_constructdevices_id`,
+            `plugin_fusioninventory_mappings_id`,
+            `oid_port_counter`, `oid_port_dyn`, `vlan`)
          VALUES
-         ('".$oid."', '".$_POST['id']."', '".$a_mapping[1]."',
+         ('".$oid."', '".$_POST['id']."', '".$mappings_id."',
             '".$_POST['oid_port_counter_'.$oid]."',
-            '".$_POST['oid_port_dyn_'.$oid]."', '".$a_mapping[0]."',
+            '".$_POST['oid_port_dyn_'.$oid]."',
               '".$_POST['vlan_'.$oid]."' )";
       $DB->query($query_ins);     
    }

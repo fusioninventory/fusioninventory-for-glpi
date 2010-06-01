@@ -51,7 +51,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
     *  - type
     *  - agent_id
     *  - entity
-    *  - plugin_fusioninventory_modelinfos_id
+    *  - plugin_fusioninventory_snmpmodels_id
     *  - authSNMP
     *
     *@return Nothing (displays)
@@ -85,7 +85,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if ($insert == "1") {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_discovery`
                                   (`date`, `ip`, `name`, `descr`, `serialnumber`, `type`,
-                                   `plugin_fusioninventory_agents_id`, `entities_id`, `plugin_fusioninventory_modelinfos_id`,
+                                   `plugin_fusioninventory_agents_id`, `entities_id`, `plugin_fusioninventory_snmpmodels_id`,
                                    `plugin_fusioninventory_snmpauths_id`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
@@ -95,7 +95,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                              '".$Array['type']."',
                              '".$Array['agent_id']."',
                              '".$Array['entity']."',
-                             '".$Array['plugin_fusioninventory_modelinfos_id']."',
+                             '".$Array['plugin_fusioninventory_snmpmodels_id']."',
                              '".$Array['authSNMP']."');";
             $DB->query($query);
          }
@@ -120,7 +120,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$discovery_ID."'
-                      AND `itemtype` = 'PluginFusioninventoryUnknowndevice';";
+                      AND `itemtype` = 'PluginFusioninventoryUnknownDevice';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
          $NetworkPort->getFromDB($data["id"]);
@@ -151,7 +151,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $NetworkPort->update($data_Port);
 
             $data_fusioninventory["printers_id"] = $ID_Device;
-            $data_fusioninventory["plugin_fusioninventory_modelinfos_id"] = $ptud->fields["plugin_fusioninventory_modelinfos_id"];
+            $data_fusioninventory["plugin_fusioninventory_snmpmodels_id"] = $ptud->fields["plugin_fusioninventory_snmpmodels_id"];
             $data_fusioninventory["plugin_fusioninventory_snmpauths_id"] = $ptud->fields["plugin_fusioninventory_snmpauths_id"];
             $tp->add($data_fusioninventory);
 
@@ -161,7 +161,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
          case NETWORKING_TYPE :
             $Netdevice = new Netdevice;
-            $fusioninventory_networking = new PluginFusioninventoryNetworkequipment;
+            $fusioninventory_networking = new PluginFusioninventoryNetworkEquipment;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
             if (!empty($ptud->fields["name"])) {
@@ -186,7 +186,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             $Netdevice->deleteFromDB($NetworkPort->fields["id"]);
 
             $data_fusioninventory["networkequipments_id"] = $ID_Device;
-            $data_fusioninventory["plugin_fusioninventory_modelinfos_id"] = $ptud->fields["plugin_fusioninventory_modelinfos_id"];
+            $data_fusioninventory["plugin_fusioninventory_snmpmodels_id"] = $ptud->fields["plugin_fusioninventory_snmpmodels_id"];
             $data_fusioninventory["plugin_fusioninventory_snmpauths_id"] = $ptud->fields["plugin_fusioninventory_snmpauths_id"];
             $fusioninventory_networking->add($data_fusioninventory);
 
@@ -482,7 +482,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          $a_types = array($p_type);
       } else {
          $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
-                           PHONE_TYPE, 'PluginFusioninventoryUnknowndevice');
+                           PHONE_TYPE, 'PluginFusioninventoryUnknownDevice');
       }
 
       $condition = "";
@@ -524,7 +524,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
       foreach ($a_types as $type) {
          $ci->setType($type,true);
-         if ($type == 'PluginFusioninventoryUnknowndevice') {
+         if ($type == 'PluginFusioninventoryUnknownDevice') {
             $query = "SELECT ".$ci->obj->table.".id ".$select_unknown." FROM ".$ci->obj->table;
          } else {
             $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
@@ -532,7 +532,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if ($ci->obj->table != "glpi_networkequipments") {
             $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".id AND itemtype=".$type;
          }
-         if ($type == 'PluginFusioninventoryUnknowndevice') {
+         if ($type == 'PluginFusioninventoryUnknownDevice') {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;
          } else {
             $query .= " WHERE is_deleted=0 ".$condition;
@@ -548,8 +548,8 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          }
       }
 
-      // Search in 'PluginFusioninventoryUnknowndevice' when ip in not empty (so when it's a switch)
-      $ci->setType('PluginFusioninventoryUnknowndevice',true);
+      // Search in 'PluginFusioninventoryUnknownDevice' when ip in not empty (so when it's a switch)
+      $ci->setType('PluginFusioninventoryUnknownDevice',true);
       $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
       $query .= " WHERE is_deleted=0 ".$condition;
       $result = $DB->query($query);

@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$agents = new PluginFusioninventoryAgents;
+$agents = new PluginFusioninventoryAgent;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
@@ -65,7 +65,7 @@ if (isset ($_POST["add"])) {
 	$agents->delete($_POST);
 	glpi_header("agents.php");
 } else if (isset ($_POST["startagent"])) {
-   $pta = new PluginFusioninventoryAgents;
+   $pta = new PluginFusioninventoryAgent;
    $pta->RemoteStartAgent($_POST['agentID'], $_POST['ip']);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }

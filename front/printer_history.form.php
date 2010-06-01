@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("printer","r");
 PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 
-$printer_history = new PluginFusioninventoryPrintersHistory;
+$printer_history = new PluginFusioninventoryPrinterLog;
 
 if ((isset($_POST['delete']))) {
 	

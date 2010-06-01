@@ -39,17 +39,16 @@ include_once ("includes.php");
 function plugin_init_fusioninventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
-   Plugin::registerClass('PluginFusioninventoryAgents');
-   Plugin::registerClass('PluginFusioninventoryAgentsProcesses');
+   Plugin::registerClass('PluginFusioninventoryAgent');
+   Plugin::registerClass('PluginFusioninventoryAgentProcess');
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryConstructDevice');
-   Plugin::registerClass('PluginFusioninventoryErrors');
    Plugin::registerClass('PluginFusioninventoryModelInfos');
-   Plugin::registerClass('PluginFusioninventoryNetworkequipment');
+   Plugin::registerClass('PluginFusioninventoryNetworkEquipment');
    Plugin::registerClass('PluginFusioninventoryPrinter');
-   Plugin::registerClass('PluginFusioninventoryRangeIP');
-   Plugin::registerClass('PluginFusioninventorySnmpauth');
-   Plugin::registerClass('PluginFusioninventorySnmphistory');
+   Plugin::registerClass('PluginFusioninventoryIPRange');
+   Plugin::registerClass('PluginFusioninventoryConfigSNMPSecurity');
+   Plugin::registerClass('PluginFusioninventoryNetworkPortLog');
    Plugin::registerClass('PluginFusioninventoryTask');
    Plugin::registerClass('PluginFusioninventoryUnknownDevice');
    Plugin::registerClass('PluginFusioninventoryNetworkport2',
@@ -106,20 +105,20 @@ function plugin_init_fusioninventory() {
             ) {
 
             $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
-            if (PluginFusioninventory::haveRight("snmp_models","w")) {
+            if (PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = 'front/models.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = 'front/models.php';
             }
-            if (PluginFusioninventory::haveRight("snmp_authentification","w")) {
+            if (PluginFusioninventoryAuth::haveRight("snmp_authentification","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['snmp_auth'] = 'front/snmp_auth.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/snmp_auth.php';
             }
-            if (PluginFusioninventory::haveRight("agents","w")) {
+            if (PluginFusioninventoryAuth::haveRight("agents","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agents.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agents.php';
             }
 
-            if (PluginFusioninventory::haveRight("rangeip","w")) {
+            if (PluginFusioninventoryAuth::haveRight("rangeip","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rangeip'] = 'front/rangeip.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rangeip'] = 'front/rangeip.php';
             }
@@ -127,7 +126,7 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['constructdevice'] = 'front/construct_device.form.php?add=1';
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['constructdevice'] = 'front/construct_device.php';
 
-            if (PluginFusioninventory::haveRight("configuration","r")) {
+            if (PluginFusioninventoryAuth::haveRight("configuration","r")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/functionalities.form.php';
             }
 			}
@@ -169,7 +168,7 @@ function plugin_fusioninventory_check_config() {
 function plugin_fusioninventory_haveTypeRight($type,$right) {
 	switch ($type) {
 		case 'PluginFusioninventoryError' :
-			return PluginFusioninventory::haveRight("errors",$right);
+			return PluginFusioninventoryAuth::haveRight("errors",$right);
 			break;
 	}
 	return true;

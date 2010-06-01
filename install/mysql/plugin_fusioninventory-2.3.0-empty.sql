@@ -1,39 +1,41 @@
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computers`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_networking`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_history`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_stats`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_discovery`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_errors`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;  -- obsolete table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;  -- obsolete table
+## obsolete tables
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computers`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_networking`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_stats`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_discovery`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_errors`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;
 
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_label`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_object`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_oid`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_inventory_state`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_history`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_device`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_walks`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_mibs`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mib_networking`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_model_infos`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ifaddr`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ports`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers_history`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rangeip`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history_connections`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_connection`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;  -- renamed table
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;  -- renamed table
+## renamed tables
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_label`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_object`;
+DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_oid`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_inventory_state`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_device`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_walks`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_mibs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mib_networking`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_model_infos`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ifaddr`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ports`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rangeip`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history_connections`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_connection`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
 
 
@@ -153,7 +155,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentprocesses` (
    `query_nb_connections_deleted` int(11) NOT NULL DEFAULT '0',
    `comment` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
    PRIMARY KEY (`id`),
-   KEY `process_number` (`process_number`,`FK_agent`),
+   KEY `process_number` (`process_number`,`plugin_fusioninventory_agents_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -230,16 +232,16 @@ CREATE TABLE `glpi_plugin_fusioninventory_constructdevicewalks` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_constructdevices_miboids`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_constructdevice_miboids`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_constructdevices_miboids` (
+CREATE TABLE `glpi_plugin_fusioninventory_constructdevice_miboids` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_miboids_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_constructdevices_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `oid_port_counter` int(1) NOT NULL DEFAULT '0',
    `oid_port_dyn` int(1) NOT NULL DEFAULT '0',
-   `mapping_type` varchar(255) DEFAULT NULL,
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
    `vlan` int(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -277,7 +279,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockables`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_lockables` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-   `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL;
+   `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    `tablefields` TEXT ,
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0',
@@ -581,7 +583,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_mappings` (
    `tablefield` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `locale` INT( 4 ) NOT NULL,
    PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` (`name`, `type`)
+   KEY `name` (`name`),
+   KEY `type` (`type`)
+##   UNIQUE KEY `unicity` (`name`, `type`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -612,19 +616,19 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0');
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0');
 
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '2', '1', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '3', '2', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '4', '3', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '5', '4', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '6', '5', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '7', '6', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '8', '7', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '9', '8', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '10', '9', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '11', '10', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '14', '11', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '12', '12', '0');
---INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '13', '13', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '2', '1', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '3', '2', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '4', '3', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '5', '4', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '6', '5', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '7', '6', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '8', '7', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '9', '8', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '10', '9', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '11', '10', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '14', '11', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '12', '12', '0');
+##INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryNetworkPort', '13', '13', '0');
 
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryAgent', '8', '1', '0');
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryAgent', '9', '2', '0');
@@ -634,13 +638,13 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryAgent', '13', '6', '0');
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryAgent', '14', '7', '0');
 
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIpRange', '2', '1', '0');
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIpRange', '3', '2', '0');
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIpRange', '5', '3', '0');
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIpRange', '6', '4', '0');
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIpRange', '9', '5', '0');
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIpRange', '7', '6', '0');
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIpRange', '8', '7', '0');
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIPRange', '2', '1', '0');
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIPRange', '3', '2', '0');
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIPRange', '5', '3', '0');
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIPRange', '6', '4', '0');
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIPRange', '9', '5', '0');
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIPRange', '7', '6', '0');
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryIPRange', '8', '7', '0');
 
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryAgentProcess', '2', '1', '0');
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) VALUES (NULL,'PluginFusioninventoryAgentProcess', '3', '2', '0');

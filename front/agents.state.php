@@ -37,9 +37,9 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
 //if (isset ($_POST["startagent"])) {
-//   $pta = new PluginFusioninventoryAgents;
+//   $pta = new PluginFusioninventoryAgent;
 //   $ptt = new PluginFusioninventoryTask;
-//   $ptais = new PluginFusioninventoryAgentsInventoryState;
+//   $ptais = new PluginFusioninventoryAgentInventoryState;
 //
 //   if ($ptt->addTask(0, 0, 'INVENTORY', $_POST['agentID'])) {
 //      $ptais->changeStatus($_POST['id'], 1);
@@ -50,7 +50,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 //	glpi_header($_SERVER['HTTP_REFERER']);
 //}
 //
-//$ptais = new PluginFusioninventoryAgentsInventoryState;
+//$ptais = new PluginFusioninventoryAgentInventoryState;
 //$ptais->computerState($_SERVER["PHP_SELF"], $_GET["id"]);
 
 

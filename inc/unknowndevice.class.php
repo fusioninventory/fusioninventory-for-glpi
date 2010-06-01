@@ -35,7 +35,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_unknowndevices";
-		$this->type = 'PluginFusioninventoryUnknowndevice';
       $this->dohistory=true;
 	}
 
@@ -48,7 +47,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		if ($this->fields['id'] > 0){
          $ong[1]=$LANG['title'][27];
          $ong[2]=$LANG['buttons'][37];
-         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
+         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
             $ong[3]=$LANG['plugin_fusioninventory']["task"][2];
          }
          $ong[4]=$LANG['title'][38];
@@ -209,15 +208,15 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "<td align='center'>";
          Dropdown::show("PluginFusioninventoryModelInfos",
-                        array('name'=>"plugin_fusioninventory_modelinfos_id",
-                              'value'=>$this->fields["plugin_fusioninventory_modelinfos_id"]));
+                        array('name'=>"plugin_fusioninventory_snmpmodels_id",
+                              'value'=>$this->fields["plugin_fusioninventory_snmpmodels_id"]));
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][3] . " :</td>";
          echo "<td align='center'>";
-         Dropdown::show("PluginFusioninventorySnmpauth",
+         Dropdown::show("PluginFusioninventoryConfigSNMPSecurity",
                         array('name'=>"plugin_fusioninventory_snmpauths_id",
                               'value'=>$this->fields["plugin_fusioninventory_snmpauths_id"]));
          echo "</td>";
@@ -273,7 +272,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                 FROM `glpi_networkports`
                      LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
                                ON `items_id`=`glpi_plugin_fusioninventory_unknowndevices`.`id`
-                     WHERE `itemtype`=".'PluginFusioninventoryUnknowndevice'."
+                     WHERE `itemtype`=".'PluginFusioninventoryUnknownDevice'."
                            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
@@ -298,7 +297,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                 FROM `glpi_networkports`
                 WHERE `mac` != ''
                       AND `mac` != '00:00:00:00:00:00'
-                      AND `itemtype`=".'PluginFusioninventoryUnknowndevice'."
+                      AND `itemtype`=".'PluginFusioninventoryUnknownDevice'."
                 GROUP BY `mac`
                 HAVING COUNT(*)>0;";
 		if ($result=$DB->query($query)) {
@@ -308,7 +307,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                             FROM `glpi_networkports`
                             WHERE `mac` IN ('".$data["mac"]."','".strtoupper($data["mac"])."',
                                               '".strtolower($data["mac"])."')
-                                  AND `itemtype`!=".'PluginFusioninventoryUnknowndevice'."
+                                  AND `itemtype`!=".'PluginFusioninventoryUnknownDevice'."
                             LIMIT 0,1;";
 				$result_known=$DB->query($query_known);
             if ($DB->numrows($result_known) > 0) {
@@ -365,7 +364,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->getFromDB($id);
 
       // Get port
-      $a_ports = $np->find('items_id='.$id." AND itemtype='PluginFusioninventoryUnknowndevice'");
+      $a_ports = $np->find('items_id='.$id." AND itemtype='PluginFusioninventoryUnknownDevice'");
 
       if (count($a_ports) == '1') {
          // Put mac and ip to unknown

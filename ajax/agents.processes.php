@@ -47,31 +47,31 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 switch($_POST['glpi_tab']) {
 	case -1 :
-      $ptap = new PluginFusioninventoryAgentsProcesses;
+      $ptap = new PluginFusioninventoryAgentProcess;
       $ptap->ShowProcesses();
-      $ptac = new PluginFusioninventorySnmphistoryconnection;
+      $ptac = new PluginFusioninventoryNetworkPortConnectionLog;
       $ptac->showForm($_GET);
-      $ptae = new PluginFusioninventoryAgentsErrors;
+      $ptae = new PluginFusioninventoryAgentProcessError;
       $ptae->ShowErrors($_GET);
 		break;
 
 	case 1 :
-      $ptap = new PluginFusioninventoryAgentsProcesses;
+      $ptap = new PluginFusioninventoryAgentProcess;
       $ptap->ShowProcesses();
 		break;
 
    case 2 :
-      $ptac = new PluginFusioninventorySnmphistoryconnection;
+      $ptac = new PluginFusioninventoryNetworkPortConnectionLog;
       $ptac->showForm($_POST);
 		break;
 
    case 3 :
-      $ptae = new PluginFusioninventoryAgentsErrors;
+      $ptae = new PluginFusioninventoryAgentProcessError;
       $ptae->ShowErrors($_POST);
 		break;
 
    default :
-      $ptap = new PluginFusioninventoryAgentsProcesses;
+      $ptap = new PluginFusioninventoryAgentProcess;
       $ptap->ShowProcesses();
 		break;
 }

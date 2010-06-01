@@ -145,10 +145,10 @@ class PluginFusioninventoryCommunication {
     **/
    function addQuery($pxml, $task=0) {
       $ptmi    = new PluginFusioninventoryModelInfos;
-      $ptsnmpa = new PluginFusioninventorySnmpauth;
-      $pta     = new PluginFusioninventoryAgents;
-      $ptap    = new PluginFusioninventoryAgentsProcesses;
-      $ptrip   = new PluginFusioninventoryRangeIP;
+      $ptsnmpa = new PluginFusioninventoryConfigSNMPSecurity;
+      $pta     = new PluginFusioninventoryAgent;
+      $ptap    = new PluginFusioninventoryAgentProcess;
+      $ptrip   = new PluginFusioninventoryIPRange;
       $ptt     = new PluginFusioninventoryTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
@@ -255,10 +255,10 @@ class PluginFusioninventoryCommunication {
     *@return nothing
     **/
    function addDiscovery($pxml, $task=0) {
-      $ptsnmpa = new PluginFusioninventorySnmpauth;
-      $pta     = new PluginFusioninventoryAgents;
-      $ptap    = new PluginFusioninventoryAgentsProcesses;
-      $ptrip   = new PluginFusioninventoryRangeIP;
+      $ptsnmpa = new PluginFusioninventoryConfigSNMPSecurity;
+      $pta     = new PluginFusioninventoryAgent;
+      $ptap    = new PluginFusioninventoryAgentProcess;
+      $ptrip   = new PluginFusioninventoryIPRange;
       $ptt     = new PluginFusioninventoryTask;
 
       $agent = $pta->InfosByKey($pxml->DEVICEID);
@@ -336,7 +336,7 @@ class PluginFusioninventoryCommunication {
     *@return nothing
     **/
    function addAuth($p_sxml_node, $p_id) {
-      $ptsnmpa = new PluginFusioninventorySnmpauth;
+      $ptsnmpa = new PluginFusioninventoryConfigSNMPSecurity;
       $ptsnmpa->getFromDB($p_id);
 
       $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
@@ -458,14 +458,14 @@ class PluginFusioninventoryCommunication {
             $type='NETWORKING';
             $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                              `glpi_networkequipments`.`ip` AS `gnifaddr`,
-                             `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
+                             `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_snmpmodels_id`
                       FROM `glpi_networkequipments`
                       LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                            ON `networkequipments_id`=`glpi_networkequipments`.`id`
-                      INNER join `glpi_plugin_fusioninventory_modelinfos`
-                           ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
+                      INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                           ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                       WHERE `glpi_networkequipments`.`is_deleted`='0'
-                           AND `plugin_fusioninventory_modelinfos_id`!='0'
+                           AND `plugin_fusioninventory_snmpmodels_id`!='0'
                            AND `plugin_fusioninventory_snmpauths_id`!='0'";
              if ($p_entity != '-1') {
                $query .= "AND `glpi_networkequipments`.`entities_id`='".$p_entity."' ";
@@ -484,17 +484,17 @@ class PluginFusioninventoryCommunication {
             $type='PRINTER';
             $query = "SELECT `glpi_printers`.`id` AS `gID`,
                              `glpi_networkports`.`ip` AS `gnifaddr`,
-                             `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_modelinfos_id`
+                             `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_snmpmodels_id`
                       FROM `glpi_printers`
                       LEFT JOIN `glpi_plugin_fusioninventory_printers`
                               ON `printers_id`=`glpi_printers`.`id`
                       LEFT JOIN `glpi_networkports`
                               ON `items_id`=`glpi_printers`.`id`
                                  AND `itemtype`='".PRINTER_TYPE."'
-                      INNER join `glpi_plugin_fusioninventory_modelinfos`
-                           ON `plugin_fusioninventory_modelinfos_id`=`glpi_plugin_fusioninventory_modelinfos`.`id`
+                      INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                           ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                       WHERE `glpi_printers`.`is_deleted`=0
-                            AND `plugin_fusioninventory_modelinfos_id`!='0'
+                            AND `plugin_fusioninventory_snmpmodels_id`!='0'
                             AND `plugin_fusioninventory_snmpauths_id`!='0'";
              if ($p_entity != '-1') {
                $query .= "AND `glpi_printers`.`entities_id`='".$p_entity."' ";
@@ -520,10 +520,10 @@ class PluginFusioninventoryCommunication {
                            $data['gID'],
                            $data['gnifaddr'],
                            $data['plugin_fusioninventory_snmpauths_id'],
-                           $data['plugin_fusioninventory_modelinfos_id'],
+                           $data['plugin_fusioninventory_snmpmodels_id'],
                            $type);
          }
-         $modelslistused[$data['plugin_fusioninventory_modelinfos_id']] = 1;
+         $modelslistused[$data['plugin_fusioninventory_snmpmodels_id']] = 1;
       }
       return $modelslistused;
    }
@@ -576,7 +576,7 @@ class PluginFusioninventoryCommunication {
       if ($errors != '') {
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
             $result=true;
-            $ptap = new PluginFusioninventoryAgentsProcesses;
+            $ptap = new PluginFusioninventoryAgentProcess;
             $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                  array('comment' => $errors));
 
@@ -598,8 +598,8 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $this->addLog('Function importContent().');
-      $ptap = new PluginFusioninventoryAgentsProcesses;
-      $pta  = new PluginFusioninventoryAgents;
+      $ptap = new PluginFusioninventoryAgentProcess;
+      $pta  = new PluginFusioninventoryAgent;
       
       $errors='';
       $nbDevices = 0;
@@ -652,8 +652,8 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $this->addLog('Function importDevice().');
-      $ptap = new PluginFusioninventoryAgentsProcesses;
-      $ptae = new PluginFusioninventoryAgentsErrors;
+      $ptap = new PluginFusioninventoryAgentProcess;
+      $ptae = new PluginFusioninventoryAgentProcessError;
 
       $errors=''; $this->deviceId='';
       switch ($p_device->INFO->TYPE) {
@@ -803,7 +803,7 @@ class PluginFusioninventoryCommunication {
          }
       }
       if (!empty($errors)) {
-         $pfiae = new PluginFusioninventoryAgentsErrors;
+         $pfiae = new PluginFusioninventoryAgentProcessError;
 
          $a_input = array();
          $a_input['id'] = $p_info->ID;
@@ -830,7 +830,7 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $errors='';
-      $this->ptd = new PluginFusioninventoryNetworkequipment;
+      $this->ptd = new PluginFusioninventoryNetworkEquipment;
       $this->ptd->load($this->deviceId);
 
       foreach ($p_info->children() as $child)
@@ -946,7 +946,7 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $errors='';
-      $pti = new PluginFusioninventoryNetworkequipment_Ip;
+      $pti = new PluginFusioninventoryNetworkEquipmentIp;
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
@@ -1009,8 +1009,8 @@ class PluginFusioninventoryCommunication {
 
       $this->addLog('Function importPortNetworking().');
       $errors='';
-//      $ptp = new PluginFusioninventoryNetworkport(NETWORKING_TYPE);
-      $ptp = new PluginFusioninventoryNetworkport(NETWORKING_TYPE, $this->logFile);
+//      $ptp = new PluginFusioninventoryNetworkPort(NETWORKING_TYPE);
+      $ptp = new PluginFusioninventoryNetworkPort(NETWORKING_TYPE, $this->logFile);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
@@ -1029,22 +1029,22 @@ class PluginFusioninventoryCommunication {
                   $errors.=$this->importVlans($child, $ptp);
                   break;
                case 'IFNAME' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('mac', $child);
                   break;
                case 'IFNUMBER' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
                   break;
                case 'TRUNK' :
                   if (!$ptp->getNoTrunk()) {
-                     PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                     PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                      $ptp->setValue('vlanTrunkPortDynamicStatus', $p_port->$name);
                   }
                   break;
@@ -1059,7 +1059,7 @@ class PluginFusioninventoryCommunication {
                case 'IFOUTOCTETS' :
                case 'IFSPEED' :
                case 'IFSTATUS' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :
@@ -1083,7 +1083,7 @@ class PluginFusioninventoryCommunication {
       global $LANG;
 
       $errors='';
-      $ptp = new PluginFusioninventoryNetworkport(PRINTER_TYPE);
+      $ptp = new PluginFusioninventoryNetworkPort(PRINTER_TYPE);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
          $portIndex = $this->ptd->getPortIndex($p_port->MAC, $p_port->IP);
@@ -1096,19 +1096,19 @@ class PluginFusioninventoryCommunication {
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'IFNAME' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('name', $child);
                   break;
                case 'MAC' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('mac', $child);
                   break;
                case 'IP' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('ip', $child);
                   break;
                case 'IFNUMBER' :
-                  PluginFusioninventorySnmphistory::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
                   $ptp->setValue('logical_number', $child);
                   break;
                case 'IFTYPE' : // already managed
@@ -1487,7 +1487,7 @@ class PluginFusioninventoryCommunication {
       $this->setXML($p_xml);
 
       if ((isset($this->sxml->DEVICEID)) AND (isset($this->sxml->TOKEN))) {
-         $pta = new PluginFusioninventoryAgents;
+         $pta = new PluginFusioninventoryAgent;
          $a_agent = $pta->find("`key`='".$this->sxml->DEVICEID."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
@@ -1512,7 +1512,7 @@ class PluginFusioninventoryCommunication {
       global $DB;
 
       $this->addLog('Function sendInventoryToOcsServer().');
-      $ptais = new PluginFusioninventoryAgentsInventoryState;
+      $ptais = new PluginFusioninventoryAgentInventoryState;
       
       $this->setXML($p_xml);
 
@@ -1561,7 +1561,7 @@ class PluginFusioninventoryCommunication {
    function synchroOCS($p_xml) {
       global $DB;
 
-      $ptais = new PluginFusioninventoryAgentsInventoryState;
+      $ptais = new PluginFusioninventoryAgentInventoryState;
       
       $this->setXML($p_xml);
 
@@ -1579,7 +1579,7 @@ class PluginFusioninventoryCommunication {
 
    function addInventory() {
       $ptc  = new PluginFusioninventoryConfig;
-      $ptap = new PluginFusioninventoryAgentsProcesses;
+      $ptap = new PluginFusioninventoryAgentProcess;
 //      if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
 //         $this->addProcessNumber($ptap->addProcess($pxml));
 //         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
@@ -1590,7 +1590,7 @@ class PluginFusioninventoryCommunication {
 
 
    function addWakeonlan($pxml) {
-      $pta = new PluginFusioninventoryAgents;
+      $pta = new PluginFusioninventoryAgent;
       $ptt = new PluginFusioninventoryTask;
       $np  = new NetworkPort;
 

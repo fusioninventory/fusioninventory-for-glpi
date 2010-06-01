@@ -88,229 +88,229 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt['PluginFusioninventoryModelinfo']['common'] = $LANG['plugin_fusioninventory']["profile"][19];
 
-	$sopt['PluginFusioninventoryModelinfo'][1]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryModelinfo'][1]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryModelinfo'][1]['field'] = 'name';
 	$sopt['PluginFusioninventoryModelinfo'][1]['linkfield'] = 'name';
 	$sopt['PluginFusioninventoryModelinfo'][1]['name'] = $LANG["common"][16];
   $sopt['PluginFusioninventoryModelinfo'][1]['datatype']='itemlink';
   
-	$sopt['PluginFusioninventoryModelinfo'][30]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryModelinfo'][30]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryModelinfo'][30]['field'] = 'id';
 	$sopt['PluginFusioninventoryModelinfo'][30]['linkfield'] = '';
 	$sopt['PluginFusioninventoryModelinfo'][30]['name'] = $LANG["common"][2];
 
-	$sopt['PluginFusioninventoryModelinfo'][3]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryModelinfo'][3]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryModelinfo'][3]['field'] = 'itemtype';
 	$sopt['PluginFusioninventoryModelinfo'][3]['linkfield'] = 'itemtype';
 	$sopt['PluginFusioninventoryModelinfo'][3]['name'] = $LANG["common"][17];
 
-	$sopt['PluginFusioninventoryModelinfo'][5]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryModelinfo'][5]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryModelinfo'][5]['field'] = 'id';
 	$sopt['PluginFusioninventoryModelinfo'][5]['linkfield'] = '';
 	$sopt['PluginFusioninventoryModelinfo'][5]['name'] = $LANG["buttons"][31];
 
-	$sopt['PluginFusioninventoryModelinfo'][6]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryModelinfo'][6]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryModelinfo'][6]['field'] = 'activation';
 	$sopt['PluginFusioninventoryModelinfo'][6]['linkfield'] = 'activation';
 	$sopt['PluginFusioninventoryModelinfo'][6]['name'] = $LANG['plugin_fusioninventory']["model_info"][11];
 	$sopt['PluginFusioninventoryModelinfo'][6]['datatype']='bool';
 
-	$sopt['PluginFusioninventoryModelinfo'][7]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryModelinfo'][7]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryModelinfo'][7]['field'] = 'discovery_key';
 	$sopt['PluginFusioninventoryModelinfo'][7]['linkfield'] = 'discovery_key';
 	$sopt['PluginFusioninventoryModelinfo'][7]['name'] = $LANG['plugin_fusioninventory']["model_info"][12];
 
-	$sopt['PluginFusioninventoryModelinfo'][8]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryModelinfo'][8]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryModelinfo'][8]['field'] = 'comment';
 	$sopt['PluginFusioninventoryModelinfo'][8]['linkfield'] = 'comment';
 	$sopt['PluginFusioninventoryModelinfo'][8]['name'] = $LANG['common'][25];
 
-	$sopt['PluginFusioninventorySnmpauth']['common'] = $LANG['plugin_fusioninventory']["profile"][22];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity']['common'] = $LANG['plugin_fusioninventory']["profile"][22];
 
-	$sopt['PluginFusioninventorySnmpauth'][1]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
-	$sopt['PluginFusioninventorySnmpauth'][1]['field'] = 'name';
-	$sopt['PluginFusioninventorySnmpauth'][1]['linkfield'] = 'name';
-	$sopt['PluginFusioninventorySnmpauth'][1]['name'] = $LANG["common"][16];
-  $sopt['PluginFusioninventorySnmpauth'][1]['datatype']='itemlink';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][1]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][1]['field'] = 'name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][1]['linkfield'] = 'name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][1]['name'] = $LANG["common"][16];
+  $sopt['PluginFusioninventoryConfigSNMPSecurity'][1]['datatype']='itemlink';
   
-	$sopt['PluginFusioninventorySnmpauth'][30]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
-	$sopt['PluginFusioninventorySnmpauth'][30]['field'] = 'id';
-	$sopt['PluginFusioninventorySnmpauth'][30]['linkfield'] = 'id';
-	$sopt['PluginFusioninventorySnmpauth'][30]['name'] = $LANG["common"][2];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][30]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][30]['field'] = 'id';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][30]['linkfield'] = 'id';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][30]['name'] = $LANG["common"][2];
 
-	$sopt['PluginFusioninventorySnmpauth'][3]['table'] = 'glpi_plugin_fusioninventory_snmpversions';
-	$sopt['PluginFusioninventorySnmpauth'][3]['field'] = 'name';
-	$sopt['PluginFusioninventorySnmpauth'][3]['linkfield'] = 'plugin_fusioninventory_snmpversions_id';
-	$sopt['PluginFusioninventorySnmpauth'][3]['name'] = $LANG['plugin_fusioninventory']["model_info"][2];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][3]['table'] = 'glpi_plugin_fusioninventory_snmpversions';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][3]['field'] = 'name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][3]['linkfield'] = 'plugin_fusioninventory_snmpversions_id';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][3]['name'] = $LANG['plugin_fusioninventory']["model_info"][2];
 
-	$sopt['PluginFusioninventorySnmpauth'][4]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
-	$sopt['PluginFusioninventorySnmpauth'][4]['field'] = 'community';
-	$sopt['PluginFusioninventorySnmpauth'][4]['linkfield'] = 'community';
-	$sopt['PluginFusioninventorySnmpauth'][4]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][1];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][4]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][4]['field'] = 'community';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][4]['linkfield'] = 'community';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][4]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][1];
 
-	$sopt['PluginFusioninventorySnmpauth'][5]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
-	$sopt['PluginFusioninventorySnmpauth'][5]['field'] = 'sec_name';
-	$sopt['PluginFusioninventorySnmpauth'][5]['linkfield'] = 'sec_name';
-	$sopt['PluginFusioninventorySnmpauth'][5]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][2];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['field'] = 'sec_name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['linkfield'] = 'sec_name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][2];
 
-	$sopt['PluginFusioninventorySnmpauth'][7]['table'] = 'glpi_plugin_fusioninventory_snmpprotocolauths';
-	$sopt['PluginFusioninventorySnmpauth'][7]['field'] = 'name';
-	$sopt['PluginFusioninventorySnmpauth'][7]['linkfield'] = 'auth_protocol';
-	$sopt['PluginFusioninventorySnmpauth'][7]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][4];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['table'] = 'glpi_plugin_fusioninventory_snmpprotocolauths';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['field'] = 'name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['linkfield'] = 'auth_protocol';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][4];
 
-	$sopt['PluginFusioninventorySnmpauth'][8]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
-	$sopt['PluginFusioninventorySnmpauth'][8]['field'] = 'auth_passphrase';
-	$sopt['PluginFusioninventorySnmpauth'][8]['linkfield'] = 'auth_passphrase';
-	$sopt['PluginFusioninventorySnmpauth'][8]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][5];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][8]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][8]['field'] = 'auth_passphrase';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][8]['linkfield'] = 'auth_passphrase';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][8]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][5];
 
-	$sopt['PluginFusioninventorySnmpauth'][9]['table'] = 'glpi_plugin_fusioninventory_snmpprotocolprivs';
-	$sopt['PluginFusioninventorySnmpauth'][9]['field'] = 'name';
-	$sopt['PluginFusioninventorySnmpauth'][9]['linkfield'] = 'priv_protocol';
-	$sopt['PluginFusioninventorySnmpauth'][9]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][6];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['table'] = 'glpi_plugin_fusioninventory_snmpprotocolprivs';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['field'] = 'name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['linkfield'] = 'priv_protocol';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][6];
 
-	$sopt['PluginFusioninventorySnmpauth'][10]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
-	$sopt['PluginFusioninventorySnmpauth'][10]['field'] = 'priv_passphrase';
-	$sopt['PluginFusioninventorySnmpauth'][10]['linkfield'] = 'priv_passphrase';
-	$sopt['PluginFusioninventorySnmpauth'][10]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][7];
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][10]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][10]['field'] = 'priv_passphrase';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][10]['linkfield'] = 'priv_passphrase';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][10]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][7];
 
-	$sopt['PluginFusioninventoryUnknowndevice']['common'] = $LANG['plugin_fusioninventory']["menu"][4];
+	$sopt['PluginFusioninventoryUnknownDevice']['common'] = $LANG['plugin_fusioninventory']["menu"][4];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][1]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][1]['field'] = 'name';
-	$sopt['PluginFusioninventoryUnknowndevice'][1]['linkfield'] = 'name';
-	$sopt['PluginFusioninventoryUnknowndevice'][1]['name'] = $LANG["common"][16];
-   $sopt['PluginFusioninventoryUnknowndevice'][1]['datatype']='itemlink';
-   $sopt['PluginFusioninventoryUnknowndevice'][1]['forcegroupby']='1';
+	$sopt['PluginFusioninventoryUnknownDevice'][1]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][1]['field'] = 'name';
+	$sopt['PluginFusioninventoryUnknownDevice'][1]['linkfield'] = 'name';
+	$sopt['PluginFusioninventoryUnknownDevice'][1]['name'] = $LANG["common"][16];
+   $sopt['PluginFusioninventoryUnknownDevice'][1]['datatype']='itemlink';
+   $sopt['PluginFusioninventoryUnknownDevice'][1]['forcegroupby']='1';
 
-	$sopt['PluginFusioninventoryUnknowndevice'][2]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][2]['field'] = 'dnsname';
-	$sopt['PluginFusioninventoryUnknowndevice'][2]['linkfield'] = 'dnsname';
-	$sopt['PluginFusioninventoryUnknowndevice'][2]['name'] = $LANG['plugin_fusioninventory']["unknown"][0];
+	$sopt['PluginFusioninventoryUnknownDevice'][2]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][2]['field'] = 'dnsname';
+	$sopt['PluginFusioninventoryUnknownDevice'][2]['linkfield'] = 'dnsname';
+	$sopt['PluginFusioninventoryUnknownDevice'][2]['name'] = $LANG['plugin_fusioninventory']["unknown"][0];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][3]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][3]['field'] = 'date_mod';
-	$sopt['PluginFusioninventoryUnknowndevice'][3]['linkfield'] = '';
-	$sopt['PluginFusioninventoryUnknowndevice'][3]['name'] = $LANG["common"][26];
-   $sopt['PluginFusioninventoryUnknowndevice'][3]['datatype'] = 'datetime';
+	$sopt['PluginFusioninventoryUnknownDevice'][3]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][3]['field'] = 'date_mod';
+	$sopt['PluginFusioninventoryUnknownDevice'][3]['linkfield'] = '';
+	$sopt['PluginFusioninventoryUnknownDevice'][3]['name'] = $LANG["common"][26];
+   $sopt['PluginFusioninventoryUnknownDevice'][3]['datatype'] = 'datetime';
 
-	$sopt['PluginFusioninventoryUnknowndevice'][4]['table'] = 'glpi_entities';
-	$sopt['PluginFusioninventoryUnknowndevice'][4]['field'] = 'name';
-	$sopt['PluginFusioninventoryUnknowndevice'][4]['linkfield'] = 'entities_id';
-	$sopt['PluginFusioninventoryUnknowndevice'][4]['name'] = $LANG["entity"][0];
+	$sopt['PluginFusioninventoryUnknownDevice'][4]['table'] = 'glpi_entities';
+	$sopt['PluginFusioninventoryUnknownDevice'][4]['field'] = 'name';
+	$sopt['PluginFusioninventoryUnknownDevice'][4]['linkfield'] = 'entities_id';
+	$sopt['PluginFusioninventoryUnknownDevice'][4]['name'] = $LANG["entity"][0];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][5]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][5]['field'] = 'serial';
-	$sopt['PluginFusioninventoryUnknowndevice'][5]['linkfield'] = 'serial';
-	$sopt['PluginFusioninventoryUnknowndevice'][5]['name'] = $LANG['common'][19];
+	$sopt['PluginFusioninventoryUnknownDevice'][5]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][5]['field'] = 'serial';
+	$sopt['PluginFusioninventoryUnknownDevice'][5]['linkfield'] = 'serial';
+	$sopt['PluginFusioninventoryUnknownDevice'][5]['name'] = $LANG['common'][19];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][6]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][6]['field'] = 'otherserial';
-	$sopt['PluginFusioninventoryUnknowndevice'][6]['linkfield'] = 'otherserial';
-	$sopt['PluginFusioninventoryUnknowndevice'][6]['name'] = $LANG['common'][20];
+	$sopt['PluginFusioninventoryUnknownDevice'][6]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][6]['field'] = 'otherserial';
+	$sopt['PluginFusioninventoryUnknownDevice'][6]['linkfield'] = 'otherserial';
+	$sopt['PluginFusioninventoryUnknownDevice'][6]['name'] = $LANG['common'][20];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][7]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][7]['field'] = 'contact';
-	$sopt['PluginFusioninventoryUnknowndevice'][7]['linkfield'] = 'contact';
-	$sopt['PluginFusioninventoryUnknowndevice'][7]['name'] = $LANG['common'][18];
+	$sopt['PluginFusioninventoryUnknownDevice'][7]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][7]['field'] = 'contact';
+	$sopt['PluginFusioninventoryUnknownDevice'][7]['linkfield'] = 'contact';
+	$sopt['PluginFusioninventoryUnknownDevice'][7]['name'] = $LANG['common'][18];
  
-	$sopt['PluginFusioninventoryUnknowndevice'][8]['table'] = 'glpi_domains';
-	$sopt['PluginFusioninventoryUnknowndevice'][8]['field'] = 'name';
-	$sopt['PluginFusioninventoryUnknowndevice'][8]['linkfield'] = 'domain';
-	$sopt['PluginFusioninventoryUnknowndevice'][8]['name'] = $LANG["setup"][89];
+	$sopt['PluginFusioninventoryUnknownDevice'][8]['table'] = 'glpi_domains';
+	$sopt['PluginFusioninventoryUnknownDevice'][8]['field'] = 'name';
+	$sopt['PluginFusioninventoryUnknownDevice'][8]['linkfield'] = 'domain';
+	$sopt['PluginFusioninventoryUnknownDevice'][8]['name'] = $LANG["setup"][89];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][9]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][9]['field'] = 'comment';
-	$sopt['PluginFusioninventoryUnknowndevice'][9]['linkfield'] = 'comment';
-	$sopt['PluginFusioninventoryUnknowndevice'][9]['name'] = $LANG['common'][25];
+	$sopt['PluginFusioninventoryUnknownDevice'][9]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][9]['field'] = 'comment';
+	$sopt['PluginFusioninventoryUnknownDevice'][9]['linkfield'] = 'comment';
+	$sopt['PluginFusioninventoryUnknownDevice'][9]['name'] = $LANG['common'][25];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][10]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][10]['field'] = 'type';
-	$sopt['PluginFusioninventoryUnknowndevice'][10]['linkfield'] = 'type';
-	$sopt['PluginFusioninventoryUnknowndevice'][10]['name'] = $LANG['common'][17];
+	$sopt['PluginFusioninventoryUnknownDevice'][10]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][10]['field'] = 'type';
+	$sopt['PluginFusioninventoryUnknownDevice'][10]['linkfield'] = 'type';
+	$sopt['PluginFusioninventoryUnknownDevice'][10]['name'] = $LANG['common'][17];
 
-	$sopt['PluginFusioninventoryUnknowndevice'][11]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][11]['field'] = 'snmp';
-	$sopt['PluginFusioninventoryUnknowndevice'][11]['linkfield'] = 'snmp';
-	$sopt['PluginFusioninventoryUnknowndevice'][11]['name'] = $LANG['plugin_fusioninventory']["functionalities"][3];
-   $sopt['PluginFusioninventoryUnknowndevice'][11]['datatype']='bool';
+	$sopt['PluginFusioninventoryUnknownDevice'][11]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][11]['field'] = 'snmp';
+	$sopt['PluginFusioninventoryUnknownDevice'][11]['linkfield'] = 'snmp';
+	$sopt['PluginFusioninventoryUnknownDevice'][11]['name'] = $LANG['plugin_fusioninventory']["functionalities"][3];
+   $sopt['PluginFusioninventoryUnknownDevice'][11]['datatype']='bool';
    
-	$sopt['PluginFusioninventoryUnknowndevice'][12]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
-	$sopt['PluginFusioninventoryUnknowndevice'][12]['field'] = 'name';
-	$sopt['PluginFusioninventoryUnknowndevice'][12]['linkfield'] = 'plugin_fusioninventory_modelinfos_id';
-	$sopt['PluginFusioninventoryUnknowndevice'][12]['name'] = $LANG['plugin_fusioninventory']["model_info"][4];
+	$sopt['PluginFusioninventoryUnknownDevice'][12]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
+	$sopt['PluginFusioninventoryUnknownDevice'][12]['field'] = 'name';
+	$sopt['PluginFusioninventoryUnknownDevice'][12]['linkfield'] = 'plugin_fusioninventory_snmpmodels_id';
+	$sopt['PluginFusioninventoryUnknownDevice'][12]['name'] = $LANG['plugin_fusioninventory']["model_info"][4];
 
-   $sopt['PluginFusioninventoryUnknowndevice'][13]['table'] = 'glpi_plugin_fusioninventory_snmpauths';
-   $sopt['PluginFusioninventoryUnknowndevice'][13]['field'] = 'name';
-   $sopt['PluginFusioninventoryUnknowndevice'][13]['linkfield'] = 'plugin_fusioninventory_snmpauths_id';
-   $sopt['PluginFusioninventoryUnknowndevice'][13]['name'] = $LANG['plugin_fusioninventory']["model_info"][3];
+   $sopt['PluginFusioninventoryUnknownDevice'][13]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
+   $sopt['PluginFusioninventoryUnknownDevice'][13]['field'] = 'name';
+   $sopt['PluginFusioninventoryUnknownDevice'][13]['linkfield'] = 'plugin_fusioninventory_snmpauths_id';
+   $sopt['PluginFusioninventoryUnknownDevice'][13]['name'] = $LANG['plugin_fusioninventory']["model_info"][3];
 
-   $sopt['PluginFusioninventoryUnknowndevice'][14]['table'] = 'glpi_networkports';
-   $sopt['PluginFusioninventoryUnknowndevice'][14]['field'] = 'ip';
-   $sopt['PluginFusioninventoryUnknowndevice'][14]['linkfield'] = 'id';
-   $sopt['PluginFusioninventoryUnknowndevice'][14]['name'] = $LANG["networking"][14];
-   $sopt['PluginFusioninventoryUnknowndevice'][14]['forcegroupby']='1';
+   $sopt['PluginFusioninventoryUnknownDevice'][14]['table'] = 'glpi_networkports';
+   $sopt['PluginFusioninventoryUnknownDevice'][14]['field'] = 'ip';
+   $sopt['PluginFusioninventoryUnknownDevice'][14]['linkfield'] = 'id';
+   $sopt['PluginFusioninventoryUnknownDevice'][14]['name'] = $LANG["networking"][14];
+   $sopt['PluginFusioninventoryUnknownDevice'][14]['forcegroupby']='1';
 
-   $sopt['PluginFusioninventoryUnknowndevice'][15]['table'] = 'glpi_networkports';
-   $sopt['PluginFusioninventoryUnknowndevice'][15]['field'] = 'mac';
-   $sopt['PluginFusioninventoryUnknowndevice'][15]['linkfield'] = 'id';
-   $sopt['PluginFusioninventoryUnknowndevice'][15]['name'] = $LANG["networking"][15];
-   $sopt['PluginFusioninventoryUnknowndevice'][15]['forcegroupby']='1';
+   $sopt['PluginFusioninventoryUnknownDevice'][15]['table'] = 'glpi_networkports';
+   $sopt['PluginFusioninventoryUnknownDevice'][15]['field'] = 'mac';
+   $sopt['PluginFusioninventoryUnknownDevice'][15]['linkfield'] = 'id';
+   $sopt['PluginFusioninventoryUnknownDevice'][15]['name'] = $LANG["networking"][15];
+   $sopt['PluginFusioninventoryUnknownDevice'][15]['forcegroupby']='1';
 
-   $sopt['PluginFusioninventoryUnknowndevice'][16]['table'] = 'glpi_networkequipments';
-   $sopt['PluginFusioninventoryUnknowndevice'][16]['field'] = 'device';
-   $sopt['PluginFusioninventoryUnknowndevice'][16]['linkfield'] = 'device';
-   $sopt['PluginFusioninventoryUnknowndevice'][16]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG["reports"][52];
-   //$sopt['PluginFusioninventoryUnknowndevice'][16]['forcegroupby'] = '1';
+   $sopt['PluginFusioninventoryUnknownDevice'][16]['table'] = 'glpi_networkequipments';
+   $sopt['PluginFusioninventoryUnknownDevice'][16]['field'] = 'device';
+   $sopt['PluginFusioninventoryUnknownDevice'][16]['linkfield'] = 'device';
+   $sopt['PluginFusioninventoryUnknownDevice'][16]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG["reports"][52];
+   //$sopt['PluginFusioninventoryUnknownDevice'][16]['forcegroupby'] = '1';
 
-   $sopt['PluginFusioninventoryUnknowndevice'][17]['table'] = 'glpi_plugin_fusioninventory_networkports';
-   $sopt['PluginFusioninventoryUnknowndevice'][17]['field'] = 'id';
-   $sopt['PluginFusioninventoryUnknowndevice'][17]['linkfield'] = 'id';
-   $sopt['PluginFusioninventoryUnknowndevice'][17]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG["reports"][46];
-   $sopt['PluginFusioninventoryUnknowndevice'][17]['forcegroupby'] = '1';
+   $sopt['PluginFusioninventoryUnknownDevice'][17]['table'] = 'glpi_plugin_fusioninventory_networkports';
+   $sopt['PluginFusioninventoryUnknownDevice'][17]['field'] = 'id';
+   $sopt['PluginFusioninventoryUnknownDevice'][17]['linkfield'] = 'id';
+   $sopt['PluginFusioninventoryUnknownDevice'][17]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG["reports"][46];
+   $sopt['PluginFusioninventoryUnknownDevice'][17]['forcegroupby'] = '1';
 
-	$sopt['PluginFusioninventoryUnknowndevice'][18]['table'] = 'glpi_networkports';
-	$sopt['PluginFusioninventoryUnknowndevice'][18]['field'] = 'name';
-	$sopt['PluginFusioninventoryUnknowndevice'][18]['linkfield'] = 'id';
-	$sopt['PluginFusioninventoryUnknowndevice'][18]['name'] = $LANG['plugin_fusioninventory']["unknown"][1];
-   $sopt['PluginFusioninventoryUnknowndevice'][18]['forcegroupby']='1';
+	$sopt['PluginFusioninventoryUnknownDevice'][18]['table'] = 'glpi_networkports';
+	$sopt['PluginFusioninventoryUnknownDevice'][18]['field'] = 'name';
+	$sopt['PluginFusioninventoryUnknownDevice'][18]['linkfield'] = 'id';
+	$sopt['PluginFusioninventoryUnknownDevice'][18]['name'] = $LANG['plugin_fusioninventory']["unknown"][1];
+   $sopt['PluginFusioninventoryUnknownDevice'][18]['forcegroupby']='1';
 
-	$sopt['PluginFusioninventoryUnknowndevice'][19]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
-	$sopt['PluginFusioninventoryUnknowndevice'][19]['field'] = 'accepted';
-	$sopt['PluginFusioninventoryUnknowndevice'][19]['linkfield'] = 'accepted';
-	$sopt['PluginFusioninventoryUnknowndevice'][19]['name'] = $LANG['plugin_fusioninventory']["unknown"][2];
-   $sopt['PluginFusioninventoryUnknowndevice'][19]['datatype']='bool';
+	$sopt['PluginFusioninventoryUnknownDevice'][19]['table'] = 'glpi_plugin_fusioninventory_unknowndevices';
+	$sopt['PluginFusioninventoryUnknownDevice'][19]['field'] = 'accepted';
+	$sopt['PluginFusioninventoryUnknownDevice'][19]['linkfield'] = 'accepted';
+	$sopt['PluginFusioninventoryUnknownDevice'][19]['name'] = $LANG['plugin_fusioninventory']["unknown"][2];
+   $sopt['PluginFusioninventoryUnknownDevice'][19]['datatype']='bool';
 
-	$sopt['PluginFusioninventoryNetworkport']['common'] = $LANG['plugin_fusioninventory']["errors"][0];
+	$sopt['PluginFusioninventoryNetworkPort']['common'] = $LANG['plugin_fusioninventory']["errors"][0];
 
-	$sopt['PluginFusioninventoryNetworkport'][1]['name'] = $LANG["common"][16];
+	$sopt['PluginFusioninventoryNetworkPort'][1]['name'] = $LANG["common"][16];
 
-	$sopt['PluginFusioninventoryNetworkport'][2]['name'] = $LANG['plugin_fusioninventory']["snmp"][42];
+	$sopt['PluginFusioninventoryNetworkPort'][2]['name'] = $LANG['plugin_fusioninventory']["snmp"][42];
 
-	$sopt['PluginFusioninventoryNetworkport'][3]['name'] = $LANG['plugin_fusioninventory']["snmp"][43];
+	$sopt['PluginFusioninventoryNetworkPort'][3]['name'] = $LANG['plugin_fusioninventory']["snmp"][43];
 
-	$sopt['PluginFusioninventoryNetworkport'][4]['name'] = $LANG['plugin_fusioninventory']["snmp"][44];
+	$sopt['PluginFusioninventoryNetworkPort'][4]['name'] = $LANG['plugin_fusioninventory']["snmp"][44];
 
-	$sopt['PluginFusioninventoryNetworkport'][5]['name'] = $LANG['plugin_fusioninventory']["snmp"][45];
+	$sopt['PluginFusioninventoryNetworkPort'][5]['name'] = $LANG['plugin_fusioninventory']["snmp"][45];
 
-	$sopt['PluginFusioninventoryNetworkport'][6]['name'] = $LANG['plugin_fusioninventory']["snmp"][46];
+	$sopt['PluginFusioninventoryNetworkPort'][6]['name'] = $LANG['plugin_fusioninventory']["snmp"][46];
 
-	$sopt['PluginFusioninventoryNetworkport'][7]['name'] = $LANG['plugin_fusioninventory']["snmp"][47];
+	$sopt['PluginFusioninventoryNetworkPort'][7]['name'] = $LANG['plugin_fusioninventory']["snmp"][47];
 
-	$sopt['PluginFusioninventoryNetworkport'][8]['name'] = $LANG['plugin_fusioninventory']["snmp"][48];
+	$sopt['PluginFusioninventoryNetworkPort'][8]['name'] = $LANG['plugin_fusioninventory']["snmp"][48];
 
-	$sopt['PluginFusioninventoryNetworkport'][9]['name'] = $LANG['plugin_fusioninventory']["snmp"][49];
+	$sopt['PluginFusioninventoryNetworkPort'][9]['name'] = $LANG['plugin_fusioninventory']["snmp"][49];
 
-	$sopt['PluginFusioninventoryNetworkport'][10]['name'] = $LANG['plugin_fusioninventory']["snmp"][51];
+	$sopt['PluginFusioninventoryNetworkPort'][10]['name'] = $LANG['plugin_fusioninventory']["snmp"][51];
 
-	$sopt['PluginFusioninventoryNetworkport'][11]['name'] = $LANG['plugin_fusioninventory']["mapping"][115];
+	$sopt['PluginFusioninventoryNetworkPort'][11]['name'] = $LANG['plugin_fusioninventory']["mapping"][115];
 
-	$sopt['PluginFusioninventoryNetworkport'][12]['name'] = $LANG["networking"][17];
+	$sopt['PluginFusioninventoryNetworkPort'][12]['name'] = $LANG["networking"][17];
 
-	$sopt['PluginFusioninventoryNetworkport'][13]['name'] = $LANG['plugin_fusioninventory']["snmp"][50];
+	$sopt['PluginFusioninventoryNetworkPort'][13]['name'] = $LANG['plugin_fusioninventory']["snmp"][50];
 
-	$sopt['PluginFusioninventoryNetworkport'][14]['name'] = $LANG["networking"][56];
+	$sopt['PluginFusioninventoryNetworkPort'][14]['name'] = $LANG["networking"][56];
 
-   $sopt['PluginFusioninventoryNetworkport'][15]['name'] = $LANG['plugin_fusioninventory']["snmp"][41];
+   $sopt['PluginFusioninventoryNetworkPort'][15]['name'] = $LANG['plugin_fusioninventory']["snmp"][41];
 
 	$sopt['PluginFusioninventoryAgent']['common'] = $LANG['plugin_fusioninventory']["profile"][26];
 
@@ -376,94 +376,94 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryAgent'][14]['name'] = $LANG['plugin_fusioninventory']['config'][6];
    $sopt['PluginFusioninventoryAgent'][14]['datatype']='bool';
 
-	$sopt['PluginFusioninventoryIprange']['common'] = $LANG['plugin_fusioninventory']["profile"][25];
+	$sopt['PluginFusioninventoryIPRange']['common'] = $LANG['plugin_fusioninventory']["profile"][25];
 
-	$sopt['PluginFusioninventoryIprange'][1]['table'] = 'glpi_plugin_fusioninventory_ipranges';
-	$sopt['PluginFusioninventoryIprange'][1]['field'] = 'name';
-	$sopt['PluginFusioninventoryIprange'][1]['linkfield'] = 'name';
-	$sopt['PluginFusioninventoryIprange'][1]['name'] = $LANG["common"][16];
-   $sopt['PluginFusioninventoryIprange'][1]['datatype']='itemlink';
+	$sopt['PluginFusioninventoryIPRange'][1]['table'] = 'glpi_plugin_fusioninventory_ipranges';
+	$sopt['PluginFusioninventoryIPRange'][1]['field'] = 'name';
+	$sopt['PluginFusioninventoryIPRange'][1]['linkfield'] = 'name';
+	$sopt['PluginFusioninventoryIPRange'][1]['name'] = $LANG["common"][16];
+   $sopt['PluginFusioninventoryIPRange'][1]['datatype']='itemlink';
   
-	$sopt['PluginFusioninventoryIprange'][2]['table'] = 'glpi_plugin_fusioninventory_ipranges';
-	$sopt['PluginFusioninventoryIprange'][2]['field'] = 'ifaddr_start';
-	$sopt['PluginFusioninventoryIprange'][2]['linkfield'] = 'ifaddr_start';
-	$sopt['PluginFusioninventoryIprange'][2]['name'] = $LANG['plugin_fusioninventory']["rangeip"][0];
+	$sopt['PluginFusioninventoryIPRange'][2]['table'] = 'glpi_plugin_fusioninventory_ipranges';
+	$sopt['PluginFusioninventoryIPRange'][2]['field'] = 'ifaddr_start';
+	$sopt['PluginFusioninventoryIPRange'][2]['linkfield'] = 'ifaddr_start';
+	$sopt['PluginFusioninventoryIPRange'][2]['name'] = $LANG['plugin_fusioninventory']["rangeip"][0];
 
-	$sopt['PluginFusioninventoryIprange'][3]['table'] = 'glpi_plugin_fusioninventory_ipranges';
-	$sopt['PluginFusioninventoryIprange'][3]['field'] = 'ifaddr_end';
-	$sopt['PluginFusioninventoryIprange'][3]['linkfield'] = 'ifaddr_end';
-	$sopt['PluginFusioninventoryIprange'][3]['name'] = $LANG['plugin_fusioninventory']["rangeip"][1];
+	$sopt['PluginFusioninventoryIPRange'][3]['table'] = 'glpi_plugin_fusioninventory_ipranges';
+	$sopt['PluginFusioninventoryIPRange'][3]['field'] = 'ifaddr_end';
+	$sopt['PluginFusioninventoryIPRange'][3]['linkfield'] = 'ifaddr_end';
+	$sopt['PluginFusioninventoryIPRange'][3]['name'] = $LANG['plugin_fusioninventory']["rangeip"][1];
 
-	$sopt['PluginFusioninventoryIprange'][30]['table'] = 'glpi_plugin_fusioninventory_ipranges';
-	$sopt['PluginFusioninventoryIprange'][30]['field'] = 'id';
-	$sopt['PluginFusioninventoryIprange'][30]['linkfield'] = '';
-	$sopt['PluginFusioninventoryIprange'][30]['name'] = $LANG["common"][2];
+	$sopt['PluginFusioninventoryIPRange'][30]['table'] = 'glpi_plugin_fusioninventory_ipranges';
+	$sopt['PluginFusioninventoryIPRange'][30]['field'] = 'id';
+	$sopt['PluginFusioninventoryIPRange'][30]['linkfield'] = '';
+	$sopt['PluginFusioninventoryIPRange'][30]['name'] = $LANG["common"][2];
 
-	$sopt['PluginFusioninventoryIprange'][5]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt['PluginFusioninventoryIprange'][5]['field'] = 'name';
-	$sopt['PluginFusioninventoryIprange'][5]['linkfield'] = 'plugin_fusioninventory_agents_id_discover';
-	$sopt['PluginFusioninventoryIprange'][5]['name'] = $LANG['plugin_fusioninventory']["agents"][12];
-	$sopt['PluginFusioninventoryIprange'][5]['datatype']='itemlink';
-	$sopt['PluginFusioninventoryIprange'][5]['itemlink_type']='PluginFusioninventoryAgent';
-   $sopt['PluginFusioninventoryIprange'][5]['forcegroupby']='1';
+	$sopt['PluginFusioninventoryIPRange'][5]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryIPRange'][5]['field'] = 'name';
+	$sopt['PluginFusioninventoryIPRange'][5]['linkfield'] = 'plugin_fusioninventory_agents_id_discover';
+	$sopt['PluginFusioninventoryIPRange'][5]['name'] = $LANG['plugin_fusioninventory']["agents"][12];
+	$sopt['PluginFusioninventoryIPRange'][5]['datatype']='itemlink';
+	$sopt['PluginFusioninventoryIPRange'][5]['itemlink_type']='PluginFusioninventoryAgent';
+   $sopt['PluginFusioninventoryIPRange'][5]['forcegroupby']='1';
   
-	$sopt['PluginFusioninventoryIprange'][6]['table'] = 'glpi_plugin_fusioninventory_ipranges';
-	$sopt['PluginFusioninventoryIprange'][6]['field'] = 'discover';
-	$sopt['PluginFusioninventoryIprange'][6]['linkfield'] = 'discover';
-	$sopt['PluginFusioninventoryIprange'][6]['name'] = $LANG['plugin_fusioninventory']["discovery"][3];
-   $sopt['PluginFusioninventoryIprange'][6]['datatype']='bool';
+	$sopt['PluginFusioninventoryIPRange'][6]['table'] = 'glpi_plugin_fusioninventory_ipranges';
+	$sopt['PluginFusioninventoryIPRange'][6]['field'] = 'discover';
+	$sopt['PluginFusioninventoryIPRange'][6]['linkfield'] = 'discover';
+	$sopt['PluginFusioninventoryIPRange'][6]['name'] = $LANG['plugin_fusioninventory']["discovery"][3];
+   $sopt['PluginFusioninventoryIPRange'][6]['datatype']='bool';
   
-	$sopt['PluginFusioninventoryIprange'][7]['table'] = 'glpi_plugin_fusioninventory_ipranges';
-	$sopt['PluginFusioninventoryIprange'][7]['field'] = 'query';
-	$sopt['PluginFusioninventoryIprange'][7]['linkfield'] = 'query';
-	$sopt['PluginFusioninventoryIprange'][7]['name'] = $LANG['plugin_fusioninventory']["rangeip"][3];
-   $sopt['PluginFusioninventoryIprange'][7]['datatype']='bool';
+	$sopt['PluginFusioninventoryIPRange'][7]['table'] = 'glpi_plugin_fusioninventory_ipranges';
+	$sopt['PluginFusioninventoryIPRange'][7]['field'] = 'query';
+	$sopt['PluginFusioninventoryIPRange'][7]['linkfield'] = 'query';
+	$sopt['PluginFusioninventoryIPRange'][7]['name'] = $LANG['plugin_fusioninventory']["rangeip"][3];
+   $sopt['PluginFusioninventoryIPRange'][7]['datatype']='bool';
   
-	$sopt['PluginFusioninventoryIprange'][8]['table'] = 'glpi_entities';
-	$sopt['PluginFusioninventoryIprange'][8]['field'] = 'name';
-	$sopt['PluginFusioninventoryIprange'][8]['linkfield'] = 'entities_id';
-	$sopt['PluginFusioninventoryIprange'][8]['name'] = $LANG["entity"][0];
+	$sopt['PluginFusioninventoryIPRange'][8]['table'] = 'glpi_entities';
+	$sopt['PluginFusioninventoryIPRange'][8]['field'] = 'name';
+	$sopt['PluginFusioninventoryIPRange'][8]['linkfield'] = 'entities_id';
+	$sopt['PluginFusioninventoryIPRange'][8]['name'] = $LANG["entity"][0];
 
-	$sopt['PluginFusioninventoryIprange'][9]['table'] = 'glpi_plugin_fusioninventory_agents';
-	$sopt['PluginFusioninventoryIprange'][9]['field'] = 'name';
-	$sopt['PluginFusioninventoryIprange'][9]['linkfield'] = 'plugin_fusioninventory_agents_id_query';
-	$sopt['PluginFusioninventoryIprange'][9]['name'] = $LANG['plugin_fusioninventory']["agents"][13];
-	$sopt['PluginFusioninventoryIprange'][9]['datatype']='itemlink';
-	$sopt['PluginFusioninventoryIprange'][9]['itemlink_type']='PluginFusioninventoryAgent';
-   $sopt['PluginFusioninventoryIprange'][9]['forcegroupby']='1';
+	$sopt['PluginFusioninventoryIPRange'][9]['table'] = 'glpi_plugin_fusioninventory_agents';
+	$sopt['PluginFusioninventoryIPRange'][9]['field'] = 'name';
+	$sopt['PluginFusioninventoryIPRange'][9]['linkfield'] = 'plugin_fusioninventory_agents_id_query';
+	$sopt['PluginFusioninventoryIPRange'][9]['name'] = $LANG['plugin_fusioninventory']["agents"][13];
+	$sopt['PluginFusioninventoryIPRange'][9]['datatype']='itemlink';
+	$sopt['PluginFusioninventoryIPRange'][9]['itemlink_type']='PluginFusioninventoryAgent';
+   $sopt['PluginFusioninventoryIPRange'][9]['forcegroupby']='1';
 
-	$sopt['PluginFusioninventorySnmphistory']['common'] = $LANG['plugin_fusioninventory']["title"][2];
+	$sopt['PluginFusioninventoryNetworkPortLog']['common'] = $LANG['plugin_fusioninventory']["title"][2];
 
-	$sopt['PluginFusioninventorySnmphistory'][1]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt['PluginFusioninventorySnmphistory'][1]['field'] = 'id';
-	$sopt['PluginFusioninventorySnmphistory'][1]['linkfield'] = '';
-	$sopt['PluginFusioninventorySnmphistory'][1]['name'] = $LANG["common"][2];
+	$sopt['PluginFusioninventoryNetworkPortLog'][1]['table'] = 'glpi_plugin_fusioninventory_networkportlogs';
+	$sopt['PluginFusioninventoryNetworkPortLog'][1]['field'] = 'id';
+	$sopt['PluginFusioninventoryNetworkPortLog'][1]['linkfield'] = '';
+	$sopt['PluginFusioninventoryNetworkPortLog'][1]['name'] = $LANG["common"][2];
 
-	$sopt['PluginFusioninventorySnmphistory'][2]['table'] = 'glpi_networkports';
-	$sopt['PluginFusioninventorySnmphistory'][2]['field'] = 'id';
-	$sopt['PluginFusioninventorySnmphistory'][2]['linkfield'] = 'networkports_id';
-	$sopt['PluginFusioninventorySnmphistory'][2]['name'] = $LANG["setup"][175];
+	$sopt['PluginFusioninventoryNetworkPortLog'][2]['table'] = 'glpi_networkports';
+	$sopt['PluginFusioninventoryNetworkPortLog'][2]['field'] = 'id';
+	$sopt['PluginFusioninventoryNetworkPortLog'][2]['linkfield'] = 'networkports_id';
+	$sopt['PluginFusioninventoryNetworkPortLog'][2]['name'] = $LANG["setup"][175];
 
-	$sopt['PluginFusioninventorySnmphistory'][3]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt['PluginFusioninventorySnmphistory'][3]['field'] = 'field';
-	$sopt['PluginFusioninventorySnmphistory'][3]['linkfield'] = 'field';
-	$sopt['PluginFusioninventorySnmphistory'][3]['name'] = $LANG["event"][18];
+	$sopt['PluginFusioninventoryNetworkPortLog'][3]['table'] = 'glpi_plugin_fusioninventory_networkportlogs';
+	$sopt['PluginFusioninventoryNetworkPortLog'][3]['field'] = 'field';
+	$sopt['PluginFusioninventoryNetworkPortLog'][3]['linkfield'] = 'field';
+	$sopt['PluginFusioninventoryNetworkPortLog'][3]['name'] = $LANG["event"][18];
 
-	$sopt['PluginFusioninventorySnmphistory'][4]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt['PluginFusioninventorySnmphistory'][4]['field'] = 'old_value';
-	$sopt['PluginFusioninventorySnmphistory'][4]['linkfield'] = 'old_value';
-	$sopt['PluginFusioninventorySnmphistory'][4]['name'] = $LANG['plugin_fusioninventory']["history"][0];
+	$sopt['PluginFusioninventoryNetworkPortLog'][4]['table'] = 'glpi_plugin_fusioninventory_networkportlogs';
+	$sopt['PluginFusioninventoryNetworkPortLog'][4]['field'] = 'old_value';
+	$sopt['PluginFusioninventoryNetworkPortLog'][4]['linkfield'] = 'old_value';
+	$sopt['PluginFusioninventoryNetworkPortLog'][4]['name'] = $LANG['plugin_fusioninventory']["history"][0];
 
-	$sopt['PluginFusioninventorySnmphistory'][5]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt['PluginFusioninventorySnmphistory'][5]['field'] = 'new_value';
-	$sopt['PluginFusioninventorySnmphistory'][5]['linkfield'] = 'new_value';
-	$sopt['PluginFusioninventorySnmphistory'][5]['name'] = $LANG['plugin_fusioninventory']["history"][1];
+	$sopt['PluginFusioninventoryNetworkPortLog'][5]['table'] = 'glpi_plugin_fusioninventory_networkportlogs';
+	$sopt['PluginFusioninventoryNetworkPortLog'][5]['field'] = 'new_value';
+	$sopt['PluginFusioninventoryNetworkPortLog'][5]['linkfield'] = 'new_value';
+	$sopt['PluginFusioninventoryNetworkPortLog'][5]['name'] = $LANG['plugin_fusioninventory']["history"][1];
 
-	$sopt['PluginFusioninventorySnmphistory'][6]['table'] = 'glpi_plugin_fusioninventory_snmphistories';
-	$sopt['PluginFusioninventorySnmphistory'][6]['field'] = 'date_mod';
-	$sopt['PluginFusioninventorySnmphistory'][6]['linkfield'] = 'date_mod';
-	$sopt['PluginFusioninventorySnmphistory'][6]['name'] = $LANG["common"][27];
-	$sopt['PluginFusioninventorySnmphistory'][6]['datatype']='datetime';
+	$sopt['PluginFusioninventoryNetworkPortLog'][6]['table'] = 'glpi_plugin_fusioninventory_networkportlogs';
+	$sopt['PluginFusioninventoryNetworkPortLog'][6]['field'] = 'date_mod';
+	$sopt['PluginFusioninventoryNetworkPortLog'][6]['linkfield'] = 'date_mod';
+	$sopt['PluginFusioninventoryNetworkPortLog'][6]['name'] = $LANG["common"][27];
+	$sopt['PluginFusioninventoryNetworkPortLog'][6]['datatype']='datetime';
 
 
 	$sopt['PluginFusioninventoryNetworkport2']['common'] = $LANG['plugin_fusioninventory']["profile"][28];
@@ -489,7 +489,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryNetworkport2'][3]['name'] = $LANG["login"][0];
 
 
-	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusioninventory_modelinfos';
+	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
 	$sopt[NETWORKING_TYPE][5190]['field']='id';
 	$sopt[NETWORKING_TYPE][5190]['linkfield']='id';
 	$sopt[NETWORKING_TYPE][5190]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][19];
@@ -500,7 +500,7 @@ function plugin_fusioninventory_getSearchOption() {
 		$sopt[NETWORKING_TYPE][5191]['linkfield'] = 'id';
 		$sopt[NETWORKING_TYPE][5191]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
 	} else {
-		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_fusioninventory_snmpauths';
+		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_fusioninventory_configsnmpsecurities';
 		$sopt[NETWORKING_TYPE][5191]['field']='name';
 		$sopt[NETWORKING_TYPE][5191]['linkfield']='id';
 		$sopt[NETWORKING_TYPE][5191]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
@@ -517,7 +517,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[NETWORKING_TYPE][5195]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["snmp"][13];
 
 
-	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_fusioninventory_modelinfos';
+	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
 	$sopt[PRINTER_TYPE][5190]['field']='id';
 	$sopt[PRINTER_TYPE][5190]['linkfield']='id';
 	$sopt[PRINTER_TYPE][5190]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][19];
@@ -528,7 +528,7 @@ function plugin_fusioninventory_getSearchOption() {
 		$sopt[PRINTER_TYPE][5191]['linkfield'] = 'id';
 		$sopt[PRINTER_TYPE][5191]['name'] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
 	} else {
-		$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_fusioninventory_snmpauths';
+		$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_fusioninventory_configsnmpsecurities';
 		$sopt[PRINTER_TYPE][5191]['field']='id';
 		$sopt[PRINTER_TYPE][5191]['linkfield']='id';
 		$sopt[PRINTER_TYPE][5191]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][20];
@@ -616,7 +616,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt['PluginFusioninventoryConstructDevices']['common'] = $LANG['plugin_fusioninventory']["constructdevice"][0];
 
-	$sopt['PluginFusioninventoryConstructDevices'][1]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][1]['table'] = 'glpi_plugin_fusioninventory_constructdevices';
 	$sopt['PluginFusioninventoryConstructDevices'][1]['field'] = 'id';
 	$sopt['PluginFusioninventoryConstructDevices'][1]['linkfield'] = 'id';
 	$sopt['PluginFusioninventoryConstructDevices'][1]['name'] = $LANG["common"][16];
@@ -627,31 +627,31 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryConstructDevices'][2]['linkfield'] = 'manufacturer';
 	$sopt['PluginFusioninventoryConstructDevices'][2]['name'] = $LANG['common'][5];
 
-	$sopt['PluginFusioninventoryConstructDevices'][3]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][3]['table'] = 'glpi_plugin_fusioninventory_constructdevices';
 	$sopt['PluginFusioninventoryConstructDevices'][3]['field'] = 'device';
 	$sopt['PluginFusioninventoryConstructDevices'][3]['linkfield'] = 'device';
 	$sopt['PluginFusioninventoryConstructDevices'][3]['name'] = $LANG['common'][1];
    $sopt['PluginFusioninventoryConstructDevices'][3]['datatype']='text';
 
-	$sopt['PluginFusioninventoryConstructDevices'][4]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][4]['table'] = 'glpi_plugin_fusioninventory_constructdevices';
 	$sopt['PluginFusioninventoryConstructDevices'][4]['field'] = 'firmware';
 	$sopt['PluginFusioninventoryConstructDevices'][4]['linkfield'] = 'firmware';
 	$sopt['PluginFusioninventoryConstructDevices'][4]['name'] = $LANG['setup'][71];
    $sopt['PluginFusioninventoryConstructDevices'][4]['datatype']='text';
 
-	$sopt['PluginFusioninventoryConstructDevices'][5]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][5]['table'] = 'glpi_plugin_fusioninventory_constructdevices';
 	$sopt['PluginFusioninventoryConstructDevices'][5]['field'] = 'sysdescr';
 	$sopt['PluginFusioninventoryConstructDevices'][5]['linkfield'] = 'sysdescr';
 	$sopt['PluginFusioninventoryConstructDevices'][5]['name'] = $LANG['common'][25];
    $sopt['PluginFusioninventoryConstructDevices'][5]['datatype']='text';
 
-	$sopt['PluginFusioninventoryConstructDevices'][6]['table'] = 'glpi_plugin_fusioninventory_construct_device';
+	$sopt['PluginFusioninventoryConstructDevices'][6]['table'] = 'glpi_plugin_fusioninventory_constructdevices';
 	$sopt['PluginFusioninventoryConstructDevices'][6]['field'] = 'type';
 	$sopt['PluginFusioninventoryConstructDevices'][6]['linkfield'] = 'type';
 	$sopt['PluginFusioninventoryConstructDevices'][6]['name'] = $LANG['common'][17];
    $sopt['PluginFusioninventoryConstructDevices'][6]['datatype']='number';
 
-	$sopt['PluginFusioninventoryConstructDevices'][7]['table'] = 'glpi_plugin_fusioninventory_modelinfos';
+	$sopt['PluginFusioninventoryConstructDevices'][7]['table'] = 'glpi_plugin_fusioninventory_snmpmodels';
 	$sopt['PluginFusioninventoryConstructDevices'][7]['field'] = 'name';
 	$sopt['PluginFusioninventoryConstructDevices'][7]['linkfield'] = 'snmpmodel_id';
 	$sopt['PluginFusioninventoryConstructDevices'][7]['name'] = $LANG['plugin_fusioninventory']["profile"][24];
@@ -730,21 +730,21 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/models.form.php?id=" . $FK_model_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_modelinfos", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodels", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmpauths.name" :
-					$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.name" :
+					$plugin_fusioninventory_snmp = new PluginFusioninventoryConfigSNMPSecurity;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/snmp_auth.form.php?id=" . $FK_auth_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpauths", $FK_auth_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_configsnmpsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -803,21 +803,21 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
 					$FK_model_DB = $plugin_fusioninventory_snmp->GetSNMPModel($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/models.form.php?id=" . $FK_model_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_modelinfos", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodels", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmpauths.id" :
-					$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.id" :
+					$plugin_fusioninventory_snmp = new PluginFusioninventoryConfigSNMPSecurity;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/snmp_auth.form.php?id=" . $FK_auth_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpauths", $FK_auth_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_configsnmpsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -830,7 +830,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			switch ($table.'.'.$field) {
 
 				// ** Name of type of model (network, printer...)
-				case "glpi_plugin_fusioninventory_modelinfos.itemtype" :
+				case "glpi_plugin_fusioninventory_snmpmodels.itemtype" :
 					$out = '<center> ';
 					switch ($data["ITEM_$num"]) {
 						case COMPUTER_TYPE:
@@ -858,7 +858,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** Display pic / link for exporting model
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
 					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/fusioninventory/front/models.export.php' target='_blank'>
 						<input type='hidden' name='model' value='" . $data["id"] . "' />
 						<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
@@ -871,11 +871,11 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 
 
 		// * Authentification List (plugins/fusioninventory/front/snmp_auth.php)
-		case 'PluginFusioninventorySnmpauth' :
+		case 'PluginFusioninventoryConfigSNMPSecurity' :
 			switch ($table.'.'.$field) {
 
 				// ** Hidden auth passphrase (SNMP v3)
-				case "glpi_plugin_fusioninventory_snmpauths.auth_passphrase" :
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.auth_passphrase" :
                $out = "";
 					if (empty($data["ITEM_$num"])) {
 						
@@ -886,7 +886,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** Hidden priv passphrase (SNMP v3)
-				case "glpi_plugin_fusioninventory_snmpauths.priv_passphrase" :
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.priv_passphrase" :
                $out = "";
 					if (empty($data["ITEM_$num"])) {
 						
@@ -899,7 +899,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
-		case 'PluginFusioninventoryUnknowndevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.'.'.$field) {
 
 				// ** FusionInventory - switch
@@ -908,9 +908,9 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
                $NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $NetworkPort->getDeviceData($vartmp,'PluginFusioninventoryUnknowndevice');
+                  $NetworkPort->getDeviceData($vartmp,'PluginFusioninventoryUnknownDevice');
 
-                  $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES['PluginFusioninventoryUnknowndevice']."?id=".$vartmp."\">";
+                  $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES['PluginFusioninventoryUnknownDevice']."?id=".$vartmp."\">";
                   $out .=  $NetworkPort->device_name;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
@@ -964,7 +964,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// *
-		case 'PluginFusioninventoryNetworkport' :
+		case 'PluginFusioninventoryNetworkPort' :
 			switch ($table.'.'.$field) {
 
 			}
@@ -1016,7 +1016,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * range IP list (plugins/fusioninventory/front/rangeip.php)
-		case 'PluginFusioninventoryIprange' :
+		case 'PluginFusioninventoryIPRange' :
 			switch ($table.'.'.$field) {
 
 
@@ -1032,12 +1032,12 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
-		case 'PluginFusioninventorySnmphistory' :
+		case 'PluginFusioninventoryNetworkPortLog' :
 			switch ($table.'.'.$field) {
 
 				// ** Display switch and Port
 				case "glpi_networkports.id" :
-					$Array_device = PluginFusioninventoryNetworkport::getUniqueObjectfieldsByportID($data["ITEM_$num"]);
+					$Array_device = PluginFusioninventoryNetworkPort::getUniqueObjectfieldsByportID($data["ITEM_$num"]);
 					$item = new $Array_device["itemtype"];
 					$item->getFromDB($Array_device["items_id"]);
 					$out = "<div align='center'>" . $item->getLink(1);
@@ -1055,13 +1055,13 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmphistories.field" :
+				case "glpi_plugin_fusioninventory_networkportlogs.field" :
                $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["ITEM_$num"]]['name'];
                return $out;
 					break;
 
 				// ** Display Old Value (before changement of value)
-				case "glpi_plugin_fusioninventory_snmphistories.old_value" :
+				case "glpi_plugin_fusioninventory_networkportlogs.old_value" :
 					// TODO ADD LINK TO DEVICE
 					if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"]))) {
 						return "<center><b>".$data["ITEM_$num"]."</b></center>";
@@ -1069,7 +1069,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** Display New Value (new value modified)
-				case "glpi_plugin_fusioninventory_snmphistories.new_value" :
+				case "glpi_plugin_fusioninventory_networkportlogs.new_value" :
 					if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"]))) {
 						return "<center><b>".$data["ITEM_$num"]."</b></center>";
                }
@@ -1090,9 +1090,9 @@ function plugin_fusioninventory_getDropdown() {
 	if (isset ($_SESSION["glpi_plugin_fusioninventory_installed"]) && $_SESSION["glpi_plugin_fusioninventory_installed"] == 1) {
 		return array (
 			"glpi_plugin_fusioninventory_snmpversions" => "SNMP version",
-			"glpi_plugin_fusioninventory_mib_oid" => "OID MIB",
-			"glpi_plugin_fusioninventory_mib_object" => "Objet MIB",
-			"glpi_plugin_fusioninventory_mib_label" => "Label MIB"
+			"glpi_plugin_fusioninventory_miboids" => "OID MIB",
+			"glpi_plugin_fusioninventory_mibobjects" => "Objet MIB",
+			"glpi_plugin_fusioninventory_miblabels" => "Label MIB"
 		);
    } else {
 		return array ();
@@ -1106,7 +1106,7 @@ function cron_plugin_fusioninventory() {
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
-   $pfisnmph = new PluginFusioninventorySnmphistory;
+   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
    $pfisnmph->cronCleanHistory();
    return 1;
 }
@@ -1264,20 +1264,22 @@ function plugin_fusioninventory_needUpdate() {
 
 
 // Define headings added by the plugin //
-function plugin_get_headings_fusioninventory($type,$id,$withtemplate) {
+//function plugin_get_headings_fusioninventory($type,$id,$withtemplate) {
+function plugin_get_headings_fusioninventory($item,$withtemplate) {
 	global $LANG;
 	$configModules = new PluginFusioninventoryConfigModules;
 
-	switch ($type) {
+	$type = get_Class($item);
+   switch ($type) {
 		case COMPUTER_TYPE :
 			if ($withtemplate) { //?
 				return array();
 			// Non template case
          } else {
-//				if ((PluginFusioninventory::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 				$array = array ();
             //return array(
-            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
+            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
 				//}
@@ -1293,7 +1295,7 @@ function plugin_get_headings_fusioninventory($type,$id,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((PluginFusioninventory::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					return array(
 						1 => $LANG['plugin_fusioninventory']["title"][5]
 					);
@@ -1307,7 +1309,7 @@ function plugin_get_headings_fusioninventory($type,$id,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((PluginFusioninventory::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+				if ((PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusioninventory']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusioninventory']["title"][5];
@@ -1322,7 +1324,7 @@ function plugin_get_headings_fusioninventory($type,$id,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((PluginFusioninventory::haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
+				if ((PluginFusioninventoryAuth::haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusioninventory']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusioninventory']["title"][5];
@@ -1353,7 +1355,7 @@ function plugin_headings_actions_fusioninventory($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventory::haveRight("remotecontrol","w"))) {
+         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -1367,7 +1369,7 @@ function plugin_headings_actions_fusioninventory($type) {
          );
       case PRINTER_TYPE :
 			$array = array ();
-			if (PluginFusioninventory::haveRight("snmp_printers", "r")) {
+			if (PluginFusioninventoryAuth::haveRight("snmp_printers", "r")) {
 				$array[1] = "plugin_headings_fusioninventory_printerInfo";
 			}
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -1375,7 +1377,7 @@ function plugin_headings_actions_fusioninventory($type) {
 			break;
 
 		case NETWORKING_TYPE :
-			if (PluginFusioninventory::haveRight("snmp_networking", "r")) {
+			if (PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) {
 				$array[1] = "plugin_headings_fusioninventory_networkingInfo";
 			}
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -1393,11 +1395,6 @@ function plugin_headings_actions_fusioninventory($type) {
 }
 
 
-function plugin_headings_fusioninventory_computerErrors($type, $id) {
-	$errors = new PluginFusioninventoryErrors;
-	$errors->showForm(COMPUTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/errors.form.php', $_GET["id"]);
-}
-
 function plugin_headings_fusioninventory_computerInfo($type, $id) {
    $pfit = new PluginFusioninventoryTask;
    $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $id, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
@@ -1414,25 +1411,15 @@ function plugin_headings_fusioninventory_printerInfo($type, $id) {
 }
 
 function plugin_headings_fusioninventory_printerHistory($type, $id) {
-	$print_history = new PluginFusioninventoryPrintersHistory;
+	$print_history = new PluginFusioninventoryPrinterLog;
 	$print_history->showForm($_GET["id"],
                array('target'=>GLPI_ROOT.'/plugins/fusioninventory/front/printer_history.form.php'));
 }
 
-function plugin_headings_fusioninventory_printerErrors($type, $id) {
-	$errors = new PluginFusioninventoryErrors;
-	$errors->showForm(PRINTER_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/errors.form.php', $_GET["id"]);
-}
-
 function plugin_headings_fusioninventory_networkingInfo($type, $id) {
-	$snmp = new PluginFusioninventoryNetworkequipment;
+	$snmp = new PluginFusioninventoryNetworkEquipment;
 	$snmp->showForm($id, 
            array('target'=>GLPI_ROOT.'/plugins/fusioninventory/front/switch_info.form.php'));
-}
-
-function plugin_headings_fusioninventory_networkingErrors($type, $id) {
-	$errors = new PluginFusioninventoryErrors;
-	$errors->showForm(NETWORKING_TYPE, GLPI_ROOT . '/plugins/fusioninventory/front/errors.form.php', $_GET["id"]);
 }
 
 function plugin_headings_fusioninventory_fusioninventoryLocks($type, $id) {
@@ -1477,7 +1464,7 @@ function plugin_fusioninventory_MassiveActions($type) {
 			);
 			break;
 
-		case 'PluginFusioninventoryUnknowndevice';
+		case 'PluginFusioninventoryUnknownDevice';
 			return array (
 				"plugin_fusioninventory_discovery_import" => $LANG["buttons"][37]
 			);
@@ -1493,15 +1480,15 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusioninventory_get_model" :
-               if(PluginFusioninventory::haveRight("snmp_models","w")) {
+               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusioninventory_assign_model" :
-               if(PluginFusioninventory::haveRight("snmp_models","w")) {
+               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusioninventory_modelinfos`
+                                   FROM `glpi_plugin_fusioninventory_snmpmodels`
                                    WHERE `itemtype`!='2'
                                          AND `itemtype`!='0';";
                   $result_models=$DB->query($query_models);
@@ -1519,7 +1506,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusioninventory_assign_auth" :
-               if(PluginFusioninventory::haveRight("snmp_authentification","w")) {
+               if(PluginFusioninventoryAuth::haveRight("snmp_authentification","w")) {
                   PluginFusioninventorySNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1537,15 +1524,15 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusioninventory_get_model" :
-               if(PluginFusioninventory::haveRight("snmp_models","w")) {
+               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusioninventory_assign_model" :
-               if(PluginFusioninventory::haveRight("snmp_models","w")) {
+               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusioninventory_modelinfos`
+                                   FROM `glpi_plugin_fusioninventory_snmpmodels`
                                    WHERE `itemtype`!='3'
                                          AND `itemtype`!='0';";
                   $result_models=$DB->query($query_models);
@@ -1563,7 +1550,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusioninventory_assign_auth" :
-               if(PluginFusioninventory::haveRight("snmp_authentification","w")) {
+               if(PluginFusioninventoryAuth::haveRight("snmp_authentification","w")) {
                   PluginFusioninventorySNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1577,10 +1564,10 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 			}
 			break;
 
-		case 'PluginFusioninventoryUnknowndevice';
+		case 'PluginFusioninventoryUnknownDevice';
 			switch ($action) {
 				case "plugin_fusioninventory_discovery_import" :
-               if(PluginFusioninventory::haveRight("unknowndevices","w")) {
+               if(PluginFusioninventoryAuth::haveRight("unknowndevices","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
 					break;
@@ -1660,7 +1647,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          break;
       
 		case "plugin_fusioninventory_discovery_import" :
-         if(PluginFusioninventory::haveRight("unknowndevices","w")) {
+         if(PluginFusioninventoryAuth::haveRight("unknowndevices","w")) {
             $Import = 0;
             $NoImport = 0;
             foreach ($data['item'] as $key => $val) {
@@ -1683,13 +1670,13 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 	//echo $table.".".$field."<br/>";
 	switch ($table.".".$field) {
 
-		case 'glpi_plugin_fusioninventory_snmpauths.name':
-			Dropdown::show("PluginFusioninventorySnmpauth",
+		case 'glpi_plugin_fusioninventory_configsnmpsecurities.name':
+			Dropdown::show("PluginFusioninventoryConfigSNMPSecurity",
                         array('name' => $linkfield));
 			return true;
 			break;
 
-		case 'glpi_plugin_fusioninventory_modelinfos.name':
+		case 'glpi_plugin_fusioninventory_snmpmodels.name':
 			Dropdown::show("PluginFusioninventoryModelInfos",
                         array('name' => $linkfield,
                               'comment' => false));
@@ -1708,7 +1695,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_agents.id' :
-			Dropdown::show("PluginFusioninventoryAgents",
+			Dropdown::show("PluginFusioninventoryAgent",
                         array('name' => $linkfield,
                               'comment' => false));
 			return true;
@@ -1754,12 +1741,12 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 			break;
 
 		case 'glpi_plugin_fusioninventory_discovery.plugin_fusioninventory_snmpauths_id' :
-			$plugin_fusioninventory_snmp = new PluginFusioninventorySnmpauth;
+			$plugin_fusioninventory_snmp = new PluginFusioninventoryConfigSNMPSecurity;
 			echo $plugin_fusioninventory_snmp->selectbox();
 			return true;
 			break;
 
-		case 'glpi_plugin_fusioninventory_modelinfos.itemtype' :
+		case 'glpi_plugin_fusioninventory_snmpmodels.itemtype' :
          $type_list = array();
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
@@ -1823,7 +1810,7 @@ function plugin_fusioninventory_addSelect($type,$id,$num) {
          }
          break;
 
-		case 'PluginFusioninventoryUnknowndevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.".".$field) {
 
 				case "glpi_networkequipments.device" :
@@ -1837,7 +1824,7 @@ function plugin_fusioninventory_addSelect($type,$id,$num) {
 			}
 			break;
 
-      case 'PluginFusioninventoryIprange' :
+      case 'PluginFusioninventoryIPRange' :
          switch ($table.".".$SEARCH_OPTION[$type][$id]["linkfield"]) {
 
             case "glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id_query" :
@@ -1935,15 +1922,15 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_networkequipments AS gptn_model ON (glpi_networkequipments.id = gptn_model.networkequipments_id) ".
-						" LEFT JOIN glpi_plugin_fusioninventory_modelinfos ON (gptn_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_modelinfos.id) ";
+						" LEFT JOIN glpi_plugin_fusioninventory_snmpmodels ON (gptn_model.plugin_fusioninventory_snmpmodels_id = glpi_plugin_fusioninventory_snmpmodels.id) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmpauths.id" :
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.id" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_networkequipments AS gptn_auth ON glpi_networkequipments.id = gptn_auth.networkequipments_id ".
-						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptn_auth.plugin_fusioninventory_snmpauths_id = glpi_plugin_fusioninventory_snmpauths.id ";
+						" LEFT JOIN glpi_plugin_fusioninventory_configsnmpsecurities ON gptn_auth.plugin_fusioninventory_snmpauths_id = glpi_plugin_fusioninventory_configsnmpsecurities.id ";
 					break;
 
 			}
@@ -1959,15 +1946,15 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_model ON (glpi_printers.id = gptp_model.printers_id) ".
-						" LEFT JOIN glpi_plugin_fusioninventory_modelinfos ON (gptp_model.plugin_fusioninventory_modelinfos_id = glpi_plugin_fusioninventory_modelinfos.id) ";
+						" LEFT JOIN glpi_plugin_fusioninventory_snmpmodels ON (gptp_model.plugin_fusioninventory_snmpmodels_id = glpi_plugin_fusioninventory_snmpmodels.id) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmpauths.id" :
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.id" :
 					return " LEFT JOIN glpi_plugin_fusioninventory_printers AS gptp_auth ON glpi_printers.id = gptp_auth.printers_id ".
-						" LEFT JOIN glpi_plugin_fusioninventory_snmpauths ON gptp_auth.plugin_fusioninventory_snmpauths_id = glpi_plugin_fusioninventory_snmpauths.id ";
+						" LEFT JOIN glpi_plugin_fusioninventory_configsnmpsecurities ON gptp_auth.plugin_fusioninventory_snmpauths_id = glpi_plugin_fusioninventory_configsnmpsecurities.id ";
 					break;
 
 				// ** FusionInventory - switch
@@ -2019,7 +2006,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
-		case 'PluginFusioninventoryUnknowndevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($new_table.".".$linkfield) {
 
 				// ** FusionInventory - switch
@@ -2086,7 +2073,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			break;
 
 		// * range IP list (plugins/fusioninventory/front/rangeip.php)
-		case 'PluginFusioninventoryIprange' :
+		case 'PluginFusioninventoryIPRange' :
 			switch ($new_table.".".$linkfield) {
 
 				// ** Agent name associed to IP range and link to agent form
@@ -2103,8 +2090,8 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			break;
 
       // * ports updates list (report/switch_ports.history.php)
-		case 'PluginFusioninventorySnmphistory' :
-         return " LEFT JOIN `glpi_networkports` ON ( `glpi_networkports`.`id` = `glpi_plugin_fusioninventory_snmphistories`.`networkports_id` ) ";
+		case 'PluginFusioninventoryNetworkPortLog' :
+         return " LEFT JOIN `glpi_networkports` ON ( `glpi_networkports`.`id` = `glpi_plugin_fusioninventory_networkportlogs`.`networkports_id` ) ";
 			break;
 	}
 	return "";
@@ -2148,8 +2135,8 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
-					return " ORDER BY glpi_plugin_fusioninventory_modelinfos.name $order ";
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmpmodels.name $order ";
 					break;
 
 			}
@@ -2165,13 +2152,13 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
-					return " ORDER BY glpi_plugin_fusioninventory_modelinfos.name $order ";
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
+					return " ORDER BY glpi_plugin_fusioninventory_snmpmodels.name $order ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmpauths.id" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmpauths.name $order ";
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.id" :
+					return " ORDER BY glpi_plugin_fusioninventory_configsnmpsecurities.name $order ";
 					break;
 
 				// ** FusionInventory - switch
@@ -2188,7 +2175,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
-		case 'PluginFusioninventoryUnknowndevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
@@ -2217,7 +2204,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			break;
 
 		// * range IP list (plugins/fusioninventory/front/rangeip.php)
-		case 'PluginFusioninventoryIprange' :
+		case 'PluginFusioninventoryIPRange' :
 			switch ($table.".".$field) {
 			
 				// ** Agent name associed to IP range and link to agent form
@@ -2229,34 +2216,34 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			break;
 
 		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
-		case 'PluginFusioninventorySnmphistory' :
+		case 'PluginFusioninventoryNetworkPortLog' :
 			switch ($table.".".$field) {
 
 				// ** Display switch and Port
-				case "glpi_plugin_fusioninventory_snmphistories.id" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.id $order ";
+				case "glpi_plugin_fusioninventory_networkportlogs.id" :
+					return " ORDER BY glpi_plugin_fusioninventory_networkportlogs.id $order ";
 					break;
 				case "glpi_networkports.id" :
 					return " ORDER BY glpi_networkequipments.name,glpi_networkports.name $order ";
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmphistories.field" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.field $order ";
+				case "glpi_plugin_fusioninventory_networkportlogs.field" :
+					return " ORDER BY glpi_plugin_fusioninventory_networkportlogs.field $order ";
 					break;
 
 				// ** Display Old Value (before changement of value)
-				case "glpi_plugin_fusioninventory_snmphistories.old_value" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.old_value $order ";
+				case "glpi_plugin_fusioninventory_networkportlogs.old_value" :
+					return " ORDER BY glpi_plugin_fusioninventory_networkportlogs.old_value $order ";
 					break;
 
 				// ** Display New Value (new value modified)
-				case "glpi_plugin_fusioninventory_snmphistories.new_value" :
-					return " ORDER BY glpi_plugin_fusioninventory_snmphistories.new_value $order ";
+				case "glpi_plugin_fusioninventory_networkportlogs.new_value" :
+					return " ORDER BY glpi_plugin_fusioninventory_networkportlogs.new_value $order ";
 					break;
 
-				case "glpi_plugin_fusioninventory_snmphistories.date_mod" :
-				return " ORDER BY glpi_plugin_fusioninventory_snmphistories.date_mod $order ";
+				case "glpi_plugin_fusioninventory_networkportlogs.date_mod" :
+				return " ORDER BY glpi_plugin_fusioninventory_networkportlogs.date_mod $order ";
 						break;
 
 			}
@@ -2321,7 +2308,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";
@@ -2335,11 +2322,11 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 				case "glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_snmpauths_id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
-						$ADD=" OR glpi_plugin_fusioninventory_snmpauths.name IS NULL";
+						$ADD=" OR glpi_plugin_fusioninventory_configsnmpsecurities.name IS NULL";
 					} else if ($nott=="1"&&$val=="NULL") {
-						$ADD=" OR glpi_plugin_fusioninventory_snmpauths.name IS NOT NULL";
+						$ADD=" OR glpi_plugin_fusioninventory_configsnmpsecurities.name IS NOT NULL";
 					}
-					return $link." (glpi_plugin_fusioninventory_snmpauths.name  LIKE '%".$val."%' $ADD ) ";
+					return $link." (glpi_plugin_fusioninventory_configsnmpsecurities.name  LIKE '%".$val."%' $ADD ) ";
 					break;
 
             // ** FusionInventory - CPU
@@ -2366,7 +2353,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusioninventory_modelinfos.id" :
+				case "glpi_plugin_fusioninventory_snmpmodels.id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";
@@ -2377,7 +2364,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** FusionInventory - SNMP authentification
-				case "glpi_plugin_fusioninventory_snmpauths.id" :
+				case "glpi_plugin_fusioninventory_configsnmpsecurities.id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";
@@ -2413,7 +2400,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusioninventory/report/unknown_mac.php)
-		case 'PluginFusioninventoryUnknowndevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
@@ -2481,7 +2468,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 			break;
 
 		// * range IP list (plugins/fusioninventory/front/rangeip.php)
-		case 'PluginFusioninventoryIprange' :
+		case 'PluginFusioninventoryIPRange' :
 			switch ($table.".".$field) {
 
 				// ** Name of range IP and link to form
@@ -2518,7 +2505,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 			break;
 
 		// * Detail of ports history (plugins/fusioninventory/report/switch_ports.history.php)
-		case 'PluginFusioninventorySnmphistory' :
+		case 'PluginFusioninventoryNetworkPortLog' :
 			switch ($table.".".$field) {
 
 				// ** Display switch and Port
@@ -2533,7 +2520,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** Display GLPI field of device
-				case "glpi_plugin_fusioninventory_snmphistories.field" :
+				case "glpi_plugin_fusioninventory_networkportlogs.field" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.$field IS NULL ";
@@ -2576,14 +2563,14 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 					$DB->query($query_delete);
 				}
 
-				$query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments_ips`.`id`
-                             FROM `glpi_plugin_fusioninventory_networkequipments_ips`
+				$query_select = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.`id`
+                             FROM `glpi_plugin_fusioninventory_networkequipmentips`
                                   LEFT JOIN `glpi_networkequipments`
                                             ON `glpi_networkequipments`.`id` = `networkequipments_id`
                              WHERE `networkequipments_id`='".$parm["id"]."';";
 				$result=$DB->query($query_select);
 				while ($data=$DB->fetch_array($result)) {
-					$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipments_ips`
+					$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
                                 WHERE `id`='".$data["id"]."';";
 					$DB->query($query_delete);
 				}
@@ -2593,22 +2580,22 @@ function plugin_pre_item_purge_fusioninventory($parm) {
 				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers`
                              WHERE `printers_id`='".$parm["id"]."';";
 				$DB->query($query_delete);
-				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers_cartridges`
+				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printercartridges`
                              WHERE `printers_id`='".$parm["id"]."';";
 				$DB->query($query_delete);
-				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers_history`
+				$query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printerlogs`
                              WHERE `printers_id`='".$parm["id"]."';";
 				$DB->query($query_delete);
             break;
 
-         case 'PluginFusioninventoryUnknowndevice' :
+         case 'PluginFusioninventoryUnknownDevice' :
             // Delete ports and connections if exists
             $np=new NetworkPort;
             $nn = new NetworkPort_NetworkPort();
             $query = "SELECT `id`
                       FROM `glpi_networkports`
                       WHERE `items_id` = '".$parm["id"]."'
-                            AND `itemtype` = 'PluginFusioninventoryUnknowndevice';";
+                            AND `itemtype` = 'PluginFusioninventoryUnknownDevice';";
             $result = $DB->query($query);
             while ($data = $DB->fetch_array($result)) {
                if ($nn->getFromDBForNetworkPort($data['id'])) {
@@ -2686,12 +2673,12 @@ function plugin_item_add_fusioninventory($parm) {
          case NETWORKING_PORT_TYPE :
             // Verify when add networking port on object (not unknown device) if port
             // of an unknown device exist.
-            if ($parm["input"]["itemtype"] != 'PluginFusioninventoryUnknowndevice') {
+            if ($parm["input"]["itemtype"] != 'PluginFusioninventoryUnknownDevice') {
                // Search in DB
                $np = new NetworkPort;
                $nw = new NetworkPort_NetworkPort;
-               $pfiud = new PluginFusionInventoryUnknownDevice;
-               $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusioninventoryUnknowndevice' ");
+               $pfiud = new PluginFusioninventoryUnknownDevice;
+               $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
                if (count($a_ports) == "1") {
                   foreach ($a_ports as $port_infos) {
                      // Get wire
@@ -2704,7 +2691,7 @@ function plugin_item_add_fusioninventory($parm) {
                      // Delete port
                      $np->deleteFromDB($port_infos['id']);
                      // Delete unknown device (if it has no port)
-                     if (count($np->find("`items_id`='".$port_infos['items_id']."' AND `itemtype`='PluginFusioninventoryUnknowndevice' ")) == "0") {
+                     if (count($np->find("`items_id`='".$port_infos['items_id']."' AND `itemtype`='PluginFusioninventoryUnknownDevice' ")) == "0") {
                         $pfiud->deleteFromDB($port_infos['items_id']);
                      }
                   }

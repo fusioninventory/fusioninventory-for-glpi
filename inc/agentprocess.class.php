@@ -31,11 +31,10 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
+class PluginFusioninventoryAgentProcess extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_agents_processes";
-		$this->type = 'PluginFusioninventoryAgentsProcess';
+		$this->table = "glpi_plugin_fusioninventory_agentprocesses";
 	}
 
 
@@ -387,7 +386,7 @@ class PluginFusioninventoryAgentsProcesses extends CommonDBTM {
 
    function addProcess($pxml) {
 
-      $pta = new PluginFusioninventoryAgents;
+      $pta = new PluginFusioninventoryAgent;
       
       $agent = $pta->InfosByKey($pxml->DEVICEID);
 

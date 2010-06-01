@@ -54,7 +54,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $this->dohistory=true;
       $this->oFusionInventory_printer = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers");
       $this->oFusionInventory_printer_history =
-                        new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers_history");
+                        new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printerlogs");
    }
 
    /**
@@ -84,7 +84,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
          }
 
          $query = "SELECT *
-                   FROM `glpi_plugin_fusioninventory_printers_history`
+                   FROM `glpi_plugin_fusioninventory_printerlogs`
                    WHERE `printers_id` = '".$this->getValue('id')."'
                          AND LEFT(`date`, 10)='".date("Y-m-d")."';";
          if ($result = $DB->query($query)) {
@@ -144,7 +144,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginFusioninventoryNetworkport();
+      $ptp = new PluginFusioninventoryNetworkPort();
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$this->getValue('id')."'
@@ -265,7 +265,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
     *@return nothing
     **/
    function saveCartridges() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_printers_cartridges"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_printercartridges"; // TODO : to clean
 
       foreach ($this->cartridges as $index=>$ptc) {
          if (!in_array($index, $this->updatesCartridges)) { // delete cartridges which don't exist any more
@@ -305,7 +305,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 
       $ptc = new PluginFusioninventoryPrinter_Cartridge();
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_printers_cartridges`
+                FROM `glpi_plugin_fusioninventory_printercartridges`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
       $cartridgesIds = array();
       if ($result = $DB->query($query)) {
@@ -380,7 +380,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_modelinfos`
+                       FROM `glpi_plugin_fusioninventory_snmpmodels`
                        WHERE `itemtype`!=3
                              AND `itemtype`!=0";
 		$result_models=$DB->query($query_models);
@@ -389,8 +389,8 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 			$exclude_models[] = $data_models['id'];
 		}
 		Dropdown::show("PluginFusioninventoryModelInfos",
-                     array('name'=>"plugin_fusioninventory_modelinfos_id",
-                           'value'=>$data["plugin_fusioninventory_modelinfos_id"],
+                     array('name'=>"plugin_fusioninventory_snmpmodels_id",
+                           'value'=>$data["plugin_fusioninventory_snmpmodels_id"],
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
@@ -627,7 +627,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
                        MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
                        SUM(`$graphField`) AS `$graphField`
-                FROM `glpi_plugin_fusioninventory_printers_history`"
+                FROM `glpi_plugin_fusioninventory_printerlogs`"
                 .$where
                 .$group."
                 ORDER BY `year`, `month`, `day`, `printers_id`";

@@ -38,17 +38,17 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryAgentsInventoryState extends CommonDBTM {
+class PluginFusioninventoryAgentInventoryState extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_agentsinvstates";
+		$this->table = "glpi_plugin_fusioninventory_agentinventorystates";
 	}
 
    function computerState($target, $id) {
       global $DB, $LANG;
 
       $np = new NetworkPort;
-      $pta = new PluginFusioninventoryAgents;
+      $pta = new PluginFusioninventoryAgent;
 
       echo "<br/>";
       echo "<div align='center'>";

@@ -422,84 +422,84 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellow']['shortname'] = $LANG['plugi
 
 // Printers : Counter pages
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['field'] = 'pages_total';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['name'] = $LANG['plugin_fusioninventory']["mapping"][28];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][128];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['field'] = 'pages_n_b';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['name'] = $LANG['plugin_fusioninventory']["mapping"][29];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][129];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['field'] = 'pages_color';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['name'] = $LANG['plugin_fusioninventory']["mapping"][30];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][130];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['field'] = 'pages_recto_verso';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['name'] = $LANG['plugin_fusioninventory']["mapping"][54];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][154];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['field'] = 'scanned';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['name'] = $LANG['plugin_fusioninventory']["mapping"][55];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][155];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['field'] = 'pages_total_print';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['name'] = $LANG['plugin_fusioninventory']["mapping"][423];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1423];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['field'] = 'pages_n_b_print';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['name'] = $LANG['plugin_fusioninventory']["mapping"][424];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1424];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['field'] = 'pages_color_print';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['name'] = $LANG['plugin_fusioninventory']["mapping"][425];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1425];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['field'] = 'pages_total_copy';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['name'] = $LANG['plugin_fusioninventory']["mapping"][426];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1426];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['field'] = 'pages_n_b_copy';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['name'] = $LANG['plugin_fusioninventory']["mapping"][427];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1427];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['field'] = 'pages_color_copy';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['name'] = $LANG['plugin_fusioninventory']["mapping"][428];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1428];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['table'] = 'glpi_plugin_fusioninventory_printerlogs';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['field'] = 'pages_total_fax';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['name'] = $LANG['plugin_fusioninventory']["mapping"][429];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1429];

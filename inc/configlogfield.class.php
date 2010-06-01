@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
+class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_config_snmp_history";
+		$this->table="glpi_plugin_fusioninventory_configlogfields";
 	}
 
 	function initConfig() {
@@ -191,7 +191,7 @@ class PluginFusioninventoryConfigSNMPHistory extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
-      if (PluginFusioninventory::haveRight("configuration","w")) {
+      if (PluginFusioninventoryAuth::haveRight("configuration","w")) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
       }
       echo "</td>";

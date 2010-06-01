@@ -49,8 +49,8 @@ class PluginFusioninventoryDb extends CommonDBTM {
 
          $query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
                    `id`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
-                   `snmp_models`, `snmp_authentification`, `rangeip`, `agents`, `remotecontrol`,
-                   `agentsprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
+                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
                    `snmp_query`, `wol`, `configuration` )
                    VALUES ('$id', '$name','fusioninventory','0','w','w',
                      'w','w','w','w','w',
@@ -69,8 +69,8 @@ class PluginFusioninventoryDb extends CommonDBTM {
 
       $query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
                    `id`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
-                   `snmp_models`, `snmp_authentification`, `rangeip`, `agents`, `remotecontrol`,
-                   `agentsprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
+                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
                    `snmp_query`, `wol`, `configuration` )
                 VALUES ('$id', '$name','fusioninventory','0',NULL,NULL,
                    NULL,NULL,NULL,NULL,NULL,
@@ -89,9 +89,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
       $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
                   SET `interface`='fusioninventory', `snmp_networking`='w',
                       `snmp_printers`='w', `snmp_models`='w',
-                      `snmp_authentification`='w', `rangeip`='w',
+                      `snmp_authentication`='w', `iprange`='w',
                       `agents`='w', `remotecontrol`='w',
-                      `agentsprocesses`='r', `unknowndevices`='w',
+                      `agentprocesses`='r', `unknowndevices`='w',
                       `reports`='r', `deviceinventory`='w',
                       `netdiscovery`='w', `snmp_query`='w',
                       `wol`='w', `configuration`='w'
@@ -138,12 +138,12 @@ class PluginFusioninventoryDb extends CommonDBTM {
    static function clean_db() {
       global $DB;
 
-      $ptp = new PluginFusioninventoryNetworkport;
-      $pti = new PluginFusioninventoryNetworkequipment_Ip;
-      $ptn = new PluginFusioninventoryNetworkequipment;
+      $ptp = new PluginFusioninventoryNetworkPort;
+      $pti = new PluginFusioninventoryNetworkEquipmentIp;
+      $ptn = new PluginFusioninventoryNetworkEquipment;
       $ptpr = new PluginFusioninventoryPrinter;
       $ptpc = new PluginFusioninventoryPrinter_Cartridge;
-      $ptph = new PluginFusioninventoryPrintersHistory;
+      $ptph = new PluginFusioninventoryPrinterLog;
 
       // * Clean glpi_plugin_fusioninventory_networkports
       $query_select = "SELECT `glpi_plugin_fusioninventory_networkports`.`id`
@@ -157,9 +157,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptp->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_networkequipments_ips
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments_ips`.`id`
-                       FROM `glpi_plugin_fusioninventory_networkequipments_ips`
+      // * Clean glpi_plugin_fusioninventory_networkequipmentips
+      $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.`id`
+                       FROM `glpi_plugin_fusioninventory_networkequipmentips`
                              LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                        WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
@@ -187,9 +187,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptpr->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_printers_cartridges
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printers_cartridges`.`id`
-                       FROM `glpi_plugin_fusioninventory_printers_cartridges`
+      // * Clean glpi_plugin_fusioninventory_printercartridges
+      $query_select = "SELECT `glpi_plugin_fusioninventory_printercartridges`.`id`
+                       FROM `glpi_plugin_fusioninventory_printercartridges`
                              LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                        WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);
@@ -197,9 +197,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptpc->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_printers_history
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printers_history`.`id`
-                       FROM `glpi_plugin_fusioninventory_printers_history`
+      // * Clean glpi_plugin_fusioninventory_printerlogs
+      $query_select = "SELECT `glpi_plugin_fusioninventory_printerlogs`.`id`
+                       FROM `glpi_plugin_fusioninventory_printerlogs`
                              LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                        WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);

@@ -61,15 +61,13 @@ class PluginFusioninventorySetup {
       $config->initConfig($version);
       $config_modules = new PluginFusioninventoryConfigModules;
       $config_modules->initConfig();
-      $config_snmp_networking = new PluginFusioninventoryConfigSNMPNetworking;
-      $config_snmp_networking->initConfig();
-      $config_history = new PluginFusioninventoryConfigSNMPHistory;
-      $config_history->initConfig();
+      $configLogField = new PluginFusioninventoryConfigLogField();
+      $configLogField->initConfig();
 
       // Import models
       $importexport = new PluginFusioninventoryImportExport;
-      include(GLPI_ROOT.'/inc/setup.function.php');
-      include(GLPI_ROOT.'/inc/rulesengine.function.php');
+//      include(GLPI_ROOT.'/inc/setup.function.php');
+//      include(GLPI_ROOT.'/inc/rulesengine.function.php');
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 
       PluginFusioninventoryAuth::initSession();
@@ -146,7 +144,7 @@ class PluginFusioninventorySetup {
                      LIMIT 1 ;");
          ini_set("memory_limit","-1");
          ini_set("max_execution_time", "0");
-         $pthc = new PluginFusioninventorySnmphistoryconnection;
+         $pthc = new PluginFusioninventoryNetworkPortConnectionLog;
          $pthc->migration();
          PluginFusioninventoryDb::clean_db();
       }
@@ -170,23 +168,23 @@ class PluginFusioninventorySetup {
          $DB->query($query_delete);
 
          // Delete models
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_modelinfos`";
+         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_snmpmodels`";
          $DB->query($query_delete);
 
          // Import models
          $importexport = new PluginFusioninventoryImportExport;
-         include(GLPI_ROOT.'/inc/setup.function.php');
-         include(GLPI_ROOT.'/inc/rulesengine.function.php');
+//         include_once(GLPI_ROOT.'/inc/setup.function.php');
+//         include_once(GLPI_ROOT.'/inc/rulesengine.function.php');
          foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 
          // Update ports history from lang traduction into field constant (MySQL fiel 'Field')
-         $pfisnmph = new PluginFusioninventorySnmphistory;
+         $pfisnmph = new PluginFusioninventoryNetworkPortLog;
          $pfisnmph->ConvertField();
 
-         // Delete all values in glpi_plugin_fusioninventory_config_snmp_history
-         $pficsnmph = new PluginFusioninventoryConfigSNMPHistory;
-         $pficsnmph->initConfig();
-         $pficsnmph->updateTrackertoFusion();
+         // Delete all values in glpi_plugin_fusioninventory_configlogfields
+         $pficlf = new PluginFusioninventoryConfigLogField();
+         $pficlf->initConfig();
+         $pficlf->updateTrackertoFusion();
          // Delete all ports present in fusion but deleted in glpi_networking
          $query = "SELECT `glpi_plugin_fusioninventory_networkports`.`id` AS `fusinvId`
                    FROM `glpi_plugin_fusioninventory_networkports`
@@ -247,35 +245,35 @@ class PluginFusioninventorySetup {
          $DB->query($query);
          //CLean glpi_display
          $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MODEL."'
+                   WHERE `itemtype`='PluginFusioninventorySnmpModel'
                          AND `num` NOT IN (1, 30, 3, 5, 6, 7, 8)";
          $DB->query($query);
          $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_AUTH."'
+                   WHERE `itemtype`='PluginFusioninventoryConfigSnmpSecurity'
                          AND `num` NOT IN (1, 30, 3, 4, 5, 7, 8, 9, 10)";
          $DB->query($query);
          $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                   WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
                          AND `num` NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)";
          $DB->query($query);
+//         $query = "DELETE FROM `glpi_displaypreferences`
+//                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
+//                         AND `num` NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)";
+//         $DB->query($query);
          $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS."'
-                         AND `num` NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)";
-         $DB->query($query);
-         $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_AGENTS."'
+                   WHERE `itemtype`='PluginFusioninventoryAgent'
                          AND `num` NOT IN (1, 30, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15)";
          $DB->query($query);
          $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP."'
+                   WHERE `itemtype`='PluginFusioninventoryIPRange'
                          AND `num` NOT IN (1, 2, 3, 30, 5, 6, 7, 8, 9)";
          $DB->query($query);
          $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_HISTORY."'
+                   WHERE `itemtype`='PluginFusioninventoryNetworkPortLog'
                          AND `num` NOT IN (1, 2, 3, 4, 5, 6)";
          $DB->query($query);
          $query = "DELETE FROM `glpi_displaypreferences`
-                   WHERE `itemtype`='".PLUGIN_FUSIONINVENTORY_SNMP_NETWORKING_PORTS2."'
+                   WHERE `itemtype`='PluginFusioninventoryNetworkPort'
                          AND `num` NOT IN (30, 1, 2, 3)";
          $DB->query($query);
       }
@@ -325,23 +323,23 @@ class PluginFusioninventorySetup {
       }
 
       $query="DELETE FROM `glpi_displaypreferences`
-              WHERE `type`='PluginFusioninventoryError'
-                    OR `type`='PluginFusioninventoryModelinfo'
-                    OR `type`='PluginFusioninventorySnmpauth'
-                    OR `type`='PluginFusioninventoryUnknowndevice'
-                    OR `type`='PluginFusioninventoryNetworkport'
-                    OR `type`='PluginFusioninventoryNetworkport2'
-                    OR `type`='PluginFusioninventoryAgent'
-                    OR `type`='PluginFusioninventoryIprange'
-                    OR `type`='PluginFusioninventoryAgentsProcess'
-                    OR `type`='PluginFusioninventorySnmphistory'
-                    OR `type`='PluginFusioninventoryConfig'
-                    OR `type`='PluginFusioninventoryTask'
-                    OR `type`='PluginFusioninventoryConstructDevices' ;";
+              WHERE `itemtype`='PluginFusioninventoryError'
+                    OR `itemtype`='PluginFusioninventoryModelinfo'
+                    OR `itemtype`='PluginFusioninventoryConfigSNMPSecurity'
+                    OR `itemtype`='PluginFusioninventoryUnknownDevice'
+                    OR `itemtype`='PluginFusioninventoryNetworkPort'
+                    OR `itemtype`='PluginFusioninventoryNetworkport2'
+                    OR `itemtype`='PluginFusioninventoryAgent'
+                    OR `itemtype`='PluginFusioninventoryIPRange'
+                    OR `itemtype`='PluginFusioninventoryAgentProcess'
+                    OR `itemtype`='PluginFusioninventoryNetworkPortLog'
+                    OR `itemtype`='PluginFusioninventoryConfig'
+                    OR `itemtype`='PluginFusioninventoryTask'
+                    OR `itemtype`='PluginFusioninventoryConstructDevices' ;";
       $DB->query($query) or die($DB->error());
 
 
-      $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknowndevice' ");
+      $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknownDevice' ");
       foreach ($a_netports as $NetworkPort){
          $np->cleanDBonPurge($NetworkPort['id']);
          $np->deleteFromDB($NetworkPort['id']);

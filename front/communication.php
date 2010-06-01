@@ -44,7 +44,7 @@ include (GLPI_ROOT."/inc/includes.php");
 $_SESSION["glpi_use_mode"] = 2;
 
 $ptc  = new PluginFusioninventoryCommunication;
-$ptap = new PluginFusioninventoryAgentsProcesses;
+$ptap = new PluginFusioninventoryAgentProcess;
 
 $res='';
 $errors='';
@@ -88,7 +88,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 <REPLY>
 </REPLY>");
 
-         $pta  = new PluginFusionInventoryAgents;
+         $pta  = new PluginFusioninventoryAgent;
          $ptt  = new PluginFusionInventoryTask;
          $ptcm = new PluginFusionInventoryConfigModules;
 

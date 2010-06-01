@@ -38,18 +38,18 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventorySnmphistoryconnection extends CommonDBTM {
+class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_snmphistoryconnections";
+		$this->table = "glpi_plugin_fusioninventory_networkportconnectionlogs";
 	}
 
    function migration() {
       global $DB;
 
-      $ptsnmph = new PluginFusioninventorySnmphistory;
+      $ptsnmph = new PluginFusioninventoryNetworkPortLog;
 
-      $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_snmphistories`
+      $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_networkportlogs`
                         WHERE `field`='0'
                         ORDER BY `plugin_fusioninventory_processes_id` DESC, `date_mod` DESC;";
       $result_connection = $DB->query($sql_connection);

@@ -1,12 +1,12 @@
 <?php
 /*
- * @version $Id:$
- -------------------------------------------------------------------------
+ * @version $Id$
+ ----------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+ Copynetwork (C) 2003-2010 by the INDEPNET Development Team.
 
- http://indepnet.net/   http://glpi-project.org
- -------------------------------------------------------------------------
+ http://indepnet.net/   http://glpi-project.org/
+ ----------------------------------------------------------------------
 
  LICENSE
 
@@ -25,20 +25,27 @@
  You should have received a copy of the GNU General Public License
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+ ------------------------------------------------------------------------
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Vincent MAZZONI
+// Original Author of file: MAZZONI Vincent
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+if (!defined('GLPI_ROOT')) {
+	die("Sorry. You can't access directly to this file");
+}
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+class PluginFusioninventoryMibOid extends CommonDropdown {
+   // From CommonDBTM
+   public $table = 'glpi_plugin_fusioninventory_miboids';
 
-Plugin::load('fusioninventory',true);
+   static function getTypeName() {
+      global $LANG;
 
-$dropdown = new PluginFusioninventoryMibLabel();
-include (GLPI_ROOT . "/front/dropdown.common.php");
+      return "Plugin FusionInventory MIB OID";
+   }
+}
+
 ?>

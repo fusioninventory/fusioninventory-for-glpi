@@ -1,12 +1,12 @@
 <?php
 /*
  * @version $Id$
- ----------------------------------------------------------------------
+ -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
- Copynetwork (C) 2003-2010 by the INDEPNET Development Team.
+ Copyright (C) 2003-2009 by the INDEPNET Development Team.
 
- http://indepnet.net/   http://glpi-project.org/
- ----------------------------------------------------------------------
+ http://indepnet.net/   http://glpi-project.org
+ -------------------------------------------------------------------------
 
  LICENSE
 
@@ -25,27 +25,40 @@
  You should have received a copy of the GNU General Public License
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+ --------------------------------------------------------------------------
  */
 
 // ----------------------------------------------------------------------
 // Original Author of file: MAZZONI Vincent
-// Purpose of file:
+// Purpose of file: modelisation of a networking switch ports
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryMib_Label extends CommonDropdown {
-   // From CommonDBTM
-   public $table = 'glpi_plugin_fusioninventory_mib_label';
-   public $type  = 'PluginFusioninventoryMibLabel';
+/**
+ * Class to use networking interface address
+ **/
+class PluginFusioninventoryNetworkEquipmentIP extends PluginFusioninventoryCommonDBTM {
+	/**
+	 * Constructor
+	**/
+   function __construct() {
+      parent::__construct("glpi_plugin_fusioninventory_networkequipmentips");
+   }
 
-   static function getTypeName() {
-      global $LANG;
-
-      return "Plugin FusionInventory MIB label";
+   /**
+    * Add a new ip with the instance values
+    *
+    *@param $p_id Networking id
+    *@return nothing
+    **/
+   function addDB($p_id) {
+      if (count($this->ptcdUpdates)) {
+         $this->ptcdUpdates['networkequipments_id']=$p_id;
+         $this->add($this->ptcdUpdates);
+      }
    }
 }
 

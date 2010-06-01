@@ -43,12 +43,12 @@ PluginFusioninventoryAuth::checkRight("rangeip","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch('PluginFusioninventoryIprange');
+manageGetValuesInSearch('PluginFusioninventoryIPRange');
 
 $_GET['target']="rangeip.php";
 
-searchForm('PluginFusioninventoryIprange',$_GET);
-showList('PluginFusioninventoryIprange',$_GET);
+searchForm('PluginFusioninventoryIPRange',$_GET);
+showList('PluginFusioninventoryIPRange',$_GET);
 
 commonFooter();
 

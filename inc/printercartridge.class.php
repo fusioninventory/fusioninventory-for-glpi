@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryPrinter_Cartridge extends PluginFusioninventoryCommonDBTM {
 	function __construct() {
-      parent::__construct("glpi_plugin_fusioninventory_printers_cartridges");
+      parent::__construct("glpi_plugin_fusioninventory_printercartridges");
 	}
 }
 

@@ -38,11 +38,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryRangeIP extends CommonDBTM {
+class PluginFusioninventoryIPRange extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_ipranges";
-		$this->type = 'PluginFusioninventoryIprange';
 	}
 
 
@@ -108,7 +107,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][12] . "</td>";
 		echo "<td align='center'>";
-		Dropdown::show("PluginFusioninventoryAgents",
+		Dropdown::show("PluginFusioninventoryAgent",
                      array('name'=>"plugin_fusioninventory_agents_id_discover",
                            'value'=>$this->fields["plugin_fusioninventory_agents_id_discover"],
                            'comment'=>false));
@@ -118,7 +117,7 @@ class PluginFusioninventoryRangeIP extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][13] . "</td>";
 		echo "<td align='center'>";
-		Dropdown::show("PluginFusioninventoryAgents",
+		Dropdown::show("PluginFusioninventoryAgent",
                      array('name'=>"plugin_fusioninventory_agents_id_query",
                            'value'=>$this->fields["plugin_fusioninventory_agents_id_query"],
                            'comment'=>false));

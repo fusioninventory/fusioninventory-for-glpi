@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryAgents extends CommonDBTM {
+class PluginFusioninventoryAgent extends CommonDBTM {
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_agents";
 		$this->type = 'PluginFusioninventoryAgent';
@@ -52,7 +52,7 @@ class PluginFusioninventoryAgents extends CommonDBTM {
       $ong = array();
 		if ($this->fields['id'] > 0){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
-         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventory::haveRight("remotecontrol","w"))) {
+         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
          }
       }

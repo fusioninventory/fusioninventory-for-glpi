@@ -36,6 +36,9 @@
 define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
+//include (GLPI_ROOT."/plugins/fusioninventory/locales/fr_FR.php");
+//include (GLPI_ROOT."/plugins/fusioninventory/inc/config.class.php");
+//include (GLPI_ROOT."/plugins/fusioninventory/setup.php");
 
 checkRight("config","w");
 
@@ -59,13 +62,13 @@ if (isset($_POST['update'])) {
          break;
 
       case 'history' :
-         $pficsnmph = new PluginFusioninventoryConfigSNMPHistory;
+         $pficlf = new PluginFusioninventoryConfigLogField();
          foreach ($_POST as $key=>$val) {
             if (is_int($key)) {
                $input = array();
                $input['id']   = $key;
                $input['days'] = $val;
-               $pficsnmph->update($input);
+               $pficlf->update($input);
             }
          }
          break;
@@ -76,7 +79,7 @@ if (isset($_POST['update'])) {
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['Clean_history']))) {
-   $pfisnmph = new PluginFusioninventorySnmphistory;
+   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
    $pfisnmph->cronCleanHistory();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['plugin_fusioninventory_lockable_add']))

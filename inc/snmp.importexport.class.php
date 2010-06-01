@@ -44,7 +44,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
 		$query = "SELECT * 
-                FROM `glpi_plugin_fusioninventory_modelinfos`
+                FROM `glpi_plugin_fusioninventory_snmpmodels`
                 WHERE `id`='".$ID_model."';";
 
 		if ($result=$DB->query($query)) {
@@ -67,18 +67,23 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
       $xml .= "	<comments><![CDATA[".$comments."]]></comments>\n";
 		$xml .= "	<oidlist>\n";
 
-		$query = "SELECT * 
-                FROM `glpi_plugin_fusioninventory_mib` AS `model_t`
-                WHERE `plugin_fusioninventory_modelinfos_id`='".$ID_model."';";
-		
+      $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
+            `glpi_plugin_fusioninventory_mappings`.`type` AS `mapping_type`,
+            `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
+         FROM `glpi_plugin_fusioninventory_snmpmodelmibs` AS `model_t`
+            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
+               ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_snmpmodels_id`=
+                  `glpi_plugin_fusioninventory_mappings`.`id`
+         WHERE `plugin_fusioninventory_snmpmodels_id`='".$ID_model."';";
+
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
 				$xml .= "		<oidobject>\n";
 				$xml .= "			<object><![CDATA[".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_object",$data["plugin_fusioninventory_mib_object_id"]).
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_mibobjects",$data["plugin_fusioninventory_mibobjects_id"]).
                "]]></object>\n";
 				$xml .= "			<oid><![CDATA[".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_mib_oid",$data["plugin_fusioninventory_mib_oid_id"])."]]></oid>\n";
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_miboids",$data["plugin_fusioninventory_miboids_id"])."]]></oid>\n";
 				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
@@ -136,7 +141,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 		echo "<td align='center'>";
       echo $LANG['plugin_fusioninventory']["model_info"][16]."<br/>";
 		echo "<input type='hidden' name='massimport' value='1'/>";
-      if(PluginFusioninventory::haveRight("snmp_models","w")) {
+      if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
 		echo "</td>";
@@ -158,7 +163,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 
 		// Verify same model exist
 		$query = "SELECT id
-                FROM `glpi_plugin_fusioninventory_modelinfos`
+                FROM `glpi_plugin_fusioninventory_snmpmodels`
                 WHERE `name`='".$xml->name[0]."';";
 		$result = $DB->query($query);
 		
@@ -168,11 +173,11 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
          }
 			return false;
 		} else {
-			$query = "INSERT INTO `glpi_plugin_fusioninventory_modelinfos`
+			$query = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodels`
                                (`name`,`itemtype`,`discovery_key`,`comment`)
                    VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."','".$xml->comments[0]."');";
 			$DB->query($query);
-			$plugin_fusioninventory_modelinfos_id = $DB->insert_id();
+			$plugin_fusioninventory_snmpmodels_id = $DB->insert_id();
 			
 			$i = -1;
 			foreach($xml->oidlist[0] as $num) {
@@ -182,12 +187,12 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 					$j++;
 					switch ($j) {
 						case 1:
-							$plugin_fusioninventory_mib_object_id = Dropdown::importExternal(
+							$plugin_fusioninventory_mibobjects_id = Dropdown::importExternal(
                                          "PluginFusioninventoryMib_Object",$item);
 							break;
 
 						case 2:
-							$plugin_fusioninventory_mib_oid_id = Dropdown::importExternal(
+							$plugin_fusioninventory_miboids_id = Dropdown::importExternal(
                                       "PluginFusioninventoryMib_Oid",$item);
 							break;
 
@@ -216,18 +221,21 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 							break;
 					}
 				}
-
-				$query = "INSERT INTO `glpi_plugin_fusioninventory_mib`
-                                  (`plugin_fusioninventory_modelinfos_id`,`plugin_fusioninventory_mib_oid_id`,`plugin_fusioninventory_mib_object_id`,`oid_port_counter`,
-                                   `oid_port_dyn`,`mapping_type`,`mapping_name`,`vlan`,`activation`)
-                      VALUES('".$plugin_fusioninventory_modelinfos_id."','".$plugin_fusioninventory_mib_oid_id."','".$plugin_fusioninventory_mib_object_id."',
-                             '".$oid_port_counter."', '".$oid_port_dyn."', '".$mapping_type."',
-                             '".$mapping_name."', '".$vlan."', '".$activation."');";
+            $mapping = new PluginFusioninventoryMapping;
+            $mappings = $mapping->find("`type`='".$mapping_type."'
+                                       AND `name`='".$mapping_name."'");
+            $mappings_id = $mappings->fields['id'];
+				$query = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelmibs`
+                                  (`plugin_fusioninventory_snmpmodels_id`,`plugin_fusioninventory_miboids_id`,`plugin_fusioninventory_mibobjects_id`,`oid_port_counter`,
+                                   `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`activation`)
+                      VALUES('".$plugin_fusioninventory_snmpmodels_id."','".$plugin_fusioninventory_miboids_id."','".$plugin_fusioninventory_mibobjects_id."',
+                             '".$oid_port_counter."', '".$oid_port_dyn."', '".$mappings_id."',
+                             '".$vlan."', '".$activation."');";
 				$DB->query($query);
 			}
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
-               " : <a href='models.form.php?id=".$plugin_fusioninventory_modelinfos_id."'>".$xml->name[0]."</a>";
+               " : <a href='models.form.php?id=".$plugin_fusioninventory_snmpmodels_id."'>".$xml->name[0]."</a>";
          }
 		}
 	}
@@ -246,8 +254,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
       $p_criteria = array();
 
 		$walks            = new PluginFusioninventoryWalk;
-      $ptap             = new PluginFusioninventoryAgentsProcesses;
-      $pta              = new PluginFusioninventoryAgents;
+      $ptap             = new PluginFusioninventoryAgentProcess;
+      $pta              = new PluginFusioninventoryAgent;
 		$config_discovery = new PluginFusioninventoryConfig;
       $np               = new NetworkPort;
       $ptud             = new PluginFusioninventoryUnknownDevice;
@@ -283,19 +291,19 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
             }
             if ($discovery->MODELSNMP != "") {
                $query = "SELECT *
-                         FROM `glpi_plugin_fusioninventory_modelinfos`
+                         FROM `glpi_plugin_fusioninventory_snmpmodels`
                          WHERE `discovery_key`='".$discovery->MODELSNMP."'
                          LIMIT 0,1;";
                $result = $DB->query($query);
                $data = $DB->fetch_assoc($result);
-				$plugin_fusioninventory_modelinfos_id = $data['id'];
+				$plugin_fusioninventory_snmpmodels_id = $data['id'];
             } else {
-				$plugin_fusioninventory_modelinfos_id = 0;
+				$plugin_fusioninventory_snmpmodels_id = 0;
             }
             $discovery->MAC = strtolower($discovery->MAC);
 
-			if (empty($plugin_fusioninventory_modelinfos_id)) {
-				$plugin_fusioninventory_modelinfos_id = 0;
+			if (empty($plugin_fusioninventory_snmpmodels_id)) {
+				$plugin_fusioninventory_snmpmodels_id = 0;
             }
 
             unset($p_criteria);
@@ -331,7 +339,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                }
                $ptud->fields['comment'] = $discovery->DESCRIPTION;
                $ptud->fields['type'] = $discovery->TYPE;
-            $ptud->fields['plugin_fusioninventory_modelinfos_id'] = $plugin_fusioninventory_modelinfos_id;
+            $ptud->fields['plugin_fusioninventory_snmpmodels_id'] = $plugin_fusioninventory_snmpmodels_id;
 
                $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
                if ($discovery->AUTHSNMP != "") {
@@ -348,8 +356,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                if ($ptud->fields['snmp'] == '') {
                   $ptud->fields['snmp'] = 0;
                }
-            if ($ptud->fields['plugin_fusioninventory_modelinfos_id'] == '') {
-               $ptud->fields['plugin_fusioninventory_modelinfos_id'] = 0;
+            if ($ptud->fields['plugin_fusioninventory_snmpmodels_id'] == '') {
+               $ptud->fields['plugin_fusioninventory_snmpmodels_id'] = 0;
                }
                if ($ptud->fields['plugin_fusioninventory_snmpauths_id'] == '') {
                   $ptud->fields['plugin_fusioninventory_snmpauths_id'] = 0;
@@ -367,7 +375,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                unset($data);
                // Add networking_port
                $port_add["items_id"] = $newID;
-               $port_add["itemtype"] = 'PluginFusioninventoryUnknowndevice';
+               $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
                $port_add["ip"] = $discovery->IP;
                $port_add['mac'] = $discovery->MAC;
                $port_add['name'] = $discovery->NETPORTVENDOR;
@@ -386,7 +394,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                $data['id'] = $ci->getField('id');
                $data['plugin_fusioninventory_snmpauths_id'] = 0;
 
-               if ($a_device[1] == 'PluginFusioninventoryUnknowndevice') {
+               if ($a_device[1] == 'PluginFusioninventoryUnknownDevice') {
                   if ($ci->getField('name') && !in_array('name', $a_lockable)) {
                      if (!empty($discovery->NETBIOSNAME)) {
                         $data['name'] = $discovery->NETBIOSNAME;
@@ -425,8 +433,8 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                }
                if ($ci->getField('comment') && !in_array('comment', $a_lockable))
                   $data['comment'] = $discovery->DESCRIPTION;
-               if ($ci->getField('plugin_fusioninventory_modelinfos_id') && !in_array('plugin_fusioninventory_modelinfos_id', $a_lockable));
-                  $data['plugin_fusioninventory_modelinfos_id'] = $FK_model;
+               if ($ci->getField('plugin_fusioninventory_snmpmodels_id') && !in_array('plugin_fusioninventory_snmpmodels_id', $a_lockable));
+                  $data['plugin_fusioninventory_snmpmodels_id'] = $FK_model;
                if ($ci->getField('plugin_fusioninventory_snmpauths_id') && !in_array('plugin_fusioninventory_snmpauths_id', $a_lockable));
                   $data['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
                if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {
@@ -462,7 +470,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                         $port['name'] = $discovery->NETPORTVENDOR;
                         $np->update($port);
                      } else if ($DB->numrows($result) > 1) {
-                        $ptae = new PluginFusionInventoryAgentsErrors;
+                        $ptae = new PluginFusioninventoryAgentProcessError;
                         $error_input['id'] = $a_device[0];
                         $error_input['TYPE'] = $a_device[1];
                         $error_input['MESSAGE'] = 'Unable to determine network port of device to update with values : '.$discovery->IP.'(ip),
@@ -533,7 +541,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                    WHERE `id`='".$agent_id."';";
 			$DB->query($query);
  	            
-			$query = "UPDATE `glpi_plugin_fusioninventory_agents_processes`
+			$query = "UPDATE `glpi_plugin_fusioninventory_agentprocesses`
                    SET `end_time`='".$agent->end_date."',
                        `status`='3',
                        `networking_queries`='".$device_queried_networking."',
