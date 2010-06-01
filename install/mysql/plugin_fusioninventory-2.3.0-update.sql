@@ -266,7 +266,7 @@ ALTER TABLE `glpi_plugin_fusioninventory_unknowndevices`
 
 ## glpi_plugin_fusioninventory_mappings
 INSERT INTO `glpi_plugin_fusioninventory_mappings`
-      (`id`, `type`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
+      (`id`, `itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
    VALUES (NULL,'NetworkEquipment','location','glpi_networkequipments','locations_id',1,NULL),
           (NULL,'NetworkEquipment','firmware','glpi_networkequipments',
              'networkequipmentfirmwares_id',2,NULL),
@@ -339,7 +339,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           (NULL,'Printer','memory','glpi_printers','memory_size',26,NULL),
           (NULL,'Printer','location','glpi_printers','locations_id',56,NULL),
           (NULL,'Printer','informations','','',165,165),
-// Cartridges
+## Cartridges
           (NULL,'Printer','tonerblack','','',157,157),
           (NULL,'Printer','tonerblack2','','',166,166),
           (NULL,'Printer','tonercyan','','',158,158),
