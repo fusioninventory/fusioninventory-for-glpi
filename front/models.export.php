@@ -51,6 +51,6 @@ header('Content-type: application/xml; charset="utf-8"',true);
 header("Content-disposition: attachment; filename=export.xml");
 
 
-echo $importexport->plugin_fusioninventory_export($_GET["model"]);
+echo $importexport->export($_GET["model"]);
 
 ?>

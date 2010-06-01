@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryImportExport extends CommonDBTM {
 
-	function plugin_fusioninventory_export($ID_model) {
+	function export($ID_model) {
 		global $DB;
 		
 		PluginFusioninventoryAuth::checkRight("snmp_models","r");
@@ -57,23 +57,17 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 				exit();
          }
 		}	
-		
-		
+			
 		// Construction of XML file
 		$xml = "<model>\n";
 		$xml .= "	<name><![CDATA[".$model_name."]]></name>\n";
 		$xml .= "	<type>".$type."</type>\n";
 		$xml .= "	<key>".$discovery_key."</key>\n";
-      $xml .= "	<comments><![CDATA[".$comments."]]></comments>\n";
+      $xml .= "	<comments><![CDATA[".$comment."]]></comments>\n";
 		$xml .= "	<oidlist>\n";
 
       $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
-            `glpi_plugin_fusioninventory_mappings`.`itemtype` AS `mapping_type`,
-            `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
-         FROM `glpi_plugin_fusioninventory_snmpmodelmibs` AS `model_t`
-            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-               ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_snmpmodels_id`=
-                  `glpi_plugin_fusioninventory_mappings`.`id`
+         FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
          WHERE `plugin_fusioninventory_snmpmodels_id`='".$ID_model."';";
 
 		if ($result=$DB->query($query)) {
@@ -86,15 +80,13 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
                Dropdown::getDropdownName("glpi_plugin_fusioninventory_miboids",$data["plugin_fusioninventory_miboids_id"])."]]></oid>\n";
 				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
-				$xml .= "			<mapping_type>".$data["mapping_type"]."</mapping_type>\n";
-				$xml .= " 			<mapping_name><![CDATA[".$data["mapping_name"]."]]></mapping_name>\n";
+				$xml .= "			<mappings_id>".$data["plugin_fusioninventory_mappings_id"].
+                                 "</mappings_id>\n";
 				$xml .= "			<vlan>".$data["vlan"]."</vlan>\n";
 				$xml .= "			<activation>".$data["activation"]."</activation>\n";
 				$xml .= "		</oidobject>\n";
 			}
-		
-		}
-		
+		}		
 		$xml .= "	</oidlist>\n";
 		$xml .= "</model>\n";
 		
@@ -205,26 +197,18 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 							break;
 
 						case 5:
-							$mapping_type = $item;
+							$mappings_id = $item;
 							break;
 
 						case 6:
-							$mapping_name = $item;
-							break;
-
-						case 7:
 							$vlan = $item;
 							break;
 
-						case 8:
+						case 7:
 							$activation = $item;
 							break;
 					}
 				}
-            $mapping = new PluginFusioninventoryMapping;
-            $mappings = $mapping->find("`itemtype`='".$mapping_type."'
-                                       AND `name`='".$mapping_name."'");
-            $mappings_id = $mappings->fields['id'];
 				$query = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelmibs`
                                   (`plugin_fusioninventory_snmpmodels_id`,`plugin_fusioninventory_miboids_id`,`plugin_fusioninventory_mibobjects_id`,`oid_port_counter`,
                                    `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`activation`)
