@@ -254,8 +254,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    `creation` INT( 1 ) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_networkports_id_source` INT( 11 ) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_networkports_id_destination` INT( 11 ) NOT NULL DEFAULT '0',
+   `networkports_id_source` INT( 11 ) NOT NULL DEFAULT '0',
+   `networkports_id_destination` INT( 11 ) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL DEFAULT '0',
    PRIMARY KEY ( `id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

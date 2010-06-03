@@ -197,8 +197,8 @@ ALTER TABLE `glpi_plugin_fusioninventory_networkequipments`
 
 ALTER TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
-   CHANGE `FK_port_source` `plugin_fusioninventory_networkports_id_source` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_port_destination` `plugin_fusioninventory_networkports_id_destination` INT( 11 ) NOT NULL DEFAULT '0';
+   CHANGE `FK_port_source` `networkports_id_source` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_port_destination` `networkports_id_destination` INT( 11 ) NOT NULL DEFAULT '0';
    CHANGE `process_number` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `glpi_plugin_fusioninventory_networkportlogs`

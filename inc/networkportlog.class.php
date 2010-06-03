@@ -546,12 +546,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          SELECT * FROM(
             SELECT * FROM (
                SELECT `id`, `date`, `plugin_fusioninventory_agentprocesses_id`,
-                  `plugin_fusioninventory_networkports_id_source`,
-                  `plugin_fusioninventory_networkports_id_destination`,
+                  `networkports_id_source`, `networkports_id_destination`,
                   `creation` as `field`, NULL as `value_old`, NULL as `value_new`
                FROM `glpi_plugin_fusioninventory_networkportconnectionlogs`
-               WHERE `plugin_fusioninventory_networkports_id_source`='".$ID_port."'
-                  OR `plugin_fusioninventory_networkports_id_destination`='".$ID_port."'
+               WHERE `networkports_id_source`='".$ID_port."'
+                  OR `networkports_id_destination`='".$ID_port."'
                ORDER BY `date` DESC
                LIMIT 0,30
                )
