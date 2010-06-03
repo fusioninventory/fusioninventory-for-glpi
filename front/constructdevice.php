@@ -80,7 +80,7 @@ echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][4]."</a>";
 echo " | ";
 
-searchForm('PluginFusioninventoryConstructDevices',$_GET);
+//searchForm('PluginFusioninventoryConstructDevices',$_GET);
 //showList('PluginFusioninventoryConstructDevices',$_GET);
 
 commonFooter();

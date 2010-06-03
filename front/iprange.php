@@ -45,7 +45,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="rangeip.php";
 
-searchForm('PluginFusioninventoryIPRange',$_GET);
+//searchForm('PluginFusioninventoryIPRange',$_GET);
 //showList('PluginFusioninventoryIPRange',$_GET);
 
 commonFooter();

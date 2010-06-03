@@ -45,7 +45,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="models.php";
 
-searchForm('PluginFusioninventoryModelinfo',$_GET);
+//searchForm('PluginFusioninventoryModelinfo',$_GET);
 //showList('PluginFusioninventoryModelinfo',$_GET);
 
 commonFooter();
