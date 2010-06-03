@@ -64,7 +64,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["rangeip"][0] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["iprange"][0] . "</td>";
 		echo "<td align='center'>";
       if (empty($this->fields["ifaddr_start"]))
          $this->fields["ifaddr_start"] = "...";
@@ -84,7 +84,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["rangeip"][1] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["iprange"][1] . "</td>";
 		echo "<td align='center'>";
       unset($ipexploded);
       if (empty($this->fields["ifaddr_end"]))
@@ -132,7 +132,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["rangeip"][3] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["iprange"][3] . "</td>";
 		echo "<td align='center'>";
 		Dropdown::showYesNo("query",$this->fields["query"]);
 		echo "</td>";
@@ -235,8 +235,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          return true;
       } else {
          addMessageAfterRedirect("<font color='#ff0000'>IP incorrecte</font><br/>".
-            $LANG['plugin_fusioninventory']["rangeip"][0]." : ".$a_input['ifaddr_start0'].".".$a_input['ifaddr_start1'].".".$a_input['ifaddr_start2'].".".$a_input['ifaddr_start3']."<br/>".
-            $LANG['plugin_fusioninventory']["rangeip"][1]." : ".$a_input['ifaddr_end0'].".".$a_input['ifaddr_end1'].".".$a_input['ifaddr_end2'].".".$a_input['ifaddr_end3']);
+            $LANG['plugin_fusioninventory']["iprange"][0]." : ".$a_input['ifaddr_start0'].".".$a_input['ifaddr_start1'].".".$a_input['ifaddr_start2'].".".$a_input['ifaddr_start3']."<br/>".
+            $LANG['plugin_fusioninventory']["iprange"][1]." : ".$a_input['ifaddr_end0'].".".$a_input['ifaddr_end1'].".".$a_input['ifaddr_end2'].".".$a_input['ifaddr_end3']);
          return false;
       }
    }

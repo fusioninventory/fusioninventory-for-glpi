@@ -162,7 +162,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["profile"][25]." :</td>";
       echo "<td>";
-		Profile::dropdownNoneReadWrite("rangeip",$this->fields["rangeip"],1,1,1);
+		Profile::dropdownNoneReadWrite("iprange",$this->fields["iprange"],1,1,1);
 		echo "</td>";
 		echo "<td>".$LANG['plugin_fusioninventory']["profile"][22]." :</td>";
       echo "<td>";

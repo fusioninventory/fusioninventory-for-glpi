@@ -37,13 +37,13 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","rangeip");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","iprange");
 
-PluginFusioninventoryAuth::checkRight("rangeip","r");
+PluginFusioninventoryAuth::checkRight("iprange","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-$_GET['target']="rangeip.php";
+$_GET['target']="iprange.php";
 
 //searchForm('PluginFusioninventoryIPRange',$_GET);
 //showList('PluginFusioninventoryIPRange',$_GET);

@@ -1015,7 +1015,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 		case 'PluginFusioninventoryAgent' :
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/iprange.php)
 		case 'PluginFusioninventoryIPRange' :
 			switch ($table.'.'.$field) {
 
@@ -2072,7 +2072,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 			}
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/iprange.php)
 		case 'PluginFusioninventoryIPRange' :
 			switch ($new_table.".".$linkfield) {
 
@@ -2203,7 +2203,7 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
 			}
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/iprange.php)
 		case 'PluginFusioninventoryIPRange' :
 			switch ($table.".".$field) {
 			
@@ -2467,7 +2467,7 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
 			}
 			break;
 
-		// * range IP list (plugins/fusioninventory/front/rangeip.php)
+		// * range IP list (plugins/fusioninventory/front/iprange.php)
 		case 'PluginFusioninventoryIPRange' :
 			switch ($table.".".$field) {
 

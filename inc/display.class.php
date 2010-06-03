@@ -66,8 +66,8 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
 
       echo "<td align='center' width='".$width."' height='130'>";
-      if(PluginFusioninventoryAuth::haveRight("rangeip","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/rangeip.php'>
+      if(PluginFusioninventoryAuth::haveRight("iprange","r")) {
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/iprange.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_rangeip.png'/>
          <br/><b>".$LANG['plugin_fusioninventory']["menu"][2]."</b></a>";
       }
@@ -153,8 +153,8 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
            $LANG['plugin_fusioninventory']["model_info"][3]."</span>";
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
-      if(PluginFusioninventoryAuth::haveRight("rangeip","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/rangeip.php'>
+      if(PluginFusioninventoryAuth::haveRight("iprange","r")) {
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/iprange.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_rangeip.png'
                 onmouseout=\"cleanhide('menu_mini_rangeip')\"
                 onmouseover=\"cleandisplay('menu_mini_rangeip')\" /></a>";

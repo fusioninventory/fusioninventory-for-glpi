@@ -36,34 +36,34 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$rangeip = new PluginFusioninventoryIPRange;
+$iprange = new PluginFusioninventoryIPRange;
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","rangeip");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","iprange");
 
-PluginFusioninventoryAuth::checkRight("rangeip","r");
+PluginFusioninventoryAuth::checkRight("iprange","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
 if (isset ($_POST["add"])) {
-   if ($rangeip->checkip($_POST)) {
-      PluginFusioninventoryAuth::checkRight("rangeip","w");
+   if ($iprange->checkip($_POST)) {
+      PluginFusioninventoryAuth::checkRight("iprange","w");
       $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
       $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
-      $rangeip->add($_POST);
+      $iprange->add($_POST);
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-   if ($rangeip->checkip($_POST)) {
-      PluginFusioninventoryAuth::checkRight("rangeip","w");
+   if ($iprange->checkip($_POST)) {
+      PluginFusioninventoryAuth::checkRight("iprange","w");
       $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
       $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
-      $rangeip->update($_POST);
+      $iprange->update($_POST);
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryAuth::checkRight("rangeip","w");
-	$agents->rangeip($_POST);
-	glpi_header("rangeip.php");
+	PluginFusioninventoryAuth::checkRight("iprange","w");
+	$agents->iprange($_POST);
+	glpi_header("iprange.php");
 }
 
 
@@ -72,7 +72,7 @@ if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
 
-$rangeip->showForm($id);
+$iprange->showForm($id);
 
 commonFooter();
 
