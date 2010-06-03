@@ -62,9 +62,9 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 		$_GET["link"][1] = "AND";
 
 		$_SESSION["glpisearchcount"]['PluginFusioninventoryNetworkport2'] = 1;
-		showList('PluginFusioninventoryNetworkport2',$_GET);
+//		showList('PluginFusioninventoryNetworkport2',$_GET);
 } else {
-	showList('PluginFusioninventoryNetworkport2',$_GET);
+//	showList('PluginFusioninventoryNetworkport2',$_GET);
 }
 commonFooter(); 
 

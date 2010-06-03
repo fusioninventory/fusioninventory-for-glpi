@@ -81,7 +81,7 @@ echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusionin
 echo " | ";
 
 searchForm('PluginFusioninventoryConstructDevices',$_GET);
-showList('PluginFusioninventoryConstructDevices',$_GET);
+//showList('PluginFusioninventoryConstructDevices',$_GET);
 
 commonFooter();
 
