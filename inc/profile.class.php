@@ -151,7 +151,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["profile"][20]." :</td>";
       echo "<td>";
-		Profile::dropdownNoneReadWrite("snmp_authentification",$this->fields["snmp_authentification"],1,1,1);
+		Profile::dropdownNoneReadWrite("snmp_authentication",$this->fields["snmp_authentication"],1,1,1);
 		echo "</td>";
 		echo "<td>".$LANG['plugin_fusioninventory']["profile"][31]." :</td>";
       echo "<td>";

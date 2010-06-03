@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 
 if (PluginFusioninventoryAuth::haveRight("snmp_models","r")
-	OR PluginFusioninventoryAuth::haveRight("snmp_authentification","r")
+	OR PluginFusioninventoryAuth::haveRight("snmp_authentication","r")
 	OR PluginFusioninventoryAuth::haveRight("snmp_iprange","r")
 	OR PluginFusioninventoryAuth::haveRight("snmp_agent","r")
 	OR PluginFusioninventoryAuth::haveRight("snmp_scripts_infos","r")

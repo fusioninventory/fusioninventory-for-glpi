@@ -87,7 +87,7 @@ function plugin_init_fusioninventory() {
          $report_list["report/ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
 
-			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r")) {
+			if (haveRight("snmp_models", "r") || haveRight("snmp_authentication", "r")) {
 				$PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
          }
 
@@ -96,7 +96,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
          if (PluginFusioninventoryAuth::haveRight("snmp_models","r")
-            OR PluginFusioninventoryAuth::haveRight("snmp_authentification","r")
+            OR PluginFusioninventoryAuth::haveRight("snmp_authentication","r")
             OR PluginFusioninventoryAuth::haveRight("rangeip","r")
             OR PluginFusioninventoryAuth::haveRight("agents","r")
             OR PluginFusioninventoryAuth::haveRight("agentsprocesses","r")
@@ -109,7 +109,7 @@ function plugin_init_fusioninventory() {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = 'front/models.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = 'front/models.php';
             }
-            if (PluginFusioninventoryAuth::haveRight("snmp_authentification","w")) {
+            if (PluginFusioninventoryAuth::haveRight("snmp_authentication","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['snmp_auth'] = 'front/snmp_auth.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/snmp_auth.php';
             }
