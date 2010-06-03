@@ -57,7 +57,7 @@ if (isset($_POST["delete"])) {
 	$ptud->delete($_POST,1);
 
 //	logEvent($_POST["id"], "computers", 4, "inventory", $_SESSION["glpiname"]." ".$LANG['log'][22]);
-	glpi_header($CFG_GLPI["root_doc"]."plugins/fusioninventory/front/unknown.php");
+	glpi_header($CFG_GLPI["root_doc"]."plugins/fusioninventory/front/unknowndevice.php");
 } else if (isset($_POST["restore"])) {
 
 
@@ -77,7 +77,7 @@ if (isset($_POST["delete"])) {
    if ($Import == "0") {
       glpi_header($_SERVER['HTTP_REFERER']);
    } else {
-      glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknown.php");
+      glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknowndevice.php");
    }
 }
 

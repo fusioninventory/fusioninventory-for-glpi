@@ -103,7 +103,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventoryAuth::haveRight("unknowndevices","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknown.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknowndevice.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_unknown_device.png'/>
             <br/><b>".$LANG['plugin_fusioninventory']["menu"][4]."</b></a>";
       }
@@ -195,7 +195,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventoryAuth::haveRight("unknowndevices","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknown.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknowndevice.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_unknown_device.png'
                 onmouseout=\"cleanhide('menu_mini_unknown')\"
                 onmouseover=\"cleandisplay('menu_mini_unknown')\" /></a>";

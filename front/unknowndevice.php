@@ -45,7 +45,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 manageGetValuesInSearch('PluginFusioninventoryUnknownDevice');
 
-$_GET['target']="unknown.php";
+$_GET['target']="unknowndevice.php";
 
 searchForm('PluginFusioninventoryUnknownDevice',$_GET);
 showList('PluginFusioninventoryUnknownDevice',$_GET);
