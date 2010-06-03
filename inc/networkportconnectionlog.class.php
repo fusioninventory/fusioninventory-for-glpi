@@ -101,7 +101,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
       echo "<th>";
       echo $LANG['plugin_fusioninventory']["processes"][1];
-      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/agents.processes.form.php'>(".$LANG['common'][66].")</a>";
+      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -143,7 +143,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agents.processes.form.php?h_process_number=".$data['plugin_fusioninventory_processes_id']."'>".
+            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".$data['plugin_fusioninventory_processes_id']."'>".
             $data['plugin_fusioninventory_processes_id']."</a>";
             echo "</td>";
 

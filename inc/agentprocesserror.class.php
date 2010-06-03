@@ -48,7 +48,7 @@ class PluginFusioninventoryAgentProcessError extends CommonDBTM {
 
       echo "<th>";
       echo $LANG['plugin_fusioninventory']["processes"][1];
-      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/agents.processes.form.php'>(".$LANG['common'][66].")</a>";
+      echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 
       echo "<th>";
