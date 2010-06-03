@@ -136,7 +136,7 @@ function displaySearchForm() {
 	echo "<td>";
 	//Add parameters to uri to be saved as bookmarks
 	$_SERVER["REQUEST_URI"] = buildBookmarkUrl($_SERVER["REQUEST_URI"],$_GET);
-	showSaveBookmarkButton(BOOKMARK_SEARCH,'PluginFusioninventoryNetworkport2');
+	Bookmark::showSaveButton(BOOKMARK_SEARCH,'PluginFusioninventoryNetworkport2');
 	echo "</td>";
 
 	echo "<td>";
