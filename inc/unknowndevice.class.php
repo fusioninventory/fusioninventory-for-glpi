@@ -418,8 +418,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input["itemtype"] = $this->type;
       $input["name"] = "Link";
       $id_port = $np->add($input);
-      $nn->add(array('networkports_id_1'=> $p_oPort->getValue('id'),
-                     'networkports_id_2' => $id_port));
+      $nn->add(array('networkports_id_source'=> $p_oPort->getValue('id'),
+                     'networkports_id_destination' => $id_port));
 
       foreach ($p_oPort->getMacsToConnect() as $mac) {
          $input = array();
@@ -433,8 +433,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
             $line = $DB->fetch_assoc($result);
-            $nn->add(array('networkports_id_1'=> $line['id'],
-                           'networkports_id_2' => $id_port));
+            $nn->add(array('networkports_id_source'=> $line['id'],
+                           'networkports_id_destination' => $id_port));
          } else {
             // Create device inconnu
 

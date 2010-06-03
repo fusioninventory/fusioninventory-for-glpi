@@ -51,11 +51,11 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
       $sql_connection = "SELECT * FROM `glpi_plugin_fusioninventory_networkportlogs`
                         WHERE `field`='0'
-                        ORDER BY `plugin_fusioninventory_processes_id` DESC, `date_mod` DESC;";
+                        ORDER BY `plugin_fusioninventory_agentprocesses_id` DESC, `date_mod` DESC;";
       $result_connection = $DB->query($sql_connection);
       while ($thread_connection = $DB->fetch_array($result_connection)) {
          $input = array();
-         $input['plugin_fusioninventory_processes_id'] = $thread_connection['plugin_fusioninventory_processes_id'];
+         $input['plugin_fusioninventory_agentprocesses_id'] = $thread_connection['plugin_fusioninventory_agentprocesses_id'];
          $input['date'] = $thread_connection['date_mod'];
          if (($thread_connection["old_device_ID"] != "0")
                  OR ($thread_connection["new_device_ID"] != "0")) {
@@ -67,7 +67,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
                // connection
                $input['creation'] = '1';
             }
-            $input['networkports_id_1'] = $thread_connection["networkports_id"];
+            $input['networkports_id_source'] = $thread_connection["networkports_id"];
 
             if ($thread_connection["old_device_ID"] != "0") {
                $queryPort = "SELECT *
@@ -84,7 +84,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
                $resultPort = $DB->query($queryPort);
                $dataPort = $DB->fetch_assoc($resultPort);
             }
-            $input['networkports_id_2'] = $dataPort['id'];
+            $input['networkports_id_destination'] = $dataPort['id'];
             $this->add($input);
             $ptsnmph->deleteFromDB($thread_connection['id'], 1);
          }
@@ -123,17 +123,17 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
       echo "</tr>";
 
-      if (!isset($input['plugin_fusioninventory_processes_id'])) {
+      if (!isset($input['plugin_fusioninventory_agentprocesses_id'])) {
          $condition = '';
       } else {
-         $condition = "WHERE `plugin_fusioninventory_processes_id`='".$input['plugin_fusioninventory_processes_id']."'";
+         $condition = "WHERE `plugin_fusioninventory_agentprocesses_id`='".$input['plugin_fusioninventory_agentprocesses_id']."'";
          if (isset($input['created'])) {
             $condition .= " AND `creation`='".$input['created']."' ";
          }
       }
       $query = "SELECT * FROM `".$this->table."`
          ".$condition."
-         ORDER BY `date`DESC , `plugin_fusioninventory_processes_id` DESC";
+         ORDER BY `date`DESC , `plugin_fusioninventory_agentprocesses_id` DESC";
       if (!isset($input['process_number'])) {
          $query .= " LIMIT 0,500";
       }
@@ -143,8 +143,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".$data['plugin_fusioninventory_processes_id']."'>".
-            $data['plugin_fusioninventory_processes_id']."</a>";
+            echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".$data['plugin_fusioninventory_agentprocesses_id']."'>".
+            $data['plugin_fusioninventory_agentprocesses_id']."</a>";
             echo "</td>";
 
             echo "<td>";
@@ -152,7 +152,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $np->getFromDB($data['networkports_id_1']);
+            $np->getFromDB($data['networkports_id_source']);
             $item = new $np->fields["itemtype"];
             $item->getFromDB($np->fields["items_id"]);
             $link1 = $item->getLink(1);
@@ -175,7 +175,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            $np->getFromDB($data['networkports_id_2']);
+            $np->getFromDB($data['networkports_id_destination']);
             $item = new $np->fields["itemtype"];
             $item->getFromDB($np->fields["items_id"]);
             $link1 = $item->getLink(1);

@@ -53,7 +53,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 	 * @return id of inserted line
 	 *
 	**/
-	function insert_connection($status,$array,$plugin_fusioninventory_processes_id=0) {
+	function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
 		global $DB,$CFG_GLPI;
 
       $pthc = new PluginFusioninventoryNetworkPortConnectionLog;
@@ -64,10 +64,10 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       if ($status == "field") {
 
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_networkportlogs` (
-                               `networkports_id`,`field`,`old_value`,`new_value`,`date_mod`,`plugin_fusioninventory_processes_id`)
+                               `networkports_id`,`field`,`value_old`,`value_new`,`date_mod`,`plugin_fusioninventory_agentprocesses_id`)
                    VALUES('".$array["networkports_id"]."','".addslashes($array["field"])."',
-                          '".$array["old_value"]."','".$array["new_value"]."',
-                          '".date("Y-m-d H:i:s")."','".$plugin_fusioninventory_processes_id."');";
+                          '".$array["value_old"]."','".$array["value_new"]."',
+                          '".date("Y-m-d H:i:s")."','".$plugin_fusioninventory_agentprocesses_id."');";
          $DB->query($query);
 		}
  	}
@@ -277,8 +277,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $query = "SELECT *
                 FROM ".$this->table."
                 WHERE `field` = '0' 
-                  AND ((`old_value` NOT LIKE '%:%')
-                        OR (`old_value` IS NULL))";
+                  AND ((`value_old` NOT LIKE '%:%')
+                        OR (`value_old` IS NULL))";
       if ($result=$DB->query($query)) {
          $nb = $DB->numrows($result);
          $i = 0;
@@ -288,12 +288,12 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
             // Search port from mac address
             $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `mac`='".$data['new_value']."' ";
+               WHERE `mac`='".$data['value_new']."' ";
             if ($result_port=$DB->query($query_port)) {
                if ($DB->numrows($result_port) == '1') {
                   $input = array();
                   $data_port = $DB->fetch_assoc($result_port);
-                  $input['networkports_id_1'] = $data_port['id'];
+                  $input['networkports_id_source'] = $data_port['id'];
 
                   $query_port2 = "SELECT * FROM `glpi_networkports`
                      WHERE `items_id` = '".$data['new_device_ID']."'
@@ -301,11 +301,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['networkports_id_2'] = $data_port2['id'];
+                        $input['networkports_id_destination'] = $data_port2['id'];
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
-                        $input['plugin_fusioninventory_processes_id'] = $data['plugin_fusioninventory_processes_id'];
+                        $input['plugin_fusioninventory_agentprocesses_id'] = $data['plugin_fusioninventory_agentprocesses_id'];
                         $pfihc->add($input);
                      }
                   }
@@ -338,8 +338,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $query = "SELECT *
                 FROM ".$this->table."
                 WHERE `field` = '0'
-                  AND ((`new_value` NOT LIKE '%:%')
-                        OR (`new_value` IS NULL))";
+                  AND ((`value_new` NOT LIKE '%:%')
+                        OR (`value_new` IS NULL))";
       if ($result=$DB->query($query)) {
          $nb = $DB->numrows($result);
          $i = 0;
@@ -349,12 +349,12 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             
             // Search port from mac address
             $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE `mac`='".$data['old_value']."' ";
+               WHERE `mac`='".$data['value_old']."' ";
             if ($result_port=$DB->query($query_port)) {
                if ($DB->numrows($result_port) == '1') {
                   $input = array();
                   $data_port = $DB->fetch_assoc($result_port);
-                  $input['networkports_id_1'] = $data_port['id'];
+                  $input['networkports_id_source'] = $data_port['id'];
 
                   $query_port2 = "SELECT * FROM `glpi_networkports`
                      WHERE `items_id` = '".$data['old_device_ID']."'
@@ -362,12 +362,12 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                   if ($result_port2=$DB->query($query_port2)) {
                      if ($DB->numrows($result_port2) == '1') {
                         $data_port2 = $DB->fetch_assoc($result_port2);
-                        $input['networkports_id_2'] = $data_port2['id'];
+                        $input['networkports_id_destination'] = $data_port2['id'];
 
                         $input['date'] = $data['date_mod'];
                         $input['creation'] = 1;
-                        $input['plugin_fusioninventory_processes_id'] = $data['plugin_fusioninventory_processes_id'];
-                        if ($input['networkports_id_1'] != $input['networkports_id_2']) {
+                        $input['plugin_fusioninventory_agentprocesses_id'] = $data['plugin_fusioninventory_agentprocesses_id'];
+                        if ($input['networkports_id_source'] != $input['networkports_id_destination']) {
                            $pfihc->add($input);
                         }
                      }
@@ -422,7 +422,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       }
    }
 
-   static function addLog($port,$field,$old_value,$new_value,$mapping,$plugin_fusioninventory_processes_id=0) {
+   static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB,$CFG_GLPI;
 
       $history = new PluginFusioninventoryNetworkPortLog;
@@ -441,15 +441,15 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
          $array["networkports_id"] = $port;
          $array["field"] = $field;
-         $array["old_value"] = $old_value;
-         $array["new_value"] = $new_value;
+         $array["value_old"] = $value_old;
+         $array["value_new"] = $value_new;
 
          // Ajouter en DB
-         $history->insert_connection("field",$array,$plugin_fusioninventory_processes_id);
+         $history->insert_connection("field",$array,$plugin_fusioninventory_agentprocesses_id);
       }
    }
 
-   static function networkport_addLog($port_id, $new_value, $field) {
+   static function networkport_addLog($port_id, $value_new, $field) {
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $ptp = new PluginFusioninventoryNetworkPort;
@@ -489,39 +489,39 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       $ptp->load($port_id);
       //echo $ptp->getValue($db_field);
-      if ($ptp->getValue($db_field) != $new_value) {
+      if ($ptp->getValue($db_field) != $value_new) {
          $days = $pficlf->getValue($field);
 
          if ((isset($days)) AND ($days != '-1')) {
             $array["networkports_id"] = $port_id;
             $array["field"] = $field;
-            $array["old_value"] = $ptp->getValue($db_field);
-            $array["new_value"] = $new_value;
+            $array["value_old"] = $ptp->getValue($db_field);
+            $array["value_new"] = $value_new;
             $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
          }
       }
    }
 
    // $status = connection or disconnection
-   static function addLogConnection($status,$port,$plugin_fusioninventory_processes_id=0) {
+   static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB,$CFG_GLPI;
 
       $pthc = new PluginFusioninventoryNetworkPortConnectionLog;
       $nw=new NetworkPort_NetworkPort;
 
-      if (($plugin_fusioninventory_processes_id == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
-         $input['plugin_fusioninventory_processes_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
+      if (($plugin_fusioninventory_agentprocesses_id == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
+         $input['plugin_fusioninventory_agentprocesses_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       }
 
       // Récupérer le port de la machine associé au port du switch
 
       // Récupérer le type de matériel
-      $input["networkports_id_1"] = $port;
+      $input["networkports_id_source"] = $port;
       $opposite_port = $nw->getOppositeContact($port);
       if ($opposite_port == "0") {
          return;
       }
-      $input['networkports_id_2'] = $opposite_port;
+      $input['networkports_id_destination'] = $opposite_port;
 
       $input['date'] = date("Y-m-d H:i:s");
 
@@ -545,31 +545,35 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $query = "
          SELECT * FROM(
             SELECT * FROM (
-               SELECT id, date as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
-               networkports_id_1, networkports_id_2,
-               creation as field, NULL as old_value, NULL as new_value
-
-               FROM glpi_plugin_fusioninventory_networkportconnectionlogs
-               WHERE `networkports_id_1`='".$ID_port."'
-                  OR `networkports_id_2`='".$ID_port."'
-               ORDER BY date DESC
+               SELECT `id`, `date`, `plugin_fusioninventory_agentprocesses_id`,
+                  `plugin_fusioninventory_networkports_id_source`,
+                  `plugin_fusioninventory_networkports_id_destination`,
+                  `creation` as `field`, NULL as `value_old`, NULL as `value_new`
+               FROM `glpi_plugin_fusioninventory_networkportconnectionlogs`
+               WHERE `plugin_fusioninventory_networkports_id_source`='".$ID_port."'
+                  OR `plugin_fusioninventory_networkports_id_destination`='".$ID_port."'
+               ORDER BY `date` DESC
                LIMIT 0,30
                )
-            AS DerivedTable1
+            AS `DerivedTable1`
             UNION ALL
             SELECT * FROM (
-               SELECT id, date_mod as date, plugin_fusioninventory_processes_id as plugin_fusioninventory_processes_id,
-               networkports_id AS networkports_id_1, NULL as networkports_id_2,
-               field, old_value, new_value
-
-               FROM glpi_plugin_fusioninventory_networkportlogs
-               WHERE `networkports_id`='".$ID_port."'
-               ORDER BY date DESC
+               SELECT `glpi_plugin_fusioninventory_networkportlogs`.`id`,
+                  `date_mod` as `date`, `plugin_fusioninventory_agentprocesses_id`,
+                  `plugin_fusioninventory_networkports_id` AS `networkports_id_source`,
+                  NULL as `networkports_id_destination`,
+                  `tablefield` AS `field`, `value_old`, `value_new`
+               FROM `glpi_plugin_fusioninventory_networkportlogs`
+                  LEFT JOIN `glpi_plugin_fusioninventory_mappings`
+                     ON `glpi_plugin_fusioninventory_networkportlogs`.`plugin_fusioninventory_mappings_id` =
+                        `glpi_plugin_fusioninventory_mappings`.`id`
+               WHERE `plugin_fusioninventory_networkports_id`='".$ID_port."'
+               ORDER BY `date` DESC
                LIMIT 0,30
                )
-            AS DerivedTable2)
-         AS MainTable
-         ORDER BY date DESC, id DESC
+            AS `DerivedTable2`)
+         AS `MainTable`
+         ORDER BY `date` DESC, `id` DESC
          LIMIT 0,30";
    //echo $query."<br/>";
       $text = "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -593,15 +597,15 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       if ($result=$DB->query($query)) {
          while ($data=$DB->fetch_array($result)) {
             $text .= "<tr class='tab_bg_1'>";
-            if (!empty($data["networkports_id_2"])) {
+            if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections
                if ($data['field'] == '1') {
                   $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_ok.png'/></td>";
                } else {
                   $text .= "<td align='center'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/connection_notok.png'/></td>";
                }
-               if ($ID_port == $data["networkports_id_1"]) {
-                  $np->getFromDB($data["networkports_id_2"]);
+               if ($ID_port == $data["networkports_id_source"]) {
+                  $np->getFromDB($data["networkports_id_destination"]);
                   if (isset($np->fields["items_id"])) {
                      $item = new $np->fields["itemtype"];
                      $item->getFromDB($np->fields["items_id"]);
@@ -617,8 +621,8 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                      $text .= "<td align='center'><font color='#ff0000'>".$LANG['common'][28]."</font></td>";
                   }
 
-               } else if ($ID_port == $data["networkports_id_2"]) {
-                  $np->getFromDB($data["networkports_id_1"]);
+               } else if ($ID_port == $data["networkports_id_destination"]) {
+                  $np->getFromDB($data["networkports_id_source"]);
                   if (isset($np->fields["items_id"])) {
                      $item = new $np->fields["itemtype"];
                      $item->getFromDB($np->fields["items_id"]);
@@ -641,9 +645,9 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                // Changes values
                $text .= "<td align='center' colspan='2'></td>";
                $text .= "<td align='center'>".$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
-               $text .= "<td align='center'>".$data["old_value"]."</td>";
+               $text .= "<td align='center'>".$data["value_old"]."</td>";
                $text .= "<td align='center'>-></td>";
-               $text .= "<td align='center'>".$data["new_value"]."</td>";
+               $text .= "<td align='center'>".$data["value_new"]."</td>";
                $text .= "<td align='center'>".convDateTime($data["date"])."</td>";
             }
             $text .= "</tr>";
