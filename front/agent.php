@@ -43,8 +43,6 @@ PluginFusioninventoryAuth::checkRight("agents","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch('PluginFusioninventoryAgent');
-
 $_GET['target']="agent.php";
 
 searchForm('PluginFusioninventoryAgent',$_GET);

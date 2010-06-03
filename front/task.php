@@ -41,8 +41,6 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch('PluginFusioninventoryTask');
-
 $_GET['target']="task.php";
 
 searchForm('PluginFusioninventoryTask',$_GET);

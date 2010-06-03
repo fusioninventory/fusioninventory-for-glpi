@@ -43,8 +43,6 @@ PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch('PluginFusioninventoryUnknownDevice');
-
 $_GET['target']="unknowndevice.php";
 
 searchForm('PluginFusioninventoryUnknownDevice',$_GET);

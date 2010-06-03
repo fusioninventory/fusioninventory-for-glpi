@@ -41,8 +41,6 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch('PluginFusioninventoryConstructDevices');
-
 $_GET['target']="construct_device.php";
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd = new PluginFusioninventoryConstructDevice;

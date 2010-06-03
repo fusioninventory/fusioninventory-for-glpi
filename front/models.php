@@ -43,8 +43,6 @@ PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-manageGetValuesInSearch('PluginFusioninventoryModelinfo');
-
 $_GET['target']="models.php";
 
 searchForm('PluginFusioninventoryModelinfo',$_GET);

@@ -52,8 +52,6 @@ if (!isset($_GET["start"])) {
 $_GET=getValues($_GET,$_POST);
 displaySearchForm();
 
-manageGetValuesInSearch('PluginFusioninventoryNetworkport2');
-
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
 		
 		$_GET["field"][0] = 3;

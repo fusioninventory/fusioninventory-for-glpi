@@ -57,8 +57,6 @@ if ($config->getValue("authsnmp") == "file") {
 	
 	$_GET['target']="snmp_auth.php";
 	
-	manageGetValuesInSearch('PluginFusioninventoryConfigSNMPSecurity');
-
 	searchForm('PluginFusioninventoryConfigSNMPSecurity',$_GET);
 	showList('PluginFusioninventoryConfigSNMPSecurity',$_GET);
 } else {
