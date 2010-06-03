@@ -58,7 +58,7 @@ $query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.
                  `glpi_networkports`.`id` as `id`
           FROM `glpi_networkequipments`
                LEFT JOIN `glpi_networkports` ON `items_id` = `glpi_networkequipments`.`id`
-          WHERE `itemtype`=".NETWORKING_TYPE."
+          WHERE `itemtype`='".NETWORKING_TYPE."'
           ORDER BY `glpi_networkequipments`.`name`, `glpi_networkports`.`logical_number`;";
 
 $result=$DB->query($query);
