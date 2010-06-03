@@ -338,9 +338,9 @@ class PluginFusioninventorySNMP extends CommonDBTM {
       $plugin_fusioninventory_snmp_auth = new PluginFusioninventoryConfigSNMPSecurity;
       $config = new PluginFusioninventoryConfig;
 
-      if ($config->getValue("authsnmp") == "file") {
+      if ($config->getValue("storagesnmpauth") == "file") {
          echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
-      } else  if ($config->getValue("authsnmp") == "DB") {
+      } else  if ($config->getValue("storagesnmpauth") == "DB") {
          Dropdown::show("PluginFusioninventoryConfigSNMPSecurity",
                         array('name' => "plugin_fusioninventory_snmpauths_id",
                               'value' => $selected,

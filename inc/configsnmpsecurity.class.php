@@ -433,7 +433,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 			$snmp_auth[1]["id"] = 0;
 		}
 
-		if ($config->getValue("authsnmp") == "file") {
+		if ($config->getValue("storagesnmpauth") == "file") {
 			$xml = simplexml_load_file($xml_auth_rep."auth.xml");
 		
 			$i=-1;
@@ -533,7 +533,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 					}
 				}
 			}	
-		} else if ($config->getValue("authsnmp") == "DB") {
+		} else if ($config->getValue("storagesnmpauth") == "DB") {
 			if ($ID_Device == "all") {
 				$query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_configsnmpsecurities`";

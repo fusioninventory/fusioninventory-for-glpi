@@ -46,13 +46,13 @@ $config = new PluginFusioninventoryConfig;
 PluginFusioninventoryDisplay::mini_menu();
 
 // Forms for FILE
-if ($config->getValue("authsnmp") == "file") {
+if ($config->getValue("storagesnmpauth") == "file") {
 	$plugin_fusioninventory_snmp_auth = new PluginFusioninventoryConfigSNMPSecurity;
 	
 	if (!isset($_GET["id"])) {
 		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
 	}
-} else if ($config->getValue("authsnmp") == "DB") {
+} else if ($config->getValue("storagesnmpauth") == "DB") {
 	// Forms for DB
 	
 	$_GET['target']="snmp_auth.php";

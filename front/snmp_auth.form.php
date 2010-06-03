@@ -48,9 +48,9 @@ PluginFusioninventoryDisplay::mini_menu();
 
 if (isset ($_POST["add"])) {
 	PluginFusioninventoryAuth::checkRight("snmp_authentication","w");
-	if ($config->getValue("authsnmp") == "file") {
+	if ($config->getValue("storagesnmpauth") == "file") {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add_xml();
-   } else if ($config->getValue("authsnmp") == "DB") {
+   } else if ($config->getValue("storagesnmpauth") == "DB") {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
    }
 	

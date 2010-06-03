@@ -494,7 +494,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[NETWORKING_TYPE][5190]['linkfield']='id';
 	$sopt[NETWORKING_TYPE][5190]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][19];
 
-	if ($config->getValue("authsnmp") == "file") {
+	if ($config->getValue("storagesnmpauth") == "file") {
 		$sopt[NETWORKING_TYPE][5191]['table'] = 'glpi_plugin_fusioninventory_networkequipments';
 		$sopt[NETWORKING_TYPE][5191]['field'] = 'plugin_fusioninventory_snmpauths_id';
 		$sopt[NETWORKING_TYPE][5191]['linkfield'] = 'id';
@@ -522,7 +522,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PRINTER_TYPE][5190]['linkfield']='id';
 	$sopt[PRINTER_TYPE][5190]['name']=$LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["profile"][19];
 
-	if ($config->getValue("authsnmp") == "file") {
+	if ($config->getValue("storagesnmpauth") == "file") {
 		$sopt[PRINTER_TYPE][5191]['table'] = 'glpi_plugin_fusioninventory_printers';
 		$sopt[PRINTER_TYPE][5191]['field'] = 'plugin_fusioninventory_snmpauths_id';
 		$sopt[PRINTER_TYPE][5191]['linkfield'] = 'id';
