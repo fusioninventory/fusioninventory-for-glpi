@@ -531,7 +531,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
    `value_new` varchar(255) DEFAULT NULL,
    `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   KEY `plugin_fusioninventory_networkports_id` (`plugin_fusioninventory_networkports_id`,`date_mod`)
+   KEY `networkports_id` (`networkports_id`,`date_mod`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
