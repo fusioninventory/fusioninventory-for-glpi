@@ -59,7 +59,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventoryAuth::haveRight("snmp_authentication","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmp_auth.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/configsnmpsecurity.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_authentification.png'/>
             <br/><b>".$LANG['plugin_fusioninventory']["model_info"][3]."</b></a>";
       }
@@ -144,7 +144,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventoryAuth::haveRight("snmp_authentication","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmp_auth.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/configsnmpsecurity.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_authentification.png'
                 onmouseout=\"cleanhide('menu_mini_authentification')\"
                 onmouseover=\"cleandisplay('menu_mini_authentification')\" /></a>";

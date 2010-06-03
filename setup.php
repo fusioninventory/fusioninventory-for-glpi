@@ -110,8 +110,8 @@ function plugin_init_fusioninventory() {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = 'front/models.php';
             }
             if (PluginFusioninventoryAuth::haveRight("snmp_authentication","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['snmp_auth'] = 'front/snmp_auth.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/snmp_auth.php';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['snmp_auth'] = 'front/configsnmpsecurity.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/configsnmpsecurity.php';
             }
             if (PluginFusioninventoryAuth::haveRight("agents","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';

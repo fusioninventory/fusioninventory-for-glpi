@@ -1,5 +1,4 @@
 <?php
-
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -32,43 +31,39 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-define('GLPI_ROOT', '../../..');
+if (!defined('GLPI_ROOT')) {
+	define('GLPI_ROOT', '../../..');
+}
 
-include (GLPI_ROOT . "/inc/includes.php");
-
-PluginFusioninventoryAuth::checkRight("snmp_authentication","r");
-
-$plugin_fusioninventory_snmp_auth = new PluginFusioninventoryConfigSNMPSecurity;
-$config = new PluginFusioninventoryConfig;
+include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
 
+PluginFusioninventoryAuth::checkRight("snmp_authentication","r");
+
+$config = new PluginFusioninventoryConfig;
+
 PluginFusioninventoryDisplay::mini_menu();
 
-
-if (isset ($_POST["add"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_authentication","w");
-	if ($config->getValue("storagesnmpauth") == "file") {
-		$new_ID = $plugin_fusioninventory_snmp_auth->add_xml();
-   } else if ($config->getValue("storagesnmpauth") == "DB") {
-		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
-   }
+// Forms for FILE
+if ($config->getValue("storagesnmpauth") == "file") {
+	$plugin_fusioninventory_snmp_auth = new PluginFusioninventoryConfigSNMPSecurity;
 	
-	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='snmp_auth.php?id=".$new_ID."'>".$_POST["name"]."</a>";
-	glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset ($_POST["update"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_authentication","w");
-	$plugin_fusioninventory_snmp_auth->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
+	if (!isset($_GET["id"])) {
+		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
+	}
+} else if ($config->getValue("storagesnmpauth") == "DB") {
+	// Forms for DB
+	
+	$_GET['target']="configsnmpsecurity.php";
+	
+Search::show('PluginFusioninventoryConfigSNMPSecurity');
+//	searchForm('PluginFusioninventoryConfigSNMPSecurity',$_GET);
+//	showList('PluginFusioninventoryConfigSNMPSecurity',$_GET);
+} else {
+	echo $LANG['plugin_fusioninventory']["functionalities"][19];
 }
 
-$id = "";
-if (isset($_GET["id"])) {
-	$id = $_GET["id"];
-}
-if(PluginFusioninventoryAuth::haveRight("snmp_authentication","r")) {
-   $plugin_fusioninventory_snmp_auth->showForm($id);
-}
 commonFooter();
 
 ?>

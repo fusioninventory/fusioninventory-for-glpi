@@ -743,7 +743,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 				case "glpi_plugin_fusioninventory_configsnmpsecurities.name" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventoryConfigSNMPSecurity;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["id"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/snmp_auth.form.php?id=" . $FK_auth_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/configsnmpsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_configsnmpsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -816,7 +816,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 				case "glpi_plugin_fusioninventory_configsnmpsecurities.id" :
 					$plugin_fusioninventory_snmp = new PluginFusioninventoryConfigSNMPSecurity;
 					$FK_auth_DB = $plugin_fusioninventory_snmp->GetSNMPAuth($data["id"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/snmp_auth.form.php?id=" . $FK_auth_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusioninventory/front/configsnmpsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusioninventory_configsnmpsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -870,7 +870,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			break;
 
 
-		// * Authentification List (plugins/fusioninventory/front/snmp_auth.php)
+		// * Authentification List (plugins/fusioninventory/front/configsnmpsecurity.php)
 		case 'PluginFusioninventoryConfigSNMPSecurity' :
 			switch ($table.'.'.$field) {
 
