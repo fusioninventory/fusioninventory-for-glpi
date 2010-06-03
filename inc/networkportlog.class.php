@@ -560,14 +560,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             SELECT * FROM (
                SELECT `glpi_plugin_fusioninventory_networkportlogs`.`id`,
                   `date_mod` as `date`, `plugin_fusioninventory_agentprocesses_id`,
-                  `plugin_fusioninventory_networkports_id` AS `networkports_id_source`,
+                  `networkports_id` AS `networkports_id_source`,
                   NULL as `networkports_id_destination`,
                   `tablefield` AS `field`, `value_old`, `value_new`
                FROM `glpi_plugin_fusioninventory_networkportlogs`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                      ON `glpi_plugin_fusioninventory_networkportlogs`.`plugin_fusioninventory_mappings_id` =
                         `glpi_plugin_fusioninventory_mappings`.`id`
-               WHERE `plugin_fusioninventory_networkports_id`='".$ID_port."'
+               WHERE `networkports_id`='".$ID_port."'
                ORDER BY `date` DESC
                LIMIT 0,30
                )

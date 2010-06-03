@@ -524,7 +524,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportlogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugin_fusioninventory_networkports_id` int(11) NOT NULL,
+   `networkports_id` int(11) NOT NULL,
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `date_mod` datetime DEFAULT NULL,
    `value_old` varchar(255) DEFAULT NULL,

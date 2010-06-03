@@ -203,7 +203,7 @@ ALTER TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs`
 
 ALTER TABLE `glpi_plugin_fusioninventory_networkportlogs`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
-   CHANGE `FK_ports` `plugin_fusioninventory_networkports_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_ports` `networkports_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `Field` `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    CHANGE `old_value` `value_old` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `new_value` `value_new` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL,
