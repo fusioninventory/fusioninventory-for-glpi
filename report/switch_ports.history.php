@@ -85,8 +85,7 @@ echo "</tr>";
 echo "</table></form>";
 
 if(isset($_GET["networkports_id"])) {
-
-   echo plugin_fusioninventory_snmp_showHistory($FK_port, 0);
+   echo PluginFusioninventoryNetworkPortLog::showHistory($_GET["networkports_id"]);
 }
 
 echo "</form>";
