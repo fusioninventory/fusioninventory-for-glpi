@@ -63,7 +63,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
 	PluginFusioninventoryAuth::checkRight("agents","w");
 	$agents->delete($_POST);
-	glpi_header("agents.php");
+	glpi_header("agent.php");
 } else if (isset ($_POST["startagent"])) {
    $pta = new PluginFusioninventoryAgent;
    $pta->RemoteStartAgent($_POST['agentID'], $_POST['ip']);

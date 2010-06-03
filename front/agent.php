@@ -45,7 +45,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 manageGetValuesInSearch('PluginFusioninventoryAgent');
 
-$_GET['target']="agents.php";
+$_GET['target']="agent.php";
 
 searchForm('PluginFusioninventoryAgent',$_GET);
 showList('PluginFusioninventoryAgent',$_GET);

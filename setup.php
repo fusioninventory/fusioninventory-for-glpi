@@ -114,8 +114,8 @@ function plugin_init_fusioninventory() {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/snmp_auth.php';
             }
             if (PluginFusioninventoryAuth::haveRight("agents","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agents.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agents.php';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
             }
 
             if (PluginFusioninventoryAuth::haveRight("rangeip","w")) {

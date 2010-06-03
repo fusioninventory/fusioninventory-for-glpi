@@ -75,7 +75,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventoryAuth::haveRight("agents","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agents.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agent.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png'/><br/>
          <b>".$LANG['plugin_fusioninventory']["menu"][1]."</b></a>";
       }
@@ -164,7 +164,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "</td>";
       echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventoryAuth::haveRight("agents","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agents.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agent.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_agents.png'
                 onmouseout=\"cleanhide('menu_mini_agents')\"
                 onmouseover=\"cleandisplay('menu_mini_agents')\" /></a>";

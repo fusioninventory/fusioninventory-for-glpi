@@ -1011,7 +1011,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 			}
 			break;
 
-		// * FusionInventory Agents list (plugins/fusioninventory/front/agents.php)
+		// * FusionInventory Agents list (plugins/fusioninventory/front/agent.php)
 		case 'PluginFusioninventoryAgent' :
 			break;
 
