@@ -73,10 +73,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["model_info"][2] . "</td>";
 		echo "<td align='center'>";
-		Dropdown::show("PluginFusioninventorySnmpversion",
-                     array('name' => "plugin_fusioninventory_snmpversions_id",
-                           'value' => $this->fields["plugin_fusioninventory_snmpversions_id"],
-                           'comment' => false));
+         $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
 		echo "</td>";
 		echo "</tr>";
 
@@ -90,17 +87,14 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][2] . "</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='sec_name' value='" . $this->fields["sec_name"] . "'/>";
+		echo "<input type='text' name='username' value='" . $this->fields["username"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][4] . "</td>";
 		echo "<td align='center'>";
-		Dropdown::show("PluginFusioninventorySnmpprotocolauth",
-                     array('name' => "auth_protocol",
-                           'value' => $this->fields["auth_protocol"],
-                           'comment' => false));
+         $this->showDropdownSNMPAuth($this->fields["authentication"]);
 		echo "</td>";
 		echo "</tr>";
 
@@ -115,10 +109,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["snmpauth"][6] . "</td>";
 		echo "<td align='center'>";
-		Dropdown::show("PluginFusioninventorySnmpprotocolpriv",
-                     array('name' => "priv_protocol",
-                           'value' => $this->fields["priv_protocol"],
-                           'comment' => false));
+         $this->showDropdownSNMPEncryption($this->fields["encryption"]);
 		echo "</td>";
 		echo "</tr>";
 
@@ -130,6 +121,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
+      $options['colspan']=1;
       $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
@@ -191,14 +183,14 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 						break;
 
 					case 5:
-						$sec_name[$i] = $item;
+						$username[$i] = $item;
 						break;
 
 					case 7:
-						$auth_protocol[$i] = Dropdown::getDropdownName(
+						$authentication[$i] = Dropdown::getDropdownName(
                                     "glpi_plugin_fusioninventory_snmpprotocolauths",$item);
-						if ($auth_protocol[$i] == "&nbsp;") {
-							$auth_protocol[$i] = "";
+						if ($authentication[$i] == "&nbsp;") {
+							$authentication[$i] = "";
                   }
 						break;
 
@@ -207,10 +199,10 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 						break;
 
 					case 9:
-						$priv_protocol[$i] = Dropdown::getDropdownName(
+						$encryption[$i] = Dropdown::getDropdownName(
                                     "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
-						if ($priv_protocol[$i] == "&nbsp;") {
-							$priv_protocol[$i] = "";
+						if ($encryption[$i] == "&nbsp;") {
+							$encryption[$i] = "";
                   }
 						break;
 
@@ -228,10 +220,10 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 				echo "<td align='center'>".$name[$key]."</td>";
 				echo "<td align='center'>".$snmp_version[$key]."</td>";
 				echo "<td align='center'>".$community[$key]."</td>";
-				echo "<td align='center'>".$sec_name[$key]."</td>";
-				echo "<td align='center'>".$auth_protocol[$key]."</td>";
+				echo "<td align='center'>".$username[$key]."</td>";
+				echo "<td align='center'>".$authentication[$key]."</td>";
 				echo "<td align='center'>".$auth_passphrase[$key]."</td>";
-				echo "<td align='center'>".$priv_protocol[$key]."</td>";
+				echo "<td align='center'>".$encryption[$key]."</td>";
 				echo "<td align='center'>".$priv_passphrase[$key]."</td>";
 				echo "</tr>";
 			} else if ($array == '1') {
@@ -239,10 +231,10 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 				$array_auth["$numero"]['name']= $name[$key];
 				$array_auth["$numero"]['namec']=$snmp_version[$key];
 				$array_auth["$numero"]['community']=$community[$key];
-				$array_auth["$numero"]['sec_name']=$sec_name[$key];
-				$array_auth["$numero"]['auth_protocol']=$auth_protocol[$key];
+				$array_auth["$numero"]['username']=$username[$key];
+				$array_auth["$numero"]['authentication']=$authentication[$key];
 				$array_auth["$numero"]['auth_passphrase']=$auth_passphrase[$key];
-				$array_auth["$numero"]['priv_protocol']=$priv_protocol[$key];
+				$array_auth["$numero"]['encryption']=$encryption[$key];
 				$array_auth["$numero"]['priv_passphrase']=$priv_passphrase[$key];
 			}
 		}
@@ -254,7 +246,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 	}
 	
 
-	
+	// for file stored snmp authentication
 	function add_xml() {
 		// Get new id
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
@@ -304,7 +296,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 						break;
 
 					case 9:
-						$xml_write .= "			<priv_protocol>".$item."</priv_protocol>\n";
+						$xml_write .= "			<priv_protocol>".$item."</encryption>\n";
 						break;
 
 					case 10:
@@ -321,11 +313,11 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		$xml_write .= "			<Name><![CDATA[".$_POST["name"]."]]></Name>\n";
 		$xml_write .= "			<snmp_version>".$_POST["plugin_fusioninventory_snmpversions_id"]."</snmp_version>\n";
 		$xml_write .= "			<community><![CDATA[".$_POST["community"]."]]></community>\n";
-		$xml_write .= "			<sec_name><![CDATA[".$_POST["sec_name"]."]]></sec_name>\n";
-		$xml_write .= "			<auth_protocol>".$_POST["auth_protocol"]."</auth_protocol>\n";
+		$xml_write .= "			<sec_name><![CDATA[".$_POST["username"]."]]></sec_name>\n";
+		$xml_write .= "			<auth_protocol>".$_POST["authentication"]."</auth_protocol>\n";
 		$xml_write .= "			<auth_passphrase><![CDATA[".$_POST["auth_passphrase"].
                     "]]></auth_passphrase>\n";
-		$xml_write .= "			<priv_protocol>".$_POST["priv_protocol"]."</priv_protocol>\n";
+		$xml_write .= "			<priv_protocol>".$_POST["encryption"]."</priv_protocol>\n";
 		$xml_write .= "			<priv_passphrase><![CDATA[".$_POST["priv_passphrase"].
                     "]]></priv_passphrase>\n";
 		$xml_write .= "		</conf>\n";
@@ -341,8 +333,36 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		return $id;
 	}
 	
-	
-	
+	function showDropdownSNMPVersion($p_value=NULL) {
+      $snmpVersions = array(0=>'-----', '1', '2c', '3');
+      if (is_null($p_value)) {
+         $options = array();
+      } else {
+         $options = array('value'=>$p_value);
+      }
+      Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
+   }
+
+	function showDropdownSNMPAuth($p_value=NULL) {
+      $authentications = array(0=>'-----', 'MD5', 'SHA');
+      if (is_null($p_value)) {
+         $options = array();
+      } else {
+         $options = array('value'=>$p_value);
+      }
+      Dropdown::showFromArray("authentication", $authentications, $options);
+   }
+
+	function showDropdownSNMPEncryption($p_value=NULL) {
+      $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256');
+      if (is_null($p_value)) {
+         $options = array();
+      } else {
+         $options = array('value'=>$p_value);
+      }
+      Dropdown::showFromArray("encryption", $encryptions, $options);
+   }
+
 	function selectbox($selected=0) {
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
 		$i = -1;
@@ -416,19 +436,19 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 			$snmp_auth[0]["Name"] = "Public-v2c";
 			$snmp_auth[0]["snmp_version"] = "2c";
 			$snmp_auth[0]["community"] = "public";
-			$snmp_auth[0]["sec_name"] = "";
-			$snmp_auth[0]["auth_protocol"] = "";
+			$snmp_auth[0]["username"] = "";
+			$snmp_auth[0]["authentication"] = "";
 			$snmp_auth[0]["auth_passphrase"] = "";
-			$snmp_auth[0]["priv_protocol"] = "";
+			$snmp_auth[0]["encryption"] = "";
 			$snmp_auth[0]["priv_passphrase"] = "";			
 			$snmp_auth[0]["id"] = 0;
 			$snmp_auth[1]["Name"] = "Public-v1";
 			$snmp_auth[1]["snmp_version"] = "1";
 			$snmp_auth[1]["community"] = "public";
-			$snmp_auth[1]["sec_name"] = "";
-			$snmp_auth[1]["auth_protocol"] = "";
+			$snmp_auth[1]["username"] = "";
+			$snmp_auth[1]["authentication"] = "";
 			$snmp_auth[1]["auth_passphrase"] = "";
-			$snmp_auth[1]["priv_protocol"] = "";
+			$snmp_auth[1]["encryption"] = "";
 			$snmp_auth[1]["priv_passphrase"] = "";		
 			$snmp_auth[1]["id"] = 0;
 		}
@@ -484,20 +504,20 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 
 						case 5:
 							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["sec_name"] = $item;
+								$snmp_auth["username"] = $item;
                      }
 							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["sec_name"] = $item;
+								$snmp_auth[($i+2)]["username"] = $item;
                      }
 							break;
 
 						case 7:
 							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["auth_protocol"] = Dropdown::getDropdownName(
+								$snmp_auth["authentication"] = Dropdown::getDropdownName(
                               "glpi_plugin_fusioninventory_snmpprotocolauths",$item);
                      }
 							if ($ID_Device == "all") {
-								$snmp_auth[($i+2)]["auth_protocol"] = Dropdown::getDropdownName(
+								$snmp_auth[($i+2)]["authentication"] = Dropdown::getDropdownName(
                               "glpi_plugin_fusioninventory_snmpprotocolauths",$item);
                      }
 							break;
@@ -513,11 +533,11 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
                   
 						case 9:
 							if (($recup == "1") AND ($ID_Device != "all")) {
-								$snmp_auth["priv_protocol"] = Dropdown::getDropdownName(
+								$snmp_auth["encryption"] = Dropdown::getDropdownName(
                               "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
                      }
 							if ($ID_Device == "all") {
-									$snmp_auth[($i+2)]["priv_protocol"] = Dropdown::getDropdownName(
+									$snmp_auth[($i+2)]["encryption"] = Dropdown::getDropdownName(
                               "glpi_plugin_fusioninventory_snmpprotocolprivs",$item);
                      }
 							break;
@@ -547,10 +567,10 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 				$snmp_auth["Name"] = "";
 				$snmp_auth["snmp_version"] = "";
 				$snmp_auth["community"] = "";
-				$snmp_auth["sec_name"] = "";
-				$snmp_auth["auth_protocol"] = "";
+				$snmp_auth["username"] = "";
+				$snmp_auth["authentication"] = "";
 				$snmp_auth["auth_passphrase"] = "";
-				$snmp_auth["priv_protocol"] = "";
+				$snmp_auth["encryption"] = "";
 				$snmp_auth["priv_passphrase"] = "";
 			} else if ($ID_Device != "all") {
 				$snmp_auth["Name"] = $DB->result($result,0,"name");
@@ -558,14 +578,14 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
                "glpi_plugin_fusioninventory_snmpversions",$DB->result($result,0,
                "plugin_fusioninventory_snmpversions_id"));
 				$snmp_auth["community"] = $DB->result($result,0,"community");
-				$snmp_auth["sec_name"] = $DB->result($result,0,"sec_name");
-				$snmp_auth["auth_protocol"] = Dropdown::getDropdownName(
+				$snmp_auth["username"] = $DB->result($result,0,"username");
+				$snmp_auth["authentication"] = Dropdown::getDropdownName(
                "glpi_plugin_fusioninventory_snmpprotocolauths",$DB->result($result,0,
-               "auth_protocol"));
+               "authentication"));
 				$snmp_auth["auth_passphrase"] = $DB->result($result,0,"auth_passphrase");
-				$snmp_auth["priv_protocol"] = Dropdown::getDropdownName(
+				$snmp_auth["encryption"] = Dropdown::getDropdownName(
                "glpi_plugin_fusioninventory_snmpprotocolprivs",$DB->result($result,0,
-               "priv_protocol"));
+               "encryption"));
 				$snmp_auth["priv_passphrase"] = $DB->result($result,0,"priv_passphrase");
 			} else if ($ID_Device == "all") {
 				$i = 2;
@@ -586,12 +606,12 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 						$snmp_auth[$i]["snmp_version"] = Dropdown::getDropdownName(
                      "glpi_plugin_fusioninventory_snmpversions",$data["plugin_fusioninventory_snmpversions_id"]);
 						$snmp_auth[$i]["community"] = $data["community"];
-						$snmp_auth[$i]["sec_name"] = $data["sec_name"];
-						$snmp_auth[$i]["auth_protocol"] = Dropdown::getDropdownName(
-                     "glpi_plugin_fusioninventory_snmpprotocolauths",$data["auth_protocol"]);
+						$snmp_auth[$i]["username"] = $data["username"];
+						$snmp_auth[$i]["authentication"] = Dropdown::getDropdownName(
+                     "glpi_plugin_fusioninventory_snmpprotocolauths",$data["authentication"]);
 						$snmp_auth[$i]["auth_passphrase"] = $data["auth_passphrase"];
-						$snmp_auth[$i]["priv_protocol"] = Dropdown::getDropdownName(
-                     "glpi_plugin_fusioninventory_snmpprotocolprivs",$data["priv_protocol"]);
+						$snmp_auth[$i]["encryption"] = Dropdown::getDropdownName(
+                     "glpi_plugin_fusioninventory_snmpprotocolprivs",$data["encryption"]);
 						$snmp_auth[$i]["priv_passphrase"] = $data["priv_passphrase"];
 						$i++;
 					}
@@ -658,6 +678,10 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
                 $snmp_auth_name."</a>";
       }
 	}
+
+   function canCreate() {
+      return plugin_fusioninventory_haveTypeRight('PluginFusioninventoryConfigSNMPSecurity', 'w');
+   }
 }
 
 ?>

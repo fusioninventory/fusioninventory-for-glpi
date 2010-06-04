@@ -345,21 +345,21 @@ class PluginFusioninventoryCommunication {
          $sxml_authentication->addAttribute('VERSION',
                             Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpversions',
                                             $ptsnmpa->fields['plugin_fusioninventory_snmpversions_id']));
-         $sxml_authentication->addAttribute('USERNAME', $ptsnmpa->fields['sec_name']);
-         if ($ptsnmpa->fields['auth_protocol'] == '0') {
+         $sxml_authentication->addAttribute('USERNAME', $ptsnmpa->fields['username']);
+         if ($ptsnmpa->fields['authentication'] == '0') {
             $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
          } else {
             $sxml_authentication->addAttribute('AUTHPROTOCOL',
                             Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpprotocolauths',
-                                            $ptsnmpa->fields['auth_protocol']));
+                                            $ptsnmpa->fields['authentication']));
          }
          $sxml_authentication->addAttribute('AUTHPASSPHRASE', $ptsnmpa->fields['auth_passphrase']);
-         if ($ptsnmpa->fields['priv_protocol'] == '0') {
+         if ($ptsnmpa->fields['encryption'] == '0') {
             $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
          } else {
             $sxml_authentication->addAttribute('PRIVPROTOCOL',
                     Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpprotocolprivs',
-                                    $ptsnmpa->fields['priv_protocol']));
+                                    $ptsnmpa->fields['encryption']));
          }
          $sxml_authentication->addAttribute('PRIVPASSPHRASE', $ptsnmpa->fields['priv_passphrase']);
    }

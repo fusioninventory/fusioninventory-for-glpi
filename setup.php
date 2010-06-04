@@ -167,8 +167,8 @@ function plugin_fusioninventory_check_config() {
 
 function plugin_fusioninventory_haveTypeRight($type,$right) {
 	switch ($type) {
-		case 'PluginFusioninventoryError' :
-			return PluginFusioninventoryAuth::haveRight("errors",$right);
+		case 'PluginFusioninventoryConfigSNMPSecurity' :
+			return PluginFusioninventoryAuth::haveRight("snmp_authentication",$right);
 			break;
 	}
 	return true;

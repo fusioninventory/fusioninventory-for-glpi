@@ -149,13 +149,13 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][4]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][1];
 
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
-	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['field'] = 'sec_name';
-	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['linkfield'] = 'sec_name';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['field'] = 'username';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['linkfield'] = 'username';
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][5]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][2];
 
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['table'] = 'glpi_plugin_fusioninventory_snmpprotocolauths';
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['field'] = 'name';
-	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['linkfield'] = 'auth_protocol';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['linkfield'] = 'authentication';
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][7]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][4];
 
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][8]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
@@ -165,7 +165,7 @@ function plugin_fusioninventory_getSearchOption() {
 
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['table'] = 'glpi_plugin_fusioninventory_snmpprotocolprivs';
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['field'] = 'name';
-	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['linkfield'] = 'priv_protocol';
+	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['linkfield'] = 'encryption';
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][9]['name'] = $LANG['plugin_fusioninventory']["snmpauth"][6];
 
 	$sopt['PluginFusioninventoryConfigSNMPSecurity'][10]['table'] = 'glpi_plugin_fusioninventory_configsnmpsecurities';
