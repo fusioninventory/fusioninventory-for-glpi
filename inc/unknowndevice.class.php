@@ -517,7 +517,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          while ($data=$DB->fetch_array($result)) {
             $query_port = "SELECT * FROM `glpi_networking_ports`
                WHERE on_device='".$data['ID']."'
-               device_type='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
+                  AND device_type='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
             if ($result_port=$DB->query($query_port)) {
                while ($data_port=$DB->fetch_array($result_port)) {
                   removeConnector($data_port['ID']);
