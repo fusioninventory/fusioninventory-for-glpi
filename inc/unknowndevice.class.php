@@ -475,6 +475,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $input = array();
       $input['hub'] = "1";
       $input['name'] = "hub";
+         // get source entity :
+         $datas = $np->getDeviceData($p_oPort->getValue("on_device"),$p_oPort->getValue("device_type"));
+         if (isset($np->FK_entities)) {
+            $input['FK_entities'] = $np->FK_entities;
+         }
       $id_unknown = $this->add($input);
 
       $input = array();
