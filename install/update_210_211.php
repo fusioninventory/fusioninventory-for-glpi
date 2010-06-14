@@ -37,9 +37,23 @@
 
 // Update from 2.1.0 to 2.1.1
 function update210to211() {
+   global $DB;
 
+   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-2.1.1-update";
+   $DBf_handle = fopen($DB_file, "rt");
+   $sql_query = fread($DBf_handle, filesize($DB_file));
+   fclose($DBf_handle);
+   foreach ( explode(";\n", "$sql_query") as $sql_line) {
+      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (!empty($sql_line)) {
+         $DB->query($sql_line);
+      }
+   }
 
-
+   $DB->query("UPDATE `glpi_plugin_tracker_config`
+               SET `version` = '2.1.1'
+               WHERE `id`=1
+               LIMIT 1 ;");
 
 
 }

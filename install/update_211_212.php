@@ -37,9 +37,13 @@
 
 // Update from 2.1.1 to 2.1.2
 function update211to212() {
+   global $DB;
 
-
-
+   $DB->query("UPDATE `glpi_plugin_tracker_config`
+               SET `version` = '2.1.3'
+               WHERE `id`=1
+               LIMIT 1 ;");
+   //PluginFusioninventoryDb::clean_db();
 
 
 }

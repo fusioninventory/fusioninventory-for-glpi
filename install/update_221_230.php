@@ -37,9 +37,21 @@
 
 // Update from 2.2.1 to 2.3.0
 function update221to230() {
+   global $DB;
 
+   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-2.3.0-update";
+   $DBf_handle = fopen($DB_file, "rt");
+   $sql_query = fread($DBf_handle, filesize($DB_file));
+   fclose($DBf_handle);
+   foreach ( explode(";\n", "$sql_query") as $sql_line) {
+      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (!empty($sql_line)) {
+         $DB->query($sql_line);
+      }
+   }
 
-
+   //TODO
+// Plugin::migrateItemType();
 
 
 }

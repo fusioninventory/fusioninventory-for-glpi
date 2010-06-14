@@ -37,7 +37,14 @@
 
 // Update from 2.0.2 to 2.1.0
 function update202to210() {
+   global $DB;
 
+   $DB->query("UPDATE `glpi_plugin_tracker_networking`
+               SET `last_PID_update` = '0';");
+   $DB->query("UPDATE `glpi_plugin_tracker_config`
+               SET `version` = '2.1.0'
+               WHERE `id`='1'
+               LIMIT 1 ;");
 
 
 

@@ -35,10 +35,10 @@
 // ----------------------------------------------------------------------
 
 
-function getCurrentVersion() {
+function pluginFusioninventoryGetCurrentVersion($version) {
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config"))) {
-      return "2.3.0";
+      return $version;
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
 
@@ -80,7 +80,7 @@ function getCurrentVersion() {
 }
 
 
-function update($current_version) {
+function pluginFusioninventoryUpdate($current_version) {
 
    switch ($current_version){
       case "1.0.0":
@@ -118,6 +118,14 @@ function update($current_version) {
 			update221to230();
 
    }
+//   // Remote IP of switch ports
+//   $query = "UPDATE `glpi_networkports`
+//             SET `ip` = NULL
+//             WHERE `itemtype` ='NetworkEquipment'
+//                AND `ip` IS NOT NULL ";
+//   $DB->query($query);
+
+   PluginFusioninventoryAuth::initSession();
    
 }
 ?>

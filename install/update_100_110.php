@@ -37,9 +37,18 @@
 
 // Update from 1.0.0 to 1.1.0
 function update100to110() {
+   global $DB;
 
-
-
+   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_tracker-1.1.0-update";
+   $DBf_handle = fopen($DB_file, "rt");
+   $sql_query = fread($DBf_handle, filesize($DB_file));
+   fclose($DBf_handle);
+   foreach ( explode(";\n", "$sql_query") as $sql_line) {
+      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (!empty($sql_line)) {
+         $DB->query($sql_line);
+      }
+   }
 
 
 }

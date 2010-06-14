@@ -37,8 +37,17 @@
 
 // Update from 2.1.2 to 2.1.3
 function update212to213() {
+   global $DB;
 
-
+   $DB->query("UPDATE `glpi_plugin_tracker_config`
+               SET `version` = '2.2.0'
+               WHERE `id`=1
+               LIMIT 1 ;");
+   ini_set("memory_limit","-1");
+   ini_set("max_execution_time", "0");
+   $pthc = new PluginFusioninventoryNetworkPortConnectionLog;
+   $pthc->migration();
+   PluginFusioninventoryDb::clean_db();
 
 
 
