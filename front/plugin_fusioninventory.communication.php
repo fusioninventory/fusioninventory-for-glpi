@@ -153,7 +153,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                $ptc->addQuery($pxml);
             }
          }
-         if ($ocsinventory == '1') {
+         if (($ocsinventory == '1') AND ($a_agent['module_inventory'] == "1")) {
             $ptc->addInventory();
          }
    //      $ptc->addWakeonlan();
