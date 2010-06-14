@@ -43,10 +43,11 @@ PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
-$_GET['target']="models.php";
+$_GET['target']="snmpmodel.php";
 
-//searchForm('PluginFusioninventoryModelinfo',$_GET);
-//showList('PluginFusioninventoryModelinfo',$_GET);
+//searchForm('PluginFusioninventorySNMPModel',$_GET);
+//showList('PluginFusioninventorySNMPModel',$_GET);
+Search::show('PluginFusioninventorySNMPModel');
 
 commonFooter();
 

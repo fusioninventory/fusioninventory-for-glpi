@@ -215,7 +215,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_constructdevices` (
    `manufacturers_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `snmpmodels_id` int(11) DEFAULT NULL,
+   `plugin_fusioninventory_snmpmodels_id` int(11) DEFAULT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -320,7 +320,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmpmodels` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
    `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
-   `is_deleted` int(1) DEFAULT NULL,
+   `is_deleted` int(1) NOT NULL DEFAULT '0',
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `activation` int(1) NOT NULL DEFAULT '1',
    `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

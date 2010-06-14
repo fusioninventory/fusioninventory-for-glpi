@@ -172,7 +172,7 @@ ALTER TABLE `glpi_plugin_fusioninventory_snmpmodelmibs`
    CHANGE `FK_model_infos` `plugin_fusioninventory_snmpmodels_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `FK_mib_label` `plugin_fusioninventory_miblabels_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `FK_mib_oid` `plugin_fusioninventory_miboids_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_mib_object` `plugin_fusioninventory_mibobjects_id` INT( 11 ) NOT NULL DEFAULT '0'
+   CHANGE `FK_mib_object` `plugin_fusioninventory_mibobjects_id` INT( 11 ) NOT NULL DEFAULT '0',
    DROP `mapping_type`;
 
 ALTER TABLE `glpi_plugin_fusioninventory_snmpmodels`
@@ -180,7 +180,10 @@ ALTER TABLE `glpi_plugin_fusioninventory_snmpmodels`
    CHANGE `device_type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `FK_entities` `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `deleted` `is_deleted` INT( 1 ) NOT NULL DEFAULT '0',
-   CHANGE `comments` `comment` text COLLATE utf8_unicode_ci;
+   CHANGE `comments` `comment` text COLLATE utf8_unicode_ci,
+   ADD `is_deleted` int(1) NOT NULL DEFAULT '0';
+UPDATE `glpi_plugin_fusioninventory_snmpmodels`
+   SET `is_deleted` = '0';
 
 ALTER TABLE `glpi_plugin_fusioninventory_networkequipmentips`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,

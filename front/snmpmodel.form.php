@@ -38,8 +38,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_models","r");
 
-$plugin_fusioninventory_model_infos = new PluginFusioninventoryModelInfos;
-$plugin_fusioninventory_mib = new PluginFusioninventoryMib;
+$plugin_fusioninventory_model_infos = new PluginFusioninventorySNMPModel;
+$plugin_fusioninventory_mib = new PluginFusioninventorySNMPModelMib;
 
 $importexport = new PluginFusioninventoryImportExport;
 
@@ -59,7 +59,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
 	PluginFusioninventoryAuth::checkRight("snmp_models","w");
 	$plugin_fusioninventory_model_infos->delete($_POST);
-	glpi_header("models.php");
+	glpi_header("snmpmodel.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
 	PluginFusioninventoryAuth::checkRight("snmp_models","w");
 	$importexport->import($_FILES['importfile']['tmp_name']);
@@ -80,7 +80,8 @@ if (isset ($_POST["add_oid"])) {
 }
 
 if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
-   $importexport->showForm('');
+//   print_r($_POST);
+   $importexport->showForm($_GET["id"]); //TODO : verify
    $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
 }
 $id = "";

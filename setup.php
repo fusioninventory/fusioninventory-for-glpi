@@ -43,7 +43,7 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventoryAgentProcess');
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryConstructDevice');
-   Plugin::registerClass('PluginFusioninventoryModelInfos');
+   Plugin::registerClass('PluginFusioninventorySNMPModel');
    Plugin::registerClass('PluginFusioninventoryNetworkEquipment');
    Plugin::registerClass('PluginFusioninventoryPrinter');
    Plugin::registerClass('PluginFusioninventoryIPRange');
@@ -106,8 +106,8 @@ function plugin_init_fusioninventory() {
 
             $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
             if (PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = 'front/models.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = 'front/models.php';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = 'front/snmpmodel.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = 'front/snmpmodel.php';
             }
             if (PluginFusioninventoryAuth::haveRight("snmp_authentication","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['snmp_auth'] = 'front/configsnmpsecurity.form.php?add=1';

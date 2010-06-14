@@ -365,7 +365,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['id'];
 		}
-      Dropdown::show("PluginFusioninventoryModelInfos",
+      Dropdown::show("PluginFusioninventorySNMPModel",
                      array('name'=>"model_infos",
                            'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>0,

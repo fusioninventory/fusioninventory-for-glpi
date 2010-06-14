@@ -219,7 +219,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
 			}
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
-               " : <a href='models.form.php?id=".$plugin_fusioninventory_snmpmodels_id."'>".$xml->name[0]."</a>";
+               " : <a href='snmpmodel.form.php?id=".$plugin_fusioninventory_snmpmodels_id."'>".$xml->name[0]."</a>";
          }
 		}
 	}
@@ -270,7 +270,7 @@ class PluginFusioninventoryImportExport extends CommonDBTM {
          foreach($p_xml->DEVICE as $discovery) {
             // If module version is 1.0, so try to get right model (discovery file in this agent is too old
             if (($moduleversion == "1.0") AND ($discovery->AUTHSNMP != "")) {
-               $pfimi = new PluginFusionInventoryModelInfos;
+               $pfimi = new PluginFusioninventorySNMPModel;
                $discovery->MODELSNMP = $pfimi->getrightmodel(0, 0, $discovery->DESCRIPTION);
             }
             if ($discovery->MODELSNMP != "") {

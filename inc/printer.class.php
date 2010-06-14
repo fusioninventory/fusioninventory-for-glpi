@@ -388,7 +388,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['id'];
 		}
-		Dropdown::show("PluginFusioninventoryModelInfos",
+		Dropdown::show("PluginFusioninventorySNMPModel",
                      array('name'=>"plugin_fusioninventory_snmpmodels_id",
                            'value'=>$data["plugin_fusioninventory_snmpmodels_id"],
                            'comment'=>false,

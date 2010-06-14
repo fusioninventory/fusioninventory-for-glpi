@@ -57,7 +57,7 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 	$plugin_fusioninventory_printer->update($_POST);
 	
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
-   $plugin_fusioninventory_model_infos = new PluginFusioninventoryModelInfos;
+   $plugin_fusioninventory_model_infos = new PluginFusioninventorySNMPModel;
    $plugin_fusioninventory_model_infos->getrightmodel($_POST['id'], PRINTER_TYPE);
 }
 

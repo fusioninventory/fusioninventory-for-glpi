@@ -51,7 +51,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/models.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmpmodel.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_models.png'/>
             <br/><b>".$LANG['plugin_fusioninventory']["model_info"][4]."</b></a>";
       }
@@ -134,7 +134,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/models.php'>
+         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmpmodel.php'>
             <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_models.png'
                 onmouseout=\"cleanhide('menu_mini_models')\"
                 onmouseover=\"cleandisplay('menu_mini_models')\" /></a>";

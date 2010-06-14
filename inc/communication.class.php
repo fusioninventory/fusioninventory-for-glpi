@@ -144,7 +144,7 @@ class PluginFusioninventoryCommunication {
     *@return nothing
     **/
    function addQuery($pxml, $task=0) {
-      $ptmi    = new PluginFusioninventoryModelInfos;
+      $ptmi    = new PluginFusioninventorySNMPModel;
       $ptsnmpa = new PluginFusioninventoryConfigSNMPSecurity;
       $pta     = new PluginFusioninventoryAgent;
       $ptap    = new PluginFusioninventoryAgentProcess;
@@ -372,8 +372,8 @@ class PluginFusioninventoryCommunication {
     *@return nothing
     **/
    function addModel($p_sxml_node, $p_id) {
-      $models = new PluginFusioninventoryModelInfos;
-      $mib_networking = new PluginFusioninventoryMib;
+      $models = new PluginFusioninventorySNMPModel;
+      $mib_networking = new PluginFusioninventorySNMPModelMib;
 
       $models->getFromDB($p_id);
       $sxml_model = $p_sxml_node->addChild('MODEL');

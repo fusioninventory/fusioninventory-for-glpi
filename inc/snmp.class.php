@@ -66,7 +66,7 @@ class PluginFusioninventorySNMP extends CommonDBTM {
                           AND `glpi_plugin_fusioninventory_printers`.`plugin_fusioninventory_snmpmodels_id`!='0' ";
       }
 			
-		$query = "SELECT `glpi_plugin_fusioninventory_mappings`.`itemtype` AS `mapping_type`,
+		$query = "SELECT `glpi_plugin_fusioninventory_mappings`.`itemtype`,
                        `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
                        `glpi_plugin_fusioninventory_snmpmodelmibs`.`oid_port_dyn`,
                        `glpi_plugin_fusioninventory_miboids`.`name` AS `name`

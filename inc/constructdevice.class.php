@@ -337,7 +337,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_counter"] == "0") {
                                  $mapping = new PluginFusioninventoryMapping;
-                                 $mappings = $mapping->find("`itemtype`='".$a_mibs['mapping_type']."'
+                                 $mappings = $mapping->find("`itemtype`='".$a_mibs['itemtype']."'
                                           AND `name`='".$a_mibs['mapping_name']."'");
                                  echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']]." ( ".$a_mibs["mapping_name"]." )";
                               }
@@ -434,7 +434,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                if (isset($a_mibs['id'])) {
                   if ($a_mibs["oid_port_counter"] == "0") {
                      $mapping = new PluginFusioninventoryMapping;
-                     $mappings = $mapping->find("`itemtype`='".$a_mibs['mapping_type']."'
+                     $mappings = $mapping->find("`itemtype`='".$a_mibs['itemtype']."'
                                           AND `name`='".$a_mibs['mapping_name']."'");
                      if ($mappings) {
                         echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']];
@@ -491,8 +491,8 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
    function generatemodels() {
       global $DB;
 
-      $ptmi = new PluginFusioninventoryModelInfos;
-      $ptmn = new PluginFusioninventoryMib;
+      $ptmi = new PluginFusioninventorySNMPModel;
+      $ptmn = new PluginFusioninventorySNMPModelMib;
 
       $query = "SELECT glpi_plugin_fusioninventory_constructdevices.id, type
          FROM glpi_plugin_fusioninventory_constructdevices
@@ -506,7 +506,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
             $count_mib = 0;
             $query_mibs = "SELECT `glpi_plugin_fusioninventory_constructdevice_miboids`.*,
                   `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
-                  `glpi_plugin_fusioninventory_mappings`.`itemtype` AS `mapping_type`
+                  `glpi_plugin_fusioninventory_mappings`.`itemtype`
                FROM `glpi_plugin_fusioninventory_constructdevice_miboids`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                      ON `glpi_plugin_fusioninventory_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
@@ -514,7 +514,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                WHERE plugin_fusioninventory_constructdevices_id='".$data["id"]."' ";
             if ($result_mibs = $DB->query($query_mibs)) {
                while ($data_mibs = $DB->fetch_array($result_mibs)) {
-                  $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['mapping_type'] = $data_mibs['mapping_type'];
+                  $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['itemtype'] = $data_mibs['itemtype'];
                   $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['mapping_name'] = $data_mibs['mapping_name'];
                   $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['oid_port_counter'] = $data_mibs['oid_port_counter'];
                   $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
@@ -531,7 +531,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                   if ($existent != '1') {
                      $count_mib_model = 0;
                      $query_mibs_model = "SELECT `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
-                           `glpi_plugin_fusioninventory_mappings`.`itemtype` AS `mapping_type`,
+                           `glpi_plugin_fusioninventory_mappings`.`itemtype`,
                            `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
                         FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
@@ -542,9 +542,9 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                         while ($data_mib_model = $DB->fetch_array($result_mib_model)) {
                            $count_mib_model++;
                            if ($existent != '-1') {
-                              if (isset($a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['mapping_type'])) {
+                              if (isset($a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['itemtype'])) {
                                  // Oid Existe, on vérifie si tous les paramètres sont pareils
-                                 if ($a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['mapping_type'] == $data_mib_model['mapping_type'] AND
+                                 if ($a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['itemtype'] == $data_mib_model['itemtype'] AND
                                     $a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['mapping_name'] == $data_mib_model['mapping_name'] AND
                                     $a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['oid_port_counter'] == $data_mib_model['oid_port_counter'] AND
                                     $a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['oid_port_dyn'] == $data_mib_model['oid_port_dyn'] AND
@@ -582,7 +582,7 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
                
                $query_mibs = "SELECT `glpi_plugin_fusioninventory_constructdevice_miboids`.*,
                   `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
-                  `glpi_plugin_fusioninventory_mappings`.`itemtype` AS `mapping_type`
+                  `glpi_plugin_fusioninventory_mappings`.`itemtype`
                FROM `glpi_plugin_fusioninventory_constructdevice_miboids`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                      ON `glpi_plugin_fusioninventory_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
@@ -726,15 +726,15 @@ class PluginFusioninventoryConstructDevice extends CommonDBTM {
 
                $query_serial = "SELECT `glpi_plugin_fusioninventory_constructdevice_miboids`.*,
                      `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
-                     `glpi_plugin_fusioninventory_mappings`.`itemtype` AS `mapping_type`
+                     `glpi_plugin_fusioninventory_mappings`.`itemtype`
                   FROM `glpi_plugin_fusioninventory_constructdevice_miboids`
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                         ON `glpi_plugin_fusioninventory_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
                   WHERE `plugin_fusioninventory_constructdevices_id`='".$data['id']."'
-                     AND ((`mapping_name`='macaddr' AND `mapping_type`='NetworkEquipment')
-                           OR ( `mapping_name`='ifPhysAddress' AND `mapping_type`='Printer')
-                           OR ( `mapping_name`='ifPhysAddress' AND `mapping_type`='Computer'))
+                     AND ((`mapping_name`='macaddr' AND `itemtype`='NetworkEquipment')
+                           OR ( `mapping_name`='ifPhysAddress' AND `itemtype`='Printer')
+                           OR ( `mapping_name`='ifPhysAddress' AND `itemtype`='Computer'))
                   LIMIT 1";
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {

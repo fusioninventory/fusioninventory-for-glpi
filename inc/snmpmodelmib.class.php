@@ -101,7 +101,7 @@ class PluginFusioninventorySNMPModelMib extends CommonDBTM {
 					echo "</td>";
 	
 					echo "<td align='center'>";
-					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_miblabels",$data["plugin_fusioninventory_mib_label_id"]);
+					echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_miblabels",$data["plugin_fusioninventory_miblabels_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -138,11 +138,11 @@ class PluginFusioninventorySNMPModelMib extends CommonDBTM {
 					
 					echo "<td align='center'>";
                $mapping = new PluginFusioninventoryMapping;
-               $mappings = $mapping->find("`itemtype`='".$data['mapping_type']."'
-                                          AND `name`='".$data['mapping_name']."'");
+               $mappings = $mapping->find("`itemtype`='".$data['itemtype']."'
+                                          AND `name`='".$data['name']."'");
                if ($mappings) {
-                  echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']]." ( ".$data["mapping_name"]." )";
-						$linkoid_used[$data['mapping_type']."||".$data["mapping_name"]] = 1;
+                  echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']]." ( ".$data["name"]." )";
+						$linkoid_used[$data['itemtype']."||".$data["name"]] = 1;
                }
 					echo "</td>";
 					
@@ -214,7 +214,7 @@ class PluginFusioninventorySNMPModelMib extends CommonDBTM {
 
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusioninventoryMibLabel",
-                           array('name' => "plugin_fusioninventory_mib_label_id",
+                           array('name' => "plugin_fusioninventory_miblabels_id",
                                  'value' => 0));
 				echo "</td>";
 				
@@ -279,15 +279,15 @@ class PluginFusioninventorySNMPModelMib extends CommonDBTM {
 
 	function prepareInputForUpdate($input) {
 		$explode = explode("||",$input["links_oid_fields"]);
-		$input["mapping_type"] = $explode[0];
-		$input["mapping_name"] = $explode[1];
+		$input["itemtype"] = $explode[0];
+		$input["name"] = $explode[1];
 		return $input;
 	}
 
 	function prepareInputForAdd($input) {
 		$explode = explode("||",$input["links_oid_fields"]);
-		$input["mapping_type"] = $explode[0];
-		$input["mapping_name"] = $explode[1];
+		$input["itemtype"] = $explode[0];
+		$input["name"] = $explode[1];
 		return $input;
 	}
 
