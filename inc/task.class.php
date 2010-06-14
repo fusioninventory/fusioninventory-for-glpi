@@ -421,46 +421,45 @@ class PluginFusionInventoryTask extends CommonDBTM {
       $np = new Netport;
 
       $agent_id = 0;
+      if (isset($computer_ID)) {
+         $a_portsList = $np->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
 
-      $a_portsList = $np->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
+         switch ($device_type) {
 
-      switch ($device_type) {
+            case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
+               $agent_id = $on_device;
+               break;
 
-         case PLUGIN_FUSIONINVENTORY_SNMP_AGENTS:
-            $agent_id = $on_device;
-            break;
-
-         case COMPUTER_TYPE:
-            // Search ID of agent
-            $list = $pfia->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
-            foreach ($list as $ID=>$data) {
-               $agent_id = $ID;
-            }
-            break;
-
-      }
-//      if ($agent_id == "0") {
-//         return;
-//      }
-      if ($verifagent == '0') {
-         foreach ($a_portsList as $ID=>$data) {
-            if ($data['ifaddr'] != "127.0.0.1") {
-               if ($this->getStateAgent($data['ifaddr'],$agent_id)) {
-                  $count_agent_on++;
+            case COMPUTER_TYPE:
+               // Search ID of agent
+               $list = $pfia->find('on_device='.$computer_ID.' AND device_type="'.COMPUTER_TYPE.'"');
+               foreach ($list as $ID=>$data) {
+                  $agent_id = $ID;
                }
-            }
+               break;
+
          }
 
-         if ($count_agent_on == 0) {
-            echo "<tr class='tab_bg_1'>";
-            echo "<td align='center' colspan='2'>";
-            echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
-            echo "</td>";
-            echo "</tr>";
-         } else {
-            echo "<script>
-               document.getElementById('displaybutton').style.visibility='visible';
-            </script>";
+         if ($verifagent == '0') {
+            foreach ($a_portsList as $ID=>$data) {
+               if ($data['ifaddr'] != "127.0.0.1") {
+                  if ($this->getStateAgent($data['ifaddr'],$agent_id)) {
+                     $count_agent_on++;
+                  }
+               }
+            }
+
+            if ($count_agent_on == 0) {
+               echo "<tr class='tab_bg_1'>";
+               echo "<td align='center' colspan='2'>";
+               echo "<b>".$LANG['plugin_fusioninventory']["task"][13]."</b>";
+               echo "</td>";
+               echo "</tr>";
+            } else {
+               echo "<script>
+                  document.getElementById('displaybutton').style.visibility='visible';
+               </script>";
+            }
          }
       }
    }
