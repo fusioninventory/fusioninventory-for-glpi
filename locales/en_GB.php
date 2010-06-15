@@ -550,11 +550,11 @@ $LANG['plugin_fusioninventory']["discovery"][7]="Secondary criteria for existenc
 $LANG['plugin_fusioninventory']["discovery"][8]="If a device returns empty fields on first ciriteria, second one will be used.";
 $LANG['plugin_fusioninventory']["discovery"][9]="Number of devices not imported because type non defined";
 
-$LANG['plugin_fusioninventory']["rangeip"][0]="Start of IP range";
-$LANG['plugin_fusioninventory']["rangeip"][1]="End of IP range";
-$LANG['plugin_fusioninventory']["rangeip"][2]="IP Ranges";
-$LANG['plugin_fusioninventory']["rangeip"][3]="Query";
-$LANG['plugin_fusioninventory']["rangeip"][4]="Incorrect IP address";
+$LANG['plugin_fusioninventory']["iprange"][0]="Start of IP range";
+$LANG['plugin_fusioninventory']["iprange"][1]="End of IP range";
+$LANG['plugin_fusioninventory']["iprange"][2]="IP Ranges";
+$LANG['plugin_fusioninventory']["iprange"][3]="Query";
+$LANG['plugin_fusioninventory']["iprange"][4]="Incorrect IP address";
 
 $LANG['plugin_fusioninventory']["agents"][0]="SNMP Agent";
 $LANG['plugin_fusioninventory']["agents"][2]="Number of threads used by core for querying devices";

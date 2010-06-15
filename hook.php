@@ -387,12 +387,12 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryIPRange'][2]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt['PluginFusioninventoryIPRange'][2]['field'] = 'ifaddr_start';
 	$sopt['PluginFusioninventoryIPRange'][2]['linkfield'] = 'ifaddr_start';
-	$sopt['PluginFusioninventoryIPRange'][2]['name'] = $LANG['plugin_fusioninventory']["rangeip"][0];
+	$sopt['PluginFusioninventoryIPRange'][2]['name'] = $LANG['plugin_fusioninventory']["iprange"][0];
 
 	$sopt['PluginFusioninventoryIPRange'][3]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt['PluginFusioninventoryIPRange'][3]['field'] = 'ifaddr_end';
 	$sopt['PluginFusioninventoryIPRange'][3]['linkfield'] = 'ifaddr_end';
-	$sopt['PluginFusioninventoryIPRange'][3]['name'] = $LANG['plugin_fusioninventory']["rangeip"][1];
+	$sopt['PluginFusioninventoryIPRange'][3]['name'] = $LANG['plugin_fusioninventory']["iprange"][1];
 
 	$sopt['PluginFusioninventoryIPRange'][30]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt['PluginFusioninventoryIPRange'][30]['field'] = 'id';
@@ -416,7 +416,7 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt['PluginFusioninventoryIPRange'][7]['table'] = 'glpi_plugin_fusioninventory_ipranges';
 	$sopt['PluginFusioninventoryIPRange'][7]['field'] = 'query';
 	$sopt['PluginFusioninventoryIPRange'][7]['linkfield'] = 'query';
-	$sopt['PluginFusioninventoryIPRange'][7]['name'] = $LANG['plugin_fusioninventory']["rangeip"][3];
+	$sopt['PluginFusioninventoryIPRange'][7]['name'] = $LANG['plugin_fusioninventory']["iprange"][3];
    $sopt['PluginFusioninventoryIPRange'][7]['datatype']='bool';
   
 	$sopt['PluginFusioninventoryIPRange'][8]['table'] = 'glpi_entities';

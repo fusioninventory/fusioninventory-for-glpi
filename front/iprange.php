@@ -47,6 +47,7 @@ $_GET['target']="iprange.php";
 
 //searchForm('PluginFusioninventoryIPRange',$_GET);
 //showList('PluginFusioninventoryIPRange',$_GET);
+Search::show('PluginFusioninventoryIPRange');
 
 commonFooter();
 

@@ -551,11 +551,11 @@ $LANG['plugin_fusioninventory']["discovery"][7]="Critères d'existence secondair
 $LANG['plugin_fusioninventory']["discovery"][8]="Si tous les critères d'existence se confrontent à des champs vides, vous pouvez sélectionner des critères secondaires.";
 $LANG['plugin_fusioninventory']["discovery"][9]="Nombre de matériels non importés car type non défini";
 
-$LANG['plugin_fusioninventory']["rangeip"][0]="Début de la plage IP";
-$LANG['plugin_fusioninventory']["rangeip"][1]="Fin de la plage IP";
-$LANG['plugin_fusioninventory']["rangeip"][2]="Plage IP";
-$LANG['plugin_fusioninventory']["rangeip"][3]="Interrogation";
-$LANG['plugin_fusioninventory']["rangeip"][4]="Adresse IP incorrecte";
+$LANG['plugin_fusioninventory']["iprange"][0]="Début de la plage IP";
+$LANG['plugin_fusioninventory']["iprange"][1]="Fin de la plage IP";
+$LANG['plugin_fusioninventory']["iprange"][2]="Plage IP";
+$LANG['plugin_fusioninventory']["iprange"][3]="Interrogation";
+$LANG['plugin_fusioninventory']["iprange"][4]="Adresse IP incorrecte";
 
 $LANG['plugin_fusioninventory']["agents"][0]="Agent SNMP";
 $LANG['plugin_fusioninventory']["agents"][2]="Threads interrogation (par coeur)";
