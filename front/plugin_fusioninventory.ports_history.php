@@ -37,6 +37,8 @@
 
 define('GLPI_ROOT', '../../..'); 
 
+$NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software");
+
 include (GLPI_ROOT."/inc/includes.php");
 
 echo plugin_fusioninventory_snmp_showHistory($_POST["ID"],30,1);
