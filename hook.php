@@ -1116,104 +1116,107 @@ function cron_plugin_fusioninventory() {
 function plugin_fusioninventory_install() {
 	global $DB, $LANG, $CFG_GLPI;
 
-	include_once (GLPI_ROOT."/inc/profile.class.php");
-    /**
-    *  List of all FusionInventorys versions :
-    *    1.0.0
-    *    1.1.0 non exists glpi_plugin_fusioninventory_agents (MySQL)
-    *    2.0.0 non exists glpi_plugin_fusioninventory_config_discovery (MySQL)
-    *    2.0.1 Nothing
-    *    2.0.2 config version field 2.0.2
-    *    2.1.0 config version field 2.1.0
-    *    2.1.1 config version field 2.1.1
-    **/
-   if ((!TableExists("glpi_plugin_tracker_config")) &&
-      (!TableExists("glpi_plugin_fusioninventory_config"))) {
-         PluginFusioninventorySetup::install("2.3.0");
-   } else if ((TableExists("glpi_plugin_tracker_config")) ||
-         (TableExists("glpi_plugin_fusioninventory_config"))) {
-      //$config = new PluginFusioninventoryConfig;
-      if ((!TableExists("glpi_plugin_tracker_agents")) &&
-         (!TableExists("glpi_plugin_fusioninventory_agents"))) {
-         PluginFusioninventorySetup::update("1.1.0");
-      }
-      if ((!TableExists("glpi_plugin_tracker_config_discovery")) &&
-         (!TableExists("glpi_plugin_fusioninventory_config"))) {
-         PluginFusioninventorySetup::update("2.0.0");
-      }
-      if ((TableExists("glpi_plugin_tracker_agents")) &&
-         (!FieldExists("glpi_plugin_tracker_config", "version")) &&
-         (!TableExists("glpi_plugin_fusioninventory_config"))) {
-         PluginFusioninventorySetup::update("2.0.2");
-      }
-      if (((TableExists("glpi_plugin_tracker_agents")) &&
-           (FieldExists("glpi_plugin_tracker_config", "version"))) ||
-         (TableExists("glpi_plugin_fusioninventory_config"))) {
-         if (TableExists("glpi_plugin_tracker_agents")) {
-            $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
-         } else if (TableExists("glpi_plugin_fusioninventory_config")) {
-            $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
-         }
-         if ($result=$DB->query($query)) {
-            if ($DB->numrows($result) == "1") {
-               $data = $DB->fetch_assoc($result);
-            }
-         }
-         if  ($data['version'] == "0") {
-            $DB->query("UPDATE `glpi_plugin_tracker_config`
-                        SET `version` = '2.0.2'
-                        WHERE `ID`='1';");
-            $data['version'] = "2.0.2";
-         }
-         if ($data['version'] == "2.0.2") {
-            $DB->query("UPDATE `glpi_plugin_tracker_config`
-                        SET `version` = '2.1.0'
-                        WHERE `ID`='1';");
-            $data['version'] = "2.1.0";
-         }
-         if ($data['version'] == "2.1.0") {
-            PluginFusioninventorySetup::update("2.1.1");
-            $DB->query("UPDATE `glpi_plugin_tracker_config` 
-                        SET version = '2.1.1'
-                        WHERE ID=1");
-            $data['version'] = "2.1.1";
-         }
-         if ($data['version'] == "2.1.1") {
-            //PluginFusioninventorySetup::update("2.1.2");
-            $DB->query("UPDATE `glpi_plugin_tracker_config`
-                        SET `version` = '2.1.2'
-                        WHERE `ID`='1';");
-            $data['version'] = "2.1.2";
-         }
-         if ($data['version'] == "2.1.2") {
-            //PluginFusioninventorySetup::update("2.1.2");
-            $DB->query("UPDATE `glpi_plugin_tracker_config`
-                        SET `version` = '2.1.3'
-                        WHERE `ID`='1';");
-            $data['version'] = "2.1.3";
-         }
-         if ($data['version'] == "2.1.3") {
-            PluginFusioninventorySetup::update("2.2.0");
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
-                        SET `version` = '2.2.0'
-                        WHERE `ID`='1';");
-         }
-         if ($data['version'] == "2.2.0") {
-            PluginFusioninventorySetup::update("2.2.1");
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
-                        SET `version` = '2.2.1'
-                        WHERE `ID`='1';");
-         }
-         if ($data['version'] == "2.2.1") {
-            PluginFusioninventorySetup::update("2.3.0");
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
-                        SET `version` = '2.3.0'
-                        WHERE `id`='1';");
-         }
-      }
-   } else if (TableExists("glpi_plugin_fusioninventory_configs")) {
+   include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
+   pluginFusioninventoryInstall("2.3.0");
 
-   }
+//	include_once (GLPI_ROOT."/inc/profile.class.php");
+//    /**
+//    *  List of all FusionInventorys versions :
+//    *    1.0.0
+//    *    1.1.0 non exists glpi_plugin_fusioninventory_agents (MySQL)
+//    *    2.0.0 non exists glpi_plugin_fusioninventory_config_discovery (MySQL)
+//    *    2.0.1 Nothing
+//    *    2.0.2 config version field 2.0.2
+//    *    2.1.0 config version field 2.1.0
+//    *    2.1.1 config version field 2.1.1
+//    **/
+//   if ((!TableExists("glpi_plugin_tracker_config")) &&
+//      (!TableExists("glpi_plugin_fusioninventory_config"))) {
+//         PluginFusioninventorySetup::install("2.3.0");
+//   } else if ((TableExists("glpi_plugin_tracker_config")) ||
+//         (TableExists("glpi_plugin_fusioninventory_config"))) {
+//      //$config = new PluginFusioninventoryConfig;
+//      if ((!TableExists("glpi_plugin_tracker_agents")) &&
+//         (!TableExists("glpi_plugin_fusioninventory_agents"))) {
+//         PluginFusioninventorySetup::update("1.1.0");
+//      }
+//      if ((!TableExists("glpi_plugin_tracker_config_discovery")) &&
+//         (!TableExists("glpi_plugin_fusioninventory_config"))) {
+//         PluginFusioninventorySetup::update("2.0.0");
+//      }
+//      if ((TableExists("glpi_plugin_tracker_agents")) &&
+//         (!FieldExists("glpi_plugin_tracker_config", "version")) &&
+//         (!TableExists("glpi_plugin_fusioninventory_config"))) {
+//         PluginFusioninventorySetup::update("2.0.2");
+//      }
+//      if (((TableExists("glpi_plugin_tracker_agents")) &&
+//           (FieldExists("glpi_plugin_tracker_config", "version"))) ||
+//         (TableExists("glpi_plugin_fusioninventory_config"))) {
+//         if (TableExists("glpi_plugin_tracker_agents")) {
+//            $query = "SELECT version FROM glpi_plugin_tracker_config LIMIT 1";
+//         } else if (TableExists("glpi_plugin_fusioninventory_config")) {
+//            $query = "SELECT version FROM glpi_plugin_fusioninventory_config LIMIT 1";
+//         }
+//         if ($result=$DB->query($query)) {
+//            if ($DB->numrows($result) == "1") {
+//               $data = $DB->fetch_assoc($result);
+//            }
+//         }
+//         if  ($data['version'] == "0") {
+//            $DB->query("UPDATE `glpi_plugin_tracker_config`
+//                        SET `version` = '2.0.2'
+//                        WHERE `ID`='1';");
+//            $data['version'] = "2.0.2";
+//         }
+//         if ($data['version'] == "2.0.2") {
+//            $DB->query("UPDATE `glpi_plugin_tracker_config`
+//                        SET `version` = '2.1.0'
+//                        WHERE `ID`='1';");
+//            $data['version'] = "2.1.0";
+//         }
+//         if ($data['version'] == "2.1.0") {
+//            PluginFusioninventorySetup::update("2.1.1");
+//            $DB->query("UPDATE `glpi_plugin_tracker_config`
+//                        SET version = '2.1.1'
+//                        WHERE ID=1");
+//            $data['version'] = "2.1.1";
+//         }
+//         if ($data['version'] == "2.1.1") {
+//            //PluginFusioninventorySetup::update("2.1.2");
+//            $DB->query("UPDATE `glpi_plugin_tracker_config`
+//                        SET `version` = '2.1.2'
+//                        WHERE `ID`='1';");
+//            $data['version'] = "2.1.2";
+//         }
+//         if ($data['version'] == "2.1.2") {
+//            //PluginFusioninventorySetup::update("2.1.2");
+//            $DB->query("UPDATE `glpi_plugin_tracker_config`
+//                        SET `version` = '2.1.3'
+//                        WHERE `ID`='1';");
+//            $data['version'] = "2.1.3";
+//         }
+//         if ($data['version'] == "2.1.3") {
+//            PluginFusioninventorySetup::update("2.2.0");
+//            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+//                        SET `version` = '2.2.0'
+//                        WHERE `ID`='1';");
+//         }
+//         if ($data['version'] == "2.2.0") {
+//            PluginFusioninventorySetup::update("2.2.1");
+//            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+//                        SET `version` = '2.2.1'
+//                        WHERE `ID`='1';");
+//         }
+//         if ($data['version'] == "2.2.1") {
+//            PluginFusioninventorySetup::update("2.3.0");
+//            $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
+//                        SET `version` = '2.3.0'
+//                        WHERE `id`='1';");
+//         }
+//      }
+//   } else if (TableExists("glpi_plugin_fusioninventory_configs")) {
+//
+//   }
    return true;
 }
 
@@ -1230,34 +1233,13 @@ function plugin_fusioninventory_uninstall() {
 * @return 0 (no need update) OR 1 (need update)
 **/
 function plugin_fusioninventory_needUpdate() {
-
-    /**
-    *  List of all FusionInventorys versions :
-    *    1.0.0
-    *    1.1.0 non exists glpi_plugin_fusioninventory_agents (MySQL)
-    *    2.0.0 non exists glpi_plugin_fusioninventory_config_discovery (MySQL)
-    *    2.0.1 Nothing
-    *    2.0.2 config version field 2.0.2
-    *    2.1.0 config version field 2.1.0
-    *    2.1.1 config version field 2.1.1
-    **/
-	if (!TableExists("glpi_plugin_fusioninventory_configs")) {
-		return 0; // Installation
-   } else if (!TableExists("glpi_plugin_fusioninventory_agents")) {
-		return 1; //Update
-   } else if (!TableExists("glpi_plugin_fusioninventory_config_discovery")) {
-//		return 1; // Update (Bug with new version SVN 2.1.4
-   } else if (!FieldExists("glpi_plugin_fusioninventory_configs", "version")) {
-      return 1; // Update
-   } else if (FieldExists("glpi_plugin_fusioninventory_configs", "version")) {
-      $config = new PluginFusioninventoryConfig;
-      if ($config->getValue('version') != "2.1.3") {
-         return 1;
-      } else {
-         return 0;
-      }
+   $version = "2.3.0";
+   include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
+   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
+   if ((isset($version_detected)) AND ($version_detected != $version)) {
+      return 1;
    } else {
-		return 0;
+      return 0;
    }
 }
 
