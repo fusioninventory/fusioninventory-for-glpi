@@ -35,7 +35,7 @@
 // ----------------------------------------------------------------------
 
 
-function pluginFusioninventoryInstall($version) {
+function pluginFusinvsnmpInstall($version) {
    global $DB,$LANG;
 
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
