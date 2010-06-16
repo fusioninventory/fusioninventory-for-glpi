@@ -63,17 +63,8 @@ function pluginFusioninventoryInstall($version) {
       $config->initConfig($version);
       $config_modules = new PluginFusioninventoryConfigModules;
       $config_modules->initConfig();
-      $configLogField = new PluginFusioninventoryConfigLogField();
-      $configLogField->initConfig();
-
-      // Import models
-      $importexport = new PluginFusioninventoryImportExport;
-//      include(GLPI_ROOT.'/inc/setup.function.php');
-//      include(GLPI_ROOT.'/inc/rulesengine.function.php');
-      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 
       PluginFusioninventoryAuth::initSession();
-
    }
 }
 

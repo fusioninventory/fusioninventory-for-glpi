@@ -45,9 +45,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="agent.php";
 
-//searchForm('PluginFusioninventoryAgent',$_GET);
-//showList('PluginFusioninventoryAgent',$_GET);
-
+Search::show('PluginFusioninventoryAgent');
 
 commonFooter();
 

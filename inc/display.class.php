@@ -50,40 +50,13 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "<tr><th colspan='4'>".$LANG['plugin_fusioninventory']["title"][0]."</th></tr>";
 
       echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='130'>";
-      if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmpmodel.php'>
-            <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_models.png'/>
-            <br/><b>".$LANG['plugin_fusioninventory']["model_info"][4]."</b></a>";
-      }
-      echo "</td>";
-
-      echo "<td align='center' width='".$width."' height='130'>";
-      if(PluginFusioninventoryAuth::haveRight("snmp_authentication","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/configsnmpsecurity.php'>
-            <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_authentification.png'/>
-            <br/><b>".$LANG['plugin_fusioninventory']["model_info"][3]."</b></a>";
-      }
-      echo "</td>";
-
-      echo "<td align='center' width='".$width."' height='130'>";
-      if(PluginFusioninventoryAuth::haveRight("iprange","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/iprange.php'>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_rangeip.png'/>
-         <br/><b>".$LANG['plugin_fusioninventory']["menu"][2]."</b></a>";
-      }
-      echo "</td>";
-
-      echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventoryAuth::haveRight("agents","r")) {
          echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agent.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png'/><br/>
          <b>".$LANG['plugin_fusioninventory']["menu"][1]."</b></a>";
       }
       echo "</td>";
-      echo "</tr>";
 
-
-      echo "<tr class='tab_bg_1'>";
       echo "<td align='center' width='".$width."' height='130'>";
       if(PluginFusioninventoryAuth::haveRight("remotecontrol","r")) {
          echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php'>
@@ -98,22 +71,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
                   "/plugins/fusioninventory/front/agentprocess.form.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_info_agents.png'/>
          <br/><b>".$LANG['plugin_fusioninventory']["processes"][19]."</b></a>";
-      }
-      echo "</td>";
-
-      echo "<td align='center' width='".$width."' height='130'>";
-      if(PluginFusioninventoryAuth::haveRight("unknowndevices","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknowndevice.php'>
-            <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_unknown_device.png'/>
-            <br/><b>".$LANG['plugin_fusioninventory']["menu"][4]."</b></a>";
-      }
-      echo "</td>";
-
-      echo "<td align='center' width='".$width."' height='130'>";
-      if(PluginFusioninventoryAuth::haveRight("reports","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/report.php'>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_rapports.png'/>
-         <br/><b>".$LANG['plugin_fusioninventory']["processes"][20]."</b></a>";
       }
       echo "</td>";
       echo "</tr>";
@@ -133,36 +90,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    //	echo "<tr><th colspan='8'>".$LANG['plugin_fusioninventory']["menu"][3]."</th></tr>";
 
       echo "<tr class='tab_bg_1'><td align='center' width='".$width."' height='40'>";
-      if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/snmpmodel.php'>
-            <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_models.png'
-                onmouseout=\"cleanhide('menu_mini_models')\"
-                onmouseover=\"cleandisplay('menu_mini_models')\" /></a>";
-      }
-      echo "<span class='over_link' id='menu_mini_models'>".$LANG['plugin_fusioninventory']["model_info"][4].
-           "</span>";
-      echo "</td>";
-      echo "<td align='center' width='".$width."' height='40'>";
-      if(PluginFusioninventoryAuth::haveRight("snmp_authentication","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/configsnmpsecurity.php'>
-            <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_authentification.png'
-                onmouseout=\"cleanhide('menu_mini_authentification')\"
-                onmouseover=\"cleandisplay('menu_mini_authentification')\" /></a>";
-      }
-      echo "<span class='over_link' id='menu_mini_authentification'>".
-           $LANG['plugin_fusioninventory']["model_info"][3]."</span>";
-      echo "</td>";
-      echo "<td align='center' width='".$width."' height='40'>";
-      if(PluginFusioninventoryAuth::haveRight("iprange","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/iprange.php'>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_rangeip.png'
-                onmouseout=\"cleanhide('menu_mini_rangeip')\"
-                onmouseover=\"cleandisplay('menu_mini_rangeip')\" /></a>";
-      }
-      echo "<span class='over_link' id='menu_mini_rangeip'>".$LANG['plugin_fusioninventory']["menu"][2].
-           "</span>";
-      echo "</td>";
-      echo "<td align='center' width='".$width."' height='40'>";
       if(PluginFusioninventoryAuth::haveRight("agents","r")) {
          echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agent.php'>
          <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_agents.png'
@@ -193,27 +120,6 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       echo "<span class='over_link' id='menu_mini_info_agents'>".
                $LANG['plugin_fusioninventory']["processes"][19]."</span>";
       echo "</td>";
-      echo "<td align='center' width='".$width."' height='40'>";
-      if(PluginFusioninventoryAuth::haveRight("unknowndevices","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/unknowndevice.php'>
-            <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_unknown_device.png'
-                onmouseout=\"cleanhide('menu_mini_unknown')\"
-                onmouseover=\"cleandisplay('menu_mini_unknown')\" /></a>";
-      }
-      echo "<span class='over_link' id='menu_mini_unknown'>".$LANG['plugin_fusioninventory']["menu"][4].
-           "</span>";
-      echo "</td>";
-      echo "<td align='center' width='".$width."' height='40'>";
-      if(PluginFusioninventoryAuth::haveRight("reports","r")) {
-         echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/report.php'>
-         <img src='".GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_rapports.png'
-                onmouseout=\"cleanhide('menu_mini_rapports')\"
-                onmouseover=\"cleandisplay('menu_mini_rapports')\" /></a>";
-      }
-      echo "<span class='over_link' id='menu_mini_rapports'>".$LANG['plugin_fusioninventory']["processes"][20].
-           "</span>";
-      echo "</td>";
-
       echo "</tr>";
 
       echo "</table></div>";

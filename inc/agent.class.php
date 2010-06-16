@@ -50,7 +50,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $ptcm = new PluginFusioninventoryConfigModules;
 
       $ong = array();
-		if ($this->fields['id'] > 0){
+		if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
          if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
@@ -78,7 +78,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		if ($id!='') {
+      if ($id!='') {
 			$this->getFromDB($id);
       } else {
 			$this->getEmpty();
@@ -88,7 +88,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 		$this->showTabs($options);
       $this->showFormHeader($options);
-
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>" . $LANG["common"][16] . " :</td>";
 		echo "<td align='center'>";

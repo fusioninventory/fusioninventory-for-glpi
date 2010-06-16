@@ -43,8 +43,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="task.php";
 
-//searchForm('PluginFusioninventoryTask',$_GET);
-//showList('PluginFusioninventoryTask',$_GET);
+Search::show('PluginFusioninventoryTask');
 
 commonFooter();
 
