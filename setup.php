@@ -34,6 +34,48 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+include_once ("includes.php");
+
+// Init the hooks of fusinvdeploy
+function plugin_init_fusinvdeploy() {
+	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
+
+   Plugin::registerClass('PluginFusinvdeployPackage');
+   Plugin::registerClass('PluginFusinvdeployDependence');
+   Plugin::registerClass('PluginFusinvdeployHistory');
+
+}
+
+
+
+// Name and Version of the plugin
+function plugin_version_fusinvdeploy() {
+	return array('name'    => 'FusionInventory DEPLOY',
+                'version' => '2.3.0-1',
+                'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
+                           & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
+                'homepage'=>'http://forge.fusioninventory.org/projects/pluginfusinvdeploy',
+                'minGlpiVersion' => '0.78'// For compatibility / no install in version < 0.78
+   );
+}
+
+
+
+// Optional : check prerequisites before install : may print errors or add to message after redirect
+function plugin_fusinvdeploy_check_prerequisites() {
+   global $LANG;
+	if (GLPI_VERSION >= '0.78') {
+		return true;
+   } else {
+		echo $LANG['plugin_fusinvdeploy']["errors"][50];
+   }
+}
+
+
+
+function plugin_fusinvdeploy_check_config() {
+	return true;
+}
 
 
 ?>
