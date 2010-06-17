@@ -49,6 +49,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_errors`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentprocesserrors`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agentprocesserrors` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
@@ -191,7 +192,7 @@ COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_profiles`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_profiles` (
+CREATE TABLE `glpi_plugin_fusioninventory_profiles` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `interface` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'fusioninventory',
@@ -216,9 +217,20 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_profiles` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_modules`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_modules` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `locale` INT( 4 ) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mappings`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_mappings` (
+CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
