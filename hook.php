@@ -66,7 +66,7 @@ function plugin_fusinvinventory_install() {
 	global $DB, $LANG, $CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusinvinventory/install/install.php");
-   pluginFusinvinventoryInstall("2.3.0");
+   pluginFusinvinventoryInstall();
 
    return true;
 }
