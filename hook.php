@@ -66,7 +66,7 @@ function plugin_fusinvdeploy_install() {
 	global $DB, $LANG, $CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
-   pluginFusinvdeployInstall("2.3.0");
+   pluginFusinvdeployInstall();
 
    return true;
 }
