@@ -38,13 +38,13 @@
 function pluginFusinvsnmpInstall($version) {
    global $DB,$LANG;
 
-   include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
-   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
+   include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
+   $version_detected = pluginfusinvsnmpGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
-      pluginFusioninventoryUpdate($version);
+      pluginFusinvsnmpUpdate($version);
    } else {
       // Install
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-empty.sql";
+      $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$version."-empty.sql";
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
@@ -53,26 +53,26 @@ function pluginFusinvsnmpInstall($version) {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      PluginFusioninventoryDb::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+      //PluginFusinvsnmpDb::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp');
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmp');
       }
 
-      $config = new PluginFusioninventoryConfig;
-      $config->initConfig($version);
-      $config_modules = new PluginFusioninventoryConfigModules;
-      $config_modules->initConfig();
-      $configLogField = new PluginFusioninventoryConfigLogField();
-      $configLogField->initConfig();
+//      $config = new PluginFusinvsnmpConfig;
+//      $config->initConfig($version);
+//      $config_modules = new PluginFusinvsnmpConfigModules;
+//      $config_modules->initConfig();
+//      $configLogField = new PluginFusinvsnmpConfigLogField();
+//      $configLogField->initConfig();
 
       // Import models
-      $importexport = new PluginFusioninventoryImportExport;
+      $importexport = new PluginFusinvsnmpImportExport;
 //      include(GLPI_ROOT.'/inc/setup.function.php');
 //      include(GLPI_ROOT.'/inc/rulesengine.function.php');
-      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      PluginFusioninventoryAuth::initSession();
+      PluginFusinvsnmpAuth::initSession();
 
    }
 }
