@@ -182,16 +182,21 @@ class PluginFusionInventoryHistoryConnections extends CommonDBTM {
 
             echo "<td>";
             $np->getFromDB($data['FK_port_destination']);
-            $CommonItem->getFromDB($np->fields["device_type"],
-                                   $np->fields["on_device"]);
-            $link1 = $CommonItem->getLink(1);
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
-            if (rtrim($np->fields["name"]) != "")
-               $link .= $np->fields["name"];
-            else
-               $link .= $LANG['common'][0];
-            $link .= "</a>";
-            echo $link." ".$LANG['networking'][25]." ".$link1;
+            if (isset($np->fields["on_device"])) {
+               $CommonItem->getFromDB($np->fields["device_type"],
+                                      $np->fields["on_device"]);
+               $link1 = $CommonItem->getLink(1);
+
+               $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networking.port.php?ID=" . $np->fields["ID"] . "\">";
+               if (rtrim($np->fields["name"]) != "")
+                  $link .= $np->fields["name"];
+               else
+                  $link .= $LANG['common'][0];
+               $link .= "</a>";
+               echo $link." ".$LANG['networking'][25]." ".$link1;
+            } else {
+               echo $LANG['common'][28];
+            }
             echo "</td>";
 
             echo "</tr>";
