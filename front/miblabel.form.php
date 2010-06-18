@@ -39,6 +39,6 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Plugin::load('fusioninventory',true);
 
-$dropdown = new PluginFusioninventoryMibLabel();
+$dropdown = new PluginFusinvsnmpMibLabel();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");
 ?>

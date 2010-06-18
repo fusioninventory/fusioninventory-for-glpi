@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking ports
  **/
-class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
+class PluginFusinvsnmpNetworkPort extends PluginFusioninventoryCommonDBTM {
    private $oFusioninventory_networkport; // link fusioninventory table object
    private $fusioninventory_networkports_id; // id in link fusioninventory table
    private $portsToConnect=array(); // id of known connected ports
@@ -65,10 +65,10 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
       }
       parent::__construct("glpi_networkports", $logFile);
       $this->oFusioninventory_networkport =
-              new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkports");
+              new PluginFusioninventoryCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
       if ($p_type!=NULL) $this->glpi_type = $p_type;
-      $this->addLog('New PluginFusioninventoryNetworkPort object.');
-      $this->type='PluginFusioninventoryNetworkPort';
+      $this->addLog('New PluginFusinvsnmpNetworkPort object.');
+      $this->type='PluginFusinvsnmpNetworkPort';
    }
 
    /**
@@ -82,7 +82,7 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
       parent::load($p_id);
       if (is_numeric($p_id)) { // port exists
          $query = "SELECT `id`
-                   FROM `glpi_plugin_fusioninventory_networkports`
+                   FROM `glpi_plugin_fusinvsnmp_networkports`
                    WHERE `networkports_id` = '".$p_id."';";
          if ($result = $DB->query($query)) {
             if ($DB->numrows($result) != 0) {
@@ -198,17 +198,17 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
     *@return nothing
     **/
    function PortUnknownConnection($p_mac, $p_ip) {
-      $ptud = new PluginFusioninventoryUnknownDevice;
+      $ptud = new PluginFusinvsnmpUnknownDevice;
       $unknown_infos["name"] = '';
       $newID=$ptud->add($unknown_infos);
       // Add networking_port
       $np=new NetworkPort;
       $port_add["items_id"] = $newID;
-      $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
+      $port_add["itemtype"] = 'PluginFusinvsnmpUnknownDevice';
       $port_add["ip"] = $p_ip;
       $port_add['mac'] = $p_mac;
       $dport = $np->add($port_add);
-      $ptsnmp=new PluginFusioninventorySNMP;
+      $ptsnmp=new PluginFusinvsnmpSNMP;
       $this->connectDB($dport);
    }
 
@@ -272,7 +272,7 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
                                'networkports_id_destination' => $destination_port))) { //connect those 2 ports
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                     array('query_nb_connections_created' => '1'));
-               PluginFusioninventoryNetworkPortLog::addLogConnection("make",$this->getValue('id'));
+               PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$this->getValue('id'));
             }
          }
       }
@@ -287,8 +287,8 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
 	function disconnectDB($p_port='') {
       if ($p_port=='') $p_port=$this->getValue('id');
       $netwire = new NetworkPort_NetworkPort;
-      PluginFusioninventoryNetworkPortLog::addLogConnection("remove",$netwire->getOppositeContact($p_port));
-      //PluginFusioninventoryNetworkPortLog::addLogConnection("remove",$p_port);
+      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$netwire->getOppositeContact($p_port));
+      //PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
       $nn = new NetworkPort_NetworkPort();
       if ($nn->getFromDBForNetworkPort($p_port)) {
          if ($nn->delete(array('id'=>$p_port))) {
@@ -351,7 +351,7 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
          if ($this->connectedPort != '') $ports[] = $this->connectedPort;
          foreach ($ports AS $num=>$tmp_port) {
             if ($num==1) { // connected port
-               $ptpConnected = new PluginFusioninventoryNetworkPort();
+               $ptpConnected = new PluginFusinvsnmpNetworkPort();
                $ptpConnected->load($tmp_port);
                if ($ptpConnected->fields['itemtype']==NETWORKING_TYPE) {
                   break; // don't update if port on a switch
@@ -412,7 +412,7 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
                $this->cleanVlan('', $this->getValue('id'));
                if ($this->connectedPort != '') {
-                  $ptpConnected = new PluginFusioninventoryNetworkPort();
+                  $ptpConnected = new PluginFusinvsnmpNetworkPort();
                   $ptpConnected->load($this->connectedPort);
                   if ($ptpConnected->fields['itemtype'] != NETWORKING_TYPE) {
                      // don't update vlan on connected port if connected port on a switch
@@ -475,7 +475,7 @@ class PluginFusioninventoryNetworkPort extends PluginFusioninventoryCommonDBTM {
       global $DB;
 
       $macs='';
-      $ptp = new PluginFusioninventoryNetworkPort;
+      $ptp = new PluginFusinvsnmpNetworkPort;
       foreach($this->portsToConnect as $index=>$portConnection) {
          if ($macs!='') $macs.=', ';
          $ptp->load($portConnection);

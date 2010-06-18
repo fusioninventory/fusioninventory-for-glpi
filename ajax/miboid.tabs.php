@@ -39,7 +39,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Plugin::load('fusioninventory',true);
 
-$dropdown = new PluginFusioninventoryMibOid();
+$dropdown = new PluginFusinvsnmpMibOid();
 include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");
 
 ?>

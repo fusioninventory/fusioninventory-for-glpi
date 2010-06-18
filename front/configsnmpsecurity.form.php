@@ -38,7 +38,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_authentication","r");
 
-$plugin_fusioninventory_snmp_auth = new PluginFusioninventoryConfigSNMPSecurity;
+$plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
 $config = new PluginFusioninventoryConfig;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");

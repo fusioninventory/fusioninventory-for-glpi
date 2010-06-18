@@ -47,7 +47,7 @@ PluginFusioninventoryDisplay::mini_menu();
 
 // Forms for FILE
 if ($config->getValue("storagesnmpauth") == "file") {
-	$plugin_fusioninventory_snmp_auth = new PluginFusioninventoryConfigSNMPSecurity;
+	$plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
 	
 	if (!isset($_GET["id"])) {
 		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
@@ -57,9 +57,9 @@ if ($config->getValue("storagesnmpauth") == "file") {
 	
 	$_GET['target']="configsnmpsecurity.php";
 	
-Search::show('PluginFusioninventoryConfigSNMPSecurity');
-//	searchForm('PluginFusioninventoryConfigSNMPSecurity',$_GET);
-//	showList('PluginFusioninventoryConfigSNMPSecurity',$_GET);
+Search::show('PluginFusinvsnmpConfigSecurity');
+//	searchForm('PluginFusinvsnmpConfigSecurity',$_GET);
+//	showList('PluginFusinvsnmpConfigSecurity',$_GET);
 } else {
 	echo $LANG['plugin_fusioninventory']["functionalities"][19];
 }

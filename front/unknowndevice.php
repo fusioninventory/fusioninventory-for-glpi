@@ -45,8 +45,8 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="unknowndevice.php";
 
-//searchForm('PluginFusioninventoryUnknownDevice',$_GET);
-//showList('PluginFusioninventoryUnknownDevice',$_GET);
+//searchForm('PluginFusinvsnmpUnknownDevice',$_GET);
+//showList('PluginFusinvsnmpUnknownDevice',$_GET);
 
 commonFooter();
 

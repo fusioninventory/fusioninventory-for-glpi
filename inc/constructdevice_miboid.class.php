@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryConstructDevice_MibOid extends CommonDBTM {
+class PluginFusinvsnmpConstructDevice_MibOid extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_constructdevice_miboids";
+		$this->table = "glpi_plugin_fusinvsnmp_constructdevice_miboids";
 	}
 }
 

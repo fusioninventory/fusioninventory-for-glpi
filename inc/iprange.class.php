@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryIPRange extends CommonDBTM {
+class PluginFusinvsnmpIPRange extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_ipranges";
+		$this->table = "glpi_plugin_fusinvsnmp_ipranges";
 	}
 
 
@@ -166,13 +166,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       switch ($type) {
 
          case "discover":
-            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_ipranges`
+            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusinvsnmp_ipranges`
                WHERE `plugin_fusioninventory_agents_id_discover`='".$agent_id."'
                   AND `discover`='1' ";
             break;
 
          case "query":
-            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusioninventory_ipranges`
+            $query = "SELECT COUNT(*) as count FROM `glpi_plugin_fusinvsnmp_ipranges`
                WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
                   AND `query`='1' ";
             break;
@@ -194,13 +194,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       switch ($type) {
 
          case "discover":
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_ipranges`
+            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_ipranges`
                WHERE `plugin_fusioninventory_agents_id_discover`='".$agent_id."'
                   AND `discover`='1' ";
             break;
 
          case "query":
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_ipranges`
+            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_ipranges`
                WHERE `plugin_fusioninventory_agents_id_query`='".$agent_id."'
                   AND `query`='1' ";
             break;

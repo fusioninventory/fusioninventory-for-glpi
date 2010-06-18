@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking switches
  **/
-class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonDBTM {
+class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
    private $ports=array(), $ifaddrs=array();
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
@@ -52,7 +52,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
    function __construct() {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
-      $this->oFusionInventory_networkequipment = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+      $this->oFusionInventory_networkequipment = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
    }
 
    /**
@@ -68,7 +68,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
       $this->ports = $this->getPortsDB();
 
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_networkequipments`
+                FROM `glpi_plugin_fusinvsnmp_networkequipments`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -119,7 +119,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginFusioninventoryNetworkPort();
+      $ptp = new PluginFusinvsnmpNetworkPort();
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$this->getValue('id')."'
@@ -230,7 +230,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
     *@return nothing
     **/
    function saveIfaddrs() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_networkequipmentips"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_networkequipmentips"; // TODO : to clean
 
       foreach ($this->ifaddrs as $index=>$pti) {
          if (!in_array($index, $this->updatesIfaddrs)) {
@@ -270,7 +270,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 
       $pti = new PluginFusioninventoryNetworkEquipmentIp();
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_networkequipmentips`
+                FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
       $ifaddrsIds = array();
       if ($result = $DB->query($query)) {
@@ -314,7 +314,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		$history = new PluginFusioninventoryNetworkPortLog;
+		$history = new PluginFusinvsnmpNetworkPortLog;
 
 		if (!PluginFusioninventoryAuth::haveRight("snmp_networking","r")) {
 			return false;
@@ -329,7 +329,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 		$this->id = $id;
 
 		$nw=new NetworkPort_NetworkPort();
-		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
+		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
 
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
                "/lib/extjs/adapter/prototype/prototype.js'></script>";
@@ -357,7 +357,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["profile"][24]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_snmpmodels`
+                       FROM `glpi_plugin_fusinvsnmp_models`
                        WHERE `itemtype`!='2'
                              AND `itemtype`!='0';";
 		$result_models=$DB->query($query_models);
@@ -365,7 +365,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['id'];
 		}
-      Dropdown::show("PluginFusioninventorySNMPModel",
+      Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"model_infos",
                            'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>0,
@@ -376,7 +376,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		PluginFusioninventorySNMP::auth_dropdown($this->fields['plugin_fusioninventory_snmpauths_id']);
+		PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusioninventory_snmpauths_id']);
 		echo "</td>";
 		echo "</tr>";
 
@@ -499,12 +499,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryCommonD
 // ********************************************************************************************** //
 
 		$query = "
-		SELECT *,glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
+		SELECT *,glpi_plugin_fusinvsnmp_networkports.mac as ifmacinternal
 
-		FROM glpi_plugin_fusioninventory_networkports
+		FROM glpi_plugin_fusinvsnmp_networkports
 
 		LEFT JOIN glpi_networkports
-		ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
+		ON glpi_plugin_fusinvsnmp_networkports.networkports_id = glpi_networkports.id
 		WHERE glpi_networkports.items_id='".$id."'
 		ORDER BY logical_number ";
 
@@ -525,7 +525,7 @@ function appear_array(id){
 		echo "<tr class='tab_bg_1'>";
 		$query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `type`='PluginFusioninventoryNetworkPort'
+                      WHERE `type`='PluginFusinvsnmpNetworkPort'
                             AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
@@ -747,7 +747,7 @@ function appear_array(id){
                                             $item->getLink());
                         $link2 = str_replace($item->getName(0), $data_device["ip"],
                                              $item->getLink());
-								if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
+								if ($data_device["itemtype"] == 'PluginFusinvsnmpUnknownDevice') {
                            if ($item->getField("accepted") == "1") {
                               echo "<td style='background:#bfec75'
                                         class='tab_bg_1_2'>".$link1;
@@ -842,7 +842,7 @@ function appear_array(id){
 				echo "
 				<tr style='display: none;' id='viewfollowup".$data["id"]."'>
 					<td colspan='".(mysql_num_rows($result_array) + 2)."'>".
-                  PluginFusioninventoryNetworkPortLog::showHistory($data["id"])."</td>
+                  PluginFusinvsnmpNetworkPortLog::showHistory($data["id"])."</td>
 				</tr>
 				";
 			}

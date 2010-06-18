@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusioninventoryDiscovery extends CommonDBTM {
+class PluginFusinvsnmpDiscovery extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_discovery";
@@ -63,7 +63,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       $query_sel = "SELECT *
                     FROM `glpi_plugin_fusioninventory_discovery`
                     WHERE `ip`='".$Array['ip']."'
-                          AND `name`='".PluginFusioninventorySNMP::hex_to_string($Array['name'])."'
+                          AND `name`='".PluginFusinvsnmpSNMP::hex_to_string($Array['name'])."'
                           AND `descr`='".$Array['description']."'
                           AND `serialnumber`='".$Array['serial']."'
                           AND `entities_id`='".$Array['entity']."';";
@@ -74,7 +74,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             // Detect is a device is same but this another IP (like switch)
             $query_sel = "SELECT *
                           FROM `glpi_plugin_fusioninventory_discovery`
-                          WHERE `name`='".PluginFusioninventorySNMP::hex_to_string($Array['name'])."'
+                          WHERE `name`='".PluginFusinvsnmpSNMP::hex_to_string($Array['name'])."'
                                 AND `descr`='".$Array['description']."'
                                 AND `serialnumber`='".$Array['serial']."';";
             $result_sel = $DB->query($query_sel);
@@ -89,7 +89,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                                    `plugin_fusioninventory_snmpauths_id`)
                       VALUES('".$Array['date']."',
                              '".$Array['ip']."',
-                             '".PluginFusioninventorySNMP::hex_to_string($Array['name'])."',
+                             '".PluginFusinvsnmpSNMP::hex_to_string($Array['name'])."',
                              '".$Array['description']."',
                              '".$Array['serial']."',
                              '".$Array['type']."',
@@ -114,13 +114,13 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $NetworkPort = new NetworkPort;
-      $ptud = new PluginFusioninventoryUnknownDevice;
+      $ptud = new PluginFusinvsnmpUnknownDevice;
 
       $ptud->getFromDB($discovery_ID);
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$discovery_ID."'
-                      AND `itemtype` = 'PluginFusioninventoryUnknownDevice';";
+                      AND `itemtype` = 'PluginFusinvsnmpUnknownDevice';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
          $NetworkPort->getFromDB($data["id"]);
@@ -129,7 +129,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
       switch ($ptud->fields['type']) {
          case PRINTER_TYPE :
             $Printer = new Printer;
-            $tp = new PluginFusioninventoryPrinter;
+            $tp = new PluginFusinvsnmpPrinter;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
             if (!empty($ptud->fields["name"])) {
@@ -161,7 +161,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
          case NETWORKING_TYPE :
             $Netdevice = new Netdevice;
-            $fusioninventory_networking = new PluginFusioninventoryNetworkEquipment;
+            $fusioninventory_networking = new PluginFusinvsnmpNetworkEquipment;
 
             $data["entities_id"] = $ptud->fields["entities_id"];
             if (!empty($ptud->fields["name"])) {
@@ -364,7 +364,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                   } else {
                      unset($a_criteria);
                      $a_criteria[$criteria] = $p_criteria[$criteria];
-                     $r_find = PluginFusioninventoryDiscovery::find_device($a_criteria, $type);
+                     $r_find = PluginFusinvsnmpDiscovery::find_device($a_criteria, $type);
                      if ($r_find) {
                         return $r_find;
                      } else {
@@ -389,7 +389,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             if ($i == 0) {
                // Go to criteria2
             } else {
-               $r_find = PluginFusioninventoryDiscovery::find_device($a_criteria, $type);
+               $r_find = PluginFusinvsnmpDiscovery::find_device($a_criteria, $type);
                if ($r_find) {
                   return $r_find;
                } else {
@@ -401,7 +401,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                         }
                      }
                   }
-                  $r_find = PluginFusioninventoryDiscovery::find_device($a_criteria, $type);
+                  $r_find = PluginFusinvsnmpDiscovery::find_device($a_criteria, $type);
                   if ($r_find) {
                      return $r_find;
                   }
@@ -423,7 +423,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                   } else {
                      unset($a_criteria);
                      $a_criteria[$criteria] = $p_criteria[$criteria];
-                     $r_find = PluginFusioninventoryDiscovery::find_device($a_criteria, $type);
+                     $r_find = PluginFusinvsnmpDiscovery::find_device($a_criteria, $type);
                      if ($r_find) {
                         return $r_find;
                      } else {
@@ -448,7 +448,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
             if ($i == 0) {
                return false;
             } else {
-               $r_find = PluginFusioninventoryDiscovery::find_device($a_criteria, $type);
+               $r_find = PluginFusinvsnmpDiscovery::find_device($a_criteria, $type);
                if ($r_find) {
                   return $r_find;
                } else {
@@ -460,7 +460,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
                         }
                      }
                   }
-                  $r_find = PluginFusioninventoryDiscovery::find_device($a_criteria, $type);
+                  $r_find = PluginFusinvsnmpDiscovery::find_device($a_criteria, $type);
                   if ($r_find) {
                      return $r_find;
                   } else {
@@ -482,7 +482,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          $a_types = array($p_type);
       } else {
          $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
-                           PHONE_TYPE, 'PluginFusioninventoryUnknownDevice');
+                           PHONE_TYPE, 'PluginFusinvsnmpUnknownDevice');
       }
 
       $condition = "";
@@ -524,7 +524,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
 
       foreach ($a_types as $type) {
          $ci->setType($type,true);
-         if ($type == 'PluginFusioninventoryUnknownDevice') {
+         if ($type == 'PluginFusinvsnmpUnknownDevice') {
             $query = "SELECT ".$ci->obj->table.".id ".$select_unknown." FROM ".$ci->obj->table;
          } else {
             $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
@@ -532,7 +532,7 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          if ($ci->obj->table != "glpi_networkequipments") {
             $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".id AND itemtype=".$type;
          }
-         if ($type == 'PluginFusioninventoryUnknownDevice') {
+         if ($type == 'PluginFusinvsnmpUnknownDevice') {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;
          } else {
             $query .= " WHERE is_deleted=0 ".$condition;
@@ -548,8 +548,8 @@ class PluginFusioninventoryDiscovery extends CommonDBTM {
          }
       }
 
-      // Search in 'PluginFusioninventoryUnknownDevice' when ip in not empty (so when it's a switch)
-      $ci->setType('PluginFusioninventoryUnknownDevice',true);
+      // Search in 'PluginFusinvsnmpUnknownDevice' when ip in not empty (so when it's a switch)
+      $ci->setType('PluginFusinvsnmpUnknownDevice',true);
       $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
       $query .= " WHERE is_deleted=0 ".$condition;
       $result = $DB->query($query);

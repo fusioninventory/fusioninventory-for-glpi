@@ -62,7 +62,7 @@ if (isset($_POST['update'])) {
          break;
 
       case 'history' :
-         $pficlf = new PluginFusioninventoryConfigLogField();
+         $pficlf = new PluginFusinvsnmpConfigLogField();
          foreach ($_POST as $key=>$val) {
             if (is_int($key)) {
                $input = array();
@@ -79,7 +79,7 @@ if (isset($_POST['update'])) {
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['Clean_history']))) {
-   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
+   $pfisnmph = new PluginFusinvsnmpNetworkPortLog;
    $pfisnmph->cronCleanHistory();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['plugin_fusioninventory_lockable_add']))

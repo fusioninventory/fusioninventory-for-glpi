@@ -45,9 +45,9 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="snmpmodel.php";
 
-//searchForm('PluginFusioninventorySNMPModel',$_GET);
-//showList('PluginFusioninventorySNMPModel',$_GET);
-Search::show('PluginFusioninventorySNMPModel');
+//searchForm('PluginFusinvsnmpModel',$_GET);
+//showList('PluginFusinvsnmpModel',$_GET);
+Search::show('PluginFusinvsnmpModel');
 
 commonFooter();
 

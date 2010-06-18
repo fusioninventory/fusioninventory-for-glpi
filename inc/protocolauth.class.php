@@ -37,15 +37,14 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventorySnmpprotocolpriv extends CommonDropdown {
+class PluginFusinvsnmpProtocolAuth extends CommonDropdown {
    // From CommonDBTM
-   public $table = 'glpi_plugin_fusioninventory_snmpprotocolprivs';
-   public $type  = 'PluginFusioninventorySnmpprotocolpriv';
+   public $table = 'glpi_plugin_fusioninventory_snmpprotocolauths';
 
    static function getTypeName() {
       global $LANG;
 
-      return "Plugin Fusioninventory Snmp protocol priv";
+      return "Plugin Fusioninventory Snmp protocol auth";
    }
 }
 

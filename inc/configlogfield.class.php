@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusioninventoryConfigLogField extends CommonDBTM {
+class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_configlogfields";
+		$this->table="glpi_plugin_fusinvsnmp_configlogfields";
 	}
 
 	function initConfig() {

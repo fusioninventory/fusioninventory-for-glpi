@@ -38,10 +38,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
+class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_configsnmpsecurities";
+		$this->table = "glpi_plugin_fusinvsnmp_configsecurities";
 	}
 
 	function showForm($id, $options=array()) {
@@ -415,13 +415,13 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 			switch ($type) {
 				case NETWORKING_TYPE :
 					$query = "SELECT *
-                         FROM `glpi_plugin_fusioninventory_networkequipments`
+                         FROM `glpi_plugin_fusinvsnmp_networkequipments`
                          WHERE `networkequipments_id`='".$ID_Device."';";
 					break;
 
 				case PRINTER_TYPE :
 					$query = "SELECT *
-                         FROM `glpi_plugin_fusioninventory_printers`
+                         FROM `glpi_plugin_fusinvsnmp_printers`
                          WHERE `printers_id`='".$ID_Device."';";
 					break;
 			}		
@@ -556,10 +556,10 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		} else if ($config->getValue("storagesnmpauth") == "DB") {
 			if ($ID_Device == "all") {
 				$query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_configsnmpsecurities`";
+                      FROM `glpi_plugin_fusinvsnmp_configsecurities`";
          } else {
 				$query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_configsnmpsecurities`
+                      FROM `glpi_plugin_fusinvsnmp_configsecurities`
                       WHERE `id`='".$ID_auth."';";
 			}
 			$result=$DB->query($query);
@@ -629,13 +629,13 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 		switch ($type) {
 			case NETWORKING_TYPE :
 				$query = "SELECT plugin_fusioninventory_snmpauths_id
-				FROM glpi_plugin_fusioninventory_networkequipments 
+				FROM glpi_plugin_fusinvsnmp_networkequipments 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 
 			case PRINTER_TYPE :
 				$query = "SELECT `plugin_fusioninventory_snmpauths_id`
-                      FROM `glpi_plugin_fusioninventory_printers`
+                      FROM `glpi_plugin_fusinvsnmp_printers`
                       WHERE `printers_id`='".$ID_Device."';";
 				break;
 		}
@@ -680,7 +680,7 @@ class PluginFusioninventoryConfigSNMPSecurity extends CommonDBTM {
 	}
 
    function canCreate() {
-      return plugin_fusioninventory_haveTypeRight('PluginFusioninventoryConfigSNMPSecurity', 'w');
+      return plugin_fusioninventory_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
    }
 }
 

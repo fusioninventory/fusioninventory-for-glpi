@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryConstructDeviceWalk extends CommonDBTM {
+class PluginFusinvsnmpConstructDeviceWalk extends CommonDBTM {
 
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_constructdevice_walks";

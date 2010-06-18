@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use printers
  **/
-class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
+class PluginFusinvsnmpPrinter extends PluginFusioninventoryCommonDBTM {
    private $oFusionInventory_printer;
    private $oFusionInventory_printer_history;
    private $ports=array(), $newPorts=array(), $updatesPorts=array();
@@ -52,9 +52,9 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
-      $this->oFusionInventory_printer = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $this->oFusionInventory_printer = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusinvsnmp_printers");
       $this->oFusionInventory_printer_history =
-                        new PluginFusioninventoryCommonDBTM("glpi_plugin_fusioninventory_printerlogs");
+                        new PluginFusioninventoryCommonDBTM("glpi_plugin_fusinvsnmp_printerlogs");
    }
 
    /**
@@ -70,7 +70,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $this->cartridges = $this->getCartridgesDB();
 
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_printers`
+                FROM `glpi_plugin_fusinvsnmp_printers`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
       if ($result = $DB->query($query)) {
          if ($DB->numrows($result) != 0) {
@@ -84,7 +84,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
          }
 
          $query = "SELECT *
-                   FROM `glpi_plugin_fusioninventory_printerlogs`
+                   FROM `glpi_plugin_fusinvsnmp_printerlogs`
                    WHERE `printers_id` = '".$this->getValue('id')."'
                          AND LEFT(`date`, 10)='".date("Y-m-d")."';";
          if ($result = $DB->query($query)) {
@@ -144,7 +144,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    private function getPortsDB() {
       global $DB;
 
-      $ptp = new PluginFusioninventoryNetworkPort();
+      $ptp = new PluginFusinvsnmpNetworkPort();
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$this->getValue('id')."'
@@ -265,7 +265,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
     *@return nothing
     **/
    function saveCartridges() {
-      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusioninventory_printercartridges"; // TODO : to clean
+      $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_printercartridges"; // TODO : to clean
 
       foreach ($this->cartridges as $index=>$ptc) {
          if (!in_array($index, $this->updatesCartridges)) { // delete cartridges which don't exist any more
@@ -303,9 +303,9 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
    private function getCartridgesDB() {
       global $DB;
 
-      $ptc = new PluginFusioninventoryPrinter_Cartridge();
+      $ptc = new PluginFusinvsnmpPrinterCartridge();
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_printercartridges`
+                FROM `glpi_plugin_fusinvsnmp_printercartridges`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
       $cartridgesIds = array();
       if ($result = $DB->query($query)) {
@@ -354,11 +354,11 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 
 		$this->id = $id;
 
-		$plugin_fusioninventory_printer = new PluginFusioninventoryPrinter;
-		$plugin_fusioninventory_snmp = new PluginFusioninventorySNMP;
+		$plugin_fusioninventory_printer = new PluginFusinvsnmpPrinter;
+		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
 
 		$query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_printers`
+                FROM `glpi_plugin_fusinvsnmp_printers`
                 WHERE `printers_id`=".$id." ";
 
 		$result = $DB->query($query);
@@ -366,7 +366,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 
 		// Add in database if not exist
 		if ($DB->numrows($result) == "0") {
-			$query_add = "INSERT INTO `glpi_plugin_fusioninventory_printers` (`printers_id`)
+			$query_add = "INSERT INTO `glpi_plugin_fusinvsnmp_printers` (`printers_id`)
                               VALUES('".$id."') ";
 
 			$DB->query($query_add);
@@ -380,7 +380,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_snmpmodels`
+                       FROM `glpi_plugin_fusinvsnmp_models`
                        WHERE `itemtype`!=3
                              AND `itemtype`!=0";
 		$result_models=$DB->query($query_models);
@@ -388,7 +388,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['id'];
 		}
-		Dropdown::show("PluginFusioninventorySNMPModel",
+		Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"plugin_fusioninventory_snmpmodels_id",
                            'value'=>$data["plugin_fusioninventory_snmpmodels_id"],
                            'comment'=>false,
@@ -403,7 +403,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		PluginFusioninventorySNMP::auth_dropdown($data["plugin_fusioninventory_snmpauths_id"]);
+		PluginFusinvsnmpSNMP::auth_dropdown($data["plugin_fusioninventory_snmpauths_id"]);
 		echo "</td>";
       echo "<td>";
       echo "</td>";
@@ -627,7 +627,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
                        MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
                        SUM(`$graphField`) AS `$graphField`
-                FROM `glpi_plugin_fusioninventory_printerlogs`"
+                FROM `glpi_plugin_fusinvsnmp_printerlogs`"
                 .$where
                 .$group."
                 ORDER BY `year`, `month`, `day`, `printers_id`";
@@ -697,7 +697,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryCommonDBTM {
       echo "<div class=center>";
       $title = $elementsField[$graphField];
       if (count($printers)) {
-         $ptg = new PluginFusioninventoryGraph($query, $graphField, $timeUnit, $printers, $title);
+         $ptg = new PluginFusinvsnmpGraph($query, $graphField, $timeUnit, $printers, $title);
       }
       echo '</div>';
    }

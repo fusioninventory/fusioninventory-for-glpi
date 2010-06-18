@@ -31,7 +31,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusioninventoryLogs extends CommonDBTM {
+class PluginFusinvsnmpLog extends CommonDBTM {
 	
 	function write($file,$text,$type,$ID_Device,$debug=0) {
 		global $CFG_GLPI;

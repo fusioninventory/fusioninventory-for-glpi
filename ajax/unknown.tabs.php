@@ -51,32 +51,32 @@ $pfit = new PluginFusioninventoryTask;
 
 switch($_POST['glpi_tab']) {
 	case -1 :
-      showPorts($_POST["id"], 'PluginFusioninventoryUnknownDevice');
-      $pfiud = new PluginFusioninventoryUnknownDevice;
+      showPorts($_POST["id"], 'PluginFusinvsnmpUnknownDevice');
+      $pfiud = new PluginFusinvsnmpUnknownDevice;
       $pfiud->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
-      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
-      showHistory('PluginFusioninventoryUnknownDevice',$_POST["id"]);
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusinvsnmpUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      showHistory('PluginFusinvsnmpUnknownDevice',$_POST["id"]);
       break;
 
 	case 1 :
-      showPorts($_POST["id"], 'PluginFusioninventoryUnknownDevice');
+      showPorts($_POST["id"], 'PluginFusinvsnmpUnknownDevice');
 		break;
 
    case 2 :
-      $pfiud = new PluginFusioninventoryUnknownDevice;
+      $pfiud = new PluginFusinvsnmpUnknownDevice;
       $pfiud->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
       break;
 
    case 3 :
-      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusioninventoryUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
+      $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusinvsnmpUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
    case 4 :
-      showHistory('PluginFusioninventoryUnknownDevice',$_POST["id"]);
+      showHistory('PluginFusinvsnmpUnknownDevice',$_POST["id"]);
       break;
 
    default :
-      showPorts($_POST["id"], 'PluginFusioninventoryUnknownDevice');
+      showPorts($_POST["id"], 'PluginFusinvsnmpUnknownDevice');
 		break;
 }
 

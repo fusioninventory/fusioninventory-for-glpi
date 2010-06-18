@@ -40,12 +40,12 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use networking interface address
  **/
-class PluginFusioninventoryNetworkEquipmentIP extends PluginFusioninventoryCommonDBTM {
+class PluginFusinvsnmpNetworkEquipmentIP extends PluginFusioninventoryCommonDBTM {
 	/**
 	 * Constructor
 	**/
    function __construct() {
-      parent::__construct("glpi_plugin_fusioninventory_networkequipmentips");
+      parent::__construct("glpi_plugin_fusinvsnmp_networkequipmentips");
    }
 
    /**

@@ -43,13 +43,13 @@ PluginFusioninventoryAuth::checkRight("snmp_printers","r");
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 		PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 	
-	$plugin_fusioninventory_printer = new PluginFusioninventoryPrinter;
+	$plugin_fusioninventory_printer = new PluginFusinvsnmpPrinter;
 	
 	$_POST['printers_id'] = $_POST['id'];
 	unset($_POST['id']);
 	
 	$query = "SELECT * 
-             FROM `glpi_plugin_fusioninventory_printers`
+             FROM `glpi_plugin_fusinvsnmp_printers`
              WHERE `printers_id`='".$_POST['printers_id']."' ";
 	$result = $DB->query($query);		
 	$data = $DB->fetch_assoc($result);	
@@ -57,17 +57,17 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 	$plugin_fusioninventory_printer->update($_POST);
 	
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
-   $plugin_fusioninventory_model_infos = new PluginFusioninventorySNMPModel;
+   $plugin_fusioninventory_model_infos = new PluginFusinvsnmpModel;
    $plugin_fusioninventory_model_infos->getrightmodel($_POST['id'], PRINTER_TYPE);
 }
 
 if ((isset($_POST['update_cartridges'])) && (isset($_POST['id']))) {
 	PluginFusioninventoryAuth::checkRight("snmp_printers","w");
 
-	$plugin_fusioninventory_printer_cartridge = new PluginFusioninventoryPrinter_Cartridge;
+	$plugin_fusioninventory_printer_cartridge = new PluginFusinvsnmpPrinterCartridge;
 
 	$query = "SELECT * 
-             FROM `glpi_plugin_fusioninventory_printercartridges`
+             FROM `glpi_plugin_fusinvsnmp_printercartridges`
              WHERE `printers_id`='".$_POST['id']."'
                    AND `object_name`='".$_POST['object_name']."' ";
 	$result = $DB->query($query);		

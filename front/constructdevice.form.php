@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$ptcd = new PluginFusioninventoryConstructDevice;
+$ptcd = new PluginFusinvsnmpConstructDevice;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 
@@ -44,14 +44,14 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 PluginFusioninventoryDisplay::mini_menu();
 
 if (isset($_GET['vlan_update'])) {
-   $query_update = "UPDATE `glpi_plugin_fusioninventory_constructdevice_miboids`
+   $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
          SET vlan=0
       WHERE plugin_fusioninventory_constructdevices_id=".$_GET['id']."
          AND plugin_fusioninventory_miboids_id=".$_GET['vlan_update'];
    $DB->query($query_update);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["add"])) {
-   $query = "SELECT * FROM glpi_plugin_fusioninventory_constructdevices
+   $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
       WHERE sysdescr='".$_POST['sysdescr']."' ";
    $result = $DB->query($query);
 	if ($DB->numrows($result) == '0') {
@@ -64,7 +64,7 @@ if (isset($_GET['vlan_update'])) {
    $i = 1;
    while ($i == '1') {
       $md5 = md5(rand(1, 1000000));
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_constructdevicewalks`
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_constructdevicewalks`
          WHERE log='".$md5."' ";
       $result = $DB->query($query);
       if ($DB->numrows($result) == "0") {
@@ -72,7 +72,7 @@ if (isset($_GET['vlan_update'])) {
       }   
    }
 
-   $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_constructdevicewalks` (
+   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` (
 `id` ,
 `plugin_fusioninventory_constructdevices_id` ,
 `log`
@@ -91,7 +91,7 @@ NULL , '".$_POST['id']."', '".$md5."'
       $mappings = $mapping->find("`itemtype`='".$a_mapping[0]."'
                                  AND `name`='".$a_mapping[1]."'");
       $mappings_id = $mappings->fields['id'];
-      $query_ins = "INSERT INTO glpi_plugin_fusioninventory_constructdevice_miboids
+      $query_ins = "INSERT INTO glpi_plugin_fusinvsnmp_constructdevice_miboids
          (`plugin_fusioninventory_miboids_id`, `plugin_fusioninventory_constructdevices_id`,
             `plugin_fusioninventory_mappings_id`,
             `oid_port_counter`, `oid_port_dyn`, `vlan`)

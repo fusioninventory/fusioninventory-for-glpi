@@ -38,7 +38,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryAuth::checkRight("snmp_networking","r");
 
-$ptud = new PluginFusioninventoryUnknownDevice;
+$ptud = new PluginFusinvsnmpUnknownDevice;
 $ptt  = new PluginFusioninventoryTask;
 $ptcm = new PluginFusioninventoryConfigModules;
 
@@ -71,7 +71,7 @@ if (isset($_POST["delete"])) {
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = PluginFusioninventoryDiscovery::import($_POST['id'],$Import,$NoImport);
+   list($Import, $NoImport) = PluginFusinvsnmpDiscovery::import($_POST['id'],$Import,$NoImport);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][5]." : ".$Import);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']["discovery"][9]." : ".$NoImport);
    if ($Import == "0") {

@@ -37,10 +37,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryPrinterLog extends CommonDBTM {
+class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_printerlogs";
+		$this->table="glpi_plugin_fusinvsnmp_printerlogs";
 	}
 	
 	function countAllEntries($id) {

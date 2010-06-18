@@ -43,19 +43,19 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="construct_device.php";
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
-   $ptcd = new PluginFusioninventoryConstructDevice;
+   $ptcd = new PluginFusinvsnmpConstructDevice;
    $ptcd->generatemodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['generatediscover']) AND $_GET['generatediscover'] == '1') {
-   $ptcd = new PluginFusioninventoryConstructDevice;
+   $ptcd = new PluginFusinvsnmpConstructDevice;
    $ptcd->generateDiscovery();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['cleanmodels']) AND $_GET['cleanmodels'] == '1') {
-   $ptcd = new PluginFusioninventoryConstructDevice;
+   $ptcd = new PluginFusinvsnmpConstructDevice;
    $ptcd->cleanmodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['exportmodels']) AND $_GET['exportmodels'] == '1') {
-   $ptcd = new PluginFusioninventoryConstructDevice;
+   $ptcd = new PluginFusinvsnmpConstructDevice;
    $ptcd->exportmodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['generatecomments']) AND $_GET['generatecomments'] == '1') {

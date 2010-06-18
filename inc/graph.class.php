@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to generate graphs using pChart
  **/
-class PluginFusioninventoryGraph {
+class PluginFusinvsnmpGraph {
    private $pData;
    private $timeUnit;
    private $timeUnitName;

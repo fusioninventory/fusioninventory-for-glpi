@@ -45,9 +45,9 @@ PluginFusioninventoryDisplay::mini_menu();
 
 $_GET['target']="iprange.php";
 
-//searchForm('PluginFusioninventoryIPRange',$_GET);
-//showList('PluginFusioninventoryIPRange',$_GET);
-Search::show('PluginFusioninventoryIPRange');
+//searchForm('PluginFusinvsnmpIPRange',$_GET);
+//showList('PluginFusinvsnmpIPRange',$_GET);
+Search::show('PluginFusinvsnmpIPRange');
 
 commonFooter();
 

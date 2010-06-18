@@ -38,7 +38,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt")) {
    if (file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt") == "1") {
-      $pfisnmph = new PluginFusioninventoryNetworkPortLog;
+      $pfisnmph = new PluginFusinvsnmpNetworkPortLog;
       $pfisnmph->ConvertField(1);
       unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt");
    }   

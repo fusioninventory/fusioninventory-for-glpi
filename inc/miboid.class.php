@@ -37,9 +37,9 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryMibOid extends CommonDropdown {
+class PluginFusinvsnmpMibOid extends CommonDropdown {
    // From CommonDBTM
-   public $table = 'glpi_plugin_fusioninventory_miboids';
+   public $table = 'glpi_plugin_fusinvsnmp_miboids';
 
    static function getTypeName() {
       global $LANG;
