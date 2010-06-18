@@ -53,18 +53,18 @@ function pluginFusinvsnmpInstall($version) {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      //PluginFusinvsnmpDb::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
+      PluginFusioninventoryDb::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp');
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmp');
       }
 
-//      $config = new PluginFusinvsnmpConfig;
-//      $config->initConfig($version);
-//      $config_modules = new PluginFusinvsnmpConfigModules;
-//      $config_modules->initConfig();
-//      $configLogField = new PluginFusinvsnmpConfigLogField();
-//      $configLogField->initConfig();
+      $config = new PluginFusioninventoryConfig;
+      $config->initConfig($version);
+      $config_modules = new PluginFusioninventoryConfigModules;
+      $config_modules->initConfig();
+      $configLogField = new PluginFusinvsnmpConfigLogField();
+      $configLogField->initConfig();
 
       // Import models
       $importexport = new PluginFusinvsnmpImportExport;
