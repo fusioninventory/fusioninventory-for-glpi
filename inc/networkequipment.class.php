@@ -37,6 +37,8 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
+require_once(GLPI_ROOT.'/plugins/fusioninventory/inc/commondbtm.class.php');
+
 /**
  * Class to use networking switches
  **/
@@ -268,7 +270,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
    private function getIfaddrsDB() {
       global $DB;
 
-      $pti = new PluginFusioninventoryNetworkEquipmentIp();
+      $pti = new PluginFusinvsnmpNetworkEquipmentIp();
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                 WHERE `networkequipments_id` = '".$this->getValue('id')."';";
@@ -316,10 +318,10 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
 
 		$history = new PluginFusinvsnmpNetworkPortLog;
 
-		if (!PluginFusioninventoryAuth::haveRight("snmp_networking","r")) {
+		if (!PluginFusinvsnmpAuth::haveRight("snmp_networking","r")) {
 			return false;
       }
-		if (PluginFusioninventoryAuth::haveRight("snmp_networking","w")) {
+		if (PluginFusinvsnmpAuth::haveRight("snmp_networking","w")) {
 			$canedit = true;
       } else {
 			$canedit = false;
@@ -393,7 +395,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
 		echo "</table></form>";
 
       // Remote action of agent
-      $pfit = new PluginFusioninventoryTask;
+      $pfit = new PluginFusinvsnmpTask;
       $pfit->RemoteStateAgent($target, $id, NETWORKING_TYPE, array('INVENTORY' => 1 ));
 
 
@@ -465,7 +467,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
 			echo "<tr class='tab_bg_1 center'>";
 			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][13]."</td>";
 			echo "<td>";
-			PluginFusioninventoryDisplay::bar($this->fields['cpu'],'','inverse');
+			PluginFusinvsnmpDisplay::bar($this->fields['cpu'],'','inverse');
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -485,7 +487,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
 			} else {
 				$ram_pourcentage = ceil((100 * ($data2["ram"] - $this->fields['memory'])) / $data2["ram"]);
 			}
-			PluginFusioninventoryDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->fields['memory'])." Mo / ".
+			PluginFusinvsnmpDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->fields['memory'])." Mo / ".
                             $data2["ram"]." Mo)",'inverse');
 			echo "</td>";
 			echo "</tr>";

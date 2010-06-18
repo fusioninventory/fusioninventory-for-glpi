@@ -38,7 +38,7 @@ function plugin_fusinvsnmp_getSearchOption() {
 	global $LANG;
 	$sopt = array ();
 
-	$config = new PluginFusioninventoryConfig;
+	$config = new PluginFusinvsnmpConfig;
 
 	// Part header
 	$sopt['PluginFusinvsnmpSNMPModel']['common'] = $LANG['plugin_fusinvsnmp']["profile"][19];
@@ -975,7 +975,7 @@ function plugin_fusinvsnmp_uninstall() {
 function plugin_fusinvsnmp_needUpdate() {
    $version = "2.3.0";
    include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
-   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
+   $version_detected = pluginFusinvsnmpGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
       return 1;
    } else {
@@ -989,7 +989,7 @@ function plugin_fusinvsnmp_needUpdate() {
 //function plugin_get_headings_fusinvsnmp($type,$id,$withtemplate) {
 function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 	global $LANG;
-	$configModules = new PluginFusioninventoryConfigModules;
+	$configModules = new PluginFusinvsnmpConfigModules;
 
 	$type = get_Class($item);
    switch ($type) {
@@ -998,10 +998,10 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusinvsnmpAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 				$array = array ();
             //return array(
-            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
+            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusinvsnmpAuth::haveRight("remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
             }
 				//}
@@ -1017,7 +1017,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusinvsnmpAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					return array(
 						1 => $LANG['plugin_fusinvsnmp']["title"][5]
 					);
@@ -1031,7 +1031,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+				if ((PluginFusinvsnmpAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusinvsnmp']["title"][5];
@@ -1046,7 +1046,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((PluginFusioninventoryAuth::haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
+				if ((PluginFusinvsnmpAuth::haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusinvsnmp']["title"][5];
@@ -1072,12 +1072,12 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_fusinvsnmp($type) {
 
-   $configModules = new PluginFusioninventoryConfigModules;
+   $configModules = new PluginFusinvsnmpConfigModules;
 
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
+         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusinvsnmpAuth::haveRight("remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusinvsnmp_computerInfo";
          }
 			return $array;
@@ -1088,14 +1088,14 @@ function plugin_headings_actions_fusinvsnmp($type) {
 
       case PRINTER_TYPE :
 			$array = array ();
-			if (PluginFusioninventoryAuth::haveRight("snmp_printers", "r")) {
+			if (PluginFusinvsnmpAuth::haveRight("snmp_printers", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_printerInfo";
 			}
 			return $array;
 			break;
 
 		case NETWORKING_TYPE :
-			if (PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) {
+			if (PluginFusinvsnmpAuth::haveRight("snmp_networking", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_networkingInfo";
 			}
 			return $array;
@@ -1113,7 +1113,7 @@ function plugin_headings_actions_fusinvsnmp($type) {
 
 
 function plugin_headings_fusinvsnmp_computerInfo($type, $id) {
-   $pfit = new PluginFusioninventoryTask;
+   $pfit = new PluginFusinvsnmpTask;
    $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusinvsnmp/front/agents.state.php', $id, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 }
 
@@ -1144,9 +1144,9 @@ function plugin_headings_fusinvsnmp($type,$id,$withtemplate=0) {
 
 	switch ($type) {
 		case PROFILE_TYPE :
-			$prof=new PluginFusioninventoryProfile;
+			$prof=new PluginFusinvsnmpProfile;
 			if (!$prof->GetfromDB($id)) {
-				PluginFusioninventoryDb::createaccess($id);
+				PluginFusinvsnmpDb::createaccess($id);
          }
 			$prof->showForm($id, 
               array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/profile.php"));
@@ -1190,13 +1190,13 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusinvsnmp_get_model" :
-               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
+               if(PluginFusinvsnmpAuth::haveRight("snmp_models","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusinvsnmp_assign_model" :
-               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
+               if(PluginFusinvsnmpAuth::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusinvsnmp_snmpmodels`
                                    WHERE `itemtype`!='2'
@@ -1216,7 +1216,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusinvsnmp_assign_auth" :
-               if(PluginFusioninventoryAuth::haveRight("snmp_authentication","w")) {
+               if(PluginFusinvsnmpAuth::haveRight("snmp_authentication","w")) {
                   PluginFusinvsnmpSNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1229,13 +1229,13 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusinvsnmp_get_model" :
-               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
+               if(PluginFusinvsnmpAuth::haveRight("snmp_models","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusinvsnmp_assign_model" :
-               if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
+               if(PluginFusinvsnmpAuth::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusinvsnmp_snmpmodels`
                                    WHERE `itemtype`!='3'
@@ -1255,7 +1255,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusinvsnmp_assign_auth" :
-               if(PluginFusioninventoryAuth::haveRight("snmp_authentication","w")) {
+               if(PluginFusinvsnmpAuth::haveRight("snmp_authentication","w")) {
                   PluginFusinvsnmpSNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1267,7 +1267,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 		case 'PluginFusinvsnmpUnknownDevice';
 			switch ($action) {
 				case "plugin_fusinvsnmp_discovery_import" :
-               if(PluginFusioninventoryAuth::haveRight("unknowndevices","w")) {
+               if(PluginFusinvsnmpAuth::haveRight("unknowndevices","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
 					break;
@@ -1303,13 +1303,13 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
 			if ($data['itemtype'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						PluginFusioninventoryMassiveaction::assign($key, NETWORKING_TYPE, "model", $data["snmp_model"]);
+						PluginFusinvsnmpMassiveaction::assign($key, NETWORKING_TYPE, "model", $data["snmp_model"]);
 					}
 				}
 			} else if($data['itemtype'] == PRINTER_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						PluginFusioninventoryMassiveaction::assign($key, PRINTER_TYPE, "model", $data["snmp_model"]);
+						PluginFusinvsnmpMassiveaction::assign($key, PRINTER_TYPE, "model", $data["snmp_model"]);
 					}
 				}
 			}
@@ -1319,20 +1319,20 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
 			if ($data['itemtype'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						PluginFusioninventoryMassiveaction::assign($key, NETWORKING_TYPE, "auth", $data["plugin_fusinvsnmp_snmpauths_id"]);
+						PluginFusinvsnmpMassiveaction::assign($key, NETWORKING_TYPE, "auth", $data["plugin_fusinvsnmp_snmpauths_id"]);
 					}
 				}
 			} else if($data['itemtype'] == PRINTER_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-						PluginFusioninventoryMassiveaction::assign($key, PRINTER_TYPE, "auth", $data["plugin_fusinvsnmp_snmpauths_id"]);
+						PluginFusinvsnmpMassiveaction::assign($key, PRINTER_TYPE, "auth", $data["plugin_fusinvsnmp_snmpauths_id"]);
 					}
 				}
 			}
 			break;
 
 		case "plugin_fusinvsnmp_discovery_import" :
-         if(PluginFusioninventoryAuth::haveRight("unknowndevices","w")) {
+         if(PluginFusinvsnmpAuth::haveRight("unknowndevices","w")) {
             $Import = 0;
             $NoImport = 0;
             foreach ($data['item'] as $key => $val) {
@@ -1380,7 +1380,7 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$link
 			break;
 
 		case 'glpi_plugin_fusinvsnmp_agents.id' :
-			Dropdown::show("PluginFusioninventoryAgent",
+			Dropdown::show("PluginFusinvsnmpAgent",
                         array('name' => $linkfield,
                               'comment' => false));
 			return true;

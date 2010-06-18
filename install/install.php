@@ -39,9 +39,9 @@ function pluginFusinvsnmpInstall($version) {
    global $DB,$LANG;
 
    include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
-   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
+   $version_detected = pluginfusinvsnmpGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
-      pluginFusioninventoryUpdate($version);
+      pluginFusinvsnmpUpdate($version);
    } else {
       // Install
       $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$version."-empty.sql";
@@ -72,7 +72,7 @@ function pluginFusinvsnmpInstall($version) {
 //      include(GLPI_ROOT.'/inc/rulesengine.function.php');
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      PluginFusioninventoryAuth::initSession();
+      PluginFusinvsnmpAuth::initSession();
 
    }
 }

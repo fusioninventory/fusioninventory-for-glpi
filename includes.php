@@ -37,12 +37,12 @@ include_once ("hook.php");
 
 // inc files 
 
-foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
+foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/inc/*.php') as $file) {
    include_once($file);
 }
 
-foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc_manufacturer/*.php') as $file) {
-   include_once($file);
-}
+//foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/inc_manufacturer/*.php') as $file) {
+//   include_once($file);
+//}
 
 ?>

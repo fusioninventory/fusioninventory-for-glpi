@@ -35,7 +35,7 @@
 // ----------------------------------------------------------------------
 
 
-function pluginFusioninventoryGetCurrentVersion($version) {
+function pluginFusinvsnmpGetCurrentVersion($version) {
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config"))) {
       return $version;
@@ -80,7 +80,7 @@ function pluginFusioninventoryGetCurrentVersion($version) {
 }
 
 
-function pluginFusioninventoryUpdate($current_version) {
+function pluginFusinvsnmpUpdate($current_version) {
 
    switch ($current_version){
       case "1.0.0":
@@ -125,7 +125,7 @@ function pluginFusioninventoryUpdate($current_version) {
 //                AND `ip` IS NOT NULL ";
 //   $DB->query($query);
 
-   PluginFusioninventoryAuth::initSession();
+   PluginFusinvsnmpAuth::initSession();
    
 }
 ?>
