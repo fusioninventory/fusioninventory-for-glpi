@@ -38,13 +38,22 @@
 function pluginFusinvsnmpInstall($version) {
    global $DB,$LANG;
 
+
+   // Get informations of plugin
+   $a_plugin = plugin_version_fusinvsnmp();
+
    include (GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
-   $version_detected = pluginfusinvsnmpGetCurrentVersion($version);
-   if ((isset($version_detected)) AND ($version_detected != $version)) {
-      pluginFusinvsnmpUpdate($version);
+   $version_detected = pluginfusinvsnmpGetCurrentVersion();
+   if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
+      // Update
+      pluginFusinvsnmpUpdate();
    } else {
-      // Install
-      $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$version."-empty.sql";
+      // Installation
+      // Add new module in plugin_fusioninventory (core)
+      $modules_id = PluginFusioninventoryModule::add($a_plugin['name'], 'locale');
+
+      // Create database
+      $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$a_plugin['version']."-empty.sql";
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
@@ -53,26 +62,25 @@ function pluginFusinvsnmpInstall($version) {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      PluginFusioninventoryDb::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
+      // Create folder in GLPI_PLUGIN_DOC_DIR
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp');
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmp');
       }
 
-      $config = new PluginFusioninventoryConfig;
-      $config->initConfig($version);
-      $config_modules = new PluginFusioninventoryConfigModules;
-      $config_modules->initConfig();
-      $configLogField = new PluginFusinvsnmpConfigLogField();
-      $configLogField->initConfig();
+//      ??
+//      $configLogField = new PluginFusinvsnmpConfigLogField();
+//      $configLogField->initConfig();
 
       // Import models
       $importexport = new PluginFusinvsnmpImportExport;
-//      include(GLPI_ROOT.'/inc/setup.function.php');
-//      include(GLPI_ROOT.'/inc/rulesengine.function.php');
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      PluginFusinvsnmpAuth::initSession();
+      // Creation of profile
+//      PluginFusioninventoryAuth::initSession($modules_id, array(type, right));
+
+      // Creation config values
+//      PluginFusioninventoryConfig::add($modules_id, type, value);
 
    }
 }

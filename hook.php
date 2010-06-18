@@ -955,7 +955,7 @@ function plugin_fusinvsnmp_install() {
 	global $DB, $LANG, $CFG_GLPI;
 
    include (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
-   pluginFusinvsnmpInstall("2.3.0-1");
+   pluginFusinvsnmpInstall();
 
    return true;
 }
