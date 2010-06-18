@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_modules` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `xmltag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `locale` INT( 4 ) NOT NULL,
+   `plugins_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

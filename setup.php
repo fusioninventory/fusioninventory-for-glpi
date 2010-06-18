@@ -73,17 +73,17 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
          $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
-         if (PluginFusioninventoryProfile::haveRight("agents","r")
-            OR PluginFusioninventoryProfile::haveRight("agentsprocesses","r")
+         if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","r")
+            OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentsprocesses","r")
             ) {
 
             $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
-            if (PluginFusioninventoryProfile::haveRight("agents","w")) {
+            if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
             }
 
-            if (PluginFusioninventoryProfile::haveRight("configuration","r")) {
+            if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "configuration","r")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/functionalities.form.php';
             }
 			}

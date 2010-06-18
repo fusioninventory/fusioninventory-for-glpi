@@ -37,9 +37,9 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-if (PluginFusioninventoryProfile::haveRight("agents","r")
-	OR PluginFusioninventoryProfile::haveRight("agentprocesses","r")
-	OR PluginFusioninventoryProfile::haveRight("remotecontrol","r")
+if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","r")
+	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentprocesses","r")
+	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")
 	) {
 	if (plugin_fusioninventory_needUpdate() == 1) {
 		commonHeader($LANG['plugin_fusioninventory']["setup"][4], $_SERVER["PHP_SELF"],"plugins","fusioninventory");

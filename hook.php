@@ -268,7 +268,8 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			// Non template case
          } else {
 				$array = array ();
-            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("remotecontrol","w"))) {
+            if (($configModules->isActivated('remotehttpagent')) AND
+                    (PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
             $array[2] = $LANG['plugin_fusioninventory']["title"][5];
@@ -334,7 +335,8 @@ function plugin_headings_actions_fusioninventory($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventoryProfile::haveRight("remotecontrol","w"))) {
+         if (($configModules->isActivated('remotehttpagent')) AND 
+                 (PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -342,25 +344,21 @@ function plugin_headings_actions_fusioninventory($type) {
 			break;
 
 		case MONITOR_TYPE :
-         $array = array ();
-         $array = array (
+         return array (
             1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
          );
+         break;
+
       case PRINTER_TYPE :
-			$array = array ();
-			if (PluginFusioninventoryProfile::haveRight("snmp_printers", "r")) {
-				$array[1] = "plugin_headings_fusioninventory_printerInfo";
-			}
-         $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
-			return $array;
+         return array (
+            1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
+         );
 			break;
 
 		case NETWORKING_TYPE :
-			if (PluginFusioninventoryProfile::haveRight("snmp_networking", "r")) {
-				$array[1] = "plugin_headings_fusioninventory_networkingInfo";
-			}
-         $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
-			return $array;
+         return array (
+            1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
+         );
 			break;
 
 		case PROFILE_TYPE :

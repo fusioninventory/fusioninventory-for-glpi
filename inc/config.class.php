@@ -42,7 +42,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 	function __construct() {
 		$this->table="glpi_plugin_fusioninventory_configs";
-		$this->type='PluginFusioninventoryConfig';
 	}
 
 	function initConfig($version) {
@@ -201,6 +200,58 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       return true;
 	}
+
+   /**
+    * Add config
+    *
+    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
+    *@param $p_value Value
+    *@return integer the new id of the added item (or false if fail)
+    **/
+   function addConfig($p_modules_id, $p_type, $p_value) {
+      return $this->add(array('type'=>$p_type, `value`=>$p_value,
+                       'plugin_fusioninventory_modules_id'=>$p_modules_id));
+   }
+
+   /**
+    * Update config
+    *
+    *@param $p_id Config id
+    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
+    *@param $p_value Value
+    *@return boolean : true on success
+    **/
+   function updateConfig($p_id, $p_modules_id, $p_type, $p_value) {
+      return $this->update(array('id'=>$p_id, 'type'=>$p_type, `value`=>$p_value,
+                       'plugin_fusioninventory_modules_id'=>$p_modules_id));
+   }
+
+   /**
+    * Delete config
+    *
+    *@param $p_id Config id
+    *@return boolean : true on success
+    **/
+   function deleteConfig($p_id) {
+      return $this->delete(array('id'=>$p_id));
+   }
+
+   /**
+    * Clean config
+    *
+    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@return boolean : true on success
+    **/
+   function cleanConfig($p_modules_id) {
+      global $DB;
+
+      $delete = "DELETE FROM ".$this->table.
+                "WHERE `plugin_fusioninventory_modules_id`='".$p_modules_id."';";
+      return $DB->query($delete);
+   }
+
 }
 
 ?>
