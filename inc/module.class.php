@@ -79,25 +79,25 @@ class PluginFusioninventoryModule extends CommonDBTM {
     * Get module
     *
     *@param $p_name Module name
-    *@return array(id, name, xmltag) (one line max)
+    *@return array(id, name, xmltag, plugins_id) (one line max)
     **/
    function get($p_name) {
       return $this->find("`name`='".$p_name."' AND `id`<>0
-                          AND `glpi_plugins_id` IN (SELECT `id`
-                                                    FROM `glpi_plugins`
-                                                    WHERE `state`=1)");
+                          AND `plugins_id` IN (SELECT `id`
+                                               FROM `glpi_plugins`
+                                               WHERE `state`=1)");
    }
 
    /**
     * Get all modules
     *
-    *@return array(id, name, xmltag)
+    *@return array(id, name, xmltag, plugins_id)
     **/
    function getAll() {
       return $this->find("`id`<>0
-                          AND `glpi_plugins_id` IN (SELECT `id`
-                                           FROM `glpi_plugins`
-                                           WHERE `state`=1)
+                          AND `plugins_id` IN (SELECT `id`
+                                               FROM `glpi_plugins`
+                                               WHERE `state`=1)
                          ", 'name');
    }
 
