@@ -37,7 +37,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
 //todo
-//PluginFusioninventoryAuth::checkRight("snmp_networking","r");
+//PluginFusioninventoryProfile::checkRight("snmp_networking","r");
 
 if(isset($_POST["unlock_field_fusioninventory"])){
 	if (isset($_POST["lockfield_fusioninventory"])&&count($_POST["lockfield_fusioninventory"])){

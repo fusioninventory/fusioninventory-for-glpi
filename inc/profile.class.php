@@ -217,7 +217,149 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       return true;
 	}
-	
+
+   static function initSession() {
+      global $DB;
+
+      if(TableExists("glpi_plugin_fusioninventory_configs")) {
+
+         if (FieldExists("glpi_plugin_fusioninventory_configs","id")) {
+            $profile=new PluginFusioninventoryProfile;
+
+            $query = "SELECT DISTINCT `glpi_profiles`.*
+                      FROM `glpi_profiles_users` INNER JOIN `glpi_profiles`
+                           ON (`glpi_profiles_users`.`profiles_id` = `glpi_profiles`.`id`)
+                      WHERE `glpi_profiles_users`.`users_id`='".$_SESSION["glpiID"]."'";
+            $result = $DB->query($query);
+            $_SESSION['glpi_plugin_fusioninventory_profile'] = array ();
+            if ($DB->numrows($result)) {
+               while ($data = $DB->fetch_assoc($result)) {
+                  $profile->fields = array ();
+                  if(isset($_SESSION["glpiactiveprofile"]["id"])) {
+                     $profile->getFromDB($_SESSION["glpiactiveprofile"]["id"]);
+                     $_SESSION['glpi_plugin_fusioninventory_profile'] = $profile->fields;
+                  } else {
+                     $profile->getFromDB($data['id']);
+                     $_SESSION['glpi_plugin_fusioninventory_profile'] = $profile->fields;
+                  }
+                  $_SESSION["glpi_plugin_fusioninventory_installed"]=1;
+               }
+            }
+         }
+      }
+   }
+
+   static function haveRight($module,$right) {
+   // echo $_SESSION["glpiactive_entity"];
+      $matches=array(
+            ""  => array("","r","w"), // ne doit pas arriver normalement
+            "r" => array("r","w"),
+            "w" => array("w"),
+            "1" => array("1"),
+            "0" => array("0","1"), // ne doit pas arriver non plus
+               );
+      if (isset($_SESSION["glpi_plugin_fusioninventory_profile"][$module])
+                &&in_array($_SESSION["glpi_plugin_fusioninventory_profile"][$module],$matches[$right])) {
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+   static function checkRight($module, $right) {
+      global $CFG_GLPI;
+
+      if (!PluginFusioninventoryProfile::haveRight($module, $right)) {
+         // Gestion timeout session
+         if (!isset ($_SESSION["glpiID"])) {
+            glpi_header($CFG_GLPI["root_doc"] . "/index.php");
+            exit ();
+         }
+
+         displayRightError();
+      }
+   }
+
+   static function changeprofile() {
+      if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])
+               && $_SESSION["glpi_plugin_fusioninventory_installed"]==1) {
+         $prof=new PluginFusionInventoryProfile;
+         if($prof->getFromDB($_SESSION['glpiactiveprofile']['ID'])) {
+            $_SESSION["glpi_plugin_fusioninventory_profile"]=$prof->fields;
+         } else {
+            unset($_SESSION["glpi_plugin_fusioninventory_profile"]);
+         }
+      }
+   }
+
+   /*
+    * Give all rights to this profile (the installer profile)
+    */
+   static function createfirstaccess($id) {
+      global $DB;
+
+      $plugin_fusioninventory_Profile=new PluginFusioninventoryProfile;
+      if (!$plugin_fusioninventory_Profile->GetfromDB($id)) {
+         $Profile=new Profile;
+         $Profile->GetfromDB($id);
+         $name=$Profile->fields["name"];
+
+         $query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
+                   `id`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
+                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
+                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+                   `snmp_query`, `wol`, `configuration` )
+                   VALUES ('$id', '$name','fusioninventory','0','w','w',
+                     'w','w','w','w','w',
+                     'r','w','r','w','w',
+                     'w','w','w');";
+         $DB->query($query);
+      }
+   }
+
+   /*
+    * Init all rights to NULL for this profile
+    */
+   static function createaccess($id) {
+      global $DB;
+
+      $Profile=new Profile;
+      $Profile->GetfromDB($id);
+      $name=$Profile->fields["name"];
+
+      $query = "INSERT INTO `glpi_plugin_fusioninventory_profiles` (
+                   `id`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
+                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
+                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+                   `snmp_query`, `wol`, `configuration` )
+                VALUES ('$id', '$name','fusioninventory','0',NULL,NULL,
+                   NULL,NULL,NULL,NULL,NULL,
+                   NULL,NULL,NULL,NULL,NULL,
+                   NULL,NULL,NULL);";
+      $DB->query($query);
+   }
+
+   static function updateaccess($id) {
+      global $DB;
+
+      $Profile=new Profile;
+      $Profile->GetfromDB($id);
+      $name=$Profile->fields["name"];
+
+      $query = "UPDATE `glpi_plugin_fusioninventory_profiles`
+                  SET `interface`='fusioninventory', `snmp_networking`='w',
+                      `snmp_printers`='w', `snmp_models`='w',
+                      `snmp_authentication`='w', `iprange`='w',
+                      `agents`='w', `remotecontrol`='w',
+                      `agentprocesses`='r', `unknowndevices`='w',
+                      `reports`='r', `deviceinventory`='w',
+                      `netdiscovery`='w', `snmp_query`='w',
+                      `wol`='w', `configuration`='w'
+                  WHERE `name`='".$name."'";
+      $DB->query($query);
+
+   }
+
 }
 
 ?>

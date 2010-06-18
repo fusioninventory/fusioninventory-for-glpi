@@ -40,19 +40,19 @@ $agents = new PluginFusioninventoryAgent;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
-PluginFusioninventoryAuth::checkRight("agents","r");
+PluginFusioninventoryProfile::checkRight("agents","r");
 
 PluginFusioninventoryDisplay::mini_menu();
 
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryAuth::checkRight("agents","w");
+	PluginFusioninventoryProfile::checkRight("agents","w");
    if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
    }
 	$agents->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryAuth::checkRight("agents","w");
+	PluginFusioninventoryProfile::checkRight("agents","w");
    if (isset($_POST['items_id'])) {
       if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
          $_POST['itemtype'] = '1';
@@ -61,7 +61,7 @@ if (isset ($_POST["add"])) {
 	$agents->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryAuth::checkRight("agents","w");
+	PluginFusioninventoryProfile::checkRight("agents","w");
 	$agents->delete($_POST);
 	glpi_header("agent.php");
 } else if (isset ($_POST["startagent"])) {

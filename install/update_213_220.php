@@ -62,7 +62,7 @@ function update213to220() {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
    }
    // Update right
-   PluginFusioninventory::updateaccess($_SESSION['glpiactiveprofile']['id']);
+   PluginFusioninventoryProfile::updateaccess($_SESSION['glpiactiveprofile']['id']);
 
    // Delete old agents
    $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_agents`";

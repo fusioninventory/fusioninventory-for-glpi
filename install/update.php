@@ -125,7 +125,7 @@ function pluginFusioninventoryUpdate($current_version) {
 //                AND `ip` IS NOT NULL ";
 //   $DB->query($query);
 
-   PluginFusioninventoryAuth::initSession();
+   PluginFusioninventoryProfile::initSession();
    
 }
 ?>

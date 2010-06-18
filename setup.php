@@ -44,8 +44,8 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryTask');
 
-	$PLUGIN_HOOKS['init_session']['fusioninventory'] = 'plugin_fusioninventory_initSession';
-	$PLUGIN_HOOKS['change_profile']['fusioninventory'] = 'plugin_fusioninventory_changeprofile';
+	$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
+	$PLUGIN_HOOKS['change_profile']['fusioninventory'] = array('Profile', 'changeprofile');
 
 	$PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
@@ -73,17 +73,17 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
          $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
-         if (PluginFusioninventoryAuth::haveRight("agents","r")
-            OR PluginFusioninventoryAuth::haveRight("agentsprocesses","r")
+         if (PluginFusioninventoryProfile::haveRight("agents","r")
+            OR PluginFusioninventoryProfile::haveRight("agentsprocesses","r")
             ) {
 
             $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
-            if (PluginFusioninventoryAuth::haveRight("agents","w")) {
+            if (PluginFusioninventoryProfile::haveRight("agents","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
             }
 
-            if (PluginFusioninventoryAuth::haveRight("configuration","r")) {
+            if (PluginFusioninventoryProfile::haveRight("configuration","r")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/functionalities.form.php';
             }
 			}
@@ -125,7 +125,7 @@ function plugin_fusioninventory_check_config() {
 function plugin_fusioninventory_haveTypeRight($type,$right) {
 //	switch ($type) {
 //		case 'PluginFusioninventoryConfigSNMPSecurity' :
-//			return PluginFusioninventoryAuth::haveRight("snmp_authentication",$right);
+//			return PluginFusioninventoryProfile::haveRight("snmp_authentication",$right);
 //			break;
 //	}
 	return true;

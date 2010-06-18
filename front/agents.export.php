@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-PluginFusioninventoryAuth::checkRight("snmp_agent","r");
+PluginFusioninventoryProfile::checkRight("snmp_agent","r");
 
 $agents = new PluginFusioninventoryAgent;
 

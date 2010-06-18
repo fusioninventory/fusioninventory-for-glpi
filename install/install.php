@@ -53,7 +53,7 @@ function pluginFusioninventoryInstall($version) {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      PluginFusioninventoryDb::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
+      PluginFusioninventoryProfile::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
@@ -64,7 +64,7 @@ function pluginFusioninventoryInstall($version) {
       $config_modules = new PluginFusioninventoryConfigModules;
       $config_modules->initConfig();
 
-      PluginFusioninventoryAuth::initSession();
+      PluginFusioninventoryProfile::initSession();
    }
 }
 

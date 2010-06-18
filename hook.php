@@ -268,7 +268,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			// Non template case
          } else {
 				$array = array ();
-            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
+            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
             $array[2] = $LANG['plugin_fusioninventory']["title"][5];
@@ -334,7 +334,7 @@ function plugin_headings_actions_fusioninventory($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
+         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventoryProfile::haveRight("remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -348,7 +348,7 @@ function plugin_headings_actions_fusioninventory($type) {
          );
       case PRINTER_TYPE :
 			$array = array ();
-			if (PluginFusioninventoryAuth::haveRight("snmp_printers", "r")) {
+			if (PluginFusioninventoryProfile::haveRight("snmp_printers", "r")) {
 				$array[1] = "plugin_headings_fusioninventory_printerInfo";
 			}
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -356,7 +356,7 @@ function plugin_headings_actions_fusioninventory($type) {
 			break;
 
 		case NETWORKING_TYPE :
-			if (PluginFusioninventoryAuth::haveRight("snmp_networking", "r")) {
+			if (PluginFusioninventoryProfile::haveRight("snmp_networking", "r")) {
 				$array[1] = "plugin_headings_fusioninventory_networkingInfo";
 			}
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
@@ -391,7 +391,7 @@ function plugin_headings_fusioninventory($type,$id,$withtemplate=0) {
 		case PROFILE_TYPE :
 			$prof=new PluginFusioninventoryProfile;
 			if (!$prof->GetfromDB($id)) {
-				PluginFusioninventoryDb::createaccess($id);
+				PluginFusioninventoryProfile::createaccess($id);
          }
 			$prof->showForm($id, 
               array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php"));
