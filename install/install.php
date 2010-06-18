@@ -42,7 +42,7 @@ function pluginFusinvdeployInstall() {
    $a_plugin = plugin_version_fusinvdeploy();
 
    include (GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
-   $version_detected = pluginfusinvdeployGetCurrentVersion();
+   $version_detected = pluginfusinvdeployGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected)) AND ($version_detected != $a_plugin['version'])) {
       // Update
       pluginFusinvdeployUpdate();
