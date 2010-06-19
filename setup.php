@@ -47,11 +47,12 @@ function plugin_init_fusinvinventory() {
 
 // Name and Version of the plugin
 function plugin_version_fusinvinventory() {
-	return array('name'    => 'FusionInventory INVENTORY',
-                'version' => '2.3.0-1',
-                'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
-                           & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
-                'homepage'=>'http://forge.fusioninventory.org/projects/pluginfusinvinventory',
+	return array('name'           => 'FusionInventory INVENTORY',
+                'shortname'      => 'fusinvinventory',
+                'version'        => '2.3.0-1',
+                'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
+                                    & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
+                'homepage'       =>'http://forge.fusioninventory.org/projects/pluginfusinvinventory',
                 'minGlpiVersion' => '0.78'// For compatibility / no install in version < 0.78
    );
 }

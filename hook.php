@@ -75,7 +75,8 @@ function plugin_fusinvinventory_install() {
 
 // Uninstall process for plugin : need to return true if succeeded
 function plugin_fusinvinventory_uninstall() {
-   return PluginFusinvinventorySetup::uninstall();
+   include (GLPI_ROOT . "/plugins/fusinvinventory/install/install.php");
+   pluginFusinvinventoryUninstall();
 }
 
 
