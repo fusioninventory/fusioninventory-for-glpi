@@ -50,7 +50,8 @@ function pluginFusinvsnmpInstall($version) {
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
-      $modules_id = PluginFusioninventoryModule::add($a_plugin['name'], 'locale');
+      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
+      $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
 
       // Create database
       $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$a_plugin['version']."-empty.sql";
@@ -63,9 +64,9 @@ function pluginFusinvsnmpInstall($version) {
       }
 
       // Create folder in GLPI_PLUGIN_DOC_DIR
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp');
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmp');
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp');
       }
 
 //      ??
@@ -77,12 +78,68 @@ function pluginFusinvsnmpInstall($version) {
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
       // Creation of profile
-//      PluginFusioninventoryAuth::initSession($modules_id, array(type, right));
+//      PluginFusioninventoryProfile::initSession($modules_id, array(type, right));
 
       // Creation config values
 //      PluginFusioninventoryConfig::add($modules_id, type, value);
 
    }
+}
+
+
+function pluginFusinvsnmpUninstall() {
+   global $DB;
+
+   // Get informations of plugin
+   $a_plugin = plugin_version_fusinvsnmp();
+
+   if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+      if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+         $current_dir = GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/';
+         while (($f = readdir($dir)) !== false) {
+            if($f > '0' and filetype($current_dir.$f) == "file") {
+               unlink($current_dir.$f);
+            } else if ($f > '0' and filetype($current_dir.$f) == "dir") {
+               Plugin_Fusioninventory_delTree($current_dir.$f);
+            }
+         }
+         closedir($dir);
+         rmdir($current_dir);
+      }
+   }
+
+   $query = "SHOW TABLES;";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if (strstr($data[0],"glpi_plugin_".$a_plugin['shortname']."_")){
+         $query_delete = "DROP TABLE `".$data[0]."`;";
+         $DB->query($query_delete) or die($DB->error());
+      }
+   }
+
+//   $query="DELETE FROM `glpi_displaypreferences`
+//           WHERE `itemtype`='PluginFusioninventoryError'
+//                 OR `itemtype`='PluginFusioninventorySNMPModel'
+//                 OR `itemtype`='PluginFusioninventoryConfigSNMPSecurity'
+//                 OR `itemtype`='PluginFusioninventoryUnknownDevice'
+//                 OR `itemtype`='PluginFusioninventoryNetworkPort'
+//                 OR `itemtype`='PluginFusioninventoryNetworkport2'
+//                 OR `itemtype`='PluginFusioninventoryAgent'
+//                 OR `itemtype`='PluginFusioninventoryIPRange'
+//                 OR `itemtype`='PluginFusioninventoryAgentProcess'
+//                 OR `itemtype`='PluginFusioninventoryNetworkPortLog'
+//                 OR `itemtype`='PluginFusioninventoryConfig'
+//                 OR `itemtype`='PluginFusioninventoryTask'
+//                 OR `itemtype`='PluginFusioninventoryConstructDevices' ;";
+//   $DB->query($query) or die($DB->error());
+//
+//
+//   $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknownDevice' ");
+//   foreach ($a_netports as $NetworkPort){
+//      $np->cleanDBonPurge($NetworkPort['id']);
+//      $np->deleteFromDB($NetworkPort['id']);
+//   }
+   return true;
 }
 
 ?>

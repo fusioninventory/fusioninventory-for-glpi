@@ -962,7 +962,8 @@ function plugin_fusinvsnmp_install() {
 
 // Uninstall process for plugin : need to return true if succeeded
 function plugin_fusinvsnmp_uninstall() {
-   return PluginFusinvsnmpSetup::uninstall();
+   include (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
+   pluginFusinvsnmpUninstall();
 }
 
 /**
