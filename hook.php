@@ -75,7 +75,8 @@ function plugin_fusinvdeploy_install() {
 
 // Uninstall process for plugin : need to return true if succeeded
 function plugin_fusinvdeploy_uninstall() {
-   return PluginFusinvdeploySetup::uninstall();
+   include (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
+   pluginFusinvdeployUninstall();
 }
 
 
