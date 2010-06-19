@@ -95,17 +95,6 @@ class PluginFusioninventorySetup {
       return true;
    }
 
-   static function delTree($dir) {
-       $files = glob( $dir . '*', GLOB_MARK );
-       foreach( $files as $file ){
-           if( is_dir( $file ) )
-               PluginFusioninventorySetup::delTree( $file );
-           else
-               unlink( $file );
-       }
-
-       if (is_dir($dir)) rmdir( $dir );
-   }
 }
 
 ?>

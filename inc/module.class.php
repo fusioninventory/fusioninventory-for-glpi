@@ -50,8 +50,9 @@ class PluginFusioninventoryModule extends CommonDBTM {
     *@param $p_name Module name ('Fusioninventory', 'Fusinvsnmp'...)
     *@return integer the new id of the added item (or false if fail)
     **/
-   function addModule($p_name) {
-      return $this->add(array('name'=>$p_name));
+   static function addModule($p_name) {
+      $pfm = new PluginFusioninventoryModule;
+      return $pfm->add(array('name'=>$p_name));
    }
 
    /**
