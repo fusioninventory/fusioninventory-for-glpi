@@ -39,9 +39,9 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_miblabels`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_miblabels`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_miblabels` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_miblabels` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci,
@@ -50,9 +50,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_miblabels` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mibobjects`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_mibobjects`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_mibobjects` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_mibobjects` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci,
@@ -61,9 +61,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_mibobjects` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_miboids`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_miboids`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_miboids` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_miboids` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `comment` text COLLATE utf8_unicode_ci,
@@ -73,9 +73,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_miboids` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_agents`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_agents` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_agents` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `core_discovery` int(11) NOT NULL DEFAULT '1',
@@ -100,9 +100,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_errors`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_agents_errors`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_agentprocesserrors` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_agentprocesserrors` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `plugin_fusioninventory_agentprocesses_id` VARCHAR( 255 )  COLLATE utf8_unicode_ci DEFAULT NULL,
    `items_id` INT( 11 ) NOT NULL DEFAULT '0',
@@ -115,9 +115,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentprocesserrors` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentinventorystates`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_agentinventorystates`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_agentinventorystates` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_agentinventorystates` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `computers_id` INT( 11 ) NOT NULL DEFAULT '0',
    `state` INT( 1 ) NOT NULL DEFAULT '0',
@@ -127,9 +127,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentinventorystates` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentprocesses`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_agentprocesses`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_agentprocesses` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_agentprocesses` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `process_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
@@ -160,9 +160,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentprocesses` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_configs` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_configs` (
    `id` int(1) NOT NULL AUTO_INCREMENT,
    `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
    `URL_agent_conf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -183,9 +183,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_configs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configmodules`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configmodules`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_configmodules` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_configmodules` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
    `snmp` INT( 1 ) NOT NULL DEFAULT '0',
    `inventoryocs` INT( 1 ) NOT NULL DEFAULT '0',
@@ -196,9 +196,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_configmodules` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configlogfields`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configlogfields`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_configlogfields` (
    `id` INT( 8 ) NOT NULL AUTO_INCREMENT ,
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `days` int(255) NOT NULL DEFAULT '-1',
@@ -208,9 +208,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_configlogfields` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_constructdevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevices`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_constructdevices` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `manufacturers_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text,
@@ -221,9 +221,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_constructdevices` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_constructdevicewalks`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevicewalks`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_constructdevicewalks` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_constructdevices_id` int(11) NOT NULL DEFAULT '0',
    `log` text,
@@ -232,9 +232,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_constructdevicewalks` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_constructdevice_miboids`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevice_miboids`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_constructdevice_miboids` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_miboids_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_constructdevices_id` int(11) NOT NULL DEFAULT '0',
@@ -248,9 +248,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_constructdevice_miboids` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportconnectionlogs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportconnectionlogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
    `creation` INT( 1 ) NOT NULL DEFAULT '0',
@@ -262,9 +262,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_locks`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_locks`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_locks` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_locks` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
    `items_id` INT( 11 ) NOT NULL ,
@@ -275,9 +275,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_locks` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockables`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_lockables`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_lockables` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_lockables` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    `tablefields` TEXT ,
@@ -290,9 +290,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_lockables` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelmibs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_snmpmodelmibs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelmibs` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmibs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_snmpmodels_id` int(11) DEFAULT NULL,
    `plugin_fusioninventory_miblabels_id` int(11) DEFAULT NULL,
@@ -314,9 +314,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelmibs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodels`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_snmpmodels`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_snmpmodels` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodels` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
    `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
@@ -332,9 +332,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmpmodels` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkequipments`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkequipments`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipments` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkequipments_id` int(11) NOT NULL,
    `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
@@ -351,9 +351,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkequipmentips`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkequipmentips`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkequipmentips` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipmentips` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkequipments_id` int(11) NOT NULL,
    `ip` varchar(255) NOT NULL,
@@ -363,9 +363,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipmentips` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkports`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkports`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkports` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkports_id` int(11) NOT NULL,
    `ifmtu` int(8) NOT NULL DEFAULT '0',
@@ -389,9 +389,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printerlogs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printerlogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_printerlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
    `date` datetime DEFAULT '0000-00-00 00:00:00',
@@ -412,9 +412,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printers`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_printers` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL,
    `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
@@ -428,9 +428,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printercartridges`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printercartridges`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_printercartridges` (
    `id` int(100) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL,
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
@@ -441,9 +441,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_tasks`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_tasks`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_tasks` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
    `date` DATETIME NOT NULL ,
    `plugin_fusioninventory_agents_id` INT( 11 ) NOT NULL,
@@ -458,9 +458,9 @@ COLLATE=utf8_unicode_ci;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_profiles`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_profiles`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_profiles` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_profiles` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `interface` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'fusioninventory',
@@ -485,9 +485,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_profiles` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_ipranges`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_ipranges` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) DEFAULT NULL,
    `plugin_fusioninventory_agents_id_discover` int(11) NOT NULL DEFAULT '0',
@@ -502,9 +502,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configsnmpsecurities`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configsnmpsecurities`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_configsnmpsecurities` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_configsnmpsecurities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
    `snmpversion` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
@@ -520,9 +520,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_configsnmpsecurities` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportlogs`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportlogs`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkportlogs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkports_id` int(11) NOT NULL,
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
@@ -535,9 +535,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknowndevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_unknowndevices`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_unknowndevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `dnsname` VARCHAR( 255 ) NULL DEFAULT NULL,
@@ -563,9 +563,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_modules`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_modules`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_modules` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_modules` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `locale` INT( 4 ) NOT NULL,
@@ -573,9 +573,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_modules` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mappings`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_mappings`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_mappings` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_mappings` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
    `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -591,8 +591,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_mappings` (
 
 
 ## INSERT
-## glpi_plugin_fusioninventory_configsnmpsecurities
-INSERT INTO `glpi_plugin_fusioninventory_configsnmpsecurities` 
+## glpi_plugin_fusinvsnmp_configsnmpsecurities
+INSERT INTO `glpi_plugin_fusinvsnmp_configsnmpsecurities`
       (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`,
        `encryption`, `priv_passphrase`, `is_deleted`)
    VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '', '0', '', '0'),
@@ -601,83 +601,83 @@ INSERT INTO `glpi_plugin_fusioninventory_configsnmpsecurities`
 
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
-   VALUES (NULL, 'PluginFusioninventorySnmpModel', '3', '1', '0'),
-          (NULL, 'PluginFusioninventorySnmpModel', '5', '2', '0');
+   VALUES (NULL, 'PluginFusinvsnmpModel', '3', '1', '0'),
+          (NULL, 'PluginFusinvsnmpSnmpModel', '5', '2', '0');
 
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
-   VALUES (NULL, 'PluginFusioninventoryConfigSnmpSecurity', '3', '1', '0'),
-          (NULL, 'PluginFusioninventoryConfigSnmpSecurity', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryConfigSnmpSecurity', '5', '3', '0'),
-          (NULL, 'PluginFusioninventoryConfigSnmpSecurity', '7', '4', '0'),
-          (NULL, 'PluginFusioninventoryConfigSnmpSecurity', '8', '5', '0'),
-          (NULL, 'PluginFusioninventoryConfigSnmpSecurity', '9', '6', '0'),
-          (NULL, 'PluginFusioninventoryConfigSnmpSecurity', '10', '7', '0'),
+   VALUES (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '3', '1', '0'),
+          (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '4', '2', '0'),
+          (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '5', '3', '0'),
+          (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '7', '4', '0'),
+          (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '8', '5', '0'),
+          (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '9', '6', '0'),
+          (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '10', '7', '0'),
 
-          (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '3', '3', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '5', '4', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '7', '5', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '10', '6', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '11', '7', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '18', '8', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '14', '9', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '2', '1', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '4', '2', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '3', '3', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '5', '4', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '7', '5', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '10', '6', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '11', '7', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '18', '8', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '14', '9', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '15', '10', '0'),
+          (NULL, 'PluginFusinvsnmpUnknownDevice', '9', '11', '0'),
 
-##          (NULL,'PluginFusioninventoryNetworkPort', '2', '1', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '3', '2', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '4', '3', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '5', '4', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '6', '5', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '7', '6', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '8', '7', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '9', '8', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '10', '9', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '11', '10', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '14', '11', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '12', '12', '0'),
-##          (NULL,'PluginFusioninventoryNetworkPort', '13', '13', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '2', '1', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '3', '2', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '4', '3', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '5', '4', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '6', '5', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '7', '6', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '8', '7', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '9', '8', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '10', '9', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '11', '10', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '14', '11', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '12', '12', '0'),
+##          (NULL,'PluginFusinvsnmpNetworkPort', '13', '13', '0'),
 
-          (NULL,'PluginFusioninventoryAgent', '8', '1', '0'),
-          (NULL,'PluginFusioninventoryAgent', '9', '2', '0'),
-          (NULL,'PluginFusioninventoryAgent', '10', '3', '0'),
-          (NULL,'PluginFusioninventoryAgent', '11', '4', '0'),
-          (NULL,'PluginFusioninventoryAgent', '12', '5', '0'),
-          (NULL,'PluginFusioninventoryAgent', '13', '6', '0'),
-          (NULL,'PluginFusioninventoryAgent', '14', '7', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '5', '3', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '6', '4', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '9', '5', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '7', '6', '0'),
-          (NULL,'PluginFusioninventoryIPRange', '8', '7', '0'),
+          (NULL,'PluginFusinvsnmpAgent', '8', '1', '0'),
+          (NULL,'PluginFusinvsnmpAgent', '9', '2', '0'),
+          (NULL,'PluginFusinvsnmpAgent', '10', '3', '0'),
+          (NULL,'PluginFusinvsnmpAgent', '11', '4', '0'),
+          (NULL,'PluginFusinvsnmpAgent', '12', '5', '0'),
+          (NULL,'PluginFusinvsnmpAgent', '13', '6', '0'),
+          (NULL,'PluginFusinvsnmpAgent', '14', '7', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '3', '2', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '5', '3', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '6', '4', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '9', '5', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '7', '6', '0'),
+          (NULL,'PluginFusinvsnmpIPRange', '8', '7', '0'),
 
-          (NULL,'PluginFusioninventoryAgentProcess', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '4', '3', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '5', '4', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '6', '5', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '7', '6', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '8', '7', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '9', '8', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '10', '9', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '11', '10', '0'),
-          (NULL,'PluginFusioninventoryAgentProcess', '12', '11', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '3', '2', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '4', '3', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '5', '4', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '6', '5', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '7', '6', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '8', '7', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '9', '8', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '10', '9', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '11', '10', '0'),
+          (NULL,'PluginFusinvsnmpAgentProcess', '12', '11', '0'),
 
-          (NULL,'PluginFusioninventoryNetworkPortLog', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '4', '3', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '5', '4', '0'),
-          (NULL,'PluginFusioninventoryNetworkPortLog', '6', '5', '0'),
+          (NULL,'PluginFusinvsnmpNetworkPortLog', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpNetworkPortLog', '3', '2', '0'),
+          (NULL,'PluginFusinvsnmpNetworkPortLog', '4', '3', '0'),
+          (NULL,'PluginFusinvsnmpNetworkPortLog', '5', '4', '0'),
+          (NULL,'PluginFusinvsnmpNetworkPortLog', '6', '5', '0'),
 
-          (NULL,'PluginFusioninventoryNetworkPort', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryNetworkPort', '3', '2', '0');
+          (NULL,'PluginFusinvsnmpNetworkPort', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpNetworkPort', '3', '2', '0');
 
 
-## glpi_plugin_fusioninventory_mappings
-INSERT INTO `glpi_plugin_fusioninventory_mappings`
+## glpi_plugin_fusinvsnmp_mappings
+INSERT INTO `glpi_plugin_fusinvsnmp_mappings`
       (`id`, `itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
    VALUES (1,'NetworkEquipment','location','glpi_networkequipments','locations_id',1,NULL),
           (2,'NetworkEquipment','firmware','glpi_networkequipments',
