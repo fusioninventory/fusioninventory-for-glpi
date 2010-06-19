@@ -37,10 +37,10 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","r")
-	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentprocesses","r")
-	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")
-	) {
+//if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","r")
+//	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentprocesses","r")
+//	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")
+//	) {
 	if (plugin_fusioninventory_needUpdate() == 1) {
 		commonHeader($LANG['plugin_fusioninventory']["setup"][4], $_SERVER["PHP_SELF"],"plugins","fusioninventory");
 		echo "<div align='center'>";
@@ -53,11 +53,11 @@ if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","r")
 	} else {
 		commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-		PluginFusioninventoryDisplay::menu();
+      PluginFusioninventoryMenu::displayMenu();
 	}
-} else {
-	displayRightError();
-}
+//} else {
+//	displayRightError();
+//}
 
 commonFooter();
 

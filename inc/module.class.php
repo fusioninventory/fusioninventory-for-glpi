@@ -94,8 +94,9 @@ class PluginFusioninventoryModule extends CommonDBTM {
     *
     *@return array(id, name, xmltag, plugins_id)
     **/
-   function getAll() {
-      return $this->find("`id`<>0
+   static function getAll() {
+      $pfm = new PluginFusioninventoryModule;
+      return $pfm->find("`id`<>0
                           AND `plugins_id` IN (SELECT `id`
                                                FROM `glpi_plugins`
                                                WHERE `state`=1)
