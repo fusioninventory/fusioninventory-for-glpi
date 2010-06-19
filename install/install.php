@@ -49,7 +49,6 @@ function pluginFusinvdeployInstall() {
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
-      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
       $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
 
       // Create database
