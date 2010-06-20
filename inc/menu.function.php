@@ -42,11 +42,11 @@ function plugin_fusinvdeploy_displayMenu() {
    global $CFG_GLPI,$LANG;
 
    $a_menu[0]['name'] = "Gestion des packages";
-   $a_menu[0]['pic'] = "urlimage";
+   $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
    $a_menu[0]['link'] = "lien";
 
    $a_menu[1]['name'] = "Etat des deploiements";
-   $a_menu[1]['pic'] = "urlimage";
+   $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
    $a_menu[1]['link'] = "lien";
 
    return $a_menu;
