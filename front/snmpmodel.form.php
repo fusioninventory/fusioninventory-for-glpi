@@ -45,7 +45,7 @@ $importexport = new PluginFusinvsnmpImportExport;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","models");
 
-PluginFusioninventoryDisplay::mini_menu();
+PluginFusioninventoryMenu::displayMenu("mini");
 
 //if (isset ($_POST["add"]) && isset($_POST["id"])) {
 if (isset ($_POST["add"])) {

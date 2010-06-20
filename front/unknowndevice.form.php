@@ -44,7 +44,7 @@ $ptcm = new PluginFusioninventoryConfigModules;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
 
-PluginFusioninventoryDisplay::mini_menu();
+PluginFusioninventoryMenu::displayMenu("mini");
 
 $id = "";
 if (isset($_GET["id"])) {

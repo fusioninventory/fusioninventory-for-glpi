@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 
-PluginFusioninventoryDisplay::mini_menu();
+PluginFusioninventoryMenu::displayMenu("mini");
 
 $_GET['target']="construct_device.php";
 if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {

@@ -41,7 +41,7 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryAuth::checkRight("iprange","r");
 
-PluginFusioninventoryDisplay::mini_menu();
+PluginFusioninventoryMenu::displayMenu("mini");
 
 $_GET['target']="iprange.php";
 

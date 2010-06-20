@@ -41,7 +41,7 @@ $ptcd = new PluginFusinvsnmpConstructDevice;
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 
 
-PluginFusioninventoryDisplay::mini_menu();
+PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_GET['vlan_update'])) {
    $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`

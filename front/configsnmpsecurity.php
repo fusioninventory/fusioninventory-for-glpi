@@ -43,7 +43,7 @@ PluginFusioninventoryAuth::checkRight("snmp_authentication","r");
 
 $config = new PluginFusioninventoryConfig;
 
-PluginFusioninventoryDisplay::mini_menu();
+PluginFusioninventoryMenu::displayMenu("mini");
 
 // Forms for FILE
 if ($config->getValue("storagesnmpauth") == "file") {
