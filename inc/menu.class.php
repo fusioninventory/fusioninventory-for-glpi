@@ -51,15 +51,15 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agent.php";
 //      }
-//      if(PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")) {
-         $a_menu[1]['name'] = $LANG['plugin_fusioninventory']["task"][1];
-         $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png";
-         $a_menu[1]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php";
-//      }
 //      if(PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentprocesses","r")) {
-         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']["processes"][19];
-         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_info_agents.png";
-         $a_menu[2]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agentprocess.form.php";
+         $a_menu[1]['name'] = $LANG['plugin_fusioninventory']["processes"][19];
+         $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_info_agents.png";
+         $a_menu[1]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agentprocess.form.php";
+//      }
+//      if(PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")) {
+         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']["task"][1];
+         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png";
+         $a_menu[2]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php";
 //      }
 
       echo "<div align='center'>";
@@ -87,8 +87,8 @@ class PluginFusioninventoryMenu {
       $width_max = 950;
 
       if ($type == "big") {
-         $width="150";
-         $height="130";
+         $width="140";
+         $height="120";
       } else if ($type == "mini") {
          $width="50";
          $height="40";
@@ -115,7 +115,10 @@ class PluginFusioninventoryMenu {
       echo "<tr class='tab_bg_1'>";
       foreach ($a_menu as $menu_id) {
          echo "<td align='center' width='".$width."' height='".$height."'>";
-         echo $menu_id['name'];
+         echo "<a href='".$menu_id['link']."'>
+         <img src='".$menu_id['pic']."'/>
+         <br/><b>".$menu_id['name']."</b></a>";
+
          echo "</td>";
       }
       echo "</tr>";
