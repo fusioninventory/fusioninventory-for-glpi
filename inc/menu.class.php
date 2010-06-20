@@ -65,6 +65,10 @@ class PluginFusioninventoryMenu {
       echo "<div align='center'>";
       echo "<table width='950'>";
       echo "<tr>";
+      echo "<td align='center'>";
+
+      echo "<table>";
+      echo "<tr>";
       echo "<td>";
       $width_status = PluginFusioninventoryMenu::htmlMenu("fusioninventory", $a_menu, $type, $width_status);
 
@@ -74,6 +78,10 @@ class PluginFusioninventoryMenu {
          $a_menu = call_user_func("plugin_".$datas['name']."_displayMenu");
          $width_status = PluginFusioninventoryMenu::htmlMenu($datas['name'], $a_menu, $type, $width_status);
       }
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -98,6 +106,8 @@ class PluginFusioninventoryMenu {
          $width_status = 0;
          echo "</td>";
          echo "</tr>";
+         echo "</table>";
+         echo "<table>";
          echo "<tr>";
          echo "<td>";
       } else {
@@ -113,12 +123,22 @@ class PluginFusioninventoryMenu {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      foreach ($a_menu as $menu_id) {
+      $i = 0;
+      foreach ($a_menu as $menu_id) {         
          echo "<td align='center' width='".$width."' height='".$height."'>";
-         echo "<a href='".$menu_id['link']."'>
-         <img src='".$menu_id['pic']."'/>
-         <br/><b>".$menu_id['name']."</b></a>";
-
+         if ($type == "big") {
+            echo "<a href='".$menu_id['link']."'>
+            <img src='".$menu_id['pic']."'/>
+            <br/><b>".$menu_id['name']."</b></a>";
+         } else if ($type == "mini") {
+            $i++;
+            $menu_id['pic'] = str_replace("/menu_","/menu_mini_" ,$menu_id['pic']);
+            echo "<a href='".$menu_id['link']."'>
+               <img src='".$menu_id['pic']."'
+                onmouseout=\"cleanhide('".$plugin_name."_".$i."')\"
+                onmouseover=\"cleandisplay('".$plugin_name."_".$i."')\" /></a>";
+            echo "<span class='over_link' id='".$plugin_name."_".$i."'>".$menu_id['name']."</span>";
+         }
          echo "</td>";
       }
       echo "</tr>";
