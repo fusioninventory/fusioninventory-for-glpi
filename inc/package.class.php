@@ -40,7 +40,91 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvdeployPackage extends CommonDBTM {
 
+   function __construct() {
+		$this->table = "glpi_plugin_fusinvdeploy_packages";
+		$this->type = "PluginFusinvdeployPackage";
+	}
 
+
+
+   function defineTabs($options=array()){
+		global $LANG,$CFG_GLPI;
+
+      $ong = array();
+		if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
+         $ong[1]=$LANG['plugin_fusinvdeploy']["package"][5];
+         $ong[2]="Documents";
+         $ong[3]="Dépendances";
+      }
+		return $ong;
+	}
+
+
+   
+   function showForm($id, $options=array()) {
+		global $DB,$CFG_GLPI,$LANG;
+
+      if ($id!='') {
+			$this->getFromDB($id);
+      } else {
+			$this->getEmpty();
+      }
+
+      $this->showTabs($options);
+      $this->showFormHeader($options);
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+		echo "</td>";
+
+		echo "<td rowspan='4'>".$LANG['common'][25]."&nbsp;:</td>";
+		echo "<td rowspan='4' align='center'>";
+		echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
+		echo "</td>";
+
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['document'][2]."&nbsp;:</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='document_id' size='40' value='".$this->fields["document_id"]."'/>";
+		echo "</td>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['plugin_fusinvdeploy']["package"][0]."&nbsp;:</td>";
+		echo "<td align='center'>";
+      $a_actions[] = $LANG['plugin_fusinvdeploy']["package"][2];
+      $a_actions[] = $LANG['plugin_fusinvdeploy']["package"][3];
+      $a_actions[] = $LANG['plugin_fusinvdeploy']["package"][4];
+      Dropdown::showFromArray('action',$a_actions, array('value' => $this->fields["action"]));
+		echo "</td>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['plugin_fusinvdeploy']["package"][1]."&nbsp;:</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='commandline' size='40' value='".$this->fields["commandline"]."'/>";
+		echo "</td>";
+      echo "</tr>";
+
+
+
+
+
+      
+
+      $this->showFormButtons($options);
+
+      echo "<div id='tabcontent'></div>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
+      return true;
+   }
+
+   
 }
 
 ?>

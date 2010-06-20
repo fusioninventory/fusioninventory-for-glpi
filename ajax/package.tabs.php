@@ -1,12 +1,12 @@
 <?php
 /*
- * @version $Id$
- ----------------------------------------------------------------------
+ * @version $Id: computer.tabs.php 8003 2009-02-26 11:03:19Z moyo $
+ -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
- Copynetwork (C) 2003-2006 by the INDEPNET Development Team.
+ Copyright (C) 2003-2009 by the INDEPNET Development Team.
 
- http://indepnet.net/   http://glpi-project.org/
- ----------------------------------------------------------------------
+ http://indepnet.net/   http://glpi-project.org
+ -------------------------------------------------------------------------
 
  LICENSE
 
@@ -25,7 +25,7 @@
  You should have received a copy of the GNU General Public License
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
+ --------------------------------------------------------------------------
  */
 
 // ----------------------------------------------------------------------
@@ -33,17 +33,35 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$title="Fusinvdeploy";
-$version="2.3.0-1";
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
+header("Content-Type: text/html; charset=UTF-8");
+header_nocache();
 
-$LANG['plugin_fusinvdeploy']["title"][0]="$title";
+if(!isset($_POST["id"])) {
+	exit();
+}
 
-$LANG['plugin_fusinvdeploy']["package"][0]="Action";
-$LANG['plugin_fusinvdeploy']["package"][1]="Commande";
-$LANG['plugin_fusinvdeploy']["package"][2]="Lancer (exécutable dans le paquet)";
-$LANG['plugin_fusinvdeploy']["package"][3]="Exécuter (exécutable du système)";
-$LANG['plugin_fusinvdeploy']["package"][4]="Stocker";
-$LANG['plugin_fusinvdeploy']["package"][5]="Paquets";
+if(!isset($_POST["sort"])) $_POST["sort"] = "";
+if(!isset($_POST["order"])) $_POST["order"] = "";
+if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
+$pfp = new PluginFusinvdeployPackage;
+
+switch($_POST['glpi_tab']) {
+	case -1 :
+     	break;
+
+	case 1 :
+		break;
+
+   case 2 :
+		break;
+
+   default :
+		break;
+}
+
+ajaxFooter();
 
 ?>

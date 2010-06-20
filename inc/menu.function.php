@@ -43,7 +43,7 @@ function plugin_fusinvdeploy_displayMenu() {
 
    $a_menu[0]['name'] = "Gestion des packages";
    $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
-   $a_menu[0]['link'] = "lien";
+   $a_menu[0]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/package.php";
 
    $a_menu[1]['name'] = "Etat des deploiements";
    $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";

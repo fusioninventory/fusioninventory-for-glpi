@@ -44,6 +44,11 @@ function plugin_init_fusinvdeploy() {
    Plugin::registerClass('PluginFusinvdeployDependence');
    Plugin::registerClass('PluginFusinvdeployHistory');
 
+
+   $PLUGIN_HOOKS['menu_entry']['fusinvdeploy'] = true;
+   $PLUGIN_HOOKS['submenu_entry']['fusinvdeploy']['add']['package'] = 'front/package.form.php?add=1';
+   $PLUGIN_HOOKS['submenu_entry']['fusinvdeploy']['search']['package'] = 'front/package.php';
+
 }
 
 
