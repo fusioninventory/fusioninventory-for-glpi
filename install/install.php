@@ -35,7 +35,7 @@
 // ----------------------------------------------------------------------
 
 
-function pluginFusinvsnmpInstall($version) {
+function pluginFusinvsnmpInstall() {
    global $DB,$LANG;
 
 
