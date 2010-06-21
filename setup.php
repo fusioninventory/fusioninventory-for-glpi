@@ -65,9 +65,7 @@ function plugin_init_fusioninventory() {
 			$PLUGIN_HOOKS['item_update']['fusioninventory'] = 'plugin_item_update_fusioninventory';
          $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
 
-//			if (haveRight("snmp_models", "r") || haveRight("snmp_authentication", "r")) {
-				$PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
-//         }
+   		$PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
 
          // Tabs for each type
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
@@ -77,7 +75,6 @@ function plugin_init_fusioninventory() {
             OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentsprocesses","r")
             ) {
 
-            $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
             if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';

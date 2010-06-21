@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryMenu {
 
    static function displayMenu($type = "big") {
-      global $CFG_GLPI,$LANG;
+      global $LANG;
 
       $width_status = 0;
 
@@ -49,17 +49,17 @@ class PluginFusioninventoryMenu {
 //      if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents", "r")) {
          $a_menu[0]['name'] = $LANG['plugin_fusioninventory']["menu"][1];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png";
-         $a_menu[0]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agent.php";
+         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agent.php";
 //      }
 //      if(PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentprocesses","r")) {
          $a_menu[1]['name'] = $LANG['plugin_fusioninventory']["processes"][19];
          $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_info_agents.png";
-         $a_menu[1]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/agentprocess.form.php";
+         $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php";
 //      }
 //      if(PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusioninventory']["task"][1];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png";
-         $a_menu[2]['link'] = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php";
+         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/task.php";
 //      }
 
       echo "<div align='center'>";
