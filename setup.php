@@ -40,6 +40,9 @@ include_once ("includes.php");
 function plugin_init_fusinvinventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   $a_plugin = plugin_version_fusinvinventory();
+   $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile($a_plugin['shortname']);
+
 
 }
 
