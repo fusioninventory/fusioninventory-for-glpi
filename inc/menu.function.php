@@ -41,13 +41,18 @@ if (!defined('GLPI_ROOT')) {
 function plugin_fusinvdeploy_displayMenu() {
    global $LANG;
 
-   $a_menu[0]['name'] = "Gestion des packages";
-   $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
-   $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
+   $a_menu = array();
+   if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
+      $a_menu[0]['name'] = "Gestion des packages";
+      $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
+      $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
+   }
 
-   $a_menu[1]['name'] = "Etat des deploiements";
-   $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
-   $a_menu[1]['link'] = "lien";
+   if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "status", "r")) {
+      $a_menu[1]['name'] = "Etat des deploiements";
+      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
+      $a_menu[1]['link'] = "lien";
+   }
 
    return $a_menu;
 }

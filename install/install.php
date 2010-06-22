@@ -48,8 +48,6 @@ function pluginFusinvdeployInstall() {
       pluginFusinvdeployUpdate();
    } else {
       // Installation
-      // Add new module in plugin_fusioninventory (core)
-      $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
 
       // Create database
       $DB_file = GLPI_ROOT ."/plugins/fusinvdeploy/install/mysql/plugin_fusinvdeploy-".$a_plugin['version']."-empty.sql";
@@ -66,8 +64,11 @@ function pluginFusinvdeployInstall() {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
 
-      // Creation of profile
-//    PluginFusioninventoryProfile::initSession($modules_id, array(type, right));
+      $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $a_rights = array();
+      $a_rights['packages'] = 'w';
+      $a_rights['status'] = 'w';
+      PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
 
       // Creation config values
 //    PluginFusioninventoryConfig::add($modules_id, type, value);
