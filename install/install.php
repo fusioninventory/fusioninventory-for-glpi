@@ -49,8 +49,6 @@ function pluginFusinvsnmpInstall() {
       pluginFusinvsnmpUpdate();
    } else {
       // Installation
-      // Add new module in plugin_fusioninventory (core)
-      $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
 
       // Create database
       $DB_file = GLPI_ROOT ."/plugins/fusinvsnmp/install/mysql/plugin_fusinvsnmp-".$a_plugin['version']."-empty.sql";
@@ -76,8 +74,16 @@ function pluginFusinvsnmpInstall() {
       $importexport = new PluginFusinvsnmpImportExport;
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      // Creation of profile
-//      PluginFusioninventoryProfile::initSession($modules_id, array(type, right));
+      $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $a_rights = array();
+      $a_rights['networking'] = 'w';
+      $a_rights['printers'] = 'w';
+      $a_rights['models'] = 'w';
+      $a_rights['authentication'] = 'w';
+      $a_rights['rangeip'] = 'w';
+      $a_rights['unknowndevices'] = 'w';
+      $a_rights['configuration'] = 'w';
+      PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
 
       // Creation config values
 //      PluginFusioninventoryConfig::add($modules_id, type, value);

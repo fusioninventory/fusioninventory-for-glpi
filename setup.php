@@ -52,8 +52,9 @@ function plugin_init_fusinvsnmp() {
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusinvsnmp_errors");
 
-	$PLUGIN_HOOKS['init_session']['fusinvsnmp'] = 'plugin_fusinvsnmp_initSession';
-	$PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = 'plugin_fusinvsnmp_changeprofile';
+   $a_plugin = plugin_version_fusinvsnmp();
+   $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($a_plugin['shortname']);
+
 
 	$PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
