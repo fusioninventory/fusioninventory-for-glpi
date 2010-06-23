@@ -64,7 +64,7 @@ function pluginFusinvdeployInstall() {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
 
-      $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
       $a_rights = array();
       $a_rights['packages'] = 'w';
       $a_rights['status'] = 'w';
@@ -98,6 +98,9 @@ function pluginFusinvdeployUninstall() {
       }
    }
 
+   PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
+   PluginFusioninventoryModule::deleteModule($a_plugin['shortname']);
+
    $query = "SHOW TABLES;";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
@@ -106,6 +109,7 @@ function pluginFusinvdeployUninstall() {
          $DB->query($query_delete) or die($DB->error());
       }
    }
+
    return true;
 }
 

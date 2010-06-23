@@ -48,7 +48,7 @@ function plugin_init_fusinvdeploy() {
    $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] = PluginFusioninventoryProfile::changeprofile($a_plugin['shortname']);
 
 
-   $PLUGIN_HOOKS['menu_entry']['fusinvdeploy'] = true;
+   //$PLUGIN_HOOKS['menu_entry']['fusinvdeploy'] = true;
    $PLUGIN_HOOKS['submenu_entry']['fusinvdeploy']['add']['package'] = 'front/package.form.php?add=1';
    $PLUGIN_HOOKS['submenu_entry']['fusinvdeploy']['search']['package'] = 'front/package.php';
 
