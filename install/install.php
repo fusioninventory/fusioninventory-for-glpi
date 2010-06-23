@@ -97,6 +97,9 @@ function pluginFusinvinventoryUninstall() {
       }
    }
 
+   PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
+   PluginFusioninventoryModule::deleteModule($a_plugin['shortname']);
+
    $query = "SHOW TABLES;";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
