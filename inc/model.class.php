@@ -47,7 +47,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		PluginFusioninventoryAuth::checkRight("snmp_models","r");
+		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models","r");
 
 		if ($id!='') {
 			$this->getFromDB($id);

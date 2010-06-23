@@ -184,9 +184,9 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodelmibs` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_snmpmodels`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_models`;
 
-CREATE TABLE `glpi_plugin_fusinvsnmp_snmpmodels` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
    `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,

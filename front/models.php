@@ -37,17 +37,17 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","iprange");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "rangeip","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp","models","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$_GET['target']="iprange.php";
+$_GET['target']="models.php";
 
-//searchForm('PluginFusinvsnmpIPRange',$_GET);
-//showList('PluginFusinvsnmpIPRange',$_GET);
-Search::show('PluginFusinvsnmpIPRange');
+//searchForm('PluginFusinvsnmpModel',$_GET);
+//showList('PluginFusinvsnmpModel',$_GET);
+Search::show('PluginFusinvsnmpModel');
 
 commonFooter();
 
