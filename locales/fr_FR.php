@@ -599,6 +599,7 @@ $LANG['plugin_fusioninventory']["task"][10]="En cours d'execution... pas disponi
 $LANG['plugin_fusioninventory']["task"][11]="L'agent a été notifié et commence son exécution";
 $LANG['plugin_fusioninventory']["task"][12]="Déclencher l'agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) indisponible(s)";
+$LANG['plugin_fusioninventory']["task"][14]="Date d'exécution";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusioninventory']["constructdevice"][1]="Creation automatique des modèles";

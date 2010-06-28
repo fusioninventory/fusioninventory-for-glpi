@@ -40,6 +40,162 @@ class PluginFusioninventoryTask extends CommonDBTM {
 	}
 
 
+   function getSearchOptions() {
+      global $LANG;
+
+      $sopt = array();
+
+      $sopt['common'] = $LANG['plugin_fusioninventory']["task"][0];
+
+      $sopt[1]['table']          = $this->getTable();
+      $sopt[1]['field']          = 'name';
+      $sopt[1]['linkfield']      = '';
+      $sopt[1]['name']           = $LANG["common"][16];
+      $sopt[1]['datatype']       = 'itemlink';
+
+      $sopt[2]['table']          = $this->getTable();
+      $sopt[2]['field']          = 'date_creation';
+      $sopt[2]['linkfield']      = '';
+      $sopt[2]['name']           = $LANG["common"][27];
+      $sopt[2]['datatype']       = 'datetime';
+
+      $sopt[3]['table']          = $this->getTable();
+      $sopt[3]['field']          = 'entities_id';
+      $sopt[3]['linkfield']      = '';
+      $sopt[3]['name']           = '';
+
+      $sopt[30]['table']          = $this->getTable();
+      $sopt[30]['field']          = 'id';
+      $sopt[30]['linkfield']      = '';
+      $sopt[30]['name']           = $LANG['common'][2];
+
+      return $sopt;
+   }
+
+
+
+   static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']["task"][1];
+   }
+
+
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canCancel() {
+      return true;
+   }
+
+   function canUndo() {
+      return true;
+   }
+
+   function canValidate() {
+      return true;
+   }
+
+
+
+   function defineTabs($options=array()){
+		global $LANG,$CFG_GLPI,$DB;
+
+      $ong = array();
+      $ong[1] = $LANG['title'][26];
+
+      $pft = new PluginFusioninventoryTaskjob;
+      $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'", "date_scheduled,id");
+      $i = 1;
+      foreach($a_taskjob as $taskjob_id=>$datas) {
+         $i++;
+         $ong[$i] = "Tâche ".($i-1);
+      }
+
+      $i++;
+      $ong[$i] = "Nouvelle tâche";
+      return $ong;
+	}
+
+
+
+	function showForm($id, $options=array()) {
+		global $DB,$CFG_GLPI,$LANG;
+
+      if ($id!='') {
+			$this->getFromDB($id);
+      } else {
+			$this->getEmpty();
+      }
+
+		$this->showTabs($options);
+      $this->showFormHeader($options);
+      
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+		echo "<td align='center'>";
+		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+		echo "</td>";
+
+		echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
+		echo "<td align='center' rowspan='3'>";
+      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
+		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo getUserName($this->fields["users_id"],1);
+		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+		echo "</td>";
+      echo "</tr>";
+
+
+
+
+
+
+
+      $this->showFormButtons($options);
+      $this->addDivForTabs();
+
+      return true;
+   }
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    function Counter($agent_id, $action) {
       global $DB;
 

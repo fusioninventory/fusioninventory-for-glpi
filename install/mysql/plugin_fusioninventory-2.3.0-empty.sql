@@ -166,17 +166,39 @@ CREATE TABLE `glpi_plugin_fusioninventory_lockables` (
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_tasks`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
-   `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-   `date` DATETIME NOT NULL ,
-   `plugin_fusioninventory_agents_id` INT( 11 ) NOT NULL,
-   `plugin_fusioninventory_modules_id` INT( 11 ) NOT NULL,
-   `param` varchar(255) NOT NULL,
-   `items_id` INT( 11 ) NOT NULL ,
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `single` int(1) NOT NULL,
-   PRIMARY KEY ( `id` )
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8
-COLLATE=utf8_unicode_ci;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date_creation` datetime DEFAULT NULL,
+  `comment` text COLLATE utf8_unicode_ci,
+  `users_id` int(11) NOT NULL DEFAULT '0',
+  `is_active` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobs`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_tasks_id` int(11) NOT NULL DEFAULT '0',
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date_creation` datetime DEFAULT NULL,
+  `date_scheduled` datetime DEFAULT NULL,
+  `retry_nb` int(2) NOT NULL DEFAULT '0',
+  `retry_time` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_module_id` int(11) NOT NULL DEFAULT '0',
+  `method` text COLLATE utf8_unicode_ci,
+  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `comment` text COLLATE utf8_unicode_ci,
+  `users_id` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '0',
+  `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
+  `statuscomments` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
