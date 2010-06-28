@@ -38,6 +38,9 @@
 function pluginFusioninventoryInstall($version) {
    global $DB,$LANG;
 
+   // Get informations of plugin
+   $a_plugin = plugin_version_fusioninventory();
+
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion($version);
    if ((isset($version_detected)) AND ($version_detected != $version)) {
@@ -53,18 +56,22 @@ function pluginFusioninventoryInstall($version) {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
-      PluginFusioninventoryProfile::createfirstaccess($_SESSION['glpiactiveprofile']['id']);
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
       }
 
-      $config = new PluginFusioninventoryConfig;
-      $config->initConfig($version);
-      $config_modules = new PluginFusioninventoryConfigModules;
-      $config_modules->initConfig();
+//      $config = new PluginFusioninventoryConfig;
+//      $config->initConfig($version);
 
-      PluginFusioninventoryProfile::initSession();
+      $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $a_rights = array();
+      $a_rights['agents'] = 'w';
+      $a_rights['agentsprocesses'] = 'w';
+      $a_rights['remotecontrol'] = 'w';
+      $a_rights['wol'] = 'w';
+      $a_rights['configuration'] = 'w';
+      PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
    }
 }
 
