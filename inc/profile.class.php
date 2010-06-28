@@ -114,20 +114,18 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     *
     *@param $p_modules_id Module id (0 for Fusioninventory)
     **/
-   static function changeprofile($p_modules_name) {
-
-      $a_module = PluginFusioninventoryModule::get($p_modules_name);
+   static function changeprofile($p_id,$p_name) {
 
       $pfp=new PluginFusioninventoryProfile;
       $a_rights = $pfp->find("profiles_id = ".$_SESSION['glpiactiveprofile']['id'].
-                             " AND `plugin_fusioninventory_modules_id`=".$a_module['id']);
+                             " AND `plugin_fusioninventory_modules_id`=".$p_id);
       $i = 0;
       foreach ($a_rights as $id=>$datas) {
          $i++;
-         $_SESSION["glpi_plugin_".$p_modules_name."_profile"][$datas['type']] = $datas['right'];
+         $_SESSION["glpi_plugin_".$p_name."_profile"][$datas['type']] = $datas['right'];
       }
       if ($i == '0') {
-         unset($_SESSION["glpi_plugin_".$p_modules_name."_profile"]);
+         unset($_SESSION["glpi_plugin_".$p_name."_profile"]);
       }
    }
 

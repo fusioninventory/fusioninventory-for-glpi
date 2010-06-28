@@ -84,7 +84,8 @@ class PluginFusioninventoryModule extends CommonDBTM {
     *@return array(id, xmltag, plugins_id) (one line max)
     **/
    function get($p_id) {
-      return $this->find("`id`='".$p_id."'
+      $pfm = new PluginFusioninventoryModule;
+      return $pfm->find("`id`='".$p_id."'
                           AND `plugins_id` IN (SELECT `id`
                                                FROM `glpi_plugins`
                                                WHERE `state`=1)");
@@ -120,7 +121,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
     *@param $p_id Module id
     *@return name or false if module is not active
     **/
-   static function getName($p_id) {
+   static function getModuleName($p_id) {
       if (isset ($_SESSION['glpi_plugins'][$p_id])) {
          return $_SESSION['glpi_plugins'][$p_id];
       } else {
