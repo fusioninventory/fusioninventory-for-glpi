@@ -44,8 +44,12 @@ function plugin_init_fusinvdeploy() {
    Plugin::registerClass('PluginFusinvdeployDependence');
    Plugin::registerClass('PluginFusinvdeployHistory');
 
-   $a_plugin = plugin_version_fusinvdeploy();
-   $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] = PluginFusioninventoryProfile::changeprofile($a_plugin['shortname']);
+   $a_plugin = plugin_version_fusioninventory();
+
+   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getId($a_plugin['shortname']);
+
+	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
+   $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] = PluginFusioninventoryProfile::changeprofile(PluginFusioninventoryModule::getId($a_plugin['shortname']),$a_plugin['shortname']);
 
 
    //$PLUGIN_HOOKS['menu_entry']['fusinvdeploy'] = true;
