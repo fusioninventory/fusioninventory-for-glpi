@@ -40,8 +40,12 @@ include_once ("includes.php");
 function plugin_init_fusinvinventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
-   $a_plugin = plugin_version_fusinvinventory();
-   $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile($a_plugin['shortname']);
+   $a_plugin = plugin_version_fusioninventory();
+
+   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getId($a_plugin['shortname']);
+
+	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
+   $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile(PluginFusioninventoryModule::getId($a_plugin['shortname']),$a_plugin['shortname']);
 
 
 }
