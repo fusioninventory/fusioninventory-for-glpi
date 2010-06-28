@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-PluginFusioninventoryProfile::checkRight("Fusioninventory", "agentprocesses","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "agentsprocesses","r");
 
 $modif = 0;
 if (empty($_GET)) {

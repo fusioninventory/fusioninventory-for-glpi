@@ -46,21 +46,21 @@ class PluginFusioninventoryMenu {
       $width_status = 0;
 
       $a_menu = array();
-//      if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents", "r")) {
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")) {
          $a_menu[0]['name'] = $LANG['plugin_fusioninventory']["menu"][1];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agent.php";
-//      }
-//      if(PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentprocesses","r")) {
+      }
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "agentsprocesses","r")) {
          $a_menu[1]['name'] = $LANG['plugin_fusioninventory']["processes"][19];
          $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_info_agents.png";
          $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php";
-//      }
-//      if(PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")) {
+      }
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusioninventory']["task"][1];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/task.php";
-//      }
+      }
 
       echo "<div align='center'>";
       echo "<table width='950'>";
@@ -70,13 +70,19 @@ class PluginFusioninventoryMenu {
       echo "<table>";
       echo "<tr>";
       echo "<td>";
-      $width_status = PluginFusioninventoryMenu::htmlMenu("fusioninventory", $a_menu, $type, $width_status);
+      if (!empty($a_menu)) {
+         $width_status = PluginFusioninventoryMenu::htmlMenu("fusioninventory", $a_menu, $type, $width_status);
+      }
 
       // Get menu from plugins fusinv...
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $module_id=>$datas) {
-         $a_menu = call_user_func("plugin_".$datas['name']."_displayMenu");
-         $width_status = PluginFusioninventoryMenu::htmlMenu($datas['name'], $a_menu, $type, $width_status);
+         if (function_exists("plugin_".$datas['name']."_displayMenu")) {
+            $a_menu = call_user_func("plugin_".$datas['name']."_displayMenu");
+            if (!empty($a_menu)) {
+               $width_status = PluginFusioninventoryMenu::htmlMenu($datas['name'], $a_menu, $type, $width_status);
+            }
+         }
       }
       echo "</td>";
       echo "</tr>";
