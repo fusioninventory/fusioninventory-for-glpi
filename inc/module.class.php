@@ -47,23 +47,24 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Add module
     *
-    *@param $p_name Module name ('Fusioninventory', 'Fusinvsnmp'...)
+    *@param $p_pluginsId Plugin id
+    *@param $p_xmltag Tag used for module name in XML file
     *@return integer the new id of the added item (or false if fail)
     **/
-   static function addModule($p_name) {
+   static function addModule($p_pluginsId, $p_xmltag) {
       $pfm = new PluginFusioninventoryModule;
-      return $pfm->add(array('name'=>$p_name));
+      return $pfm->add(array('plugins_id'=>$p_pluginsId, 'xmltag'=>$p_xmltag));
    }
 
    /**
     * Update module
     *
     *@param $p_id Module id
-    *@param $p_name Module name ('Fusioninventory', 'Fusinvsnmp'...)
+    *@param $p_xmltag Tag used for module name in XML file
     *@return boolean : true on success
     **/
-   function updateModule($p_id, $p_name) {
-      return $this->update(array('id'=>$p_id, 'name'=>$p_name));
+   function updateModule($p_id, $p_xmltag) {
+      return $this->update(array('id'=>$p_id, 'xmltag'=>$p_xmltag));
    }
 
    /**
@@ -79,11 +80,11 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Get module
     *
-    *@param $p_name Module name
-    *@return array(id, name, xmltag, plugins_id) (one line max)
+    *@param $p_id Module id
+    *@return array(id, xmltag, plugins_id) (one line max)
     **/
-   function get($p_name) {
-      return $this->find("`name`='".$p_name."' AND `id`<>0
+   function get($p_id) {
+      return $this->find("`id`='".$p_id."'
                           AND `plugins_id` IN (SELECT `id`
                                                FROM `glpi_plugins`
                                                WHERE `state`=1)");
@@ -92,7 +93,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Get all modules
     *
-    *@return array(id, name, xmltag, plugins_id)
+    *@return array(id, xmltag, plugins_id)
     **/
    static function getAll() {
       $pfm = new PluginFusioninventoryModule;
@@ -102,6 +103,31 @@ class PluginFusioninventoryModule extends CommonDBTM {
                                                WHERE `state`=1)
                          ", 'name');
    }
+
+   /**
+    * Get module id
+    *
+    *@param $p_name Module name
+    *@return id or false if module is not active
+    **/
+   static function getId($p_name) {
+      return array_search($p_name, $_SESSION['glpi_plugins']);
+   }
+
+   /**
+    * Get module name
+    *
+    *@param $p_id Module id
+    *@return name or false if module is not active
+    **/
+   static function getName($p_id) {
+      if (isset ($_SESSION['glpi_plugins'][$p_id])) {
+         return $_SESSION['glpi_plugins'][$p_id];
+      } else {
+         return false;
+      }
+   }
+
 
 }
 
