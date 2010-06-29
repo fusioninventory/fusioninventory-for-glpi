@@ -224,8 +224,15 @@ function cron_plugin_fusioninventory() {
 function plugin_fusioninventory_install() {
 	global $DB, $LANG, $CFG_GLPI;
 
-   include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
-   pluginFusioninventoryInstall("2.3.0");
+   $version = "2.3.0";
+   include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
+   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
+   if ((isset($version_detected)) AND ($version_detected != $version)) {
+      pluginFusioninventoryUpdate($version_detected);
+   } else {
+      include (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
+      pluginFusioninventoryInstall($version);
+   }
 
    return true;
 }

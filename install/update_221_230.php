@@ -37,7 +37,7 @@
 
 // Update from 2.2.1 to 2.3.0
 function update221to230() {
-   global $DB;
+   global $DB, $CFG_GLPI;
 
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-2.3.0-update";
    $DBf_handle = fopen($DB_file, "rt");
@@ -49,6 +49,34 @@ function update221to230() {
          $DB->query($sql_line);
       }
    }
+
+   // glpi_plugin_fusioninventory_modules
+   $plugin = new Plugin();
+   $data = $plugin->find("`name` = 'FusionInventory'");
+   $fields = current($data);
+   $plugins_id = $fields['id'];
+   $query = "INSERT INTO `glpi_plugin_fusioninventory_modules` (`id`, `xmltag`, `plugins_id`)
+             VALUES ('0','INVENTORY', '".$plugins_id."');";
+   $DB->query($query);
+   // glpi_plugin_fusioninventory_configs
+   $url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
+   $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
+                         (`type`, `value`, `plugin_fusioninventory_modules_id`)
+             VALUES ('version', '2.3.0', '0'),
+                    ('URL_agent_conf', '".$url."', '0'),
+                    ('ssl_only', '0', '0'),
+                    ('storagesnmpauth', 'DB', '0'),
+                    ('inventory_frequence', '24', '0'),
+                    ('criteria1_ip', '0', '0'),
+                    ('criteria1_name', '0', '0'),
+                    ('criteria1_serial', '0', '0'),
+                    ('criteria1_macaddr', '0', '0'),
+                    ('criteria2_ip', '0', '0'),
+                    ('criteria2_name', '0', '0'),
+                    ('criteria2_serial', '0', '0'),
+                    ('criteria2_macaddr', '0', '0'),
+                    ('delete_agent_process', '24', '0');";
+   $DB->query($query);
 
    //TODO
 // Plugin::migrateItemType();

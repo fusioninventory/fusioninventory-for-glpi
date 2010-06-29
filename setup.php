@@ -44,8 +44,7 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryTask');
 
-	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
-	$PLUGIN_HOOKS['change_profile']['fusioninventory'] = array('Profile', 'changeprofile');
+	$PLUGIN_HOOKS['change_profile']['fusioninventory'] = array('Profile', 'changeProfile');
 
 	$PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
