@@ -102,11 +102,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       $pfp = new PluginFusioninventoryProfile;
       foreach ($a_profile as $type=>$right) {
-<<<<<<< HEAD:inc/profile.class.php
          $pfp->addProfile($p_modules_id, $type, $right);
-=======
-         PluginFusioninventoryProfile::addProfile($p_modules_id, $type, $right);
->>>>>>> 62286a665956ebfd6a0c3723a73d99544c150844:inc/profile.class.php
       }
       $pfp = new PluginFusioninventoryProfile;
      $pfp->changeProfile($p_modules_id);
@@ -119,35 +115,18 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     *
     *@param $p_modules_id=0 Module id (0 for Fusioninventory)
     **/
-<<<<<<< HEAD:inc/profile.class.php
-   static function changeProfile($p_modules_id=0) {
-      if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])
-               && $_SESSION["glpi_plugin_fusioninventory_installed"]==1) {
-         $pfp=new PluginFusioninventoryProfile;
-         $a_rights = $pfp->find(profiles_id." = ".$_SESSION['glpiactiveprofile']['id'].
-                                " AND `plugin_fusioninventory_modules_id`=".$p_modules_id);
-         $i = 0;
-         foreach ($a_rights as $id=>$datas) {
-            $i++;
-            $_SESSION["glpi_plugin_fusioninventory_profile"][$p_modules_id][$datas['type']] = $datas['right'];
-         }
-         if ($i == '0') {
-            unset($_SESSION["glpi_plugin_fusioninventory_profile"]);
-         }
-=======
-   static function changeprofile($p_id,$p_name) {
-
+   static function changeprofile($p_modules_id=0) {
+      $moduleName = PluginFusioninventoryModule::getModuleName($p_modules_id);
       $pfp=new PluginFusioninventoryProfile;
       $a_rights = $pfp->find("profiles_id = ".$_SESSION['glpiactiveprofile']['id'].
-                             " AND `plugin_fusioninventory_modules_id`=".$p_id);
+                             " AND `plugin_fusioninventory_modules_id`=".$p_modules_id);
       $i = 0;
       foreach ($a_rights as $id=>$datas) {
          $i++;
-         $_SESSION["glpi_plugin_".$p_name."_profile"][$datas['type']] = $datas['right'];
+         $_SESSION["glpi_plugin_".$moduleName."_profile"][$datas['type']] = $datas['right'];
       }
       if ($i == '0') {
-         unset($_SESSION["glpi_plugin_".$p_name."_profile"]);
->>>>>>> 62286a665956ebfd6a0c3723a73d99544c150844:inc/profile.class.php
+         unset($_SESSION["glpi_plugin_".$moduleName."_profile"]);
       }
    }
 

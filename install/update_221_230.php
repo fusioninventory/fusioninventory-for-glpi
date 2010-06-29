@@ -75,7 +75,9 @@ function update221to230() {
                     ('criteria2_name', '0', '0'),
                     ('criteria2_serial', '0', '0'),
                     ('criteria2_macaddr', '0', '0'),
-                    ('delete_agent_process', '24', '0');";
+                    ('delete_agent_process', '24', '0'),
+                    ('remotehttpagent', '0', '0'),
+                    ('wol', '0', '0');";
    $DB->query($query);
 
    //TODO
