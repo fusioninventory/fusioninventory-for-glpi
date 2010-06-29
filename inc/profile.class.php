@@ -100,32 +100,33 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    static function initProfile($p_modules_id, $a_profile = array()) {
       global $DB;
 
+      $pfp = new PluginFusioninventoryProfile;
       foreach ($a_profile as $type=>$right) {
-         PluginFusioninventoryProfile::addProfile($p_modules_id, $type, $right);
+         $pfp->addProfile($p_modules_id, $type, $right);
       }
       $pfp = new PluginFusioninventoryProfile;
-      $pfp->changeprofile($p_modules_id);
+     $pfp->changeProfile($p_modules_id);
    }
 
 
 
    /**
-    * Charge profile (for used connected)
+    * Change profile (for used connected)
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_modules_id=0 Module id (0 for Fusioninventory)
     **/
-   static function changeprofile($p_id,$p_name) {
-
+   static function changeprofile($p_modules_id=0) {
+      $moduleName = PluginFusioninventoryModule::getModuleName($p_modules_id);
       $pfp=new PluginFusioninventoryProfile;
       $a_rights = $pfp->find("profiles_id = ".$_SESSION['glpiactiveprofile']['id'].
-                             " AND `plugin_fusioninventory_modules_id`=".$p_id);
+                             " AND `plugin_fusioninventory_modules_id`=".$p_modules_id);
       $i = 0;
       foreach ($a_rights as $id=>$datas) {
          $i++;
-         $_SESSION["glpi_plugin_".$p_name."_profile"][$datas['type']] = $datas['right'];
+         $_SESSION["glpi_plugin_".$moduleName."_profile"][$datas['type']] = $datas['right'];
       }
       if ($i == '0') {
-         unset($_SESSION["glpi_plugin_".$p_name."_profile"]);
+         unset($_SESSION["glpi_plugin_".$moduleName."_profile"]);
       }
    }
 
@@ -211,7 +212,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 
 	
-	function showprofileForm($target,$id) {
+	function showProfileForm($target,$id) {
 		global $LANG,$CFG_GLPI;
 
 		if (!haveRight("profile","r")) return false;

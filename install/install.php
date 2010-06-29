@@ -36,43 +36,70 @@
 
 
 function pluginFusioninventoryInstall($version) {
-   global $DB,$LANG;
+   global $DB,$LANG,$CFG_GLPI;
 
    // Get informations of plugin
    $a_plugin = plugin_version_fusioninventory();
 
-   include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
-   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
-   if ((isset($version_detected)) AND ($version_detected != $version)) {
-      pluginFusioninventoryUpdate($version);
-   } else {
-      // Install
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-empty.sql";
-      $DBf_handle = fopen($DB_file, "rt");
-      $sql_query = fread($DBf_handle, filesize($DB_file));
-      fclose($DBf_handle);
-      foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
-      }
-
-      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
-         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
-      }
-
-//      $config = new PluginFusioninventoryConfig;
-//      $config->initConfig($version);
-
-      $module_id = PluginFusioninventoryModule::addModule(PluginFusioninventoryModule::getId($a_plugin['shortname'], ""));
-      $a_rights = array();
-      $a_rights['agents'] = 'w';
-      $a_rights['agentsprocesses'] = 'w';
-      $a_rights['remotecontrol'] = 'w';
-      $a_rights['wol'] = 'w';
-      $a_rights['configuration'] = 'w';
-      PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
+   $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
+              .$version."-empty.sql";
+   $DBf_handle = fopen($DB_file, "rt");
+   $sql_query = fread($DBf_handle, filesize($DB_file));
+   fclose($DBf_handle);
+   foreach ( explode(";\n", "$sql_query") as $sql_line) {
+      if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+      if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
    }
+
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+   }
+
+   $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname'], 'INVENTORY');
+   $a_rights = array();
+   $a_rights['agents'] = 'w';
+   $a_rights['agentsprocesses'] = 'w';
+   $a_rights['remotecontrol'] = 'w';
+   $a_rights['wol'] = 'w';
+   $a_rights['configuration'] = 'w';
+   PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
+
+   // glpi_plugin_fusioninventory_modules
+   $plugin = new Plugin();
+   $data = $plugin->find("`name` = 'FusionInventory'");
+   $fields = current($data);
+   $plugins_id = $fields['id'];
+   $query = "INSERT INTO `glpi_plugin_fusioninventory_modules` (`id`, `xmltag`, `plugins_id`)
+             VALUES ('0','INVENTORY', '".$plugins_id."');";
+   $DB->query($query);
+
+   // glpi_plugin_fusioninventory_configs
+   $url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
+   $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
+                         (`type`, `value`, `plugin_fusioninventory_modules_id`)
+             VALUES ('version', '".$version."', '0'),
+                    ('URL_agent_conf', '".$url."', '0'),
+                    ('ssl_only', '0', '0'),
+                    ('storagesnmpauth', 'DB', '0'),
+                    ('inventory_frequence', '24', '0'),
+                    ('criteria1_ip', '0', '0'),
+                    ('criteria1_name', '0', '0'),
+                    ('criteria1_serial', '0', '0'),
+                    ('criteria1_macaddr', '0', '0'),
+                    ('criteria2_ip', '0', '0'),
+                    ('criteria2_name', '0', '0'),
+                    ('criteria2_serial', '0', '0'),
+                    ('criteria2_macaddr', '0', '0'),
+                    ('delete_agent_process', '24', '0'),
+                    ('remotehttpagent', '0', '0'),
+                    ('wol', '0', '0');";
+   $DB->query($query);
+
+   $config_modules = new PluginFusioninventoryConfigModules;
+   $config_modules->initConfig();
+
+   PluginFusioninventoryProfile::changeProfile();
 }
 
 ?>

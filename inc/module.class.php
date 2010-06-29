@@ -47,13 +47,13 @@ class PluginFusioninventoryModule extends CommonDBTM {
    /**
     * Add module
     *
-    *@param $p_pluginsId Plugin id
+    *@param $p_plugins_id Plugin id
     *@param $p_xmltag Tag used for module name in XML file
     *@return integer the new id of the added item (or false if fail)
     **/
-   static function addModule($p_pluginsId, $p_xmltag) {
+   static function addModule($p_plugins_id, $p_xmltag) {
       $pfm = new PluginFusioninventoryModule;
-      return $pfm->add(array('plugins_id'=>$p_pluginsId, 'xmltag'=>$p_xmltag));
+      return $pfm->add(array('plugins_id'=>$p_plugins_id, 'xmltag'=>$p_xmltag));
    }
 
    /**
@@ -110,7 +110,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
     *@param $p_name Module name
     *@return id or false if module is not active
     **/
-   static function getId($p_name) {
+   static function getModuleId($p_name) {
       return array_search($p_name, $_SESSION['glpi_plugins']);
    }
 

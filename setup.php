@@ -46,11 +46,10 @@ function plugin_init_fusioninventory() {
 
    $a_plugin = plugin_version_fusioninventory();
 
-   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getId($a_plugin['shortname']);
+   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
-   $PLUGIN_HOOKS['change_profile']['fusioninventory'] = PluginFusioninventoryProfile::changeprofile(PluginFusioninventoryModule::getId($a_plugin['shortname']),$a_plugin['shortname']);
-
+   $PLUGIN_HOOKS['change_profile']['fusioninventory'] = PluginFusioninventoryProfile::changeprofile(PluginFusioninventoryModule::getModuleId($a_plugin['shortname']),$a_plugin['shortname']);
 
 	$PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 

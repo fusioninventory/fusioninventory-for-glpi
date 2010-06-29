@@ -81,7 +81,7 @@ function pluginFusioninventoryGetCurrentVersion($version) {
 
 
 function pluginFusioninventoryUpdate($current_version) {
-
+   // update from current_version to last case version + 1
    switch ($current_version){
       case "1.0.0":
 			include("update_100_110.php");
@@ -125,7 +125,7 @@ function pluginFusioninventoryUpdate($current_version) {
 //                AND `ip` IS NOT NULL ";
 //   $DB->query($query);
 
-   PluginFusioninventoryProfile::initSession();
+   PluginFusioninventoryProfile::changeProfile();
    
 }
 ?>

@@ -44,19 +44,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		$this->table="glpi_plugin_fusioninventory_configs";
 	}
 
-	function initConfig($version) {
-		global $DB,$CFG_GLPI;
-		$url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
-		$query = "INSERT INTO ".$this->table."(
-                              `id`, `version`, `URL_agent_conf`, `ssl_only`, `storagesnmpauth`, `inventory_frequence`,
-                              `criteria1_ip`, `criteria1_name`, `criteria1_serial`,
-                              `criteria1_macaddr`, `criteria2_ip`, `criteria2_name`,
-                              `criteria2_serial`, `criteria2_macaddr`, `delete_agent_process`)
-                VALUES ('1', '".$version."', '".$url."', '0', 'DB', '24', '0', '0', '0', '0', '0', '0', '0', '0', '24');";
-
-		$DB->query($query);
-	}
-	
 	/* Function to get the value of a field */
 	function getValue($field) {
 		global $DB;
