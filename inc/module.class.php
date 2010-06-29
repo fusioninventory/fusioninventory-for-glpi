@@ -101,8 +101,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
       return $pfm->find("`id`<>0
                           AND `plugins_id` IN (SELECT `id`
                                                FROM `glpi_plugins`
-                                               WHERE `state`=1)
-                         ", 'name');
+                                               WHERE `state`=1)");
    }
 
    /**
