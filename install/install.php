@@ -64,7 +64,7 @@ function pluginFusioninventoryInstall($version) {
 //      $config = new PluginFusioninventoryConfig;
 //      $config->initConfig($version);
 
-      $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $module_id = PluginFusioninventoryModule::addModule(PluginFusioninventoryModule::getId($a_plugin['shortname'], ""));
       $a_rights = array();
       $a_rights['agents'] = 'w';
       $a_rights['agentsprocesses'] = 'w';
