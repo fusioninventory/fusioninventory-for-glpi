@@ -1,4 +1,5 @@
 <?php
+
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -31,50 +32,31 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../../..');
-}
+define('GLPI_ROOT', '../../..');
 
-include (GLPI_ROOT."/inc/includes.php");
+include (GLPI_ROOT . "/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
+$pft = new PluginFusioninventoryTask;
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "agentsprocesses","r");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
-$modif = 0;
-if (empty($_GET)) {
-	$modif = 1;
-}
+//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$ptap = new PluginFusioninventoryAgentProcess;
-$pfiae  =  new PluginFusioninventoryAgentProcessError;
-$ptap->CleanProcesses();
-$pfiae->CleanErrors();
+if (isset ($_POST["add"])) {
+
+}
 
 
-$a_tab = array();
-if (isset($_GET['process_number'])) {
-   $_SESSION['glpi_tabs'] = 3;
-   $a_tab['process_number'] = $_GET['process_number'];
-}
-if (isset($_GET['h_process_number'])) {
-   $_SESSION['glpi_tabs'] = 2;
-   $a_tab['process_number'] = $_GET['h_process_number'];
-}
-if (isset($_GET['agent_type'])) {
-   $_SESSION['glpi_tabs'] = 3;
-   $a_tab['agent_type'] = $_GET['agent_type'];
-}
-if (isset($_GET['created'])) {
-   $_SESSION['glpi_tabs'] = 2;
-   $a_tab['created'] = $_GET['created'];
+$id = "";
+if (isset($_GET["id"])) {
+	$id = $_GET["id"];
+} else {
+   $pft->showForm($id);
 }
 
-$ptap->showTabs('1', '',$_SESSION['glpi_tabs'],$a_tab);
-echo "<div id='tabcontent'></div>";
-echo "<script type='text/javascript'>loadDefaultTab();</script>";
+$pft->showForm($_GET["id"]);
 
 commonFooter();
 

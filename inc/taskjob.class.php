@@ -32,52 +32,18 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusioninventoryTask extends CommonDBTM {
+class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_tasks";
-      $this->type = 'PluginFusioninventoryTask';
+		$this->table = "glpi_plugin_fusioninventory_taskjobs";
+      $this->type = 'PluginFusioninventoryTaskjob';
 	}
-
-
-   function getSearchOptions() {
-      global $LANG;
-
-      $sopt = array();
-
-      $sopt['common'] = $LANG['plugin_fusioninventory']["task"][0];
-
-      $sopt[1]['table']          = $this->getTable();
-      $sopt[1]['field']          = 'name';
-      $sopt[1]['linkfield']      = '';
-      $sopt[1]['name']           = $LANG["common"][16];
-      $sopt[1]['datatype']       = 'itemlink';
-
-      $sopt[2]['table']          = $this->getTable();
-      $sopt[2]['field']          = 'date_creation';
-      $sopt[2]['linkfield']      = '';
-      $sopt[2]['name']           = $LANG["common"][27];
-      $sopt[2]['datatype']       = 'datetime';
-
-      $sopt[3]['table']          = $this->getTable();
-      $sopt[3]['field']          = 'entities_id';
-      $sopt[3]['linkfield']      = '';
-      $sopt[3]['name']           = '';
-
-      $sopt[30]['table']          = $this->getTable();
-      $sopt[30]['field']          = 'id';
-      $sopt[30]['linkfield']      = '';
-      $sopt[30]['name']           = $LANG['common'][2];
-
-      return $sopt;
-   }
-
 
 
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusioninventory']["task"][1];
+      return $LANG['plugin_fusioninventory']["task"][2];
    }
 
 
@@ -103,28 +69,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
-   function defineTabs($options=array()){
-		global $LANG,$CFG_GLPI,$DB;
-
-      $ong = array();
-      $ong[1] = $LANG['title'][26];
-
-      $pft = new PluginFusioninventoryTaskjob;
-      $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'", "date_scheduled,id");
-      $i = 1;
-      foreach($a_taskjob as $taskjob_id=>$datas) {
-         $i++;
-         $ong[$i] = "Tâche ".($i-1);
-      }
-
-      $i++;
-      $ong[$i] = "Nouvelle tâche";
-      return $ong;
-	}
-
-
-
-	function showForm($id, $options=array()) {
+   function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
       if ($id!='') {
@@ -133,7 +78,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 			$this->getEmpty();
       }
 
-		$this->showTabs($options);
+      echo "<br/>";
       $this->showFormHeader($options);
       
 		echo "<tr class='tab_bg_1'>";
@@ -142,23 +87,62 @@ class PluginFusioninventoryTask extends CommonDBTM {
 		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
 		echo "</td>";
 
-		echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
-		echo "<td align='center' rowspan='3'>";
-      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
-		echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo getUserName($this->fields["users_id"],1);
 		echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>Module&nbsp;:</td>";
+		echo "<td align='center'>";
+      echo "fusinvdeploy";
+		echo "</td>";
+
+      echo "<td>Méthode&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      echo "fusinvdeploy::install(acrobat9)";
+		echo "</td>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>Nombre d'essais&nbsp;:</td>";
+		echo "<td align='center'>";
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+		echo "</td>";
+
+      echo "<td>Temps entre 2 essais (en minutes)&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
+		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td>Planifié le&nbsp;:</td>";
+		echo "<td align='center'>";
+      if ($id) {
+         showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
+      } else {
+         showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      }
+		echo "</td>";
+
+      echo "<td>Statut&nbsp;:</td>";
+      echo "<td align='center'>";
+      switch ($this->fields["status"]) {
+
+         case 0 :
+            echo "Planifié";
+            break;
+
+      }
+		echo "</td>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+		echo "<td align='center' colspan='3'>";
+      echo "<textarea cols='80' rows='4' name='comment' >".$this->fields["comment"]."</textarea>";
 		echo "</td>";
       echo "</tr>";
 
@@ -166,10 +150,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
+// id 	plugin_fusioninventory_module_id 	method 	plugin_fusioninventory_agents_id	rescheduled_taskjob_id 	statuscomments
+
 
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
 
       return true;
    }

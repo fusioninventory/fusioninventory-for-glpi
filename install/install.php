@@ -36,6 +36,7 @@
 
 
 function pluginFusioninventoryInstall($version) {
+<<<<<<< HEAD:install/install.php
    global $DB,$LANG,$CFG_GLPI;
 
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-empty.sql";
@@ -51,6 +52,44 @@ function pluginFusioninventoryInstall($version) {
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+=======
+   global $DB,$LANG;
+
+   // Get informations of plugin
+   $a_plugin = plugin_version_fusioninventory();
+
+   include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
+   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
+   if ((isset($version_detected)) AND ($version_detected != $version)) {
+      pluginFusioninventoryUpdate($version);
+   } else {
+      // Install
+      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-".$version."-empty.sql";
+      $DBf_handle = fopen($DB_file, "rt");
+      $sql_query = fread($DBf_handle, filesize($DB_file));
+      fclose($DBf_handle);
+      foreach ( explode(";\n", "$sql_query") as $sql_line) {
+         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+      }
+
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+      }
+
+//      $config = new PluginFusioninventoryConfig;
+//      $config->initConfig($version);
+
+      $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $a_rights = array();
+      $a_rights['agents'] = 'w';
+      $a_rights['agentsprocesses'] = 'w';
+      $a_rights['remotecontrol'] = 'w';
+      $a_rights['wol'] = 'w';
+      $a_rights['configuration'] = 'w';
+      PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
+>>>>>>> 62286a665956ebfd6a0c3723a73d99544c150844:install/install.php
    }
 
    // glpi_plugin_fusioninventory_modules
