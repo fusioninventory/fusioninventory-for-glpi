@@ -55,18 +55,18 @@ if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "configuration", 
       case -1 :
          $config = new PluginFusioninventoryConfig;
          $config->showForm('1', array('target'=>$_POST['target']));
-         $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm('1', array('target'=>$_POST['target']));
+//         $config_modules = new PluginFusioninventoryConfigModules;
+//         $config_modules->showForm('1', array('target'=>$_POST['target']));
          $history = new PluginFusioninventoryNetworkPortLog;
          $history->showForm('1', array('target'=>$_POST['target']));
          $ptLockable = new PluginFusioninventoryLockable;
          $ptLockable->showForm(array('target'=>$_POST['target']));
          break;
 
-      case 2 :
-         $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm('1', array('target'=>$_POST['target']));
-         break;
+//      case 2 :
+//         $config_modules = new PluginFusioninventoryConfigModules;
+//         $config_modules->showForm('1', array('target'=>$_POST['target']));
+//         break;
 
       case 7 :
          // Historique
@@ -81,7 +81,9 @@ if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "configuration", 
          break;
 
       default :
-         if (!displayPluginAction(COMPUTER_TYPE,$_POST["id"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
+         $computer = new Computer;
+         $computer->getFromDB($_POST["id"]);
+         if (!Plugin::displayAction($computer,$_POST['glpi_tab'],$_POST["withtemplate"])) {
             $config = new PluginFusioninventoryConfig;
             $config->showForm('1', array('target'=>$_POST['target']));
          }

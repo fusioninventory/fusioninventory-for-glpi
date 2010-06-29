@@ -96,9 +96,6 @@ function pluginFusioninventoryInstall($version) {
                     ('wol', '0', '0');";
    $DB->query($query);
 
-   $config_modules = new PluginFusioninventoryConfigModules;
-   $config_modules->initConfig();
-
    PluginFusioninventoryProfile::changeProfile();
 }
 

@@ -47,12 +47,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
 
-      $ptcm = new PluginFusioninventoryConfigModules;
+      $ptc = new PluginFusioninventoryConfig;
 
       $ong = array();
 		if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
-         if (($ptcm->isActivated('remotehttpagent')) 
+         if (($ptc->isActivated('remotehttpagent')) 
               AND(PluginFusioninventoryProfile::haveRight("Fusioninventory","remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
          }
@@ -85,60 +85,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 			$this->getEmpty();
       }
 
-      $ptcm       = new PluginFusioninventoryConfigModules;
+      $ptc = new PluginFusioninventoryConfig;
 
 		$this->showTabs($options);
       $this->showFormHeader($options);
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>" . $LANG["common"][16] . " :</td>";
-		echo "<td align='center'>";
-		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-		echo "</td>";
-
-      if ($ptcm->getValue('inventoryocs') == "1") {
-         echo "<td>".$LANG['plugin_fusioninventory']['config'][3]." :</td>";
-         echo "<td align='center'>";
-		Dropdown::showYesNo("module_inventory",$this->fields["module_inventory"]);
-		echo "</td>";
-      } else {
-         echo "<td colspan='2'></td>";
-      }
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["agents"][5]." :</td>";
-		echo "<td align='center'>";
-		echo $this->fields["fusioninventory_agent_version"];
-		echo "</td>";
-
-      if ($ptcm->getValue('netdiscovery') == "1") {
-         echo "<td>".$LANG['plugin_fusioninventory']['config'][4]." :</td>";
-         echo "<td align='center'>";
-         Dropdown::showYesNo("module_netdiscovery",$this->fields["module_netdiscovery"]);
-         echo "</td>";
-      } else {
-         echo "<td colspan='2'></td>";
-      }
-		echo "</tr>";
-
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>" . $LANG['plugin_fusioninventory']["agents"][6] . " :</td>";
-		echo "<td align='center'>";
-		Dropdown::showYesNo("lock",$this->fields["lock"]);
-		echo "</td>";
-
-      if ($ptcm->getValue('snmp') == "1") {
-         echo "<td>".$LANG['plugin_fusioninventory']['config'][7]." :</td>";
-         echo "<td align='center'>";
-         Dropdown::showYesNo("module_snmpquery",$this->fields["module_snmpquery"]);
-         echo "</td>";
-      } else {
-         echo "<td colspan='2'></td>";
-      }
-		echo "</tr>";
-
-      		
 		echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["agents"][23]." :</td>";
 		echo "<td align='center'>";
@@ -152,7 +102,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
 		echo "</td>";
 
-      if ($ptcm->getValue('wol') == "1") {
+      if ($ptc->getValue('wol') == "1") {
          echo "<td>".$LANG['plugin_fusioninventory']['config'][6]." :</td>";
          echo "<td align='center'>";
          Dropdown::showYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);

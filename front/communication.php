@@ -90,7 +90,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
          $pta  = new PluginFusioninventoryAgent;
          $ptt  = new PluginFusionInventoryTask;
-         $ptcm = new PluginFusionInventoryConfigModules;
+         $ptc = new PluginFusionInventoryConfig;
 
 
          $a_agent = $pta->InfosByKey($pxml->DEVICEID);
@@ -101,7 +101,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
          foreach ($a_tasks as $task_id=>$datas) {
             if (($a_tasks[$task_id]['action'] == 'INVENTORY')
-                    AND ($ptcm->isActivated('inventoryocs'))
+                    AND ($ptc->isActivated('inventoryocs'))
                     AND ($a_agent['module_inventory'] == '1')) {
 
                $ptc->addInventory();
@@ -111,7 +111,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                $single = 1;
             }
             if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
-                    AND ($ptcm->isActivated('netdiscovery'))
+                    AND ($ptc->isActivated('netdiscovery'))
                     AND ($a_agent['module_netdiscovery'] == '1')) {
                $single = 1;
                $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
@@ -119,7 +119,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                $ptt->delete($input);
             }
             if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
-                    AND ($ptcm->isActivated('snmp'))
+                    AND ($ptc->isActivated('snmp'))
                     AND ($a_agent['module_snmpquery'] == '1')) {
                $single = 1;
                $ptc->addQuery($pxml, 1);
@@ -127,7 +127,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
                $ptt->delete($input);
             }
             if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
-                    AND ($ptcm->isActivated('wol'))
+                    AND ($ptc->isActivated('wol'))
                     AND ($a_agent['module_wakeonlan'] == '1')) {
                $single = 1;
                $ptc->addWakeonlan($pxml);

@@ -45,22 +45,20 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 	}
 
 	/* Function to get the value of a field */
-	function getValue($field) {
+	function getValue($p_type, $p_modules_id=0) {
 		global $DB;
 
-		$query = "SELECT ".$field."
-                FROM ".$this->table."
-                WHERE `id` = '1';";
-		if ($result = $DB->query($query)) {
-			if ($this->fields = $DB->fetch_row($result)) {
-				return $this->fields['0'];
-         }
+      $data = $this->find("`plugin_fusioninventory_modules_id`='".$p_modules_id."'
+                          AND `type`='".$p_type."'");
+      $config = current($data);
+		if (isset($config['value'])) {
+         return $config['value'];
 		}
 		return false;
 	}
 
 	// Confirm if the functionality is activated, or not
-	function isActivated($functionality) {
+	function isActivated($p_type, $p_modules_id=0) {
 		if (!($this->getValue($functionality))) {
 			return false;
       } else {

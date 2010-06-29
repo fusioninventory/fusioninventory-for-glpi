@@ -268,8 +268,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG;
 
       $pta = new PluginFusioninventoryAgent;
-      $ptcm = new PluginFusioninventoryConfigModules;
-      if ((!$ptcm->isActivated('remotehttpagent')) AND 
+      $ptc = new PluginFusioninventoryConfig;
+      if ((!$ptc->isActivated('remotehttpagent')) AND 
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return;
       }
@@ -344,8 +344,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    function addTask($device_id, $itemtype, $action, $agent_id, $param="") {
-      $ptcm = new PluginFusioninventoryConfigModules;
-      if ((!$ptcm->isActivated('remotehttpagent')) AND 
+      $ptc = new PluginFusioninventoryConfig;
+      if ((!$ptc->isActivated('remotehttpagent')) AND 
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return false;
       }
@@ -393,10 +393,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    function RemoteStartAgent($id, $ip) {
-      $ptcm = new PluginFusioninventoryConfigModules;
+      $ptc = new PluginFusioninventoryConfig;
       $pfia = new PluginFusioninventoryAgent;
 
-      if ((!$ptcm->isActivated('remotehttpagent')) AND
+      if ((!$ptc->isActivated('remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return false;
       }
@@ -418,10 +418,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function RemoteStateAgent($target, $id, $type, $a_modules = array()) {
       global $LANG,$CFG_GLPI;
 
-      $ptcm = new PluginFusioninventoryConfigModules;
+      $ptc = new PluginFusioninventoryConfig;
       $pfia = new PluginFusioninventoryAgent;
 
-      if ((!$ptcm->isActivated('remotehttpagent')) AND
+      if ((!$ptc->isActivated('remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return;
       }
@@ -809,13 +809,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
       // Dropdown with printer and network devices who have model and auth
       global $DB,$LANG;
 
-      $ptcm = new PluginFusioninventoryConfigModules;
+      $ptc = new PluginFusioninventoryConfig;
       $pfia = new PluginFusioninventoryAgent;
 
       $dropdownOptions = "";
 
       $pfia->getFromDB($agent_id);
-      if (($ptcm->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
+      if (($ptc->getValue("snmp") == '1') AND ($pfia->fields['module_snmpquery'] == '1')) {
          // Networking
          $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,

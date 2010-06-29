@@ -53,8 +53,6 @@ function update213to220() {
    ini_set("memory_limit", "-1");
    ini_set("max_execution_time", "0");
 
-//   $config_modules = new PluginFusioninventoryConfigModules;
-//   $config_modules->initConfig();
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
    }
