@@ -59,7 +59,13 @@ if (isset ($_POST["add"])) {
       $pftj->delete($datas);
    }
    $pft->delete($_POST);
-   glpi_header($CFG_GLPI["root_doc"]."/front/computer.php");
+   glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php");
+} else if (isset($_POST["update"])) {
+//   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
+
+   $pft->update($_POST);
+
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 if (isset($_GET["id"])) {
