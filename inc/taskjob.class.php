@@ -86,39 +86,25 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
 		echo "</td>";
-
-      echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo getUserName($this->fields["users_id"],1);
-		echo "</td>";
-      echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
 		echo "<td>Module&nbsp;:</td>";
 		echo "<td align='center'>";
       echo "fusinvdeploy";
 		echo "</td>";
+      echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo getUserName($this->fields["users_id"],1);
+		echo "</td>";
       echo "<td>Méthode&nbsp;:</td>";
       echo "<td align='center'>";
       echo "fusinvdeploy::install(acrobat9)";
 		echo "</td>";
       echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>Nombre d'essais&nbsp;:</td>";
-		echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 1, 30);
-		echo "</td>";
-
-      echo "<td>Temps entre 2 essais (en minutes)&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-		echo "</td>";
-      echo "</tr>";
-
       echo "<tr class='tab_bg_1'>";
-		echo "<td>Planifié le&nbsp;:</td>";
+      echo "<td>Planifié le&nbsp;:</td>";
 		echo "<td align='center'>";
       if ($id) {
          showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
@@ -126,7 +112,38 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       }
 		echo "</td>";
+      
+      echo "<td>Arguments&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "";
+		echo "</td>";
+      echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+		echo "<td>Nombre d'essais&nbsp;:</td>";
+		echo "<td align='center'>";
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 1, 30);
+		echo "</td>";
+		echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
+		echo "<td align='center' rowspan='2'>";
+      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
+		echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>Temps entre 2 essais (en minutes)&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
+		echo "</td>";
+      echo "</tr>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_2'>";
+      echo "<td colspan='4' height='10'></td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>Statut&nbsp;:</td>";
       echo "<td align='center'>";
       switch ($this->fields["status"]) {
@@ -137,12 +154,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       }
 		echo "</td>";
-      echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
-		echo "<td align='center' colspan='3'>";
-      echo "<textarea cols='80' rows='4' name='comment' >".$this->fields["comment"]."</textarea>";
+		echo "<td>".$LANG['common'][25]." status&nbsp;:</td>";
+		echo "<td align='center'>";
+      echo $this->fields["statuscomments"];
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
 		echo "</td>";
       echo "</tr>";
@@ -179,7 +193,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-
+// TODO : see in all function under this text if is ok or must be deleted
 
 
    function Counter($agent_id, $action) {
