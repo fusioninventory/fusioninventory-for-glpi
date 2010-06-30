@@ -45,10 +45,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 	}
 
 	/* Function to get the value of a field */
-	function getValue($p_type, $p_modules_id=0) {
+	function getValue($p_plugins_id, $p_type) {
 		global $DB;
 
-      $data = $this->find("`plugin_fusioninventory_modules_id`='".$p_modules_id."'
+      $data = $this->find("`plugins_id`='".$p_plugins_id."'
                           AND `type`='".$p_type."'");
       $config = current($data);
 		if (isset($config['value'])) {
@@ -58,8 +58,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 	}
 
 	// Confirm if the functionality is activated, or not
-	function isActivated($p_type, $p_modules_id=0) {
-		if (!($this->getValue($functionality))) {
+//	function isActivated($p_type, $p_plugins_id=0) {
+	function is_active($p_modules_id, $p_type) {
+		if (!($this->getValue($p_modules_id, $p_type))) {
 			return false;
       } else {
 			return true;
@@ -87,10 +88,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		$this->showTabs($options);
       $this->showFormHeader($options);
 
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
 		echo "<td width='20%'>";
-		Dropdown::showYesNo("ssl_only", $this->isActivated('ssl_only'));
+		Dropdown::showYesNo("ssl_only", $this->is_active($plugins_id, 'ssl_only'));
 		echo "</td>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][16]."&nbsp;:</td>";
 		echo "<td width='20%'>";
@@ -137,44 +139,44 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_ip", $this->isActivated('criteria1_ip'));
+		Dropdown::showYesNo("criteria1_ip", $this->is_active($plugins_id, 'criteria1_ip'));
 		echo "</td>";
 		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_ip", $this->isActivated('criteria2_ip'));
+		Dropdown::showYesNo("criteria2_ip", $this->is_active($plugins_id, 'criteria2_ip'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_name", $this->isActivated('criteria1_name'));
+		Dropdown::showYesNo("criteria1_name", $this->is_active($plugins_id, 'criteria1_name'));
 		echo "</td>";
 		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_name", $this->isActivated('criteria2_name'));
+		Dropdown::showYesNo("criteria2_name", $this->is_active($plugins_id, 'criteria2_name'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_serial", $this->isActivated('criteria1_serial'));
+		Dropdown::showYesNo("criteria1_serial", $this->is_active($plugins_id, 'criteria1_serial'));
 		echo "</td>";
 		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_serial", $this->isActivated('criteria2_serial'));
+		Dropdown::showYesNo("criteria2_serial", $this->is_active($plugins_id, 'criteria2_serial'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_macaddr", $this->isActivated('criteria1_macaddr'));
+		Dropdown::showYesNo("criteria1_macaddr", $this->is_active($plugins_id, 'criteria1_macaddr'));
 		echo "</td>";
 		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_macaddr", $this->isActivated('criteria2_macaddr'));
+		Dropdown::showYesNo("criteria2_macaddr", $this->is_active($plugins_id, 'criteria2_macaddr'));
 		echo "</td>";
 		echo "</tr>";
 

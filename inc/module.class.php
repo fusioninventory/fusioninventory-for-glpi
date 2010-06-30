@@ -41,88 +41,46 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryModule extends CommonDBTM {
 
 	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_modules";
+		$this->table="glpi_plugins";
 	}
 
    /**
-    * Add module
+    * Get all active modules
     *
-    *@param $p_plugins_id Plugin id
-    *@param $p_xmltag Tag used for module name in XML file
-    *@return integer the new id of the added item (or false if fail)
-    **/
-   static function addModule($p_plugins_id, $p_xmltag) {
-      $pfm = new PluginFusioninventoryModule;
-      return $pfm->add(array('plugins_id'=>$p_plugins_id, 'xmltag'=>$p_xmltag));
-   }
-
-   /**
-    * Update module
-    *
-    *@param $p_id Module id
-    *@param $p_xmltag Tag used for module name in XML file
-    *@return boolean : true on success
-    **/
-   function updateModule($p_id, $p_xmltag) {
-      return $this->update(array('id'=>$p_id, 'xmltag'=>$p_xmltag));
-   }
-
-   /**
-    * Delete module
-    *
-    *@param $p_id Module id
-    *@return boolean : true on success
-    **/
-   function deleteModule($p_id) {
-      return $this->delete(array('id'=>$p_id));
-   }
-
-   /**
-    * Get module
-    *
-    *@param $p_id Module id
-    *@return array(id, xmltag, plugins_id) (one line max)
-    **/
-   function get($p_id) {
-      $pfm = new PluginFusioninventoryModule;
-      return $pfm->find("`id`='".$p_id."'
-                          AND `plugins_id` IN (SELECT `id`
-                                               FROM `glpi_plugins`
-                                               WHERE `state`=1)");
-   }
-
-   /**
-    * Get all modules
-    *
-    *@return array(id, xmltag, plugins_id)
+    *@return array of fields
     **/
    static function getAll() {
-      $pfm = new PluginFusioninventoryModule;
-      return $pfm->find("`id`<>0
-                          AND `plugins_id` IN (SELECT `id`
-                                               FROM `glpi_plugins`
-                                               WHERE `state`=1)");
+      $plugin = new Plugin;
+      return $plugin->find("`state`='1' AND `directory` LIKE 'fusinv%'");
    }
 
    /**
-    * Get module id
+    * Get module id or fusioninventory plugin id
     *
     *@param $p_name Module name
-    *@return id or false if module is not active
+    *@return Plugin id or false if module is not active or not a fusioninventory module
     **/
    static function getModuleId($p_name) {
-      return array_search($p_name, $_SESSION['glpi_plugins']);
+      if ((substr($p_name, 0, 6) == 'fusinv') OR ($p_name == 'fusioninventory')) {
+         return array_search($p_name, $_SESSION['glpi_plugins']);
+      } else {
+         return false;
+      }
    }
 
    /**
     * Get module name
     *
     *@param $p_id Module id
-    *@return name or false if module is not active
+    *@return name or false if module is not active or not a fusioninventory module
     **/
    static function getModuleName($p_id) {
-      if (isset ($_SESSION['glpi_plugins'][$p_id])) {
-         return $_SESSION['glpi_plugins'][$p_id];
+      if (isset($_SESSION['glpi_plugins'][$p_id])) {
+         if (substr($_SESSION['glpi_plugins'][$p_id], 0, 6) == 'fusinv') {
+            return $_SESSION['glpi_plugins'][$p_id];
+         } else {
+            return false;
+         }
       } else {
          return false;
       }

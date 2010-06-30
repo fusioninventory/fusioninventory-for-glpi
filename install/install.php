@@ -56,47 +56,41 @@ function pluginFusioninventoryInstall($version) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
    }
 
-   $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname'], 'INVENTORY');
+   $plugin = new Plugin();
+   $data = $plugin->find("`name` = 'FusionInventory'");
+   $fields = current($data);
+   $plugins_id = $fields['id'];
    $a_rights = array();
    $a_rights['agents'] = 'w';
    $a_rights['agentsprocesses'] = 'w';
    $a_rights['remotecontrol'] = 'w';
    $a_rights['wol'] = 'w';
    $a_rights['configuration'] = 'w';
-   PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
-
-   // glpi_plugin_fusioninventory_modules
-   $plugin = new Plugin();
-   $data = $plugin->find("`name` = 'FusionInventory'");
-   $fields = current($data);
-   $plugins_id = $fields['id'];
-   $query = "INSERT INTO `glpi_plugin_fusioninventory_modules` (`id`, `xmltag`, `plugins_id`)
-             VALUES ('0','INVENTORY', '".$plugins_id."');";
-   $DB->query($query);
+   PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
 
    // glpi_plugin_fusioninventory_configs
    $url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
    $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
-                         (`type`, `value`, `plugin_fusioninventory_modules_id`)
-             VALUES ('version', '".$version."', '0'),
-                    ('URL_agent_conf', '".$url."', '0'),
-                    ('ssl_only', '0', '0'),
-                    ('storagesnmpauth', 'DB', '0'),
-                    ('inventory_frequence', '24', '0'),
-                    ('criteria1_ip', '0', '0'),
-                    ('criteria1_name', '0', '0'),
-                    ('criteria1_serial', '0', '0'),
-                    ('criteria1_macaddr', '0', '0'),
-                    ('criteria2_ip', '0', '0'),
-                    ('criteria2_name', '0', '0'),
-                    ('criteria2_serial', '0', '0'),
-                    ('criteria2_macaddr', '0', '0'),
-                    ('delete_agent_process', '24', '0'),
-                    ('remotehttpagent', '0', '0'),
-                    ('wol', '0', '0');";
+                         (`type`, `value`, `plugins_id`)
+             VALUES ('version', '".$version."', '".$plugins_id."'),
+                    ('URL_agent_conf', '".$url."', '".$plugins_id."'),
+                    ('ssl_only', '0', '".$plugins_id."'),
+                    ('storagesnmpauth', 'DB', '".$plugins_id."'),
+                    ('inventory_frequence', '24', '".$plugins_id."'),
+                    ('criteria1_ip', '0', '".$plugins_id."'),
+                    ('criteria1_name', '0', '".$plugins_id."'),
+                    ('criteria1_serial', '0', '".$plugins_id."'),
+                    ('criteria1_macaddr', '0', '".$plugins_id."'),
+                    ('criteria2_ip', '0', '".$plugins_id."'),
+                    ('criteria2_name', '0', '".$plugins_id."'),
+                    ('criteria2_serial', '0', '".$plugins_id."'),
+                    ('criteria2_macaddr', '0', '".$plugins_id."'),
+                    ('delete_agent_process', '24', '".$plugins_id."'),
+                    ('remotehttpagent', '0', '".$plugins_id."'),
+                    ('wol', '0', '".$plugins_id."');";
    $DB->query($query);
 
-   PluginFusioninventoryProfile::changeProfile();
+   PluginFusioninventoryProfile::changeProfile($plugins_id);
 }
 
 ?>

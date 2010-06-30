@@ -52,7 +52,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $ong = array();
 		if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
-         if (($ptc->isActivated('remotehttpagent')) 
+         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+         if (($ptc->is_active($plugins_id, 'remotehttpagent'))
               AND(PluginFusioninventoryProfile::haveRight("Fusioninventory","remotecontrol","w"))) {
             $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
          }

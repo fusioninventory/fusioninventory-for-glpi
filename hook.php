@@ -238,8 +238,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			// Non template case
          } else {
 				$array = array ();
-            if (($pfc->isActivated('remotehttpagent')) AND
-                    (PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","w"))) {
+            $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+            if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
+                    (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
             $array[2] = $LANG['plugin_fusioninventory']["title"][5];
@@ -305,8 +306,9 @@ function plugin_headings_actions_fusioninventory($type) {
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if (($pfc->isActivated('remotehttpagent')) AND
-                 (PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","w"))) {
+         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+         if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
+                 (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";

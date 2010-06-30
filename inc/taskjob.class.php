@@ -254,7 +254,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $pta = new PluginFusioninventoryAgent;
       $ptc = new PluginFusioninventoryConfig;
-      if ((!$ptc->isActivated('remotehttpagent')) AND 
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return;
       }
@@ -330,7 +331,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    function addTask($device_id, $itemtype, $action, $agent_id, $param="") {
       $ptc = new PluginFusioninventoryConfig;
-      if ((!$ptc->isActivated('remotehttpagent')) AND 
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return false;
       }
@@ -380,8 +382,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function RemoteStartAgent($id, $ip) {
       $ptc = new PluginFusioninventoryConfig;
       $pfia = new PluginFusioninventoryAgent;
-
-      if ((!$ptc->isActivated('remotehttpagent')) AND
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return false;
       }
@@ -405,8 +407,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $ptc = new PluginFusioninventoryConfig;
       $pfia = new PluginFusioninventoryAgent;
-
-      if ((!$ptc->isActivated('remotehttpagent')) AND
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
          return;
       }

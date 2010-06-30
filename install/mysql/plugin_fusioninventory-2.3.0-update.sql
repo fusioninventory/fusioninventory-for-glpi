@@ -2,6 +2,7 @@
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;  -- obsolete table
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computers`;  -- obsolete table
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;  -- obsolete table
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_networking`;  -- obsolete table
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_history`;  -- obsolete table
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_stats`;  -- obsolete table
@@ -13,14 +14,6 @@ DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;  -- ob
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;  -- obsolete table
 
 ############## Create ##############
-
-
-CREATE TABLE `glpi_plugin_fusioninventory_modules` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `xmltag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugins_id` int(11) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
@@ -49,7 +42,6 @@ RENAME TABLE `glpi_plugin_fusioninventory_agents_errors` TO `glpi_plugin_fusioni
 RENAME TABLE `glpi_plugin_fusioninventory_agents_processes` TO `glpi_plugin_fusioninventory_agentprocesses`;
 RENAME TABLE `glpi_plugin_fusioninventory_agents` TO `glpi_plugin_fusioninventory_agents`;
 RENAME TABLE `glpi_plugin_fusioninventory_config_snmp_history` TO `glpi_plugin_fusioninventory_configlogfields`;
-RENAME TABLE `glpi_plugin_fusioninventory_config_modules` TO `glpi_plugin_fusioninventory_configmodules`;
 RENAME TABLE `glpi_plugin_fusioninventory_config` TO `glpi_plugin_fusioninventory_configs`;
 RENAME TABLE `glpi_plugin_fusioninventory_snmp_connection` TO `glpi_plugin_fusioninventory_configsnmpsecurities`;
 RENAME TABLE `glpi_plugin_fusioninventory_construct_mibs` TO `glpi_plugin_fusioninventory_constructdevice_miboids`;
@@ -85,7 +77,7 @@ ALTER TABLE `glpi_plugin_fusioninventory_agentinventorystates`
 ALTER TABLE `glpi_plugin_fusioninventory_agentprocesserrors`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `process_number` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `agent_type` `plugin_fusioninventory_modules_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `agent_type` `plugins_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `device_type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `on_device` `items_id` INT( 11 ) NOT NULL DEFAULT '0';
 
@@ -101,9 +93,6 @@ ALTER TABLE `glpi_plugin_fusioninventory_agents`
    CHANGE `on_device` `items_id` INT( 11 ) NOT NULL DEFAULT '0';
 
 ALTER TABLE `glpi_plugin_fusioninventory_configlogfields`
-   CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `glpi_plugin_fusioninventory_configmodules`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `glpi_plugin_fusioninventory_configs`
@@ -250,7 +239,7 @@ ALTER TABLE `glpi_plugin_fusioninventory_tasks`
    CHANGE `agent_id` `plugin_fusioninventory_agents_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `device_type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `on_device` `items_id` INT( 11 ) NOT NULL,
-   CHANGE `action` `plugin_fusioninventory_modules_id` INT( 11 ) NOT NULL;
+   CHANGE `action` `plugins_id` INT( 11 ) NOT NULL;
 
 ALTER TABLE `glpi_plugin_fusioninventory_unknowndevices`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,

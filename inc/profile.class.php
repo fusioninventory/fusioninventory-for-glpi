@@ -113,20 +113,26 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Change profile (for used connected)
     *
-    *@param $p_modules_id=0 Module id (0 for Fusioninventory)
+    *@param $p_plugins_id Module id
     **/
-   static function changeprofile($p_modules_id=0) {
-      $moduleName = PluginFusioninventoryModule::getModuleName($p_modules_id);
-      $pfp=new PluginFusioninventoryProfile;
-      $a_rights = $pfp->find("profiles_id = ".$_SESSION['glpiactiveprofile']['id'].
-                             " AND `plugin_fusioninventory_modules_id`=".$p_modules_id);
-      $i = 0;
-      foreach ($a_rights as $id=>$datas) {
-         $i++;
-         $_SESSION["glpi_plugin_".$moduleName."_profile"][$datas['type']] = $datas['right'];
-      }
-      if ($i == '0') {
-         unset($_SESSION["glpi_plugin_".$moduleName."_profile"]);
+   static function changeprofile($p_plugins_id) {
+      $moduleName = PluginFusioninventoryModule::getModuleName($p_plugins_id);
+      if ($moduleName != false) {
+         if(isset($_SESSION["glpi_plugin_".$moduleName."_installed"])
+            && $_SESSION["glpi_plugin_".$moduleName."_installed"]==1) {
+
+            $pfp=new PluginFusioninventoryProfile;
+            $a_rights = $pfp->find("`profiles_id` = ".$_SESSION['glpiactiveprofile']['id'].
+                                   " AND `plugins_id`='".$p_plugins_id."'");
+            $i = 0;
+            foreach ($a_rights as $id=>$datas) {
+               $i++;
+               $_SESSION["glpi_plugin_".$moduleName."_profile"][$datas['type']] = $datas['right'];
+            }
+            if ($i == '0') {
+               unset($_SESSION["glpi_plugin_".$moduleName."_profile"]);
+            }
+         }
       }
    }
 
@@ -188,13 +194,12 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    static function cleanProfile($p_modules_name) {
       global $DB;
 
-      $pfm = new PluginFusioninventoryModule;
       $pfp = new PluginFusioninventoryProfile;
 
-      $a_module = $pfm->get($p_modules_name);
+      $plugins_id = PluginFusioninventoryModule::getModuleId($p_modules_name);
 
       $delete = "DELETE FROM ".$pfp->table.
-                " WHERE `plugin_fusioninventory_modules_id`='".$a_module['id']."';";
+                " WHERE `plugins_id`='".$plugins_id."';";
       return $DB->query($delete);
    }
 
