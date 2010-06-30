@@ -74,6 +74,8 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
       $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
+
+      // Icons add, search...
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['tasks'] = 'front/task.form.php?add=1';
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['tasks'] = 'front/task.php';
 
@@ -92,6 +94,20 @@ function plugin_init_fusioninventory() {
          }
       }
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']["<img  src='".GLPI_ROOT."/plugins/fusioninventory/pics/books.png' title='".$LANG['plugin_fusioninventory']["setup"][16]."' alt='".$LANG['plugin_fusioninventory']["setup"][16]."'>"] = 'front/documentation.php';
+
+      // Fil ariane
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']["menu"][3];
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/menu.php';
+
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = $LANG['plugin_fusioninventory']["task"][1];
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
+
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']["menu"][1];
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
+
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agentsprocesses']['title'] = $LANG['plugin_fusioninventory']["processes"][19];
+      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agentsprocesses']['page']  = '/plugins/fusioninventory/front/agentprocess.form.php';
+
 	}
 }
 

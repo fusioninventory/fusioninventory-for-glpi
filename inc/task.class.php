@@ -111,7 +111,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       if ($this->fields['id'] > 0) {
          $pft = new PluginFusioninventoryTaskjob;
-         $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'", "date_scheduled,id");
+         $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'
+               AND `rescheduled_taskjob_id`='0' ", "date_scheduled,id");
          $i = 1;
          foreach($a_taskjob as $taskjob_id=>$datas) {
             $i++;

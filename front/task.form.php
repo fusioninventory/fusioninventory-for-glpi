@@ -49,6 +49,17 @@ if (isset ($_POST["add"])) {
 
    $pft->add($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST["delete"])) {
+//   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
+
+   $pftj = new PluginFusioninventoryTaskjob;
+   
+   $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id` = '".$_POST['id']."' ");
+   foreach ($a_taskjob as $jobtask_id => $datas) {
+      $pftj->delete($datas);
+   }
+   $pft->delete($_POST);
+   glpi_header($CFG_GLPI["root_doc"]."/front/computer.php");
 }
 
 if (isset($_GET["id"])) {

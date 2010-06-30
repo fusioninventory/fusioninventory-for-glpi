@@ -49,7 +49,8 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 $pft = new PluginFusioninventoryTask;
 
 $pftj = new PluginFusioninventoryTaskjob;
-$a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'", "date_scheduled,id");
+$a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
+      AND `rescheduled_taskjob_id`='0' ", "date_scheduled,id");
 $i = 1;
 
 switch($_POST['glpi_tab']) {
