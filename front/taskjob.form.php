@@ -1,4 +1,5 @@
 <?php
+
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -31,19 +32,24 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../../..');
-}
+define('GLPI_ROOT', '../../..');
 
-include (GLPI_ROOT."/inc/includes.php");
+include (GLPI_ROOT . "/inc/includes.php");
+
+$pft = new PluginFusioninventoryTaskjob;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
+//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
+
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$_GET['target']="task.php";
+if (isset ($_POST["add"])) {
+//   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
 
-Search::show('PluginFusioninventoryTask');
+   $pft->add($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
+}
 
 commonFooter();
 

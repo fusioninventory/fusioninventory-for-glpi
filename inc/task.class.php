@@ -109,16 +109,18 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $ong = array();
       $ong[1] = $LANG['title'][26];
 
-      $pft = new PluginFusioninventoryTaskjob;
-      $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'", "date_scheduled,id");
-      $i = 1;
-      foreach($a_taskjob as $taskjob_id=>$datas) {
-         $i++;
-         $ong[$i] = "Tâche ".($i-1);
-      }
+      if ($this->fields['id'] > 0) {
+         $pft = new PluginFusioninventoryTaskjob;
+         $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'", "date_scheduled,id");
+         $i = 1;
+         foreach($a_taskjob as $taskjob_id=>$datas) {
+            $i++;
+            $ong[$i] = "Tâche ".($i-1);
+         }
 
-      $i++;
-      $ong[$i] = "Nouvelle tâche";
+         $i++;
+         $ong[$i] = "Nouvelle tâche";
+      }
       return $ong;
 	}
 

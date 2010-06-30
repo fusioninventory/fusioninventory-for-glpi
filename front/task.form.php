@@ -45,18 +45,17 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
+//   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
 
+   $pft->add($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-
-$id = "";
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+	$pft->showForm($_GET["id"]);
 } else {
-   $pft->showForm($id);
+   $pft->showForm("");
 }
-
-$pft->showForm($_GET["id"]);
 
 commonFooter();
 

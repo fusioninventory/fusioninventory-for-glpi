@@ -108,7 +108,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>Nombre d'essais&nbsp;:</td>";
 		echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 1, 30);
 		echo "</td>";
 
       echo "<td>Temps entre 2 essais (en minutes)&nbsp;:</td>";
@@ -143,6 +143,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 		echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
 		echo "<td align='center' colspan='3'>";
       echo "<textarea cols='80' rows='4' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
 		echo "</td>";
       echo "</tr>";
 
