@@ -49,20 +49,20 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Add profile
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_plugins_id Module plugin id
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     *@param $p_profiles_id Profile id
     *@return integer the new id of the added item (or false if fail)
     **/
-    static function addProfile($p_modules_id, $p_type, $p_right, $p_profiles_id=NULL) {
+    static function addProfile($p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
       $pfp = new PluginFusioninventoryProfile;
       return $pfp->add(array('type'=>$p_type,
                               'right'=>$p_right,
-                              'plugin_fusioninventory_modules_id'=>$p_modules_id,
+                              'plugins_id'=>$p_plugins_id,
                               'profiles_id'=>$p_profiles_id));
    }
 
@@ -72,20 +72,20 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * Update profile
     *
     *@param $p_id Profile id
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_plugins_id Module plugin id
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     *@param $p_profiles_id Profile id
     *@return boolean : true on success
     **/
-   function updateProfile($p_id, $p_modules_id, $p_type, $p_right, $p_profiles_id=NULL) {
+   function updateProfile($p_id, $p_plugins_id, $p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
          $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
       }
       return $this->update(array('id'=>$p_id,
                                  'type'=>$p_type,
                                  'right'=>$p_right,
-                                 'plugin_fusioninventory_modules_id'=>$p_modules_id,
+                                 'plugins_id'=>$p_plugins_id,
                                  'profiles_id'=>$p_profiles_id));
    }
 
@@ -94,18 +94,18 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Create full profile (used on install plugin)
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_plugins_id Module plugin id
     *@param $a_profile array with Right type ('wol', 'agents'...) and Right (NULL, r, w)
     **/
-   static function initProfile($p_modules_id, $a_profile = array()) {
+   static function initProfile($p_plugins_id, $a_profile = array()) {
       global $DB;
 
       $pfp = new PluginFusioninventoryProfile;
       foreach ($a_profile as $type=>$right) {
-         $pfp->addProfile($p_modules_id, $type, $right);
+         $pfp->addProfile($p_plugins_id, $type, $right);
       }
       $pfp = new PluginFusioninventoryProfile;
-     $pfp->changeProfile($p_modules_id);
+     $pfp->changeProfile($p_plugins_id);
    }
 
 
@@ -113,14 +113,11 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Change profile (for used connected)
     *
-    *@param $p_plugins_id Module id
+    *@param $p_plugins_id Module plugin id
     **/
    static function changeprofile($p_plugins_id) {
       $moduleName = PluginFusioninventoryModule::getModuleName($p_plugins_id);
       if ($moduleName != false) {
-         if(isset($_SESSION["glpi_plugin_".$moduleName."_installed"])
-            && $_SESSION["glpi_plugin_".$moduleName."_installed"]==1) {
-
             $pfp=new PluginFusioninventoryProfile;
             $a_rights = $pfp->find("`profiles_id` = ".$_SESSION['glpiactiveprofile']['id'].
                                    " AND `plugins_id`='".$p_plugins_id."'");
@@ -131,7 +128,6 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             }
             if ($i == '0') {
                unset($_SESSION["glpi_plugin_".$moduleName."_profile"]);
-            }
          }
       }
    }
@@ -141,19 +137,19 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * test if user have right
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_moduleName Module name
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     *@return boolean : true if right is ok
     **/
-   static function haveRight($p_modules_name, $p_type, $p_right) {
+   static function haveRight($p_moduleName, $p_type, $p_right) {
       $matches=array(
             ""  => array("","r","w"), // ne doit pas arriver normalement
             "r" => array("r","w"),
             "w" => array("w"),
                );
-      if (isset($_SESSION["glpi_plugin_".$p_modules_name."_profile"][$p_type])
-                &&in_array($_SESSION["glpi_plugin_".$p_modules_name."_profile"][$p_type],$matches[$p_right])) {
+      if (isset($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type])
+                &&in_array($_SESSION["glpi_plugin_".$p_moduleName."_profile"][$p_type],$matches[$p_right])) {
          return true;
       } else {
          return false;
@@ -165,15 +161,15 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Check right and display error if right not ok
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_moduleName Module name
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     **/
-   static function checkRight($p_modules_name, $p_type, $p_right) {
+   static function checkRight($p_moduleName, $p_type, $p_right) {
       global $CFG_GLPI;
 
       $pfp = new PluginFusioninventoryProfile;
-      if (!$pfp->haveRight($p_modules_name, $p_type, $p_right)) {
+      if (!$pfp->haveRight($p_moduleName, $p_type, $p_right)) {
          // Gestion timeout session
          if (!isset ($_SESSION["glpiID"])) {
             glpi_header($CFG_GLPI["root_doc"] . "/index.php");
@@ -188,15 +184,15 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Clean profile
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_moduleName Module name
     *@return boolean : true on success
     **/
-   static function cleanProfile($p_modules_name) {
+   static function cleanProfile($p_moduleName) {
       global $DB;
 
       $pfp = new PluginFusioninventoryProfile;
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId($p_modules_name);
+      $plugins_id = PluginFusioninventoryModule::getModuleId($p_moduleName);
 
       $delete = "DELETE FROM ".$pfp->table.
                 " WHERE `plugins_id`='".$plugins_id."';";

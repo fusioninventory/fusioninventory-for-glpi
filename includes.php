@@ -41,8 +41,4 @@ foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
    include_once($file);
 }
 
-foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc_manufacturer/*.php') as $file) {
-   include_once($file);
-}
-
 ?>

@@ -37,27 +37,9 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-//if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "agents","r")
-//	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "agentprocesses","r")
-//	OR PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol","r")
-//	) {
-	if (plugin_fusioninventory_needUpdate() == 1) {
-		commonHeader($LANG['plugin_fusioninventory']["setup"][4], $_SERVER["PHP_SELF"],"plugins","fusioninventory");
-		echo "<div align='center'>";
-		echo "<table class='tab_cadre' cellpadding='5'>";
-		echo "<tr><th>".$LANG['plugin_fusioninventory']["setup"][3];
-		echo "</th></tr>";
-		echo "<tr class='tab_bg_1'><td>";
-		echo "<a href='install.php'>".$LANG['plugin_fusioninventory']["setup"][5]."</a></td></tr>";
-		echo "</table></div>";
-	} else {
-		commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-      PluginFusioninventoryMenu::displayMenu();
-	}
-//} else {
-//	displayRightError();
-//}
+PluginFusioninventoryMenu::displayMenu();
 
 commonFooter();
 

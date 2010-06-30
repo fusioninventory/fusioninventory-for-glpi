@@ -205,26 +205,6 @@ function plugin_fusioninventory_uninstall() {
    return PluginFusioninventorySetup::uninstall();
 }
 
-/**
-* Check if FusionInventory need to be updated
-*
-* @param
-*
-* @return 0 (no need update) OR 1 (need update)
-**/
-function plugin_fusioninventory_needUpdate() {
-   $version = "2.3.0";
-   include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
-   $version_detected = pluginFusioninventoryGetCurrentVersion($version);
-   if ((isset($version_detected)) AND ($version_detected != $version)) {
-      return 1;
-   } else {
-      return 0;
-   }
-}
-
-
-
 // Define headings added by the plugin //
 function plugin_get_headings_fusioninventory($item,$withtemplate) {
 	global $LANG;
