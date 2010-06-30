@@ -456,7 +456,9 @@ class PluginFusioninventoryAgentProcess extends CommonDBTM {
 
    function CleanProcesses() {
       $ptc = new PluginFusioninventoryConfig;
-      $data = $this->find("`start_time`<DATE_SUB(NOW(), INTERVAL ".$ptc->getValue('delete_agent_process')." HOUR)");
+      $modules_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      $data = $this->find("`start_time`<DATE_SUB(NOW(), 
+                           INTERVAL ".$ptc->getValue($modules_id, 'delete_agent_process')." HOUR)");
       foreach ($data as $process_id=>$dataInfos) {
          $this->deleteFromDB($process_id,1);
       }      
