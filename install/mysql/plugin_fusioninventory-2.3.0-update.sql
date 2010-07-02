@@ -41,31 +41,31 @@ RENAME TABLE `glpi_plugin_fusioninventory_agents_inventory_state` TO `glpi_plugi
 RENAME TABLE `glpi_plugin_fusioninventory_agents_errors` TO `glpi_plugin_fusioninventory_agentprocesserrors`;
 RENAME TABLE `glpi_plugin_fusioninventory_agents_processes` TO `glpi_plugin_fusioninventory_agentprocesses`;
 RENAME TABLE `glpi_plugin_fusioninventory_agents` TO `glpi_plugin_fusioninventory_agents`;
-RENAME TABLE `glpi_plugin_fusioninventory_config_snmp_history` TO `glpi_plugin_fusioninventory_configlogfields`;
+RENAME TABLE `glpi_plugin_fusioninventory_config_snmp_history` TO `glpi_plugin_fusinvsnmp_configlogfields`;
 RENAME TABLE `glpi_plugin_fusioninventory_config` TO `glpi_plugin_fusioninventory_configs`;
-RENAME TABLE `glpi_plugin_fusioninventory_snmp_connection` TO `glpi_plugin_fusioninventory_configsnmpsecurities`;
-RENAME TABLE `glpi_plugin_fusioninventory_construct_mibs` TO `glpi_plugin_fusioninventory_constructdevice_miboids`;
-RENAME TABLE `glpi_plugin_fusioninventory_construct_device` TO `glpi_plugin_fusioninventory_constructdevices`;
+RENAME TABLE `glpi_plugin_fusioninventory_snmp_connection` TO `glpi_plugin_fusinvsnmp_configsecurities`;
+RENAME TABLE `glpi_plugin_fusioninventory_construct_mibs` TO `glpi_plugin_fusinvsnmp_constructdevice_miboids`;
+RENAME TABLE `glpi_plugin_fusioninventory_construct_device` TO `glpi_plugin_fusinvsnmp_constructdevices`;
 RENAME TABLE `glpi_plugin_fusioninventory_construct_walks` TO `glpi_plugin_fusioninventory_constructdevicewalks`;
 RENAME TABLE `glpi_plugin_fusioninventory_rangeip` TO `glpi_plugin_fusioninventory_ipranges`;
 RENAME TABLE `glpi_plugin_fusioninventory_lockable` TO `glpi_plugin_fusioninventory_lockables`;
 RENAME TABLE `glpi_plugin_fusioninventory_lock` TO `glpi_plugin_fusioninventory_locks`;
-RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_label` TO `glpi_plugin_fusioninventory_miblabels`;
-RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_object` TO `glpi_plugin_fusioninventory_mibobjects`;
-RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_oid` TO `glpi_plugin_fusioninventory_miboids`;
-RENAME TABLE `glpi_plugin_fusioninventory_mib_networking` TO `glpi_plugin_fusioninventory_snmpmodelmibs`;
-RENAME TABLE `glpi_plugin_fusioninventory_model_infos` TO `glpi_plugin_fusioninventory_snmpmodels`;
-RENAME TABLE `glpi_plugin_fusioninventory_networking_ifaddr` TO `glpi_plugin_fusioninventory_networkequipmentips`;
-RENAME TABLE `glpi_plugin_fusioninventory_networking` TO `glpi_plugin_fusioninventory_networkequipments`;
-RENAME TABLE `glpi_plugin_fusioninventory_snmp_history_connections` TO `glpi_plugin_fusioninventory_networkportconnectionlogs`;
-RENAME TABLE `glpi_plugin_fusioninventory_snmp_history` TO `glpi_plugin_fusioninventory_networkportlogs`;
-RENAME TABLE `glpi_plugin_fusioninventory_networking_ports` TO `glpi_plugin_fusioninventory_networkports`;
-RENAME TABLE `glpi_plugin_fusioninventory_printers_history` TO `glpi_plugin_fusioninventory_printerlogs`;
-RENAME TABLE `glpi_plugin_fusioninventory_printers` TO `glpi_plugin_fusioninventory_printers`;
-RENAME TABLE `glpi_plugin_fusioninventory_printers_cartridges` TO `glpi_plugin_fusioninventory_printercartridges`;
+RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_label` TO `glpi_plugin_fusinvsnmp_miblabels`;
+RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_object` TO `glpi_plugin_fusinvsnmp_mibobjects`;
+RENAME TABLE `glpi_dropdown_plugin_fusioninventory_mib_oid` TO `glpi_plugin_fusinvsnmp_miboids`;
+RENAME TABLE `glpi_plugin_fusioninventory_mib_networking` TO `glpi_plugin_fusinvsnmp_modelmibs`;
+RENAME TABLE `glpi_plugin_fusioninventory_model_infos` TO `glpi_plugin_fusinvsnmp_models`;
+RENAME TABLE `glpi_plugin_fusioninventory_networking_ifaddr` TO `glpi_plugin_fusinvsnmp_networkequipmentips`;
+RENAME TABLE `glpi_plugin_fusioninventory_networking` TO `glpi_plugin_fusinvsnmp_networkequipments`;
+RENAME TABLE `glpi_plugin_fusioninventory_snmp_history_connections` TO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`;
+RENAME TABLE `glpi_plugin_fusioninventory_snmp_history` TO `glpi_plugin_fusinvsnmp_networkportlogs`;
+RENAME TABLE `glpi_plugin_fusioninventory_networking_ports` TO `glpi_plugin_fusinvsnmp_networkports`;
+RENAME TABLE `glpi_plugin_fusinvsnmp_printers_history` TO `glpi_plugin_fusinvsnmp_printerlogs`;
+RENAME TABLE `glpi_plugin_fusinvsnmp_printers` TO `glpi_plugin_fusinvsnmp_printers`;
+RENAME TABLE `glpi_plugin_fusinvsnmp_printers_cartridges` TO `glpi_plugin_fusinvsnmp_printercartridges`;
 RENAME TABLE `glpi_plugin_fusioninventory_profiles` TO `glpi_plugin_fusioninventory_profiles`;
 RENAME TABLE `glpi_plugin_fusioninventory_task` TO `glpi_plugin_fusioninventory_tasks`;
-RENAME TABLE `glpi_plugin_fusioninventory_unknown_device` TO `glpi_plugin_fusioninventory_unknowndevices`;
+RENAME TABLE `glpi_plugin_fusioninventory_unknown_device` TO `glpi_plugin_fusinvsnmp_unknowndevices`;
 
 
 ## Rename fields
@@ -92,38 +92,38 @@ ALTER TABLE `glpi_plugin_fusioninventory_agents`
    CHANGE `device_type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `on_device` `items_id` INT( 11 ) NOT NULL DEFAULT '0';
 
-ALTER TABLE `glpi_plugin_fusioninventory_configlogfields`
+ALTER TABLE `glpi_plugin_fusinvsnmp_configlogfields`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `glpi_plugin_fusioninventory_configs`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `authsnmp` `storagesnmpauth` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL;
 
-ALTER TABLE `glpi_plugin_fusioninventory_configsnmpsecurities`
+ALTER TABLE `glpi_plugin_fusinvsnmp_configsecurities`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `secname` `username` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `auth_protocole` `authentication` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `priv_protocole` `encryption` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `deleted` `is_deleted` INT( 1 ) NOT NULL DEFAULT '0';
 
-ALTER TABLE `glpi_plugin_fusioninventory_constructdevice_miboids`
+ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `mapping_type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `mapping_name` `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   CHANGE `mib_oid_id` `plugin_fusioninventory_miboids_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `construct_device_id` `plugin_fusioninventory_constructdevices_id` INT( 11 ) NOT NULL DEFAULT '0';
+   CHANGE `mib_oid_id` `plugin_fusinvsnmp_miboids_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `construct_device_id` `plugin_fusinvsnmp_constructdevices_id` INT( 11 ) NOT NULL DEFAULT '0';
 
-ALTER TABLE `glpi_plugin_fusioninventory_constructdevices`
+ALTER TABLE `glpi_plugin_fusinvsnmp_constructdevices`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_glpi_enterprise` `manufacturers_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `snmp_model_id` `plugin_fusioninventory_snmpmodels_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `snmp_model_id` `plugin_fusinvsnmp_models_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    DROP `device`,
    DROP `firmware`;
 
 ALTER TABLE `glpi_plugin_fusioninventory_constructdevicewalks`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
-   CHANGE `construct_device_id` `plugin_fusioninventory_constructdevices_id` INT( 11 ) NOT NULL DEFAULT '0';
+   CHANGE `construct_device_id` `plugin_fusinvsnmp_constructdevices_id` INT( 11 ) NOT NULL DEFAULT '0';
 
 ALTER TABLE `glpi_plugin_fusioninventory_ipranges`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
@@ -143,57 +143,57 @@ ALTER TABLE `glpi_plugin_fusioninventory_locks`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `fields` `tablefields` TEXT;
 
-ALTER TABLE `glpi_plugin_fusioninventory_miblabels`
+ALTER TABLE `glpi_plugin_fusinvsnmp_miblabels`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `comments` `comment` text COLLATE utf8_unicode_ci;
 
-ALTER TABLE `glpi_plugin_fusioninventory_mibobjects`
+ALTER TABLE `glpi_plugin_fusinvsnmp_mibobjects`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `comments` `comment` text COLLATE utf8_unicode_ci;
 
-ALTER TABLE `glpi_plugin_fusioninventory_miboids`
+ALTER TABLE `glpi_plugin_fusinvsnmp_miboids`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `comments` `comment` text COLLATE utf8_unicode_ci;
 
-ALTER TABLE `glpi_plugin_fusioninventory_snmpmodelmibs`
+ALTER TABLE `glpi_plugin_fusinvsnmp_modelmibs`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `mapping_name` `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
-   CHANGE `FK_model_infos` `plugin_fusioninventory_snmpmodels_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_mib_label` `plugin_fusioninventory_miblabels_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_mib_oid` `plugin_fusioninventory_miboids_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_mib_object` `plugin_fusioninventory_mibobjects_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_model_infos` `plugin_fusinvsnmp_models_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_mib_label` `plugin_fusinvsnmp_miblabels_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_mib_oid` `plugin_fusinvsnmp_miboids_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_mib_object` `plugin_fusinvsnmp_mibobjects_id` INT( 11 ) NOT NULL DEFAULT '0',
    DROP `mapping_type`;
 
-ALTER TABLE `glpi_plugin_fusioninventory_snmpmodels`
+ALTER TABLE `glpi_plugin_fusinvsnmp_models`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `device_type` `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
    CHANGE `FK_entities` `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `deleted` `is_deleted` INT( 1 ) NOT NULL DEFAULT '0',
    CHANGE `comments` `comment` text COLLATE utf8_unicode_ci,
    ADD `is_deleted` int(1) NOT NULL DEFAULT '0';
-UPDATE `glpi_plugin_fusioninventory_snmpmodels`
+UPDATE `glpi_plugin_fusinvsnmp_models`
    SET `is_deleted` = '0';
 
-ALTER TABLE `glpi_plugin_fusioninventory_networkequipmentips`
+ALTER TABLE `glpi_plugin_fusinvsnmp_networkequipmentips`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `ifaddr` `ip` VARCHAR( 255 ) COLLATE utf8_unicode_ci,
    CHANGE `FK_networking` `networkequipments_id` INT( 11 ) NOT NULL DEFAULT '0';
 
-ALTER TABLE `glpi_plugin_fusioninventory_networkequipments`
+ALTER TABLE `glpi_plugin_fusinvsnmp_networkequipments`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_networking` `networkequipments_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_model_infos` `plugin_fusioninventory_snmpmodels_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_snmp_connection` `plugin_fusioninventory_configsnmpsecurities_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_model_infos` `plugin_fusinvsnmp_models_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_snmp_connection` `plugin_fusinvsnmp_configsecurities_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `memory` `memory` INT( 11 ) NOT NULL,
    CHANGE `cpu` `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%';
 
-ALTER TABLE `glpi_plugin_fusioninventory_networkportconnectionlogs`
+ALTER TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_port_source` `networkports_id_source` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `FK_port_destination` `networkports_id_destination` INT( 11 ) NOT NULL DEFAULT '0';
    CHANGE `process_number` `plugin_fusioninventory_agentprocesses_id` INT( 11 ) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `glpi_plugin_fusioninventory_networkportlogs`
+ALTER TABLE `glpi_plugin_fusinvsnmp_networkportlogs`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_ports` `networkports_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `Field` `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
@@ -205,24 +205,24 @@ ALTER TABLE `glpi_plugin_fusioninventory_networkportlogs`
    DROP `new_device_type`,
    DROP `new_device_ID`;
 
-ALTER TABLE `glpi_plugin_fusioninventory_networkports`
+ALTER TABLE `glpi_plugin_fusinvsnmp_networkports`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
-   CHANGE `FK_networking_ports` `plugin_fusioninventory_networkports_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_networking_ports` `plugin_fusinvsnmp_networkports_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `ifmac` `mac` VARCHAR( 255 ) COLLATE utf8_unicode_ci;
 
-ALTER TABLE `glpi_plugin_fusioninventory_printerlogs`
+ALTER TABLE `glpi_plugin_fusinvsnmp_printerlogs`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_printers` `printers_id` INT( 11 ) NOT NULL DEFAULT '0';
 
-ALTER TABLE `glpi_plugin_fusioninventory_printers`
+ALTER TABLE `glpi_plugin_fusinvsnmp_printers`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_printers` `printers_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_model_infos` `plugin_fusioninventory_snmpmodels_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_snmp_connection` `plugin_fusioninventory_configsnmpsecurities_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_model_infos` `plugin_fusinvsnmp_models_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_snmp_connection` `plugin_fusinvsnmp_configsecurities_id` INT( 11 ) NOT NULL DEFAULT '0',
    DROP KEY `printers_id`,
    ADD UNIQUE KEY `unicity` (`printers_id`);
 
-ALTER TABLE `glpi_plugin_fusioninventory_printercartridges`
+ALTER TABLE `glpi_plugin_fusinvsnmp_printercartridges`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_printers` `printers_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `object-name` `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
@@ -241,13 +241,13 @@ ALTER TABLE `glpi_plugin_fusioninventory_tasks`
    CHANGE `on_device` `items_id` INT( 11 ) NOT NULL,
    CHANGE `action` `plugins_id` INT( 11 ) NOT NULL;
 
-ALTER TABLE `glpi_plugin_fusioninventory_unknowndevices`
+ALTER TABLE `glpi_plugin_fusinvsnmp_unknowndevices`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `FK_entities` `entities_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `deleted` `is_deleted` INT( 1 ) NOT NULL DEFAULT '0',
    CHANGE `comments` `comment` text COLLATE utf8_unicode_ci,
-   CHANGE `FK_model_infos` `plugin_fusioninventory_snmpmodels_id` INT( 11 ) NOT NULL DEFAULT '0',
-   CHANGE `FK_snmp_connection` `plugin_fusioninventory_configsnmpsecurities_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_model_infos` `plugin_fusinvsnmp_models_id` INT( 11 ) NOT NULL DEFAULT '0',
+   CHANGE `FK_snmp_connection` `plugin_fusinvsnmp_configsecurities_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `FK_agent` `plugin_fusioninventory_agents_id` INT( 11 ) NOT NULL DEFAULT '0',
    CHANGE `ifaddr` `ip` VARCHAR( 255 ) COLLATE utf8_unicode_ci,
    CHANGE `ifmac` `mac` VARCHAR( 255 ) COLLATE utf8_unicode_ci;
@@ -266,19 +266,19 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           (4,'NetworkEquipment','firmware2','','',2,NULL),
           (5,'NetworkEquipment','contact','glpi_networkequipments','contact',403,NULL),
           (6,'NetworkEquipment','comments','glpi_networkequipments','comment',404,NULL),
-          (7,'NetworkEquipment','uptime','glpi_plugin_fusioninventory_networkequipments',
+          (7,'NetworkEquipment','uptime','glpi_plugin_fusinvsnmp_networkequipments',
              'uptime',3,NULL),
-          (8,'NetworkEquipment','cpu','glpi_plugin_fusioninventory_networkequipments',
+          (8,'NetworkEquipment','cpu','glpi_plugin_fusinvsnmp_networkequipments',
              'cpu',12,NULL),
-          (9,'NetworkEquipment','cpuuser','glpi_plugin_fusioninventory_networkequipments',
+          (9,'NetworkEquipment','cpuuser','glpi_plugin_fusinvsnmp_networkequipments',
              'cpu',401,NULL),
-          (10,'NetworkEquipment','cpusystem','glpi_plugin_fusioninventory_networkequipments',
+          (10,'NetworkEquipment','cpusystem','glpi_plugin_fusinvsnmp_networkequipments',
              'cpu',402,NULL),
           (11,'NetworkEquipment','serial','glpi_networkequipments','serial',13,NULL),
           (12,'NetworkEquipment','otherserial','glpi_networkequipments','otherserial',419,NULL),
           (13,'NetworkEquipment','name','glpi_networkequipments','name',20,NULL),
           (14,'NetworkEquipment','ram','glpi_networkequipments','ram',21,NULL),
-          (15,'NetworkEquipment','memory','glpi_plugin_fusioninventory_networkequipments',
+          (15,'NetworkEquipment','memory','glpi_plugin_fusinvsnmp_networkequipments',
              'memory',22,NULL),
           (16,'NetworkEquipment','vtpVlanName','','',19,NULL),
           (17,'NetworkEquipment','vmvlan','','',430,NULL),
@@ -296,31 +296,31 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           (27,'NetworkEquipment','PortVlanIndex','','',422,NULL),
 ## NetworkPorts
           (28,'NetworkEquipment','ifIndex','','',408,NULL),
-          (29,'NetworkEquipment','ifmtu','glpi_plugin_fusioninventory_networkports',
+          (29,'NetworkEquipment','ifmtu','glpi_plugin_fusinvsnmp_networkports',
              'ifmtu',4,NULL),
-          (30,'NetworkEquipment','ifspeed','glpi_plugin_fusioninventory_networkports',
+          (30,'NetworkEquipment','ifspeed','glpi_plugin_fusinvsnmp_networkports',
              'ifspeed',5,NULL),
-          (31,'NetworkEquipment','ifinternalstatus','glpi_plugin_fusioninventory_networkports',
+          (31,'NetworkEquipment','ifinternalstatus','glpi_plugin_fusinvsnmp_networkports',
              'ifinternalstatus',6,NULL),
-          (32,'NetworkEquipment','iflastchange','glpi_plugin_fusioninventory_networkports',
+          (32,'NetworkEquipment','iflastchange','glpi_plugin_fusinvsnmp_networkports',
              'iflastchange',7,NULL),
-          (33,'NetworkEquipment','ifinoctets','glpi_plugin_fusioninventory_networkports',
+          (33,'NetworkEquipment','ifinoctets','glpi_plugin_fusinvsnmp_networkports',
              'ifinoctets',8,NULL),
-          (34,'NetworkEquipment','ifoutoctets','glpi_plugin_fusioninventory_networkports',
+          (34,'NetworkEquipment','ifoutoctets','glpi_plugin_fusinvsnmp_networkports',
              'ifoutoctets',9,NULL),
-          (35,'NetworkEquipment','ifinerrors','glpi_plugin_fusioninventory_networkports',
+          (35,'NetworkEquipment','ifinerrors','glpi_plugin_fusinvsnmp_networkports',
              'ifinerrors',10,NULL),
-          (36,'NetworkEquipment','ifouterrors','glpi_plugin_fusioninventory_networkports',
+          (36,'NetworkEquipment','ifouterrors','glpi_plugin_fusinvsnmp_networkports',
              'ifouterrors',11,NULL),
-          (37,'NetworkEquipment','ifstatus','glpi_plugin_fusioninventory_networkports',
+          (37,'NetworkEquipment','ifstatus','glpi_plugin_fusinvsnmp_networkports',
              'ifstatus',14,NULL),
           (38,'NetworkEquipment','ifPhysAddress','glpi_networkports','mac',15,NULL),
           (39,'NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
           (40,'NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
           (41,'NetworkEquipment','ifType','','',18,NULL),
-          (42,'NetworkEquipment','ifdescr','glpi_plugin_fusioninventory_networkports',
+          (42,'NetworkEquipment','ifdescr','glpi_plugin_fusinvsnmp_networkports',
              'ifdescr',23,NULL),
-          (43,'NetworkEquipment','portDuplex','glpi_plugin_fusioninventory_networkports',
+          (43,'NetworkEquipment','portDuplex','glpi_plugin_fusinvsnmp_networkports',
              'portduplex',33,NULL),
 ## Printers
           (44,'Printer','model','glpi_printers','printermodels_id',25,NULL),
@@ -351,29 +351,29 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           (68,'Printer','drummagenta','','',163,163),
           (69,'Printer','drumyellow','','',164,164),
 ## Printers : Counter pages
-          (70,'Printer','pagecountertotalpages','glpi_plugin_fusioninventory_printerlogs',
+          (70,'Printer','pagecountertotalpages','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_total',28,128),
-          (71,'Printer','pagecounterblackpages','glpi_plugin_fusioninventory_printerlogs',
+          (71,'Printer','pagecounterblackpages','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_n_b',29,129),
-          (72,'Printer','pagecountercolorpages','glpi_plugin_fusioninventory_printerlogs',
+          (72,'Printer','pagecountercolorpages','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_color',30,130),
-          (73,'Printer','pagecounterrectoversopages','glpi_plugin_fusioninventory_printerlogs',
+          (73,'Printer','pagecounterrectoversopages','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_recto_verso',54,154),
-          (74,'Printer','pagecounterscannedpages','glpi_plugin_fusioninventory_printerlogs',
+          (74,'Printer','pagecounterscannedpages','glpi_plugin_fusinvsnmp_printerlogs',
              'scanned',55,155),
-          (75,'Printer','pagecountertotalpages_print','glpi_plugin_fusioninventory_printerlogs',
+          (75,'Printer','pagecountertotalpages_print','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_total_print',423,1423),
-          (76,'Printer','pagecounterblackpages_print','glpi_plugin_fusioninventory_printerlogs',
+          (76,'Printer','pagecounterblackpages_print','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_n_b_print',424,1424),
-          (77,'Printer','pagecountercolorpages_print','glpi_plugin_fusioninventory_printerlogs',
+          (77,'Printer','pagecountercolorpages_print','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_color_print',425,1425),
-          (78,'Printer','pagecountertotalpages_copy','glpi_plugin_fusioninventory_printerlogs',
+          (78,'Printer','pagecountertotalpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_total_copy',426,1426),
-          (79,'Printer','pagecounterblackpages_copy','glpi_plugin_fusioninventory_printerlogs',
+          (79,'Printer','pagecounterblackpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_n_b_copy',427,1427),
-          (80,'Printer','pagecountercolorpages_copy','glpi_plugin_fusioninventory_printerlogs',
+          (80,'Printer','pagecountercolorpages_copy','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_color_copy',428,1428),
-          (81,'Printer','pagecountertotalpages_fax','glpi_plugin_fusioninventory_printerlogs',
+          (81,'Printer','pagecountertotalpages_fax','glpi_plugin_fusinvsnmp_printerlogs',
              'pages_total_fax',429,1429),
 ## Printers : NetworkPort
           (82,'Printer','ifPhysAddress','glpi_networkports','mac',58,NULL),
