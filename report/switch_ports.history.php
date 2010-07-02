@@ -38,7 +38,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-PluginFusioninventoryAuth::checkRight("reports","r");
+PluginFusioninventoryProfile::checkRight("reports","r");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
 

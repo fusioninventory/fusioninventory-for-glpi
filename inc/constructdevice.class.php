@@ -246,7 +246,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
             LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                   `glpi_plugin_fusioninventory_mappings`.`id`
-         WHERE `plugin_fusioninventory_constructdevices_id`='".$id."'
+         WHERE `plugin_fusinvsnmp_constructdevices_id`='".$id."'
             AND `mapping_name` != ''";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
@@ -256,7 +256,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       }
 
       $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevicewalks
-         WHERE plugin_fusioninventory_constructdevices_id='".$id."'";
+         WHERE plugin_fusinvsnmp_constructdevices_id='".$id."'";
       echo "<div align='center'>
          <form method='post' name='' id=''  action='".$target."' >";
 
@@ -364,8 +364,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                         }
                         $query_oid_mib = "SELECT *
                            FROM glpi_plugin_fusinvsnmp_constructdevice_miboids
-                           WHERE plugin_fusioninventory_constructdevices_id='".$id."'
-                              AND plugin_fusioninventory_miboids_id='".$a_oids2[$num]."'";
+                           WHERE plugin_fusinvsnmp_constructdevices_id='".$id."'
+                              AND plugin_fusinvsnmp_miboids_id='".$a_oids2[$num]."'";
                         $a_mibs = array();
                         $result_oid_mib = $DB->query($query_oid_mib);
                         if ($DB->numrows($result_oid_mib) != "0") {
@@ -496,7 +496,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
       $query = "SELECT glpi_plugin_fusinvsnmp_constructdevices.id, type
          FROM glpi_plugin_fusinvsnmp_constructdevices
-         LEFT JOIN glpi_plugin_fusinvsnmp_constructdevicewalks on glpi_plugin_fusinvsnmp_constructdevices.id = plugin_fusioninventory_constructdevices_id
+         LEFT JOIN glpi_plugin_fusinvsnmp_constructdevicewalks on glpi_plugin_fusinvsnmp_constructdevices.id = plugin_fusinvsnmp_constructdevices_id
          WHERE type IN (1,2,3)
             AND log!=''";
       if ($result = $DB->query($query)) {
@@ -511,14 +511,14 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                      ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
-               WHERE plugin_fusioninventory_constructdevices_id='".$data["id"]."' ";
+               WHERE plugin_fusinvsnmp_constructdevices_id='".$data["id"]."' ";
             if ($result_mibs = $DB->query($query_mibs)) {
                while ($data_mibs = $DB->fetch_array($result_mibs)) {
-                  $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['itemtype'] = $data_mibs['itemtype'];
-                  $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['mapping_name'] = $data_mibs['mapping_name'];
-                  $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['oid_port_counter'] = $data_mibs['oid_port_counter'];
-                  $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
-                  $a_mib[$data_mibs['plugin_fusioninventory_miboids_id']]['vlan'] = $data_mibs['vlan'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['itemtype'] = $data_mibs['itemtype'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['mapping_name'] = $data_mibs['mapping_name'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_counter'] = $data_mibs['oid_port_counter'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['vlan'] = $data_mibs['vlan'];
                   $count_mib++;
                }
             }
@@ -535,20 +535,20 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
                         FROM `glpi_plugin_fusinvsnmp_modelmibs`
                            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                              ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`=
+                              ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`=
                                  `glpi_plugin_fusioninventory_mappings`.`id`
-                        WHERE `plugin_fusioninventory_snmpmodels_id`='".$data_models['id']."' ";
+                        WHERE `plugin_fusinvsnmp_models_id`='".$data_models['id']."' ";
                      if ($result_mib_model = $DB->query($query_mibs_model)) {
                         while ($data_mib_model = $DB->fetch_array($result_mib_model)) {
                            $count_mib_model++;
                            if ($existent != '-1') {
-                              if (isset($a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['itemtype'])) {
+                              if (isset($a_mib[$data_mib_model['plugin_fusinvsnmp_miboids_id']]['itemtype'])) {
                                  // Oid Existe, on vérifie si tous les paramètres sont pareils
-                                 if ($a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['itemtype'] == $data_mib_model['itemtype'] AND
-                                    $a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['mapping_name'] == $data_mib_model['mapping_name'] AND
-                                    $a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['oid_port_counter'] == $data_mib_model['oid_port_counter'] AND
-                                    $a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['oid_port_dyn'] == $data_mib_model['oid_port_dyn'] AND
-                                    $a_mib[$data_mib_model['plugin_fusioninventory_miboids_id']]['vlan'] == $data_mib_model['vlan']) {
+                                 if ($a_mib[$data_mib_model['plugin_fusinvsnmp_miboids_id']]['itemtype'] == $data_mib_model['itemtype'] AND
+                                    $a_mib[$data_mib_model['plugin_fusinvsnmp_miboids_id']]['mapping_name'] == $data_mib_model['mapping_name'] AND
+                                    $a_mib[$data_mib_model['plugin_fusinvsnmp_miboids_id']]['oid_port_counter'] == $data_mib_model['oid_port_counter'] AND
+                                    $a_mib[$data_mib_model['plugin_fusinvsnmp_miboids_id']]['oid_port_dyn'] == $data_mib_model['oid_port_dyn'] AND
+                                    $a_mib[$data_mib_model['plugin_fusinvsnmp_miboids_id']]['vlan'] == $data_mib_model['vlan']) {
 
                                  } else {
                                     $existent = '-1';
@@ -587,12 +587,12 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                      ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
-               WHERE `plugin_fusioninventory_constructdevices_id`='".$data["id"]."' ";
+               WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data["id"]."' ";
                if ($result_mibs = $DB->query($query_mibs)) {
                   while ($data_mibs = $DB->fetch_array($result_mibs)) {
                      $a_input = array();
-                     $a_input['plugin_fusioninventory_snmpmodels_id'] = $id;
-                     $a_input['plugin_fusioninventory_miboids_id'] = $data_mibs['plugin_fusioninventory_miboids_id'];
+                     $a_input['plugin_fusinvsnmp_models_id'] = $id;
+                     $a_input['plugin_fusinvsnmp_miboids_id'] = $data_mibs['plugin_fusinvsnmp_miboids_id'];
                      $a_input['oid_port_counter'] = $data_mibs['oid_port_counter'];
                      $a_input['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
                      $a_input['vlan'] = $data_mibs['vlan'];
@@ -714,14 +714,14 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                         ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
-                  WHERE `plugin_fusioninventory_constructdevices_id`='".$data['id']."'
+                  WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data['id']."'
                      AND `mapping_name`='serial'
                   LIMIT 1";
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
                   $sxml_device->addAttribute('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                               $line['plugin_fusioninventory_miboids_id']));
+                                               $line['plugin_fusinvsnmp_miboids_id']));
                }
 
                $query_serial = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
@@ -731,7 +731,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                         ON `glpi_plugin_fusinvsnmp_constructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
-                  WHERE `plugin_fusioninventory_constructdevices_id`='".$data['id']."'
+                  WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data['id']."'
                      AND ((`mapping_name`='macaddr' AND `itemtype`='NetworkEquipment')
                            OR ( `mapping_name`='ifPhysAddress' AND `itemtype`='Printer')
                            OR ( `mapping_name`='ifPhysAddress' AND `itemtype`='Computer'))
@@ -741,10 +741,10 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   $line = mysql_fetch_assoc($result_serial);
                   if ($line['mapping_name'] == "macaddr") {
                      $sxml_device->addAttribute('MAC', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                                   $line['plugin_fusioninventory_miboids_id']));
+                                                   $line['plugin_fusinvsnmp_miboids_id']));
                   } else {
                      $sxml_device->addAttribute('MACDYN', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                                   $line['plugin_fusioninventory_miboids_id']));
+                                                   $line['plugin_fusinvsnmp_miboids_id']));
                   }
                }
             }

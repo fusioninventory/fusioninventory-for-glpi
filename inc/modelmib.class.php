@@ -50,7 +50,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
 		
-		if (!PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
+		if (!PluginFusioninventoryProfile::haveRight("snmp_models","r")) {
 			return false;
       } else if ((isset($id)) AND (!empty($id))) {
 			$query = "SELECT `itemtype`
@@ -64,7 +64,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                           `glpi_plugin_fusinvsnmp_modelmibs`.*
                    FROM `glpi_plugin_fusinvsnmp_modelmibs`
                         LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                        ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`=
+                        ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`=
                            `glpi_plugin_fusinvsnmp_models`.`id`
                    WHERE `glpi_plugin_fusinvsnmp_models`.`id`='".$id."';";
 			
@@ -101,17 +101,17 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 					echo "</td>";
 	
 					echo "<td align='center'>";
-					echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miblabels",$data["plugin_fusioninventory_miblabels_id"]);
+					echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miblabels",$data["plugin_fusinvsnmp_miblabels_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					$object_used[] = $data["plugin_fusioninventory_mibobjects_id"];
+					$object_used[] = $data["plugin_fusinvsnmp_mibobjects_id"];
 					echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects",
-                                    $data["plugin_fusioninventory_mibobjects_id"]);
+                                    $data["plugin_fusinvsnmp_mibobjects_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
-					echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusioninventory_miboids_id"]);
+					echo Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusinvsnmp_miboids_id"]);
 					echo "</td>";
 					
 					echo "<td align='center'>";
@@ -184,7 +184,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      $LANG["buttons"][19]."</a>";
 				echo "</td><td align='left' colspan='6' width='80%'>";
-            if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
+            if(PluginFusioninventoryProfile::haveRight("snmp_models","w")) {
    				echo "<input class='submit' type='submit' name='delete_oid' value='" .
                      $LANG["buttons"][6] . "'>";
             }
@@ -214,19 +214,19 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusinvsnmpMibLabel",
-                           array('name' => "plugin_fusioninventory_miblabels_id",
+                           array('name' => "plugin_fusinvsnmp_miblabels_id",
                                  'value' => 0));
 				echo "</td>";
 				
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusinvsnmpMibObject",
-                           array('name' => "plugin_fusioninventory_mibobjects_id",
+                           array('name' => "plugin_fusinvsnmp_mibobjects_id",
                                  'value' => 0));
 				echo "</td>";
 
 				echo "<td align='center'>";
 				Dropdown::show("PluginFusinvsnmpMibOid",
-                           array('name' => "plugin_fusioninventory_miboids_id",
+                           array('name' => "plugin_fusinvsnmp_miboids_id",
                                  'value' => 0));
 				echo "</td>";
 				
@@ -297,7 +297,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 	function deleteMib($item_coche) {
 		global $DB;
 		
-		PluginFusioninventoryAuth::checkRight("snmp_models","w");
+		PluginFusioninventoryProfile::checkRight("snmp_models","w");
 		
 		for ($i = 0; $i < count($item_coche); $i++) {
          $this->deleteFromDB($item_coche[$i],1);
@@ -334,7 +334,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                                ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
                                   `glpi_plugin_fusioninventory_mappings`.`id`
-                WHERE `plugin_fusioninventory_snmpmodels_id`='".$p_id."'
+                WHERE `plugin_fusinvsnmp_models_id`='".$p_id."'
                   AND `activation`='1'
                   AND `oid_port_counter`='0';";
 
@@ -344,14 +344,14 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
             case 0:
                $ptc->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusioninventory_miboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             
             case 1:
                $ptc->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusioninventory_miboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
             

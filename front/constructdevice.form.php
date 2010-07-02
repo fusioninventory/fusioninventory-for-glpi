@@ -46,8 +46,8 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (isset($_GET['vlan_update'])) {
    $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
          SET vlan=0
-      WHERE plugin_fusioninventory_constructdevices_id=".$_GET['id']."
-         AND plugin_fusioninventory_miboids_id=".$_GET['vlan_update'];
+      WHERE plugin_fusinvsnmp_constructdevices_id=".$_GET['id']."
+         AND plugin_fusinvsnmp_miboids_id=".$_GET['vlan_update'];
    $DB->query($query_update);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["add"])) {
@@ -74,7 +74,7 @@ if (isset($_GET['vlan_update'])) {
 
    $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` (
 `id` ,
-`plugin_fusioninventory_constructdevices_id` ,
+`plugin_fusinvsnmp_constructdevices_id` ,
 `log`
 )
 VALUES (
@@ -92,7 +92,7 @@ NULL , '".$_POST['id']."', '".$md5."'
                                  AND `name`='".$a_mapping[1]."'");
       $mappings_id = $mappings->fields['id'];
       $query_ins = "INSERT INTO glpi_plugin_fusinvsnmp_constructdevice_miboids
-         (`plugin_fusioninventory_miboids_id`, `plugin_fusioninventory_constructdevices_id`,
+         (`plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`,
             `plugin_fusioninventory_mappings_id`,
             `oid_port_counter`, `oid_port_dyn`, `vlan`)
          VALUES

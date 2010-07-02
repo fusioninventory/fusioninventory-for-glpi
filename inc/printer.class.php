@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class to use printers
  **/
-class PluginFusinvsnmpPrinter extends PluginFusioninventoryCommonDBTM {
+class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_printer;
    private $oFusionInventory_printer_history;
    private $ports=array(), $newPorts=array(), $updatesPorts=array();
@@ -52,9 +52,9 @@ class PluginFusinvsnmpPrinter extends PluginFusioninventoryCommonDBTM {
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
-      $this->oFusionInventory_printer = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+      $this->oFusionInventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
       $this->oFusionInventory_printer_history =
-                        new PluginFusioninventoryCommonDBTM("glpi_plugin_fusinvsnmp_printerlogs");
+                        new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printerlogs");
    }
 
    /**
@@ -348,7 +348,7 @@ class PluginFusinvsnmpPrinter extends PluginFusioninventoryCommonDBTM {
 	function showFormPrinter($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;
 
-		PluginFusioninventoryAuth::checkRight("snmp_printers","r");
+		PluginFusioninventoryProfile::checkRight("snmp_printers","r");
 
 		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
@@ -389,8 +389,8 @@ class PluginFusinvsnmpPrinter extends PluginFusioninventoryCommonDBTM {
 			$exclude_models[] = $data_models['id'];
 		}
 		Dropdown::show("PluginFusinvsnmpModel",
-                     array('name'=>"plugin_fusioninventory_snmpmodels_id",
-                           'value'=>$data["plugin_fusioninventory_snmpmodels_id"],
+                     array('name'=>"plugin_fusinvsnmp_models_id",
+                           'value'=>$data["plugin_fusinvsnmp_models_id"],
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";

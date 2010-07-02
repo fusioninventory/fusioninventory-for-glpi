@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-PluginFusioninventoryAuth::checkRight("snmp_models","r");
+PluginFusioninventoryProfile::checkRight("snmp_models","r");
 
 $plugin_fusioninventory_model_infos = new PluginFusinvsnmpModel;
 $plugin_fusioninventory_mib = new PluginFusinvsnmpModelMib;
@@ -49,37 +49,37 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 //if (isset ($_POST["add"]) && isset($_POST["id"])) {
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_models","w");
+	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$plugin_fusioninventory_model_infos->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_models","w");
+	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$plugin_fusioninventory_model_infos->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_models","w");
+	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$plugin_fusioninventory_model_infos->delete($_POST);
 	glpi_header("snmpmodel.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
-	PluginFusioninventoryAuth::checkRight("snmp_models","w");
+	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$importexport->import($_FILES['importfile']['tmp_name']);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET["activation"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_models","w");
+	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$plugin_fusioninventory_mib->activation($_GET["activation"]);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['massimport'])) {
-   PluginFusioninventoryAuth::checkRight("snmp_models","w");
+   PluginFusioninventoryProfile::checkRight("snmp_models","w");
    $importexport->importMass();
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 if (isset ($_POST["add_oid"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_models","w");
+	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$plugin_fusioninventory_mib->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
+if(PluginFusioninventoryProfile::haveRight("snmp_models","r")) {
 //   print_r($_POST);
    $importexport->showForm($_GET["id"]); //TODO : verify
    $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
@@ -90,12 +90,12 @@ if (isset($_GET["id"])) {
 }
 
 if(!empty($_POST["item_coche"])) {
-	PluginFusioninventoryAuth::checkRight("snmp_models","w");
+	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$plugin_fusioninventory_mib->deleteMib($_POST["item_coche"]);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-if(PluginFusioninventoryAuth::haveRight("snmp_models","r")) {
+if(PluginFusioninventoryProfile::haveRight("snmp_models","r")) {
    $plugin_fusioninventory_model_infos->showForm($id);
    $plugin_fusioninventory_mib->showForm($id);
 }

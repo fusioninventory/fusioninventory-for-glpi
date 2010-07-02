@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvsnmpPrinterCartridge extends PluginFusioninventoryCommonDBTM {
+class PluginFusinvsnmpPrinterCartridge extends PluginFusinvsnmpCommonDBTM {
 	function __construct() {
       parent::__construct("glpi_plugin_fusinvsnmp_printercartridges");
 	}
