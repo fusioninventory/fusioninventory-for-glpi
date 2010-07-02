@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-require_once(GLPI_ROOT.'/plugins/fusioninventory/inc/commondbtm.class.php');
+require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
 /**
  * Class to use networking switches

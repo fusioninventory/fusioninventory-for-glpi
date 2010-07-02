@@ -54,13 +54,14 @@ function plugin_init_fusinvsnmp() {
 
    $a_plugin = plugin_version_fusioninventory();
 
-   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getId($a_plugin['shortname']);
+   $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['SNMPQUERY'] = 'PluginFusinvsnmpCommunicationSNMPQuery';
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] = 'PluginFusinvsnmpCommunicationNetDiscovery';
 
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
-   $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile(PluginFusioninventoryModule::getId($a_plugin['shortname']),$a_plugin['shortname']);
+   $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
 
 	$PLUGIN_HOOKS['cron']['fusinvsnmp'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
