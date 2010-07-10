@@ -64,9 +64,9 @@ if (isset ($_POST["add"])) {
 	PluginFusioninventoryProfile::checkRight("snmp_models","w");
 	$importexport->import($_FILES['importfile']['tmp_name']);
 	glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset($_GET["activation"])) {
+} else if (isset($_GET["is_active"])) {
 	PluginFusioninventoryProfile::checkRight("snmp_models","w");
-	$plugin_fusioninventory_mib->activation($_GET["activation"]);
+	$plugin_fusioninventory_mib->activation($_GET["is_active"]);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['massimport'])) {
    PluginFusioninventoryProfile::checkRight("snmp_models","w");

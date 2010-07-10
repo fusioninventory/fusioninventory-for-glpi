@@ -79,7 +79,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                                   `glpi_plugin_fusinvsnmp_miboids`.`id`
                ".$query_add."
                    AND `oid_port_counter`='0'
-                   AND `glpi_plugin_fusinvsnmp_modelmibs`.`activation`='1';";
+                   AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1';";
 
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {

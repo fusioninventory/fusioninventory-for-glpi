@@ -144,7 +144,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                            ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`=
                               `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
                       WHERE `networkequipments_id`='".$ID_Device."'
-                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`activation`='1' ";
+                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
 				break;
 
 			case PRINTER_TYPE :
@@ -159,7 +159,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                               ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
                                  `glpi_plugin_fusioninventory_mappings`.`id`
                       WHERE `printers_id`='".$ID_Device."'
-                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`activation`='1' ";
+                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
 				break;
 		}
 		if (!empty($query)) {

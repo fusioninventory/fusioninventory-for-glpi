@@ -577,7 +577,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                $a_input = array();
                $a_input['name'] = rand(10000, 10000000);
                $a_input['itemtype'] = $data["type"];
-               $a_input['activation'] = 1;
+               $a_input['is_active'] = 1;
                $id = $ptmi->add($a_input);
                
                $query_mibs = "SELECT `glpi_plugin_fusinvsnmp_constructdevice_miboids`.*,
@@ -597,7 +597,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                      $a_input['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
                      $a_input['vlan'] = $data_mibs['vlan'];
                      $a_input['links_oid_fields'] = $data_mibs['itemtype']."||".$data_mibs['mapping_name'];
-                     $a_input['activation'] = 1;
+                     $a_input['is_active'] = 1;
                      $ptmn->add($a_input);
                   }
                }

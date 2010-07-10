@@ -91,7 +91,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 				
 				echo "</tr>";
 				while ($data=$DB->fetch_array($result)) {
-					if ($data["activation"] == "0") {
+					if ($data["is_active"] == "0") {
 						echo "<tr class='tab_bg_1' style='color: grey; '>";
                } else {
 						echo "<tr class='tab_bg_1'>";
@@ -116,9 +116,9 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 					
 					echo "<td align='center'>";
 					if ($data["oid_port_counter"] == "1") {
-						if ($data["activation"] == "1") {
+						if ($data["is_active"] == "1") {
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                  } else if ($data["activation"] == "0") {
+                  } else if ($data["is_active"] == "0") {
 							echo "<img src='".$CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                   }
@@ -127,9 +127,9 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 					
 					echo "<td align='center'>";
 					if ($data["oid_port_dyn"] == "1") {
-						if ($data["activation"] == "1") {
+						if ($data["is_active"] == "1") {
 							echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                  } else if ($data["activation"] == "0") {
+                  } else if ($data["is_active"] == "0") {
 							echo "<img src='".$CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                   }
@@ -149,9 +149,9 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 					if ($data['itemtype'] == NETWORKING_TYPE) {
 						echo "<td align='center'>";
 						if ($data["vlan"] == "1") {
-							if ($data["activation"] == "1") {
+							if ($data["is_active"] == "1") {
 								echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                     } else if ($data["activation"] == "0") {
+                     } else if ($data["is_active"] == "0") {
 								echo "<img src='".$CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                      }
@@ -160,10 +160,10 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 					}
 					
 					echo "<td align='center'>";
-					echo "<a href='".$target."?id=".$id."&activation=".$data["id"]."'>";
-					if ($data["activation"] == "1") {
+					echo "<a href='".$target."?id=".$id."&is_active=".$data["id"]."'>";
+					if ($data["is_active"] == "1") {
 						echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-               } else if ($data["activation"] == "0") {
+               } else if ($data["is_active"] == "0") {
 						echo "<img src='".$CFG_GLPI["root_doc"].
                            "/plugins/fusioninventory/pics/bookmark_off.png'/>";
                }
@@ -314,10 +314,10 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 		$mib_networking->getFromDB($id);
 		$data['id'] = $id;
 		$data = $mib_networking->fields;
-		if ($mib_networking->fields["activation"] == "1") {
-			$data['activation'] = 0;
+		if ($mib_networking->fields["is_active"] == "1") {
+			$data['is_active'] = 0;
       } else {
-			$data['activation'] = 1;
+			$data['is_active'] = 1;
       }
 		$mib_networking->update($data);
 	}
@@ -335,7 +335,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                                ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
                                   `glpi_plugin_fusioninventory_mappings`.`id`
                 WHERE `plugin_fusinvsnmp_models_id`='".$p_id."'
-                  AND `activation`='1'
+                  AND `is_active`='1'
                   AND `oid_port_counter`='0';";
 
       $result=$DB->query($query);

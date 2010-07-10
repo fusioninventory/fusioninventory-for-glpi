@@ -545,7 +545,7 @@ $LANG['plugin_fusioninventory']["buttons"][0]="Entdecke";
 
 $LANG['plugin_fusioninventory']["discovery"][0]="IP Bereich zum Scannen";
 $LANG['plugin_fusioninventory']["discovery"][1]="Endeckte Ger&auml;te";
-$LANG['plugin_fusioninventory']["discovery"][2]="Activation in the script automatically";
+$LANG['plugin_fusioninventory']["discovery"][2]="is_active in the script automatically";
 $LANG['plugin_fusioninventory']["discovery"][3]="Endecker";
 $LANG['plugin_fusioninventory']["discovery"][4]="Serien Nummer";
 $LANG['plugin_fusioninventory']["discovery"][5]="Anzahl importierter Ger&auml;te";

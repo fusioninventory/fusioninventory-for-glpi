@@ -242,7 +242,7 @@ Adding a module report (3 reports)
 
 Version 1.1.0
 
-- #173 Ajout d'une option pour l'activation des logs (spécialement pour tracker)
+- #173 Ajout d'une option pour l'is_active des logs (spécialement pour tracker)
 - #174 Meilleure écriture des logs
 - #170 Ajout des imprimantes en multiprocess
 - correction nettoyages de fonctions
@@ -250,7 +250,7 @@ Version 1.1.0
 - #166 Correction assignation de l'authentification SNMP en mode de stockage fichiers
 
 
-- #173 Add option for log activation (specially for tracker)
+- #173 Add option for log is_active (specially for tracker)
 - #174 enhance logs writes
 - #170 add printer in multi-process
 - corrections and clean functions

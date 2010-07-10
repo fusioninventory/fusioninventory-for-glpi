@@ -83,7 +83,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 				$xml .= "			<mappings_id>".$data["plugin_fusioninventory_mappings_id"].
                                  "</mappings_id>\n";
 				$xml .= "			<vlan>".$data["vlan"]."</vlan>\n";
-				$xml .= "			<activation>".$data["activation"]."</activation>\n";
+				$xml .= "			<activation>".$data["is_active"]."</activation>\n";
 				$xml .= "		</oidobject>\n";
 			}
 		}		
@@ -205,16 +205,16 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 							break;
 
 						case 7:
-							$activation = $item;
+							$is_active = $item;
 							break;
 					}
 				}
 				$query = "INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs`
                                   (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_miboids_id`,`plugin_fusinvsnmp_mibobjects_id`,`oid_port_counter`,
-                                   `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`activation`)
+                                   `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`is_active`)
                       VALUES('".$plugin_fusinvsnmp_models_id."','".$plugin_fusinvsnmp_miboids_id."','".$plugin_fusinvsnmp_mibobjects_id."',
                              '".$oid_port_counter."', '".$oid_port_dyn."', '".$mappings_id."',
-                             '".$vlan."', '".$activation."');";
+                             '".$vlan."', '".$is_active."');";
 				$DB->query($query);
 			}
 			if ($message == '1') {
