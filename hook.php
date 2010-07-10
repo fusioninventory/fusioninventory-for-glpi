@@ -177,8 +177,8 @@ function cron_plugin_fusioninventory() {
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
-   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
-   $pfisnmph->cronCleanHistory();
+//   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
+//   $pfisnmph->cronCleanHistory();
    return 1;
 }
 
@@ -329,9 +329,15 @@ function plugin_headings_fusioninventory_computerInfo($type, $id) {
    $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $id, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 }
 
-function plugin_headings_fusioninventory_fusioninventoryLocks($type, $id) {
-	$fusioninventory_locks = new PluginFusioninventoryLock();
-	$fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/lock.form.php', $type, $id);
+//function plugin_headings_fusioninventory_fusioninventoryLocks($type, $id) {
+function plugin_headings_fusioninventory_fusioninventoryLocks($item) {
+   $type = get_Class($item);
+   if ($type == 'PluginFusioninventoryLock') {
+      $id = $item->getField('id');
+//	$fusioninventory_locks = new PluginFusioninventoryLock();
+//      $fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/lock.form.php', $type, $id);
+      $item->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/lock.form.php', $type, $id);
+   }
 }
 
 function plugin_headings_fusioninventory($type,$id,$withtemplate=0) {

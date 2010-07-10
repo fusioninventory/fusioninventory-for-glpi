@@ -77,13 +77,13 @@ function update213to220() {
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0,1);
 
    // Update ports history from lang traduction into field constant (MySQL fiel 'Field')
-   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
-   $pfisnmph->ConvertField();
+//   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
+//   $pfisnmph->ConvertField();
 
    // Delete all values in glpi_plugin_fusioninventory_configlogfields
-   $pficlf = new PluginFusioninventoryConfigLogField();
-   $pficlf->initConfig();
-   $pficlf->updateTrackertoFusion();
+//   $pficlf = new PluginFusioninventoryConfigLogField();
+//   $pficlf->initConfig();
+//   $pficlf->updateTrackertoFusion();
    // Delete all ports present in fusion but deleted in glpi_networking
    $query = "SELECT `glpi_plugin_fusioninventory_networkports`.`id` AS `fusinvId`
              FROM `glpi_plugin_fusioninventory_networkports`

@@ -57,27 +57,27 @@ if (isset($_POST['update'])) {
 			$config1 = new PluginFusioninventoryConfig;
 			break;
 
-      case 'history' :
-         $pficlf = new PluginFusioninventoryConfigLogField();
-         foreach ($_POST as $key=>$val) {
-            if (is_int($key)) {
-               $input = array();
-               $input['id']   = $key;
-               $input['days'] = $val;
-               $pficlf->update($input);
-            }
-         }
-         break;
+//      case 'history' :
+//         $pficlf = new PluginFusioninventoryConfigLogField();
+//         foreach ($_POST as $key=>$val) {
+//            if (is_int($key)) {
+//               $input = array();
+//               $input['id']   = $key;
+//               $input['days'] = $val;
+//               $pficlf->update($input);
+//            }
+//         }
+//         break;
 
 	}
 	if (isset($config1)) {
 		$config1->update($_POST);
    }
    glpi_header($_SERVER['HTTP_REFERER']);
-} else if ((isset($_POST['Clean_history']))) {
-   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
-   $pfisnmph->cronCleanHistory();
-   glpi_header($_SERVER['HTTP_REFERER']);
+//} else if ((isset($_POST['Clean_history']))) {
+//   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
+//   $pfisnmph->cronCleanHistory();
+//   glpi_header($_SERVER['HTTP_REFERER']);
 } else if ((isset($_POST['plugin_fusioninventory_lockable_add']))
            OR (isset($_POST['plugin_fusioninventory_lockable_delete']))) {
    PluginFusioninventoryLockable::setLockableForm($_POST);
@@ -86,9 +86,10 @@ if (isset($_POST['update'])) {
 
 $config = new PluginFusioninventoryConfig;
 
-$config->showTabs('1', '',$_SESSION['glpi_tabs']);
-echo "<div id='tabcontent'></div>";
-echo "<script type='text/javascript'>loadDefaultTab();</script>";
+$config->showForm('');
+//$config->showTabs('1', '',$_SESSION['glpi_tabs']);
+//echo "<div id='tabcontent'></div>";
+//echo "<script type='text/javascript'>loadDefaultTab();</script>";
 commonFooter();
 
 ?>

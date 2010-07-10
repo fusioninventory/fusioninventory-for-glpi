@@ -160,9 +160,9 @@ class PluginFusioninventoryCommunication {
       if ($errors != '') {
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
             $result=true;
-            $ptap = new PluginFusioninventoryAgentProcess;
-            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                                 array('comment' => $errors));
+//            $ptap = new PluginFusioninventoryAgentProcess;
+//            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                                 array('comment' => $errors));
          } else {
             // It's PROLOG
             $result=false;

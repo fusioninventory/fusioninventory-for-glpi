@@ -40,7 +40,6 @@ function plugin_init_fusioninventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
    Plugin::registerClass('PluginFusioninventoryAgent');
-   Plugin::registerClass('PluginFusioninventoryAgentProcess');
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryTask');
 
@@ -59,9 +58,10 @@ function plugin_init_fusioninventory() {
 
 	if (isset($_SESSION["glpiID"])) {
 
-		if (haveRight("configuration", "r") || haveRight("profile", "w")) {// Config page
-			$PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
-      }
+//		if (haveRight("configuration", "r")) {// Config page
+//		if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
+//			$PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
+//      }
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
       $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
       $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = 'plugin_pre_item_purge_fusioninventory';
@@ -89,9 +89,11 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
          }
 
-         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
+//         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/functionalities.form.php';
          }
+//         }
       }
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']["<img  src='".GLPI_ROOT."/plugins/fusioninventory/pics/books.png' title='".$LANG['plugin_fusioninventory']["setup"][16]."' alt='".$LANG['plugin_fusioninventory']["setup"][16]."'>"] = 'front/documentation.php';
 
@@ -104,10 +106,6 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']["menu"][1];
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
-
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agentsprocesses']['title'] = $LANG['plugin_fusioninventory']["processes"][19];
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agentsprocesses']['page']  = '/plugins/fusioninventory/front/agentprocess.form.php';
-
 	}
 }
 
