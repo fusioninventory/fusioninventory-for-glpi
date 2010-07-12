@@ -93,6 +93,7 @@ $LANG['plugin_fusinvsnmp']["setup"][13]="Vérification des modules PHP nécessai
 $LANG['plugin_fusinvsnmp']["setup"][14]="L'extension snmp de PHP n'est pas chargée";
 $LANG['plugin_fusinvsnmp']["setup"][15]="L'extension runkit de PHP/PECL n'est pas chargée";
 $LANG['plugin_fusinvsnmp']["setup"][16]="Documentation";
+$LANG['plugin_fusinvsnmp']["setup"][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
 
 $LANG['plugin_fusinvsnmp']["functionalities"][0]="Fonctionnalités";
 $LANG['plugin_fusinvsnmp']["functionalities"][1]="Ajout / Suppression de fonctionnalités";
