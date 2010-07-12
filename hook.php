@@ -357,27 +357,27 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$sopt['PluginFusinvsnmpNetworkPortLog'][6]['datatype']='datetime';
 
 
-	$sopt['PluginFusinvsnmpNetworkport2']['common'] = $LANG['plugin_fusinvsnmp']["profile"][28];
+	$sopt['PluginFusinvsnmpNetworkport']['common'] = $LANG['plugin_fusinvsnmp']["profile"][28];
 
-	$sopt['PluginFusinvsnmpNetworkport2'][30]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
-	$sopt['PluginFusinvsnmpNetworkport2'][30]['field'] = 'id';
-	$sopt['PluginFusinvsnmpNetworkport2'][30]['linkfield'] = '';
-	$sopt['PluginFusinvsnmpNetworkport2'][30]['name'] = $LANG["reports"][52];
+	$sopt['PluginFusinvsnmpNetworkport'][30]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
+	$sopt['PluginFusinvsnmpNetworkport'][30]['field'] = 'id';
+	$sopt['PluginFusinvsnmpNetworkport'][30]['linkfield'] = '';
+	$sopt['PluginFusinvsnmpNetworkport'][30]['name'] = $LANG["reports"][52];
 
-	$sopt['PluginFusinvsnmpNetworkport2'][1]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
-	$sopt['PluginFusinvsnmpNetworkport2'][1]['field'] = 'networkports_id';
-	$sopt['PluginFusinvsnmpNetworkport2'][1]['linkfield'] = 'networkports_id';
-	$sopt['PluginFusinvsnmpNetworkport2'][1]['name'] = $LANG["setup"][175];
+	$sopt['PluginFusinvsnmpNetworkport'][1]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
+	$sopt['PluginFusinvsnmpNetworkport'][1]['field'] = 'networkports_id';
+	$sopt['PluginFusinvsnmpNetworkport'][1]['linkfield'] = 'networkports_id';
+	$sopt['PluginFusinvsnmpNetworkport'][1]['name'] = $LANG["setup"][175];
 
-	$sopt['PluginFusinvsnmpNetworkport2'][2]['table'] = 'glpi_locations';
-	$sopt['PluginFusinvsnmpNetworkport2'][2]['field'] = 'id';
-	$sopt['PluginFusinvsnmpNetworkport2'][2]['linkfield'] = 'networkports_id';
-	$sopt['PluginFusinvsnmpNetworkport2'][2]['name'] = $LANG["common"][15];
+	$sopt['PluginFusinvsnmpNetworkport'][2]['table'] = 'glpi_locations';
+	$sopt['PluginFusinvsnmpNetworkport'][2]['field'] = 'id';
+	$sopt['PluginFusinvsnmpNetworkport'][2]['linkfield'] = 'networkports_id';
+	$sopt['PluginFusinvsnmpNetworkport'][2]['name'] = $LANG["common"][15];
 
-	$sopt['PluginFusinvsnmpNetworkport2'][3]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
-	$sopt['PluginFusinvsnmpNetworkport2'][3]['field'] = 'lastup';
-	$sopt['PluginFusinvsnmpNetworkport2'][3]['linkfield'] = 'lastup';
-	$sopt['PluginFusinvsnmpNetworkport2'][3]['name'] = $LANG["login"][0];
+	$sopt['PluginFusinvsnmpNetworkport'][3]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
+	$sopt['PluginFusinvsnmpNetworkport'][3]['field'] = 'lastup';
+	$sopt['PluginFusinvsnmpNetworkport'][3]['linkfield'] = 'lastup';
+	$sopt['PluginFusinvsnmpNetworkport'][3]['name'] = $LANG["login"][0];
 
 
 	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusinvsnmp_snmpmodels';
@@ -805,15 +805,8 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 			}
 			break;
 
-		// *
-		case 'PluginFusinvsnmpNetworkPort' :
-			switch ($table.'.'.$field) {
-
-			}
-			break;
-
 		// * Ports date connection - report (plugins/fusinvsnmp/report/ports_date_connections.php)
-		case 'PluginFusinvsnmpNetworkport2' :
+		case 'PluginFusinvsnmpNetworkport' :
 			switch ($table.'.'.$field) {
 
 				// ** Name and link of networking device (switch)
@@ -1745,7 +1738,7 @@ function plugin_fusinvsnmp_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$
 
 
 		// * Ports date connection - report (plugins/fusinvsnmp/report/ports_date_connections.php)
-		case 'PluginFusinvsnmpNetworkport2' :
+		case 'PluginFusinvsnmpNetworkport' :
 			switch ($new_table.".".$linkfield) {
 
 				// ** Location of switch
@@ -1878,7 +1871,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
 			break;
 
 		// * Ports date connection - report (plugins/fusinvsnmp/report/ports_date_connections.php)
-		case 'PluginFusinvsnmpNetworkport2' :
+		case 'PluginFusinvsnmpNetworkport' :
 			switch ($table.".".$field) {
 
 				// ** Location of switch
@@ -2114,7 +2107,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 			break;
 
 		// * Ports date connection - report (plugins/fusinvsnmp/report/ports_date_connections.php)
-		case 'PluginFusinvsnmpNetworkport2' :
+		case 'PluginFusinvsnmpNetworkport' :
 			switch ($table.".".$field) {
 
 				// ** Name and link of networking device (switch)
