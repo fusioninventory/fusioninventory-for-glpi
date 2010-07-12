@@ -2336,13 +2336,17 @@ function plugin_item_add_fusinvsnmp($parm) {
                $pfiud = new PluginFusinvsnmpUnknownDevice;
                $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusinvsnmpUnknownDevice' ");
                if (count($a_ports) == "1") {
+                  $nn = new NetworkPort_NetworkPort();
                   foreach ($a_ports as $port_infos) {
                      // Get wire
                      $opposite_ID = $nw->getOppositeContact($port_infos['id']);
                      if (isset($opposite_ID)) {
                         // Modify wire
-                        removeConnector($port_infos['id']);
-                        makeConnector($parm['id'], $opposite_ID);
+                        if ($nn->getFromDBForNetworkPort($port_infos['id'])) {
+                            $nn->delete($port_infos);
+                        }
+                        $nn->add(array('networkports_id_1'=> $parm['id'],
+                                       'networkports_id_2' => $opposite_ID));
                      }
                      // Delete port
                      $np->deleteFromDB($port_infos['id']);
