@@ -57,6 +57,16 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST["update"])) {
 //   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
 
+   if (!empty($_POST['selection'])) {
+      $a_selection = explode(',', $_POST['selection']);
+      foreach ($a_selection as $num=>$data) {
+         $dataDB = explode('-', $data);
+         if (!empty($dataDB[0])) {
+            $a_selectionDB[$dataDB[0]] = $dataDB[1];
+         }
+      }
+      $_POST['selection'] = exportArrayToDB($a_selectionDB);
+   }
    $pft->update($_POST);
 
    glpi_header($_SERVER['HTTP_REFERER']);

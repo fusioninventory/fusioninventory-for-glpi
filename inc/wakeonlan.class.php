@@ -72,39 +72,38 @@ class PluginFusioninventoryWakeonlan extends CommonDBTM {
             AND `mac`!='' ";
       if ($result_subnet = $DB->query($query_subnet)) {
          while ($data_subnet=$DB->fetch_array($result_subnet)) {
+            // TODO : add left join agent and agent exist for computer
             $query = "SELECT * FROM `glpi_networkports`
                LEFT JOIN `glpi_computers` ON items_id=`glpi_computers`.`id`
-
-
 
                WHERE `itemtype`='Computer'
                   AND subnet='".$data_subnet['subnet']."'
                   ".$osfind." ";
+
+            // OR
+               // Get config for agent for wakeonlan
+                  //find in glpi_plugin_fusioninventory_agentmodules
+                  // => liste des agent qui ne sont pas configuré pour le wol
+                  // => liste des agent qui sont configure pour le wol
+               // Search agent
+            $query = "SELECT * FROM glpi_plugin_fusioninventory_agents
+               LEFT JOIN 
+
+
+               WHERE `itemtype`='Computer'";
+
+
             if ($result = $DB->query($query)) {
                while ($data=$DB->fetch_array($result)) {
                   $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
                   if ($agentStatus ==  true) {
-                     echo "OK";
                      return $data_subnet['subnet']."-agents_id";
                   }
-                  //print_r($data);
                }
             }
-
          }
       }
-
-      // Search in subnet computer online and in preference under linux
-
-
-      // If found, wake agent and send it computer to wake up
-
-
-      // else search an agent online in subnet and wake agent...
-      
    }
-
-
 }
 
 ?>

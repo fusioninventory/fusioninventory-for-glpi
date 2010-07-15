@@ -45,9 +45,18 @@ if (!defined('GLPI_ROOT')) {
 checkCentralAccess();
 
 echo "<script type='text/javascript'>
-var select = document.getElementById('selection');
+var select = document.getElementById('selectionDisplay');
 var obj = document.getElementsByName('selectionList').item(0);
-select.options[select.options.length] = new Option(obj.options[obj.selectedIndex].text, document.getElementsByName('itemtype').item(0).value + '-' + obj.value);
+var list = document.getElementById('selection').value;
+
+var pattern1 = new RegExp(document.getElementsByName('itemtype').item(0).value + '-' + obj.value + ',');
+var pattern2 = new RegExp(document.getElementsByName('itemtype').item(0).value + '-' + obj.value + '$');
+if ((list.match(pattern1)) || (list.match(pattern2))) {
+
+} else {
+   select.options[select.options.length] = new Option(obj.options[obj.selectedIndex].text, document.getElementsByName('itemtype').item(0).value + '-' + obj.value);
+   document.getElementById('selection').value = list + ',' + document.getElementsByName('itemtype').item(0).value + '-' + obj.value;
+}
 </script>";
 
 ?>

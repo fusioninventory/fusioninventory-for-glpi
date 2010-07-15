@@ -77,7 +77,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-$this->cronTaskScheduler();
+//$this->cronTaskScheduler();
       echo "<br/>";
       $this->showFormHeader($options);
       
@@ -120,8 +120,21 @@ $this->cronTaskScheduler();
       echo "</span>";
       echo "<span id='show_selectionList'>";
       echo "</span>";
-      echo "<br/><select name='selection' id='selection' size='10' multiple='multiple'></select>";
-		echo "</td>";
+      $a_deviceList = importArrayFromDB($this->fields['selection']);
+      $selection = '';
+      $selectionDisplayOptions = '';
+      foreach ($a_deviceList as $itemtype=>$items_id) {
+         $selection .= ','.$itemtype.'-'.$items_id;
+
+         $class = new $itemtype();
+         $class->getFromDB($items_id);
+         $selectionDisplayOptions .= "<option value='".$itemtype.'-'.$items_id."'>".$class->fields['name']."</option>";
+      }
+      echo "<br/><select name='selectionDisplay' id='selectionDisplay' size='10' multiple='multiple'>".$selectionDisplayOptions."</select>";
+      echo "<div style='visibility:hidden'>";
+      echo "<textarea name='selection' id='selection'>".$selection."</textarea>";
+      echo "</div>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
