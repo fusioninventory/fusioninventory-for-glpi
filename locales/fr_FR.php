@@ -600,6 +600,7 @@ $LANG['plugin_fusioninventory']["task"][11]="L'agent a été notifié et commenc
 $LANG['plugin_fusioninventory']["task"][12]="Déclencher l'agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) indisponible(s)";
 $LANG['plugin_fusioninventory']["task"][14]="Date d'exécution";
+$LANG['plugin_fusioninventory']["task"][16]="Nouvelle action";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusioninventory']["constructdevice"][1]="Creation automatique des modèles";
@@ -609,5 +610,10 @@ $LANG['plugin_fusioninventory']["constructdevice"][4]="Exporter tous les modèle
 $LANG['plugin_fusioninventory']["constructdevice"][5]="Regénérer les commentaires de modèles";
 
 $LANG['plugin_fusioninventory']["update"][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande pour finir la mise à jour : ";
+
+$LANG['plugin_fusioninventory']["wakeonlan"][0]="Choix d'ordinateurs";
+$LANG['plugin_fusioninventory']["wakeonlan"][1]="Choix de groupes dynamiques";
+$LANG['plugin_fusioninventory']["wakeonlan"][2]="Choix de groupes simples";
+$LANG['plugin_fusioninventory']["wakeonlan"][3]="Choix d'ordinateur d'une autres action de cette tâche";
 
 ?>

@@ -176,6 +176,7 @@ function cron_plugin_fusioninventory() {
 //	$ptud = new PluginFusioninventoryUnknownDevice;
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
+//	TODO : regarder les 2 lignes juste en dessous !!!!!
 //   #Clean server script processes history
 //   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
 //   $pfisnmph->cronCleanHistory();

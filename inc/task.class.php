@@ -116,11 +116,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $i = 1;
          foreach($a_taskjob as $taskjob_id=>$datas) {
             $i++;
-            $ong[$i] = "Tâche ".($i-1);
+            $ong[$i] = $LANG['plugin_fusioninventory']["task"][2]." ".($i-1);
          }
 
          $i++;
-         $ong[$i] = "Nouvelle tâche";
+         $ong[$i] = $LANG['plugin_fusioninventory']["task"][16];
       }
       return $ong;
 	}
