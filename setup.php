@@ -91,7 +91,7 @@ function plugin_init_fusioninventory() {
 
 //         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/functionalities.form.php';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/configuration.form.php';
          }
 //         }
       }

@@ -251,9 +251,6 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 			);
 		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false);
 		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false,'profile_interface');
-//$prof=new PluginFusioninventoryProfile;
-
-//	$prof->showfusioninventoryForm($_POST["id"]);
 
 		echo "<br>";
 

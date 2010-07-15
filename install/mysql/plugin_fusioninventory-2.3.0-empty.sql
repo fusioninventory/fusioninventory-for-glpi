@@ -61,11 +61,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_locks`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_locks` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+   `tablename` VARCHAR( 64 ) COLLATE utf8_unicode_ci NOT NULL,
    `items_id` INT( 11 ) NOT NULL,
    `tablefields` TEXT,
    PRIMARY KEY ( `id` ),
-   KEY `item` (`itemtype`,`items_id`)
+   KEY `tablename` ( `tablename` ),
+   KEY `items_id` (`items_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -74,12 +75,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockables`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_lockables` (
    `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
-   `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
+   `tablename` VARCHAR( 64 ) COLLATE utf8_unicode_ci NOT NULL,
    `tablefields` TEXT,
    `entities_id` int(11) NOT NULL DEFAULT '-1',
    `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0',
    PRIMARY KEY ( `id` ),
-   KEY `itemtype` ( `itemtype` ),
+   KEY `tablename` ( `tablename` ),
    KEY `entities_id` ( `entities_id` ),
    KEY `is_recursive` ( `is_recursive` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -128,7 +129,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   KEY `entities_id` (`entities_id`),
   KEY `date_scheduled` (`date_scheduled`),
   KEY `plugins_id` (`plugins_id`),
-  KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`)
+  KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
   KEY `users_id` (`users_id`),
   KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
