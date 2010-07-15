@@ -52,7 +52,7 @@ function plugin_init_fusinvsnmp() {
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusinvsnmp_errors");
 
-   $a_plugin = plugin_version_fusioninventory();
+   $a_plugin = plugin_version_fusinvsnmp();
 
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getId($a_plugin['shortname']);
 

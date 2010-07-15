@@ -74,7 +74,7 @@ function pluginFusinvsnmpInstall() {
       $importexport = new PluginFusinvsnmpImportExport;
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $module_id = PluginFusioninventoryModule::addModule(PluginFusioninventoryModule::getId($a_plugin['shortname'], "SNMPQUERY"));
       $a_rights = array();
       $a_rights['networking'] = 'w';
       $a_rights['printers'] = 'w';
