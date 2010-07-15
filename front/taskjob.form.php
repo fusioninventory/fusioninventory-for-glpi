@@ -62,7 +62,7 @@ if (isset ($_POST["add"])) {
       foreach ($a_selection as $num=>$data) {
          $dataDB = explode('-', $data);
          if (!empty($dataDB[0])) {
-            $a_selectionDB[$dataDB[0]] = $dataDB[1];
+            $a_selectionDB[][$dataDB[0]] = $dataDB[1];
          }
       }
       $_POST['selection'] = exportArrayToDB($a_selectionDB);

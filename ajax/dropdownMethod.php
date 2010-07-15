@@ -43,6 +43,11 @@ checkCentralAccess();
 $value = 0;
 if (isset($_POST['value'])) {
    $value = $_POST['value'];
+} else {
+   echo "<script type='text/javascript'>
+   document.getElementById('selection').value = '';
+   document.getElementById('selectionDisplay').length = 0;
+   </script>";
 }
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
 $PluginFusioninventoryTaskjob->dropdownSelectionType("selection_type", $_POST['method_id'], $value);

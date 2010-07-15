@@ -32,11 +32,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusioninventoryTaskjobhistory extends CommonDBTM {
+class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_taskjoblogs";
-      $this->type = 'PluginFusioninventoryTaskjobhistory';
+      $this->type = 'PluginFusioninventoryTaskjoblogs';
 	}
 
 
@@ -63,7 +63,7 @@ class PluginFusioninventoryTaskjobhistory extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $a_history = $this->find('taskjob_id="'.$id.'" ', 'id');
+      $a_history = $this->find('plugin_fusioninventory_taskjobs_id="'.$id.'" ', 'id');
 
       foreach($a_history as $history_id=>$datas) {
          echo "<tr class='tab_bg_1'>";

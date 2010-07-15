@@ -78,7 +78,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 			$this->getEmpty();
       }
 //$this->cronTaskScheduler();
-      echo "<br/>";
       $this->showFormHeader($options);
       
 		echo "<tr class='tab_bg_1'>";
@@ -123,12 +122,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_deviceList = importArrayFromDB($this->fields['selection']);
       $selection = '';
       $selectionDisplayOptions = '';
-      foreach ($a_deviceList as $itemtype=>$items_id) {
-         $selection .= ','.$itemtype.'-'.$items_id;
+      for ($i=0; $i < count($a_deviceList) ; $i++) {
+         foreach ($a_deviceList[$i] as $itemtype=>$items_id) {
+            $selection .= ','.$itemtype.'-'.$items_id;
 
-         $class = new $itemtype();
-         $class->getFromDB($items_id);
-         $selectionDisplayOptions .= "<option value='".$itemtype.'-'.$items_id."'>".$class->fields['name']."</option>";
+            $class = new $itemtype();
+            $class->getFromDB($items_id);
+            $selectionDisplayOptions .= "<option value='".$itemtype.'-'.$items_id."'>".$class->fields['name']."</option>";
+         }
       }
       echo "<br/><select name='selectionDisplay' id='selectionDisplay' size='10' multiple='multiple'>".$selectionDisplayOptions."</select>";
       echo "<div style='visibility:hidden'>";
@@ -331,6 +332,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $dateNow = date("Y-m-d H:i:s");
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask;
+      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
       $query = "SELECT * FROM ".$this->table."
          LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`".$this->table."`.`id`
@@ -371,7 +374,21 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                   $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
-                  $class->run($a_device[0], $a_device[1]);
+                  
+                  $agent_id = $class->run($a_device[0], $a_device[1]);
+                  // Add jobstatus and put status (waiting on server = 0)
+
+                  $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
+                  $a_input['items_id'] = $a_device[1];
+                  $a_input['itemtype'] = $a_device[0];
+                  $a_input['state'] = 0;
+                  $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
+                  $PluginFusioninventoryTaskjobstatus->add($a_input);
+
+                  unset($a_input['plugin_fusioninventory_agents_id']);
+                  $a_input['state'] = 1;
+                  $a_input['date'] = date("Y-m-d H:i:s");
+                  $PluginFusioninventoryTaskjoblogs->add();
 
                   // fusinvsnmp_method($a_device[1], $a_device[0]);
   // echo $a_device[1].", ".$a_device[0]."<br/>";
