@@ -998,14 +998,14 @@ $this->cronTaskScheduler();
          $dropdownOptions = "<optgroup label=\"".$LANG['help'][26]."\">";
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                            `glpi_networkequipments`.`name` AS `name`, `serial`, `otherserial`,
-                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_snmpmodels_id`
+                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusinvsnmp_models_id`
                          FROM `glpi_networkequipments`
-                         LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
+                         LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
                               ON `networkequipments_id`=`glpi_networkequipments`.`id`
-                         INNER join `glpi_plugin_fusioninventory_snmpmodels`
-                              ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                         INNER join `glpi_plugin_fusinvsnmp_models`
+                              ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
                          WHERE `glpi_networkequipments`.`is_deleted`='0'
-                              AND `plugin_fusioninventory_snmpmodels_id`!='0'
+                              AND `plugin_fusinvsnmp_models_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY networkequipments_id";
          $result=$DB->query($query);
@@ -1019,17 +1019,17 @@ $this->cronTaskScheduler();
          $dropdownOptions .= "<optgroup label=\"".$LANG['help'][27]."\">";
          $query = "SELECT `glpi_printers`.`id` AS `gID`,
                            `glpi_printers`.`name` AS `name`, `serial`, `otherserial`,
-                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusioninventory_snmpmodels_id`
+                                `plugin_fusioninventory_snmpauths_id`, `plugin_fusinvsnmp_models_id`
                          FROM `glpi_printers`
-                         LEFT JOIN `glpi_plugin_fusioninventory_printers`
+                         LEFT JOIN `glpi_plugin_fusinvsnmp_printers`
                               ON `printers_id`=`glpi_printers`.`id`
                          LEFT JOIN `glpi_networkports`
                                  ON `items_id`=`glpi_printers`.`id`
                                     AND `itemtype`='".PRINTER_TYPE."'
-                         INNER join `glpi_plugin_fusioninventory_snmpmodels`
-                              ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                         INNER join `glpi_plugin_fusinvsnmp_models`
+                              ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
                          WHERE `glpi_printers`.`is_deleted`='0'
-                              AND `plugin_fusioninventory_snmpmodels_id`!='0'
+                              AND `plugin_fusinvsnmp_models_id`!='0'
                               AND `plugin_fusioninventory_snmpauths_id`!='0'
                          GROUP BY printers_id";
          $result=$DB->query($query);

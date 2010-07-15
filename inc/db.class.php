@@ -83,9 +83,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
       $ptpc = new PluginFusioninventoryPrinter_Cartridge;
       $ptph = new PluginFusioninventoryPrinterLog;
 
-      // * Clean glpi_plugin_fusioninventory_networkports
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networkports`.`id`
-                       FROM `glpi_plugin_fusioninventory_networkports`
+      // * Clean glpi_plugin_fusinvsnmp_networkports
+      $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkports`.`id`
+                       FROM `glpi_plugin_fusinvsnmp_networkports`
                              LEFT JOIN `glpi_networkports`
                                        ON `glpi_networkports`.`id` = `networkports_id`
                              LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `items_id`
@@ -95,9 +95,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptp->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_networkequipmentips
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.`id`
-                       FROM `glpi_plugin_fusioninventory_networkequipmentips`
+      // * Clean glpi_plugin_fusinvsnmp_networkequipmentips
+      $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipmentips`.`id`
+                       FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                              LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                        WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
@@ -105,9 +105,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $pti->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_networkequipments
-      $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
-                       FROM `glpi_plugin_fusioninventory_networkequipments`
+      // * Clean glpi_plugin_fusinvsnmp_networkequipments
+      $query_select = "SELECT `glpi_plugin_fusinvsnmp_networkequipments`.`id`
+                       FROM `glpi_plugin_fusinvsnmp_networkequipments`
                              LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
                        WHERE `glpi_networkequipments`.`id` IS NULL";
       $result=$DB->query($query_select);
@@ -115,9 +115,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptn->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_printers
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
-                       FROM `glpi_plugin_fusioninventory_printers`
+      // * Clean glpi_plugin_fusinvsnmp_printers
+      $query_select = "SELECT `glpi_plugin_fusinvsnmp_printers`.`id`
+                       FROM `glpi_plugin_fusinvsnmp_printers`
                              LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                        WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);
@@ -125,9 +125,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptpr->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_printercartridges
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printercartridges`.`id`
-                       FROM `glpi_plugin_fusioninventory_printercartridges`
+      // * Clean glpi_plugin_fusinvsnmp_printercartridges
+      $query_select = "SELECT `glpi_plugin_fusinvsnmp_printercartridges`.`id`
+                       FROM `glpi_plugin_fusinvsnmp_printercartridges`
                              LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                        WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);
@@ -135,9 +135,9 @@ class PluginFusioninventoryDb extends CommonDBTM {
          $ptpc->deleteFromDB($data["id"],1);
       }
 
-      // * Clean glpi_plugin_fusioninventory_printerlogs
-      $query_select = "SELECT `glpi_plugin_fusioninventory_printerlogs`.`id`
-                       FROM `glpi_plugin_fusioninventory_printerlogs`
+      // * Clean glpi_plugin_fusinvsnmp_printerlogs
+      $query_select = "SELECT `glpi_plugin_fusinvsnmp_printerlogs`.`id`
+                       FROM `glpi_plugin_fusinvsnmp_printerlogs`
                              LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
                        WHERE `glpi_printers`.`id` IS NULL";
       $result=$DB->query($query_select);

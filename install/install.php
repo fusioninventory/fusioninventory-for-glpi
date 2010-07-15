@@ -62,32 +62,27 @@ function pluginFusioninventoryInstall($version) {
    $plugins_id = $fields['id'];
    $a_rights = array();
    $a_rights['agents'] = 'w';
-   $a_rights['agentsprocesses'] = 'w';
+//   $a_rights['agentsprocesses'] = 'w';
    $a_rights['remotecontrol'] = 'w';
    $a_rights['wol'] = 'w';
    $a_rights['configuration'] = 'w';
    PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
 
    // glpi_plugin_fusioninventory_configs
-   $url = str_replace("http:","https:",$CFG_GLPI["url_base"]);
    $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
                          (`type`, `value`, `plugins_id`)
              VALUES ('version', '".$version."', '".$plugins_id."'),
-                    ('URL_agent_conf', '".$url."', '".$plugins_id."'),
                     ('ssl_only', '0', '".$plugins_id."'),
                     ('storagesnmpauth', 'DB', '".$plugins_id."'),
-                    ('inventory_frequence', '24', '".$plugins_id."'),
-                    ('criteria1_ip', '0', '".$plugins_id."'),
-                    ('criteria1_name', '0', '".$plugins_id."'),
-                    ('criteria1_serial', '0', '".$plugins_id."'),
-                    ('criteria1_macaddr', '0', '".$plugins_id."'),
-                    ('criteria2_ip', '0', '".$plugins_id."'),
-                    ('criteria2_name', '0', '".$plugins_id."'),
-                    ('criteria2_serial', '0', '".$plugins_id."'),
-                    ('criteria2_macaddr', '0', '".$plugins_id."'),
-                    ('delete_agent_process', '24', '".$plugins_id."'),
-                    ('remotehttpagent', '0', '".$plugins_id."'),
-                    ('wol', '0', '".$plugins_id."');";
+                    ('inventory_frequence', '24', '".$plugins_id."');";
+//                    ('criteria1_ip', '0', '".$plugins_id."'),
+//                    ('criteria1_name', '0', '".$plugins_id."'),
+//                    ('criteria1_serial', '0', '".$plugins_id."'),
+//                    ('criteria1_macaddr', '0', '".$plugins_id."'),
+//                    ('criteria2_ip', '0', '".$plugins_id."'),
+//                    ('criteria2_name', '0', '".$plugins_id."'),
+//                    ('criteria2_serial', '0', '".$plugins_id."'),
+//                    ('criteria2_macaddr', '0', '".$plugins_id."'),
    $DB->query($query);
 
    PluginFusioninventoryProfile::changeProfile($plugins_id);

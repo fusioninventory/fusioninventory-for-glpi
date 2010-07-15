@@ -44,7 +44,6 @@ include (GLPI_ROOT."/inc/includes.php");
 $_SESSION["glpi_use_mode"] = 2;
 
 $ptc  = new PluginFusioninventoryCommunication;
-$ptap = new PluginFusioninventoryAgentProcess;
 
 $res='';
 $errors='';
@@ -97,7 +96,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $a_tasks = $ptt->find("`agent_id`='".$a_agent['id']."'", "date");
 
          $single = 0;
-         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '0';
+//         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '0';
 
          foreach ($a_tasks as $task_id=>$datas) {
             if (($a_tasks[$task_id]['action'] == 'INVENTORY')

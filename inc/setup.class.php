@@ -71,15 +71,9 @@ class PluginFusioninventorySetup {
 
       $query="DELETE FROM `glpi_displaypreferences`
               WHERE `itemtype`='PluginFusioninventoryError'
-                    OR `itemtype`='PluginFusioninventorySNMPModel'
-                    OR `itemtype`='PluginFusioninventoryConfigSNMPSecurity'
                     OR `itemtype`='PluginFusioninventoryUnknownDevice'
-                    OR `itemtype`='PluginFusioninventoryNetworkPort'
-                    OR `itemtype`='PluginFusioninventoryNetworkport2'
                     OR `itemtype`='PluginFusioninventoryAgent'
                     OR `itemtype`='PluginFusioninventoryIPRange'
-                    OR `itemtype`='PluginFusioninventoryAgentProcess'
-                    OR `itemtype`='PluginFusioninventoryNetworkPortLog'
                     OR `itemtype`='PluginFusioninventoryConfig'
                     OR `itemtype`='PluginFusioninventoryTask'
                     OR `itemtype`='PluginFusioninventoryConstructDevices' ;";
