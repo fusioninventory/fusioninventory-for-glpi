@@ -45,7 +45,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
 	 * Constructor
 	**/
 	function __construct () {
-		$this->table="glpi_plugin_fusioninventory_lockable";
+		$this->table="glpi_plugin_fusioninventory_lockables";
 	}
 
 
@@ -57,20 +57,22 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     *
     *@return nothing (print the form)
     **/
-   // si suppr du lockable --> suppr les locks
    function showForm($options=array()) {
-      global $LANG, $DB, $LINK_ID_TABLE;
+      global $LANG, $DB;
+
+      if (!isset($this->fields['id'])) $this->fields['id']=0;
 
       $tableSelect='';
       if (isset($_SESSION["glpi_plugin_fusioninventory_lockable_table"])) {
-         $tableId=$_SESSION["glpi_plugin_fusioninventory_lockable_table"];
-         if (isset($LINK_ID_TABLE[$tableId])) {
-            $tableSelect=$LINK_ID_TABLE[$tableId];
-         }
+         $tableSelect=$_SESSION["glpi_plugin_fusioninventory_lockable_table"];
       }
 
-      $this->showTabs($options);
-      $this->showFormHeader($options);
+      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<div class='center' id='tabsbody'>";
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr><th colspan='4'>".$LANG['plugin_fusioninventory']["functionalities"][70]."</th>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][72]." :</td>";
@@ -81,8 +83,6 @@ class PluginFusioninventoryLockable extends CommonDBTM{
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $options="";
 
@@ -110,7 +110,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
       ajaxUpdateItemOnSelectEvent($idSelect, 'columnsLockable', GLPI_ROOT."/plugins/fusioninventory/ajax/lockable.lockables.php", $params);
       
       echo "</td><td class='center'>";
-      if (PluginFusioninventoryProfile::haveRight("Fusioninventory", "configuration", "w")) {
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_add' value='" . $LANG["buttons"][8] . " >>'>";
          echo "<br /><br />";
          echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_delete' value='<< " . $LANG["buttons"][6] . "'>";
@@ -128,23 +128,23 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     * Get all about lockables fields
     *
     *@param $p_entities_id='' Entity id.
-    *@param $p_itemtype='' Table id.
+    *@param $p_table='' Table name.
     *TODO:  check rights
     *
     *@return result of the query
     **/
-   static function getLockable($p_entities_id='', $p_itemtype='') {
+   static function getLockable($p_entities_id='', $p_table='') {
       global $DB;
 
-      $query = "SELECT `id`, `itemtype`, `fields`, `entities_id`, `is_recursive`
-                FROM `glpi_plugin_fusioninventory_lockable`";
+      $query = "SELECT `id`, `tablename`, `tablefields`, `entities_id`, `is_recursive`
+                FROM `glpi_plugin_fusioninventory_lockables`";
       $where = '';
       if ($p_entities_id != '') {
          $where = "`entities_id`='".$p_entities_id."'";
       }
-      if ($p_itemtype != '') {
+      if ($p_table != '') {
          if ($where != '') $where.=' AND ';
-         $where .= "`itemtype`='".$p_itemtype."'";
+         $where .= "`tablename`='".$p_table."'";
       }
       if ($where != '') $query.=' WHERE '.$where.';';
       $result = $DB->query($query);
@@ -156,17 +156,17 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     * Get lockables fields
     *
     *@param $p_entities_id='' Entity id.
-    *@param $p_itemtype='' Table id.
+    *@param $p_table='' Table name.
     *TODO:  check rights
     *
     *@return array of lockable fields
     **/
-   static function getLockableFields($p_entities_id='', $p_itemtype='') {
+   static function getLockableFields($p_entities_id='', $p_table='') {
       global $DB;
 
-      if (TableExists('glpi_plugin_fusioninventory_lockable')) {
-         $db_lockable = $DB->fetch_assoc(PluginFusioninventoryLockable::getLockable($p_entities_id, $p_itemtype));
-         $lockable_fields = $db_lockable["fields"];
+      if (TableExists('glpi_plugin_fusioninventory_lockables')) {
+         $db_lockable = $DB->fetch_assoc(PluginFusioninventoryLockable::getLockable($p_entities_id, $p_table));
+         $lockable_fields = $db_lockable["tablefields"];
          $lockable = importArrayFromDB($lockable_fields);
 
          return $lockable;
@@ -177,7 +177,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     * Set lockables fields
     *
     *@param $p_id Lockable id. If 0 creates a new lockable record, else update.
-    *@param $p_itemtype Table name.
+    *@param $p_table Table name.
     *@param $p_fields Array of fields to set to lockable (ex : "0=>name 1=>comment 2=>contact").
     *@param $p_entities_id Entity id.
     *@param $p_recursive Recursive lock (0/1).
@@ -185,7 +185,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     *
     *@return nothing
     **/
-   static function setLockable($p_id, $p_itemtype, $p_fields, $p_entities_id, $p_recursive) {
+   static function setLockable($p_id, $p_table, $p_fields, $p_entities_id, $p_recursive) {
       global $DB;
 
       if (empty($p_entities_id)) {
@@ -196,14 +196,14 @@ class PluginFusioninventoryLockable extends CommonDBTM{
       }
 
       if (!$p_id) {
-         $insert = "INSERT INTO `glpi_plugin_fusioninventory_lockable` (
-                     `itemtype`, `fields`, `entities_id`, `is_recursive` )
-                    VALUES ('$p_itemtype','$p_fields','$p_entities_id','$p_recursive');";
+         $insert = "INSERT INTO `glpi_plugin_fusioninventory_lockables` (
+                     `tablename`, `tablefields`, `entities_id`, `is_recursive` )
+                    VALUES ('$p_table','$p_fields','$p_entities_id','$p_recursive');";
          $DB->query($insert);
       } else {
-         $update = "UPDATE `glpi_plugin_fusioninventory_lockable`
-                    SET `itemtype`='$p_itemtype',
-                        `fields`='$p_fields',
+         $update = "UPDATE `glpi_plugin_fusioninventory_lockables`
+                    SET `tablename`='$p_table',
+                        `tablefields`='$p_fields',
                         `entities_id`='$p_entities_id'
                     WHERE `id`='$p_id';";
          $DB->query($update);
@@ -213,28 +213,23 @@ class PluginFusioninventoryLockable extends CommonDBTM{
    /**
     * Set lockables fields
     *
-    *@param $p_id Lockable id. If 0 creates a new lockable record, else update.
-    *@param $p_itemtype Table name.
-    *@param $p_fields Array of fields to set to lockable (ex : "0=>name 1=>comment 2=>contact").
-    *@param $p_entities_id Entity id.
-    *@param $p_recursive Recursive lock (0/1).
+    *@param $p_post Array.
     *TODO:  check rights
     *
     *@return nothing
     **/
    static function setLockableForm($p_post) {
-      global $DB, $LINK_ID_TABLE;
+      global $DB;
 
-      $tableId = array_search($p_post["tableSelect"], $LINK_ID_TABLE);
-      $_SESSION["glpi_plugin_fusioninventory_lockable_table"] = $tableId;
+      $tableSelect = $p_post["tableSelect"];
+      $_SESSION["glpi_plugin_fusioninventory_lockable_table"] = $tableSelect;
 
       if ( (isset($p_post['plugin_fusioninventory_lockable_add']) AND isset($p_post['columnSelect'])) // add AND columns to add
             OR (isset($_POST['plugin_fusioninventory_lockable_delete']) AND isset($p_post['columnLockable'])) ) {  // delete AND columns to delete
-         $db_lockable = $DB->fetch_assoc(PluginFusioninventoryLockable::getLockable('', $tableId));
+         $db_lockable = $DB->fetch_assoc(PluginFusioninventoryLockable::getLockable('', $tableSelect));
          $lockable_id = $db_lockable["id"];
-         $lockable_fields = $db_lockable["fields"];
+         $lockable_fields = $db_lockable["tablefields"];
          $lockable = importArrayFromDB($lockable_fields);
-
 
          if (isset($p_post['plugin_fusioninventory_lockable_add']) AND isset($p_post['columnSelect'])) { // add
             foreach ($p_post['columnSelect'] as $key=>$id_value) {
@@ -250,40 +245,37 @@ class PluginFusioninventoryLockable extends CommonDBTM{
                   // TODO add a confirmation request before lockable deletion if locks are defined on this field
                   unset($lockable[$fieldToDel]);
                   // field is not lockable any more --> delete all locks on this field
-                  PluginFusioninventoryLock::deleteInAllLockArray($tableId, $fieldName);
+                  PluginFusioninventoryLock::deleteInAllLockArray($tableSelect, $fieldName);
                }
             }
          }
 
-         PluginFusioninventoryLockable::setLockable($lockable_id, $tableId, exportArrayToDB($lockable), '', '');
+         $lockable = array_values($lockable);
+         PluginFusioninventoryLockable::setLockable($lockable_id, $tableSelect, exportArrayToDB($lockable), '', '');
       }
    }
 
    /**
     * Get multiple column select
     *
-    *@param $p_itemtype Table name.
+    *@param $p_table Table name.
     *TODO:  check rights
     *
     *@return nothing
     **/
-   static function getColumnSelect($p_itemtype) {
-      global $DB, $LINK_ID_TABLE;
+   static function getColumnSelect($p_table) {
+      global $DB;
 
-      $query = "SHOW COLUMNS FROM `".$p_itemtype."`";
+      $query = "SHOW COLUMNS FROM `".$p_table."`";
       if ($result=$DB->query($query)) {
-         include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/mapping.fields.constant.php");
-         $tableId = array_search($p_itemtype, $LINK_ID_TABLE);
-         if ($tableId != 0) {
-            $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $tableId);
+         if ($p_table != "") {
+            $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $p_table);
             echo '<SELECT NAME="columnSelect[]" MULTIPLE SIZE="15">'."\n";
             while ($data=$DB->fetch_array($result)) {
                $column=$data[0];
-               if (isset($FUSIONINVENTORY_MAPPING_FIELDS[$column])) { // do not display if the column name is not translated
                   if (!in_array($column,$lockable_fields)) { // do not display if the column name is already lockable
-                     echo "<OPTION value='$column'>$FUSIONINVENTORY_MAPPING_FIELDS[$column]</OPTION>\n";
+                     echo "<OPTION value='$column'>$column</OPTION>\n";
                   }
-               }
             }
             echo '</SELECT>';
          }
@@ -293,22 +285,20 @@ class PluginFusioninventoryLockable extends CommonDBTM{
    /**
     * Get multiple lockable select
     *
-    *@param $p_itemtype Table name.
+    *@param $p_table Table name.
     *TODO:  check rights
     *
     *@return nothing
     **/
-   static function getLockableSelect($p_itemtype) {
-      global $DB, $LINK_ID_TABLE;
+   static function getLockableSelect($p_table) {
+      global $DB;
 
-      $tableId = array_search($p_itemtype, $LINK_ID_TABLE);
-      if ($tableId != 0) {
-         $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $tableId);
-         include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/mapping.fields.constant.php");
+      if ($p_table != "") {
+         $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $p_table);
          echo '<SELECT NAME="columnLockable[]" MULTIPLE SIZE="15">';
          if (count($lockable_fields)){
             foreach ($lockable_fields as $key => $val){
-               echo "<OPTION value='$val'>$FUSIONINVENTORY_MAPPING_FIELDS[$val]</OPTION>\n";
+               echo "<OPTION value='$val'>$val</OPTION>\n";
             }
          }
          echo '</SELECT>';

@@ -212,12 +212,12 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 	$pfc = new PluginFusioninventoryConfig;
 
 	$type = get_Class($item);
-   switch ($type) {
-		case COMPUTER_TYPE :
-			if ($withtemplate) { //?
+//   switch ($type) {
+   switch (get_class($item)) {
+		case 'Computer' :
+			if ($withtemplate) { // new object / template case
 				return array();
-			// Non template case
-         } else {
+         } else { // Non template case / editing an existing object
 				$array = array ();
             $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
             if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
@@ -230,49 +230,43 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			}
 			break;
 
-		case MONITOR_TYPE :
-			if ($withtemplate) { //?
+		case 'Monitor' :
+			if ($withtemplate) { // new object / template case
 				return array();
-			// Non template case
-         } else {
+         } else { // Non template case / editing an existing object
             return array(
                1 => $LANG['plugin_fusioninventory']["title"][5]
             );
 			}
 			break;
 
-		case NETWORKING_TYPE :
-			if ($withtemplate) {
+		case 'NetworkEquipment' :
+			if ($withtemplate) { // new object / template case
 				return array();
-			// Non template case
-         } else {
+         } else { // Non template case / editing an existing object
             return array(
                1 => $LANG['plugin_fusioninventory']["title"][5]
             );
 			}
 			break;
 
-		case PRINTER_TYPE :
-			// template case
-			if ($withtemplate) {
+		case 'Printer' :
+			if ($withtemplate) { // new object / template case
 				return array();
-			// Non template case
-         } else {
+         } else { // Non template case / editing an existing object
             return array(
                1 => $LANG['plugin_fusioninventory']["title"][5]
             );
 			}
 			break;
 
-		case PROFILE_TYPE :
-			// template case
-			if ($withtemplate) {
+		case 'Profile' :
+			if ($withtemplate) { // new object / template case
 				return array();
-			// Non template case
-         } else {
+         } else { // Non template case / editing an existing object
 				return array(
 					1 => $LANG['plugin_fusioninventory']["title"][0],
-					);
+            );
          }
 			break;
 	}
@@ -280,41 +274,41 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 }
 
 // Define headings actions added by the plugin	 
-function plugin_headings_actions_fusioninventory($type) {
-
-   $pfc = new PluginFusioninventoryConfig;
-
-	switch ($type) {
-		case COMPUTER_TYPE :
+//function plugin_headings_actions_fusioninventory($type) {
+function plugin_headings_actions_fusioninventory($item) {
+//	switch ($type) {
+	switch (get_class($item)) {
+		case 'Computer' :
 			$array = array ();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+         $pfc = new PluginFusioninventoryConfig;
          if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
                  (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
-         $array[2] = "plugin_headings_fusioninventory_fusioninventoryLocks";
+         $array[2] = "plugin_headings_fusioninventory_locks";
 			return $array;
 			break;
 
-		case MONITOR_TYPE :
+		case 'Monitor' :
          return array (
-            1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
+            1 => "plugin_headings_fusioninventory_locks"
          );
          break;
 
-      case PRINTER_TYPE :
+      case 'Printer' :
          return array (
-            1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
+            1 => "plugin_headings_fusioninventory_locks"
          );
 			break;
 
-		case NETWORKING_TYPE :
+		case 'NetworkEquipment' :
          return array (
-            1 => "plugin_headings_fusioninventory_fusioninventoryLocks"
+            1 => "plugin_headings_fusioninventory_locks"
          );
 			break;
 
-		case PROFILE_TYPE :
+		case 'Profile' :
 			return array(
 				1 => "plugin_headings_fusioninventory",
 				);
@@ -330,31 +324,43 @@ function plugin_headings_fusioninventory_computerInfo($type, $id) {
    $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $id, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 }
 
-//function plugin_headings_fusioninventory_fusioninventoryLocks($type, $id) {
-function plugin_headings_fusioninventory_fusioninventoryLocks($item) {
+//function plugin_headings_fusioninventory_locks($type, $id) {
+function plugin_headings_fusioninventory_locks($item) {
    $type = get_Class($item);
-   if ($type == 'PluginFusioninventoryLock') {
-      $id = $item->getField('id');
-//	$fusioninventory_locks = new PluginFusioninventoryLock();
-//      $fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/lock.form.php', $type, $id);
-      $item->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/lock.form.php', $type, $id);
-   }
+   $id = $item->getField('id');
+	$fusioninventory_locks = new PluginFusioninventoryLock();
+   $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
+                                                       $type, $id);
 }
 
-function plugin_headings_fusioninventory($type,$id,$withtemplate=0) {
-	global $CFG_GLPI;
-
-	switch ($type) {
-		case PROFILE_TYPE :
-			$prof=new PluginFusioninventoryProfile;
-			if (!$prof->GetfromDB($id)) {
-				PluginFusioninventoryProfile::createaccess($id);
-         }
-			$prof->showForm($id, 
-              array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php"));
-		break;
-	}
-}
+//function plugin_headings_fusioninventory($type,$id,$withtemplate=0) {
+//function plugin_headings_fusioninventory($item,$withtemplate=0) {
+//	global $CFG_GLPI;
+//
+//   if (!$withtemplate) {
+//      echo "<div class='center'>";
+//      switch (get_class($item)) {
+////      switch ($type) {
+//         case 'Profile' :
+//            $prof=new PluginFusioninventoryProfile;
+//            if (!$prof->GetfromDB($id)) {
+//               PluginFusioninventoryProfile::createaccess($id);
+//            }
+//            $prof->showForm($id,
+//                 array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php"));
+//            break;
+//
+//         case 'Computer' :
+//            $prof=new PluginFusioninventoryProfile;
+//            if (!$prof->GetfromDB($id)) {
+//               PluginFusioninventoryProfile::createaccess($id);
+//            }
+//            $prof->showForm($id,
+//                 array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php"));
+//            break;
+//      }
+//   }
+//}
 
 
 function plugin_fusioninventory_MassiveActions($type) {

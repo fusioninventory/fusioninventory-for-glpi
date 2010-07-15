@@ -72,21 +72,23 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $ong = array();
 		$ong[1]=$LANG['plugin_fusioninventory']["functionalities"][2];
-      $ong[2]=$LANG['plugin_fusioninventory']['config'][1];
+//      $ong[2]=$LANG['plugin_fusioninventory']['config'][1];
 //		$ong[3]=$LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG['plugin_fusioninventory']["functionalities"][5];
 //		$ong[3]=$LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG['plugin_fusioninventory']["discovery"][3];
 
-      $ong[7]=$LANG['title'][38];
-      $ong[8]=$LANG['plugin_fusioninventory']["functionalities"][7];
+//      $ong[7]=$LANG['title'][38];
+      $ong[2]=$LANG['plugin_fusioninventory']["functionalities"][7];
 
 		return $ong;
 	}
 
-	function showForm($id, $options=array()) {
+//	function showForm($id, $options=array()) {
+//	function showForm($options=array()) {
+	function showForm() {
 		global $LANG,$CFG_GLPI;
 
-		$this->showTabs($options);
-      $this->showFormHeader($options);
+//		$this->showTabs($options);
+//      $this->showFormHeader($options);
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 		echo "<tr class='tab_bg_1'>";
@@ -182,7 +184,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		$this->showFormButtons($options);
+		$this->showFormButtons();
 		$this->addDivForTabs();
 
       return true;
