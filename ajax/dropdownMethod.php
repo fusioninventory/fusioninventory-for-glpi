@@ -40,10 +40,12 @@ if (strpos($_SERVER['PHP_SELF'],"dropdownMethod.php")) {
 }
 
 checkCentralAccess();
-
-
+$value = 0;
+if (isset($_POST['value'])) {
+   $value = $_POST['value'];
+}
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->dropdownSelectionType("selection_type", $_POST['method_id']);
+$PluginFusioninventoryTaskjob->dropdownSelectionType("selection_type", $_POST['method_id'], $value);
 
 
 ?>

@@ -88,7 +88,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 		echo "</td>";
 		echo "<td>Méthode&nbsp;:</td>";
 		echo "<td align='center'>";
-      $this->dropdownMethod("method_id");
+      $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['selection_type']);
 		echo "</td>";
       echo "</tr>";
 
@@ -191,7 +191,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-   function dropdownMethod($myname,$value=0,$entity_restrict='') {
+   function dropdownMethod($myname,$value=0,$valueType=0,$entity_restrict='') {
       global $DB,$CFG_GLPI;
 
       $a_methods = array();
@@ -215,8 +215,26 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-
       ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params);
+
+      if ($value != "0") {
+         $i = -1;
+         foreach ($a_methods2 as $method) {
+            $i++;
+            if ($method == $value) {
+               $numSelected = $i;
+            } 
+         }
+         $params['value'] = $valueType;
+         if (isset($numSelected)) {
+            echo "<script type='text/javascript'>
+            document.getElementById('dropdown_".$myname.$rand."').selectedIndex = ".$numSelected.";
+";
+       ajaxUpdateItemJsCode("show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params,true,"dropdown_method_id".$rand);
+
+            echo "</script>";
+         }
+      }
 
       return $rand;
    }
@@ -251,6 +269,25 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      );
 
       ajaxUpdateItemOnSelectEvent("dropdown_selection_type".$rand,"show_Selection_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelectionType.php",$params);
+
+      if ($value != "0") {
+         $i = -1;
+         foreach ($a_selectiontype as $type) {
+            $i++;
+            if ($type == $value) {
+               $numSelected = $i;
+            } 
+         }
+         if (isset($numSelected)) {
+            echo "<script type='text/javascript'>
+            document.getElementById('dropdown_".$myname.$rand."').selectedIndex = ".$numSelected.";
+               ";
+            ajaxUpdateItemJsCode("show_Selection_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelectionType.php",$params,true,"dropdown_selection_type".$rand);
+
+            echo "</script>";
+         }
+      }
+
    }
 
 
