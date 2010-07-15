@@ -49,7 +49,7 @@ function pluginFusinvinventoryInstall() {
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
-      $modules_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $modules_id = PluginFusioninventoryModule::addModule(PluginFusioninventoryModule::getId($a_plugin['shortname'], "INVENTORY"));
 
       // Create database
       $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";

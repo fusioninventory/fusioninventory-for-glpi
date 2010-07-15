@@ -40,7 +40,7 @@ include_once ("includes.php");
 function plugin_init_fusinvinventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
-   $a_plugin = plugin_version_fusioninventory();
+   $a_plugin = plugin_version_fusinvinventory();
 
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getId($a_plugin['shortname']);
 
