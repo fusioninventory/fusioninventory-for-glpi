@@ -178,13 +178,42 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `retry_nb` int(2) NOT NULL DEFAULT '0',
   `retry_time` int(11) NOT NULL DEFAULT '0',
   `plugins_id` int(11) NOT NULL DEFAULT '0',
-  `method` text COLLATE utf8_unicode_ci,
+  `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `selection_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `selection` text COLLATE utf8_unicode_ci,
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `comment` text COLLATE utf8_unicode_ci,
   `users_id` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '0',
   `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
-  `statuscomments` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjoblogs`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
+  `date` datetime DEFAULT NULL,
+  `items_id` int(11) NOT NULL DEFAULT '0',
+  `itemtype` varchar(100) DEFAULT NULL,
+  `state` int(11) NOT NULL DEFAULT '0',
+  `comment` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjobstatus`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
+  `items_id` int(11) NOT NULL DEFAULT '0',
+  `itemtype` varchar(100) DEFAULT NULL,
+  `state` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

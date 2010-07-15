@@ -42,7 +42,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    static function getTypeName() {
       global $LANG;
-
+      
       return $LANG['plugin_fusioninventory']["task"][2];
    }
 
@@ -77,7 +77,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-
+$this->cronTaskScheduler();
       echo "<br/>";
       $this->showFormHeader($options);
       
@@ -86,9 +86,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
 		echo "</td>";
-		echo "<td>Module&nbsp;:</td>";
+		echo "<td>Méthode&nbsp;:</td>";
 		echo "<td align='center'>";
-      echo "fusinvdeploy";
+      $this->dropdownMethod("method_id");
 		echo "</td>";
       echo "</tr>";
 
@@ -97,9 +97,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<td align='center'>";
       echo getUserName($this->fields["users_id"],1);
 		echo "</td>";
-      echo "<td>Méthode&nbsp;:</td>";
+      echo "<td>selection_type&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "fusinvdeploy::install(acrobat9)";
+      echo "<span id='show_SelectionType_id'>";
+      //$this->dropdownSelectionType("selection_type");
+      echo "</span>";
 		echo "</td>";
       echo "</tr>";
 
@@ -112,10 +114,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       }
 		echo "</td>";
-      
-      echo "<td>Arguments&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "";
+      echo "<td rowspan='4'>Selection&nbsp;:</td>";
+      echo "<td align='center' rowspan='4'>";
+      echo "<span id='show_Selection_id'>";
+      echo "</span>";
+      echo "<span id='show_selectionList'>";
+      echo "</span>";
+      echo "<br/><select name='selection' id='selection' size='10' multiple='multiple'></select>";
 		echo "</td>";
       echo "</tr>";
 
@@ -123,11 +128,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 		echo "<td>Nombre d'essais&nbsp;:</td>";
 		echo "<td align='center'>";
       Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 1, 30);
-		echo "</td>";
-		echo "<td rowspan='2'>".$LANG['common'][25]."&nbsp;:</td>";
-		echo "<td align='center' rowspan='2'>";
-      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
 		echo "</td>";
       echo "</tr>";
 
@@ -139,35 +139,37 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_2'>";
-      echo "<td colspan='4' height='10'></td>";
-      echo "</tr>";
-
       echo "<tr class='tab_bg_1'>";
-      echo "<td>Statut&nbsp;:</td>";
-      echo "<td align='center'>";
-      switch ($this->fields["status"]) {
-
-         case 0 :
-            echo "Planifié";
-            break;
-
-      }
-		echo "</td>";
-		echo "<td>".$LANG['common'][25]." status&nbsp;:</td>";
+		echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
 		echo "<td align='center'>";
-      echo $this->fields["statuscomments"];
+      echo "<textarea cols='40' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
 		echo "</td>";
       echo "</tr>";
 
+      if ($id) {
+         echo "<tr class='tab_bg_2'>";
+         echo "<td colspan='4' height='10'></td>";
+         echo "</tr>";
 
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>Statut&nbsp;:</td>";
+         echo "<td align='center'>";
+         switch ($this->fields["status"]) {
 
+            case 0 :
+               echo "Planifié";
+               break;
 
-
-// id 	plugin_fusioninventory_module_id 	method 	plugin_fusioninventory_agents_id	rescheduled_taskjob_id 	statuscomments
-
-
+         }
+         echo "</td>";
+         echo "<td>".$LANG['common'][25]." status&nbsp;:</td>";
+         echo "<td align='center'>";
+         echo $this->fields["statuscomments"];
+         echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
+         echo "</td>";
+         echo "</tr>";
+      }
 
       $this->showFormButtons($options);
 
@@ -176,8 +178,164 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
+   function dropdownMethod($myname,$value=0,$entity_restrict='') {
+      global $DB,$CFG_GLPI;
+
+      $a_methods = array();
+      $a_methods = plugin_fusioninventory_task_methods();
+      $a_modules = PluginFusioninventoryModule::getAll();
+      foreach ($a_modules as $module_id=>$datas) {
+         if (function_exists("plugin_".$datas['name']."_task_methods")) {
+            $a_methods = call_user_func("plugin_".$datas['name']."_task_methods");
+         }
+      }
+      $a_methods2 = array();
+      $a_methods2[''] = "------";
+      foreach ($a_methods as $num=>$datas) {
+         $a_methods2[$datas['method']] = $datas['method'];
+      }
+
+      $rand = Dropdown::showFromArray($myname, $a_methods2);
+
+      $params=array('method_id'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'rand'=>$rand,
+                     'myname'=>$myname
+                     );
+
+      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params);
+
+      return $rand;
+   }
 
 
+
+   function dropdownSelectionType($myname,$method,$value=0,$entity_restrict='') {
+      global $DB,$CFG_GLPI;
+
+      $a_methods = array();
+      $a_methods = plugin_fusioninventory_task_methods();
+      $a_modules = PluginFusioninventoryModule::getAll();
+      foreach ($a_modules as $module_id=>$datas) {
+         if (function_exists("plugin_".$datas['name']."_task_methods")) {
+            $a_methods = call_user_func("plugin_".$datas['name']."_task_methods");
+         }
+      }
+      $a_selectiontype = array();
+      $a_selectiontype[''] = "------";
+      foreach ($a_methods as $num=>$datas) {
+         if ($datas['method'] == $method) {
+            $a_selectiontype[$datas['selection_type']] = $datas['selection_type'];
+         }
+      }
+
+      $rand = Dropdown::showFromArray($myname, $a_selectiontype);
+
+      $params=array('selection_type'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'rand'=>$rand,
+                     'myname'=>$myname
+                     );
+
+      ajaxUpdateItemOnSelectEvent("dropdown_selection_type".$rand,"show_Selection_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelectionType.php",$params);
+   }
+
+
+
+   function dropdownSelection($myname,$selectiontype,$value=0,$entity_restrict='') {
+      global $DB,$CFG_GLPI;
+      
+      $types = '';
+      $internal = 1;
+      if ($selectiontype == "devices") {
+
+      } else if ($selectiontype == "rules") {
+
+      } else if ($selectiontype == "devicegroups") {
+         $types = array();
+         $types[] = 'Group';
+      } else {
+         $internal = 0;
+      }
+      if ($internal == "1") {
+         Dropdown::showAllItems($myname, 0, 0, -1, $types);
+      } else {
+         // <select> personalisé :
+         plugin_fusioninventory_task_wakeonlan_fromothertasks();
+      }
+      echo "<input type='button' name='addObject' id='addObject' value='Ajouter'/>";
+
+      $params=array('selection'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'myname'=>$myname
+                     );
+
+
+      ajaxUpdateItemOnEvent('addObject','show_selectionList',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelection.php",$params,array("click"));
+   }
+   
+
+   function cronTaskScheduler() {
+      global $DB;
+
+      $dateNow = date("Y-m-d H:i:s");
+
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask;
+
+      $query = "SELECT * FROM ".$this->table."
+         LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`".$this->table."`.`id`
+         WHERE `is_active`='0'
+            AND `status` = '0'
+            AND date_scheduled < '".$dateNow."' ";
+      if ($result = $DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+
+            // Get list of devices listed in this job
+            unset($a_deviceList);
+            switch ($data['selection_type']) {
+
+               case 'devices':
+                  $a_deviceList = importArrayFromDB($data['selection']);
+                  break;
+
+               case 'rules':
+
+                  break;
+
+               case 'devicegroups':
+
+                  break;
+
+               case 'fromothertasks':
+
+                  break;
+            }
+
+            if (isset($a_deviceList)) {
+
+
+               // Run function of this method for each device
+               foreach ($a_deviceList as $num=>$devicecomposed_id) {
+                  $a_device = explode("\$\$\$\$\$", $devicecomposed_id);
+                  // Get module name
+                  $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+                  $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+                  $class = new $className;
+                  $class->run($a_device[0], $a_device[1]);
+
+                  // fusinvsnmp_method($a_device[1], $a_device[0]);
+  // echo $a_device[1].", ".$a_device[0]."<br/>";
+               }
+            }
+         }
+      }      
+   }
+
+
+
+
+   
+   
 
 
 
@@ -193,6 +351,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
+
+// **********************************************************************
 // TODO : see in all function under this text if is ok or must be deleted
 
 
@@ -781,24 +941,40 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function getStateAgent($ip, $agentid, $type="") {
       global $LANG;
 
-      PluginFusioninventoryDisplay::disableDebug();
+      //PluginFusioninventoryDisplay::disableDebug();
       $state = false;
-      if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'>";
-         echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip-$type'/>";
-         echo "</td>";
-         echo "<td align='center'>".$ip;
-         echo "</td>";
-         echo "<td align='center'>";
-         echo $LANG['plugin_fusioninventory']["task"][8];
-         echo "</td>";
-         echo "</tr>";
+      $ctx = stream_context_create(array(
+          'http' => array(
+              'timeout' => 2
+              )
+          )
+      );
 
-         fclose($fp);
-         $state = true;
+      $url = "http://".$ip.":62354/status";
+
+      $str = @file_get_contents($url, 0, $ctx);
+      if (strstr($str, "waiting")) {
+
+         return true;
       }
-      PluginFusioninventoryDisplay::reenableusemode();
+
+
+//      if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
+//         echo "<tr class='tab_bg_1'>";
+//         echo "<td align='center'>";
+//         echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip-$type'/>";
+//         echo "</td>";
+//         echo "<td align='center'>".$ip;
+//         echo "</td>";
+//         echo "<td align='center'>";
+//         echo $LANG['plugin_fusioninventory']["task"][8];
+//         echo "</td>";
+//         echo "</tr>";
+//
+//         fclose($fp);
+//         $state = true;
+//      }
+      //PluginFusioninventoryDisplay::reenableusemode();
       return $state;
    }
 

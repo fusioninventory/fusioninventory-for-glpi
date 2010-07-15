@@ -47,6 +47,7 @@ if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 $pft = new PluginFusioninventoryTask;
+$PluginFusioninventoryTaskjobhistory = new PluginFusioninventoryTaskjobhistory;
 
 $pftj = new PluginFusioninventoryTaskjob;
 $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
@@ -79,6 +80,19 @@ if ($_POST['glpi_tab'] > 1) {
       $i++;
       if ($_POST['glpi_tab'] == $i) {
          $pftj->showForm($taskjob_id);
+         $PluginFusioninventoryTaskjobhistory->showHistory($taskjob_id);
+         $taskjob_id_next = $taskjob_id;
+         for ($j=2 ; $j > 1; $j++) {
+            $a_taskjobreties = $pftj->find("`rescheduled_taskjob_id`='".$taskjob_id_next."' ", "", 1);
+            if (!empty($a_taskjobreties)) {
+               foreach($a_taskjobreties as $taskjob_id_next=>$datas2) {
+                  $pftj->showForm($taskjob_id_next);
+                  $PluginFusioninventoryTaskjobhistory->showHistory($taskjob_id_next);
+               }
+            } else {
+               $j = 0;
+            }
+         }
       }
    }
 }
