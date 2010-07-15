@@ -1564,7 +1564,8 @@ function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 
             case "plugin_fusioninventory_manage_locks" :
                $pfil = new PluginFusionInventoryLock;
-               $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
+               include_once(GLPI_ROOT.'/inc/printer.class.php');
+               $pfil->showForm($_SERVER["PHP_SELF"], PRINTER_TYPE, '');
                break;
 
 			}
