@@ -47,7 +47,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 		if ($this->fields['id'] > 0){
          $ong[1]=$LANG['title'][27];
          $ong[2]=$LANG['buttons'][37];
-         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventoryAuth::haveRight("remotecontrol","w"))) {
+         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("remotecontrol","w"))) {
             $ong[3]=$LANG['plugin_fusioninventory']["task"][2];
          }
          $ong[4]=$LANG['title'][38];
@@ -58,7 +58,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		PluginFusioninventoryAuth::checkRight("snmp_networking","r");
+		PluginFusioninventoryProfile::checkRight("snmp_networking","r");
 
 		if ($id!='') {
 			$this->getFromDB($id);
@@ -208,8 +208,8 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "<td align='center'>";
          Dropdown::show("PluginFusinvsnmpModel",
-                        array('name'=>"plugin_fusioninventory_snmpmodels_id",
-                              'value'=>$this->fields["plugin_fusioninventory_snmpmodels_id"]));
+                        array('name'=>"plugin_fusinvsnmp_models_id",
+                              'value'=>$this->fields["plugin_fusinvsnmp_models_id"]));
          echo "</td>";
          echo "</tr>";
 

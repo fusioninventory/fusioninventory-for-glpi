@@ -105,12 +105,12 @@ $LANG['plugin_fusioninventory']["functionalities"][6]="Legend";
 $LANG['plugin_fusioninventory']["functionalities"][7]="Lockable fields";
 
 $LANG['plugin_fusioninventory']["functionalities"][9]="Retention in days";
-$LANG['plugin_fusioninventory']["functionalities"][10]="History activation";
-$LANG['plugin_fusioninventory']["functionalities"][11]="Connection module activation";
-$LANG['plugin_fusioninventory']["functionalities"][12]="SNMP networking module activation";
-$LANG['plugin_fusioninventory']["functionalities"][13]="SNMP peripheral module activation";
-$LANG['plugin_fusioninventory']["functionalities"][14]="SNMP phones module activation";
-$LANG['plugin_fusioninventory']["functionalities"][15]="SNMP printers module activation";
+$LANG['plugin_fusioninventory']["functionalities"][10]="History is_active";
+$LANG['plugin_fusioninventory']["functionalities"][11]="Connection module is_active";
+$LANG['plugin_fusioninventory']["functionalities"][12]="SNMP networking module is_active";
+$LANG['plugin_fusioninventory']["functionalities"][13]="SNMP peripheral module is_active";
+$LANG['plugin_fusioninventory']["functionalities"][14]="SNMP phones module is_active";
+$LANG['plugin_fusioninventory']["functionalities"][15]="SNMP printers module is_active";
 $LANG['plugin_fusioninventory']["functionalities"][16]="SNMP authentication";
 $LANG['plugin_fusioninventory']["functionalities"][17]="Database";
 $LANG['plugin_fusioninventory']["functionalities"][18]="Files";
@@ -138,7 +138,7 @@ $LANG['plugin_fusioninventory']["functionalities"][43]="SNMP authentication";
 
 $LANG['plugin_fusioninventory']["functionalities"][50]="Number of simultaneous processes for the network discovery";
 $LANG['plugin_fusioninventory']["functionalities"][51]="Number of simultaneous processes for SNMP queries";
-$LANG['plugin_fusioninventory']["functionalities"][52]="Log files activation";
+$LANG['plugin_fusioninventory']["functionalities"][52]="Log files is_active";
 $LANG['plugin_fusioninventory']["functionalities"][53]="Number of simultanous processes to be used by server script";
 
 $LANG['plugin_fusioninventory']["functionalities"][60]="Clean history";
@@ -269,7 +269,7 @@ $LANG['plugin_fusioninventory']["model_info"][7]="Create SNMP model";
 $LANG['plugin_fusioninventory']["model_info"][8]="Model already exists: import was not done";
 $LANG['plugin_fusioninventory']["model_info"][9]="Import completed successfully";
 $LANG['plugin_fusioninventory']["model_info"][10]="SNMP model import";
-$LANG['plugin_fusioninventory']["model_info"][11]="Activation";
+$LANG['plugin_fusioninventory']["model_info"][11]="is_active";
 $LANG['plugin_fusioninventory']["model_info"][12]="Key for model discovery";
 $LANG['plugin_fusioninventory']["model_info"][13]="Load the correct model";
 $LANG['plugin_fusioninventory']["model_info"][14]="Load the correct SNMP model";
@@ -541,7 +541,7 @@ $LANG['plugin_fusioninventory']["buttons"][0]="Discover";
 
 $LANG['plugin_fusioninventory']["discovery"][0]="IP range to scan";
 $LANG['plugin_fusioninventory']["discovery"][1]="Discovered devices";
-$LANG['plugin_fusioninventory']["discovery"][2]="Activation in the script automatically";
+$LANG['plugin_fusioninventory']["discovery"][2]="is_active in the script automatically";
 $LANG['plugin_fusioninventory']["discovery"][3]="Discover";
 $LANG['plugin_fusioninventory']["discovery"][4]="Serial number";
 $LANG['plugin_fusioninventory']["discovery"][5]="Number of imported devices";

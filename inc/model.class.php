@@ -97,7 +97,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
+      if(PluginFusioninventoryProfile::haveRight("snmp_models","w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
                  "\" class='submit' >";
@@ -141,10 +141,10 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 				$query = "SELECT * 
                       FROM `glpi_plugin_fusinvsnmp_networkequipments`
                            LEFT JOIN `glpi_plugin_fusinvsnmp_modelmibs`
-                           ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusioninventory_snmpmodels_id`=
-                              `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`
+                           ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`=
+                              `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
                       WHERE `networkequipments_id`='".$ID_Device."'
-                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`activation`='1' ";
+                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
 				break;
 
 			case PRINTER_TYPE :
@@ -153,13 +153,13 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                         `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
                       FROM `glpi_plugin_fusinvsnmp_printers`
                            LEFT JOIN `glpi_plugin_fusinvsnmp_modelmibs`
-                              ON `glpi_plugin_fusinvsnmp_printers`.`plugin_fusioninventory_snmpmodels_id`=
-                                 `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`
+                              ON `glpi_plugin_fusinvsnmp_printers`.`plugin_fusinvsnmp_models_id`=
+                                 `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
                            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                               ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
                                  `glpi_plugin_fusioninventory_mappings`.`id`
                       WHERE `printers_id`='".$ID_Device."'
-                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`activation`='1' ";
+                            AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1' ";
 				break;
 		}
 		if (!empty($query)) {
@@ -167,7 +167,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 			$exclude = array();
 			while ($data=$DB->fetch_array($result)) {
 				$oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
-               Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusioninventory_miboids_id']);
+               Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',$data['plugin_fusinvsnmp_miboids_id']);
          }
 			return $oids;
 		}
@@ -218,7 +218,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                       LIMIT 0,1";
 				$result = $DB->query($query);
 				$data = $DB->fetch_assoc($result);
-				$plugin_fusioninventory_snmpmodels_id = $data['id'];
+				$plugin_fusinvsnmp_models_id = $data['id'];
             if ($comment != "") {
                return $data['discovery_key'];
             } else {
@@ -227,14 +227,14 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
                   case NETWORKING_TYPE:
                      $query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
-                               SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusioninventory_snmpmodels_id."'
+                               SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."'
                                WHERE `networkequipments_id`='".$device_id."'";
                      $DB->query($query);
                      break;
 
                   case PRINTER_TYPE:
                      $query = "UPDATE `glpi_plugin_fusinvsnmp_printers`
-                               SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusioninventory_snmpmodels_id."'
+                               SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."'
                                WHERE `printers_id`='".$device_id."'";
                      $DB->query($query);
                      break;

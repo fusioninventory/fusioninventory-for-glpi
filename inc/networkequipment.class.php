@@ -37,12 +37,12 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-require_once(GLPI_ROOT.'/plugins/fusioninventory/inc/commondbtm.class.php');
+require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
 /**
  * Class to use networking switches
  **/
-class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
+class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    private $ports=array(), $ifaddrs=array();
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
@@ -54,7 +54,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
    function __construct() {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
-      $this->oFusionInventory_networkequipment = new PluginFusioninventoryCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+      $this->oFusionInventory_networkequipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
    }
 
    /**
@@ -369,7 +369,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusioninventoryCommonDBTM {
 		}
       Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"model_infos",
-                           'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
+                           'value'=>$this->fields['plugin_fusinvsnmp_models_id'],
                            'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";

@@ -65,8 +65,8 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$sopt['PluginFusinvsnmpSNMPModel'][5]['name'] = $LANG["buttons"][31];
 
 	$sopt['PluginFusinvsnmpSNMPModel'][6]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][6]['field'] = 'activation';
-	$sopt['PluginFusinvsnmpSNMPModel'][6]['linkfield'] = 'activation';
+	$sopt['PluginFusinvsnmpSNMPModel'][6]['field'] = 'is_active';
+	$sopt['PluginFusinvsnmpSNMPModel'][6]['linkfield'] = 'is_active';
 	$sopt['PluginFusinvsnmpSNMPModel'][6]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][11];
 	$sopt['PluginFusinvsnmpSNMPModel'][6]['datatype']='bool';
 

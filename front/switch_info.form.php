@@ -38,12 +38,12 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("networking","r");
-PluginFusioninventoryAuth::checkRight("snmp_networking","r");
+PluginFusioninventoryProfile::checkRight("snmp_networking","r");
 
 $plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
-	PluginFusioninventoryAuth::checkRight("snmp_networking","w");
+	PluginFusioninventoryProfile::checkRight("snmp_networking","w");
 	$plugin_fusioninventory_snmp->update_network_infos($_POST['id'], $_POST['model_infos'], $_POST['plugin_fusioninventory_snmpauths_id']);
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
    $plugin_fusioninventory_model_infos = new PluginFusinvsnmpModel;

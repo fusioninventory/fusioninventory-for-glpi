@@ -54,16 +54,16 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
 		if ($type == NETWORKING_TYPE) {
 			$query_add = "LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
-                                 ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusioninventory_snmpmodels_id`=
-                                    `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`
+                                 ON `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`=
+                                    `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
                     WHERE `networkequipments_id`='".$ID_Device."'
-                          AND `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusioninventory_snmpmodels_id`!='0' ";
+                          AND `glpi_plugin_fusinvsnmp_networkequipments`.`plugin_fusinvsnmp_models_id`!='0' ";
       } else if($type == PRINTER_TYPE) {
 			$query_add = "LEFT JOIN `glpi_plugin_fusinvsnmp_printers`
-                                 ON `glpi_plugin_fusinvsnmp_printers`.`plugin_fusioninventory_snmpmodels_id`=
-                                    `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`
+                                 ON `glpi_plugin_fusinvsnmp_printers`.`plugin_fusinvsnmp_models_id`=
+                                    `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_models_id`
                     WHERE `printers_id`='".$ID_Device."'
-                          AND `glpi_plugin_fusinvsnmp_printers`.`plugin_fusioninventory_snmpmodels_id`!='0' ";
+                          AND `glpi_plugin_fusinvsnmp_printers`.`plugin_fusinvsnmp_models_id`!='0' ";
       }
 			
 		$query = "SELECT `glpi_plugin_fusioninventory_mappings`.`itemtype`,
@@ -75,11 +75,11 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                                ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
                                   `glpi_plugin_fusioninventory_mappings`.`id`
                      LEFT JOIN `glpi_plugin_fusinvsnmp_miboids`
-                               ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_miboids_id`=
+                               ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusinvsnmp_miboids_id`=
                                   `glpi_plugin_fusinvsnmp_miboids`.`id`
                ".$query_add."
                    AND `oid_port_counter`='0'
-                   AND `glpi_plugin_fusinvsnmp_modelmibs`.`activation`='1';";
+                   AND `glpi_plugin_fusinvsnmp_modelmibs`.`is_active`='1';";
 
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
@@ -103,7 +103,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_network_infos($id, $plugin_fusioninventory_snmpmodels_id, $plugin_fusioninventory_snmpauths_id) {
+	function update_network_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 		
 		$query = "SELECT *
@@ -120,7 +120,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 			$plugin_fusioninventory_snmpauths_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
-                SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusioninventory_snmpmodels_id."',
+                SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."',
                     `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `networkequipments_id`='".$id."';";
 	
@@ -138,7 +138,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_printer_infos($id, $plugin_fusioninventory_snmpmodels_id, $plugin_fusioninventory_snmpauths_id) {
+	function update_printer_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusioninventory_snmpauths_id) {
 		global $DB;
 
 		$query = "SELECT *
@@ -155,7 +155,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 			$plugin_fusioninventory_snmpauths_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusinvsnmp_printers`
-                SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusioninventory_snmpmodels_id."',
+                SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."',
                     `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
                 WHERE `printers_id`='".$id."';";
 	
@@ -312,13 +312,13 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
 		switch ($type) {
 			case NETWORKING_TYPE :
-				$query = "SELECT plugin_fusioninventory_snmpmodels_id
+				$query = "SELECT plugin_fusinvsnmp_models_id
 				FROM glpi_plugin_fusinvsnmp_networkequipments 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 
 			case PRINTER_TYPE :
-				$query = "SELECT `plugin_fusioninventory_snmpmodels_id`
+				$query = "SELECT `plugin_fusinvsnmp_models_id`
                       FROM `glpi_plugin_fusinvsnmp_printers`
                       WHERE `printers_id`='".$ID_Device."';";
 				break;
@@ -326,7 +326,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 		if (isset($query)) {
 			if (($result = $DB->query($query))) {
 				if ($DB->numrows($result) != 0) {
-					return $DB->result($result, 0, "plugin_fusioninventory_snmpmodels_id");
+					return $DB->result($result, 0, "plugin_fusinvsnmp_models_id");
             }
 			}
 		}

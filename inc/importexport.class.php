@@ -42,7 +42,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 	function export($ID_model) {
 		global $DB;
 		
-		PluginFusioninventoryAuth::checkRight("snmp_models","r");
+		PluginFusioninventoryProfile::checkRight("snmp_models","r");
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusinvsnmp_models`
                 WHERE `id`='".$ID_model."';";
@@ -68,22 +68,22 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 
       $query = "SELECT `glpi_plugin_fusinvsnmp_modelmibs`.*,
          FROM `glpi_plugin_fusinvsnmp_modelmibs`
-         WHERE `plugin_fusioninventory_snmpmodels_id`='".$ID_model."';";
+         WHERE `plugin_fusinvsnmp_models_id`='".$ID_model."';";
 
 		if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
 				$xml .= "		<oidobject>\n";
 				$xml .= "			<object><![CDATA[".
-               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects",$data["plugin_fusioninventory_mibobjects_id"]).
+               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects",$data["plugin_fusinvsnmp_mibobjects_id"]).
                "]]></object>\n";
 				$xml .= "			<oid><![CDATA[".
-               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusioninventory_miboids_id"])."]]></oid>\n";
+               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusinvsnmp_miboids_id"])."]]></oid>\n";
 				$xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
 				$xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
 				$xml .= "			<mappings_id>".$data["plugin_fusioninventory_mappings_id"].
                                  "</mappings_id>\n";
 				$xml .= "			<vlan>".$data["vlan"]."</vlan>\n";
-				$xml .= "			<activation>".$data["activation"]."</activation>\n";
+				$xml .= "			<activation>".$data["is_active"]."</activation>\n";
 				$xml .= "		</oidobject>\n";
 			}
 		}		
@@ -98,7 +98,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 		
-		PluginFusioninventoryAuth::checkRight("snmp_models","r");
+		PluginFusioninventoryProfile::checkRight("snmp_models","r");
 		
       $this->showTabs($options);
       $this->showFormHeader($options);
@@ -122,7 +122,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
    function showFormMassImport($target) {
 		global $DB,$CFG_GLPI,$LANG;
 
-      PluginFusioninventoryAuth::checkRight("snmp_models","r");
+      PluginFusioninventoryProfile::checkRight("snmp_models","r");
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
@@ -133,7 +133,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 		echo "<td align='center'>";
       echo $LANG['plugin_fusioninventory']["model_info"][16]."<br/>";
 		echo "<input type='hidden' name='massimport' value='1'/>";
-      if(PluginFusioninventoryAuth::haveRight("snmp_models","w")) {
+      if(PluginFusioninventoryProfile::haveRight("snmp_models","w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
 		echo "</td>";
@@ -149,7 +149,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 		global $DB,$LANG;
 
 		if ($installation != 1) {
-			PluginFusioninventoryAuth::checkRight("snmp_models","w");
+			PluginFusioninventoryProfile::checkRight("snmp_models","w");
       }
 		$xml = simplexml_load_file($file);
 
@@ -169,7 +169,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
                                (`name`,`itemtype`,`discovery_key`,`comment`)
                    VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."','".$xml->comments[0]."');";
 			$DB->query($query);
-			$plugin_fusioninventory_snmpmodels_id = $DB->insert_id();
+			$plugin_fusinvsnmp_models_id = $DB->insert_id();
 			
 			$i = -1;
 			foreach($xml->oidlist[0] as $num) {
@@ -179,12 +179,12 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 					$j++;
 					switch ($j) {
 						case 1:
-							$plugin_fusioninventory_mibobjects_id = Dropdown::importExternal(
+							$plugin_fusinvsnmp_mibobjects_id = Dropdown::importExternal(
                                          "PluginFusinvsnmpMibObject",$item);
 							break;
 
 						case 2:
-							$plugin_fusioninventory_miboids_id = Dropdown::importExternal(
+							$plugin_fusinvsnmp_miboids_id = Dropdown::importExternal(
                                       "PluginFusinvsnmpMibOid",$item);
 							break;
 
@@ -205,21 +205,21 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 							break;
 
 						case 7:
-							$activation = $item;
+							$is_active = $item;
 							break;
 					}
 				}
 				$query = "INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs`
-                                  (`plugin_fusioninventory_snmpmodels_id`,`plugin_fusioninventory_miboids_id`,`plugin_fusioninventory_mibobjects_id`,`oid_port_counter`,
-                                   `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`activation`)
-                      VALUES('".$plugin_fusioninventory_snmpmodels_id."','".$plugin_fusioninventory_miboids_id."','".$plugin_fusioninventory_mibobjects_id."',
+                                  (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_miboids_id`,`plugin_fusinvsnmp_mibobjects_id`,`oid_port_counter`,
+                                   `oid_port_dyn`,`plugin_fusioninventory_mappings_id`,`vlan`,`is_active`)
+                      VALUES('".$plugin_fusinvsnmp_models_id."','".$plugin_fusinvsnmp_miboids_id."','".$plugin_fusinvsnmp_mibobjects_id."',
                              '".$oid_port_counter."', '".$oid_port_dyn."', '".$mappings_id."',
-                             '".$vlan."', '".$activation."');";
+                             '".$vlan."', '".$is_active."');";
 				$DB->query($query);
 			}
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
-               " : <a href='snmpmodel.form.php?id=".$plugin_fusioninventory_snmpmodels_id."'>".$xml->name[0]."</a>";
+               " : <a href='snmpmodel.form.php?id=".$plugin_fusinvsnmp_models_id."'>".$xml->name[0]."</a>";
          }
 		}
 	}
@@ -280,14 +280,14 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
                          LIMIT 0,1;";
                $result = $DB->query($query);
                $data = $DB->fetch_assoc($result);
-				$plugin_fusioninventory_snmpmodels_id = $data['id'];
+				$plugin_fusinvsnmp_models_id = $data['id'];
             } else {
-				$plugin_fusioninventory_snmpmodels_id = 0;
+				$plugin_fusinvsnmp_models_id = 0;
             }
             $discovery->MAC = strtolower($discovery->MAC);
 
-			if (empty($plugin_fusioninventory_snmpmodels_id)) {
-				$plugin_fusioninventory_snmpmodels_id = 0;
+			if (empty($plugin_fusinvsnmp_models_id)) {
+				$plugin_fusinvsnmp_models_id = 0;
             }
 
             unset($p_criteria);
@@ -323,7 +323,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
                }
                $ptud->fields['comment'] = $discovery->DESCRIPTION;
                $ptud->fields['type'] = $discovery->TYPE;
-            $ptud->fields['plugin_fusioninventory_snmpmodels_id'] = $plugin_fusioninventory_snmpmodels_id;
+            $ptud->fields['plugin_fusinvsnmp_models_id'] = $plugin_fusinvsnmp_models_id;
 
                $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
                if ($discovery->AUTHSNMP != "") {
@@ -340,8 +340,8 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
                if ($ptud->fields['snmp'] == '') {
                   $ptud->fields['snmp'] = 0;
                }
-            if ($ptud->fields['plugin_fusioninventory_snmpmodels_id'] == '') {
-               $ptud->fields['plugin_fusioninventory_snmpmodels_id'] = 0;
+            if ($ptud->fields['plugin_fusinvsnmp_models_id'] == '') {
+               $ptud->fields['plugin_fusinvsnmp_models_id'] = 0;
                }
                if ($ptud->fields['plugin_fusioninventory_snmpauths_id'] == '') {
                   $ptud->fields['plugin_fusioninventory_snmpauths_id'] = 0;
@@ -417,8 +417,8 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
                }
                if ($ci->getField('comment') && !in_array('comment', $a_lockable))
                   $data['comment'] = $discovery->DESCRIPTION;
-               if ($ci->getField('plugin_fusioninventory_snmpmodels_id') && !in_array('plugin_fusioninventory_snmpmodels_id', $a_lockable));
-                  $data['plugin_fusioninventory_snmpmodels_id'] = $FK_model;
+               if ($ci->getField('plugin_fusinvsnmp_models_id') && !in_array('plugin_fusinvsnmp_models_id', $a_lockable));
+                  $data['plugin_fusinvsnmp_models_id'] = $FK_model;
                if ($ci->getField('plugin_fusioninventory_snmpauths_id') && !in_array('plugin_fusioninventory_snmpauths_id', $a_lockable));
                   $data['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
                if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {

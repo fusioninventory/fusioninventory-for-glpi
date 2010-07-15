@@ -93,6 +93,7 @@ $LANG['plugin_fusinvsnmp']["setup"][13]="Vérification des modules PHP nécessai
 $LANG['plugin_fusinvsnmp']["setup"][14]="L'extension snmp de PHP n'est pas chargée";
 $LANG['plugin_fusinvsnmp']["setup"][15]="L'extension runkit de PHP/PECL n'est pas chargée";
 $LANG['plugin_fusinvsnmp']["setup"][16]="Documentation";
+$LANG['plugin_fusinvsnmp']["setup"][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
 
 $LANG['plugin_fusinvsnmp']["functionalities"][0]="Fonctionnalités";
 $LANG['plugin_fusinvsnmp']["functionalities"][1]="Ajout / Suppression de fonctionnalités";
@@ -104,12 +105,12 @@ $LANG['plugin_fusinvsnmp']["functionalities"][6]="Légende";
 $LANG['plugin_fusinvsnmp']["functionalities"][7]="Champs verrouillables";
 
 $LANG['plugin_fusinvsnmp']["functionalities"][9]="Rétention en jours";
-$LANG['plugin_fusinvsnmp']["functionalities"][10]="Activation de l'historique";
-$LANG['plugin_fusinvsnmp']["functionalities"][11]="Activation du module connexion";
-$LANG['plugin_fusinvsnmp']["functionalities"][12]="Activation du module SNMP réseaux";
-$LANG['plugin_fusinvsnmp']["functionalities"][13]="Activation du module SNMP périphériques";
-$LANG['plugin_fusinvsnmp']["functionalities"][14]="Activation du module SNMP téléphones";
-$LANG['plugin_fusinvsnmp']["functionalities"][15]="Activation du module SNMP imprimantes";
+$LANG['plugin_fusinvsnmp']["functionalities"][10]="is_active de l'historique";
+$LANG['plugin_fusinvsnmp']["functionalities"][11]="is_active du module connexion";
+$LANG['plugin_fusinvsnmp']["functionalities"][12]="is_active du module SNMP réseaux";
+$LANG['plugin_fusinvsnmp']["functionalities"][13]="is_active du module SNMP périphériques";
+$LANG['plugin_fusinvsnmp']["functionalities"][14]="is_active du module SNMP téléphones";
+$LANG['plugin_fusinvsnmp']["functionalities"][15]="is_active du module SNMP imprimantes";
 $LANG['plugin_fusinvsnmp']["functionalities"][16]="Stockage de l'authentification SNMP";
 $LANG['plugin_fusinvsnmp']["functionalities"][17]="Base de données";
 $LANG['plugin_fusinvsnmp']["functionalities"][18]="Fichiers";
@@ -137,7 +138,7 @@ $LANG['plugin_fusinvsnmp']["functionalities"][43]="Authentification SNMP";
 
 $LANG['plugin_fusinvsnmp']["functionalities"][50]="Nombre de process simultanés pour la découverte réseau";
 $LANG['plugin_fusinvsnmp']["functionalities"][51]="Nombre de process simultanés pour l'interrogation SNMP";
-$LANG['plugin_fusinvsnmp']["functionalities"][52]="Activation des journaux";
+$LANG['plugin_fusinvsnmp']["functionalities"][52]="is_active des journaux";
 $LANG['plugin_fusinvsnmp']["functionalities"][53]="Nombre de process simultanés pour le script serveur de post-traitement";
 
 $LANG['plugin_fusinvsnmp']["functionalities"][60]="Nettoyage de l'historique";
@@ -268,7 +269,7 @@ $LANG['plugin_fusinvsnmp']["model_info"][7]="Création de modèle SNMP";
 $LANG['plugin_fusinvsnmp']["model_info"][8]="Modèle déjà existant : import non effectué";
 $LANG['plugin_fusinvsnmp']["model_info"][9]="Import effectué avec succès";
 $LANG['plugin_fusinvsnmp']["model_info"][10]="Importation de modèle";
-$LANG['plugin_fusinvsnmp']["model_info"][11]="Activation";
+$LANG['plugin_fusinvsnmp']["model_info"][11]="is_active";
 $LANG['plugin_fusinvsnmp']["model_info"][12]="Clé modèle pour la découverte";
 $LANG['plugin_fusinvsnmp']["model_info"][13]="Charger le bon modèle";
 $LANG['plugin_fusinvsnmp']["model_info"][14]="Charger le bon modèle SNMP";

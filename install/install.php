@@ -74,7 +74,7 @@ function pluginFusinvsnmpInstall() {
       $importexport = new PluginFusinvsnmpImportExport;
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      $module_id = PluginFusioninventoryModule::addModule(PluginFusioninventoryModule::getId($a_plugin['shortname'], "SNMPQUERY"));
+      $plugin_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       $a_rights = array();
       $a_rights['networking'] = 'w';
       $a_rights['printers'] = 'w';
@@ -83,7 +83,7 @@ function pluginFusinvsnmpInstall() {
       $a_rights['rangeip'] = 'w';
       $a_rights['unknowndevices'] = 'w';
       $a_rights['configuration'] = 'w';
-      PluginFusioninventoryProfile::initProfile($module_id,$a_rights);
+      PluginFusioninventoryProfile::initProfile($plugin_id,$a_rights);
 
       // Creation config values
 //      PluginFusioninventoryConfig::add($modules_id, type, value);
@@ -114,7 +114,6 @@ function pluginFusinvsnmpUninstall() {
    }
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
-   PluginFusioninventoryModule::deleteModule($a_plugin['shortname']);
 
    $query = "SHOW TABLES;";
    $result=$DB->query($query);

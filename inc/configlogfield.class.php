@@ -191,7 +191,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
-      if (PluginFusioninventoryAuth::haveRight("configuration","w")) {
+      if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
       }
       echo "</td>";
