@@ -40,7 +40,7 @@ function plugin_init_fusinvsnmp() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
    $plugin = new Plugin;
-   if (!$plugin->isActivated("fusioninventory")) {
+   if (!$plugin->isActivated("fusioninventory") && $plugin->isActivated("fusinvsnmp")) {
       $plugin->getFromDBbyDir("fusinvsnmp");
       $plugin->unactivate($plugin->fields['id']);
       addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["setup"][17]);
