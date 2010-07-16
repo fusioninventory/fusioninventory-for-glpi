@@ -72,8 +72,9 @@ while ($data=$DB->fetch_array($result)) {
    }
    $ports[$data['ID']] = $data['name']." - ".$data['pname'];
 }
-
-dropdownArrayValues("FK_networking_ports",$ports,$selected);
+if (isset($ports)) {
+   dropdownArrayValues("FK_networking_ports",$ports,$selected);
+}
 echo "</td>";
 echo "</tr>";
 
