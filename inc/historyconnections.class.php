@@ -182,7 +182,7 @@ class PluginFusionInventoryHistoryConnections extends CommonDBTM {
 
             echo "<td>";
             $np->getFromDB($data['FK_port_destination']);
-            if (isset($np->fields["on_device"])) {
+            if ((isset($np->fields["on_device"])) AND (isset($np->fields["device_type"]))) {
                $CommonItem->getFromDB($np->fields["device_type"],
                                       $np->fields["on_device"]);
                $link1 = $CommonItem->getLink(1);
