@@ -1274,17 +1274,14 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((plugin_fusioninventory_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 				$array = array ();
-            //return array(
             if (($configModules->isActivated('remotehttpagent')) AND(plugin_fusioninventory_HaveRight("remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
-				//}
-            $array[2] = $LANG['plugin_fusioninventory']["title"][5];
-
+            if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])) {
+               $array[2] = $LANG['plugin_fusioninventory']["title"][5];
+            }
             return $array;
-//				}
 			}
 			break;
 
@@ -1293,11 +1290,11 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((plugin_fusioninventory_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
-					return array(
-						1 => $LANG['plugin_fusioninventory']["title"][5]
-					);
-//				}
+            $array = array ();
+            if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])) {
+               $array[1] = $LANG['plugin_fusioninventory']["title"][5];
+				}
+            return $array;
 			}
 			break;
 
@@ -1310,7 +1307,9 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 				if ((plugin_fusioninventory_haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusioninventory']["title"][0];
 				}
-            $array[2] = $LANG['plugin_fusioninventory']["title"][5];
+            if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])) {
+               $array[2] = $LANG['plugin_fusioninventory']["title"][5];
+            }
             return $array;
 			}
 			break;
@@ -1325,7 +1324,9 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 				if ((plugin_fusioninventory_haveRight("snmp_printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
 					$array[1] = $LANG['plugin_fusioninventory']["title"][0];
 				}
-            $array[2] = $LANG['plugin_fusioninventory']["title"][5];
+            if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])) {
+               $array[2] = $LANG['plugin_fusioninventory']["title"][5];
+            }
             return $array;
 			}
 			break;
@@ -1336,9 +1337,11 @@ function plugin_get_headings_fusioninventory($type,$ID,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-				return array(
-					1 => $LANG['plugin_fusioninventory']["title"][0],
-					);
+            $array = array ();
+            if(isset($_SESSION["glpi_plugin_fusioninventory_installed"])) {
+               $array[1] = $LANG['plugin_fusioninventory']["title"][0];
+            }
+            return $array;
          }
 			break;
 	}
