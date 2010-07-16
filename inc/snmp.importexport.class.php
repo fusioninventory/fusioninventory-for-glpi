@@ -453,7 +453,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   $np = new Netport;
                   $query = "SELECT ID FROM glpi_networking_ports
                      WHERE (on_device = '".$a_device[0]."' AND device_type = '".$a_device[1]."')
-                        AND `ifaddr` NOT IN ('', '127.0.0.1')
+                        AND `ifaddr` NOT IN ('127.0.0.1')
                      ORDER BY name, logical_number";
                   if ($result = $DB->query($query)) {
                      if ($DB->numrows($result) == 1) {
