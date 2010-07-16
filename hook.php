@@ -33,7 +33,7 @@
 // Original Author of file: DURIEUX David
 // Purpose of file:
 // ----------------------------------------------------------------------
-
+unset($_SESSION["glpi_plugin_fusioninventory_search"]);
 function plugin_fusioninventory_getSearchOption() {
 	global $LANG;
 	$sopt = array ();
@@ -1781,7 +1781,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
 
 function plugin_fusioninventory_addSelect($type,$ID,$num) {
 	global $SEARCH_OPTION;
-
+   
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 
@@ -2071,6 +2071,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
                break;
 
             case 'glpi_networking_ports.ID':
+               
                if (isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport'])) {
                   return " ";
                } else {
