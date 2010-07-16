@@ -473,6 +473,14 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                            '.$discovery->MAC.'(mac), '.$discovery->NETPORTVENDOR.'(name)';
                         $error_input['agent_type'] = 'NETDISCOVERY';
                         $ptae->addError($error_input);
+                     } else { // noport
+                        $port_add = array();
+                        $port_add["on_device"] = $a_device[0];
+                        $port_add["device_type"] = $a_device[1];
+                        $port_add["ifaddr"] = $discovery->IP;
+                        $port_add['ifmac'] = $discovery->MAC;
+                        $port_add['name'] = $discovery->NETPORTVENDOR;
+                        $np->add($port_add);
                      }
                   }
                }
