@@ -76,11 +76,13 @@ class PluginFusionInventoryLock extends CommonDBTM{
       } else {
          $locked = array();
       }
-
-      include_once(GLPI_ROOT.'/plugins/fusioninventory/inc_constants/plugin_fusioninventory.mapping.fields.constant.php');
+      include(GLPI_ROOT.'/plugins/fusioninventory/inc_constants/plugin_fusioninventory.mapping.fields.constant.php');
       $CommonItem = new CommonItem;
       $CommonItem->getFromDB($p_itemtype, $p_items_id);
 
+      if ($p_itemtype == NETWORKING_PORT_TYPE) {
+         $Netport = new Netport;
+      }
       echo "<form method='post' action=\"$p_target\">";
       echo "<input type='hidden' name='ID' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
@@ -94,8 +96,16 @@ class PluginFusionInventoryLock extends CommonDBTM{
          } else {
             $checked = '';
          }
-         echo "<tr class='tab_bg_1'><td>" . $FUSIONINVENTORY_MAPPING_FIELDS[$val] . "</td>
-                  <td>".$CommonItem->getField($val)."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
+         if ($p_itemtype == NETWORKING_PORT_TYPE) {
+            $port = $Netport->find("`ID`='".$p_items_id."'");
+            foreach ($port as $port_id=>$data) {
+               echo "<tr class='tab_bg_1'><td>" . $FUSIONINVENTORY_MAPPING_FIELDS[$val] . "</td>
+               <td>".$data[$val]."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
+            }
+         } else {
+            echo "<tr class='tab_bg_1'><td>" . $FUSIONINVENTORY_MAPPING_FIELDS[$val] . "</td>
+            <td>".$CommonItem->getField($val)."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
+         }
       }
       echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
                <input class='submit' type='submit' name='unlock_field_fusioninventory'

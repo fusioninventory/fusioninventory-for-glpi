@@ -1443,6 +1443,12 @@ function plugin_headings_fusioninventory_networkingErrors($type, $ID) {
 function plugin_headings_fusioninventory_fusioninventoryLocks($type, $ID) {
 	$fusioninventory_locks = new PluginFusionInventoryLock();
 	$fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.lock.form.php', $type, $ID);
+   // Get networking_ports
+   $Netport = new netport;
+   $a_netports = $Netport->find("`device_type`='".$type."' AND `on_device`='".$ID."'");
+   foreach ($a_netports as $netports_id=>$data) {
+      $fusioninventory_locks->showForm(GLPI_ROOT . '/plugins/fusioninventory/front/plugin_fusioninventory.lock.form.php', NETWORKING_PORT_TYPE, $netports_id);
+   }
 }
 
 function plugin_headings_fusioninventory($type,$ID,$withtemplate=0) {
