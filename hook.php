@@ -1786,7 +1786,7 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
 
 			// ** FusionInventory - switch
 				case "glpi_plugin_fusioninventory_networking.ID" :
-					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_12.on_device SEPARATOR '$$$$') AS ITEM_$num, ";
+               return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_12.on_device SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
 				// ** FusionInventory - switch port
@@ -1816,11 +1816,13 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
 			switch ($table.".".$field) {
 
 				case "glpi_networking.device" :
+               $_SESSION["glpi_plugin_fusioninventory_search"]['switch'] = 1;
 					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_12.on_device SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
 				case "glpi_plugin_fusioninventory_networking_ports.ID" :
-					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_22.".$field." SEPARATOR '$$$$') AS ITEM_$num, ";
+               $_SESSION["glpi_plugin_fusioninventory_search"]['switchport'] = 1;
+					return "GROUP_CONCAT( DISTINCT FUSIONINVENTORY_12.".$field." SEPARATOR '$$$$') AS ITEM_$num, ";
 					break;
 
 			}
@@ -2014,17 +2016,28 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
 				// ** FusionInventory - switch
 				case "glpi_networking.device" :
-               return " LEFT JOIN glpi_networking_ports AS FUSIONINVENTORY_10 ON (glpi_plugin_fusioninventory_unknown_device.ID = FUSIONINVENTORY_10.on_device AND FUSIONINVENTORY_10.device_type='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."') ".
-                  " LEFT JOIN glpi_networking_wire AS FUSIONINVENTORY_11 ON FUSIONINVENTORY_10.ID = FUSIONINVENTORY_11.end1 OR FUSIONINVENTORY_10.ID = FUSIONINVENTORY_11.end2 ".
-                  " LEFT JOIN glpi_networking_ports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.ID = CASE WHEN FUSIONINVENTORY_11.end1 = FUSIONINVENTORY_10.ID THEN FUSIONINVENTORY_11.end2 ELSE FUSIONINVENTORY_11.end1 END
-                  LEFT JOIN glpi_networking AS FUSIONINVENTORY_13 ON FUSIONINVENTORY_12.on_device=FUSIONINVENTORY_13.ID";
+               if ((isset($_SESSION["glpi_plugin_fusioninventory_search"]['switchport']))
+                       AND ($_SESSION["glpi_plugin_fusioninventory_search"]['switchport'] == "2")) {
+
+               } else {
+                  $_SESSION["glpi_plugin_fusioninventory_search"]['switch'] = "2";
+                  return " LEFT JOIN glpi_networking_wire AS FUSIONINVENTORY_11 ON glpi_networking_ports.ID = FUSIONINVENTORY_11.end1 OR glpi_networking_ports.ID = FUSIONINVENTORY_11.end2 ".
+                     " LEFT JOIN glpi_networking_ports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.ID = CASE WHEN FUSIONINVENTORY_11.end1 = glpi_networking_ports.ID THEN FUSIONINVENTORY_11.end2 ELSE FUSIONINVENTORY_11.end1 END";
+               }
+               return "";
                break;
 
             // ** FusionInventory - switch port
             case "glpi_plugin_fusioninventory_networking_ports.ID" :
-               return " LEFT JOIN glpi_networking_ports AS FUSIONINVENTORY_20 ON (FUSIONINVENTORY_20.on_device = glpi_plugin_fusioninventory_unknown_device.ID AND FUSIONINVENTORY_20.device_type='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."') ".
-                " LEFT JOIN glpi_networking_wire AS FUSIONINVENTORY_21 ON FUSIONINVENTORY_20.ID = FUSIONINVENTORY_21.end1 OR FUSIONINVENTORY_20.ID = FUSIONINVENTORY_21.end2 ".
-                  " LEFT JOIN glpi_networking_ports AS FUSIONINVENTORY_22 ON FUSIONINVENTORY_22.ID = CASE WHEN FUSIONINVENTORY_21.end1 = FUSIONINVENTORY_20.ID THEN FUSIONINVENTORY_21.end2 ELSE FUSIONINVENTORY_21.end1 END ";
+               if ((isset($_SESSION["glpi_plugin_fusioninventory_search"]['switch']))
+                       AND ($_SESSION["glpi_plugin_fusioninventory_search"]['switch'] == "2")) {
+
+               } else {
+                  $_SESSION["glpi_plugin_fusioninventory_search"]['switchport'] = "2";
+                  return " LEFT JOIN glpi_networking_wire AS FUSIONINVENTORY_11 ON glpi_networking_ports.ID = FUSIONINVENTORY_11.end1 OR glpi_networking_ports.ID = FUSIONINVENTORY_11.end2 ".
+                     " LEFT JOIN glpi_networking_ports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.ID = CASE WHEN FUSIONINVENTORY_11.end1 = glpi_networking_ports.ID THEN FUSIONINVENTORY_11.end2 ELSE FUSIONINVENTORY_11.end1 END";
+               }
+               return "";
                break;
 
 			}
