@@ -36,7 +36,18 @@ if (!defined('GLPI_ROOT')) {
 }
 
 $NEEDED_ITEMS=array("fusioninventory","search");
+
 include (GLPI_ROOT."/inc/includes.php");
+
+if (isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport'])) {
+   unset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport']);
+}
+if (isset($_SESSION["glpi_plugin_fusioninventory_search"]['switchport'])) {
+   unset($_SESSION["glpi_plugin_fusioninventory_search"]['switchport']);
+}
+if (isset($_SESSION["glpi_plugin_fusioninventory_search"]['switch'])) {
+   unset($_SESSION["glpi_plugin_fusioninventory_search"]['switch']);
+}
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","unknown");
 
