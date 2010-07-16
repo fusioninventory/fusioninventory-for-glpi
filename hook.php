@@ -33,7 +33,7 @@
 // Original Author of file: DURIEUX David
 // Purpose of file:
 // ----------------------------------------------------------------------
-unset($_SESSION["glpi_plugin_fusioninventory_search"]);
+
 function plugin_fusioninventory_getSearchOption() {
 	global $LANG;
 	$sopt = array ();
@@ -1848,6 +1848,7 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
 
 
 function plugin_fusioninventory_forceGroupBy($type) {
+
     switch ($type) {
 
       case COMPUTER_TYPE :
@@ -2029,7 +2030,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
                   }
                }
                $net = '';
-               if (($table_networking_ports == "0") OR (!isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport']))) {
+               if (($table_networking_ports == "0") AND (!isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport']))) {
                   $_SESSION["glpi_plugin_fusioninventory_search"]['networkport'] = 1;
                   $net = " LEFT JOIN glpi_networking_ports ON (glpi_plugin_fusioninventory_unknown_device.ID = glpi_networking_ports.on_device AND glpi_networking_ports.device_type='5153')";
                }
@@ -2054,7 +2055,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
                   }
                }
                $net = '';
-               if (($table_networking_ports == "0") OR (!isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport']))) {
+               if (($table_networking_ports == "0") AND (!isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport']))) {
                   $_SESSION["glpi_plugin_fusioninventory_search"]['networkport'] = 1;
                   $net = " LEFT JOIN glpi_networking_ports ON (glpi_plugin_fusioninventory_unknown_device.ID = glpi_networking_ports.on_device AND glpi_networking_ports.device_type='5153')";
                }
@@ -2071,8 +2072,8 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
                break;
 
             case 'glpi_networking_ports.ID':
-               
                if (isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport'])) {
+                  print_r($_SESSION["glpi_plugin_fusioninventory_search"]);
                   return " ";
                } else {
                   $_SESSION["glpi_plugin_fusioninventory_search"]['networkport'] = 1;
