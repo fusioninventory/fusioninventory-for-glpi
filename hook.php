@@ -2204,7 +2204,7 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 
             // ** FusionInventory - switch port
             case "glpi_plugin_fusioninventory_networking_ports.ID" :
-               return " ORDER BY FUSIONINVENTORY_22.".$field." $order ";
+               return " ORDER BY FUSIONINVENTORY_12.".$field." $order ";
                break;
 
 			}
