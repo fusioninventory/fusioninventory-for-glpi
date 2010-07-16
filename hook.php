@@ -224,8 +224,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
                     (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][0];
             }
-            $array[2] = $LANG['plugin_fusioninventory']["title"][5];
-
+            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+               $array[2] = $LANG['plugin_fusioninventory']["title"][5];
+            }
             return $array;
 			}
 			break;
@@ -234,9 +235,11 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			if ($withtemplate) { // new object / template case
 				return array();
          } else { // Non template case / editing an existing object
-            return array(
-               1 => $LANG['plugin_fusioninventory']["title"][5]
-            );
+            $array = array ();
+            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+               $array[1] = $LANG['plugin_fusioninventory']["title"][5];
+            }
+            return $array;
 			}
 			break;
 
@@ -244,9 +247,11 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			if ($withtemplate) { // new object / template case
 				return array();
          } else { // Non template case / editing an existing object
-            return array(
-               1 => $LANG['plugin_fusioninventory']["title"][5]
-            );
+            $array = array ();
+            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+               $array[1] = $LANG['plugin_fusioninventory']["title"][5];
+            }
+            return $array;
 			}
 			break;
 
@@ -254,9 +259,11 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			if ($withtemplate) { // new object / template case
 				return array();
          } else { // Non template case / editing an existing object
-            return array(
-               1 => $LANG['plugin_fusioninventory']["title"][5]
-            );
+            $array = array ();
+            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+               $array[1] = $LANG['plugin_fusioninventory']["title"][5];
+            }
+            return $array;
 			}
 			break;
 
@@ -264,9 +271,11 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 			if ($withtemplate) { // new object / template case
 				return array();
          } else { // Non template case / editing an existing object
-				return array(
-					1 => $LANG['plugin_fusioninventory']["title"][0],
-            );
+            $array = array ();
+            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+               $array[1] = $LANG['plugin_fusioninventory']["title"][0];
+            }
+            return $array;
          }
 			break;
 	}
