@@ -463,8 +463,40 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
                $this->getFromDB($np->fields["on_device"]);
                if ($this->fields["hub"] == "1") {
                   // We will update ports and wire
+                     // Get all ports of hub
+                     $a_ports = $np->find("`on_device`='".$np->fields["on_device"]."' AND `device_type`='".$np->fields["device_type"]."'");
+                     $a_listport = array();
 
+                  foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+                     $query = "SELECT * FROM `glpi_networking_ports`
+                        WHERE `ifmac` = '".$ifmac."' ";
+                     $result = $DB->query($query);
+                     if ($DB->numrows($result) == 1) {
+                        $line = $DB->fetch_assoc($result);
+                        makeConnector($p_oPort->getValue('ID'), $line['ID']);
+                        $a_listport[$line['ID']]=1;
+                     } else {
+                        $this->getEmpty();
+                        $unknown_id = $this->add($this->fields);
+                        // Create device inconnu
+                        $input = array();
+                        $input["on_device"] = $id_unknown;
+                        $input["device_type"] = $this->type;
+                        $input["ifmac"] = $ifmac;
+                        $id_port = $np->add($input);
+                        makeConnector($p_oPort->getValue('ID'), $id_port);
+                        $a_listport[$id_port]=1;
+                     }
+                  }
 
+                  foreach ($a_ports as $port_id=>$data) {
+                     if (!isset($a_listport[$port_id])) {
+                        // delete linked port
+                        removeConnector($port_id);
+                     } else {
+                        unset($a_listport[$port_id]);
+                     }
+                  }
                   return;
                }
             }
@@ -501,11 +533,18 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
             $line = $DB->fetch_assoc($result);
-            makeConnector($line['ID'], $id_port);
+            makeConnector($p_oPort->getValue('ID'), $line['ID']);
          } else {
             // Create device inconnu
-
-            
+            $this->getEmpty();
+            $unknown_id = $this->add($this->fields);
+            // Create device inconnu
+            $input = array();
+            $input["on_device"] = $id_unknown;
+            $input["device_type"] = $this->type;
+            $input["ifmac"] = $ifmac;
+            $id_port = $np->add($input);
+            makeConnector($p_oPort->getValue('ID'), $id_port);
          }
       }
    }
