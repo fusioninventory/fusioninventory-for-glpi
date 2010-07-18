@@ -458,24 +458,18 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          if ($Netport->fields["device_type"] == $this->type) {
             $this->getFromDB($Netport->fields["on_device"]);
             if ($this->fields["hub"] == "1") {
-               echo "[t]";
                $this->releaseHub($this->fields['ID'], $p_oPort);
-               echo "ok";
                $hub_id = $this->fields['ID'];
             } else {
-               echo "[tt]";
-               $this->removeConnector($ID);
+               removeConnector($ID);
                $hub_id = $this->createHub($p_oPort);
             }
          } else {
-            echo "[ttt]";
-            $this->removeConnector($ID);
+            removeConnector($ID);
             $hub_id = $this->createHub($p_oPort);
          }
       } else {
-         echo "[tttt]";
          $hub_id = $this->createHub($p_oPort);
-         echo "titi";
       }
 
 
@@ -493,10 +487,8 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`ifmac`='".$ifmac."'");
-
          if (count($a_ports) == "1") {
             if ($used_id = $this->searchIfmacOnHub($a_ports, $a_portglpi)) {
-               
             } else {
                // Connect port
                $used_id = $this->connectPortToHub($a_ports, $hub_id);
@@ -504,7 +496,6 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          } else if (count($a_ports) == "0") {
             // Port don't exist
             // Create unknown device
-
             $input = array();
                // get source entity :
                $Netport->getDeviceData($p_oPort->getValue("on_device"),$p_oPort->getValue("device_type"));
@@ -512,13 +503,14 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
                   $input['FK_entities'] = $Netport->FK_entities;
                }
             $unknown_id = $this->add($input);
-
             $input = array();
             $input["on_device"] = $unknown_id;
             $input["device_type"] = $this->type;
             $input["ifmac"] = $ifmac;
             $id_port = $Netport->add($input);
-            $used_id = $this->connectPortToHub($id_port, $hub_id);
+            $a_portcreate = array();
+            $a_portcreate[$id_port] = 1;
+            $used_id = $this->connectPortToHub($a_portcreate, $hub_id);
          }
          $a_portUsed[$used_id] = 1;
       }
@@ -560,7 +552,6 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          if ($DB->numrows($result) == 1) {
             $freeport = $DB->fetch_assoc($result);
             $freeport_id = $freeport['ID'];
-            print_r($freeport);
          } else {
             // Create port
             $input = array();
