@@ -449,6 +449,235 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
    function hubNetwork($p_oPort) {
       global $DB;
 
+      $Netwire = new Netwire;
+      $Netport = new Netport;
+
+      // Get port connected on switch port
+      if ($ID = $Netwire->getOppositeContact($p_oPort->getValue('ID'))) {
+         $Netport->getFromDB($ID);
+         if ($Netport->fields["device_type"] == $this->type) {
+            $this->getFromDB($Netport->fields["on_device"]);
+            if ($this->fields["hub"] == "1") {
+               releaseHub($this->fields['ID'], $p_oPort);
+               $hub_id = $this->fields['ID'];
+            } else {
+               removeConnector($ID);
+               $hub_id = createHub($p_oPort);
+            }
+         } else {
+            removeConnector($ID);
+            $hub_id = createHub($p_oPort);
+         }
+      } else {
+         $hub_id = createHub($p_oPort);
+      }
+
+      // Get all ports connected to this hub
+      $a_portglpi = array();
+      $a_ports = $Netport->find("`on_device`='".$hub_id."'
+          AND `device_type`='".$this->type."'");
+      foreach ($a_ports as $port_id=>$data) {
+         if ($ID = $Netwire->getOppositeContact($port_id)) {
+            $a_portglpi[$ID] = $port_id;
+         }
+      }
+
+      $a_portUsed = array();
+      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+         $a_ports = $Netport->find("`ifmac`='".$ifmac."'");
+         if (count($a_ports) == "1") {
+            if ($used_id = searchIfmacOnHub($a_ports, $a_portglpi)) {
+               
+            } else {
+               // Connect port
+               $used_id = connectPortToHub($a_ports, $hub_id);
+            }
+         } else if (count($a_ports) == "0") {
+            // Port don't exist
+            // Create unknown device
+            $input = array();
+               // get source entity :
+               $datas = $Netport->getDeviceData($p_oPort->getValue("on_device"),$p_oPort->getValue("device_type"));
+               if (isset($Netport->FK_entities)) {
+                  $input['FK_entities'] = $Netport->FK_entities;
+               }
+            $unknown_id = $this->add($input);
+
+            $input = array();
+            $input["on_device"] = unknown_id;
+            $input["device_type"] = $this->type;
+            $input["ifmac"] = $ifmac;
+            $id_port = $Netport->add($input);
+            $used_id = connectPortToHub($id_port, $hub_id);
+         }
+         $a_portUsed[$used_id] = 1;
+      }
+      deleteNonUsedPortHub($a_portUsed);
+   }
+
+
+
+   function deleteNonUsedPortHub($hub_id, $a_portUsed) {
+
+      $Netport = new Netport;
+
+      $a_ports = $Netport->find("`on_device`='".$hub_id."'
+          AND `device_type`='".$this->type."'");
+      foreach ($a_ports as $port_id=>$data) {
+         if (!isset($a_portUsed[$port_id])) {
+            $Netport->deleteFromDB($port_id);
+         }
+      }
+   }
+
+
+
+   function connectPortToHub($a_ports, $hub_id) {
+      global $DB;
+
+      $Netport = new Netport;
+
+      foreach ($a_ports as $port_id=>$data) {
+         removeConnector($port_id);
+         // Search free port
+         $query = "SELECT * FROM `glpi_networking_ports`
+            LEFT JOIN `glpi_networking_wire` ON `glpi_networking_ports`.`ID` = `end1` OR `glpi_networking_ports`.`ID` = `end2`
+            WHERE `device_type`='".$this->type."'
+               AND `on_device`='".$hub_id."'
+               AND `end1` is null
+            LIMIT 1;";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $freeport = $DB->fetch_assoc($result);
+            $freeport_id = $freeport['ID'];
+         } else {
+            // Create port
+            $input = array();
+            $input["on_device"] = $hub_id;
+            $input["device_type"] = $this->type;
+            $freeport_id = $Netport->add($input);
+         }
+         makeConnector($port_id, $freeport_id);
+         return $freeport_id;
+      }      
+   }
+
+
+
+   function searchIfmacOnHub($a_ports, $a_portglpi) {
+
+      foreach ($a_ports as $port_id=>$data) {
+         if (isset($a_portglpi[$port_id])) {
+            return $a_portglpi[$port_id];
+         }         
+      }
+      return false;
+   }
+
+
+
+   function createHub($p_oPort) {
+      global $DB;
+
+      $Netport = new Netport;
+      $Netwire = new Netwire;
+      
+      // Find in the mac connected to the if they are in hub without link port connected
+      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+         $a_ports = $Netport->find("`ifmac`='".$ifmac."'");
+         foreach ($a_ports as $port_id=>$data) {
+            if ($ID = $Netwire->getOppositeContact($p_oPort->getValue('ID'))) {
+               $Netport->getFromDB($ID);
+               if ($Netport->fields["device_type"] == $this->type) {
+                  if ($this->fields["hub"] == "1") {
+                     $a_portLink = $Netport->find("`name`='Link'
+                        AND `on_device`='".$this->fields['ID']."'
+                        AND `device_type`='".$this->type."'");
+                     foreach ($a_portLink as $portLink_id=>$dataLink) {
+                        if ($Netwire->getOppositeContact(portLink_id)) {
+
+                        } else {
+                           // We have founded a hub orphelin
+                           makeConnector($p_oPort->getValue('ID'), portLink_id);
+                           releaseHub($this->fields['ID'], $p_oPort);
+                           return $this->fields['ID'];
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+      // Not founded, creation hub and link port
+      $input = array();
+      $input['hub'] = "1";
+      $input['name'] = "hub";
+         // get source entity :
+         $datas = $Netport->getDeviceData($p_oPort->getValue("on_device"),$p_oPort->getValue("device_type"));
+         if (isset($Netport->FK_entities)) {
+            $input['FK_entities'] = $Netport->FK_entities;
+         }
+      $hub_id = $this->add($input);
+
+      $input = array();
+      $input["on_device"] = $hub_id;
+      $input["device_type"] = $this->type;
+      $input["name"] = "Link";
+      $port_id = $Netport->add($input);
+      makeConnector($p_oPort->getValue('ID'), $port_id);
+      return $hub_id;
+   }
+
+
+
+   function releaseHub($hub_id, $p_oPort) {
+
+      $Netport = new Netport;
+
+      $a_macOnSwitch = array();
+      foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+         $a_macOnSwitch[$ifmac] = 1;
+      }
+
+      // get all ports of hub
+      $releasePorts = array();
+      $a_ports = $Netport->find("`on_device`='".$hub_id."' AND `device_type`='".$this->type."'");
+      foreach ($a_ports as $port_id=>$data) {
+         if (!isset($a_macOnSwitch[$data['ifmac']])) {
+            $releasePorts[$data['ID']] = 1;
+         }
+      }
+      foreach ($releasePorts as $port_id=>$data) {
+         removeConnector($port_id);
+      }   
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function tempdelete() {
+
+      // ====================================================================================================
+
+
       $nw = new Netwire;
       $np = new Netport;
       // List of macs : $p_oPort->getPortsToConnect
@@ -462,6 +691,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
             if ($np->fields["device_type"] == $this->type) {
                $this->getFromDB($np->fields["on_device"]);
                if ($this->fields["hub"] == "1") {
+                  $hub_id = $this->fields['ID'];
                   // We will update ports and wire
                      // Get all ports of hub
                      $a_ports = $np->find("`on_device`='".$np->fields["on_device"]."' AND `device_type`='".$np->fields["device_type"]."'");
@@ -473,6 +703,45 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
                      $result = $DB->query($query);
                      if ($DB->numrows($result) == 1) {
                         $line = $DB->fetch_assoc($result);
+                        // network card exist in GLPI
+                        // search if connected to this hub
+                        $portsopposite_id = $nw->getOppositeContact($line['ID']);
+                        if ($portsopposite_id == true) {
+                           $a_portfind = $np->find("`ID`='".$portsopposite_id."'");
+                           foreach($a_portfind as $portfind_id=>$data) {
+                              if (($data['device_type'] == $this->type) AND ($data['on_device'] == $hub_id)) {
+                                 // port exist
+                                 $a_listport[$data['ID']] = 1;
+                              } else {
+                                 // Find a free port or create port
+                                 $query = "SELECT * FROM `glpi_networking_ports`
+                                    LEFT JOIN `glpi_networking_wire` ON `glpi_networking_ports`.`ID` = `end1` OR `glpi_networking_ports`.`ID` = `end2`
+                                    WHERE `device_type`='".$this->type."'
+                                       AND `on_device`='".$hub_id."'
+                                       AND `end1` is null
+                                    LIMIT 1;";
+                                 $result = $DB->query($query);
+                                 if ($DB->numrows($result) == 1) {
+                                    $freeport = $DB->fetch_assoc($result);
+                                    $freeport_id = $freeport['ID'];
+                                 } else {
+                                    // Create port
+                                    $input = array();
+                                    $input["on_device"] = $hub_id;
+                                    $input["device_type"] = $this->type;
+                                    $freeport_id = $np->add($input);
+                                    makeConnector($data['ID'], $freeport_id);
+
+                                 }
+                                 // makeConnector($p_oPort->getValue('ID'), $id_port);
+                                 $a_listport[$freeport_id] = 1;
+
+                              }
+                           }
+                        } else {
+                           
+                        }
+
                         makeConnector($p_oPort->getValue('ID'), $line['ID']);
                         $a_listport[$line['ID']]=1;
                      } else {
