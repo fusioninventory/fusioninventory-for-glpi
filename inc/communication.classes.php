@@ -552,6 +552,7 @@ class PluginFusionInventoryCommunication {
       } else {
          $moduleversion = "1.0";
       }
+
       switch ($this->sxml->QUERY) {
          case 'SNMPQUERY' :
             $errors.=$this->importContent($this->sxml->CONTENT);
@@ -1268,7 +1269,8 @@ class PluginFusionInventoryCommunication {
             case 'CDP' : // already managed
                break;
             case 'CONNECTION' :
-               $count++;
+               //$count++;
+               $count += count($child);
                $errors.=$this->importConnection($child, $p_oPort, $cdp);
                break;
             default :
