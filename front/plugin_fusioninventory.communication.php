@@ -43,7 +43,7 @@ $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","mon
 	"phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo",
    "rule.ocs","rule.softwarecategories","rule.dictionnary.software","rule.dictionnary.dropdown","entity");
 
-
+session_start();
 include (GLPI_ROOT."/inc/includes.php");
 
 $_SESSION["glpi_use_mode"] = 2;
