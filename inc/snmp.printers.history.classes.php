@@ -62,7 +62,7 @@ class PluginFusionInventoryPrintersHistory extends CommonDBTM {
 	/* Gets history (and the number of entries) of one printer */
 	function getEntries($ID, $begin, $limit) {
 		global $DB;
-		
+
 		$datas=array();
 		$query = "SELECT *
                 FROM ".$this->table."

@@ -255,7 +255,9 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		$config_discovery = new PluginFusionInventoryConfig;
       $np               = new Netport;
       $ptud             = new PluginFusionInventoryUnknownDevice;
-
+      $PluginFusionInventoryNetworking = new PluginFusionInventoryNetworking;
+      $PluginFusionInventoryPrinters   = new PluginFusionInventoryPrinters;
+      
       if (isset($p_xml->AGENT->START)) {
          $ptap->updateProcess($p_xml->PROCESSNUMBER, array('start_time_discovery' => date("Y-m-d H:i:s")));
       } else if (isset($p_xml->AGENT->END)) {
@@ -381,6 +383,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                # Update device
                //echo "discovery_criteria :".$discovery_criteria;
                $a_device = explode("||", $discovery_criteria);
+               $a_deviceExtension = array();
                // $a_device[0] == id, $a_device[1] = type
                $ci = new commonitem;
                $ci->getFromDB($a_device[1], $a_device[0]);
@@ -432,8 +435,10 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   $data['comments'] = $discovery->DESCRIPTION;
                if (!in_array('FK_model_infos', $a_lockable));
                   $data['FK_model_infos'] = $FK_model;
+                  $a_deviceExtension['FK_model_infos'] = $FK_model;
                if (!in_array('FK_snmp_connection', $a_lockable));
                   $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
+                  $a_deviceExtension['FK_snmp_connection'] = $discovery->AUTHSNMP;
                if (!in_array('snmp', $a_lockable)) {
                   $data['snmp'] = 0;
                   if ($discovery->AUTHSNMP != "") {
@@ -487,6 +492,30 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                }
 
                $ci->obj->update($data);
+
+               if ($a_device[1] == NETWORKING_TYPE) {
+                  $a_extension = $PluginFusionInventoryNetworking->find("`FK_networking`='".$a_device[0]."' ");
+                  foreach($a_extension as $extension_id=>$input) {
+                     if (isset($a_deviceExtension['FK_model_infos'])) {
+                        $input['FK_model_infos'] = $a_deviceExtension['FK_model_infos'];
+                     }
+                     if (isset($a_deviceExtension['FK_snmp_connection'])) {
+                        $input['FK_snmp_connection'] = $a_deviceExtension['FK_snmp_connection'];
+                     }
+                     $PluginFusionInventoryNetworking->update($input);
+                  }                  
+               } else if ($a_device[1] == PRINTER_TYPE) {
+                  $a_extension = $PluginFusionInventoryPrinters->find("`FK_printers`='".$a_device[0]."' ");
+                  foreach($a_extension as $extension_id=>$input) {
+                     if (isset($a_deviceExtension['FK_model_infos'])) {
+                        $input['FK_model_infos'] = $a_deviceExtension['FK_model_infos'];
+                     }
+                     if (isset($a_deviceExtension['FK_snmp_connection'])) {
+                        $input['FK_snmp_connection'] = $a_deviceExtension['FK_snmp_connection'];
+                     }
+                     $PluginFusionInventoryPrinters->update($input);
+                  } 
+               }
 
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_exists' => '1'));
             }
