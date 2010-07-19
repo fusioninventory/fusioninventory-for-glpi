@@ -60,12 +60,12 @@ class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
     *@return nothing
     **/
    function load($p_id='') {
-      global $DB, $LINK_ID_TABLE;
+      global $DB;
 
       if ($p_id!='') { // existing item : load old values
          $this->getFromDB($p_id);
          $this->ptcdFields=$this->fields;
-         $itemtype=array_search($this->table, $LINK_ID_TABLE);
+         $itemtype=getItemTypeForTable($this->table);
          if ($itemtype) {
             $this->ptcdLockFields=PluginFusioninventoryLock::getLockFields($itemtype, $p_id);
          }

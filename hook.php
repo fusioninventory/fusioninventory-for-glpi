@@ -506,7 +506,7 @@ function plugin_fusinvsnmp_getSearchOption() {
 
 
 function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
-	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LINK_ID_TABLE,$LANG,$SEARCH_OPTION,$FUSIONINVENTORY_MAPPING;
+	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LANG, $SEARCH_OPTION, $FUSIONINVENTORY_MAPPING;
 
 	$table=$SEARCH_OPTION[$type][$id]["table"];
 	$field=$SEARCH_OPTION[$type][$id]["field"];
@@ -1344,7 +1344,7 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
 // How to display specific update fields ?
 // Massive Action functions
 function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield) {
-	global $LINK_ID_TABLE,$LANG;
+	global $LANG;
 	// Table fields
 	//echo $table.".".$field."<br/>";
 	switch ($table.".".$field) {
