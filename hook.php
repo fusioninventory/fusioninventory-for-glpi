@@ -1085,6 +1085,13 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 			}
 			break;
 
+
+      case PLUGIN_FUSIONINVENTORY_TASK:
+         if ($table.'.'.$field == 'glpi_plugin_fusioninventory_task.id') {
+            return $data["ITEM_$num"];
+         }
+         break;
+
 	}
 
 	return "";
