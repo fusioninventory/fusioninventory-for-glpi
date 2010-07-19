@@ -61,11 +61,19 @@ class PluginFusioninventoryModule extends CommonDBTM {
     *@return Plugin id or false if module is not active or not a fusioninventory module
     **/
    static function getModuleId($p_name) {
+      $index = false;
       if ((substr($p_name, 0, 6) == 'fusinv') OR ($p_name == 'fusioninventory')) {
-         return array_search($p_name, $_SESSION['glpi_plugins']);
-      } else {
-         return false;
+         $index = array_search($p_name, $_SESSION['glpi_plugins']);
+         if (!$index) {
+            $plugin = new Plugin();
+            $data = $plugin->find("directory='".$p_name."'");
+            if (count($data)) {
+               $fields = current($data);
+               $index = $fields['id'];
+            }
+         }
       }
+      return $index;
    }
 
    /**
