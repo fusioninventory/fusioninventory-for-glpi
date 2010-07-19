@@ -391,22 +391,22 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                $data['FK_snmp_connection'] = 0;
 
                if ($a_device[1] == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
-                  if ($ci->getField('name') && !in_array('name', $a_lockable)) {
+                  if (!in_array('name', $a_lockable)) {
                      if (!empty($discovery->NETBIOSNAME)) {
                         $data['name'] = $discovery->NETBIOSNAME;
                      } else if (!empty($discovery->SNMPHOSTNAME)) {
                         $data['name'] = $discovery->SNMPHOSTNAME;
                      }
                   }
-                  if ($ci->getField('dnsname') && !in_array('dnsname', $a_lockable))
+                  if (!in_array('dnsname', $a_lockable))
                      $data['dnsname'] = $discovery->DNSHOSTNAME;
-                  if ($ci->getField('FK_entities') && !in_array('FK_entities', $a_lockable))
+                  if (!in_array('FK_entities', $a_lockable))
                      $data['FK_entities'] = $discovery->ENTITY;
-                  if ($ci->getField('serial') && !in_array('serial', $a_lockable))
+                  if (!in_array('serial', $a_lockable))
                      $data['serial'] = trim($discovery->SERIAL);
-                  if ($ci->getField('contact') && !in_array('contact', $a_lockable))
+                  if (!in_array('contact', $a_lockable))
                      $data['contact'] = $discovery->USERSESSION;
-                  if ($ci->getField('domain') && !in_array('domain', $a_lockable)) {
+                  if (!in_array('domain', $a_lockable)) {
                      $data['domain'] = 0;
                      if (!empty($discovery->WORKGROUP)) {
                         $data['domain'] = externalImportDropdown(
@@ -417,7 +417,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                      $data['type'] = $discovery->TYPE;
                   }
                } else {
-                  if (!$ci->getField('name') && !in_array('name', $a_lockable)) {
+                  if (!in_array('name', $a_lockable)) {
                      if (!empty($discovery->NETBIOSNAME)) {
                         $data['name'] = $discovery->NETBIOSNAME;
                      } else if (!empty($discovery->SNMPHOSTNAME)) {
@@ -427,13 +427,14 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                      }
                   }
                }
-               if ($ci->getField('comments') && !in_array('comments', $a_lockable))
+
+               if (!in_array('comments', $a_lockable))
                   $data['comments'] = $discovery->DESCRIPTION;
-               if ($ci->getField('FK_model_infos') && !in_array('FK_model_infos', $a_lockable));
+               if (!in_array('FK_model_infos', $a_lockable));
                   $data['FK_model_infos'] = $FK_model;
-               if ($ci->getField('FK_snmp_connection') && !in_array('FK_snmp_connection', $a_lockable));
+               if (!in_array('FK_snmp_connection', $a_lockable));
                   $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
-               if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {
+               if (!in_array('snmp', $a_lockable)) {
                   $data['snmp'] = 0;
                   if ($discovery->AUTHSNMP != "") {
                      $data['snmp'] = 1;
