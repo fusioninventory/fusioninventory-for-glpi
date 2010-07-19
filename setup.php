@@ -47,7 +47,7 @@ function plugin_init_fusinvsnmp() {
       return false;
    }
    Plugin::registerClass('PluginFusinvsnmpConstructDevice');
-   Plugin::registerClass('PluginFusinvsnmpSNMPModel');
+   Plugin::registerClass('PluginFusinvsnmpModel');
    Plugin::registerClass('PluginFusinvsnmpNetworkEquipment');
    Plugin::registerClass('PluginFusinvsnmpPrinter');
    Plugin::registerClass('PluginFusinvsnmpIPRange');

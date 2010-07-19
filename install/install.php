@@ -124,23 +124,16 @@ function pluginFusinvsnmpUninstall() {
       }
    }
 
-//   $query="DELETE FROM `glpi_displaypreferences`
-//           WHERE `itemtype`='PluginFusioninventoryError'
-//                 OR `itemtype`='PluginFusioninventorySNMPModel'
-//                 OR `itemtype`='PluginFusioninventoryConfigSNMPSecurity'
-//                 OR `itemtype`='PluginFusioninventoryUnknownDevice'
-//                 OR `itemtype`='PluginFusioninventoryNetworkPort'
-//                 OR `itemtype`='PluginFusioninventoryNetworkport2'
-//                 OR `itemtype`='PluginFusioninventoryAgent'
-//                 OR `itemtype`='PluginFusioninventoryIPRange'
-//                 OR `itemtype`='PluginFusioninventoryAgentProcess'
-//                 OR `itemtype`='PluginFusioninventoryNetworkPortLog'
-//                 OR `itemtype`='PluginFusioninventoryConfig'
-//                 OR `itemtype`='PluginFusioninventoryTask'
-//                 OR `itemtype`='PluginFusioninventoryConstructDevices' ;";
-//   $DB->query($query) or die($DB->error());
-//
-//
+   $query="DELETE FROM `glpi_displaypreferences`
+           WHERE `itemtype`='PluginFusinvsnmpConfigSnmpSecurity'
+                 OR `itemtype`='PluginFusinvsnmpUnknownDevice'
+                 OR `itemtype`='PluginFusinvsnmpAgent'
+                 OR `itemtype`='PluginFusinvsnmpIPRange'
+                 OR `itemtype`='PluginFusinvsnmpAgentProcess'
+                 OR `itemtype`='PluginFusinvsnmpModel'
+                 OR `itemtype`='PluginFusinvsnmpNetworkPortLog'
+                 OR `itemtype`='PluginFusinvsnmpNetworkPort' ;";
+   $DB->query($query) or die($DB->error());
 //   $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknownDevice' ");
 //   foreach ($a_netports as $NetworkPort){
 //      $np->cleanDBonPurge($NetworkPort['id']);

@@ -41,44 +41,44 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$config = new PluginFusinvsnmpConfig;
 
 	// Part header
-	$sopt['PluginFusinvsnmpSNMPModel']['common'] = $LANG['plugin_fusinvsnmp']["profile"][19];
+	$sopt['PluginFusinvsnmpModel']['common'] = $LANG['plugin_fusinvsnmp']["profile"][19];
 
-	$sopt['PluginFusinvsnmpSNMPModel'][1]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][1]['field'] = 'name';
-	$sopt['PluginFusinvsnmpSNMPModel'][1]['linkfield'] = 'name';
-	$sopt['PluginFusinvsnmpSNMPModel'][1]['name'] = $LANG["common"][16];
-  $sopt['PluginFusinvsnmpSNMPModel'][1]['datatype']='itemlink';
+	$sopt['PluginFusinvsnmpModel'][1]['table'] = 'glpi_plugin_fusinvsnmp_models';
+	$sopt['PluginFusinvsnmpModel'][1]['field'] = 'name';
+	$sopt['PluginFusinvsnmpModel'][1]['linkfield'] = 'name';
+	$sopt['PluginFusinvsnmpModel'][1]['name'] = $LANG["common"][16];
+  $sopt['PluginFusinvsnmpModel'][1]['datatype']='itemlink';
   
-	$sopt['PluginFusinvsnmpSNMPModel'][30]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][30]['field'] = 'id';
-	$sopt['PluginFusinvsnmpSNMPModel'][30]['linkfield'] = '';
-	$sopt['PluginFusinvsnmpSNMPModel'][30]['name'] = $LANG["common"][2];
+	$sopt['PluginFusinvsnmpModel'][30]['table'] = 'glpi_plugin_fusinvsnmp_models';
+	$sopt['PluginFusinvsnmpModel'][30]['field'] = 'id';
+	$sopt['PluginFusinvsnmpModel'][30]['linkfield'] = '';
+	$sopt['PluginFusinvsnmpModel'][30]['name'] = $LANG["common"][2];
 
-	$sopt['PluginFusinvsnmpSNMPModel'][3]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][3]['field'] = 'itemtype';
-	$sopt['PluginFusinvsnmpSNMPModel'][3]['linkfield'] = 'itemtype';
-	$sopt['PluginFusinvsnmpSNMPModel'][3]['name'] = $LANG["common"][17];
+	$sopt['PluginFusinvsnmpModel'][3]['table'] = 'glpi_plugin_fusinvsnmp_models';
+	$sopt['PluginFusinvsnmpModel'][3]['field'] = 'itemtype';
+	$sopt['PluginFusinvsnmpModel'][3]['linkfield'] = 'itemtype';
+	$sopt['PluginFusinvsnmpModel'][3]['name'] = $LANG["common"][17];
 
-	$sopt['PluginFusinvsnmpSNMPModel'][5]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][5]['field'] = 'id';
-	$sopt['PluginFusinvsnmpSNMPModel'][5]['linkfield'] = '';
-	$sopt['PluginFusinvsnmpSNMPModel'][5]['name'] = $LANG["buttons"][31];
+	$sopt['PluginFusinvsnmpModel'][5]['table'] = 'glpi_plugin_fusinvsnmp_models';
+	$sopt['PluginFusinvsnmpModel'][5]['field'] = 'id';
+	$sopt['PluginFusinvsnmpModel'][5]['linkfield'] = '';
+	$sopt['PluginFusinvsnmpModel'][5]['name'] = $LANG["buttons"][31];
 
-	$sopt['PluginFusinvsnmpSNMPModel'][6]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][6]['field'] = 'is_active';
-	$sopt['PluginFusinvsnmpSNMPModel'][6]['linkfield'] = 'is_active';
-	$sopt['PluginFusinvsnmpSNMPModel'][6]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][11];
-	$sopt['PluginFusinvsnmpSNMPModel'][6]['datatype']='bool';
+	$sopt['PluginFusinvsnmpModel'][6]['table'] = 'glpi_plugin_fusinvsnmp_models';
+	$sopt['PluginFusinvsnmpModel'][6]['field'] = 'is_active';
+	$sopt['PluginFusinvsnmpModel'][6]['linkfield'] = 'is_active';
+	$sopt['PluginFusinvsnmpModel'][6]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][11];
+	$sopt['PluginFusinvsnmpModel'][6]['datatype']='bool';
 
-	$sopt['PluginFusinvsnmpSNMPModel'][7]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][7]['field'] = 'discovery_key';
-	$sopt['PluginFusinvsnmpSNMPModel'][7]['linkfield'] = 'discovery_key';
-	$sopt['PluginFusinvsnmpSNMPModel'][7]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][12];
+	$sopt['PluginFusinvsnmpModel'][7]['table'] = 'glpi_plugin_fusinvsnmp_models';
+	$sopt['PluginFusinvsnmpModel'][7]['field'] = 'discovery_key';
+	$sopt['PluginFusinvsnmpModel'][7]['linkfield'] = 'discovery_key';
+	$sopt['PluginFusinvsnmpModel'][7]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][12];
 
-	$sopt['PluginFusinvsnmpSNMPModel'][8]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
-	$sopt['PluginFusinvsnmpSNMPModel'][8]['field'] = 'comment';
-	$sopt['PluginFusinvsnmpSNMPModel'][8]['linkfield'] = 'comment';
-	$sopt['PluginFusinvsnmpSNMPModel'][8]['name'] = $LANG['common'][25];
+	$sopt['PluginFusinvsnmpModel'][8]['table'] = 'glpi_plugin_fusinvsnmp_models';
+	$sopt['PluginFusinvsnmpModel'][8]['field'] = 'comment';
+	$sopt['PluginFusinvsnmpModel'][8]['linkfield'] = 'comment';
+	$sopt['PluginFusinvsnmpModel'][8]['name'] = $LANG['common'][25];
 
 	$sopt['PluginFusinvsnmpConfigSNMPSecurity']['common'] = $LANG['plugin_fusinvsnmp']["profile"][22];
 
@@ -189,9 +189,9 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$sopt['PluginFusinvsnmpUnknownDevice'][11]['name'] = $LANG['plugin_fusinvsnmp']["functionalities"][3];
    $sopt['PluginFusinvsnmpUnknownDevice'][11]['datatype']='bool';
    
-	$sopt['PluginFusinvsnmpUnknownDevice'][12]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
+	$sopt['PluginFusinvsnmpUnknownDevice'][12]['table'] = 'glpi_plugin_fusinvsnmp_models';
 	$sopt['PluginFusinvsnmpUnknownDevice'][12]['field'] = 'name';
-	$sopt['PluginFusinvsnmpUnknownDevice'][12]['linkfield'] = 'plugin_fusinvsnmp_snmpmodels_id';
+	$sopt['PluginFusinvsnmpUnknownDevice'][12]['linkfield'] = 'plugin_fusinvsnmp_models_id';
 	$sopt['PluginFusinvsnmpUnknownDevice'][12]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][4];
 
    $sopt['PluginFusinvsnmpUnknownDevice'][13]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
@@ -380,7 +380,7 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$sopt['PluginFusinvsnmpNetworkport'][3]['name'] = $LANG["login"][0];
 
 
-	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusinvsnmp_snmpmodels';
+	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusinvsnmp_models';
 	$sopt[NETWORKING_TYPE][5190]['field']='id';
 	$sopt[NETWORKING_TYPE][5190]['linkfield']='id';
 	$sopt[NETWORKING_TYPE][5190]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][19];
@@ -408,7 +408,7 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$sopt[NETWORKING_TYPE][5195]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["snmp"][13];
 
 
-	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_fusinvsnmp_snmpmodels';
+	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_fusinvsnmp_models';
 	$sopt[PRINTER_TYPE][5190]['field']='id';
 	$sopt[PRINTER_TYPE][5190]['linkfield']='id';
 	$sopt[PRINTER_TYPE][5190]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][19];
@@ -493,7 +493,7 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$sopt['PluginFusinvsnmpConstructDevices'][6]['name'] = $LANG['common'][17];
    $sopt['PluginFusinvsnmpConstructDevices'][6]['datatype']='number';
 
-	$sopt['PluginFusinvsnmpConstructDevices'][7]['table'] = 'glpi_plugin_fusinvsnmp_snmpmodels';
+	$sopt['PluginFusinvsnmpConstructDevices'][7]['table'] = 'glpi_plugin_fusinvsnmp_models';
 	$sopt['PluginFusinvsnmpConstructDevices'][7]['field'] = 'name';
 	$sopt['PluginFusinvsnmpConstructDevices'][7]['linkfield'] = 'snmpmodel_id';
 	$sopt['PluginFusinvsnmpConstructDevices'][7]['name'] = $LANG['plugin_fusinvsnmp']["profile"][24];
@@ -572,11 +572,11 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
+				case "glpi_plugin_fusinvsnmp_models.id" :
 					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpSNMP;
 					$FK_model_DB = $plugin_fusinvsnmp_snmp->GetSNMPModel($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/snmpmodel.form.php?id=" . $FK_model_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_snmpmodels", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_models", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -645,11 +645,11 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
+				case "glpi_plugin_fusinvsnmp_models.id" :
 					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpSNMP;
 					$FK_model_DB = $plugin_fusinvsnmp_snmp->GetSNMPModel($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/snmpmodel.form.php?id=" . $FK_model_DB . "\">";
-					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_snmpmodels", $FK_model_DB, 0);
+					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_models", $FK_model_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
 					break;
@@ -668,11 +668,11 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * Model List (plugins/fusinvsnmp/front/snmpmodel.php)
-		case 'PluginFusinvsnmpSNMPModel' :
+		case 'PluginFusinvsnmpModel' :
 			switch ($table.'.'.$field) {
 
 				// ** Name of type of model (network, printer...)
-				case "glpi_plugin_fusinvsnmp_snmpmodels.itemtype" :
+				case "glpi_plugin_fusinvsnmp_models.itemtype" :
 					$out = '<center> ';
 					switch ($data["ITEM_$num"]) {
 						case COMPUTER_TYPE:
@@ -700,7 +700,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 					break;
 
 				// ** Display pic / link for exporting model
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
+				case "glpi_plugin_fusinvsnmp_models.id" :
 					$out = "<div align='center'><form></form><form method='get' action='" . GLPI_ROOT . "/plugins/fusinvsnmp/front/models.export.php' target='_blank'>
 						<input type='hidden' name='model' value='" . $data["id"] . "' />
 						<input name='export' src='" . GLPI_ROOT . "/pics/right.png' title='Exporter' value='Exporter' type='image'>
@@ -1192,7 +1192,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 				case "plugin_fusinvsnmp_assign_model" :
                if(PluginFusinvsnmpAuth::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusinvsnmp_snmpmodels`
+                                   FROM `glpi_plugin_fusinvsnmp_models`
                                    WHERE `itemtype`!='2'
                                          AND `itemtype`!='0';";
                   $result_models=$DB->query($query_models);
@@ -1200,7 +1200,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
                   while ($data_models=$DB->fetch_array($result_models)) {
                      $exclude_models[] = $data_models['id'];
                   }
-                  Dropdown::show("PluginFusinvsnmpSNMPModel",
+                  Dropdown::show("PluginFusinvsnmpModel",
                                  array('name' => "snmp_model",
                                        'value' => "name",
                                        'comment' => false,
@@ -1231,7 +1231,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 				case "plugin_fusinvsnmp_assign_model" :
                if(PluginFusinvsnmpAuth::haveRight("snmp_models","w")) {
                   $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusinvsnmp_snmpmodels`
+                                   FROM `glpi_plugin_fusinvsnmp_models`
                                    WHERE `itemtype`!='3'
                                          AND `itemtype`!='0';";
                   $result_models=$DB->query($query_models);
@@ -1239,7 +1239,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
                   while ($data_models=$DB->fetch_array($result_models)) {
                      $exclude_models[] = $data_models['id'];
                   }
-                  Dropdown::show("PluginFusinvsnmpSNMPModel",
+                  Dropdown::show("PluginFusinvsnmpModel",
                                  array('name' => "snmp_model",
                                        'value' => "name",
                                        'comment' => false,
@@ -1279,15 +1279,15 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          if ($data['itemtype'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-                  $PluginFusinvsnmpSNMPModel = new PluginFusinvsnmpSNMPModel;
-                  $PluginFusinvsnmpSNMPModel->getrightmodel($key, NETWORKING_TYPE);
+                  $PluginFusinvsnmpModel = new PluginFusinvsnmpModel;
+                  $PluginFusinvsnmpModel->getrightmodel($key, NETWORKING_TYPE);
 					}
 				}
          } else if($data['itemtype'] == PRINTER_TYPE) {
             foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-                  $PluginFusinvsnmpSNMPModel = new PluginFusinvsnmpSNMPModel;
-                  $PluginFusinvsnmpSNMPModel->getrightmodel($key, PRINTER_TYPE);
+                  $PluginFusinvsnmpModel = new PluginFusinvsnmpModel;
+                  $PluginFusinvsnmpModel->getrightmodel($key, PRINTER_TYPE);
 					}
 				}
          }
@@ -1355,8 +1355,8 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$link
 			return true;
 			break;
 
-		case 'glpi_plugin_fusinvsnmp_snmpmodels.name':
-			Dropdown::show("PluginFusinvsnmpSNMPModel",
+		case 'glpi_plugin_fusinvsnmp_models.name':
+			Dropdown::show("PluginFusinvsnmpModel",
                         array('name' => $linkfield,
                               'comment' => false));
 			return true;
@@ -1425,7 +1425,7 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$link
 			return true;
 			break;
 
-		case 'glpi_plugin_fusinvsnmp_snmpmodels.itemtype' :
+		case 'glpi_plugin_fusinvsnmp_models.itemtype' :
          $type_list = array();
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
@@ -1601,9 +1601,9 @@ function plugin_fusinvsnmp_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
+				case "glpi_plugin_fusinvsnmp_models.id" :
 					return " LEFT JOIN glpi_plugin_fusinvsnmp_networkequipments AS gptn_model ON (glpi_networkequipments.id = gptn_model.networkequipments_id) ".
-						" LEFT JOIN glpi_plugin_fusinvsnmp_snmpmodels ON (gptn_model.plugin_fusinvsnmp_snmpmodels_id = glpi_plugin_fusinvsnmp_snmpmodels.id) ";
+						" LEFT JOIN glpi_plugin_fusinvsnmp_models ON (gptn_model.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
@@ -1625,9 +1625,9 @@ function plugin_fusinvsnmp_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
+				case "glpi_plugin_fusinvsnmp_models.id" :
 					return " LEFT JOIN glpi_plugin_fusinvsnmp_printers AS gptp_model ON (glpi_printers.id = gptp_model.printers_id) ".
-						" LEFT JOIN glpi_plugin_fusinvsnmp_snmpmodels ON (gptp_model.plugin_fusinvsnmp_snmpmodels_id = glpi_plugin_fusinvsnmp_snmpmodels.id) ";
+						" LEFT JOIN glpi_plugin_fusinvsnmp_models ON (gptp_model.plugin_fusinvsnmp_models_id = glpi_plugin_fusinvsnmp_models.id) ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
@@ -1814,8 +1814,8 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
-					return " ORDER BY glpi_plugin_fusinvsnmp_snmpmodels.name $order ";
+				case "glpi_plugin_fusinvsnmp_models.id" :
+					return " ORDER BY glpi_plugin_fusinvsnmp_models.name $order ";
 					break;
 
 			}
@@ -1831,8 +1831,8 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
-					return " ORDER BY glpi_plugin_fusinvsnmp_snmpmodels.name $order ";
+				case "glpi_plugin_fusinvsnmp_models.id" :
+					return " ORDER BY glpi_plugin_fusinvsnmp_models.name $order ";
 					break;
 
 				// ** FusionInventory - SNMP authentification
@@ -1987,7 +1987,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
+				case "glpi_plugin_fusinvsnmp_models.id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";
@@ -2032,7 +2032,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 					break;
 
 				// ** FusionInventory - SNMP models
-				case "glpi_plugin_fusinvsnmp_snmpmodels.id" :
+				case "glpi_plugin_fusinvsnmp_models.id" :
 					$ADD = "";
 					if ($nott=="0"&&$val=="NULL") {
 						$ADD=" OR $table.name IS NULL";

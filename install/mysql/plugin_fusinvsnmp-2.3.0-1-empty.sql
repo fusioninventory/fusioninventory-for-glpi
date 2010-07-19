@@ -437,10 +437,9 @@ INSERT INTO `glpi_plugin_fusinvsnmp_configsnmpsecurities`
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
    VALUES (NULL, 'PluginFusinvsnmpModel', '3', '1', '0'),
-          (NULL, 'PluginFusinvsnmpSnmpModel', '5', '2', '0');
+          (NULL, 'PluginFusinvsnmpModel', '5', '2', '0'),
 
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
-   VALUES (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '3', '1', '0'),
+          (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '3', '1', '0'),
           (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '4', '2', '0'),
           (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '5', '3', '0'),
           (NULL, 'PluginFusinvsnmpConfigSnmpSecurity', '7', '4', '0'),
@@ -481,6 +480,7 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusinvsnmpAgent', '12', '5', '0'),
           (NULL,'PluginFusinvsnmpAgent', '13', '6', '0'),
           (NULL,'PluginFusinvsnmpAgent', '14', '7', '0'),
+
           (NULL,'PluginFusinvsnmpIPRange', '2', '1', '0'),
           (NULL,'PluginFusinvsnmpIPRange', '3', '2', '0'),
           (NULL,'PluginFusinvsnmpIPRange', '5', '3', '0'),
