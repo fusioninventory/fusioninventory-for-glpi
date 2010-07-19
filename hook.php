@@ -438,7 +438,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 // How to display specific update fields ?
 // Massive Action functions
 function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield) {
-	global $LINK_ID_TABLE,$LANG;
+	global $LANG;
 	// Table fields
 	//echo $table.".".$field."<br/>";
 	switch ($table.".".$field) {
