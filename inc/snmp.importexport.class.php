@@ -464,12 +464,16 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                   if ($result = $DB->query($query)) {
                      if ($DB->numrows($result) == 1) {
                         $data2 = $DB->fetch_assoc($result);
+                        $a_lockable_ports = plugin_fusioninventory_lock_getLockFields(NETWORKING_PORT_TYPE, $data2["ID"]);
                         $np->getFromDB($data2["ID"]);
                         $port = array();
                         $port['ID'] = $data2["ID"];
-                        $port["ifaddr"] = $discovery->IP;
-                        $port['ifmac'] = $discovery->MAC;
-                        $port['name'] = $discovery->NETPORTVENDOR;
+                        if (!in_array('ifaddr', $a_lockable_ports))
+                           $port["ifaddr"] = $discovery->IP;
+                        if (!in_array('ifmac', $a_lockable_ports))
+                           $port['ifmac'] = $discovery->MAC;
+                        if (!in_array('name', $a_lockable_ports))
+                           $port['name'] = $discovery->NETPORTVENDOR;
                         $np->update($port);
                      } else if ($DB->numrows($result) > 1) {
                         $ptae = new PluginFusionInventoryAgentsErrors;
