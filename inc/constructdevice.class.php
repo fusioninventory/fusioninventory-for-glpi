@@ -210,6 +210,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.4']         = 'cartridgesyellow';
       $mapping_pre[3]['.1.3.6.1.2.1.43.10.2.1.4.1.1']                = 'pagecountertotalpages';
       $mapping_pre[3]['.1.3.6.1.2.1.43.5.1.1.17.1']                  = 'serial';
+      $mapping_pre[3]['.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0']      = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.13']        = 'pagecountercolorpages';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.14']        = 'pagecounterblackpages';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.2']         = 'pagecountertotalpages_copy';
