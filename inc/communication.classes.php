@@ -1278,7 +1278,8 @@ class PluginFusionInventoryCommunication {
                         .$child->getName()."\n";
          }
       }
-      if ($p_oPort->getValue('trunk')!=1) {
+//      if ($p_oPort->getValue('trunk')!=1) {
+      if ($cdp == 0) {
          if ($count > 1) { // MultipleMac
             $p_oPort->setNoTrunk();
             $pfiud = new PluginFusionInventoryUnknownDevice;
