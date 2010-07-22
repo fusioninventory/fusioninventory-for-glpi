@@ -67,28 +67,13 @@ function plugin_init_fusinvsnmp() {
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['SNMPQUERY'] = 'PluginFusinvsnmpCommunicationSNMPQuery';
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] = 'PluginFusinvsnmpCommunicationNetDiscovery';
 
-   // comment trouver le dernier index libre
-//   $_SESSION['glpi_plugin_fusioninventory']['configuration_tabs'][] = $LANG['plugin_fusinvsnmp']["title"][0];
-//   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration_tabs']['fusinvsnmp'])) {
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
                        [$LANG['plugin_fusinvsnmp']["title"][0]])) {
-//      $_SESSION['glpi_plugin_fusioninventory']['configuration_tabs']['fusinvsnmp'] = $LANG['plugin_fusinvsnmp']["title"][0];
-//      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
                [$LANG['plugin_fusinvsnmp']["title"][0]] = array('class'=>'PluginFusinvSNMPConfig',
                                                                 'submitbutton'=>'plugin_fusinvsnmp_config_set',
                                                                 'submitmethod'=>'putForm');
-//               [$LANG['plugin_fusinvsnmp']["title"][0]] = 'PluginFusinvSNMPConfig';
-//               [$LANG['plugin_fusinvsnmp']["title"][0]] = $LANG['plugin_fusinvsnmp']["title"][0];
    }
-//   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['forms']
-//               ['plugin_fusinvsnmp_config_set'])) {
-//      $_SESSION['glpi_plugin_fusioninventory']['configuration']['forms']
-//               ['plugin_fusinvsnmp_config_set'] = array('class'=>'PluginFusinvSNMPConfig',
-//                                                        'method'=>'putForm');
-//   }
-//   $_SESSION['glpi_plugin_fusioninventory']['configuration_tabs']['modules']['fusinvsnmp'] =
-//      array($LANG['plugin_fusinvsnmp']["title"][0]);
 
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
