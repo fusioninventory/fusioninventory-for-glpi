@@ -43,7 +43,8 @@ class PluginFusinvSNMPConfig extends PluginFusioninventoryConfig {
 		global $DB;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $insert = array('criteria1_ip'=>'0',
+      $insert = array('storagesnmpauth'=>'DB',
+                      'criteria1_ip'=>'0',
                       'criteria1_name'=>'0',
                       'criteria1_serial'=>'0',
                       'criteria1_macaddr'=>'0',
@@ -56,6 +57,7 @@ class PluginFusinvSNMPConfig extends PluginFusioninventoryConfig {
 
 	function putForm($p_post) {
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+      $this->updateConfigType($plugins_id, 'storagesnmpauth', $p_post['storagesnmpauth']);
       $this->updateConfigType($plugins_id, 'criteria1_ip', $p_post['criteria1_ip']);
       $this->updateConfigType($plugins_id, 'criteria1_name', $p_post['criteria1_name']);
       $this->updateConfigType($plugins_id, 'criteria1_serial', $p_post['criteria1_serial']);
@@ -75,7 +77,19 @@ class PluginFusinvSNMPConfig extends PluginFusioninventoryConfig {
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr>";
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][16]."&nbsp;:</td>";
+		echo "<td>";
+		$ArrayValues = array();
+		$ArrayValues['DB']= $LANG['plugin_fusioninventory']["functionalities"][17];
+		$ArrayValues['file']= $LANG['plugin_fusioninventory']["functionalities"][18];
+		Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
+                              array('value'=>$this->getValue($plugins_id, 'storagesnmpauth')));
+		echo "</td>";
+      echo "<td colspan='2'></td>";;
+      echo "</tr>";
+
+      echo "<tr>";
 		echo "<th colspan='2'>";
 		echo $LANG['plugin_fusioninventory']["discovery"][6]."&nbsp;:";
 		echo "</th>";
