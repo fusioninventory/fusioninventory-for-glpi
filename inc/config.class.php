@@ -86,21 +86,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showInteger("inventory_frequence",
                             $this->getValue($plugins_id, 'inventory_frequence'),1,240);
 		echo "</td>";
-//		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][16]."&nbsp;:</td>";
-//		echo "<td width='20%'>";
-//		$ArrayValues = array();
-//		$ArrayValues['DB']= $LANG['plugin_fusioninventory']["functionalities"][17];
-//		$ArrayValues['file']= $LANG['plugin_fusioninventory']["functionalities"][18];
-//		Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
-//                              array('value'=>$this->getValue($plugins_id, 'storagesnmpauth')));
-//		echo "</td>";
       echo "</tr>";
 
  		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][32]."</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][32]." :</td>";
 		echo "<td>";
-      Dropdown::showInteger("delete_agent_process",
-                            $this->getValue($plugins_id, 'delete_agent_process'),1,240);
+      Dropdown::showInteger("delete_task",
+                            $this->getValue($plugins_id, 'delete_task'),1,240);
       echo " ".$LANG['gmt'][1];
 		echo "</td>";
 		echo "<td colspan='2'></td>";

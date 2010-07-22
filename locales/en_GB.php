@@ -128,7 +128,7 @@ $LANG['plugin_fusioninventory']["functionalities"][29]="List of fields to histor
 
 $LANG['plugin_fusioninventory']["functionalities"][30]="Status of active material";
 $LANG['plugin_fusioninventory']["functionalities"][31]="Management of cartridges and stock";
-$LANG['plugin_fusioninventory']["functionalities"][32]="Delete agents informations processes after";
+$LANG['plugin_fusioninventory']["functionalities"][32]="Delete tasks after";
 $LANG['plugin_fusioninventory']["functionalities"][36]="Frequency of meter reading";
 
 $LANG['plugin_fusioninventory']["functionalities"][40]="Configuration";

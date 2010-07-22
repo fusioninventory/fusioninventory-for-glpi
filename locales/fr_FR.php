@@ -128,7 +128,7 @@ $LANG['plugin_fusioninventory']["functionalities"][29]="Liste des champs à hist
 
 $LANG['plugin_fusioninventory']["functionalities"][30]="Statut du matériel actif";
 $LANG['plugin_fusioninventory']["functionalities"][31]="Gestion des cartouches et du stock";
-$LANG['plugin_fusioninventory']["functionalities"][32]="Effacer les informations des process agent après";
+$LANG['plugin_fusioninventory']["functionalities"][32]="Effacer les tâches terminées après";
 $LANG['plugin_fusioninventory']["functionalities"][36]="Fréquence de relevé des compteurs";
 
 $LANG['plugin_fusioninventory']["functionalities"][40]="Configuration";
