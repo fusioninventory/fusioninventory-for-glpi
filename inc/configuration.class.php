@@ -30,7 +30,7 @@
 
 // ----------------------------------------------------------------------
 // Original Author of file: MAZZONI Vincent
-// Purpose of file:
+// Purpose of file: general configuration menu for fusioninventory and fusinv* plugins
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
@@ -43,11 +43,26 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
    function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
 
-      $ong = array();
-		$ong[1]=$LANG['plugin_fusioninventory']["functionalities"][2];
-      $ong[2]=$LANG['plugin_fusioninventory']["functionalities"][7];
+      $tabs = array();
+		$tabs[0]=$LANG['plugin_fusioninventory']["functionalities"][2];
+      $tabs[1]=$LANG['plugin_fusioninventory']["functionalities"][7];
+      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
+         $fusionTabs = $tabs;
+         $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
+         if (count($moduleTabForms)) {
+            foreach ($moduleTabForms as $module=>$form) {
+               $plugin = new Plugin;
+               if ($plugin->isActivated($module)) {
+                  $tabs = array_merge($tabs, array_keys($form));
+               }
+            }
+            $moduleTabs = array_diff($tabs, $fusionTabs);
+         }
+         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
+      }
+      $tabs['no_all_tab'] = true;
 
-		return $ong;
+		return $tabs;
 	}
 
 }

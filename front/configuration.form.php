@@ -40,40 +40,34 @@ include (GLPI_ROOT."/inc/includes.php");
 checkRight("config","w");
 
 commonHeader($LANG['plugin_fusioninventory']["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","summary");
-//echo 'bla';
-//echo class_exists("ComputerT");
-//if (isset($_POST['update'])) {
-//
-//	if (empty($_POST['cleaning_days'])) {
-//		$_POST['cleaning_days'] = 0;
-//   }
-//
-//   $_POST['id']=1;
-//	switch ($_POST['tabs']) {
-//
-//		case 'config' :
-//			$config1 = new PluginFusioninventoryConfig;
-//			break;
-//
-//	}
-//	if (isset($config1)) {
-//		$config1->update($_POST);
-//   }
-//   glpi_header($_SERVER['HTTP_REFERER']);
-//} else if ((isset($_POST['plugin_fusioninventory_lockable_add']))
-//           OR (isset($_POST['plugin_fusioninventory_lockable_delete']))) {
-//   PluginFusioninventoryLockable::setLockableForm($_POST);
-//   glpi_header($_SERVER['HTTP_REFERER']);
-//}
+
+if (isset($_POST['plugin_fusioninventory_config_set'])) {
+   $config = new PluginFusioninventoryConfig;
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+   $config->updateConfigType($plugins_id, 'ssl_only', $_POST['ssl_only']);
+   $config->updateConfigType($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
+   glpi_header($_SERVER['HTTP_REFERER']);
+}
+
 if ((isset($_POST['plugin_fusioninventory_lockable_add']))
            OR (isset($_POST['plugin_fusioninventory_lockable_delete']))) {
    PluginFusioninventoryLockable::setLockableForm($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
-//$config = new PluginFusioninventoryConfig;
-//
-////$config->showForm('');
-//$config->showForm();
+
+// modules
+if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
+   foreach($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'] as $module=>$form) {
+      foreach($form as $title=>$code) {
+         if (isset($_POST[$code['submitbutton']])) {
+            $obj = new $code['class'];
+            $obj->$code['submitmethod']($_POST);
+            glpi_header($_SERVER['HTTP_REFERER']);
+         }
+      }
+   }
+}
+
 $configuration = new PluginFusioninventoryConfiguration;
 $configuration->show();
 

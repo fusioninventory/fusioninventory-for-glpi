@@ -57,7 +57,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
     *
     *@return nothing (print the form)
     **/
-   function showForm($options=array()) {
+   function showForm($p_options=array()) {
       global $LANG, $DB;
 
       if (!isset($this->fields['id'])) $this->fields['id']=0;
@@ -67,24 +67,19 @@ class PluginFusioninventoryLockable extends CommonDBTM{
          $tableSelect=$_SESSION["glpi_plugin_fusioninventory_lockable_table"];
       }
 
-      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<form name='form' method='post' action='".$p_options['target']."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr><th colspan='4'>".$LANG['plugin_fusioninventory']["functionalities"][70]."</th>";
-      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][72]." :</td>";
       echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][71]." :</td>";
-      echo "<td></td><td>".$LANG['plugin_fusioninventory']['functionalities'][7]."</td>";
+      echo "<td></td><td>".$LANG['plugin_fusioninventory']['functionalities'][7]." :</td>";
 
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-
-      $options="";
 
       $query = "SHOW TABLES;";
       $elements=array(0 => '-----');

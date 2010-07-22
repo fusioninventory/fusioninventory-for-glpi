@@ -33,43 +33,45 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-//echo "configuration.tabs";
-
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
-//header("Content-Type: text/html; charset=UTF-8");
-//header_nocache();
 
-//if(!isset($_POST["id"])) {
-//	exit();
-//}
-//if(!isset($_POST["sort"])) $_POST["sort"] = "";
-//if(!isset($_POST["order"])) $_POST["order"] = "";
-//if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
-
-
-
-
-//checkRight("config","w");
+checkRight("config","w");
 
 if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {
    switch($_POST['glpi_tab']) {
-      case 2 :
-         // lockables
+      case 0 :
+         $config = new PluginFusioninventoryConfig;
+         $config->showForm(array('target'=>$_POST['target']));
+         break;
+
+      case 1 :
          $ptLockable = new PluginFusioninventoryLockable;
-//         $ptLockable->showForm(array('target'=>$_POST['target']));
-//      echo 'avant showForm';
-         $ptLockable->showForm(array('id'=>0, 'target'=>$_POST['target']));
+         $ptLockable->showForm(array('target'=>$_POST['target']));
          break;
 
       default :
-      case 1 :
-         $config = new PluginFusioninventoryConfig;
-//         $config->showForm('1', array('target'=>$_POST['target']));
-         $config->showForm();
-//         $ptLockable = new PluginFusioninventoryLockable;
-//         $ptLockable->showForm(array('target'=>$_POST['target']));
-         break;
+         if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
+            $sessionConfig = $_SESSION['glpi_plugin_fusioninventory']['configuration'];
+            if (isset($sessionConfig['moduletabs'])) {
+               $pluginsTabs = $sessionConfig['moduletabs'];
+               if (isset($pluginsTabs[$_POST['glpi_tab']])){
+                  $title = $pluginsTabs[$_POST['glpi_tab']];
+                  $plugin = new Plugin;
+                  foreach($sessionConfig['moduletabforms'] as $module=>$form) {
+                     if ($plugin->isActivated($module)) {
+                        if (isset($form[$title])) {
+                           $class = $form[$title]['class'];
+                           $oTab = new $class;
+                           $oTab->showForm(array('target'=>$_POST['target']));
+                           break;
+                        }
+                     }
+                  }
+               }
+            }
+         }
+
    }
 } else {
    echo $LANG['common'][83]."<br/>";

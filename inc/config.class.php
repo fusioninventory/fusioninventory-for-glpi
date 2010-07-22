@@ -59,38 +59,23 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 	// Confirm if the functionality is activated, or not
 //	function isActivated($p_type, $p_plugins_id=0) {
-	function is_active($p_modules_id, $p_type) {
-		if (!($this->getValue($p_modules_id, $p_type))) {
+	function is_active($p_plugins_id, $p_type) {
+		if (!($this->getValue($p_plugins_id, $p_type))) {
 			return false;
       } else {
 			return true;
       }
 	}
 
-   function defineTabs($options=array()){
+	function showForm($options=array()) {
 		global $LANG,$CFG_GLPI;
-
-      $ong = array();
-		$ong[1]=$LANG['plugin_fusioninventory']["functionalities"][2];
-//      $ong[2]=$LANG['plugin_fusioninventory']['config'][1];
-//		$ong[3]=$LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG['plugin_fusioninventory']["functionalities"][5];
-//		$ong[3]=$LANG['plugin_fusioninventory']["functionalities"][3]." - ".$LANG['plugin_fusioninventory']["discovery"][3];
-
-//      $ong[7]=$LANG['title'][38];
-      $ong[2]=$LANG['plugin_fusioninventory']["functionalities"][7];
-
-		return $ong;
-	}
-
-//	function showForm($id, $options=array()) {
-//	function showForm($options=array()) {
-	function showForm() {
-		global $LANG,$CFG_GLPI;
-
-//		$this->showTabs($options);
-//      $this->showFormHeader($options);
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+
+      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<div class='center' id='tabsbody'>";
+      echo "<table class='tab_cadre_fixe'>";
+
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
 		echo "<td width='20%'>";
@@ -120,72 +105,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 		echo "</td>";
       echo "</tr>";
 
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][26]." (ex : https://192.168.0.1/glpi)</td>";
-//      echo "<td>";
-//      echo "<input type='text' name='URL_agent_conf' size='30' value='".$this->getValue('URL_agent_conf')."' />";
-//      echo "</td>";
-//      echo "<td>";
-//      echo "</td>";
-//      echo "<td>";
-//      echo "</td>";
-//      echo "</tr>";
-
-		echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["discovery"][6]."&nbsp;:";
-		echo "</th>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["discovery"][6]." 2&nbsp;:";
-		echo "</th>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_ip", $this->is_active($plugins_id, 'criteria1_ip'));
-		echo "</td>";
-		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_ip", $this->is_active($plugins_id, 'criteria2_ip'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_name", $this->is_active($plugins_id, 'criteria1_name'));
-		echo "</td>";
-		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_name", $this->is_active($plugins_id, 'criteria2_name'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_serial", $this->is_active($plugins_id, 'criteria1_serial'));
-		echo "</td>";
-		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_serial", $this->is_active($plugins_id, 'criteria2_serial'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_macaddr", $this->is_active($plugins_id, 'criteria1_macaddr'));
-		echo "</td>";
-		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_macaddr", $this->is_active($plugins_id, 'criteria2_macaddr'));
-		echo "</td>";
-		echo "</tr>";
-
-		$this->showFormButtons();
-		$this->addDivForTabs();
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
+         echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
+               <input class='submit' type='submit' name='plugin_fusioninventory_config_set'
+                      value='" . $LANG['buttons'][7] . "'></td></tr>";
+      }
+      echo "</table>";
+      echo "</form>";
 
       return true;
 	}
@@ -193,30 +119,60 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Add config
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_plugins_id Plugin id
     *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
     *@param $p_value Value
     *@return integer the new id of the added item (or false if fail)
     **/
-   function addConfig($p_modules_id, $p_type, $p_value) {
-      return $this->add(array('type'=>$p_type, `value`=>$p_value,
-                       'plugin_fusioninventory_modules_id'=>$p_modules_id));
+   function addConfig($p_plugins_id, $p_type, $p_value) {
+      return $this->add(array('plugins_id'=>$p_plugins_id, 
+                              'type'=>$p_type,
+                              'value'=>$p_value));
    }
 
    /**
     * Update config
     *
     *@param $p_id Config id
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_value Value
+    *@return boolean : true on success
+    **/
+   function updateConfig($p_id, $p_value) {
+      return $this->update(array('id'=>$p_id, 'value'=>$p_value));
+   }
+
+   /**
+    * Update config type
+    *
+    *@param $p_plugins_id Plugin id
     *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
     *@param $p_value Value
     *@return boolean : true on success
     **/
-   function updateConfig($p_id, $p_modules_id, $p_type, $p_value) {
-      return $this->update(array('id'=>$p_id, 'type'=>$p_type, `value`=>$p_value,
-                       'plugin_fusioninventory_modules_id'=>$p_modules_id));
+   function updateConfigType($p_plugins_id, $p_type, $p_value) {
+      $data = $this->find("`plugins_id`='".$p_plugins_id."'
+                          AND `type`='".$p_type."'");
+      $config = current($data);
+		if (isset($config['id'])) {
+         return $this->updateConfig($config['id'], $p_value);
+      }
+      return false;
    }
 
+//   /**
+//    * Update config
+//    *
+//    *@param $p_id Config id
+//    *@param $p_modules_id Module id (0 for Fusioninventory)
+//    *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
+//    *@param $p_value Value
+//    *@return boolean : true on success
+//    **/
+//   function updateConfig($p_id, $p_modules_id, $p_type, $p_value) {
+//      return $this->update(array('id'=>$p_id, 'type'=>$p_type, `value`=>$p_value,
+//                       'plugin_fusioninventory_modules_id'=>$p_modules_id));
+//   }
+//
    /**
     * Delete config
     *
@@ -230,17 +186,32 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Clean config
     *
-    *@param $p_modules_id Module id (0 for Fusioninventory)
+    *@param $p_plugins_id Plugin id
     *@return boolean : true on success
     **/
-   function cleanConfig($p_modules_id) {
+   function cleanConfig($p_plugins_id) {
       global $DB;
 
-      $delete = "DELETE FROM ".$this->table.
-                "WHERE `plugin_fusioninventory_modules_id`='".$p_modules_id."';";
+      $delete = "DELETE FROM `".$this->table."`
+                 WHERE `plugins_id`='".$p_plugins_id."';";
       return $DB->query($delete);
    }
 
+   /**
+    * Init config
+    *
+    *@param $p_plugins_id Plugin id
+    *@param $p_insert Array('type'=>'value')
+    *@return nothing
+    **/
+	function initConfig($p_plugins_id, $p_insert) {
+		global $DB;
+
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+      foreach ($p_insert as $type=>$value) {
+         $this->addConfig($p_plugins_id, $type, $value);
+      }
+   }
 }
 
 ?>
