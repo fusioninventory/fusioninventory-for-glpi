@@ -40,7 +40,7 @@ $agents = new PluginFusioninventoryAgent;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
-PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -71,15 +71,12 @@ if (isset ($_POST["add"])) {
 }
 
 
-$id = "";
+
 if (isset($_GET["id"])) {
-	$id = $_GET["id"];
+   $agents->showForm($_GET["id"]);
 } else {
-   $agents->showForm($id);
+   $agents->showForm("");
 }
-$agents->showTabs($id, '',$_SESSION['glpi_tabs']);
-echo "<div id='tabcontent'></div>";
-echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
 commonFooter();
 

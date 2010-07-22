@@ -46,27 +46,19 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pfia = new PluginFusioninventoryAgent;
-$pfit = new PluginFusioninventoryTask;
-
-$pfia->showForm($_POST["id"]);
+$PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
 
 switch($_POST['glpi_tab']) {
 	case -1 :
-      $pfia->showFormAdvancedOptions($_POST["id"]);
-      $pfit->RemoteStateAgent($_POST['target'], $_POST["id"], 'PluginFusioninventoryAgent', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+      //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
 		break;
 
 	case 1 :
-      $pfia->showFormAdvancedOptions($_POST["id"]);
-		break;
-
-   case 2 :
-      $pfit->RemoteStateAgent($_POST['target'], $_POST["id"], 'PluginFusioninventoryAgent', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
+      //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
 		break;
 
    default :
-      $pfia->showFormAdvancedOptions($_POST["id"]);
+      //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
 		break;
 }
 

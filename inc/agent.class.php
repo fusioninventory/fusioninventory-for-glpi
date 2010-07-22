@@ -52,14 +52,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $ong = array();
 		if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
-         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-         if (($ptc->is_active($plugins_id, 'remotehttpagent'))
-              AND(PluginFusioninventoryProfile::haveRight("Fusioninventory","remotecontrol","w"))) {
-            $ong[2]=$LANG['plugin_fusioninventory']["task"][2];
-         }
       }
+      // $ong[1] = Modules installes sur l'agent
+      // $ong[2] = activation des modules
+      // $ong[3] = actions (tâches)
+      // $ong[x] = config dynamique de chaque plugin installe
 		return $ong;
 	}
+
 
 	function PushData($id, $key) {
 		$this->getFromDB($id);
@@ -86,13 +86,23 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 			$this->getEmpty();
       }
 
-      $ptc = new PluginFusioninventoryConfig;
-
 		$this->showTabs($options);
       $this->showFormHeader($options);
-		echo "<tr class='tab_bg_1'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][16]." :</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='name' value='".$this->fields["name"]."' size='30'/>";
+      echo "</td>";
+      echo "<td>Device_id :</td>";
+      echo "<td align='center'>";
+      echo $this->fields["device_id"];
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["agents"][23]." :</td>";
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
          $oComputer = new Computer();
          $oComputer->getFromDB($this->fields["items_id"]);
@@ -101,69 +111,47 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       } else {
          Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'items_id', $_SESSION['glpiactive_entity']);
       }
-		echo "</td>";
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']["agents"][24]." :</td>";
+      echo "<td align='center'>";
+      echo $this->fields["token"];
+      echo "</td>";
+      echo "</tr>";
 
-      if ($ptc->getValue('wol') == "1") {
-         echo "<td>".$LANG['plugin_fusioninventory']['config'][6]." :</td>";
-         echo "<td align='center'>";
-         Dropdown::showYesNo("module_wakeonlan",$this->fields["module_wakeonlan"]);
-         echo "</td>";
-		} else {
-         echo "<td colspan='2'></td>";
-      }
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']["agents"][6]." :</td>";
+      echo "<td align='center'>";
+      Dropdown::showYesNo('lock', $this->fields["lock"]);
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']["agents"][25]." :</td>";
+      echo "<td align='center'>";
+      echo $this->fields["version"];
+      echo "</td>";
+      echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-      echo "<td>Token :</td>";
-		echo "<td align='center' colspan='3'>";
-		echo $this->fields["token"];
-		echo "</td>";
-		echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td></td>";
+      echo "<td align='center'>";
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']["agents"][4]." :</td>";
+      echo "<td align='center'>";
+      echo convDateTime($this->fields["last_contact"]);
+      echo "</td>";
+      echo "</tr>";
 
-		$this->showFormButtons($options);
-
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+      $this->showFormButtons($options);
+      $this->addDivForTabs();
 
       return true;
 	}
 
 
 
-   function showFormAdvancedOptions($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
-      
-      $this->showTabs($options);
-      $this->showFormHeader($options);
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusioninventory']["agents"][3]."</td>";
-		echo "<td align='center'>";
-		Dropdown::showInteger("threads_discovery", $this->fields["threads_discovery"],1,400);
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][2] . "</td>";
-		echo "<td align='center'>";
-		Dropdown::showInteger("threads_query", $this->fields["threads_query"],1,200);
-		echo "</td>";
-		echo "</tr>";
-
-      $this->showFormButtons($options);
-
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-
-      return true;
-   }
-
-
-
-   function InfosByKey($key) {
+   function InfosByKey($device_id) {
       global $DB;
 
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_agents`
-      WHERE `key`='".$key."' LIMIT 1";
+      $query = "SELECT * FROM `".$this->table."`
+      WHERE `device_id`='".$device_id."' LIMIT 1";
 
       $agent = array();
       if ($result = $DB->query($query)) {
@@ -173,6 +161,36 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return $agent;
    }
+
+
+
+   function importToken($p_xml) {
+      $sxml = @simplexml_load_string($p_xml);
+
+      if ((isset($sxml->DEVICEID)) AND (isset($sxml->TOKEN))) {
+         $pta = new PluginFusioninventoryAgent;
+         $a_agent = $pta->find("`device_id`='".$sxml->DEVICEID."'", "", "1");
+         if (empty($a_agent)) {
+            $a_input = array();
+            $a_input['token'] = $sxml->TOKEN;
+            $a_input['name'] = $sxml->DEVICEID;
+            $a_input['device_id'] = $sxml->DEVICEID;
+            $a_input['last_contact'] = date("Y-m-d H:i:s");
+            $pta->add($a_input);
+            return 2;
+         } else {
+            foreach ($a_agent as $id_agent=>$dataInfos) {
+               $input = array();
+               $input['id'] = $id_agent;
+               $input['token'] = $sxml->TOKEN;
+               $input['last_contact'] = date("Y-m-d H:i:s");
+               $pta->update($input);
+            }
+         }
+      }
+      return 1;
+   }
+   
 
 }
 

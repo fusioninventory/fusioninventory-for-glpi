@@ -560,7 +560,7 @@ $LANG['plugin_fusioninventory']["iprange"][4]="Adresse IP incorrecte";
 $LANG['plugin_fusioninventory']["agents"][0]="Agent SNMP";
 $LANG['plugin_fusioninventory']["agents"][2]="Threads interrogation (par coeur)";
 $LANG['plugin_fusioninventory']["agents"][3]="Threads découverte (par coeur)";
-$LANG['plugin_fusioninventory']["agents"][4]="Dernière remontée";
+$LANG['plugin_fusioninventory']["agents"][4]="Dernier contact de l'agent";
 $LANG['plugin_fusioninventory']["agents"][5]="Version de l'agent";
 $LANG['plugin_fusioninventory']["agents"][6]="Verrouillage";
 $LANG['plugin_fusioninventory']["agents"][7]="Export config agent";
@@ -577,6 +577,8 @@ $LANG['plugin_fusioninventory']["agents"][20]="La synchronisation entre OCS et G
 $LANG['plugin_fusioninventory']["agents"][21]="Inventaire terminé";
 $LANG['plugin_fusioninventory']["agents"][22]="En attente";
 $LANG['plugin_fusioninventory']["agents"][23]="Lié à l'ordinateur";
+$LANG['plugin_fusioninventory']["agents"][24]="Token";
+$LANG['plugin_fusioninventory']["agents"][25]="Version";
 
 $LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
 $LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";

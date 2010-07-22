@@ -207,31 +207,6 @@ class PluginFusioninventoryCommunication {
       return $this->sxml->asXML();
    }
 
-   function importToken($p_xml) {
-      $this->setXML($p_xml);
-
-      if ((isset($this->sxml->DEVICEID)) AND (isset($this->sxml->TOKEN))) {
-         $pta = new PluginFusioninventoryAgent;
-         $a_agent = $pta->find("`key`='".$this->sxml->DEVICEID."'", "", "1");
-         if (empty($a_agent)) {
-            $a_input = array();
-            $a_input['token'] = $this->sxml->TOKEN;
-            $a_input['name'] = $this->sxml->DEVICEID;
-            $a_input['key'] = $this->sxml->DEVICEID;
-            $pta->add($a_input);
-            return 2;
-         } else {
-            foreach ($a_agent as $id_agent=>$dataInfos) {
-               $input = array();
-               $input['id'] = $id_agent;
-               $input['token'] = $this->sxml->TOKEN;
-               $pta->update($input);
-            }
-         }
-      }
-      return 1;
-   }
-
    function addWakeonlan($pxml) {
       $pta = new PluginFusioninventoryAgent;
       $ptt = new PluginFusioninventoryTask;
