@@ -73,7 +73,6 @@ function pluginFusioninventoryInstall($version) {
                          (`type`, `value`, `plugins_id`)
              VALUES ('version', '".$version."', '".$plugins_id."'),
                     ('ssl_only', '0', '".$plugins_id."'),
-                    ('storagesnmpauth', 'DB', '".$plugins_id."'),
                     ('inventory_frequence', '24', '".$plugins_id."');";
 //                    ('criteria1_ip', '0', '".$plugins_id."'),
 //                    ('criteria1_name', '0', '".$plugins_id."'),
