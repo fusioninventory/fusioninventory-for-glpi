@@ -85,6 +85,8 @@ function pluginFusinvsnmpInstall() {
       $a_rights['configuration'] = 'w';
       PluginFusioninventoryProfile::initProfile($plugin_id,$a_rights);
 
+      $configSNMP = new PluginFusinvSNMPConfig;
+      $configSNMP->initConfigModule();
       // Creation config values
 //      PluginFusioninventoryConfig::add($modules_id, type, value);
 
@@ -139,6 +141,9 @@ function pluginFusinvsnmpUninstall() {
 //      $np->cleanDBonPurge($NetworkPort['id']);
 //      $np->deleteFromDB($NetworkPort['id']);
 //   }
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+   $config = new PluginFusionInventoryConfig;
+   $config->cleanConfig($plugins_id);
    return true;
 }
 
