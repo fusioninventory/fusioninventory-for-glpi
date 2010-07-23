@@ -44,6 +44,36 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$this->type = 'PluginFusioninventoryAgent';
 	}
 
+
+   
+   static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']["agents"][26];
+   }
+
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canCancel() {
+      return true;
+   }
+
+   function canUndo() {
+      return true;
+   }
+
+   function canValidate() {
+      return true;
+   }
+
+
+
    function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
 
@@ -54,7 +84,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
       }
       // $ong[1] = Modules installes sur l'agent
-      // $ong[2] = activation des modules
+       $ong[2] = "activation modules"; //activation des modules
       // $ong[3] = actions (tâches)
       // $ong[x] = config dynamique de chaque plugin installe
 		return $ong;

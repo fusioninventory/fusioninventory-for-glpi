@@ -57,6 +57,11 @@ switch($_POST['glpi_tab']) {
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
 		break;
 
+   case 2:
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $PluginFusioninventoryAgentmodule->showFormAgentException($_POST["id"]);
+      break;
+
    default :
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
 		break;
