@@ -484,13 +484,42 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                         $error_input['agent_type'] = 'NETDISCOVERY';
                         $ptae->addError($error_input);
                      } else { // noport
-                        $port_add = array();
-                        $port_add["on_device"] = $a_device[0];
-                        $port_add["device_type"] = $a_device[1];
-                        $port_add["ifaddr"] = $discovery->IP;
-                        $port_add['ifmac'] = $discovery->MAC;
-                        $port_add['name'] = $discovery->NETPORTVENDOR;
-                        $np->add($port_add);
+                        // Search if netport exist or not
+                        $add = 0;
+                        if (isset($discovery->MAC) AND $discovery->MAC != '' AND $discovery->MAC != '00:00:00:00:00:00') {
+                           $query_unknown = "SELECT * FROM glpi_networking_ports
+                              WHERE device_type = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                                 AND `ifmac` = '".$discovery->MAC."' ";
+                           if ($result_unknown = $DB->query($query_unknown)) {
+                              if ($DB->numrows($result_unknown) == 1) {
+                                 $data_unknown = $DB->fetch_assoc($result_unknown);
+                                 $query_unknown2 = "SELECT ID FROM glpi_networking_ports
+                                    WHERE `device_type` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                                       AND `on_device` = '".$data_unknown['on_device']."' ";
+                                 if ($result_unknown2 = $DB->query($query_unknown2)) {
+                                    if ($DB->numrows($result_unknown2) == 1) {
+                                       // Delete unknown device
+                                       $ptud->deleteFromDB($data_unknown['on_device'], 1);
+                                    }
+                                 }                                 
+                                 $add = 1;
+                                 $data_unknown["on_device"] = $a_device[0];
+                                 $data_unknown["device_type"] = $a_device[1];
+                                 $data_unknown["ifaddr"] = $discovery->IP;
+                                 $data_unknown['name'] = $discovery->NETPORTVENDOR;
+                                 $np->update($data_unknown);
+                              }
+                           }
+                        }
+                        if ($add == '0') {
+                           $port_add = array();
+                           $port_add["on_device"] = $a_device[0];
+                           $port_add["device_type"] = $a_device[1];
+                           $port_add["ifaddr"] = $discovery->IP;
+                           $port_add['ifmac'] = $discovery->MAC;
+                           $port_add['name'] = $discovery->NETPORTVENDOR;
+                           $np->add($port_add);
+                        }
                      }
                   }
                }
