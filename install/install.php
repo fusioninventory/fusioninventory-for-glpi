@@ -78,6 +78,13 @@ function pluginFusioninventoryInstall($version) {
    $DB->query($query);
 
    PluginFusioninventoryProfile::changeProfile($plugins_id);
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $input = array();
+   $input['plugins_id'] = $plugins_id;
+   $input['modulename'] = "WAKEONLAN";
+   $input['is_active']  = 0;
+   $input['exceptions'] = exportArrayToDB(array());
+   $PluginFusioninventoryAgentmodule->add($input);
 }
 
 ?>

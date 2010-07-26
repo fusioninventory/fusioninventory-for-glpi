@@ -579,6 +579,8 @@ $LANG['plugin_fusioninventory']["agents"][22]="En attente";
 $LANG['plugin_fusioninventory']["agents"][23]="Lié à l'ordinateur";
 $LANG['plugin_fusioninventory']["agents"][24]="Token";
 $LANG['plugin_fusioninventory']["agents"][25]="Version";
+$LANG['plugin_fusioninventory']["agents"][26]="Gestion des agents";
+$LANG['plugin_fusioninventory']["agents"][27]="Modules des agents";
 
 $LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
 $LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";

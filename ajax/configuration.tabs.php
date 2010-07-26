@@ -50,6 +50,11 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
          $ptLockable->showForm(array('target'=>$_POST['target']));
          break;
 
+      case 2:
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+         $PluginFusioninventoryAgentmodule->showForm();
+         break;
+
       default :
          if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
             $sessionConfig = $_SESSION['glpi_plugin_fusioninventory']['configuration'];
