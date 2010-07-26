@@ -54,7 +54,7 @@ function plugin_fusinvsnmp_displayMenu() {
       $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/authentication.php";
    }
 
-   if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "rangeip", "r")) {
+   if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange", "r")) {
       $a_menu[2]['name'] = $LANG['plugin_fusinvsnmp']["menu"][2];
       $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rangeip.png";
       $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";

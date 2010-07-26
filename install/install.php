@@ -79,7 +79,7 @@ function pluginFusinvsnmpInstall() {
       $a_rights['printers'] = 'w';
       $a_rights['models'] = 'w';
       $a_rights['authentication'] = 'w';
-      $a_rights['rangeip'] = 'w';
+      $a_rights['iprange'] = 'w';
       $a_rights['unknowndevices'] = 'w';
       $a_rights['configuration'] = 'w';
       PluginFusioninventoryProfile::initProfile($plugin_id,$a_rights);
