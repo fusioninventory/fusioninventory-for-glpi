@@ -43,7 +43,7 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp","models","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$_GET['target']="models.php";
+$_GET['target']="model.php";
 
 //searchForm('PluginFusinvsnmpModel',$_GET);
 //showList('PluginFusinvsnmpModel',$_GET);

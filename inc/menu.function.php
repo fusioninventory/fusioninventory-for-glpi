@@ -45,13 +45,13 @@ function plugin_fusinvsnmp_displayMenu() {
    if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models", "r")) {
       $a_menu[0]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][4];
       $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_models.png";
-      $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/models.php";
+      $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/model.php";
    }
 
    if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication", "r")) {
       $a_menu[1]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][3];
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_authentification.png";
-      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/authentication.php";
+      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/configsecurity.php";
    }
 
    if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange", "r")) {
@@ -63,7 +63,7 @@ function plugin_fusinvsnmp_displayMenu() {
    if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices", "r")) {
       $a_menu[3]['name'] = $LANG['plugin_fusinvsnmp']["menu"][4];
       $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_unknown_device.png";
-      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/unknown.php";
+      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/unknowndevice.php";
    }
 
    return $a_menu;
