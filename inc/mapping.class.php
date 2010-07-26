@@ -43,6 +43,22 @@ class PluginFusioninventoryMapping extends CommonDBTM {
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_mappings";
 	}
+
+   /**
+    * Get mapping
+    *
+    *@param $p_itemtype Mapping itemtype
+    *@param $p_name Mapping name
+    *@return mapping fields or false
+    **/
+   function get($p_itemtype, $p_name) {
+		$data = $this->find("`itemtype`='".$p_itemtype."' AND `name`='".$p_name."'");
+      $mapping = current($data);
+		if (isset($mapping['id'])) {
+         return $mapping;
+		}
+      return false;
+	}
 }
 
 ?>
