@@ -194,8 +194,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
    KEY `name` (`name`),
    KEY `itemtype` (`itemtype`),
    KEY `table` (`table`),
-   KEY `tablefield` (`tablefield`)
-##   UNIQUE KEY `unicity` (`name`, `itemtype`)
+   KEY `tablefield` (`tablefield`),
+   UNIQUE KEY `unicity` (`name`, `itemtype`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

@@ -75,14 +75,6 @@ function pluginFusioninventoryInstall($version) {
                     ('ssl_only', '0', '".$plugins_id."'),
                     ('delete_task', '24', '".$plugins_id."'),
                     ('inventory_frequence', '24', '".$plugins_id."');";
-//                    ('criteria1_ip', '0', '".$plugins_id."'),
-//                    ('criteria1_name', '0', '".$plugins_id."'),
-//                    ('criteria1_serial', '0', '".$plugins_id."'),
-//                    ('criteria1_macaddr', '0', '".$plugins_id."'),
-//                    ('criteria2_ip', '0', '".$plugins_id."'),
-//                    ('criteria2_name', '0', '".$plugins_id."'),
-//                    ('criteria2_serial', '0', '".$plugins_id."'),
-//                    ('criteria2_macaddr', '0', '".$plugins_id."'),
    $DB->query($query);
 
    PluginFusioninventoryProfile::changeProfile($plugins_id);
