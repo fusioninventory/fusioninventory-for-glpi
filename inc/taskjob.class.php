@@ -72,6 +72,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+
       if ($id!='') {
 			$this->getFromDB($id);
       } else {
@@ -162,30 +164,18 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
 
       if ($id) {
-         echo "<tr class='tab_bg_2'>";
-         echo "<td colspan='4' height='10'></td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>Statut&nbsp;:</td>";
-         echo "<td align='center'>";
-         switch ($this->fields["status"]) {
-
-            case 0 :
-               echo "Planifié";
-               break;
-
+         if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {
+            echo "</table><br/>";
+            if ($id) {
+               $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
+               echo "<br/>";
+            }
+         } else {
+            $this->showFormButtons($options);
          }
-         echo "</td>";
-         echo "<td>".$LANG['common'][25]." status&nbsp;:</td>";
-         echo "<td align='center'>";
-         echo $this->fields["statuscomments"];
-         echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
-         echo "</td>";
-         echo "</tr>";
+      } else  {
+         $this->showFormButtons($options);
       }
-
-      $this->showFormButtons($options);
 
       return true;
    }
@@ -314,7 +304,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          // <select> personalisé :
          plugin_fusioninventory_task_wakeonlan_fromothertasks();
       }
-      echo "<input type='button' name='addObject' id='addObject' value='Ajouter'/>";
+      echo "<input type='button' name='addObject' id='addObject' value='Ajouter' class='submit'/>";
 
       $params=array('selection'=>'__VALUE__',
                      'entity_restrict'=>$entity_restrict,
@@ -375,7 +365,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
                   
-                  $agent_id = $class->run($a_device[0], $a_device[1]);
+                  $agent_id = $class->prepareRun($a_device[0], $a_device[1]);
                   // Add jobstatus and put status (waiting on server = 0)
 
                   $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
@@ -385,6 +375,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                   $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                   $PluginFusioninventoryTaskjobstatus->add($a_input);
 
+                  //Add log of taskjob
                   unset($a_input['plugin_fusioninventory_agents_id']);
                   $a_input['state'] = 1;
                   $a_input['date'] = date("Y-m-d H:i:s");

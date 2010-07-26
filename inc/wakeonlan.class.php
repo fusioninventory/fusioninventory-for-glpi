@@ -40,7 +40,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryWakeonlan extends CommonDBTM {
 
-   function run($itemtype, $items_id) {
+   // Get all devices and put in taskjobstatus each task for each device for each agent
+   function prepareRun($itemtype, $items_id) {
       global $DB;
       // Get ids of operating systems which can make real wakeonlan
       $OperatingSystem = new OperatingSystem;
@@ -100,6 +101,38 @@ class PluginFusioninventoryWakeonlan extends CommonDBTM {
                      return $data_subnet['subnet']."-agents_id";
                   }
                }
+            }
+         }
+      }
+   }
+
+
+
+   // When agent contact server, this function send datas to agent
+   // $a_devices = array(itemtype, items_id);
+   function run($a_devices, $taskjobs_id, $agents_id) {
+      global $DB;
+
+      $sxml_option = $this->sxml->addChild('OPTION');
+      $sxml_option->addChild('NAME', 'WAKEONLAN');
+
+      foreach ($a_devices as $itemtype=>$items_id) {
+         // Get ip
+         $a_networkPort = NetworkPort::find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."' ");
+         foreach ($a_networkPort as $networkPort_id=>$data) {
+            if ($data['ip'] != "127.0.0.1") {
+               $sxml_param = $sxml_option->addChild('PARAM');
+               $sxml_param->addAttribute('MAC', $data['mac']);
+               $sxml_param->addAttribute('IP', $data['ip']);
+
+               // Update taskjobstatus (state = 1 : running);
+               $query_update = "UPDATE `glpi_plugin_fusioninventory_taskjobstatus`
+                  SET `state`='1'
+                  WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+                  AND `items_id`='".$items_id."'
+                  AND `itemtype`='".$itemtype."'
+                  AND `plugin_fusioninventory_agents_id`='".$agents_id."' ";
+               $DB->query($query_update);
             }
          }
       }
