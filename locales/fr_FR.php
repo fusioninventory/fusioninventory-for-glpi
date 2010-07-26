@@ -41,6 +41,7 @@ $LANG['plugin_fusinvsnmp']["title"][1]="Informations SNMP";
 $LANG['plugin_fusinvsnmp']["title"][2]="Historique de connexion";
 $LANG['plugin_fusinvsnmp']["title"][3]="[Trk] Erreurs";
 $LANG['plugin_fusinvsnmp']["title"][4]="[Trk] Cron";
+$LANG['plugin_fusinvsnmp']["title"][5]="Historique SNMP";
 
 $LANG['plugin_fusinvsnmp']['config'][0] = "Fréquence des inventaires (en heures)";
 $LANG['plugin_fusinvsnmp']['config'][1] = "Modules";

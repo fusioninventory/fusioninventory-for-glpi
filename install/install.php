@@ -66,9 +66,8 @@ function pluginFusinvsnmpInstall() {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp');
       }
 
-//      ??
-//      $configLogField = new PluginFusinvsnmpConfigLogField();
-//      $configLogField->initConfig();
+      $configLogField = new PluginFusinvsnmpConfigLogField();
+      $configLogField->initConfig();
 
       // Import models
       $importexport = new PluginFusinvsnmpImportExport;

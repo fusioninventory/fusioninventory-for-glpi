@@ -44,37 +44,48 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 		$this->table="glpi_plugin_fusinvsnmp_configlogfields";
 	}
 
+   /**
+    * Init config log fields : add default values in table
+    *
+    *@return nothing
+    **/
 	function initConfig() {
-		global $DB,$CFG_GLPI;
-      // Add all values
+      global $DB,$CFG_GLPI;
+      
+      $NOLOG = '-1';
+      $logs = array();
+      $logs['NetworkEquipment']['ifdescr'] = $NOLOG;
+      $logs['NetworkEquipment']['ifIndex'] = $NOLOG;
+      $logs['NetworkEquipment']['ifinerrors'] = $NOLOG;
+      $logs['NetworkEquipment']['ifinoctets'] = $NOLOG;
+      $logs['NetworkEquipment']['ifinternalstatus'] = $NOLOG;
+      $logs['NetworkEquipment']['iflastchange'] = $NOLOG;
+      $logs['NetworkEquipment']['ifmtu'] = $NOLOG;
+      $logs['NetworkEquipment']['ifName'] = $NOLOG;
+      $logs['NetworkEquipment']['ifouterrors'] = $NOLOG;
+      $logs['NetworkEquipment']['ifoutoctets'] = $NOLOG;
+      $logs['NetworkEquipment']['ifspeed'] = $NOLOG;
+      $logs['NetworkEquipment']['ifstatus'] = $NOLOG;
+      $logs['NetworkEquipment']['macaddr'] = $NOLOG;
+      $logs['NetworkEquipment']['portDuplex'] = $NOLOG;
+      $logs['NetworkEquipment']['vlanTrunkPortDynamicStatus'] = $NOLOG;
 
-      $rights = array();
-      $rights['ifmtu'] = '-1';
-      $rights['ifdescr'] = '-1';
-      $rights['ifinerrors'] = '-1';
-      $rights['ifinoctets'] = '-1';
-      $rights['ifinternalstatus'] = '-1';
-      $rights['iflastchange'] = '-1';
-      $rights['ifName'] = '-1';
-      $rights['ifouterrors'] = '-1';
-      $rights['ifoutoctets'] = '-1';
-      $rights['ifspeed'] = '-1';
-      $rights['ifstatus'] = '-1';
-//      $rights['ifnumber'] = '-1';
-//      $rights['mac'] = '-1';
-      $rights['vlanTrunkPortDynamicStatus'] = '-1';
-      $rights['portDuplex'] = '-1';
-      $rights['ifIndex'] = '-1';
-      $rights['macaddr'] = '-1';
+      $logs['Printer']['ifIndex'] = $NOLOG;
+      $logs['Printer']['ifName'] = $NOLOG;
 
-      foreach ($rights as $field=>$value){
-         $input = array();
-         $input['field'] = $field;
-         $input['days']  = $value;
-         $this->add($input);
+      $mapping = new PluginFusioninventoryMapping();
+      foreach ($logs as $itemtype=>$fields){
+         foreach ($fields as $name=>$value){
+            $input = array();
+            $mapfields = $mapping->get($itemtype, $name);
+            if ($mapfields != false) {
+               $input['plugin_fusioninventory_mappings_id'] = $mapfields['id'];
+               $input['days']  = $value;
+               $this->add($input);
+            }
+         }
       }
 	}
-	
 
 
 	function getValue($field) {
@@ -138,18 +149,16 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
          $input['days']  = $value;
          $this->add($input);
       }
-      
    }
 
-
 		
-	function showForm($target) {
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
-      
-		global $LANG,$DB,$FUSIONINVENTORY_MAPPING;
+	function showForm($options=array()) {
+		global $LANG,$DB;
 
-      $this->showTabs($options);
-      $this->showFormHeader($options);
+//      $this->showFormHeader($options);
+      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<div class='center' id='tabsbody'>";
+      echo "<table class='tab_cadre_fixe'>";
 
 		echo "<tr>";
 		echo "<th>";
@@ -167,42 +176,58 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
          $days[$i]  = "$i";
       }
 
-      $query = "SELECT *
-                FROM ".$this->table.";";
+      $query = "SELECT `".$this->table."`.`id`, `locale`, `days`, `itemtype`, `name`
+                FROM `".$this->table."`, `glpi_plugin_fusioninventory_mappings`
+                WHERE `".$this->table."`.`plugin_fusioninventory_mappings_id`=
+                         `glpi_plugin_fusioninventory_mappings`.`id`
+                ORDER BY `itemtype`, `name`;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";
-            echo $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data['field']]['name'];
+            echo $LANG['plugin_fusioninventory']["mapping"][$data['locale']];
             echo "</td>";
 
             echo "<td align='center'>";
-            Dropdown::showFromArray($data['id'], $days,
+            Dropdown::showFromArray('field-'.$data['id'], $days,
                                     array('value'=>$data['days']));
             echo "</td>";
             echo "</tr>";
          }
       }
 
-      $this->showFormButtons($options);
-
+//      $this->showFormButtons($options);
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
+         echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
+               <input class='submit' type='submit' name='plugin_fusinvsnmp_configlogfield_set'
+                      value='" . $LANG['buttons'][7] . "'></td></tr>";
+      }
+      echo "</table>";
 
       echo "<br/>";
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
-      if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
+      if (PluginFusioninventoryProfile::haveRight('fusioninventory',"configuration","w")) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' value='".$LANG['buttons'][53]."' >";
       }
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+      echo "</form>";
 
       return true;
 	}
+
+   function putForm($p_post) {
+      foreach ($p_post as $field=>$log) {
+         if (substr($field, 0, 6) == 'field-') {
+            $input['id'] = substr($field, 6);
+            $input['days'] = $log;
+            $this->update($input);
+         }
+      }
+   }
 }
 
 ?>
