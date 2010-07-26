@@ -72,10 +72,10 @@ class PluginFusioninventoryMenu {
       // Get menu from plugins fusinv...
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $module_id=>$datas) {
-         if (function_exists("plugin_".$datas['name']."_displayMenu")) {
-            $a_menu = call_user_func("plugin_".$datas['name']."_displayMenu");
+         if (function_exists("plugin_".$datas['directory']."_displayMenu")) {
+            $a_menu = call_user_func("plugin_".$datas['directory']."_displayMenu");
             if (!empty($a_menu)) {
-               $width_status = PluginFusioninventoryMenu::htmlMenu($datas['name'], $a_menu, $type, $width_status);
+               $width_status = PluginFusioninventoryMenu::htmlMenu($datas['directory'], $a_menu, $type, $width_status);
             }
          }
       }
@@ -90,6 +90,15 @@ class PluginFusioninventoryMenu {
    }
 
 
+   /**
+    * htmlMenu
+    *
+    *@param $plugin_name Plugin directory
+    *@param $a_menu
+    *@param $type
+    *@param $width_status
+    *@return $width_status and print menu
+    **/
    static function htmlMenu($plugin_name, $a_menu = array(), $type = "big", $width_status) {
       global $LANG;
 
