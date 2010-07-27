@@ -55,8 +55,19 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 			$this->getEmpty();	
       }
 
-      $this->showTabs($options);
-      $this->showFormHeader($options);
+//      $this->getFromDB($id);
+//      $this->showTabs($options);
+//      $this->showFormHeader($options);
+      $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/model.form.php';
+//            $this->showTabs($id, "",$_SESSION['glpi_tab']);
+            $this->showTabs($id);
+		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
+
+		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
+		echo ($id =='' ? $LANG['plugin_fusioninventory']["model_info"][7] :
+            $LANG['plugin_fusioninventory']["model_info"][6]);
+		echo " :</th></tr>";
+
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
@@ -97,7 +108,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("snmp_models","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
                  "\" class='submit' >";
@@ -105,16 +116,8 @@ class PluginFusinvsnmpModel extends CommonDBTM {
             echo "<input type='hidden' name='id' value='" . $id . "'/>";
             echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
                  "\" class='submit' >";
-            if (!$this->fields["is_deleted"]) {
-               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
                     $LANG["buttons"][6] . "\" class='submit'>";
-            } else {
-               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='restore' value=\"" .
-                    $LANG["buttons"][21] . "\" class='submit'>";
-
-               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='purge' value=\"" .
-                    $LANG["buttons"][22] . "\" class='submit'>";
-            }
          }
       }
 		echo "</td>";

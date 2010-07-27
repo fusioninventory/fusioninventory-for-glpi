@@ -37,7 +37,8 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvsnmpImportExport extends CommonDBTM {
+//class PluginFusinvsnmpImportExport extends CommonDBTM {
+class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 	function export($ID_model) {
 		global $DB;
@@ -98,23 +99,35 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 		
-		PluginFusioninventoryProfile::checkRight("snmp_models","r");
+		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models", "r");
 		
-      $this->showTabs($options);
-      $this->showFormHeader($options);
-		
+      $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/model.form.php';
+		echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
+
+		echo "<br>";
+		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
+		echo $LANG['plugin_fusinvsnmp']["model_info"][10]." :</th></tr>";
+      
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'>";
 		echo "</td>";
 		echo "<td align='center'>";
 		echo "<input type='file' name='importfile' value=''/>";
 
-      $this->showFormButtons($options);
+//      $this->showFormButtons($options);
+//
+//      echo "<div id='tabcontent'></div>";
+//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+//
+//      return true;
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+         echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
+      }
+		echo "</td>";
+		echo "</tr>";
+		echo "</table>";
 
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-
-      return true;
+		echo "</form>";		
 	}
 
 
@@ -122,18 +135,18 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
    function showFormMassImport($target) {
 		global $DB,$CFG_GLPI,$LANG;
 
-      PluginFusioninventoryProfile::checkRight("snmp_models","r");
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models","r");
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th>";
-		echo $LANG['plugin_fusioninventory']["model_info"][15]." :</th></tr>";
+		echo $LANG['plugin_fusinvsnmp']["model_info"][15]." :</th></tr>";
 
 		echo "	<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
-      echo $LANG['plugin_fusioninventory']["model_info"][16]."<br/>";
+      echo $LANG['plugin_fusinvsnmp']["model_info"][16]."<br/>";
 		echo "<input type='hidden' name='massimport' value='1'/>";
-      if(PluginFusioninventoryProfile::haveRight("snmp_models","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
 		echo "</td>";
@@ -149,7 +162,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 		global $DB,$LANG;
 
 		if ($installation != 1) {
-			PluginFusioninventoryProfile::checkRight("snmp_models","w");
+			PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models","w");
       }
 		$xml = simplexml_load_file($file);
 
@@ -219,7 +232,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 			}
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
-               " : <a href='snmpmodel.form.php?id=".$plugin_fusinvsnmp_models_id."'>".$xml->name[0]."</a>";
+               " : <a href='model.form.php?id=".$plugin_fusinvsnmp_models_id."'>".$xml->name[0]."</a>";
          }
 		}
 	}
@@ -227,7 +240,7 @@ class PluginFusinvsnmpImportExport extends CommonDBTM {
 
 
    function importMass() {
-      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $this->import($file,0,1);
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file,0,1);
    }
 
 

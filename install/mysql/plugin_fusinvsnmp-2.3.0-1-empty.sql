@@ -178,7 +178,6 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
    `itemtype` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
-   `is_deleted` int(1) NOT NULL DEFAULT '0',
    `entities_id` int(11) NOT NULL DEFAULT '0',
    `is_active` int(1) NOT NULL DEFAULT '1',
    `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -187,7 +186,6 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
    KEY `name` (`name`),
    KEY `itemtype` (`itemtype`),
    KEY `entities_id` (`entities_id`),
-   KEY `is_deleted` (`is_deleted`),
    KEY `is_active` (`is_active`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
