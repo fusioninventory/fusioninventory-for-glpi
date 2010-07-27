@@ -38,13 +38,13 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("printer","r");
-PluginFusioninventoryProfile::checkRight("snmp_printers","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printers","r");
 
 $printer_history = new PluginFusinvsnmpPrinterLog;
 
 if ((isset($_POST['delete']))) {
 	
-	PluginFusioninventoryProfile::checkRight("snmp_printers","w");
+	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printers","w");
 	
 	if (isset($_POST['limit'])) {
 		for ($i=0 ; $i<$_POST['limit'] ; $i++) {

@@ -348,7 +348,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 	function showFormPrinter($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;
 
-		PluginFusioninventoryProfile::checkRight("snmp_printers","r");
+		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printers","r");
 
 		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 

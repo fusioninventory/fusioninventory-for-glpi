@@ -50,7 +50,7 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
 checkRight("config","w");
 
-if (PluginFusioninventoryProfile::haveRight("configuration","r")) {
+if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) {
    switch($_POST['glpi_tab']) {
       case -1 :
          $config = new PluginFusioninventoryConfig;

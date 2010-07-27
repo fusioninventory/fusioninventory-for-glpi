@@ -40,13 +40,13 @@ $iprange = new PluginFusinvsnmpIPRange;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","iprange");
 
-PluginFusioninventoryProfile::checkRight("iprange","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
    if ($iprange->checkip($_POST)) {
-      PluginFusioninventoryProfile::checkRight("iprange","w");
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
       $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
       $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
       $iprange->add($_POST);
@@ -54,14 +54,14 @@ if (isset ($_POST["add"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
    if ($iprange->checkip($_POST)) {
-      PluginFusioninventoryProfile::checkRight("iprange","w");
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
       $_POST['ifaddr_start'] = $_POST['ifaddr_start0'].".".$_POST['ifaddr_start1'].".".$_POST['ifaddr_start2'].".".$_POST['ifaddr_start3'];
       $_POST['ifaddr_end'] = $_POST['ifaddr_end0'].".".$_POST['ifaddr_end1'].".".$_POST['ifaddr_end2'].".".$_POST['ifaddr_end3'];
       $iprange->update($_POST);
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryProfile::checkRight("iprange","w");
+	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
 	$agents->iprange($_POST);
 	glpi_header("iprange.php");
 }

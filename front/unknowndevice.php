@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","unknown");
 
-PluginFusioninventoryProfile::checkRight("snmp_networking","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "networking","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

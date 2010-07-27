@@ -105,7 +105,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $LANG;
 		
-		if (!PluginFusioninventoryProfile::haveRight("snmp_printers","r")) {
+		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers","r")) {
 			return false;
       }
 		
@@ -170,7 +170,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 			echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
 		}
 		
-		if (!PluginFusioninventoryProfile::haveRight("snmp_printers","w")) {
+		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers","w")) {
 			return false;
       }
 			

@@ -43,7 +43,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 	function export($ID_model) {
 		global $DB;
 		
-		PluginFusioninventoryProfile::checkRight("snmp_models","r");
+		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models","r");
 		$query = "SELECT * 
                 FROM `glpi_plugin_fusinvsnmp_models`
                 WHERE `id`='".$ID_model."';";
