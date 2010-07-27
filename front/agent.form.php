@@ -45,14 +45,14 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","r");
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","w");
+	PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","w");
    if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
    }
 	$agents->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","w");
+	PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","w");
    if (isset($_POST['items_id'])) {
       if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
          $_POST['itemtype'] = '1';
@@ -61,7 +61,7 @@ if (isset ($_POST["add"])) {
 	$agents->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
-	PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","w");
+	PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","w");
 	$agents->delete($_POST);
 	glpi_header("agent.php");
 } else if (isset ($_POST["startagent"])) {

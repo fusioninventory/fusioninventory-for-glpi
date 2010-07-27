@@ -137,7 +137,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * test if user have right
     *
-    *@param $p_moduleName Module name
+    *@param $p_moduleName Module name (directory)
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     *@return boolean : true if right is ok
@@ -161,7 +161,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    /**
     * Check right and display error if right not ok
     *
-    *@param $p_moduleName Module name
+    *@param $p_moduleName Module name (directory)
     *@param $p_type Right type ('wol', 'agents'...)
     *@param $p_right Right (NULL, r, w)
     **/

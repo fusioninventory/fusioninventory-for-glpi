@@ -274,7 +274,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $ptc = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
       if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
-              (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
+              (!PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol", "w"))) {
          return;
       }
       // TODO: detect if task yet present in MySQL task table
@@ -351,7 +351,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $ptc = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
       if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
-              (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
+              (!PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol", "w"))) {
          return false;
       }
       if ($param == 'PluginFusioninventoryAgent') {
@@ -402,7 +402,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $pfia = new PluginFusioninventoryAgent;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
       if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
-              (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
+              (!PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol", "w"))) {
          return false;
       }
       $pfia->getFromDB($id);
@@ -427,7 +427,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $pfia = new PluginFusioninventoryAgent;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
       if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
-              (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
+              (!PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol", "w"))) {
          return;
       }
       if ($type == 'PluginFusioninventoryAgent') {
