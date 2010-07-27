@@ -44,6 +44,7 @@ include (GLPI_ROOT."/inc/includes.php");
 $_SESSION["glpi_use_mode"] = 2;
 
 $ptc  = new PluginFusioninventoryCommunication;
+$pta  = new PluginFusioninventoryAgent;
 
 $res='';
 $errors='';
@@ -55,7 +56,7 @@ $errors='';
 if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    // Get conf tu know if SSL is only
    $fusioninventory_config = new PluginFusionInventoryConfig;
-   $ssl = $fusioninventory_config->getValue('ssl_only');
+   $ssl = $fusioninventory_config->getValue(19, 'ssl_only');
    if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
        OR ($ssl == "0")) {
       // echo "On continue";
@@ -68,7 +69,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    }
    $ocsinventory = '0';
    file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
-   $state = PluginFusioninventoryAgent::importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+   $state = $pta->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
    if ($state == '2') { // agent created
       $ocsinventory = '1';
    }
@@ -87,69 +88,76 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 <REPLY>
 </REPLY>");
 
-         $pta  = new PluginFusioninventoryAgent;
-         $ptt  = new PluginFusionInventoryTask;
-         $ptc = new PluginFusionInventoryConfig;
+
+            $ptt  = new PluginFusionInventoryTask;
+            $PluginFusionInventoryConfig        = new PluginFusionInventoryConfig;
+            $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+
+            $a_agent = $pta->InfosByKey($pxml->DEVICEID);
+            $a_tasks = $ptt->find("`agent_id`='".$a_agent['id']."'", "date");
+
+            $single = 0;
+
+            // Get taskjob in waiting
+            $ptc->getTaskAgent($a_agent['id']);
 
 
-         $a_agent = $pta->InfosByKey($pxml->DEVICEID);
-         $a_tasks = $ptt->find("`agent_id`='".$a_agent['id']."'", "date");
 
-         $single = 0;
-//         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '0';
-
-         foreach ($a_tasks as $task_id=>$datas) {
-            if (($a_tasks[$task_id]['action'] == 'INVENTORY')
-                    AND ($ptc->is_active("TODO", 'inventoryocs')) //TODO
-                    AND ($a_agent['module_inventory'] == '1')) {
-
-               $ptc->addInventory();
-               $input['id'] = $task_id;
-               $ptt->delete($input);
-               $ocsinventory = '0';
-               $single = 1;
-            }
-            if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
-                    AND ($ptc->is_active('TODO', 'netdiscovery')) //TODO
-                    AND ($a_agent['module_netdiscovery'] == '1')) {
-               $single = 1;
-               $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
-               $input['id'] = $task_id;
-               $ptt->delete($input);
-            }
-            if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
-                    AND ($ptc->is_active('TODO', 'snmp')) //TODO
-                    AND ($a_agent['module_snmpquery'] == '1')) {
-               $single = 1;
-               $ptc->addQuery($pxml, 1);
-               $input['id'] = $task_id;
-               $ptt->delete($input);
-            }
-            if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
-                    AND ($ptc->is_active('TODO', 'wol')) //TODO
-                    AND ($a_agent['module_wakeonlan'] == '1')) {
-               $single = 1;
-               $ptc->addWakeonlan($pxml);
-               $input['id'] = $task_id;
-               $ptt->delete($input);
-            }
-         }
-
-         if ($single == "0") {
-            if ($a_agent['module_netdiscovery'] == '1') {
-               $ptc->addDiscovery($pxml);
-            }
-            if ($a_agent['module_snmpquery'] == '1') {
-               $ptc->addQuery($pxml);
-            }
-         }
-         if ($ocsinventory == '1') {
-            $ptc->addInventory();
-         }
-   //      $ptc->addWakeonlan();
+//
+//
+//            foreach ($a_tasks as $task_id=>$datas) {
+//               if (($a_tasks[$task_id]['action'] == 'INVENTORY')
+//                       AND ($ptc->is_active("TODO", 'inventoryocs')) //TODO
+//                       AND ($a_agent['module_inventory'] == '1')) {
+//
+//                  $ptc->addInventory();
+//                  $input['id'] = $task_id;
+//                  $ptt->delete($input);
+//                  $ocsinventory = '0';
+//                  $single = 1;
+//               }
+//               if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
+//                       AND ($ptc->is_active('TODO', 'netdiscovery')) //TODO
+//                       AND ($a_agent['module_netdiscovery'] == '1')) {
+//                  $single = 1;
+//                  $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
+//                  $input['id'] = $task_id;
+//                  $ptt->delete($input);
+//               }
+//               if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
+//                       AND ($ptc->is_active('TODO', 'snmp')) //TODO
+//                       AND ($a_agent['module_snmpquery'] == '1')) {
+//                  $single = 1;
+//                  $ptc->addQuery($pxml, 1);
+//                  $input['id'] = $task_id;
+//                  $ptt->delete($input);
+//               }
+//               if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
+//                       AND ($ptc->is_active('TODO', 'wol')) //TODO
+//                       AND ($a_agent['module_wakeonlan'] == '1')) {
+//                  $single = 1;
+//                  $ptc->addWakeonlan($pxml);
+//                  $input['id'] = $task_id;
+//                  $ptt->delete($input);
+//               }
+//            }
+//
+//            if ($single == "0") {
+//               if ($a_agent['module_netdiscovery'] == '1') {
+//                  $ptc->addDiscovery($pxml);
+//               }
+//               if ($a_agent['module_snmpquery'] == '1') {
+//                  $ptc->addQuery($pxml);
+//               }
+//            }
+//            if ($ocsinventory == '1') {
+//               $ptc->addInventory();
+//            }
+////          $ptc->addWakeonlan();
+//
          // ******** Send XML
             $ptc->setXML($ptc->getXML());
-            echo $ptc->getSend(); // echo response for the agent
+            echo $ptc->getSend();
          }
       } else {
          $res .= "0'".$errors."'";
