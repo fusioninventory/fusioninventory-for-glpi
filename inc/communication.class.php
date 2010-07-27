@@ -257,7 +257,7 @@ class PluginFusioninventoryCommunication {
    function getTaskAgent($agent_id) {
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-      $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskAgent($agent_id);
+      $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className=>$data) {
          $class = new $className;
          $this->sxml = $class->Run($data['items_id'], $data['itemtype'], $data['plugin_fusioninventory_taskjobs_id'], $data['id']);

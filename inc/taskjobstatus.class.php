@@ -88,7 +88,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
 
    
-   function getTaskAgent($agent_id) {
+   function getTaskjobsAgent($agent_id) {
       global $DB;
 
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
