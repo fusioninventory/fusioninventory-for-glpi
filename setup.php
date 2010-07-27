@@ -114,7 +114,9 @@ function plugin_init_fusinvsnmp() {
          $report_list["report/ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
-			if (haveRight("snmp_models", "r") || haveRight("snmp_authentication", "r")) {
+//			if (haveRight("models", "r") || haveRight("authentication", "r")) {
+			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models", "r")
+             || PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication", "r")) {
 				$PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
          }
 
@@ -122,30 +124,31 @@ function plugin_init_fusinvsnmp() {
          $PLUGIN_HOOKS['headings']['fusinvsnmp'] = 'plugin_get_headings_fusinvsnmp';
          $PLUGIN_HOOKS['headings_action']['fusinvsnmp'] = 'plugin_headings_actions_fusinvsnmp';
 
-         if (PluginFusinvsnmpAuth::haveRight("snmp_models","r")
-            OR PluginFusinvsnmpAuth::haveRight("snmp_authentication","r")
-            OR PluginFusinvsnmpAuth::haveRight("iprange","r")
-            OR PluginFusinvsnmpAuth::haveRight("agents","r")
-            OR PluginFusinvsnmpAuth::haveRight("agentsprocesses","r")
-            OR PluginFusinvsnmpAuth::haveRight("unknowndevices","r")
-            OR PluginFusinvsnmpAuth::haveRight("reports","r")
+//         if (PluginFusinvsnmpAuth::haveRight("models","r")
+         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agentsprocesses","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reports","r")
             ) {
 
             $PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
-            if (PluginFusinvsnmpAuth::haveRight("snmp_models","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['models'] = 'front/snmpmodel.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['models'] = 'front/snmpmodel.php';
+            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['models'] = 'front/model.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['models'] = 'front/model.php';
             }
-            if (PluginFusinvsnmpAuth::haveRight("snmp_authentication","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['snmp_auth'] = 'front/configsnmpsecurity.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['snmp_auth'] = 'front/configsnmpsecurity.php';
+            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","w")) {
+               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['snmp_auth'] = 'front/configsecurity.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['snmp_auth'] = 'front/configsecurity.php';
             }
-            if (PluginFusinvsnmpAuth::haveRight("agents","w")) {
+            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['agents'] = 'front/agent.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['agents'] = 'front/agent.php';
             }
 
-            if (PluginFusinvsnmpAuth::haveRight("iprange","w")) {
+            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['iprange'] = 'front/iprange.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['iprange'] = 'front/iprange.php';
             }
@@ -153,7 +156,7 @@ function plugin_init_fusinvsnmp() {
             $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['constructdevice'] = 'front/construct_device.form.php?add=1';
             $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['constructdevice'] = 'front/construct_device.php';
 
-            if (PluginFusinvsnmpAuth::haveRight("configuration","r")) {
+            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) {
                $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['config'] = 'front/functionalities.form.php';
             }
 			}
@@ -195,8 +198,9 @@ function plugin_fusinvsnmp_check_config() {
 
 function plugin_fusinvsnmp_haveTypeRight($type,$right) {
 	switch ($type) {
-		case 'PluginFusinvsnmpConfigSNMPSecurity' :
-			return PluginFusinvsnmpAuth::haveRight("snmp_authentication",$right);
+		case 'PluginFusinvsnmpConfigSecurity' :
+//			return PluginFusinvsnmpAuth::haveRight("authentication",$right);
+			return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication",$right);
 			break;
 	}
 	return true;

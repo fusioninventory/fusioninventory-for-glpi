@@ -331,9 +331,9 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_ipranges` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configsnmpsecurities`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configsecurities`;
 
-CREATE TABLE `glpi_plugin_fusinvsnmp_configsnmpsecurities` (
+CREATE TABLE `glpi_plugin_fusinvsnmp_configsecurities` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
    `snmpversion` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
@@ -404,8 +404,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_unknowndevices` (
 
 
 ## INSERT
-## glpi_plugin_fusinvsnmp_configsnmpsecurities
-INSERT INTO `glpi_plugin_fusinvsnmp_configsnmpsecurities`
+## glpi_plugin_fusinvsnmp_configsecurities
+INSERT INTO `glpi_plugin_fusinvsnmp_configsecurities`
       (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`,
        `encryption`, `priv_passphrase`, `is_deleted`)
    VALUES (1, 'Communauté Public v1', '1', 'public', '', '0', '', '0', '', '0'),

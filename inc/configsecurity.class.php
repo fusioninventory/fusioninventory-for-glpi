@@ -47,7 +47,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		PluginFusioninventoryProfile::checkRight("snmp_authentication","r");
+		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","r");
 
 		if ($id!='') {
 			$this->getFromDB($id);

@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("snmp_authentication","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","r");
 
 $plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
 $config = new PluginFusioninventoryConfig;
@@ -47,17 +47,18 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryProfile::checkRight("snmp_authentication","w");
-	if ($config->getValue("storagesnmpauth") == "file") {
+	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","w");
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+	if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add_xml();
-   } else if ($config->getValue("storagesnmpauth") == "DB") {
+   } else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
    }
 	
 	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='configsnmpsecurity.php?id=".$new_ID."'>".$_POST["name"]."</a>";
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryProfile::checkRight("snmp_authentication","w");
+	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","w");
 	$plugin_fusioninventory_snmp_auth->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
@@ -66,7 +67,7 @@ $id = "";
 if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
-if(PluginFusioninventoryProfile::haveRight("snmp_authentication","r")) {
+if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","r")) {
    $plugin_fusioninventory_snmp_auth->showForm($id);
 }
 commonFooter();

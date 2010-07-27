@@ -38,67 +38,67 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFuvinvsnmpDb extends CommonDBTM {
-   static function createfirstaccess($id) {
-      global $DB;
+//   static function createfirstaccess($id) {
+//      global $DB;
+//
+//      $plugin_fusinvsnmp_Profile=new PluginFusinvsnmpProfile;
+//      if (!$plugin_fusinvsnmp_Profile->GetfromDB($id)) {
+//         $Profile=new Profile;
+//         $Profile->GetfromDB($id);
+//         $name=$Profile->fields["name"];
+//
+//         $query = "INSERT INTO `glpi_plugin_fusinvsnmp_profiles` (
+//                   `id`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
+//                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
+//                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+//                   `snmp_query`, `wol`, `configuration` )
+//                   VALUES ('$id', '$name','fusinvsnmp','0','w','w',
+//                     'w','w','w','w','w',
+//                     'r','w','r','w','w',
+//                     'w','w','w');";
+//         $DB->query($query);
+//      }
+//   }
 
-      $plugin_fusinvsnmp_Profile=new PluginFusinvsnmpProfile;
-      if (!$plugin_fusinvsnmp_Profile->GetfromDB($id)) {
-         $Profile=new Profile;
-         $Profile->GetfromDB($id);
-         $name=$Profile->fields["name"];
+//   static function createaccess($id) {
+//      global $DB;
+//
+//      $Profile=new Profile;
+//      $Profile->GetfromDB($id);
+//      $name=$Profile->fields["name"];
+//
+//      $query = "INSERT INTO `glpi_plugin_fusinvsnmp_profiles` (
+//                   `id`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
+//                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
+//                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
+//                   `snmp_query`, `wol`, `configuration` )
+//                VALUES ('$id', '$name','fusinvsnmp','0',NULL,NULL,
+//                   NULL,NULL,NULL,NULL,NULL,
+//                   NULL,NULL,NULL,NULL,NULL,
+//                   NULL,NULL,NULL);";
+//      $DB->query($query);
+//   }
 
-         $query = "INSERT INTO `glpi_plugin_fusinvsnmp_profiles` (
-                   `id`, `name`, `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
-                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
-                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
-                   `snmp_query`, `wol`, `configuration` )
-                   VALUES ('$id', '$name','fusinvsnmp','0','w','w',
-                     'w','w','w','w','w',
-                     'r','w','r','w','w',
-                     'w','w','w');";
-         $DB->query($query);
-      }
-   }
-
-   static function createaccess($id) {
-      global $DB;
-
-      $Profile=new Profile;
-      $Profile->GetfromDB($id);
-      $name=$Profile->fields["name"];
-
-      $query = "INSERT INTO `glpi_plugin_fusinvsnmp_profiles` (
-                   `id`, `name` , `interface`, `is_default`, `snmp_networking`, `snmp_printers`,
-                   `snmp_models`, `snmp_authentication`, `iprange`, `agents`, `remotecontrol`,
-                   `agentprocesses`, `unknowndevices`, `reports`, `deviceinventory`, `netdiscovery`,
-                   `snmp_query`, `wol`, `configuration` )
-                VALUES ('$id', '$name','fusinvsnmp','0',NULL,NULL,
-                   NULL,NULL,NULL,NULL,NULL,
-                   NULL,NULL,NULL,NULL,NULL,
-                   NULL,NULL,NULL);";
-      $DB->query($query);
-   }
-
-   static function updateaccess($id) {
-      global $DB;
-
-      $Profile=new Profile;
-      $Profile->GetfromDB($id);
-      $name=$Profile->fields["name"];
-
-      $query = "UPDATE `glpi_plugin_fusinvsnmp_profiles`
-                  SET `interface`='fusinvsnmp', `snmp_networking`='w',
-                      `snmp_printers`='w', `snmp_models`='w',
-                      `snmp_authentication`='w', `iprange`='w',
-                      `agents`='w', `remotecontrol`='w',
-                      `agentprocesses`='r', `unknowndevices`='w',
-                      `reports`='r', `deviceinventory`='w',
-                      `netdiscovery`='w', `snmp_query`='w',
-                      `wol`='w', `configuration`='w'
-                  WHERE `name`='".$name."'";
-      $DB->query($query);
-
-   }
+//   static function updateaccess($id) {
+//      global $DB;
+//
+//      $Profile=new Profile;
+//      $Profile->GetfromDB($id);
+//      $name=$Profile->fields["name"];
+//
+//      $query = "UPDATE `glpi_plugin_fusinvsnmp_profiles`
+//                  SET `interface`='fusinvsnmp', `snmp_networking`='w',
+//                      `snmp_printers`='w', `snmp_models`='w',
+//                      `snmp_authentication`='w', `iprange`='w',
+//                      `agents`='w', `remotecontrol`='w',
+//                      `agentprocesses`='r', `unknowndevices`='w',
+//                      `reports`='r', `deviceinventory`='w',
+//                      `netdiscovery`='w', `snmp_query`='w',
+//                      `wol`='w', `configuration`='w'
+//                  WHERE `name`='".$name."'";
+//      $DB->query($query);
+//
+//   }
 
    static function getDeviceFieldFromId($type, $id, $field, $return) {
       global $DB;

@@ -39,20 +39,21 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
 
-PluginFusioninventoryProfile::checkRight("snmp_authentication","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","r");
 
 $config = new PluginFusioninventoryConfig;
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
+$plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 // Forms for FILE
-if ($config->getValue("storagesnmpauth") == "file") {
+if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
 	$plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
 	
 	if (!isset($_GET["id"])) {
 		echo $plugin_fusioninventory_snmp_auth->plugin_fusioninventory_snmp_connections();
 	}
-} else if ($config->getValue("storagesnmpauth") == "DB") {
+} else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
 	// Forms for DB
 	
 	$_GET['target']="configsnmpsecurity.php";
