@@ -46,6 +46,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       // Get ids of operating systems which can make real wakeonlan
       $OperatingSystem = new OperatingSystem;
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
 
       $a_os = $OperatingSystem->find(" `name` LIKE '%Linux%' ");
       $osfind = '(';
@@ -73,32 +74,75 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             AND `mac`!='' ";
       if ($result_subnet = $DB->query($query_subnet)) {
          while ($data_subnet=$DB->fetch_array($result_subnet)) {
-            // TODO : add left join agent and agent exist for computer
-            $query = "SELECT * FROM `glpi_networkports`
-               LEFT JOIN `glpi_computers` ON items_id=`glpi_computers`.`id`
+            $agentModule = $PluginFusioninventoryAgentmodule->getActivationExceptions('WAKEONLAN');
+            $where = "";
+            if ($agentModule['is_active'] == 0) {
+               $a_agentList = importArrayFromDB($agentModule['exceptions']);
+               if (count($a_agentList) > 0) {
+                  $where = " AND `glpi_plugin_fusioninventory_agents` IN (";
+                  $i = 0;
+                  $sep  = '';
+                  foreach ($a_agentList as $agent_id=>$num) {
+                     if ($i> 1) {
+                        $sep  = ',';
+                     }
+                     $where .= $agent_id.$sep;
+                     $i++;
+                  }
+                  $where .= ") ";
+               }
+            } else {
+               $a_agentList = importArrayFromDB($agentModule['exceptions']);
+               if (count($a_agentList) > 0) {
+                  $where = " AND `glpi_plugin_fusioninventory_agents` NOT IN (";
+                  $i = 0;
+                  $sep  = '';
+                  foreach ($a_agentList as $agent_id=>$num) {
+                     if ($i> 1) {
+                        $sep  = ',';
+                     }
+                     $where .= $agent_id.$sep;
+                     $i++;
+                  }
+                  $where .= ") ";
+               }
+            }
 
-               WHERE `itemtype`='Computer'
-                  AND subnet='".$data_subnet['subnet']."'
-                  ".$osfind." ";
 
-            // OR
+//            // TODO : add left join agent and agent exist for computer
+//            $query = "SELECT * FROM `glpi_networkports`
+//               LEFT JOIN `glpi_computers` ON items_id=`glpi_computers`.`id`
+//
+//               WHERE `itemtype`='Computer'
+//                  AND subnet='".$data_subnet['subnet']."'
+//                  ".$osfind." ";
+//
+//            // OR
                // Get config for agent for wakeonlan
                   //find in glpi_plugin_fusioninventory_agentmodules
                   // => liste des agent qui ne sont pas configuré pour le wol
                   // => liste des agent qui sont configure pour le wol
                // Search agent
-            $query = "SELECT * FROM glpi_plugin_fusioninventory_agents
-               LEFT JOIN 
 
 
-               WHERE `itemtype`='Computer'";
-
+            $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
+               LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+               LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+               WHERE `glpi_networkports`.`itemtype`='Computer'
+                 
+                  ".$osfind."
+                  ".$where." ";
+// ajouter :  AND subnet='".$data_subnet['subnet']."'
 
             if ($result = $DB->query($query)) {
                while ($data=$DB->fetch_array($result)) {
                   $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
                   if ($agentStatus ==  true) {
-                     return $data_subnet['subnet']."-agents_id";
+                     $return = array();
+                     $return['ip'] = $data['ip'];
+                     $return['token'] = $data['token'];
+                     $return['agents_id'] = $data['a_id'];
+                     return $return;
                   }
                }
             }

@@ -79,7 +79,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-//$this->cronTaskScheduler();
+
+
+$this->cronTaskScheduler();
       $this->showFormHeader($options);
       
 		echo "<tr class='tab_bg_1'>";
@@ -325,9 +327,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
-      $query = "SELECT * FROM ".$this->table."
-         LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`".$this->table."`.`id`
-         WHERE `is_active`='0'
+      $remoteStartAgents = array();
+
+      $query = "SELECT `".$this->table."`.* FROM ".$this->table."
+         LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+         WHERE `is_active`='1'
             AND `status` = '0'
             AND date_scheduled < '".$dateNow."' ";
       if ($result = $DB->query($query)) {
@@ -356,44 +360,87 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
             if (isset($a_deviceList)) {
 
-
                // Run function of this method for each device
                foreach ($a_deviceList as $num=>$devicecomposed_id) {
-                  $a_device = explode("\$\$\$\$\$", $devicecomposed_id);
+                  foreach ($devicecomposed_id as $itemtype=>$items_id) {
+                     
+                  }
                   // Get module name
                   $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
                   
-                  $agent_id = $class->prepareRun($a_device[0], $a_device[1]);
+                  $a_agents = $class->prepareRun($itemtype, $items_id);
                   // Add jobstatus and put status (waiting on server = 0)
-
                   $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
-                  $a_input['items_id'] = $a_device[1];
-                  $a_input['itemtype'] = $a_device[0];
+                  $a_input['items_id'] = $items_id;
+                  $a_input['itemtype'] = $itemtype;
                   $a_input['state'] = 0;
-                  $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
+                  $a_input['plugin_fusioninventory_agents_id'] = $a_agents['agents_id'];
                   $PluginFusioninventoryTaskjobstatus->add($a_input);
 
                   //Add log of taskjob
                   unset($a_input['plugin_fusioninventory_agents_id']);
                   $a_input['state'] = 1;
                   $a_input['date'] = date("Y-m-d H:i:s");
-                  $PluginFusioninventoryTaskjoblogs->add();
+                  $PluginFusioninventoryTaskjoblogs->add($a_input);
 
-                  // fusinvsnmp_method($a_device[1], $a_device[0]);
-  // echo $a_device[1].", ".$a_device[0]."<br/>";
+                  $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
+
+                  // TODO : put status = 1 in glpi_plugin_fusioninventory_taskjobs
                }
             }
          }
-      }      
+      }
+      // remote start agents
+      foreach ($remoteStartAgents as $ip=>$token) {
+         $this->RemoteStartAgent($ip, $token);
+      }     
+
+   }
+
+
+
+   function getStateAgent($ip, $agentid, $type="") {
+      global $LANG;
+
+      //PluginFusioninventoryDisplay::disableDebug();
+      $state = false;
+      $ctx = stream_context_create(array(
+          'http' => array(
+              'timeout' => 2
+              )
+          )
+      );
+
+      $url = "http://".$ip.":62354/status";
+
+      $str = @file_get_contents($url, 0, $ctx);
+      if (strstr($str, "waiting")) {
+         return true;
+      }
+      return $state;
+   }
+   
+
+
+   function RemoteStartAgent($ip, $token) {
+      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 1))) {
+         $input = 'Agent don\'t respond';
+         return false;
+      } else {
+         $handle = fopen("http://".$ip.":62354/now/".$token, "r");
+         $input = 'Agent run Now';
+         fclose($fp);
+         return true;
+      }
+
    }
 
 
 
 
-   
-   
+
 
 
 
@@ -612,28 +659,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-   function RemoteStartAgent($id, $ip) {
-      $ptc = new PluginFusioninventoryConfig;
-      $pfia = new PluginFusioninventoryAgent;
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-      if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
-              (!PluginFusioninventoryProfile::haveRight("Fusioninventory", "remotecontrol", "w"))) {
-         return false;
-      }
-      $pfia->getFromDB($id);
-      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 1))) {
-         $input = 'Agent don\'t respond';
-         addMessageAfterRedirect($input);
-         return false;
-      } else {
-         $handle = fopen("http://".$ip.":62354/now/".$pfia->fields['token'], "r");
-         $input = 'Agent run Now';
-         fclose($fp);
-         addMessageAfterRedirect($input);
-         return true;
-      }
 
-   }
 
    function RemoteStateAgent($target, $id, $type, $a_modules = array()) {
       global $LANG,$CFG_GLPI;
@@ -996,45 +1022,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    }
 
-   function getStateAgent($ip, $agentid, $type="") {
-      global $LANG;
 
-      //PluginFusioninventoryDisplay::disableDebug();
-      $state = false;
-      $ctx = stream_context_create(array(
-          'http' => array(
-              'timeout' => 2
-              )
-          )
-      );
-
-      $url = "http://".$ip.":62354/status";
-
-      $str = @file_get_contents($url, 0, $ctx);
-      if (strstr($str, "waiting")) {
-
-         return true;
-      }
-
-
-//      if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
-//         echo "<tr class='tab_bg_1'>";
-//         echo "<td align='center'>";
-//         echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip-$type'/>";
-//         echo "</td>";
-//         echo "<td align='center'>".$ip;
-//         echo "</td>";
-//         echo "<td align='center'>";
-//         echo $LANG['plugin_fusioninventory']["task"][8];
-//         echo "</td>";
-//         echo "</tr>";
-//
-//         fclose($fp);
-//         $state = true;
-//      }
-      //PluginFusioninventoryDisplay::reenableusemode();
-      return $state;
-   }
 
 
 

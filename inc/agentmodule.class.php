@@ -182,6 +182,15 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
+
+   function getActivationExceptions($module_name) {
+      $a_modules = $this->find("`modulename`='".$module_name."' ");
+      foreach ($a_modules as $module_id=>$data) {
+         return $data;
+      }
+   }
+
+
 }
 
 ?>
