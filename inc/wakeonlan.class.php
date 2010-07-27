@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryWakeonlan extends CommonDBTM {
+class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
    function prepareRun($itemtype, $items_id) {
@@ -110,32 +110,30 @@ class PluginFusioninventoryWakeonlan extends CommonDBTM {
 
    // When agent contact server, this function send datas to agent
    // $a_devices = array(itemtype, items_id);
-   function run($a_devices, $taskjobs_id, $agents_id) {
+   function run($items_id, $itemtype, $taskjobs_id, $taskjobstatus_id) {
       global $DB;
+
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $NetworkPort                        = new NetworkPort;
+      $PluginFusioninventoryTaskjoblogs   = new PluginFusioninventoryTaskjoblogs;
 
       $sxml_option = $this->sxml->addChild('OPTION');
       $sxml_option->addChild('NAME', 'WAKEONLAN');
 
-      foreach ($a_devices as $itemtype=>$items_id) {
-         // Get ip
-         $a_networkPort = NetworkPort::find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."' ");
-         foreach ($a_networkPort as $networkPort_id=>$data) {
-            if ($data['ip'] != "127.0.0.1") {
-               $sxml_param = $sxml_option->addChild('PARAM');
-               $sxml_param->addAttribute('MAC', $data['mac']);
-               $sxml_param->addAttribute('IP', $data['ip']);
+      // Get ip
+      $a_networkPort = $NetworkPort->find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."' ");
+      foreach ($a_networkPort as $networkPort_id=>$data) {
+         if ($data['ip'] != "127.0.0.1") {
+            $sxml_param = $sxml_option->addChild('PARAM');
+            $sxml_param->addAttribute('MAC', $data['mac']);
+            $sxml_param->addAttribute('IP', $data['ip']);
 
-               // Update taskjobstatus (state = 1 : running);
-               $query_update = "UPDATE `glpi_plugin_fusioninventory_taskjobstatus`
-                  SET `state`='1'
-                  WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
-                  AND `items_id`='".$items_id."'
-                  AND `itemtype`='".$itemtype."'
-                  AND `plugin_fusioninventory_agents_id`='".$agents_id."' ";
-               $DB->query($query_update);
-            }
+            // Update taskjobstatus (state = 3 : finish); Because we haven't return of agent on this action
+            $PluginFusioninventoryTaskjobstatus->changeStatus($taskjobstatus_id, "3");
+            $PluginFusioninventoryTaskjoblogs->addTaskjoblog($taskjobs_id, $items_id, $itemtype, '5', "WakeOnLan have not return state");
          }
       }
+      return $this->sxml;
    }
 }
 

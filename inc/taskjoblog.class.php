@@ -34,6 +34,18 @@
 
 class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 
+   /*
+    * Define different state
+    *
+    * 1 : started
+    * 2 : ok
+    * 3 : error / replaned
+    * 4 : error
+    * 5 : Unknown
+    */
+
+
+
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_taskjoblogs";
       $this->type = 'PluginFusioninventoryTaskjoblogs';
@@ -99,7 +111,7 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 
             case 5 :
                echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
-               echo "<strong>Unknow</strong>";
+               echo "<strong>Unknown</strong>";
                break;
 
          }
@@ -115,6 +127,20 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 
       return true;
   
+   }
+
+
+   function addTaskjoblog($taskjobs_id, $items_id, $itemtype, $state, $comment) {
+
+      $this->getEmpty();
+      $this->fields['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+      $this->fields['date'] = date("Y-m-d H:i:s");
+      $this->fields['items_id'] = $items_id;
+      $this->fields['itemtype'] = $itemtype;
+      $this->fields['state'] = $state;
+      $this->fields['comment'] = $comment;
+
+      $this->addToDB();
    }
 
 }

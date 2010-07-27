@@ -76,6 +76,40 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       }
       displayProgressBar('930',ceil($globalState));
    }
+
+
+
+   function changeStatus($id, $state) {
+      $this->getFromDB($id);
+      $input = $this->fields;
+      $input['state'] = $state;
+      $this->update($input);      
+   }
+
+
+   
+   function getTaskAgent($agent_id) {
+      global $DB;
+
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+
+      $moduleRun = array();
+
+      $a_taskjobstatus = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id."' AND `state`='0'");
+      foreach ($a_taskjobstatus as $taskjobstatus_id=>$data) {
+
+         // Get job and data to send to agent
+         $PluginFusioninventoryTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
+
+         $pluginName = PluginFusioninventoryModule::getModuleName($PluginFusioninventoryTaskjob->fields['plugins_id']);
+         $className = "Plugin".ucfirst($pluginName).ucfirst($PluginFusioninventoryTaskjob->fields['method']);
+         $moduleRun[$className] = $data;
+      }
+      return $moduleRun;
+   }
+
+
+
 }
 
 ?>

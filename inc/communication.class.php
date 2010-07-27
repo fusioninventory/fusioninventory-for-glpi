@@ -46,7 +46,8 @@ if (!defined('GLPI_ROOT')) {
  * Class to communicate with agents using XML
  **/
 class PluginFusioninventoryCommunication {
-   private $sxml, $deviceId, $ptd, $type='';
+   private $deviceId, $ptd, $type='';
+   protected $sxml;
 
    function __construct() {
       $this->sxml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
@@ -250,6 +251,17 @@ class PluginFusioninventoryCommunication {
                            "\n".time().' : '.$p_logs,
                            FILE_APPEND);
       }
+   }
+
+
+   function getTaskAgent($agent_id) {
+
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskAgent($agent_id);
+      foreach ($moduleRun as $className=>$data) {
+         $class = new $className;
+         $this->sxml = $class->Run($data['items_id'], $data['itemtype'], $data['plugin_fusioninventory_taskjobs_id'], $data['id']);
+      }      
    }
 }
 
