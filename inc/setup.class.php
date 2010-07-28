@@ -71,20 +71,10 @@ class PluginFusioninventorySetup {
 
       $query="DELETE FROM `glpi_displaypreferences`
               WHERE `itemtype`='PluginFusioninventoryError'
-                    OR `itemtype`='PluginFusioninventoryUnknownDevice'
                     OR `itemtype`='PluginFusioninventoryAgent'
-                    OR `itemtype`='PluginFusioninventoryIPRange'
                     OR `itemtype`='PluginFusioninventoryConfig'
-                    OR `itemtype`='PluginFusioninventoryTask'
-                    OR `itemtype`='PluginFusioninventoryConstructDevices' ;";
+                    OR `itemtype`='PluginFusioninventoryTask' ;";
       $DB->query($query) or die($DB->error());
-
-
-      $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknownDevice' ");
-      foreach ($a_netports as $NetworkPort){
-         $np->cleanDBonPurge($NetworkPort['id']);
-         $np->deleteFromDB($NetworkPort['id']);
-      }
 
       return true;
    }
