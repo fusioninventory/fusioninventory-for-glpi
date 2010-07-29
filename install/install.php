@@ -66,11 +66,24 @@ function pluginFusinvinventoryInstall() {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
 
+      $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+
       // Creation of profile
 //      PluginFusioninventoryProfile::initSession($modules_id, array(type, right));
 
       // Creation config values
 //      PluginFusioninventoryConfig::add($modules_id, type, value);
+
+
+      PluginFusioninventoryProfile::changeProfile($plugins_id);
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "INVENTORY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $PluginFusioninventoryAgentmodule->add($input);
+
 
    }
 }
@@ -99,6 +112,10 @@ function pluginFusinvinventoryUninstall() {
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
    PluginFusioninventoryModule::deleteModule($a_plugin['shortname']);
+
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
 
    $query = "SHOW TABLES;";
    $result=$DB->query($query);
