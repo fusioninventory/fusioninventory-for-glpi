@@ -76,6 +76,8 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
 	function showForm($options=array()) {
 		global $LANG,$CFG_GLPI;
 
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
       echo "<form name='form' method='post' action='".$options['target']."'>";
@@ -89,7 +91,7 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
 		$ArrayValues['DB']= $LANG['plugin_fusioninventory']["functionalities"][17];
 		$ArrayValues['file']= $LANG['plugin_fusioninventory']["functionalities"][18];
 		Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
-                              array('value'=>$this->getValue($plugins_id, 'storagesnmpauth')));
+                              array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'storagesnmpauth')));
 		echo "</td>";
       echo "<td colspan='2'></td>";;
       echo "</tr>";
@@ -106,44 +108,44 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_ip", $this->is_active($plugins_id, 'criteria1_ip'));
+		Dropdown::showYesNo("criteria1_ip", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_ip'));
 		echo "</td>";
 		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_ip", $this->is_active($plugins_id, 'criteria2_ip'));
+		Dropdown::showYesNo("criteria2_ip", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_ip'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_name", $this->is_active($plugins_id, 'criteria1_name'));
+		Dropdown::showYesNo("criteria1_name", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_name'));
 		echo "</td>";
 		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_name", $this->is_active($plugins_id, 'criteria2_name'));
+		Dropdown::showYesNo("criteria2_name", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_name'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_serial", $this->is_active($plugins_id, 'criteria1_serial'));
+		Dropdown::showYesNo("criteria1_serial", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_serial'));
 		echo "</td>";
 		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_serial", $this->is_active($plugins_id, 'criteria2_serial'));
+		Dropdown::showYesNo("criteria2_serial", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_serial'));
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria1_macaddr", $this->is_active($plugins_id, 'criteria1_macaddr'));
+		Dropdown::showYesNo("criteria1_macaddr", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_macaddr'));
 		echo "</td>";
 		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
 		echo "<td>";
-		Dropdown::showYesNo("criteria2_macaddr", $this->is_active($plugins_id, 'criteria2_macaddr'));
+		Dropdown::showYesNo("criteria2_macaddr", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_macaddr'));
 		echo "</td>";
 		echo "</tr>";
 
