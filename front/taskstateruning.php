@@ -1,5 +1,4 @@
 <?php
-
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -32,34 +31,19 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_fusioninventory_task_methods() {
-   global $LANG;
-
-   $a_tasks = array();
-   $a_tasks[] = array('module'         => 'fusioninventory',
-                      'method'         => 'wakeonlan',
-                      'selection_type' => 'devices');
-   $a_tasks[] = array('module'         => 'fusioninventory',
-                      'method'         => 'wakeonlan',
-                      'selection_type' => 'rules');
-   $a_tasks[] = array('module'         => 'fusioninventory',
-                      'method'         => 'wakeonlan',
-                      'selection_type' => 'devicegroups');
-   $a_tasks[] = array('module'         => 'fusioninventory',
-                      'method'         => 'wakeonlan',
-                      'selection_type' => 'fromothertasks');
-   return $a_tasks;
+if (!defined('GLPI_ROOT')) {
+	define('GLPI_ROOT', '../../..');
 }
 
+include (GLPI_ROOT."/inc/includes.php");
 
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
-function plugin_fusioninventory_task_wakeonlan_fromothertasks($a_computerid = array()) {
-   global $LANG;
+PluginFusioninventoryMenu::displayMenu("mini");
 
+$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+$PluginFusioninventoryTaskjob->showRunning();
 
-   
-
-
-}
+commonFooter();
 
 ?>

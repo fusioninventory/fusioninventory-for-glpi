@@ -80,8 +80,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 			$this->getEmpty();
       }
 
-
 $this->cronTaskScheduler();
+
       $this->showFormHeader($options);
       
 		echo "<tr class='tab_bg_1'>";
@@ -162,6 +162,11 @@ $this->cronTaskScheduler();
 		echo "<td align='center'>";
       echo "<textarea cols='40' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
+      $a_methods = array();
+      $a_methods = plugin_fusioninventory_getmethods();
+      foreach ($a_methods as $num=>$datas) {
+         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+      }
 		echo "</td>";
       echo "</tr>";
 
@@ -187,20 +192,13 @@ $this->cronTaskScheduler();
    function dropdownMethod($myname,$value=0,$valueType=0,$entity_restrict='') {
       global $DB,$CFG_GLPI;
 
-      $a_methods = array();
-      $a_methods = plugin_fusioninventory_task_methods();
-      $a_modules = PluginFusioninventoryModule::getAll();
-      foreach ($a_modules as $module_id=>$datas) {
-         if (function_exists("plugin_".$datas['name']."_task_methods")) {
-            $a_methods = call_user_func("plugin_".$datas['name']."_task_methods");
-         }
-      }
+      $a_methods = plugin_fusioninventory_getmethods();
+
       $a_methods2 = array();
       $a_methods2[''] = "------";
       foreach ($a_methods as $num=>$datas) {
          $a_methods2[$datas['method']] = $datas['method'];
       }
-
       $rand = Dropdown::showFromArray($myname, $a_methods2);
 
       $params=array('method_id'=>'__VALUE__',
@@ -238,13 +236,7 @@ $this->cronTaskScheduler();
       global $DB,$CFG_GLPI;
 
       $a_methods = array();
-      $a_methods = plugin_fusioninventory_task_methods();
-      $a_modules = PluginFusioninventoryModule::getAll();
-      foreach ($a_modules as $module_id=>$datas) {
-         if (function_exists("plugin_".$datas['name']."_task_methods")) {
-            $a_methods = call_user_func("plugin_".$datas['name']."_task_methods");
-         }
-      }
+      $a_methods = plugin_fusioninventory_getmethods();
       $a_selectiontype = array();
       $a_selectiontype[''] = "------";
       foreach ($a_methods as $num=>$datas) {
@@ -387,7 +379,9 @@ $this->cronTaskScheduler();
 
                   $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
 
-                  // TODO : put status = 1 in glpi_plugin_fusioninventory_taskjobs
+                  $this->getFromDB($data['id']);
+                  $this->fields['status'] = 1;
+                  $this->update($this->fields);
                }
             }
          }
@@ -439,7 +433,25 @@ $this->cronTaskScheduler();
 
 
 
+   function showRunning() {
+      global $DB;
 
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+
+      $a_taskjob = $this->find();
+      $query = "SELECT * FROM ".$this->table."
+         WHERE status='1' ";
+
+      if ($result = $DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            if ($PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '', 'get') < 100) {
+               $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '200');
+            }
+         }
+      }
+
+
+   }
 
 
 

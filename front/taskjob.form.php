@@ -47,6 +47,11 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (isset ($_POST["add"])) {
 //   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
 
+   if (isset($_POST['method_id'])) {
+      $_POST['method'] = $_POST['method_id'];
+   }
+   $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
+
    if (!empty($_POST['selection'])) {
       $a_selection = explode(',', $_POST['selection']);
       foreach ($a_selection as $num=>$data) {
