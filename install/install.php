@@ -64,7 +64,7 @@ function pluginFusinvdeployInstall() {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
       }
 
-      $module_id = PluginFusioninventoryModule::addModule($a_plugin['shortname']);
+      $module_id = PluginFusioninventoryModule::addModule(PluginFusioninventoryModule::getId($a_plugin['shortname'], "DEPLOY"));
       $a_rights = array();
       $a_rights['packages'] = 'w';
       $a_rights['status'] = 'w';
