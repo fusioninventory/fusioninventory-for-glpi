@@ -42,10 +42,11 @@ function plugin_init_fusinvinventory() {
 
    $a_plugin = plugin_version_fusinvinventory();
 
-   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getId($a_plugin['shortname']);
-
+   $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
+   
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
-   $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile(PluginFusioninventoryModule::getId($a_plugin['shortname']),$a_plugin['shortname']);
+   $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
 
 }
