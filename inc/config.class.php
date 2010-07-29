@@ -38,9 +38,11 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusinvSNMPConfig extends PluginFusioninventoryConfig {
+class PluginFusinvSNMPConfig extends CommonDBTM {
 	function initConfigModule() {
 		global $DB;
+
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $insert = array('storagesnmpauth'=>'DB',
@@ -52,20 +54,23 @@ class PluginFusinvSNMPConfig extends PluginFusioninventoryConfig {
                       'criteria2_name'=>'0',
                       'criteria2_serial'=>'0',
                       'criteria2_macaddr'=>'0');
-      $this->initConfig($plugins_id, $insert);
+      $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
 	function putForm($p_post) {
+
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $this->updateConfigType($plugins_id, 'storagesnmpauth', $p_post['storagesnmpauth']);
-      $this->updateConfigType($plugins_id, 'criteria1_ip', $p_post['criteria1_ip']);
-      $this->updateConfigType($plugins_id, 'criteria1_name', $p_post['criteria1_name']);
-      $this->updateConfigType($plugins_id, 'criteria1_serial', $p_post['criteria1_serial']);
-      $this->updateConfigType($plugins_id, 'criteria1_macaddr', $p_post['criteria1_macaddr']);
-      $this->updateConfigType($plugins_id, 'criteria2_ip', $p_post['criteria2_ip']);
-      $this->updateConfigType($plugins_id, 'criteria2_name', $p_post['criteria2_name']);
-      $this->updateConfigType($plugins_id, 'criteria2_serial', $p_post['criteria2_serial']);
-      $this->updateConfigType($plugins_id, 'criteria2_macaddr', $p_post['criteria2_macaddr']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'storagesnmpauth', $p_post['storagesnmpauth']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_ip', $p_post['criteria1_ip']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_name', $p_post['criteria1_name']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_serial', $p_post['criteria1_serial']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_macaddr', $p_post['criteria1_macaddr']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_ip', $p_post['criteria2_ip']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_name', $p_post['criteria2_name']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_serial', $p_post['criteria2_serial']);
+      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_macaddr', $p_post['criteria2_macaddr']);
    }
 
 	function showForm($options=array()) {
