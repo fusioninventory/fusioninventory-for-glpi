@@ -73,7 +73,7 @@ function pluginFusinvsnmpInstall() {
       $importexport = new PluginFusinvsnmpImportExport;
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
-      $plugin_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+      $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       $a_rights = array();
       $a_rights['networking'] = 'w';
       $a_rights['printers'] = 'w';
@@ -82,12 +82,28 @@ function pluginFusinvsnmpInstall() {
       $a_rights['iprange'] = 'w';
       $a_rights['unknowndevices'] = 'w';
       $a_rights['configuration'] = 'w';
-      PluginFusioninventoryProfile::initProfile($plugin_id,$a_rights);
+      PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
 
       $configSNMP = new PluginFusinvSNMPConfig;
       $configSNMP->initConfigModule();
       // Creation config values
 //      PluginFusioninventoryConfig::add($modules_id, type, value);
+
+      PluginFusioninventoryProfile::changeProfile($plugins_id);
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "SNMPQUERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $PluginFusioninventoryAgentmodule->add($input);
+      
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "NETDISCOVERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $PluginFusioninventoryAgentmodule->add($input);
 
    }
 }
@@ -141,6 +157,10 @@ function pluginFusinvsnmpUninstall() {
 //      $np->deleteFromDB($NetworkPort['id']);
 //   }
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
+
    $config = new PluginFusionInventoryConfig;
    $config->cleanConfig($plugins_id);
    return true;
