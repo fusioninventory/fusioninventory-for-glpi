@@ -537,6 +537,7 @@ $LANG['plugin_fusioninventory']["menu"][3]="Menu";
 $LANG['plugin_fusioninventory']["menu"][4]="Matériel inconnu";
 $LANG['plugin_fusioninventory']["menu"][5]="Historique des ports de switchs";
 $LANG['plugin_fusioninventory']["menu"][6]="Ports de switchs inutilisés";
+$LANG['plugin_fusioninventory']["menu"][7]="Tâches en cours d'exécution";
 
 $LANG['plugin_fusioninventory']["buttons"][0]="Découvrir";
 

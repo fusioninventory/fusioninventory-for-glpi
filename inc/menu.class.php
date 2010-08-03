@@ -51,11 +51,16 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agent.php";
       }
+
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusioninventory']["task"][1];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/task.php";
       }
+
+      $a_menu[3]['name'] = $LANG['plugin_fusioninventory']["menu"][7];
+      $a_menu[3]['pic']  = "";
+      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskstateruning.php";
 
       echo "<div align='center'>";
       echo "<table width='950'>";

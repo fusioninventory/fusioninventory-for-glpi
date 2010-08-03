@@ -191,6 +191,17 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
+
+   function deleteModule($plugins_id) {
+
+      $a_agentmodule = $this->find("`plugins_id`='".$plugins_id."'");
+      foreach($a_agentmodule as $id=>$data) {
+         $this->fields['id'] = $id;
+         $this->deleteFromDB();
+      }
+   }
+
+
 }
 
 ?>
