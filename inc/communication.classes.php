@@ -157,7 +157,6 @@ class PluginFusionInventoryCommunication {
       if ($task == "1") {
          $tasks = $ptt->ListTask($agent["ID"], "SNMPQUERY");
          foreach ($tasks as $task_id=>$taskInfos) {
-            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/query.log".rand(), $agent["ID"]);
             if ($tasks[$task_id]["param"] == PLUGIN_FUSIONINVENTORY_SNMP_AGENTS) {
                $task = "0";
             }
@@ -762,10 +761,12 @@ class PluginFusionInventoryCommunication {
       $errors='';
       $criteria['serial']  = trim($p_info->SERIAL);
       $criteria['name']    = $p_info->NAME;
-      $criteria['macaddr'] = $p_info->MAC; //TODO get mac in PORT for printer
+      $criteria['macaddr'] = $p_info->MAC;
+
       $error_criteria = 0;
       if ($p_info->TYPE=='NETWORKING') {
          $this->deviceId = plugin_fusioninventory_discovery_criteria($criteria, NETWORKING_TYPE);
+
          if ($this->deviceId != '') {
             $errors.=$this->importInfoNetworking($p_info);
          } else {
