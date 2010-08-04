@@ -548,5 +548,9 @@ $FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['serial']['name'] = $LANG['plugin_fusion
 $FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['ifPhysAddress']['field'] = 'ifmac';
 $FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['ifPhysAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][15];
 
+$FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['ifaddr']['field'] = 'ifaddr';
+$FUSIONINVENTORY_MAPPING[COMPUTER_TYPE]['ifaddr']['name'] = $LANG['plugin_fusioninventory']["mapping"][407];
+
+
 
 ?>

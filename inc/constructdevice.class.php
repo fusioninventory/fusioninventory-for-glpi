@@ -240,6 +240,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
       $mapping_pre[1]['.1.3.6.1.4.1.714.1.2.5.3.5.0'] = 'serial';
       $mapping_pre[1]['.1.3.6.1.2.1.2.2.1.6']         = 'ifPhysAddress';
+      $mapping_pre[1]['.1.3.6.1.2.1.4.20.1.2']        = 'ifaddr';
+
 
 //      $mapping_pre[3][''] = '';
       $mapping_pre_vlan = array();
@@ -666,9 +668,11 @@ echo "</a>";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {
             $sxml_device = $sxml->addChild('DEVICE');
-            $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
-            $sxml_device->addAttribute('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
-            $sxml_device->addAttribute('TYPE', $data['type']);
+            $data['sysdescr'] = str_replace("\n", "", $data['sysdescr']);
+            $data['sysdescr'] = str_replace("\r", "", $data['sysdescr']);
+            $sxml_device->addChild('SYSDESCR', "<![CDATA[".$data['sysdescr']."]]>");
+            $sxml_device->addChild('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
+            $sxml_device->addChild('TYPE', $data['type']);
 
             if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
                //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
@@ -679,7 +683,7 @@ echo "</a>";
                $result_modelkey=$DB->query($query_modelkey);
                if ($DB->numrows($result_modelkey)) {
                   $line = mysql_fetch_assoc($result_modelkey);
-                  $sxml_device->addAttribute('MODELSNMP', $line['discovery_key']);
+                  $sxml_device->addChild('MODELSNMP', $line['discovery_key']);
                }               
 
                $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
@@ -689,7 +693,7 @@ echo "</a>";
                $result_serial=$DB->query($query_serial);
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
-                  $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                  $sxml_device->addChild('SERIAL', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                $line['mib_oid_id']));
                }
 
@@ -703,10 +707,10 @@ echo "</a>";
                if ($DB->numrows($result_serial)) {
                   $line = mysql_fetch_assoc($result_serial);
                   if ($line['mapping_name'] == "macaddr") {
-                     $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                     $sxml_device->addChild('MAC', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                    $line['mib_oid_id']));
                   } else {
-                     $sxml_device->addAttribute('MACDYN', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                     $sxml_device->addChild('MACDYN', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                    $line['mib_oid_id']));
                   }
                }
@@ -715,9 +719,9 @@ echo "</a>";
                $data['sysdescr'] = str_replace("^M", "", $data['sysdescr']);
 
                $sxml_device = $sxml->addChild('DEVICE');
-               $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
-               $sxml_device->addAttribute('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
-               $sxml_device->addAttribute('TYPE', $data['type']);
+               $sxml_device->addChild('SYSDESCR', "<![CDATA[".$data['sysdescr']."]]>");
+               $sxml_device->addChild('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
+               $sxml_device->addChild('TYPE', $data['type']);
 
                if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
                   //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
@@ -728,7 +732,7 @@ echo "</a>";
                   $result_modelkey=$DB->query($query_modelkey);
                   if ($DB->numrows($result_modelkey)) {
                      $line = mysql_fetch_assoc($result_modelkey);
-                     $sxml_device->addAttribute('MODELSNMP', $line['discovery_key']);
+                     $sxml_device->addChild('MODELSNMP', $line['discovery_key']);
                   }
 
                   $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
@@ -738,7 +742,7 @@ echo "</a>";
                   $result_serial=$DB->query($query_serial);
                   if ($DB->numrows($result_serial)) {
                      $line = mysql_fetch_assoc($result_serial);
-                     $sxml_device->addAttribute('SERIAL', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                     $sxml_device->addChild('SERIAL', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                   $line['mib_oid_id']));
                   }
 
@@ -752,10 +756,10 @@ echo "</a>";
                   if ($DB->numrows($result_serial)) {
                      $line = mysql_fetch_assoc($result_serial);
                      if ($line['mapping_name'] == "macaddr") {
-                        $sxml_device->addAttribute('MAC', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                        $sxml_device->addChild('MAC', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                       $line['mib_oid_id']));
                      } else {
-                        $sxml_device->addAttribute('MACDYN', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                        $sxml_device->addChild('MACDYN', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
                                                       $line['mib_oid_id']));
                      }
                   }
@@ -773,7 +777,7 @@ echo "</a>";
 
    function formatXmlString($sxml) {
       $xml = str_replace("><", ">\n<", $sxml->asXML());
-      $xml = str_replace("^M", "", $xml);
+      //$xml = str_replace("^M", "", $xml);
       $token      = strtok($xml, "\n");
       $result     = '';
       $pad        = 0;
@@ -799,6 +803,8 @@ echo "</a>";
          $token   = strtok("\n");
          $pad    += $indent;
       }
+      $result = str_replace("&lt;![CDATA[", "<![CDATA[", $result);
+      $result = str_replace("]]&gt;", "]]>", $result);
       $sxml = simplexml_load_string($result);
       return $sxml;
    }
