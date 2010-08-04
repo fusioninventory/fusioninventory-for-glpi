@@ -439,6 +439,7 @@ function plugin_fusioninventory_discovery_criteria($p_criteria, $type=0) {
                   unset($a_criteria);
                   $a_criteria[$criteria] = $p_criteria[$criteria];
                   $r_find = plugin_fusioninventory_find_device($a_criteria, $type);
+
                   if ($r_find) {
                      return $r_find;
                   } else {
@@ -505,6 +506,7 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
    $select = "";
    $condition_unknown = "";
    $select_unknown = "";
+
    foreach ($a_criteria as $criteria=>$value) {
       switch ($criteria) {
          
