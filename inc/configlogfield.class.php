@@ -213,8 +213,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      echo "</table>";
-      echo "</form>";
+      echo "</table></div></form>";
 
       return true;
 	}
