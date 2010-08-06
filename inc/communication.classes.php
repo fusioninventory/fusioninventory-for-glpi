@@ -1511,6 +1511,7 @@ class PluginFusionInventoryCommunication {
             $a_input['token'] = $this->sxml->TOKEN;
             $a_input['name'] = $this->sxml->DEVICEID;
             $a_input['key'] = $this->sxml->DEVICEID;
+            $a_input['last_agent_update'] = date("Y-m-d H:i:s");
             // Search deviceid of an inventory
             $query = "SELECT * FROM `glpi_ocs_link`
                WHERE `ocs_deviceid`='".$this->sxml->DEVICEID."'
