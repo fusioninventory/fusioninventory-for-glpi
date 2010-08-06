@@ -57,6 +57,7 @@ if ((list.match(pattern1)) || (list.match(pattern2))) {
    select.options[select.options.length] = new Option(obj.options[obj.selectedIndex].text, document.getElementsByName('itemtype').item(0).value + '-' + obj.value);
    document.getElementById('selection').value = list + ',' + document.getElementsByName('itemtype').item(0).value + '-' + obj.value;
 }
-</script>";
+
+ </script>";
 
 ?>

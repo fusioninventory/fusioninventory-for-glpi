@@ -36,9 +36,10 @@ function plugin_fusioninventory_task_methods() {
    global $LANG;
 
    $a_tasks = array();
-   $a_tasks[] = array('module'         => 'fusioninventory',
-                      'method'         => 'wakeonlan',
-                      'selection_type' => 'devices');
+   $a_tasks[] = array('module'               => 'fusioninventory',
+                      'method'               => 'wakeonlan',
+                      'selection_type'       => 'devices',
+                      'selection_type_name'  => $LANG['common'][1]);
    $a_tasks[] = array('module'         => 'fusioninventory',
                       'method'         => 'wakeonlan',
                       'selection_type' => 'rules');
