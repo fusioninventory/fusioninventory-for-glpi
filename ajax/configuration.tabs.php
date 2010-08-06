@@ -54,27 +54,13 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
             $sessionConfig = $_SESSION['glpi_plugin_fusioninventory']['configuration'];
             if (isset($sessionConfig['moduletabs'])) {
                $pluginsTabs = $sessionConfig['moduletabs'];
-               logDebug("sessionConfig['moduletabs']".' : ');
-               logDebug($sessionConfig['moduletabs']);
-               logDebug($_POST['glpi_tab']);
-//               if (isset($pluginsTabs[$_POST['glpi_tab']])){
-//                  $title = $pluginsTabs[$_POST['glpi_tab']];
-                  $plugin = new Plugin;
-//                  logDebug($module.' : '.$form);
-                  foreach($sessionConfig['moduletabforms'] as $module=>$form) {
-                     logDebug($module.' : ');
-                     logDebug($form);
-                     if ($plugin->isActivated($module)) {
-                       foreach($form as $title=>$tab) {
-                           logDebug($title.' : ');
-                           logDebug($tab);
-//                        if (isset($form[$title])) {
-                           $class = $form[$title]['class'];
-//                           $class = $tab['class'];
-                           $oTab = new $class;
-                           $oTab->showForm(array('target'=>$_POST['target']));
-//                           break;
-//                        }
+               $plugin = new Plugin;
+               foreach($sessionConfig['moduletabforms'] as $module=>$form) {
+                  if ($plugin->isActivated($module)) {
+                    foreach($form as $title=>$tab) {
+                        $class = $form[$title]['class'];
+                        $oTab = new $class;
+                        $oTab->showForm(array('target'=>$_POST['target']));
                      }
                   }
                }
