@@ -514,7 +514,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          }
          $a_portUsed[$used_id] = 1;
       }
-      $this->deleteNonUsedPortHub($a_portUsed);
+      $this->deleteNonUsedPortHub($hub_id, $a_portUsed);
    }
 
 
