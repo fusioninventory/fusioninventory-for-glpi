@@ -162,7 +162,20 @@
 
 
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
-	return "";
+	global $CFG_GLPI, $LANG;
+
+	$searchopt = &Search::getOptions($type);
+   $table = $searchopt[$id]["table"];
+   $field = $searchopt[$id]["field"];
+
+	switch ($table.'.'.$field) {
+
+		case "glpi_plugin_fusioninventory_tasks.id" :
+         // Get progression bar 
+         return "";
+         break;
+   }
+   return "";
 }
 
 // Define Dropdown tables to be manage in GLPI :

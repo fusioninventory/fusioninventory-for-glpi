@@ -56,7 +56,7 @@ if (isset ($_POST["add"])) {
       $a_selection = explode(',', $_POST['selection']);
       foreach ($a_selection as $num=>$data) {
          $dataDB = explode('-', $data);
-         if (!empty($dataDB[0])) {
+         if (isset($dataDB[1]) AND $dataDB > 0) {
             $a_selectionDB[][$dataDB[0]] = $dataDB[1];
          }
       }
@@ -76,7 +76,7 @@ if (isset ($_POST["add"])) {
       $a_selection = explode(',', $_POST['selection']);
       foreach ($a_selection as $num=>$data) {
          $dataDB = explode('-', $data);
-         if (!empty($dataDB[0])) {
+         if (isset($dataDB[1]) AND $dataDB > 0) {
             $a_selectionDB[][$dataDB[0]] = $dataDB[1];
          }
       }

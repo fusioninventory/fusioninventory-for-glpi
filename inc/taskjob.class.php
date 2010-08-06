@@ -117,8 +117,8 @@ $this->cronTaskScheduler();
          showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       }
 		echo "</td>";
-      echo "<td rowspan='4'>Selection&nbsp;:</td>";
-      echo "<td align='center' rowspan='4'>";
+      echo "<td rowspan='5'>Selection&nbsp;:</td>";
+      echo "<td align='center' rowspan='5'>";
       echo "<span id='show_Selection_id'>";
       echo "</span>";
       echo "<span id='show_selectionList'>";
@@ -129,16 +129,31 @@ $this->cronTaskScheduler();
       for ($i=0; $i < count($a_deviceList) ; $i++) {
          foreach ($a_deviceList[$i] as $itemtype=>$items_id) {
             $selection .= ','.$itemtype.'-'.$items_id;
-
-            $class = new $itemtype();
-            $class->getFromDB($items_id);
-            $selectionDisplayOptions .= "<option value='".$itemtype.'-'.$items_id."'>".$class->fields['name']."</option>";
+            if (!empty($itemtype)) {
+               $class = new $itemtype();
+               $class->getFromDB($items_id);
+               $selectionDisplayOptions .= "<option value='".$itemtype.'-'.$items_id."'>".$class->fields['name']."</option>";
+            }
          }
       }
       echo "<br/><select name='selectionDisplay' id='selectionDisplay' size='10' multiple='multiple'>".$selectionDisplayOptions."</select>";
       echo "<div style='visibility:hidden'>";
       echo "<textarea name='selection' id='selection'>".$selection."</textarea>";
       echo "</div>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
+		echo "<td align='center'>";
+      Dropdown::showInteger("periodicity", "", 1, 300);
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time[] = "minutes";
+      $a_time[] = "heures";
+      $a_time[] = "jours";
+      $a_time[] = "mois";
+      Dropdown::showFromArray("tt", $a_time, array('value'=>0));
       echo "</td>";
       echo "</tr>";
 
@@ -241,7 +256,11 @@ $this->cronTaskScheduler();
       $a_selectiontype[''] = "------";
       foreach ($a_methods as $num=>$datas) {
          if ($datas['method'] == $method) {
-            $a_selectiontype[$datas['selection_type']] = $datas['selection_type'];
+            if (isset($datas['selection_type_name'])) {
+               $a_selectiontype[$datas['selection_type']] = $datas['selection_type_name'];
+            } else {
+               $a_selectiontype[$datas['selection_type']] = $datas['selection_type'];
+            }
          }
       }
 
@@ -250,7 +269,8 @@ $this->cronTaskScheduler();
       $params=array('selection_type'=>'__VALUE__',
                      'entity_restrict'=>$entity_restrict,
                      'rand'=>$rand,
-                     'myname'=>$myname
+                     'myname'=>$myname,
+                     'method'=>$method
                      );
 
       ajaxUpdateItemOnSelectEvent("dropdown_selection_type".$rand,"show_Selection_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelectionType.php",$params);
@@ -277,7 +297,7 @@ $this->cronTaskScheduler();
 
 
 
-   function dropdownSelection($myname,$selectiontype,$value=0,$entity_restrict='') {
+   function dropdownSelection($myname,$selectiontype,$method,$value=0,$entity_restrict='') {
       global $DB,$CFG_GLPI;
       
       $types = '';
@@ -296,7 +316,19 @@ $this->cronTaskScheduler();
          Dropdown::showAllItems($myname, 0, 0, -1, $types);
       } else {
          // <select> personalisé :
-         plugin_fusioninventory_task_wakeonlan_fromothertasks();
+         $a_methods = array();
+         $a_methods = plugin_fusioninventory_getmethods();
+         $a_selectiontype = array();
+         foreach ($a_methods as $num=>$datas) {
+            if ($datas['method'] == $method) {
+               $module = $datas['module'];
+            }
+         }
+         $a_list = call_user_func('plugin_'.$module.'_task_'.$method.'_'.$selectiontype);
+         echo "<div style='visibility:hidden'>";
+         echo "<select name='itemtype'><option value='0' selected>0</option></select>";
+         echo "</div>";
+         Dropdown::showFromArray($myname, $a_list);
       }
       echo "<input type='button' name='addObject' id='addObject' value='Ajouter' class='submit'/>";
 
@@ -308,6 +340,7 @@ $this->cronTaskScheduler();
 
       ajaxUpdateItemOnEvent('addObject','show_selectionList',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelection.php",$params,array("click"));
    }
+   
    
 
    function cronTaskScheduler() {

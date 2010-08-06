@@ -73,7 +73,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    }
 
 
-
+   
    static function getTypeName() {
       global $LANG;
 
