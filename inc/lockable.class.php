@@ -116,7 +116,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
          PluginFusioninventoryLockable::getLockableSelect($tableSelect);
       }
       echo "</span>\n";
-      echo "</table></form>";
+      echo "</tr></table></div></form>";
    }
 
    /**

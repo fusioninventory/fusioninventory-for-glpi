@@ -40,6 +40,48 @@ checkRight("config","w");
 
 if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {
    switch($_POST['glpi_tab']) {
+      case -1 : // All
+         $config = new PluginFusioninventoryConfig;
+         $config->showForm(array('target'=>$_POST['target']));
+
+         $ptLockable = new PluginFusioninventoryLockable;
+         $ptLockable->showForm(array('target'=>$_POST['target']));
+
+         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+         $PluginFusioninventoryAgentmodule->showForm();
+
+         if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
+            $sessionConfig = $_SESSION['glpi_plugin_fusioninventory']['configuration'];
+            if (isset($sessionConfig['moduletabs'])) {
+               $pluginsTabs = $sessionConfig['moduletabs'];
+               logDebug("sessionConfig['moduletabs']".' : ');
+               logDebug($sessionConfig['moduletabs']);
+               logDebug($_POST['glpi_tab']);
+//               if (isset($pluginsTabs[$_POST['glpi_tab']])){
+//                  $title = $pluginsTabs[$_POST['glpi_tab']];
+                  $plugin = new Plugin;
+//                  logDebug($module.' : '.$form);
+                  foreach($sessionConfig['moduletabforms'] as $module=>$form) {
+                     logDebug($module.' : ');
+                     logDebug($form);
+                     if ($plugin->isActivated($module)) {
+                       foreach($form as $title=>$tab) {
+                           logDebug($title.' : ');
+                           logDebug($tab);
+//                        if (isset($form[$title])) {
+                           $class = $form[$title]['class'];
+//                           $class = $tab['class'];
+                           $oTab = new $class;
+                           $oTab->showForm(array('target'=>$_POST['target']));
+//                           break;
+//                        }
+                     }
+                  }
+               }
+            }
+         }
+         break;
+
       case 0 :
          $config = new PluginFusioninventoryConfig;
          $config->showForm(array('target'=>$_POST['target']));

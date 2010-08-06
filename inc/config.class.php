@@ -103,8 +103,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                <input class='submit' type='submit' name='plugin_fusioninventory_config_set'
                       value='" . $LANG['buttons'][7] . "'></td></tr>";
       }
-      echo "</table>";
-      echo "</form>";
+      echo "</table></div></form>";
 
       return true;
 	}
