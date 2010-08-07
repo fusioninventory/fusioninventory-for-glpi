@@ -525,10 +525,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
       $a_ports = $Netport->find("`on_device`='".$hub_id."'
           AND `device_type`='".$this->type."'
-          AND `name`!='Link'");
+          AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $port_id=>$data) {
          if (!isset($a_portUsed[$port_id])) {
             removeConnector($port_id);
+            $Netport->deleteFromDB($port_id);
          }
       }
    }
