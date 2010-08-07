@@ -446,7 +446,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
 
    
-   function hubNetwork($p_oPort) {
+   function hubNetwork($p_oPort, $agent_id) {
       global $DB;
 
       $Netwire = new Netwire;
@@ -462,14 +462,14 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
                $hub_id = $this->fields['ID'];
             } else {
                removeConnector($ID);
-               $hub_id = $this->createHub($p_oPort);
+               $hub_id = $this->createHub($p_oPort, $agent_id);
             }
          } else {
             removeConnector($ID);
-            $hub_id = $this->createHub($p_oPort);
+            $hub_id = $this->createHub($p_oPort, $agent_id);
          }
       } else {
-         $hub_id = $this->createHub($p_oPort);
+         $hub_id = $this->createHub($p_oPort, $agent_id);
       }
 
 
@@ -581,7 +581,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
 
 
-   function createHub($p_oPort) {
+   function createHub($p_oPort, $agent_id) {
       global $DB;
 
       $Netport = new Netport;
@@ -617,6 +617,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $input = array();
       $input['hub'] = "1";
       $input['name'] = "hub";
+      $input["FK_agent"] = $agent_id;
          // get source entity :
          $datas = $Netport->getDeviceData($p_oPort->getValue("on_device"),$p_oPort->getValue("device_type"));
          if (isset($Netport->FK_entities)) {
