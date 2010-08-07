@@ -68,6 +68,7 @@ function plugin_fusioninventory_snmp_addLog($port,$field,$old_value,$new_value,$
 
 
 function plugin_fusioninventory_networking_ports_addLog($port_id, $new_value, $field) {
+   global $LANG;
    include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 
    $ptp = new PluginFusionInventoryPort;
