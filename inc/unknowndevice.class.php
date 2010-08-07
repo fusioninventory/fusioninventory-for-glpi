@@ -642,17 +642,17 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
       $a_macOnSwitch = array();
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
-         $a_macOnSwitch['$ifmac'] = 1;
+         $a_macOnSwitch["$ifmac"] = 1;
       }
 
       // get all ports of hub
       $releasePorts = array();
-      $a_ports = $Netport->find("`on_device`='".$hub_id."' AND `device_type`='".$this->type."' AND `name`!='Link'");
+      $a_ports = $Netport->find("`on_device`='".$hub_id."' AND `device_type`='".$this->type."' AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $port_id=>$data) {
-         if ($ID = $Netwire->getOppositeContact($p_oPort->getValue('ID'))) {
+         if ($ID = $Netwire->getOppositeContact($port_id)) {
             $Netport->getFromDB($ID);
             if (!isset($a_macOnSwitch[$Netport->fields["ifmac"]])) {
-               $releasePorts[$data['ID']] = 1;
+               $releasePorts[$port_id] = 1;
             }
          }
       }
