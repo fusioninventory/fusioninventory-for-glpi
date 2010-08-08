@@ -48,11 +48,15 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</DESCRIPTION>
     <PROCESSNUMBER>1280906135/001</PROCESSNUMBER>
   </CONTENT>
   <DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>
-  <QUERY>SNMPQUERY</QUERY>
+  <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>
 ';
       $PluginFusionInventoryCommunication = new PluginFusionInventoryCommunication;
       $code = $PluginFusionInventoryCommunication->import($input_xml);
+
+      // Search in unknown devices
+
+
       $this->assertFalse(!$code);
 
    }

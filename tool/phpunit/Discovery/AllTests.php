@@ -16,6 +16,7 @@ if (!defined('GLPI_ROOT')) {
 
 require_once 'Agent.php';
 require_once 'Newdevices.php';
+require_once 'Snmpinventory.php';
 
 
 
