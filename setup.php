@@ -194,7 +194,7 @@ function plugin_init_fusioninventory() {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['snmp_auth'] = 'front/plugin_fusioninventory.snmp_auth.php';
             }
             if (plugin_fusioninventory_haveRight("agents","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/plugin_fusioninventory.agents.form.php?add=1';
+               //$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/plugin_fusioninventory.agents.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/plugin_fusioninventory.agents.php';
             }
 
