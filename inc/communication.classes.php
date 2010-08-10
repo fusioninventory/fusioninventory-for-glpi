@@ -1614,8 +1614,8 @@ class PluginFusionInventoryCommunication {
 //         $this->addProcessNumber($ptap->addProcess($pxml));
 //         $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
 //      }
-      $this->sxml->addAttribute('RESPONSE', "SEND");
-      $this->sxml->addAttribute('PROLOG_FREQ', $ptc->getValue('inventory_frequence'));
+      $this->sxml->addChild('RESPONSE', "SEND");
+      $this->sxml->addChild('PROLOG_FREQ', $ptc->getValue('inventory_frequence'));
    }
 
 
