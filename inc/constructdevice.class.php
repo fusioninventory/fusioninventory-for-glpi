@@ -135,6 +135,9 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $result = $DB->query($query);
       $a_device = $DB->fetch_assoc($result);
       $type_model = $a_device['type'];
+      $sysdescr   = $a_device['sysdescr'];
+
+      $a_ignore = array();
 
       // List of OID with relations by default with mapping
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.4']      = 'cdpCacheAddress';
@@ -147,7 +150,9 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.1']            = 'dot1dTpFdbAddress';
       $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.2']            = 'dot1dTpFdbPort';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1001']    = 'entPhysicalModelName';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.2']       = 'entPhysicalModelName';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1001']     = 'firmware';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1000']     = 'firmware';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.2']               = 'ifdescr';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.1']               = 'ifIndex';
       $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.14']              = 'ifinerrors';
@@ -170,15 +175,15 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.2.1.1.5.0']                 = 'name';
       $mapping_pre[2]['.1.3.6.1.4.1.9.3.6.6.0']             = 'ram';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001']    = 'serial';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1']       = 'serial';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.2']       = 'serial';
       $mapping_pre[2]['.1.3.6.1.2.1.1.3.0']                 = 'uptime';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.6.1.1.14']     = 'vlanTrunkPortDynamicStatus';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.68.1.2.2.1.2']      = 'vmvlan';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.3.1.1.4.1']    = 'vtpVlanName';
       $mapping_pre[2]['.1.3.6.1.2.1.17.7.1.4.3.1.1']        = 'vtpVlanName';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001']    = 'serial';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1']        = 'firmware1';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.10.1']       = 'firmware2';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1']       = 'serial';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1']       = 'entPhysicalModelName';
       $mapping_pre[2]['.1.3.6.1.4.1.171.10.37.20.1.8.0']    = 'entPhysicalModelName';
       $mapping_pre[2]['.1.3.6.1.4.1.171.10.37.20.1.9.0']    = 'firmware';
@@ -235,6 +240,19 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.1602.1.2.1.4.0']                 = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.3.0']         = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0']       = 'serial';
+      // ##### Not see in contruct tool
+      $a_ignore[3][] = '.1.3.6.1.2.1.1.3.0';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.4';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.5';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.7';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.8';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.9';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.10';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.14';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.16';
+      $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.20';
+      $a_ignore[3][] = '.1.3.6.1.2.1.4.20.1.1';
+      $a_ignore[3][] = '.1.3.6.1.2.1.4.22.1.2';
 
 
 
@@ -251,6 +269,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre_vlan['.1.3.6.1.2.1.4.22.1.2'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.2'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.17.1.4.1.2'] = '1';
+
 
 
 
@@ -292,8 +311,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             foreach($file_content as $line){
                 $i = 1;
                foreach($a_oids as $num=>$oid){
-                  if ((strstr($line, $oid.".")) OR (strstr($line, $oid." "))) {
-                     if (($i == '1') AND ($before != $a_oids1[$num])) {
+                  if (((strstr($line, $oid.".")) OR (strstr($line, $oid." "))) AND (!in_array($a_oids1[$num],$a_ignore[$type_model]))) {
+                     if (($i == '1') AND ($before != $a_oids1[$num]) ) {
                         if ($before != '') {
                            echo "</td>";
                            echo "</tr>";
@@ -302,35 +321,37 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                            echo $LANG['plugin_fusioninventory']["mib"][9]." : ";
                            if (isset($a_mibs['ID'])) {
                               if ($a_mibs["vlan"] == "1") {
-
-
-echo "<a href='".$target."?ID=".$ID."&vlan_update=".$oid_id_before."'>";
-
-
+                                 echo "<a href='".$target."?ID=".$ID."&vlan_update=".$oid_id_before."'>";
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-echo "</a>";
-
+                                 echo "</a>";
                               } else {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
                               if (isset($mapping_pre_vlan[$before])) {
-                                 dropdownYesNo("vlan_".$oid_id_before, 1);
+                                 if (strstr($sysdescr, "Cisco")) {
+                                    dropdownYesNo("vlan_".$oid_id_before, 1);
+                                 } else {
+                                    dropdownYesNo("vlan_".$oid_id_before);
+                                 }
                               } else {
                                  dropdownYesNo("vlan_".$oid_id_before);
                               }
                            }
                            echo "</th>";
-                           echo "<th>";
-                           echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
+                           echo "<th width='350'>";
                            if (isset($a_mibs['ID'])) {
+                              echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
                               if ($a_mibs["oid_port_counter"] == "1") {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
                               } else {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
-                              dropdownYesNo("oid_port_counter_".$oid_id_before);
+                              if ($before == ".1.3.6.1.2.1.2.1.0") {
+                                 echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
+                                 dropdownYesNo("oid_port_counter_".$oid_id_before, 1);
+                              }
                            }
                            echo "</th>";
                            echo "<th>";
@@ -342,7 +363,11 @@ echo "</a>";
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
-                              dropdownYesNo("oid_port_dyn_".$oid_id_before);
+                              if (preg_match('/^if/', $mapping_pre[$type_model][$before])) {
+                                 dropdownYesNo("oid_port_dyn_".$oid_id_before,1);
+                              } else {
+                                 dropdownYesNo("oid_port_dyn_".$oid_id_before);
+                              }
                            }
                            echo "</th>";
                            echo "</tr>";
@@ -380,7 +405,41 @@ echo "</a>";
                         if ($DB->numrows($result_oid_mib) != "0") {
                            $a_mibs = $DB->fetch_assoc($result_oid_mib);
                         }
-                        echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+                        $style = '';
+                        $types = array();
+                        foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
+                           if (($type_model == $type) OR ($type_model == "0")) {
+                              if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+                                 foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+                                    $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
+                                 }
+                              }
+                           }
+                        }
+                        if (isset($a_mibs['ID'])) {
+                           $style = " style='border-color: #00d50f; border-width: 2px' ";
+                        } else if (isset($mapping_pre[$type_model][$a_oids1[$num]]) ) {
+                           $display = 0;
+                           foreach($types as $key => $val){                              
+                              if (!isset($a_mapping_used[$key])) {
+                                 if ($type_model."||".$mapping_pre[$type_model][$a_oids1[$num]] == $key) {
+                                    $display++;
+                                 }
+                              }
+                           }
+
+                           if ($display == '0') {
+                               $style = " style='border-color: #ff0000; border-width: 2px' ";
+                           } else {
+                              $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
+                           }
+                           
+                        } else {
+                           $style = " style='border-color: #ff0000; border-width: 2px' ";
+                        }
+
+
+                        echo "<table class='tab_cadre' cellpadding='5' width='950' ".$style.">";
                         echo "<tr>";
                         echo "<th colspan='3'>";
                         if (isset($a_mibs['ID'])) {
@@ -422,19 +481,38 @@ echo "</a>";
                   }
                } else {
                   if (isset($mapping_pre_vlan[$before])) {
-                     dropdownYesNo("vlan_".$oid_id_before, 1);
+                     if (strstr($sysdescr, "Cisco")) {
+                        dropdownYesNo("vlan_".$oid_id_before, 1);
+                     } else {
+                        dropdownYesNo("vlan_".$oid_id_before);
+                     }
                   } else {
                      dropdownYesNo("vlan_".$oid_id_before);
                   }
                }
                echo "</th>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
-               dropdownYesNo("oid_port_counter_".$oid_id_before);
+               if (isset($a_mibs['ID'])) {
+                  echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
+                  if ($a_mibs["oid_port_counter"] == "1") {
+                     echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+                  } else {
+                     echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
+                  }
+               } else {
+                  if ($before == ".1.3.6.1.2.1.2.1.0") {
+                     echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
+                     dropdownYesNo("oid_port_counter_".$oid_id_before, 1);
+                  }
+               }
                echo "</th>";
                echo "<th>";
                echo $LANG['plugin_fusioninventory']["mib"][7]." : ";
-               dropdownYesNo("oid_port_dyn_".$oid_id_before);
+               if (preg_match('/^if/', $mapping_pre[$type_model][$before])) {
+                  dropdownYesNo("oid_port_dyn_".$oid_id_before,1);
+               } else {
+                  dropdownYesNo("oid_port_dyn_".$oid_id_before);
+               }
                echo "</th>";
                echo "</tr>";
                echo "<tr>";
