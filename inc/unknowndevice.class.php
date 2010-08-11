@@ -451,6 +451,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
       $Netwire = new Netwire;
       $Netport = new Netport;
+      $PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
       // Get port connected on switch port
       if ($ID = $Netwire->getOppositeContact($p_oPort->getValue('ID'))) {
@@ -461,11 +462,19 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
                $this->releaseHub($this->fields['ID'], $p_oPort);
                $hub_id = $this->fields['ID'];
             } else {
-               removeConnector($ID);
+               plugin_fusioninventory_addLogConnection("remove",$ID);
+               if (removeConnector($ID)) {
+                  $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                              array('query_nb_connections_deleted' => '1'));
+               }
                $hub_id = $this->createHub($p_oPort, $agent_id);
             }
          } else {
-            removeConnector($ID);
+            plugin_fusioninventory_addLogConnection("remove",$ID);
+            if (removeConnector($ID)) {
+               $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                           array('query_nb_connections_deleted' => '1'));
+            }
             $hub_id = $this->createHub($p_oPort, $agent_id);
          }
       } else {
@@ -586,6 +595,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
       $Netport = new Netport;
       $Netwire = new Netwire;
+      $PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
       // Find in the mac connected to the if they are in hub without link port connected
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
@@ -603,7 +613,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
 
                         } else {
                            // We have founded a hub orphelin
-                           makeConnector($p_oPort->getValue('ID'), portLink_id);
+                           if (makeConnector($p_oPort->getValue('ID'), portLink_id)) {
+                              $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                                          array('query_nb_connections_created' => '1'));
+                              plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
+                           }
                            releaseHub($this->fields['ID'], $p_oPort);
                            return $this->fields['ID'];
                         }
@@ -630,7 +644,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $input["device_type"] = $this->type;
       $input["name"] = "Link";
       $port_id = $Netport->add($input);
-      makeConnector($p_oPort->getValue('ID'), $port_id);
+      if (makeConnector($p_oPort->getValue('ID'), $port_id)) {
+         $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+                     array('query_nb_connections_created' => '1'));
+         plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
+      }
       return $hub_id;
    }
 
@@ -658,6 +676,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
          }
       }
       foreach ($releasePorts as $port_id=>$data) {
+         plugin_fusioninventory_addLogConnection("remove",$port_id);
          removeConnector($port_id);
       }   
    }
