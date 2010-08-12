@@ -64,7 +64,7 @@ if (isset($_GET['vlan_update'])) {
 	if ($DB->numrows($result) == '0') {
       $ptcd->add($_POST);
    } else {
-      $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
+      $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["constructdevice"][6];
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST['addWalk'])) {
