@@ -180,6 +180,7 @@ $LANG['plugin_fusioninventory']["snmp"][50]="Connexion";
 $LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
 $LANG['plugin_fusioninventory']["snmp"][52]="Date dernier inventaire FusionInventory";
 $LANG['plugin_fusioninventory']["snmp"][53]="Dernier inventaire";
+$LANG['plugin_fusioninventory']["snmp"][54]="Voir l'historique complet";
 
 $LANG['plugin_fusioninventory']["snmpauth"][1]="Communauté";
 $LANG['plugin_fusioninventory']["snmpauth"][2]="Utilisateur";

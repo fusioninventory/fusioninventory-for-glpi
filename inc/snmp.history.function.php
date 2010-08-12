@@ -291,7 +291,7 @@ function plugin_fusioninventory_snmp_showHistory($ID_port, $limit = 30,$ajax=0) 
    if ($limit == "30") {
       $text .= "<tr class='tab_bg_1'>";
       $text .= "<th colspan='8'>";
-      $text .= "<a href='".$path."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php?FK_networking_ports=".$ID_port."'>Voir l'historique complet</a>";
+      $text .= "<a href='".$path."/plugins/fusioninventory/report/plugin_fusioninventory.switch_ports.history.php?FK_networking_ports=".$ID_port."'>".$LANG['plugin_fusioninventory']["snmp"][54]."</a>";
       $text .= "</th>";
       $text .= "</tr>";
    }
