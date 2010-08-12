@@ -150,43 +150,43 @@ $LANG['plugin_fusioninventory']["functionalities"][73]="Champs";
 $LANG['plugin_fusioninventory']["functionalities"][74]="Valeurs";
 $LANG['plugin_fusioninventory']["functionalities"][75]="Verrous";
 
-$LANG['plugin_fusioninventory']["snmp"][0]="Informations SNMP du matériel";
-$LANG['plugin_fusioninventory']["snmp"][1]="Général";
-$LANG['plugin_fusioninventory']["snmp"][2]="Cablâge";
-$LANG['plugin_fusioninventory']["snmp"][2]="Données SNMP";
+//$LANG['plugin_fusioninventory']["snmp"][0]="Informations SNMP du matériel";
+//$LANG['plugin_fusioninventory']["snmp"][1]="Général";
+//$LANG['plugin_fusioninventory']["snmp"][2]="Cablâge";
+//$LANG['plugin_fusioninventory']["snmp"][2]="Données SNMP";
+//
+//$LANG['plugin_fusioninventory']["snmp"][11]="Informations supplémentaires";
+//$LANG['plugin_fusioninventory']["snmp"][12]="Uptime";
+//$LANG['plugin_fusioninventory']["snmp"][13]="Utilisation du CPU (en %)";
+//$LANG['plugin_fusioninventory']["snmp"][14]="Utilisation de la mémoire (en %)";
+//
+//$LANG['plugin_fusioninventory']["snmp"][31]="Impossible de récupérer les infos SNMP : Ce n'est pas un commutateur !";
+//$LANG['plugin_fusioninventory']["snmp"][32]="Impossible de récupérer les infos SNMP : Matériel non actif !";
+//$LANG['plugin_fusioninventory']["snmp"][33]="Impossible de récupérer les infos SNMP : IP non précisée dans la base !";
+//$LANG['plugin_fusioninventory']["snmp"][34]="Le commutateur auquel est reliée la machine n'est pas renseigné !";
+//
+//$LANG['plugin_fusioninventory']["snmp"][40]="Tableau des ports";
+//$LANG['plugin_fusioninventory']["snmp"][41]="Description du port";
+//$LANG['plugin_fusioninventory']["snmp"][42]="MTU";
+//$LANG['plugin_fusioninventory']["snmp"][43]="Vitesse";
+//$LANG['plugin_fusioninventory']["snmp"][44]="Statut Interne";
+//$LANG['plugin_fusioninventory']["snmp"][45]="Dernier changement";
+//$LANG['plugin_fusioninventory']["snmp"][46]="Nb d'octets recus";
+//$LANG['plugin_fusioninventory']["snmp"][47]="Nb d'erreurs en entrée";
+//$LANG['plugin_fusioninventory']["snmp"][48]="Nb d'octets envoyés";
+//$LANG['plugin_fusioninventory']["snmp"][49]="Nb d'erreurs en réception";
+//$LANG['plugin_fusioninventory']["snmp"][50]="Connexion";
+//$LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
+//$LANG['plugin_fusioninventory']["snmp"][52]="Date dernier inventaire FusionInventory";
+//$LANG['plugin_fusioninventory']["snmp"][53]="Dernier inventaire";
 
-$LANG['plugin_fusioninventory']["snmp"][11]="Informations supplémentaires";
-$LANG['plugin_fusioninventory']["snmp"][12]="Uptime";
-$LANG['plugin_fusioninventory']["snmp"][13]="Utilisation du CPU (en %)";
-$LANG['plugin_fusioninventory']["snmp"][14]="Utilisation de la mémoire (en %)";
-
-$LANG['plugin_fusioninventory']["snmp"][31]="Impossible de récupérer les infos SNMP : Ce n'est pas un commutateur !";
-$LANG['plugin_fusioninventory']["snmp"][32]="Impossible de récupérer les infos SNMP : Matériel non actif !";
-$LANG['plugin_fusioninventory']["snmp"][33]="Impossible de récupérer les infos SNMP : IP non précisée dans la base !";
-$LANG['plugin_fusioninventory']["snmp"][34]="Le commutateur auquel est reliée la machine n'est pas renseigné !";
-
-$LANG['plugin_fusioninventory']["snmp"][40]="Tableau des ports";
-$LANG['plugin_fusioninventory']["snmp"][41]="Description du port";
-$LANG['plugin_fusioninventory']["snmp"][42]="MTU";
-$LANG['plugin_fusioninventory']["snmp"][43]="Vitesse";
-$LANG['plugin_fusioninventory']["snmp"][44]="Statut Interne";
-$LANG['plugin_fusioninventory']["snmp"][45]="Dernier changement";
-$LANG['plugin_fusioninventory']["snmp"][46]="Nb d'octets recus";
-$LANG['plugin_fusioninventory']["snmp"][47]="Nb d'erreurs en entrée";
-$LANG['plugin_fusioninventory']["snmp"][48]="Nb d'octets envoyés";
-$LANG['plugin_fusioninventory']["snmp"][49]="Nb d'erreurs en réception";
-$LANG['plugin_fusioninventory']["snmp"][50]="Connexion";
-$LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
-$LANG['plugin_fusioninventory']["snmp"][52]="Date dernier inventaire FusionInventory";
-$LANG['plugin_fusioninventory']["snmp"][53]="Dernier inventaire";
-
-$LANG['plugin_fusioninventory']["snmpauth"][1]="Communauté";
-$LANG['plugin_fusioninventory']["snmpauth"][2]="Utilisateur";
-$LANG['plugin_fusioninventory']["snmpauth"][3]="Schéma d'authentification";
-$LANG['plugin_fusioninventory']["snmpauth"][4]="Protocole de cryptage pour authentification ";
-$LANG['plugin_fusioninventory']["snmpauth"][5]="Mot de passe";
-$LANG['plugin_fusioninventory']["snmpauth"][6]="Protocole de cryptage pour les données (écriture)";
-$LANG['plugin_fusioninventory']["snmpauth"][7]="Mot de passe (écriture)";
+//$LANG['plugin_fusioninventory']["snmpauth"][1]="Communauté";
+//$LANG['plugin_fusioninventory']["snmpauth"][2]="Utilisateur";
+//$LANG['plugin_fusioninventory']["snmpauth"][3]="Schéma d'authentification";
+//$LANG['plugin_fusioninventory']["snmpauth"][4]="Protocole de cryptage pour authentification ";
+//$LANG['plugin_fusioninventory']["snmpauth"][5]="Mot de passe";
+//$LANG['plugin_fusioninventory']["snmpauth"][6]="Protocole de cryptage pour les données (écriture)";
+//$LANG['plugin_fusioninventory']["snmpauth"][7]="Mot de passe (écriture)";
 
 $LANG['plugin_fusioninventory']["cron"][0]="Relevé automatique du compteur";
 $LANG['plugin_fusioninventory']["cron"][1]="Activer le relevé";
@@ -577,12 +577,12 @@ $LANG['plugin_fusioninventory']["agents"][25]="Version";
 $LANG['plugin_fusioninventory']["agents"][26]="Gestion des agents";
 $LANG['plugin_fusioninventory']["agents"][27]="Modules des agents";
 
-$LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
-$LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
-$LANG['plugin_fusioninventory']["unknown"][2]="Matériel approuvé";
-$LANG['plugin_fusioninventory']["unknown"][3]="Découvert par l'agent";
-$LANG['plugin_fusioninventory']["unknown"][4]="Hub réseau";
-$LANG['plugin_fusioninventory']["unknown"][5]="Importé depuis le matériel inconnu (FusionInventory)";
+//$LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
+//$LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
+//$LANG['plugin_fusioninventory']["unknown"][2]="Matériel approuvé";
+//$LANG['plugin_fusioninventory']["unknown"][3]="Découvert par l'agent";
+//$LANG['plugin_fusioninventory']["unknown"][4]="Hub réseau";
+//$LANG['plugin_fusioninventory']["unknown"][5]="Importé depuis le matériel inconnu (FusionInventory)";
 
 $LANG['plugin_fusioninventory']["task"][0]="Tâche";
 $LANG['plugin_fusioninventory']["task"][1]="Gestion des tâches";
