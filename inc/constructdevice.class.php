@@ -129,6 +129,17 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/plugin_fusioninventory.snmp.mapping.constant.php");
 
 		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
+      
+//$query = "SELECT * FROM glpi_plugin_fusioninventory_construct_walks";
+//
+//if ($result = $DB->query($query)) {
+//   while ($data = $DB->fetch_array($result)) {
+//      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log'])) {
+//               echo $data['construct_device_id']."<br/>";
+//            }
+//   }
+//}
+
 
       $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_device
          WHERE ID='".$ID."'";
@@ -271,8 +282,6 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre_vlan['.1.3.6.1.2.1.17.1.4.1.2'] = '1';
 
 
-
-
       // Used mapping name :
       $a_mapping_used = array();
       $query = "SELECT * FROM glpi_plugin_fusioninventory_construct_mibs
@@ -295,11 +304,15 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $a_mibs = array();
       if ($result = $DB->query($query)) {
 			if ($data = $DB->fetch_array($result)) {
+            $missing = "";
+            if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log'])) {
+               $missing = " (missing)";
+            }
             $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
             echo "<table class='tab_cadre' width='950'>";
             echo "<tr>";
             echo "<th>Filename : ";
-            echo $data['log'];
+            echo $data['log'].$missing;
             echo "&nbsp;<input type=\"button\" name=\"deletewalk\" class=\"submit\" value=\"" . $LANG['buttons'][6] . "\" onclick=\"self.location.href='".$_SERVER["PHP_SELF"]."?deletewalk=".$ID."'\" >";
             echo "</th>";
             echo "</tr>";
@@ -317,6 +330,19 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             }
             $before = '';
             $oid_id_before = 0;
+            if ($missing != "") {
+               $a_oid_all = array();
+               $query_oid = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
+                  INNER JOIN glpi_dropdown_plugin_fusioninventory_mib_oid
+                     on mib_oid_id = glpi_dropdown_plugin_fusioninventory_mib_oid.ID
+                  WHERE construct_device_id='".$ID."'
+                     ORDER BY name";
+               $result_oid = $DB->query($query_oid);
+               while ($fields_oid = $DB->fetch_array($result_oid)) {
+                  $a_oid_all[] = $fields_oid['comments'].' = ""';
+               }
+               $file_content = $a_oid_all;
+            }
             foreach($file_content as $line){
                 $i = 1;
                foreach($a_oids as $num=>$oid){
