@@ -44,7 +44,6 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		$this->table = "glpi_plugin_fusinvsnmp_ipranges";
 	}
 
-
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
@@ -54,9 +53,16 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 			$this->getEmpty();
       }
 		$this->showTabs($options);
-      $this->showFormHeader($options);
+//      $this->showFormHeader($options);
+      $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/iprange.form.php';
+		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
-		echo "<tr class='tab_bg_1'>";
+		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
+		echo ($id =='' ? $LANG['plugin_fusinvsnmp']["iprange"][6] :
+            $LANG['plugin_fusinvsnmp']["iprange"][5]);
+		echo " :</th></tr>";
+
+      echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
@@ -64,11 +70,11 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["iprange"][0] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][0] . "</td>";
 		echo "<td align='center'>";
-      if (empty($this->fields["ifaddr_start"]))
-         $this->fields["ifaddr_start"] = "...";
-      $ipexploded = explode(".", $this->fields["ifaddr_start"]);
+      if (empty($this->fields["ip_start"]))
+         $this->fields["ip_start"] = "...";
+      $ipexploded = explode(".", $this->fields["ip_start"]);
       $i = 0;
       foreach ($ipexploded as $ipnum) {
          if ($ipnum > 255) {
@@ -76,20 +82,20 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          }
          $i++;
       }
-		echo "<input type='text' value='".$ipexploded[0]."' name='ifaddr_start0' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[1]."' name='ifaddr_start1' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[2]."' name='ifaddr_start2' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[3]."' name='ifaddr_start3' size='3' maxlength='3' >";
+		echo "<input type='text' value='".$ipexploded[0]."' name='ip_start0' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[1]."' name='ip_start1' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' size='3' maxlength='3' >";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["iprange"][1] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][1] . "</td>";
 		echo "<td align='center'>";
       unset($ipexploded);
-      if (empty($this->fields["ifaddr_end"]))
-         $this->fields["ifaddr_end"] = "...";
-      $ipexploded = explode(".", $this->fields["ifaddr_end"]);
+      if (empty($this->fields["ip_end"]))
+         $this->fields["ip_end"] = "...";
+      $ipexploded = explode(".", $this->fields["ip_end"]);
       $i = 0;
       foreach ($ipexploded as $ipnum) {
          if ($ipnum > 255) {
@@ -97,10 +103,10 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          }
          $i++;
       }
-		echo "<input type='text' value='".$ipexploded[0]."' name='ifaddr_end0' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[1]."' name='ifaddr_end1' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[2]."' name='ifaddr_end2' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[3]."' name='ifaddr_end3' size='3' maxlength='3' >";
+		echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' size='3' maxlength='3' >";
 		echo "</td>";
 		echo "</tr>";
 
@@ -132,7 +138,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["iprange"][3] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][3] . "</td>";
 		echo "<td align='center'>";
 		Dropdown::showYesNo("query",$this->fields["query"]);
 		echo "</td>";
@@ -149,13 +155,30 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          echo "</tr>";
       }
 
-		$this->showFormButtons($options);
+//		$this->showFormButtons($options);
+//
+//      echo "<div id='tabcontent'></div>";
+//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+//
+//      return true;
+		echo "<tr class='tab_bg_2'><td colspan='2'>";
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
+         if ($id=='') {
+            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
+                 "\" class='submit' >";
+         } else {
+            echo "<input type='hidden' name='id' value='" . $id . "'/>";
+            echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
+                 "\" class='submit' >";
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
+                    $LANG["buttons"][6] . "\" class='submit'>";
+         }
+      }
+		echo "</td>";
+		echo "</tr>";
+		echo "</table></form></div>";
 
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-
-      return true;
-	}
+      }
 
 
 
@@ -222,7 +245,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $count = 0;
       foreach ($a_input as $num=>$value) {
-         if (strstr($num, "ifaddr_")) {
+         if (strstr($num, "ip_")) {
             if (($value>255) OR (!is_numeric($value)) OR strstr($value, ".")) {
                $count++;
                print $num;
@@ -235,8 +258,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          return true;
       } else {
          addMessageAfterRedirect("<font color='#ff0000'>IP incorrecte</font><br/>".
-            $LANG['plugin_fusioninventory']["iprange"][0]." : ".$a_input['ifaddr_start0'].".".$a_input['ifaddr_start1'].".".$a_input['ifaddr_start2'].".".$a_input['ifaddr_start3']."<br/>".
-            $LANG['plugin_fusioninventory']["iprange"][1]." : ".$a_input['ifaddr_end0'].".".$a_input['ifaddr_end1'].".".$a_input['ifaddr_end2'].".".$a_input['ifaddr_end3']);
+            $LANG['plugin_fusioninventory']["iprange"][0]." : ".$a_input['ip_start0'].".".$a_input['ip_start1'].".".$a_input['ip_start2'].".".$a_input['ip_start3']."<br/>".
+            $LANG['plugin_fusioninventory']["iprange"][1]." : ".$a_input['ip_end0'].".".$a_input['ip_end1'].".".$a_input['ip_end2'].".".$a_input['ip_end3']);
          return false;
       }
    }

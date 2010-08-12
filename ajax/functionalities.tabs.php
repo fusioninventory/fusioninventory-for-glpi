@@ -55,8 +55,6 @@ if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) 
       case -1 :
          $config = new PluginFusioninventoryConfig;
          $config->showForm('1', array('target'=>$_POST['target']));
-         $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm('1', array('target'=>$_POST['target']));
          $history = new PluginFusinvsnmpNetworkPortLog;
          $history->showForm('1', array('target'=>$_POST['target']));
          $ptLockable = new PluginFusioninventoryLockable;
@@ -64,8 +62,8 @@ if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) 
          break;
 
       case 2 :
-         $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm('1', array('target'=>$_POST['target']));
+         $config = new PluginFusioninventoryConfig;
+         $config->showForm('1', array('target'=>$_POST['target']));
          break;
 
       case 7 :

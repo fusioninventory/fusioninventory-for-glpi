@@ -915,20 +915,20 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 }
 
 // Define Dropdown tables to be manage in GLPI :
-function plugin_fusinvsnmp_getDropdown() {
-	// Table => Name
-	global $LANG;
-	if (isset ($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"] == 1) {
-		return array (
-			"glpi_plugin_fusinvsnmp_snmpversions" => "SNMP version",
-			"glpi_plugin_fusinvsnmp_miboids" => "OID MIB",
-			"glpi_plugin_fusinvsnmp_mibobjects" => "Objet MIB",
-			"glpi_plugin_fusinvsnmp_miblabels" => "Label MIB"
-		);
-   } else {
-		return array ();
-   }
-}
+//function plugin_fusinvsnmp_getDropdown() {
+//	// Table => Name
+//	global $LANG;
+//	if (isset ($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"] == 1) {
+//		return array (
+//			"glpi_plugin_fusinvsnmp_snmpversions" => "SNMP version",
+//			"glpi_plugin_fusinvsnmp_miboids" => "OID MIB",
+//			"glpi_plugin_fusinvsnmp_mibobjects" => "Objet MIB",
+//			"glpi_plugin_fusinvsnmp_miblabels" => "Label MIB"
+//		);
+//   } else {
+//		return array ();
+//   }
+//}
 
 /* Cron */
 function cron_plugin_fusinvsnmp() {
@@ -983,7 +983,7 @@ function plugin_fusinvsnmp_needUpdate() {
 //function plugin_get_headings_fusinvsnmp($type,$id,$withtemplate) {
 function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 	global $LANG;
-	$configModules = new PluginFusinvsnmpConfigModules;
+	$config = new PluginFusioninventoryConfig;
 
 	$type = get_Class($item);
    switch ($type) {
@@ -995,7 +995,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 //				if ((PluginFusinvsnmpAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
 				$array = array ();
             //return array(
-            if (($configModules->isActivated('remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
+            if (($config->is_active('fusioninventory', 'remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
                $array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
             }
 				//}
@@ -1025,7 +1025,8 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) AND ($config->getValue("snmp") == "1")) {
+				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusinvsnmp']["title"][5];
@@ -1040,7 +1041,8 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if ((PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
+//				if ((PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
+				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
             $array[2] = $LANG['plugin_fusinvsnmp']["title"][5];
@@ -1066,12 +1068,12 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_fusinvsnmp($type) {
 
-   $configModules = new PluginFusinvsnmpConfigModules;
+   $config = new PluginFusinvsnmpConfig;
 
 	switch ($type) {
 		case COMPUTER_TYPE :
 			$array = array ();
-         if (($configModules->isActivated('remotehttpagent')) AND (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
+         if (($config->is_active('fusioninventory', 'remotehttpagent')) AND (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusinvsnmp_computerInfo";
          }
 			return $array;

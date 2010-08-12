@@ -57,10 +57,6 @@ if (isset($_POST['update'])) {
 			$config1 = new PluginFusioninventoryConfig;
 			break;
 
-      case 'configmodules' :
-         $config1 = new PluginFusioninventoryConfigModules;
-         break;
-
       case 'history' :
          $pficlf = new PluginFusinvsnmpConfigLogField();
          foreach ($_POST as $key=>$val) {
