@@ -65,6 +65,12 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd = new PluginFusionInventoryConstructDevice;
    $ptcd->generatecomments();
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_GET['exportall']) AND $_GET['exportall'] == '1') {
+   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd->exportall();
+} else if (isset($_GET['importall']) AND $_GET['importall'] == '1') {
+   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd->importall();
 }
 
 echo " | ";
@@ -81,6 +87,14 @@ echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>".$LANG['plugin_fusioninventory']["constructdevice"][2]."</a>";
 echo " | ";
 echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][4]."</a>";
+echo " | ";
+
+echo "<br/>";
+
+echo " | ";
+echo "<a href='".$_SERVER["PHP_SELF"]."?exportall=1'>Export</a>";
+echo " | ";
+echo "<a href='".$_SERVER["PHP_SELF"]."?importall=1'>Import</a>";
 echo " | ";
 
 searchForm(PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE,$_GET);

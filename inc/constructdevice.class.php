@@ -851,6 +851,25 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       echo $sxml->asXML();
       file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml", $sxml->asXML());
 
+      $xmlstr = "package FusionInventory::Agent::Task::NetDiscovery::Dico;
+
+use strict;
+use XML::Simple;
+
+
+sub loadDico {
+
+   my \$dico = ' ".$sxml->asXML()."';
+
+   my \$xmlDico = new XML::Simple;
+   return XMLin(\$dico);
+
+   1;
+}
+
+1;";
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dico.pm", $xmlstr);
+
    }
 
 
@@ -949,6 +968,91 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
          $DB->query($query_update);
       }      
    }
+
+
+   function exportall() {
+      global $DB;
+
+
+		plugin_fusioninventory_checkRight("snmp_models","r");
+		$query = "SELECT *
+                FROM `glpi_dropdown_plugin_fusioninventory_mib_oid`";
+
+      $xml = "<xml>\n";
+      $xml .= "  <glpi_dropdown_plugin_fusioninventory_mib_oid>\n";
+		if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $xml .= "    <line>\n";
+            $xml .= "      <ID>".$data["ID"]."</ID>\n";
+            $xml .= "      <name><![CDATA[".$data["name"]."]]></name>\n";
+            $xml .= "      <comments><![CDATA[".$data["comments"]."]]></comments>\n";
+            $xml .= "    </line>\n";
+			}
+		}
+		$xml .= "  </glpi_dropdown_plugin_fusioninventory_mib_oid>\n";
+      $xml .= "  <glpi_plugin_fusioninventory_construct_device>\n";
+      $query = "SELECT *
+                FROM `glpi_plugin_fusioninventory_construct_device`";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $xml .= "    <line>\n";
+            $xml .= "      <ID>".$data["ID"]."</ID>\n";
+            $xml .= "      <FK_glpi_enterprise><![CDATA[".$data["FK_glpi_enterprise"]."]]></FK_glpi_enterprise>\n";
+            $xml .= "      <device><![CDATA[".$data["device"]."]]></device>\n";
+            $xml .= "      <firmware><![CDATA[".$data["firmware"]."]]></firmware>\n";
+            $xml .= "      <sysdescr><![CDATA[".$data["sysdescr"]."]]></sysdescr>\n";
+            $xml .= "      <type><![CDATA[".$data["type"]."]]></type>\n";
+            $xml .= "      <snmpmodel_id><![CDATA[".$data["snmpmodel_id"]."]]></snmpmodel_id>\n";
+            $xml .= "    </line>\n";
+			}
+		}
+      $xml .= "  </glpi_plugin_fusioninventory_construct_device>\n";
+      $xml .= "  <glpi_plugin_fusioninventory_construct_mibs>\n";
+      $query = "SELECT *
+                FROM `glpi_plugin_fusioninventory_construct_mibs`";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $xml .= "    <line>\n";
+            $xml .= "      <ID>".$data["ID"]."</ID>\n";
+            $xml .= "      <mib_oid_id><![CDATA[".$data["mib_oid_id"]."]]></mib_oid_id>\n";
+            $xml .= "      <construct_device_id><![CDATA[".$data["construct_device_id"]."]]></construct_device_id>\n";
+            $xml .= "      <mapping_name><![CDATA[".$data["mapping_name"]."]]></mapping_name>\n";
+            $xml .= "      <oid_port_counter><![CDATA[".$data["oid_port_counter"]."]]></oid_port_counter>\n";
+            $xml .= "      <oid_port_dyn><![CDATA[".$data["oid_port_dyn"]."]]></oid_port_dyn>\n";
+            $xml .= "      <mapping_type><![CDATA[".$data["mapping_type"]."]]></mapping_type>\n";
+            $xml .= "      <vlan><![CDATA[".$data["vlan"]."]]></vlan>\n";
+            $xml .= "    </line>\n";
+			}
+		}
+      $xml .= "  </glpi_plugin_fusioninventory_construct_mibs>\n";
+      $xml .= "  <glpi_plugin_fusioninventory_construct_walks>\n";
+      $query = "SELECT *
+                FROM `glpi_plugin_fusioninventory_construct_walks`";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $xml .= "    <line>\n";
+            $xml .= "      <ID>".$data["ID"]."</ID>\n";
+            $xml .= "      <construct_device_id><![CDATA[".$data["construct_device_id"]."]]></construct_device_id>\n";
+            $xml .= "      <log><![CDATA[".$data["log"]."]]></log>\n";
+            $xml .= "    </line>\n";
+			}
+		}
+      $xml .= "  </glpi_plugin_fusioninventory_construct_walks>\n";
+
+		$xml .= "</xml>\n";
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/exportall.xml", $xml);
+   }
+
+
+   function importall() {
+      global $DB;
+
+      
+
+
+
+   }
+
 }
 
 ?>
