@@ -1,0 +1,17 @@
+ +----------------------------------------------------------------------+
+ | FusionLibServer provides a solution to process data from both OCS    |
+ | agents and Fusion agents.                                            |
+ | Users can easily retrieve data from these agents with hooks system.  |
+ +----------------------------------------------------------------------+
+
+- You have to correctly complete:
+user/configs.ini,
+user/applications/{yourApplicationName}/FusInvHooks.class.php
+
+- Give enough permission to www-data (apache) to write and read all folders in the library.
+
+- Launch /path/to/FusionLib/Classes/Storage/Inventory/SourceDataFilter/FilesToTreeFolder.php script
+
+- URI Server: /path/to/FusionLib/user/main.php
+
+-Ready to use application as an example : /path/to/FusionLib/user/applications/MyWebSite
