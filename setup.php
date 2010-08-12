@@ -163,8 +163,8 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
 
 			$report_list = array();
-         $report_list["report/plugin_fusioninventory.switch_ports.history.php"] = "Historique des ports de switchs";
-         $report_list["report/plugin_fusioninventory.ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
+         $report_list["report/plugin_fusioninventory.switch_ports.history.php"] = $LANG['plugin_fusioninventory']["menu"][5];
+         $report_list["report/plugin_fusioninventory.ports_date_connections.php"] = $LANG['plugin_fusioninventory']["menu"][6];
 			$PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
 
 			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r")) {
