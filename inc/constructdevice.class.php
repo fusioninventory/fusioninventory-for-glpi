@@ -296,7 +296,16 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       if ($result = $DB->query($query)) {
 			if ($data = $DB->fetch_array($result)) {
             $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
-            echo $data['log']."<br/>";
+            echo "<table class='tab_cadre' width='950'>";
+            echo "<tr>";
+            echo "<th>Filename : ";
+            echo $data['log'];
+            echo "&nbsp;<input type=\"button\" name=\"deletewalk\" class=\"submit\" value=\"" . $LANG['buttons'][6] . "\" onclick=\"self.location.href='".$_SERVER["PHP_SELF"]."?deletewalk=".$ID."'\" >";
+            echo "</th>";
+            echo "</tr>";
+            echo "</table>";
+            echo "<br/>";
+
             $query_oid = "SELECT * FROM glpi_dropdown_plugin_fusioninventory_mib_oid";
             $result_oid = $DB->query($query_oid);
             while ($fields_oid = $DB->fetch_array($result_oid)) {
@@ -610,7 +619,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                            $count_mib_model++;
                            if ($existent != '-1') {
                               if (isset($a_mib[$data_mib_model['FK_mib_oid']]['mapping_type'])) {
-                                 // Oid Existe, on vérifie si tous les paramètres sont pareils
+                                 // Oid Existe, on vÃ©rifie si tous les paramÃ¨tres sont pareils
                                  if ($a_mib[$data_mib_model['FK_mib_oid']]['mapping_type'] == $data_mib_model['mapping_type'] AND
                                     $a_mib[$data_mib_model['FK_mib_oid']]['mapping_name'] == $data_mib_model['mapping_name'] AND
                                     $a_mib[$data_mib_model['FK_mib_oid']]['oid_port_counter'] == $data_mib_model['oid_port_counter'] AND

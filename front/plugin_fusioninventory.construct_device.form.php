@@ -111,7 +111,15 @@ NULL , '".$_POST['ID']."', '".$md5."'
 } else if (isset ($_POST["delete"])) {
 	$ptcd->delete($_POST);
 	glpi_header("plugin_fusioninventory.construct_device.php");
+} else if (isset($_GET['deletewalk'])) {
+   $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_construct_walks`
+      WHERE `construct_device_id`='".$_GET['deletewalk']."' ";
+   $DB->query($query_delete);
+   glpi_header("plugin_fusioninventory.construct_device.form.php?ID=".$_GET['deletewalk']);
 }
+
+
+
 
 $ID = "";
 if (isset($_GET["ID"])) {
