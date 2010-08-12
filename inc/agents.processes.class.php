@@ -104,10 +104,6 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
       echo "</th>";
 
       echo "<th>";
-      echo $LANG['plugin_fusioninventory']["processes"][28];
-      echo "</th>";
-
-      echo "<th>";
       echo $LANG['plugin_fusioninventory']["processes"][29];
       echo "</th>";
 
@@ -141,10 +137,6 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
 
       echo "<th>";
       echo $LANG['plugin_fusioninventory']["processes"][10];
-      echo "</th>";
-
-      echo "<th>";
-      echo $LANG['plugin_fusioninventory']["processes"][28];
       echo "</th>";
 
       echo "<th>";
@@ -268,10 +260,6 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
             echo "</td>";
 
             echo "<td>";
-            echo $data['discovery_core'];
-            echo "</td>";
-
-            echo "<td>";
             echo $data['discovery_threads'];
             echo "</td>";
 
@@ -330,10 +318,6 @@ class PluginFusionInventoryAgentsProcesses extends CommonDBTM {
             } else {
                echo '-';
             }
-            echo "</td>";
-
-            echo "<td>";
-            echo $data['query_core'];
             echo "</td>";
 
             echo "<td>";
