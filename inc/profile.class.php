@@ -118,9 +118,10 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    static function changeprofile($p_plugins_id) {
       $moduleName = PluginFusioninventoryModule::getModuleName($p_plugins_id);
       if ($moduleName != false) {
+         if (isset($_SESSION['glpiactiveprofile']['id'])) {
             $pfp=new PluginFusioninventoryProfile;
-            $a_rights = $pfp->find("`profiles_id` = ".$_SESSION['glpiactiveprofile']['id'].
-                                   " AND `plugins_id`='".$p_plugins_id."'");
+            $a_rights = $pfp->find("`profiles_id` = '".$_SESSION['glpiactiveprofile']['id'].
+                                   "' AND `plugins_id`='".$p_plugins_id."'");
             $i = 0;
             foreach ($a_rights as $id=>$datas) {
                $i++;
@@ -128,6 +129,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             }
             if ($i == '0') {
                unset($_SESSION["glpi_plugin_".$moduleName."_profile"]);
+            }
          }
       }
    }
