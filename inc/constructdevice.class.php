@@ -845,6 +845,57 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                }
 
             }
+            if (preg_match('/ $/', $data['sysdescr'])) {
+               $data['sysdescr'] = preg_replace("/ $/", "", $data['sysdescr']);
+
+               $sxml_device = $sxml->addChild('DEVICE');
+               $sxml_device->addChild('SYSDESCR', "<![CDATA[".$data['sysdescr']."]]>");
+               $sxml_device->addChild('MANUFACTURER', $data['FK_glpi_enterprise']); //dropdown
+               $sxml_device->addChild('TYPE', $data['type']);
+
+               if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
+                  //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
+
+                  $query_modelkey = "SELECT * FROM `glpi_plugin_fusioninventory_model_infos`
+                     WHERE ID='".$data['snmpmodel_id']."'
+                        LIMIT 1";
+                  $result_modelkey=$DB->query($query_modelkey);
+                  if ($DB->numrows($result_modelkey)) {
+                     $line = mysql_fetch_assoc($result_modelkey);
+                     $sxml_device->addChild('MODELSNMP', $line['discovery_key']);
+                  }
+
+                  $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
+                     WHERE `construct_device_id`='".$data['ID']."'
+                        AND `mapping_name`='serial'
+                     LIMIT 1";
+                  $result_serial=$DB->query($query_serial);
+                  if ($DB->numrows($result_serial)) {
+                     $line = mysql_fetch_assoc($result_serial);
+                     $sxml_device->addChild('SERIAL', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                                                  $line['mib_oid_id']));
+                  }
+
+                  $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
+                     WHERE `construct_device_id`='".$data['ID']."'
+                        AND ((`mapping_name`='macaddr' AND mapping_type='2')
+                              OR ( `mapping_name`='ifPhysAddress' AND mapping_type='3')
+                              OR ( `mapping_name`='ifPhysAddress' AND mapping_type='1'))
+                     LIMIT 1";
+                  $result_serial=$DB->query($query_serial);
+                  if ($DB->numrows($result_serial)) {
+                     $line = mysql_fetch_assoc($result_serial);
+                     if ($line['mapping_name'] == "macaddr") {
+                        $sxml_device->addChild('MAC', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                                                      $line['mib_oid_id']));
+                     } else {
+                        $sxml_device->addChild('MACDYN', getDropdownName('glpi_dropdown_plugin_fusioninventory_mib_oid',
+                                                      $line['mib_oid_id']));
+                     }
+                  }
+               }
+
+            }
          }
       }
       $sxml = $this->formatXmlString($sxml);
