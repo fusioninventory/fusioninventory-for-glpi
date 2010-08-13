@@ -585,7 +585,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 				case "glpi_plugin_fusinvsnmp_configsnmpsecurities.name" :
 					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
 					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuth($data["id"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsnmpsecurity.form.php?id=" . $FK_auth_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_configsnmpsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -658,7 +658,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 				case "glpi_plugin_fusinvsnmp_configsnmpsecurities.id" :
 					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
 					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuth($data["id"],$type);
-					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsnmpsecurity.form.php?id=" . $FK_auth_DB . "\">";
+					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_configsnmpsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
 					return "<center>".$out."</center>";
@@ -712,7 +712,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 			break;
 
 
-		// * Authentification List (plugins/fusinvsnmp/front/configsnmpsecurity.php)
+		// * Authentification List (plugins/fusinvsnmp/front/configsecurity.php)
 		case 'PluginFusinvsnmpConfigSecurity' :
 			switch ($table.'.'.$field) {
 

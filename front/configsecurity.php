@@ -57,7 +57,7 @@ if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
 } else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
 	// Forms for DB
 	
-	$_GET['target']="configsnmpsecurity.php";
+	$_GET['target']="configsecurity.php";
 	
 Search::show('PluginFusinvsnmpConfigSecurity');
 //	searchForm('PluginFusinvsnmpConfigSecurity',$_GET);

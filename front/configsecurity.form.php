@@ -55,7 +55,7 @@ if (isset ($_POST["add"])) {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
    }
 	
-	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='configsnmpsecurity.php?id=".$new_ID."'>".$_POST["name"]."</a>";
+	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='configsecurity.php?id=".$new_ID."'>".$_POST["name"]."</a>";
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");

@@ -674,7 +674,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 			}
 		}
 		if (isset($snmp_auth_name)) {
-			return "<a href='".GLPI_ROOT . "/plugins/fusioninventory/front/configsnmpsecurity.php'>".
+			return "<a href='".GLPI_ROOT . "/plugins/fusioninventory/front/configsecurity.php'>".
                 $snmp_auth_name."</a>";
       }
 	}
