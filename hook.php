@@ -80,53 +80,53 @@ function plugin_fusinvsnmp_getSearchOption() {
 	$sopt['PluginFusinvsnmpModel'][8]['linkfield'] = 'comment';
 	$sopt['PluginFusinvsnmpModel'][8]['name'] = $LANG['common'][25];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity']['common'] = $LANG['plugin_fusinvsnmp']["profile"][22];
+	$sopt['PluginFusinvsnmpConfigSecurity']['common'] = $LANG['plugin_fusinvsnmp']["profile"][22];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][1]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][1]['field'] = 'name';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][1]['linkfield'] = 'name';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][1]['name'] = $LANG["common"][16];
-  $sopt['PluginFusinvsnmpConfigSNMPSecurity'][1]['datatype']='itemlink';
+	$sopt['PluginFusinvsnmpConfigSecurity'][1]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
+	$sopt['PluginFusinvsnmpConfigSecurity'][1]['field'] = 'name';
+	$sopt['PluginFusinvsnmpConfigSecurity'][1]['linkfield'] = 'name';
+	$sopt['PluginFusinvsnmpConfigSecurity'][1]['name'] = $LANG["common"][16];
+  $sopt['PluginFusinvsnmpConfigSecurity'][1]['datatype']='itemlink';
   
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][30]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][30]['field'] = 'id';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][30]['linkfield'] = 'id';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][30]['name'] = $LANG["common"][2];
+	$sopt['PluginFusinvsnmpConfigSecurity'][30]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
+	$sopt['PluginFusinvsnmpConfigSecurity'][30]['field'] = 'id';
+	$sopt['PluginFusinvsnmpConfigSecurity'][30]['linkfield'] = 'id';
+	$sopt['PluginFusinvsnmpConfigSecurity'][30]['name'] = $LANG["common"][2];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][3]['table'] = 'glpi_plugin_fusinvsnmp_snmpversions';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][3]['field'] = 'name';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][3]['linkfield'] = 'plugin_fusinvsnmp_snmpversions_id';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][3]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][2];
+	$sopt['PluginFusinvsnmpConfigSecurity'][3]['table'] = 'glpi_plugin_fusinvsnmp_snmpversions';
+	$sopt['PluginFusinvsnmpConfigSecurity'][3]['field'] = 'name';
+	$sopt['PluginFusinvsnmpConfigSecurity'][3]['linkfield'] = 'plugin_fusinvsnmp_snmpversions_id';
+	$sopt['PluginFusinvsnmpConfigSecurity'][3]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][2];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][4]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][4]['field'] = 'community';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][4]['linkfield'] = 'community';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][4]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][1];
+	$sopt['PluginFusinvsnmpConfigSecurity'][4]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
+	$sopt['PluginFusinvsnmpConfigSecurity'][4]['field'] = 'community';
+	$sopt['PluginFusinvsnmpConfigSecurity'][4]['linkfield'] = 'community';
+	$sopt['PluginFusinvsnmpConfigSecurity'][4]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][1];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][5]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][5]['field'] = 'username';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][5]['linkfield'] = 'username';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][5]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][2];
+	$sopt['PluginFusinvsnmpConfigSecurity'][5]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
+	$sopt['PluginFusinvsnmpConfigSecurity'][5]['field'] = 'username';
+	$sopt['PluginFusinvsnmpConfigSecurity'][5]['linkfield'] = 'username';
+	$sopt['PluginFusinvsnmpConfigSecurity'][5]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][2];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][7]['table'] = 'glpi_plugin_fusinvsnmp_snmpprotocolauths';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][7]['field'] = 'name';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][7]['linkfield'] = 'authentication';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][7]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][4];
+	$sopt['PluginFusinvsnmpConfigSecurity'][7]['table'] = 'glpi_plugin_fusinvsnmp_snmpprotocolauths';
+	$sopt['PluginFusinvsnmpConfigSecurity'][7]['field'] = 'name';
+	$sopt['PluginFusinvsnmpConfigSecurity'][7]['linkfield'] = 'authentication';
+	$sopt['PluginFusinvsnmpConfigSecurity'][7]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][4];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][8]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][8]['field'] = 'auth_passphrase';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][8]['linkfield'] = 'auth_passphrase';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][8]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][5];
+	$sopt['PluginFusinvsnmpConfigSecurity'][8]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
+	$sopt['PluginFusinvsnmpConfigSecurity'][8]['field'] = 'auth_passphrase';
+	$sopt['PluginFusinvsnmpConfigSecurity'][8]['linkfield'] = 'auth_passphrase';
+	$sopt['PluginFusinvsnmpConfigSecurity'][8]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][5];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][9]['table'] = 'glpi_plugin_fusinvsnmp_snmpprotocolprivs';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][9]['field'] = 'name';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][9]['linkfield'] = 'encryption';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][9]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][6];
+	$sopt['PluginFusinvsnmpConfigSecurity'][9]['table'] = 'glpi_plugin_fusinvsnmp_snmpprotocolprivs';
+	$sopt['PluginFusinvsnmpConfigSecurity'][9]['field'] = 'name';
+	$sopt['PluginFusinvsnmpConfigSecurity'][9]['linkfield'] = 'encryption';
+	$sopt['PluginFusinvsnmpConfigSecurity'][9]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][6];
 
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][10]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][10]['field'] = 'priv_passphrase';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][10]['linkfield'] = 'priv_passphrase';
-	$sopt['PluginFusinvsnmpConfigSNMPSecurity'][10]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][7];
+	$sopt['PluginFusinvsnmpConfigSecurity'][10]['table'] = 'glpi_plugin_fusinvsnmp_configsnmpsecurities';
+	$sopt['PluginFusinvsnmpConfigSecurity'][10]['field'] = 'priv_passphrase';
+	$sopt['PluginFusinvsnmpConfigSecurity'][10]['linkfield'] = 'priv_passphrase';
+	$sopt['PluginFusinvsnmpConfigSecurity'][10]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][7];
 
 	$sopt['PluginFusinvsnmpUnknownDevice']['common'] = $LANG['plugin_fusinvsnmp']["menu"][4];
 
@@ -583,7 +583,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusinvsnmp_configsnmpsecurities.name" :
-					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSNMPSecurity;
+					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
 					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuth($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsnmpsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_configsnmpsecurities", $FK_auth_DB, 0);
@@ -656,7 +656,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusinvsnmp_configsnmpsecurities.id" :
-					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSNMPSecurity;
+					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
 					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuth($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsnmpsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_configsnmpsecurities", $FK_auth_DB, 0);
@@ -713,7 +713,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 
 
 		// * Authentification List (plugins/fusinvsnmp/front/configsnmpsecurity.php)
-		case 'PluginFusinvsnmpConfigSNMPSecurity' :
+		case 'PluginFusinvsnmpConfigSecurity' :
 			switch ($table.'.'.$field) {
 
 				// ** Hidden auth passphrase (SNMP v3)
@@ -1354,7 +1354,7 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$link
 	switch ($table.".".$field) {
 
 		case 'glpi_plugin_fusinvsnmp_configsnmpsecurities.name':
-			Dropdown::show("PluginFusinvsnmpConfigSNMPSecurity",
+			Dropdown::show("PluginFusinvsnmpConfigSecurity",
                         array('name' => $linkfield));
 			return true;
 			break;
@@ -1424,7 +1424,7 @@ function plugin_fusinvsnmp_MassiveActionsFieldsDisplay($type,$table,$field,$link
 			break;
 
 		case 'glpi_plugin_fusinvsnmp_discovery.plugin_fusinvsnmp_snmpauths_id' :
-			$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSNMPSecurity;
+			$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
 			echo $plugin_fusinvsnmp_snmp->selectbox();
 			return true;
 			break;

@@ -142,7 +142,7 @@ function pluginFusinvsnmpUninstall() {
    }
 
    $query="DELETE FROM `glpi_displaypreferences`
-           WHERE `itemtype`='PluginFusinvsnmpConfigSnmpSecurity'
+           WHERE `itemtype`='PluginFusinvsnmpConfigSecurity'
                  OR `itemtype`='PluginFusinvsnmpUnknownDevice'
                  OR `itemtype`='PluginFusinvsnmpAgent'
                  OR `itemtype`='PluginFusinvsnmpIPRange'
