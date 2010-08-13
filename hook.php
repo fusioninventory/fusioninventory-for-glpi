@@ -506,7 +506,7 @@ function plugin_fusinvsnmp_getSearchOption() {
 
 
 function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
-	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LANG, $SEARCH_OPTION, $FUSIONINVENTORY_MAPPING;
+	global $CFG_GLPI, $DB, $INFOFORM_PAGES, $LANG, $SEARCH_OPTION;
 
 	$table=$SEARCH_OPTION[$type][$id]["table"];
 	$field=$SEARCH_OPTION[$type][$id]["field"];
@@ -887,7 +887,13 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 
 				// ** Display GLPI field of device
 				case "glpi_plugin_fusinvsnmp_networkportlogs.field" :
-               $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["ITEM_$num"]]['name'];
+//               $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["ITEM_$num"]]['name'];
+               $out = '';
+               $map = new PluginFusioninventoryMapping;
+               $mapfields = $map->get('NetworkEquipment', $data["ITEM_$num"]);
+               if ($mapfields != false) {
+                  $out = $LANG['plugin_fusioninventory']["mapping"][$mapfields["locale"]];
+               }
                return $out;
 					break;
 
@@ -2203,8 +2209,15 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 						$ADD=" OR $table.$field IS NOT NULL ";
 					}
 					if (!empty($val)) {
-                  include (GLPI_ROOT . "/plugins/fusinvsnmp/inc_constants/snmp.mapping.constant.php");
-						$val = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$val]['field'];
+//                  include (GLPI_ROOT . "/plugins/fusinvsnmp/inc_constants/snmp.mapping.constant.php");
+//						$val = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$val]['field'];
+                  $map = new PluginFusioninventoryMapping;
+                  $mapfields = $map->get('NetworkEquipment', $val);
+                  if ($mapfields != false) {
+                     $val = $mapfields['tablefields'];
+                  } else {
+                     $val = '';
+                  }
                }
 					return $link." ($table.$field = '".addslashes($val)."' $ADD ) ";
 					break;

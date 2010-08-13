@@ -346,11 +346,9 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    }
    
 	function showFormPrinter($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING;
+		global $DB,$CFG_GLPI,$LANG;
 
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printers","r");
-
-		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
 		$this->id = $id;
 
@@ -531,11 +529,17 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 		echo "</tr>";
 
 		asort($mapping_name);
+      $mapping = new PluginFusioninventoryMapping();
 		foreach ($mapping_name as $cartridge_name=>$val) {
 			$state = $plugin_fusioninventory_printer->cartridges_state($id, $cartridge_name);
 			echo "<tr class='tab_bg_1'>";
 			echo "<td align='center'>";
-			echo $FUSIONINVENTORY_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
+//			echo $FUSIONINVENTORY_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
+         $mapfields = $mapping->get('Printer', $cartridge_name);
+         if ($mapfields != false) {
+//            echo $FUSIONINVENTORY_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
+            echo $mapfields['shortlocale'];
+         }
 			echo " : ";
 			echo "</td>";
 			echo "<td align='center'>";
@@ -555,9 +559,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
     * Show printer graph form
     **/
    function showFormPrinter_graph($id, $options=array()) {
-      global $FUSIONINVENTORY_MAPPING, $LANG, $DB;
-
-      include_once(GLPI_ROOT."/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
+      global $LANG, $DB;
 
       $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $printersComp = array();
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
@@ -634,20 +636,37 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
       $this->showTabs($options);
       $this->showFormHeader($options);
-
+      
+      $mapping = new PluginFusioninventoryMapping();
+      $mapfields = $mapping->find("`itemtype`='Printer'");
+      foreach ($maps as $mapfields) {
+         $pagecounters[$mapfields['name']] = $LANG['plugin_fusioninventory']["mapping"][$mapfields["shortlocale"]];
+      }
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][30]."&nbsp;:</td><td class='left' colspan='2'>";
-      $elementsField=array('pages_total'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'],
-                      'pages_n_b'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'],
-                      'pages_color'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['shortname'],
-                      'pages_recto_verso'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['shortname'],
-                      'scanned'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'],
-                      'pages_total_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['shortname'],
-                      'pages_n_b_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['shortname'],
-                      'pages_color_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['shortname'],
-                      'pages_total_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['shortname'],
-                      'pages_n_b_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'],
-                      'pages_color_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'],
-                      'pages_total_fax'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname']);
+//      $elementsField=array('pages_total'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'],
+//                      'pages_n_b'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'],
+//                      'pages_color'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['shortname'],
+//                      'pages_recto_verso'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['shortname'],
+//                      'scanned'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'],
+//                      'pages_total_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['shortname'],
+//                      'pages_n_b_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['shortname'],
+//                      'pages_color_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['shortname'],
+//                      'pages_total_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['shortname'],
+//                      'pages_n_b_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'],
+//                      'pages_color_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'],
+//                      'pages_total_fax'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname']);
+      $elementsField=array('pages_total'=>$pagecounters['pagecountertotalpages'],
+                      'pages_n_b'=>$pagecounters['pagecounterblackpages'],
+                      'pages_color'=>$pagecounters['pagecountercolorpages'],
+                      'pages_recto_verso'=>$pagecounters['pagecounterrectoversopages'],
+                      'scanned'=>$pagecounters['pagecounterscannedpages'],
+                      'pages_total_print'=>$pagecounters['pagecountertotalpages_print'],
+                      'pages_n_b_print'=>$pagecounters['pagecounterblackpages_print'],
+                      'pages_color_print'=>$pagecounters['pagecountercolorpages_print'],
+                      'pages_total_copy'=>$pagecounters['pagecountertotalpages_copy'],
+                      'pages_n_b_copy'=>$pagecounters['pagecounterblackpages_copy'],
+                      'pages_color_copy'=>$pagecounters['pagecountercolorpages_copy'],
+                      'pages_total_fax'=>$pagecounters['pagecountertotalpages_fax']);
       Dropdown::showFromArray('graph_graphField', $elementsField,
                               array('value'=>$graphField));
       echo "</td></tr>\n";
