@@ -55,7 +55,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
     **/
    function addQuery($pxml, $task=0) {
       $ptmi    = new PluginFusioninventorySNMPModel;
-      $ptsnmpa = new PluginFusioninventoryConfigSNMPSecurity;
+      $ptsnmpa = new PluginFusinvsnmpConfigSecurity;
       $pta     = new PluginFusioninventoryAgent;
       $ptap    = new PluginFusioninventoryAgentProcess;
       $ptrip   = new PluginFusioninventoryIPRange;

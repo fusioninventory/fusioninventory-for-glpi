@@ -56,7 +56,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     *@return nothing
     **/
    function addDiscovery($pxml, $task=0) {
-      $ptsnmpa = new PluginFusioninventoryConfigSNMPSecurity;
+      $ptsnmpa = new PluginFusinvsnmpConfigSecurity;
       $pta     = new PluginFusioninventoryAgent;
       $ptap    = new PluginFusioninventoryAgentProcess;
       $ptrip   = new PluginFusioninventoryIPRange;
