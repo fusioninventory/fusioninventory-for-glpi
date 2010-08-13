@@ -1059,12 +1059,11 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 }
 
 // Define headings actions added by the plugin	 
-function plugin_headings_actions_fusinvsnmp($type) {
-
+function plugin_headings_actions_fusinvsnmp($item) {
    $config = new PluginFusinvsnmpConfig;
 
-	switch ($type) {
-		case COMPUTER_TYPE :
+   switch (get_class($item)) {
+		case 'Computer' :
 			$array = array ();
          if (($config->is_active('fusioninventory', 'remotehttpagent')) AND (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
              $array[1] = "plugin_headings_fusinvsnmp_computerInfo";
@@ -1072,10 +1071,10 @@ function plugin_headings_actions_fusinvsnmp($type) {
 			return $array;
 			break;
 
-		case MONITOR_TYPE :
+		case 'Monitor' :
 			break;
 
-      case PRINTER_TYPE :
+      case 'Printer' :
 			$array = array ();
 			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_printerInfo";
@@ -1083,14 +1082,14 @@ function plugin_headings_actions_fusinvsnmp($type) {
 			return $array;
 			break;
 
-		case NETWORKING_TYPE :
+		case 'NetworkEquipment' :
 			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_networkingInfo";
 			}
 			return $array;
 			break;
 
-		case PROFILE_TYPE :
+		case 'Profile' :
 			return array(
 				1 => "plugin_headings_fusinvsnmp",
 				);
