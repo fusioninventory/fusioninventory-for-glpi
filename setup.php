@@ -74,13 +74,13 @@ function plugin_init_fusinvsnmp() {
                                                                 'submitbutton'=>'plugin_fusinvsnmp_config_set',
                                                                 'submitmethod'=>'putForm');
    }
-   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-                       [$LANG['plugin_fusinvsnmp']["title"][5]])) {
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-               [$LANG['plugin_fusinvsnmp']["title"][5]] = array('class'=>'PluginFusinvsnmpConfigLogField',
-                                                                'submitbutton'=>'plugin_fusinvsnmp_configlogfield_set',
-                                                                'submitmethod'=>'putForm');
-   }
+//   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
+//                       [$LANG['plugin_fusinvsnmp']["title"][5]])) {
+//      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
+//               [$LANG['plugin_fusinvsnmp']["title"][5]] = array('class'=>'PluginFusinvsnmpConfigLogField',
+//                                                                'submitbutton'=>'plugin_fusinvsnmp_configlogfield_set',
+//                                                                'submitmethod'=>'putForm');
+//   }
 
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);

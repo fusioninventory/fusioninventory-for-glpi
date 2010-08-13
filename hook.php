@@ -999,7 +999,6 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
                $array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
             }
 				//}
-            $array[2] = $LANG['plugin_fusinvsnmp']["title"][5];
 
             return $array;
 //				}
@@ -1011,11 +1010,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 				return array();
 			// Non template case
          } else {
-//				if ((PluginFusinvsnmpAuth::haveRight("snmp_networking", "r")) AND ($configModules->getValue("snmp") == "1")) {
-					return array(
-						1 => $LANG['plugin_fusinvsnmp']["title"][5]
-					);
-//				}
+            return array();
 			}
 			break;
 
@@ -1029,7 +1024,6 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
-            $array[2] = $LANG['plugin_fusinvsnmp']["title"][5];
             return $array;
 			}
 			break;
@@ -1045,7 +1039,6 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
-            $array[2] = $LANG['plugin_fusinvsnmp']["title"][5];
             return $array;
 			}
 			break;
