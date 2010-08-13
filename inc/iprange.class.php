@@ -248,7 +248,6 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          if (strstr($num, "ip_")) {
             if (($value>255) OR (!is_numeric($value)) OR strstr($value, ".")) {
                $count++;
-               print $num;
                $a_input[$num] = "<font color='#ff0000'>".$a_input[$num]."</font>";
             }
          }
@@ -257,11 +256,20 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       if ($count == '0') {
          return true;
       } else {
-         addMessageAfterRedirect("<font color='#ff0000'>IP incorrecte</font><br/>".
-            $LANG['plugin_fusioninventory']["iprange"][0]." : ".$a_input['ip_start0'].".".$a_input['ip_start1'].".".$a_input['ip_start2'].".".$a_input['ip_start3']."<br/>".
-            $LANG['plugin_fusioninventory']["iprange"][1]." : ".$a_input['ip_end0'].".".$a_input['ip_end1'].".".$a_input['ip_end2'].".".$a_input['ip_end3']);
+         addMessageAfterRedirect("<font color='#ff0000'>".$LANG['plugin_fusinvsnmp']["iprange"][7].
+            "</font><br/>".
+            $LANG['plugin_fusinvsnmp']["iprange"][0]." : ".
+            $a_input['ip_start0'].".".$a_input['ip_start1'].".".
+            $a_input['ip_start2'].".".$a_input['ip_start3']."<br/>".
+            $LANG['plugin_fusinvsnmp']["iprange"][1]." : ".
+            $a_input['ip_end0'].".".$a_input['ip_end1'].".".
+            $a_input['ip_end2'].".".$a_input['ip_end3']);
          return false;
       }
+   }
+
+   function canView() {
+      return true;
    }
 }
 
