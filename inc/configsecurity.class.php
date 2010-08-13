@@ -55,6 +55,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 			$this->getEmpty();	
       }
 		$this->showTabs($options);
+      $options['colspan']=1;
       $this->showFormHeader($options);
 //		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
