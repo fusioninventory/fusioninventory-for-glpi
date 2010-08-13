@@ -578,27 +578,33 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             }
          }
       }
-      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-      echo "<tr class='tab_bg_1 center'>";
-      echo "<td>";
-		echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-      echo "&nbsp;<input type='submit' name='mib' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
+      if (!empty($ID)) {
+         echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+         echo "&nbsp;<input type='submit' name='mib' value=\"" . $LANG["buttons"][7] . "\" class='submit' >";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+      }
       echo "</form><br/>";
 
-      echo "<form method='post' name='' id=''  action='".$target."' enctype=\"multipart/form-data\">";
-      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-      echo "<tr class='tab_bg_1 center'>";
-      echo "<td>";
-		echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
-      echo "<input type='file' name='walk'/>";
-      echo "&nbsp;<input type='submit' name='addWalk' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-      echo "</form></div>";
+      if (!empty($ID)) {
+         echo "<form method='post' name='' id=''  action='".$target."' enctype=\"multipart/form-data\">";
+         echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<td>";
+         echo "<input type='hidden' name='ID' value='" . $ID . "'/>";
+         echo "<input type='file' name='walk'/>";
+         echo "&nbsp;<input type='submit' name='addWalk' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+         echo "</form>";
+      }
+      echo "</div>";
+
    }
 
    
@@ -954,7 +960,7 @@ sub loadDico {
 }
 
 1;";
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/Dico.pm", $xmlstr);
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/Dico.pm", utf8_encode($xmlstr));
 
    }
 
