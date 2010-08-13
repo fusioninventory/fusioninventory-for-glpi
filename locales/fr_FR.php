@@ -41,7 +41,7 @@ $LANG['plugin_fusioninventory']["title"][1]="Informations SNMP";
 $LANG['plugin_fusioninventory']["title"][2]="Historique de connexion";
 $LANG['plugin_fusioninventory']["title"][3]="[Trk] Erreurs";
 $LANG['plugin_fusioninventory']["title"][4]="[Trk] Cron";
-$LANG['plugin_fusioninventory']["title"][5]="Verrous FusionInventory";
+$LANG['plugin_fusioninventory']["title"][5]="FusionInventory - Verrous";
 
 $LANG['plugin_fusioninventory']['config'][0] = "Fréquence des inventaires (en heures)";
 $LANG['plugin_fusioninventory']['config'][1] = "Modules";
