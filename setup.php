@@ -112,8 +112,8 @@ function plugin_init_fusinvsnmp() {
          $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = 'plugin_item_add_fusinvsnmp';
 
 			$report_list = array();
-         $report_list["report/switch_ports.history.php"] = "Historique des ports de switchs";
-         $report_list["report/ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
+         $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']["menu"][5];
+         $report_list["report/ports_date_connections.php"] = $LANG['plugin_fusinvsnmp']["menu"][6];
 			$PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
 //			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {
