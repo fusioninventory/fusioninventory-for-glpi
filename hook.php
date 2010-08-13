@@ -1212,8 +1212,8 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusinvsnmp_assign_auth" :
-//               if(PluginFusinvsnmpAuth::haveRight("authentication","w")) {
-               if(PluginFusiioninventoryProfile::haveRight("fusinvsnmp", "authentication","w")) {
+//               if(PluginFusinvsnmpAuth::haveRight("configsecurity","w")) {
+               if(PluginFusiioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
                   PluginFusinvsnmpSNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
@@ -1252,8 +1252,8 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
                break;
 
 				case "plugin_fusinvsnmp_assign_auth" :
-//               if(PluginFusinvsnmpAuth::haveRight("authentication","w")) {
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","w")) {
+//               if(PluginFusinvsnmpAuth::haveRight("configsecurity","w")) {
+               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
                   PluginFusinvsnmpSNMP::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }

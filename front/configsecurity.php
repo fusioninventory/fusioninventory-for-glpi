@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
 $config = new PluginFusioninventoryConfig;
 

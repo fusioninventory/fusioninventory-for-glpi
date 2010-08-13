@@ -78,7 +78,7 @@ function pluginFusinvsnmpInstall() {
       $a_rights['networking'] = 'w';
       $a_rights['printers'] = 'w';
       $a_rights['models'] = 'w';
-      $a_rights['authentication'] = 'w';
+      $a_rights['configsecurity'] = 'w';
       $a_rights['iprange'] = 'w';
       $a_rights['unknowndevices'] = 'w';
       $a_rights['configuration'] = 'w';

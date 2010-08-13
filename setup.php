@@ -116,9 +116,9 @@ function plugin_init_fusinvsnmp() {
          $report_list["report/ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
 			$PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
-//			if (haveRight("models", "r") || haveRight("authentication", "r")) {
+//			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {
 //			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models", "r")
-//             || PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication", "r")) {
+//             || PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
 ////				$PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
 //         }
 
@@ -128,7 +128,7 @@ function plugin_init_fusinvsnmp() {
 
 //         if (PluginFusinvsnmpAuth::haveRight("models","r")
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","r")
-            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agentsprocesses","r")
@@ -141,7 +141,7 @@ function plugin_init_fusinvsnmp() {
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['models'] = 'front/model.form.php?add=1';
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['models'] = 'front/model.php';
 //            }
-            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","w")) {
+            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['snmp_auth'] = 'front/configsecurity.form.php?add=1';
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['snmp_auth'] = 'front/configsecurity.php';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['configsecurity'] = '../fusinvsnmp/front/configsecurity.form.php?add=1';
@@ -205,8 +205,8 @@ function plugin_fusinvsnmp_check_config() {
 function plugin_fusinvsnmp_haveTypeRight($type,$right) {
 	switch ($type) {
 		case 'PluginFusinvsnmpConfigSecurity' :
-//			return PluginFusinvsnmpAuth::haveRight("authentication",$right);
-			return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication",$right);
+//			return PluginFusinvsnmpAuth::haveRight("configsecurity",$right);
+			return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity",$right);
 			break;
 	}
 	return true;

@@ -48,7 +48,7 @@ function plugin_fusinvsnmp_displayMenu() {
       $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/model.php";
    }
 
-   if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication", "r")) {
+   if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
       $a_menu[1]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][3];
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_authentification.png";
       $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/configsecurity.php";
