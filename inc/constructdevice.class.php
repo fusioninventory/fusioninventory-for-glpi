@@ -951,7 +951,7 @@ use XML::Simple;
 
 sub loadDico {
 
-   my \$dico = ' ".$sxml->asXML()."';
+   my \$dico = '".$sxml->asXML()."';
 
    my \$xmlDico = new XML::Simple;
    return XMLin(\$dico);
