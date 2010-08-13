@@ -35,27 +35,17 @@ class Plugins_Fusioninventory_Discovery_SnmpInventory extends PHPUnit_Framework_
 
    public function testQuerySwitchCisco() {
 
-      // Create agent
-      $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
-<REQUEST>
-  <DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>
-  <QUERY>PROLOG</QUERY>
-  <TOKEN>NTMXKUBJ</TOKEN>
-</REQUEST>';
+      $input_xml = $this->createAgent();
+      $processnumber = $this->createProcess($input_xml);
+
 
       $PluginFusionInventoryCommunication = new PluginFusionInventoryCommunication;
       $PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
       $PluginFusionInventoryUnknownDevice = new PluginFusionInventoryUnknownDevice;
+      $PluginFusionInventoryHistoryConnections = new PluginFusionInventoryHistoryConnections;
       $Netdevice = new Netdevice;
       $Netport = new Netport;
       $Netwire = new Netwire;
-
-      $code = $PluginFusionInventoryCommunication->importToken($input_xml);
-
-      // Create process
-      $a_input = array();
-      $pxml = @simplexml_load_string($input_xml);
-      $processnumber = $PluginFusionInventoryAgentsProcesses->addProcess($pxml);
 
       // ************************ Test 1 ************************ //
 
@@ -64,7 +54,7 @@ class Plugins_Fusioninventory_Discovery_SnmpInventory extends PHPUnit_Framework_
             </CONNECTION>';
       $input_xml = $this->xmlfile($processnumber, $mac);
       
-      $code = $PluginFusionInventoryCommunication->import($input_xml);
+      $PluginFusionInventoryCommunication->import($input_xml);
 
       // Search in unknown devices the hub
       //
@@ -113,17 +103,22 @@ class Plugins_Fusioninventory_Discovery_SnmpInventory extends PHPUnit_Framework_
             $this->assertEquals($count, 2 , 'Not have 2 right ports connected on the hub (have only '.$count.')');
             $this->assertEquals(count($a_mac), 0 , 'Have '.count($a_mac).' ports not connected on hub');
 
+            // Verification que le port du switch Fa0/1 a bien eu un historique sur sa connexion
+            $a_history = $PluginFusionInventoryHistoryConnections->find("`process_number`='".$processnumber."'
+               AND (`FK_port_source`='".$port_id."' OR `FK_port_destination`='".$port_id."')");
+            $this->assertEquals(count($a_history), 1 , 'Have '.count($a_history).' lines of history instead of 1');
          }
       }
 
 
       // ************************ Test 2 ************************ //
+      $processnumber = $this->createProcess($input_xml);
       $mac = '            <CONNECTION>
               <MAC>00:00:85:58:45:41</MAC>
             </CONNECTION>';
       $input_xml = $this->xmlfile($processnumber, $mac);
 
-      $code = $PluginFusionInventoryCommunication->import($input_xml);
+      $PluginFusionInventoryCommunication->import($input_xml);
 
       // Search if have same hub and if 00:00:85:58:45:42 has been deleted and
       // 00:00:85:58:45:41 added
@@ -165,11 +160,70 @@ class Plugins_Fusioninventory_Discovery_SnmpInventory extends PHPUnit_Framework_
             $this->assertEquals($count, 2 , '[Test2] Not have 2 right ports connected on the hub (have only '.$count.')');
             $this->assertEquals(count($a_mac), 0 , '[Test2] Have '.count($a_mac).' ports not connected on hub');
 
+            // Verification que le port du switch Fa0/1 n'a pas bouge
+            $a_history = $PluginFusionInventoryHistoryConnections->find("`process_number`='".$processnumber."'
+               AND (`FK_port_source`='".$port_id."' OR `FK_port_destination`='".$port_id."')");
+            $this->assertEquals(count($a_history), 0 , 'Have '.count($a_history).' lines of history instead of 0 (Because hub don\'t move)');
+
          }
 
+     // ************************ Test 3 (Remove a mac to have only one mac and must delete hub) ************************ //
+      $processnumber = $this->createProcess($input_xml);
+      $mac = '';
+      $input_xml = $this->xmlfile($processnumber, $mac);
 
+      $PluginFusionInventoryCommunication->import($input_xml);
+
+      $a_ports = $Netport->find("`device_type`='".NETWORKING_TYPE."'
+                         AND `on_device`='".$id."'
+                         AND `name`='Fa0/1'
+                         AND `ifmac`='00:24:51:2c:93:01'
+                         AND `logical_number`='10001' ");
+      foreach($a_ports as $port_id=>$port_data) {
+            // Verification si le port sur lequel il est connecte est un port Link
+            $port_link_hub = $Netwire->getOppositeContact($port_id);
+            $Netport->getFromDB($port_link_hub);
+            $this->assertNotEquals($Netport->fields['name'], 'Link' , 'Port device is hub link port');
+
+            // Verification que le port du switch Fa0/1 a bien eu 2 historiques (une deconnexion hub et une connexion pc)
+            $a_history = $PluginFusionInventoryHistoryConnections->find("`process_number`='".$processnumber."'
+               AND (`FK_port_source`='".$port_id."' OR `FK_port_destination`='".$port_id."')");
+            $this->assertEquals(count($a_history), 2 , 'Have '.count($a_history).' lines of history instead of 2');
+      }
 
       // Delete agent
+      $this->deleteAgent();
+
+   }
+
+   // *********************** FUNCTIONS used by test functions *********************** //
+
+   function createAgent() {
+      $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>
+  <QUERY>PROLOG</QUERY>
+  <TOKEN>NTMXKUBJ</TOKEN>
+</REQUEST>';
+
+      $PluginFusionInventoryCommunication = new PluginFusionInventoryCommunication;
+      $PluginFusionInventoryCommunication->importToken($input_xml);
+      return $input_xml;
+   }
+
+
+   function createProcess($input_xml) {
+      $PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
+      $a_input = array();
+      $pxml = @simplexml_load_string($input_xml);
+      $processnumber = $PluginFusionInventoryAgentsProcesses->addProcess($pxml);
+      return $processnumber;
+   }
+
+
+
+   function deleteAgent() {
+      
       $PluginFusionInventoryAgents = new PluginFusionInventoryAgents;
       $a_agent = $PluginFusionInventoryAgents->find("`key`='agenttest-2010-03-09-09-41-28'
                                                       AND token='NTMXKUBJ'
@@ -181,8 +235,8 @@ class Plugins_Fusioninventory_Discovery_SnmpInventory extends PHPUnit_Framework_
             $PluginFusionInventoryAgents->deleteFromDB($id);
          }
       }
-
    }
+
 
 
    function xmlfile($processnumber,$mac) {
