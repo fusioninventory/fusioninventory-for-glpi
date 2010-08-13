@@ -680,7 +680,9 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 	}
 
    function canCreate() {
-      return plugin_fusioninventory_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
+//      return plugin_fusioninventory_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
+//      return plugin_fusinvsnmp_haveTypeRight('PluginFusinvsnmpConfigSecurity', 'w');
+      return true;
    }
 
    function canView() {
