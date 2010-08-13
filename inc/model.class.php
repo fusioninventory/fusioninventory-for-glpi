@@ -246,6 +246,10 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          }
       }
    }
+
+   function canView() {
+      return true;
+   }
 }
 
 ?>
