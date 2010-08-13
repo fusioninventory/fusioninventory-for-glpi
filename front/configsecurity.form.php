@@ -41,7 +41,7 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 $plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
 $config = new PluginFusioninventoryConfig;
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
