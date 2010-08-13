@@ -954,7 +954,7 @@ sub loadDico {
 }
 
 1;";
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dico.pm", $xmlstr);
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/Dico.pm", $xmlstr);
 
    }
 
@@ -1130,11 +1130,49 @@ sub loadDico {
    }
 
 
+   function formImportall() {
+      global $LANG;
+
+      echo "<form method='post' name='' id=''  action='".$target."' enctype=\"multipart/form-data\">";
+      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+      echo "<tr class='tab_bg_1 center'>";
+      echo "<th>";
+      echo "Import file&nbsp;:";
+      echo "</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1 center'>";
+      echo "<td>";
+      echo "<input type='file' name='importallfile'/>";
+      echo "&nbsp;<input type='submit' name='addimportall' value=\"" . $LANG["buttons"][8] . "\" class='submit' >";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      echo "</form>";
+
+      
+   }
+
    function importall() {
       global $DB;
 
-      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_device`";
+      $a_db_devices = array();
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $a_db_devices[$data['sysdescr']] = $data;
+         }
+      }
+print_r($a_db_devices);
+      $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/importall.xml');
 
+      foreach ($xml->glpi_plugin_fusioninventory_construct_device->line as $line)  {
+         if (isset($a_db_devices[$line->sysdescr])) {
+            echo "exist<br/>";
+         } else {
+            echo "Not exist!<br/>";
+         }
+
+      }
 
 
    }
