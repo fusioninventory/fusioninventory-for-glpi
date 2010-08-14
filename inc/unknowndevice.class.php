@@ -537,6 +537,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
           AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $port_id=>$data) {
          if (!isset($a_portUsed[$port_id])) {
+            plugin_fusioninventory_addLogConnection("remove",$port_id);
             removeConnector($port_id);
             $Netport->deleteFromDB($port_id);
          }
@@ -551,6 +552,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
       $Netport = new Netport;
 
       foreach ($a_ports as $port_id=>$data) {
+         plugin_fusioninventory_addLogConnection("remove",$port_id);
          removeConnector($port_id);
          // Search free port
          $query = "SELECT `glpi_networking_ports`.`ID` FROM `glpi_networking_ports`
@@ -570,8 +572,8 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
             $input["device_type"] = $this->type;
             $freeport_id = $Netport->add($input);
          }
-
          makeConnector($port_id, $freeport_id);
+         plugin_fusioninventory_addLogConnection("make",$port_id);
          return $freeport_id;
       }      
    }
@@ -699,6 +701,7 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
                   AND device_type='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."' ";
             if ($result_port=$DB->query($query_port)) {
                while ($data_port=$DB->fetch_array($result_port)) {
+                  plugin_fusioninventory_addLogConnection("remove",$data_port['ID']);
                   removeConnector($data_port['ID']);
                   $np = new Netport();
                   $np->deleteFromDB($data_port['ID']);

@@ -1282,20 +1282,35 @@ class PluginFusionInventoryCommunication {
 //      if ($p_oPort->getValue('trunk')!=1) {
       if ($cdp == 0) {
          if ($count > 1) { // MultipleMac
-            $p_oPort->setNoTrunk();
-            $pfiud = new PluginFusionInventoryUnknownDevice;
-            $pta = new PluginFusionInventoryAgents;
-            $agent = $pta->InfosByKey($this->sxml->DEVICEID);
-            $pfiud->hubNetwork($p_oPort, $agent['ID']);
+            // Check if we have one and only one mac address of a switch
+            $count_switchs = 0;
+            $switch_mac = '';
+            $Netport = new Netport;
+            foreach ($p_oPort->getMacsToConnect() as $ifmac) {
+               $a_ports = $Netport->find("`ifmac`='".$ifmac."' AND `device_type`='".NETWORKING_TYPE."' ");
+               if (count($a_ports) == "1") {
+                  $switch_mac = $ifmac;
+                  $count_switchs++;
+               }            
+            }
+            if ($count_switchs == "1") {
+               $p_oPort->dropMacsToConnect();
+               $p_oPort->addMac($switch_mac);
+               if (!$p_oPort->getNoTrunk()) {
+                  $p_oPort->setValue('trunk', 0);
+               }
+            } else {
+               $p_oPort->setNoTrunk();
+               $pfiud = new PluginFusionInventoryUnknownDevice;
+               $pta = new PluginFusionInventoryAgents;
+               $agent = $pta->InfosByKey($this->sxml->DEVICEID);
+               $pfiud->hubNetwork($p_oPort, $agent['ID']);
+            }
          } else {
             if (!$p_oPort->getNoTrunk()) {
                $p_oPort->setValue('trunk', 0);
             }
          }
-//      } else {
-//         if ($p_oPort->getValue('trunk') == '-1') {
-//            $p_oPort->setValue('trunk', '0');
-//         }
       }
       return $errors;
    }

@@ -536,6 +536,10 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
       return $this->portMacs;
    }
 
+   function dropMacsToConnect() {
+      $this->portMacs=array();
+   }
+
    /**
     * Get IP addresses to connect
     *
