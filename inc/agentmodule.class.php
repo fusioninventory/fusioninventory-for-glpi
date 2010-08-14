@@ -58,13 +58,13 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                "/plugins/fusioninventory/front/agentmodule.form.php'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<th>Module</th>";
-         echo "<th>Activation (by default)</th>";
+         echo "<th width='130'>Module</th>";
+         echo "<th width='180'>Activation (by default)</th>";
          echo "<th>Exceptions</th>";
          echo "</tr>";
          
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".$data["modulename"]." :</td>";
+         echo "<td align='center'><strong>".$data["modulename"]."</strong></td>";
          echo "<td align='center'>";
          $checked = $data['is_active'];
          $check = "";
