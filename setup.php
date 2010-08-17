@@ -218,7 +218,7 @@ function plugin_init_fusioninventory() {
 // Name and Version of the plugin
 function plugin_version_fusioninventory() {
 	return array( 'name'    => 'FusionInventory',
-		'version' => '2.2.1',
+		'version' => '2.2.2',
 		'author'=>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a> & <a href="mailto:v.mazzoni@siprossii.com">Vincent MAZZONI</a>',
 		'homepage'=>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
       'minGlpiVersion' => '0.72.1'// For compatibility / no install in version < 0.72

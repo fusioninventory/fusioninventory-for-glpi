@@ -1143,7 +1143,7 @@ function plugin_fusioninventory_install() {
     **/
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config"))) {
-      plugin_fusioninventory_installing("2.2.1");
+      plugin_fusioninventory_installing("2.2.2");
    } else if ((TableExists("glpi_plugin_tracker_config")) ||
          (TableExists("glpi_plugin_fusioninventory_config"))) {
       //$config = new PluginFusionInventoryConfig;
@@ -1218,6 +1218,12 @@ function plugin_fusioninventory_install() {
             plugin_fusioninventory_update("2.2.1");
             $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
                         SET `version` = '2.2.1'
+                        WHERE `ID`='1';");
+         }
+         if ($data['version'] == "2.2.1") {
+            plugin_fusioninventory_update("2.2.2");
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_config`
+                        SET `version` = '2.2.2'
                         WHERE `ID`='1';");
          }
       }
