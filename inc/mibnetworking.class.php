@@ -281,16 +281,20 @@ class PluginFusionInventoryMibNetworking extends CommonDBTM {
 	}
 
 	function prepareInputForUpdate($input) {
-		$explode = explode("||",$input["links_oid_fields"]);
-		$input["mapping_type"] = $explode[0];
-		$input["mapping_name"] = $explode[1];
+      if ((isset($input["links_oid_fields"])) AND (strstr($input["links_oid_fields"], "||"))) {
+         $explode = explode("||",$input["links_oid_fields"]);
+         $input["mapping_type"] = $explode[0];
+         $input["mapping_name"] = $explode[1];
+      }
 		return $input;
 	}
 
 	function prepareInputForAdd($input) {
-		$explode = explode("||",$input["links_oid_fields"]);
-		$input["mapping_type"] = $explode[0];
-		$input["mapping_name"] = $explode[1];
+      if ((isset($input["links_oid_fields"])) AND (strstr($input["links_oid_fields"], "||"))) {
+         $explode = explode("||",$input["links_oid_fields"]);
+         $input["mapping_type"] = $explode[0];
+         $input["mapping_name"] = $explode[1];
+      }
 		return $input;
 	}
 

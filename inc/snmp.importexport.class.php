@@ -158,77 +158,104 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
 		if ($installation != 1) {
 			plugin_fusioninventory_checkRight("snmp_models","w");
       }
-		$xml = simplexml_load_file($file);
+
+		$xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      $PluginFusionInventoryMibNetworking = new PluginFusionInventoryMibNetworking;
 
 		// Verify same model exist
 		$query = "SELECT ID
                 FROM `glpi_plugin_fusioninventory_model_infos`
-                WHERE `name`='".$xml->name[0]."';";
+                WHERE `name`='".$xml->name."';";
 		$result = $DB->query($query);
-		
+
 		if ($DB->numrows($result) > 0) {
 			if ($message == '1') {
+            // Update model
+   			$data = $DB->fetch_assoc($result);
+            $PluginFusionInventoryModelInfos = new PluginFusionInventoryModelInfos;
+            $PluginFusionInventoryModelInfos->getFromDB($data['ID']);
+            $a_input = $PluginFusionInventoryModelInfos->fields;
+            $a_input['discovery_key'] = $xml->key;
+            $a_input['comments'] = $xml->comments;
+
+            $PluginFusionInventoryModelInfos->update($a_input);
+
+            // Update oids
+            $a_oids_DB = array();
+            $a_oids_xml = array();
+            $query2 = "SELECT * FROM `glpi_plugin_fusioninventory_mib_networking`
+               WHERE `FK_model_infos`='".$data['ID']."' ";
+            if ($result2=$DB->query($query2)) {
+               while ($data2=$DB->fetch_array($result2)) {
+                  $a_oids_DB[$data2['ID']] = $data2['mapping_name'];
+               }
+            }
+            foreach($xml->oidlist->oidobject as $num) {
+
+               if (in_array(trim($num->mapping_name), $a_oids_DB)) {
+                  // Update mib
+                  $PluginFusionInventoryMibNetworking->getFromDB(array_search(trim($num->mapping_name), $a_oids_DB));
+                  $a_input = $PluginFusionInventoryMibNetworking->fields;
+                  $a_input['FK_mib_oid'] = externalImportDropdown("glpi_dropdown_plugin_fusioninventory_mib_oid",trim($num->oid));
+                  $a_input['oid_port_counter'] = trim($num->portcounter);
+                  $a_input['oid_port_dyn'] = trim($num->dynamicport);
+                  $a_input['mapping_type'] = trim($num->mapping_type);
+                  $a_input['vlan'] = trim($num->vlan);
+                  $PluginFusionInventoryMibNetworking->update($a_input);
+
+                  unset($a_oids_DB[array_search(trim($num->mapping_name), $a_oids_DB)]);
+               } else {
+                  // Ajout oid
+                  $a_input = array();
+                  $a_input['FK_model_infos']   = $data['ID'];
+                  $a_input['FK_mib_label']     = "";
+                  $a_input['FK_mib_oid']       = externalImportDropdown("glpi_dropdown_plugin_fusioninventory_mib_oid",trim($num->oid));
+                  $a_input['FK_mib_object']    = "";
+                  $a_input['oid_port_counter'] = trim($num->portcounter);
+                  $a_input['oid_port_dyn']     = trim($num->dynamicport);
+                  $a_input['mapping_type']     = trim($num->mapping_type);
+                  $a_input['mapping_name']     = trim($num->mapping_name);
+                  $a_input['activation']       = 1;
+                  $a_input['vlan']             = trim($num->vlan);
+                  $PluginFusionInventoryMibNetworking->add($a_input);
+               }               
+            }
+
+            // Supprimer les oids en trop dans la DB
+            foreach ($a_oids_DB as $ID=>$mapping_name) {
+               $PluginFusionInventoryMibNetworking->deleteFromDB($ID);
+            }
+
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][8];
          }
 			return false;
 		} else {
 			$query = "INSERT INTO `glpi_plugin_fusioninventory_model_infos`
                                (`name`,`device_type`,`discovery_key`,`comments`)
-                   VALUES('".$xml->name[0]."','".$xml->type[0]."','".$xml->key[0]."','".$xml->comments[0]."');";
+                   VALUES('".$xml->name."','".$xml->type."','".$xml->key."','".$xml->comments."');";
 			$DB->query($query);
 			$FK_model = $DB->insert_id();
-			
-			$i = -1;
-			foreach($xml->oidlist[0] as $num) {
-				$i++;
-				$j = 0;
-				foreach($xml->oidlist->oidobject[$i] as $item) {
-					$j++;
-					switch ($j) {
-						case 1:
-							$FK_mib_object = externalImportDropdown(
-                                         "glpi_dropdown_plugin_fusioninventory_mib_object",$item);
-							break;
 
-						case 2:
-							$FK_mib_oid = externalImportDropdown(
-                                      "glpi_dropdown_plugin_fusioninventory_mib_oid",$item);
-							break;
 
-						case 3:
-							$oid_port_counter = $item;
-							break;
-
-						case 4:
-							$oid_port_dyn = $item;
-							break;
-
-						case 5:
-							$mapping_type = $item;
-							break;
-
-						case 6:
-							$mapping_name = $item;
-							break;
-
-						case 7:
-							$vlan = $item;
-							break;
-
-						case 8:
-							$activation = $item;
-							break;
-					}
-				}
+         foreach($xml->oidlist->oidobject as $num) {
+            $FK_mib_oid = externalImportDropdown("glpi_dropdown_plugin_fusioninventory_mib_oid",trim($num->oid));
+            $oid_port_counter = trim($num->portcounter);
+            $oid_port_dyn = trim($num->dynamicport);
+            $mapping_type = trim($num->mapping_type);
+            $mapping_name = trim($num->mapping_name);
+            $vlan = trim($num->vlan);
+            $activation = trim($num->activation);
 
 				$query = "INSERT INTO `glpi_plugin_fusioninventory_mib_networking`
-                                  (`FK_model_infos`,`FK_mib_oid`,`FK_mib_object`,`oid_port_counter`,
+                                  (`FK_model_infos`,`FK_mib_oid`,`oid_port_counter`,
                                    `oid_port_dyn`,`mapping_type`,`mapping_name`,`vlan`,`activation`)
-                      VALUES('".$FK_model."','".$FK_mib_oid."','".$FK_mib_object."',
+                      VALUES('".$FK_model."','".$FK_mib_oid."',
                              '".$oid_port_counter."', '".$oid_port_dyn."', '".$mapping_type."',
                              '".$mapping_name."', '".$vlan."', '".$activation."');";
 				$DB->query($query);
-			}
+         }
+
 			if ($message == '1') {
 				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
                " : <a href='plugin_fusioninventory.models.form.php?ID=".$FK_model."'>".$xml->name[0]."</a>";
