@@ -2,15 +2,7 @@
 	<name><![CDATA[539954]]></name>
 	<type>2</type>
 	<key>Networking0124</key>
-	<comments><![CDATA[5150SE
-
-6.3.4.514.R01 Service Release, October 29, 2009.
-
-IBM OS/400 V4R5M0
-
-IBM PowerPC CHRP Computer
-
-ITIUM 4030
+	<comments><![CDATA[6.3.4.514.R01 Service Release, October 29, 2009.
 
 Lexmark E120n version LE.ULN.P108 kernel 2.4.0-test6 All-N-1
 
@@ -22,13 +14,9 @@ Lexmark T650 version NR.APS.N368 kernel 2.6.18.5 All-N-1
 
 Lexmark W812 version 62.00.22 kernel 2.4.0-test6 All-N-1
 
-Microsoft Windows CE Version 5.0 (Build 0)
-
 Microsoft Windows CE Version 5.0 (Build 1400)
 
 Nortel Application Switch 3408 E
-
-ProCurve j9020a Switch 2510-48, revision U.11.08, ROM R.10.06 (/sw/code/build/dosx(ndx))
 
 RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model
 

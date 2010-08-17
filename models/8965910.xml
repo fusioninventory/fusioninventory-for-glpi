@@ -2,7 +2,35 @@
 	<name><![CDATA[8965910]]></name>
 	<type>2</type>
 	<key>Networking0256</key>
-	<comments><![CDATA[Cisco Internetwork Operating System Software ^M  
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C2940 Software (C2940-I6K2L2Q4-M), Version 12.1(22)EA13, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by cisco Systems, Inc.^M
+Compiled Fri 27-F
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C2950 Software (C2950-I6K2L2Q4-M), Version 12.1(22)EA13, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by cisco Systems, Inc.^M
+Compiled Fri 27-F
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA13, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by cisco Systems, Inc.^M
+Compiled Fri 27-Feb
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5)WC10, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2004 by cisco Systems, Inc.^M
+Compiled Fri 28-May-04 09:19 by antonino
+
+Cisco Internetwork Operating System Software ^M
+IOS (tm) C3550 Software (C3550-I5Q3L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2002 by cisco Systems, Inc.^M
+Compiled Wed 28-Aug-02 10:03 by antonino
+
+Cisco Internetwork Operating System Software ^M  
 IOS (tm) CIGESM Software (CIGESM-I6Q4L2-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)^M  
 Copyright (c) 1986-2006 by cisco Systems, Inc.^M  
 Compiled Fri 01-Dec-06 17:59 by weiliu

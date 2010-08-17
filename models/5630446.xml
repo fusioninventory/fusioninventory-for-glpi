@@ -2,7 +2,12 @@
 	<name><![CDATA[5630446]]></name>
 	<type>2</type>
 	<key>Networking0238</key>
-	<comments><![CDATA[Cisco Internetwork Operating System Software ^M  
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
+IOS (tm) C2950 Software (C2950-C3H2S-M), Version 12.0(5.3)WC(1), MAINTENANCE INTERIM SOFTWARE^M
+Copyright (c) 1986-2001 by cisco Systems, Inc.^M
+Compiled Mon 30-Apr-01 07:56 by devgoyal
+
+Cisco Internetwork Operating System Software ^M  
 IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.4)WC(1), MAINTENANCE INTERIM SOFTWARE^M  
 Copyright (c) 1986-2001 by cisco Systems, Inc.^M  
 Compiled Tue 10-Jul-01 12:32 by devgoyal
