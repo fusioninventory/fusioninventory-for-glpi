@@ -255,8 +255,8 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
          $this->getrightmodel($id, NETWORKING_TYPE);
       }
 
-
-      $Printer = new Printer;
+      require_once GLPI_ROOT.'/inc/printer.class.php';
+      $Printer = new Printer();
       $a_printer = $Printer->find("`comments` LIKE '%".$sysdescr."%'");
       foreach ($a_printer as $id=>$data) {
          $this->getrightmodel($id, PRINTER_TYPE);
@@ -271,6 +271,9 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
       $a_model = $this->find("`name`='".$modelSource."'");
       foreach ($a_model as $id=>$data) {
          $modelSource_id = $id;
+      }
+      if (!isset($modelSource_id)) {
+         return;
       }
 
       $a_model = $this->find("`name`='".$modelDestination."'");

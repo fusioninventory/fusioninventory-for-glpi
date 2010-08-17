@@ -292,106 +292,106 @@ function plugin_fusioninventory_update($version) {
 
       // Update models for printers and switches
       $PluginFusionInventoryModelInfos = new PluginFusionInventoryModelInfos;
-      $PluginFusionInventoryModelInfo->modifyModelDefined("1035120", "5547209", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("1268668", "7327673", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("1274893", "4111321", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("1435609", "2075377", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("1485438", "7714675", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("1612246", "638207", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("1635677", "1263137", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("2209837", "7051162", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("2325676", "5487096", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("2442408", "5379162", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("2531750", "5101291", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("2854950", "7362423", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3235433", "548869", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3355590", "8800076", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3381134", "8800076", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3802712", "9581305", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3811618", "1377379", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3818287", "2778418", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3881228", "38638", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("3978040", "1816151", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("4150935", "7779300", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("4191096", "4455187", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("423548", "9769689", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("4287623", "943883", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("4715578", "4111321", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("478103", "9237473", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("4789519", "5630446", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("4816050", "7731164", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5217313", "9449988", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("523939", "7951579", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5246672", "8965910", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5264937", "9216976", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("533006", "7579925", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5475348", "5910705", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5737879", "4678398", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5784626", "2011692", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5847307", "1747304", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("5905240", "9743586", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("6085529", "8668453", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("6171176", "6363084", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("6599346", "38638", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("6831406", "8965910", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("6982457", "4453057", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("701135", "5639995", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7105398", "7805253", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("711451", "4901782", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7122512", "1942119", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7409071", "9372497", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7446064", "7951579", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7449716", "3050163", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7457538", "6363084", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7767627", "7030328", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("7883129", "9449988", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8001607", "4280668", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8047251", "4981364", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8049199", "5451695", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8103516", "4901782", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8112312", "5910705", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("816731", "5303197", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8295590", "5910705", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8497286", "1559737", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8635846", "8800076", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8661591", "4564877", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8713464", "1718358", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("8992438", "100911", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("9071791", "8336819", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("9092720", "1568308", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("9265755", "6013357", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("9303532", "9449988", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("9359113", "3592450", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("9642868", "6430101", 1);
-      $PluginFusionInventoryModelInfo->modifyModelDefined("9933282", "3594228", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("1035120", "5547209", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("1268668", "7327673", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("1274893", "4111321", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("1435609", "2075377", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("1485438", "7714675", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("1612246", "638207", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("1635677", "1263137", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("2209837", "7051162", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("2325676", "5487096", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("2442408", "5379162", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("2531750", "5101291", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("2854950", "7362423", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3235433", "548869", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3355590", "8800076", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3381134", "8800076", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3802712", "9581305", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3811618", "1377379", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3818287", "2778418", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3881228", "38638", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("3978040", "1816151", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("4150935", "7779300", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("4191096", "4455187", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("423548", "9769689", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("4287623", "943883", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("4715578", "4111321", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("478103", "9237473", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("4789519", "5630446", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("4816050", "7731164", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5217313", "9449988", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("523939", "7951579", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5246672", "8965910", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5264937", "9216976", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("533006", "7579925", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5475348", "5910705", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5737879", "4678398", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5784626", "2011692", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5847307", "1747304", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("5905240", "9743586", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("6085529", "8668453", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("6171176", "6363084", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("6599346", "38638", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("6831406", "8965910", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("6982457", "4453057", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("701135", "5639995", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7105398", "7805253", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("711451", "4901782", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7122512", "1942119", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7409071", "9372497", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7446064", "7951579", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7449716", "3050163", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7457538", "6363084", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7767627", "7030328", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("7883129", "9449988", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8001607", "4280668", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8047251", "4981364", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8049199", "5451695", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8103516", "4901782", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8112312", "5910705", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("816731", "5303197", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8295590", "5910705", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8497286", "1559737", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8635846", "8800076", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8661591", "4564877", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8713464", "1718358", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("8992438", "100911", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("9071791", "8336819", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("9092720", "1568308", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("9265755", "6013357", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("9303532", "9449988", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("9359113", "3592450", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("9642868", "6430101", 1);
+      $PluginFusionInventoryModelInfos->modifyModelDefined("9933282", "3594228", 1);
 
-      $a_model = $PluginFusionInventoryModelInfo->find("`name`='1409900'");
+      $a_model = $PluginFusionInventoryModelInfos->find("`name`='1409900'");
       foreach ($a_model as $id=>$data) {
-         $PluginFusionInventoryModelInfo->deleteFromDB($id);
+         $PluginFusionInventoryModelInfos->deleteFromDB($id);
       }
-      $a_model = $PluginFusionInventoryModelInfo->find("`name`='3080441'");
+      $a_model = $PluginFusionInventoryModelInfos->find("`name`='3080441'");
       foreach ($a_model as $id=>$data) {
-         $PluginFusionInventoryModelInfo->deleteFromDB($id);
+         $PluginFusionInventoryModelInfos->deleteFromDB($id);
       }
-      $a_model = $PluginFusionInventoryModelInfo->find("`name`='3283574'");
+      $a_model = $PluginFusionInventoryModelInfos->find("`name`='3283574'");
       foreach ($a_model as $id=>$data) {
-         $PluginFusionInventoryModelInfo->deleteFromDB($id);
+         $PluginFusionInventoryModelInfos->deleteFromDB($id);
       }
-      $a_model = $PluginFusionInventoryModelInfo->find("`name`='3692917'");
+      $a_model = $PluginFusionInventoryModelInfos->find("`name`='3692917'");
       foreach ($a_model as $id=>$data) {
-         $PluginFusionInventoryModelInfo->deleteFromDB($id);
+         $PluginFusionInventoryModelInfos->deleteFromDB($id);
       }
-      $a_model = $PluginFusionInventoryModelInfo->find("`name`='4141487'");
+      $a_model = $PluginFusionInventoryModelInfos->find("`name`='4141487'");
       foreach ($a_model as $id=>$data) {
-         $PluginFusionInventoryModelInfo->deleteFromDB($id);
+         $PluginFusionInventoryModelInfos->deleteFromDB($id);
       }
-      $a_model = $PluginFusionInventoryModelInfo->find("`name`='6936229'");
+      $a_model = $PluginFusionInventoryModelInfos->find("`name`='6936229'");
       foreach ($a_model as $id=>$data) {
-         $PluginFusionInventoryModelInfo->deleteFromDB($id);
+         $PluginFusionInventoryModelInfos->deleteFromDB($id);
       }
-      $a_model = $PluginFusionInventoryModelInfo->find("`name`='8328709'");
+      $a_model = $PluginFusionInventoryModelInfos->find("`name`='8328709'");
       foreach ($a_model as $id=>$data) {
-         $PluginFusionInventoryModelInfo->deleteFromDB($id);
+         $PluginFusionInventoryModelInfos->deleteFromDB($id);
       }
 
       $a_sysdescr_reload = array();
@@ -469,7 +469,7 @@ function plugin_fusioninventory_update($version) {
       $a_sysdescr_reload[] = "Brother NC-6100h, Firmware Ver.1.03 (04.03.29),MID 84UZ51";
 
       foreach($a_sysdescr_reload as $num=>$sysdescr) {
-         $PluginFusionInventoryModelInfo->getrightmodelBySysdescr($sysdescr);
+         $PluginFusionInventoryModelInfos->getrightmodelBySysdescr($sysdescr);
       }
    }
 
