@@ -658,8 +658,8 @@ function plugin_fusioninventory_getSearchOption() {
 	$sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['name'] = $LANG['plugin_fusioninventory']["profile"][24];
    $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['datatype']='itemptype';
 
-   
 
+   
 	return $sopt;
 }
 
@@ -1849,6 +1849,9 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
                break;
 
          }
+         break;
+      
+      
 	}
 	return "";
 }
@@ -2569,6 +2572,8 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 			}
+         break;
+
 	}
 	return "";
 }
