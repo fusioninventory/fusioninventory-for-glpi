@@ -244,6 +244,60 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
          }
       }
    }
-}
 
+
+
+   function getrightmodelBySysdescr($sysdescr) {
+
+      $Netdevice = new Netdevice;
+      $a_netdevice = $Netdevice->find("`comments` LIKE '%".$sysdescr."%'");
+      foreach ($a_netdevice as $id=>$data) {
+         $this->getrightmodel($id, NETWORKING_TYPE);
+      }
+
+
+      $Printer = new Printer;
+      $a_printer = $Printer->find("`comments` LIKE '%".$sysdescr."%'");
+      foreach ($a_printer as $id=>$data) {
+         $this->getrightmodel($id, PRINTER_TYPE);
+      }
+
+   }
+
+
+   function modifyModelDefined($modelSource, $modelDestination, $deleteSource=0) {
+      global $DB;
+
+      $a_model = $this->find("`name`='".$modelSource."'");
+      foreach ($a_model as $id=>$data) {
+         $modelSource_id = $id;
+      }
+
+      $a_model = $this->find("`name`='".$modelDestination."'");
+      foreach ($a_model as $id=>$data) {
+         $modelDestination_id = $id;
+      }
+
+      $PluginFusionInventoryPrinters = new PluginFusionInventoryPrinters;
+      $PluginFusionInventoryNetworking = new PluginFusionInventoryNetworking;
+
+      $a_printers = $PluginFusionInventoryPrinters->find("`FK_model_infos`='".$modelSource_id."'");
+      foreach ($a_printers as $id=>$data) {
+         $PluginFusionInventoryPrinters->getFromDB($id);
+         $PluginFusionInventoryPrinters->fields['FK_model_infos'] = $modelDestination_id;
+         $PluginFusionInventoryPrinters->update($PluginFusionInventoryPrinters->fields);
+      }
+
+      $a_networking = $PluginFusionInventoryNetworking->find("`FK_model_infos`='".$modelSource_id."'");
+      foreach ($a_networking as $id=>$data) {
+         $PluginFusionInventoryNetworking->getFromDB($id);
+         $PluginFusionInventoryNetworking->fields['FK_model_infos'] = $modelDestination_id;
+         $PluginFusionInventoryNetworking->update($PluginFusionInventoryNetworking->fields);
+      }
+
+      if ($deleteSource == "1") {
+         $this->deleteFromDB($modelSource_id);
+      }      
+   }
+}
 ?>
