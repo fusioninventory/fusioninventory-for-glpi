@@ -36,7 +36,7 @@ Author : David DURIEUX
 
 1 - Presentation
 
-This plugin enables you get informations for networking devices by SNMP. 
+This plugin enables you get informations for discovery and query networking devices by SNMP.
 
 Compatibility 0.72
 PHP5 or higher is required !
@@ -46,7 +46,7 @@ PHP5 or higher is required !
 Download the tarball of this plugin
 Uncompress it in the plugins directory of your glpi installation
 
-Once copied in the repertory, go the the "Configuration"->"Plugins"->"Tracker" menu, and install the plugin.
+Once copied in the repertory, go the the "Configuration"->"Plugins"->"FusionInventory" menu, and install and activate the plugin.
 Make rights for this plugin.
-Plugin is ready : it is in "Plugins"->"Tracker" menu.
+Plugin is ready : it is in "Plugins"->"FusionInventory" menu.
 

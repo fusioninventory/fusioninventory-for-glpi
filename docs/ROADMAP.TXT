@@ -33,4 +33,4 @@
 // ----------------------------------------------------------------------
 
 
-
+See roadmap here : http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/roadmap

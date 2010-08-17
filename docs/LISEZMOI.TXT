@@ -46,7 +46,7 @@ Le plugin nécessite obligatoirement PHP5 ou supérieur !
 Récupérez l'archive tar.gz du plugin
 Décompressez la dans le répertoire plugins de votre installation de glpi
 
-Une fois copié dans le répertoire, dans l'onglet plugin vous verrez apparaître "Tracker".
+Une fois copié dans le répertoire, dans l'onglet plugin vous verrez apparaître "FusionInventory". installez et activez le.
 Règlez les droits sur le plugin en fonction des profils.
-Le plugin est ensuite prêt à l'emploi : il est accessible via le menu "Plugins"->"Tracker".
+Le plugin est ensuite prêt à l'emploi : il est accessible via le menu "Plugins"->"FusionInventory".
 
