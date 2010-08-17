@@ -34,6 +34,14 @@
 
 Author : David DURIEUX
 
+0 - Copyright
+
+This program is under copyright : 
+
+Copyright (C) 2003-2009 by the INDEPNET Development Team.                                                                           | guillomovitch
+Copyright (C) 2010 FusionInventory Team
+
+
 1 - Presentation
 
 This plugin enables you get informations for discovery and query networking devices by SNMP.

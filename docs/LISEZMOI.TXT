@@ -32,7 +32,15 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-Author : David DURIEUX
+Auteur : David DURIEUX
+
+0 - Copyright
+
+Les sources sont sous copyright :
+
+Copyright (C) 2003-2009 by the INDEPNET Development Team.                                                                           | guillomovitch
+Copyright (C) 2010 FusionInventory Team
+
 
 1 - Présentation
 
