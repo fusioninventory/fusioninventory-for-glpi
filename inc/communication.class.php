@@ -150,8 +150,8 @@ class PluginFusioninventoryCommunication {
       $errors = '';
 
       $xmltag = $this->sxml->QUERY;
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags'][$xmltag])) {
-         $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags'][$xmltag];
+      if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
+         $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass;
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT);
       } else {
@@ -263,6 +263,21 @@ class PluginFusioninventoryCommunication {
          $this->sxml = $class->Run($data['items_id'], $data['itemtype'], $data['plugin_fusioninventory_taskjobs_id'], $data['id']);
       }      
    }
+
+
+   function addProlog() {
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $ptc  = new PluginFusionInventoryConfig;
+      $this->sxml->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue("fusioninventory", "inventory_frequence"));
+   }
+
+
+
+   // Put in INVENTORY plugin
+   function addInventory() {
+      $this->sxml->addChild('RESPONSE', "SEND");
+   }
+
 }
 
 ?>
