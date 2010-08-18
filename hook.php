@@ -1107,7 +1107,7 @@ function plugin_headings_actions_fusinvsnmp($item) {
 
 
 function plugin_headings_fusinvsnmp_computerInfo($type, $id) {
-   $pfit = new PluginFusinvsnmpTask;
+   $pfit = new PluginFusioninventoryTask;
    $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusinvsnmp/front/agents.state.php', $id, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
 }
 
