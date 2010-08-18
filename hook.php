@@ -1612,17 +1612,16 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 	switch ($data['action']) {
 
       case "plugin_fusioninventory_get_model" :
+         $PluginFusionInventoryModelInfos = new PluginFusionInventoryModelInfos;
          if ($data['device_type'] == NETWORKING_TYPE) {
 				foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-                  $PluginFusionInventoryModelInfos = new PluginFusionInventoryModelInfos;
                   $PluginFusionInventoryModelInfos->getrightmodel($key, NETWORKING_TYPE);
 					}
 				}
          } else if($data['device_type'] == PRINTER_TYPE) {
             foreach ($data['item'] as $key => $val) {
 					if ($val == 1) {
-                  $PluginFusionInventoryModelInfos = new PluginFusionInventoryModelInfos;
                   $PluginFusionInventoryModelInfos->getrightmodel($key, PRINTER_TYPE);
 					}
 				}
