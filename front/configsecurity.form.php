@@ -36,29 +36,27 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
 $plugin_fusioninventory_snmp_auth = new PluginFusinvsnmpConfigSecurity;
 $config = new PluginFusioninventoryConfig;
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 
 if (isset ($_POST["add"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","w");
+	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 	if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add_xml();
    } else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
 		$new_ID = $plugin_fusioninventory_snmp_auth->add($_POST);
    }
-	
-	$_SESSION["MESSAGE_AFTER_REDIRECT"] = "Import effectué avec succès : <a href='configsnmpsecurity.php?id=".$new_ID."'>".$_POST["name"]."</a>";
-	glpi_header($_SERVER['HTTP_REFERER']);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","w");
+	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","w");
 	$plugin_fusioninventory_snmp_auth->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
@@ -67,7 +65,7 @@ $id = "";
 if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
-if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","r")) {
+if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")) {
    $plugin_fusioninventory_snmp_auth->showForm($id);
 }
 commonFooter();

@@ -118,9 +118,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
 
    function manageWalks($target, $id) {
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
-
-		global $DB,$CFG_GLPI,$LANG,$FUSIONINVENTORY_MAPPING,$IMPORT_TYPES;
+		global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
 
       $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
          WHERE id='".$id."'";
@@ -344,13 +342,23 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            } else {
                               $types = array();
                               $types[] = "-----";
-                              foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
+//                              foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
+//                                 if (($type_model == $type) OR ($type_model == "0")) {
+//                                    if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+//                                       foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+//                                          $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
+//                                       }
+//                                    }
+//                                 }
+//                              }
+                              $map = new PluginFusioninventoryMapping;
+                              $maps = $map->find();
+                              foreach ($maps as $mapfields) {
                                  if (($type_model == $type) OR ($type_model == "0")) {
-                                    if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-                                       foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-                                          $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
-                                       }
-                                    }
+                                    $types[$type."||".$mapfields['name']]=
+                                       $LANG['plugin_fusioninventory']["mapping"]
+                                          [$mapfields["locale"]].
+                                       " (".$mapfields['name'].")";
                                  }
                               }
                               Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
@@ -443,13 +451,23 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                } else {
                   $types = array();
                   $types[] = "-----";
-                  foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
+//                  foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
+//                     if (($type_model == $type) OR ($type_model == "0")) {
+//                        if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+//                           foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+//                              $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
+//                           }
+//                        }
+//                     }
+//                  }
+                  $map = new PluginFusioninventoryMapping;
+                  $maps = $map->find();
+                  foreach ($maps as $mapfields) {
                      if (($type_model == $type) OR ($type_model == "0")) {
-                        if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-                           foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-                              $types[$type."||".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"]." (".$name.")";
-                           }
-                        }
+                        $types[$type."||".$mapfields['name']]=
+                           $LANG['plugin_fusioninventory']["mapping"]
+                              [$mapfields["locale"]].
+                           " (".$mapfields['name'].")";
                      }
                   }
                   Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,

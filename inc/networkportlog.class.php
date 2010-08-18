@@ -87,17 +87,22 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
 
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
-
       $options="";
 
-      foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
-         if (isset($FUSIONINVENTORY_MAPPING[$type])) {
-            foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
-               $listName[$type."-".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
-            }
-         }
+//      foreach ($FUSIONINVENTORY_MAPPING as $type=>$mapping43) {
+//         if (isset($FUSIONINVENTORY_MAPPING[$type])) {
+//            foreach ($FUSIONINVENTORY_MAPPING[$type] as $name=>$mapping) {
+//               $listName[$type."-".$name]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
+//            }
+//         }
+//      }
+      $map = new PluginFusioninventoryMapping;
+      $maps = $map->find();
+      foreach ($maps as $mapfields) {
+         $listName[$mapfields['itemtype']."-".$mapfields['name']]=
+            $LANG['plugin_fusioninventory']["mapping"][$mapfields["locale"]];
       }
+
       if (!empty($listName)) {
          asort($listName);
       }
@@ -108,12 +113,14 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             list($type,$name) = explode("-", $data['field']);
-            if (!isset($FUSIONINVENTORY_MAPPING[$type][$name]["name"])) {
+//            if (!isset($FUSIONINVENTORY_MAPPING[$type][$name]["name"])) {
+            if (!isset($listName[$type."-".$name])) {
                $query_del = "DELETE FROM `glpi_plugin_fusinvsnmp_configlogfields`
                   WHERE id='".$data['id']."' ";
                   $DB->query($query_del);
             } else {
-               $options[$data['field']]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
+//               $options[$data['field']]=$FUSIONINVENTORY_MAPPING[$type][$name]["name"];
+               $options[$data['field']]=$listName[$type."-".$name];
             }
             unset($listName[$data['field']]);
          }
@@ -209,12 +216,17 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    }
 
    function ConvertField($force=0) {
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
       global $DB, $LANG;
 
       $constantsfield = array();
-      foreach ($FUSIONINVENTORY_MAPPING[NETWORKING_TYPE] as $fieldtype=>$array) {
-         $constantsfield[$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$fieldtype]['name']] = $fieldtype;
+//      foreach ($FUSIONINVENTORY_MAPPING[NETWORKING_TYPE] as $fieldtype=>$array) {
+//         $constantsfield[$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$fieldtype]['name']] = $fieldtype;
+//      }
+      $map = new PluginFusioninventoryMapping;
+      $maps = $map->find("`itemtype`='NetworkEquipment'");
+      foreach ($maps as $mapfields) {
+         $constantsfield[$LANG['plugin_fusioninventory']["mapping"][$mapfields["locale"]]] =
+            $mapfields['name'];
       }
 
       echo "<center><table align='center' width='500'>";
@@ -450,8 +462,6 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    }
 
    static function networkport_addLog($port_id, $value_new, $field) {
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
-
       $ptp = new PluginFusinvsnmpNetworkPort;
       $ptsnmph = new PluginFusinvsnmpNetworkPortLog;
       $pficlf = new PluginFusinvsnmpConfigLogField();
@@ -537,8 +547,6 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    // List of history in networking display
    static function showHistory($ID_port) {
       global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
-
-      include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
       $np = new NetworkPort;
 
@@ -643,7 +651,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             } else {
                // Changes values
                $text .= "<td align='center' colspan='2'></td>";
-               $text .= "<td align='center'>".$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
+//               $text .= "<td align='center'>".$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
+               $map = new PluginFusioninventoryMapping;
+               $mapfields = $map->get('NetworkEquipment', $data["field"]);
+               if ($mapfields != false) {
+                  $text .= "<td align='center'>".
+                     $LANG['plugin_fusioninventory']["mapping"][$mapfields["locale"]]."</td>";
+               }
                $text .= "<td align='center'>".$data["value_old"]."</td>";
                $text .= "<td align='center'>-></td>";
                $text .= "<td align='center'>".$data["value_new"]."</td>";

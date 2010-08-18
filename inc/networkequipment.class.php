@@ -326,7 +326,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       } else {
 			$canedit = false;
       }
-		include (GLPI_ROOT . "/plugins/fusioninventory/inc_constants/snmp.mapping.constant.php");
 
 		$this->id = $id;
 
@@ -350,6 +349,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       }
 
       $PID = $this->fields['last_PID_update'];
+//      $PID = $this->getValue('last_PID_update');
 
 		// Form networking informations
 		$this->showTabs($options);
@@ -395,7 +395,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "</table></form>";
 
       // Remote action of agent
-      $pfit = new PluginFusinvsnmpTask;
+      $pfit = new PluginFusioninventoryTask;
       $pfit->RemoteStateAgent($target, $id, NETWORKING_TYPE, array('INVENTORY' => 1 ));
 
 

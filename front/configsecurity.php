@@ -37,9 +37,10 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
+//commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","snmp_auth");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "authentication","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
 $config = new PluginFusioninventoryConfig;
 
@@ -56,7 +57,7 @@ if ($config->getValue($plugins_id, "storagesnmpauth") == "file") {
 } else if ($config->getValue($plugins_id, "storagesnmpauth") == "DB") {
 	// Forms for DB
 	
-	$_GET['target']="configsnmpsecurity.php";
+	$_GET['target']="configsecurity.php";
 	
 Search::show('PluginFusinvsnmpConfigSecurity');
 //	searchForm('PluginFusinvsnmpConfigSecurity',$_GET);

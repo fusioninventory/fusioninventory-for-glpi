@@ -55,8 +55,6 @@ if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) 
       case -1 :
          $config = new PluginFusioninventoryConfig;
          $config->showForm('1', array('target'=>$_POST['target']));
-         $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm('1', array('target'=>$_POST['target']));
          $history = new PluginFusinvsnmpNetworkPortLog;
          $history->showForm('1', array('target'=>$_POST['target']));
          $ptLockable = new PluginFusioninventoryLockable;
@@ -64,8 +62,8 @@ if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) 
          break;
 
       case 2 :
-         $config_modules = new PluginFusioninventoryConfigModules;
-         $config_modules->showForm('1', array('target'=>$_POST['target']));
+         $config = new PluginFusioninventoryConfig;
+         $config->showForm('1', array('target'=>$_POST['target']));
          break;
 
       case 7 :
@@ -81,7 +79,9 @@ if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) 
          break;
 
       default :
-         if (!displayPluginAction(COMPUTER_TYPE,$_POST["id"],$_POST['glpi_tab'],$_POST["withtemplate"])) {
+         $computer = new Computer;
+         $computer->getFromDB($_POST["id"]);
+         if (!Plugin::displayAction($computer,$_POST['glpi_tab'],$_POST["withtemplate"])) {
             $config = new PluginFusioninventoryConfig;
             $config->showForm('1', array('target'=>$_POST['target']));
          }

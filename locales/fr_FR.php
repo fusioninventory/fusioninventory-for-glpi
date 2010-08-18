@@ -557,6 +557,9 @@ $LANG['plugin_fusinvsnmp']["iprange"][1]="Fin de la plage IP";
 $LANG['plugin_fusinvsnmp']["iprange"][2]="Plage IP";
 $LANG['plugin_fusinvsnmp']["iprange"][3]="Interrogation";
 $LANG['plugin_fusinvsnmp']["iprange"][4]="Adresse IP incorrecte";
+$LANG['plugin_fusinvsnmp']["iprange"][5]="Edition de plage IP";
+$LANG['plugin_fusinvsnmp']["iprange"][6]="Création d'une plage IP";
+$LANG['plugin_fusinvsnmp']["iprange"][7]="IP incorrecte";
 
 $LANG['plugin_fusinvsnmp']["agents"][0]="Agent SNMP";
 $LANG['plugin_fusinvsnmp']["agents"][2]="Threads interrogation (par coeur)";

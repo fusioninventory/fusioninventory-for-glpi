@@ -41,13 +41,13 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
    function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
 
-      $ptcm = new PluginFusioninventoryConfigModules;
 
       $ong = array();
 		if ($this->fields['id'] > 0){
          $ong[1]=$LANG['title'][27];
          $ong[2]=$LANG['buttons'][37];
-         if (($ptcm->isActivated('remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
+         $ptc = new PluginFusioninventoryConfig;
+         if (($ptc->is_active('fusioninventory', 'remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
             $ong[3]=$LANG['plugin_fusioninventory']["task"][2];
          }
          $ong[4]=$LANG['title'][38];

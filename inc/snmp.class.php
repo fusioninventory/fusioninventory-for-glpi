@@ -48,7 +48,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	 *
 	**/
 	function GetLinkOidToFields($ID_Device,$type) {
-		global $DB,$FUSIONINVENTORY_MAPPING;
+		global $DB;
 		
 		$ObjectLink = array();
 

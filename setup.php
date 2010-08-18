@@ -51,7 +51,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpNetworkEquipment');
    Plugin::registerClass('PluginFusinvsnmpPrinter');
    Plugin::registerClass('PluginFusinvsnmpIPRange');
-   Plugin::registerClass('PluginFusinvsnmpConfigSNMPSecurity');
+   Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
    Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
    Plugin::registerClass('PluginFusinvsnmpUnknownDevice');
    Plugin::registerClass('PluginFusinvsnmpNetworkport',
@@ -74,13 +74,13 @@ function plugin_init_fusinvsnmp() {
                                                                 'submitbutton'=>'plugin_fusinvsnmp_config_set',
                                                                 'submitmethod'=>'putForm');
    }
-   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-                       [$LANG['plugin_fusinvsnmp']["title"][5]])) {
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-               [$LANG['plugin_fusinvsnmp']["title"][5]] = array('class'=>'PluginFusinvsnmpConfigLogField',
-                                                                'submitbutton'=>'plugin_fusinvsnmp_configlogfield_set',
-                                                                'submitmethod'=>'putForm');
-   }
+//   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
+//                       [$LANG['plugin_fusinvsnmp']["title"][5]])) {
+//      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
+//               [$LANG['plugin_fusinvsnmp']["title"][5]] = array('class'=>'PluginFusinvsnmpConfigLogField',
+//                                                                'submitbutton'=>'plugin_fusinvsnmp_configlogfield_set',
+//                                                                'submitmethod'=>'putForm');
+//   }
 
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
@@ -101,7 +101,9 @@ function plugin_init_fusinvsnmp() {
 		$CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_ipranges';
       $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 
-		if(isset($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"]==1) {
+//		if(isset($_SESSION["glpi_plugin_fusinvsnmp_installed"]) && $_SESSION["glpi_plugin_fusinvsnmp_installed"]==1) {
+      $plugin = new Plugin();
+		if($plugin->isInstalled('fusinvsnmp')) {
 
 			$PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
          $PLUGIN_HOOKS['pre_item_delete']['fusinvsnmp'] = 'plugin_pre_item_delete_fusinvsnmp';
@@ -110,15 +112,15 @@ function plugin_init_fusinvsnmp() {
          $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = 'plugin_item_add_fusinvsnmp';
 
 			$report_list = array();
-         $report_list["report/switch_ports.history.php"] = "Historique des ports de switchs";
-         $report_list["report/ports_date_connections.php"] = "Ports de switchs non connectés depuis xx mois";
+         $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']["menu"][5];
+         $report_list["report/ports_date_connections.php"] = $LANG['plugin_fusinvsnmp']["menu"][6];
 			$PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
-//			if (haveRight("models", "r") || haveRight("authentication", "r")) {
-			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models", "r")
-             || PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication", "r")) {
-				$PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
-         }
+//			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {
+//			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models", "r")
+//             || PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
+////				$PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
+//         }
 
          // Tabs for each type
          $PLUGIN_HOOKS['headings']['fusinvsnmp'] = 'plugin_get_headings_fusinvsnmp';
@@ -126,7 +128,7 @@ function plugin_init_fusinvsnmp() {
 
 //         if (PluginFusinvsnmpAuth::haveRight("models","r")
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","r")
-            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","r")
+            OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agentsprocesses","r")
@@ -134,33 +136,37 @@ function plugin_init_fusinvsnmp() {
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reports","r")
             ) {
 
-            $PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
-            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['models'] = 'front/model.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['models'] = 'front/model.php';
+//            $PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
+//            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['models'] = 'front/model.form.php?add=1';
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['models'] = 'front/model.php';
+//            }
+            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['snmp_auth'] = 'front/configsecurity.form.php?add=1';
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['snmp_auth'] = 'front/configsecurity.php';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['configsecurity'] = '../fusinvsnmp/front/configsecurity.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['configsecurity'] = '../fusinvsnmp/front/configsecurity.php';
+//$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['links']['add']
+//                                                      = '/plugins/fusinvsnmp/front/configsecurity.form.php';
             }
-            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['snmp_auth'] = 'front/configsecurity.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['snmp_auth'] = 'front/configsecurity.php';
-            }
-            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['agents'] = 'front/agent.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['agents'] = 'front/agent.php';
-            }
+//            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","w")) {
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['agents'] = 'front/agent.form.php?add=1';
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['agents'] = 'front/agent.php';
+//            }
 
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['iprange'] = 'front/iprange.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['iprange'] = 'front/iprange.php';
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['iprange'] = 'front/iprange.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = '../fusinvsnmp/front/iprange.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] = '../fusinvsnmp/front/iprange.php';
             }
+//            $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['constructdevice'] = 'front/construct_device.form.php?add=1';
+//            $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['constructdevice'] = 'front/construct_device.php';
 
-            $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['constructdevice'] = 'front/construct_device.form.php?add=1';
-            $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['constructdevice'] = 'front/construct_device.php';
-
-            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['config'] = 'front/functionalities.form.php';
-            }
+//            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) {
+//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['config'] = 'front/functionalities.form.php';
+//            }
 			}
-         $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']["<img  src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/books.png' title='".$LANG['plugin_fusinvsnmp']["setup"][16]."' alt='".$LANG['plugin_fusinvsnmp']["setup"][16]."'>"] = 'front/documentation.php';
+//         $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']["<img  src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/books.png' title='".$LANG['plugin_fusinvsnmp']["setup"][16]."' alt='".$LANG['plugin_fusinvsnmp']["setup"][16]."'>"] = 'front/documentation.php';
 		}
 	}
 }
@@ -199,8 +205,8 @@ function plugin_fusinvsnmp_check_config() {
 function plugin_fusinvsnmp_haveTypeRight($type,$right) {
 	switch ($type) {
 		case 'PluginFusinvsnmpConfigSecurity' :
-//			return PluginFusinvsnmpAuth::haveRight("authentication",$right);
-			return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "authentication",$right);
+//			return PluginFusinvsnmpAuth::haveRight("configsecurity",$right);
+			return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity",$right);
 			break;
 	}
 	return true;

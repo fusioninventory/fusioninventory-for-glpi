@@ -316,7 +316,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             $p_criteria['serial'] = trim($discovery->SERIAL);
             $p_criteria['macaddr'] = $discovery->MAC;
 
-            $discovery_criteria = plugin_fusioninventory_discovery_criteria($p_criteria);
+            $discovery_criteria = PluginFusinvsnmpDiscovery::criteria($p_criteria);
             if (!$discovery_criteria) {
                $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_import' => '1'));
                // Add in unknown device

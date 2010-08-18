@@ -107,7 +107,6 @@ ALTER TABLE `glpi_plugin_fusioninventory_configmodules`
    CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `glpi_plugin_fusioninventory_configs`
-   CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
    CHANGE `authsnmp` `storagesnmpauth` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL;
 
 ALTER TABLE `glpi_plugin_fusinvsnmp_configsecurities`

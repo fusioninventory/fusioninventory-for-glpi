@@ -56,7 +56,7 @@ class PluginFusinvsnmpCommunicationSNMP {
     *@return nothing
     **/
    function addAuth($p_sxml_node, $p_id) {
-      $ptsnmpa = new PluginFusioninventoryConfigSNMPSecurity;
+      $ptsnmpa = new PluginFusinvsnmpConfigSecurity;
       $ptsnmpa->getFromDB($p_id);
 
       $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');

@@ -40,7 +40,6 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp", "networking","r");
 
 $ptud = new PluginFusinvsnmpUnknownDevice;
 $ptt  = new PluginFusioninventoryTask;
-$ptcm = new PluginFusioninventoryConfigModules;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
 
