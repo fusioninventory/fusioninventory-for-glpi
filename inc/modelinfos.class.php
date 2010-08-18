@@ -227,6 +227,17 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
                switch($type) {
 
                   case NETWORKING_TYPE:
+                     $query = "SELECT *
+                               FROM `glpi_plugin_fusioninventory_networking`
+                               WHERE `FK_networking`='".$device_id."';";
+                     $result = $DB->query($query);
+                     if ($DB->numrows($result) == "0") {
+                        $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_networking`(`FK_networking`)
+                                        VALUES('".$device_id."');";
+
+                        $DB->query($queryInsert);
+                     }
+
                      $query = "UPDATE `glpi_plugin_fusioninventory_networking`
                                SET `FK_model_infos`='".$FK_model."'
                                WHERE `FK_networking`='".$device_id."'";
@@ -234,6 +245,17 @@ class PluginFusionInventoryModelInfos extends CommonDBTM {
                      break;
 
                   case PRINTER_TYPE:
+                     $query = "SELECT *
+                               FROM `glpi_plugin_fusioninventory_printers`
+                               WHERE `FK_printers`='".$device_id."';";
+                     $result = $DB->query($query);
+                     if ($DB->numrows($result) == "0") {
+                        $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_printers`(`FK_printers`)
+                                        VALUES('".$device_id."');";
+
+                        $DB->query($queryInsert);
+                     }
+                     
                      $query = "UPDATE `glpi_plugin_fusioninventory_printers`
                                SET `FK_model_infos`='".$FK_model."'
                                WHERE `FK_printers`='".$device_id."'";
