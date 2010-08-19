@@ -36,7 +36,7 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$pft = new PluginFusioninventoryTaskjob;
+$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
@@ -62,12 +62,12 @@ if (isset ($_POST["add"])) {
       }
       $_POST['selection'] = exportArrayToDB($a_selectionDB);
    }
-   $pft->add($_POST);
+   $PluginFusioninventoryTaskjob->add($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["delete"])) {
 //   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
 
-   $pft->delete($_POST);
+   $PluginFusioninventoryTaskjob->delete($_POST);
    glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php");
 } else if (isset($_POST["update"])) {
 //   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
@@ -82,7 +82,37 @@ if (isset ($_POST["add"])) {
       }
       $_POST['selection'] = exportArrayToDB($a_selectionDB);
    }
-   $pft->update($_POST);
+   $PluginFusioninventoryTaskjob->update($_POST);
+
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['itemaddaction'])) {
+   $array = explode("||", $_POST['methodaction']);
+   $module = $array[0];
+   $method = $array[1];
+   // Add task
+   $PluginFusioninventoryTask = new PluginFusioninventoryTask;
+   $PluginFusioninventoryTask->getEmpty();
+   $PluginFusioninventoryTask->fields['name'] = $method;
+
+   $task_id = $PluginFusioninventoryTask->addToDB();
+   
+   // Add job with this device
+   $PluginFusioninventoryTaskjob->getEmpty();
+   $PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id'] = $task_id;
+   $PluginFusioninventoryTaskjob->fields['name'] = $method;
+   $PluginFusioninventoryTaskjob->fields['date_scheduled'] = $_POST['date_scheduled'];
+
+   $PluginFusioninventoryTaskjob->fields['plugins_id'] = PluginFusioninventoryModule::getModuleId($module);
+   $PluginFusioninventoryTaskjob->fields['method'] = $method;
+   $a_selectionDB = array();
+   $a_selectionDB[][$_POST['itemtype']] = $_POST['items_id'];
+   $PluginFusioninventoryTaskjob->fields['selection'] = exportArrayToDB($a_selectionDB);
+   $PluginFusioninventoryTaskjob->addToDB();
+   // Upsate task to activate it
+   $PluginFusioninventoryTask->getFromDB($task_id);
+   $PluginFusioninventoryTask->fields['is_active'] = "1";
+   $PluginFusioninventoryTask->update($PluginFusioninventoryTask->fields);
+   // force running this job (?)
 
    glpi_header($_SERVER['HTTP_REFERER']);
 }

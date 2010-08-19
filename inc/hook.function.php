@@ -63,4 +63,13 @@ function plugin_fusioninventory_task_wakeonlan_fromothertasks($a_computerid = ar
 
 }
 
+
+# Actions with itemtype autorized
+function plugin_fusioninventory_task_action_wakeonlan() {
+   $a_itemtype = array();
+   $a_itemtype[] = COMPUTER_TYPE;
+
+   return $a_itemtype;
+}
+
 ?>

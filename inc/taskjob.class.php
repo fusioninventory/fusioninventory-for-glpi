@@ -148,7 +148,7 @@ $this->cronTaskScheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>Planifié le&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusinvsnmp']["task"][14]."&nbsp;:</td>";
 		echo "<td align='center'>";
       if ($id) {
          showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
@@ -542,32 +542,51 @@ $this->cronTaskScheduler();
        *
        */
 
-      echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php\">";
+      echo "<div align='center'>";
+      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/taskjob.form.php\">";
 
 		echo "<table  class='tab_cadre_fixe'>";
 
       echo "<tr>";
-      echo "<th colspan='2'>";
-      echo $LANG['plugin_fusioninventory']["agents"][14];
+      echo "<th colspan='4'>";
+      echo $LANG['plugin_fusioninventory']["task"][21];
       echo " : </th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2' align='center'>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusioninventory']["task"][2]."&nbsp;:";
+      echo "</td>";
 
+      echo "<td align='center'>";
       $a_methods = array();
       $a_methods = plugin_fusioninventory_getmethods();
       $a_parseMethods = array();
+      $a_parseMethods[''] = "------";
       foreach($a_methods as $num=>$data) {
-         $a_parseMethods[$data['module']] = $data['method'];
+         if (function_exists('plugin_'.$data['module'].'_task_action_'.$data['method'])) {
+            $a_itemtype = call_user_func('plugin_'.$data['module'].'_task_action_'.$data['method']);
+            if (in_array($itemtype, $a_itemtype)) {
+               $a_parseMethods[$data['module']."||".$data['method']] = $data['method'];
+            }
+         }
       }
-      
       Dropdown::showFromArray('methodaction', $a_parseMethods);
+      echo "</td>";
 
-      echo "<tr class='tab_bg_2'>";
       echo "<td align='center'>";
-      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
+      echo $LANG['plugin_fusinvsnmp']["task"][14]."&nbsp;:";
+      echo "</td>";
+      echo "<td align='center'>";
+      showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      echo "</td>";
+      echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center' colspan='4'>";
+      echo "<input type='hidden' name='items_id' value='".$items_id."'/>";
+      echo "<input type='hidden' name='itemtype' value='".$itemtype."'/>";
+      echo "<input type='submit' name='itemaddaction' value=\"".$LANG['buttons'][8]."\" class='submit' >";
       echo "</td>";
       echo "</tr>";
 

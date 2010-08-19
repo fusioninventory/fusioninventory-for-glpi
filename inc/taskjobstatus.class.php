@@ -104,28 +104,48 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          case 'running':
             $search = " AND `state`!='3'";
             $title = $LANG['plugin_fusioninventory']["task"][19];
+            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $search = " AND `state`='3'";
             $title = $LANG['plugin_fusioninventory']["task"][20];
+            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
+            break;
+
+         case 'nostarted';
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`
+               LEFT JOIN ".$this->table." on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+               WHERE `selection` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
+                  AND `plugin_fusioninventory_taskjobs_id` is null";
+            $a_taskjobs = array();
+            if ($result = $DB->query($query)) {
+               while ($data=$DB->fetch_array($result)) {
+                  $data['plugin_fusioninventory_taskjobs_id'] = $data['id'];
+                  $a_taskjobs[] = $data;                  
+               }
+            }
+            $title = $LANG['plugin_fusioninventory']["task"][22];
+            $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/>";
             break;
 
          case 'all':
             $search = "";
             $title = $LANG['plugin_fusioninventory']["task"][18];
+            $icon = "";
             break;
 
       }
-
-      $query = "SELECT * FROM ".$this->table."
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
-         WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
-         ORDER BY `date_scheduled` DESC";
-      $a_taskjobs = array();
-      if ($result = $DB->query($query)) {
-         while ($data=$DB->fetch_array($result)) {
-            $a_taskjobs[] = $data;
+      if (isset($search)) {
+         $query = "SELECT * FROM ".$this->table."
+            LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
+            WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
+            ORDER BY `date_scheduled` DESC";
+         $a_taskjobs = array();
+         if ($result = $DB->query($query)) {
+            while ($data=$DB->fetch_array($result)) {
+               $a_taskjobs[] = $data;
+            }
          }
       }
 
@@ -135,9 +155,12 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 		echo "<table  class='tab_cadre_fixe'>";
 
       echo "<tr>";
-      echo "<th colspan='2'>";
-      echo $title;
-      echo " : </th>";
+      echo "<th width='110'>";
+      echo $icon;
+      echo "</th>";
+      echo "<th>";
+      echo $title."&nbsp;:";
+      echo "</th>";
       echo "</tr>";
 
       echo "</table>";

@@ -376,6 +376,8 @@ function plugin_headings_fusioninventory_tasks($item) {
    $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
    $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
    // see tasks finished
+   $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'nostarted');
+   // see tasks finished
    $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
 }
 
