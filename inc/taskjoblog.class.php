@@ -52,10 +52,10 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 	}
 
 
-   function showHistory($id) {
+   function showHistory($id, $width="950") {
 		global $DB,$CFG_GLPI,$LANG;
 
-      echo "<center><table class='tab_cadre_fixe'>";
+      echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
       echo "<tr>";
       echo "<th colspan='4'>Historique</th>";
       echo "</tr>";

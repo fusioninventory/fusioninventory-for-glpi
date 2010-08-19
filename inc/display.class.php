@@ -120,6 +120,39 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
          set_error_handler("userErrorHandler");
       }
    }
+
+
+   static function getProgressBar($width,$percent,$options=array()) {
+      global  $CFG_GLPI,$LANG;
+
+      $param['title']=$LANG['common'][47];
+      $param['simple']=false;
+      $param['forcepadding']=false;
+
+      if (is_array($options) && count($options)) {
+         foreach ($options as $key => $val) {
+            $param[$key]=$val;
+         }
+      }
+
+      $percentwidth=floor($percent*$width/100);
+      $output="<div class='center'><table class='tab_cadre' width='".($width+20)."px'>";
+      if (!$param['simple']) {
+         $output.="<tr><th class='center'>".$param['title']."&nbsp;".$percent."%</th></tr>";
+      }
+      $output.="<tr><td>
+                <table><tr><td class='center' style='background:url(".$CFG_GLPI["root_doc"].
+                "/pics/loader.png) repeat-x;' width='.$percentwidth' height='12'>";
+      if ($param['simple']) {
+         $output.=$percent."%";
+      } else {
+         $output.='&nbsp;';
+      }
+      $output.="</td></tr></table></td>";
+      $output.="</tr></table>";
+      $output.="</div>";
+      return $output;
+   }
 }
 
 ?>

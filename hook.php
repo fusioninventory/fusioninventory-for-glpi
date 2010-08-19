@@ -174,6 +174,11 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          // Get progression bar 
          return "";
          break;
+
+      case "glpi_plugin_fusioninventory_taskjobs.status":
+         $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+         return $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '400', 'htmlvar', 'simple');
+         break;
    }
    return "";
 }
@@ -240,6 +245,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[2] = $LANG['plugin_fusioninventory']["title"][5];
             }
+            $array[3] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
             return $array;
 			}
 			break;
@@ -264,6 +270,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][5];
             }
+            $array[2] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
             return $array;
 			}
 			break;
@@ -276,6 +283,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][5];
             }
+            $array[2] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
             return $array;
 			}
 			break;
@@ -309,6 +317,7 @@ function plugin_headings_actions_fusioninventory($item) {
              $array[1] = "plugin_headings_fusioninventory_computerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_locks";
+         $array[3] = "plugin_headings_fusioninventory_tasks";
 			return $array;
 			break;
 
@@ -320,13 +329,15 @@ function plugin_headings_actions_fusioninventory($item) {
 
       case 'Printer' :
          return array (
-            1 => "plugin_headings_fusioninventory_locks"
+            1 => "plugin_headings_fusioninventory_locks",
+            2 => "plugin_headings_fusioninventory_tasks"
          );
 			break;
 
 		case 'NetworkEquipment' :
          return array (
-            1 => "plugin_headings_fusioninventory_locks"
+            1 => "plugin_headings_fusioninventory_locks",
+            2 => "plugin_headings_fusioninventory_tasks"
          );
 			break;
 
@@ -353,6 +364,19 @@ function plugin_headings_fusioninventory_locks($item) {
 	$fusioninventory_locks = new PluginFusioninventoryLock();
    $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
                                                        $type, $id);
+}
+
+function plugin_headings_fusioninventory_tasks($item) {
+   $itemtype = get_Class($item);
+   $items_id = $item->getField('id');
+   // Create task
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+   $PluginFusioninventoryTaskjob->showActions($items_id, $itemtype);
+   // See task runing
+   $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+   $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
+   // see tasks finished
+   $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
 }
 
 //function plugin_headings_fusioninventory($type,$id,$withtemplate=0) {

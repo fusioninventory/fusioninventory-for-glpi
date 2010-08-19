@@ -42,6 +42,7 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventoryAgent');
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryTask');
+   Plugin::registerClass('PluginFusioninventoryTaskjob');
 
    $a_plugin = plugin_version_fusioninventory();
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);

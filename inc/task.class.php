@@ -165,18 +165,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
 		echo "</td>";
       echo "</tr>";
 
-
-
-
-
-
-
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
       return true;
    }
-
 
 
 
@@ -197,7 +190,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
-
+## CHECK FUNCTION (ok, not ok) UNDER THIS LINE
 
    function Counter($agent_id, $action) {
       global $DB;

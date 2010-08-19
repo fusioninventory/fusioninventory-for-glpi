@@ -601,6 +601,9 @@ $LANG['plugin_fusioninventory']["task"][13]="Agent(s) indisponible(s)";
 $LANG['plugin_fusioninventory']["task"][14]="Date d'exécution";
 $LANG['plugin_fusioninventory']["task"][16]="Nouvelle action";
 $LANG['plugin_fusioninventory']["task"][17]="Périodicité";
+$LANG['plugin_fusioninventory']["task"][18]="Tâches";
+$LANG['plugin_fusioninventory']["task"][19]="Tâches en cours";
+$LANG['plugin_fusioninventory']["task"][20]="Tâches terminées";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusioninventory']["constructdevice"][1]="Creation automatique des modèles";

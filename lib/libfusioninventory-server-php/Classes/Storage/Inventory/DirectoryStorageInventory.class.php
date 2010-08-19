@@ -253,7 +253,7 @@ INFOCONTENT;
     */
     private function _getCriteriaDSN($criteriaName, $criteriaValue)
     {
-        $dsn = sprintf('%s/../../../%s/%s/%s/%s/%s',
+        $dsn = sprintf('%s%s/%s/%s/%s/%s',
         dirname(__FILE__),
         $this->_configs["storageLocation"],
         "criterias",
@@ -270,7 +270,7 @@ INFOCONTENT;
     */
     private function _getInfoPathDSN($internalId)
     {
-        $dsn = sprintf('%s/../../../%s/%s/%s',
+        $dsn = sprintf('%s%s/%s/%s',
         dirname(__FILE__),
         $this->_configs["storageLocation"],
         "machines",
@@ -330,7 +330,7 @@ INFOCONTENT;
                 unset($iniSections["sections"][$sectionId]);
                 array_push($sectionsId, $sectionId);
             }
-            Hooks::removeSections($sectionsId, $iniSections["externalId"][0]);
+            PluginFusinvinventoryLibhook::removeSections($sectionsId, $iniSections["externalId"][0]);
 
             $log->notifyDebugMessage(count($sectionsToRemove)." section(s) removed");
         }
@@ -348,7 +348,7 @@ INFOCONTENT;
 
             }
 
-            $sectionsId = Hooks::addSections($data, $iniSections["externalId"][0]);
+            $sectionsId = PluginFusinvinventoryLibhook::addSections($data, $iniSections["externalId"][0]);
 
             $log->notifyDebugMessage(count($sectionsToAdd)." section(s) added");
 

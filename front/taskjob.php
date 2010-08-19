@@ -37,12 +37,17 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
+commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","taskjob");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->showRunning();
+if (!isset($_GET['sort'])) {
+   $_GET['sort'] = 2;
+   $_GET['order'] = 'DESC';
+}
+$_GET['target']="task.php";
+
+Search::show('PluginFusioninventoryTaskjob');
 
 commonFooter();
 

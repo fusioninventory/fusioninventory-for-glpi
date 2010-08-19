@@ -115,7 +115,7 @@ class InventoryAction extends Action
             $internalId = uniqid();
 
             try {
-                $externalId = Hooks::createMachine();
+                $externalId = PluginFusinvinventoryLibhook::createMachine();
 
                 $libData->addLibMachine($internalId, $externalId);
                 $libData->addLibCriteriasMachine($internalId);

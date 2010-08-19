@@ -60,7 +60,7 @@ class PluginFusioninventoryMenu {
 
       $a_menu[3]['name'] = $LANG['plugin_fusioninventory']["menu"][7];
       $a_menu[3]['pic']  = "";
-      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskstateruning.php";
+      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskjob.php";
 
       echo "<div align='center'>";
       echo "<table width='950'>";

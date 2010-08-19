@@ -50,7 +50,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 	}
 
 
-   function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html') {
+   function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html', $style = '') {
       global $DB;
 
       $state = array();
@@ -75,12 +75,100 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          $globalState = $first + $second + $third + $fourth;
       }
       if ($return == 'html') {
-         displayProgressBar($width,ceil($globalState));
+         if ($style == 'simple') {
+            displayProgressBar($width,ceil($globalState), array('simple' => 1));
+         } else {
+            displayProgressBar($width,ceil($globalState));
+         }
+      } else if ($return == 'htmlvar') {
+         if ($style == 'simple') {
+            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState), array('simple' => 1));
+         } else {
+            return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState));
+         }
       } else {
          return ceil($globalState);
       }
    }
 
+
+
+   function stateTaskjobItem($items_id, $itemtype, $state='all') {
+      global $DB,$LANG;
+
+      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTask        = new PluginFusioninventoryTask;
+
+      switch ($state) {
+
+         case 'running':
+            $search = " AND `state`!='3'";
+            $title = $LANG['plugin_fusioninventory']["task"][19];
+            break;
+
+         case 'finished':
+            $search = " AND `state`='3'";
+            $title = $LANG['plugin_fusioninventory']["task"][20];
+            break;
+
+         case 'all':
+            $search = "";
+            $title = $LANG['plugin_fusioninventory']["task"][18];
+            break;
+
+      }
+
+      $query = "SELECT * FROM ".$this->table."
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
+         WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
+         ORDER BY `date_scheduled` DESC";
+      $a_taskjobs = array();
+      if ($result = $DB->query($query)) {
+         while ($data=$DB->fetch_array($result)) {
+            $a_taskjobs[] = $data;
+         }
+      }
+
+
+      echo "<br/><div align='center'>";
+
+		echo "<table  class='tab_cadre_fixe'>";
+
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo $title;
+      echo " : </th>";
+      echo "</tr>";
+
+      echo "</table>";
+      echo "<br/>";
+
+      foreach ($a_taskjobs as $num=>$data) {
+         echo "<table  class='tab_cadre_fixe' style='width: 800px'>";
+         echo "<tr>";
+         echo "<th>";
+         $PluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
+         
+         echo $LANG['plugin_fusioninventory']["task"][2]." : ".$data['name']." (".
+            $LANG['plugin_fusioninventory']["task"][0]." : ".$PluginFusioninventoryTask->getLink().")";
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_4'>";
+         echo "<td>";
+         echo "<br/>";
+         if ($state != 'finished') {
+            $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], $width = '730');
+            echo "<br/>";
+         }
+         $PluginFusioninventoryTaskjoblogs->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750');
+         echo "<br/>";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table><br/>";
+      }
+      echo "</div>";
+   }
 
 
    function changeStatus($id, $state) {

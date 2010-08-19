@@ -16,17 +16,17 @@ class Logger
 
     public function __construct($fileName)
     {
-        $filePath = dirname(__FILE__)."/../data/logs/";
-        if(!file_exists(dirname(__FILE__)."/../data/logs/"))
+        $filePath = GLPI_DOC_DIR."/_plugins/fusioninventory/logs/";
+        if(!file_exists(GLPI_DOC_DIR."/_plugins/fusioninventory/logs/"))
         {
-            mkdir(dirname(__FILE__)."/../data/logs/",0777,true);
+            //mkdir(GLPI_DOC_DIR."/_plugins/fusioninventory/logs/",0777,true);
         }
 
-        $this->_fileHandle = fopen($filePath.$fileName, "a");
+        $this->_fileHandle = fopen(GLPI_DOC_DIR."/_plugins/fusioninventory/logs", "a");
 
-        if (!is_writable($filePath.$fileName))
+        if (!is_writable(GLPI_DOC_DIR."/_plugins/fusioninventory/logs"))
         {
-            throw new Exception("$filePath.$fileName isn't writable. Check permissions.");
+            throw new Exception(GLPI_DOC_DIR."/_plugins/fusioninventory/logs isn't writable. Check permissions.");
         }
 
     }

@@ -47,6 +47,45 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
+   function getSearchOptions() {
+      global $LANG;
+
+      $sopt = array();
+
+      $sopt['common'] = $LANG['plugin_fusioninventory']["task"][0];
+
+      $sopt[1]['table']          = $this->getTable();
+      $sopt[1]['field']          = 'name';
+      $sopt[1]['linkfield']      = '';
+      $sopt[1]['name']           = $LANG["common"][16];
+      $sopt[1]['datatype']       = 'itemlink';
+
+      $sopt[2]['table']          = $this->getTable();
+      $sopt[2]['field']          = 'date_scheduled';
+      $sopt[2]['linkfield']      = '';
+      $sopt[2]['name']           = $LANG["common"][27];
+      $sopt[2]['datatype']       = 'datetime';
+
+      $sopt[3]['table']          = $this->getTable();
+      $sopt[3]['field']          = 'entities_id';
+      $sopt[3]['linkfield']      = '';
+      $sopt[3]['name']           = '';
+
+      $sopt[4]['table']          = $this->getTable();
+      $sopt[4]['field']          = 'status';
+      $sopt[4]['linkfield']      = '';
+      $sopt[4]['name']           = 'status';
+      
+      $sopt[30]['table']          = $this->getTable();
+      $sopt[30]['field']          = 'id';
+      $sopt[30]['linkfield']      = '';
+      $sopt[30]['name']           = $LANG['common'][2];
+
+      return $sopt;
+   }
+
+   
+
    function canCreate() {
       return true;
    }
@@ -482,9 +521,69 @@ $this->cronTaskScheduler();
             }
          }
       }
-
-
    }
+   
+   
+   /*
+    * Display actions possible in device
+    *
+    */
+   function showActions($items_id, $itemtype) {
+      global $LANG;
+
+      // load all plugin and get method possible
+      /*
+       * Example :
+       * * inventory
+       * * snmpquery
+       * * wakeonlan
+       * * deploy => software
+       * 
+       *
+       */
+
+      echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php\">";
+
+		echo "<table  class='tab_cadre_fixe'>";
+
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusioninventory']["agents"][14];
+      echo " : </th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+
+      $a_methods = array();
+      $a_methods = plugin_fusioninventory_getmethods();
+      $a_parseMethods = array();
+      foreach($a_methods as $num=>$data) {
+         $a_parseMethods[$data['module']] = $data['method'];
+      }
+      
+      Dropdown::showFromArray('methodaction', $a_parseMethods);
+
+      echo "<tr class='tab_bg_2'>";
+      echo "<td align='center'>";
+      echo "<input type='submit' name='startagent' value=\"".$LANG['plugin_fusioninventory']["task"][12]."\" class='submit' >";
+
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
+      echo "</form>";
+      echo "</div>";
+      
+   }
+
+
+
+
+
+
+
+
 
 
 
