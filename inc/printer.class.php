@@ -426,10 +426,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 		echo "</table></form>";
 		echo "</div>";
 
-      // Remote action of agent
-      $pfit = new PluginFusioninventoryTask;
-      $pfit->RemoteStateAgent($target, $id, PRINTER_TYPE, array('INVENTORY' => 1 ));
-
 
 		// ** FORM FOR CARTRIDGES
 

@@ -1069,16 +1069,6 @@ function plugin_headings_actions_fusinvsnmp($item) {
    $config = new PluginFusinvsnmpConfig;
 
    switch (get_class($item)) {
-		case 'Computer' :
-			$array = array ();
-         if (($config->is_active('fusioninventory', 'remotehttpagent')) AND (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
-             $array[1] = "plugin_headings_fusinvsnmp_computerInfo";
-         }
-			return $array;
-			break;
-
-		case 'Monitor' :
-			break;
 
       case 'Printer' :
 			$array = array ();
@@ -1105,11 +1095,6 @@ function plugin_headings_actions_fusinvsnmp($item) {
 	return false;
 }
 
-
-function plugin_headings_fusinvsnmp_computerInfo($type, $id) {
-   $pfit = new PluginFusioninventoryTask;
-   $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusinvsnmp/front/agents.state.php', $id, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
-}
 
 function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
 	include_once(GLPI_ROOT."/inc/stat.function.php");

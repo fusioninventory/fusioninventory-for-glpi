@@ -394,10 +394,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "</table></form>";
 
-      // Remote action of agent
-      $pfit = new PluginFusioninventoryTask;
-      $pfit->RemoteStateAgent($target, $id, NETWORKING_TYPE, array('INVENTORY' => 1 ));
-
 
       // SNMP Informations
 //		echo "<div align='center'>

@@ -48,14 +48,14 @@ function plugin_fusinvsnmp_task_methods() {
                       'method'         => 'netdiscovery',
                       'selection_type' => 'ipranges associated');
    $a_tasks[] = array('module'         => 'fusinvsnmp',
-                      'method'         => 'snmp inventory',
+                      'method'         => 'snmpinventory',
                       'selection_type' => 'devices');
    $a_tasks[] = array('module'         => 'fusinvsnmp',
-                      'method'         => 'snmp inventory',
+                      'method'         => 'snmpinventory',
                       'selection_type' => 'iprange',
                       'selection_type_name' => $LANG['plugin_fusioninventory']["menu"][2]);
    $a_tasks[] = array('module'         => 'fusinvsnmp',
-                      'method'         => 'snmp inventory',
+                      'method'         => 'snmpinventory',
                       'selection_type' => 'ipranges associated');
 
    return $a_tasks;
@@ -73,6 +73,15 @@ function plugin_fusinvsnmp_task_netdiscovery_iprange() {
       $array[$id] = $datas['name']." [".$datas['ip_start']." - ".$datas['ip_end']."]";
    }
    return $array;
+}
+
+
+function plugin_fusinvsnmp_task_action_snmpinventory() {
+   $a_itemtype = array();
+   $a_itemtype[] = PRINTER_TYPE;
+   $a_itemtype[] = NETWORKING_TYPE;
+
+   return $a_itemtype;
 }
 
 ?>
