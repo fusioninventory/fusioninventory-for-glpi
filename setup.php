@@ -44,6 +44,8 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventoryTask');
    Plugin::registerClass('PluginFusioninventoryTaskjob');
 
+   CronTask::Register('fusioninventory', 'tasks', '300', array('mode'=>1, 'allowmode'=>3, 'logs_lifetime'=>30));
+
    $a_plugin = plugin_version_fusioninventory();
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 

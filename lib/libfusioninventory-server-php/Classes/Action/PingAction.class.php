@@ -19,7 +19,7 @@ class PingAction extends Action
     */
     public function startAction($simpleXMLObj)
     {
-        $log = new Logger('logs');
+        $log = new Logger();
 
         $log->notifyDebugMessage("-- PING ACTION START --");
 

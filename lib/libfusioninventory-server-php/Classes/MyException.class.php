@@ -4,7 +4,7 @@ class MyException extends Exception
 {
     function __construct($msg)
     {
-        $log = new Logger('logs');
+        $log = new Logger();
         $log->notifyExceptionMessage($msg);
         parent::__construct($msg);
     }

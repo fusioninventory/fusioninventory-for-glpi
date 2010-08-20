@@ -198,6 +198,9 @@ function cron_plugin_fusioninventory() {
 //   #Clean server script processes history
 //   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
 //   $pfisnmph->cronCleanHistory();
+
+
+   
    return 1;
 }
 

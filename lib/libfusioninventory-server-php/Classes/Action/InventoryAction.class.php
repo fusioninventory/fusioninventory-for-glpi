@@ -89,7 +89,7 @@ class InventoryAction extends Action
     */
     public function startAction($simpleXMLObj)
     {
-        $log = new Logger('logs');
+        $log = new Logger();
 
         $libData = StorageInventoryFactory::createStorage($this->_applicationName, $this->_config, $simpleXMLObj);
 
@@ -115,7 +115,8 @@ class InventoryAction extends Action
             $internalId = uniqid();
 
             try {
-                $externalId = PluginFusinvinventoryLibhook::createMachine();
+               $classhook = LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME;
+                $externalId = $classhook::createMachine();
 
                 $libData->addLibMachine($internalId, $externalId);
                 $libData->addLibCriteriasMachine($internalId);

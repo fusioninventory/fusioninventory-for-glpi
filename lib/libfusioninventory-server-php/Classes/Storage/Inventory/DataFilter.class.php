@@ -14,7 +14,7 @@ class DataFilter
     */
     public static function filter($section)
     {
-        $log = new Logger('logs');
+        $log = new Logger();
         switch($section->getName())
         {
             case 'CONTROLLERS':

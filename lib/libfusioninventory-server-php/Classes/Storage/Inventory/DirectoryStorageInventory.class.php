@@ -109,6 +109,10 @@ class DirectoryStorageInventory extends StorageInventory
                 }
             }
         }
+        if($falseCriteriaNb == $this->_configs["maxFalse"])
+        {
+            return false;
+        }
         if (isset($internalId[2]))
         {
             return $internalId[2];
@@ -253,9 +257,8 @@ INFOCONTENT;
     */
     private function _getCriteriaDSN($criteriaName, $criteriaValue)
     {
-        $dsn = sprintf('%s%s/%s/%s/%s/%s',
-        dirname(__FILE__),
-        $this->_configs["storageLocation"],
+        $dsn = sprintf('%s/%s/%s',
+        LIBSERVERFUSIONINVENTORY_STORAGELOCATION,
         "criterias",
         $criteriaName,
         $this->_applicationName,
@@ -270,9 +273,8 @@ INFOCONTENT;
     */
     private function _getInfoPathDSN($internalId)
     {
-        $dsn = sprintf('%s%s/%s/%s',
-        dirname(__FILE__),
-        $this->_configs["storageLocation"],
+        $dsn = sprintf('%s/%s/%s',
+        LIBSERVERFUSIONINVENTORY_STORAGELOCATION,
         "machines",
         $internalId);
         return $dsn;
@@ -306,7 +308,7 @@ INFOCONTENT;
     */
     public function updateLibMachine($xmlSections, $internalId)
     {
-        $log = new Logger('logs');
+        $log = new Logger();
         // Retrieve all sections stored in info file
         $iniSections = $this->_getINISections($internalId);
 
@@ -320,7 +322,7 @@ INFOCONTENT;
         //Retrieve changes, sections to Add and sections to Remove
         $sectionsToAdd = array_diff($xmlHashSections, $iniSections["sections"]);
         $sectionsToRemove = array_diff($iniSections["sections"], $xmlHashSections);
-
+        $classhook = LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME;
         if ($sectionsToRemove)
         {
             $sectionsId = array();
@@ -330,7 +332,8 @@ INFOCONTENT;
                 unset($iniSections["sections"][$sectionId]);
                 array_push($sectionsId, $sectionId);
             }
-            PluginFusinvinventoryLibhook::removeSections($sectionsId, $iniSections["externalId"][0]);
+            
+            $classhook::removeSections($sectionsId, $iniSections["externalId"][0]);
 
             $log->notifyDebugMessage(count($sectionsToRemove)." section(s) removed");
         }
@@ -348,7 +351,7 @@ INFOCONTENT;
 
             }
 
-            $sectionsId = PluginFusinvinventoryLibhook::addSections($data, $iniSections["externalId"][0]);
+            $sectionsId = $classhook::addSections($data, $iniSections["externalId"][0]);
 
             $log->notifyDebugMessage(count($sectionsToAdd)." section(s) added");
 

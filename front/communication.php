@@ -42,6 +42,10 @@ if (!defined('GLPI_ROOT')) {
 session_start();
 include (GLPI_ROOT."/inc/includes.php");
 
+if (!isset($_SESSION['glpilanguage'])) {
+   $_SESSION['glpilanguage'] = 'en_GB';
+}
+
 $_SESSION["glpi_use_mode"] = 2;
 
 // Load all plugin files

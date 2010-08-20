@@ -97,6 +97,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       global $DB,$LANG;
 
       $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTaskjob     = new PluginFusioninventoryTaskjob;
       $PluginFusioninventoryTask        = new PluginFusioninventoryTask;
 
       switch ($state) {
@@ -114,14 +115,13 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             break;
 
          case 'nostarted';
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`
+            $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid FROM `glpi_plugin_fusioninventory_taskjobs`
                LEFT JOIN ".$this->table." on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
                WHERE `selection` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
                   AND `plugin_fusioninventory_taskjobs_id` is null";
             $a_taskjobs = array();
             if ($result = $DB->query($query)) {
                while ($data=$DB->fetch_array($result)) {
-                  $data['plugin_fusioninventory_taskjobs_id'] = $data['id'];
                   $a_taskjobs[] = $data;                  
                }
             }
@@ -180,11 +180,15 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          echo "<tr class='tab_bg_4'>";
          echo "<td>";
          echo "<br/>";
-         if ($state != 'finished') {
-            $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], $width = '730');
-            echo "<br/>";
+         if ($state == 'nostarted') {
+            $PluginFusioninventoryTaskjob->showMiniAction($data['tjid'], '750');
+         } else {
+            if ($state != 'finished') {
+               $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], $width = '730');
+               echo "<br/>";
+            }
+            $PluginFusioninventoryTaskjoblogs->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750');
          }
-         $PluginFusioninventoryTaskjoblogs->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750');
          echo "<br/>";
          echo "</td>";
          echo "</tr>";

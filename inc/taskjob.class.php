@@ -597,7 +597,34 @@ $this->cronTaskScheduler();
    }
 
 
+   function showMiniAction($items_id, $width="950") {
+      global $LANG;
+      
+      echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
+      echo "<tr>";
+      echo "<th>";
+      echo "Date";
+      echo "</th>";
+      echo "<th>";
+      echo "Comment";
+      echo "</th>";
+      echo "</tr>";
+
+      $a_taskjob = $this->find('`id`="'.$items_id.'" ', 'date_scheduled DESC');
+      foreach ($a_taskjob as $is=>$data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         echo convDateTime($data['date_scheduled']);
+         echo "</td>";
+         echo "<td align='center'>";
+         echo $data['comment'];
+         echo "</td>";
+         echo "</tr>";
+      }
+
+      echo "</table></center>";
+   }
 
 
 

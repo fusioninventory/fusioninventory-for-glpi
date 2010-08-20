@@ -14,19 +14,18 @@ class Logger
 
     private $_fileHandle;
 
-    public function __construct($fileName)
+    public function __construct()
     {
-        $filePath = GLPI_DOC_DIR."/_plugins/fusioninventory/logs/";
-        if(!file_exists(GLPI_DOC_DIR."/_plugins/fusioninventory/logs/"))
+        if(!file_exists(LIBSERVERFUSIONINVENTORY_LOG_FILE))
         {
-            //mkdir(GLPI_DOC_DIR."/_plugins/fusioninventory/logs/",0777,true);
+            mkdir(LIBSERVERFUSIONINVENTORY_LOG_FILE,0777,true);
         }
 
-        $this->_fileHandle = fopen(GLPI_DOC_DIR."/_plugins/fusioninventory/logs", "a");
+        $this->_fileHandle = fopen(LIBSERVERFUSIONINVENTORY_LOG_FILE, "a");
 
-        if (!is_writable(GLPI_DOC_DIR."/_plugins/fusioninventory/logs"))
+        if (!is_writable(LIBSERVERFUSIONINVENTORY_LOG_FILE))
         {
-            throw new Exception(GLPI_DOC_DIR."/_plugins/fusioninventory/logs isn't writable. Check permissions.");
+            throw new Exception("$filePath.$fileName isn't writable. Check permissions.");
         }
 
     }

@@ -84,7 +84,7 @@ class FusionLibServer
        $simpleXMLObj = simplexml_load_string(@gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
         //$simpleXMLObj = simplexml_load_file(dirname(__FILE__) ."/../data/aofr.ocs");
 
-        $log = new Logger('logs');
+        $log = new Logger();
 
         if($simpleXMLObj->QUERY == "PROLOG")
         {
