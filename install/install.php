@@ -49,7 +49,6 @@ function pluginFusinvinventoryInstall() {
    } else {
       // Installation
       // Add new module in plugin_fusioninventory (core)
-      $modules_id = PluginFusioninventoryModule::addModule(PluginFusioninventoryModule::getId($a_plugin['shortname'], "INVENTORY"));
 
       // Create database
       $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
@@ -67,7 +66,15 @@ function pluginFusinvinventoryInstall() {
       }
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-
+      $a_rights = array();
+      $a_rights['networking'] = 'w';
+      $a_rights['printers'] = 'w';
+      $a_rights['models'] = 'w';
+      $a_rights['authentication'] = 'w';
+      $a_rights['iprange'] = 'w';
+      $a_rights['unknowndevices'] = 'w';
+      $a_rights['configuration'] = 'w';
+      PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
       // Creation of profile
 //      PluginFusioninventoryProfile::initSession($modules_id, array(type, right));
 
