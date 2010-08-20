@@ -698,7 +698,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
                          GROUP BY FK_printers";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $dropdownOptions .= "<option value='".NETWORKING_TYPE."-".$data['gID']."'>".
+            $dropdownOptions .= "<option value='".PRINTER_TYPE."-".$data['gID']."'>".
                $data['name']." - ".$data['serial']." - ".$data['otherserial']."</option>";
          }
          $dropdownOptions .= "</optgroup>";
