@@ -79,7 +79,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    }
    $ocsinventory = '0';
 // ***** For debug only ***** //
-// file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+ file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
 // ********** End ********** //
    $state = $ptc->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
    if (($state == '2') OR ($state == '1')) { // agent created (2) + agent also created (1)
