@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_fusioninventory_date ($number_dates,$frequence,$today='') {
+function plugin_fusioninventory_date($number_dates,$frequence,$today='') {
 	if ($today == "") {
 		$today = time();
 	} else {
@@ -83,7 +83,7 @@ function plugin_fusioninventory_date ($number_dates,$frequence,$today='') {
 
 
 
-function plugin_fusioninventory_printer_calendar ($getvalue,$field,$target) {
+function plugin_fusioninventory_printer_calendar($getvalue,$field,$target) {
 	global $DB,$LANG;
 
 	echo "<div align='center'><form method='post' action='".$target."'>";
