@@ -36,131 +36,6 @@
 
 
 
-
-//function plugin_fusioninventory_getAddSearchOptions() {
-//	global $LANG;
-//	$sopt = array ();
-//
-//	$config = new PluginFusioninventoryConfig;
-//
-//	// Part header
-//	$sopt['PluginFusioninventoryError']['common'] = $LANG['plugin_fusioninventory']["errors"][0];
-//
-//	$sopt['PluginFusioninventoryError'][1]['table'] = 'glpi_plugin_fusioninventory_errors';
-//	$sopt['PluginFusioninventoryError'][1]['field'] = 'ip';
-//	$sopt['PluginFusioninventoryError'][1]['linkfield'] = 'ip';
-//	$sopt['PluginFusioninventoryError'][1]['name'] = $LANG['plugin_fusioninventory']["errors"][1];
-//
-//	$sopt['PluginFusioninventoryError'][30]['table'] = 'glpi_plugin_fusioninventory_errors';
-//	$sopt['PluginFusioninventoryError'][30]['field'] = 'id';
-//	$sopt['PluginFusioninventoryError'][30]['linkfield'] = '';
-//	$sopt['PluginFusioninventoryError'][30]['name'] = $LANG["common"][2];
-//
-//	$sopt['PluginFusioninventoryError'][3]['table'] = 'glpi_plugin_fusioninventory_errors';
-//	$sopt['PluginFusioninventoryError'][3]['field'] = 'itemtype';
-//	$sopt['PluginFusioninventoryError'][3]['linkfield'] = 'itemtype';
-//	$sopt['PluginFusioninventoryError'][3]['name'] = $LANG["common"][1];
-//
-//	$sopt['PluginFusioninventoryError'][4]['table'] = 'glpi_plugin_fusioninventory_errors';
-//	$sopt['PluginFusioninventoryError'][4]['field'] = 'device_id';
-//	$sopt['PluginFusioninventoryError'][4]['linkfield'] = 'device_id';
-//	$sopt['PluginFusioninventoryError'][4]['name'] = $LANG["common"][16];
-//
-//	$sopt['PluginFusioninventoryError'][6]['table'] = 'glpi_plugin_fusioninventory_errors';
-//	$sopt['PluginFusioninventoryError'][6]['field'] = 'description';
-//	$sopt['PluginFusioninventoryError'][6]['linkfield'] = 'description';
-//	$sopt['PluginFusioninventoryError'][6]['name'] = $LANG['plugin_fusioninventory']["errors"][2];
-//  $sopt['PluginFusioninventoryError'][6]['datatype']='text';
-//
-//	$sopt['PluginFusioninventoryError'][7]['table'] = 'glpi_plugin_fusioninventory_errors';
-//	$sopt['PluginFusioninventoryError'][7]['field'] = 'first_pb_date';
-//	$sopt['PluginFusioninventoryError'][7]['linkfield'] = 'first_pb_date';
-//	$sopt['PluginFusioninventoryError'][7]['name'] = $LANG['plugin_fusioninventory']["errors"][3];
-//  $sopt['PluginFusioninventoryError'][7]['datatype']='datetime';
-//
-//	$sopt['PluginFusioninventoryError'][8]['table'] = 'glpi_plugin_fusioninventory_errors';
-//	$sopt['PluginFusioninventoryError'][8]['field'] = 'last_pb_date';
-//	$sopt['PluginFusioninventoryError'][8]['linkfield'] = 'last_pb_date';
-//	$sopt['PluginFusioninventoryError'][8]['name'] = $LANG['plugin_fusioninventory']["errors"][4];
-//  $sopt['PluginFusioninventoryError'][8]['datatype']='datetime';
-//
-//	$sopt['PluginFusioninventoryError'][80]['table'] = 'glpi_entities';
-//	$sopt['PluginFusioninventoryError'][80]['field'] = 'completename';
-//	$sopt['PluginFusioninventoryError'][80]['linkfield'] = 'entities_id';
-//	$sopt['PluginFusioninventoryError'][80]['name'] = $LANG["entity"][0];
-//
-//   $sopt['PluginFusioninventoryAgent']['common'] = $LANG['plugin_fusioninventory']["profile"][26];
-//
-//	$sopt['PluginFusioninventoryAgent'][1]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][1]['field'] = 'name';
-//	$sopt['PluginFusioninventoryAgent'][1]['linkfield'] = 'name';
-//	$sopt['PluginFusioninventoryAgent'][1]['name'] = $LANG["common"][16];
-//   $sopt['PluginFusioninventoryAgent'][1]['datatype']='itemlink';
-//
-//	$sopt['PluginFusioninventoryAgent'][30]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][30]['field'] = 'id';
-//	$sopt['PluginFusioninventoryAgent'][30]['linkfield'] = '';
-//	$sopt['PluginFusioninventoryAgent'][30]['name'] = $LANG["common"][2];
-//
-//	$sopt['PluginFusioninventoryAgent'][4]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][4]['field'] = 'threads_discovery';
-//	$sopt['PluginFusioninventoryAgent'][4]['linkfield'] = 'threads_discovery';
-//	$sopt['PluginFusioninventoryAgent'][4]['name'] = $LANG['plugin_fusioninventory']["agents"][3];
-//
-//	$sopt['PluginFusioninventoryAgent'][6]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][6]['field'] = 'threads_query';
-//	$sopt['PluginFusioninventoryAgent'][6]['linkfield'] = 'threads_query';
-//	$sopt['PluginFusioninventoryAgent'][6]['name'] = $LANG['plugin_fusioninventory']["agents"][2];
-//
-//	$sopt['PluginFusioninventoryAgent'][8]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][8]['field'] = 'last_agent_update';
-//	$sopt['PluginFusioninventoryAgent'][8]['linkfield'] = '';
-//	$sopt['PluginFusioninventoryAgent'][8]['name'] = $LANG['plugin_fusioninventory']["agents"][4];
-//   $sopt['PluginFusioninventoryAgent'][8]['datatype']='datetime';
-//
-//	$sopt['PluginFusioninventoryAgent'][9]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][9]['field'] = 'fusioninventory_agent_version';
-//	$sopt['PluginFusioninventoryAgent'][9]['linkfield'] = '';
-//	$sopt['PluginFusioninventoryAgent'][9]['name'] = $LANG['plugin_fusioninventory']["agents"][5];
-//
-//	$sopt['PluginFusioninventoryAgent'][10]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][10]['field'] = 'lock';
-//	$sopt['PluginFusioninventoryAgent'][10]['linkfield'] = 'lock';
-//	$sopt['PluginFusioninventoryAgent'][10]['name'] = $LANG['plugin_fusioninventory']["agents"][6];
-//   $sopt['PluginFusioninventoryAgent'][10]['datatype']='bool';
-//
-// 	$sopt['PluginFusioninventoryAgent'][11]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][11]['field'] = 'module_inventory';
-//	$sopt['PluginFusioninventoryAgent'][11]['linkfield'] = 'module_inventory';
-//	$sopt['PluginFusioninventoryAgent'][11]['name'] = $LANG['plugin_fusioninventory']['config'][3];
-//   $sopt['PluginFusioninventoryAgent'][11]['datatype']='bool';
-//
-// 	$sopt['PluginFusioninventoryAgent'][12]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][12]['field'] = 'module_netdiscovery';
-//	$sopt['PluginFusioninventoryAgent'][12]['linkfield'] = 'module_netdiscovery';
-//	$sopt['PluginFusioninventoryAgent'][12]['name'] = $LANG['plugin_fusioninventory']['config'][4];
-//   $sopt['PluginFusioninventoryAgent'][12]['datatype']='bool';
-//
-//   $sopt['PluginFusioninventoryAgent'][13]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][13]['field'] = 'module_snmpquery';
-//	$sopt['PluginFusioninventoryAgent'][13]['linkfield'] = 'module_snmpquery';
-//	$sopt['PluginFusioninventoryAgent'][13]['name'] = $LANG['plugin_fusioninventory']['config'][7];
-//   $sopt['PluginFusioninventoryAgent'][13]['datatype']='bool';
-//
-//   $sopt['PluginFusioninventoryAgent'][14]['table'] = 'glpi_plugin_fusioninventory_agents';
-//	$sopt['PluginFusioninventoryAgent'][14]['field'] = 'module_wakeonlan';
-//	$sopt['PluginFusioninventoryAgent'][14]['linkfield'] = 'module_wakeonlan';
-//	$sopt['PluginFusioninventoryAgent'][14]['name'] = $LANG['plugin_fusioninventory']['config'][6];
-//   $sopt['PluginFusioninventoryAgent'][14]['datatype']='bool';
-//
-//
-//
-//
-//
-//	return $sopt;
-//}
-
-
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 	global $CFG_GLPI, $LANG;
 
@@ -179,6 +54,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
          return $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '400', 'htmlvar', 'simple');
          break;
+
    }
    return "";
 }

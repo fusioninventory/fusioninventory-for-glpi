@@ -50,38 +50,40 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    function getSearchOptions() {
       global $LANG;
 
-      $sopt = array();
+      $tab = array();
 
-      $sopt['common'] = $LANG['plugin_fusioninventory']["task"][0];
+      $tab['common'] = $LANG['plugin_fusioninventory']["task"][0];
 
-      $sopt[1]['table']          = $this->getTable();
-      $sopt[1]['field']          = 'name';
-      $sopt[1]['linkfield']      = '';
-      $sopt[1]['name']           = $LANG["common"][16];
-      $sopt[1]['datatype']       = 'itemlink';
+      $tab[1]['table']          = $this->getTable();
+      $tab[1]['field']          = 'name';
+      $tab[1]['linkfield']      = '';
+      $tab[1]['name']           = $LANG["common"][16];
+      $tab[1]['datatype']       = 'itemlink';
 
-      $sopt[2]['table']          = $this->getTable();
-      $sopt[2]['field']          = 'date_scheduled';
-      $sopt[2]['linkfield']      = '';
-      $sopt[2]['name']           = $LANG["common"][27];
-      $sopt[2]['datatype']       = 'datetime';
+      $tab[2]['table']           = 'glpi_entities';
+      $tab[2]['field']           = 'completename';
+      $tab[2]['linkfield']       = 'entities_id';
+      $tab[2]['name']            = $LANG['entity'][0];
 
-      $sopt[3]['table']          = $this->getTable();
-      $sopt[3]['field']          = 'entities_id';
-      $sopt[3]['linkfield']      = '';
-      $sopt[3]['name']           = '';
+      $tab[3]['table']          = $this->getTable();
+      $tab[3]['field']          = 'date_scheduled';
+      $tab[3]['linkfield']      = '';
+      $tab[3]['name']           = $LANG["common"][27];
+      $tab[3]['datatype']       = 'datetime';
 
-      $sopt[4]['table']          = $this->getTable();
-      $sopt[4]['field']          = 'status';
-      $sopt[4]['linkfield']      = '';
-      $sopt[4]['name']           = 'status';
+      $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
+      $tab[4]['field']          = 'name';
+      $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
+      $tab[4]['name']           = $LANG['plugin_fusioninventory']["task"][0];
+      $tab[4]['datatype']       = 'itemlink';
+      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
       
-      $sopt[30]['table']          = $this->getTable();
-      $sopt[30]['field']          = 'id';
-      $sopt[30]['linkfield']      = '';
-      $sopt[30]['name']           = $LANG['common'][2];
+      $tab[5]['table']          = $this->getTable();
+      $tab[5]['field']          = 'status';
+      $tab[5]['linkfield']      = '';
+      $tab[5]['name']           = 'status';
 
-      return $sopt;
+      return $tab;
    }
 
    
@@ -627,7 +629,23 @@ $this->cronTaskScheduler();
    }
 
 
+   function redirectTask($taskjobs_id) {
 
+      $this->getFromDB($taskjobs_id);
+
+      $a_taskjob = $this->find("`plugin_fusioninventory_tasks_id`='".$this->fields['plugin_fusioninventory_tasks_id']."'
+            AND `rescheduled_taskjob_id`='0' ", "date_scheduled,id");
+      $i = 1;
+      foreach($a_taskjob as $id=>$datas) {
+         $i++;
+         if ($id == $taskjobs_id) {
+            $tab = $i;
+         }
+      }
+      glpi_header(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?"
+              ."itemtype=PluginFusioninventoryTask&id=".$this->fields['plugin_fusioninventory_tasks_id']."&glpi_tab=".$tab);
+
+   }
 
 
 

@@ -241,6 +241,13 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryAgent', '13', '6', '0'),
           (NULL,'PluginFusioninventoryAgent', '14', '7', '0');
 
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
+   VALUES (NULL,'PluginFusioninventoryTaskjob', '1', '1', '0'),
+          (NULL,'PluginFusioninventoryTaskjob', '2', '2', '0'),
+          (NULL,'PluginFusioninventoryTaskjob', '3', '3', '0'),
+          (NULL,'PluginFusioninventoryTaskjob', '4', '4', '0'),
+          (NULL,'PluginFusioninventoryTaskjob', '5', '5', '0');
+
 
 ## glpi_plugin_fusioninventory_mappings
 INSERT INTO `glpi_plugin_fusioninventory_mappings`
