@@ -775,7 +775,8 @@ class PluginFusionInventoryCommunication {
                      ID : '.$p_info->ID.'<br/>
                      serial : '.trim($p_info->SERIAL).'<br/>
                      name : '.$p_info->NAME.'<br/>
-                     macaddress : '.$p_info->MAC.'\n';
+                     macaddress : '.$p_info->MAC.'<br/>
+                     IP : '.$p_info->IP.'\n';
             $error_criteria = 1;
          }
       } elseif ($p_info->TYPE=='PRINTER') {
@@ -807,7 +808,8 @@ class PluginFusionInventoryCommunication {
                         ID : '.$p_info->ID.'<br/>
                         serial : '.trim($p_info->SERIAL).'<br/>
                         name : '.$p_info->NAME.'<br/>
-                        macaddress : '.$p_info->MAC.'\n';
+                        macaddress : '.$p_info->MAC.'<br/>
+                        IP : '.$p_info->IP.'\n';
             }
          }
       }
@@ -1327,7 +1329,7 @@ class PluginFusionInventoryCommunication {
 
       $this->addLog('Function importConnection().');
       $errors='';
-      $portID=''; $mac=''; $ip='';
+      $portID=''; $mac=''; $ip=''; $sysname='';
       $ptsnmp= new PluginFusionInventorySNMP;
       if ($p_cdp==1) {
          $ifdescr='';
@@ -1340,12 +1342,19 @@ class PluginFusionInventoryCommunication {
                case 'IFDESCR' :
                   $ifdescr=$child;
                   break;
+               case 'SYSNAME' :
+                  $sysname = $child;
+                  break;
                default :
                   $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
             }
          }
-         $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
+         if ($ip != '') {
+            $portID=$ptsnmp->getPortIDfromDeviceIP($ip, $ifdescr);
+         } else if ($sysname != '') {
+            $portID=$ptsnmp->getPortIDfromDeviceSysname($sysname, $ifdescr);
+         }
       } else {
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {

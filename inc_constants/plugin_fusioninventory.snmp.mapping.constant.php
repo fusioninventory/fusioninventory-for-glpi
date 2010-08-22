@@ -169,6 +169,20 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['name'] = $LANG[
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['dropdown'] = '';
 
+// Networking LLDP
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['table'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['field'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][431];
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['dropdown'] = '';
+
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['table'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['field'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['name'] = $LANG['plugin_fusioninventory']["mapping"][432];
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['dropdown'] = '';
+
+
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['table'] = '';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['field'] = '';
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['name'] = $LANG['plugin_fusioninventory']["mapping"][411];

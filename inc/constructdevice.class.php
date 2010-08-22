@@ -152,9 +152,9 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
       // List of OID with relations by default with mapping
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.4']      = 'cdpCacheAddress';
-      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.5.0.44']     = 'cdpCacheAddress';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.5.0.44']     = 'lldpCacheAddress';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.7']      = 'cdpCacheDevicePort';
-      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.7.0.44']     = 'cdpCacheDevicePort';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.7.0.44']     = 'lldpCacheDevicePort';
       $mapping_pre[2]['.1.3.6.1.2.1.1.1.0']                 = 'comments';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1']   = 'cpu';
       $mapping_pre[2]['.1.3.6.1.2.1.17.1.4.1.2']            = 'dot1dBasePortIfIndex';
