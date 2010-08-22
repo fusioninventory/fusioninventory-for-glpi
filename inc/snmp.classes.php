@@ -194,6 +194,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                $a_ports = $np->find("`on_device`='".$data_unknown['ID']."' ");
                foreach ($a_ports as $id_port=>$dataport) {
                   // Delete Wire :
+                  plugin_fusioninventory_addLogConnection("remove",$id_port);
                   removeConnector($id_port);
                   // Delete port :
                   $np->deleteFromDB($id_port);
@@ -330,18 +331,15 @@ class PluginFusionInventorySNMP extends CommonDBTM {
 
 		if ($resultVerif=$DB->query($queryVerif)) {
 			if ($DB->numrows($resultVerif) == "0") {
-				plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($source_port),$FK_process);
 				plugin_fusioninventory_addLogConnection("remove",$source_port,$FK_process);
 				$this->CleanVlan($source_port);
             removeConnector($source_port);
 
-				plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($destination_port),$FK_process);
 				plugin_fusioninventory_addLogConnection("remove",$destination_port,$FK_process);
             $this->CleanVlan($destination_port);
             removeConnector($destination_port);
 						
 				makeConnector($source_port,$destination_port);
-				plugin_fusioninventory_addLogConnection("make",$destination_port,$FK_process);
 				plugin_fusioninventory_addLogConnection("make",$source_port,$FK_process);
 				
 				if ((!empty($vlan)) AND ($vlan != " []")) {

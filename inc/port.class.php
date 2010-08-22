@@ -288,8 +288,9 @@ class PluginFusionInventoryPort extends PluginFusionInventoryCommonDBTM {
 	function disconnectDB($p_port='') {
       if ($p_port=='') $p_port=$this->getValue('ID');
       $netwire = new Netwire;
-      plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($p_port));
-      //plugin_fusioninventory_addLogConnection("remove",$p_port);
+      if ($netwire->getOppositeContact($p_port)) {
+         plugin_fusioninventory_addLogConnection("remove",$netwire->getOppositeContact($p_port));
+      }
       if (removeConnector($p_port)) {
          $ptap = new PluginFusionInventoryAgentsProcesses;
          $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],

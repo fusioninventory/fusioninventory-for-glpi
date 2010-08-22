@@ -146,7 +146,8 @@ function plugin_fusioninventory_discovery_import($discovery_ID,$Import=0, $NoImp
 			$data["ifaddr"] = $Netport->fields["ifaddr"];
          $data["ifmac"] = $Netport->fields["ifmac"];
 			$ID_Device = $Netdevice->add($data);
-         
+
+         plugin_fusioninventory_addLogConnection("remove",$Netport->fields["ID"]);
          removeConnector($Netport->fields["ID"]);
          $Netdevice->deleteFromDB($Netport->fields["ID"]);
 

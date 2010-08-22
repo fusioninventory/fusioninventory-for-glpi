@@ -2642,6 +2642,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                             AND `device_type` = '".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."';";
             $result = $DB->query($query);
             while ($data = $DB->fetch_array($result)) {
+               plugin_fusioninventory_addLogConnection("remove",$data["ID"]);
                removeConnector($data["ID"]);
                $np->delete(array("ID"=>$data["ID"]));
             }
@@ -2727,8 +2728,10 @@ function plugin_item_add_fusioninventory($parm) {
                      $opposite_ID = $nw->getOppositeContact($port_infos['ID']);
                      if (isset($opposite_ID)) {
                         // Modify wire
+                        plugin_fusioninventory_addLogConnection("remove",$port_infos['ID']);
                         removeConnector($port_infos['ID']);
                         makeConnector($parm['ID'], $opposite_ID);
+                        plugin_fusioninventory_addLogConnection("make",$parm['ID']);
                      }
                      // Delete port
                      $np->deleteFromDB($port_infos['ID']);

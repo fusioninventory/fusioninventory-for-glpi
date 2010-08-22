@@ -401,8 +401,6 @@ function plugin_fusioninventory_snmp_GetOIDPorts(
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
 
-		plugin_fusioninventory_addLogConnection(
-         "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
       plugin_fusioninventory_addLogConnection("remove",$data['ID'],$FK_process);
       removeConnector($data['ID']);
       
@@ -420,8 +418,6 @@ function plugin_fusioninventory_snmp_GetOIDPorts(
                    AND `logical_number` NOT IN ".$logicalnumberlist.";";
    $result=$DB->query($query);
 	while ($data=$DB->fetch_array($result)) {
-		plugin_fusioninventory_addLogConnection(
-         "remove",$netwire->getOppositeContact($data['ID']),$FK_process);
       plugin_fusioninventory_addLogConnection("remove",$data['ID'],$FK_process);
       removeConnector($data['ID']);
       $np->delete($data);
@@ -799,9 +795,6 @@ function plugin_fusioninventory_UpdateGLPINetworkingPorts(
                   if (($link == "ifinternalstatus")
                       AND (($oidvalues[$oid.$data['logical_number']][""] == "2")
                            OR ($oidvalues[$oid.$data['logical_number']][""] == "down(2)"))) {
-                     $netwire=new Netwire;
-                     plugin_fusioninventory_addLogConnection(
-                           "remove",$netwire->getOppositeContact($data["ID"]),$FK_process);
                      plugin_fusioninventory_addLogConnection("remove",$data["ID"],$FK_process);
                      removeConnector($data["ID"]);
 
@@ -1083,8 +1076,6 @@ function plugin_fusioninventory_cdp_trunk($ID_Device,$type,$oidsModel,$oidvalues
                   $_SESSION['FK_process']);
                // Remove vlan
                plugin_fusioninventory_db_lock_wire_check();
-               plugin_fusioninventory_addLogConnection("remove",
-                  $netwire->getOppositeContact($data['FK_networking_ports']),$FK_process);
                plugin_fusioninventory_addLogConnection("remove",$data['FK_networking_ports'],$FK_process);
                $snmp_queries->CleanVlan($data['FK_networking_ports']);
                $snmp_queries->CleanVlan($netwire->getOppositeContact($data['FK_networking_ports']));
