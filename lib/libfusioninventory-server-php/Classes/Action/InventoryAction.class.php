@@ -161,19 +161,16 @@ class InventoryAction extends Action
                 DataFilter::filter($section);
             }
 
-
-            ob_start();
+            $sectionData = array();
             foreach ($section->children() as $data)
             {
-                echo $data->getName()." = ".$data."<br />";
+                $sectionData[$data->getName()] = (string)$data;
             }
-            $sectionData = ob_get_contents();
-            ob_end_clean();
 
             //sectionId initialization, we will affect id after hook createSection return value.
             array_push($xmlSections, (array(
             "sectionId" => 0,
-            "sectionHash" => md5($sectionData),
+            "sectionHash" => md5(serialize($sectionData)),
             "sectionName" => $section->getName(),
             "sectionData" => $sectionData)));
         }
