@@ -38,33 +38,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-function plugin_fusioninventory_snmp_addLog($port,$field,$old_value,$new_value,$mapping,$FK_process=0) {
-	global $DB,$CFG_GLPI;
-
-	$history = new PluginFusionInventorySNMPHistory;
-   $doHistory = 1;
-   if ($mapping != "") {
-      $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_config_snmp_history`
-                WHERE `field`='".$mapping."';";
-      $result = $DB->query($query);
-      if ($DB->numrows($result) == 0) {
-         $doHistory = 0;
-      }
-   }
-
-   if ($doHistory == "1") {
-
-      $array["FK_ports"] = $port;
-      $array["field"] = $field;
-      $array["old_value"] = $old_value;
-      $array["new_value"] = $new_value;
-
-      // Ajouter en DB
-      $history->insert_connection("field",$array,$FK_process);
-   }
-}
-
 
 
 function plugin_fusioninventory_networking_ports_addLog($port_id, $new_value, $field) {
