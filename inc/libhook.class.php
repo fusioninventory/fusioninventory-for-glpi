@@ -76,46 +76,40 @@ class PluginFusinvinventoryLibhook {
     * @return int $sectionId
     */
     public static function addSections($data, $idmachine) {
-
+print_r($data);
       $Computer = new Computer;
       $sectionsId = array();
       $Computer->getFromDB($idmachine);
+
+
       foreach($data as $section) {
-         $a_fields = array();
-         $a_fields_temp = explode('<br />', $section['dataSection']);
-         foreach ($a_fields_temp as $num=>$fields) {
-            if (strstr($fields, " = ")) {
-               $a_fields_temp2 = explode(" = ", $fields);
-               $a_fields[$a_fields_temp2[0]] = $a_fields_temp2[1];
-            }
-         }
 
          switch ($section['sectionName']) {
 
             case 'BIOS':
-               if (isset($a_fields['SMANUFACTURER'])) {
+               if (isset($section['dataSection']['SMANUFACTURER'])) {
                   $Manufacturer = new Manufacturer;
-                  $Computer->fields['manufacturers_id'] = $Manufacturer->import($Manufacturer->processName($a_fields['SMANUFACTURER']));
+                  $Computer->fields['manufacturers_id'] = $Manufacturer->import($Manufacturer->processName($section['dataSection']['SMANUFACTURER']));
                }
-               if (isset($a_fields['SMODEL'])) {
+               if (isset($section['dataSection']['SMODEL'])) {
                   $ComputerModel = new ComputerModel;
-                  $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$a_fields['SMODEL']));
+                  $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$section['dataSection']['SMODEL']));
                }
-               if (isset($a_fields['SSN']))
-                  $Computer->fields['serial'] = $a_fields['SSN'];
-               
+               if (isset($section['dataSection']['SSN']))
+                  $Computer->fields['serial'] = $section['dataSection']['SSN'];
+
                break;
 
             case 'HARDWARE':
-               if (isset($a_fields['NAME']))
-                  $Computer->fields['name'] = $a_fields['NAME'];
-               if (isset($a_fields['OSNAME'])) {
+               if (isset($section['dataSection']['NAME']))
+                  $Computer->fields['name'] = $section['dataSection']['NAME'];
+               if (isset($section['dataSection']['OSNAME'])) {
                   $OperatingSystem = new OperatingSystem;
-                  $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$a_fields['OSNAME']));
+                  $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$section['dataSection']['OSNAME']));
                }
-               if (isset($a_fields['OSVERSION'])) {
+               if (isset($section['dataSection']['OSVERSION'])) {
                   $OperatingSystemVersion = new OperatingSystemVersion;
-                  $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$a_fields['OSVERSION']));
+                  $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$section['dataSection']['OSVERSION']));
                }
 
                break;
@@ -124,6 +118,104 @@ class PluginFusinvinventoryLibhook {
       }
 
       $Computer->update($Computer->fields);
+
+      foreach($data as $section) {
+
+         switch ($section['sectionName']) {
+
+            case 'CPUS':
+               $DeviceProcessor = new DeviceProcessor();
+               $Computer_Device = new Computer_Device('DeviceProcessor');
+
+               $input = array();
+               $input['designation'] = $section['dataSection']['NAME'];
+               $input['frequence'] = $section['dataSection']['SPEED'];
+               $Manufacturer = new Manufacturer;
+               $input['manufacturers_id'] = $Manufacturer->import($Manufacturer->processName($section['dataSection']['MANUFACTURER']));
+
+               $proc_id = $DeviceProcessor->import($input);
+               $input = array();
+               $input['computers_id'] = $idmachine;
+               $input['deviceprocessors_id'] = $proc_id;
+               $input['specificity'] = $section['dataSection']['SPEED'];
+               $input['_itemtype'] = 'DeviceProcessor';
+               $id_link_device = $Computer_Device->add($input);
+
+               array_push($sectionsId,$id_link_device);
+               break;
+
+            case 'DRIVES':
+               $ComputerDisk = new ComputerDisk;
+               $id_disk = 0;
+               $disk=array();
+               $disk['computers_id']=$idmachine;
+               if (in_array($section['dataSection']['TYPE'],array("vxfs","ufs")) ) {
+                  $disk['name']=$section['dataSection']['VOLUMN'];
+                  $disk['mountpoint']=$section['dataSection']['VOLUMN'];
+                  $disk['device']=$section['dataSection']['FILESYSTEM'];
+                  $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["TYPE"]);
+               } else if (in_array($section['dataSection']['FILESYSTEM'],array('ext4','ext3','ext2','ffs','jfs','jfs2',
+                                                             'xfs','smbfs','nfs','hfs','ufs',
+                                                             'Journaled HFS+','fusefs','fuseblk')) ) {
+                  $disk['mountpoint']=$section['dataSection']['VOLUMN'];
+                  $disk['device']=$section['dataSection']['TYPE'];
+                  // Found /dev in VOLUMN : invert datas
+                  if (strstr($section['dataSection']['VOLUMN'],'/dev/')) {
+                     $disk['mountpoint']=$section['dataSection']['TYPE'];
+                     $disk['device']=$section['dataSection']['VOLUMN'];
+                  }
+
+                  $disk['name']=$disk['mountpoint'];
+                  $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["FILESYSTEM"]);
+               } else if (in_array($section['dataSection']['FILESYSTEM'],array('FAT32',
+                                                             'NTFS',
+                                                             'FAT')) ){
+                  if (!empty($section['dataSection']['VOLUMN'])) {
+                     $disk['name']=$section['dataSection']['VOLUMN'];
+                  } else {
+                     $disk['name']=$section['dataSection']['LETTER'];
+                  }
+                  $disk['mountpoint']=$section['dataSection']['LETTER'];
+                  $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["FILESYSTEM"]);
+               }
+               if (isset($disk['name']) && !empty($disk["name"])) {
+                  $disk['totalsize']=$section['dataSection']['TOTAL'];
+                  $disk['freesize']=$section['dataSection']['FREE'];
+                  $id_disk = $ComputerDisk->add($disk);
+               }
+               array_push($sectionsId,$id_disk);
+               break;
+
+            case 'SOFTWARES':
+
+               // Add software name
+               // Add version of software
+               // link version with computer : glpi_computers_softwareversions
+               $PluginFusinvinventorySoftwares = new PluginFusinvinventorySoftwares;
+               $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$section['dataSection']['NAME'],
+                                                                              'version'=>$section['dataSection']['VERSION']));
+               array_push($sectionsId,$Computer_SoftwareVersion_id);
+               break;
+
+            case 'BIOS':
+               array_push($sectionsId,$idmachine);
+               break;
+
+
+            case 'HARDWARE':
+               array_push($sectionsId,$idmachine);
+               break;
+
+
+            default:
+               array_push($sectionsId,0);
+               break;
+
+
+
+         }
+      }
+
        
       return $sectionsId;
     }
@@ -135,7 +227,7 @@ class PluginFusinvinventoryLibhook {
     * @param string $sectionName
     * @param array $dataSection
     */
-    public static function removeSection($idsections, $idmachine)
+    public static function removeSections($idsections, $idmachine)
     {
         echo "section removed";
         $sectionsId = array();
