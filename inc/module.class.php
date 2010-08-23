@@ -34,15 +34,15 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
 class PluginFusioninventoryModule extends CommonDBTM {
 
-	function __construct() {
-		$this->table="glpi_plugins";
-	}
+   function __construct() {
+      $this->table="glpi_plugins";
+   }
 
    /**
     * Get all active modules

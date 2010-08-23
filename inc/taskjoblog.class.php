@@ -46,14 +46,14 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 
 
 
-	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_taskjoblogs";
+   function __construct() {
+      $this->table = "glpi_plugin_fusioninventory_taskjoblogs";
       $this->type = 'PluginFusioninventoryTaskjoblogs';
-	}
+   }
 
 
    function showHistory($id, $width="950") {
-		global $DB,$CFG_GLPI,$LANG;
+      global $DB,$CFG_GLPI,$LANG;
 
       echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
       echo "<tr>";

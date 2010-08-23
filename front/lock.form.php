@@ -40,13 +40,13 @@ include (GLPI_ROOT . "/inc/includes.php");
 //PluginFusioninventoryProfile::checkRight("snmp_networking","r");
 
 if(isset($_POST["unlock_field_fusioninventory"])){
-	if (isset($_POST["lockfield_fusioninventory"])&&count($_POST["lockfield_fusioninventory"])){
+   if (isset($_POST["lockfield_fusioninventory"])&&count($_POST["lockfield_fusioninventory"])){
       $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
          PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);
-	} else {
+   } else {
       PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], array());
    }
-	glpi_header($_SERVER['HTTP_REFERER']);
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 $locks = new PluginFusioninventoryLock;

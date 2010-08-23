@@ -36,14 +36,14 @@
 
 // Direct access to file
 if(strstr($_SERVER['PHP_SELF'],"lockable.columns.php")){
-	define('GLPI_ROOT','../../..');
-	include (GLPI_ROOT."/inc/includes.php");
-	header("Content-Type: text/html; charset=UTF-8");
-	header_nocache();
+   define('GLPI_ROOT','../../..');
+   include (GLPI_ROOT."/inc/includes.php");
+   header("Content-Type: text/html; charset=UTF-8");
+   header_nocache();
 };
 
 if (!defined('GLPI_ROOT')){
-	die("Can not acces directly to this file");
+   die("Can not acces directly to this file");
 }
 
 if (isset($_POST["tableSelect"])) {

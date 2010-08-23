@@ -39,7 +39,7 @@ header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
 if(!isset($_POST["id"])) {
-	exit();
+   exit();
 }
 
 if(!isset($_POST["sort"])) $_POST["sort"] = "";
@@ -49,13 +49,13 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
 
 switch($_POST['glpi_tab']) {
-	case -1 :
+   case -1 :
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
-		break;
+      break;
 
-	case 1 :
+   case 1 :
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
-		break;
+      break;
 
    case 2:
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
@@ -64,7 +64,7 @@ switch($_POST['glpi_tab']) {
 
    default :
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
-		break;
+      break;
 }
 
 ajaxFooter();

@@ -37,7 +37,7 @@ ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
 if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../../..');
+   define('GLPI_ROOT', '../../..');
 }
 session_start();
 include (GLPI_ROOT."/inc/includes.php");
@@ -57,7 +57,7 @@ $_SESSION["glpi_use_mode"] = 2;
 
 
 
-$ptc  = new PluginFusioninventoryCommunication;
+$PluginFusioninventoryCommunication  = new PluginFusioninventoryCommunication;
 $pta  = new PluginFusioninventoryAgent;
 
 $res='';
@@ -75,10 +75,10 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
        OR ($ssl == "0")) {
       // echo "On continue";
    } else {
-      $ptc->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
+      $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
 <REPLY>
 </REPLY>");
-      $ptc->noSSL();
+      $PluginFusioninventoryCommunication->noSSL();
       exit();
    }
    $ocsinventory = '0';
@@ -88,7 +88,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
       $ocsinventory = '1';
    }
    $top0 = gettimeofday();
-   if (!$ptc->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
+   if (!$PluginFusioninventoryCommunication->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       //if ($ac->connectionOK($errors)) {
       if (1) {
          $res .= "1'".$errors."'";
@@ -98,84 +98,27 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
          if (isset($pxml->DEVICEID)) {
 
-            $ptc->setXML("<?xml version='1.0' encoding='UTF-8'?>
+            $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
 
 
-            $ptt  = new PluginFusionInventoryTask;
             $PluginFusionInventoryConfig        = new PluginFusionInventoryConfig;
             $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
             $a_agent = $pta->InfosByKey($pxml->DEVICEID);
-            $a_tasks = $ptt->find("`agent_id`='".$a_agent['id']."'", "date");
 
             $single = 0;
 
             // Get taskjob in waiting
-            $ptc->getTaskAgent($a_agent['id']);
+            $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
 
-
-
-//
-//
-//            foreach ($a_tasks as $task_id=>$datas) {
-//               if (($a_tasks[$task_id]['action'] == 'INVENTORY')
-//                       AND ($ptc->is_active("TODO", 'inventoryocs')) //TODO
-//                       AND ($a_agent['module_inventory'] == '1')) {
-//
-//                  $ptc->addInventory();
-//                  $input['id'] = $task_id;
-//                  $ptt->delete($input);
-//                  $ocsinventory = '0';
-//                  $single = 1;
-//               }
-//               if (($a_tasks[$task_id]['action'] == 'NETDISCOVERY')
-//                       AND ($ptc->is_active('TODO', 'netdiscovery')) //TODO
-//                       AND ($a_agent['module_netdiscovery'] == '1')) {
-//                  $single = 1;
-//                  $ptc->addDiscovery($pxml, 0); // Want to discovery all range IP
-//                  $input['id'] = $task_id;
-//                  $ptt->delete($input);
-//               }
-//               if (($a_tasks[$task_id]['action'] == 'SNMPQUERY')
-//                       AND ($ptc->is_active('TODO', 'snmp')) //TODO
-//                       AND ($a_agent['module_snmpquery'] == '1')) {
-//                  $single = 1;
-//                  $ptc->addQuery($pxml, 1);
-//                  $input['id'] = $task_id;
-//                  $ptt->delete($input);
-//               }
-//               if (($a_tasks[$task_id]['action'] == 'WAKEONLAN')
-//                       AND ($ptc->is_active('TODO', 'wol')) //TODO
-//                       AND ($a_agent['module_wakeonlan'] == '1')) {
-//                  $single = 1;
-//                  $ptc->addWakeonlan($pxml);
-//                  $input['id'] = $task_id;
-//                  $ptt->delete($input);
-//               }
-//            }
-//
-//            if ($single == "0") {
-//               if ($a_agent['module_netdiscovery'] == '1') {
-//                  $ptc->addDiscovery($pxml);
-//               }
-//               if ($a_agent['module_snmpquery'] == '1') {
-//                  $ptc->addQuery($pxml);
-//               }
-//            }
-//            if ($ocsinventory == '1') {
-//               $ptc->addInventory();
-//            }
-////          $ptc->addWakeonlan();
-//
-         // ******** Send XML
+            // ******** Send XML
             
-            
-            $ptc->addInventory();
-            $ptc->addProlog();
-            $ptc->setXML($ptc->getXML());
-            echo $ptc->getSend();
+            $PluginFusioninventoryCommunication->addInventory();
+            $PluginFusioninventoryCommunication->addProlog();
+            $PluginFusioninventoryCommunication->setXML($ptc->getXML());
+            echo $PluginFusioninventoryCommunication->getSend();
          }
       } else {
          $res .= "0'".$errors."'";

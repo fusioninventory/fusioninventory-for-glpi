@@ -34,15 +34,15 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
 class PluginFusioninventoryProfile extends CommonDBTM {
 
-	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_profiles";
-	}
+   function __construct() {
+      $this->table="glpi_plugin_fusioninventory_profiles";
+   }
 
 
    
@@ -214,54 +214,54 @@ class PluginFusioninventoryProfile extends CommonDBTM {
    }
 
 
-	
-	function showProfileForm($target,$id) {
-		global $LANG,$CFG_GLPI;
+   
+   function showProfileForm($target,$id) {
+      global $LANG,$CFG_GLPI;
 
-		if (!haveRight("profile","r")) return false;
+      if (!haveRight("profile","r")) return false;
 
-		$onfocus="";
-		if ($id) {
-			$this->getFromDB($id);
-		} else {
-			$this->getEmpty();
-			$onfocus="onfocus=\"this.value=''\"";
-		}
+      $onfocus="";
+      if ($id) {
+         $this->getFromDB($id);
+      } else {
+         $this->getEmpty();
+         $onfocus="onfocus=\"this.value=''\"";
+      }
 
-		if (empty($this->fields["interface"])) $this->fields["interface"]="fusioninventory";
-		if (empty($this->fields["name"])) $this->fields["name"]=$LANG["common"][0];
+      if (empty($this->fields["interface"])) $this->fields["interface"]="fusioninventory";
+      if (empty($this->fields["name"])) $this->fields["name"]=$LANG["common"][0];
 
 
-		echo "<form name='form' method='post' action=\"$target\">";
-		echo "<div align='center'>";
-		echo "<table class='tab_cadre'><tr>";
-		echo "<table class='tab_cadre_fixe'>";
-		echo "<th>".$LANG["common"][16].":</th>";
-		echo "<th><input type='text' name='name' value=\"".$this->fields["name"]."\" $onfocus></th>";
-		echo "<tr><th colspan='2' align='center'><strong>TEST ".$this->fields["name"]."</strong></th></tr>";
+      echo "<form name='form' method='post' action=\"$target\">";
+      echo "<div align='center'>";
+      echo "<table class='tab_cadre'><tr>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<th>".$LANG["common"][16].":</th>";
+      echo "<th><input type='text' name='name' value=\"".$this->fields["name"]."\" $onfocus></th>";
+      echo "<tr><th colspan='2' align='center'><strong>TEST ".$this->fields["name"]."</strong></th></tr>";
 
-		echo "<th>".$LANG["profiles"][2].":</th>";
-		echo "<th><select name='interface' id='profile_interface'>";
-		echo "<option value='fusioninventory' ".($this->fields["interface"]!="fusioninventory"?"selected":"").">".$LANG['plugin_fusioninventory']["profile"][1]."</option>";
+      echo "<th>".$LANG["profiles"][2].":</th>";
+      echo "<th><select name='interface' id='profile_interface'>";
+      echo "<option value='fusioninventory' ".($this->fields["interface"]!="fusioninventory"?"selected":"").">".$LANG['plugin_fusioninventory']["profile"][1]."</option>";
 
-		echo "</select></th>";
-		echo "</tr></table>";
-		echo "</div>";
-		
-		$params=array('interface'=>'__VALUE__',
-				'id'=>$id,
-			);
-		ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false);
-		ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false,'profile_interface');
+      echo "</select></th>";
+      echo "</tr></table>";
+      echo "</div>";
+      
+      $params=array('interface'=>'__VALUE__',
+            'id'=>$id,
+         );
+      ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false);
+      ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false,'profile_interface');
 
-		echo "<br>";
+      echo "<br>";
 
-		echo "<div align='center' id='profile_form'>";
-		echo "</div>";
+      echo "<div align='center' id='profile_form'>";
+      echo "</div>";
 
-		echo "</form>";
+      echo "</form>";
 
-	}
+   }
 }
 
 ?>

@@ -37,7 +37,7 @@ include_once ("includes.php");
 
 // Init the hooks of fusioninventory
 function plugin_init_fusioninventory() {
-	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
+   global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
    Plugin::registerClass('PluginFusioninventoryAgent');
    Plugin::registerClass('PluginFusioninventoryConfig');
@@ -49,20 +49,20 @@ function plugin_init_fusioninventory() {
    $a_plugin = plugin_version_fusioninventory();
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
-	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
+   //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
       PluginFusioninventoryProfile::changeprofile(
         PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
 
-	$PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
+   $PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
    $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
-	if (isset($_SESSION["glpiID"])) {
+   if (isset($_SESSION["glpiID"])) {
 
-//		if (haveRight("configuration", "r")) {// Config page
-//		if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-//			$PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
+//      if (haveRight("configuration", "r")) {// Config page
+//      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
+//         $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
 //      }
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
       $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
@@ -108,12 +108,12 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']["menu"][1];
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
-	}
+   }
 }
 
 // Name and Version of the plugin
 function plugin_version_fusioninventory() {
-	return array('name'           => 'FusionInventory',
+   return array('name'           => 'FusionInventory',
                 'shortname'      => 'fusioninventory',
                 'version'        => '2.3.0',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
@@ -127,28 +127,28 @@ function plugin_version_fusioninventory() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
    global $LANG;
-	if (GLPI_VERSION >= '0.78') {
-		return true;
+   if (GLPI_VERSION >= '0.78') {
+      return true;
    } else {
-		echo $LANG['plugin_fusioninventory']["errors"][50];
+      echo $LANG['plugin_fusioninventory']["errors"][50];
    }
 }
 
 
 
 function plugin_fusioninventory_check_config() {
-	return true;
+   return true;
 }
 
 
 
 function plugin_fusioninventory_haveTypeRight($type,$right) {
-//	switch ($type) {
-//		case 'PluginFusioninventoryConfigSNMPSecurity' :
-//			return PluginFusioninventoryProfile::haveRight("snmp_authentication",$right);
-//			break;
-//	}
-	return true;
+//   switch ($type) {
+//      case 'PluginFusioninventoryConfigSNMPSecurity' :
+//         return PluginFusioninventoryProfile::haveRight("snmp_authentication",$right);
+//         break;
+//   }
+   return true;
 }
 
 ?>

@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusioninventoryDisplay extends CommonDBTM {
@@ -55,7 +55,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
          echo $pourcentage."% ".$message;
       }
 
-      echo						"</td>
+      echo                  "</td>
                      </tr>
                      <tr>
                         <td>
@@ -69,7 +69,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       if (empty($pourcentage)) {
          echo "<td></td>";
       } else {
-         echo "										<td bgcolor='";
+         echo "                              <td bgcolor='";
          if ($order!= '') {
             if ($pourcentage > 80) {
                echo "red";
@@ -94,11 +94,11 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
          }
       }
       if ($pourcentage == 0) {
-         echo "									<td height='20' width='1'></td>";
+         echo "                           <td height='20' width='1'></td>";
       } else {
-         echo "									<td height='20' width='".(400 - (4 * $pourcentage))."'></td>";
+         echo "                           <td height='20' width='".(400 - (4 * $pourcentage))."'></td>";
       }
-      echo "								</tr>
+      echo "                        </tr>
                               </tbody>
                            </table>
                         </td>

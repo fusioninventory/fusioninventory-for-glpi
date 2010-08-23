@@ -37,15 +37,15 @@
 
 
 function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
-	global $CFG_GLPI, $LANG;
+   global $CFG_GLPI, $LANG;
 
-	$searchopt = &Search::getOptions($type);
+   $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];
 
-	switch ($table.'.'.$field) {
+   switch ($table.'.'.$field) {
 
-		case "glpi_plugin_fusioninventory_tasks.id" :
+      case "glpi_plugin_fusioninventory_tasks.id" :
          // Get progression bar 
          return "";
          break;
@@ -66,11 +66,11 @@ function plugin_fusioninventory_getDropdown() {
 
 /* Cron */
 function cron_plugin_fusioninventory() {
-   // TODO :Disable for the moment (may be check if functions is good or not
-//	$ptud = new PluginFusioninventoryUnknownDevice;
+//   TODO :Disable for the moment (may be check if functions is good or not
+//   $ptud = new PluginFusioninventoryUnknownDevice;
 //   $ptud->CleanOrphelinsConnections();
-//	$ptud->FusionUnknownKnownDevice();
-//	TODO : regarder les 2 lignes juste en dessous !!!!!
+//   $ptud->FusionUnknownKnownDevice();
+//   TODO : regarder les 2 lignes juste en dessous !!!!!
 //   #Clean server script processes history
 //   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
 //   $pfisnmph->cronCleanHistory();
@@ -83,7 +83,7 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
-	global $DB, $LANG, $CFG_GLPI;
+   global $DB, $LANG, $CFG_GLPI;
 
    $version = "2.3.0";
    include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
@@ -105,17 +105,17 @@ function plugin_fusioninventory_uninstall() {
 
 // Define headings added by the plugin //
 function plugin_get_headings_fusioninventory($item,$withtemplate) {
-	global $LANG;
-	$pfc = new PluginFusioninventoryConfig;
+   global $LANG;
+   $pfc = new PluginFusioninventoryConfig;
 
-	$type = get_Class($item);
+   $type = get_Class($item);
 //   switch ($type) {
    switch (get_class($item)) {
-		case 'Computer' :
-			if ($withtemplate) { // new object / template case
-				return array();
+      case 'Computer' :
+         if ($withtemplate) { // new object / template case
+            return array();
          } else { // Non template case / editing an existing object
-				$array = array ();
+            $array = array ();
             $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
             if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
                     (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
@@ -126,37 +126,24 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             }
             $array[3] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
             return $array;
-			}
-			break;
+         }
+         break;
 
-		case 'Monitor' :
-			if ($withtemplate) { // new object / template case
-				return array();
+      case 'Monitor' :
+         if ($withtemplate) { // new object / template case
+            return array();
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[1] = $LANG['plugin_fusioninventory']["title"][5];
             }
             return $array;
-			}
-			break;
+         }
+         break;
 
-		case 'NetworkEquipment' :
-			if ($withtemplate) { // new object / template case
-				return array();
-         } else { // Non template case / editing an existing object
-            $array = array ();
-            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = $LANG['plugin_fusioninventory']["title"][5];
-            }
-            $array[2] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
-            return $array;
-			}
-			break;
-
-		case 'Printer' :
-			if ($withtemplate) { // new object / template case
-				return array();
+      case 'NetworkEquipment' :
+         if ($withtemplate) { // new object / template case
+            return array();
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
@@ -164,12 +151,25 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             }
             $array[2] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
             return $array;
-			}
-			break;
+         }
+         break;
 
-		case 'Profile' :
-			if ($withtemplate) { // new object / template case
-				return array();
+      case 'Printer' :
+         if ($withtemplate) { // new object / template case
+            return array();
+         } else { // Non template case / editing an existing object
+            $array = array ();
+            if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+               $array[1] = $LANG['plugin_fusioninventory']["title"][5];
+            }
+            $array[2] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
+            return $array;
+         }
+         break;
+
+      case 'Profile' :
+         if ($withtemplate) { // new object / template case
+            return array();
          } else { // Non template case / editing an existing object
             $array = array ();
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
@@ -177,18 +177,18 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             }
             return $array;
          }
-			break;
-	}
-	return false;	
+         break;
+   }
+   return false;
 }
 
-// Define headings actions added by the plugin	 
+// Define headings actions added by the plugin
 //function plugin_headings_actions_fusioninventory($type) {
 function plugin_headings_actions_fusioninventory($item) {
-//	switch ($type) {
-	switch (get_class($item)) {
-		case 'Computer' :
-			$array = array ();
+//   switch ($type) {
+   switch (get_class($item)) {
+      case 'Computer' :
+         $array = array ();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
          $pfc = new PluginFusioninventoryConfig;
          if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
@@ -197,10 +197,10 @@ function plugin_headings_actions_fusioninventory($item) {
          }
          $array[2] = "plugin_headings_fusioninventory_locks";
          $array[3] = "plugin_headings_fusioninventory_tasks";
-			return $array;
-			break;
+         return $array;
+         break;
 
-		case 'Monitor' :
+      case 'Monitor' :
          return array (
             1 => "plugin_headings_fusioninventory_locks"
          );
@@ -211,23 +211,23 @@ function plugin_headings_actions_fusioninventory($item) {
             1 => "plugin_headings_fusioninventory_locks",
             2 => "plugin_headings_fusioninventory_tasks"
          );
-			break;
+         break;
 
-		case 'NetworkEquipment' :
+      case 'NetworkEquipment' :
          return array (
             1 => "plugin_headings_fusioninventory_locks",
             2 => "plugin_headings_fusioninventory_tasks"
          );
-			break;
+         break;
 
-		case 'Profile' :
-			return array(
-				1 => "plugin_headings_fusioninventory",
-				);
-			break;
+      case 'Profile' :
+         return array(
+            1 => "plugin_headings_fusioninventory",
+            );
+         break;
 
-	}
-	return false;
+   }
+   return false;
 }
 
 
@@ -240,7 +240,7 @@ function plugin_headings_fusioninventory_computerInfo($type, $id) {
 function plugin_headings_fusioninventory_locks($item) {
    $type = get_Class($item);
    $id = $item->getField('id');
-	$fusioninventory_locks = new PluginFusioninventoryLock();
+   $fusioninventory_locks = new PluginFusioninventoryLock();
    $fusioninventory_locks->showForm(getItemTypeFormURL('PluginFusioninventoryLock').'?id='.$id,
                                                        $type, $id);
 }
@@ -262,7 +262,7 @@ function plugin_headings_fusioninventory_tasks($item) {
 
 //function plugin_headings_fusioninventory($type,$id,$withtemplate=0) {
 //function plugin_headings_fusioninventory($item,$withtemplate=0) {
-//	global $CFG_GLPI;
+//   global $CFG_GLPI;
 //
 //   if (!$withtemplate) {
 //      echo "<div class='center'>";
@@ -291,55 +291,55 @@ function plugin_headings_fusioninventory_tasks($item) {
 
 
 function plugin_fusioninventory_MassiveActions($type) {
-	global $LANG;
-	switch ($type) {
-		case NETWORKING_TYPE :
-			return array (
+   global $LANG;
+   switch ($type) {
+      case NETWORKING_TYPE :
+         return array (
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']["functionalities"][75]
-			);
-			break;
+         );
+         break;
 
-		case PRINTER_TYPE :
-			return array (
+      case PRINTER_TYPE :
+         return array (
             "plugin_fusioninventory_manage_locks" => $LANG['plugin_fusioninventory']["functionalities"][75]
-			);
-			break;
-	}
-	return array ();
+         );
+         break;
+   }
+   return array ();
 }
 
 function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
 
-	global $LANG, $CFG_GLPI, $DB;
-	switch ($type) {
-		case NETWORKING_TYPE :
-			switch ($action) {
+   global $LANG, $CFG_GLPI, $DB;
+   switch ($type) {
+      case NETWORKING_TYPE :
+         switch ($action) {
             case "plugin_fusioninventory_manage_locks" :
                $pfil = new PluginFusioninventoryLock;
                $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
                break;
-			}
-			break;
+         }
+         break;
 
-		case PRINTER_TYPE :
-			switch ($action) {
+      case PRINTER_TYPE :
+         switch ($action) {
             case "plugin_fusioninventory_manage_locks" :
                $pfil = new PluginFusioninventoryLock;
                $pfil->showForm($_SERVER["PHP_SELF"], NETWORKING_TYPE, '');
                break;
-			}
-			break;
-	}
-	return "";
+         }
+         break;
+   }
+   return "";
 }
 
 function plugin_fusioninventory_MassiveActionsProcess($data) {
-	global $LANG;
-	switch ($data['action']) {
+   global $LANG;
+   switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == NETWORKING_TYPE) OR ($data['itemtype'] == PRINTER_TYPE)) {
             foreach ($data['item'] as $key => $val) {
-					if ($val == 1) {
+               if ($val == 1) {
                   if (isset($data["lockfield_fusioninventory"])&&count($data["lockfield_fusioninventory"])){
                      $tab=PluginFusioninventoryLock::exportChecksToArray($data["lockfield_fusioninventory"]);
                         PluginFusioninventoryLock::setLockArray($data['type'], $key, $tab);
@@ -350,78 +350,78 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             }
          }
          break;
-	}
+   }
 }
 
 // How to display specific update fields ?
 // Massive Action functions
 function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,$linkfield) {
-	global $LANG;
-	// Table fields
-	//echo $table.".".$field."<br/>";
-	switch ($table.".".$field) {
-		case 'glpi_plugin_fusioninventory_agents.id' :
-			Dropdown::show("PluginFusioninventoryAgent",
+   global $LANG;
+   // Table fields
+   //echo $table.".".$field."<br/>";
+   switch ($table.".".$field) {
+      case 'glpi_plugin_fusioninventory_agents.id' :
+         Dropdown::show("PluginFusioninventoryAgent",
                         array('name' => $linkfield,
                               'comment' => false));
-			return true;
-			break;
+         return true;
+         break;
 
-		case 'glpi_plugin_fusioninventory_agents.nb_process_query' :
-			Dropdown::showInteger("nb_process_query", $linkfield,1,200);
-			return true;
-			break;
+      case 'glpi_plugin_fusioninventory_agents.nb_process_query' :
+         Dropdown::showInteger("nb_process_query", $linkfield,1,200);
+         return true;
+         break;
 
-		case 'glpi_plugin_fusioninventory_agents.nb_process_discovery' :
-			Dropdown::showInteger("nb_process_discovery", $linkfield,1,400);
-			return true;
-			break;
+      case 'glpi_plugin_fusioninventory_agents.nb_process_discovery' :
+         Dropdown::showInteger("nb_process_discovery", $linkfield,1,400);
+         return true;
+         break;
 
-		case 'glpi_plugin_fusioninventory_agents.logs' :
-			$ArrayValues[]= $LANG["choice"][0];
-			$ArrayValues[]= $LANG["choice"][1];
-			$ArrayValues[]= $LANG["setup"][137];
-			Dropdown::showFromArray('logs', $ArrayValues,
+      case 'glpi_plugin_fusioninventory_agents.logs' :
+         $ArrayValues[]= $LANG["choice"][0];
+         $ArrayValues[]= $LANG["choice"][1];
+         $ArrayValues[]= $LANG["setup"][137];
+         Dropdown::showFromArray('logs', $ArrayValues,
                                  array('value'=>$linkfield));
-			return true;
-			break;
+         return true;
+         break;
 
-		case 'glpi_plugin_fusioninventory_agents.core_discovery' :
-			Dropdown::showInteger("core_discovery", $linkfield,1,32);
-			return true;
-			break;
+      case 'glpi_plugin_fusioninventory_agents.core_discovery' :
+         Dropdown::showInteger("core_discovery", $linkfield,1,32);
+         return true;
+         break;
 
-		case 'glpi_plugin_fusioninventory_agents.core_query' :
-			Dropdown::showInteger("core_query", $linkfield,1,32);
-			return true;
-			break;
+      case 'glpi_plugin_fusioninventory_agents.core_query' :
+         Dropdown::showInteger("core_query", $linkfield,1,32);
+         return true;
+         break;
 
-		case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
-			Dropdown::showInteger("threads_discovery", $linkfield,1,400);
-			return true;
-			break;
+      case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
+         Dropdown::showInteger("threads_discovery", $linkfield,1,400);
+         return true;
+         break;
 
-		case 'glpi_plugin_fusioninventory_agents.threads_query' :
-			Dropdown::showInteger("threads_query", $linkfield,1,400);
-			return true;
-			break;
+      case 'glpi_plugin_fusioninventory_agents.threads_query' :
+         Dropdown::showInteger("threads_query", $linkfield,1,400);
+         return true;
+         break;
 
       case 'glpi_entities.name' :
          if (isMultiEntitiesMode()) {
             Dropdown::show("Entities",
-		                     array('name' => "entities_id",
+                           array('name' => "entities_id",
                            'value' => $_SESSION["glpiactive_entity"]));
          }
          return true;
          break;
-	}
-	return false;
+   }
+   return false;
 }
 
 
 
 function plugin_fusioninventory_addSelect($type,$id,$num) {
-	return "";
+   return "";
 }
 
 
@@ -431,24 +431,24 @@ function plugin_fusioninventory_forceGroupBy($type) {
 
 
 function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables) {
-	return "";
+   return "";
 }
 
 
 function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
-	return "";
+   return "";
 }
 
 
 function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
-	return "";
+   return "";
 }
 
 function plugin_pre_item_purge_fusioninventory($parm) {
-	global $DB;
+   global $DB;
 
-	if (isset($parm["_item_type_"])) {
-		switch ($parm["_item_type_"]) {
+   if (isset($parm["_item_type_"])) {
+      switch ($parm["_item_type_"]) {
          case COMPUTER_TYPE :
             // Delete link between computer and agent fusion
             $query = "UPDATE `glpi_plugin_fusioninventory_agents`
@@ -459,15 +459,15 @@ function plugin_pre_item_purge_fusioninventory($parm) {
             $DB->query($query);
             break;
 
-		}
+      }
    }
-	return $parm;
+   return $parm;
 }
 
 
 
 function plugin_pre_item_delete_fusioninventory($parm) {
-	return $parm;
+   return $parm;
 }
 
 

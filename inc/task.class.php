@@ -34,10 +34,10 @@
 
 class PluginFusioninventoryTask extends CommonDBTM {
 
-	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_tasks";
+   function __construct() {
+      $this->table = "glpi_plugin_fusioninventory_tasks";
       $this->type = 'PluginFusioninventoryTask';
-	}
+   }
 
 
    function getSearchOptions() {
@@ -104,7 +104,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-		global $LANG,$CFG_GLPI,$DB;
+      global $LANG,$CFG_GLPI,$DB;
 
       $ong = array();
       $ong[1] = $LANG['title'][26];
@@ -123,46 +123,46 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $ong[$i] = $LANG['plugin_fusioninventory']["task"][16];
       }
       return $ong;
-	}
+   }
 
 
 
-	function showForm($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG;
+   function showForm($id, $options=array()) {
+      global $DB,$CFG_GLPI,$LANG;
 
       if ($id!='') {
-			$this->getFromDB($id);
+         $this->getFromDB($id);
       } else {
-			$this->getEmpty();
+         $this->getEmpty();
       }
 
-		$this->showTabs($options);
+      $this->showTabs($options);
       $this->showFormHeader($options);
       
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-		echo "<td align='center'>";
-		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-		echo "</td>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      echo "</td>";
 
-		echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
-		echo "<td align='center' rowspan='3'>";
+      echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='3'>";
       echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo getUserName($this->fields["users_id"],1);
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo("is_active",$this->fields["is_active"]);
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
@@ -273,30 +273,30 @@ class PluginFusioninventoryTask extends CommonDBTM {
       // TODO: detect if task yet present in MySQL task table
 
       echo "<br/><div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
-		echo "<table  class='tab_cadre_fixe'>";
+      echo "<table  class='tab_cadre_fixe'>";
       
-		echo "<tr><th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["task"][4];
-		echo " :</th></tr>";
+      echo "<tr><th colspan='2'>";
+      echo $LANG['plugin_fusioninventory']["task"][4];
+      echo " :</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-		echo $LANG['plugin_fusioninventory']["task"][5];
-		echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusioninventory']["task"][5];
+      echo "</td>";
       
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       Dropdown::show("PluginFusioninventoryAgent",
                      array('name'=>'agentocs',
                            'entity'=>1)); //TODO : check
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-		echo $LANG['plugin_fusioninventory']["task"][7];
-		echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusioninventory']["task"][7];
+      echo "</td>";
 
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       $active_valid = 0;
       if (isset($input['up']) AND (isset($input['agentocs']))) {
          
@@ -312,16 +312,16 @@ class PluginFusioninventoryTask extends CommonDBTM {
       }
       PluginFusioninventoryDisplay::reenableusemode();
 
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
 
       echo "<tr class='tab_bg_2'>";
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       echo "<input type='submit' name='up' value=\"".$LANG['plugin_fusioninventory']["task"][6]."\" class='submit'>";
-		echo "</td>";
+      echo "</td>";
       
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       if ($active_valid == '1') {
          echo "<input type='submit' name='add' value=\"".$LANG['buttons'][2]."\" class='submit'>";
       } else {
@@ -329,7 +329,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             STYLE='font-size: 11px; border: 1px solid #888888; cursor:pointer; background:  url(\"".GLPI_ROOT."/plugins/fusioninventory/pics/fond_form_off.png\") repeat-x'
                disabled='disabled'>";
       }
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
   
       echo "</table>";
@@ -438,7 +438,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       
       echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php\">";
 
-		echo "<table  class='tab_cadre_fixe'>";
+      echo "<table  class='tab_cadre_fixe'>";
 
       echo "<tr>";
       echo "<th colspan='2'>";

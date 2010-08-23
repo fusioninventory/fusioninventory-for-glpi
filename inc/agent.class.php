@@ -35,14 +35,14 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusioninventoryAgent extends CommonDBTM {
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_agents";
-		$this->type = 'PluginFusioninventoryAgent';
-	}
+      $this->table = "glpi_plugin_fusioninventory_agents";
+      $this->type = 'PluginFusioninventoryAgent';
+   }
 
 
    
@@ -75,48 +75,48 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-		global $LANG,$CFG_GLPI;
+      global $LANG,$CFG_GLPI;
 
       $ptc = new PluginFusioninventoryConfig;
 
       $ong = array();
-		if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
+      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
       }
       // $ong[1] = Modules installes sur l'agent
        $ong[2] = "activation modules"; //activation des modules
       // $ong[3] = actions (tâches)
       // $ong[x] = config dynamique de chaque plugin installe
-		return $ong;
-	}
+      return $ong;
+   }
 
 
-	function PushData($id, $key) {
-		$this->getFromDB($id);
-		// Name of server
-		// $this->fields["name"];
-		
-		$xml = "<snmp>\n";
-		// ** boucle sur les équipements réseau
-		// ** détection des équipements avec le bon status et l'IP dans la plage de l'agent
-		//  Ecriture du fichier xml pour l'envoi à l'agent
-	
-		$xml .= "</snmp>\n";
-		// Affichage du fichier xml pour que l'agent récupère les paramètres
-		echo $xml;
-	}
+   function PushData($id, $key) {
+      $this->getFromDB($id);
+      // Name of server
+      // $this->fields["name"];
+      
+      $xml = "<snmp>\n";
+      // ** boucle sur les équipements réseau
+      // ** détection des équipements avec le bon status et l'IP dans la plage de l'agent
+      //  Ecriture du fichier xml pour l'envoi à l'agent
+   
+      $xml .= "</snmp>\n";
+      // Affichage du fichier xml pour que l'agent récupère les paramètres
+      echo $xml;
+   }
 
 
-	function showForm($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG;
+   function showForm($id, $options=array()) {
+      global $DB,$CFG_GLPI,$LANG;
 
       if ($id!='') {
-			$this->getFromDB($id);
+         $this->getFromDB($id);
       } else {
-			$this->getEmpty();
+         $this->getEmpty();
       }
 
-		$this->showTabs($options);
+      $this->showTabs($options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -173,7 +173,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->addDivForTabs();
 
       return true;
-	}
+   }
 
 
 

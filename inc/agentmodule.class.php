@@ -35,19 +35,19 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_agentmodules";
-		$this->type = 'PluginFusioninventoryAgentmodule';
-	}
+      $this->table = "glpi_plugin_fusioninventory_agentmodules";
+      $this->type = 'PluginFusioninventoryAgentmodule';
+   }
 
 
    // Configuration of agentmodule
-	function showForm() {
-		global $DB,$CFG_GLPI,$LANG;
+   function showForm() {
+      global $DB,$CFG_GLPI,$LANG;
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
 
@@ -115,7 +115,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
 
       return true;
-	}
+   }
 
 
 
@@ -160,7 +160,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "</td>";
          if ($i == 1) {
             echo "</tr>";
-          $i = -1;
+            $i = -1;
          }
          $i++;
       }

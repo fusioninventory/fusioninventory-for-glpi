@@ -44,10 +44,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
     */
 
 
-	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_taskjobstatus";
+   function __construct() {
+      $this->table = "glpi_plugin_fusioninventory_taskjobstatus";
       $this->type = 'PluginFusioninventoryTaskjobstatus';
-	}
+   }
 
 
    function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html', $style = '') {
@@ -152,7 +152,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
       echo "<br/><div align='center'>";
 
-		echo "<table  class='tab_cadre_fixe'>";
+      echo "<table  class='tab_cadre_fixe'>";
 
       echo "<tr>";
       echo "<th width='110'>";

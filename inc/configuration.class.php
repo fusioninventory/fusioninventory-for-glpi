@@ -34,17 +34,17 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
 class PluginFusioninventoryConfiguration extends CommonGLPI {
 
    function defineTabs($options=array()){
-		global $LANG,$CFG_GLPI;
+      global $LANG,$CFG_GLPI;
 
       $tabs = array();
-		$tabs[0]=$LANG['plugin_fusioninventory']["functionalities"][2];
+      $tabs[0]=$LANG['plugin_fusioninventory']["functionalities"][2];
       $tabs[1]=$LANG['plugin_fusioninventory']["functionalities"][7];
       $tabs[2]=$LANG['plugin_fusioninventory']["agents"][27];
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
@@ -62,8 +62,8 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
          $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
       }
 
-		return $tabs;
-	}
+      return $tabs;
+   }
 
 }
 

@@ -57,7 +57,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
                $plugin = new Plugin;
                foreach($sessionConfig['moduletabforms'] as $module=>$form) {
                   if ($plugin->isActivated($module)) {
-                    foreach($form as $title=>$tab) {
+                     foreach($form as $title=>$tab) {
                         $class = $form[$title]['class'];
                         $oTab = new $class;
                         $oTab->showForm(array('target'=>$_POST['target']));

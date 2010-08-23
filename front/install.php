@@ -49,10 +49,10 @@ include (GLPI_ROOT . "/inc/includes.php");
 if (haveRight("config","w") && haveRight("profile","w")) {
    $config = new PluginFusioninventoryConfig;
    if (!TableExists("glpi_plugin_fusioninventory_agents")) {
-		PluginFusioninventorySetup::update("1.1.0");
+      PluginFusioninventorySetup::update("1.1.0");
    }
    if (!TableExists("glpi_plugin_fusioninventory_config_discovery")) {
-		PluginFusioninventorySetup::update("2.0.0");
+      PluginFusioninventorySetup::update("2.0.0");
    }
    if (!FieldExists("glpi_plugin_fusioninventory_configs", "version")) {
       PluginFusioninventorySetup::update("2.0.2");
@@ -76,14 +76,14 @@ if (haveRight("config","w") && haveRight("profile","w")) {
       }
    }
 
-	glpi_header($_SERVER['HTTP_REFERER']);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else {
 
-	commonHeader($LANG["login"][5],$_SERVER['PHP_SELF'],"plugins","fusioninventory");
-	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\"
+   commonHeader($LANG["login"][5],$_SERVER['PHP_SELF'],"plugins","fusioninventory");
+   echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\"
               alt=\"warning\"><br><br>";
-	echo "<b>".$LANG["login"][5]."</b></div>";
-	commonFooter();
+   echo "<b>".$LANG["login"][5]."</b></div>";
+   commonFooter();
 }
 
 ?>

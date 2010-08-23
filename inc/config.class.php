@@ -34,41 +34,41 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 
 class PluginFusioninventoryConfig extends CommonDBTM {
 
-	function __construct() {
-		$this->table="glpi_plugin_fusioninventory_configs";
-	}
+   function __construct() {
+      $this->table="glpi_plugin_fusioninventory_configs";
+   }
 
-	/* Function to get the value of a field */
-	function getValue($p_plugins_id, $p_type) {
-		global $DB;
+   /* Function to get the value of a field */
+   function getValue($p_plugins_id, $p_type) {
+      global $DB;
 
       $data = $this->find("`plugins_id`='".$p_plugins_id."'
                           AND `type`='".$p_type."'");
       $config = current($data);
-		if (isset($config['value'])) {
+      if (isset($config['value'])) {
          return $config['value'];
-		}
-		return false;
-	}
-
-	// Confirm if the functionality is activated, or not
-//	function isActivated($p_type, $p_plugins_id=0) {
-	function is_active($p_plugins_id, $p_type) {
-		if (!($this->getValue($p_plugins_id, $p_type))) {
-			return false;
-      } else {
-			return true;
       }
-	}
+      return false;
+   }
 
-	function showForm($options=array()) {
-		global $LANG,$CFG_GLPI;
+   // Confirm if the functionality is activated, or not
+//   function isActivated($p_type, $p_plugins_id=0) {
+   function is_active($p_plugins_id, $p_type) {
+      if (!($this->getValue($p_plugins_id, $p_type))) {
+         return false;
+      } else {
+         return true;
+      }
+   }
+
+   function showForm($options=array()) {
+      global $LANG,$CFG_GLPI;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -76,26 +76,26 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
-		echo "<td width='20%'>";
-		Dropdown::showYesNo("ssl_only", $this->is_active($plugins_id, 'ssl_only'));
-		echo "</td>";
-		echo "<td>".$LANG['plugin_fusioninventory']['config'][0]."&nbsp;:</td>";
-		echo "<td width='20%'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      Dropdown::showYesNo("ssl_only", $this->is_active($plugins_id, 'ssl_only'));
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['config'][0]."&nbsp;:</td>";
+      echo "<td width='20%'>";
       Dropdown::showInteger("inventory_frequence",
                             $this->getValue($plugins_id, 'inventory_frequence'),1,240);
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
- 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][32]." :</td>";
-		echo "<td>";
+       echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][32]." :</td>";
+      echo "<td>";
       Dropdown::showInteger("delete_task",
                             $this->getValue($plugins_id, 'delete_task'),1,240);
       echo " ".$LANG['gmt'][1];
-		echo "</td>";
-		echo "<td colspan='2'></td>";
+      echo "</td>";
+      echo "<td colspan='2'></td>";
       echo "</tr>";
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
@@ -106,7 +106,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</table></div></form>";
 
       return true;
-	}
+   }
 
    /**
     * Add config
@@ -145,7 +145,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $data = $this->find("`plugins_id`='".$p_plugins_id."'
                           AND `type`='".$p_type."'");
       $config = current($data);
-		if (isset($config['id'])) {
+      if (isset($config['id'])) {
          return $this->updateConfig($config['id'], $p_value);
       }
       return false;
@@ -196,8 +196,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *@param $p_insert Array('type'=>'value')
     *@return nothing
     **/
-	function initConfig($p_plugins_id, $p_insert) {
-		global $DB;
+   function initConfig($p_plugins_id, $p_insert) {
+      global $DB;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       foreach ($p_insert as $type=>$value) {

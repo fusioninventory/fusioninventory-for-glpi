@@ -35,21 +35,21 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 /// Plugin FusionInventory lock class
 class PluginFusioninventoryLock extends CommonDBTM{
 
-	/**
-	 * Constructor
-	**/
-	function __construct () {
-		$this->table="glpi_plugin_fusioninventory_locks";
-	}
+   /**
+    * Constructor
+   **/
+   function __construct () {
+      $this->table="glpi_plugin_fusioninventory_locks";
+   }
 
 
-	/**
+   /**
     * Show locks form.
     *
     *@param $p_target Target file.

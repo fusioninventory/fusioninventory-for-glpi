@@ -34,10 +34,10 @@
 
 class PluginFusioninventoryTaskjob extends CommonDBTM {
 
-	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_taskjobs";
+   function __construct() {
+      $this->table = "glpi_plugin_fusioninventory_taskjobs";
       $this->type = 'PluginFusioninventoryTaskjob';
-	}
+   }
 
 
    static function getTypeName() {
@@ -111,53 +111,53 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-		global $DB,$CFG_GLPI,$LANG;
+      global $DB,$CFG_GLPI,$LANG;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
       if ($id!='') {
-			$this->getFromDB($id);
+         $this->getFromDB($id);
       } else {
-			$this->getEmpty();
+         $this->getEmpty();
       }
 
 $this->cronTaskScheduler();
 
       $this->showFormHeader($options);
       
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-		echo "<td align='center'>";
-		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-		echo "</td>";
-		echo "<td>Méthode&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      echo "</td>";
+      echo "<td>Méthode&nbsp;:</td>";
+      echo "<td align='center'>";
       $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['selection_type']);
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo getUserName($this->fields["users_id"],1);
-		echo "</td>";
+      echo "</td>";
       echo "<td>selection_type&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<span id='show_SelectionType_id'>";
       //$this->dropdownSelectionType("selection_type");
       echo "</span>";
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvsnmp']["task"][14]."&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       if ($id) {
          showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
       } else {
          showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       }
-		echo "</td>";
+      echo "</td>";
       echo "<td rowspan='5'>Selection&nbsp;:</td>";
       echo "<td align='center' rowspan='5'>";
       echo "<span id='show_Selection_id'>";
@@ -185,8 +185,8 @@ $this->cronTaskScheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
+      echo "<td align='center'>";
       Dropdown::showInteger("periodicity", "", 1, 300);
       $a_time = array();
       $a_time[] = "------";
@@ -199,23 +199,23 @@ $this->cronTaskScheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td>Nombre d'essais&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<td>Nombre d'essais&nbsp;:</td>";
+      echo "<td align='center'>";
       Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 1, 30);
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>Temps entre 2 essais (en minutes)&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
-		echo "<td align='center'>";
+      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center'>";
       echo "<textarea cols='40' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
       $a_methods = array();
@@ -223,7 +223,7 @@ $this->cronTaskScheduler();
       foreach ($a_methods as $num=>$datas) {
          echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
       }
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       if ($id) {
@@ -547,7 +547,7 @@ $this->cronTaskScheduler();
       echo "<div align='center'>";
       echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/taskjob.form.php\">";
 
-		echo "<table  class='tab_cadre_fixe'>";
+      echo "<table  class='tab_cadre_fixe'>";
 
       echo "<tr>";
       echo "<th colspan='4'>";
@@ -750,30 +750,30 @@ $this->cronTaskScheduler();
       // TODO: detect if task yet present in MySQL task table
 
       echo "<br/><div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
-		echo "<table  class='tab_cadre_fixe'>";
+      echo "<table  class='tab_cadre_fixe'>";
       
-		echo "<tr><th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["task"][4];
-		echo " :</th></tr>";
+      echo "<tr><th colspan='2'>";
+      echo $LANG['plugin_fusioninventory']["task"][4];
+      echo " :</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-		echo $LANG['plugin_fusioninventory']["task"][5];
-		echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusioninventory']["task"][5];
+      echo "</td>";
       
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       Dropdown::show("PluginFusioninventoryAgent",
                      array('name'=>'agentocs',
                            'entity'=>1)); //TODO : check
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>";
-		echo $LANG['plugin_fusioninventory']["task"][7];
-		echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusioninventory']["task"][7];
+      echo "</td>";
 
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       $active_valid = 0;
       if (isset($input['up']) AND (isset($input['agentocs']))) {
          
@@ -789,16 +789,16 @@ $this->cronTaskScheduler();
       }
       PluginFusioninventoryDisplay::reenableusemode();
 
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
 
 
       echo "<tr class='tab_bg_2'>";
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       echo "<input type='submit' name='up' value=\"".$LANG['plugin_fusioninventory']["task"][6]."\" class='submit'>";
-		echo "</td>";
+      echo "</td>";
       
-		echo "<td align='center'>";
+      echo "<td align='center'>";
       if ($active_valid == '1') {
          echo "<input type='submit' name='add' value=\"".$LANG['buttons'][2]."\" class='submit'>";
       } else {
@@ -806,7 +806,7 @@ $this->cronTaskScheduler();
             STYLE='font-size: 11px; border: 1px solid #888888; cursor:pointer; background:  url(\"".GLPI_ROOT."/plugins/fusioninventory/pics/fond_form_off.png\") repeat-x'
                disabled='disabled'>";
       }
-		echo "</td>";
+      echo "</td>";
       echo "</tr>";
   
       echo "</table>";
@@ -891,7 +891,7 @@ $this->cronTaskScheduler();
       
       echo "<div align='center'><form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agents.state.php\">";
 
-		echo "<table  class='tab_cadre_fixe'>";
+      echo "<table  class='tab_cadre_fixe'>";
 
       echo "<tr>";
       echo "<th colspan='2'>";

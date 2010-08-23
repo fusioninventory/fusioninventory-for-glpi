@@ -34,10 +34,10 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../../..');
+   define('GLPI_ROOT', '../../..');
 }
 if (!defined("GLPI_PLUGIN_DOC_DIR")){
-	define("GLPI_PLUGIN_DOC_DIR",GLPI_ROOT . "/files/_plugins");
+   define("GLPI_PLUGIN_DOC_DIR",GLPI_ROOT . "/files/_plugins");
 }
 $docDir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory';
 

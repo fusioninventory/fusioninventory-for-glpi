@@ -107,7 +107,7 @@ if (isset($_POST["agent_add"])) {
       $PluginFusioninventoryAgentmodule->update($data);
    }
 
-	glpi_header($_SERVER['HTTP_REFERER']);
+   glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
    $PluginFusioninventoryAgentmodule->getFromDB($_POST['id']);
    $input = array();

@@ -69,7 +69,7 @@ if (isset ($_POST["add"])) {
 }
 
 if (isset($_GET["id"])) {
-	$pft->showForm($_GET["id"]);
+   $pft->showForm($_GET["id"]);
 } else {
    $pft->showForm("");
 }

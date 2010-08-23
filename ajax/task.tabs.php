@@ -39,7 +39,7 @@ header("Content-Type: text/html; charset=UTF-8");
 header_nocache();
 
 if(!isset($_POST["id"])) {
-	exit();
+   exit();
 }
 
 if(!isset($_POST["sort"])) $_POST["sort"] = "";
@@ -55,14 +55,14 @@ $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
 $i = 1;
 
 switch($_POST['glpi_tab']) {
-//	case -1 :
+//   case -1 :
 //      $pfia->showFormAdvancedOptions($_POST["id"]);
 //      $pfit->RemoteStateAgent($_POST['target'], $_POST["id"], 'PluginFusioninventoryAgent', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
-//		break;
+//      break;
 //
-	case 1 :
+   case 1 :
 //      $pfia->showFormAdvancedOptions($_POST["id"]);
-		break;
+      break;
 }
 
 if ($_POST['glpi_tab'] > 1) {

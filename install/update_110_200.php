@@ -54,13 +54,13 @@ function update110to200() {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
    }
 
-   //		$config_discovery = new PluginFusioninventoryConfigDiscovery;
-   //		$config_discovery->initConfig();
-   //		$config_snmp_script = new PluginFusioninventoryConfigSNMPScript;
-   //		$config_snmp_script->initConfig();
+   //      $config_discovery = new PluginFusioninventoryConfigDiscovery;
+   //      $config_discovery->initConfig();
+   //      $config_snmp_script = new PluginFusioninventoryConfigSNMPScript;
+   //      $config_snmp_script->initConfig();
          // Import models
-   //		$importexport = new PluginFusioninventoryImportExport;
-   //		foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0);
+   //      $importexport = new PluginFusioninventoryImportExport;
+   //      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/models/*.xml') as $file) $importexport->import($file,0);
          // Clean DB (ports in glpi_plugin_fusioninventory_networkports..... )
 
 

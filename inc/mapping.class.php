@@ -35,14 +35,14 @@
 // ----------------------------------------------------------------------
 
 if (!defined('GLPI_ROOT')) {
-	die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
 class PluginFusioninventoryMapping extends CommonDBTM {
 
    function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_mappings";
-	}
+      $this->table = "glpi_plugin_fusioninventory_mappings";
+   }
 
    /**
     * Get mapping
@@ -52,13 +52,13 @@ class PluginFusioninventoryMapping extends CommonDBTM {
     *@return mapping fields or false
     **/
    function get($p_itemtype, $p_name) {
-		$data = $this->find("`itemtype`='".$p_itemtype."' AND `name`='".$p_name."'");
+      $data = $this->find("`itemtype`='".$p_itemtype."' AND `name`='".$p_name."'");
       $mapping = current($data);
-		if (isset($mapping['id'])) {
+      if (isset($mapping['id'])) {
          return $mapping;
-		}
+      }
       return false;
-	}
+   }
 }
 
 ?>
