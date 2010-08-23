@@ -76,6 +76,7 @@ class PluginFusinvinventoryLibhook {
     * @return int $sectionId
     */
     public static function addSections($data, $idmachine) {
+       echo "section added";
 print_r($data);
       $Computer = new Computer;
       $sectionsId = array();
@@ -230,6 +231,7 @@ print_r($data);
     public static function removeSections($idsections, $idmachine)
     {
         echo "section removed";
+        print_r($idsections);
         $sectionsId = array();
         return $sectionsId;
     }

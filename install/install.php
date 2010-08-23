@@ -51,14 +51,14 @@ function pluginFusinvinventoryInstall() {
       // Add new module in plugin_fusioninventory (core)
 
       // Create database
-      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
-      $DBf_handle = fopen($DB_file, "rt");
-      $sql_query = fread($DBf_handle, filesize($DB_file));
-      fclose($DBf_handle);
-      foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
-      }
+//      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/plugin_fusinvinventory-".$a_plugin['version']."-empty.sql";
+//      $DBf_handle = fopen($DB_file, "rt");
+//      $sql_query = fread($DBf_handle, filesize($DB_file));
+//      fclose($DBf_handle);
+//      foreach ( explode(";\n", "$sql_query") as $sql_line) {
+//         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+//         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+//      }
 
       // Create folder in GLPI_PLUGIN_DOC_DIR
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
@@ -118,7 +118,6 @@ function pluginFusinvinventoryUninstall() {
    }
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
-   PluginFusioninventoryModule::deleteModule($a_plugin['shortname']);
 
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
