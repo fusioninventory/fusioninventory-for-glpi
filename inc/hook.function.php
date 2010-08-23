@@ -75,13 +75,53 @@ function plugin_fusinvsnmp_task_netdiscovery_iprange() {
    return $array;
 }
 
-
+# Actions with itemtype autorized 
 function plugin_fusinvsnmp_task_action_snmpinventory() {
    $a_itemtype = array();
    $a_itemtype[] = PRINTER_TYPE;
    $a_itemtype[] = NETWORKING_TYPE;
+   $a_itemtype[] = 'PluginFusinvsnmpIPRange';
 
    return $a_itemtype;
+}
+
+
+function plugin_fusinvsnmp_task_action_netdiscovery() {
+   $a_itemtype = array();
+   $a_itemtype[] = 'PluginFusinvsnmpIPRange';
+
+   return $a_itemtype;
+}
+
+# Selection type for actions
+function plugin_fusinvsnmp_task_selection_type_snmpinventory($itemtype) {
+   switch ($itemtype) {
+
+      case 'PluginFusinvsnmpIPRange':
+         $selection_type = 'iprange';
+         break;
+
+      case PRINTER_TYPE;
+      case NETWORKING_TYPE;
+         $selection_type = 'devices';
+         break;
+
+   }
+
+   return $selection_type;
+}
+
+
+function plugin_fusinvsnmp_selection_type_netdiscovery($itemtype) {
+   switch ($itemtype) {
+
+      case 'PluginFusinvsnmpIPRange':
+         $selection_type = 'iprange';
+         break;
+
+   }
+
+   return $selection_type;
 }
 
 ?>

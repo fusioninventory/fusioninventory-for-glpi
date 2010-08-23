@@ -42,7 +42,24 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusinvsnmp_ipranges";
+      $this->type  = "PluginFusinvsnmpIPRange";
 	}
+
+   static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusinvsnmp']["iprange"][5];
+   }
+
+   function defineTabs($options=array()){
+      global $LANG,$CFG_GLPI,$DB;
+
+      $ong = array();
+      $ong[1] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
+
+      return $ong;
+   }
+
 
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
@@ -52,15 +69,9 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       } else {
 			$this->getEmpty();
       }
-		$this->showTabs($options);
-//      $this->showFormHeader($options);
-      $target = GLPI_ROOT.'/plugins/fusinvsnmp/front/iprange.form.php';
-		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
-		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($id =='' ? $LANG['plugin_fusinvsnmp']["iprange"][6] :
-            $LANG['plugin_fusinvsnmp']["iprange"][5]);
-		echo " :</th></tr>";
+      $this->showTabs($options);
+      $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG["common"][16] . "</td>";
@@ -155,28 +166,31 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          echo "</tr>";
       }
 
-//		$this->showFormButtons($options);
-//
-//      echo "<div id='tabcontent'></div>";
-//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-//
-//      return true;
-		echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
-         if ($id=='') {
-            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
-                 "\" class='submit' >";
-         } else {
-            echo "<input type='hidden' name='id' value='" . $id . "'/>";
-            echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
-                 "\" class='submit' >";
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
-                    $LANG["buttons"][6] . "\" class='submit'>";
-         }
-      }
-		echo "</td>";
-		echo "</tr>";
-		echo "</table></form></div>";
+////		$this->showFormButtons($options);
+////
+////      echo "<div id='tabcontent'></div>";
+////      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+////
+////      return true;
+//		echo "<tr class='tab_bg_2'><td colspan='2'>";
+//      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
+//         if ($id=='') {
+//            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
+//                 "\" class='submit' >";
+//         } else {
+//            echo "<input type='hidden' name='id' value='" . $id . "'/>";
+//            echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
+//                 "\" class='submit' >";
+//            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
+//                    $LANG["buttons"][6] . "\" class='submit'>";
+//         }
+//      }
+//		echo "</td>";
+//		echo "</tr>";
+//		echo "</table></form></div>";
+
+      $this->showFormButtons($options);
+      $this->addDivForTabs();
 
       }
 

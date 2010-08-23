@@ -603,6 +603,7 @@ $LANG['plugin_fusinvsnmp']["task"][10]="En cours d'execution... pas disponible";
 $LANG['plugin_fusinvsnmp']["task"][11]="L'agent a été notifié et commence son exécution";
 $LANG['plugin_fusinvsnmp']["task"][12]="Déclencher l'agent";
 $LANG['plugin_fusinvsnmp']["task"][13]="Agent(s) indisponible(s)";
+$LANG['plugin_fusinvsnmp']["task"][14]="Planifié le";
 
 $LANG['plugin_fusinvsnmp']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']["constructdevice"][1]="Creation automatique des modèles";
