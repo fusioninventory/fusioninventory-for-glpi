@@ -245,9 +245,11 @@ function plugin_headings_fusioninventory_locks($item) {
                                                        $type, $id);
 }
 
-function plugin_headings_fusioninventory_tasks($item) {
-   $itemtype = get_Class($item);
-   $items_id = $item->getField('id');
+function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0) {
+   if ($itemtype == '') {
+      $itemtype = get_Class($item);
+      $items_id = $item->getField('id');
+   }
    // Create task
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
    $PluginFusioninventoryTaskjob->showActions($items_id, $itemtype);

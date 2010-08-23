@@ -277,7 +277,7 @@ $this->cronTaskScheduler();
             echo "<script type='text/javascript'>
             document.getElementById('dropdown_".$myname.$rand."').selectedIndex = ".$numSelected.";
 ";
-       ajaxUpdateItemJsCode("show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params,true,"dropdown_method_id".$rand);
+            ajaxUpdateItemJsCode("show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params,true,"dropdown_method_id".$rand);
 
             echo "</script>";
          }

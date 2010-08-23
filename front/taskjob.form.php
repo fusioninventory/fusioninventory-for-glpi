@@ -106,6 +106,9 @@ if (isset ($_POST["add"])) {
    $a_selectionDB = array();
    $a_selectionDB[][$_POST['itemtype']] = $_POST['items_id'];
    $PluginFusioninventoryTaskjob->fields['selection'] = exportArrayToDB($a_selectionDB);
+   $PluginFusioninventoryTaskjob->fields['selection_type'] = 
+      call_user_func("plugin_".$module."_selection_type_".$method, $_POST['itemtype']);
+
    $PluginFusioninventoryTaskjob->addToDB();
    // Upsate task to activate it
    $PluginFusioninventoryTask->getFromDB($task_id);
