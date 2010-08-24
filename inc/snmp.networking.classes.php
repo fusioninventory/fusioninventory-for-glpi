@@ -66,20 +66,7 @@ class PluginFusionInventoryNetworking extends CommonDBTM {
 	var $glpi_right;
 	var $fusioninventory_right;
 
-	// Init
-	function plugin_fusioninventory_snmp() {
-		$this->fields = array();
-		$this->type = "";
-		$this->table = "";
-		$this->ID = -1;
-		$this->networking_ports_ID = -1;
-		$this->ip = "";
-		$this->community = "public";
-		$this->snmp = array("name" => "", "contact" => "", "location" => "", "netmask" => "");
-		$this->glpi_right = "";
-		$this->fusioninventory_right = "";
-	}
-	
+
 	// to check if the device is working
 	function isActive() {
 		global $DB;

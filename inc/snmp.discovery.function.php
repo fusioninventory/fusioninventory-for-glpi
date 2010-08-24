@@ -39,31 +39,6 @@ if (!defined('GLPI_ROOT')) {
 	
 
 /**
- * Description
- *
- * @param
- * @param
- *
- * @return
- *
-**/
-function plugin_fusioninventory_discovery_update_devices($array, $target) {
-	global $DB;
-
-	foreach ($array as $key=>$value) {
-		if (strstr($key, "model_infos")) {
-			$explode = explode ("-", $key);
-			$query = "UPDATE `glpi_plugin_fusioninventory_discovery`
-                   SET `FK_model_infos`='".$value."',`type`='".$array['type-'.$explode[1]]."'
-                   WHERE `ID`='".$explode[1]."';";
-			$DB->query($query);
-		}
-	}
-}
-
-
-
-/**
  * Function to import discovered device
  *
  * @param $discovery_ID ID of the device to import

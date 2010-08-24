@@ -105,20 +105,6 @@ function plugin_fusioninventory_updateaccess($ID) {
 
 
 
-function plugin_fusioninventory_getIdFromUser($name) {
-	
-	global $DB;
-	
-	$query = "SELECT `ID` ".
-            "FROM `glpi_users` ".
-            "WHERE `name` = '".$name."';";
-
-	if (($result = $DB->query($query))) {
-		return $DB->result($result,0,"ID");
-	}
-	return false;
-}
-
 function plugin_fusioninventory_getDeviceFieldFromId($type, $ID, $field, $return) {
 	global $DB;
 	switch($type) {
@@ -228,29 +214,5 @@ function plugin_fusioninventory_clean_db() {
 	}
 }
 
-function plugin_fusioninventory_db_lock_wire_check() {
-   while (1) {
-      $file_lock = GLPI_PLUGIN_DOC_DIR."/fusioninventory/wire.lock";
-      $fp =  fopen($file_lock,"r+");
-      $lock = 1;
-      fseek($fp,0);
-      $lock = fgets($fp,255);
-      if ($lock == 0) {
-         fseek($fp,0);
-         fputs($fp,1);
-         fclose($fp);
-         return;
-      }
-      fclose($fp);
-      usleep(250000);
-   }
-}
-
-function plugin_fusioninventory_db_lock_wire_unlock() {
-   $file_lock = GLPI_PLUGIN_DOC_DIR."/fusioninventory/wire.lock";
-   $fp =  fopen($file_lock,"r+");
-   fputs($fp,0);
-   fclose($fp);
-}
 
 ?>

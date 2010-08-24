@@ -265,7 +265,7 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          $query = "SELECT *
              FROM `glpi_networking_ports`
              WHERE `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
-               AND`ifaddr`='".$IP."'
+               AND `ifaddr`='".$IP."'
              LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
@@ -288,6 +288,126 @@ class PluginFusionInventorySNMP extends CommonDBTM {
       }
 		return($PortID);
 	}
+
+
+function getPortIDfromDeviceSysname($sysname, $ifDescr) {
+		global $DB;
+
+      $pfiud = new PluginFusionInventoryUnknownDevice;
+      $np = new Netport;
+
+      $PortID = "";
+		$query = "SELECT *
+                FROM `glpi_networking`
+                WHERE `name`='".$sysname."';";
+
+		$result = $DB->query($query);
+      if ($DB->numrows($result) == "1") {
+         $data = $DB->fetch_assoc($result);
+
+         // Delete CDP device in unknown device
+         $query_unknown = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
+            WHERE `name`='".$sysname."' ";
+         if ($result_unknown=$DB->query($query_unknown)) {
+            while ($data_unknown=$DB->fetch_array($result_unknown)) {
+               // delete ports
+               $a_ports = $np->find("`on_device`='".$data_unknown['ID']."' ");
+               foreach ($a_ports as $id_port=>$dataport) {
+                  // Delete Wire :
+                  removeConnector($id_port);
+                  // Delete port :
+                  $np->deleteFromDB($id_port);
+               }
+               $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_unknown_device`
+                  WHERE `ID`='".$data_unknown['ID']."' ";
+               $DB->query($query_delete);
+            }
+         }
+         // End of delete CDP device
+
+         $queryPort = "SELECT *
+                       FROM `glpi_plugin_fusioninventory_networking_ports`
+                            INNER JOIN `glpi_networking_ports`
+                                      ON `glpi_plugin_fusioninventory_networking_ports`.`FK_networking_ports`=
+                                         `glpi_networking_ports`.`ID`
+                       WHERE (`ifdescr`='".$ifDescr."'
+                                OR `glpi_networking_ports`.`name`='".$ifDescr."')
+                             AND `glpi_networking_ports`.`on_device`='".$data["ID"]."'
+                             AND `glpi_networking_ports`.`device_type`='2'
+                       LIMIT 0,1;";
+         $resultPort = $DB->query($queryPort);
+         $dataPort = $DB->fetch_assoc($resultPort);
+         if ($DB->numrows($resultPort) == "0") {
+            // Search in other devices
+//            $queryPort = "SELECT *
+//                          FROM `glpi_networking_ports`
+//                          WHERE `ifaddr`='".$IP."'
+//                             AND
+//                          ORDER BY `device_type`
+//                          LIMIT 0,1;";
+//            $resultPort = $DB->query($queryPort);
+//            $dataPort = $DB->fetch_assoc($resultPort);
+//            $PortID = $dataPort["ID"];
+         } else {
+            $PortID = $dataPort["FK_networking_ports"];
+         }
+      } else if ($DB->numrows($result) == "0") {
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknown_device`
+            WHERE `name`='".$sysname."'
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            // Search port and add if required
+            $query1 = "SELECT *
+                FROM `glpi_networking_ports`
+                WHERE `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+                   AND `on_device`='".$data['ID']."'
+                   AND `name`='".$ifDescr."'
+                LIMIT 1";
+            $result1 = $DB->query($query1);
+            if ($DB->numrows($result1) == "1") {
+               $data1 = $DB->fetch_assoc($result1);
+               $PortID = $data1['ID'];
+            } else {
+               // Add port
+               $input = array();
+               $input['on_device'] = $data['ID'];
+               $input['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+               $input['name'] = $ifDescr;
+               $PortID = $np->add($input);
+            }
+            return $PortID;
+         }
+
+         $query = "SELECT *
+             FROM `glpi_networking_ports`
+             WHERE `device_type`='".PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN."'
+               AND `name`='".$sysname."'
+             LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            $PortID = $data['ID'];
+            return $PortID;
+         }
+         // Add unknown device
+         $input = array();
+         $input['name'] = $sysname;
+         $unkonwn_id = $pfiud->add($input);
+         // Add port
+         $input = array();
+         $input['on_device'] = $unkonwn_id;
+         $input['device_type'] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
+         $input['name'] = $ifDescr;
+         $PortID = $np->add($input);
+         return($PortID);
+      }
+		return($PortID);
+	}
+
+
+
 
 	/**
 	 * Get port ID from device MAC address
