@@ -343,7 +343,7 @@ function plugin_fusioninventory_discovery_criteria($p_criteria, $type=0) {
 
    switch ($CountCriteria1) {
       case 0:
-         return false;
+         //return false;
          break;
 
       case 1:
