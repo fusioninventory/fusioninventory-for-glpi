@@ -463,6 +463,8 @@ class PluginFusionInventoryCommunication {
                            ON `FK_networking`=`glpi_networking`.`ID`
                       INNER join `glpi_plugin_fusioninventory_model_infos`
                            ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                      INNER join `glpi_plugin_fusioninventory_snmp_connection`
+                           ON `FK_snmp_connection`=`glpi_plugin_fusioninventory_snmp_connection`.`ID`
                       WHERE `glpi_networking`.`deleted`='0'
                            AND `FK_model_infos`!='0'
                            AND `FK_snmp_connection`!='0'";
@@ -492,6 +494,8 @@ class PluginFusionInventoryCommunication {
                                  AND `device_type`='".PRINTER_TYPE."'
                       INNER join `glpi_plugin_fusioninventory_model_infos`
                            ON `FK_model_infos`=`glpi_plugin_fusioninventory_model_infos`.`ID`
+                      INNER join `glpi_plugin_fusioninventory_snmp_connection`
+                           ON `FK_snmp_connection`=`glpi_plugin_fusioninventory_snmp_connection`.`ID`
                       WHERE `glpi_printers`.`deleted`=0
                             AND `FK_model_infos`!='0'
                             AND `FK_snmp_connection`!='0'";
