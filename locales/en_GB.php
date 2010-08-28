@@ -598,6 +598,14 @@ $LANG['plugin_fusioninventory']["task"][10]="Running... not available";
 $LANG['plugin_fusioninventory']["task"][11]="Agent has been notified and begin running";
 $LANG['plugin_fusioninventory']["task"][12]="Wake agent";
 $LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
+$LANG['plugin_fusioninventory']["task"][14]="Dunning date";
+$LANG['plugin_fusioninventory']["task"][16]="New action";
+$LANG['plugin_fusioninventory']["task"][17]="Périodicité";
+$LANG['plugin_fusioninventory']["task"][18]="Tasks";
+$LANG['plugin_fusioninventory']["task"][19]="Running tasks";
+$LANG['plugin_fusioninventory']["task"][20]="Finished tasks";
+$LANG['plugin_fusioninventory']["task"][21]="Action sur ce matériel";
+$LANG['plugin_fusioninventory']["task"][22]="Only planified tasks";
 
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusioninventory']["constructdevice"][1]="Automatic creation of models";

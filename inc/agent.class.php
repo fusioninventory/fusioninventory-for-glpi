@@ -220,7 +220,21 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return 1;
    }
-   
+
+   function getIPs($items_id) {
+      $ip = array();
+      $this->getFromDB($items_id);
+      if ($this->fields['items_id'] != "0") {
+         $NetworkPort = new NetworkPort;
+         $a_ports = $NetworkPort->find("`itemtype`='Computer'
+                             AND `items_id`='".$this->fields['items_id']."'
+                             AND `ip` IS NOT NULL");
+         foreach($a_ports as $ports_id=>$data) {
+            $ip[] = $data['ip'];
+         }         
+      }
+      return $ip;
+   }   
 
 }
 

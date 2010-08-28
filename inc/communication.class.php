@@ -261,7 +261,7 @@ class PluginFusioninventoryCommunication {
       foreach ($moduleRun as $className=>$data) {
          $class = new $className;
          $this->sxml = $class->Run($data['items_id'], $data['itemtype'], $data['plugin_fusioninventory_taskjobs_id'], $data['id']);
-      }      
+      }
    }
 
 

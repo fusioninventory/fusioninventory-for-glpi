@@ -422,6 +422,10 @@ $this->cronTaskScheduler();
                case 'fromothertasks':
 
                   break;
+
+               default:
+                  $a_deviceList = importArrayFromDB($data['selection']);
+                  break;
             }
 
             if (isset($a_deviceList)) {
@@ -435,27 +439,28 @@ $this->cronTaskScheduler();
                   $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
-                  
                   $a_agents = $class->prepareRun($itemtype, $items_id);
-                  // Add jobstatus and put status (waiting on server = 0)
-                  $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
-                  $a_input['items_id'] = $items_id;
-                  $a_input['itemtype'] = $itemtype;
-                  $a_input['state'] = 0;
-                  $a_input['plugin_fusioninventory_agents_id'] = $a_agents['agents_id'];
-                  $PluginFusioninventoryTaskjobstatus->add($a_input);
+                  if (is_array($a_agents)) {
+                     // Add jobstatus and put status (waiting on server = 0)
+                     $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
+                     $a_input['items_id'] = $items_id;
+                     $a_input['itemtype'] = $itemtype;
+                     $a_input['state'] = 0;
+                     $a_input['plugin_fusioninventory_agents_id'] = $a_agents['agents_id'];
+                     $PluginFusioninventoryTaskjobstatus->add($a_input);
 
-                  //Add log of taskjob
-                  unset($a_input['plugin_fusioninventory_agents_id']);
-                  $a_input['state'] = 1;
-                  $a_input['date'] = date("Y-m-d H:i:s");
-                  $PluginFusioninventoryTaskjoblogs->add($a_input);
+                     //Add log of taskjob
+                     unset($a_input['plugin_fusioninventory_agents_id']);
+                     $a_input['state'] = 1;
+                     $a_input['date'] = date("Y-m-d H:i:s");
+                     $PluginFusioninventoryTaskjoblogs->add($a_input);
 
-                  $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
+                     $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
 
-                  $this->getFromDB($data['id']);
-                  $this->fields['status'] = 1;
-                  $this->update($this->fields);
+                     $this->getFromDB($data['id']);
+                     $this->fields['status'] = 1;
+                     $this->update($this->fields);
+                  }
                }
             }
          }

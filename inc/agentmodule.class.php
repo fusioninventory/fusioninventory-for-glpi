@@ -191,6 +191,65 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
+   function getAgentsCanDo($module_name, $items_id=0) {
+
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+
+      $agentModule = $this->getActivationExceptions($module_name);
+      $where = "";
+      if ($agentModule['is_active'] == 0) {
+         $a_agentList = importArrayFromDB($agentModule['exceptions']);
+         if (count($a_agentList) > 0) {
+            $where = " `id` IN (";
+            $i = 0;
+            $sep  = '';
+            foreach ($a_agentList as $num=>$agent_id) {
+               if (($items_id != '0') AND ($items_id == $agent_id)) {
+                  return true;
+               }
+               if ($i> 0) {
+                  $sep  = ',';
+               }
+               $where .= $sep.$agent_id;
+               $i++;
+            }
+            $where .= ") ";
+         }
+      } else {
+         $a_agentList = importArrayFromDB($agentModule['exceptions']);
+
+         if (count($a_agentList) > 0) {
+            $where = " `id` NOT IN (";
+            $i = 0;
+            $sep  = '';
+            foreach ($a_agentList as $num=>$agent_id) {
+               if ($i> 0) {
+                  $sep  = ',';
+               }
+               $where .= $sep.$agent_id;
+               $i++;
+            }
+            $where .= ") ";
+         }
+         if ($items_id != '0') {
+            $a_agents = $PluginFusioninventoryAgent->find($where);
+            if(array_key_exists($items_id, $a_agents)) {
+               return true;
+            }
+         }
+      }
+
+      if ($items_id == '0') {
+         $a_agents = $PluginFusioninventoryAgent->find($where);
+         return $a_agents;
+      } else {
+         return false;
+      }
+
+
+   }
+
+
 
    function deleteModule($plugins_id) {
 

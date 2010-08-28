@@ -217,19 +217,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentconfigs`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_agentconfigs` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-   `version` TEXT COMMENT 'array(xmltag=>value)',
-   `threads` TEXT COMMENT 'array(xmltag=>value)',
-   PRIMARY KEY (`id`),
-   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
 ## INSERT
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 

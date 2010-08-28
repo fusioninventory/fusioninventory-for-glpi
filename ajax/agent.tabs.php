@@ -63,6 +63,7 @@ switch($_POST['glpi_tab']) {
       break;
 
    default :
+      Plugin::displayAction($PluginFusioninventoryAgent, $_REQUEST['glpi_tab']);
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
       break;
 }
