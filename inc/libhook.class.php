@@ -77,14 +77,14 @@ class PluginFusinvinventoryLibhook {
     */
     public static function addSections($data, $idmachine) {
        echo "section added";
-print_r($data);
+
       $Computer = new Computer;
       $sectionsId = array();
       $Computer->getFromDB($idmachine);
 
-
+      $i = -1;
       foreach($data as $section) {
-
+         $i++;
          switch ($section['sectionName']) {
 
             case 'BIOS':
@@ -112,12 +112,23 @@ print_r($data);
                   $OperatingSystemVersion = new OperatingSystemVersion;
                   $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$section['dataSection']['OSVERSION']));
                }
+               break;
+
+            case 'ENVS':
+               // Not using it now
+               unset($data[$i]);
+
+               break;
+
+            case 'PROCESSES':
+               // Not using it now
+               unset($data[$i]);
 
                break;
 
          }
       }
-
+print_r($data);
       $Computer->update($Computer->fields);
 
       foreach($data as $section) {
@@ -187,6 +198,41 @@ print_r($data);
                array_push($sectionsId,$id_disk);
                break;
 
+            case 'MEMORIES':
+               $CompDevice = new Computer_Device('DeviceMemory');
+               if (!empty ($section['dataSection']["CAPACITY"])) {
+                  $ram["designation"]="";
+                  if ($section['dataSection']["TYPE"]!="Empty Slot" && $section['dataSection']["TYPE"] != "Unknown") {
+                     $ram["designation"]=$section['dataSection']["TYPE"];
+                  }
+                  if ($section['dataSection']["DESCRIPTION"]) {
+                     if (!empty($ram["designation"])) {
+                        $ram["designation"].=" - ";
+                     }
+                     $ram["designation"] .= $section['dataSection']["DESCRIPTION"];
+                  }
+                  if (!is_numeric($section['dataSection']["CAPACITY"])) {
+                     $section['dataSection']["CAPACITY"]=0;
+                  }
+
+                  $ram["specif_default"] = $section['dataSection']["CAPACITY"];
+                  
+                  $ram["frequence"] = $section['dataSection']["SPEED"];
+                  $ram["devicememorytypes_id"]
+                        = Dropdown::importExternal('DeviceMemoryType', $section['dataSection']["TYPE"]);
+
+                  $DeviceMemory = new DeviceMemory();
+                  $ram_id = $DeviceMemory->import($ram);
+                  if ($ram_id) {
+                     $devID = $CompDevice->add(array('computers_id' => $idmachine,
+                                                     '_itemtype'     => 'DeviceMemory',
+                                                     'devicememories_id'     => $ram_id,
+                                                     'specificity'  => $section['dataSection']["CAPACITY"]));
+                  }
+               }
+
+               break;
+
             case 'SOFTWARES':
 
                // Add software name
@@ -206,7 +252,6 @@ print_r($data);
             case 'HARDWARE':
                array_push($sectionsId,$idmachine);
                break;
-
 
             default:
                array_push($sectionsId,0);
