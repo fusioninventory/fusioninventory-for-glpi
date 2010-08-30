@@ -73,7 +73,8 @@ class PluginFusioninventorySetup {
               WHERE `itemtype`='PluginFusioninventoryError'
                     OR `itemtype`='PluginFusioninventoryAgent'
                     OR `itemtype`='PluginFusioninventoryConfig'
-                    OR `itemtype`='PluginFusioninventoryTask' ;";
+                    OR `itemtype`='PluginFusioninventoryTask'
+                    OR `itemtype`='PluginFusioninventoryTaskjob';";
       $DB->query($query) or die($DB->error());
 
       return true;
