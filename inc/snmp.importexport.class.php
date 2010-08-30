@@ -506,8 +506,12 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                         $ptae = new PluginFusionInventoryAgentsErrors;
                         $error_input['ID'] = $a_device[0];
                         $error_input['TYPE'] = $a_device[1];
-                        $error_input['MESSAGE'] = 'Unable to determine network port of device to update with values : '.$discovery->IP.'(ip),
-                           '.$discovery->MAC.'(mac), '.$discovery->NETPORTVENDOR.'(name)';
+                        $serial = "";
+                        if (isset($discovery->SERIAL)) {
+                           $serial = ", ".$discovery->SERIAL."(serial)";
+                        }
+                        $error_input['MESSAGE'] = 'Unable to determine network port for unknown device created because multiple port detected : '.$discovery->IP.'(ip),
+                           '.$discovery->MAC.'(mac), '.$discovery->NETPORTVENDOR.'(name)'.$serial;
                         $error_input['agent_type'] = 'NETDISCOVERY';
                         $ptae->addError($error_input);
                      } else { // noport
