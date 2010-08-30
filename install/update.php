@@ -36,6 +36,7 @@
 
 
 function pluginFusioninventoryGetCurrentVersion($version) {
+   global $DB;
    if ((!TableExists("glpi_plugin_tracker_config")) &&
       (!TableExists("glpi_plugin_fusioninventory_config"))) {
       return $version;
