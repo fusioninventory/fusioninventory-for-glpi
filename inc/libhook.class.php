@@ -63,8 +63,9 @@ class PluginFusinvinventoryLibhook {
     public static function createMachine() {
 
        $Computer = new Computer;
-       $Computer->getEmpty();
-       return $Computer->addToDB();
+       $input = array();
+       $input['is_deleted'] = 0;
+       return $Computer->add($input);
     }
 
     /**
