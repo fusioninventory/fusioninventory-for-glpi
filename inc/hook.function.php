@@ -74,9 +74,10 @@ function plugin_fusioninventory_task_action_wakeonlan() {
 
 # Selection type for actions
 function plugin_fusioninventory_task_selection_type_wakeonlan($itemtype) {
+
    switch ($itemtype) {
 
-      case NETWORKING_TYPE;
+      case "Computer";
          $selection_type = 'devices';
          break;
 

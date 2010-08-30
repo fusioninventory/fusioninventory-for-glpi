@@ -79,7 +79,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             if ($agentModule['is_active'] == 0) {
                $a_agentList = importArrayFromDB($agentModule['exceptions']);
                if (count($a_agentList) > 0) {
-                  $where = " AND `glpi_plugin_fusioninventory_agents` IN (";
+                  $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
                   $i = 0;
                   $sep  = '';
                   foreach ($a_agentList as $agent_id=>$num) {
@@ -94,7 +94,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             } else {
                $a_agentList = importArrayFromDB($agentModule['exceptions']);
                if (count($a_agentList) > 0) {
-                  $where = " AND `glpi_plugin_fusioninventory_agents` NOT IN (";
+                  $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` NOT IN (";
                   $i = 0;
                   $sep  = '';
                   foreach ($a_agentList as $agent_id=>$num) {
@@ -148,6 +148,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             }
          }
       }
+      return false;
    }
 
 

@@ -228,6 +228,43 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    }
 
 
+   function changeStatusFinish($taskjobs_id, $items_id, $itemtype, $error=0, $message='') {
+
+      // Add status if not exist
+
+      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+      // Check if we have retry
+      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+      $input = array();
+      if($PluginFusioninventoryTaskjob->fields['retry_nb'] > 0) {
+         // Replanification
+         $a_input['state'] = 3;
+         
+         $PluginFusioninventoryTaskjob->fields['retry_nb']--;
+         $PluginFusioninventoryTaskjob->fields['date_scheduled'] = 
+                 date(time() + $PluginFusioninventoryTaskjob->fields['retry_time'] *60, "Y-m-d H:i:s");
+         $PluginFusioninventoryTaskjob->fields['status'] = 0;
+         unset($PluginFusioninventoryTaskjob->fields['id']);
+         $PluginFusioninventoryTaskjob->add($PluginFusioninventoryTaskjob->fields);
+      } else {
+       $a_input['state'] = 4;
+      }
+      $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+      $a_input['items_id'] = $items_id;
+      $a_input['itemtype'] = $itemtype;
+      $a_input['date'] = date("Y-m-d H:i:s");
+      $PluginFusioninventoryTaskjoblogs->add($a_input);      
+   }
+
+      /*
+    * Define different state
+    *
+    * 0 : define for each job, what computer and what agent will do task
+    * 1 : server has sent datas to agent
+    * 2 : return of agent data and update glpi
+    * 3 : finish
+    */
 
 }
 

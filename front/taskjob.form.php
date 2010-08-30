@@ -90,26 +90,26 @@ if (isset ($_POST["add"])) {
    $method = $array[1];
    // Add task
    $PluginFusioninventoryTask = new PluginFusioninventoryTask;
-   $PluginFusioninventoryTask->getEmpty();
-   $PluginFusioninventoryTask->fields['name'] = $method;
+   $input = array();
+   $input['name'] = $method;
 
-   $task_id = $PluginFusioninventoryTask->addToDB();
+   $task_id = $PluginFusioninventoryTask->add($input);
    
    // Add job with this device
-   $PluginFusioninventoryTaskjob->getEmpty();
-   $PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id'] = $task_id;
-   $PluginFusioninventoryTaskjob->fields['name'] = $method;
-   $PluginFusioninventoryTaskjob->fields['date_scheduled'] = $_POST['date_scheduled'];
+   $input = array();
+   $input['plugin_fusioninventory_tasks_id'] = $task_id;
+   $input['name'] = $method;
+   $input['date_scheduled'] = $_POST['date_scheduled'];
 
-   $PluginFusioninventoryTaskjob->fields['plugins_id'] = PluginFusioninventoryModule::getModuleId($module);
-   $PluginFusioninventoryTaskjob->fields['method'] = $method;
+   $input['plugins_id'] = PluginFusioninventoryModule::getModuleId($module);
+   $input['method'] = $method;
    $a_selectionDB = array();
    $a_selectionDB[][$_POST['itemtype']] = $_POST['items_id'];
-   $PluginFusioninventoryTaskjob->fields['selection'] = exportArrayToDB($a_selectionDB);
-   $PluginFusioninventoryTaskjob->fields['selection_type'] = 
-      call_user_func("plugin_".$module."_selection_type_".$method, $_POST['itemtype']);
+   $input['selection'] = exportArrayToDB($a_selectionDB);
+   $input['selection_type'] =
+      call_user_func("plugin_".$module."_task_selection_type_".$method, $_POST['itemtype']);
 
-   $PluginFusioninventoryTaskjob->addToDB();
+   $PluginFusioninventoryTaskjob->add($input);
    // Upsate task to activate it
    $PluginFusioninventoryTask->getFromDB($task_id);
    $PluginFusioninventoryTask->fields['is_active'] = "1";

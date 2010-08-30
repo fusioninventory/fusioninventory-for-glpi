@@ -440,7 +440,15 @@ $this->cronTaskScheduler();
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
                   $a_agents = $class->prepareRun($itemtype, $items_id);
-                  if (is_array($a_agents)) {
+                  if (!$a_agents) {
+                     $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'], 
+                                                                             $items_id, 
+                                                                             $itemtype,
+                                                                             1,
+                                                                             "Uname to find agent to run this job");
+
+
+                  } else if (is_array($a_agents)) {
                      // Add jobstatus and put status (waiting on server = 0)
                      $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
                      $a_input['items_id'] = $items_id;
