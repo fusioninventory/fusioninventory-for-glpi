@@ -445,8 +445,10 @@ $this->cronTaskScheduler();
                                                                              $items_id, 
                                                                              $itemtype,
                                                                              1,
-                                                                             "Uname to find agent to run this job");
-
+                                                                             "Unable to find agent to run this job");
+                     $this->getFromDB($data['id']);
+                     $this->fields['status'] = 1;
+                     $this->update($this->fields);
 
                   } else if (is_array($a_agents)) {
                      // Add jobstatus and put status (waiting on server = 0)

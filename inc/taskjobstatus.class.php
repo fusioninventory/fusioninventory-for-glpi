@@ -231,6 +231,23 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    function changeStatusFinish($taskjobs_id, $items_id, $itemtype, $error=0, $message='') {
 
       // Add status if not exist
+      $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+                     AND `items_id`='".$items_id."'
+                     AND`itemtype`='".$itemtype."'");
+      if (count($a_taskjobstatus) =="0") {
+         $input = array();
+         $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $input['items_id'] = $items_id;
+         $input['itemtype'] = $itemtype;
+         $input['state'] = 3;
+         $this->add($input);
+      } else {
+         foreach($a_taskjobstatus as $taskjobstatus_id=>$data) {
+            $this->getFromDB($taskjobstatus_id);
+            $this->fields['state'] = 3;
+            $this->update($this->fields);
+         }
+      }
 
       $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
@@ -254,17 +271,9 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_input['items_id'] = $items_id;
       $a_input['itemtype'] = $itemtype;
       $a_input['date'] = date("Y-m-d H:i:s");
+      $a_input['comment'] = $message;
       $PluginFusioninventoryTaskjoblogs->add($a_input);      
    }
-
-      /*
-    * Define different state
-    *
-    * 0 : define for each job, what computer and what agent will do task
-    * 1 : server has sent datas to agent
-    * 2 : return of agent data and update glpi
-    * 3 : finish
-    */
 
 }
 
