@@ -174,8 +174,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             $sxml_param->addAttribute('IP', $data['ip']);
 
             // Update taskjobstatus (state = 3 : finish); Because we haven't return of agent on this action
-            $PluginFusioninventoryTaskjobstatus->changeStatus($taskjobstatus_id, "3");
-            $PluginFusioninventoryTaskjoblogs->addTaskjoblog($taskjobs_id, $items_id, $itemtype, '5', "WakeOnLan have not return state");
+            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobs_id, $items_id, $itemtype, 0, 'WakeOnLan have not return state', 1);
          }
       }
       return $this->sxml;

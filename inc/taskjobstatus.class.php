@@ -228,7 +228,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    }
 
 
-   function changeStatusFinish($taskjobs_id, $items_id, $itemtype, $error=0, $message='') {
+   function changeStatusFinish($taskjobs_id, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
 
       // Add status if not exist
       $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
@@ -248,26 +248,31 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             $this->update($this->fields);
          }
       }
-
-      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-      // Check if we have retry
-      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
       $input = array();
-      if($PluginFusioninventoryTaskjob->fields['retry_nb'] > 0) {
-         // Replanification
-         $a_input['state'] = 3;
-         
-         $PluginFusioninventoryTaskjob->fields['retry_nb']--;
-         $PluginFusioninventoryTaskjob->fields['date_creation'] = date("Y-m-d H:i:s");
-         $PluginFusioninventoryTaskjob->fields['date_scheduled'] = 
-                 date("Y-m-d H:i:s", time() + ($PluginFusioninventoryTaskjob->fields['retry_time'] * 60));
-         $PluginFusioninventoryTaskjob->fields['status'] = 0;
-         $PluginFusioninventoryTaskjob->fields['rescheduled_taskjob_id'] = $PluginFusioninventoryTaskjob->fields['id'];
-         unset($PluginFusioninventoryTaskjob->fields['id']);
-         $PluginFusioninventoryTaskjob->add($PluginFusioninventoryTaskjob->fields);
+      if ($unknown ==  "1") {
+         $a_input['state'] = 5;
+      } else if ($error == "0") {
+         $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+         $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
+         // Check if we have retry
+         $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+         if($PluginFusioninventoryTaskjob->fields['retry_nb'] > 0) {
+            // Replanification
+            $a_input['state'] = 3;
+
+            $PluginFusioninventoryTaskjob->fields['retry_nb']--;
+            $PluginFusioninventoryTaskjob->fields['date_creation'] = date("Y-m-d H:i:s");
+            $PluginFusioninventoryTaskjob->fields['date_scheduled'] =
+                    date("Y-m-d H:i:s", time() + ($PluginFusioninventoryTaskjob->fields['retry_time'] * 60));
+            $PluginFusioninventoryTaskjob->fields['status'] = 0;
+            $PluginFusioninventoryTaskjob->fields['rescheduled_taskjob_id'] = $PluginFusioninventoryTaskjob->fields['id'];
+            unset($PluginFusioninventoryTaskjob->fields['id']);
+            $PluginFusioninventoryTaskjob->add($PluginFusioninventoryTaskjob->fields);
+         } else {
+          $a_input['state'] = 4;
+         }
       } else {
-       $a_input['state'] = 4;
+         $a_input['state'] = 2;
       }
       $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
       $a_input['items_id'] = $items_id;
