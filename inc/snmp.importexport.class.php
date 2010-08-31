@@ -461,8 +461,10 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                if (!in_array('comments', $a_lockable))
                   $data['comments'] = $discovery->DESCRIPTION;
                if (!in_array('FK_model_infos', $a_lockable));
-                  $data['FK_model_infos'] = $FK_model;
-                  $a_deviceExtension['FK_model_infos'] = $FK_model;
+                  if ($FK_model > 0) {
+                     $data['FK_model_infos'] = $FK_model;
+                     $a_deviceExtension['FK_model_infos'] = $FK_model;
+                  }
                if (!in_array('FK_snmp_connection', $a_lockable));
                   $data['FK_snmp_connection'] = $discovery->AUTHSNMP;
                   $a_deviceExtension['FK_snmp_connection'] = $discovery->AUTHSNMP;
@@ -560,7 +562,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                if ($a_device[1] == NETWORKING_TYPE) {
                   $a_extension = $PluginFusionInventoryNetworking->find("`FK_networking`='".$a_device[0]."' ");
                   foreach($a_extension as $extension_id=>$input) {
-                     if (isset($a_deviceExtension['FK_model_infos'])) {
+                     if ((isset($a_deviceExtension['FK_model_infos'])) AND ($a_deviceExtension['FK_model_infos'] > 0)) {
                         $input['FK_model_infos'] = $a_deviceExtension['FK_model_infos'];
                      }
                      if (isset($a_deviceExtension['FK_snmp_connection'])) {
@@ -571,7 +573,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                } else if ($a_device[1] == PRINTER_TYPE) {
                   $a_extension = $PluginFusionInventoryPrinters->find("`FK_printers`='".$a_device[0]."' ");
                   foreach($a_extension as $extension_id=>$input) {
-                     if (isset($a_deviceExtension['FK_model_infos'])) {
+                     if ((isset($a_deviceExtension['FK_model_infos'])) AND ($a_deviceExtension['FK_model_infos'] > 0)) {
                         $input['FK_model_infos'] = $a_deviceExtension['FK_model_infos'];
                      }
                      if (isset($a_deviceExtension['FK_snmp_connection'])) {
