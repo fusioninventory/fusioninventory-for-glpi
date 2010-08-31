@@ -187,7 +187,7 @@ $this->cronTaskScheduler();
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("periodicity", "", 1, 300);
+      Dropdown::showInteger("periodicity", "", 0, 300);
       $a_time = array();
       $a_time[] = "------";
       $a_time[] = "minutes";
@@ -201,7 +201,7 @@ $this->cronTaskScheduler();
       echo "<tr class='tab_bg_1'>";
       echo "<td>Nombre d'essais&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 1, 30);
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
       echo "</td>";
       echo "</tr>";
 
