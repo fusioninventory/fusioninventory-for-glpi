@@ -323,18 +323,22 @@ function plugin_fusioninventory_discovery_criteria($p_criteria, $type=0) {
    $CountCriteria2 = 0;
    if ($type == '0') {
       $arrayc = array('ip', 'name', 'serial', 'macaddr');
-      $CountCriteria1 = $ptc->getValue('criteria1_ip');
-      $CountCriteria2 = $ptc->getValue('criteria2_ip');
    } else {
       $arrayc = array('name', 'serial', 'macaddr');
+      $p_criteria['ip'] = '';
    }
-   $CountCriteria1 +=  $ptc->getValue('criteria1_name')
+   $CountCriteria1 =   $ptc->getValue('criteria1_ip')
+                     + $ptc->getValue('criteria1_name')
                      + $ptc->getValue('criteria1_serial')
                      + $ptc->getValue('criteria1_macaddr');
-   
-   $CountCriteria2 +=  $ptc->getValue('criteria2_name')
+
+   $CountCriteria2 =   $ptc->getValue('criteria2_name')
                      + $ptc->getValue('criteria2_serial')
                      + $ptc->getValue('criteria2_macaddr');
+   if ($type == '0') {
+      $CountCriteria2 += $ptc->getValue('criteria2_ip');
+   }
+
 
    foreach ($arrayc as $criteria) {
       if (!isset($p_criteria[$criteria])) {
@@ -407,7 +411,7 @@ function plugin_fusioninventory_discovery_criteria($p_criteria, $type=0) {
          break;
 
       case 1:
-         foreach ($arrayc as $criteria) {
+         foreach ($arrayc as $criteria) {         
             if ($ptc->getValue('criteria2_'.$criteria) == "1"){
                if ($p_criteria[$criteria] == "") {
                   return false;
@@ -477,7 +481,6 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
       $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
                         PHONE_TYPE, PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN);
    }
-
    $condition = "";
    $select = "";
    $condition_unknown = "";
@@ -516,7 +519,7 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
       }
    }
 
-   foreach ($a_types as $type) {
+   foreach ($a_types as $num=>$type) {
       $ci->setType($type,true);
       if ($type == PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN) {
          $query = "SELECT ".$ci->obj->table.".ID ".$select_unknown." FROM ".$ci->obj->table;
@@ -534,7 +537,6 @@ function plugin_fusioninventory_find_device($a_criteria, $p_type=0) {
       // Replace name with table.name because Column 'name' in field list is ambiguous
       $query = str_replace(" name", $ci->obj->table.".name", $query);
       $query = str_replace("`name`", $ci->obj->table.".`name`", $query);
-
       $result = $DB->query($query);
       if($DB->numrows($result) > 0) {
          $data = $DB->fetch_assoc($result);
