@@ -230,11 +230,13 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
    function changeStatusFinish($taskjobs_id, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
 
+      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+
       // Add status if not exist
       $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
                      AND `items_id`='".$items_id."'
                      AND`itemtype`='".$itemtype."'");
-      if (count($a_taskjobstatus) =="0") {
+      if (count($a_taskjobstatus) == "0") {
          $input = array();
          $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $input['items_id'] = $items_id;
@@ -251,8 +253,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $input = array();
       if ($unknown ==  "1") {
          $a_input['state'] = 5;
-      } else if ($error == "0") {
-         $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      } else if ($error == "1") {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
          // Check if we have retry
          $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
@@ -279,7 +280,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_input['itemtype'] = $itemtype;
       $a_input['date'] = date("Y-m-d H:i:s");
       $a_input['comment'] = $message;
-      $PluginFusioninventoryTaskjoblogs->add($a_input);      
+      $PluginFusioninventoryTaskjoblogs->add($a_input);
    }
 
 }
