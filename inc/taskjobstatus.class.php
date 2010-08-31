@@ -259,8 +259,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          $a_input['state'] = 3;
          
          $PluginFusioninventoryTaskjob->fields['retry_nb']--;
-         $PluginFusioninventoryTaskjob->fields['date_creation'] =
-         $PluginFusioninventoryTaskjob->fields['date_scheduled'] = date("Y-m-d H:i:s");
+         $PluginFusioninventoryTaskjob->fields['date_creation'] = date("Y-m-d H:i:s");
+         $PluginFusioninventoryTaskjob->fields['date_scheduled'] = 
                  date("Y-m-d H:i:s", time() + ($PluginFusioninventoryTaskjob->fields['retry_time'] * 60));
          $PluginFusioninventoryTaskjob->fields['status'] = 0;
          $PluginFusioninventoryTaskjob->fields['rescheduled_taskjob_id'] = $PluginFusioninventoryTaskjob->fields['id'];
