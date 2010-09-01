@@ -327,7 +327,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 			$canedit = false;
       }
 
-		$this->id = $id;
+		$this->oFusionInventory_networkequipment->id = $id;
 
 		$nw=new NetworkPort_NetworkPort();
 		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
@@ -337,23 +337,24 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
                "/lib/extjs/adapter/prototype/effects.js'></script>";
 
-      if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
+      if (!$data = $this->oFusionInventory_networkequipment->find("`networkequipments_id`='".$id."'", '', 1)) {
          // Add in database if not exist
+         $input = array();
          $input['networkequipments_id'] = $id;
-         $ID_tn = $this->add($input);
-         $this->getFromDB($ID_tn);
+         $ID_tn = $this->oFusionInventory_networkequipment->add($input);
+         $this->oFusionInventory_networkequipment->getFromDB($ID_tn);
       } else {
          foreach ($data as $ID_tn=>$datas) {
-            $this->fields = $data[$ID_tn];
+            $this->oFusionInventory_networkequipment->fields = $data[$ID_tn];
          }
       }
 
-      $PID = $this->fields['last_PID_update'];
+      $PID = $this->oFusionInventory_networkequipment->fields['last_PID_update'];
 //      $PID = $this->getValue('last_PID_update');
 
 		// Form networking informations
-		$this->showTabs($options);
-      $this->showFormHeader($options);
+		//$this->showTabs($options);
+      $this->oFusionInventory_networkequipment->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["profile"][24]."</td>";
@@ -369,7 +370,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		}
       Dropdown::show("PluginFusinvsnmpModel",
                      array('name'=>"model_infos",
-                           'value'=>$this->fields['plugin_fusinvsnmp_models_id'],
+                           'value'=>$this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_models_id'],
                            'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";
@@ -378,7 +379,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusioninventory_snmpauths_id']);
+		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
 		echo "</td>";
 		echo "</tr>";
 
@@ -409,7 +410,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<tr class='tab_bg_1 center'>";
 		echo "<td colspan='2' height='30'>";
-		echo $LANG['plugin_fusioninventory']["snmp"][52].": ".convDateTime($this->fields['last_fusioninventory_update']);
+		echo $LANG['plugin_fusioninventory']["snmp"][52].": ".convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
 		echo "</td>";
 		echo "</tr>";
 
@@ -426,7 +427,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 			echo "<tr class='tab_bg_1 center'>";
 			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][12]."</td>";
 			echo "<td>";
-			$sysUpTime = $this->fields['uptime'];
+			$sysUpTime = $this->oFusionInventory_networkequipment->fields['uptime'];
 			if (strstr($sysUpTime, "days")) {
 				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
          } else if (strstr($sysUpTime, "hours")) {
@@ -463,7 +464,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 			echo "<tr class='tab_bg_1 center'>";
 			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][13]."</td>";
 			echo "<td>";
-			PluginFusinvsnmpDisplay::bar($this->fields['cpu'],'','inverse');
+			PluginFusinvsnmpDisplay::bar($this->oFusionInventory_networkequipment->fields['cpu'],'','inverse');
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -481,9 +482,9 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 			if (empty($data2["ram"])) {
 				$ram_pourcentage = 0;
 			} else {
-				$ram_pourcentage = ceil((100 * ($data2["ram"] - $this->fields['memory'])) / $data2["ram"]);
+				$ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
 			}
-			PluginFusinvsnmpDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->fields['memory'])." Mo / ".
+			PluginFusinvsnmpDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
                             $data2["ram"]." Mo)",'inverse');
 			echo "</td>";
 			echo "</tr>";

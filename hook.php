@@ -584,7 +584,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusinvsnmp_configsecurities.name" :
 					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
-					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuth($data["id"],$type);
+					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuthDevice($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_configsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
@@ -657,7 +657,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 				// ** FusionInventory - SNMP authentification
 				case "glpi_plugin_fusinvsnmp_configsecurities.id" :
 					$plugin_fusinvsnmp_snmp = new PluginFusinvsnmpConfigSecurity;
-					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuth($data["id"],$type);
+					$FK_auth_DB = $plugin_fusinvsnmp_snmp->GetSNMPAuthDevice($data["id"],$type);
 					$out = "<a href=\"" . $CFG_GLPI["root_doc"] . "/plugins/fusinvsnmp/front/configsecurity.form.php?id=" . $FK_auth_DB . "\">";
 					$out .= Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_configsecurities", $FK_auth_DB, 0);
 					$out .= "</a>";
@@ -1061,13 +1061,18 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          }
 			break;
 
+       case 'PluginFusioninventoryAgent' :
+          $array = array ();
+          $array[1] = $LANG['plugin_fusinvsnmp']["agents"][24];
+          return $array;
+          break;
+
 	}
 	return false;	
 }
 
 // Define headings actions added by the plugin	 
 function plugin_headings_actions_fusinvsnmp($item) {
-   $config = new PluginFusinvsnmpConfig;
 
    switch (get_class($item)) {
 
@@ -1092,6 +1097,13 @@ function plugin_headings_actions_fusinvsnmp($item) {
 				);
 			break;
 
+      case 'PluginFusioninventoryAgent' :
+         $array = array ();
+         $array[1] = "plugin_headings_fusinvsnmp_agents";
+         // $array[1] = "plugin_headings_fusinvsnmp_agents";  => $array[1] = array('taclasse', 'taméthode');
+         return $array;
+         break;
+
 	}
 	return false;
 }
@@ -1115,7 +1127,7 @@ function plugin_headings_fusinvsnmp_printerHistory($type, $id) {
 
 function plugin_headings_fusinvsnmp_networkingInfo($type, $id) {
 	$snmp = new PluginFusinvsnmpNetworkEquipment;
-	$snmp->showForm($id, 
+	$snmp->showForm($_POST['id'],
            array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/switch_info.form.php'));
 }
 
@@ -1132,6 +1144,11 @@ function plugin_headings_fusinvsnmp($type,$id,$withtemplate=0) {
               array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/profile.php"));
 		break;
 	}
+}
+
+function plugin_headings_fusinvsnmp_agents($type,$id) {
+   $PluginFusinvsnmpAgentconfig = new PluginFusinmpvsnAgentconfig;
+   $PluginFusinvsnmpAgentconfig->showForm($_POST['id']);
 }
 
 

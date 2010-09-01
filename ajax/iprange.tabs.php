@@ -46,9 +46,25 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-echo "<br/>";
+$PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
 
-plugin_headings_fusioninventory_tasks(0, 'PluginFusinvsnmpIPRange', $_POST["id"]);
+switch($_POST['glpi_tab']) {
+   case -1 :
+      //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
+      break;
+
+   case 1 :
+      //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
+      break;
+
+   case 2:
+
+      break;
+
+   default :
+
+      break;
+}
 
 ajaxFooter();
 

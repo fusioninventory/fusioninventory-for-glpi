@@ -54,6 +54,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
    Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
    Plugin::registerClass('PluginFusinvsnmpUnknownDevice');
+   Plugin::registerClass('PluginFusinvsnmpAgentconfig');
    Plugin::registerClass('PluginFusinvsnmpNetworkport',
                          array('classname'=>'glpi_networkports'));
 
@@ -67,10 +68,8 @@ function plugin_init_fusinvsnmp() {
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['SNMPQUERY'] = 'PluginFusinvsnmpCommunicationSNMPQuery';
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] = 'PluginFusinvsnmpCommunicationNetDiscovery';
 
-   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-                       [$LANG['plugin_fusinvsnmp']["title"][0]])) {
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-               [$LANG['plugin_fusinvsnmp']["title"][0]] = array('class'=>'PluginFusinvSNMPConfig',
+   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']["title"][0]])) {
+      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']["title"][0]] = array('class'=>'PluginFusinvSNMPConfig',
                                                                 'submitbutton'=>'plugin_fusinvsnmp_config_set',
                                                                 'submitmethod'=>'putForm');
    }

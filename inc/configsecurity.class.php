@@ -344,6 +344,25 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       Dropdown::showFromArray("snmpversion", $snmpVersions, $options);
    }
 
+   function getSNMPVersion($id) {
+      switch($id) {
+
+         case '1':
+            return '1';
+            break;
+
+         case '2':
+            return '2c';
+            break;
+
+         case '3':
+            return '3';
+            break;
+
+      }
+      return '';
+   }
+
 	function showDropdownSNMPAuth($p_value=NULL) {
       $authentications = array(0=>'-----', 'MD5', 'SHA');
       if (is_null($p_value)) {
@@ -354,6 +373,21 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       Dropdown::showFromArray("authentication", $authentications, $options);
    }
 
+   function getSNMPAuthProtocol($id) {
+      switch($id) {
+
+         case '1':
+            return 'MD5';
+            break;
+
+         case '2':
+            return 'SHA';
+            break;
+
+      }
+      return '';
+   }
+
 	function showDropdownSNMPEncryption($p_value=NULL) {
       $encryptions = array(0=>'-----', 'DES', 'AES128', 'AES192', 'AES256');
       if (is_null($p_value)) {
@@ -362,6 +396,29 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
          $options = array('value'=>$p_value);
       }
       Dropdown::showFromArray("encryption", $encryptions, $options);
+   }
+
+   function getSNMPEncryption($id) {
+      switch($id) {
+
+         case '1':
+            return 'DES';
+            break;
+
+         case '2':
+            return 'AES128';
+            break;
+
+         case '3':
+            return 'AES192';
+            break;
+
+         case '4':
+            return 'AES256';
+            break;
+
+      }
+      return '';
    }
 
 	function selectbox($selected=0) {
@@ -624,7 +681,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 
 
-	function GetSNMPAuth($ID_Device,$type) {
+	function GetSNMPAuthDevice($ID_Device,$type) {
 		global $DB;
 
 		switch ($type) {

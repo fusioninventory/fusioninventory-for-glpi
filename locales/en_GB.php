@@ -94,6 +94,7 @@ $LANG['plugin_fusinvsnmp']["setup"][13]="Verification of PHP modules";
 $LANG['plugin_fusinvsnmp']["setup"][14]="SNMP extension of PHP isn't load";
 $LANG['plugin_fusinvsnmp']["setup"][15]="PHP/PECL runkit extension isn't load";
 $LANG['plugin_fusinvsnmp']["setup"][16]="Documentation";
+$LANG['plugin_fusinvsnmp']["setup"][17]="Plugin ".$title." need plugin FusionInventory installed before install.";
 
 $LANG['plugin_fusinvsnmp']["functionalities"][0]="Features";
 $LANG['plugin_fusinvsnmp']["functionalities"][1]="Add / Delete features";
@@ -518,6 +519,7 @@ $LANG['plugin_fusinvsnmp']["mapping"][162]="Cyan drum";
 $LANG['plugin_fusinvsnmp']["mapping"][163]="Magenta drum";
 $LANG['plugin_fusinvsnmp']["mapping"][164]="Yellow drum";
 $LANG['plugin_fusinvsnmp']["mapping"][165]="Many informations grouped";
+$LANG['plugin_fusinvsnmp']["mapping"][166]="Black toner 2";
 $LANG['plugin_fusinvsnmp']["mapping"][1423]="Total number of printed pages (print)";
 $LANG['plugin_fusinvsnmp']["mapping"][1424]="Number of printed black and white pages (print)";
 $LANG['plugin_fusinvsnmp']["mapping"][1425]="Number of printed color pages (print)";
@@ -555,6 +557,9 @@ $LANG['plugin_fusinvsnmp']["iprange"][1]="End of IP range";
 $LANG['plugin_fusinvsnmp']["iprange"][2]="IP Ranges";
 $LANG['plugin_fusinvsnmp']["iprange"][3]="Query";
 $LANG['plugin_fusinvsnmp']["iprange"][4]="Incorrect IP address";
+$LANG['plugin_fusinvsnmp']["iprange"][5]="Edit IP range";
+$LANG['plugin_fusinvsnmp']["iprange"][6]="Create range IP";
+$LANG['plugin_fusinvsnmp']["iprange"][7]="Bad IP";
 
 $LANG['plugin_fusinvsnmp']["agents"][0]="SNMP Agent";
 $LANG['plugin_fusinvsnmp']["agents"][2]="Number of threads used by core for querying devices";
@@ -576,6 +581,7 @@ $LANG['plugin_fusinvsnmp']["agents"][20]="Synchronisation between OCS and GLPI i
 $LANG['plugin_fusinvsnmp']["agents"][21]="Inventory terminated";
 $LANG['plugin_fusinvsnmp']["agents"][22]="Wait";
 $LANG['plugin_fusinvsnmp']["agents"][23]="Computer link";
+$LANG['plugin_fusinvsnmp']["agents"][24]="SNMP - Threads";
 
 $LANG['plugin_fusinvsnmp']["unknown"][0]="DNS Name";
 $LANG['plugin_fusinvsnmp']["unknown"][1]="Network port name";
@@ -598,6 +604,7 @@ $LANG['plugin_fusinvsnmp']["task"][10]="Running... not available";
 $LANG['plugin_fusinvsnmp']["task"][11]="Agent has been notified and begin running";
 $LANG['plugin_fusinvsnmp']["task"][12]="Wake agent";
 $LANG['plugin_fusinvsnmp']["task"][13]="Agent(s) unvailable";
+$LANG['plugin_fusinvsnmp']["task"][14]="Planified on";
 
 $LANG['plugin_fusinvsnmp']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']["constructdevice"][1]="Automatic creation of models";

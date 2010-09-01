@@ -51,6 +51,27 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       return $LANG['plugin_fusinvsnmp']["iprange"][5];
    }
 
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canCancel() {
+      return true;
+   }
+
+   function canUndo() {
+      return true;
+   }
+
+   function canValidate() {
+      return true;
+   }
+
+
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI,$DB;
 
@@ -282,9 +303,6 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       }
    }
 
-   function canView() {
-      return true;
-   }
 }
 
 ?>

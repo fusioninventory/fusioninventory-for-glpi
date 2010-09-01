@@ -581,6 +581,7 @@ $LANG['plugin_fusinvsnmp']["agents"][20]="La synchronisation entre OCS et GLPI e
 $LANG['plugin_fusinvsnmp']["agents"][21]="Inventaire terminé";
 $LANG['plugin_fusinvsnmp']["agents"][22]="En attente";
 $LANG['plugin_fusinvsnmp']["agents"][23]="Lié à l'ordinateur";
+$LANG['plugin_fusinvsnmp']["agents"][24]="SNMP - Threads";
 
 $LANG['plugin_fusinvsnmp']["unknown"][0]="Nom DNS";
 $LANG['plugin_fusinvsnmp']["unknown"][1]="Nom port réseau";

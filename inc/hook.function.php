@@ -39,9 +39,6 @@ function plugin_fusinvsnmp_task_methods() {
 
    $a_tasks[] = array('module'         => 'fusinvsnmp',
                       'method'         => 'netdiscovery',
-                      'selection_type' => 'devices');
-   $a_tasks[] = array('module'         => 'fusinvsnmp',
-                      'method'         => 'netdiscovery',
                       'selection_type' => 'iprange',
                       'selection_type_name' => $LANG['plugin_fusioninventory']["menu"][2]);
    $a_tasks[] = array('module'         => 'fusinvsnmp',
@@ -123,5 +120,6 @@ function plugin_fusinvsnmp_selection_type_netdiscovery($itemtype) {
 
    return $selection_type;
 }
+
 
 ?>

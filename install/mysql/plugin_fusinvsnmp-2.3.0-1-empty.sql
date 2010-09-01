@@ -401,6 +401,21 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_unknowndevices` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_agentconfigs`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_agentconfigs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `version_netdiscovery` TEXT COMMENT 'array(xmltag=>value)',
+   `version_snmpquery` TEXT COMMENT 'array(xmltag=>value)',
+   `threads_netdiscovery` int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)',
+   `threads_snmpquery` int(4) DEFAULT '1' COMMENT 'array(xmltag=>value)',
+   PRIMARY KEY (`id`),
+   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 ## INSERT
 ## glpi_plugin_fusinvsnmp_configsecurities
 INSERT INTO `glpi_plugin_fusinvsnmp_configsecurities`
