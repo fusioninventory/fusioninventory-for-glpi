@@ -370,7 +370,9 @@ INFOCONTENT;
             $iniSections["sections"] = array_merge (
             $iniSections["sections"],
             $sectionsToAdd);
-
+            if ((count($allSectionsId)) != (count($iniSections["sections"])))  {
+               $log->notifyDebugMessage("Number of lines of array returne by hooks sections (add and remove) are not same with number of sections");
+            }
             $iniSections["sections"] = array_combine($allSectionsId, $iniSections["sections"]);
 
         }
