@@ -578,12 +578,12 @@ $LANG['plugin_fusioninventory']["agents"][25]="Version";
 $LANG['plugin_fusioninventory']["agents"][26]="Gestion des agents";
 $LANG['plugin_fusioninventory']["agents"][27]="Modules des agents";
 
-//$LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
-//$LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
-//$LANG['plugin_fusioninventory']["unknown"][2]="Matériel approuvé";
-//$LANG['plugin_fusioninventory']["unknown"][3]="Découvert par l'agent";
-//$LANG['plugin_fusioninventory']["unknown"][4]="Hub réseau";
-//$LANG['plugin_fusioninventory']["unknown"][5]="Importé depuis le matériel inconnu (FusionInventory)";
+$LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
+$LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
+$LANG['plugin_fusioninventory']["unknown"][2]="Matériel approuvé";
+$LANG['plugin_fusioninventory']["unknown"][3]="Découvert par l'agent";
+$LANG['plugin_fusioninventory']["unknown"][4]="Hub réseau";
+$LANG['plugin_fusioninventory']["unknown"][5]="Importé depuis le matériel inconnu (FusionInventory)";
 
 $LANG['plugin_fusioninventory']["task"][0]="Tâche";
 $LANG['plugin_fusioninventory']["task"][1]="Gestion des tâches";

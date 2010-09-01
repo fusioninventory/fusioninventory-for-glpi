@@ -43,6 +43,7 @@ function plugin_init_fusioninventory() {
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryTask');
    Plugin::registerClass('PluginFusioninventoryTaskjob');
+   Plugin::registerClass('PluginFusioninventoryUnknownDevice');
 
    CronTask::Register('fusioninventory', 'tasks', '300', array('mode'=>1, 'allowmode'=>3, 'logs_lifetime'=>30));
 

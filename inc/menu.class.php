@@ -62,6 +62,13 @@ class PluginFusioninventoryMenu {
       $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_runningjob.png";
       $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskjob.php";
 
+
+//      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevices", "r")) {
+         $a_menu[4]['name'] = $LANG['plugin_fusioninventory']["menu"][4];
+         $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_unknown_device.png";
+         $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php";
+//      }
+
       echo "<div align='center'>";
       echo "<table width='950'>";
       echo "<tr>";

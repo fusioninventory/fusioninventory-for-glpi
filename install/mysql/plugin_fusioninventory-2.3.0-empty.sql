@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
 
 
@@ -200,6 +201,35 @@ CREATE TABLE `glpi_plugin_fusioninventory_mappings` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknowndevices`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `date_mod` datetime DEFAULT NULL,
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `location` int(11) NOT NULL DEFAULT '0',
+   `is_deleted` smallint(6) NOT NULL DEFAULT '0',
+   `serial` VARCHAR( 255 ) NULL DEFAULT NULL,
+   `otherserial` VARCHAR( 255 ) NULL DEFAULT NULL,
+   `contact` VARCHAR( 255 ) NULL DEFAULT NULL,
+   `domain` INT( 11 ) NOT NULL DEFAULT '0',
+   `comment` TEXT NULL DEFAULT NULL,
+   `type` INT( 11 ) NOT NULL DEFAULT '0',
+   `accepted` INT( 1 ) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+   `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `hub` int(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `entities_id` (`entities_id`),
+   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
+   KEY `is_deleted` (`is_deleted`),
+   KEY `date_mod` (`date_mod`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
@@ -226,7 +256,19 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryAgent', '11', '4', '0'),
           (NULL,'PluginFusioninventoryAgent', '12', '5', '0'),
           (NULL,'PluginFusioninventoryAgent', '13', '6', '0'),
-          (NULL,'PluginFusioninventoryAgent', '14', '7', '0');
+          (NULL,'PluginFusioninventoryAgent', '14', '7', '0'),
+
+          (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '3', '3', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '5', '4', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '7', '5', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '10', '6', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '11', '7', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '18', '8', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '14', '9', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0'),
+          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0');
 
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
    VALUES (NULL,'PluginFusioninventoryTaskjob', '1', '1', '0'),
