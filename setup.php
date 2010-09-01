@@ -109,6 +109,20 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']["menu"][1];
       $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
    }
+
+   // Check for uninstall
+   if (isset($_GET['id']) AND ($_GET['id'] == $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"])
+            AND (isset($_GET['action']) AND $_GET['action'] == 'uninstall')
+            AND (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
+
+      if (PluginFusioninventoryModule::getAll()) {
+         addMessageAfterRedirect($LANG['plugin_fusioninventory']["setup"][17]);
+         glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+         exit;
+      }
+   }
+
+
 }
 
 // Name and Version of the plugin
