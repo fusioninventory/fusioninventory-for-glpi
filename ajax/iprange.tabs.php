@@ -54,11 +54,7 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 1 :
-      //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
-      break;
-
-   case 2:
-
+      plugin_headings_fusioninventory_tasks("", "PluginFusinvsnmpIPRange", $_POST['id']);
       break;
 
    default :

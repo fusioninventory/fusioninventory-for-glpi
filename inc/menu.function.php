@@ -60,11 +60,6 @@ function plugin_fusinvsnmp_displayMenu() {
       $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
    }
 
-   if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices", "r")) {
-      $a_menu[3]['name'] = $LANG['plugin_fusinvsnmp']["menu"][4];
-      $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_unknown_device.png";
-      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/unknowndevice.php";
-   }
 
    return $a_menu;
 }

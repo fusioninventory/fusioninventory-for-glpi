@@ -583,13 +583,6 @@ $LANG['plugin_fusinvsnmp']["agents"][22]="Wait";
 $LANG['plugin_fusinvsnmp']["agents"][23]="Computer link";
 $LANG['plugin_fusinvsnmp']["agents"][24]="SNMP - Threads";
 
-$LANG['plugin_fusinvsnmp']["unknown"][0]="DNS Name";
-$LANG['plugin_fusinvsnmp']["unknown"][1]="Network port name";
-$LANG['plugin_fusinvsnmp']["unknown"][2]="Approved devices";
-$LANG['plugin_fusinvsnmp']["unknown"][3]="Discovered by agent";
-$LANG['plugin_fusinvsnmp']["unknown"][4]="Network hub";
-$LANG['plugin_fusinvsnmp']["unknown"][5]="Imported from unknown devices (FusionInventory)";
-
 $LANG['plugin_fusinvsnmp']["task"][0]="Task";
 $LANG['plugin_fusinvsnmp']["task"][1]="Task management";
 $LANG['plugin_fusinvsnmp']["task"][2]="Action";

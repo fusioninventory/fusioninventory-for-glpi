@@ -76,8 +76,9 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       global $LANG,$CFG_GLPI,$DB;
 
       $ong = array();
-      $ong[1] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
-
+      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
+         $ong[1] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
+      }
       return $ong;
    }
 

@@ -35,7 +35,6 @@
 #DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_connection`;
 #DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history`;
 #DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
-#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
 
 
@@ -366,37 +365,17 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkportlogs` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_unknowndevices`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_unknowndevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `dnsname` VARCHAR( 255 ) NULL DEFAULT NULL,
-   `date_mod` datetime DEFAULT NULL,
-   `entities_id` int(11) NOT NULL DEFAULT '0',
-   `location` int(11) NOT NULL DEFAULT '0',
-   `is_deleted` smallint(6) NOT NULL DEFAULT '0',
-   `serial` VARCHAR( 255 ) NULL DEFAULT NULL,
-   `otherserial` VARCHAR( 255 ) NULL DEFAULT NULL,
-   `contact` VARCHAR( 255 ) NULL DEFAULT NULL,
-   `domain` INT( 11 ) NOT NULL DEFAULT '0',
-   `comment` TEXT NULL DEFAULT NULL,
-   `type` INT( 11 ) NOT NULL DEFAULT '0',
-   `snmp` INT( 1 ) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_unknowndevices_id` int(11) NOT NULL DEFAULT '0',
+   `sysdescr` TEXT,
    `plugin_fusinvsnmp_models_id` INT( 11 ) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` INT( 11 ) NOT NULL DEFAULT '0',
-   `accepted` INT( 1 ) NOT NULL DEFAULT '0',
-   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-   `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `hub` int(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   KEY `entities_id` (`entities_id`),
-   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`),
-   KEY `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
-   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
-   KEY `is_deleted` (`is_deleted`),
-   KEY `date_mod` (`date_mod`)
+   KEY `plugin_fusioninventory_unknowndevices_id` (`plugin_fusioninventory_unknowndevices_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -437,18 +416,6 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL, 'PluginFusinvsnmpConfigSecurity', '8', '5', '0'),
           (NULL, 'PluginFusinvsnmpConfigSecurity', '9', '6', '0'),
           (NULL, 'PluginFusinvsnmpConfigSecurity', '10', '7', '0'),
-
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '2', '1', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '4', '2', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '3', '3', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '5', '4', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '7', '5', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '10', '6', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '11', '7', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '18', '8', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '14', '9', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '15', '10', '0'),
-          (NULL, 'PluginFusinvsnmpUnknownDevice', '9', '11', '0'),
 
 ##          (NULL,'PluginFusinvsnmpNetworkPort', '2', '1', '0'),
 ##          (NULL,'PluginFusinvsnmpNetworkPort', '3', '2', '0'),

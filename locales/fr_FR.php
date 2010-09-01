@@ -583,13 +583,6 @@ $LANG['plugin_fusinvsnmp']["agents"][22]="En attente";
 $LANG['plugin_fusinvsnmp']["agents"][23]="Lié à l'ordinateur";
 $LANG['plugin_fusinvsnmp']["agents"][24]="SNMP - Threads";
 
-$LANG['plugin_fusinvsnmp']["unknown"][0]="Nom DNS";
-$LANG['plugin_fusinvsnmp']["unknown"][1]="Nom port réseau";
-$LANG['plugin_fusinvsnmp']["unknown"][2]="Matériel approuvé";
-$LANG['plugin_fusinvsnmp']["unknown"][3]="Découvert par l'agent";
-$LANG['plugin_fusinvsnmp']["unknown"][4]="Hub réseau";
-$LANG['plugin_fusinvsnmp']["unknown"][5]="Importé depuis le matériel inconnu (FusionInventory)";
-
 $LANG['plugin_fusinvsnmp']["task"][0]="Tâche";
 $LANG['plugin_fusinvsnmp']["task"][1]="Gestion des tâches";
 $LANG['plugin_fusinvsnmp']["task"][2]="Action";
