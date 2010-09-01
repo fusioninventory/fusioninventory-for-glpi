@@ -113,25 +113,14 @@ class PluginFusinvinventoryLibhook {
                   $OperatingSystemVersion = new OperatingSystemVersion;
                   $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$section['dataSection']['OSVERSION']));
                }
-               break;
-
-            case 'ENVS':
-               // Not using it now
-               unset($data[$i]);
-
-               break;
-
-            case 'PROCESSES':
-               // Not using it now
-               unset($data[$i]);
-
+               
                break;
 
          }
       }
-print_r($data);
-      $Computer->update($Computer->fields);
 
+      $Computer->update($Computer->fields);
+      $j = 0;
       foreach($data as $section) {
 
          switch ($section['sectionName']) {
@@ -154,7 +143,7 @@ print_r($data);
                $input['_itemtype'] = 'DeviceProcessor';
                $id_link_device = $Computer_Device->add($input);
 
-               array_push($sectionsId,$id_link_device);
+               array_push($sectionsId,$section['sectionName']."/".$id_link_device);
                break;
 
             case 'DRIVES':
@@ -196,7 +185,7 @@ print_r($data);
                   $disk['freesize']=$section['dataSection']['FREE'];
                   $id_disk = $ComputerDisk->add($disk);
                }
-               array_push($sectionsId,$id_disk);
+               array_push($sectionsId,$section['sectionName']."/".$id_disk);
                break;
 
             case 'MEMORIES':
@@ -229,9 +218,15 @@ print_r($data);
                                                      '_itemtype'     => 'DeviceMemory',
                                                      'devicememories_id'     => $ram_id,
                                                      'specificity'  => $section['dataSection']["CAPACITY"]));
+                     array_push($sectionsId,$section['sectionName']."/".$devID);
+                  } else {
+                     array_push($sectionsId,$section['sectionName']."/".$j);
+                     $j++;
                   }
+               } else {
+                  array_push($sectionsId,$section['sectionName']."/".$j);
+                  $j++;
                }
-
                break;
 
             case 'SOFTWARES':
@@ -242,27 +237,25 @@ print_r($data);
                $PluginFusinvinventorySoftwares = new PluginFusinvinventorySoftwares;
                $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$section['dataSection']['NAME'],
                                                                               'version'=>$section['dataSection']['VERSION']));
-               array_push($sectionsId,$Computer_SoftwareVersion_id);
+               array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
 
             case 'BIOS':
-               array_push($sectionsId,$idmachine);
+               array_push($sectionsId,$section['sectionName']."/".$idmachine);
                break;
 
 
             case 'HARDWARE':
-               array_push($sectionsId,$idmachine);
+               array_push($sectionsId,$section['sectionName']."/".$idmachine);
                break;
 
             default:
-               array_push($sectionsId,0);
+               array_push($sectionsId,$section['sectionName']."/".$j);
+               $j++;
                break;
-
-
 
          }
       }
-
        
       return $sectionsId;
     }
