@@ -93,6 +93,11 @@ NULL , '".$_POST['ID']."', '".$md5."'
 } else if (isset($_POST['mib'])) { // Check MIBS
    foreach($_POST['oidsselected'] as $oid) {
       $a_mapping = explode('||', $_POST['links_oid_fields_'.$oid]);
+      
+      if (!isset($_POST['oid_port_counter_'.$oid]) or $_POST['oid_port_counter_'.$oid] == "") {
+         $_POST['oid_port_counter_'.$oid] = 0;
+      }
+
 
       $query_ins = "INSERT INTO glpi_plugin_fusioninventory_construct_mibs
          (`mib_oid_id`, `construct_device_id`, `mapping_name`,

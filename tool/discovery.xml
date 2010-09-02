@@ -642,9 +642,20 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)FX, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Wed 12-Oct-05 22:05 by yenanh]]></SYSDESCR>
-      <MANUFACTURER>0</MANUFACTURER>
-      <TYPE>2</TYPE>
+      <SYSDESCR><![CDATA[NRG MP 1600 1.01 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0271</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[NRG MP C4500 1.59 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0272</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Sun 21-May-06 21:33 by yenanh]]></SYSDESCR>
@@ -1167,6 +1178,9 @@
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C451]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>3</TYPE>
+      <MODELSNMP>Printer0096</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA Di3510f]]></SYSDESCR>
@@ -3087,6 +3101,9 @@
       <SYSDESCR><![CDATA[HP J4899B ProCurve Switch 2650, revision H.08.67, ROM H.08.02 (/sw/code/build/fish(f04))]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>2</TYPE>
+      <MODELSNMP>Networking0058</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[FS-C5200DN]]></SYSDESCR>
@@ -5074,7 +5091,7 @@
       <SYSDESCR><![CDATA[ProCurve J8773A Switch 4208vl, revision L.11.09, ROM L.10.03 (/sw/code/build/rmm(rm11))]]></SYSDESCR>
       <MANUFACTURER>0</MANUFACTURER>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0043</MODELSNMP>
+      <MODELSNMP>Networking0329</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -6425,5 +6442,218 @@
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0262</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2007 by Cisco Systems, Inc.^MCompiled Mon 16-Jul-07 03:24 by myl]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0088</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Mon 16-Jul-07 03:24 by myl]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0088</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio 3030 1.26 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0119</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[RICOH Aficio 3224C 1.13 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0042</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP J4905A ProCurve Switch 3400cl-24G, revision M.08.74, ROM I.08.07 (/sw/code/build/makf(ts_08_5))]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0058</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Allied Telesyn Ethernet Switch AT-8024]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0007</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Canon iR-ADV C7055 /P]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0133</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.1602.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox Phaser 7400DT;PS 4.2.0,Net 25.72.10.07.2005,Eng 0.11.2,OS 6.26]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0175</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Canon iR2520 /P]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0138</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.1602.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox Phaser 8560DN; OS 9.82, PS 4.7.0, Eng 22.L0.4.7.0, Net 37.54.03.02.2008, Adobe PostScript 3016.101 (11), PCL 5c Version 5.0]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0265</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Dell 2330dn Laser Printer version NR.APS.N449 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0196</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.674.10898.100.2.1.2.1.6.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2006 by Cisco Systems, Inc.^MCompiled Fri 28-Jul-06 08:46 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0302</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Fri 28-Jul-06 08:46 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0302</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[PowerConnect M6220, 1.1.0.10, VxWorks5.5.1]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0331</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(53)SE1, RELEASE SOFTWARE (fc2)^MTechnical Support: http://www.cisco.com/techsupport^MCopyright (c) 1986-2010 by Cisco Systems, Inc.^MCompiled Fri 12-Mar-10 17:54 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0088</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(53)SE1, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Fri 12-Mar-10 17:54 by prod_rel_team]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0088</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2008 by Cisco Systems, Inc.^MCompiled Fri 07-Mar-08 00:38 by weiliu]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0332</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Fri 07-Mar-08 00:38 by weiliu]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0332</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4a, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by cisco Systems, Inc.^MCompiled Fri 16-Sep-05 10:46 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0333</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA4a, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by cisco Systems, Inc.Compiled Fri 16-Sep-05 10:46 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0333</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)FX, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2005 by Cisco Systems, Inc.^MCompiled Wed 12-Oct-05 22:05 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0334</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)FX, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Wed 12-Oct-05 22:05 by yenanh]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0334</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C3550 Software (C3550-I9Q3L2-M), Version 12.1(12c)EA1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2002 by cisco Systems, Inc.^MCompiled Sun 24-Nov-02 23:58 by antonino]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0256</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3550 Software (C3550-I9Q3L2-M), Version 12.1(12c)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2002 by cisco Systems, Inc.Compiled Sun 24-Nov-02 23:58 by antonino]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0256</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 4500 50-Port Software Version 3Com OS V3.03.00s56]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0316</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software ^MIOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA1, RELEASE SOFTWARE (fc1)^MCopyright (c) 1986-2004 by cisco Systems, Inc.^MCompiled Mon 12-Jul-04 08:18 by madison]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0335</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Mon 12-Jul-04 08:18 by madison]]></SYSDESCR>
+      <MANUFACTURER>-1</MANUFACTURER>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking0335</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
 </SNMPDISCOVERY>
