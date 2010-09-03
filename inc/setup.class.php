@@ -49,7 +49,7 @@ class PluginFusioninventorySetup {
          return false;
       }
 
-
+      CronTask::Unregister('fusioninventory');
 
       $np = new NetworkPort;
 
