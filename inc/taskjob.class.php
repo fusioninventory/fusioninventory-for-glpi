@@ -121,7 +121,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-$this->cronTaskScheduler();
+$this->cronTaskscheduler();
 
       $this->showFormHeader($options);
       
@@ -384,7 +384,7 @@ $this->cronTaskScheduler();
    
    
 
-   function cronTaskScheduler() {
+   function cronTaskscheduler() {
       global $DB;
 
       $dateNow = date("Y-m-d H:i:s");
