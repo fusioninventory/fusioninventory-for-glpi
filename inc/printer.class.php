@@ -350,32 +350,47 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printers","r");
 
-		$this->id = $id;
+      // $oFusionInventory_printer_history
+
+		//$this->id = $id;
 
 		$plugin_fusioninventory_printer = new PluginFusinvsnmpPrinter;
 		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
 
-		$query = "SELECT *
-                FROM `glpi_plugin_fusinvsnmp_printers`
-                WHERE `printers_id`=".$id." ";
+//		$query = "SELECT *
+//                FROM `glpi_plugin_fusinvsnmp_printers`
+//                WHERE `printers_id`=".$id." ";
+//
+//		$result = $DB->query($query);
+//		$data = $DB->fetch_assoc($result);
+//
+//		// Add in database if not exist
+//		if ($DB->numrows($result) == "0") {
+//			$query_add = "INSERT INTO `glpi_plugin_fusinvsnmp_printers` (`printers_id`)
+//                              VALUES('".$id."') ";
+//
+//			$DB->query($query_add);
+//		}
+      $this->oFusionInventory_printer->id = $id;
+      
+      if (!$data = $this->oFusionInventory_printer->find("`printers_id`='".$id."'", '', 1)) {
+         // Add in database if not exist
+         $input = array();
+         $input['printers_id'] = $id;
+         $ID_tn = $this->oFusionInventory_printer->add($input);
+         $this->oFusionInventory_printer->getFromDB($ID_tn);
+      } else {
+         foreach ($data as $ID_tn=>$datas) {
+            $this->oFusionInventory_printer->fields = $data[$ID_tn];
+         }
+      }
 
-		$result = $DB->query($query);
-		$data = $DB->fetch_assoc($result);
-
-		// Add in database if not exist
-		if ($DB->numrows($result) == "0") {
-			$query_add = "INSERT INTO `glpi_plugin_fusinvsnmp_printers` (`printers_id`)
-                              VALUES('".$id."') ";
-
-			$DB->query($query_add);
-		}
 
 		// Form printer informations
-      $this->showTabs($options);
-      $this->showFormHeader($options);
+      $this->oFusionInventory_printer->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusioninventory']["model_info"][4]."</td>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -386,22 +401,22 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 		while ($data_models=$DB->fetch_array($result_models)) {
 			$exclude_models[] = $data_models['id'];
 		}
-		Dropdown::show("PluginFusinvsnmpModel",
-                     array('name'=>"plugin_fusinvsnmp_models_id",
-                           'value'=>$data["plugin_fusinvsnmp_models_id"],
+      Dropdown::show("PluginFusinvsnmpModel",
+                     array('name'=>"model_infos",
+                           'value'=>$this->oFusionInventory_printer->fields['plugin_fusinvsnmp_models_id'],
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>";
       echo " <input type='submit' name='GetRightModel' value='".
-             $LANG['plugin_fusioninventory']["model_info"][13]."' class='submit'/></td>";
+             $LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/></td>";
       echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["functionalities"][43]."</td>";
 		echo "<td align='center'>";
-		PluginFusinvsnmpSNMP::auth_dropdown($data["plugin_fusioninventory_snmpauths_id"]);
+      PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
 		echo "</td>";
       echo "<td>";
       echo "</td>";
@@ -409,7 +424,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center' colspan='2' height='30'>";
-		echo $LANG['plugin_fusioninventory']["snmp"][52].": ".convDateTime($data["last_fusioninventory_update"]);
+		echo $LANG['plugin_fusinvsnmp']["snmp"][52].": ".convDateTime($this->oFusionInventory_printer->fields["last_fusioninventory_update"]);
 		echo "</td>";
       echo "<td>";
       echo "</td>";
@@ -516,7 +531,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 			}
 
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
-                 action=\"".$target."\">";
+                 action=\"".$options['target']."\">";
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 		echo "<tr class='tab_bg_1'>";
 		echo "<th align='center' colspan='3'>";
@@ -583,12 +598,12 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
       $printers = $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'];
       $printersView = $printers; // printers without the current printer
-      if (isset($printersView[$p_ID])) {
-         unset($printersView[$p_ID]);
+      if (isset($printersView[$id])) {
+         unset($printersView[$id]);
       } else {
          $oPrinter = new Printer();
-         if ($oPrinter->getFromDB($p_ID)){
-            $printers[$p_ID] = $oPrinter->getField('name');
+         if ($oPrinter->getFromDB($id)){
+            $printers[$id] = $oPrinter->getField('name');
          }
       }
 
@@ -605,7 +620,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
       $where = " WHERE `printers_id` IN(".$printersIds.")";
       if ($begin!='' || $end!='') {
-            $where .= " AND " .$DB->getDateRequest("`date`",$begin,$end);
+            $where .= " AND " .getDateRequest("`date`",$begin,$end);
          }
       switch ($timeUnit) {
          case 'day':
@@ -630,7 +645,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                 .$group."
                 ORDER BY `year`, `month`, `day`, `printers_id`";
 
-      $this->showTabs($options);
       $this->showFormHeader($options);
       
       $mapping = new PluginFusioninventoryMapping();

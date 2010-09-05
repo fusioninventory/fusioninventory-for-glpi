@@ -1110,9 +1110,9 @@ function plugin_headings_actions_fusinvsnmp($item) {
 
 
 function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
-	include_once(GLPI_ROOT."/inc/stat.function.php");
+//	include_once(GLPI_ROOT."/inc/stat.function.php");
 	$plugin_fusinvsnmp_printer = new PluginFusinvsnmpPrinter;
-	$plugin_fusinvsnmp_printer->showFormPrinter($id,
+	$plugin_fusinvsnmp_printer->showFormPrinter($_POST['id'],
                array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/printer_info.form.php'));
 	echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
    $plugin_fusinvsnmp_printer->showFormPrinter_graph($id,

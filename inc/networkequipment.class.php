@@ -386,7 +386,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "<tr class='tab_bg_1 center'>";
       echo "<td>";
       echo " <input type='submit' name='GetRightModel'
-              value='".$LANG['plugin_fusioninventory']["model_info"][13]."' class='submit'/></td>";
+              value='".$LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/></td>";
 		echo "<td>";
 		echo "<input type='hidden' name='id' value='".$id."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
