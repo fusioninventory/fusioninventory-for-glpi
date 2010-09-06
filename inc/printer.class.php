@@ -529,7 +529,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                }
 				}
 			}
-
+      echo "<br/>";
 		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
                  action=\"".$options['target']."\">";
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
@@ -582,7 +582,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
       if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d");; // today
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
-      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_graphField'])) $graphField=$_SESSION['glpi_plugin_fusioninventory_graph_graphField'];
       if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
          $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
@@ -655,23 +654,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          }
          $pagecounters[$mapfields['name']] = $LANG['plugin_fusinvsnmp']["mapping"][$mapfields["shortlocale"]];
       }
-      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][30]."&nbsp;:</td><td class='left' colspan='2'>";
 
-      $elementsField=array('pages_total'=>$pagecounters['pagecountertotalpages'],
-                      'pages_n_b'=>$pagecounters['pagecounterblackpages'],
-                      'pages_color'=>$pagecounters['pagecountercolorpages'],
-                      'pages_recto_verso'=>$pagecounters['pagecounterrectoversopages'],
-                      'scanned'=>$pagecounters['pagecounterscannedpages'],
-                      'pages_total_print'=>$pagecounters['pagecountertotalpages_print'],
-                      'pages_n_b_print'=>$pagecounters['pagecounterblackpages_print'],
-                      'pages_color_print'=>$pagecounters['pagecountercolorpages_print'],
-                      'pages_total_copy'=>$pagecounters['pagecountertotalpages_copy'],
-                      'pages_n_b_copy'=>$pagecounters['pagecounterblackpages_copy'],
-                      'pages_color_copy'=>$pagecounters['pagecountercolorpages_copy'],
-                      'pages_total_fax'=>$pagecounters['pagecountertotalpages_fax']);
-      Dropdown::showFromArray('graph_graphField', $elementsField,
-                              array('value'=>$graphField));
-      echo "</td></tr>\n";
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][8]."&nbsp;:</td>
                                  <td class='left' colspan='2'>";
       showDateFormItem("graph_begin", $begin);
@@ -715,25 +698,20 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</table>";
       echo "</form>";
 
-//      echo "<div class=center>";
-//      $title = $elementsField[$graphField];
-//      if (count($printers)) {
-//         $ptg = new PluginFusinvsnmpGraph($query, $graphField, $timeUnit, $printers, $title);
-//      }
-//      echo '</div>';
-//
-//      $printers = array();
-//      $printers[$id] = "printer name";
-//      $PluginFusinvsnmpGraph = new PluginFusinvsnmpGraph;
-//      foreach($elementsField as $title=>$data) {
-//         $PluginFusinvsnmpGraph->setDatas($query, $graphField, $timeUnit, $printers, $title);
-//      }
+      $elementsField=array('pages_total'=>$pagecounters['pagecountertotalpages'],
+                      'pages_n_b'=>$pagecounters['pagecounterblackpages'],
+                      'pages_color'=>$pagecounters['pagecountercolorpages'],
+                      'pages_recto_verso'=>$pagecounters['pagecounterrectoversopages'],
+                      'scanned'=>$pagecounters['pagecounterscannedpages'],
+                      'pages_total_print'=>$pagecounters['pagecountertotalpages_print'],
+                      'pages_n_b_print'=>$pagecounters['pagecounterblackpages_print'],
+                      'pages_color_print'=>$pagecounters['pagecountercolorpages_print'],
+                      'pages_total_copy'=>$pagecounters['pagecountertotalpages_copy'],
+                      'pages_n_b_copy'=>$pagecounters['pagecounterblackpages_copy'],
+                      'pages_color_copy'=>$pagecounters['pagecountercolorpages_copy'],
+                      'pages_total_fax'=>$pagecounters['pagecountertotalpages_fax']);
 
-      
-
-      // Test with graph of GLPI core
-
-
+      echo "<br/>";
       foreach($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
@@ -752,7 +730,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                      $pages = $data[$graphField];
                   }
                   $input[$data['printers_id']][$data['day']."-".$data['month']] = $data[$graphField] - $pages;
-
+                  $pages = $data[$graphField];
                }
             }
          }
@@ -763,22 +741,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                      'type'      => 'line',
                      'showtotal' => false));
       }
-
-
-//'pages_total'=>$pagecounters['pagecountertotalpages'],
-//'pages_n_b'=>$pagecounters['pagecounterblackpages'],
-//'pages_color'=>$pagecounters['pagecountercolorpages'],
-//'pages_recto_verso'=>$pagecounters['pagecounterrectoversopages'],
-//'scanned'=>$pagecounters['pagecounterscannedpages'],
-//'pages_total_print'=>$pagecounters['pagecountertotalpages_print'],
-//'pages_n_b_print'=>$pagecounters['pagecounterblackpages_print'],
-//'pages_color_print'=>$pagecounters['pagecountercolorpages_print'],
-//'pages_total_copy'=>$pagecounters['pagecountertotalpages_copy'],
-//'pages_n_b_copy'=>$pagecounters['pagecounterblackpages_copy'],
-//'pages_color_copy'=>$pagecounters['pagecountercolorpages_copy'],
-//'pages_total_fax'=>$pagecounters['pagecountertotalpages_fax']);
-
-
    }
 }
 
