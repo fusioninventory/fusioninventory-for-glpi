@@ -1115,7 +1115,7 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
 	$plugin_fusinvsnmp_printer->showFormPrinter($_POST['id'],
                array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/printer_info.form.php'));
 	echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
-   $plugin_fusinvsnmp_printer->showFormPrinter_graph($id,
+   $plugin_fusinvsnmp_printer->showFormPrinter_graph($_POST['id'],
                array('target'=>GLPI_ROOT . '/plugins/fusinvsnmp/front/printer_info.form.php'));
 }
 

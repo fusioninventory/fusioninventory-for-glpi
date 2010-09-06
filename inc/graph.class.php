@@ -58,13 +58,18 @@ class PluginFusinvsnmpGraph {
 	**/
    function __construct($p_query='', $p_field='pages_total', $p_timeUnit='day',
                         $p_printers=array(), $p_title='') {
-      global $LANG;
-      
-      $this->pChartPath = GLPI_ROOT.'/plugins/fusioninventory/lib/pChart/';
-      $this->fontsPath = GLPI_ROOT.'/plugins/fusioninventory/lib/fonts/';
-      $this->tmpPath = GLPI_ROOT.'/files/_plugins/fusioninventory/tmp/';
+
+      $this->pChartPath = GLPI_ROOT.'/plugins/fusinvsnmp/lib/pChart/';
+      $this->fontsPath = GLPI_ROOT.'/plugins/fusinvsnmp/lib/fonts/';
+      $this->tmpPath = GLPI_ROOT.'/files/_plugins/fusinvsnmp/tmp/';
       include($this->pChartPath."pData.class");
       include($this->pChartPath."pChart.class");
+   }
+
+
+   function setDatas($p_query='', $p_field='pages_total', $p_timeUnit='day',
+                        $p_printers=array(), $p_title='') {
+      global $LANG;
 
       $this->pData = new pData;
       $this->timeUnit = $p_timeUnit;
@@ -73,16 +78,16 @@ class PluginFusinvsnmpGraph {
       $this->title = $p_title;
       switch ($this->timeUnit) {
          case 'day':
-            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][34];
+            $this->timeUnitName = $LANG['plugin_fusinvsnmp']["prt_history"][34];
             break;
          case 'week':
-            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][35];
+            $this->timeUnitName = $LANG['plugin_fusinvsnmp']["prt_history"][35];
             break;
          case 'month':
-            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][36];
+            $this->timeUnitName = $LANG['plugin_fusinvsnmp']["prt_history"][36];
             break;
          case 'year':
-            $this->timeUnitName = $LANG['plugin_fusioninventory']["prt_history"][37];
+            $this->timeUnitName = $LANG['plugin_fusinvsnmp']["prt_history"][37];
             break;
       }
 

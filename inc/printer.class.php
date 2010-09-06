@@ -645,26 +645,18 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                 .$group."
                 ORDER BY `year`, `month`, `day`, `printers_id`";
 
-      $this->showFormHeader($options);
-      
-      $mapping = new PluginFusioninventoryMapping();
-      $mapfields = $mapping->find("`itemtype`='Printer'");
-      foreach ($maps as $mapfields) {
-         $pagecounters[$mapfields['name']] = $LANG['plugin_fusioninventory']["mapping"][$mapfields["shortlocale"]];
+      $this->oFusionInventory_printer->showFormHeader($options);
+
+      $mapping = new PluginFusioninventoryMapping;
+      $maps = $mapping->find("`itemtype`='Printer'");
+      foreach ($maps as $num=>$mapfields) {
+         if (!isset($mapfields["shortlocale"])) {
+            $mapfields["shortlocale"] = $mapfields["locale"];
+         }
+         $pagecounters[$mapfields['name']] = $LANG['plugin_fusinvsnmp']["mapping"][$mapfields["shortlocale"]];
       }
       echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][30]."&nbsp;:</td><td class='left' colspan='2'>";
-//      $elementsField=array('pages_total'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages']['shortname'],
-//                      'pages_n_b'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages']['shortname'],
-//                      'pages_color'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages']['shortname'],
-//                      'pages_recto_verso'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterrectoversopages']['shortname'],
-//                      'scanned'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterscannedpages']['shortname'],
-//                      'pages_total_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_print']['shortname'],
-//                      'pages_n_b_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_print']['shortname'],
-//                      'pages_color_print'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_print']['shortname'],
-//                      'pages_total_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_copy']['shortname'],
-//                      'pages_n_b_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterblackpages_copy']['shortname'],
-//                      'pages_color_copy'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountercolorpages_copy']['shortname'],
-//                      'pages_total_fax'=>$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname']);
+
       $elementsField=array('pages_total'=>$pagecounters['pagecountertotalpages'],
                       'pages_n_b'=>$pagecounters['pagecounterblackpages'],
                       'pages_color'=>$pagecounters['pagecountercolorpages'],
@@ -723,12 +715,70 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</table>";
       echo "</form>";
 
-      echo "<div class=center>";
-      $title = $elementsField[$graphField];
-      if (count($printers)) {
-         $ptg = new PluginFusinvsnmpGraph($query, $graphField, $timeUnit, $printers, $title);
+//      echo "<div class=center>";
+//      $title = $elementsField[$graphField];
+//      if (count($printers)) {
+//         $ptg = new PluginFusinvsnmpGraph($query, $graphField, $timeUnit, $printers, $title);
+//      }
+//      echo '</div>';
+//
+//      $printers = array();
+//      $printers[$id] = "printer name";
+//      $PluginFusinvsnmpGraph = new PluginFusinvsnmpGraph;
+//      foreach($elementsField as $title=>$data) {
+//         $PluginFusinvsnmpGraph->setDatas($query, $graphField, $timeUnit, $printers, $title);
+//      }
+
+      
+
+      // Test with graph of GLPI core
+
+
+      foreach($elementsField as $graphField=>$name) {
+         $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
+                    MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
+                    SUM(`$graphField`) AS `$graphField`
+             FROM `glpi_plugin_fusinvsnmp_printerlogs`"
+             .$where
+             .$group."
+             ORDER BY `year`, `month`, `day`, `printers_id`";
+
+         $input = array();
+         if ($result = $DB->query($query)) {
+            if ($DB->numrows($result) != 0) {
+               $pages = 0;
+               while ($data = $DB->fetch_assoc($result)) {
+                  if ($pages == 0) {
+                     $pages = $data[$graphField];
+                  }
+                  $input[$data['printers_id']][$data['day']."-".$data['month']] = $data[$graphField] - $pages;
+
+               }
+            }
+         }
+
+         Stat::showGraph($input,
+                  array('title'  => $name,
+                     'unit'      => '',
+                     'type'      => 'line',
+                     'showtotal' => false));
       }
-      echo '</div>';
+
+
+//'pages_total'=>$pagecounters['pagecountertotalpages'],
+//'pages_n_b'=>$pagecounters['pagecounterblackpages'],
+//'pages_color'=>$pagecounters['pagecountercolorpages'],
+//'pages_recto_verso'=>$pagecounters['pagecounterrectoversopages'],
+//'scanned'=>$pagecounters['pagecounterscannedpages'],
+//'pages_total_print'=>$pagecounters['pagecountertotalpages_print'],
+//'pages_n_b_print'=>$pagecounters['pagecounterblackpages_print'],
+//'pages_color_print'=>$pagecounters['pagecountercolorpages_print'],
+//'pages_total_copy'=>$pagecounters['pagecountertotalpages_copy'],
+//'pages_n_b_copy'=>$pagecounters['pagecounterblackpages_copy'],
+//'pages_color_copy'=>$pagecounters['pagecountercolorpages_copy'],
+//'pages_total_fax'=>$pagecounters['pagecountertotalpages_fax']);
+
+
    }
 }
 
