@@ -636,16 +636,16 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
             break;
       }
 
-      $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
-                       MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
-                       SUM(`$graphField`) AS `$graphField`
-                FROM `glpi_plugin_fusinvsnmp_printerlogs`"
-                .$where
-                .$group."
-                ORDER BY `year`, `month`, `day`, `printers_id`";
+//      $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
+//                       MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
+//                       SUM(`$graphField`) AS `$graphField`
+//                FROM `glpi_plugin_fusinvsnmp_printerlogs`"
+//                .$where
+//                .$group."
+//                ORDER BY `year`, `month`, `day`, `printers_id`";
 
-      $this->oFusionInventory_printer->showFormHeader($options);
-
+      echo "<form method='post' name='snmp_form' id='snmp_form' action='".GLPI_ROOT."/plugins/fusinvsnmp/front/printer_info.form.php'>";
+      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       $mapping = new PluginFusioninventoryMapping;
       $maps = $mapping->find("`itemtype`='Printer'");
       foreach ($maps as $num=>$mapfields) {
@@ -655,46 +655,68 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
          $pagecounters[$mapfields['name']] = $LANG['plugin_fusinvsnmp']["mapping"][$mapfields["shortlocale"]];
       }
 
-      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][8]."&nbsp;:</td>
-                                 <td class='left' colspan='2'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['search'][8]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
       showDateFormItem("graph_begin", $begin);
-      echo "</td></tr>\n";
-      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['search'][9]."&nbsp;:</td>
-                                 <td class='left' colspan='2'>";
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['search'][9]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
       showDateFormItem("graph_end", $end);
-      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][31]."&nbsp;:</td>
-                                 <td class='left' colspan='2'>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][31]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
       $elementsTime=array('day'=>$LANG['plugin_fusioninventory']["prt_history"][34],
                           'week'=>$LANG['plugin_fusioninventory']["prt_history"][35],
                           'month'=>$LANG['plugin_fusioninventory']["prt_history"][36],
                           'year'=>$LANG['plugin_fusioninventory']["prt_history"][37]);
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
                               array('value'=>$timeUnit));
-      echo "</td></tr>\n";
-      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['Menu'][2]."&nbsp;:</td>
-                                 <td class='left' colspan='2'>";
+      echo "</td>";
+      echo "</tr>\n";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['Menu'][2]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
       echo $printersList;
-      echo "</td></tr>\n";
-      echo "<tr class='tab_bg_2'><td class='center' colspan='3'>
-               <input type='submit' class=\"submit\" name='graph_plugin_fusioninventory_printer_period'
-                      value='" . $LANG["buttons"][7] . "'>";
-      echo "</td></tr>\n";
+      echo "</td>";
+      echo "</tr>\n";
 
-      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][32]."&nbsp;:</td><td class='left'>";
+      echo "<tr class='tab_bg_2'>";
+      echo "<td class='center' colspan='3'>
+               <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
+                      value='" . $LANG["buttons"][7] . "'/>";
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][32]."&nbsp;:</td>";
+      echo "<td class='left'>";
       Computer_Item::dropdownConnect(PRINTER_TYPE,PRINTER_TYPE,"graph_printerCompAdd", -1, 0, array_keys($printers));
-      echo "</td><td class='left'>\n";
+      echo "</td>";
+      echo "<td class='left'>\n";
       echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
-      echo "</td></tr>\n";
+      echo "</td>";
+      echo "</tr>\n";
 
-      echo "<tr class='tab_bg_1'><td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][33]."&nbsp;:</td>
-                                 <td class='left'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][33]."&nbsp;:</td>";
+      echo "<td class='left'>";
       $printersTmp = $printersView;
       $printersTmp[0] = "-----";
       asort($printersTmp);
       Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
-      echo "</td><td class='left'>\n";
+      echo "</td>";
+      echo "<td class='left'>\n";
       echo "<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
-      echo "</td></tr>\n";
+      echo "</td>";
+      echo "</tr>\n";
       echo "</table>";
       echo "</form>";
 
@@ -715,7 +737,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       foreach($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
-                    SUM(`$graphField`) AS `$graphField`
+                    `$graphField`
              FROM `glpi_plugin_fusinvsnmp_printerlogs`"
              .$where
              .$group."
