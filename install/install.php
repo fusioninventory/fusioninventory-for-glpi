@@ -70,6 +70,15 @@ function pluginFusinvdeployInstall() {
       $a_rights['status'] = 'w';
       PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
 
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "OCSDEPLOY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $PluginFusioninventoryAgentmodule->add($input);
+
+
       // Creation config values
 //    PluginFusioninventoryConfig::add($modules_id, type, value);
 

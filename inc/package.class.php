@@ -46,6 +46,33 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 	}
 
 
+      static function getTypeName() {
+      global $LANG;
+
+      return "Packages";
+   }
+
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canCancel() {
+      return true;
+   }
+
+   function canUndo() {
+      return true;
+   }
+
+   function canValidate() {
+      return true;
+   }
+
+
 
    function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
@@ -53,7 +80,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $ong = array();
 		if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['plugin_fusinvdeploy']["package"][5];
-         $ong[2]="Documents";
+         $ong[2]="Fichiers";
          $ong[3]="Dépendances";
       }
 		return $ong;
@@ -79,17 +106,21 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 		echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
 		echo "</td>";
 
-		echo "<td rowspan='4'>".$LANG['common'][25]."&nbsp;:</td>";
-		echo "<td rowspan='4' align='center'>";
-		echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
+		echo "<td>Nom de fichier&nbsp;:</td>";
+		echo "<td align='center'>";
+      echo "<input type='text' name='filename' size='40' value='".$this->fields["filename"]."'/>";
 		echo "</td>";
-
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['document'][2]."&nbsp;:</td>";
+		echo "<td>Version&nbsp;:</td>";
 		echo "<td align='center'>";
-		echo "<input type='text' name='document_id' size='40' value='".$this->fields["document_id"]."'/>";
+		echo "<input type='text' name='version' size='40' value='".$this->fields["version"]."'/>";
+		echo "</td>";
+
+		echo "<td>Nombre de fragments&nbsp;:</td>";
+		echo "<td align='center'>";
+      Dropdown::showInteger("fragments",$this->fields["fragments"] , 1, 100);
 		echo "</td>";
       echo "</tr>";
 
@@ -101,20 +132,48 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $a_actions[] = $LANG['plugin_fusinvdeploy']["package"][4];
       Dropdown::showFromArray('action',$a_actions, array('value' => $this->fields["action"]));
 		echo "</td>";
+		echo "<td>Module&nbsp;:</td>";
+		echo "<td align='center'>";
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $a_modules = $PluginFusioninventoryAgentmodule->find("`plugins_id`='".$_SESSION["plugin_fusinvdeploy_moduleid"]."'");
+      $a_modulename = array();
+      foreach($a_modules as $module_id=>$data) {
+         $a_modulename[$module_id] = $data['modulename'];
+      }
+      Dropdown::showFromArray("modulename", $a_modulename);
+		echo "</td>";
       echo "</tr>";
+
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td>".$LANG['plugin_fusinvdeploy']["package"][1]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='commandline' size='40' value='".$this->fields["commandline"]."'/>";
 		echo "</td>";
+
+		echo "<td rowspan='2'>Operating system&nbsp;:</td>";
+		echo "<td rowspan='2' align='center'>";
+      $OperatingSystem = new OperatingSystem;
+      $list = $OperatingSystem->find();
+      echo "<table>";
+      foreach($list as $operatingsystem_id=>$data) {
+         echo "<tr>";
+         echo "<td>";
+         echo "<input type='checkbox' name='operatingsystems_id' value='".$operatingsystem_id."'>".$data['name'];
+         echo "</td>";
+         echo "</tr>";
+      }
+      echo "</table>";
+		echo "</td>";
       echo "</tr>";
-
-
-
-
-
       
+
+      echo "<tr class='tab_bg_1'>";
+		echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+		echo "<td align='center'>";
+		echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
+		echo "</td>";
+      echo "</tr>";
 
       $this->showFormButtons($options);
 
@@ -124,7 +183,19 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-   
+
+   function showFormGenerate($id, $options=array()) {
+		global $DB,$CFG_GLPI,$LANG;
+
+      $this->getFromDB($id);
+      if ($this->fields['sha1sum'] == "") {
+         echo "Ce paquet n'a pas encore été généré<br/>";
+         echo "<input type='button' value='générer le package' class='submit'/><br/>";
+      } else {
+         echo "<input type='button' value='re-générer le package' class='submit'/><br/>";
+      }
+   }
+  
 }
 
 ?>

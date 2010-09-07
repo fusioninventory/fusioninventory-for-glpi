@@ -36,33 +36,22 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","packages");
-
 //PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
 
-PluginFusioninventoryMenu::displayMenu("mini");
-
-$PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
+$PluginFusinvdeployPackage_File = new PluginFusinvdeployPackage_File();
 
 if (isset ($_POST["add"])) {
 //	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->add($_POST);
+	$PluginFusinvdeployPackage_File->add($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
 //	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->update($_POST);
+	$PluginFusinvdeployPackage_File->update($_POST);
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
 //	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->delete($_POST);
+	$PluginFusinvdeployPackage_File->delete($_POST);
 	glpi_header("agent.php");
 }
-
-$id = "";
-if (isset($_GET["id"])) {
-	$id = $_GET["id"];
-}
-$PluginFusinvdeployPackage->showForm($id);
-commonFooter();
 
 ?>

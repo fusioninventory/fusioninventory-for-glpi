@@ -1,5 +1,4 @@
 <?php
-
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -32,37 +31,22 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-define('GLPI_ROOT', '../../..');
+if (!defined('GLPI_ROOT')) {
+   define('GLPI_ROOT', '../../..');
+}
 
-include (GLPI_ROOT . "/inc/includes.php");
+include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","packages");
+commonHeader($LANG['plugin_fusinvdeploy']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","files");
 
-//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
+//PluginFusioninventoryProfile::checkRight("fusinvdeploy", "files","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
+$_GET['target']="file.php";
 
-if (isset ($_POST["add"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->add($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset ($_POST["update"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->update($_POST);
-	glpi_header($_SERVER['HTTP_REFERER']);
-} else if (isset ($_POST["delete"])) {
-//	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
-	$PluginFusinvdeployPackage->delete($_POST);
-	glpi_header("agent.php");
-}
+Search::show('PluginFusinvdeployFile');
 
-$id = "";
-if (isset($_GET["id"])) {
-	$id = $_GET["id"];
-}
-$PluginFusinvdeployPackage->showForm($id);
 commonFooter();
 
 ?>

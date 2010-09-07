@@ -46,16 +46,19 @@ if(!isset($_POST["sort"])) $_POST["sort"] = "";
 if(!isset($_POST["order"])) $_POST["order"] = "";
 if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 
-$pfp = new PluginFusinvdeployPackage;
+$PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
 
 switch($_POST['glpi_tab']) {
 	case -1 :
      	break;
 
 	case 1 :
+      $PluginFusinvdeployPackage->showFormGenerate($_POST['id']);
 		break;
 
    case 2 :
+      $PluginFusinvdeployPackage_File = new PluginFusinvdeployPackage_File;
+      $PluginFusinvdeployPackage_File->listFiles($_POST['id']);
 		break;
 
    default :

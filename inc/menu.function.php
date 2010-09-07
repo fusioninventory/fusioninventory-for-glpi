@@ -48,10 +48,14 @@ function plugin_fusinvdeploy_displayMenu() {
       $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
    }
 
+   $a_menu[1]['name'] = "Gestion des fichiers";
+   $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
+   $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/file.php";
+
    if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "status", "r")) {
-      $a_menu[1]['name'] = "Etat des deploiements";
-      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
-      $a_menu[1]['link'] = "lien";
+      $a_menu[2]['name'] = "Etat des deploiements";
+      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
+      $a_menu[2]['link'] = "lien";
    }
 
    return $a_menu;

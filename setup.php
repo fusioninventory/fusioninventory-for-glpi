@@ -41,6 +41,8 @@ function plugin_init_fusinvdeploy() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
    Plugin::registerClass('PluginFusinvdeployPackage');
+   Plugin::registerClass('PluginFusinvdeployFile');
+   Plugin::registerClass('PluginFusinvdeployPackageFile');
    Plugin::registerClass('PluginFusinvdeployDependence');
    Plugin::registerClass('PluginFusinvdeployHistory');
 
@@ -50,12 +52,15 @@ function plugin_init_fusinvdeploy() {
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
-   $PLUGIN_HOOKS['change_profile']['fusinvsnmp'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
+   $PLUGIN_HOOKS['change_profile']['fusinvdeploy'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
 
    //$PLUGIN_HOOKS['menu_entry']['fusinvdeploy'] = true;
-   $PLUGIN_HOOKS['submenu_entry']['fusinvdeploy']['add']['package'] = 'front/package.form.php?add=1';
-   $PLUGIN_HOOKS['submenu_entry']['fusinvdeploy']['search']['package'] = 'front/package.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] = '../fusinvdeploy/front/package.form.php?add=1';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['packages'] = '../fusinvdeploy/front/package.php';
+
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['files'] = '../fusinvdeploy/front/file.form.php?add=1';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['files'] = '../fusinvdeploy/front/file.php';
 
 }
 
