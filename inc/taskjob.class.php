@@ -141,10 +141,8 @@ $this->cronTaskscheduler();
       echo "<td align='center'>";
       echo getUserName($this->fields["users_id"],1);
       echo "</td>";
-      echo "<td>selection_type&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<span id='show_SelectionType_id'>";
-      //$this->dropdownSelectionType("selection_type");
+      echo "<td colspan='2'>";
+      echo "<span id='show_arguments_id'>";
       echo "</span>";
       echo "</td>";
       echo "</tr>";
@@ -158,8 +156,28 @@ $this->cronTaskscheduler();
          showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       }
       echo "</td>";
-      echo "<td rowspan='5'>Selection&nbsp;:</td>";
-      echo "<td align='center' rowspan='5'>";
+      echo "<td>selection_type&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<span id='show_SelectionType_id'>";
+      //$this->dropdownSelectionType("selection_type");
+      echo "</span>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("periodicity", "", 0, 300);
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time[] = "minutes";
+      $a_time[] = "heures";
+      $a_time[] = "jours";
+      $a_time[] = "mois";
+      Dropdown::showFromArray("tt", $a_time, array('value'=>0));
+      echo "</td>";
+      echo "<td rowspan='4'>Selection&nbsp;:</td>";
+      echo "<td align='center' rowspan='4'>";
       echo "<span id='show_Selection_id'>";
       echo "</span>";
       echo "<span id='show_selectionList'>";
@@ -181,20 +199,6 @@ $this->cronTaskscheduler();
       echo "<div style='visibility:hidden'>";
       echo "<textarea name='selection' id='selection'>".$selection."</textarea>";
       echo "</div>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("periodicity", "", 0, 300);
-      $a_time = array();
-      $a_time[] = "------";
-      $a_time[] = "minutes";
-      $a_time[] = "heures";
-      $a_time[] = "jours";
-      $a_time[] = "mois";
-      Dropdown::showFromArray("tt", $a_time, array('value'=>0));
       echo "</td>";
       echo "</tr>";
 
@@ -263,6 +267,14 @@ $this->cronTaskscheduler();
                      'myname'=>$myname
                      );
       ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params);
+
+      $params=array('method_id'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'rand'=>$rand,
+                     'myname'=>$myname
+                     );
+      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_arguments_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownArgument.php",$params);
+
 
       if ($value != "0") {
          $i = -1;
@@ -380,6 +392,24 @@ $this->cronTaskscheduler();
 
 
       ajaxUpdateItemOnEvent('addObject','show_selectionList',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelection.php",$params,array("click"));
+   }
+
+
+
+   function dropdownArgument($myname,$method,$value=0,$entity_restrict='') {
+      global $DB,$CFG_GLPI;
+
+      $a_methods = plugin_fusioninventory_getmethods();
+
+      foreach ($a_methods as $num=>$datas) {
+         if ($method == $datas['method']) {
+            $module = $datas['module'];
+         }
+      }
+
+      if (function_exists('plugin_'.$module.'_task_argument_'.$method)) {
+         call_user_func('plugin_'.$module.'_task_argument_'.$method);
+      }
    }
    
    

@@ -32,7 +32,7 @@
 // ----------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'],"dropdownMethod.php")) {
+if (strpos($_SERVER['PHP_SELF'],"dropdownArgument.php")) {
    define('GLPI_ROOT','../../..');
    include (GLPI_ROOT."/inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
@@ -44,12 +44,10 @@ $value = 0;
 if (isset($_POST['value'])) {
    $value = $_POST['value'];
 } else {
-   echo "<script type='text/javascript'>
-   document.getElementById('selection').value = '';
-   document.getElementById('selectionDisplay').length = 0;
-   </script>";
+
 }
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->dropdownSelectionType("selection_type", $_POST['method_id'], $value);
+$PluginFusioninventoryTaskjob->dropdownArgument("selection_type", $_POST['method_id'], $value);
+
 
 ?>

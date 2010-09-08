@@ -119,6 +119,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `retry_time` int(11) NOT NULL DEFAULT '0',
   `plugins_id` int(11) NOT NULL DEFAULT '0',
   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `argument` text COLLATE utf8_unicode_ci,
   `selection_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `selection` text COLLATE utf8_unicode_ci,
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
