@@ -37,16 +37,61 @@ function plugin_fusinvdeploy_task_methods() {
 
    $a_tasks = array();
    $a_tasks[] = array('module'         => 'fusinvdeploy',
-                      'method'         => 'deploy',
-                      'selection_type' => 'devices');
+                      'method'         => 'ocsdeploy',
+                      'selection_type' => 'devices',
+                      'selection_type_name' => "devices");
    $a_tasks[] = array('module'         => 'fusinvdeploy',
-                      'method'         => 'deploy',
+                      'method'         => 'ocsdeploy',
                       'selection_type' => 'rules');
    $a_tasks[] = array('module'         => 'fusinvdeploy',
-                      'method'         => 'deploy',
+                      'method'         => 'ocsdeploy',
                       'selection_type' => 'devicegroups');
    return $a_tasks;
 }
 
+
+# Actions with itemtype autorized
+function plugin_fusinvdeploy_task_action_ocsdeploy() {
+   $a_itemtype = array();
+   $a_itemtype[] = 'PluginFusinvdeployPackage';
+   $a_itemtype[] = 'Computer';
+
+   return $a_itemtype;
+}
+
+# Selection type for actions
+function plugin_fusinvdeploy_task_selection_type_ocsdeploy($itemtype) {
+   switch ($itemtype) {
+
+      case 'PluginFusinvdeployPackage':
+         $selection_type = 'devices';
+         break;
+
+      case 'Computer';
+         $selection_type = 'devices';
+         break;
+
+   }
+
+   return $selection_type;
+}
+
+
+# Select arguments if exist
+
+function plugin_fusinvdeploy_task_argument_ocsdeploy() {
+
+   $PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
+
+   //$a_list = $PluginFusinvdeployPackage->find();
+   echo "Package : ";
+   echo "</td>";
+   echo "<td>";
+   $options = array();
+   $options['entity'] = $_SESSION['glpiactive_entity'];
+   $options['entity_sons'] = 1;
+   Dropdown::show("PluginFusinvdeployPackage", $options);
+
+}
 
 ?>

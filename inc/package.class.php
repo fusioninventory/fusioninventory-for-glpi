@@ -82,6 +82,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $ong[1]=$LANG['plugin_fusinvdeploy']["package"][5];
          $ong[2]="Fichiers";
          $ong[3]="Dépendances";
+         $ong[4] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
       }
 		return $ong;
 	}
@@ -188,14 +189,58 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 		global $DB,$CFG_GLPI,$LANG;
 
       $this->getFromDB($id);
+      echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
+      echo "<input type='hidden' name='id' value='".$id."'/>";
       if ($this->fields['sha1sum'] == "") {
          echo "Ce paquet n'a pas encore été généré<br/>";
-         echo "<input type='button' value='générer le package' class='submit'/><br/>";
+         echo "<input type='submit' name='generate' value='générer le package' class='submit'/><br/>";
       } else {
-         echo "<input type='button' value='re-générer le package' class='submit'/><br/>";
+         echo "<input type='submit' name='regenerate' value='re-générer le package' class='submit'/><br/>";
       }
+      echo "</form>";
+   }
+
+
+   function generatePackage($id, $regenerate=0) {
+      
+      $zip = new ZipArchive();
+      $PluginFusinvdeployPackage_File = new PluginFusinvdeployPackage_File;
+      $PluginFusinvdeployFile = new PluginFusinvdeployFile;
+
+      $this->getFromDB($id);
+
+      $path_package = GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/";
+
+      if ($regenerate == '1') {
+         unlink($path_package.$this->fields['sha1sum']);
+      }
+
+      // Create zip file
+      $filename_package = sha1(serialize($this->fields));
+      if ($zip->open($path_package.$filename_package, ZIPARCHIVE::CREATE)!==TRUE) {
+         exit("Impossible d'ouvrir <".$path_package.$filename_package.">\n");
+      }
+
+      // Add each files
+      $a_list = $PluginFusinvdeployPackage_File->find("`plugin_fusinvdeploy_packages_id`='".$id."'");
+      foreach($a_list as $packagefile_id=>$data) {
+         $PluginFusinvdeployFile->getFromDB($data['plugin_fusinvdeploy_files_id']);
+
+         $filename_sum = $PluginFusinvdeployFile->fields['sha1sum'];
+         $filename = $PluginFusinvdeployFile->fields['filename'];
+
+         $zip->addFile(GLPI_ROOT."/files/_plugins/fusinvdeploy/files/".$filename_sum,
+                        $data['packagepath'].$filename);
+
+      }
+
+      $zip->close();
+
+      $this->fields['sha1sum'] = $filename_package;
+      $this->update($this->fields);
    }
   
+
 }
 
 ?>

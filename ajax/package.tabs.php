@@ -61,6 +61,10 @@ switch($_POST['glpi_tab']) {
       $PluginFusinvdeployPackage_File->listFiles($_POST['id']);
 		break;
 
+   case 4 :
+      plugin_headings_fusioninventory_tasks("", "PluginFusinvdeployPackage", $_POST['id']);
+      break;
+
    default :
 		break;
 }

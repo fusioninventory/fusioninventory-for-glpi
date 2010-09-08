@@ -56,6 +56,12 @@ if (isset ($_POST["add"])) {
 //	PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
 	$PluginFusinvdeployPackage->delete($_POST);
 	glpi_header("agent.php");
+} else if (isset($_POST['generate'])) {
+   $PluginFusinvdeployPackage->generatePackage($_POST['id']);
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['regenerate'])) {
+   $PluginFusinvdeployPackage->generatePackage($_POST['id'], 1);
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 $id = "";
