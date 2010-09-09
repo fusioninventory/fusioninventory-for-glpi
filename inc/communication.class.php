@@ -51,16 +51,16 @@ class PluginFusioninventoryCommunication {
 
    function __construct() {
       $this->sxml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
-         $sxml_option = $this->sxml->addChild('OPTION');
-            $sxml_option->addChild('NAME', 'DOWNLOAD');
-            $sxml_param = $sxml_option->addChild('PARAM');
-               $sxml_param->addAttribute('FRAG_LATENCY', '10');
-               $sxml_param->addAttribute('PERIOD_LATENCY', '10');
-               $sxml_param->addAttribute('TIMEOUT', '30');
-               $sxml_param->addAttribute('ON', '1');
-               $sxml_param->addAttribute('TYPE', 'CONF');
-               $sxml_param->addAttribute('CYCLE_LATENCY', '60');
-               $sxml_param->addAttribute('PERIOD_LENGTH', '10');
+//         $sxml_option = $this->sxml->addChild('OPTION');
+//            $sxml_option->addChild('NAME', 'DOWNLOAD');
+//            $sxml_param = $sxml_option->addChild('PARAM');
+//               $sxml_param->addAttribute('FRAG_LATENCY', '10');
+//               $sxml_param->addAttribute('PERIOD_LATENCY', '10');
+//               $sxml_param->addAttribute('TIMEOUT', '30');
+//               $sxml_param->addAttribute('ON', '1');
+//               $sxml_param->addAttribute('TYPE', 'CONF');
+//               $sxml_param->addAttribute('CYCLE_LATENCY', '60');
+//               $sxml_param->addAttribute('PERIOD_LENGTH', '10');
          $this->sxml->addChild('PROLOG_FREQ', '24'); // a recup dans base config --> pas trouvé
          PluginFusioninventoryCommunication::addLog('New PluginFusioninventoryCommunication object.');
    }

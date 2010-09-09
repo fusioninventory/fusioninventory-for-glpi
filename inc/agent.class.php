@@ -234,7 +234,20 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          }         
       }
       return $ip;
-   }   
+   }
+
+
+   function getAgentWithComputer($items_id) {
+
+      $agent = $this->find("`itemtype`='Computer' AND `items_id`='".$items_id."'");
+
+      if ($agent) {
+         foreach($agent as $agent_id=>$data) {
+            return $agent_id;
+         }
+      }
+      return false;
+   }
 
 }
 
