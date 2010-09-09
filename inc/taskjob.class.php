@@ -114,6 +114,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -235,6 +236,9 @@ $this->cronTaskscheduler();
             echo "</table><br/>";
             if ($id) {
                $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
+
+               // Display graph finish
+               $PluginFusioninventoryTaskjoblogs->graphFinish($id);
                echo "<br/>";
             }
          } else {

@@ -608,6 +608,13 @@ $LANG['plugin_fusioninventory']["task"][20]="Tâches terminées";
 $LANG['plugin_fusioninventory']["task"][21]="Action sur ce matériel";
 $LANG['plugin_fusioninventory']["task"][22]="Tâches planifiées uniquement";
 
+$LANG['plugin_fusioninventory']["taskjoblog"][1]="Démarré";
+$LANG['plugin_fusioninventory']["taskjoblog"][2]="Ok";
+$LANG['plugin_fusioninventory']["taskjoblog"][3]="Erreur  /replannifié";
+$LANG['plugin_fusioninventory']["taskjoblog"][4]="Erreur";
+$LANG['plugin_fusioninventory']["taskjoblog"][5]="Inconnu";
+
+
 $LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusioninventory']["constructdevice"][1]="Creation automatique des modèles";
 $LANG['plugin_fusioninventory']["constructdevice"][2]="Générer le fichier de découverte";

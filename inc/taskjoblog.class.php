@@ -91,27 +91,27 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 
             case 1 :
                echo "<td align='center'>";
-               echo "Started";
+               echo $LANG['plugin_fusioninventory']["taskjoblog"][1];
                break;
 
             case 2 :
                echo "<td style='background-color: rgb(0, 255, 0);' align='center'>";
-               echo "Ok";
+               echo $LANG['plugin_fusioninventory']["taskjoblog"][2];
                break;
 
             case 3 :
                echo "<td style='background-color: rgb(255, 120, 0);' align='center'>";
-               echo "<strong>Error / replaned</strong>";
+               echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][3]."</strong>";
                break;
 
             case 4 :
                echo "<td style='background-color: rgb(255, 0, 0);' align='center'>";
-               echo "<strong>Error</strong>";
+               echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][4]."</strong>";
                break;
 
             case 5 :
                echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
-               echo "<strong>Unknown</strong>";
+               echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][5]."</strong>";
                break;
 
          }
@@ -141,6 +141,39 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
       $this->fields['comment'] = $comment;
 
       $this->addToDB();
+   }
+
+
+   function graphFinish($taskjobs_id) {
+      global $LANG;
+
+      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+
+      $finishState = array();
+      $finishState[2] = 0;
+      $finishState[3] = 0;
+      $finishState[4] = 0;
+      $finishState[5] = 0;
+
+      // Get logs information (ok, error, replanned, unknow)
+      $a_joblogs = $PluginFusioninventoryTaskjoblogs->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+            AND `state` IN (2, 3, 4, 5)");
+      foreach($a_joblogs as $joblog_id=>$datajob) {
+         $finishState[$datajob['state']]++;
+      }
+      $input = array();
+      $input[$LANG['plugin_fusioninventory']["taskjoblog"][2]] = $finishState[2];
+      $input[$LANG['plugin_fusioninventory']["taskjoblog"][3]] = $finishState[3];
+      $input[$LANG['plugin_fusioninventory']["taskjoblog"][4]] = $finishState[4];
+      $input[$LANG['plugin_fusioninventory']["taskjoblog"][5]] = $finishState[5];
+
+      Stat::showGraph(array('status'=>$input),
+               array('title'  => '',
+                  'unit'      => '',
+                  'type'      => 'pie',
+                  'height'    => 150,
+                  'showtotal' => false));
+
    }
 
 }
