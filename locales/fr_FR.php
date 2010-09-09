@@ -608,4 +608,8 @@ $LANG['plugin_fusinvsnmp']["constructdevice"][5]="Regénérer les commentaires d
 
 $LANG['plugin_fusinvsnmp']["update"][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande pour finir la mise à jour : ";
 
+$LANG['plugin_fusinvsnmp']["stats"][0]="Compteur total";
+$LANG['plugin_fusinvsnmp']["stats"][1]="pages par jour";
+$LANG['plugin_fusinvsnmp']["stats"][2]="Affichage";
+
 ?>

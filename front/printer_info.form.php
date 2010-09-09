@@ -111,7 +111,7 @@ for ($i=1 ; $i <= 5 ; $i++) {
 }
 
 if (isset($_POST['graph_plugin_fusioninventory_printer_period'])) {
-   $fields = array('graph_begin', 'graph_end', 'graph_timeUnit');
+   $fields = array('graph_begin', 'graph_end', 'graph_timeUnit', 'graph_type');
    foreach ($fields as $field) {
       if (isset($_POST[$field])) {
          $_SESSION['glpi_plugin_fusioninventory_'.$field] = $_POST[$field];
