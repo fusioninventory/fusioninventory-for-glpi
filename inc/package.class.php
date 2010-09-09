@@ -46,7 +46,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 	}
 
 
-      static function getTypeName() {
+   
+   static function getTypeName() {
       global $LANG;
 
       return "Packages";
@@ -185,6 +186,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
 
+
    function showFormGenerate($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
@@ -200,6 +202,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       echo "</form>";
    }
 
+   
 
    function generatePackage($id, $regenerate=0) {
       
@@ -239,7 +242,42 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $this->fields['sha1sum'] = $filename_package;
       $this->update($this->fields);
    }
-  
+
+   
+
+   function downloadFragments ($fileSha1sum) {
+
+      if (strstr($fileSha1sum, "-")) {
+         list($package_id, $numFragment) = explode("-", $fileSha1sum);
+      }
+      $a_packages = $this->getFromDB($package_id);
+
+      $fileSha1sum = $this->fields["sha1sum"];
+
+      if (isset($numFragment)) {
+         // Send fragment
+         $fileSize = filesize(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum);
+         $fragmentSize = $fileSize / $this->fields['fragments'];
+         if ($numFragment == $this->fields['fragments']) {
+            echo file_get_contents(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum, NULL, NULL, $fragmentSize * ($numFragment - 1));
+         } else {
+            echo file_get_contents(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum, NULL, NULL, $fragmentSize * ($numFragment - 1), $fragmentSize);
+         }
+      } else {
+         // send all file
+         echo file_get_contents(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum);
+      }
+
+   }
+
+
+   function downloadFileinfo ($package_id) {
+
+      $this->getFromDB($package_id);
+      $md5 = md5_file(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$this->fields['sha1sum']);
+      echo '<DOWNLOAD ID="'.$package_id.'" PRI="5" ACT="STORE" DIGEST="'.$md5.'" PROTO="HTTP" FRAGS="4" DIGEST_ALGO="MD5" DIGEST_ENCODE="Hexa" PATH="./" NAME="" COMMAND="" NOTIFY_USER="0"  NOTIFY_TEXT="" NOTIFY_COUNTDOWN="" NOTIFY_CAN_ABORT="0" NOTIFY_CAN_DELAY="0" NEED_DONE_ACTION="0" NEED_DONE_ACTION_TEXT="" GARDEFOU="rien" />';
+      
+   }
 
 }
 
