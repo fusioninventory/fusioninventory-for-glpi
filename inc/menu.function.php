@@ -55,7 +55,7 @@ function plugin_fusinvdeploy_displayMenu() {
    if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "status", "r")) {
       $a_menu[2]['name'] = "Etat des deploiements";
       $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
-      $a_menu[2]['link'] = "lien";
+      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/deploystatus.php";
    }
 
    return $a_menu;
