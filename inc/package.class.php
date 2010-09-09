@@ -257,7 +257,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       if (isset($numFragment)) {
          // Send fragment
          $fileSize = filesize(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum);
-         $fragmentSize = $fileSize / $this->fields['fragments'];
+         $fragmentSize = ceil($fileSize / $this->fields['fragments']);
          if ($numFragment == $this->fields['fragments']) {
             echo file_get_contents(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum, NULL, NULL, $fragmentSize * ($numFragment - 1));
          } else {
@@ -275,7 +275,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       $this->getFromDB($package_id);
       $md5 = md5_file(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$this->fields['sha1sum']);
-      echo '<DOWNLOAD ID="'.$package_id.'" PRI="5" ACT="STORE" DIGEST="'.$md5.'" PROTO="HTTP" FRAGS="4" DIGEST_ALGO="MD5" DIGEST_ENCODE="Hexa" PATH="./" NAME="" COMMAND="" NOTIFY_USER="0"  NOTIFY_TEXT="" NOTIFY_COUNTDOWN="" NOTIFY_CAN_ABORT="0" NOTIFY_CAN_DELAY="0" NEED_DONE_ACTION="0" NEED_DONE_ACTION_TEXT="" GARDEFOU="rien" />';
+      echo '<DOWNLOAD ID="'.$package_id.'" PRI="5" ACT="STORE" DIGEST="'.$md5.'" PROTO="HTTP" FRAGS="'.$this->fields['fragments'].'" DIGEST_ALGO="MD5" DIGEST_ENCODE="Hexa" PATH="./" NAME="" COMMAND="" NOTIFY_USER="0"  NOTIFY_TEXT="" NOTIFY_COUNTDOWN="" NOTIFY_CAN_ABORT="0" NOTIFY_CAN_DELAY="0" NEED_DONE_ACTION="0" NEED_DONE_ACTION_TEXT="" GARDEFOU="rien" />';
       
    }
 
