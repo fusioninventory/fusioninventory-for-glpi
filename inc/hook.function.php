@@ -90,6 +90,7 @@ function plugin_fusinvdeploy_task_argument_ocsdeploy() {
    $options = array();
    $options['entity'] = $_SESSION['glpiactive_entity'];
    $options['entity_sons'] = 1;
+   $options['name'] = 'argument';
    Dropdown::show("PluginFusinvdeployPackage", $options);
 
 }
