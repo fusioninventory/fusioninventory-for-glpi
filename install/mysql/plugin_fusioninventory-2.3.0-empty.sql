@@ -149,7 +149,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
   `comment` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`,`state`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -163,7 +164,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstatus` (
   `itemtype` varchar(100) DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
+  KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

@@ -147,8 +147,6 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
    function graphFinish($taskjobs_id) {
       global $LANG;
 
-      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
-
       $finishState = array();
       $finishState[2] = 0;
       $finishState[3] = 0;
@@ -156,7 +154,7 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
       $finishState[5] = 0;
 
       // Get logs information (ok, error, replanned, unknow)
-      $a_joblogs = $PluginFusioninventoryTaskjoblogs->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+      $a_joblogs = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
             AND `state` IN (2, 3, 4, 5)");
       foreach($a_joblogs as $joblog_id=>$datajob) {
          $finishState[$datajob['state']]++;
