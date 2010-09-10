@@ -35,6 +35,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 	function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_unknowndevices";
+      $this->type = "PluginFusioninventoryUnknownDevice";
       $this->dohistory=true;
 	}
 
@@ -249,10 +250,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $query = "SELECT `glpi_networkports`.`id`
                 FROM `glpi_networkports`
-                     LEFT JOIN `glpi_plugin_fusinvsnmp_unknowndevices`
-                               ON `items_id`=`glpi_plugin_fusinvsnmp_unknowndevices`.`id`
-                     WHERE `itemtype`=".'PluginFusinvsnmpUnknownDevice'."
-                           AND `glpi_plugin_fusinvsnmp_unknowndevices`.`id` IS NULL;";
+                     LEFT JOIN `glpi_plugin_fusioninventory_unknowndevices`
+                               ON `items_id`=`glpi_plugin_fusioninventory_unknowndevices`.`id`
+                     WHERE `itemtype`=".'PluginFusioninventoryUnknownDevice'."
+                           AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL;";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             $unknown_infos["name"] = '';
@@ -276,7 +277,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                 FROM `glpi_networkports`
                 WHERE `mac` != ''
                       AND `mac` != '00:00:00:00:00:00'
-                      AND `itemtype`=".'PluginFusinvsnmpUnknownDevice'."
+                      AND `itemtype`=".'PluginFusioninventoryUnknownDevice'."
                 GROUP BY `mac`
                 HAVING COUNT(*)>0;";
 		if ($result=$DB->query($query)) {
@@ -286,7 +287,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                             FROM `glpi_networkports`
                             WHERE `mac` IN ('".$data["mac"]."','".strtoupper($data["mac"])."',
                                               '".strtolower($data["mac"])."')
-                                  AND `itemtype`!=".'PluginFusinvsnmpUnknownDevice'."
+                                  AND `itemtype`!=".'PluginFusioninventoryUnknownDevice'."
                             LIMIT 0,1;";
 				$result_known=$DB->query($query_known);
             if ($DB->numrows($result_known) > 0) {
@@ -343,7 +344,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->getFromDB($id);
 
       // Get port
-      $a_ports = $np->find('items_id='.$id." AND itemtype='PluginFusinvsnmpUnknownDevice'");
+      $a_ports = $np->find('items_id='.$id." AND itemtype='PluginFusioninventoryUnknownDevice'");
 
       if (count($a_ports) == '1') {
          // Put mac and ip to unknown
