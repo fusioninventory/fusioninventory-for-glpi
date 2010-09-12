@@ -62,6 +62,8 @@ function pluginFusinvdeployInstall() {
       // Create folder in GLPI_PLUGIN_DOC_DIR
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/files');
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/packages');
       }
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);

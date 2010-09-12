@@ -62,7 +62,7 @@ function plugin_init_fusinvdeploy() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['files'] = '../fusinvdeploy/front/file.form.php?add=1';
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['files'] = '../fusinvdeploy/front/file.php';
 
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['DOWNLOAD'] = 'PluginFusinvdeploycommunicationDeployOcsdeploy';
+   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['DOWNLOAD'] = 'PluginFusinvdeployCommunicationOcsdeploy';
 
 }
 
