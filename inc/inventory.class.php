@@ -119,7 +119,7 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
       // "biosSerial","enclosureSerial","smodel","storagesSerial","drivesSerial"
 //      $config['criterias'][] = "assetTag";
 //      $config['criterias'][] = "motherboardSerial";
-//      $config['criterias'][] = "uuid";
+      $config['criterias'][] = "uuid";
 //      $config['criterias'][] = "smodel";
       $config['criterias'][] = "ssn";
 
