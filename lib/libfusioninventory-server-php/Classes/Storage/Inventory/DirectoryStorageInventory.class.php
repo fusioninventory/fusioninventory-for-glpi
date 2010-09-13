@@ -332,8 +332,10 @@ INFOCONTENT;
                 unset($iniSections["sections"][$sectionId]);
                 array_push($sectionsId, $sectionId);
             }
-            
-            $classhook::removeSections($sectionsId, $iniSections["externalId"][0]);
+
+            call_user_func(array($classhook,"removeSections"),
+                           $sectionsId,
+                           $iniSections["externalId"][0]);
 
             $log->notifyDebugMessage(count($sectionsToRemove)." section(s) removed");
         }
@@ -351,7 +353,9 @@ INFOCONTENT;
 
             }
 
-            $sectionsId = $classhook::addSections($data, $iniSections["externalId"][0]);
+            $sectionsId = call_user_func(array($classhook,"addSections"),
+                                         $data,
+                                         $iniSections["externalId"][0]);
 
             $log->notifyDebugMessage(count($sectionsToAdd)." section(s) added");
 
