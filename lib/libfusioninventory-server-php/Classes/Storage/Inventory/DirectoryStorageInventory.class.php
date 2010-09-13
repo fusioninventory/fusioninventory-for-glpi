@@ -257,11 +257,10 @@ INFOCONTENT;
     */
     private function _getCriteriaDSN($criteriaName, $criteriaValue)
     {
-        $dsn = sprintf('%s/%s/%s',
+        $dsn = sprintf('%s/%s/%s/%s',
         LIBSERVERFUSIONINVENTORY_STORAGELOCATION,
         "criterias",
         $criteriaName,
-        $this->_applicationName,
         $criteriaValue);
         return $dsn;
     }
