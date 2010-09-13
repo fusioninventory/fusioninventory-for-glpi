@@ -60,6 +60,14 @@ function plugin_fusinvsnmp_displayMenu() {
       $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
    }
 
+   $a_menu[3]['name'] = "Etat des découverte";
+   $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rangeip.png";
+   $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
+
+   $a_menu[4]['name'] = "Etat des inventaires réseaux";
+   $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rangeip.png";
+   $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
+
 
    return $a_menu;
 }

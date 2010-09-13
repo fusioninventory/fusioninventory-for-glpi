@@ -77,7 +77,9 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
+         $ong[1] = $LANG['plugin_fusinvsnmp']["task"][15];
+         $ong[2] = $LANG['plugin_fusinvsnmp']["task"][16];
+         $ong[3] = $LANG['plugin_fusioninventory']["task"][18];
       }
       return $ong;
    }
@@ -100,6 +102,10 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
 		echo "</td>";
+
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusinvsnmp']['config'][4];
+      echo "</th>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -119,6 +125,11 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "<input type='text' value='".$ipexploded[1]."' name='ip_start1' size='3' maxlength='3' >.";
 		echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' size='3' maxlength='3' >.";
 		echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' size='3' maxlength='3' >";
+		echo "</td>";
+
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][3] . "</td>";
+		echo "<td align='center'>";
+		Dropdown::showYesNo("discover",$this->fields["discover"]);
 		echo "</td>";
 		echo "</tr>";
 
@@ -141,75 +152,30 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' size='3' maxlength='3' >.";
 		echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' size='3' maxlength='3' >";
 		echo "</td>";
+
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusinvsnmp']['config'][3];
+      echo "</th>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][12] . "</td>";
-		echo "<td align='center'>";
-		Dropdown::show("PluginFusioninventoryAgent",
-                     array('name'=>"plugin_fusioninventory_agents_id_discover",
-                           'value'=>$this->fields["plugin_fusioninventory_agents_id_discover"],
-                           'comment'=>false));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["agents"][13] . "</td>";
-		echo "<td align='center'>";
-		Dropdown::show("PluginFusioninventoryAgent",
-                     array('name'=>"plugin_fusioninventory_agents_id_query",
-                           'value'=>$this->fields["plugin_fusioninventory_agents_id_query"],
-                           'comment'=>false));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["discovery"][3] . "</td>";
-		echo "<td align='center'>";
-		Dropdown::showYesNo("discover",$this->fields["discover"]);
-		echo "</td>";
-		echo "</tr>";
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][3] . "</td>";
-		echo "<td align='center'>";
-		Dropdown::showYesNo("query",$this->fields["query"]);
-		echo "</td>";
-		echo "</tr>";
-
+      echo "<tr class='tab_bg_1'>";
       if (isMultiEntitiesMode()) {
-         echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>".$LANG['entity'][0]."</td>";
          echo "<td align='center'>";
          Dropdown::show('Entity',
                         array('name'=>'entities_id',
                               'value'=>$this->fields["entities_id"]));
          echo "</td>";
-         echo "</tr>";
+      } else {
+         echo "<td colspan='2'></td>";
       }
 
-////		$this->showFormButtons($options);
-////
-////      echo "<div id='tabcontent'></div>";
-////      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-////
-////      return true;
-//		echo "<tr class='tab_bg_2'><td colspan='2'>";
-//      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
-//         if ($id=='') {
-//            echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
-//                 "\" class='submit' >";
-//         } else {
-//            echo "<input type='hidden' name='id' value='" . $id . "'/>";
-//            echo "<div align='center'><input type='submit' name='update' value=\"".$LANG["buttons"][7].
-//                 "\" class='submit' >";
-//            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
-//                    $LANG["buttons"][6] . "\" class='submit'>";
-//         }
-//      }
-//		echo "</td>";
-//		echo "</tr>";
-//		echo "</table></form></div>";
+      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][3] . "</td>";
+		echo "<td align='center'>";
+		Dropdown::showYesNo("query",$this->fields["query"]);
+		echo "</td>";
+
+      echo "</tr>";
 
       $this->showFormButtons($options);
       $this->addDivForTabs();
@@ -302,6 +268,62 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
             $a_input['ip_end2'].".".$a_input['ip_end3']);
          return false;
       }
+   }
+
+
+   function permanentTask($module_name) {
+      global $LANG;
+
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+
+      // Get on task & taskjob
+      $this->fields['is_active'] = 0;
+
+
+      $options = array();
+      $this->showFormHeader($options);
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      echo "</td>";
+      echo "</td>";
+
+      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("periodicity", "", 0, 300);
+      echo "&nbsp;";
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time[] = "minutes";
+      $a_time[] = "heures";
+      $a_time[] = "jours";
+      $a_time[] = "mois";
+      Dropdown::showFromArray("tt", $a_time, array('value'=>0));
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2'>";
+      echo $LANG['plugin_fusinvsnmp']["agents"][25];
+      echo "</td>";
+      echo "<td colspan='2'>";
+      $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo($module_name);
+      $a_list = array();
+      $a_list[0] = "[ Sélection dynamique des agents ]";
+      foreach($a_agents as $agent_id=>$data) {
+         // TODO : display only agent associated with computer and have ip in this range
+         $a_list[$agent_id] = $data['name']." / ".$data['version'];
+      }
+      Dropdown::showFromArray('selection', $a_list);
+      echo "</td>";
+      echo "</tr>";
+
+      $this->showFormButtons($options);
+
+      echo "Historique <br/>";
    }
 
 }

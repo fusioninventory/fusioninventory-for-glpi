@@ -33,8 +33,8 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$title="FusionInventory";
-$version="2.3.0";
+$title="FusionInventory SNMP";
+$version="2.3.0-1";
 
 $LANG['plugin_fusinvsnmp']["title"][0]="$title";
 $LANG['plugin_fusinvsnmp']["title"][1]="SNMP information";
@@ -94,6 +94,7 @@ $LANG['plugin_fusinvsnmp']["setup"][13]="PHP Module &uuml;berpr&uuml;fen";
 $LANG['plugin_fusinvsnmp']["setup"][14]="PHP SNMP Erweiterung nicht geladen";
 $LANG['plugin_fusinvsnmp']["setup"][15]="PHP/PECL Laufzeiterweiterung nicht geladen";
 $LANG['plugin_fusinvsnmp']["setup"][16]="Dokumentation";
+$LANG['plugin_fusinvsnmp']["setup"][17]="Plugin ".$title." need plugin FusionInventory installed before install.";
 
 $LANG['plugin_fusinvsnmp']["functionalities"][0]="Funktionen";
 $LANG['plugin_fusinvsnmp']["functionalities"][1]="Funktionen Hinzuf&uuml;gen/L&ouml;schen";
@@ -153,7 +154,7 @@ $LANG['plugin_fusinvsnmp']["functionalities"][75]="Locks";
 $LANG['plugin_fusinvsnmp']["snmp"][0]="SNMP Informationen der Ger&auml;te";
 $LANG['plugin_fusinvsnmp']["snmp"][1]="Grundlage";
 $LANG['plugin_fusinvsnmp']["snmp"][2]="Verkabelung";
-$LANG['plugin_fusinvsnmp']["snmp"][2]="SNMP Daten";
+$LANG['plugin_fusinvsnmp']["snmp"][3]="SNMP Daten";
 
 $LANG['plugin_fusinvsnmp']["snmp"][11]="Zus&auml;tzliche Informationen";
 $LANG['plugin_fusinvsnmp']["snmp"][12]="Uptime";
@@ -250,7 +251,6 @@ $LANG['plugin_fusinvsnmp']["cpt_history"][3]="Benutzer";
 $LANG['plugin_fusinvsnmp']["cpt_history"][4]="Zustand";
 $LANG['plugin_fusinvsnmp']["cpt_history"][5]="Datum";
 
-
 $LANG['plugin_fusinvsnmp']["type"][1]="Computer";
 $LANG['plugin_fusinvsnmp']["type"][2]="Switch";
 $LANG['plugin_fusinvsnmp']["type"][3]="Drucker";
@@ -330,7 +330,6 @@ $LANG['plugin_fusinvsnmp']["state"][0]="Computer start";
 $LANG['plugin_fusinvsnmp']["state"][1]="Computer stop";
 $LANG['plugin_fusinvsnmp']["state"][2]="Benutzer Verbindung";
 $LANG['plugin_fusinvsnmp']["state"][3]="Benutzer Trennung";
-
 
 $LANG['plugin_fusinvsnmp']["mapping"][1]="Netzwerk > Standort";
 $LANG['plugin_fusinvsnmp']["mapping"][2]="Netzwerk > Firmware";
@@ -559,6 +558,9 @@ $LANG['plugin_fusinvsnmp']["iprange"][1]="Ende des IP Bereichs";
 $LANG['plugin_fusinvsnmp']["iprange"][2]="IP Bereiche";
 $LANG['plugin_fusinvsnmp']["iprange"][3]="Abfrage";
 $LANG['plugin_fusinvsnmp']["iprange"][4]="Incorrect IP address";
+$LANG['plugin_fusinvsnmp']["iprange"][5]="Edit IP range";
+$LANG['plugin_fusinvsnmp']["iprange"][6]="Create range IP";
+$LANG['plugin_fusinvsnmp']["iprange"][7]="Bad IP";
 
 $LANG['plugin_fusinvsnmp']["agents"][0]="SNMP Agent";
 $LANG['plugin_fusinvsnmp']["agents"][2]="Number of threads used by core for querying devices";
@@ -580,6 +582,8 @@ $LANG['plugin_fusinvsnmp']["agents"][20]="Synchronisation between OCS and GLPI i
 $LANG['plugin_fusinvsnmp']["agents"][21]="Inventory terminated";
 $LANG['plugin_fusinvsnmp']["agents"][22]="Wait";
 $LANG['plugin_fusinvsnmp']["agents"][23]="Computer link";
+$LANG['plugin_fusinvsnmp']["agents"][24]="SNMP - Threads";
+$LANG['plugin_fusinvsnmp']["agents"][25]="Agent(s)";
 
 $LANG['plugin_fusinvsnmp']["task"][0]="Task";
 $LANG['plugin_fusinvsnmp']["task"][1]="Task management";
@@ -595,6 +599,9 @@ $LANG['plugin_fusinvsnmp']["task"][10]="Running... not available";
 $LANG['plugin_fusinvsnmp']["task"][11]="Agent has been notified and begin running";
 $LANG['plugin_fusinvsnmp']["task"][12]="Wake agent";
 $LANG['plugin_fusinvsnmp']["task"][13]="Agent(s) unvailable";
+$LANG['plugin_fusinvsnmp']["task"][14]="Planified on";
+$LANG['plugin_fusinvsnmp']["task"][15]="Permanent task - Discovery";
+$LANG['plugin_fusinvsnmp']["task"][16]="Permanent task - Inventory";
 
 $LANG['plugin_fusinvsnmp']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']["constructdevice"][1]="Automatic creation of models";
@@ -604,5 +611,9 @@ $LANG['plugin_fusinvsnmp']["constructdevice"][4]="Export all models";
 $LANG['plugin_fusinvsnmp']["constructdevice"][5]="Re-create models comments";
 
 $LANG['plugin_fusinvsnmp']["update"][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
+
+$LANG['plugin_fusinvsnmp']["stats"][0]="Total counter";
+$LANG['plugin_fusinvsnmp']["stats"][1]="pages per day";
+$LANG['plugin_fusinvsnmp']["stats"][2]="Display";
 
 ?>

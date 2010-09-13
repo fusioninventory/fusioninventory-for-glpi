@@ -49,15 +49,23 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
 
 switch($_POST['glpi_tab']) {
-   case -1 :
+   case -1:
       //$PluginFusioninventoryAgent->showFormAdvancedOptions($_POST["id"]);
       break;
 
-   case 1 :
+   case 1:
+      $PluginFusinvsnmpIPRange->permanentTask("NETDISCOVERY");
+      break;
+
+   case 2:
+      $PluginFusinvsnmpIPRange->permanentTask("SNMPQUERY");
+      break;
+
+   case 3:
       plugin_headings_fusioninventory_tasks("", "PluginFusinvsnmpIPRange", $_POST['id']);
       break;
 
-   default :
+   default:
 
       break;
 }

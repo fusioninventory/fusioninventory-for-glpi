@@ -154,7 +154,7 @@ $LANG['plugin_fusinvsnmp']["functionalities"][75]="Verrous";
 $LANG['plugin_fusinvsnmp']["snmp"][0]="Informations SNMP du matériel";
 $LANG['plugin_fusinvsnmp']["snmp"][1]="Général";
 $LANG['plugin_fusinvsnmp']["snmp"][2]="Cablâge";
-$LANG['plugin_fusinvsnmp']["snmp"][2]="Données SNMP";
+$LANG['plugin_fusinvsnmp']["snmp"][3]="Données SNMP";
 
 $LANG['plugin_fusinvsnmp']["snmp"][11]="Informations supplémentaires";
 $LANG['plugin_fusinvsnmp']["snmp"][12]="Uptime";
@@ -555,7 +555,7 @@ $LANG['plugin_fusinvsnmp']["discovery"][9]="Nombre de matériels non importés c
 $LANG['plugin_fusinvsnmp']["iprange"][0]="Début de la plage IP";
 $LANG['plugin_fusinvsnmp']["iprange"][1]="Fin de la plage IP";
 $LANG['plugin_fusinvsnmp']["iprange"][2]="Plage IP";
-$LANG['plugin_fusinvsnmp']["iprange"][3]="Interrogation";
+$LANG['plugin_fusinvsnmp']["iprange"][3]="Activation";
 $LANG['plugin_fusinvsnmp']["iprange"][4]="Adresse IP incorrecte";
 $LANG['plugin_fusinvsnmp']["iprange"][5]="Edition de plage IP";
 $LANG['plugin_fusinvsnmp']["iprange"][6]="Création d'une plage IP";
@@ -582,6 +582,7 @@ $LANG['plugin_fusinvsnmp']["agents"][21]="Inventaire terminé";
 $LANG['plugin_fusinvsnmp']["agents"][22]="En attente";
 $LANG['plugin_fusinvsnmp']["agents"][23]="Lié à l'ordinateur";
 $LANG['plugin_fusinvsnmp']["agents"][24]="SNMP - Threads";
+$LANG['plugin_fusinvsnmp']["agents"][25]="Agent(s)";
 
 $LANG['plugin_fusinvsnmp']["task"][0]="Tâche";
 $LANG['plugin_fusinvsnmp']["task"][1]="Gestion des tâches";
@@ -598,6 +599,8 @@ $LANG['plugin_fusinvsnmp']["task"][11]="L'agent a été notifié et commence son
 $LANG['plugin_fusinvsnmp']["task"][12]="Déclencher l'agent";
 $LANG['plugin_fusinvsnmp']["task"][13]="Agent(s) indisponible(s)";
 $LANG['plugin_fusinvsnmp']["task"][14]="Planifié le";
+$LANG['plugin_fusinvsnmp']["task"][15]="Tâche permanente - Découverte";
+$LANG['plugin_fusinvsnmp']["task"][16]="Tâche permanente - Inventaire";
 
 $LANG['plugin_fusinvsnmp']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']["constructdevice"][1]="Creation automatique des modèles";

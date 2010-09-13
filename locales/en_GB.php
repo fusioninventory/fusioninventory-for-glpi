@@ -33,8 +33,8 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$title="FusionInventory";
-$version="2.3.0";
+$title="FusionInventory SNMP";
+$version="2.3.0-1";
 
 $LANG['plugin_fusinvsnmp']["title"][0]="$title";
 $LANG['plugin_fusinvsnmp']["title"][1]="SNMP information";
@@ -154,7 +154,7 @@ $LANG['plugin_fusinvsnmp']["functionalities"][75]="Locks";
 $LANG['plugin_fusinvsnmp']["snmp"][0]="SNMP information of equipment";
 $LANG['plugin_fusinvsnmp']["snmp"][1]="General";
 $LANG['plugin_fusinvsnmp']["snmp"][2]="Cabling";
-$LANG['plugin_fusinvsnmp']["snmp"][2]="SNMP data";
+$LANG['plugin_fusinvsnmp']["snmp"][3]="SNMP data";
 
 $LANG['plugin_fusinvsnmp']["snmp"][11]="Additional information";
 $LANG['plugin_fusinvsnmp']["snmp"][12]="Uptime";
@@ -582,6 +582,7 @@ $LANG['plugin_fusinvsnmp']["agents"][21]="Inventory terminated";
 $LANG['plugin_fusinvsnmp']["agents"][22]="Wait";
 $LANG['plugin_fusinvsnmp']["agents"][23]="Computer link";
 $LANG['plugin_fusinvsnmp']["agents"][24]="SNMP - Threads";
+$LANG['plugin_fusinvsnmp']["agents"][25]="Agent(s)";
 
 $LANG['plugin_fusinvsnmp']["task"][0]="Task";
 $LANG['plugin_fusinvsnmp']["task"][1]="Task management";
@@ -598,6 +599,8 @@ $LANG['plugin_fusinvsnmp']["task"][11]="Agent has been notified and begin runnin
 $LANG['plugin_fusinvsnmp']["task"][12]="Wake agent";
 $LANG['plugin_fusinvsnmp']["task"][13]="Agent(s) unvailable";
 $LANG['plugin_fusinvsnmp']["task"][14]="Planified on";
+$LANG['plugin_fusinvsnmp']["task"][15]="Permanent task - Discovery";
+$LANG['plugin_fusinvsnmp']["task"][16]="Permanent task - Inventory";
 
 $LANG['plugin_fusinvsnmp']["constructdevice"][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']["constructdevice"][1]="Automatic creation of models";
@@ -607,5 +610,9 @@ $LANG['plugin_fusinvsnmp']["constructdevice"][4]="Export all models";
 $LANG['plugin_fusinvsnmp']["constructdevice"][5]="Re-create models comments";
 
 $LANG['plugin_fusinvsnmp']["update"][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
+
+$LANG['plugin_fusinvsnmp']["stats"][0]="Total counter";
+$LANG['plugin_fusinvsnmp']["stats"][1]="pages per day";
+$LANG['plugin_fusinvsnmp']["stats"][2]="Display";
 
 ?>
