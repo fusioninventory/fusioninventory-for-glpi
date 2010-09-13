@@ -379,24 +379,69 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['informations']['name'] = $LANG['plugin_f
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['informations']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][165];
 
 // NEW CARTRIDGE
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack']['name'] = $LANG['plugin_fusioninventory']["mapping"][157];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][157];
+   // Black
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack']['name'] = $LANG['plugin_fusioninventory']["mapping"][157];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][157];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblackmax']['name'] = $LANG['plugin_fusioninventory']["mapping"][166];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblackmax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][166];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblackused']['name'] = $LANG['plugin_fusioninventory']["mapping"][167];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblackused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][167];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblackremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][168];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblackremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][168];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2']['name'] = $LANG['plugin_fusioninventory']["mapping"][157]." 2";
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][157]." 2";
+   // Black 2
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2']['name'] = $LANG['plugin_fusioninventory']["mapping"][157]." 2";
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][157]." 2";
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2max']['name'] = $LANG['plugin_fusioninventory']["mapping"][166]." 2";
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2max']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][166]." 2";
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2used']['name'] = $LANG['plugin_fusioninventory']["mapping"][167]." 2";
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2used']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][167]." 2";
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2remaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][168]." 2";
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonerblack2remaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][168]." 2";
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyan']['name'] = $LANG['plugin_fusioninventory']["mapping"][158];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyan']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][158];
+   // Cyan
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyan']['name'] = $LANG['plugin_fusioninventory']["mapping"][158];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyan']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][158];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyanmax']['name'] = $LANG['plugin_fusioninventory']["mapping"][169];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyanmax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][169];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyanused']['name'] = $LANG['plugin_fusioninventory']["mapping"][170];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyanused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][170];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyanremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][171];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonercyanremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][171];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagenta']['name'] = $LANG['plugin_fusioninventory']["mapping"][159];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagenta']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][159];
+   // Magenta
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagenta']['name'] = $LANG['plugin_fusioninventory']["mapping"][159];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagenta']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][159];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagentamax']['name'] = $LANG['plugin_fusioninventory']["mapping"][172];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagentamax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][172];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagentaused']['name'] = $LANG['plugin_fusioninventory']["mapping"][173];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagentaused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][173];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagentaremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][174];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['tonermagentaremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][174];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellow']['name'] = $LANG['plugin_fusioninventory']["mapping"][160];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellow']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][160];
+   // Yellow
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellow']['name'] = $LANG['plugin_fusioninventory']["mapping"][160];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellow']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][160];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellowmax']['name'] = $LANG['plugin_fusioninventory']["mapping"][175];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellowmax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][175];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellowused']['name'] = $LANG['plugin_fusioninventory']["mapping"][176];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellowused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][176];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellowremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][177];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['toneryellowremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][177];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetoner']['name'] = $LANG['plugin_fusioninventory']["mapping"][151];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetoner']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][151];
+   // Waste
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetoner']['name'] = $LANG['plugin_fusioninventory']["mapping"][151];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetoner']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][151];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetonermax']['name'] = $LANG['plugin_fusioninventory']["mapping"][190];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetonermax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][190];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetonerused']['name'] = $LANG['plugin_fusioninventory']["mapping"][191];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetonerused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][191];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetonerremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][192];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['wastetonerremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][192];
 
+
+
+   // Cartridge black
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgeblack']['name'] = $LANG['plugin_fusioninventory']["mapping"][134];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgeblack']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][134];
 
@@ -418,20 +463,56 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgemagentalight']['shortname'] = $
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgeyellow']['name'] = $LANG['plugin_fusioninventory']["mapping"][137];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgeyellow']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][137];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekit']['name'] = $LANG['plugin_fusioninventory']["mapping"][156];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekit']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][156];
+   // maintenance kit
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekit']['name'] = $LANG['plugin_fusioninventory']["mapping"][156];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekit']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][156];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekitmax']['name'] = $LANG['plugin_fusioninventory']["mapping"][193];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekitmax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][193];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekitused']['name'] = $LANG['plugin_fusioninventory']["mapping"][194];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekitused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][194];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekitremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][195];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekitremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][195];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblack']['name'] = $LANG['plugin_fusioninventory']["mapping"][161];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblack']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][161];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyan']['name'] = $LANG['plugin_fusioninventory']["mapping"][162];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyan']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][162];
+   // Drum Black
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblack']['name'] = $LANG['plugin_fusioninventory']["mapping"][161];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblack']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][161];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblackmax']['name'] = $LANG['plugin_fusioninventory']["mapping"][178];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblackmax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][178];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblackused']['name'] = $LANG['plugin_fusioninventory']["mapping"][179];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblackused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][179];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblackremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][180];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumblackremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][180];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagenta']['name'] = $LANG['plugin_fusioninventory']["mapping"][163];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagenta']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][163];
+   // Drum cyan
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyan']['name'] = $LANG['plugin_fusioninventory']["mapping"][162];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyan']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][162];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyanmax']['name'] = $LANG['plugin_fusioninventory']["mapping"][181];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyanmax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][181];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyanused']['name'] = $LANG['plugin_fusioninventory']["mapping"][182];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyanused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][182];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyanremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][183];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumcyanremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][183];
 
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellow']['name'] = $LANG['plugin_fusioninventory']["mapping"][164];
-$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellow']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][164];
+   // Drum magenta
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagenta']['name'] = $LANG['plugin_fusioninventory']["mapping"][163];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagenta']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][163];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagentamax']['name'] = $LANG['plugin_fusioninventory']["mapping"][184];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagentamax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][184];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagentaused']['name'] = $LANG['plugin_fusioninventory']["mapping"][185];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagentaused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][185];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagentaremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][186];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drummagentaremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][186];
+
+   // Drum yellow
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellow']['name'] = $LANG['plugin_fusioninventory']["mapping"][164];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellow']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][164];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellowmax']['name'] = $LANG['plugin_fusioninventory']["mapping"][187];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellowmax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][187];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellowused']['name'] = $LANG['plugin_fusioninventory']["mapping"][188];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellowused']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][188];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellowremaining']['name'] = $LANG['plugin_fusioninventory']["mapping"][189];
+   $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['drumyellowremaining']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][189];
 
 
 // Printers : Counter pages
