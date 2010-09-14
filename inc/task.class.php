@@ -145,8 +145,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='3'>";
+      echo "<td rowspan='5'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='5'>";
       echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
@@ -162,6 +162,27 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>Communication&nbsp;:</td>";
+      echo "<td align='center'>";
+      $com = array();
+      $com['push'] = "push";
+      $com['pull'] = "pull";
+      Dropdown::showFromArray("communication", $com);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>Permanent&nbsp;:</td>";
+      echo "<td align='center'>";
+      if ($this->fields['permanent'] != NULL) {
+         echo "OUI";
+      } else {
+         echo "non";
+      }
       echo "</td>";
       echo "</tr>";
 
