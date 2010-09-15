@@ -429,7 +429,7 @@ $this->cronTaskscheduler();
 
       $remoteStartAgents = array();
 
-      $query = "SELECT `".$this->table."`.* FROM ".$this->table."
+      $query = "SELECT `".$this->table."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`  FROM ".$this->table."
          LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
          WHERE `is_active`='1'
             AND `status` = '0'
