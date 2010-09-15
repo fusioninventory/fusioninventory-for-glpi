@@ -43,9 +43,8 @@ require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
-   function prepareRun($itemtype, $items_id) {
+   function prepareRun($itemtype, $items_id, $communication) {
       global $DB;
-
       
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
@@ -62,8 +61,16 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
             $a_ip = $PluginFusioninventoryAgent->getIPs($PluginFusinvsnmpIPRange->fields['plugin_fusioninventory_agents_id_discover']);
             $PluginFusioninventoryAgent->getFromDB($PluginFusinvsnmpIPRange->fields['plugin_fusioninventory_agents_id_discover']);
             foreach($a_ip as $num=>$ip) {
-               $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-               if ($agentStatus == true) {
+               if ($communication == 'push') {
+                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+                  if ($agentStatus == true) {
+                     $return = array();
+                     $return['ip'] = $ip;
+                     $return['token'] = $PluginFusioninventoryAgent->fields['token'];
+                     $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                     return $return;
+                  }
+               } else  if ($communication == 'pull') {
                   $return = array();
                   $return['ip'] = $ip;
                   $return['token'] = $PluginFusioninventoryAgent->fields['token'];
@@ -79,8 +86,16 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $a_ip = $PluginFusioninventoryAgent->getIPs($agents_id);
          $PluginFusioninventoryAgent->getFromDB($agents_id);
          foreach($a_ip as $num=>$ip) {
-            $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-            if ($agentStatus ==  true) {
+            if ($communication == 'push') {
+               $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+               if ($agentStatus ==  true) {
+                  $return = array();
+                  $return['ip'] = $ip;
+                  $return['token'] = $PluginFusioninventoryAgent->fields['token'];
+                  $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                  return $return;
+               }
+            } else  if ($communication == 'pull') {
                $return = array();
                $return['ip'] = $ip;
                $return['token'] = $PluginFusioninventoryAgent->fields['token'];
