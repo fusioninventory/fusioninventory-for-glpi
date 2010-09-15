@@ -151,38 +151,32 @@ class PluginFusinvinventoryLibhook {
                $id_disk = 0;
                $disk=array();
                $disk['computers_id']=$idmachine;
-               if (in_array($section['dataSection']['TYPE'],array("vxfs","ufs")) ) {
-                  $disk['name']=$section['dataSection']['VOLUMN'];
-                  $disk['mountpoint']=$section['dataSection']['VOLUMN'];
-                  $disk['device']=$section['dataSection']['FILESYSTEM'];
-                  $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["TYPE"]);
-               } else if (in_array($section['dataSection']['FILESYSTEM'],array('ext4','ext3','ext2','ffs','jfs','jfs2',
-                                                             'xfs','smbfs','nfs','hfs','ufs',
-                                                             'Journaled HFS+','fusefs','fuseblk')) ) {
-                  $disk['mountpoint']=$section['dataSection']['VOLUMN'];
-                  $disk['device']=$section['dataSection']['TYPE'];
-                  // Found /dev in VOLUMN : invert datas
-                  if (strstr($section['dataSection']['VOLUMN'],'/dev/')) {
-                     $disk['mountpoint']=$section['dataSection']['TYPE'];
-                     $disk['device']=$section['dataSection']['VOLUMN'];
-                  }
-
-                  $disk['name']=$disk['mountpoint'];
-                  $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["FILESYSTEM"]);
-               } else if (in_array($section['dataSection']['FILESYSTEM'],array('FAT32',
-                                                             'NTFS',
-                                                             'FAT')) ){
-                  if (!empty($section['dataSection']['VOLUMN'])) {
-                     $disk['name']=$section['dataSection']['VOLUMN'];
-                  } else {
-                     $disk['name']=$section['dataSection']['LETTER'];
-                  }
-                  $disk['mountpoint']=$section['dataSection']['LETTER'];
-                  $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["FILESYSTEM"]);
+               // totalsize 	freesize
+               if (isset($section['dataSection']['LABEL'])) {
+                  $disk['name']=$section['dataSection']['LABEL'];
+               } else if ((!isset($section['dataSection']['VOLUMN'])) AND (isset($section['dataSection']['LETTER']))) {
+                  $disk['name']=$section['dataSection']['LETTER'];
+               } else {
+                  $disk['name']=$section['dataSection']['TYPE'];
+               }
+               if (isset($section['dataSection']['VOLUMN'])) {
+                  $disk['device']=$section['dataSection']['VOLUMN'];
+               }
+               if (isset($section['dataSection']['MOUNTPOINT'])) {
+                  $disk['mountpoint'] = $section['dataSection']['MOUNTPOINT'];
+               } else if (isset($section['dataSection']['LETTER'])) {
+                  $disk['mountpoint'] = $section['dataSection']['LETTER'];
+               } else if (isset($section['dataSection']['TYPE'])) {
+                  $disk['mountpoint'] = $section['dataSection']['TYPE'];
+               }
+               $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["FILESYSTEM"]);
+               if (isset($section['dataSection']['TOTAL'])) {
+                  $disk['totalsize']=$section['dataSection']['TOTAL'];
+               }
+               if (isset($section['dataSection']['FREE'])) {
+                  $disk['freesize']=$section['dataSection']['FREE'];
                }
                if (isset($disk['name']) && !empty($disk["name"])) {
-                  $disk['totalsize']=$section['dataSection']['TOTAL'];
-                  $disk['freesize']=$section['dataSection']['FREE'];
                   $id_disk = $ComputerDisk->add($disk);
                }
                array_push($sectionsId,$section['sectionName']."/".$id_disk);
