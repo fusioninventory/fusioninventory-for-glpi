@@ -48,7 +48,15 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvsnmp']["iprange"][5];
+      if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
+         // Permanent task discovery
+         return $LANG['plugin_fusinvsnmp']["task"][15];
+      } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
+         // Permanent task inventory
+         return $LANG['plugin_fusinvsnmp']["task"][16];
+      } else {
+         return $LANG['plugin_fusinvsnmp']["iprange"][5];
+      }
    }
 
    function canCreate() {
@@ -271,19 +279,40 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    }
 
 
-   function permanentTask($module_name) {
+   function permanentTask($items_id, $module_name) {
       global $LANG;
 
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask;
 
-      // Get on task & taskjob
+      $permanent = exportArrayToDB(array($this->type=>$items_id, 'module'=>$module_name));
+      // Get on task & taskjob (and create this task if not exist)
+      if ($a_task = $PluginFusioninventoryTask->find("`permanent` LIKE '".$permanent."'", "`id` DESC", "1")) {
+         foreach($a_task as $task_id=>$datas) {
+            
+         }
+      } else {
+         // Create task
+         $input = array();
+         $input['name'] = $module_name." of IP Range (permanent)";
+         $input['date_creation'] = date("Y-m-d H:i:s");
+         $input['is_active'] = 0;
+         $input['permanent'] = $permanent;
+
+         $task_id = $PluginFusioninventoryTask->add($input);
+      }
+      // Get task job or create if not exist
+
+      
+
       $this->fields['is_active'] = 0;
+      $this->fields['id'] = 0;
 
 
       $options = array();
       $this->showFormHeader($options);
-
+// TODO: ajouter communicztion (push ou pull)
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";

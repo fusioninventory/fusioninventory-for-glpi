@@ -54,11 +54,11 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 1:
-      $PluginFusinvsnmpIPRange->permanentTask("NETDISCOVERY");
+      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "NETDISCOVERY");
       break;
 
    case 2:
-      $PluginFusinvsnmpIPRange->permanentTask("SNMPQUERY");
+      $PluginFusinvsnmpIPRange->permanentTask($_POST["id"], "SNMPQUERY");
       break;
 
    case 3:
