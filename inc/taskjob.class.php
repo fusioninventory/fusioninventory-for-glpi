@@ -473,7 +473,7 @@ $this->cronTaskscheduler();
                   $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
-                  $a_agents = $class->prepareRun($itemtype, $items_id);
+                  $a_agents = $class->prepareRun($itemtype, $items_id, $data['communication']);
                   if (!$a_agents) {
                      $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'], 
                                                                              $items_id, 
@@ -499,8 +499,9 @@ $this->cronTaskscheduler();
                      $a_input['date'] = date("Y-m-d H:i:s");
                      $PluginFusioninventoryTaskjoblogs->add($a_input);
 
-                     $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
-
+                     if ($data['communication'] == 'push') {
+                        $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
+                     }
                      $this->getFromDB($data['id']);
                      $this->fields['status'] = 1;
                      $this->update($this->fields);

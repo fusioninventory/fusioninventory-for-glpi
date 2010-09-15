@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
-   function prepareRun($itemtype, $items_id) {
+   function prepareRun($itemtype, $items_id, $communication) {
       global $DB;
       // Get ids of operating systems which can make real wakeonlan
       $OperatingSystem = new OperatingSystem;
@@ -123,8 +123,16 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      ".$where." ";
                if ($result = $DB->query($query)) {
                   while ($data=$DB->fetch_array($result)) {
-                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
-                     if ($agentStatus ==  true) {
+                     if ($communication == 'push') {
+                        $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
+                        if ($agentStatus ==  true) {
+                           $return = array();
+                           $return['ip'] = $data['ip'];
+                           $return['token'] = $data['token'];
+                           $return['agents_id'] = $data['a_id'];
+                           return $return;
+                        }
+                     } else if ($communication == 'pull') {
                         $return = array();
                         $return['ip'] = $data['ip'];
                         $return['token'] = $data['token'];

@@ -171,7 +171,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $com = array();
       $com['push'] = "push";
       $com['pull'] = "pull";
-      Dropdown::showFromArray("communication", $com);
+      Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
       echo "</td>";
       echo "</tr>";
 
