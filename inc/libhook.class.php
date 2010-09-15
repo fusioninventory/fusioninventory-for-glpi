@@ -121,6 +121,7 @@ class PluginFusinvinventoryLibhook {
 
       $Computer->update($Computer->fields);
       $j = 0;
+
       foreach($data as $section) {
 
          switch ($section['sectionName']) {
@@ -133,8 +134,9 @@ class PluginFusinvinventoryLibhook {
                $input['designation'] = $section['dataSection']['NAME'];
                $input['frequence'] = $section['dataSection']['SPEED'];
                $Manufacturer = new Manufacturer;
-               $input['manufacturers_id'] = $Manufacturer->import($Manufacturer->processName($section['dataSection']['MANUFACTURER']));
-
+               $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer',
+                                                                          $section['dataSection']['MANUFACTURER']);
+               $input['specif_default'] = $section['dataSection']['SPEED'];
                $proc_id = $DeviceProcessor->import($input);
                $input = array();
                $input['computers_id'] = $idmachine;
@@ -185,6 +187,7 @@ class PluginFusinvinventoryLibhook {
             case 'MEMORIES':
                $CompDevice = new Computer_Device('DeviceMemory');
                if (!empty ($section['dataSection']["CAPACITY"])) {
+                  $ram = array();
                   $ram["designation"]="";
                   if ($section['dataSection']["TYPE"]!="Empty Slot" && $section['dataSection']["TYPE"] != "Unknown") {
                      $ram["designation"]=$section['dataSection']["TYPE"];
@@ -221,6 +224,28 @@ class PluginFusinvinventoryLibhook {
                   array_push($sectionsId,$section['sectionName']."/".$j);
                   $j++;
                }
+               break;
+
+            case 'NETWORKS':
+               $NetworkPort = new NetworkPort();
+               $network = array();
+               $network['computers_id']=$idmachine;
+               $network['itemtype'] = 'Computer';
+               $network['name'] = $section['dataSection']["DESCRIPTION"];
+               $network['ip'] = $section['dataSection']["IPADDRESS"];
+               $network['mac'] = $section['dataSection']["MACADDR"];
+               $netport["networkinterfaces_id"]
+                              = Dropdown::importExternal('NetworkInterface', $section['dataSection']["TYPE"]);
+               if (isset($section['dataSection']["IPMASK"]))
+                  $network['netmask'] = $section['dataSection']["IPMASK"];
+               if (isset($section['dataSection']["IPGATEWAY"]))
+                  $network['gateway'] = $section['dataSection']["IPGATEWAY"];
+               if (isset($section['dataSection']["IPSUBNET"]))
+                  $network['subnet'] = $section['dataSection']["IPSUBNET"];
+
+               $devID = $NetworkPort->add($network);
+
+               array_push($sectionsId,$section['sectionName']."/".$devID);
                break;
 
             case 'SOFTWARES':
