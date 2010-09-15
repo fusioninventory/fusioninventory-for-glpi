@@ -43,7 +43,7 @@ require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
-   function prepareRun($itemtype, $items_id) {
+   function prepareRun($itemtype, $items_id, $communication) {
       global $DB;
 
 
@@ -81,12 +81,20 @@ class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
                $a_ip = $PluginFusioninventoryAgent->getIPs($agent_id);
                $PluginFusioninventoryAgent->getFromDB($agent_id);
                foreach($a_ip as $num=>$ip) {
-                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-                  if ($agentStatus == true) {
+                  if ($communication == 'push') {
+                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+                     if ($agentStatus == true) {
+                        $return = array();
+                        $return['ip'] = $ip;
+                        $return['token'] = $PluginFusioninventoryAgent->fields['token'];
+                        $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                        return $return;
+                     }
+                  } else if ($communication == 'pull') {
                      $return = array();
-                     $return['ip'] = $ip;
-                     $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-                     $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                     $return['ip'] = $data['ip'];
+                     $return['token'] = $data['token'];
+                     $return['agents_id'] = $data['a_id'];
                      return $return;
                   }
                }
