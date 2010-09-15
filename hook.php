@@ -1147,7 +1147,7 @@ function plugin_headings_fusinvsnmp($type,$id,$withtemplate=0) {
 }
 
 function plugin_headings_fusinvsnmp_agents($type,$id) {
-   $PluginFusinvsnmpAgentconfig = new PluginFusinmpvsnAgentconfig;
+   $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig;
    $PluginFusinvsnmpAgentconfig->showForm($_POST['id']);
 }
 
