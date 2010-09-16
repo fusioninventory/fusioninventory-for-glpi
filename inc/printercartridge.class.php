@@ -136,7 +136,6 @@ class PluginFusinvsnmpPrinterCartridge extends PluginFusinvsnmpCommonDBTM {
             }
          }
       }
-      echo "<br/>";
       echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
                  action=\"".$options['target']."\">";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";

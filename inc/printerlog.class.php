@@ -185,6 +185,267 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
             </div></td></tr>";
 		echo "</table></form></div>";
 	}
+
+
+   /**
+    * Show printer graph form
+    **/
+   function showGraph($id, $options=array()) {
+      global $LANG, $DB;
+
+      $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $printersComp = array();$graphType='day';
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
+         $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
+      }
+      if ( $begin == 'NULL' OR $begin == '' ) $begin=date("Y-m-01"); // first day of current month
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_end'])) {
+         $end=$_SESSION['glpi_plugin_fusioninventory_graph_end'];
+      }
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_type'])) {
+         $graphType = $_SESSION['glpi_plugin_fusioninventory_graph_type'];
+      }
+      if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d");; // today
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
+      if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
+      if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
+         $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
+         if (!key_exists($printerCompAdd, $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
+            $oPrinter = new Printer();
+            if ($oPrinter->getFromDB($printerCompAdd)){
+               $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] = $oPrinter->getField('name');
+            }
+         }
+      } elseif (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
+         unset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove']]);
+      }
+
+      $printers = $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'];
+      $printersView = $printers; // printers without the current printer
+      if (isset($printersView[$id])) {
+         unset($printersView[$id]);
+      } else {
+         $oPrinter = new Printer();
+         if ($oPrinter->getFromDB($id)){
+            $printers[$id] = $oPrinter->getField('name');
+         }
+      }
+
+      $printersList = '';
+      foreach ($printers as $printer) {
+         if ($printersList != '') $printersList .= '<BR>';
+         $printersList .= $printer;
+      }
+      $printersIds = "";
+      foreach (array_keys($printers) as $printerId) {
+         if ($printersIds != '') $printersIds.=', ';
+         $printersIds .= $printerId;
+      }
+
+      $where = " WHERE `printers_id` IN(".$printersIds.")";
+      if ($begin!='' || $end!='') {
+            $where .= " AND " .getDateRequest("`date`",$begin,$end);
+         }
+      switch ($timeUnit) {
+         case 'day':
+            $group = "GROUP BY `printers_id`, `year`, `month`, `day`";
+            break;
+         case 'week':
+            $group = "GROUP BY `printers_id`, `year`, `month`, `week`";
+            break;
+         case 'month':
+            $group = "GROUP BY `printers_id`, `year`, `month`";
+            break;
+         case 'year':
+            $group = "GROUP BY `printers_id`, `year`";
+            break;
+      }
+
+//      $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
+//                       MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
+//                       SUM(`$graphField`) AS `$graphField`
+//                FROM `glpi_plugin_fusinvsnmp_printerlogs`"
+//                .$where
+//                .$group."
+//                ORDER BY `year`, `month`, `day`, `printers_id`";
+
+      echo "<form method='post' name='snmp_form' id='snmp_form' action='".GLPI_ROOT."/plugins/fusinvsnmp/front/printer_info.form.php'>";
+      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+      $mapping = new PluginFusioninventoryMapping;
+      $maps = $mapping->find("`itemtype`='Printer'");
+      foreach ($maps as $num=>$mapfields) {
+         if (!isset($mapfields["shortlocale"])) {
+            $mapfields["shortlocale"] = $mapfields["locale"];
+         }
+         $pagecounters[$mapfields['name']] = $LANG['plugin_fusinvsnmp']["mapping"][$mapfields["shortlocale"]];
+      }
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['search'][8]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
+      showDateFormItem("graph_begin", $begin);
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['search'][9]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
+      showDateFormItem("graph_end", $end);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][31]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
+      $elementsTime=array('day'=>$LANG['plugin_fusioninventory']["prt_history"][34],
+                          'week'=>$LANG['plugin_fusioninventory']["prt_history"][35],
+                          'month'=>$LANG['plugin_fusioninventory']["prt_history"][36],
+                          'year'=>$LANG['plugin_fusioninventory']["prt_history"][37]);
+      Dropdown::showFromArray('graph_timeUnit', $elementsTime,
+                              array('value'=>$timeUnit));
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['plugin_fusinvsnmp']["stats"][2]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
+      $elements=array('total'=>$LANG['plugin_fusinvsnmp']["stats"][0],
+                    'day'=>$LANG['plugin_fusinvsnmp']["stats"][1]);
+      Dropdown::showFromArray('graph_type', $elements,
+                              array('value'=>$graphType));
+      echo "</td>";
+      echo "</tr>";
+
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['Menu'][2]."&nbsp;:</td>";
+      echo "<td class='left' colspan='2'>";
+      echo $printersList;
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_2'>";
+      echo "<td class='center' colspan='3'>
+               <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
+                      value='" . $LANG["buttons"][7] . "'/>";
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][32]."&nbsp;:</td>";
+      echo "<td class='left'>";
+      $printersused = array();
+      foreach($printersView as $printer_id=>$name) {
+         $printersused[] = $printer_id;
+      }
+      Dropdown::show('Printer', array('name'    =>'graph_printerCompAdd',
+                                      'entiry'  => $_SESSION['glpiactive_entity'],
+                                      'used'    => $printersused));
+      echo "</td>";
+      echo "<td class='left'>\n";
+      echo "<input type='submit' value=\"".$LANG['buttons'][8]."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
+      echo "</td>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][33]."&nbsp;:</td>";
+      echo "<td class='left'>";
+      $printersTmp = $printersView;
+      $printersTmp[0] = "-----";
+      asort($printersTmp);
+      Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
+      echo "</td>";
+      echo "<td class='left'>\n";
+      echo "<input type='submit' value=\"".$LANG['buttons'][6]."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+      echo "</td>";
+      echo "</tr>\n";
+      echo "</table>";
+      echo "</form>";
+
+      $elementsField=array('pages_total'=>$pagecounters['pagecountertotalpages'],
+                      'pages_n_b'=>$pagecounters['pagecounterblackpages'],
+                      'pages_color'=>$pagecounters['pagecountercolorpages'],
+                      'pages_recto_verso'=>$pagecounters['pagecounterrectoversopages'],
+                      'scanned'=>$pagecounters['pagecounterscannedpages'],
+                      'pages_total_print'=>$pagecounters['pagecountertotalpages_print'],
+                      'pages_n_b_print'=>$pagecounters['pagecounterblackpages_print'],
+                      'pages_color_print'=>$pagecounters['pagecountercolorpages_print'],
+                      'pages_total_copy'=>$pagecounters['pagecountertotalpages_copy'],
+                      'pages_n_b_copy'=>$pagecounters['pagecounterblackpages_copy'],
+                      'pages_color_copy'=>$pagecounters['pagecountercolorpages_copy'],
+                      'pages_total_fax'=>$pagecounters['pagecountertotalpages_fax']);
+
+      echo "<br/>";
+      foreach($elementsField as $graphField=>$name) {
+         $query = "SELECT `printers_id`, DAY(`date`) AS `day`, WEEK(`date`) AS `week`,
+                    MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
+                    `$graphField`
+             FROM `glpi_plugin_fusinvsnmp_printerlogs`"
+             .$where
+             .$group."
+             ORDER BY `year`, `month`, `day`, `printers_id`";
+
+         $input = array();
+         if ($result = $DB->query($query)) {
+            if ($DB->numrows($result) != 0) {
+               $pages = array();
+               while ($data = $DB->fetch_assoc($result)) {
+                  switch($timeUnit) {
+
+                     case 'day':
+                        $time=mktime(0,0,0,$data['month'],$data['day'],$data['year']);
+                        $dayofweek=date("w",$time);
+                        if ($dayofweek==0) {
+                           $dayofweek=7;
+                        }
+
+                        $date= $LANG['calendarDay'][$dayofweek%7]." ".$data['day']." ".$LANG['calendarM'][$data['month']-1];
+                        break;
+
+                     case 'week':
+                        $date= $data['day']."/".$data['month'];
+                        break;
+
+                     case 'month':
+                        $date= $data['month']."/".$data['year'];
+                        break;
+
+                     case 'year':
+                        $date = $data['year'];
+                        break;
+
+                  }
+
+                  if ($graphType == 'day') {
+                     if (!isset($pages[$data['printers_id']])) {
+                        $pages[$data['printers_id']] = $data[$graphField];
+                     }
+                     $oPrinter->getFromDB($data['printers_id']);
+
+                     $input[$oPrinter->getName()][$date] = $data[$graphField] - $pages[$data['printers_id']];
+                     $pages[$data['printers_id']] = $data[$graphField];
+                  } else {
+                     $oPrinter->getFromDB($data['printers_id']);
+                     $input[$oPrinter->getName()][$date] = $data[$graphField];
+                  }
+               }
+            }
+         }
+// TODO : correct title (not total of printed)
+         if ($graphType == 'day') {
+            $type = 'bar';
+         } else {
+            $type = 'line';
+         }
+
+         Stat::showGraph($input,
+                  array('title'  => $name,
+                     'unit'      => '',
+                     'type'      => $type,
+                     'height'    => 400,
+                     'showtotal' => false));
+      }
+   }
+
 }
 
 ?>
