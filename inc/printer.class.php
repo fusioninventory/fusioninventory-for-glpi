@@ -396,8 +396,13 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
       
 		// Form printer informations
-      $this->oFusionInventory_printer->showFormHeader($options);
+// Don't work in this case :      $this->oFusionInventory_printer->showFormHeader($options);
 
+		echo "<div align='center'>";
+      echo "<form method='post' name='snmp_form' id='snmp_form'
+                 action=\"".$options['target']."\">";
+      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
+      
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']["snmp"][4];
@@ -451,17 +456,17 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
-//		echo "<tr class='tab_bg_1'>";
-//		echo "<td colspan='3'>";
-//		echo "<div align='center'>";
-//		echo "<input type='hidden' name='id' value='".$id."'>";
-//		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
-//		echo "</td>";
-//		echo "</tr>";
+		echo "<tr class='tab_bg_1'>";
+		echo "<td colspan='3'>";
+		echo "<div align='center'>";
+		echo "<input type='hidden' name='id' value='".$id."'>";
+		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+		echo "</td>";
+		echo "</tr>";
 
-      $this->oFusionInventory_printer->showFormButtons($options);
-//		echo "</table></form>";
-//		echo "</div>";
+//      $this->oFusionInventory_printer->showFormButtons($options);
+		echo "</table></form>";
+		echo "</div>";
 
 	}
 

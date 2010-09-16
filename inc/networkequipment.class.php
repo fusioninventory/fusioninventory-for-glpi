@@ -536,12 +536,12 @@ function appear_array(id){
 		echo "<tr class='tab_bg_1'>";
 		$query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `type`='PluginFusinvsnmpNetworkPort'
+                      WHERE `itemtype`='PluginFusinvsnmpNetworkPort'
                             AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
 		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
-		echo $LANG['plugin_fusioninventory']["snmp"][40];
+		echo $LANG['plugin_fusinvsnmp']["snmp"][40];
       $result=$DB->query($query);
       echo ' ('.$DB->numrows($result).')';
       if ($_SESSION["glpilanguage"] == "fr_FR") {
@@ -566,7 +566,7 @@ function appear_array(id){
 
 		$query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `type`='5157'
+                      WHERE `itemtype`='5157'
                              AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
@@ -659,7 +659,7 @@ function appear_array(id){
 
 				$query_array = "SELECT *
                             FROM `glpi_displaypreferences`
-                            WHERE `type`='5157'
+                            WHERE `itemtype`='5157'
                                   AND `users_id`='0'
                             ORDER BY `rank`;";
 				$result_array=$DB->query($query_array);
