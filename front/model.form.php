@@ -85,7 +85,7 @@ if(!empty($_POST["item_coche"])) {
 }
 
 if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","r")) {
-   $importexport->showForm($_GET["id"]);
+   $importexport->showForm($_SERVER["PHP_SELF"]);
    $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
 }
 

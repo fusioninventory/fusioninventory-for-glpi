@@ -353,7 +353,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 //      $PID = $this->getValue('last_PID_update');
 
 		// Form networking informations
-		//$this->showTabs($options);
       $this->oFusionInventory_networkequipment->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";

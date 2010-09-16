@@ -55,7 +55,35 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
       $this->oFusionInventory_printer_history =
                         new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printerlogs");
+      $this->oFusionInventory_printer->type = 'PluginFusinvsnmpPrinter';
    }
+
+
+   static function getTypeName() {
+      global $LANG;
+
+   }
+
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canCancel() {
+      return true;
+   }
+
+   function canUndo() {
+      return true;
+   }
+
+   function canValidate() {
+      return true;
+   }
+
 
    /**
     * Load an existing networking printer
@@ -350,27 +378,9 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
 		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printers","r");
 
-      // $oFusionInventory_printer_history
-
-		//$this->id = $id;
-
 		$plugin_fusioninventory_printer = new PluginFusinvsnmpPrinter;
 		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
 
-//		$query = "SELECT *
-//                FROM `glpi_plugin_fusinvsnmp_printers`
-//                WHERE `printers_id`=".$id." ";
-//
-//		$result = $DB->query($query);
-//		$data = $DB->fetch_assoc($result);
-//
-//		// Add in database if not exist
-//		if ($DB->numrows($result) == "0") {
-//			$query_add = "INSERT INTO `glpi_plugin_fusinvsnmp_printers` (`printers_id`)
-//                              VALUES('".$id."') ";
-//
-//			$DB->query($query_add);
-//		}
       $this->oFusionInventory_printer->id = $id;
       
       if (!$data = $this->oFusionInventory_printer->find("`printers_id`='".$id."'", '', 1)) {
@@ -384,8 +394,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
             $this->oFusionInventory_printer->fields = $data[$ID_tn];
          }
       }
-
-
+      
 		// Form printer informations
       $this->oFusionInventory_printer->showFormHeader($options);
 
@@ -420,7 +429,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                            'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>";
-      echo " <input type='submit' name='GetRightModel' value='".
+      echo "<input type='submit' name='GetRightModel' value='".
              $LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/></td>";
       echo "</td>";
 		echo "</tr>";
@@ -442,139 +451,18 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
-		echo "<div align='center'>";
-		echo "<input type='hidden' name='id' value='".$id."'>";
-		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
-		echo "</td>";
-		echo "</tr>";
+//		echo "<tr class='tab_bg_1'>";
+//		echo "<td colspan='3'>";
+//		echo "<div align='center'>";
+//		echo "<input type='hidden' name='id' value='".$id."'>";
+//		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
+//		echo "</td>";
+//		echo "</tr>";
 
-		echo "</table></form>";
-		echo "</div>";
+      $this->oFusionInventory_printer->showFormButtons($options);
+//		echo "</table></form>";
+//		echo "</div>";
 
-
-		// ** FORM FOR CARTRIDGES
-
-		// get infos to get visible or not the counters
-			$snmp_model_ID = $plugin_fusioninventory_snmp->GetSNMPModel($id,PRINTER_TYPE);
-			// ** Get link OID fields
-			$Array_Object_TypeNameConstant= $plugin_fusioninventory_snmp->GetLinkOidToFields($id,PRINTER_TYPE);
-			$mapping_name=array();
-			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
-				if ((strstr($mapping_type_name, "cartridge")) OR (strstr($mapping_type_name, "toner"))) {
-               switch($mapping_type_name) {
-                     CASE "cartridgeblack":
-                        $mapping_name[$mapping_type_name] = "1";
-                        break;
-
-                     CASE "cartridgeblackphoto":
-                        $mapping_name[$mapping_type_name] = "2";
-                        break;
-
-                     CASE "tonerblack" :
-                        $mapping_name[$mapping_type_name] = "3";
-                        break;
-
-                     CASE "tonerblack2" :
-                        $mapping_name[$mapping_type_name] = "4";
-                        break;
-
-                     CASE "cartridgecyan":
-                        $mapping_name[$mapping_type_name] = "5";
-                        break;
-
-                     CASE "cartridgecyanlight":
-                        $mapping_name[$mapping_type_name] = "6";
-                        break;
-
-                     CASE "tonercyan" :
-                        $mapping_name[$mapping_type_name] = "7";
-                        break;
-
-                     CASE "cartridgemagenta":
-                        $mapping_name[$mapping_type_name] = "8";
-                        break;
-
-                     CASE "cartridgemagentalight":
-                        $mapping_name[$mapping_type_name] = "9";
-                        break;
-
-                     CASE "tonermagenta":
-                        $mapping_name[$mapping_type_name] = "10";
-                        break;
-
-                     CASE "cartridgeyellow":
-                        $mapping_name[$mapping_type_name] = "11";
-                        break;
-
-                     CASE "toneryellow":
-                        $mapping_name[$mapping_type_name] = "12";
-                        break;
-
-                     CASE "drumblack":
-                        $mapping_name[$mapping_type_name] = "13";
-                        break;
-
-                     CASE "drumcyan":
-                        $mapping_name[$mapping_type_name] = "14";
-                        break;
-
-                     CASE "drummagenta":
-                        $mapping_name[$mapping_type_name] = "15";
-                        break;
-
-                     CASE "drumyellow":
-                        $mapping_name[$mapping_type_name] = "16";
-                        break;
-
-                     CASE "wastetoner":
-                        $mapping_name[$mapping_type_name] = "17";
-                        break;
-
-                     CASE "maintenancekit":
-                        $mapping_name[$mapping_type_name] = "18";
-                        break;
-
-                     default:
-                        $mapping_name[$mapping_type_name] = "19";
-               }
-				}
-			}
-      echo "<br/>";
-		echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
-                 action=\"".$options['target']."\">";
-		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-		echo "<tr class='tab_bg_1'>";
-		echo "<th align='center' colspan='3'>";
-		echo $LANG["cartridges"][16];
-		echo "</th>";
-		echo "</tr>";
-
-		asort($mapping_name);
-      $mapping = new PluginFusioninventoryMapping();
-		foreach ($mapping_name as $cartridge_name=>$val) {
-			$state = $plugin_fusioninventory_printer->cartridges_state($id, $cartridge_name);
-			echo "<tr class='tab_bg_1'>";
-			echo "<td align='center'>";
-//			echo $FUSIONINVENTORY_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
-         $mapfields = $mapping->get('Printer', $cartridge_name);
-         if ($mapfields != false) {
-//            echo $FUSIONINVENTORY_MAPPING[PRINTER_TYPE][$cartridge_name]['shortname'];
-            echo $mapfields['shortlocale'];
-         }
-			echo " : ";
-			echo "</td>";
-			echo "<td align='center'>";
-			echo "</td>";
-			echo "<td align='center'>";
-			PluginFusioninventoryDisplay::bar($state['state']);
-			echo "</td>";
-			echo "</tr>";
-		}
-
-		echo "</table></form>";
-  		echo "</div>";
 	}
 
 

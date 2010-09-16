@@ -50,6 +50,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpModel');
    Plugin::registerClass('PluginFusinvsnmpNetworkEquipment');
    Plugin::registerClass('PluginFusinvsnmpPrinter');
+   Plugin::registerClass('PluginFusinvsnmpPrinterCartridge');
    Plugin::registerClass('PluginFusinvsnmpIPRange');
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
    Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
@@ -137,8 +138,8 @@ function plugin_init_fusinvsnmp() {
 
 //            $PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
 //            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['models'] = 'front/model.form.php?add=1';
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['models'] = 'front/model.php';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = '../fusinvsnmp/front/model.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = '../fusinvsnmp/front/model.php';
 //            }
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['snmp_auth'] = 'front/configsecurity.form.php?add=1';
