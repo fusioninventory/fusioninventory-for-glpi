@@ -195,6 +195,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkequipments`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipments` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkequipments_id` int(11) NOT NULL,
+   `sysdescr` text COLLATE utf8_unicode_ci,
    `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -279,6 +280,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printers`;
 CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL,
+   `sysdescr` text COLLATE utf8_unicode_ci,
    `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',

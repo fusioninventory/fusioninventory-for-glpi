@@ -357,6 +357,17 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']["snmp"][4];
+      echo "</td>";
+      echo "<td>";
+      echo "<textarea name='toto' rows='3' cols='45'>";
+      echo $this->oFusionInventory_networkequipment->fields['sysdescr'];
+      echo "</textarea>";
+      echo "</td>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusioninventory']["profile"][24]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
@@ -393,12 +404,11 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		echo "</table></form>";
-
+		$this->oFusionInventory_networkequipment->showFormButtons($options);
 
       // SNMP Informations
 //		echo "<div align='center'>
-      echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$target."\">";
+      echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$options['target']."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
 
@@ -410,7 +420,10 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<tr class='tab_bg_1 center'>";
 		echo "<td colspan='2' height='30'>";
-		echo $LANG['plugin_fusioninventory']["snmp"][52].": ".convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
+		echo $LANG['plugin_fusinvsnmp']["snmp"][52].": ";
+      if (!empty($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update'])) {
+         convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
+      }
 		echo "</td>";
 		echo "</tr>";
 

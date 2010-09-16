@@ -189,15 +189,17 @@ class PluginFusinvsnmpModel extends CommonDBTM {
          switch($type) {
 
             case NETWORKING_TYPE:
-               $Netdevice = new Netdevice;
+               $Netdevice = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+               //$Netdevice = new Netdevice;
                $Netdevice->check($device_id,'r');
-               $sysdescr = $Netdevice->fields["comment"];
+               $sysdescr = $Netdevice->fields["sysdescr"];
                break;
 
             case PRINTER_TYPE:
-               $Printer = new Printer;
+               $printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+               //$Printer = new Printer;
                $Printer->check($device_id,'r');
-               $sysdescr = $Printer->fields["comment"];
+               $sysdescr = $Printer->fields["sysdescr"];
                break;
 
          }

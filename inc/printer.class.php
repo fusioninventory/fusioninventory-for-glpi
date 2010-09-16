@@ -390,6 +390,18 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_printer->showFormHeader($options);
 
 		echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']["snmp"][4];
+      echo "</td>";
+      echo "<td>";
+      echo "<textarea name='toto' rows='3' cols='45'>";
+      echo $this->oFusionInventory_printer->fields['sysdescr'];
+      echo "</textarea>";
+      echo "</td>";
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["model_info"][4]."</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
