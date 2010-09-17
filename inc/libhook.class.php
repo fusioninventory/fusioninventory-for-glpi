@@ -231,7 +231,7 @@ class PluginFusinvinventoryLibhook {
                $network = array();
                $network['items_id']=$idmachine;
                $network['itemtype'] = 'Computer';
-               $network['name'] = $section['dataSection']["DESCRIPTION"];
+               $network['name'] = addslashes($section['dataSection']["DESCRIPTION"]);
                $network['ip'] = $section['dataSection']["IPADDRESS"];
                $network['mac'] = $section['dataSection']["MACADDR"];
                if (isset($section['dataSection']["TYPE"])) {
@@ -260,6 +260,20 @@ class PluginFusinvinventoryLibhook {
                                                                               'version'=>$section['dataSection']['VERSION']));
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
+
+//            case 'VERSIONCLIENT':
+//               // Verify agent is created
+//               $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+//               $a_agent = $PluginFusioninventoryAgent->InfosByKey($section['sectionName']);
+//               if (count($a_agent) == '0') {
+//                  // TODO : Create agent
+//
+//               }
+//               $PluginFusioninventoryAgent->getFromDB($a_agent['id']);
+//               $PluginFusioninventoryAgent->fields['items_id'] = $idmachine;
+//               $PluginFusioninventoryAgent->fields['itemtype'] = 'Computer';
+//               $PluginFusioninventoryAgent->update($PluginFusioninventoryAgent->fields);
+//               break;
 
             case 'BIOS':
                array_push($sectionsId,$section['sectionName']."/".$idmachine);
