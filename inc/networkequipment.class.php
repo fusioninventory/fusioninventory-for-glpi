@@ -555,8 +555,8 @@ function appear_array(id){
 
 		echo "<tr class='tab_bg_1'>";
       // TODO : translate
-		echo '<th><img alt="Sélectionnez les éléments à afficher par défaut"
-                     title="Sélectionnez les éléments à afficher par défaut"
+		echo '<th><img alt="'.$LANG['setup'][252].'"
+                     title="'.$LANG['setup'][252].'"
                      src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
                      onclick="var w = window.open(\''.GLPI_ROOT.
                         '/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\',
