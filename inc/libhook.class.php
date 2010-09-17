@@ -229,7 +229,7 @@ class PluginFusinvinventoryLibhook {
             case 'NETWORKS':
                $NetworkPort = new NetworkPort();
                $network = array();
-               $network['computers_id']=$idmachine;
+               $network['items_id']=$idmachine;
                $network['itemtype'] = 'Computer';
                $network['name'] = $section['dataSection']["DESCRIPTION"];
                $network['ip'] = $section['dataSection']["IPADDRESS"];
