@@ -234,8 +234,10 @@ class PluginFusinvinventoryLibhook {
                $network['name'] = $section['dataSection']["DESCRIPTION"];
                $network['ip'] = $section['dataSection']["IPADDRESS"];
                $network['mac'] = $section['dataSection']["MACADDR"];
-               $netport["networkinterfaces_id"]
+               if (isset($section['dataSection']["TYPE"])) {
+                  $network["networkinterfaces_id"]
                               = Dropdown::importExternal('NetworkInterface', $section['dataSection']["TYPE"]);
+               }
                if (isset($section['dataSection']["IPMASK"]))
                   $network['netmask'] = $section['dataSection']["IPMASK"];
                if (isset($section['dataSection']["IPGATEWAY"]))
