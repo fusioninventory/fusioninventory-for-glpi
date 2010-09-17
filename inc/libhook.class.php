@@ -119,8 +119,6 @@ class PluginFusinvinventoryLibhook {
                if (isset($section['dataSection']['WINPRODKEY'])) {
                   $Computer->fields['os_license_number'] = $section['dataSection']['WINPRODKEY'];
                }
-                	
-               
                break;
 
          }
@@ -263,8 +261,13 @@ class PluginFusinvinventoryLibhook {
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
                $PluginFusinvinventorySoftwares = new PluginFusinvinventorySoftwares;
-               $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$section['dataSection']['NAME'],
+               if (isset($section['dataSection']['VERSION'])) {
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$section['dataSection']['NAME'],
                                                                               'version'=>$section['dataSection']['VERSION']));
+               } else {
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$section['dataSection']['NAME'],
+                                                                              'version'=>''));
+               }
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
 
