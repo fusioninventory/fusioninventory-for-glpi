@@ -437,7 +437,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1")) {
 
 			echo "<tr class='tab_bg_1 center'>";
-			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][12]."</td>";
+			echo "<td>".$LANG['plugin_fusinvsnmp']["snmp"][12]."</td>";
 			echo "<td>";
 			$sysUpTime = $this->oFusionInventory_networkequipment->fields['uptime'];
 			if (strstr($sysUpTime, "days")) {
@@ -474,7 +474,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 			)) {
 
 			echo "<tr class='tab_bg_1 center'>";
-			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][13]."</td>";
+			echo "<td>".$LANG['plugin_fusinvsnmp']["snmp"][13]."</td>";
 			echo "<td>";
 			PluginFusinvsnmpDisplay::bar($this->oFusionInventory_networkequipment->fields['cpu'],'','inverse');
 			echo "</td>";
@@ -483,7 +483,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1")) {
 			echo "<tr class='tab_bg_1 center'>";
-			echo "<td>".$LANG['plugin_fusioninventory']["snmp"][14]."</td>";
+			echo "<td>".$LANG['plugin_fusinvsnmp']["snmp"][14]."</td>";
 			echo "<td>";
 			$query2 = "SELECT *
                     FROM `glpi_networkequipments`
@@ -573,39 +573,39 @@ function appear_array(id){
 			echo "<th>";
 			switch ($data_array['num']) {
 				case 2 :
-					echo $LANG['plugin_fusioninventory']["snmp"][42];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][42];
 					break;
 
 				case 3 :
-					echo $LANG['plugin_fusioninventory']["snmp"][43];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][43];
 					break;
 
 				case 4 :
-					echo $LANG['plugin_fusioninventory']["snmp"][44];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][44];
 					break;
 
 				case 5 :
-					echo $LANG['plugin_fusioninventory']["snmp"][45];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][45];
 					break;
 
 				case 6 :
-					echo $LANG['plugin_fusioninventory']["snmp"][46];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][46];
 					break;
 
 				case 7 :
-					echo $LANG['plugin_fusioninventory']["snmp"][47];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][47];
 					break;
 
 				case 8 :
-					echo $LANG['plugin_fusioninventory']["snmp"][48];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][48];
 					break;
 
 				case 9 :
-					echo $LANG['plugin_fusioninventory']["snmp"][49];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][49];
 					break;
 
 				case 10 :
-					echo $LANG['plugin_fusioninventory']["snmp"][51];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][51];
 					break;
 
 				case 11 :
@@ -617,7 +617,7 @@ function appear_array(id){
 					break;
 
 				case 13 :
-					echo $LANG['plugin_fusioninventory']["snmp"][50];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][50];
 					break;
 
 				case 14 :
@@ -625,14 +625,14 @@ function appear_array(id){
 					break;
 
             case 15 :
-					echo $LANG['plugin_fusioninventory']["snmp"][41];
+					echo $LANG['plugin_fusinvsnmp']["snmp"][41];
 					break;
 
 			}
 			echo "</th>";
 		}
 		echo "</tr>";
-		// Fin de l'entête du tableau
+		// Fin de l'entÃªte du tableau
 
 		if ($result) {
 			while ($data=$DB->fetch_array($result)) {
