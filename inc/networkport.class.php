@@ -638,6 +638,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       }
       return($array);
    }
+
+
+   
 }
 
 ?>

@@ -554,14 +554,13 @@ function appear_array(id){
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-      // TODO : translate
+
 		echo '<th><img alt="'.$LANG['setup'][252].'"
                      title="'.$LANG['setup'][252].'"
                      src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
                      onclick="var w = window.open(\''.GLPI_ROOT.
                         '/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\',
-                        \'height=400,
-                     width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
+                        \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
 
 		$query_array = "SELECT *
