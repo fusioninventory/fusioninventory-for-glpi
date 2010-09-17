@@ -113,6 +113,13 @@ class PluginFusinvinventoryLibhook {
                   $OperatingSystemVersion = new OperatingSystemVersion;
                   $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$section['dataSection']['OSVERSION']));
                }
+               if (isset($section['dataSection']['WINPRODID'])) {
+                  $Computer->fields['os_licenseid'] = $section['dataSection']['WINPRODID'];
+               }
+               if (isset($section['dataSection']['WINPRODKEY'])) {
+                  $Computer->fields['os_license_number'] = $section['dataSection']['WINPRODKEY'];
+               }
+                	
                
                break;
 
