@@ -44,6 +44,10 @@ $LANG['plugin_fusinvdeploy']["package"][2]="Lancer (exécutable dans le paquet)"
 $LANG['plugin_fusinvdeploy']["package"][3]="Exécuter (exécutable du système)";
 $LANG['plugin_fusinvdeploy']["package"][4]="Stocker";
 $LANG['plugin_fusinvdeploy']["package"][5]="Paquets";
+$LANG['plugin_fusinvdeploy']["package"][6]="Gestion des packages";
 
+$LANG['plugin_fusinvdeploy']["files"][0]="Gestion des fichiers";
+
+$LANG['plugin_fusinvdeploy']["deploystatus"][0]="Etat des deploiements";
 
 ?>
