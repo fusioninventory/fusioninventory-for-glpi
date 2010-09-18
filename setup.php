@@ -58,6 +58,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpAgentconfig');
    Plugin::registerClass('PluginFusinvsnmpNetworkport',
                          array('classname'=>'glpi_networkports'));
+   Plugin::registerClass('PluginFusinvsnmpStateDiscovery');
 
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusinvsnmp_errors");
 

@@ -62,7 +62,7 @@ function plugin_fusinvsnmp_displayMenu() {
 
    $a_menu[3]['name'] = "Etat des découverte";
    $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
-   $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
+   $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/statediscovery.php";
 
    $a_menu[4]['name'] = "Etat des inventaires réseaux";
    $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
