@@ -577,6 +577,7 @@ $LANG['plugin_fusioninventory']["agents"][24]="Token";
 $LANG['plugin_fusioninventory']["agents"][25]="Version";
 $LANG['plugin_fusioninventory']["agents"][26]="Gestion des agents";
 $LANG['plugin_fusioninventory']["agents"][27]="Modules des agents";
+$LANG['plugin_fusioninventory']["agents"][28]="Agent";
 
 $LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
 $LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
@@ -610,17 +611,9 @@ $LANG['plugin_fusioninventory']["task"][22]="Tâches planifiées uniquement";
 
 $LANG['plugin_fusioninventory']["taskjoblog"][1]="Démarré";
 $LANG['plugin_fusioninventory']["taskjoblog"][2]="Ok";
-$LANG['plugin_fusioninventory']["taskjoblog"][3]="Erreur  /replannifié";
+$LANG['plugin_fusioninventory']["taskjoblog"][3]="Erreur / replannifié";
 $LANG['plugin_fusioninventory']["taskjoblog"][4]="Erreur";
 $LANG['plugin_fusioninventory']["taskjoblog"][5]="Inconnu";
-
-
-$LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
-$LANG['plugin_fusioninventory']["constructdevice"][1]="Creation automatique des modèles";
-$LANG['plugin_fusioninventory']["constructdevice"][2]="Générer le fichier de découverte";
-$LANG['plugin_fusioninventory']["constructdevice"][3]="Supprimer modèles non utilisés";
-$LANG['plugin_fusioninventory']["constructdevice"][4]="Exporter tous les modèles";
-$LANG['plugin_fusioninventory']["constructdevice"][5]="Regénérer les commentaires de modèles";
 
 $LANG['plugin_fusioninventory']["update"][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande pour finir la mise à jour : ";
 

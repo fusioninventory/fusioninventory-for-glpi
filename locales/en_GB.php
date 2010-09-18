@@ -577,6 +577,7 @@ $LANG['plugin_fusioninventory']["agents"][24]="Token";
 $LANG['plugin_fusioninventory']["agents"][25]="Version";
 $LANG['plugin_fusioninventory']["agents"][26]="Agents management";
 $LANG['plugin_fusioninventory']["agents"][27]="Agents modules";
+$LANG['plugin_fusioninventory']["agents"][28]="Agent";
 
 $LANG['plugin_fusioninventory']["unknown"][0]="DNS Name";
 $LANG['plugin_fusioninventory']["unknown"][1]="Network port name";
@@ -608,12 +609,11 @@ $LANG['plugin_fusioninventory']["task"][20]="Finished tasks";
 $LANG['plugin_fusioninventory']["task"][21]="Action sur ce matériel";
 $LANG['plugin_fusioninventory']["task"][22]="Only planified tasks";
 
-$LANG['plugin_fusioninventory']["constructdevice"][0]="Gestion des mib de matériel";
-$LANG['plugin_fusioninventory']["constructdevice"][1]="Automatic creation of models";
-$LANG['plugin_fusioninventory']["constructdevice"][2]="Generate discovery file";
-$LANG['plugin_fusioninventory']["constructdevice"][3]="Delete models non used";
-$LANG['plugin_fusioninventory']["constructdevice"][4]="Export all models";
-$LANG['plugin_fusioninventory']["constructdevice"][5]="Re-create models comments";
+$LANG['plugin_fusioninventory']["taskjoblog"][1]="Started";
+$LANG['plugin_fusioninventory']["taskjoblog"][2]="Ok";
+$LANG['plugin_fusioninventory']["taskjoblog"][3]="Error / replaned";
+$LANG['plugin_fusioninventory']["taskjoblog"][4]="Error";
+$LANG['plugin_fusioninventory']["taskjoblog"][5]="unknow";
 
 $LANG['plugin_fusioninventory']["update"][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 
