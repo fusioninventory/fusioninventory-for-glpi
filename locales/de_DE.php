@@ -158,12 +158,12 @@ $LANG['plugin_fusioninventory']["snmp"][2]="SNMP Daten";
 $LANG['plugin_fusioninventory']["snmp"][11]="Zus&auml;tzliche Informationen";
 $LANG['plugin_fusioninventory']["snmp"][12]="Uptime";
 $LANG['plugin_fusioninventory']["snmp"][13]="CPU Verwendung (in %)";
-$LANG['plugin_fusioninventory']["snmp"][14]="Speicher Verwendung (in %)";
+$LANG['plugin_fusioninventory']["snmp"][14]="Speicherverbrauch (in %)";
 
-$LANG['plugin_fusioninventory']["snmp"][31]="Keine SNMP Informationen erhalten: Dies ist kein Switch";
-$LANG['plugin_fusioninventory']["snmp"][32]="Keine SNMP Informationen erhalten: Hardware inaktiv";
-$LANG['plugin_fusioninventory']["snmp"][33]="Keine SNMP Informationen erhalten: IP in der Basis nicht spezifiziert";
-$LANG['plugin_fusioninventory']["snmp"][34]="Der Switch ist an einer Maschine angeschlossen welche nicht eingetragen ist";
+$LANG['plugin_fusioninventory']["snmp"][31]="Keine SNMP-Informationen erhalten: Das ist kein Switch";
+$LANG['plugin_fusioninventory']["snmp"][32]="Keine SNMP-Informationen erhalten: Hardware ist inaktiv";
+$LANG['plugin_fusioninventory']["snmp"][33]="Keine SNMP-Informationen erhalten: IP in der Basis nicht spezifiziert";
+$LANG['plugin_fusioninventory']["snmp"][34]="Der Switch an dem die Maschine angeschlossen ist, ist nicht eingetragen!";
 
 $LANG['plugin_fusioninventory']["snmp"][40]="Anschlu&szlig; Aufstellung";
 $LANG['plugin_fusioninventory']["snmp"][41]="";
@@ -201,29 +201,29 @@ $LANG['plugin_fusioninventory']["errors"][4]="Datum des letzten Fehlers";
 
 $LANG['plugin_fusioninventory']["errors"][10]="Inconsistent with the basic GLPI";
 $LANG['plugin_fusioninventory']["errors"][11]="Position unbekannt";
-$LANG['plugin_fusioninventory']["errors"][12]="Unbekannte IP";
+$LANG['plugin_fusioninventory']["errors"][12]="Unbekannte IP-Adresse";
 
-$LANG['plugin_fusioninventory']["errors"][20]="SNMP Fehler";
-$LANG['plugin_fusioninventory']["errors"][21]="Keine SNMP Informationen erhalten";
+$LANG['plugin_fusioninventory']["errors"][20]="SNMP-Fehler";
+$LANG['plugin_fusioninventory']["errors"][21]="Keine SNMP-Informationen erhalten";
 $LANG['plugin_fusioninventory']["errors"][22]="Unattended element in";
 $LANG['plugin_fusioninventory']["errors"][23]="Unable to identify device";
 
 $LANG['plugin_fusioninventory']["errors"][30]="Verkabelungsfehler";
 $LANG['plugin_fusioninventory']["errors"][31]="Verkabelungsproblem";
 
-$LANG['plugin_fusioninventory']["errors"][50]="GLPI version not compatible need 0.78";
+$LANG['plugin_fusioninventory']["errors"][50]="Ihre GLPI-Version ist nicht kompatibel, benötige Version 0.78";
 
 $LANG['plugin_fusioninventory']["errors"][101]="Timeout";
-$LANG['plugin_fusioninventory']["errors"][102]="Kein SNMP Modell zugeordnet";
-$LANG['plugin_fusioninventory']["errors"][103]="Keine SNMP Authentifzierung zugeordnet";
-$LANG['plugin_fusioninventory']["errors"][104]="Error message";
+$LANG['plugin_fusioninventory']["errors"][102]="Kein SNMP-Modell zugeordnet";
+$LANG['plugin_fusioninventory']["errors"][103]="Keine SNMP-Authentifzierung zugeordnet";
+$LANG['plugin_fusioninventory']["errors"][104]="Fehlermeldung";
 
 $LANG['plugin_fusioninventory']["history"][0] = "Alt";
 $LANG['plugin_fusioninventory']["history"][1] = "Neu";
 $LANG['plugin_fusioninventory']["history"][2] = "Trennen";
 $LANG['plugin_fusioninventory']["history"][3] = "Verbindung";
 
-$LANG['plugin_fusioninventory']["prt_history"][0]="Historie und Statistik der Druckerzähler";
+$LANG['plugin_fusioninventory']["prt_history"][0]="Verlauf und Statistik der Druckerzähler";
 
 $LANG['plugin_fusioninventory']["prt_history"][10]="Druckerzähler Statistik";
 $LANG['plugin_fusioninventory']["prt_history"][11]="Tag(e)";
@@ -236,14 +236,14 @@ $LANG['plugin_fusioninventory']["prt_history"][22]="Meter";
 
 $LANG['plugin_fusioninventory']["prt_history"][30]="Display";
 $LANG['plugin_fusioninventory']["prt_history"][31]="Time unit";
-$LANG['plugin_fusioninventory']["prt_history"][32]="Add a printer";
+$LANG['plugin_fusioninventory']["prt_history"][32]="Drucker hinzufügen";
 $LANG['plugin_fusioninventory']["prt_history"][33]="Remove a printer";
-$LANG['plugin_fusioninventory']["prt_history"][34]="day";
-$LANG['plugin_fusioninventory']["prt_history"][35]="week";
-$LANG['plugin_fusioninventory']["prt_history"][36]="month";
-$LANG['plugin_fusioninventory']["prt_history"][37]="year";
+$LANG['plugin_fusioninventory']["prt_history"][34]="Tag";
+$LANG['plugin_fusioninventory']["prt_history"][35]="Woche";
+$LANG['plugin_fusioninventory']["prt_history"][36]="Monat";
+$LANG['plugin_fusioninventory']["prt_history"][37]="Jahr";
 
-$LANG['plugin_fusioninventory']["cpt_history"][0]="Historie Sitzungen";
+$LANG['plugin_fusioninventory']["cpt_history"][0]="Sitzungsverlauf";
 $LANG['plugin_fusioninventory']["cpt_history"][1]="Kontakt";
 $LANG['plugin_fusioninventory']["cpt_history"][2]="Computer";
 $LANG['plugin_fusioninventory']["cpt_history"][3]="Benutzer";

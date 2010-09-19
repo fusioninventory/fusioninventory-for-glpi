@@ -40,6 +40,7 @@ if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
 }
 session_start();
+//$_SESSION['glpi_use_mode'] = 2;
 include (GLPI_ROOT."/inc/includes.php");
 
 if (!isset($_SESSION['glpilanguage'])) {
@@ -118,6 +119,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
             $PluginFusioninventoryCommunication->addInventory();
             $PluginFusioninventoryCommunication->addProlog();
             $PluginFusioninventoryCommunication->setXML($PluginFusioninventoryCommunication->getXML());
+
             echo $PluginFusioninventoryCommunication->getSend();
          }
       } else {

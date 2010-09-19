@@ -62,7 +62,29 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[3]['table']          = $this->getTable();
       $sopt[3]['field']          = 'entities_id';
       $sopt[3]['linkfield']      = '';
-      $sopt[3]['name']           = '';
+      $sopt[3]['name']           = $LANG['entity'][0];
+
+      $sopt[4]['table']          = $this->getTable();
+      $sopt[4]['field']          = 'comment';
+      $sopt[4]['linkfield']      = '';
+      $sopt[4]['name']           = $LANG['common'][25];
+
+      $sopt[5]['table']          = $this->getTable();
+      $sopt[5]['field']          = 'is_active';
+      $sopt[5]['linkfield']      = '';
+      $sopt[5]['name']           = $LANG['common'][60];
+      $sopt[5]['datatype']       = 'bool';
+
+      $sopt[6]['table']          = $this->getTable();
+      $sopt[6]['field']          = 'communication';
+      $sopt[6]['linkfield']      = '';
+      $sopt[6]['name']           = 'Communication';
+
+      $sopt[7]['table']          = $this->getTable();
+      $sopt[7]['field']          = 'permanent';
+      $sopt[7]['linkfield']      = '';
+      $sopt[7]['name']           = 'permanent';
+      $sopt[7]['datatype']       = 'bool';
 
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
