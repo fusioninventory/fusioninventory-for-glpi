@@ -151,44 +151,6 @@ $LANG['plugin_fusioninventory']["functionalities"][73]="Fields";
 $LANG['plugin_fusioninventory']["functionalities"][74]="Values";
 $LANG['plugin_fusioninventory']["functionalities"][75]="Locks";
 
-//$LANG['plugin_fusioninventory']["snmp"][0]="SNMP information of equipment";
-//$LANG['plugin_fusioninventory']["snmp"][1]="General";
-//$LANG['plugin_fusioninventory']["snmp"][2]="Cabling";
-//$LANG['plugin_fusioninventory']["snmp"][2]="SNMP data";
-//
-//$LANG['plugin_fusioninventory']["snmp"][11]="Additional information";
-//$LANG['plugin_fusioninventory']["snmp"][12]="Uptime";
-//$LANG['plugin_fusioninventory']["snmp"][13]="CPU usage (in %)";
-//$LANG['plugin_fusioninventory']["snmp"][14]="Memory usage (in %)";
-//
-//$LANG['plugin_fusioninventory']["snmp"][31]="Unable to retrieve SNMP info: This is not a switch !";
-//$LANG['plugin_fusioninventory']["snmp"][32]="Unable to retrieve SNMP information: Hardware inactive !";
-//$LANG['plugin_fusioninventory']["snmp"][33]="Unable to retrieve SNMP information: IP not specified in the basic !";
-//$LANG['plugin_fusioninventory']["snmp"][34]="The switch is connected to a machine that is not filled !";
-//
-//$LANG['plugin_fusioninventory']["snmp"][40]="Ports array";
-//$LANG['plugin_fusioninventory']["snmp"][41]="Port description";
-//$LANG['plugin_fusioninventory']["snmp"][42]="MTU";
-//$LANG['plugin_fusioninventory']["snmp"][43]="Speed";
-//$LANG['plugin_fusioninventory']["snmp"][44]="Internal status";
-//$LANG['plugin_fusioninventory']["snmp"][45]="Last Change";
-//$LANG['plugin_fusioninventory']["snmp"][46]="Number of bytes received";
-//$LANG['plugin_fusioninventory']["snmp"][47]="Number of input errors";
-//$LANG['plugin_fusioninventory']["snmp"][48]="Number of bytes sent";
-//$LANG['plugin_fusioninventory']["snmp"][49]="Number of errors in reception";
-//$LANG['plugin_fusioninventory']["snmp"][50]="Connection";
-//$LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
-//$LANG['plugin_fusioninventory']["snmp"][52]="Date of last FusionInventory inventory";
-//$LANG['plugin_fusioninventory']["snmp"][53]="Last inventory";
-//
-//$LANG['plugin_fusioninventory']["snmpauth"][1]="Community";
-//$LANG['plugin_fusioninventory']["snmpauth"][2]="User";
-//$LANG['plugin_fusioninventory']["snmpauth"][3]="Authentication scheme";
-//$LANG['plugin_fusioninventory']["snmpauth"][4]="Encryption protocol for authentication ";
-//$LANG['plugin_fusioninventory']["snmpauth"][5]="Password";
-//$LANG['plugin_fusioninventory']["snmpauth"][6]="Encryption protocol for data (write)";
-//$LANG['plugin_fusioninventory']["snmpauth"][7]="Password (write)";
-
 $LANG['plugin_fusioninventory']["cron"][0]="Automatic reading meter";
 $LANG['plugin_fusioninventory']["cron"][1]="Activate the record";
 $LANG['plugin_fusioninventory']["cron"][2]="";
@@ -259,33 +221,6 @@ $LANG['plugin_fusioninventory']["rules"][1]="Rules";
 
 $LANG['plugin_fusioninventory']["massiveaction"][1]="Assign SNMP model";
 $LANG['plugin_fusioninventory']["massiveaction"][2]="Assign SNMP authentication";
-
-//$LANG['plugin_fusioninventory']["model_info"][1]="SNMP information";
-//$LANG['plugin_fusioninventory']["model_info"][2]="SNMP version";
-//$LANG['plugin_fusioninventory']["model_info"][3]="SNMP authentication";
-//$LANG['plugin_fusioninventory']["model_info"][4]="SNMP models";
-//$LANG['plugin_fusioninventory']["model_info"][5]="MIB management";
-//$LANG['plugin_fusioninventory']["model_info"][6]="Edit SNMP model";
-//$LANG['plugin_fusioninventory']["model_info"][7]="Create SNMP model";
-//$LANG['plugin_fusioninventory']["model_info"][8]="Model already exists: import was not done";
-//$LANG['plugin_fusioninventory']["model_info"][9]="Import completed successfully";
-//$LANG['plugin_fusioninventory']["model_info"][10]="SNMP model import";
-//$LANG['plugin_fusioninventory']["model_info"][11]="Activation";
-//$LANG['plugin_fusioninventory']["model_info"][12]="Key for model discovery";
-//$LANG['plugin_fusioninventory']["model_info"][13]="Load the correct model";
-//$LANG['plugin_fusioninventory']["model_info"][14]="Load the correct SNMP model";
-//$LANG['plugin_fusioninventory']["model_info"][15]="Mass import of models";
-//$LANG['plugin_fusioninventory']["model_info"][16]="Mass import of models in folder plugins/fusioninventory/models/";
-//
-//$LANG['plugin_fusioninventory']["mib"][1]="MIB Label";
-//$LANG['plugin_fusioninventory']["mib"][2]="Object";
-//$LANG['plugin_fusioninventory']["mib"][3]="oid";
-//$LANG['plugin_fusioninventory']["mib"][4]="add an oid...";
-//$LANG['plugin_fusioninventory']["mib"][5]="oid list";
-//$LANG['plugin_fusioninventory']["mib"][6]="Port Counters";
-//$LANG['plugin_fusioninventory']["mib"][7]="Dynamic port (.x)";
-//$LANG['plugin_fusioninventory']["mib"][8]="Linked fields";
-//$LANG['plugin_fusioninventory']["mib"][9]="Vlan";
 
 $LANG['plugin_fusioninventory']["processes"][0]="History of script executions";
 $LANG['plugin_fusioninventory']["processes"][1]="PID";

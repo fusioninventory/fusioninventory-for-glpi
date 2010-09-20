@@ -150,36 +150,6 @@ $LANG['plugin_fusioninventory']["functionalities"][73]="Fields";
 $LANG['plugin_fusioninventory']["functionalities"][74]="Values";
 $LANG['plugin_fusioninventory']["functionalities"][75]="Locks";
 
-$LANG['plugin_fusioninventory']["snmp"][0]="SNMP Informationen der Ger&auml;te";
-$LANG['plugin_fusioninventory']["snmp"][1]="Grundlage";
-$LANG['plugin_fusioninventory']["snmp"][2]="Verkabelung";
-$LANG['plugin_fusioninventory']["snmp"][2]="SNMP Daten";
-
-$LANG['plugin_fusioninventory']["snmp"][11]="Zus&auml;tzliche Informationen";
-$LANG['plugin_fusioninventory']["snmp"][12]="Uptime";
-$LANG['plugin_fusioninventory']["snmp"][13]="CPU Verwendung (in %)";
-$LANG['plugin_fusioninventory']["snmp"][14]="Speicherverbrauch (in %)";
-
-$LANG['plugin_fusioninventory']["snmp"][31]="Keine SNMP-Informationen erhalten: Das ist kein Switch";
-$LANG['plugin_fusioninventory']["snmp"][32]="Keine SNMP-Informationen erhalten: Hardware ist inaktiv";
-$LANG['plugin_fusioninventory']["snmp"][33]="Keine SNMP-Informationen erhalten: IP in der Basis nicht spezifiziert";
-$LANG['plugin_fusioninventory']["snmp"][34]="Der Switch an dem die Maschine angeschlossen ist, ist nicht eingetragen!";
-
-$LANG['plugin_fusioninventory']["snmp"][40]="Anschlu&szlig; Aufstellung";
-$LANG['plugin_fusioninventory']["snmp"][41]="";
-$LANG['plugin_fusioninventory']["snmp"][42]="MTU";
-$LANG['plugin_fusioninventory']["snmp"][43]="Geschwindigkeit";
-$LANG['plugin_fusioninventory']["snmp"][44]="Interner Zustand";
-$LANG['plugin_fusioninventory']["snmp"][45]="Letzte &Auml;nderung";
-$LANG['plugin_fusioninventory']["snmp"][46]="Anzahl empfangener Bytes";
-$LANG['plugin_fusioninventory']["snmp"][47]="Anzahl der Input Fehler";
-$LANG['plugin_fusioninventory']["snmp"][48]="Anzahl gesendeter Bytes";
-$LANG['plugin_fusioninventory']["snmp"][49]="Anzahl von Fehlern beim Empfang";
-$LANG['plugin_fusioninventory']["snmp"][50]="Verbindung";
-$LANG['plugin_fusioninventory']["snmp"][51]="Duplex";
-$LANG['plugin_fusioninventory']["snmp"][52]="Datum des letzen FusionInventory Inventarisierung";
-$LANG['plugin_fusioninventory']["snmp"][53]="Letzte Inventarisierung";
-
 $LANG['plugin_fusioninventory']["snmpauth"][1]="Gemeinschaft";
 $LANG['plugin_fusioninventory']["snmpauth"][2]="Benutzer";
 $LANG['plugin_fusioninventory']["snmpauth"][3]="Authentifizierungsmodell";
@@ -259,33 +229,6 @@ $LANG['plugin_fusioninventory']["rules"][1]="Regeln";
 
 $LANG['plugin_fusioninventory']["massiveaction"][1]="SNMP zuordnen";
 $LANG['plugin_fusioninventory']["massiveaction"][2]="SNMP Authentifizierung zuordnen";
-
-$LANG['plugin_fusioninventory']["model_info"][1]="SNMP Information";
-$LANG['plugin_fusioninventory']["model_info"][2]="SNMP Version";
-$LANG['plugin_fusioninventory']["model_info"][3]="SNMP Authentifizierung";
-$LANG['plugin_fusioninventory']["model_info"][4]="SNMP Modelle";
-$LANG['plugin_fusioninventory']["model_info"][5]="MIB Verwaltung";
-$LANG['plugin_fusioninventory']["model_info"][6]="Bearbeite SNMP Modell";
-$LANG['plugin_fusioninventory']["model_info"][7]="Erstelle SNMP Modell";
-$LANG['plugin_fusioninventory']["model_info"][8]="Modell gibt es schon: Nicht importiert";
-$LANG['plugin_fusioninventory']["model_info"][9]="Import vollst&auml;ndig Abgeschlossen";
-$LANG['plugin_fusioninventory']["model_info"][10]="SNMP Modell Import";
-$LANG['plugin_fusioninventory']["model_info"][11]="Aktivierung";
-$LANG['plugin_fusioninventory']["model_info"][12]="Key for model discovery";
-$LANG['plugin_fusioninventory']["model_info"][13]="Lade richtiges Modell";
-$LANG['plugin_fusioninventory']["model_info"][14]="Lade richtiges SNMP Modell";
-$LANG['plugin_fusioninventory']["model_info"][15]="Mass import of models";
-$LANG['plugin_fusioninventory']["model_info"][16]="Mass import of models in folder plugins/fusioninventory/models/";
-
-$LANG['plugin_fusioninventory']["mib"][1]="MIB Bezeichnung";
-$LANG['plugin_fusioninventory']["mib"][2]="Objekt";
-$LANG['plugin_fusioninventory']["mib"][3]="oid";
-$LANG['plugin_fusioninventory']["mib"][4]="F&uuml;ge eine oid hinzu...";
-$LANG['plugin_fusioninventory']["mib"][5]="oid Liste";
-$LANG['plugin_fusioninventory']["mib"][6]="Port Counters";
-$LANG['plugin_fusioninventory']["mib"][7]="Dynamische ports (.x)";
-$LANG['plugin_fusioninventory']["mib"][8]="VerlTintete Felder";
-$LANG['plugin_fusioninventory']["mib"][9]="Vlan";
 
 $LANG['plugin_fusioninventory']["processes"][0]="Historie der Script ausf&uuml;hrung";
 $LANG['plugin_fusioninventory']["processes"][1]="PID";
