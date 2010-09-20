@@ -462,7 +462,9 @@ $LANG['plugin_fusioninventory']["mapping"][427]="printer > meter > number of pri
 $LANG['plugin_fusioninventory']["mapping"][428]="printer > meter > number of printed color pages (copy mode)";
 $LANG['plugin_fusioninventory']["mapping"][429]="printer > meter > total number of printed pages (fax mode)";
 $LANG['plugin_fusioninventory']["mapping"][430]="networking > port > vlan";
-
+$LANG['plugin_fusioninventory']["mapping"][431]="networking > remote chassis id LLDP";
+$LANG['plugin_fusioninventory']["mapping"][432]="networking > remote port LLDP";
+$LANG['plugin_fusioninventory']["mapping"][433]="networking > localchassis id LLDP";
 
 $LANG['plugin_fusioninventory']["mapping"][101]="";
 $LANG['plugin_fusioninventory']["mapping"][102]="";

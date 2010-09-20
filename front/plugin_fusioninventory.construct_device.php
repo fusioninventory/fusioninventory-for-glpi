@@ -70,6 +70,15 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd->exportall();
 } else if (isset($_GET['importall']) AND $_GET['importall'] == '1') {
    $ptcd = new PluginFusionInventoryConstructDevice;
+   if (isset($_POST['miboid'])) {
+      $ptcd->importmiboid($_POST);
+      // Form to update devices
+      $ptcd->showFormImportConstructDevice();
+
+      glpi_header($_SERVER['HTTP_REFERER']);
+   }
+
+
    if (isset($_POST['addimportall'])) {
       move_uploaded_file($_FILES['importallfile']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusioninventory/importall.xml");
       $ptcd->importall();

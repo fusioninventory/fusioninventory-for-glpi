@@ -12,8 +12,12 @@ IOS (tm) C3750 Software (C3750-I9-M), Version 12.2(20)SE4, RELEASE SOFTWARE (fc1
 Copyright (c) 1986-2005 by cisco Systems, Inc.^M  
 Compiled Sun 09-Jan-05 00:09 by antonino
 
-Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)
-Copyright (c) 1986-2006 by Cisco Systems, Inc.
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)FX, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Wed 12-Oct-05 22:05 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
 Compiled Fri 28-Jul-06 04:33 by yenanh
 
 Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE3, RELEASE SOFTWARE (fc2)^M
@@ -74,6 +78,15 @@ Compiled Mon 16-Jul-07 03:24 by myl
 Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
 Compiled Tue 30-Aug-05 15:47 by yenanh
+
+Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(50)SE3, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Wed 22-Jul-09 09:10 by prod_rel_tea
+
+Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Fri 25-Sep-09 04:40 by sasyamal
 
 Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M

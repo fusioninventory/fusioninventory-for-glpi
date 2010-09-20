@@ -170,17 +170,23 @@ $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['type'] = 'text'
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['cdpCacheDevicePort']['dropdown'] = '';
 
 // Networking LLDP
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['table'] = '';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['field'] = '';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['name'] = $LANG['plugin_fusioninventory']["mapping"][431];
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheAddress']['dropdown'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemChassisId']['table'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemChassisId']['field'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemChassisId']['name'] = $LANG['plugin_fusioninventory']["mapping"][431];
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemChassisId']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemChassisId']['dropdown'] = '';
 
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['table'] = '';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['field'] = '';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['name'] = $LANG['plugin_fusioninventory']["mapping"][432];
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['type'] = 'text';
-$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpCacheDevicePort']['dropdown'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemPortId']['table'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemPortId']['field'] = '';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemPortId']['name'] = $LANG['plugin_fusioninventory']["mapping"][432];
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemPortId']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpRemPortId']['dropdown'] = '';
+
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpLocChassisId']['table'] = 'glpi_networking';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpLocChassisId']['field'] = 'contact_num';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpLocChassisId']['name'] = $LANG['plugin_fusioninventory']["mapping"][432];
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpLocChassisId']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['lldpLocChassisId']['dropdown'] = '';
 
 
 $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE]['vlanTrunkPortDynamicStatus']['table'] = '';

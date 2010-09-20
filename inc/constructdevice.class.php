@@ -152,10 +152,12 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
       // List of OID with relations by default with mapping
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.4']      = 'cdpCacheAddress';
-      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.5.0.44']     = 'lldpCacheAddress';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.5']          = 'lldpRemChassisId';
+
       // LLDP, try to see in SNMPv2-SMI::enterprises.9.9.23.1.2.1.1.6
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.7']      = 'cdpCacheDevicePort';
-      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.7.0.44']     = 'lldpCacheDevicePort';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.4.1.1.7']          = 'lldpRemPortId';
+      $mapping_pre[2]['.1.0.8802.1.1.2.1.3.2.0']             = 'lldpLocChassisId';
       $mapping_pre[2]['.1.3.6.1.2.1.1.1.0']                 = 'comments';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1']   = 'cpu';
       $mapping_pre[2]['.1.3.6.1.2.1.17.1.4.1.2']            = 'dot1dBasePortIfIndex';
@@ -201,6 +203,9 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.4.1.171.10.37.20.1.9.0']    = 'firmware';
       // Omnistack LS6200 :
          $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.67108992'] = 'serial';
+      // 3Com
+         $mapping_pre[2]['.1.3.6.1.4.1.43.10.27.1.1.1.13.1'] = 'serial';
+         $mapping_pre[2]['.1.3.6.1.4.1.43.10.27.1.1.1.19.1'] = 'entPhysicalModelName';
          /*
           * firmware: iso.3.6.1.2.1.47.1.1.1.1.10.67108992
           * modele: iso.3.6.1.2.1.47.1.1.1.1.2.68420352
@@ -265,8 +270,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $a_ignore[3][] = '.1.3.6.1.2.1.2.2.1.20';
       $a_ignore[3][] = '.1.3.6.1.2.1.4.20.1.1';
       $a_ignore[3][] = '.1.3.6.1.2.1.4.22.1.2';
-
-
+      // ##### For cartdrige status
 
 
       $mapping_pre[1]['.1.3.6.1.4.1.714.1.2.5.3.5.0'] = 'serial';
@@ -399,7 +403,10 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
                               }
                            } else {
-                              if (preg_match('/^if/', $mapping_pre[$type_model][$before])) {
+                              if ((preg_match('/^if/', $mapping_pre[$type_model][$before]))
+                                 OR (preg_match('ipAdEntAddr', $mapping_pre[$type_model][$before]))
+                                 OR (preg_match('ipNetToMediaPhysAddress', $mapping_pre[$type_model][$before]))){
+                                 
                                  dropdownYesNo("oid_port_dyn_".$oid_id_before,1);
                               } else {
                                  dropdownYesNo("oid_port_dyn_".$oid_id_before);
@@ -1162,26 +1169,199 @@ sub loadDico {
    function importall() {
       global $DB;
 
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_device`";
-      $a_db_devices = array();
+      $query = "SELECT * FROM `glpi_dropdown_plugin_fusioninventory_mib_oid`";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
-            $a_db_devices[$data['sysdescr']] = $data;
+            $dataname = $data['name'];
+            $a_db_devices["'$dataname'"] = $data;
          }
       }
-print_r($a_db_devices);
-      $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/importall.xml');
 
-      foreach ($xml->glpi_plugin_fusioninventory_construct_device->line as $line)  {
-         if (isset($a_db_devices[$line->sysdescr])) {
-            echo "exist<br/>";
+//print_r($a_db_devices);
+      $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/importall.xml','SimpleXMLElement', LIBXML_NOCDATA);
+      echo "<form method='post' name='' id=''  action='".$target."' >";
+      echo "<table class='tab_cadre' width='950'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>name in DB</th>"; //name
+      echo "<th>Comment in DB</th>"; //comment
+      echo "<th></th>";
+      echo "<th></th>";
+      echo "<th>Name in XML</th>"; //name
+      echo "<th>Comment in XML</th>"; //comment
+      echo "</tr>";
+      $i = 0;
+      foreach ($xml->glpi_dropdown_plugin_fusioninventory_mib_oid->line as $line) {
+         if (isset($a_db_devices["'".$line->name."'"])) {
+            //echo "exist<br/>";
+            if ($a_db_devices["'".$line->name."'"]['comments'] != $line->comments) {
+               $checked = '';
+               if ($a_db_devices["'".$line->name."'"]['comments'] != $line->comments) {
+                  $checked = 'checked';
+               }
+               echo "<tr class='tab_bg_1'>";
+               echo "<td>".$a_db_devices["'".$line->name."'"]['name']."</td>"; //name
+               echo "<td>".$a_db_devices["'".$line->name."'"]['comments']."</td>"; //comment
+               echo "<td><input type='radio' name='oid".$i."' value='db'/></td>";
+               echo "<td><input type='radio' name='oid".$i."' value='xml' ".$checked."/></td>";
+               echo "<td>".$line->name."</td>"; //name
+               echo "<td><strong>".$line->comments."</strong></td>"; //comment
+               echo "</tr>";
+               $i++;
+            }
          } else {
-            echo "Not exist!<br/>";
+//            echo "Not exist!<br/>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<td></td>"; //name
+            echo "<td></td>"; //comment
+            echo "<td><input type='radio' name='oid".$i."' value='insdb'/></td>";
+            echo "<td><input type='radio' name='oid".$i."' value='insxml' checked/></td>";
+            echo "<td><strong>".$line->name."</strong></td>"; //name
+            echo "<td><strong>".$line->comments."</strong></td>"; //comment
+            echo "</tr>";
+            $i++;
          }
+      }
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='6' align='center'>";
+      echo "<input type='submit' class='submit' name='miboid' value='Update'/>";
+      echo "</td>";
+      echo "</table>";
+      echo "</form>";
 
+   }
+
+   function importmiboid($input) {
+      global $DB;
+      
+      $query = "SELECT * FROM `glpi_dropdown_plugin_fusioninventory_mib_oid`";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $dataname = $data['name'];
+            $a_db_devices["'$dataname'"] = $data;
+         }
+      }
+
+      $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/importall.xml','SimpleXMLElement', LIBXML_NOCDATA);
+      $i = 0;
+      foreach ($xml->glpi_dropdown_plugin_fusioninventory_mib_oid->line as $line) {
+         if ((isset($input['oid'.$i])) AND ($input['oid'.$i] == "xml")) {
+            // Update DB
+            $query = "UPDATE `glpi_dropdown_plugin_fusioninventory_mib_oid`
+               SET `name`='".$line->name."', `comments`='".$line->comments."'
+               WHERE `ID`='".$a_db_devices["'".$line->name."'"][ID]."' ";
+            $DB->query($query);           
+         } else if ((isset($input['oid'.$i])) AND ($input['oid'.$i] == "insxml")) {
+            $query = "INSERT INTO `glpi_dropdown_plugin_fusioninventory_mib_oid`
+              (`name`, `comments`) VALUES ('".$line->name."', '".$line->comments."')";
+            $DB->query($query);
+         }
+         $i++;
+      }
+   }
+
+
+   function showFormImportConstructDevice() {
+      global $DB;
+
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_device`";
+      if ($result=$DB->query($query)) {
+			while ($data=$DB->fetch_array($result)) {
+            $datasysdescr = $data['sysdescr'];
+            $a_db_devices["'".$datasysdescr."'"] = $data;
+         }
       }
 
 
+      // Detect constructdevice
+      $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/importall.xml','SimpleXMLElement', LIBXML_NOCDATA);
+      $i = 0;
+      foreach ($xml->glpi_plugin_fusioninventory_construct_device->line as $line) {
+         $line->sysdescr = str_replace("\n", "\r\n", $line->sysdescr);
+         echo "<table class='tab_cadre' width='950'>";
+         if (isset($a_db_devices["'".$line->sysdescr."'"])) {
+            // Exist
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo $line->sysdescr;
+            echo "</td>";
+            echo "</tr>";
+
+            $a_mibs = array();
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_mibs`
+               WHERE `construct_device_id`='".$a_db_devices["'".$line->sysdescr."'"]['ID']."' ";
+            if ($result=$DB->query($query)) {
+               while ($data=$DB->fetch_array($result)) {
+                  for($j = 0; $j<8; $j++) {
+                     unset($data[$j]);
+                  }
+                  $a_mibs[$data['mapping_name']] = $data;
+               }
+            }
+            foreach ($xml->glpi_plugin_fusioninventory_construct_mibs->line as $line_mibs) {
+               if ("$line_mibs->construct_device_id" == "$line->ID") {
+                  if (isset($a_mibs["$line_mibs->mapping_name"])) {
+                     // Same mapping, now verify same values
+                     echo "<tr class='tab_bg_1'>";
+                     echo "<td align='center'>";
+                     echo $line_mibs->mapping_name;
+                     echo "<br/><table>";
+                     foreach ($a_mibs["$line_mibs->mapping_name"] as $key => $value) {
+                        if ($value != $line_mibs[$key]) {
+                           echo "<tr>";
+                           echo "<td>";
+                           echo $value." - ".$line_mibs->{"$key"};
+                           echo "</td>";
+                           echo "</tr>";
+                        }
+                     }
+
+
+                     echo "</table>";
+
+                     echo "</td>";
+                     echo "</tr>";
+                     unset($a_mibs[$line_mibs->mapping_name]);
+                  } else {
+                     // New register
+                     echo "<tr class='tab_bg_1'>";
+                     echo "<td align='center'>";
+                     echo "New : ".$line_mibs->mapping_name;
+                     echo "</td>";
+                     echo "</tr>";
+
+                  }
+               }
+            }
+            foreach ($a_mibs as $mappingname=>$datasmib) {
+               // Delete or not ?
+            }
+         } else {
+            // not exist
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>";
+            echo $line->sysdescr;
+            echo "</td>";
+            echo "</tr>";
+            
+            echo "<tr class='tab_bg_1'>";
+            echo "<td align='center'>";
+            echo "<input type='checkbox' name='device".$i."' value='import' /> Import";
+            echo "</td>";
+            echo "</tr>";
+
+            $i++;
+         }
+         echo "</table>";
+         echo "<br/>";
+
+         
+      }
+
+
+echo "Number of devices non exist : ".$i;
+      // detect all oids
+
+      exit;
    }
 
 }

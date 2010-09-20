@@ -462,8 +462,9 @@ $LANG['plugin_fusioninventory']["mapping"][427]="imprimante > compteur > nombre 
 $LANG['plugin_fusioninventory']["mapping"][428]="imprimante > compteur > nombre de pages couleur imprimées (copie)";
 $LANG['plugin_fusioninventory']["mapping"][429]="imprimante > compteur > nombre total de pages imprimées (fax)";
 $LANG['plugin_fusioninventory']["mapping"][430]="réseaux > port > vlan";
-$LANG['plugin_fusioninventory']["mapping"][431]="réseaux > Nom LLDP";
-$LANG['plugin_fusioninventory']["mapping"][432]="réseaux > port LLDP";
+$LANG['plugin_fusioninventory']["mapping"][431]="réseaux > chassis id distant LLDP";
+$LANG['plugin_fusioninventory']["mapping"][432]="réseaux > port distant LLDP";
+$LANG['plugin_fusioninventory']["mapping"][433]="réseaux > chassis id local LLDP";
 
 
 $LANG['plugin_fusioninventory']["mapping"][101]="";
