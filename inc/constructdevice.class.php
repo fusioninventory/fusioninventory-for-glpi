@@ -735,13 +735,54 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $a_cartridgerelation[$i]["value"][] = "Toner";
       $a_cartridgerelation[$i]["mapping"] = "tonercyan";
       $i++;
+      $a_cartridgerelation[$i]["value"][] = "cyan";
+      $a_cartridgerelation[$i]["value"][] = "Toner";
+      $a_cartridgerelation[$i]["mapping"] = "tonercyan";
+      $i++;
       $a_cartridgerelation[$i]["value"][] = "Magenta";
+      $a_cartridgerelation[$i]["value"][] = "Toner";
+      $a_cartridgerelation[$i]["mapping"] = "tonermagenta";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "magenta";
       $a_cartridgerelation[$i]["value"][] = "Toner";
       $a_cartridgerelation[$i]["mapping"] = "tonermagenta";
       $i++;
       $a_cartridgerelation[$i]["value"][] = "Yellow";
       $a_cartridgerelation[$i]["value"][] = "Toner";
       $a_cartridgerelation[$i]["mapping"] = "toneryellow";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "jaune";
+      $a_cartridgerelation[$i]["value"][] = "Toner";
+      $a_cartridgerelation[$i]["mapping"] = "toneryellow";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "Waste";
+      $a_cartridgerelation[$i]["value"][] = "Toner";
+      $a_cartridgerelation[$i]["mapping"] = "wastetoner";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "usagé";
+      $a_cartridgerelation[$i]["value"][] = "Toner";
+      $a_cartridgerelation[$i]["mapping"] = "wastetoner";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "Black";
+      $a_cartridgerelation[$i]["value"][] = "Drum";
+      $a_cartridgerelation[$i]["mapping"] = "drumblack";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "Cyan";
+      $a_cartridgerelation[$i]["value"][] = "Drum";
+      $a_cartridgerelation[$i]["mapping"] = "drumcyan";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "Magenta";
+      $a_cartridgerelation[$i]["value"][] = "Drum";
+      $a_cartridgerelation[$i]["mapping"] = "drummagenta";
+      $i++;
+      $a_cartridgerelation[$i]["value"][] = "Yellow";
+      $a_cartridgerelation[$i]["value"][] = "Drum";
+      $a_cartridgerelation[$i]["mapping"] = "drumyellow";
+
+
+      
+
+
 
 
       
