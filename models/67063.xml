@@ -4,6 +4,8 @@
 	<key>Networking0033</key>
 	<comments><![CDATA[ADSL Wireless IAD Router
 
+DES-1228                                 1.10.12
+
 EMC DS-4400M Model 001 Fibre Channel Switch, firmware 08.01.01 4
 
 ES-2048
@@ -12,7 +14,11 @@ Fluke Networks OptiView (tm) Integrated Network Analyzer
 
 HP J4812A ProCurve Switch 2512, revision F.05.59, ROM F.02.01  (/sw/code/build/info(s02))
 
+HP J4899B ProCurve Switch 2650, revision H.08.60, ROM H.08.02 (/sw/code/build/fish(f04))
+
 IP Controller
+
+Symbol WS2000 HW=D SW=2.2.1.0-018R MIB=08d27
 
 WS5100 Wireless Switch, Revision WS.02.3.0.4.0-004R
 
