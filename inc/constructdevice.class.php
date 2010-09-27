@@ -484,20 +484,21 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             }
             if (isset($display_cartridge) AND ($display_cartridge == '1')) {
                echo "<tr class='tab_bg_1'>";
-               echo "<th colspan='3'align='center'>";
+               echo "<th colspan='3' align='center'>";
                echo $this->a_cartridge[$oid_walk]["name"];
                echo " => ";
                if (preg_match("/8.1.([0-9]*)$/", $oid)) {
                   echo "MAX";
-               }
-               if (preg_match("/9.1.([0-9]*)$/", $oid)) {
+               } else if (preg_match("/9.1.([0-9]*)$/", $oid)) {
                   echo "REMAIN";
+               } else {
+                  echo "Description";
                }
                echo "</th>";
                echo "</tr>";
             }
             echo "<tr class='tab_bg_1'>";
-            echo "<td colspan='3'>";
+            echo "<td colspan='3' align='center'>";
             echo $line;
             echo "</td>";
             echo "</tr>";
@@ -780,11 +781,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $a_cartridgerelation[$i]["mapping"] = "drumyellow";
 
 
+
       
-
-
-
-
       
       $a_cartridgerelation[10001]["value"][] = "Toner";
       $a_cartridgerelation[10001]["mapping"] = "tonerblack";
@@ -803,6 +801,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
          }
          if ($search == "1") {
             $last_oidId = str_replace(".1.3.6.1.2.1.43.11.1.1.6.1.", "", $oid);
+            $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.6.1.".$last_oidId]["name"] = $oid_value;
+            $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.6.1.".$last_oidId]["mapping"] = $datas["mapping"];
             $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.8.1.".$last_oidId]["name"] = $oid_value;
             $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.8.1.".$last_oidId]["mapping"] = $datas["mapping"]."max";
             $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.9.1.".$last_oidId]["name"] = $oid_value;
