@@ -95,7 +95,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                             $this->getValue($plugins_id, 'delete_task'),1,240);
       echo " ".$LANG['gmt'][1];
       echo "</td>";
-      echo "<td colspan='2'></td>";
+
+      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][8]." :</td>";
+      echo "<td>";
+      echo "<input type='text' name='agent_port' value='".$this->getValue($plugins_id, 'agent_port')."'/>";
+      echo "</td>";
       echo "</tr>";
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {

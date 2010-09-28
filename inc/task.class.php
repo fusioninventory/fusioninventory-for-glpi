@@ -307,9 +307,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG;
 
       $pta = new PluginFusioninventoryAgent;
-      $ptc = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-      if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
+      if ((!$PluginFusioninventoryConfig->is_active($plugins_id, 'remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol", "w"))) {
          return;
       }
@@ -346,7 +346,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       }
 
       PluginFusioninventoryDisplay::disableDebug();
-      if(!($fp = fsockopen("192.168.0.201", 62354, $errno, $errstr, 1))) {
+      if(!($fp = fsockopen("192.168.0.201", $PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port'), $errno, $errstr, 1))) {
           echo "<b>".$LANG['plugin_fusioninventory']["task"][9]."</b>";
       } else {
           echo "<b>".$LANG['plugin_fusioninventory']["task"][8]."</b>";
@@ -434,20 +434,20 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    function RemoteStartAgent($id, $ip) {
-      $ptc = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $pfia = new PluginFusioninventoryAgent;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-      if ((!$ptc->is_active($plugins_id, 'remotehttpagent')) AND
+      if ((!$PluginFusioninventoryConfig->is_active($plugins_id, 'remotehttpagent')) AND
               (!PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol", "w"))) {
          return false;
       }
       $pfia->getFromDB($id);
-      if(!($fp = fsockopen($ip, 62354, $errno, $errstr, 1))) {
+      if(!($fp = fsockopen($ip, $PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port'), $errno, $errstr, 1))) {
          $input = 'Agent don\'t respond';
          addMessageAfterRedirect($input);
          return false;
       } else {
-         $handle = fopen("http://".$ip.":62354/now/".$pfia->fields['token'], "r");
+         $handle = fopen("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$pfia->fields['token'], "r");
          $input = 'Agent run Now';
          fclose($fp);
          addMessageAfterRedirect($input);
@@ -821,8 +821,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $LANG;
 
       PluginFusioninventoryDisplay::disableDebug();
+
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $state = false;
-      if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
+      if($fp = fsockopen($ip, $PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port'), $errno, $errstr, 1)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip-$type'/>";
