@@ -269,8 +269,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $ptap->updateState($p_xml->PROCESSNUMBER, array('nb_ip' => $p_xml->AGENT->NBIP), $agent['id']);
       }
       if (isset($p_xml->AGENT->AGENTVERSION)) {
-         $agent['fusioninventory_agent_version'] = $p_xml->AGENT->AGENTVERSION;
-         $agent['last_agent_update'] = date("Y-m-d H:i:s");
+         $agent['version'] = $p_xml->AGENT->AGENTVERSION;
+         $agent['last_contact'] = date("Y-m-d H:i:s");
          $pta->update($agent);
       }
 
@@ -280,7 +280,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 			$count_discovery_devices++;
   		}
       if ($count_discovery_devices != "0") {
-         $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_found' => $count_discovery_devices));
+         $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_found' => $count_discovery_devices), $agent['id']);
          foreach($p_xml->DEVICE as $discovery) {
             // If module version is 1.0, so try to get right model (discovery file in this agent is too old
             if (($moduleversion == "1.0") AND ($discovery->AUTHSNMP != "")) {
@@ -319,7 +319,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
             $discovery_criteria = PluginFusinvsnmpDiscovery::criteria($p_criteria);
             if (!$discovery_criteria) {
-               $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_import' => '1'));
+               $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_import' => '1'), $agent['id']);
                // Add in unknown device
                $ptud->getEmpty();
                if (!empty($discovery->NETBIOSNAME)) {
@@ -481,7 +481,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
                $ci->obj->update($data);
 
-               $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('discovery_nb_exists' => '1'));
+               $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_exists' => '1'), $agent['id']);
             }
          }
       }
