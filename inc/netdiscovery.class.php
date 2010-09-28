@@ -130,7 +130,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_DISCOVERY', "1");
          $sxml_param->addAttribute('THREADS_DISCOVERY', $PluginFusinvsnmpAgentconfig->fields["threads_netdiscovery"]);
-         //$sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
+         $sxml_param->addAttribute('PID', $taskjobs_id);
       $PluginFusinvsnmpIPRange->getFromDB($PluginFusioninventoryTaskjobstatus->fields['items_id']);
       $sxml_rangeip = $sxml_option->addChild('RANGEIP');
          $sxml_rangeip->addAttribute('ID', $PluginFusinvsnmpIPRange->fields['id']);

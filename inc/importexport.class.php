@@ -251,23 +251,24 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $p_criteria = array();
 
 		$walks            = new PluginFusinvsnmpWalk;
-      $ptap             = new PluginFusioninventoryAgentProcess;
+      $ptap             = new PluginFusinvsnmpStateDiscovery;
       $pta              = new PluginFusioninventoryAgent;
 		$config_discovery = new PluginFusioninventoryConfig;
       $np               = new NetworkPort;
-      $ptud             = new PluginFusinvsnmpUnknownDevice;
+      $ptud             = new PluginFusioninventoryUnknownDevice;
+
+      $agent = $pta->InfosByKey($agentKey);
 
       if (isset($p_xml->AGENT->START)) {
-         $ptap->updateProcess($p_xml->PROCESSNUMBER, array('start_time_discovery' => date("Y-m-d H:i:s")));
+         $ptap->updateState($p_xml->PROCESSNUMBER, array('start_time' => date("Y-m-d H:i:s")), $agent['id']);
       } else if (isset($p_xml->AGENT->END)) {
-         $ptap->updateProcess($p_xml->PROCESSNUMBER, array('end_time_discovery' => date("Y-m-d H:i:s")));
+         $ptap->updateState($p_xml->PROCESSNUMBER, array('end_time' => date("Y-m-d H:i:s")), $agent['id']);
       } else if (isset($p_xml->AGENT->EXIT)) {
-         $ptap->endProcess($p_xml->PROCESSNUMBER, date("Y-m-d H:i:s"));
+         $ptap->endState($p_xml->PROCESSNUMBER, date("Y-m-d H:i:s"), $agent['id']);
       } else if (isset($p_xml->AGENT->NBIP)) {
-         $ptap->updateProcess($p_xml->PROCESSNUMBER, array('discovery_nb_ip' => $p_xml->AGENT->NBIP));
+         $ptap->updateState($p_xml->PROCESSNUMBER, array('nb_ip' => $p_xml->AGENT->NBIP), $agent['id']);
       }
       if (isset($p_xml->AGENT->AGENTVERSION)) {
-         $agent = $pta->InfosByKey($agentKey);
          $agent['fusioninventory_agent_version'] = $p_xml->AGENT->AGENTVERSION;
          $agent['last_agent_update'] = date("Y-m-d H:i:s");
          $pta->update($agent);
