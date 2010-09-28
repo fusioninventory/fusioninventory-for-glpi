@@ -65,8 +65,7 @@ if (isset ($_POST["add"])) {
    $agents->delete($_POST);
    glpi_header("agent.php");
 } else if (isset ($_POST["startagent"])) {
-   $pta = new PluginFusioninventoryAgent;
-   $pta->RemoteStartAgent($_POST['agentID'], $_POST['ip']);
+
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 

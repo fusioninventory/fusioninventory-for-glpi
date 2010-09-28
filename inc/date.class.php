@@ -39,6 +39,7 @@ if (!defined('GLPI_ROOT')) {
 
 
 class PluginFusioninventoryDate extends CommonDBTM {
+
    static function date($number_dates,$frequence,$today='') {
       if ($today == "") {
          $today = time();
@@ -87,6 +88,8 @@ class PluginFusioninventoryDate extends CommonDBTM {
       return $dates;
    }
 
+
+   
    static function printer_calendar($getvalue,$field,$target) {
       global $DB,$LANG;
 

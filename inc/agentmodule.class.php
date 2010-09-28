@@ -112,8 +112,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "</form>";
          echo "<br/>";
       }
-
-
       return true;
    }
 
@@ -182,6 +180,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
+   
 
    function getActivationExceptions($module_name) {
       $a_modules = $this->find("`modulename`='".$module_name."' ");
@@ -191,6 +190,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    }
 
 
+   
    function getAgentsCanDo($module_name, $items_id=0) {
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
@@ -245,8 +245,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       } else {
          return false;
       }
-
-
    }
 
 

@@ -84,27 +84,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['plugin_fusioninventory']["agents"][9];
       }
-      // $ong[1] = Modules installes sur l'agent
        $ong[2] = "activation modules"; //activation des modules
       // $ong[3] = actions (tâches)
-      // $ong[x] = config dynamique de chaque plugin installe
       return $ong;
-   }
-
-
-   function PushData($id, $key) {
-      $this->getFromDB($id);
-      // Name of server
-      // $this->fields["name"];
-      
-      $xml = "<snmp>\n";
-      // ** boucle sur les équipements réseau
-      // ** détection des équipements avec le bon status et l'IP dans la plage de l'agent
-      //  Ecriture du fichier xml pour l'envoi à l'agent
-   
-      $xml .= "</snmp>\n";
-      // Affichage du fichier xml pour que l'agent récupère les paramètres
-      echo $xml;
    }
 
 
@@ -221,7 +203,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       return 1;
    }
+   
 
+   
    function getIPs($items_id) {
       $ip = array();
       $this->getFromDB($items_id);
@@ -238,7 +222,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-   function getAgentWithComputer($items_id) {
+   
+   function getAgentWithComputerid($items_id) {
 
       $agent = $this->find("`itemtype`='Computer' AND `items_id`='".$items_id."'");
 

@@ -61,7 +61,6 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
          }
          $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
       }
-
       return $tabs;
    }
 

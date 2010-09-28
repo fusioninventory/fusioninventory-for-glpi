@@ -44,6 +44,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $this->table="glpi_plugin_fusioninventory_configs";
    }
 
+
+
    /* Function to get the value of a field */
    function getValue($p_plugins_id, $p_type) {
       global $DB;
@@ -57,6 +59,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return false;
    }
 
+
+   
    // Confirm if the functionality is activated, or not
 //   function isActivated($p_type, $p_plugins_id=0) {
    function is_active($p_plugins_id, $p_type) {
@@ -67,6 +71,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       }
    }
 
+
+   
    function showForm($options=array()) {
       global $LANG,$CFG_GLPI;
 
@@ -112,6 +118,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return true;
    }
 
+
+   
    /**
     * Add config
     *
@@ -126,6 +134,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                               'value'=>$p_value));
    }
 
+
+   
    /**
     * Update config
     *
@@ -137,6 +147,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return $this->update(array('id'=>$p_id, 'value'=>$p_value));
    }
 
+
+   
    /**
     * Update config type
     *
@@ -155,20 +167,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return false;
    }
 
-//   /**
-//    * Update config
-//    *
-//    *@param $p_id Config id
-//    *@param $p_modules_id Module id (0 for Fusioninventory)
-//    *@param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
-//    *@param $p_value Value
-//    *@return boolean : true on success
-//    **/
-//   function updateConfig($p_id, $p_modules_id, $p_type, $p_value) {
-//      return $this->update(array('id'=>$p_id, 'type'=>$p_type, `value`=>$p_value,
-//                       'plugin_fusioninventory_modules_id'=>$p_modules_id));
-//   }
-//
+
+   
    /**
     * Delete config
     *
@@ -178,6 +178,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    function deleteConfig($p_id) {
       return $this->delete(array('id'=>$p_id));
    }
+
+
 
    /**
     * Clean config
@@ -193,6 +195,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return $DB->query($delete);
    }
 
+
+   
    /**
     * Init config
     *
