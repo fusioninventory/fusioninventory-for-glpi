@@ -54,7 +54,6 @@ switch($_POST['glpi_tab']) {
 	case -1 :
       NetworkPort::showForItem('PluginFusioninventoryUnknownDevice', $_POST["id"]);
       $PluginFusioninventoryUnknownDevice->importForm(GLPI_ROOT . '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"],$_POST["id"]);
-      //$pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusinvsnmpUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
       showHistory('PluginFusinvsnmpUnknownDevice',$_POST["id"]);
       break;
 
@@ -67,7 +66,6 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 3 :
-      //$pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $_POST["id"], 'PluginFusinvsnmpUnknownDevice', array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'WAKEONLAN' => 1));
 		break;
 
    case 4 :

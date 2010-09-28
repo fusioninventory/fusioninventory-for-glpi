@@ -117,10 +117,6 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-            if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
-                    (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
-               $array[1] = $LANG['plugin_fusioninventory']["title"][0];
-            }
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[2] = $LANG['plugin_fusioninventory']["title"][5];
             }
@@ -191,10 +187,6 @@ function plugin_headings_actions_fusioninventory($item) {
          $array = array ();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
          $pfc = new PluginFusioninventoryConfig;
-         if (($pfc->is_active($plugins_id, 'remotehttpagent')) AND
-                 (PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
-             $array[1] = "plugin_headings_fusioninventory_computerInfo";
-         }
          $array[2] = "plugin_headings_fusioninventory_locks";
          $array[3] = "plugin_headings_fusioninventory_tasks";
          return $array;
@@ -231,11 +223,6 @@ function plugin_headings_actions_fusioninventory($item) {
 }
 
 
-function plugin_headings_fusioninventory_computerInfo($type, $id) {
-   $pfit = new PluginFusioninventoryTask;
-   $pfit->RemoteStateAgent(GLPI_ROOT . '/plugins/fusioninventory/front/agents.state.php', $id, $type, array('INVENTORY' => 1, 'NETDISCOVERY' => 1, 'SNMPQUERY' => 1, 'WAKEONLAN' => 1));
-}
-
 //function plugin_headings_fusioninventory_locks($type, $id) {
 function plugin_headings_fusioninventory_locks($item) {
    $type = get_Class($item);
@@ -262,34 +249,6 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
 }
 
-//function plugin_headings_fusioninventory($type,$id,$withtemplate=0) {
-//function plugin_headings_fusioninventory($item,$withtemplate=0) {
-//   global $CFG_GLPI;
-//
-//   if (!$withtemplate) {
-//      echo "<div class='center'>";
-//      switch (get_class($item)) {
-////      switch ($type) {
-//         case 'Profile' :
-//            $prof=new PluginFusioninventoryProfile;
-//            if (!$prof->GetfromDB($id)) {
-//               PluginFusioninventoryProfile::createaccess($id);
-//            }
-//            $prof->showForm($id,
-//                 array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php"));
-//            break;
-//
-//         case 'Computer' :
-//            $prof=new PluginFusioninventoryProfile;
-//            if (!$prof->GetfromDB($id)) {
-//               PluginFusioninventoryProfile::createaccess($id);
-//            }
-//            $prof->showForm($id,
-//                 array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/profile.php"));
-//            break;
-//      }
-//   }
-//}
 
 
 function plugin_fusioninventory_MassiveActions($type) {
