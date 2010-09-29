@@ -125,6 +125,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.6']                        = 'ifPhysAddress';
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.3']                        = 'ifType';
       $mapping_pre[3]['.1.3.6.1.2.1.1.5.0']                          = 'name';
+      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.7.3.5.1.1.3.1.1']      = 'name';
       $mapping_pre[3]['.1.3.6.1.2.1.1.6.0']                          = 'location';
       $mapping_pre[3]['.1.3.6.1.2.1.1.1.0']                          = 'comments';
       $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.1']                        = 'ifIndex';
@@ -139,12 +140,16 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.4.3.1.25.0']                = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.13']        = 'pagecountercolorpages';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.14']        = 'pagecounterblackpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.1.20.34']      = 'pagecounterblackpages';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.2']         = 'pagecountertotalpages_copy';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.3']         = 'pagecounterblackpages_copy';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.103.20.3']     = 'pagecounterblackpages_copy';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.5']         = 'pagecountercolorpages_copy';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.6']         = 'pagecountertotalpages_fax';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.104.20.14']    = 'pagecountertotalpages_fax';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.8']         = 'pagecountertotalpages_print';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.20']        = 'pagecounterblackpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.1.20.7']       = 'pagecounterblackpages_print';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.19']        = 'pagecountercolorpages_print';
       $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.47']        = 'pagecounterscannedpages';
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.12.0']        = 'otherserial';
@@ -683,11 +688,11 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='3'>";
-      echo $oid_walk;
       echo $LANG['plugin_fusioninventory']["mib"][8]." : ";
       if ($is_inDB > 0) {
          if ($mib_DB["oid_port_counter"] == "0") {
-               echo $FUSIONINVENTORY_MAPPING[$mib_DB['mapping_type']][$mib_DB["mapping_name"]]['name'];
+            echo $FUSIONINVENTORY_MAPPING[$mib_DB['mapping_type']][$mib_DB["mapping_name"]]['name'];
+            echo " <a href='".$_SERVER["PHP_SELF"]."?ID=".$_GET['ID']."&amp;deleteoid=".$oids_DB["id"][$oid_id]."'><img src='".GLPI_ROOT."/plugins/fusioninventory/pics/delete.png' /></a>";
          }
       } else {
          $mapping_pre = $this->mibDetection();

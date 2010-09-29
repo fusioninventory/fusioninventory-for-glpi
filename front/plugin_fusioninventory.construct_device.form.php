@@ -121,6 +121,12 @@ NULL , '".$_POST['ID']."', '".$md5."'
       WHERE `construct_device_id`='".$_GET['deletewalk']."' ";
    $DB->query($query_delete);
    glpi_header("plugin_fusioninventory.construct_device.form.php?ID=".$_GET['deletewalk']);
+} else if (isset($_GET['deleteoid'])) {
+   $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_construct_mibs`
+      WHERE `construct_device_id`='".$_GET['ID']."'
+         AND `mib_oid_id`='".$_GET['deleteoid']."' ";
+   $DB->query($query_delete);
+   glpi_header("plugin_fusioninventory.construct_device.form.php?ID=".$_GET['ID']);
 }
 
 
