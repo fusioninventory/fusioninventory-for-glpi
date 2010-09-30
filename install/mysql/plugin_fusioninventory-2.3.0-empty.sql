@@ -100,6 +100,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `is_active` int(1) NOT NULL DEFAULT '0',
   `communication` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push',
   `permanent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `periodicity` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `entities_id` ( `entities_id` ),
   KEY `users_id` ( `users_id` ),

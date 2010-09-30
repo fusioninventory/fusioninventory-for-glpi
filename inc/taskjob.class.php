@@ -166,17 +166,7 @@ $this->cronTaskscheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("periodicity", "", 0, 300);
-      $a_time = array();
-      $a_time[] = "------";
-      $a_time[] = "minutes";
-      $a_time[] = "heures";
-      $a_time[] = "jours";
-      $a_time[] = "mois";
-      Dropdown::showFromArray("tt", $a_time, array('value'=>0));
-      echo "</td>";
+      echo "<td colspan='2'></td>";
       echo "<td rowspan='4'>Selection&nbsp;:</td>";
       echo "<td align='center' rowspan='4'>";
       echo "<span id='show_Selection_id'>";

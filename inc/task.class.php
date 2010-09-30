@@ -167,9 +167,22 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td rowspan='5'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='5'>";
-      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      if (strstr($this->fields['periodicity'], "-")) {
+         $a_periodicity = explode("-", $this->fields['periodicity']);
+      } else {
+         $a_periodicity[] = 0;
+         $a_periodicity[] = '';
+      }
+      Dropdown::showInteger("periodicity-1", $a_periodicity[0], 0, 300);
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time[] = "minutes";
+      $a_time[] = "heures";
+      $a_time[] = "jours";
+      $a_time[] = "mois";
+      Dropdown::showFromArray("periodicity-2", $a_time, array('value'=>$a_periodicity[1]));
       echo "</td>";
       echo "</tr>";
 
@@ -177,6 +190,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo getUserName($this->fields["users_id"],1);
+      echo "</td>";
+
+      echo "<td rowspan='4'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='5'>";
+      echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
 
