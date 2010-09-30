@@ -515,6 +515,8 @@ $this->cronTaskscheduler();
       //PluginFusioninventoryDisplay::disableDebug();
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+
       $state = false;
       $ctx = stream_context_create(array(
           'http' => array(
@@ -536,6 +538,8 @@ $this->cronTaskscheduler();
 
    function RemoteStartAgent($ip, $token) {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+
       if(!($fp = fsockopen($ip, $PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port'), $errno, $errstr, 1))) {
          $input = 'Agent don\'t respond';
          return false;
