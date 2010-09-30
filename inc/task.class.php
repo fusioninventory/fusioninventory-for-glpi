@@ -193,7 +193,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</td>";
 
       echo "<td rowspan='4'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='5'>";
+      echo "<td align='center' rowspan='4'>";
       echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
