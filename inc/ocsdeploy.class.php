@@ -73,7 +73,7 @@ class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
 
 
          // Search if agent is associate to this computer
-         if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputer($items_id)) {
+         if ($agent_id = $PluginFusioninventoryAgent->getAgentWithComputerid($items_id)) {
             // Verify agent can do ocsdeploy
             if ($PluginFusioninventoryAgentmodule->getAgentsCanDo('OCSDEPLOY', $agent_id)) {
 
@@ -114,7 +114,10 @@ class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
    function run($items_id, $itemtype, $taskjobs_id, $taskjobstatus_id) {
       global $DB;
 
-/*
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+
+ /*
  *<OPTION>
  *  <NAME>DOWNLOAD</NAME>
  *  <PARAM FRAG_LATENCY="10" PERIOD_LATENCY="1" TIMEOUT="30" ON="1" TYPE="CONF" CYCLE_LATENCY="60" PERIOD_LENGTH="10" />
@@ -144,10 +147,10 @@ class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
          $sxml_param->addAttribute('ID', $PluginFusinvdeployPackage->fields['id']);
          $sxml_param->addAttribute('CERT_PATH', "INSTALL_PATH");
          // PACK_LOC="127.0.0.1/DOWNLOAD"
-         $sxml_param->addAttribute('PACK_LOC', "192.168.1.13/glpi078/plugins/fusinvdeploy/front/downloadfragments.php?file=");
+         $sxml_param->addAttribute('PACK_LOC', $PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path')."/plugins/fusinvdeploy/front/downloadfragments.php?file=");
          $sxml_param->addAttribute('CERT_FILE', "INSTALL_PATH/cacert.pem");
          $sxml_param->addAttribute('TYPE', "PACK");
-         $sxml_param->addAttribute('INFO_LOC', "192.168.1.13/glpi078/plugins/fusinvdeploy/front/downloadfragments.php?info=");
+         $sxml_param->addAttribute('INFO_LOC', $PluginFusioninventoryConfig->getValue($plugins_id, 'glpi_path')."/plugins/fusinvdeploy/front/downloadfragments.php?info=");
          $sxml_param->addAttribute('FORCEREPLAY', "1");
          return $this->sxml;
 

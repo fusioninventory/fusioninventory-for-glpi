@@ -50,4 +50,6 @@ $LANG['plugin_fusinvdeploy']["files"][0]="Gestion des fichiers";
 
 $LANG['plugin_fusinvdeploy']["deploystatus"][0]="Etat des deploiements";
 
+$LANG['plugin_fusinvdeploy']["config"][0]="Addresse du serveur GLPI (sans le http://)";
+
 ?>
