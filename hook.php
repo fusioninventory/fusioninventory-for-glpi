@@ -405,6 +405,17 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$id,$val) {
    return "";
 }
 
+function plugin_pre_item_update_fusioninventory($parm) {
+   if ($parm->fields['directory'] == 'fusioninventory') {
+      $plugin = new Plugin();
+
+      $a_plugins = PluginFusioninventoryModule::getAll();
+      foreach($a_plugins as $plugin_id=>$datas) {
+         $plugin->unactivate($plugin_id);
+      }
+   }
+}
+
 function plugin_pre_item_purge_fusioninventory($parm) {
    global $DB;
 
