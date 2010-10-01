@@ -408,7 +408,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_state_discovery` (
   `threads` int(11) NOT NULL DEFAULT '0',
   `nb_ip` int(11) NOT NULL DEFAULT '0',
   `nb_found` int(11) NOT NULL DEFAULT '0',
-  `nb_error` in t(11) NOT NULL DEFAULT '0',
+  `nb_error` int(11) NOT NULL DEFAULT '0',
   `nb_exists` int(11) NOT NULL DEFAULT '0',
   `nb_import` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
