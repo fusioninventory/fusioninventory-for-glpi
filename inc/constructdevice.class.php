@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusionInventoryConstructDevice extends CommonDBTM {
-   private $sysdescr='',$a_cartridge=array();
+   private $sysdescr='',$a_cartridge=array(), $a_pagecounter=array();
 
    function __construct() {
 		$this->table = "glpi_plugin_fusioninventory_construct_device";
@@ -138,20 +138,14 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.2.1.43.5.1.1.17.1']                  = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0']      = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.4.3.1.25.0']                = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.13']        = 'pagecountercolorpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.14']        = 'pagecounterblackpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.1.20.33']      = 'pagecountercolorpages';
       $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.1.20.34']      = 'pagecounterblackpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.2']         = 'pagecountertotalpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.3']         = 'pagecounterblackpages_copy';
       $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.103.20.3']     = 'pagecounterblackpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.5']         = 'pagecountercolorpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.6']         = 'pagecountertotalpages_fax';
-      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.104.20.14']    = 'pagecountertotalpages_fax';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.8']         = 'pagecountertotalpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.20']        = 'pagecounterblackpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.103.20.25']    = 'pagecountercolorpages_copy';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.104.20.15']    = 'pagecountertotalpages_fax';
       $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.1.20.7']       = 'pagecounterblackpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.19']        = 'pagecountercolorpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.47']        = 'pagecounterscannedpages';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.1.20.29']      = 'pagecountercolorpages_print';
+      $mapping_pre[3]['.1.3.6.1.4.1.253.8.53.13.2.1.8.102.20.21']    = 'pagecounterscannedpages';
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.12.0']        = 'otherserial';
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.1.1.0']  = 'pagecounterblackpages';
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.3.1.0']  = 'pagecountercolorpages';
@@ -334,7 +328,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
          }
       }
 
-
+      
 
       // Used mapping name :
       $a_mapping_used = array();
@@ -466,6 +460,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
          $oid = getDropdownName("glpi_dropdown_plugin_fusioninventory_mib_oid", $oids_DB["id"][$oid_id]);
          $oid_walk = str_replace($oids_DB["search"][$oid_id], $oid, $a_line[0]);
          $this->manageWalksLineCartridgeDetection($oid, $a_line[1]);
+         $this->manageWalksLinePagecounterDetection($oid, $a_line[1]);
          if (!isset($a_mibIgnore[$type_model][$oid])) {
             // If oid_complete !=  $previous_oid , we start array display
             if ($previous_oid == $oid_id) {
@@ -490,14 +485,18 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             if (isset($display_cartridge) AND ($display_cartridge == '1')) {
                echo "<tr class='tab_bg_1'>";
                echo "<th colspan='3' align='center'>";
-               echo $this->a_cartridge[$oid_walk]["name"];
-               echo " => ";
-               if (preg_match("/8.1.([0-9]*)$/", $oid)) {
-                  echo "MAX";
-               } else if (preg_match("/9.1.([0-9]*)$/", $oid)) {
-                  echo "REMAIN";
-               } else {
-                  echo "Description";
+               if (isset($this->a_cartridge[$oid_walk]["name"])) {
+                  echo $this->a_cartridge[$oid_walk]["name"];
+                  echo " => ";
+                  if (preg_match("/8.1.([0-9]*)$/", $oid)) {
+                     echo "MAX";
+                  } else if (preg_match("/9.1.([0-9]*)$/", $oid)) {
+                     echo "REMAIN";
+                  } else {
+                     echo "Description";
+                  }
+               } else if (isset($this->a_pagecounter[$oid_walk]["name"])) {
+                  echo $this->a_pagecounter[$oid_walk]["name"];
                }
                echo "</th>";
                echo "</tr>";
@@ -552,6 +551,9 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       } else if ((isset($mapping_pre[$type_model][$oid]) AND (!isset($mapping_pre_ignore[$type_model][$oid])))) {
          $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
       } else if (isset($this->a_cartridge[$oid_walk])) {
+         $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
+         $display_cartridge = 1;
+      } else if (isset($this->a_pagecounter[$oid_walk])) {
          $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
          $display_cartridge = 1;
       } else {
@@ -713,6 +715,8 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             dropdownArrayValues("links_oid_fields_".$oids_DB["id"][$oid_id],$types, $type_model."||".$mapping_pre[$type_model][$oid]); //,$a_mapping_used
          } else if (isset($this->a_cartridge[$oid_walk]["mapping"])) {
             dropdownArrayValues("links_oid_fields_".$oids_DB["id"][$oid_id],$types, $type_model."||".$this->a_cartridge[$oid_walk]["mapping"]); //,$a_mapping_used
+         } else if (isset($this->a_pagecounter[$oid_walk]["mapping"])) {
+            dropdownArrayValues("links_oid_fields_".$oids_DB["id"][$oid_id],$types, $type_model."||".$this->a_pagecounter[$oid_walk]["mapping"]); //,$a_mapping_used
          } else {
             dropdownArrayValues("links_oid_fields_".$oids_DB["id"][$oid_id],$types);
          }
@@ -812,6 +816,56 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
             $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.8.1.".$last_oidId]["mapping"] = $datas["mapping"]."max";
             $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.9.1.".$last_oidId]["name"] = $oid_value;
             $this->a_cartridge[".1.3.6.1.2.1.43.11.1.1.9.1.".$last_oidId]["mapping"] = $datas["mapping"]."remaining";
+            return;
+         }
+      }
+   }
+
+
+
+   function manageWalksLinePagecounterDetection($oid, $oid_value) {
+
+      // Definition of cartridges
+      $a_pagecounterrelation = array();
+      $i = 0;
+      $a_pagecounterrelation[$i]["value"][] = "Counter: Machine Total";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecountertotalpages";
+      $i++;
+      $a_pagecounterrelation[$i]["value"][] = "Counter:Print:Total";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecountertotalpages_print";
+      $i++;
+      $a_pagecounterrelation[$i]["value"][] = "Counter:Print:Black & White";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecounterblackpages_print";
+      $i++;
+      $a_pagecounterrelation[$i]["value"][] = "Counter:Print:Full Color";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecountercolorpages_print";
+      $i++;
+      $a_pagecounterrelation[$i]["value"][] = "Counter:Copy:Total";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecountertotalpages_copy";
+      $i++;
+      $a_pagecounterrelation[$i]["value"][] = "Counter:Copy:Black & White";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecounterblackpages_copy";
+      $i++;
+      $a_pagecounterrelation[$i]["value"][] = "Counter:Copy:Full Color";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecountercolorpages_copy";
+      $i++;
+      $a_pagecounterrelation[$i]["value"][] = "Counter:FAX:Total";
+      $a_pagecounterrelation[$i]["mapping"] = "pagecountertotalpages_fax";
+
+ 
+      foreach($a_pagecounterrelation as $id=>$datas) {
+         $search = 1;
+         foreach($datas["value"] as $id_value => $value) {
+            if ($search != "0") {
+               if (!strstr($oid_value, $value)) {
+                  $search = 0;
+               }
+            }
+         }
+         if ($search == "1") {
+            $last_oidId = str_replace(".1.3.6.1.4.1.367.3.2.1.2.19.5.1.5.", "", $oid);
+            $this->a_pagecounter[".1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.".$last_oidId]["name"] = $oid_value;
+            $this->a_pagecounter[".1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.".$last_oidId]["mapping"] = $datas["mapping"];
             return;
          }
       }
