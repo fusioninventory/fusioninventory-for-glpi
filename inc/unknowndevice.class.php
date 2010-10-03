@@ -308,10 +308,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $DB->query($query_update);
 
                // Delete old networking port
-               $this->deleteFromDB($data_known["id"],1);
+               $this->delete($data_known,1);
 
                // Delete unknown device
-               $this->deleteFromDB($data["items_id"],1);
+               $a_unknowndevice = $this->getFromDB($data["items_id"]);
+               $this->delete($a_unknowndevice,1);
 
                // Modify OCS link of this networking port
                $query = "SELECT *
@@ -339,7 +340,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function convertUnknownToUnknownNetwork($id) {
       global $DB;
 
-      $np  = new NetworkPort;
+      $np = new NetworkPort;
 
       $this->getFromDB($id);
 
@@ -353,7 +354,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $this->fields['mac'] = $port['mac'];
 
          $this->update($this->fields);
-         $np->deleteFromDB($port['id']);
+         $delete_port = $np->getFromDB($port['id']);
+         $np->delete($delete_port, 1);
          return true;
       }
       return false;
