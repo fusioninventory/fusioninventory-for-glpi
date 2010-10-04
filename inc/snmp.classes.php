@@ -260,6 +260,17 @@ class PluginFusionInventorySNMP extends CommonDBTM {
                $PortID = $np->add($input);
             }
             return $PortID;
+         } else if($DB->numrows($result) > 1) {
+            $i = 0;
+            while ($data=$DB->fetch_array($result)) {
+               if ($i > 0) {
+                  $pfiud->deleteFromDB($data['ID']);
+               } else {
+                  $PortID = $data['ID'];
+               }
+               $i++;
+            }
+            return $PortID;
          }
 
          $query = "SELECT *
@@ -271,6 +282,18 @@ class PluginFusionInventorySNMP extends CommonDBTM {
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
             $PortID = $data['ID'];
+            return $PortID;
+         } else if($DB->numrows($result) > 1) {
+            $i = 0;
+            while ($data=$DB->fetch_array($result)) {
+               if ($i > 0) {
+                  $np->deleteFromDB($data['ID']);
+                  $pfiud->deleteFromDB($data['on_device']);
+               } else {
+                  $PortID = $data['ID'];
+               }
+               $i++;
+            }
             return $PortID;
          }
          // Add unknown device
