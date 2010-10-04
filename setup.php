@@ -53,11 +53,6 @@ function plugin_init_fusinvinventory() {
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY'] = 'PluginFusinvinventoryCommunicationInventory';
-
-
-
-
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
