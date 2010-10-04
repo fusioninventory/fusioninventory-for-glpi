@@ -405,6 +405,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_state_discovery` (
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_mod` datetime DEFAULT NULL,
   `threads` int(11) NOT NULL DEFAULT '0',
   `nb_ip` int(11) NOT NULL DEFAULT '0',
   `nb_found` int(11) NOT NULL DEFAULT '0',
