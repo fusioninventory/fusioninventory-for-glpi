@@ -88,8 +88,7 @@ NULL , '".$_POST['id']."', '".$md5."'
       $a_mapping = explode('||', $_POST['links_oid_fields_'.$oid]);
 
       $mapping = new PluginFusioninventoryMapping;
-      $mappings = $mapping->find("`itemtype`='".$a_mapping[0]."'
-                                 AND `name`='".$a_mapping[1]."'");
+      $mappings = $mapping->get($a_mapping[0], $a_mapping[1]);
       $mappings_id = $mappings->fields['id'];
       $query_ins = "INSERT INTO glpi_plugin_fusinvsnmp_constructdevice_miboids
          (`plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`,
