@@ -335,8 +335,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_counter"] == "0") {
                                  $mapping = new PluginFusioninventoryMapping;
-                                 $mappings = $mapping->find("`itemtype`='".$a_mibs['itemtype']."'
-                                          AND `name`='".$a_mibs['mapping_name']."'");
+                                 $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
                                  echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']]." ( ".$a_mibs["mapping_name"]." )";
                               }
                            } else {
@@ -442,8 +441,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                if (isset($a_mibs['id'])) {
                   if ($a_mibs["oid_port_counter"] == "0") {
                      $mapping = new PluginFusioninventoryMapping;
-                     $mappings = $mapping->find("`itemtype`='".$a_mibs['itemtype']."'
-                                          AND `name`='".$a_mibs['mapping_name']."'");
+                     $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
                      if ($mappings) {
                         echo $LANG['plugin_fusioninventory']['mapping'][$mappings->fields['locale']];
                      }
