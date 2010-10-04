@@ -77,7 +77,7 @@ class PluginFusinvinventoryLibhook {
     * @return int $sectionId
     */
     public static function addSections($data, $idmachine) {
-       echo "section added";
+      echo "section added";
 
       $Computer = new Computer;
       $sectionsId = array();
@@ -86,38 +86,39 @@ class PluginFusinvinventoryLibhook {
       $i = -1;
       foreach($data as $section) {
          $i++;
+         $dataSection = unserialize($section['dataSection']);
          switch ($section['sectionName']) {
 
             case 'BIOS':
-               if (isset($section['dataSection']['SMANUFACTURER'])) {
+               if (isset($dataSection['SMANUFACTURER'])) {
                   $Manufacturer = new Manufacturer;
-                  $Computer->fields['manufacturers_id'] = $Manufacturer->import($Manufacturer->processName($section['dataSection']['SMANUFACTURER']));
+                  $Computer->fields['manufacturers_id'] = $Manufacturer->import($Manufacturer->processName($dataSection['SMANUFACTURER']));
                }
-               if (isset($section['dataSection']['SMODEL'])) {
+               if (isset($dataSection['SMODEL'])) {
                   $ComputerModel = new ComputerModel;
-                  $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$section['dataSection']['SMODEL']));
+                  $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
                }
-               if (isset($section['dataSection']['SSN']))
-                  $Computer->fields['serial'] = $section['dataSection']['SSN'];
+               if (isset($dataSection['SSN']))
+                  $Computer->fields['serial'] = $dataSection['SSN'];
 
                break;
 
             case 'HARDWARE':
-               if (isset($section['dataSection']['NAME']))
-                  $Computer->fields['name'] = $section['dataSection']['NAME'];
-               if (isset($section['dataSection']['OSNAME'])) {
+               if (isset($dataSection['NAME']))
+                  $Computer->fields['name'] = $dataSection['NAME'];
+               if (isset($dataSection['OSNAME'])) {
                   $OperatingSystem = new OperatingSystem;
-                  $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$section['dataSection']['OSNAME']));
+                  $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
                }
-               if (isset($section['dataSection']['OSVERSION'])) {
+               if (isset($dataSection['OSVERSION'])) {
                   $OperatingSystemVersion = new OperatingSystemVersion;
-                  $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$section['dataSection']['OSVERSION']));
+                  $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
                }
-               if (isset($section['dataSection']['WINPRODID'])) {
-                  $Computer->fields['os_licenseid'] = $section['dataSection']['WINPRODID'];
+               if (isset($dataSection['WINPRODID'])) {
+                  $Computer->fields['os_licenseid'] = $dataSection['WINPRODID'];
                }
-               if (isset($section['dataSection']['WINPRODKEY'])) {
-                  $Computer->fields['os_license_number'] = $section['dataSection']['WINPRODKEY'];
+               if (isset($dataSection['WINPRODKEY'])) {
+                  $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
                }
                break;
 
@@ -128,25 +129,28 @@ class PluginFusinvinventoryLibhook {
       $j = 0;
 
       foreach($data as $section) {
-
+         $dataSection = unserialize($section['dataSection']);
          switch ($section['sectionName']) {
 
             case 'CPUS':
+
                $DeviceProcessor = new DeviceProcessor();
                $Computer_Device = new Computer_Device('DeviceProcessor');
 
                $input = array();
-               $input['designation'] = $section['dataSection']['NAME'];
-               $input['frequence'] = $section['dataSection']['SPEED'];
+               $input['designation'] = $dataSection['NAME'];
+               $input['frequence'] = $dataSection['SPEED'];
                $Manufacturer = new Manufacturer;
+
                $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer',
-                                                                          $section['dataSection']['MANUFACTURER']);
-               $input['specif_default'] = $section['dataSection']['SPEED'];
+                                                                          $dataSection['MANUFACTURER']);
+               $input['specif_default'] = $dataSection['SPEED'];
+
                $proc_id = $DeviceProcessor->import($input);
                $input = array();
                $input['computers_id'] = $idmachine;
                $input['deviceprocessors_id'] = $proc_id;
-               $input['specificity'] = $section['dataSection']['SPEED'];
+               $input['specificity'] = $dataSection['SPEED'];
                $input['_itemtype'] = 'DeviceProcessor';
                $id_link_device = $Computer_Device->add($input);
 
@@ -159,29 +163,29 @@ class PluginFusinvinventoryLibhook {
                $disk=array();
                $disk['computers_id']=$idmachine;
                // totalsize 	freesize
-               if (isset($section['dataSection']['LABEL'])) {
-                  $disk['name']=$section['dataSection']['LABEL'];
-               } else if ((!isset($section['dataSection']['VOLUMN'])) AND (isset($section['dataSection']['LETTER']))) {
-                  $disk['name']=$section['dataSection']['LETTER'];
+               if (isset($dataSection['LABEL'])) {
+                  $disk['name']=$dataSection['LABEL'];
+               } else if ((!isset($dataSection['VOLUMN'])) AND (isset($dataSection['LETTER']))) {
+                  $disk['name']=$dataSection['LETTER'];
                } else {
-                  $disk['name']=$section['dataSection']['TYPE'];
+                  $disk['name']=$dataSection['TYPE'];
                }
-               if (isset($section['dataSection']['VOLUMN'])) {
-                  $disk['device']=$section['dataSection']['VOLUMN'];
+               if (isset($dataSection['VOLUMN'])) {
+                  $disk['device']=$dataSection['VOLUMN'];
                }
-               if (isset($section['dataSection']['MOUNTPOINT'])) {
-                  $disk['mountpoint'] = $section['dataSection']['MOUNTPOINT'];
-               } else if (isset($section['dataSection']['LETTER'])) {
-                  $disk['mountpoint'] = $section['dataSection']['LETTER'];
-               } else if (isset($section['dataSection']['TYPE'])) {
-                  $disk['mountpoint'] = $section['dataSection']['TYPE'];
+               if (isset($dataSection['MOUNTPOINT'])) {
+                  $disk['mountpoint'] = $dataSection['MOUNTPOINT'];
+               } else if (isset($dataSection['LETTER'])) {
+                  $disk['mountpoint'] = $dataSection['LETTER'];
+               } else if (isset($dataSection['TYPE'])) {
+                  $disk['mountpoint'] = $dataSection['TYPE'];
                }
-               $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $section['dataSection']["FILESYSTEM"]);
-               if (isset($section['dataSection']['TOTAL'])) {
-                  $disk['totalsize']=$section['dataSection']['TOTAL'];
+               $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $dataSection["FILESYSTEM"]);
+               if (isset($dataSection['TOTAL'])) {
+                  $disk['totalsize']=$dataSection['TOTAL'];
                }
-               if (isset($section['dataSection']['FREE'])) {
-                  $disk['freesize']=$section['dataSection']['FREE'];
+               if (isset($dataSection['FREE'])) {
+                  $disk['freesize']=$dataSection['FREE'];
                }
                if (isset($disk['name']) && !empty($disk["name"])) {
                   $id_disk = $ComputerDisk->add($disk);
@@ -191,27 +195,27 @@ class PluginFusinvinventoryLibhook {
 
             case 'MEMORIES':
                $CompDevice = new Computer_Device('DeviceMemory');
-               if (!empty ($section['dataSection']["CAPACITY"])) {
+               if (!empty ($dataSection["CAPACITY"])) {
                   $ram = array();
                   $ram["designation"]="";
-                  if ($section['dataSection']["TYPE"]!="Empty Slot" && $section['dataSection']["TYPE"] != "Unknown") {
-                     $ram["designation"]=$section['dataSection']["TYPE"];
+                  if ($dataSection["TYPE"]!="Empty Slot" && $dataSection["TYPE"] != "Unknown") {
+                     $ram["designation"]=$dataSection["TYPE"];
                   }
-                  if ($section['dataSection']["DESCRIPTION"]) {
+                  if ($dataSection["DESCRIPTION"]) {
                      if (!empty($ram["designation"])) {
                         $ram["designation"].=" - ";
                      }
-                     $ram["designation"] .= $section['dataSection']["DESCRIPTION"];
+                     $ram["designation"] .= $dataSection["DESCRIPTION"];
                   }
-                  if (!is_numeric($section['dataSection']["CAPACITY"])) {
-                     $section['dataSection']["CAPACITY"]=0;
+                  if (!is_numeric($dataSection["CAPACITY"])) {
+                     $dataSection["CAPACITY"]=0;
                   }
 
-                  $ram["specif_default"] = $section['dataSection']["CAPACITY"];
+                  $ram["specif_default"] = $dataSection["CAPACITY"];
                   
-                  $ram["frequence"] = $section['dataSection']["SPEED"];
+                  $ram["frequence"] = $dataSection["SPEED"];
                   $ram["devicememorytypes_id"]
-                        = Dropdown::importExternal('DeviceMemoryType', $section['dataSection']["TYPE"]);
+                        = Dropdown::importExternal('DeviceMemoryType', $dataSection["TYPE"]);
 
                   $DeviceMemory = new DeviceMemory();
                   $ram_id = $DeviceMemory->import($ram);
@@ -219,7 +223,7 @@ class PluginFusinvinventoryLibhook {
                      $devID = $CompDevice->add(array('computers_id' => $idmachine,
                                                      '_itemtype'     => 'DeviceMemory',
                                                      'devicememories_id'     => $ram_id,
-                                                     'specificity'  => $section['dataSection']["CAPACITY"]));
+                                                     'specificity'  => $dataSection["CAPACITY"]));
                      array_push($sectionsId,$section['sectionName']."/".$devID);
                   } else {
                      array_push($sectionsId,$section['sectionName']."/".$j);
@@ -236,19 +240,19 @@ class PluginFusinvinventoryLibhook {
                $network = array();
                $network['items_id']=$idmachine;
                $network['itemtype'] = 'Computer';
-               $network['name'] = addslashes($section['dataSection']["DESCRIPTION"]);
-               $network['ip'] = $section['dataSection']["IPADDRESS"];
-               $network['mac'] = $section['dataSection']["MACADDR"];
-               if (isset($section['dataSection']["TYPE"])) {
+               $network['name'] = addslashes($dataSection["DESCRIPTION"]);
+               $network['ip'] = $dataSection["IPADDRESS"];
+               $network['mac'] = $dataSection["MACADDR"];
+               if (isset($dataSection["TYPE"])) {
                   $network["networkinterfaces_id"]
-                              = Dropdown::importExternal('NetworkInterface', $section['dataSection']["TYPE"]);
+                              = Dropdown::importExternal('NetworkInterface', $dataSection["TYPE"]);
                }
-               if (isset($section['dataSection']["IPMASK"]))
-                  $network['netmask'] = $section['dataSection']["IPMASK"];
-               if (isset($section['dataSection']["IPGATEWAY"]))
-                  $network['gateway'] = $section['dataSection']["IPGATEWAY"];
-               if (isset($section['dataSection']["IPSUBNET"]))
-                  $network['subnet'] = $section['dataSection']["IPSUBNET"];
+               if (isset($dataSection["IPMASK"]))
+                  $network['netmask'] = $dataSection["IPMASK"];
+               if (isset($dataSection["IPGATEWAY"]))
+                  $network['gateway'] = $dataSection["IPGATEWAY"];
+               if (isset($dataSection["IPSUBNET"]))
+                  $network['subnet'] = $dataSection["IPSUBNET"];
 
                $devID = $NetworkPort->add($network);
 
@@ -261,15 +265,21 @@ class PluginFusinvinventoryLibhook {
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
                $PluginFusinvinventorySoftwares = new PluginFusinvinventorySoftwares;
-               if (isset($section['dataSection']['VERSION'])) {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$section['dataSection']['NAME'],
-                                                                              'version'=>$section['dataSection']['VERSION']));
+               if (isset($dataSection['VERSION'])) {
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                                                                              'version'=>$dataSection['VERSION']));
                } else {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$section['dataSection']['NAME'],
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
                                                                               'version'=>''));
                }
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
+
+//              case 'INPUTS':
+//                 $Peripheral = new Peripheral;
+//
+//
+//                 break;
 
 //            case 'VERSIONCLIENT':
 //               // Verify agent is created
@@ -320,6 +330,12 @@ class PluginFusinvinventoryLibhook {
         return $sectionsId;
     }
 
+
+    
+    public static function updateSections($data, $idmachine) {
+
+
+    }
 }
 
 ?>

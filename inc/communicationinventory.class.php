@@ -69,6 +69,8 @@ class PluginFusinvinventoryCommunicationInventory extends PluginFusinvsnmpCommun
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
 
+      
+
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvinventoryCommunicationInventory->import().');
 
