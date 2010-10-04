@@ -59,12 +59,12 @@ echo "<td align='center'>";
 echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.ports_date_connections.php'>".$LANG['plugin_fusioninventory']["menu"][6]."</a>";
 echo "</td>";
 echo "</tr>";
-/*
+
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
-echo "Liste des équipements prêts à être interrogés mais non associés à un agent";
+echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/plugin_fusioninventory.not_queried_recently.php'>".$LANG['plugin_fusioninventory']["report"][0]."</a>";
 echo "</td>";
-*/
+
 echo "</table>";
 
 commonFooter();

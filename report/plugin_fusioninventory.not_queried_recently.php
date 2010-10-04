@@ -82,13 +82,15 @@ echo "</form>";
 
 $query = "SELECT * FROM (
 SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
-   `model`, `glpi_plugin_fusioninventory_networking`.`ID` as `network_id`, 0 as `printer_id` FROM `glpi_plugin_fusioninventory_networking`
-LEFT JOIN `glpi_networking` on `FK_networking` = `glpi_networking`.`ID`
+   `model`, `glpi_networking`.`ID` as `network_id`, 0 as `printer_id`,
+   `FK_model_infos`, `FK_snmp_connection` FROM `glpi_plugin_fusioninventory_networking`
+JOIN `glpi_networking` on `FK_networking` = `glpi_networking`.`ID`
 WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
 UNION
 SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
-   `model`, 0 as `network_id`, `glpi_plugin_fusioninventory_printers`.`ID` as `printer_id` FROM `glpi_plugin_fusioninventory_printers`
-LEFT JOIN `glpi_printers` on `FK_printers` = `glpi_printers`.`ID`
+   `model`, 0 as `network_id`, `glpi_printers`.`ID` as `printer_id`,
+   `FK_model_infos`, `FK_snmp_connection` FROM `glpi_plugin_fusioninventory_printers`
+JOIN `glpi_printers` on `FK_printers` = `glpi_printers`.`ID`
 WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
 ) as `table`
 ORDER BY last_fusioninventory_update DESC";
@@ -103,6 +105,8 @@ echo "<th>".$LANG['state'][6]."</th>";
 echo "<th>".$LANG['common'][19]."</th>";
 echo "<th>".$LANG['common'][20]."</th>";
 echo "<th>".$LANG['common'][22]."</th>";
+echo "<th>".$LANG['plugin_fusioninventory']["profile"][24]."</th>";
+echo "<th>".$LANG['plugin_fusioninventory']["model_info"][3]."</th>";
 echo "</tr>";
 
 if ($result=$DB->query($query)) {
@@ -133,6 +137,12 @@ if ($result=$DB->query($query)) {
       } else if ($data['printer_id'] > 0) {
          echo "<td>".getDropdownName("glpi_dropdown_model_printers", $data['model'])."</td>";
       }
+      echo "<td>";
+      echo getDropdownName('glpi_plugin_fusioninventory_model_infos', $data['FK_model_infos']);
+      echo "</td>";
+      echo "<td>";
+      echo getDropdownName('glpi_plugin_fusioninventory_snmp_connection', $data['FK_snmp_connection']);
+      echo "</td>";
       echo "</tr>";
    }
 }
