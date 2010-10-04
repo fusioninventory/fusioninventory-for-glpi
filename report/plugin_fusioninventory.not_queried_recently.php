@@ -83,16 +83,17 @@ echo "</form>";
 $query = "SELECT * FROM (
 SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `model`, `glpi_networking`.`ID` as `network_id`, 0 as `printer_id`,
-   `FK_model_infos`, `FK_snmp_connection` FROM `glpi_plugin_fusioninventory_networking`
+   `FK_model_infos`, `FK_snmp_connection`, `ifaddr` FROM `glpi_plugin_fusioninventory_networking`
 JOIN `glpi_networking` on `FK_networking` = `glpi_networking`.`ID`
 WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
 UNION
-SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
+SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `model`, 0 as `network_id`, `glpi_printers`.`ID` as `printer_id`,
-   `FK_model_infos`, `FK_snmp_connection` FROM `glpi_plugin_fusioninventory_printers`
+   `FK_model_infos`, `FK_snmp_connection`, `ifaddr` FROM `glpi_plugin_fusioninventory_printers`
 JOIN `glpi_printers` on `FK_printers` = `glpi_printers`.`ID`
+LEFT JOIN `glpi_networking_ports` on `glpi_networking_ports`.`on_device` = `glpi_printers`.`ID`
 WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
-) as `table`
+AND `glpi_networking_ports`.`device_type`='".PRINTER_TYPE."') as `table`
 ORDER BY last_fusioninventory_update DESC";
 
 $CommonItem = new CommonItem;
@@ -102,6 +103,7 @@ echo "<tr class='tab_bg_1'>";
 echo "<th>".$LANG['common'][16]."</th>";
 echo "<th>".$LANG['plugin_fusioninventory']["snmp"][52]."</th>";
 echo "<th>".$LANG['state'][6]."</th>";
+echo "<th>".$LANG['networking'][14]."</th>";
 echo "<th>".$LANG['common'][19]."</th>";
 echo "<th>".$LANG['common'][20]."</th>";
 echo "<th>".$LANG['common'][22]."</th>";
@@ -130,6 +132,7 @@ if ($result=$DB->query($query)) {
          echo $LANG['Menu'][2];
       }
       echo "</td>";
+      echo "<td>".$data['ifaddr']."</td>";
       echo "<td>".$data['serial']."</td>";
       echo "<td>".$data['otherserial']."</td>";
       if ($data['network_id'] > 0) {
