@@ -6,9 +6,10 @@ require_once dirname(__FILE__) ."/../Classes/Logger.class.php";
 
 $configs = parse_ini_file(dirname(__FILE__) ."/configs.ini", true);
 
-define("LIBSERVERFUSIONINVENTORY_LOG_FILE",dirname(__FILE__)."/../data/logs");
-define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",dirname(__FILE__)."/".$configs['storageLocation']);
+define("LIBSERVERFUSIONINVENTORY_LOG_DIR",dirname(__FILE__)."/../data/logs");
+define("LIBSERVERFUSIONINVENTORY_LOG_FILE",dirname(__FILE__)."/../data/logs/fusioninventory.log");
 define("LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME","Hooks");
+define("LIBSERVERFUSIONINVENTORY_PRINTERROR",$configs["application"]["printError"]);
 
 if (file_exists ($path=dirname(__FILE__) ."/applications/{$configs['application']['name']}/FusInvHooks.class.php"))
 {
@@ -25,5 +26,6 @@ $fusionLibServer->setPrologFreq($configs['prolog']['freq']);
 foreach($configs['actions'] as $action){
     $fusionLibServer->setActionConfig($action, $configs[$action]);
 }
+$fusionLibServer->checkPermissions();
 $fusionLibServer->start();
 ?>

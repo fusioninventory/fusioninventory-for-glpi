@@ -1,0 +1,5 @@
+data/
+*~
+user/criterias/
+user/machines/
+Classes/Storage/Inventory/SourceDataFilter

@@ -9,7 +9,7 @@
 
 <body>
 
-<div id="title"><a href='index.php'><img src="Style/images/logo4.png" /></a></div>
+<div id="title"><a href='index.php'><img src="Style/images/logo5.png" width="150" height="50"/></a></div>
 
 <div id="container">
 <div id="menu">
@@ -34,7 +34,15 @@ echo "<dl>";
 while ($row = $res->fetch())
 {
     echo "<dt>{$row['sectionName']}";
-    echo "<dd><blockquote>{$row['sectionData']}</blockquote>";
+    $datasArray = unserialize($row['sectionData']);
+    ob_start();
+    foreach($datasArray as $dataName => $dataValue)
+    {
+        echo "$dataName = $dataValue <br />";
+    }
+    $datas = ob_get_contents();
+    ob_end_clean();
+    echo "<dd><blockquote>$datas</blockquote>";
 }
 echo "</dl>";
 echo "</fieldset>";

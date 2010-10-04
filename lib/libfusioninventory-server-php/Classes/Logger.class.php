@@ -18,28 +18,31 @@ class Logger
     {
         if(!file_exists(LIBSERVERFUSIONINVENTORY_LOG_FILE))
         {
-            mkdir(LIBSERVERFUSIONINVENTORY_LOG_FILE,0777,true);
+            mkdir(LIBSERVERFUSIONINVENTORY_LOG_DIR,0777,true);
         }
 
         $this->_fileHandle = fopen(LIBSERVERFUSIONINVENTORY_LOG_FILE, "a");
-
-        if (!is_writable(LIBSERVERFUSIONINVENTORY_LOG_FILE))
-        {
-            throw new Exception("$filePath.$fileName isn't writable. Check permissions.");
-        }
-
     }
 
 
     public function notifyDebugMessage($line)
     {
+        //echo "\n $line";
         $this->_log($line, Logger::DEBUG);
     }
 
 
     public function notifyExceptionMessage($line)
     {
+        if(LIBSERVERFUSIONINVENTORY_PRINTERROR)
+        {
+            echo "\n $line";
+        }
         $this->_log($line, Logger::EXCEPT);
+        if(LIBSERVERFUSIONINVENTORY_PRINTERROR)
+        {
+            echo "\n $line";
+        }
     }
 
 

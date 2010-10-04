@@ -1,17 +1,52 @@
- +----------------------------------------------------------------------+
- | FusionLibServer provides a solution to process data from both OCS    |
- | agents and Fusion agents.                                            |
- | Users can easily retrieve data from these agents with hooks system.  |
- +----------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------------------------------------+
+FusionInventory Library Server provides a modular and efficient solution to complete GLPI
+or other third-party applications. 
+The library process data from both OCS agents and Fusion agents.
+Users can easily retrieve data from these agents with the built-in hook system.
+Right now it provides an up-to-date inventory.
+Later, there will be other actions such as netdiscovery, snmpquery and wakeonlan.
 
-- You have to correctly complete:
-user/configs.ini,
-user/applications/{yourApplicationName}/FusInvHooks.class.php
+WIKI:
+see http://forge.fusioninventory.org/projects/fusioninventory-server-phplib/wiki
 
-- Give enough permission to www-data (apache) to write and read all folders in the library.
+INSTALL:
+The library comes with 3 folders:
+"Classes/"
+"data/"
+"user/"
 
-- Launch /path/to/FusionLib/Classes/Storage/Inventory/SourceDataFilter/FilesToTreeFolder.php script
+You need to give write permission to the apache process on the following folders :
+"/path/to/libfusinv-server/data/"
+"/path/to/libfusinv-server/user/"
 
-- URI Server: /path/to/FusionLib/user/main.php
+Test your installation (see TESTS)
 
--Ready to use application as an example : /path/to/FusionLib/user/applications/MyWebSite
+CONFIGURATION:
+see in "/path/to/libfusinv-server/user/configs.ini" file.
+
+HOOKS (for inventory action):
+Create your own hooks according to your needs in "/path/to/libfusinv-server/user/applications/<MyApplication>/FusInvHooks.class.php"
+The structure of hooks is available in website sample in "/path/to/libfusinv-server/user/applications/MyWebSite/FusInvHooks.class.php"
+
+That's it ! Your good to go.
+
+ABOUT:
+The "Classes/" folder holds all the core components of FusionInventory Library Server.
+The "data/" folder is used to store the following informations :
+- informations about machine (used by the inventory action)
+- log file
+- DataFilters, to filter some data from agents in order to provide more valuable information. 
+The "user/" folder holds all user-configurable files (config.ini, his application)
+
+TESTS:
+To test the library:
+-  execute library on CLI with the path of the file from "path/to/libfusinv-server/" to retrieve datas (you can specify an archive (zip only) for more files)
+    "php path/to/libfusinv-server/user/main.php path/to/file/file.ocs"
+    OR "php path/to/libfusinv-server/user/main.php path/to/file/lotOfFiles.zip"
+- Otherwise, specify URI Server to the agent:
+    "./fusioninventory-agent --server path/to/libfusinv-server/user/main.php"
+
+You can check the logs in "data/logs/fusioninventory.log".
+You can retrieve all information about the machine on an sample website: "/path/to/libfusinv-server/user/applications/MyWebSite".
+
++-------------------------------------------------------------------------------------------------------------------------------------+

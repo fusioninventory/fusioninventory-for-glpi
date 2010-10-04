@@ -2,42 +2,46 @@ body {
     font-size: 16px;
 }
 
+a img {
+    border: none;
+}
+
 /*** Title ***/
 #title{
     text-align:left;
     width:800px;
     height:51px;
-    background-color:#ddf29c;
+    background-color:#f3d44d;
 }
 /*End Title*/ 
 
 #container {
-    background-color: green;
+    background-color: #f3d44d;
     float:left;
     width:200px;
 }
 
 /***  Menu ***/
 #container #menu div a {
-    height: 26px;
+    height: 25px;
     padding-left: 10px;
     padding-top: 6px;
 }
 
 #container #menu div a:link,#menu div a:visited {
     display: block;
-    background: url(images/menu_div.gif);
+    background: url(images/menu_div2.gif);
     background-repeat: no-repeat;
 }
 
 #container #menu div a:hover {
-    color: green;
-    background: url(images/menu_div.gif) 0 -32px;
+    color: red;
+    background: url(images/menu_div2.gif) 0 -32px;
     background-repeat: no-repeat;
 }
 
 #container #menu div a:active {
-    background: url(images/menu_div.gif) 0 -64px;
+    background: url(images/menu_div2.gif) 0 -64px;
     background-repeat: no-repeat;
 }
 /*  End Menu */ 

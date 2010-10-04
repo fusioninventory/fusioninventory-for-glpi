@@ -35,14 +35,6 @@ class InventoryAction extends Action
     */
     public function checkConfig($applicationName, $config)
     {
-
-        if (!is_writable(dirname(__FILE__) ."/../../data")
-        OR !is_writable(dirname(__FILE__) ."/../../user")
-        OR !is_writable(dirname(__FILE__) ."/../../Classes"))
-        {
-            throw new MyException ("Give permission to apache to write on data/ and user/ and Classes/");
-        }
-
         if (!(file_exists(dirname(__FILE__) ."/../../user/applications/$applicationName")))
         {
             throw new MyException ("Put your application in the user/applications directory");
@@ -79,7 +71,6 @@ class InventoryAction extends Action
         } else {
             throw new MyException ("you have to complete correctly configuration array for inventory");
         }
-
     }
 
 
@@ -93,7 +84,7 @@ class InventoryAction extends Action
 
         $libData = StorageInventoryFactory::createStorage($this->_applicationName, $this->_config, $simpleXMLObj);
 
-        $log->notifyDebugMessage("-- INVENTORY ACTION START --");
+        $log->notifyDebugMessage("INVENTORY ACTION START");
 
         if ($internalId = $libData->isMachineExist())
         {
@@ -130,7 +121,7 @@ class InventoryAction extends Action
                 echo 'created machine stage: error';
             }
         }
-         $log->notifyDebugMessage("-- INVENTORY ACTION END --");
+         $log->notifyDebugMessage("INVENTORY ACTION END");
 
          $xmlResponse = $this->_getActionXMLResponse();
          echo $xmlResponse;
@@ -138,27 +129,42 @@ class InventoryAction extends Action
 
 
     /**
-    * get all sections with its hash,name and data from XML file
+    * get all sections with its name and data from XML file
     * @param simpleXML $simpleXMLObj
-    * @return array $xmlSections (hash,name and data)
+    * @return array $xmlSections (name and serialized data)
     */
     private function _getXMLSections($simpleXMLObj)
     {
 
         $xmlSections = array();
 
+        $sectionsToFilter = array();
+        if($this->_config["filter"])
+        {
+            array_push ($sectionsToFilter,
+            'USBDEVICES',
+            'CONTROLLERS',
+            'NETWORKS');
 
-        $sectionsToFilter = array (
-        'USBDEVICES',
-        'CONTROLLERS',
-        'NETWORKS');
-
+            
+            DataFilter::init();
+        }
         foreach($simpleXMLObj->CONTENT->children() as $section)
         {
 
             if(in_array($section->getName(), $sectionsToFilter))
             {
-                DataFilter::filter($section);
+                $nofilter = DataFilter::filter($section);
+                //if the folder for the filter doesn't exist, delete this element from array.
+                if($nofilter){
+                    foreach($sectionsToFilter as $fKey => $fValue)
+                    {
+                        if ($fValue == $nofilter)
+                        {
+                            unset($sectionsToFilter[$fKey]);
+                        }
+                    }
+                }
             }
 
             $sectionData = array();
@@ -168,11 +174,12 @@ class InventoryAction extends Action
             }
 
             //sectionId initialization, we will affect id after hook createSection return value.
+            $serializedSectionData = serialize($sectionData);
             array_push($xmlSections, (array(
             "sectionId" => 0,
-            "sectionHash" => md5(serialize($sectionData)),
             "sectionName" => $section->getName(),
-            "sectionData" => $sectionData)));
+            "sectionDatawName" => $serializedSectionData.$section->getName(),
+            "sectionData" => $serializedSectionData)));
         }
         return $xmlSections;
     }
