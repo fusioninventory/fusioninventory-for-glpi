@@ -465,6 +465,7 @@ $LANG['plugin_fusioninventory']["mapping"][430]="networking > port > vlan";
 $LANG['plugin_fusioninventory']["mapping"][431]="networking > remote chassis id LLDP";
 $LANG['plugin_fusioninventory']["mapping"][432]="networking > remote port LLDP";
 $LANG['plugin_fusioninventory']["mapping"][433]="networking > localchassis id LLDP";
+$LANG['plugin_fusioninventory']["mapping"][434]="printer > meter > total number of large printed pages";
 
 $LANG['plugin_fusioninventory']["mapping"][101]="";
 $LANG['plugin_fusioninventory']["mapping"][102]="";
@@ -552,6 +553,8 @@ $LANG['plugin_fusioninventory']["mapping"][192]="Waste bin Restant";
 $LANG['plugin_fusioninventory']["mapping"][193]="Maintenance kit Max";
 $LANG['plugin_fusioninventory']["mapping"][194]="Maintenance kit Utilisé";
 $LANG['plugin_fusioninventory']["mapping"][195]="Maintenance kit Restant";
+$LANG['plugin_fusioninventory']["mapping"][196]="Grey ink cartridge";
+
 $LANG['plugin_fusioninventory']["mapping"][1423]="Total number of printed pages (print mode)";
 $LANG['plugin_fusioninventory']["mapping"][1424]="Number of printed black and white pages (print mode)";
 $LANG['plugin_fusioninventory']["mapping"][1425]="Number of printed color pages (print mode)";
@@ -559,6 +562,7 @@ $LANG['plugin_fusioninventory']["mapping"][1426]="Total number of printed pages 
 $LANG['plugin_fusioninventory']["mapping"][1427]="Number of printed black and white pages (copy mode)";
 $LANG['plugin_fusioninventory']["mapping"][1428]="Number of printed color pages (copy mode)";
 $LANG['plugin_fusioninventory']["mapping"][1429]="Total number of printed pages (fax mode)";
+$LANG['plugin_fusioninventory']["mapping"][1434]="Total number of large printed pages";
 
 
 $LANG['plugin_fusioninventory']["printer"][0]="pages";

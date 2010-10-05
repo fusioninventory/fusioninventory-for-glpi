@@ -469,6 +469,9 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgemagentalight']['shortname'] = $
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgeyellow']['name'] = $LANG['plugin_fusioninventory']["mapping"][137];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgeyellow']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][137];
 
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgegrey']['name'] = $LANG['plugin_fusioninventory']["mapping"][196];
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['cartridgegrey']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][196];
+
    // maintenance kit
    $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekit']['name'] = $LANG['plugin_fusioninventory']["mapping"][156];
    $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['maintenancekit']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][156];
@@ -606,6 +609,13 @@ $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['name'] = $L
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1429];
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['type'] = 'text';
 $FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecountertotalpages_fax']['dropdown'] = '';
+
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterlargepages']['table'] = 'glpi_plugin_fusioninventory_printers_history';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterlargepages']['field'] = '';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterlargepages']['name'] = $LANG['plugin_fusioninventory']["mapping"][434];
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterlargepages']['shortname'] = $LANG['plugin_fusioninventory']["mapping"][1434];
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterlargepages']['type'] = 'text';
+$FUSIONINVENTORY_MAPPING[PRINTER_TYPE]['pagecounterlargepages']['dropdown'] = '';
 
 // Printers : Networking
 

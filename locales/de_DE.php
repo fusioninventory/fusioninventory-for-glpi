@@ -552,6 +552,8 @@ $LANG['plugin_fusioninventory']["mapping"][192]="Waste bin Restant";
 $LANG['plugin_fusioninventory']["mapping"][193]="Maintenance kit Max";
 $LANG['plugin_fusioninventory']["mapping"][194]="Maintenance kit Utilisé";
 $LANG['plugin_fusioninventory']["mapping"][195]="Maintenance kit Restant";
+$LANG['plugin_fusioninventory']["mapping"][196]="Grey ink cartridge";
+
 $LANG['plugin_fusioninventory']["mapping"][1423]="Gesamtanzahl gedruckter Seiten (Druck)";
 $LANG['plugin_fusioninventory']["mapping"][1424]="Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)";
 $LANG['plugin_fusioninventory']["mapping"][1425]="Gesamtanzahl farbig gedruckter Seiten (Druck)";

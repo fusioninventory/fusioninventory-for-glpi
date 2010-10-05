@@ -465,6 +465,7 @@ $LANG['plugin_fusioninventory']["mapping"][430]="réseaux > port > vlan";
 $LANG['plugin_fusioninventory']["mapping"][431]="réseaux > chassis id distant LLDP";
 $LANG['plugin_fusioninventory']["mapping"][432]="réseaux > port distant LLDP";
 $LANG['plugin_fusioninventory']["mapping"][433]="réseaux > chassis id local LLDP";
+$LANG['plugin_fusioninventory']["mapping"][434]="imprimante > compteur > nombre total de pages larges imprimées";
 
 
 $LANG['plugin_fusioninventory']["mapping"][101]="";
@@ -553,6 +554,7 @@ $LANG['plugin_fusioninventory']["mapping"][192]="Bac récupérateur de déchet R
 $LANG['plugin_fusioninventory']["mapping"][193]="Kit de maintenance Max";
 $LANG['plugin_fusioninventory']["mapping"][194]="Kit de maintenance Utilisé";
 $LANG['plugin_fusioninventory']["mapping"][195]="Kit de maintenance Restant";
+$LANG['plugin_fusioninventory']["mapping"][196]="Cartouche grise";
 
 
 $LANG['plugin_fusioninventory']["mapping"][1423]="Nombre total de pages imprimées (impression)";
@@ -562,6 +564,7 @@ $LANG['plugin_fusioninventory']["mapping"][1426]="Nombre total de pages imprimé
 $LANG['plugin_fusioninventory']["mapping"][1427]="Nombre de pages noir et blanc imprimées (copie)";
 $LANG['plugin_fusioninventory']["mapping"][1428]="Nombre de pages couleur imprimées (copie)";
 $LANG['plugin_fusioninventory']["mapping"][1429]="Nombre total de pages imprimées (fax)";
+$LANG['plugin_fusioninventory']["mapping"][1434]="Nombre total de pages larges imprimées";
 
 
 $LANG['plugin_fusioninventory']["printer"][0]="pages";
