@@ -132,8 +132,8 @@ class PluginFusinvdeployFile extends CommonDBTM {
          echo "<td align='center'>";
          echo "<input type='file' name='uploadfile' size='39'>";
       } else {
-         echo "<td></td>";
-         echo "<td align='center'>";
+         echo "<td colspan='2' align='center'>";
+         echo $LANG['document'][26];
       }
       echo "</td>";
       echo "</tr>";

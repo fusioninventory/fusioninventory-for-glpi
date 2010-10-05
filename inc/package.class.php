@@ -221,7 +221,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       // Create zip file
       $filename_package = sha1(serialize($this->fields));
       if ($zip->open($path_package.$filename_package, ZIPARCHIVE::CREATE)!==TRUE) {
-         exit("Impossible d'ouvrir <".$path_package.$filename_package.">\n");
+         exit("Imposs
+            ible d'ouvrir <".$path_package.$filename_package.">\n");
       }
 
       // Add each files
