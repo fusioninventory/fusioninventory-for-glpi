@@ -72,6 +72,11 @@ function pluginFusinvdeployInstall() {
       $a_rights['status'] = 'w';
       PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
 
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+
+      $insert = array('glpi_path'=>'');
+      $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
+
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
@@ -119,6 +124,9 @@ function pluginFusinvdeployUninstall() {
          $DB->query($query_delete) or die($DB->error());
       }
    }
+
+   $config = new PluginFusionInventoryConfig;
+   $config->cleanConfig($plugins_id);
 
    return true;
 }
