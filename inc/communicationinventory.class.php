@@ -69,16 +69,22 @@ class PluginFusinvinventoryCommunicationInventory extends PluginFusinvsnmpCommun
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
 
-      
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvinventoryCommunicationInventory->import().');
 
-      // Send datas to libserver
-      $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory;
-      $PluginFusinvinventoryInventory->sendLib($p_DEVICEID, $p_CONTENT, $p_xml);
+      $errors = "";
+      $agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
+      if ((!empty($agent)) AND ($PluginFusioninventoryAgentmodule->getAgentsCanDo('INVENTORY', $agent['id']))) {
+      
+         // Send datas to libserver
+         $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory;
+         $PluginFusinvinventoryInventory->sendLib($p_DEVICEID, $p_CONTENT, $p_xml);
 
-      $errors = $PluginFusinvinventoryInventory->import($p_DEVICEID, $p_CONTENT);
+         $errors = $PluginFusinvinventoryInventory->import($p_DEVICEID, $p_CONTENT);
+      }
 
       return $errors;
    }
