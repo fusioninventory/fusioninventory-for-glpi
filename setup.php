@@ -134,6 +134,12 @@ function plugin_init_fusioninventory() {
 		'typename' => $LANG['plugin_fusioninventory']["constructdevice"][0]
 		));
 
+   registerPluginType('fusioninventory', "PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY", 5168, array(
+      'tablename' => 'glpi_printers',
+      'formpage' => '../../front/printer.form.php',
+      'searchpage' => 'report/plugin_fusioninventory.print_counter.php'
+      ));
+
 	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusioninventory_errors");
 
 	$PLUGIN_HOOKS['init_session']['fusioninventory'] = 'plugin_fusioninventory_initSession';
@@ -166,6 +172,7 @@ function plugin_init_fusioninventory() {
          $report_list["report/plugin_fusioninventory.switch_ports.history.php"] = $LANG['plugin_fusioninventory']["menu"][5];
          $report_list["report/plugin_fusioninventory.ports_date_connections.php"] = $LANG['plugin_fusioninventory']["menu"][6];
 			$report_list["report/plugin_fusioninventory.not_queried_recently.php"] = $LANG['plugin_fusioninventory']["report"][0];
+         $report_list["report/plugin_fusioninventory.printer_counter.php"] = $LANG['plugin_fusioninventory']["report"][1];
          $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
 
 			if (haveRight("snmp_models", "r") || haveRight("snmp_authentification", "r")) {

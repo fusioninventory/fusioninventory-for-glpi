@@ -659,7 +659,140 @@ function plugin_fusioninventory_getSearchOption() {
    $sopt[PLUGIN_FUSIONINVENTORY_CONSTRUCT_DEVICE][7]['datatype']='itemptype';
 
 
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY]['common'] = $LANG['plugin_fusioninventory']["profile"][28];
    
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][1]['table'] = 'glpi_printers';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][1]['field'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][1]['linkfield'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][1]['name'] = $LANG['common'][16];
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][1]['datatype']='itemlink';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][24]['table'] = 'glpi_dropdown_locations';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][24]['field'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][24]['linkfield'] = 'location';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][24]['name'] = $LANG['common'][15];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][19]['table'] = 'glpi_type_printers';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][19]['field'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][19]['linkfield'] = 'type';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][19]['name'] = $LANG['common'][17];
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][19]['datatype']='itemptype';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][2]['table'] = 'glpi_dropdown_model_printers';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][2]['field'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][2]['linkfield'] = 'model';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][2]['name'] = $LANG['common'][22];
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][2]['datatype']='itemptype';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][18]['table'] = 'glpi_dropdown_state';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][18]['field'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][18]['linkfield'] = 'state';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][18]['name'] = $LANG['state'][0];
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][18]['datatype']='itemptype';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][20]['table'] = 'glpi_printers';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][20]['field'] = 'serial';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][20]['linkfield'] = 'serial';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][20]['name'] = $LANG['common'][19];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][23]['table'] = 'glpi_printers';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][23]['field'] = 'otherserial';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][23]['linkfield'] = 'otherserial';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][23]['name'] = $LANG['common'][20];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][21]['table'] = 'glpi_users';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][21]['field'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][21]['linkfield'] = 'FK_users';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][21]['name'] = $LANG['common'][34];
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][21]['datatype']='itemptype';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][3]['table'] = 'glpi_dropdown_manufacturer';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][3]['field'] = 'name';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][3]['linkfield'] = 'FK_glpi_enterprise';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][3]['name'] = $LANG['common'][5];
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][3]['datatype']='itemptype';
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][5]['table'] = 'glpi_networking_ports';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][5]['field'] = 'ifaddr';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][5]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][5]['name'] = $LANG['networking'][14];
+   
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][4]['table'] = 'glpi_infocoms';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][4]['field'] = 'budget';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][4]['linkfield'] = '';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][4]['name'] = $LANG['financial'][87];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][6]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][6]['field'] = 'pages_total';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][6]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][6]['name'] = $LANG['plugin_fusioninventory']["mapping"][128];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][7]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][7]['field'] = 'pages_n_b';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][7]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][7]['name'] = $LANG['plugin_fusioninventory']["mapping"][129];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][8]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][8]['field'] = 'pages_color';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][8]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][8]['name'] = $LANG['plugin_fusioninventory']["mapping"][130];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][9]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][9]['field'] = 'pages_recto_verso';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][9]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][9]['name'] = $LANG['plugin_fusioninventory']["mapping"][154];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][10]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][10]['field'] = 'scanned';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][10]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][10]['name'] = $LANG['plugin_fusioninventory']["mapping"][155];
+   
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][11]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][11]['field'] = 'pages_total_print';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][11]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][11]['name'] = $LANG['plugin_fusioninventory']["mapping"][1423];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][12]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][12]['field'] = 'pages_n_b_print';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][12]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][12]['name'] = $LANG['plugin_fusioninventory']["mapping"][1424];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][13]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][13]['field'] = 'pages_color_print';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][13]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][13]['name'] = $LANG['plugin_fusioninventory']["mapping"][1425];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][14]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][14]['field'] = 'pages_total_copy';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][14]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][14]['name'] = $LANG['plugin_fusioninventory']["mapping"][1426];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][15]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][15]['field'] = 'pages_n_b_copy';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][15]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][15]['name'] = $LANG['plugin_fusioninventory']["mapping"][1427];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][16]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][16]['field'] = 'pages_color_copy';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][16]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][16]['name'] = $LANG['plugin_fusioninventory']["mapping"][1428];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][17]['table'] = 'glpi_plugin_fusioninventory_printers_history';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][17]['field'] = 'pages_total_fax';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][17]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][17]['name'] = $LANG['plugin_fusioninventory']["mapping"][1429];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][22]['table'] = 'glpi_plugin_fusioninventory_printers';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][22]['field'] = 'last_fusioninventory_update';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][22]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][22]['name'] = $LANG['plugin_fusioninventory']["snmp"][52];
+
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][100]['table'] = 'glpi_printers';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][100]['field'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][100]['linkfield'] = 'ID';
+   $sopt[PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY][100]['name'] = 'ID';
+
+
 	return $sopt;
 }
 
@@ -670,6 +803,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 
+//echo $table.'.'.$field."<br/>";
 //	echo "GiveItem : ".$field."<br/>";
 	switch ($type) {
 		// * Computer List (front/computer.php)
@@ -1090,6 +1224,69 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
          if ($table.'.'.$field == 'glpi_plugin_fusioninventory_task.id') {
             return $data["ITEM_$num"];
          }
+         break;
+
+
+      case PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY:
+         switch ($table.'.'.$field) {
+
+            case 'glpi_printers.name':
+
+               // Search pages in printer history to limit SQL queries
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_start']))
+                  unset($_SESSION['glpi_plugin_fusioninventory_history_start']);
+               if (isset($_SESSION['glpi_plugin_fusioninventory_history_end']))
+                  unset($_SESSION['glpi_plugin_fusioninventory_history_end']);
+               if ((isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
+                       AND (isset($_SESSION['glpi_plugin_fusioninventory_date_end']))) {
+
+                  $query = "SELECT * FROM `glpi_plugin_fusioninventory_printers_history`
+                     WHERE FK_printers='".$data['ITEM_0_2']."'
+                        AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
+                     ORDER BY date asc
+                     LIMIT 1";
+                  $result=$DB->query($query);
+                  while ($data2=$DB->fetch_array($result)) {
+                     $_SESSION['glpi_plugin_fusioninventory_history_start'] = $data2;
+                  }
+                  $query = "SELECT * FROM `glpi_plugin_fusioninventory_printers_history`
+                     WHERE FK_printers='".$data['ITEM_0_2']."'
+                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']."'
+                     ORDER BY date desc
+                     LIMIT 1";
+                  $result=$DB->query($query);
+                  while ($data2=$DB->fetch_array($result)) {
+                     $_SESSION['glpi_plugin_fusioninventory_history_end'] = $data2;
+                  }
+               }
+               return "";
+               break;
+
+            }
+
+         switch($table) {
+
+            case 'glpi_plugin_fusioninventory_printers_history':
+               if ((isset($_SESSION['glpi_plugin_fusioninventory_history_start'][$field]))
+                               AND (isset($_SESSION['glpi_plugin_fusioninventory_history_end'][$field]))) {
+                  $counter_start = $_SESSION['glpi_plugin_fusioninventory_history_start'][$field];
+                  $counter_end = $_SESSION['glpi_plugin_fusioninventory_history_end'][$field];
+                  if ($_SESSION['glpi_plugin_fusioninventory_date_start'] == "1970-01-01") {
+                     $counter_start = 0;
+                  }
+                  $number = $counter_end - $counter_start;
+                  if (($number == '0')) {
+                      return '-';
+                  } else {
+                     return $number;
+                  }
+                  
+               } else {
+                  return '-';
+               }
+               break;
+               
+            }
          break;
 
 	}
@@ -1798,7 +1995,7 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
 	$table=$SEARCH_OPTION[$type][$ID]["table"];
 	$field=$SEARCH_OPTION[$type][$ID]["field"];
 
-	switch ($type) {
+   switch ($type) {
 		// * Computer List (front/computer.php)
 		case COMPUTER_TYPE :
 			switch ($table.".".$field) {
@@ -1847,7 +2044,7 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
 			}
 			break;
 
-      case PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP :
+      case PLUGIN_FUSIONINVENTORY_SNMP_RANGEIP:
          switch ($table.".".$SEARCH_OPTION[$type][$ID]["linkfield"]) {
 
             case "glpi_plugin_fusioninventory_agents.FK_fusioninventory_agents_query" :
@@ -1856,7 +2053,14 @@ function plugin_fusioninventory_addSelect($type,$ID,$num) {
 
          }
          break;
-      
+
+      case PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY:
+         if ($table.".".$field == "glpi_infocoms.budget") {
+            return "glpi_dropdown_budget.name AS ITEM_$num, ";
+         }
+         break;
+
+    
       
 	}
 	return "";
@@ -1876,6 +2080,10 @@ function plugin_fusioninventory_forceGroupBy($type) {
          // ** FusionInventory - switch
          return "GROUP BY glpi_printers.id";
          break;
+
+//     case PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY:
+//         return "GROUP BY ITEM_0";
+//         break;
 
     }
     return false;
@@ -2136,6 +2344,19 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 		case PLUGIN_FUSIONINVENTORY_SNMP_HISTORY :
          return " LEFT JOIN `glpi_networking_ports` ON ( `glpi_networking_ports`.`ID` = `glpi_plugin_fusioninventory_snmp_history`.`FK_ports` ) ";
 			break;
+
+      case PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY:
+         if ($new_table== "glpi_infocoms") {
+            return "LEFT JOIN glpi_infocoms ON (glpi_printers.ID = glpi_infocoms.FK_device AND glpi_infocoms.device_type='".PRINTER_TYPE."')
+                    LEFT JOIN glpi_dropdown_budget ON glpi_dropdown_budget.ID = glpi_infocoms.budget ";
+         } else if ($new_table== "glpi_networking_ports") {
+            return "LEFT JOIN glpi_networking_ports ON (glpi_printers.ID = glpi_networking_ports.on_device AND glpi_networking_ports.device_type='".PRINTER_TYPE."')  ";
+         } else if ($new_table == "glpi_plugin_fusioninventory_printers") {
+            return "LEFT JOIN glpi_plugin_fusioninventory_printers ON (glpi_printers.ID = glpi_plugin_fusioninventory_printers.FK_printers) ";
+         }
+         break;
+
+
 	}
 	return "";
 }
@@ -2290,6 +2511,12 @@ function plugin_fusioninventory_addOrderBy($type,$ID,$order,$key=0) {
 						break;
 
 			}
+       break;
+
+       case PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY:
+         if ($table.".".$field == "glpi_infocoms.budget") {
+            return " ORDER BY glpi_dropdown_budget.name $order ";
+         }
 	}
 	return "";
 }
@@ -2578,6 +2805,18 @@ function plugin_fusioninventory_addWhere($link,$nott,$type,$ID,$val) {
 					break;
 
 			}
+         break;
+
+       case PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY:
+         if ($table.".".$field == "glpi_infocoms.budget") {
+            $ADD = "";
+            if ($nott=="0"&&$val=="NULL") {
+               $ADD=" OR glpi_dropdown_budget.name IS NULL ";
+            } else if ($nott=="1"&&$val=="NULL") {
+               $ADD=" OR glpi_dropdown_budget.name IS NOT NULL ";
+            }
+            return $link." (glpi_dropdown_budget.name LIKE '%".$val."%' $ADD ) ";
+         }
          break;
 
 	}
