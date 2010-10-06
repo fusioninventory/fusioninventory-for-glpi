@@ -1,8 +1,10 @@
 <model>
-	<name><![CDATA[1718358]]></name>
+	<name><![CDATA[5652371]]></name>
 	<type>3</type>
-	<key>Printer0231</key>
-	<comments><![CDATA[Brother NC-150h, Firmware Ver.0.09  ,MID 8CA-E46-001
+	<key>Printer0292</key>
+	<comments><![CDATA[Canon iR3235 /P
+
+Canon iR3245 /P
 
 ]]></comments>
 	<oidlist>
@@ -28,7 +30,7 @@
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.9.2.1.8.1.1]]></oid>
+			<oid><![CDATA[.1.3.6.1.2.1.43.8.2.1.14.1.1]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
@@ -88,16 +90,6 @@
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.4.1.11.2.3.9.1.1.7.0]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[informations]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
@@ -138,17 +130,47 @@
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.12.0]]></oid>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.11.1.4.1.4.108]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[otherserial]]></mapping_name>
+ 			<mapping_name><![CDATA[pagecounterblackpages]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.10.2.1.4.1.1]]></oid>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.11.1.4.1.4.222]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[pagecounterblackpages_copy]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.11.1.4.1.4.114]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[pagecounterrectoversopages]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.11.1.4.1.4.501]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[pagecounterscannedpages]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.11.1.4.1.4.102]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
@@ -158,7 +180,27 @@
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.5.1.1.17.1]]></oid>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.11.1.4.1.4.202]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[pagecountertotalpages_copy]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.11.1.4.1.4.301]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[pagecountertotalpages_print]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.1602.1.2.1.4.0]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
@@ -182,27 +224,7 @@
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
 			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[tonercyan]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.4]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[tonermagenta]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.3]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>3</mapping_type>
- 			<mapping_name><![CDATA[toneryellow]]></mapping_name>
+ 			<mapping_name><![CDATA[wastetoner]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

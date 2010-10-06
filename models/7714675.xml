@@ -40,6 +40,8 @@ ProCurve J9086A Switch 2610-24/12PWR, revision R.11.22, ROM R.10.06 (/sw/code/bu
 
 ProCurve J9089A Switch 2610-48-PWR, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
+SMC 6624M TigerSwitch 10/100, revision F.02.06, ROM F.02.01a
+
 ]]></comments>
 	<oidlist>
 		<oidobject>
