@@ -161,13 +161,15 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       // Mapping for Canon
          $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.102']          = 'pagecountertotalpages';
          $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.108']          = 'pagecounterblackpages';
-
+         // Total color not present in mib
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.114']          = 'pagecounterrectoversopages';
          $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.202']          = 'pagecountertotalpages_copy';
-         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.218']          = 'pagecountercolorpages_copy';
+         // Total copie color not present in mib
          $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.222']          = 'pagecounterblackpages_copy';
-         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.302']          = 'pagecountertotalpages_print';
-         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.312']          = 'pagecountercolorpages_print';
-         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.314']          = 'pagecounterblackpages_print';
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.301']          = 'pagecountertotalpages_print';
+         // Total color printed page not present in mib
+         // Total black and white printed page not present in mib
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.501']          = 'pagecounterscannedpages';
          
          
 // To delete
