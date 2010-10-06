@@ -1243,6 +1243,7 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
                   $query = "SELECT * FROM `glpi_plugin_fusioninventory_printers_history`
                      WHERE FK_printers='".$data['ITEM_0_2']."'
                         AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
+                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
                      ORDER BY date asc
                      LIMIT 1";
                   $result=$DB->query($query);
@@ -1251,7 +1252,8 @@ function plugin_fusioninventory_giveItem($type,$ID,$data,$num) {
                   }
                   $query = "SELECT * FROM `glpi_plugin_fusioninventory_printers_history`
                      WHERE FK_printers='".$data['ITEM_0_2']."'
-                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']."'
+                        AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
+                        AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
                      ORDER BY date desc
                      LIMIT 1";
                   $result=$DB->query($query);
