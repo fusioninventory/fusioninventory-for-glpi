@@ -55,9 +55,8 @@ if ((!isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
    $_SESSION['glpi_plugin_fusioninventory_date_start'] = "1970-01-01";
 }
 if (!isset($_SESSION['glpi_plugin_fusioninventory_date_end'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_end'] = date("Y-m-d h:i:s");
+   $_SESSION['glpi_plugin_fusioninventory_date_end'] = date("Y-m-d");
 }
-
 
 displaySearchForm();
 
