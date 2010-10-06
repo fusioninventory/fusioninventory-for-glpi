@@ -158,6 +158,18 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.3.0']         = 'serial';
       $mapping_pre[3]['.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0']       = 'serial';
       $mapping_pre[3]['.1.3.6.1.2.1.2.1.0']                          = '';
+      // Mapping for Canon
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.102']          = 'pagecountertotalpages';
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.108']          = 'pagecounterblackpages';
+
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.202']          = 'pagecountertotalpages_copy';
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.218']          = 'pagecountercolorpages_copy';
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.222']          = 'pagecounterblackpages_copy';
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.302']          = 'pagecountertotalpages_print';
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.312']          = 'pagecountercolorpages_print';
+         $mapping_pre[3]['.1.3.6.1.4.1.1602.1.11.1.4.1.4.314']          = 'pagecounterblackpages_print';
+         
+         
 // To delete
       $mapping_pre[3]['.1.3.6.1.2.1.1.3.0']       = 'serial';
 
@@ -229,7 +241,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       dropdownValue("glpi_dropdown_manufacturer","FK_glpi_enterprise",$this->fields["FK_glpi_enterprise"]);
       echo "</td>";
 
-      echo "<tr>";
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['setup'][71].": 	</td><td>\n";
       dropdownValue("glpi_dropdown_firmware", "firmware", $this->fields["firmware"]);
       echo "</td>";
