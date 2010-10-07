@@ -46,7 +46,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
    switch ($table.'.'.$field) {
 
       case "glpi_plugin_fusioninventory_tasks.id" :
-         // Get progression bar 
+         // Get progression bar
          return "";
          break;
 
@@ -76,7 +76,7 @@ function cron_plugin_fusioninventory() {
 //   $pfisnmph->cronCleanHistory();
 
 
-   
+
    return 1;
 }
 
@@ -269,8 +269,7 @@ function plugin_fusioninventory_MassiveActions($type) {
    return array ();
 }
 
-function plugin_fusioninventory_MassiveActionsDisplay($type, $action) {
-
+function plugin_fusioninventory_MassiveActionsDisplay($type, $action='') {
    global $LANG, $CFG_GLPI, $DB;
    switch ($type) {
       case NETWORKING_TYPE :
