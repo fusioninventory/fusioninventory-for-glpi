@@ -58,7 +58,7 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
     *@param $p_CONTENT XML code to import
     *@return "" (import ok) / error string (import ko)
     **/
-   function import($p_DEVICEID, $p_CONTENT) {
+   function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
 
       $this->setXML($p_CONTENT);
@@ -70,6 +70,7 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
       // if found, update fields
       $this->parseSections();
 
+      $this->sendLib($p_DEVICEID, $p_CONTENT, $p_xml);
 
       return $errors;
    }
@@ -93,7 +94,7 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
           $errors = libxml_get_errors();
 
           foreach ($errors as $error) {
-              	logInFile('fusinvinventory',display_xml_error($error, $xml));
+              	logInFile('fusinvinventory',$error."\n");
           }
 
           libxml_clear_errors();
@@ -133,6 +134,7 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
       $action = ActionFactory::createAction("inventory");
 
       $action->checkConfig("../../../../../fusinvinventory/inc", $config);
+      
       $action->startAction(simplexml_load_string($p_xml));
    }
    
