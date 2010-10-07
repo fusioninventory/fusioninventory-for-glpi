@@ -39,6 +39,8 @@ include_once ("includes.php");
 function plugin_init_fusinvsnmp() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   // ##### 1. Unactivate plugin if fusioninventory not activated #####
+   
    $plugin = new Plugin;
    if (!$plugin->isActivated("fusioninventory") && $plugin->isActivated("fusinvsnmp")) {
       $plugin->getFromDBbyDir("fusinvsnmp");
@@ -46,6 +48,9 @@ function plugin_init_fusinvsnmp() {
       addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["setup"][17]);
       return false;
    }
+
+   // ##### 2. register class #####
+
    Plugin::registerClass('PluginFusinvsnmpConstructDevice');
    Plugin::registerClass('PluginFusinvsnmpModel');
    Plugin::registerClass('PluginFusinvsnmpNetworkEquipment');
@@ -60,15 +65,24 @@ function plugin_init_fusinvsnmp() {
                          array('classname'=>'glpi_networkports'));
    Plugin::registerClass('PluginFusinvsnmpStateDiscovery');
 
-	//array_push($CFG_GLPI["specif_entities_tables"],"glpi_plugin_fusinvsnmp_errors");
+   // ##### 3. get informations of the plugin #####
 
    $a_plugin = plugin_version_fusinvsnmp();
-
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+
+   // ##### 4. Set in session module_id #####
+
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
+
+   // ##### 5. Set in session XMLtags of methods #####
 
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['SNMPQUERY'] = 'PluginFusinvsnmpCommunicationSNMPQuery';
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] = 'PluginFusinvsnmpCommunicationNetDiscovery';
+
+
+   
+   
+
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']["title"][0]])) {
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']["title"][0]] = array('class'=>'PluginFusinvSNMPConfig',
@@ -143,17 +157,13 @@ function plugin_init_fusinvsnmp() {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = '../fusinvsnmp/front/model.php';
 //            }
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['snmp_auth'] = 'front/configsecurity.form.php?add=1';
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['snmp_auth'] = 'front/configsecurity.php';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['configsecurity'] = '../fusinvsnmp/front/configsecurity.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['configsecurity'] = '../fusinvsnmp/front/configsecurity.php';
 //$PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['links']['add']
 //                                                      = '/plugins/fusinvsnmp/front/configsecurity.form.php';
             }
-//            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","w")) {
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['agents'] = 'front/agent.form.php?add=1';
-//               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['search']['agents'] = 'front/agent.php';
-//            }
+
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulenetdiscovery'] = '../fusinvsnmp/front/rulenetdiscovery.php?add=1';
 
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['iprange'] = 'front/iprange.form.php?add=1';
