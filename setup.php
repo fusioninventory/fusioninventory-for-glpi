@@ -39,15 +39,33 @@ include_once ("includes.php");
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   // ##### 1. (Not required here) #####
+
+
+   // ##### 2. register class #####
+
    Plugin::registerClass('PluginFusioninventoryAgent');
    Plugin::registerClass('PluginFusioninventoryConfig');
    Plugin::registerClass('PluginFusioninventoryTask');
    Plugin::registerClass('PluginFusioninventoryTaskjob');
    Plugin::registerClass('PluginFusioninventoryUnknownDevice');
 
+   // ##### 3. get informations of the plugin #####
+
    $a_plugin = plugin_version_fusioninventory();
+   $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+
+   // ##### 4. Set in session module_id #####
+
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
+   // ##### 5. Set in session XMLtags of methods #####
+
+   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
+
+
+   
+   
    //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
       PluginFusioninventoryProfile::changeprofile(
