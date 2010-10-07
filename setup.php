@@ -40,6 +40,18 @@ include_once ("includes.php");
 function plugin_init_fusinvdeploy() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   // ##### 1. Unactivate plugin if fusioninventory not activated #####
+
+   $plugin = new Plugin;
+   if (!$plugin->isActivated("fusioninventory") && $plugin->isActivated("fusinvdeploy")) {
+      $plugin->getFromDBbyDir("fusinvdeploy");
+      $plugin->unactivate($plugin->fields['id']);
+      addMessageAfterRedirect($LANG['plugin_fusinvinventory']["setup"][17]);
+      return false;
+   }
+
+   // ##### 2. register class #####
+
    Plugin::registerClass('PluginFusinvdeployPackage');
    Plugin::registerClass('PluginFusinvdeployFile');
    Plugin::registerClass('PluginFusinvdeployPackageFile');
@@ -47,10 +59,22 @@ function plugin_init_fusinvdeploy() {
    Plugin::registerClass('PluginFusinvdeployHistory');
    Plugin::registerClass('PluginFusinvDeployConfig');
 
-   $a_plugin = plugin_version_fusinvdeploy();
+   // ##### 3. get informations of the plugin #####
 
+   $a_plugin = plugin_version_fusinvdeploy();
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+
+   // ##### 4. Set in session module_id #####
+   
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
+
+   // ##### 5. Set in session XMLtags of methods #####
+
+   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['DOWNLOAD'] = 'PluginFusinvdeployCommunicationOcsdeploy';
+
+
+
+
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]])) {
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]] = array('class'=>'PluginFusinvDeployConfig',
@@ -69,7 +93,6 @@ function plugin_init_fusinvdeploy() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['files'] = '../fusinvdeploy/front/file.form.php?add=1';
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['files'] = '../fusinvdeploy/front/file.php';
 
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['DOWNLOAD'] = 'PluginFusinvdeployCommunicationOcsdeploy';
 
 }
 
