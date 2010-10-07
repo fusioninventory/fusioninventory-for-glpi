@@ -83,6 +83,23 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
 
    function sendLib($p_DEVICEID, $p_CONTENT, $p_xml) {
 
+      // check if we can load XML (for example if not UTF-8)
+
+      libxml_use_internal_errors(true);
+
+      $doc = simplexml_load_string($p_xml);
+
+      if (!$doc) {
+          $errors = libxml_get_errors();
+
+          foreach ($errors as $error) {
+              	logInFile('fusinvinventory',display_xml_error($error, $xml));
+          }
+
+          libxml_clear_errors();
+      }
+
+
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/FusionLibServer.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/MyException.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Logger.class.php";
