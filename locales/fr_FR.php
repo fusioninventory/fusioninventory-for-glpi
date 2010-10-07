@@ -150,6 +150,7 @@ $LANG['plugin_fusioninventory']["functionalities"][72]="Table";
 $LANG['plugin_fusioninventory']["functionalities"][73]="Champs";
 $LANG['plugin_fusioninventory']["functionalities"][74]="Valeurs";
 $LANG['plugin_fusioninventory']["functionalities"][75]="Verrous";
+$LANG['plugin_fusioninventory']["functionalities"][76]="Il n'y a pas de champ verrouillable.";
 
 $LANG['plugin_fusioninventory']["cron"][0]="Relevé automatique du compteur";
 $LANG['plugin_fusioninventory']["cron"][1]="Activer le relevé";

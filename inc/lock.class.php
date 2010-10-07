@@ -86,19 +86,24 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<tr><th>&nbsp;".$LANG['plugin_fusioninventory']["functionalities"][73]."&nbsp;</th>";
       echo "<th>&nbsp;".$LANG['plugin_fusioninventory']["functionalities"][74]."&nbsp;</th>";
       echo "<th>&nbsp;".$LANG['plugin_fusioninventory']["functionalities"][75]."&nbsp;</th></tr>";
-      foreach ($lockable_fields as $key => $val) {
-         if (in_array($val, $locked)) {
-            $checked = 'checked';
-         } else {
-            $checked = '';
+      if (empty($lockable_fields)) {
+         echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
+                  ".$LANG['plugin_fusioninventory']["functionalities"][76]."</td></tr>";
+      } else {
+         foreach ($lockable_fields as $key => $val) {
+            if (in_array($val, $locked)) {
+               $checked = 'checked';
+            } else {
+               $checked = '';
+            }
+   //         echo "<tr class='tab_bg_1'><td>" . $FUSIONINVENTORY_MAPPING_FIELDS[$val] . "</td>
+            echo "<tr class='tab_bg_1'><td>" . $val . "</td>
+                     <td>".$item->getField($val)."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
          }
-//         echo "<tr class='tab_bg_1'><td>" . $FUSIONINVENTORY_MAPPING_FIELDS[$val] . "</td>
-         echo "<tr class='tab_bg_1'><td>" . $val . "</td>
-                  <td>".$item->getField($val)."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
+         echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
+                  <input class='submit' type='submit' name='unlock_field_fusioninventory'
+                         value='" . $LANG['buttons'][7] . "'></td></tr>";
       }
-      echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
-               <input class='submit' type='submit' name='unlock_field_fusioninventory'
-                      value='" . $LANG['buttons'][7] . "'></td></tr>";
       echo "</table>";
       echo "</form>";
       echo "</div>";

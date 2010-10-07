@@ -150,6 +150,7 @@ $LANG['plugin_fusioninventory']["functionalities"][72]="Table";
 $LANG['plugin_fusioninventory']["functionalities"][73]="Fields";
 $LANG['plugin_fusioninventory']["functionalities"][74]="Values";
 $LANG['plugin_fusioninventory']["functionalities"][75]="Locks";
+$LANG['plugin_fusioninventory']["functionalities"][76]="There is no lockable field.";
 
 $LANG['plugin_fusioninventory']["cron"][0]="Automatic reading meter";
 $LANG['plugin_fusioninventory']["cron"][1]="Activate the record";
