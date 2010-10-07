@@ -50,6 +50,11 @@ if (isset($_POST['glpi_plugin_fusioninventory_date_end'])) {
    $_SESSION['glpi_plugin_fusioninventory_date_end'] = $_POST['glpi_plugin_fusioninventory_date_end'];
 }
 
+if (isset($_POST['reset'])) {
+   unset($_SESSION['glpi_plugin_fusioninventory_date_start']);
+   unset($_SESSION['glpi_plugin_fusioninventory_date_end']);
+}
+
 if ((!isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
        OR (empty($_SESSION['glpi_plugin_fusioninventory_date_start']))) {
    $_SESSION['glpi_plugin_fusioninventory_date_start'] = "1970-01-01";
@@ -87,6 +92,10 @@ function displaySearchForm() {
    echo "<td width='120'>";
 	showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);
 	echo "</td>";
+
+   echo "<td>";
+	echo "<input type='submit' name='reset' value='reset' class='submit' />";
+   echo "</td>";
 
 	echo "<td>";
 	echo "<input type='submit' value='Valider' class='submit' />";
