@@ -40,6 +40,8 @@ include_once ("includes.php");
 function plugin_init_fusinvinventory() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   // ##### 1. Unactivate plugin if fusioninventory not activated #####
+
    $plugin = new Plugin;
    if (!$plugin->isActivated("fusioninventory") && $plugin->isActivated("fusinvinventory")) {
       $plugin->getFromDBbyDir("fusinvinventory");
@@ -48,13 +50,26 @@ function plugin_init_fusinvinventory() {
       return false;
    }
 
-   $a_plugin = plugin_version_fusinvinventory();
+   // ##### 2. register class #####
 
+
+   // ##### 3. get informations of the plugin #####
+
+   $a_plugin = plugin_version_fusinvinventory();
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+
+   // ##### 4. Set in session module_id #####
+   
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
+
+   // ##### 5. Set in session XMLtags of methods #####
 
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY'] = 'PluginFusinvinventoryInventory';
 
+
+
+
+   
 	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
