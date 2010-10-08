@@ -40,13 +40,22 @@ include_once ("includes.php");
 function plugin_init_fusinvdeploy() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
-   // ##### 1. Unactivate plugin if fusioninventory not activated #####
+   // ##### 1. Stop if fusioninventory not activated #####
 
    $plugin = new Plugin;
-   if (!$plugin->isActivated("fusioninventory") && $plugin->isActivated("fusinvdeploy")) {
-      $plugin->getFromDBbyDir("fusinvdeploy");
-      $plugin->unactivate($plugin->fields['id']);
-      addMessageAfterRedirect($LANG['plugin_fusinvinventory']["setup"][17]);
+   if (!$plugin->isActivated("fusioninventory")) {
+      if (isset($_GET['id']) AND isset($_GET['action'])
+            AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][17]);
+               break;
+            case 'uninstall':
+               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][18]);
+               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+               break;
+         }
+      }
       return false;
    }
 
@@ -116,6 +125,10 @@ function plugin_version_fusinvdeploy() {
 function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
 	if (GLPI_VERSION >= '0.78') {
+      $plugin = new Plugin;
+      if (!$plugin->isActivated("fusioninventory")) {
+         return false;
+      }
 		return true;
    } else {
 		echo $LANG['plugin_fusinvdeploy']["errors"][50];
