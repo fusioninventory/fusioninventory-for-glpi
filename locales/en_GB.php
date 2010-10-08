@@ -33,9 +33,12 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$title="fusinvinventory";
+$title="FusionInventory INVENTORY";
 $version="2.3.0-1";
 
 $LANG['plugin_fusinvinventory']["title"][0]="$title";
+
+$LANG['plugin_fusinvinventory']["setup"][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
+$LANG['plugin_fusinvinventory']["setup"][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
 
 ?>
