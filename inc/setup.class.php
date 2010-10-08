@@ -43,12 +43,6 @@ class PluginFusioninventorySetup {
    static function uninstall() {
       global $DB;
 
-      // Don't uninstall if other plugins are installed
-      if (PluginFusioninventoryModule::getAll()) {
-         addMessageAfterRedirect("Les autres plugins fusion doivent être deinstalle en premier");
-         return false;
-      }
-
       CronTask::Unregister('fusioninventory');
 
       $np = new NetworkPort;

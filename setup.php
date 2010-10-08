@@ -133,7 +133,7 @@ function plugin_init_fusioninventory() {
             AND (isset($_GET['action']) AND $_GET['action'] == 'uninstall')
             AND (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
-      if (PluginFusioninventoryModule::getAll()) {
+      if (PluginFusioninventoryModule::getAll(true)) {
          addMessageAfterRedirect($LANG['plugin_fusioninventory']["setup"][17]);
          glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
          exit;

@@ -94,7 +94,7 @@ $LANG['plugin_fusioninventory']["setup"][13]="Vérification des modules PHP néc
 $LANG['plugin_fusioninventory']["setup"][14]="L'extension snmp de PHP n'est pas chargée";
 $LANG['plugin_fusioninventory']["setup"][15]="L'extension runkit de PHP/PECL n'est pas chargée";
 $LANG['plugin_fusioninventory']["setup"][16]="Documentation";
-$LANG['plugin_fusioninventory']["setup"][17]="Les autres plugins FusionInventory (fusinv..) doivent être déinstallés avant de déinstaller le plugin FusionInventory";
+$LANG['plugin_fusioninventory']["setup"][17]="Les autres plugins FusionInventory (fusinv...) doivent être désinstallés avant de désinstaller le plugin FusionInventory.";
 
 $LANG['plugin_fusioninventory']["functionalities"][0]="Fonctionnalités";
 $LANG['plugin_fusioninventory']["functionalities"][1]="Ajout / Suppression de fonctionnalités";

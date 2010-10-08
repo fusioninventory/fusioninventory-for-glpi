@@ -45,13 +45,18 @@ class PluginFusioninventoryModule extends CommonDBTM {
    }
 
    /**
-    * Get all active modules
+    * Get all installed modules
     *
+    *@param $p_inactive=false Show inactive modules
     *@return array of fields
     **/
-   static function getAll() {
+   static function getAll($p_inactive=false) {
       $plugin = new Plugin;
-      return $plugin->find("`state`='1' AND `directory` LIKE 'fusinv%'");
+      if ($p_inactive) {
+         return $plugin->find("`state` IN ('1', '4') AND `directory` LIKE 'fusinv%'");
+      } else {
+         return $plugin->find("`state`='1' AND `directory` LIKE 'fusinv%'");
+      }
    }
 
    /**
