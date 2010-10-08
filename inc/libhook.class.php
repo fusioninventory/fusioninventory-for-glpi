@@ -65,6 +65,7 @@ class PluginFusinvinventoryLibhook {
        $Computer = new Computer;
        $input = array();
        $input['is_deleted'] = 0;
+       $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
        return $Computer->add($input);
     }
 
@@ -325,7 +326,9 @@ class PluginFusinvinventoryLibhook {
     public static function removeSections($idsections, $idmachine)
     {
         echo "section removed";
-        print_r($idsections);
+
+       logInFile("removesection", print_r($idsections, true));
+
         $sectionsId = array();
         return $sectionsId;
     }
@@ -334,7 +337,26 @@ class PluginFusinvinventoryLibhook {
     
     public static function updateSections($data, $idmachine) {
 
+      foreach($data as $section) {
+         $dataSection = unserialize($section['dataSection']);
+         $array = explode("/", $section['sectionId']);
+         $items_id = $array[1];
+         $sectionName = $array[0];
 
+         switch ($sectionName) {
+
+            case 'DRIVES':
+               $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
+               $PluginFusinvinventoryImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
+               
+               break;
+
+         }
+      }
+
+
+
+       logInFile("updatesection", print_r($data, true));
     }
 }
 

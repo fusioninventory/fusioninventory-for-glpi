@@ -106,11 +106,13 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
 
       $config['sections'][] = "DRIVES";
       $config['sections'][] = "NETWORKS";
+      $config['sections'][] = "PROCESSES";
 
 
       define("LIBSERVERFUSIONINVENTORY_LOG_FILE",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/logs');
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       define("LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME","PluginFusinvinventoryLibhook");
+      define("LIBSERVERFUSIONINVENTORY_LOG_DIR",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/');
 
       $log = new Logger('../../../../../../files/_plugins/fusioninventory/logs');
 
@@ -118,8 +120,12 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
 
       //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
       $action->checkConfig("", $config);
-      
+      ob_start();
       $action->startAction(simplexml_load_string($p_xml));
+      $output = ob_flush();
+      if (!empty($output)) {
+         logInFile("fusinvinventory", $output);
+      }
    }
    
 }
