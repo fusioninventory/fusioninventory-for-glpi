@@ -35,17 +35,27 @@
 
 include_once ("includes.php");
 
+
 // Init the hooks of fusinvsnmp
 function plugin_init_fusinvsnmp() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
-   // ##### 1. Unactivate plugin if fusioninventory not activated #####
-   
+   // ##### 1. Stop if fusioninventory not activated #####
+
    $plugin = new Plugin;
-   if (!$plugin->isActivated("fusioninventory") && $plugin->isActivated("fusinvsnmp")) {
-      $plugin->getFromDBbyDir("fusinvsnmp");
-      $plugin->unactivate($plugin->fields['id']);
-      addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["setup"][17]);
+   if (!$plugin->isActivated("fusioninventory")) {
+      if (isset($_GET['id']) AND isset($_GET['action'])
+            AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+               addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["setup"][17]);
+               break;
+            case 'uninstall':
+               addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["setup"][18]);
+               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+               break;
+         }
+      }
       return false;
    }
 
@@ -194,11 +204,14 @@ function plugin_version_fusinvsnmp() {
    );
 }
 
-
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvsnmp_check_prerequisites() {
    global $LANG;
 	if (GLPI_VERSION >= '0.78') {
+      $plugin = new Plugin;
+      if (!$plugin->isActivated("fusioninventory")) {
+         return false;
+      }
 		return true;
    } else {
 		echo $LANG['plugin_fusinvsnmp']["errors"][50];
