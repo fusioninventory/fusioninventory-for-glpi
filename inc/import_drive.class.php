@@ -52,6 +52,12 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
+      if (($dataSection['TYPE'] == "Removable Disk")
+             OR ($dataSection['TYPE'] == "Compact Disc")) {
+
+         return "";
+      }
+
       $ComputerDisk = new ComputerDisk;
 
       if ($type == "update") {
@@ -65,7 +71,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
       }
 
       // totalsize 	freesize
-      if (isset($dataSection['LABEL'])) {
+      if ((isset($dataSection['LABEL'])) AND (!empty($dataSection['LABEL']))) {
          $disk['name']=$dataSection['LABEL'];
       } else if ((!isset($dataSection['VOLUMN'])) AND (isset($dataSection['LETTER']))) {
          $disk['name']=$dataSection['LETTER'];

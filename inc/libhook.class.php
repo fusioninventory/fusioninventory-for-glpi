@@ -159,37 +159,11 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'DRIVES':
-               $ComputerDisk = new ComputerDisk;
-               $id_disk = 0;
-               $disk=array();
-               $disk['computers_id']=$idmachine;
-               // totalsize 	freesize
-               if (isset($dataSection['LABEL'])) {
-                  $disk['name']=$dataSection['LABEL'];
-               } else if ((!isset($dataSection['VOLUMN'])) AND (isset($dataSection['LETTER']))) {
-                  $disk['name']=$dataSection['LETTER'];
-               } else {
-                  $disk['name']=$dataSection['TYPE'];
-               }
-               if (isset($dataSection['VOLUMN'])) {
-                  $disk['device']=$dataSection['VOLUMN'];
-               }
-               if (isset($dataSection['MOUNTPOINT'])) {
-                  $disk['mountpoint'] = $dataSection['MOUNTPOINT'];
-               } else if (isset($dataSection['LETTER'])) {
-                  $disk['mountpoint'] = $dataSection['LETTER'];
-               } else if (isset($dataSection['TYPE'])) {
-                  $disk['mountpoint'] = $dataSection['TYPE'];
-               }
-               $disk['filesystems_id']=Dropdown::importExternal('Filesystem', $dataSection["FILESYSTEM"]);
-               if (isset($dataSection['TOTAL'])) {
-                  $disk['totalsize']=$dataSection['TOTAL'];
-               }
-               if (isset($dataSection['FREE'])) {
-                  $disk['freesize']=$dataSection['FREE'];
-               }
-               if (isset($disk['name']) && !empty($disk["name"])) {
-                  $id_disk = $ComputerDisk->add($disk);
+               $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
+               $id_disk = $PluginFusinvinventoryImport_Drive->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_disk)) {
+                  $id_disk = $j;
+                  $j++;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_disk);
                break;
@@ -348,7 +322,6 @@ class PluginFusinvinventoryLibhook {
             case 'DRIVES':
                $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
                $PluginFusinvinventoryImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
-               
                break;
 
          }
