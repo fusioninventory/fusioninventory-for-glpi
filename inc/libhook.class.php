@@ -84,6 +84,8 @@ class PluginFusinvinventoryLibhook {
       $sectionsId = array();
       $Computer->getFromDB($idmachine);
 
+      $ignore_controllers = array();
+
       $i = -1;
       foreach($data as $section) {
          $i++;
@@ -120,6 +122,18 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['WINPRODKEY'])) {
                   $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+               }
+               break;
+
+            case 'SOUNDS':
+               if (isset($dataSection['NAME'])) {
+                  $ignore_controllers[$dataSection['NAME']] = 1;
+               }
+               break;
+
+            case 'VIDEOS':
+               if (isset($dataSection['NAME'])) {
+                  $ignore_controllers[$dataSection['NAME']] = 1;
                }
                break;
 
@@ -166,6 +180,29 @@ class PluginFusinvinventoryLibhook {
                   $j++;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_disk);
+               break;
+
+            case 'CONTROLLERS':
+               $id_controller = '';
+               if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
+                  $PluginFusinvinventoryController_Drive = new PluginFusinvinventoryController_Drive();
+                  $id_controller = $PluginFusinvinventoryController_Drive->AddUpdateItem("add", $idmachine, $dataSection);
+               }
+               if (empty($id_controller)) {
+                  $id_controller = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_controller);
+               break;
+
+            case 'SOUNDS':
+               $PluginFusinvinventorySound_Drive = new PluginFusinvinventorySound_Drive();
+               $id_sound = $PluginFusinvinventorySound_Drive->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_sound)) {
+                  $id_sound = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_sound);
                break;
 
             case 'MEMORIES':
