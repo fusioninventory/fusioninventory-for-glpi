@@ -109,7 +109,7 @@ function pluginFusinvinventoryUninstall() {
             if($f > '0' and filetype($current_dir.$f) == "file") {
                unlink($current_dir.$f);
             } else if ($f > '0' and filetype($current_dir.$f) == "dir") {
-               Plugin_Fusioninventory_delTree($current_dir.$f);
+               deleteDir($current_dir.$f);
             }
          }
          closedir($dir);
