@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class 
  **/
-class PluginFusinvinventorySoftwares {
+class PluginFusinvinventoryImport_Software extends CommonDBTM  {
 
    
    function addSoftware($idmachine, $array) {

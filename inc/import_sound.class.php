@@ -47,7 +47,7 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 /**
  * Class 
  **/
-class PluginFusinvinventorySound_Drive extends CommonDBTM {
+class PluginFusinvinventoryImport_Sound extends CommonDBTM {
 
 
    function AddUpdateItem($type, $items_id, $dataSection) {

@@ -185,8 +185,8 @@ class PluginFusinvinventoryLibhook {
             case 'CONTROLLERS':
                $id_controller = '';
                if ((isset($dataSection["NAME"])) AND (!isset($ignore_controllers[$dataSection["NAME"]]))) {
-                  $PluginFusinvinventoryController_Drive = new PluginFusinvinventoryController_Drive();
-                  $id_controller = $PluginFusinvinventoryController_Drive->AddUpdateItem("add", $idmachine, $dataSection);
+                  $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
+                  $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("add", $idmachine, $dataSection);
                }
                if (empty($id_controller)) {
                   $id_controller = $j;
@@ -196,8 +196,8 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'SOUNDS':
-               $PluginFusinvinventorySound_Drive = new PluginFusinvinventorySound_Drive();
-               $id_sound = $PluginFusinvinventorySound_Drive->AddUpdateItem("add", $idmachine, $dataSection);
+               $PluginFusinvinventoryImport_Sound = new PluginFusinvinventoryImport_Sound();
+               $id_sound = $PluginFusinvinventoryImport_Sound->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_sound)) {
                   $id_sound = $j;
                   $j++;
@@ -206,8 +206,8 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'VIDEOS':
-               $PluginFusinvinventoryGraphiccard = new PluginFusinvinventoryGraphiccard();
-               $id_graphiccard = $PluginFusinvinventoryGraphiccard->AddUpdateItem("add", $idmachine, $dataSection);
+               $PluginFusinvinventoryImport_Graphiccard = new PluginFusinvinventoryImport_Graphiccard();
+               $id_graphiccard = $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_graphiccard)) {
                   $id_graphiccard = $j;
                   $j++;
@@ -286,12 +286,12 @@ class PluginFusinvinventoryLibhook {
                // Add software name
                // Add version of software
                // link version with computer : glpi_computers_softwareversions
-               $PluginFusinvinventorySoftwares = new PluginFusinvinventorySoftwares;
+               $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software;
                if (isset($dataSection['VERSION'])) {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
                                                                               'version'=>$dataSection['VERSION']));
                } else {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventorySoftwares->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
                                                                               'version'=>''));
                }
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
@@ -369,6 +369,22 @@ class PluginFusinvinventoryLibhook {
             case 'DRIVES':
                $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
                $PluginFusinvinventoryImport_Drive->AddUpdateItem("update", $items_id, $dataSection);
+               break;
+
+           case 'SOUNDS':
+               $PluginFusinvinventoryImport_Sound = new PluginFusinvinventoryImport_Sound();
+               $PluginFusinvinventoryImport_Sound->AddUpdateItem("update", $items_id, $dataSection);
+               break;
+
+            case 'VIDEOS':
+               $PluginFusinvinventoryImport_Graphiccard = new PluginFusinvinventoryImport_Graphiccard();
+               $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("update", $items_id, $dataSection);
+               break;
+
+            case 'CONTROLLERS':
+               $id_controller = '';
+               $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
+               $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
                break;
 
          }
