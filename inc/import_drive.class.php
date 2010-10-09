@@ -58,6 +58,10 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
          return "";
       }
 
+      foreach($dataSection as $key=>$value) {
+         $dataSection[$key] = addslashes_deep($value);
+      }
+
       $ComputerDisk = new ComputerDisk;
 
       if ($type == "update") {

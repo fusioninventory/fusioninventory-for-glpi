@@ -205,6 +205,16 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$id_sound);
                break;
 
+            case 'VIDEOS':
+               $PluginFusinvinventoryGraphiccard = new PluginFusinvinventoryGraphiccard();
+               $id_graphiccard = $PluginFusinvinventoryGraphiccard->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_graphiccard)) {
+                  $id_graphiccard = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_graphiccard);
+               break;
+
             case 'MEMORIES':
                $CompDevice = new Computer_Device('DeviceMemory');
                if (!empty ($dataSection["CAPACITY"])) {

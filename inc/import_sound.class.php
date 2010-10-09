@@ -52,6 +52,10 @@ class PluginFusinvinventorySound_Drive extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
+      foreach($dataSection as $key=>$value) {
+         $dataSection[$key] = addslashes_deep($value);
+      }
+
       $CompDevice = new Computer_Device('DeviceSoundCard');
 
       if ($type == "update") {

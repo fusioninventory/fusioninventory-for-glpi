@@ -47,7 +47,7 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 /**
  * Class 
  **/
-class PluginFusinvinventoryController_Drive extends CommonDBTM {
+class PluginFusinvinventoryGraphiccard extends CommonDBTM {
 
 
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -56,40 +56,37 @@ class PluginFusinvinventoryController_Drive extends CommonDBTM {
          $dataSection[$key] = addslashes_deep($value);
       }
 
-      $CompDevice = new Computer_Device('DeviceControl');
+      $CompDevice = new Computer_Device('DeviceGraphicCard');
 
       if ($type == "update") {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
-         $computer_controller = $CompDevice->fields;
+         $computer_graphiccard = $CompDevice->fields;
       } else if ($type == "add") {
          $id_disk = 0;
       }
-      $controller = array();
+      $graphiccard = array();
+
       if (isset($dataSection['NAME'])) {
-         $controller['designation'] = $dataSection['NAME'];
+         $graphiccard['designation'] = $dataSection['NAME'];
       }
-      if ((isset($dataSection['MANUFACTURER']))
-              AND (!empty($dataSection['MANUFACTURER']))
-              AND (!preg_match("/^\((.*)\)$/", $dataSection['MANUFACTURER'])) ) {
-         
-         $controller['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['MANUFACTURER']);
+      if (isset($dataSection['MEMORY'])) {
+         $graphiccard['specif_default'] = $dataSection['MEMORY'];
       }
 
-      $DeviceControl = new DeviceControl();
-      $controller_id = $DeviceControl->import($controller);
+      $DeviceGraphicCard = new DeviceGraphicCard();
+      $graphiccard_id = $DeviceGraphicCard->import($graphiccard);
 
-      if ($controller_id) {
+      if ($graphiccard_id) {
          if ($type == "update") {
             $devID = $CompDevice->update(array('id' => $items_id,
-                                         'computers_id' => $computer_controller['computers_id'],
-                                         '_itemtype'     => 'DeviceControl',
-                                         'devicecontrols_id'     => $controller_id));
+                                         'computers_id' => $computer_graphiccard['computers_id'],
+                                         '_itemtype'     => 'DeviceGraphicCard',
+                                         'devicegraphiccards_id'     => $graphiccard_id));
          } else if ($type == "add") {
             $devID = $CompDevice->add(array('computers_id' => $items_id,
-                                         '_itemtype'     => 'DeviceControl',
-                                         'devicecontrols_id'     => $controller_id));
+                                         '_itemtype'     => 'DeviceGraphicCard',
+                                         'devicegraphiccards_id'     => $graphiccard_id));
          }
          return $devID;         
       }
