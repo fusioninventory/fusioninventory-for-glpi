@@ -93,9 +93,16 @@ class PluginFusinvinventoryLibhook {
          switch ($section['sectionName']) {
 
             case 'BIOS':
-               if (isset($dataSection['SMANUFACTURER'])) {
-                  $Manufacturer = new Manufacturer;
-                  $Computer->fields['manufacturers_id'] = $Manufacturer->import($Manufacturer->processName($dataSection['SMANUFACTURER']));
+               if ((isset($dataSection['SMANUFACTURER']))
+                     AND (!empty($dataSection['SMANUFACTURER']))) {
+
+                  $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                          $dataSection['SMANUFACTURER']);
+               } else if ((isset($dataSection['BMANUFACTURER']))
+                            AND (!empty($dataSection['BMANUFACTURER']))) {
+                  
+                  $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                          $dataSection['BMANUFACTURER']);
                }
                if (isset($dataSection['SMODEL'])) {
                   $ComputerModel = new ComputerModel;
@@ -155,8 +162,6 @@ class PluginFusinvinventoryLibhook {
                $input = array();
                $input['designation'] = $dataSection['NAME'];
                $input['frequence'] = $dataSection['SPEED'];
-               $Manufacturer = new Manufacturer;
-
                $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['MANUFACTURER']);
                $input['specif_default'] = $dataSection['SPEED'];
