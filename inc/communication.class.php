@@ -268,7 +268,8 @@ class PluginFusioninventoryCommunication {
    function addProlog() {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $ptc  = new PluginFusionInventoryConfig;
-      $this->sxml->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue("fusioninventory", "inventory_frequence"));
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+      $this->sxml->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue($plugins_id, "inventory_frequence"));
    }
 
 
