@@ -71,8 +71,10 @@ class DataFilter
                 if(isset($section->VENDORID) AND $section->VENDORID != ''
                 AND isset($section->PRODUCTID))
                 {
-                    $manufacturer = self::_getDataFromUSBID($section->VENDORID, $section->PRODUCTID);
-                    $section->addChild('MANUFACTURER', $manufacturer);
+                    $dataArray = self::_getDataFromUSBID($section->VENDORID, $section->PRODUCTID);
+
+                    $section->addChild('MANUFACTURER', $dataArray[0]);
+                    $section->addChild('PRODUCTNAME', $dataArray[1]);
                     
                 }
 
@@ -145,16 +147,12 @@ class DataFilter
         LIBSERVERFUSIONINVENTORY_STORAGELOCATION,
         "DataFilter",
         "usbids",
-        $vendorId,
-        "$productId.info");
+        strtolower($vendorId),
+        strtolower($productId).".info");
 
         $dataArray = explode("\n", file_get_contents($dataPath));
-        $vendorName = $dataArray[0];
-        $productName = $dataArray[1];
 
-        $manufacturer = "$vendorName $productName";
-
-        return $manufacturer;
+        return $dataArray;
     }
 
 
