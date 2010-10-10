@@ -47,7 +47,7 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 /**
  * Class 
  **/
-class PluginFusinvinventoryImport_Sound extends CommonDBTM {
+class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
 
 
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -56,49 +56,40 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
          $dataSection[$key] = addslashes_deep($value);
       }
 
-      $CompDevice = new Computer_Device('DeviceSoundCard');
+      $Peripheral = new Peripheral();
 
+      $a_Peripheral = array();
       if ($type == "update") {
          $devID = $items_id;
-         $CompDevice->getFromDB($items_id);
-         $computer_sound = $CompDevice->fields;
+         $Peripheral->getFromDB($items_id);
+         $a_Peripheral = $Peripheral->fields;
       } else if ($type == "add") {
-         $id_disk = 0;
+         $id_Peripheral = 0;
       }
-      $sound = array();
-      if (isset($dataSection['NAME'])) {
-         $sound['designation'] = $dataSection['NAME'];
+
+
+      if ((isset($dataSection['PRODUCTNAME']))
+              AND (!empty($dataSection['PRODUCTNAME']))) {
+
+         $a_Peripheral['name'] = $dataSection['PRODUCTNAME'];
+      } else if (isset($dataSection['NAME'])) {
+         $a_Peripheral['name'] = $dataSection['NAME'];
+      }
+      if (isset($dataSection['SERIAL'])) {
+         $a_Peripheral['serial'] = $dataSection['SERIAL'];
       }
       if ((isset($dataSection['MANUFACTURER']))
-              AND (!empty($dataSection['MANUFACTURER']))
-              AND (!preg_match("/^\((.*)\)$/", $dataSection['MANUFACTURER'])) ) {
-         
-         $sound['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+              AND (!empty($dataSection['MANUFACTURER']))) {
+         $a_Peripheral['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['MANUFACTURER']);
       }
-      if (isset($dataSection['DESCRIPTION'])) {
-         $sound['comment'] = $dataSection['DESCRIPTION'];
-      }
 
-      $DeviceSoundCard = new DeviceSoundCard();
-      $sound_id = $DeviceSoundCard->import($sound);
-
-      if ($sound_id) {
-         if ($type == "update") {
-            $devID = $CompDevice->update(array('id' => $items_id,
-                                         '_no_history' => true,
-                                         'computers_id' => $computer_sound['computers_id'],
-                                         '_itemtype'     => 'DeviceSoundCard',
-                                         'devicesoundcards_id'     => $sound_id));
-         } else if ($type == "add") {
-            $devID = $CompDevice->add(array('computers_id' => $items_id,
-                                         '_no_history' => true,
-                                         '_itemtype'     => 'DeviceSoundCard',
-                                         'devicesoundcards_id'     => $sound_id));
-         }
-         return $devID;         
+      if ($type == "update") {
+         $devID = $Peripheral->update($a_Peripheral);
+      } else if ($type == "add") {
+         $devID = $Peripheral->add($a_Peripheral);
       }
-      return "";
+      return $devID;
    }
 
 

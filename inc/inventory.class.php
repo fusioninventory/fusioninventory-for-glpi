@@ -108,6 +108,7 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
       $config['sections'][] = "NETWORKS";
       $config['sections'][] = "PROCESSES";
 
+      $config['filter'] = 1;
 
       define("LIBSERVERFUSIONINVENTORY_LOG_FILE",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/logs');
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
@@ -118,6 +119,14 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
 
       $action = ActionFactory::createAction("inventory");
 
+
+//      require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Storage/Inventory/SourceDataFilter/FilesToTreeFolder.php";
+//      filePCItoTreeFolder();
+//      fileUSBtoTreeFolder();
+//      fileOUItoTreeFolder();
+
+      $temps_debut = microtime(true);
+
       //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
       $action->checkConfig("", $config);
       ob_start();
@@ -126,6 +135,9 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
       if (!empty($output)) {
          logInFile("fusinvinventory", $output);
       }
+      $temps_fin = microtime(true);
+      logInFile("temp", round($temps_fin - $temps_debut, 4));
+
    }
    
 }

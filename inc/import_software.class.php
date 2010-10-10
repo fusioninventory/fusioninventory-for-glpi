@@ -95,6 +95,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
 
       $Computer_SoftwareVersion = new Computer_SoftwareVersion;
       $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add(array('computers_id'        => $idmachine,
+                                           '_no_history' => true,
                                            'softwareversions_id' => $isNewVers));
       return $Computer_SoftwareVersion_id;
    }

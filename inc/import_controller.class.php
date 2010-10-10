@@ -83,11 +83,13 @@ class PluginFusinvinventoryImport_Controller extends CommonDBTM {
       if ($controller_id) {
          if ($type == "update") {
             $devID = $CompDevice->update(array('id' => $items_id,
+                                         '_no_history' => true,
                                          'computers_id' => $computer_controller['computers_id'],
                                          '_itemtype'     => 'DeviceControl',
                                          'devicecontrols_id'     => $controller_id));
          } else if ($type == "add") {
             $devID = $CompDevice->add(array('computers_id' => $items_id,
+                                         '_no_history' => true,
                                          '_itemtype'     => 'DeviceControl',
                                          'devicecontrols_id'     => $controller_id));
          }

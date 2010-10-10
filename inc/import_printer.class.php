@@ -47,7 +47,7 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 /**
  * Class 
  **/
-class PluginFusinvinventoryImport_Sound extends CommonDBTM {
+class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
 
    function AddUpdateItem($type, $items_id, $dataSection) {
@@ -56,49 +56,49 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
          $dataSection[$key] = addslashes_deep($value);
       }
 
-      $CompDevice = new Computer_Device('DeviceSoundCard');
+      $printer = new Printer();
 
+      $a_printer = array();
       if ($type == "update") {
          $devID = $items_id;
-         $CompDevice->getFromDB($items_id);
-         $computer_sound = $CompDevice->fields;
+         $printer->getFromDB($items_id);
+         $a_printer = $printer->fields;
       } else if ($type == "add") {
-         $id_disk = 0;
+         $id_printer = 0;
       }
-      $sound = array();
+
+// memory_size 	locations_id 	domains_id 	networks_id 	printertypes_id 	printermodels_id 	manufacturers_id 	is_global 	is_deleted 	is_template 	template_name 	init_pages_counter 	notepad 	users_id 	groups_id 	states_id 	ticket_tco
+
+/*
+      <DRIVER>HP Photosmart C4400 series</DRIVER>
+<NAME>HP Photosmart C4400 series</NAME>
+      <NETWORK>0</NETWORK>
+<PORT>USB001</PORT>
+      <PRINTPROCESSOR>hpzppw71</PRINTPROCESSOR>
+      <RESOLUTION>600x600</RESOLUTION>
+<SERIAL>TH96JH41WN05BN/</SERIAL>
+      <SHARED>0</SHARED>
+      <STATUS>Idle</STATUS>
+ */
       if (isset($dataSection['NAME'])) {
-         $sound['designation'] = $dataSection['NAME'];
+         $a_printer['name'] = $dataSection['NAME'];
       }
-      if ((isset($dataSection['MANUFACTURER']))
-              AND (!empty($dataSection['MANUFACTURER']))
-              AND (!preg_match("/^\((.*)\)$/", $dataSection['MANUFACTURER'])) ) {
-         
-         $sound['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['MANUFACTURER']);
+      if (isset($dataSection['SERIAL'])) {
+         $a_printer['serial'] = $dataSection['SERIAL'];
       }
-      if (isset($dataSection['DESCRIPTION'])) {
-         $sound['comment'] = $dataSection['DESCRIPTION'];
-      }
-
-      $DeviceSoundCard = new DeviceSoundCard();
-      $sound_id = $DeviceSoundCard->import($sound);
-
-      if ($sound_id) {
-         if ($type == "update") {
-            $devID = $CompDevice->update(array('id' => $items_id,
-                                         '_no_history' => true,
-                                         'computers_id' => $computer_sound['computers_id'],
-                                         '_itemtype'     => 'DeviceSoundCard',
-                                         'devicesoundcards_id'     => $sound_id));
-         } else if ($type == "add") {
-            $devID = $CompDevice->add(array('computers_id' => $items_id,
-                                         '_no_history' => true,
-                                         '_itemtype'     => 'DeviceSoundCard',
-                                         'devicesoundcards_id'     => $sound_id));
+      if (isset($dataSection['PORT'])) {
+         if (strstr($dataSection['PORT'], "USB")) {
+            $a_printer['have_usb'] = 1;
          }
-         return $devID;         
       }
-      return "";
+
+
+      if ($type == "update") {
+         $devID = $printer->update($a_printer);
+      } else if ($type == "add") {
+         $devID = $printer->add($a_printer);
+      }
+      return $devID;
    }
 
 

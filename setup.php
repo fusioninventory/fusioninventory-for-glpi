@@ -60,7 +60,7 @@ function plugin_init_fusinvinventory() {
    }
 
    // ##### 2. register class #####
-
+   Plugin::registerClass('PluginFusinvinventoryInventory');
 
    // ##### 3. get informations of the plugin #####
 
@@ -76,13 +76,16 @@ function plugin_init_fusinvinventory() {
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY'] = 'PluginFusinvinventoryInventory';
 
 
-
-
-   
-	//$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
    $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
+   if (isset($_SESSION["glpiID"])) {
+   
+      //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
 
+      $PLUGIN_HOOKS['use_massive_action']['fusinvinventory']=1;
+      $PLUGIN_HOOKS['pre_item_purge']['fusinvinventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory');
+
+   }
 }
 
 

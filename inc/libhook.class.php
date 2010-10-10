@@ -86,6 +86,7 @@ class PluginFusinvinventoryLibhook {
       $Computer->getFromDB($idmachine);
 
       $ignore_controllers = array();
+      $ignore_USB = array();
 
       $i = -1;
       foreach($data as $section) {
@@ -155,6 +156,12 @@ class PluginFusinvinventoryLibhook {
             case 'VIDEOS':
                if (isset($dataSection['NAME'])) {
                   $ignore_controllers[$dataSection['NAME']] = 1;
+               }
+               break;
+
+            case 'PRINTERS':
+               if (isset($dataSection['SERIAL'])) {
+                  $ignore_USB[$dataSection['SERIAL']] = 1;
                }
                break;
 
@@ -343,6 +350,33 @@ class PluginFusinvinventoryLibhook {
 
             case 'HARDWARE':
                array_push($sectionsId,$section['sectionName']."/".$idmachine);
+               break;
+
+            case 'USBDEVICES':
+               if ((isset($dataSection['SERIAL'])) AND (isset($ignore_USB[$dataSection['SERIAL']]))) {
+                  // Ignore
+               } else {
+                  $PluginFusinvinventoryImport_Peripheral =  new PluginFusinvinventoryImport_Peripheral();
+                  $id_peripheral = $PluginFusinvinventoryImport_Peripheral->AddUpdateItem("add", $idmachine, $dataSection);
+               }
+               if (!isset($id_peripheral)) {
+                  $id_peripheral = $j;
+                  $j++;
+               }
+
+               array_push($sectionsId,$section['sectionName']."/".$id_peripheral);
+               $j++;
+               break;
+
+            case 'PRINTERS':
+               $PluginFusinvinventoryImport_Printer =  new PluginFusinvinventoryImport_Printer();
+               $id_printer = $PluginFusinvinventoryImport_Printer->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_printer)) {
+                  $id_printer = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_sound);
+               
                break;
 
             default:
