@@ -49,7 +49,6 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
  **/
 class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
-
    function AddUpdateItem($type, $items_id, $dataSection) {
 
       foreach($dataSection as $key=>$value) {
@@ -58,28 +57,23 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
       $printer = new Printer();
 
-      $a_printer = array();
+
       if ($type == "update") {
-         $devID = $items_id;
-         $printer->getFromDB($items_id);
-         $a_printer = $printer->fields;
-      } else if ($type == "add") {
-         $id_printer = 0;
+         return "";
+      }
+      // Else (type == "add")
+         // Search if a printer yet exist
+      if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
+         $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+         if (count($a_printers) > 0) {
+            $a_printer = array();
+         } else {
+            foreach($a_printer as $printer_id=>$data) {
+               $a_printer = $data;
+            }            
+         }
       }
 
-// memory_size 	locations_id 	domains_id 	networks_id 	printertypes_id 	printermodels_id 	manufacturers_id 	is_global 	is_deleted 	is_template 	template_name 	init_pages_counter 	notepad 	users_id 	groups_id 	states_id 	ticket_tco
-
-/*
-      <DRIVER>HP Photosmart C4400 series</DRIVER>
-<NAME>HP Photosmart C4400 series</NAME>
-      <NETWORK>0</NETWORK>
-<PORT>USB001</PORT>
-      <PRINTPROCESSOR>hpzppw71</PRINTPROCESSOR>
-      <RESOLUTION>600x600</RESOLUTION>
-<SERIAL>TH96JH41WN05BN/</SERIAL>
-      <SHARED>0</SHARED>
-      <STATUS>Idle</STATUS>
- */
       if (isset($dataSection['NAME'])) {
          $a_printer['name'] = $dataSection['NAME'];
       }
@@ -93,11 +87,17 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       }
 
 
-      if ($type == "update") {
-         $devID = $printer->update($a_printer);
-      } else if ($type == "add") {
-         $devID = $printer->add($a_printer);
+      if (!isset($a_printer['id'])) {
+         $printer_id = $printer->add($a_printer);
+      } else {
+         $printer_id = $a_printer['id'];
       }
+         
+      $Computer_Item = new Computer_Item();
+      $devID = $Computer_Item->add(array('computers_id' => $items_id,
+                                 'itemtype'     => 'Printer',
+                                 'items_id'     => $printer_id,
+                                 '_no_history'  => true));
       return $devID;
    }
 
