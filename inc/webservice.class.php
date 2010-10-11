@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class 
  **/
-class PluginfusioninventoryWebservice extends PluginWebservicesMethodCommon {
+class PluginfusioninventoryWebservice {
 
 
    static function methodTest($params, $protocol) {
