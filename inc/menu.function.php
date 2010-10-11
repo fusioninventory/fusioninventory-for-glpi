@@ -29,20 +29,25 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: David DURIEUX
+// Original Author of file: DURIEUX David
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$title="FusionInventory INVENTORY";
-$version="2.3.0-1";
+if (!defined('GLPI_ROOT')) {
+	die("Sorry. You can't access directly to this file");
+}
 
-$LANG['plugin_fusinvinventory']["title"][0]="$title";
 
-$LANG['plugin_fusinvinventory']["setup"][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
-$LANG['plugin_fusinvinventory']["setup"][18]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";
+function plugin_fusinvinventory_displayMenu() {
+   global $LANG;
 
-$LANG['plugin_fusinvinventory']["menu"][0]="Importer un fichier XML de l'agent";
+   $a_menu = array();
 
-$LANG['plugin_fusinvinventory']["importxml"][0]="Import de fichier XML provenant de l'agent";
-$LANG['plugin_fusinvinventory']["importxml"][1]="Ordinateur importé dans GLPI";
+   $a_menu[0]['name'] = $LANG['plugin_fusinvinventory']["menu"][0];
+   $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_importxml.png";
+   $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/importxml.php";
+
+   return $a_menu;
+}
+
 ?>

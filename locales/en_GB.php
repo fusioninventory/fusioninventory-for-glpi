@@ -41,4 +41,8 @@ $LANG['plugin_fusinvinventory']["title"][0]="$title";
 $LANG['plugin_fusinvinventory']["setup"][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
 $LANG['plugin_fusinvinventory']["setup"][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
 
+$LANG['plugin_fusinvinventory']["menu"][0]="Import agent XML file";
+
+$LANG['plugin_fusinvinventory']["importxml"][0]="Import Agent XML file";
+$LANG['plugin_fusinvinventory']["importxml"][1]="Computer injected into GLPI";
 ?>
