@@ -86,6 +86,8 @@ function plugin_init_fusinvinventory() {
       $PLUGIN_HOOKS['pre_item_purge']['fusinvinventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory');
 
    }
+
+   $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
 }
 
 
