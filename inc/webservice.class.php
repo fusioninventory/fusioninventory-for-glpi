@@ -59,12 +59,10 @@ class PluginfusioninventoryWebservice extends PluginWebservicesMethodCommon {
          return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
       }
 
-      $filename = tempnam(GLPI_DOC_DIR . '/_tmp', 'PWS');
       $content = base64_decode($params['base64']);
-      file_put_contents($filename, $content);
 
       $PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
-      $PluginFusinvinventoryImportXML->importXML($filename);
+      $PluginFusinvinventoryImportXML->importXMLContent($content);
 
       $msg = $LANG['plugin_fusinvinventory']["importxml"][1];
       return self::Error($protocol, WEBSERVICES_ERROR_FAILED, '', $msg);

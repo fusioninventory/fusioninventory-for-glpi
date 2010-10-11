@@ -46,7 +46,7 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (isset($_FILES['importfile']['tmp_name'])) {
 
    $PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
-   $PluginFusinvinventoryImportXML->importXML($_FILES['importfile']['tmp_name']);
+   $PluginFusinvinventoryImportXML->importXMLFile($_FILES['importfile']['tmp_name']);
 
    $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']["importxml"][1];
 	glpi_header($_SERVER['HTTP_REFERER']);
