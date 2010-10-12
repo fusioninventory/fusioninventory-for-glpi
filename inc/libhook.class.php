@@ -260,11 +260,15 @@ class PluginFusinvinventoryLibhook {
                   }
 
                   $ram["specif_default"] = $dataSection["CAPACITY"];
-                  
-                  $ram["frequence"] = $dataSection["SPEED"];
-                  $ram["devicememorytypes_id"]
-                        = Dropdown::importExternal('DeviceMemoryType', $dataSection["TYPE"]);
 
+                  if (isset($dataSection["SPEED"])) {
+                     $ram["frequence"] = $dataSection["SPEED"];
+                  }
+                  if (isset($dataSection["TYPE"])) {
+                     $ram["devicememorytypes_id"]
+                           = Dropdown::importExternal('DeviceMemoryType', $dataSection["TYPE"]);
+                  }
+                  
                   $DeviceMemory = new DeviceMemory();
                   $ram_id = $DeviceMemory->import($ram);
                   if ($ram_id) {
@@ -288,9 +292,15 @@ class PluginFusinvinventoryLibhook {
                $network = array();
                $network['items_id']=$idmachine;
                $network['itemtype'] = 'Computer';
-               $network['name'] = addslashes($dataSection["DESCRIPTION"]);
-               $network['ip'] = $dataSection["IPADDRESS"];
-               $network['mac'] = $dataSection["MACADDR"];
+               if (isset($dataSection["DESCRIPTION"])) {
+                  $network['name'] = addslashes($dataSection["DESCRIPTION"]);
+               }
+               if (isset($dataSection["IPADDRESS"])) {
+                  $network['ip'] = $dataSection["IPADDRESS"];
+               }
+               if (isset($dataSection["MACADDR"])) {
+                  $network['mac'] = $dataSection["MACADDR"];
+               }
                if (isset($dataSection["TYPE"])) {
                   $network["networkinterfaces_id"]
                               = Dropdown::importExternal('NetworkInterface', $dataSection["TYPE"]);
