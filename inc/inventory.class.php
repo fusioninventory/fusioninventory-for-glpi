@@ -47,7 +47,7 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 /**
  * Class 
  **/
-class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
+class PluginFusinvinventoryInventory {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
 
 
@@ -61,24 +61,13 @@ class PluginFusinvinventoryInventory extends PluginFusinvsnmpCommunicationSNMP {
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
 
-      $this->setXML($p_CONTENT);
       $errors = '';
 
       $glpi_id = "3005";
-      // Criteria to find right device
-
-      // if found, update fields
-      $this->parseSections();
 
       $this->sendLib($p_DEVICEID, $p_CONTENT, $p_xml);
 
       return $errors;
-   }
-
-
-   function parseSections() {
-      //foreach
-      
    }
 
 
