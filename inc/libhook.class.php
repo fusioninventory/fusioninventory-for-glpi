@@ -79,7 +79,6 @@ class PluginFusinvinventoryLibhook {
     */
     public static function addSections($data, $idmachine) {
        global $DB;
-      echo "section added";
 
       $Computer = new Computer;
       $sectionsId = array();

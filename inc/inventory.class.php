@@ -90,14 +90,12 @@ class PluginFusinvinventoryInventory {
 
       $config['maxFalse'] = 0;
 
-      $config['filter'] = 0;
-      $config['printError'] = 1;
+      $config['filter'] = 1;
+      $config['printError'] = 0;
 
       $config['sections'][] = "DRIVES";
       $config['sections'][] = "NETWORKS";
       $config['sections'][] = "PROCESSES";
-
-      $config['filter'] = 1;
 
       define("LIBSERVERFUSIONINVENTORY_LOG_FILE",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/logs');
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
