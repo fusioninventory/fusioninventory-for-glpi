@@ -187,7 +187,7 @@ INFOCONTENT;
                     case "storagesSerial":
                     foreach($criteriaValue as $storages)
                     {
-                        if ($storages->TYPE=="disk")
+                        if (($storages->TYPE=="disk") AND (isset($storages->SERIAL)))
                         {
                             $criteriaPath = $this->_getCriteriaDSN($criteriaName, $storages->SERIAL);
 
