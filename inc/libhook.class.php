@@ -175,6 +175,15 @@ class PluginFusinvinventoryLibhook {
          switch ($section['sectionName']) {
 
             case 'CPUS':
+               $PluginFusinvinventoryImport_Processor = new PluginFusinvinventoryImport_Processor();
+               $id_processor = $PluginFusinvinventoryImport_Processor->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_processor)) {
+                  $id_processor = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_processor);
+
+
 
                $DeviceProcessor = new DeviceProcessor();
                $Computer_Device = new Computer_Device('DeviceProcessor');
@@ -410,7 +419,9 @@ class PluginFusinvinventoryLibhook {
     {
         echo "section removed";
 
-       logInFile("removesection", print_r($idsections, true));
+        // case 'CPUS':
+
+        logInFile("removesection", print_r($idsections, true));
 
         $sectionsId = array();
         return $sectionsId;

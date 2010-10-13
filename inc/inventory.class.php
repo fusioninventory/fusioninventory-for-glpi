@@ -101,7 +101,7 @@ class PluginFusinvinventoryInventory {
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       define("LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME","PluginFusinvinventoryLibhook");
       define("LIBSERVERFUSIONINVENTORY_LOG_DIR",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/');
-
+define("LIBSERVERFUSIONINVENTORY_PRINTERROR",$config['printError']);
       $log = new Logger('../../../../../../files/_plugins/fusioninventory/logs');
 
       $action = ActionFactory::createAction("inventory");
