@@ -48,7 +48,7 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
  * Class 
  **/
 class PluginFusinvinventoryInventory {
-//   private $sxml, $deviceId, $ptd, $type='', $logFile;
+   public $source_xml;
 
 
    /**
@@ -73,6 +73,7 @@ class PluginFusinvinventoryInventory {
 
    function sendLib($p_DEVICEID, $p_CONTENT, $p_xml) {
 
+      $this->source_xml = $p_xml;
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/FusionLibServer.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/MyException.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Logger.class.php";
@@ -101,7 +102,7 @@ class PluginFusinvinventoryInventory {
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       define("LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME","PluginFusinvinventoryLibhook");
       define("LIBSERVERFUSIONINVENTORY_LOG_DIR",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/');
-define("LIBSERVERFUSIONINVENTORY_PRINTERROR",$config['printError']);
+      define("LIBSERVERFUSIONINVENTORY_PRINTERROR",$config['printError']);
       $log = new Logger('../../../../../../files/_plugins/fusioninventory/logs');
 
       $action = ActionFactory::createAction("inventory");
