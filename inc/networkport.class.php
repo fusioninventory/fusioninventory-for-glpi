@@ -57,10 +57,12 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 	 * Constructor
 	**/
    function __construct($p_type=NULL, $p_logFile='') {
+      global $CFG_GLPI;
+      
       if ($p_logFile != '') {
          $logFile = $p_logFile;
       } else {
-         $logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/communication_port_'.
+         $logFile = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/communication_port_'.
                               time().'_'.rand(1,1000);
       }
       parent::__construct("glpi_networkports", $logFile);
