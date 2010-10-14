@@ -48,7 +48,7 @@ if (isset ($_POST["add"])) {
 //   PluginFusioninventoryProfile::checkRight("fusinvdeploy", "files","w");
    if (isset($_FILES['uploadfile']['tmp_name'])) {
       $sum = sha1_file($_FILES['uploadfile']['tmp_name']);
-      copy($_FILES['uploadfile']['tmp_name'], GLPI_ROOT."/files/_plugins/fusinvdeploy/files/".$sum);
+      copy($_FILES['uploadfile']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$sum);
       if ($_POST['filename'] == "") {
          $_POST['filename'] = $_FILES['uploadfile']['name'];
       }
@@ -69,7 +69,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
 //   PluginFusioninventoryProfile::checkRight("fusinvdeploy", "files","w");
    $PluginFusinvdeployFile->getFromDB($_POST['id']);
-   unlink(GLPI_ROOT."/files/_plugins/fusinvdeploy/files/".$PluginFusinvdeployFile->fields['sha1sum']);
+   unlink(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$PluginFusinvdeployFile->fields['sha1sum']);
 
    $PluginFusinvdeployFile->delete($_POST);
    glpi_header("file.php");
