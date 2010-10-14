@@ -246,8 +246,9 @@ class PluginFusioninventoryCommunication {
     *@return nothing (write text in log file)
     **/
    static function addLog($p_logs) {
+      global $CFG_GLPI;
       if ($_SESSION['glpi_use_mode']==DEBUG_MODE) {
-         file_put_contents(GLPI_ROOT.'/files/_plugins/fusioninventory/communication.log',
+         file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/communication.log',
                            "\n".time().' : '.$p_logs,
                            FILE_APPEND);
       }
