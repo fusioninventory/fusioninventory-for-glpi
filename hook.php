@@ -2299,7 +2299,7 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
             case 'glpi_networking_ports.ID':
                if (isset($_SESSION["glpi_plugin_fusioninventory_search"]['networkport'])) {
-                  print_r($_SESSION["glpi_plugin_fusioninventory_search"]);
+                  //print_r($_SESSION["glpi_plugin_fusioninventory_search"]);
                   return " ";
                } else {
                   $_SESSION["glpi_plugin_fusioninventory_search"]['networkport'] = 1;
