@@ -5,14 +5,13 @@ define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_Discovery_SnmpInventory::
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../../..');
    $_SESSION['glpi_use_mode'] = 2;
-   $NEEDED_ITEMS=array("computer","device","printer","networking","peripheral","monitor","software","infocom",
-      "phone","tracking","enterprise","reservation","setup","group","registry","rulesengine","ocsng","admininfo",
-      "rule.ocs","rule.softwarecategories","rule.dictionnary.software","rule.dictionnary.dropdown","entity");
-   session_start();
    require_once GLPI_ROOT."/inc/includes.php";
+
    ini_set('display_errors','On');
    error_reporting(E_ALL | E_STRICT);
    set_error_handler("userErrorHandler");
+
+   include('emulatoragent.php');
 
 }
 if (!isset($_SESSION['glpilanguage'])) {
@@ -34,16 +33,41 @@ class Plugins_Fusioninventory_Discovery_SnmpInventory extends PHPUnit_Framework_
     }
 
    public function testQuerySwitchCisco() {
-return;
+
       $input_xml = $this->createAgent();
       $processnumber = $this->createProcess($input_xml);
 
+      $Netdevice = new Netdevice;
 
-      $PluginFusionInventoryCommunication = new PluginFusionInventoryCommunication;
+      // Add switch
+      $input = array();
+      $input['serial'] = 'FOC1567KYBT';
+      $Netdevice->add($input);
+
+      // Define criteria
+      $PluginFusionInventoryConfig = new PluginFusionInventoryConfig;
+
+      $PluginFusionInventoryConfig->getFromDB("1");
+
+      $PluginFusionInventoryConfig->fields['criteria1_ip'] = 0;
+      $PluginFusionInventoryConfig->fields['criteria1_name'] = 0;
+      $PluginFusionInventoryConfig->fields['criteria1_serial'] = 1;
+      $PluginFusionInventoryConfig->fields['criteria1_macaddr'] = 0;
+
+      $PluginFusionInventoryConfig->fields['criteria2_ip'] = 0;
+      $PluginFusionInventoryConfig->fields['criteria2_name'] = 0;
+      $PluginFusionInventoryConfig->fields['criteria2_serial'] = 0;
+      $PluginFusionInventoryConfig->fields['criteria2_macaddr'] = 1;
+
+      $PluginFusionInventoryConfig->update($PluginFusionInventoryConfig->fields);
+
+
+
+//      $PluginFusionInventoryCommunication = new PluginFusionInventoryCommunication;
       $PluginFusionInventoryAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
       $PluginFusionInventoryUnknownDevice = new PluginFusionInventoryUnknownDevice;
       $PluginFusionInventoryHistoryConnections = new PluginFusionInventoryHistoryConnections;
-      $Netdevice = new Netdevice;
+
       $Netport = new Netport;
       $Netwire = new Netwire;
 
@@ -56,8 +80,10 @@ return;
               <MAC>00:00:85:58:45:42</MAC>
             </CONNECTION>';
       $input_xml = $this->xmlfile($processnumber, $mac);
-      
-      $PluginFusionInventoryCommunication->import($input_xml);
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi072/plugins/fusioninventory/front/plugin_fusioninventory.communication.php";
+      $return = $emulatorAgent->sendProlog($input_xml);
 
       // Search in unknown devices the hub
       //
@@ -67,7 +93,7 @@ return;
                                     AND `ram`='60'
                                     AND `ifmac`='00:1a:6c:9a:fc:80'
                                     AND `ifaddr`='192.168.0.80' ");
- 
+
       $this->assertEquals(count($a_switch), 1 , 'Problem on update switch (have '.count($a_switch).' times in DB)');
       foreach ($a_switch as $id=>$data) {
          $a_ports = $Netport->find("`device_type`='".NETWORKING_TYPE."'
@@ -124,7 +150,7 @@ return;
             </CONNECTION>';
       $input_xml = $this->xmlfile($processnumber, $mac);
 
-      $PluginFusionInventoryCommunication->import($input_xml);
+      $return = $emulatorAgent->sendProlog($input_xml);
 
       // Search if have same hub and if 00:00:85:58:45:42 has been deleted and
       // 00:00:85:58:45:41 added
@@ -180,7 +206,7 @@ return;
             </CONNECTION>';
       $input_xml = $this->xmlfile($processnumber, $mac);
 
-      $PluginFusionInventoryCommunication->import($input_xml);
+      $return = $emulatorAgent->sendProlog($input_xml);
 
       $a_ports = $Netport->find("`device_type`='".NETWORKING_TYPE."'
                          AND `on_device`='".$id."'
@@ -211,10 +237,11 @@ return;
       $input_xml = $this->createAgent();
       $processnumber = $this->createProcess($input_xml);
 
-      $PluginFusionInventoryCommunication = new PluginFusionInventoryCommunication;
+      //$PluginFusionInventoryCommunication = new PluginFusionInventoryCommunication;
       $PluginFusionInventoryUnknownDevice = new PluginFusionInventoryUnknownDevice;
       $Netdevice = new Netdevice;
       $Netwire = new Netwire;
+      $Netport = new Netport();
       
       $input = array();
       $input['serial'] = "HGD67N9F";
@@ -227,7 +254,9 @@ return;
       $mac = '';
       $input_xml = $this->xmlfile225($processnumber, $mac);
 
-      $PluginFusionInventoryCommunication->import($input_xml);
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi072/plugins/fusioninventory/front/plugin_fusioninventory.communication.php";
+      $return = $emulatorAgent->sendProlog($input_xml);
 
       $mac = '            <CONNECTION>
               <MAC>00:08:02:89:1f:c6</MAC>
@@ -246,7 +275,7 @@ return;
             </CONNECTION>';
       $input_xml = $this->xmlfile($processnumber, $mac);
 
-      $PluginFusionInventoryCommunication->import($input_xml);
+      $return = $emulatorAgent->sendProlog($input_xml);
 
       $a_ports = $Netport->find("`device_type`='".NETWORKING_TYPE."'
                          AND `name`='Fa0/1'
@@ -287,7 +316,7 @@ return;
       $a_unknown_ports[] = "00:1d:92:ae:e2:07";
 
       foreach ($a_unknown_ports as $ifmac) {
-         $a_ports = $Netport->find("``ifmac`='00:08:02:89:1f:c6'");
+         $a_ports = $Netport->find("`ifmac`='00:08:02:89:1f:c6'");
 
 
       }
@@ -308,15 +337,15 @@ return;
 
    
       // Delete devices
-
+      include_once GLPI_ROOT.'/inc/tracking.class.php';
       $a_switch = $Netdevice->find("`serial`='HGD67N9F'");
       foreach ($a_switch as $id=>$data) {
-         $Netdevice->deleteFromDB($id);
+         $Netdevice->deleteFromDB($id, 1);
       }
 
       $a_switch = $Netdevice->find("`serial`='FOC1567KYBT'");
       foreach ($a_switch as $id=>$data) {
-         $Netdevice->deleteFromDB($id);
+         $Netdevice->deleteFromDB($id, 1);
       }
 
       // Delete agent
