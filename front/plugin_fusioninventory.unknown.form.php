@@ -43,7 +43,8 @@ $NEEDED_ITEMS = array (
    "infocom",
    "printer",
    "peripheral",
-   "phone"
+   "phone",
+   "tracking"
 );
 
 define('GLPI_ROOT', '../../..');
