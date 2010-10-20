@@ -61,12 +61,20 @@ class PluginFusinvinventoryLibhook {
     * @return int $externalId Id to match application data with the library
     */
     public static function createMachine() {
-
+       
        $Computer = new Computer;
        $input = array();
        $input['is_deleted'] = 0;
        $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
-       return $Computer->add($input);
+       
+       $computer_id = $Computer->add($input);
+
+        if (defined('SOURCEXML')) {
+           // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
+         logInFile("fusionxml", print_r(SOURCEXML, true));
+       }
+
+       return $computer_id;
     }
 
     /**

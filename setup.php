@@ -61,6 +61,10 @@ function plugin_init_fusinvinventory() {
 
    // ##### 2. register class #####
    Plugin::registerClass('PluginFusinvinventoryInventory');
+      //Classes for rulesengine
+   Plugin::registerClass('PluginFusinvinventoryRuleInventory');
+   Plugin::registerClass('PluginFusinvinventoryRuleInventoryCollection',array('rulecollections_types'=>true));
+
 
    // ##### 3. get informations of the plugin #####
 
@@ -87,7 +91,11 @@ function plugin_init_fusinvinventory() {
 
    }
 
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleinventory'] = '../fusinvinventory/front/ruleinventory.form.php';
+
    $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
+
+  
 }
 
 

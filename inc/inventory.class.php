@@ -48,9 +48,8 @@ require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
  * Class 
  **/
 class PluginFusinvinventoryInventory {
-   public $source_xml;
 
-
+   
    /**
     * Import data
     *
@@ -63,17 +62,55 @@ class PluginFusinvinventoryInventory {
 
       $errors = '';
 
-      $glpi_id = "3005";
-
       $this->sendLib($p_DEVICEID, $p_CONTENT, $p_xml);
 
       return $errors;
    }
 
 
-   function sendLib($p_DEVICEID, $p_CONTENT, $p_xml) {
 
-      $this->source_xml = $p_xml;
+   function sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml) {
+      define('SOURCEXML', $p_xml);
+
+      $xml = simplexml_load_string($p_xml);
+      $input = array();
+      $input['serialnumber'] = "test";
+      // Global criterias
+
+         if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
+            $input['globalcriteria'][] = 1;
+         }
+         if ((isset($xml->CONTENT->HARDWARE->UUID)) AND (!empty($xml->CONTENT->HARDWARE->UUID))) {
+            $input['globalcriteria'][] = 2;
+         }
+         if ((isset($xml->CONTENT->NETWORKS->MACADDR)) AND (!empty($xml->CONTENT->NETWORKS->MACADDR))) {
+            $input['globalcriteria'][] = 3;
+         }
+         if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY)) AND (!empty($xml->CONTENT->HARDWARE->WINPRODKEY))) {
+            $input['globalcriteria'][] = 4;
+         }
+         if ((isset($xml->CONTENT->BIOS->SMODEL)) AND (!empty($xml->CONTENT->BIOS->SMODEL))) {
+            $input['globalcriteria'][] = 5;
+         }
+         if ((isset($xml->CONTENT->STORAGES->SERIALNUMBER)) AND (!empty($xml->CONTENT->STORAGES->SERIALNUMBER))) {
+            $input['globalcriteria'][] = 6;
+         }
+         if ((isset($xml->CONTENT->DRIVES->SERIAL)) AND (!empty($xml->CONTENT->DRIVES->SERIAL))) {
+            $input['globalcriteria'][] = 7;
+         }
+
+
+
+      $rule = new PluginFusinvinventoryRuleInventoryCollection();
+      $data = array ();
+      $data = $rule->processAllRules($input, array ());
+      
+   }
+   
+
+
+   function sendLib($criterias) {
+
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/FusionLibServer.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/MyException.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Logger.class.php";
@@ -106,25 +143,15 @@ class PluginFusinvinventoryInventory {
       $log = new Logger('../../../../../../files/_plugins/fusioninventory/logs');
 
       $action = ActionFactory::createAction("inventory");
-
-
-//      require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Storage/Inventory/SourceDataFilter/FilesToTreeFolder.php";
-//      filePCItoTreeFolder();
-//      fileUSBtoTreeFolder();
-//      fileOUItoTreeFolder();
-
-      $temps_debut = microtime(true);
-
+      
       //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
       $action->checkConfig("", $config);
       ob_start();
-      $action->startAction(simplexml_load_string($p_xml));
+      $action->startAction(simplexml_load_string(SOURCEXML));
       $output = ob_flush();
       if (!empty($output)) {
          logInFile("fusinvinventory", $output);
       }
-      $temps_fin = microtime(true);
-      logInFile("temp", round($temps_fin - $temps_debut, 4));
 
    }
    
