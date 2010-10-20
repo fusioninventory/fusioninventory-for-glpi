@@ -42,6 +42,7 @@ $LANG['plugin_fusinvinventory']["setup"][17]="Le plugin ".$title." a besoin que 
 $LANG['plugin_fusinvinventory']["setup"][18]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";
 
 $LANG['plugin_fusinvinventory']["menu"][0]="Importer un fichier XML de l'agent";
+$LANG['plugin_fusinvinventory']["menu"][1]="Règles de critères";
 
 $LANG['plugin_fusinvinventory']["importxml"][0]="Import de fichier XML provenant de l'agent";
 $LANG['plugin_fusinvinventory']["importxml"][1]="Ordinateur importé dans GLPI";
