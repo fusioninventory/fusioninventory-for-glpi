@@ -42,7 +42,19 @@ $LANG['plugin_fusinvinventory']["setup"][17]="Plugin ".$title." need plugin Fusi
 $LANG['plugin_fusinvinventory']["setup"][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
 
 $LANG['plugin_fusinvinventory']["menu"][0]="Import agent XML file";
+$LANG['plugin_fusinvinventory']["menu"][1]="Criterii rules";
 
 $LANG['plugin_fusinvinventory']["importxml"][0]="Import Agent XML file";
 $LANG['plugin_fusinvinventory']["importxml"][1]="Computer injected into GLPI";
+
+$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criterii rules";
+$LANG['plugin_fusinvinventory']['rule'][1]="Global criterii";
+$LANG['plugin_fusinvinventory']['rule'][2]="Serial Number";
+$LANG['plugin_fusinvinventory']['rule'][3]="MAC address";
+$LANG['plugin_fusinvinventory']['rule'][4]="Microsoft product key";
+$LANG['plugin_fusinvinventory']['rule'][5]="Computer model";
+$LANG['plugin_fusinvinventory']['rule'][6]="Hard disk serial number";
+$LANG['plugin_fusinvinventory']['rule'][7]="Partitions serial number";
+$LANG['plugin_fusinvinventory']['rule'][8]="Tag";
+
 ?>
