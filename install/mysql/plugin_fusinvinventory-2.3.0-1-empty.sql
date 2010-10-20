@@ -9,10 +9,11 @@ CREATE TABLE `glpi_plugin_fusinvinventory_criteria` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_fusinvinventory_criteria` (`id`, `name`, `comment`) VALUES
-(1, 'Serial number', NULL),
-(2, 'uuid', NULL),
-(3, 'Mac address', NULL),
-(4, 'Windows product key', NULL),
-(5, 'Model', NULL),
-(6, 'storage serial', NULL),
-(7, 'drives serial', NULL);
+(1, 'Serial number', 'ssn'),
+(2, 'uuid', 'uuid'),
+(3, 'Mac address', 'macAddress'),
+(4, 'Windows product key', 'winProdKey'),
+(5, 'Model', 'smodel'),
+(6, 'storage serial', 'storagesSeria'),
+(7, 'drives serial', 'drivesSerial'),
+(8, 'Asset Tag', 'assetTag');

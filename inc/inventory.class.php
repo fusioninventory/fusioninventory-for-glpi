@@ -62,7 +62,7 @@ class PluginFusinvinventoryInventory {
 
       $errors = '';
 
-      $this->sendLib($p_DEVICEID, $p_CONTENT, $p_xml);
+      $this->sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml);
 
       return $errors;
    }
@@ -100,17 +100,16 @@ class PluginFusinvinventoryInventory {
          }
 
 
-
       $rule = new PluginFusinvinventoryRuleInventoryCollection();
       $data = array ();
-      $data = $rule->processAllRules($input, array ());
+      $data = $rule->processAllRules($input, array());
       
    }
    
 
 
    function sendLib($criterias) {
-
+      logInFile('criteria', print_r($criterias, true));
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/FusionLibServer.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/MyException.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Logger.class.php";
@@ -120,11 +119,8 @@ class PluginFusinvinventoryInventory {
       $config['storageEngine'] = "Directory";
       $config['storageLocation'] = "/../../../../../../../files/_plugins/fusinvinventory";
 
-      // criterias available: "motherboardSerial", "assetTag", "msn",
-      // "ssn", "baseboardSerial", "macAddress", "uuid", "winProdKey",
-      // "biosSerial","enclosureSerial","smodel","storagesSerial","drivesSerial"
-      $config['criterias'][] = "uuid";
-      $config['criterias'][] = "ssn";
+      // get criteria from rules
+      $config['criterias'] = $criterias;
 
       $config['maxFalse'] = 0;
 

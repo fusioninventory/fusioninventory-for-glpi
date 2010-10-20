@@ -126,10 +126,20 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
             }
          }
       }
-
       if ($import == "1") {
-         $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
-         $PluginFusinvinventoryInventory->sendLib("");         
+
+         // Get all criteria global
+         $globalcriteria = array();
+         foreach ($this->criterias as $criteria) {
+            if ($criteria->fields['criteria'] == 'globalcriteria') {
+               $array = Dropdown::getDropdownName('glpi_plugin_fusinvinventory_criteria', $criteria->fields['pattern'], 1);
+               $globalcriteria[] = $array['comment'];
+            }
+         }
+         if (count($globalcriteria) > 0) {
+            $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+            $PluginFusinvinventoryInventory->sendLib($globalcriteria);
+         }
       }
       return $output;
    }
