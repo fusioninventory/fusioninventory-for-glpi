@@ -57,7 +57,7 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
 
 
    function maxActionsCount() {
-      return 4;
+      return 1;
    }
 
    function getCriterias() {
@@ -103,9 +103,14 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
    function getActions() {
       global $LANG;
       $actions = array();
-      $actions['_ignore_import']['name']  = $LANG['rulesengine'][132];
-      $actions['_ignore_import']['type']  = 'yesno';
-      $actions['_ignore_import']['table'] = '';
+      $actions['_import']['name']  = $LANG['plugin_fusinvinventory']['rule'][30];
+      $actions['_import']['type']  = 'yesno';
+      $actions['_import']['table'] = '';
+
+      $actions['_import_unknowndevice']['name']  = $LANG['plugin_fusinvinventory']['rule'][31];
+      $actions['_import_unknowndevice']['type']  = 'yesno';
+      $actions['_import_unknowndevice']['table'] = '';
+
 
       return $actions;
    }
@@ -117,12 +122,19 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             switch ($action->fields["action_type"]) {
+
                case "assign" :
+
                   switch ($action->fields["field"]) {
-                     case "_ignore_import" :
-                        if ($action->fields["value"] == "0") {
+                     case "_import" :
+                        if ($action->fields["value"] == "1") {
                            $import = 1;
                         }
+                        break;
+
+                     case "_import_unknowndevice" :
+                        // Import dans le matos inconnu
+
                         break;
                   }
                   break;

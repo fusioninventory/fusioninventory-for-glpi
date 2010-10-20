@@ -57,4 +57,6 @@ $LANG['plugin_fusinvinventory']['rule'][6]="Numéro de série des disques durs";
 $LANG['plugin_fusinvinventory']['rule'][7]="Numéro de série des partitions";
 $LANG['plugin_fusinvinventory']['rule'][8]="Tag";
 
+$LANG['plugin_fusinvinventory']['rule'][30]="Import dans l'inventaire";
+$LANG['plugin_fusinvinventory']['rule'][31]="Import dans le matériel inconnu";
 ?>

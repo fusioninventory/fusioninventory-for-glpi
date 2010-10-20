@@ -57,4 +57,6 @@ $LANG['plugin_fusinvinventory']['rule'][6]="Hard disk serial number";
 $LANG['plugin_fusinvinventory']['rule'][7]="Partitions serial number";
 $LANG['plugin_fusinvinventory']['rule'][8]="Tag";
 
+$LANG['plugin_fusinvinventory']['rule'][30]="Import in asset";
+$LANG['plugin_fusinvinventory']['rule'][31]="Import in unknown devices";
 ?>
