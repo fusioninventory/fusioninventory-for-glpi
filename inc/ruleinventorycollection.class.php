@@ -55,20 +55,6 @@ class PluginFusinvinventoryRuleInventoryCollection extends PluginFusioninventory
 
    function prepareInputDataForProcess($input,$params) {
 
-//
-//
-//      foreach ($fields as $field) {
-//
-//            logInFile('prepare2', print_r($input, true));
-//      }
-//
-//      reset($this->criterias);
-//      foreach ($this->criterias as $criteria) {
-//         logInFile('prepare', print_r($criteria->fields["condition"], true));
-//
-//      }
-//
-//      logInFile("prepare", print_r($this, true));
       return $input;
    }
 

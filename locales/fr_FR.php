@@ -54,5 +54,6 @@ $LANG['plugin_fusinvinventory']['rule'][4]="Clé produit Microsoft";
 $LANG['plugin_fusinvinventory']['rule'][5]="Modèle d'ordinateur";
 $LANG['plugin_fusinvinventory']['rule'][6]="Numéro de série des disques durs";
 $LANG['plugin_fusinvinventory']['rule'][7]="Numéro de série des partitions";
+$LANG['plugin_fusinvinventory']['rule'][8]="Tag";
 
 ?>

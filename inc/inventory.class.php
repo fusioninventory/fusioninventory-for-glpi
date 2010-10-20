@@ -74,29 +74,40 @@ class PluginFusinvinventoryInventory {
 
       $xml = simplexml_load_string($p_xml);
       $input = array();
-      $input['serialnumber'] = "test";
+
       // Global criterias
 
          if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
             $input['globalcriteria'][] = 1;
+            $input['serialnumber'] = $xml->CONTENT->BIOS->SSN;
          }
          if ((isset($xml->CONTENT->HARDWARE->UUID)) AND (!empty($xml->CONTENT->HARDWARE->UUID))) {
             $input['globalcriteria'][] = 2;
+            $input['uuid'] = $xml->CONTENT->HARDWARE->UUID;
          }
          if ((isset($xml->CONTENT->NETWORKS->MACADDR)) AND (!empty($xml->CONTENT->NETWORKS->MACADDR))) {
             $input['globalcriteria'][] = 3;
+            $input['mac'] = $xml->CONTENT->NETWORKS->MACADDR;
          }
          if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY)) AND (!empty($xml->CONTENT->HARDWARE->WINPRODKEY))) {
             $input['globalcriteria'][] = 4;
+            $input['windowskey'] = $xml->CONTENT->HARDWARE->WINPRODKEY;
          }
          if ((isset($xml->CONTENT->BIOS->SMODEL)) AND (!empty($xml->CONTENT->BIOS->SMODEL))) {
             $input['globalcriteria'][] = 5;
+            $input['model'] = $xml->CONTENT->BIOS->SMODEL;
          }
          if ((isset($xml->CONTENT->STORAGES->SERIALNUMBER)) AND (!empty($xml->CONTENT->STORAGES->SERIALNUMBER))) {
             $input['globalcriteria'][] = 6;
+            $input['storageserial'] = $xml->CONTENT->STORAGES->SERIALNUMBER;
          }
          if ((isset($xml->CONTENT->DRIVES->SERIAL)) AND (!empty($xml->CONTENT->DRIVES->SERIAL))) {
             $input['globalcriteria'][] = 7;
+            $input['drivesserial'] = $xml->CONTENT->DRIVES->SERIAL;
+         }
+         if ((isset($xml->CONTENT->BIOS->ASSETTAG)) AND (!empty($xml->CONTENT->BIOS->ASSETTAG))) {
+            $input['globalcriteria'][] = 8;
+            $input['assettag'] = $xml->CONTENT->BIOS->ASSETTAG;
          }
 
 

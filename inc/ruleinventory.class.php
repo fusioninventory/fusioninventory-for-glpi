@@ -94,6 +94,9 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
       $criterias['drivesserial']['field'] = 'name';
       $criterias['drivesserial']['name']  = $LANG['plugin_fusinvinventory']["rule"][7];
 
+      $criterias['assettag']['field'] = 'name';
+      $criterias['assettag']['name']  = $LANG['plugin_fusinvinventory']['rule'][8];
+
       return $criterias;
    }
 
