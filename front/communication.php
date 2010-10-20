@@ -44,7 +44,7 @@ session_start();
 include (GLPI_ROOT."/inc/includes.php");
 
 if (!isset($_SESSION['glpilanguage'])) {
-   $_SESSION['glpilanguage'] = 'en_GB';
+   $_SESSION['glpilanguage'] = 'fr_FR';
 }
 
 $_SESSION["glpi_use_mode"] = 2;
