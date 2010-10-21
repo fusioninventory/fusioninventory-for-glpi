@@ -51,6 +51,11 @@ function plugin_fusinvinventory_displayMenu() {
    $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_rules.png";
    $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleinventory.php";
 
+   $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']["menu"][2];
+   $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
+   $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.php";
+
+   
 
    return $a_menu;
 }
