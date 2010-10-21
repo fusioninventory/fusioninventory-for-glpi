@@ -69,7 +69,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
          if (count($a_printers) > 0) {
             $a_printer = array();
          } else {
-            foreach($a_printer as $printer_id=>$data) {
+            foreach($a_printers as $printer_id=>$data) {
                $a_printer = $data;
             }
          }

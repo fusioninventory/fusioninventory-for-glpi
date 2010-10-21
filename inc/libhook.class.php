@@ -415,7 +415,16 @@ class PluginFusinvinventoryLibhook {
                   $id_printer = $j;
                   $j++;
                }
-               array_push($sectionsId,$section['sectionName']."/".$id_sound);
+               array_push($sectionsId,$section['sectionName']."/".$id_printer);
+
+            case 'MONITORS':
+               $PluginFusinvinventoryImport_Monitor =  new PluginFusinvinventoryImport_Monitor();
+               $id_monitor = $PluginFusinvinventoryImport_Monitor->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_monitor)) {
+                  $id_monitor = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_monitor);
 
                break;
 

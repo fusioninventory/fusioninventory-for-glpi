@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 
 /**
- * Class 
+ * Class
  **/
 class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
 
@@ -92,13 +92,13 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
                                          '_itemtype'     => 'DeviceGraphicCard',
                                          'devicegraphiccards_id'     => $graphiccard_id));
          }
-         return $devID;         
+         return $devID;
       }
       return "";
    }
 
 
-   
+
    function deleteItem() {
 
    }
