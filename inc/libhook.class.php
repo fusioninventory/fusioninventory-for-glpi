@@ -43,7 +43,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Class 
+ * Class
  **/
 class PluginFusinvinventoryLibhook {
     /**
@@ -61,8 +61,8 @@ class PluginFusinvinventoryLibhook {
     * @return int $externalId Id to match application data with the library
     */
     public static function createMachine() {
-       
-       
+
+
       $Computer = new Computer;
       $input = array();
       $input['is_deleted'] = 0;
@@ -119,7 +119,7 @@ class PluginFusinvinventoryLibhook {
                                                                           $dataSection['SMANUFACTURER']);
                } else if ((isset($dataSection['BMANUFACTURER']))
                             AND (!empty($dataSection['BMANUFACTURER']))) {
-                  
+
                   $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['BMANUFACTURER']);
                }
@@ -148,6 +148,10 @@ class PluginFusinvinventoryLibhook {
                }
                if (isset($dataSection['WINPRODKEY'])) {
                   $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+               }
+               if (isset($dataSection['WORKGROUP'])) {
+                  $Domain = new Domain;
+                  $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
                }
                break;
 
@@ -294,7 +298,7 @@ class PluginFusinvinventoryLibhook {
                      $ram["devicememorytypes_id"]
                            = Dropdown::importExternal('DeviceMemoryType', $dataSection["TYPE"]);
                   }
-                  
+
                   $DeviceMemory = new DeviceMemory();
                   $ram_id = $DeviceMemory->import($ram);
                   if ($ram_id) {
@@ -412,7 +416,7 @@ class PluginFusinvinventoryLibhook {
                   $j++;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_sound);
-               
+
                break;
 
             default:
@@ -422,7 +426,7 @@ class PluginFusinvinventoryLibhook {
 
          }
       }
-       
+
       return $sectionsId;
     }
 
@@ -446,7 +450,7 @@ class PluginFusinvinventoryLibhook {
     }
 
 
-    
+
     public static function updateSections($data, $idmachine) {
 
       foreach($data as $section) {
