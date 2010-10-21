@@ -59,6 +59,8 @@ class PluginFusioninventoryRule extends CommonDBTM {
    /// field used to order rules
    var $orderby = 'ranking';
 
+   var $restrict_matching = false;
+
    protected $rules_id_field    = 'rules_id';
    protected $ruleactionclass   = 'RuleAction';
    protected $rulecriteriaclass = 'RuleCriteria';
@@ -228,7 +230,7 @@ class PluginFusioninventoryRule extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['rulesengine'][9]."&nbsp;:&nbsp;</td>";
       echo "<td>";
-      $this->dropdownRulesMatch("match", $this->fields["match"]);
+      $this->dropdownRulesMatch("match", $this->fields["match"],$this->restrict_matching);
       echo "</td>";
       echo "<td>".$LANG['common'][60]."&nbsp;:&nbsp;</td>";
       echo "<td>";
@@ -280,11 +282,14 @@ class PluginFusioninventoryRule extends CommonDBTM {
     * @param $name dropdown name
     * @param $value default value
    **/
-   function dropdownRulesMatch($name, $value='') {
+   function dropdownRulesMatch($name, $value='',$restrict=false) {
       global $LANG;
-
-      $elements[PluginFusioninventoryRule::AND_MATCHING] = PluginFusioninventoryRule::AND_MATCHING;
-      $elements[PluginFusioninventoryRule::OR_MATCHING]  = PluginFusioninventoryRule::OR_MATCHING;
+      if (!$restrict || $restrict == PluginFusioninventoryRule::AND_MATCHING) {
+         $elements[PluginFusioninventoryRule::AND_MATCHING] = "AND";
+      }
+      if (!$restrict || $restrict == PluginFusioninventoryRule::OR_MATCHING) {
+         $elements[PluginFusioninventoryRule::OR_MATCHING]  = "OR";
+      }
 
       return Dropdown::showFromArray($name, $elements, array('value' => $value));
    }
