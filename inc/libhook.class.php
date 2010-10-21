@@ -76,8 +76,9 @@ class PluginFusinvinventoryLibhook {
          if (empty($folder)) {
             $folder = '0';
          }
-
-         mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
+         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder)) {
+            mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
+         }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$computer_id, 'w');
          fwrite($fileopen, SOURCEXML);
          fclose($fileopen);
