@@ -38,7 +38,7 @@ include_once ("includes.php");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvinventory() {
-	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
+   global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
    // ##### 1. Stop if fusioninventory not activated #####
 
@@ -63,7 +63,8 @@ function plugin_init_fusinvinventory() {
    Plugin::registerClass('PluginFusinvinventoryInventory');
       //Classes for rulesengine
    Plugin::registerClass('PluginFusinvinventoryRuleInventory');
-   Plugin::registerClass('PluginFusinvinventoryRuleInventoryCollection',array('rulecollections_types'=>true));
+   Plugin::registerClass('PluginFusinvinventoryRuleInventoryCollection',
+                         array('rulecollections_types'=>true));
 
 
    // ##### 3. get informations of the plugin #####
@@ -72,26 +73,30 @@ function plugin_init_fusinvinventory() {
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
    // ##### 4. Set in session module_id #####
-   
+
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
    // ##### 5. Set in session XMLtags of methods #####
 
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY'] = 'PluginFusinvinventoryInventory';
+   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
+      = 'PluginFusinvinventoryInventory';
 
 
-   $PLUGIN_HOOKS['change_profile']['fusinvinventory'] = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
+   $PLUGIN_HOOKS['change_profile']['fusinvinventory']
+      = PluginFusioninventoryProfile::changeprofile($moduleId,$a_plugin['shortname']);
 
    if (isset($_SESSION["glpiID"])) {
-   
+
       //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
 
       $PLUGIN_HOOKS['use_massive_action']['fusinvinventory']=1;
-      $PLUGIN_HOOKS['pre_item_purge']['fusinvinventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory');
+      $PLUGIN_HOOKS['pre_item_purge']['fusinvinventory']
+         = array('Computer' =>'plugin_pre_item_purge_fusinvinventory');
 
    }
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleinventory'] = '../fusinvinventory/front/ruleinventory.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleinventory']
+      = '../fusinvinventory/front/ruleinventory.form.php';
 
    // Tabs for each type
    $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';
@@ -100,14 +105,14 @@ function plugin_init_fusinvinventory() {
 
    $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
 
-  
+
 }
 
 
 
 // Name and Version of the plugin
 function plugin_version_fusinvinventory() {
-	return array('name'           => 'FusionInventory INVENTORY',
+   return array('name'           => 'FusionInventory INVENTORY',
                 'shortname'      => 'fusinvinventory',
                 'version'        => '2.3.0-1',
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
@@ -122,22 +127,20 @@ function plugin_version_fusinvinventory() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvinventory_check_prerequisites() {
    global $LANG;
-	if (GLPI_VERSION >= '0.78') {
+   if (GLPI_VERSION >= '0.78') {
       $plugin = new Plugin;
       if (!$plugin->isActivated("fusioninventory")) {
          return false;
       }
-		return true;
+      return true;
    } else {
-		echo $LANG['plugin_fusinvinventory']["errors"][50];
+      echo $LANG['plugin_fusinvinventory']["errors"][50];
    }
 }
 
 
 
 function plugin_fusinvinventory_check_config() {
-	return true;
+   return true;
 }
-
-
 ?>

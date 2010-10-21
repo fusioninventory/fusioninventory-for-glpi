@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 
 /**
- * Class 
+ * Class
  **/
 class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
 
@@ -85,15 +85,22 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       }
 
       if ($type == "update") {
-         $devID = $Peripheral->update($a_Peripheral);
+         $peripheral_id = $Peripheral->update($a_Peripheral);
       } else if ($type == "add") {
-         $devID = $Peripheral->add($a_Peripheral);
+         $peripheral_id = $Peripheral->add($a_Peripheral);
       }
+
+      $Computer_Item = new Computer_Item();
+      $devID = $Computer_Item->add(array('computers_id' => $items_id,
+                                         'itemtype'     => 'Peripheral',
+                                         'items_id'     => $peripheral_id,
+                                         '_no_history'  => true));
+
       return $devID;
    }
 
 
-   
+
    function deleteItem() {
 
    }

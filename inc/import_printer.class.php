@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 
 /**
- * Class 
+ * Class
  **/
 class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
@@ -57,12 +57,13 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
       $printer = new Printer();
 
+      $a_printer = array();
 
       if ($type == "update") {
          return "";
       }
       // Else (type == "add")
-         // Search if a printer yet exist
+      // Search if a printer yet exist
       if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
          $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
          if (count($a_printers) > 0) {
@@ -70,7 +71,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
          } else {
             foreach($a_printer as $printer_id=>$data) {
                $a_printer = $data;
-            }            
+            }
          }
       }
 
@@ -92,7 +93,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       } else {
          $printer_id = $a_printer['id'];
       }
-         
+
       $Computer_Item = new Computer_Item();
       $devID = $Computer_Item->add(array('computers_id' => $items_id,
                                  'itemtype'     => 'Printer',
@@ -102,7 +103,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
    }
 
 
-   
+
    function deleteItem() {
 
    }
