@@ -150,7 +150,7 @@ function plugin_headings_fusinvinventory_xml($item) {
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th>".$LANG['plugin_fusinvinventory']["xml"][0];
-      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d h:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
+      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
 
