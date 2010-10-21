@@ -45,6 +45,7 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
    public $right='rule_ocs';
    public $can_sort=true;
    public $specific_parameters = true;
+   public $restrict_matching = "AND";
 
    function getTitle() {
       global $LANG;
