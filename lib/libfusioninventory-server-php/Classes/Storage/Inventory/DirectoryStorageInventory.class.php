@@ -207,8 +207,8 @@ INFOCONTENT;
                     case "macAddress":
                     foreach($criteriaValue as $networks)
                     {
-                        if ($networks->VIRTUALDEV!=1 AND $networks->DESCRIPTION=="eth0")
-                        {
+//                        if ($networks->VIRTUALDEV!=1 AND $networks->DESCRIPTION=="eth0")
+//                        {
                             $criteriaPath = $this->_getCriteriaDSN($criteriaName, $networks->MACADDR);
                             $internalIdPath = sprintf('%s/%s',
                             $criteriaPath,
@@ -217,7 +217,7 @@ INFOCONTENT;
                             mkdir($internalIdPath,0777,true);
 
                             array_push($criteriasPathList, $criteriaPath);
-                        }
+//                        }
                     }
                     break;
 
