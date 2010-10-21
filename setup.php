@@ -93,6 +93,11 @@ function plugin_init_fusinvinventory() {
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleinventory'] = '../fusinvinventory/front/ruleinventory.form.php';
 
+   // Tabs for each type
+   $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';
+   $PLUGIN_HOOKS['headings_action']['fusinvinventory'] = 'plugin_headings_actions_fusinvinventory';
+
+
    $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
 
   

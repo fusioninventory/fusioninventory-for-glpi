@@ -103,7 +103,15 @@ function plugin_fusinvinventory_needUpdate() {
 
 // Define headings added by the plugin //
 function plugin_get_headings_fusinvinventory($item,$withtemplate) {
+   global $LANG;
 
+   switch (get_class($item)) {
+      case 'Computer' :
+         $array = array ();
+         $array[1] = $LANG['plugin_fusinvinventory']["xml"][0];
+         return $array;
+         break;
+   }
 
 
 }
@@ -111,8 +119,48 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
 
 
 // Define headings actions added by the plugin
-function plugin_headings_actions_fusinvinventory($type) {
+function plugin_headings_actions_fusinvinventory($item) {
 
+   switch (get_class($item)) {
+   case 'Computer' :
+      $array = array ();
+      $array[1] = "plugin_headings_fusinvinventory_xml";
+      return $array;
+      break;
+   }
+
+}
+
+
+function plugin_headings_fusinvinventory_xml($item) {
+   global $LANG;
+
+   $type = get_Class($item);
+   $id = $item->getField('id');
+
+   $folder = substr($id,0,-1);
+   if (empty($folder)) {
+      $folder = '0';
+   }
+   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
+      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id);
+      $xml = str_replace("<", "&lt;", $xml);
+      $xml = str_replace(">", "&gt;", $xml);
+      $xml = str_replace("\n", "<br/>", $xml);
+      echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+      echo "<tr>";
+      echo "<th>".$LANG['plugin_fusinvinventory']["xml"][0];
+      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d h:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td width='130'>";
+      echo "<pre width='130'>".$xml."</pre>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+   }
 
 }
 

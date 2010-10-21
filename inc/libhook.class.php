@@ -62,16 +62,25 @@ class PluginFusinvinventoryLibhook {
     */
     public static function createMachine() {
        
-       $Computer = new Computer;
-       $input = array();
-       $input['is_deleted'] = 0;
-       $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
        
-       $computer_id = $Computer->add($input);
+      $Computer = new Computer;
+      $input = array();
+      $input['is_deleted'] = 0;
+      $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
 
-        if (defined('SOURCEXML')) {
-           // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
-         logInFile("fusionxml", print_r(SOURCEXML, true));
+      $computer_id = $Computer->add($input);
+
+      if (defined('SOURCEXML')) {
+         // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
+         $folder = substr($computer_id,0,-1);
+         if (empty($folder)) {
+            $folder = '0';
+         }
+
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
+         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$computer_id, 'w');
+         fwrite($fileopen, SOURCEXML);
+         fclose($fileopen);
        }
 
        return $computer_id;

@@ -59,4 +59,6 @@ $LANG['plugin_fusinvinventory']['rule'][8]="Tag";
 
 $LANG['plugin_fusinvinventory']['rule'][30]="Import dans l'inventaire";
 $LANG['plugin_fusinvinventory']['rule'][31]="Import dans le matériel inconnu";
+
+$LANG['plugin_fusinvinventory']["xml"][0]="XML FusionInventory";
 ?>
