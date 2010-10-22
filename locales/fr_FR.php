@@ -49,7 +49,7 @@ $LANG['plugin_fusinvinventory']["importxml"][0]="Import de fichier XML provenant
 $LANG['plugin_fusinvinventory']["importxml"][1]="Ordinateur importé dans GLPI";
 
 $LANG['plugin_fusinvinventory']['rule'][0]="Règles de critères d'existence d'ordinateur";
-$LANG['plugin_fusinvinventory']['rule'][1]="Critères globaux";
+$LANG['plugin_fusinvinventory']['rule'][1]="Critère d'existence";
 $LANG['plugin_fusinvinventory']['rule'][2]="Numéro de série";
 $LANG['plugin_fusinvinventory']['rule'][3]="Adresse MAC";
 $LANG['plugin_fusinvinventory']['rule'][4]="Clé produit Microsoft";

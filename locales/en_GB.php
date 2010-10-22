@@ -49,7 +49,7 @@ $LANG['plugin_fusinvinventory']["importxml"][0]="Import Agent XML file";
 $LANG['plugin_fusinvinventory']["importxml"][1]="Computer injected into GLPI";
 
 $LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criterii rules";
-$LANG['plugin_fusinvinventory']['rule'][1]="Global criterii";
+$LANG['plugin_fusinvinventory']['rule'][1]="Existant criterii";
 $LANG['plugin_fusinvinventory']['rule'][2]="Serial Number";
 $LANG['plugin_fusinvinventory']['rule'][3]="MAC address";
 $LANG['plugin_fusinvinventory']['rule'][4]="Microsoft product key";
