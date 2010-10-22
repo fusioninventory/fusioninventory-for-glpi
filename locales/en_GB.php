@@ -62,4 +62,7 @@ $LANG['plugin_fusinvinventory']['rule'][30]="Import in asset";
 $LANG['plugin_fusinvinventory']['rule'][31]="Import in unknown devices";
 
 $LANG['plugin_fusinvinventory']["xml"][0]="XML FusionInventory";
+
+$LANG['plugin_fusinvinventory']["blacklist"][0]="blacklisted values";
+$LANG['plugin_fusinvinventory']["blacklist"][1]="New value to blacklist";
 ?>

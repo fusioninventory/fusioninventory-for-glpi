@@ -70,6 +70,10 @@ class PluginFusinvinventoryInventory {
 
 
    function sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml) {
+
+      $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
+      $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
+
       define('SOURCEXML', $p_xml);
 
       $xml = simplexml_load_string($p_xml);

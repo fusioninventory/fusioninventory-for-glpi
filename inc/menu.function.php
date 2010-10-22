@@ -53,7 +53,7 @@ function plugin_fusinvinventory_displayMenu() {
 
    $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']["menu"][2];
    $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
-   $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.php";
+   $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.form.php";
 
    
 
