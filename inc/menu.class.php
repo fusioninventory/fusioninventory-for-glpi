@@ -141,7 +141,7 @@ class PluginFusioninventoryMenu {
       echo "<table class='tab_cadre'>";
 
       echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_'.$plugin_name]["title"][0]."</th>";
+      echo "<th colspan='".count($a_menu)."'>".$LANG['plugin_'.$plugin_name]["title"][0]."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
