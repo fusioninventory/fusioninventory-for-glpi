@@ -330,7 +330,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
     *@param $p_CONTENT XML code to import
     *@return "" (import ok) / error string (import ko)
     **/
-   function import($p_DEVICEID, $p_CONTENT) {
+   function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
