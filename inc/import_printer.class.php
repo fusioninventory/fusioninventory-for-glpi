@@ -66,7 +66,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       // Search if a printer yet exist
       if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
          $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
-         if (count($a_printers) > 0) {
+         if (count($a_printers) == 0) {
             $a_printer = array();
          } else {
             foreach($a_printers as $printer_id=>$data) {
