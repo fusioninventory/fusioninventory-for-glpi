@@ -68,7 +68,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       }
 
       // Search if exists peripheral with with serial
-      if (isset($dataSection['SERIAL'])) {
+      if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
          $a_array = $Peripheral->find("`serial`='".$dataSection['SERIAL']."'", "", "1");
          foreach ($a_array as $id => $a_Peripheral) {
             $type = "update";
