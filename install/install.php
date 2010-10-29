@@ -161,7 +161,7 @@ function pluginFusinvsnmpUninstall() {
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
    $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
 
-   $config = new PluginFusionInventoryConfig;
+   $config = new PluginFusioninventoryConfig;
    $config->cleanConfig($plugins_id);
    return true;
 }
