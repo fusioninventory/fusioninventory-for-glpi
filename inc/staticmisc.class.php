@@ -94,6 +94,29 @@ class PluginFusinvdeployStaticmisc {
       $options['name'] = 'argument';
       Dropdown::show("PluginFusinvdeployPackage", $options);
    }
+
+   static function displayMenu() {
+      global $LANG;
+
+      $a_menu = array();
+      if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
+         $a_menu[0]['name'] = $LANG['plugin_fusinvdeploy']["package"][6];
+         $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
+         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
+      }
+
+      $a_menu[1]['name'] = $LANG['plugin_fusinvdeploy']["files"][0];
+      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
+      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/file.php";
+
+      if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "status", "r")) {
+         $a_menu[2]['name'] = $LANG['plugin_fusinvdeploy']["deploystatus"][0];
+         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_deploy_status.png";
+         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/deploystate.php";
+      }
+
+      return $a_menu;
+   }
 }
 
 ?>
