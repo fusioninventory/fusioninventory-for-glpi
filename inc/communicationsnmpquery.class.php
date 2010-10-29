@@ -465,7 +465,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
                   case 'INFO' : // already managed
                      break;
                   case 'PORTS' :
-//                     $errors.=$this->importPorts($child);
+                     $errors.=$this->importPorts($child);
                      break;
                   case 'CARTRIDGES' :
                      if ($this->type == PRINTER_TYPE) {
@@ -747,8 +747,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPorts().');
       $errors='';
-      foreach ($p_ports->children() as $name=>$child)
-      {
+      foreach ($p_ports->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'PORT' :
                if ($this->type == "Printer") {
@@ -790,7 +789,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'CONNECTIONS' :
-                  $errors.=$this->importConnections($child, $ptp);
+                  //$errors.=$this->importConnections($child, $ptp);
                   break;
                case 'VLANS' :
                   $errors.=$this->importVlans($child, $ptp);
