@@ -24,11 +24,6 @@ function installGLPI() {
 function installFusionPlugins() {
    global $DB;
    
-//   plugin_fusioninventory_install();
-//   plugin_fusinvsnmp_install();
-//   plugin_fusinvinventory_install();
-//   plugin_fusinvdeploy_install();
-
    $Plugin = new Plugin();
 
    $Plugin->init();

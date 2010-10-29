@@ -5,7 +5,6 @@ define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventorySNMP::main');
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
 
-
    session_start();
    require_once GLPI_ROOT."/inc/includes.php";
    $_SESSION['glpi_use_mode'] = 2;
@@ -101,7 +100,50 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       $a_ips = $PluginFusinvsnmpNetworkEquipmentIP->find("`networkequipments_id`='1'
                                                 AND `ip`='192.168.0.80'");
       $this->assertEquals(count($a_ips), 1 , 'Problem on manage IPs of the switch');
-      
+   }
+
+
+   public function testPorts() {
+
+      $NetworkPort = new NetworkPort();
+      $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'");
+
+      $this->assertEquals(count($a_ports), 26 , 'Problem oN CREATION OF PORTS');
+   }
+
+
+   public function testPortsinfo() {
+
+      $NetworkPort = new NetworkPort();
+      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+      $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
+                                    AND `name`='Fa0/1'");
+      $data = array();
+      foreach ($a_ports as $id => $data) {
+
+      }
+      $oFusioninventory_networkport = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
+      $a_portsExt = $oFusioninventory_networkport->find("`networkports_id`='".$id."'");
+      $dataExt = array();
+      foreach ($a_portsExt as $idExt => $dataExt) {
+
+      }
+
+      $this->assertEquals($data['name'], 'Fa0/1' , 'Name of port not good (Fa0/1)');
+      $this->assertEquals($data['mac'], '00:24:51:2c:93:01' , 'Mac of port not good (00:24:51:2c:93:01)');
+      $this->assertEquals($data['logical_number'], '10001' , 'Number of port not good (10001)');
+
+      $this->assertEquals($dataExt['ifdescr'], 'FastEthernet0/1' , 'Description of port not good '.$dataExt['ifdescr'].' (FastEthernet0/1)');
+      $this->assertEquals($dataExt['ifmtu'], '1500' , 'MTU of port not good (1500)');
+      $this->assertEquals($dataExt['ifspeed'], '100000000' , 'Speed of port not good (100000000)');
+      $this->assertEquals($dataExt['ifinternalstatus'], '1' , 'Internal status of port not good (1)');
+      $this->assertEquals($dataExt['iflastchange'], '50 days, 16:41:29.21' , 'Last change of port not good (50 days, 16:41:29.21)');
+      $this->assertEquals($dataExt['ifinoctets'], '18847653' , 'In octets of port not good (18847653)');
+      $this->assertEquals($dataExt['ifinerrors'], '0' , 'In errors of port not good (0)');
+      $this->assertEquals($dataExt['ifoutoctets'], '2026316806' , 'Out octets of port not good (2026316806)');
+      $this->assertEquals($dataExt['ifouterrors'], '0' , 'out errors of port not good (0)');
+      $this->assertEquals($dataExt['ifstatus'], '1' , 'Status of port not good (1)');
+
    }
 
 
