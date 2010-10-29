@@ -4,6 +4,10 @@ define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventoryLocal::main');
     
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
+
+   if (!isset($_SESSION['glpilanguage'])) {
+      $_SESSION['glpilanguage'] = 'en_GB';
+   }
    $_SESSION['glpi_use_mode'] = 2;
    require_once GLPI_ROOT."/inc/includes.php";
 
@@ -115,7 +119,25 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 //
 //   }
 
-   
+
+   public function testSendinventoryByWebservice() {
+
+
+      system('php ../../../webservices/scripts/testxmlrpc.php --method=glpi.doLogin --login_name=glpi login_password=glpi',$data);
+
+
+      $a_data = explode("\n", $output);
+      foreach($a_data as $num=>$value) {
+         if (strstr($value, "[session] => ")) {
+            $session_num = str_replace("[session] => ", $value);
+         }
+      }
+
+      system('php ../../../webservices/scripts/testxmlrpc.php method=fusioninventory.test --base64=plugins/fusioninventory/tools/phpunit/xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml --session='.$session_num, $data);
+      print_r($data);
+   }
+
+
 }
 
 // Call Plugins_Fusioninventory_Discovery_Newdevices::main() if this source file is executed directly.
