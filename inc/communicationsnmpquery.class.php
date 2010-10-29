@@ -559,11 +559,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
          } else {
             if ($error_criteria == 0) {
                $errors.=$LANG['plugin_fusioninventory']["errors"][23].'<br/>
-                        type : '.$p_info->TYPE.'<br/>
-                        id : '.$p_info->ID.'<br/>
-                        serial : '.trim($p_info->SERIAL).'<br/>
-                        name : '.$p_info->NAME.'<br/>
-                        macaddress : '.$p_info->MAC.'\n';
+                        type : '.$xml->INFO->TYPE[0].'<br/>
+                        id : '.$xml->INFO->ID[0].'<br/>
+                        serial : '.$xml->INFO->SERIAL[0].'<br/>
+                        name : '.$xml->INFO->NAME[0].'<br/>
+                        macaddress : '.$xml->INFO->MAC[0].'\n';
             }
          }
       }
@@ -571,10 +571,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
          //$pfiae = new PluginFusioninventoryAgentProcessError;
 
          $a_input = array();
-         $a_input['id'] = $p_info->ID;
-         if ($p_info->TYPE=='NETWORKING') {
+         $a_input['id'] = $xml->INFO->ID[0];
+         if ($xml->INFO->TYPE=='NetworkEquipment') {
             $a_input['TYPE'] = 'NetworkEquipment';
-         } elseif ($p_info->TYPE=='PRINTER') {
+         } elseif ($xml->INFO->TYPE=='Printer') {
             $a_input['TYPE'] = 'Printer';
          }
          $a_input['MESSAGE'] = $errors;
@@ -606,7 +606,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
             case 'TYPE' : // already managed
                break;
             case 'COMMENTS' :
-               $this->ptd->setValue('comment', $p_info->INFO->COMMENTS[0]);
+               $this->ptd->setValue('sysdescr', $p_info->INFO->COMMENTS[0]);
                break;
             case 'CPU' :
                $this->ptd->setValue('cpu', $p_info->INFO->CPU[0]);
