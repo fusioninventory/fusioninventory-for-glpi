@@ -32,16 +32,20 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_fusinvinventory_task_methods() {
-   global $LANG;
-
-   $a_tasks = array();
-   $a_tasks[] = array('module'         => 'fusinvinventory',
-                      'method'         => 'inventory',
-                      'selection_type' => 'devices');
-
-   return $a_tasks;
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
 }
 
+class PluginFusinvinventoryStaticmisc {
+   static function task_methods() {
+      global $LANG;
 
+      $a_tasks = array();
+      $a_tasks[] = array('module'         => 'fusinvinventory',
+                         'method'         => 'inventory',
+                         'selection_type' => 'devices');
+
+      return $a_tasks;
+   }
+}
 ?>
