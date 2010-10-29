@@ -105,7 +105,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 </REPLY>");
 
 
-            $PluginFusionInventoryConfig        = new PluginFusionInventoryConfig;
+            $PluginFusionInventoryConfig        = new PluginFusioninventoryConfig;
             $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
             $a_agent = $pta->InfosByKey($pxml->DEVICEID);
