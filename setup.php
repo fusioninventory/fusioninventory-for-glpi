@@ -175,6 +175,10 @@ function plugin_init_fusinvsnmp() {
 
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulenetdiscovery'] = '../fusinvsnmp/front/rulenetdiscovery.php?add=1';
 
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulesnmpinventory']
+      = '../fusinvsnmp/front/ruleinventory.form.php';
+
+
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['add']['iprange'] = 'front/iprange.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] = '../fusinvsnmp/front/iprange.form.php?add=1';

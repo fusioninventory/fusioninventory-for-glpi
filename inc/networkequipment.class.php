@@ -91,8 +91,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
          $manufacturer = Dropdown::getDropdownName("glpi_manufacturers",
                                          $this->getValue('manufacturers_id'));
          $this->ptcdUpdates['model'] = Dropdown::importExternal("NetworkEquipmentModel",
-                                                   $this->ptcdUpdates['model'], 0,
-                                                   array('manufacturer'=>$manufacturer));
+                                                   $this->ptcdUpdates['model']);
       }
       if (array_key_exists('firmware', $this->ptcdUpdates)) {
          $this->ptcdUpdates['firmware'] = Dropdown::importExternal("NetworkEquipmentFirmware",
@@ -104,7 +103,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                                                    $this->ptcdUpdates['location'],
                                                    $entity);
       }
-
+      
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
@@ -234,6 +233,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
    function saveIfaddrs() {
       $CFG_GLPI["deleted_tables"][]="glpi_plugin_fusinvsnmp_networkequipmentips"; // TODO : to clean
 
+      $pti = new PluginFusinvsnmpNetworkEquipmentIP();
       foreach ($this->ifaddrs as $index=>$pti) {
          if (!in_array($index, $this->updatesIfaddrs)) {
             $pti->deleteDB();

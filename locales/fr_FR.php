@@ -259,6 +259,16 @@ $LANG['plugin_fusinvsnmp']["type"][3]="Imprimante";
 
 $LANG['plugin_fusinvsnmp']["rules"][1]="Règles";
 
+$LANG['plugin_fusinvsnmp']['rule'][0]="Règles de critères d'existence d'inventaire de matériel réseau";
+$LANG['plugin_fusinvsnmp']['rule'][1]="Critère d'existence";
+$LANG['plugin_fusinvsnmp']['rule'][2]="Numéro de série";
+$LANG['plugin_fusinvsnmp']['rule'][3]="Adresse MAC";
+$LANG['plugin_fusinvsnmp']['rule'][5]="Modèle de matériel";
+$LANG['plugin_fusinvsnmp']['rule'][6]="Nom du matériel";
+
+$LANG['plugin_fusinvsnmp']['rule'][30]="Import dans l'inventaire";
+$LANG['plugin_fusinvsnmp']['rule'][31]="Import dans le matériel inconnu";
+
 $LANG['plugin_fusinvsnmp']["massiveaction"][1]="Assigner un modèle SNMP";
 $LANG['plugin_fusinvsnmp']["massiveaction"][2]="Assigner une authentification SNMP";
 
@@ -540,6 +550,8 @@ $LANG['plugin_fusinvsnmp']["menu"][3]="Menu";
 $LANG['plugin_fusinvsnmp']["menu"][4]="Matériel inconnu";
 $LANG['plugin_fusinvsnmp']["menu"][5]="Historique des ports de switchs";
 $LANG['plugin_fusinvsnmp']["menu"][6]="Ports de switchs inutilisés";
+$LANG['plugin_fusinvsnmp']["menu"][7]="Règles de critères découverte";
+$LANG['plugin_fusinvsnmp']["menu"][8]="Règles de critères inventaire";
 
 $LANG['plugin_fusinvsnmp']["buttons"][0]="Découvrir";
 

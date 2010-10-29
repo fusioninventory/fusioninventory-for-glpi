@@ -60,13 +60,21 @@ function plugin_fusinvsnmp_displayMenu() {
       $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
    }
 
-   $a_menu[3]['name'] = "Etat des découverte";
-   $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
-   $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/statediscovery.php";
+   $a_menu[3]['name'] = $LANG['plugin_fusinvsnmp']["menu"][7];
+   $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rules.png";
+   $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/rulediscovery.php";
 
-   $a_menu[4]['name'] = "Etat des inventaires réseaux";
-   $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
-   $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
+   $a_menu[4]['name'] = $LANG['plugin_fusinvsnmp']["menu"][8];
+   $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rules.png";
+   $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/ruleinventory.php";
+
+   $a_menu[5]['name'] = "Etat des découverte";
+   $a_menu[5]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
+   $a_menu[5]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/statediscovery.php";
+
+   $a_menu[6]['name'] = "Etat des inventaires réseaux";
+   $a_menu[6]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
+   $a_menu[6]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/iprange.php";
 
 
    return $a_menu;

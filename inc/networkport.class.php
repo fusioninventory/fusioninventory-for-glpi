@@ -261,8 +261,8 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
-                     WHERE `end1` IN ('".$this->getValue('id')."', '".$destination_port."')
-                           AND `end2` IN ('".$this->getValue('id')."', '".$destination_port."');";
+                     WHERE `networkports_id_1` IN ('".$this->getValue('id')."', '".$destination_port."')
+                           AND `networkports_id_2` IN ('".$this->getValue('id')."', '".$destination_port."');";
 
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
@@ -408,7 +408,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       } else { // no vlan to add/update --> delete existing
          $query = "SELECT *
                    FROM `glpi_networkports_vlans`
-                   WHERE `ports_id`='".$this->getValue('id')."'";
+                   WHERE `networkports_id`='".$this->getValue('id')."'";
          if ($result=$DB->query($query)) {
             if ($DB->numrows($result) > 0) {// this port has one or more vlan
                $this->cleanVlan('', $this->getValue('id'));
@@ -435,7 +435,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function assignVlan($p_port, $p_vlan) {
       global $DB;
 
-      $query = "INSERT INTO glpi_networkports_vlans (ports_id,vlans_id)
+      $query = "INSERT INTO glpi_networkports_vlans (networkports_id,vlans_id)
                 VALUES ('$p_port','$p_vlan')";
       $DB->query($query);
    }
@@ -454,7 +454,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          if ($p_port != '') { // delete this vlan for this port
             $query="DELETE FROM `glpi_networkports_vlans`
                     WHERE `vlans_id`='$p_vlan'
-                          AND `ports_id`='$p_port';";
+                          AND `networkports_id`='$p_port';";
          } else { // delete this vlan for all ports
             $query="DELETE FROM `glpi_networkports_vlans`
                     WHERE `vlans_id`='$p_vlan';";
@@ -462,7 +462,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          }
       } else { // delete all vlans for this port
          $query="DELETE FROM `glpi_networkports_vlans`
-                 WHERE `ports_id`='$p_port';";
+                 WHERE `networkports_id`='$p_port';";
       }
       $DB->query($query);
 	}
@@ -505,13 +505,13 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
    function getConnectedPortInDB($p_portID) {
       global $DB;
 
-      $query = "SELECT `end1` AS `id`
+      $query = "SELECT `networkports_id_1` AS `id`
                 FROM `glpi_networkports_networkports`
-                WHERE `end2`='".$p_portID."'
+                WHERE `networkports_id_2`='".$p_portID."'
                 UNION
-                SELECT `end2` AS `id`
+                SELECT `networkports_id_2` AS `id`
                 FROM `glpi_networkports_networkports`
-                WHERE `end1`='".$p_portID."';";
+                WHERE `networkports_id_1`='".$p_portID."';";
       $result=$DB->query($query);
       if ($DB->numrows($result) == 1) {
          $port = $DB->fetch_assoc($result);
