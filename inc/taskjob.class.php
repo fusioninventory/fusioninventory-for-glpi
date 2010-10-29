@@ -149,7 +149,7 @@ $this->cronTaskscheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvsnmp']["task"][14]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']["task"][14]."&nbsp;:</td>";
       echo "<td align='center'>";
       if ($id) {
          showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
@@ -214,7 +214,7 @@ $this->cronTaskscheduler();
       echo "<textarea cols='40' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
       $a_methods = array();
-      $a_methods = plugin_fusioninventory_getmethods();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_methods as $num=>$datas) {
          echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
       }
@@ -246,7 +246,7 @@ $this->cronTaskscheduler();
    function dropdownMethod($myname,$value=0,$valueType=0,$entity_restrict='') {
       global $DB,$CFG_GLPI;
 
-      $a_methods = plugin_fusioninventory_getmethods();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
       $a_methods2 = array();
       $a_methods2[''] = "------";
@@ -298,7 +298,7 @@ $this->cronTaskscheduler();
       global $DB,$CFG_GLPI;
 
       $a_methods = array();
-      $a_methods = plugin_fusioninventory_getmethods();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_selectiontype = array();
       $a_selectiontype[''] = "------";
       foreach ($a_methods as $num=>$datas) {
@@ -364,7 +364,7 @@ $this->cronTaskscheduler();
       } else {
          // <select> personalisé :
          $a_methods = array();
-         $a_methods = plugin_fusioninventory_getmethods();
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          $a_selectiontype = array();
          foreach ($a_methods as $num=>$datas) {
             if ($datas['method'] == $method) {
@@ -393,7 +393,7 @@ $this->cronTaskscheduler();
    function dropdownArgument($myname,$method,$value=0,$entity_restrict='') {
       global $DB,$CFG_GLPI;
 
-      $a_methods = plugin_fusioninventory_getmethods();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
       foreach ($a_methods as $num=>$datas) {
          if ($method == $datas['method']) {
@@ -609,7 +609,7 @@ $this->cronTaskscheduler();
 
       echo "<td align='center'>";
       $a_methods = array();
-      $a_methods = plugin_fusioninventory_getmethods();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_parseMethods = array();
       $a_parseMethods[''] = "------";
       foreach($a_methods as $num=>$data) {
@@ -624,7 +624,7 @@ $this->cronTaskscheduler();
       echo "</td>";
 
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["task"][14]."&nbsp;:";
+      echo $LANG['plugin_fusioninventory']["task"][14]."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
       showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
