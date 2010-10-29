@@ -258,6 +258,16 @@ $LANG['plugin_fusinvsnmp']["type"][3]="Printer";
 
 $LANG['plugin_fusinvsnmp']["rules"][1]="Rules";
 
+$LANG['plugin_fusinvsnmp']['rule'][0]="Networking equipment existent criterii rules";
+$LANG['plugin_fusinvsnmp']['rule'][1]="Existant criterii";
+$LANG['plugin_fusinvsnmp']['rule'][2]="Serial Number";
+$LANG['plugin_fusinvsnmp']['rule'][3]="MAC address";
+$LANG['plugin_fusinvsnmp']['rule'][5]="Networking equipment model";
+$LANG['plugin_fusinvsnmp']['rule'][6]="Networking equipment name";
+
+$LANG['plugin_fusinvsnmp']['rule'][30]="Import in asset";
+$LANG['plugin_fusinvsnmp']['rule'][31]="Import in unknown devices";
+
 $LANG['plugin_fusinvsnmp']["massiveaction"][1]="Assign SNMP model";
 $LANG['plugin_fusinvsnmp']["massiveaction"][2]="Assign SNMP authentication";
 

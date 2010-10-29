@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
  * Class to communicate with agents using XML
  **/
 class PluginFusinvsnmpCommunicationSNMP {
-   private $sxml, $deviceId;
+   private $sxml, $deviceId, $ptd;
 
    /**
     * Add AUTHENTICATION string to XML node
