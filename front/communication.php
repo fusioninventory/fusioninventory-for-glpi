@@ -39,24 +39,24 @@ ini_set("max_execution_time", "0");
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
 }
+
 session_start();
-//$_SESSION['glpi_use_mode'] = 2;
 include (GLPI_ROOT."/inc/includes.php");
 
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
-
+error_reporting(E_ALL);
 $_SESSION["glpi_use_mode"] = 2;
 
-// Load all plugin files
-   call_user_func("plugin_init_fusinvinventory");
-   $a_modules = PluginFusioninventoryModule::getAll();
-   foreach ($a_modules as $id => $datas) {
-      call_user_func("plugin_init_".$datas['directory']);
-   }
+//// Load all plugin files
+//   call_user_func("plugin_init_fusinvinventory");
+//   $a_modules = PluginFusioninventoryModule::getAll();
+//   foreach ($a_modules as $id => $datas) {
+//      call_user_func("plugin_init_".$datas['directory']);
+//   }
 
-
+   
 
 $PluginFusioninventoryCommunication  = new PluginFusioninventoryCommunication;
 $pta  = new PluginFusioninventoryAgent;
@@ -70,7 +70,8 @@ $errors='';
 
 if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    // Get conf tu know if SSL is only
-   $fusioninventory_config = new PluginFusionInventoryConfig;
+
+   $fusioninventory_config = new PluginFusioninventoryConfig;
    $ssl = $fusioninventory_config->getValue(19, 'ssl_only');
    if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
        OR ($ssl == "0")) {
@@ -104,7 +105,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 </REPLY>");
 
 
-            $PluginFusionInventoryConfig        = new PluginFusionInventoryConfig;
+            $PluginFusionInventoryConfig        = new PluginFusioninventoryConfig;
             $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
             $a_agent = $pta->InfosByKey($pxml->DEVICEID);
