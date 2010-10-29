@@ -96,6 +96,14 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
    }
 
 
+   public function testIPs() {
+      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
+      $a_ips = $PluginFusinvsnmpNetworkEquipmentIP->find("`networkequipments_id`='1'
+                                                AND `ip`='192.168.0.80'");
+      $this->assertEquals(count($a_ips), 1 , 'Problem on manage IPs of the switch');
+      
+   }
+
 
 }
 
