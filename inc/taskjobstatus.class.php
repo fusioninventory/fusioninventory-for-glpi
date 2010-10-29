@@ -96,7 +96,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
       global $DB,$LANG;
 
-      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
       $PluginFusioninventoryTaskjob     = new PluginFusioninventoryTaskjob;
       $PluginFusioninventoryTask        = new PluginFusioninventoryTask;
 
@@ -187,7 +187,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], $width = '730');
                echo "<br/>";
             }
-            $PluginFusioninventoryTaskjoblogs->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750');
+            $PluginFusioninventoryTaskjoblog->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750');
          }
          echo "<br/>";
          echo "</td>";
@@ -230,7 +230,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
    function changeStatusFinish($taskjobs_id, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
 
-      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
 
       // Add status if not exist
       $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
@@ -280,7 +280,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $a_input['itemtype'] = $itemtype;
       $a_input['date'] = date("Y-m-d H:i:s");
       $a_input['comment'] = $message;
-      $PluginFusioninventoryTaskjoblogs->add($a_input);
+      $PluginFusioninventoryTaskjoblog->add($a_input);
    }
 
 }

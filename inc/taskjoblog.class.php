@@ -32,7 +32,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
+class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
    /*
     * Define different state
@@ -48,7 +48,7 @@ class PluginFusioninventoryTaskjoblogs extends CommonDBTM {
 
    function __construct() {
       $this->table = "glpi_plugin_fusioninventory_taskjoblogs";
-      $this->type = 'PluginFusioninventoryTaskjoblogs';
+      $this->type = 'PluginFusioninventoryTaskjoblog';
    }
 
 

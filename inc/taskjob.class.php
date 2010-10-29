@@ -114,7 +114,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -228,7 +228,7 @@ $this->cronTaskscheduler();
                $PluginFusioninventoryTaskjobstatus->stateTaskjob($id);
 
                // Display graph finish
-               $PluginFusioninventoryTaskjoblogs->graphFinish($id);
+               $PluginFusioninventoryTaskjoblog->graphFinish($id);
                echo "<br/>";
             }
          } else {
@@ -414,7 +414,7 @@ $this->cronTaskscheduler();
       $dateNow = date("Y-m-d H:i:s");
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask;
-      $PluginFusioninventoryTaskjoblogs = new PluginFusioninventoryTaskjoblogs;
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
       $remoteStartAgents = array();
@@ -487,7 +487,7 @@ $this->cronTaskscheduler();
                      unset($a_input['plugin_fusioninventory_agents_id']);
                      $a_input['state'] = 1;
                      $a_input['date'] = date("Y-m-d H:i:s");
-                     $PluginFusioninventoryTaskjoblogs->add($a_input);
+                     $PluginFusioninventoryTaskjoblog->add($a_input);
 
                      if ($data['communication'] == 'push') {
                         $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
