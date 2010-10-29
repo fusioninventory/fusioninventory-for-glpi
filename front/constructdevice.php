@@ -59,7 +59,7 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
    $ptcd->exportmodels();
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_GET['generatecomments']) AND $_GET['generatecomments'] == '1') {
-   $ptcd = new PluginFusionInventoryConstructDevice;
+   $ptcd = new PluginFusinvsnmpConstructDevice;
    $ptcd->generatecomments();
    glpi_header($_SERVER['HTTP_REFERER']);
 }
