@@ -41,7 +41,8 @@ if (!defined('GLPI_ROOT')) {
 function plugin_fusioninventory_getmethods() {
 
    $a_methods = array();
-   $a_methods = array_merge($a_methods, call_user_func("plugin_fusioninventory_task_methods"));
+   $a_methods = array_merge($a_methods, 
+      call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods')));
    $a_modules = PluginFusioninventoryModule::getAll();
    foreach ($a_modules as $num=>$data) {
       if (function_exists("plugin_".$data['directory']."_task_methods")) {
