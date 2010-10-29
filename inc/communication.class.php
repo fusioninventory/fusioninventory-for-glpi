@@ -152,7 +152,7 @@ class PluginFusioninventoryCommunication {
       $xmltag = $this->sxml->QUERY;
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
-         $moduleCommunication = new $moduleClass;
+         $moduleCommunication = new $moduleClass; 
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {
          $errors.=$LANG['plugin_fusioninventory']["errors"][22].' QUERY : *'.$xmltag."*\n";

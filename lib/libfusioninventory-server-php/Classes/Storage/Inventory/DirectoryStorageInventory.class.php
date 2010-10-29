@@ -41,7 +41,7 @@ class DirectoryStorageInventory extends StorageInventory
         foreach($this->_configs["criterias"] as $criteria)
         {
 
-            if($falseCriteriaNb == $this->_configs["maxFalse"])
+            if($falseCriteriaNb >= $this->_configs["maxFalse"])
             {
                 return false;
             }
@@ -87,15 +87,15 @@ class DirectoryStorageInventory extends StorageInventory
                             case "macAddress":
                             foreach($criteriaValue as $networks)
                             {
-                                if ($networks->VIRTUALDEV!=1 AND $networks->DESCRIPTION=="eth0")
-                                {
+//                                if ($networks->VIRTUALDEV!=1 AND $networks->DESCRIPTION=="eth0")
+//                                {
                                     if (file_exists($this->_getCriteriaDSN($criteria, $networks->MACADDR)))
                                     {
                                         $internalId = scandir($this->_getCriteriaDSN($criteria, $networks->MACADDR));
                                     } else {
                                         $falseCriteriaNb++;
                                     }
-                                }
+//                                }
                             }
                             break;
 
@@ -113,7 +113,7 @@ class DirectoryStorageInventory extends StorageInventory
                 }
             }
         }
-        if($falseCriteriaNb == $this->_configs["maxFalse"])
+        if($falseCriteriaNb >= $this->_configs["maxFalse"])
         {
             return false;
         }
@@ -207,8 +207,8 @@ INFOCONTENT;
                     case "macAddress":
                     foreach($criteriaValue as $networks)
                     {
-                        if ($networks->VIRTUALDEV!=1 AND $networks->DESCRIPTION=="eth0")
-                        {
+//                        if ($networks->VIRTUALDEV!=1 AND $networks->DESCRIPTION=="eth0")
+//                        {
                             $criteriaPath = $this->_getCriteriaDSN($criteriaName, $networks->MACADDR);
                             $internalIdPath = sprintf('%s/%s',
                             $criteriaPath,
@@ -217,7 +217,7 @@ INFOCONTENT;
                             mkdir($internalIdPath,0777,true);
 
                             array_push($criteriasPathList, $criteriaPath);
-                        }
+//                        }
                     }
                     break;
 
