@@ -149,7 +149,7 @@ $this->cronTaskscheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusinvsnmp']["task"][14]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']["task"][14]."&nbsp;:</td>";
       echo "<td align='center'>";
       if ($id) {
          showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
@@ -624,7 +624,7 @@ $this->cronTaskscheduler();
       echo "</td>";
 
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["task"][14]."&nbsp;:";
+      echo $LANG['plugin_fusioninventory']["task"][14]."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
       showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
