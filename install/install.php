@@ -38,6 +38,10 @@
 function pluginFusioninventoryInstall($version) {
    global $DB,$LANG,$CFG_GLPI;
 
+   if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   }
    // Get informations of plugin
    $a_plugin = plugin_version_fusioninventory();
 

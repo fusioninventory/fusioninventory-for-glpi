@@ -33,103 +33,109 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-include_once ("includes.php");
+include_once(GLPI_ROOT."/inc/includes.php");
 
 // Init the hooks of fusioninventory
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
-   // ##### 1. (Not required here) #####
+   if (class_exists('PluginFusioninventoryModule')) { // check if plugin is active
+      // ##### 1. (Not required here) #####
 
+      // ##### 2. register class #####
 
-   // ##### 2. register class #####
+      Plugin::registerClass('PluginFusioninventoryAgent');
+      Plugin::registerClass('PluginFusioninventoryConfig');
+      Plugin::registerClass('PluginFusioninventoryTask');
+      Plugin::registerClass('PluginFusioninventoryTaskjob');
+      Plugin::registerClass('PluginFusioninventoryUnknownDevice');
+      Plugin::registerClass('PluginFusioninventoryModule');
+      Plugin::registerClass('PluginFusioninventoryProfile');
+      Plugin::registerClass('PluginFusioninventorySetup');
+      Plugin::registerClass('PluginFusioninventoryAgentmodule');
 
-   Plugin::registerClass('PluginFusioninventoryAgent');
-   Plugin::registerClass('PluginFusioninventoryConfig');
-   Plugin::registerClass('PluginFusioninventoryTask');
-   Plugin::registerClass('PluginFusioninventoryTaskjob');
-   Plugin::registerClass('PluginFusioninventoryUnknownDevice');
+      // ##### 3. get informations of the plugin #####
 
-   // ##### 3. get informations of the plugin #####
+      $a_plugin = plugin_version_fusioninventory();
+      $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
-   $a_plugin = plugin_version_fusioninventory();
-   $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+      // ##### 4. Set in session module_id #####
 
-   // ##### 4. Set in session module_id #####
+      $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
-   $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+      // ##### 5. Set in session XMLtags of methods #####
 
-   // ##### 5. Set in session XMLtags of methods #####
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
 
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
+      //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
+      $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
+         PluginFusioninventoryProfile::changeprofile($moduleId);
 
+      $PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
 
-   
-   
-   //$PLUGIN_HOOKS['init_session']['fusioninventory'] = array('Profile', 'initSession');
-   $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
-      PluginFusioninventoryProfile::changeprofile(
-        PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
-   $PLUGIN_HOOKS['cron']['fusioninventory'] = 20*MINUTE_TIMESTAMP; // All 20 minutes
+      if (isset($_SESSION["glpiID"])) {
 
-   $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
+   //      if (haveRight("configuration", "r")) {// Config page
+   //      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
+   //         $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
+   //      }
+         $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
+         $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
+   //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
+   //      $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = 'plugin_pre_item_purge_fusioninventory';
+   //      $PLUGIN_HOOKS['item_update']['fusioninventory'] = 'plugin_item_update_fusioninventory';
+   //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
 
-   if (isset($_SESSION["glpiID"])) {
+         $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
 
-//      if (haveRight("configuration", "r")) {// Config page
-//      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-//         $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/functionalities.form.php';
-//      }
-      $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
-      $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
-//      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
-//      $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = 'plugin_pre_item_purge_fusioninventory';
-//      $PLUGIN_HOOKS['item_update']['fusioninventory'] = 'plugin_item_update_fusioninventory';
-//      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
+         // Tabs for each type
+         $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
+         $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
-      $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         // Icons add, search...
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['tasks'] = 'front/task.form.php?add=1';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['tasks'] = 'front/task.php';
 
-      // Tabs for each type
-      $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
-      $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","r")
+            OR PluginFusioninventoryProfile::haveRight("fusioninventory", "agentsprocesses","r")
+            ) {
 
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","w")) {
+   //               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
+            }
 
-      // Icons add, search...
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['tasks'] = 'front/task.form.php?add=1';
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['tasks'] = 'front/task.php';
-
-
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","r")
-         OR PluginFusioninventoryProfile::haveRight("fusioninventory", "agentsprocesses","r")
-         ) {
-
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","w")) {
-//               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
+   //         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
+            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
+               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/configuration.form.php';
+            }
+   //         }
          }
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
+            ["<img  src='".GLPI_ROOT."/plugins/fusioninventory/pics/books.png'
+               title='".$LANG['plugin_fusioninventory']["setup"][16]."'
+               alt='".$LANG['plugin_fusioninventory']["setup"][16]."'>"] =
+            'front/documentation.php';
 
-//         if (PluginFusioninventoryProfile::haveRight($_SESSION["plugin_".$a_plugin['shortname']."_moduleid"], "configuration","r")) {
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {// Config page
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/configuration.form.php';
-         }
-//         }
+         // Fil ariane
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']["menu"][3];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/menu.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = $LANG['plugin_fusioninventory']["task"][1];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']["menu"][1];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
       }
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']["<img  src='".GLPI_ROOT."/plugins/fusioninventory/pics/books.png' title='".$LANG['plugin_fusioninventory']["setup"][16]."' alt='".$LANG['plugin_fusioninventory']["setup"][16]."'>"] = 'front/documentation.php';
-
-      // Fil ariane
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']["menu"][3];
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/menu.php';
-
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = $LANG['plugin_fusioninventory']["task"][1];
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
-
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']["menu"][1];
-      $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
+   } else { // plugin not active, need $moduleId for uninstall check
+      include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');
+      $moduleId = PluginFusioninventoryModule::getModuleId('fusioninventory');
    }
 
    // Check for uninstall
-   if (isset($_GET['id']) AND ($_GET['id'] == $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"])
+   if (isset($_GET['id']) AND $_GET['id'] == $moduleId
             AND (isset($_GET['action']) AND $_GET['action'] == 'uninstall')
             AND (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
@@ -139,8 +145,6 @@ function plugin_init_fusioninventory() {
          exit;
       }
    }
-
-
 }
 
 // Name and Version of the plugin
