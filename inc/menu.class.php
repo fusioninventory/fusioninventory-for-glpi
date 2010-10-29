@@ -84,8 +84,8 @@ class PluginFusioninventoryMenu {
       // Get menu from plugins fusinv...
       $a_modules = PluginFusioninventoryModule::getAll();
       foreach ($a_modules as $module_id=>$datas) {
-         if (function_exists("plugin_".$datas['directory']."_displayMenu")) {
-            $a_menu = call_user_func("plugin_".$datas['directory']."_displayMenu");
+         if (is_callable(array("Plugin".$datas['directory']."Staticmisc", "displayMenu"))) {
+            $a_menu = call_user_func(array("Plugin".$datas['directory']."Staticmisc", "displayMenu"));
             if (!empty($a_menu)) {
                $width_status = PluginFusioninventoryMenu::htmlMenu($datas['directory'], $a_menu, $type, $width_status);
             }
