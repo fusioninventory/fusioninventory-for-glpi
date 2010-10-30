@@ -38,14 +38,14 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","blacklist");
 
-//PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","r");
+PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
 
 if (isset ($_POST["add"])) {
-//   PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","w");
+   PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
    if (!empty($_POST['value'])) {
       $PluginFusinvinventoryBlacklist->add($_POST);
    } else {

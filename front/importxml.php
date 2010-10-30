@@ -40,10 +40,12 @@ $ptcd = new PluginFusinvsnmpConstructDevice;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 
+PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_FILES['importfile']['tmp_name'])) {
+   PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","w");
 
    $PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
    $PluginFusinvinventoryImportXML->importXMLFile($_FILES['importfile']['tmp_name']);
