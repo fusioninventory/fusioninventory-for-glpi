@@ -52,35 +52,12 @@ $LANG['plugin_fusinvsnmp']['config'][5] = "Controle de l'agent à partir de GLPI
 $LANG['plugin_fusinvsnmp']['config'][6] = "Wake On Lan";
 $LANG['plugin_fusinvsnmp']['config'][7] = "Interrogation SNMP";
 
-$LANG['plugin_fusinvsnmp']["profile"][0]="Gestion des droits";
-$LANG['plugin_fusinvsnmp']["profile"][1]="$title"; //interface
-
-$LANG['plugin_fusinvsnmp']["profile"][10]="Listes des profils déjà configurés";
-$LANG['plugin_fusinvsnmp']["profile"][11]="Historique Ordinateurs";
-$LANG['plugin_fusinvsnmp']["profile"][12]="Historique Imprimantes";
-$LANG['plugin_fusinvsnmp']["profile"][13]="Infos Imprimantes";
-$LANG['plugin_fusinvsnmp']["profile"][14]="Infos Réseau";
-$LANG['plugin_fusinvsnmp']["profile"][15]="Erreurs courantes";
-
-$LANG['plugin_fusinvsnmp']["profile"][16]="SNMP Réseaux";
-$LANG['plugin_fusinvsnmp']["profile"][17]="SNMP Périphériques";
-$LANG['plugin_fusinvsnmp']["profile"][18]="SNMP Imprimantes";
-$LANG['plugin_fusinvsnmp']["profile"][19]="Modèles SNMP";
-$LANG['plugin_fusinvsnmp']["profile"][20]="Authentification SNMP";
-$LANG['plugin_fusinvsnmp']["profile"][21]="Infos scripts";
-$LANG['plugin_fusinvsnmp']["profile"][22]="Découverte réseau";
-$LANG['plugin_fusinvsnmp']["profile"][23]="Configuration";
-$LANG['plugin_fusinvsnmp']["profile"][24]="Modèle SNMP";
-$LANG['plugin_fusinvsnmp']["profile"][25]="Plages IP";
-$LANG['plugin_fusinvsnmp']["profile"][26]="Agents";
-$LANG['plugin_fusinvsnmp']["profile"][27]="Processus des agents";
-$LANG['plugin_fusinvsnmp']["profile"][28]="Rapport";
-$LANG['plugin_fusinvsnmp']["profile"][29]="Controle des agents à distance";
-$LANG['plugin_fusinvsnmp']["profile"][30]="Matériel inconnu";
-$LANG['plugin_fusinvsnmp']["profile"][31]="Inventaire machine FusionInventory";
-$LANG['plugin_fusinvsnmp']["profile"][32]="Interrogation SNMP";
-$LANG['plugin_fusinvsnmp']["profile"][33]="WakeOnLan";
-$LANG['plugin_fusinvsnmp']["profile"][34]="Actions";
+$LANG['plugin_fusinvsnmp']['profile'][1]="$title";
+$LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";
+$LANG['plugin_fusinvsnmp']["profile"][3]="Authentification SNMP";
+$LANG['plugin_fusinvsnmp']["profile"][4]="Plages IP";
+$LANG['plugin_fusinvsnmp']["profile"][5]="SNMP des équipements réseaux";
+$LANG['plugin_fusinvsnmp']["profile"][6]="SNMP des imprimantes";
 
 $LANG['plugin_fusinvsnmp']["setup"][2]="Merci de vous placer sur l'entité racine (voir tous)";
 $LANG['plugin_fusinvsnmp']["setup"][3]="Configuration du plugin ".$title;

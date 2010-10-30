@@ -74,15 +74,7 @@ function pluginFusinvsnmpInstall() {
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-      $a_rights = array();
-      $a_rights['networking'] = 'w';
-      $a_rights['printers'] = 'w';
-      $a_rights['models'] = 'w';
-      $a_rights['configsecurity'] = 'w';
-      $a_rights['iprange'] = 'w';
-      $a_rights['unknowndevices'] = 'w';
-      $a_rights['configuration'] = 'w';
-      PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
+      PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 
       $configSNMP = new PluginFusinvSNMPConfig;
       $configSNMP->initConfigModule();

@@ -166,5 +166,25 @@ class PluginFusinvsnmpStaticmisc {
 
       return $a_menu;
    }
+
+
+   static function profiles() {
+      global $LANG;
+
+      $a_profil = array();
+      $a_profil[] = array('profil'  => 'configuration',
+                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][2]);
+      $a_profil[] = array('profil'  => 'configsecurity',
+                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][3]);
+      $a_profil[] = array('profil'  => 'iprange',
+                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][4]);
+      $a_profil[] = array('profil'  => 'networkequipment',
+                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][5]);
+      $a_profil[] = array('profil'  => 'printer',
+                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][6]);
+
+      return $a_profil;
+   }
+   
 }
 ?>
