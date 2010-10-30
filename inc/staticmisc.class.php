@@ -67,5 +67,21 @@ class PluginFusinvinventoryStaticmisc {
 
       return $a_menu;
    }
+
+
+   static function profiles() {
+      global $LANG;
+
+      $a_profil = array();
+      $a_profil[] = array('profil'  => 'existantrule',
+                          'name'    => $LANG['plugin_fusinvinventory']['profile'][2]);
+      $a_profil[] = array('profil'  => 'importxml',
+                          'name'    => $LANG['plugin_fusinvinventory']['profile'][3]);
+      $a_profil[] = array('profil'  => 'blacklist',
+                          'name'    => $LANG['plugin_fusinvinventory']['profile'][4]);
+
+      return $a_profil;
+   }
+
 }
 ?>

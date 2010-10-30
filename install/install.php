@@ -66,15 +66,7 @@ function pluginFusinvinventoryInstall() {
       }
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-      $a_rights = array();
-      $a_rights['networking'] = 'w';
-      $a_rights['printers'] = 'w';
-      $a_rights['models'] = 'w';
-      $a_rights['authentication'] = 'w';
-      $a_rights['iprange'] = 'w';
-      $a_rights['unknowndevices'] = 'w';
-      $a_rights['configuration'] = 'w';
-      PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
+      PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
       // Creation of profile
 //      PluginFusioninventoryProfile::initSession($modules_id, array(type, right));
 
