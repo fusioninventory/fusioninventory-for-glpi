@@ -45,16 +45,16 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","r");
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
    if ($iprange->checkip($_POST)) {
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
       $_POST['ip_start'] = $_POST['ip_start0'].".".$_POST['ip_start1'].".".$_POST['ip_start2'].".".$_POST['ip_start3'];
       $_POST['ip_end'] = $_POST['ip_end0'].".".$_POST['ip_end1'].".".$_POST['ip_end2'].".".$_POST['ip_end3'];
       $iprange->add($_POST);
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
+   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
    if ($iprange->checkip($_POST)) {
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
       $_POST['ip_start'] = $_POST['ip_start0'].".".$_POST['ip_start1'].".".$_POST['ip_start2'].".".$_POST['ip_start3'];
       $_POST['ip_end'] = $_POST['ip_end0'].".".$_POST['ip_end1'].".".$_POST['ip_end2'].".".$_POST['ip_end3'];
       $iprange->update($_POST);

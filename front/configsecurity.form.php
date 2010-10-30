@@ -65,9 +65,9 @@ $id = "";
 if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
-if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")) {
-   $plugin_fusioninventory_snmp_auth->showForm($id);
-}
+
+$plugin_fusioninventory_snmp_auth->showForm($id);
+
 commonFooter();
 
 ?>
