@@ -117,6 +117,20 @@ class PluginFusinvdeployStaticmisc {
 
       return $a_menu;
    }
+
+
+   static function profiles() {
+      global $LANG;
+
+      $a_profil = array();
+      $a_profil[] = array('profil'  => 'packages',
+                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][2]);
+      $a_profil[] = array('profil'  => 'status',
+                          'name'    => $LANG['plugin_fusinvdeploy']['profile'][3]);
+
+      return $a_profil;
+   }
+
 }
 
 ?>

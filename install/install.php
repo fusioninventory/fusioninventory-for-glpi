@@ -67,10 +67,7 @@ function pluginFusinvdeployInstall() {
       }
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-      $a_rights = array();
-      $a_rights['packages'] = 'w';
-      $a_rights['status'] = 'w';
-      PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
+      PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
