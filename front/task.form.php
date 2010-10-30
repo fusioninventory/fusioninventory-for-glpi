@@ -40,18 +40,18 @@ $pft = new PluginFusioninventoryTask;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
-//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
-//   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
    $_POST['periodicity'] = $_POST['periodicity-1']."-".$_POST['periodicity-2'];
 
    $pft->add($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["delete"])) {
-//   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
    $pftj = new PluginFusioninventoryTaskjob;
    
@@ -62,7 +62,7 @@ if (isset ($_POST["add"])) {
    $pft->delete($_POST);
    glpi_header($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.php");
 } else if (isset($_POST["update"])) {
-//   PluginFusioninventoryProfile::checkRight("fusioninventory", "Tasks", "w");
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
    $_POST['periodicity'] = $_POST['periodicity-1']."-".$_POST['periodicity-2'];
 

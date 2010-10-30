@@ -36,12 +36,13 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-//PluginFusioninventoryProfile::checkRight("fusioninventory", "networking","r");
 
 $ptud = new PluginFusioninventoryUnknownDevice;
 $ptt  = new PluginFusioninventoryTask;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
+
+PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -51,6 +52,8 @@ if (isset($_GET["id"])) {
 }
 
 if (isset($_POST["delete"])) {
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","w");
+
 	$ptud->check($_POST['id'],'w');
 
 	$ptud->delete($_POST,1);

@@ -40,7 +40,7 @@ $agents = new PluginFusioninventoryAgent;
 
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","agents");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "agents","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
