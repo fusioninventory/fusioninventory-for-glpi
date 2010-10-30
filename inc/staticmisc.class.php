@@ -130,17 +130,17 @@ class PluginFusinvsnmpStaticmisc {
       global $LANG;
 
       $a_menu = array();
-      if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models", "r")) {
+      //if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")) {
          $a_menu[0]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][4];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_models.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/model.php";
-      }
+      //}
 
-      //if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
+      if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
          $a_menu[1]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][3];
          $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_authentification.png";
          $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/configsecurity.php";
-      //}
+      }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange", "r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusinvsnmp']["menu"][2];
