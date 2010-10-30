@@ -46,7 +46,7 @@ class PluginFusioninventoryMenu {
       $width_status = 0;
 
       $a_menu = array();
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")) {
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
          $a_menu[0]['name'] = $LANG['plugin_fusioninventory']["menu"][1];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agent.php";
@@ -58,16 +58,18 @@ class PluginFusioninventoryMenu {
          $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/task.php";
       }
 
-      $a_menu[3]['name'] = $LANG['plugin_fusioninventory']["menu"][7];
-      $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_runningjob.png";
-      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskjob.php";
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+         $a_menu[3]['name'] = $LANG['plugin_fusioninventory']["menu"][7];
+         $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_runningjob.png";
+         $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskjob.php";
+      }
 
 
-//      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevices", "r")) {
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
          $a_menu[4]['name'] = $LANG['plugin_fusioninventory']["menu"][4];
          $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_unknown_device.png";
          $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php";
-//      }
+      }
 
       echo "<div align='center'>";
       echo "<table width='950'>";
