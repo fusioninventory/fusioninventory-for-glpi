@@ -53,17 +53,23 @@ class PluginFusinvinventoryStaticmisc {
 
       $a_menu = array();
 
-      $a_menu[0]['name'] = $LANG['plugin_fusinvinventory']["menu"][0];
-      $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_importxml.png";
-      $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/importxml.php";
+      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml", "r")) {
+         $a_menu[0]['name'] = $LANG['plugin_fusinvinventory']["menu"][0];
+         $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_importxml.png";
+         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/importxml.php";
+      }
 
-      $a_menu[1]['name'] = $LANG['plugin_fusinvinventory']["menu"][1];
-      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_rules.png";
-      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleinventory.php";
+      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "existantrule", "r")) {
+         $a_menu[1]['name'] = $LANG['plugin_fusinvinventory']["menu"][1];
+         $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_rules.png";
+         $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleinventory.php";
+      }
 
-      $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']["menu"][2];
-      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
-      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.form.php";
+      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r")) {
+         $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']["menu"][2];
+         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
+         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.form.php";
+      }
 
       return $a_menu;
    }
@@ -84,4 +90,5 @@ class PluginFusinvinventoryStaticmisc {
    }
 
 }
+
 ?>
