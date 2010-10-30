@@ -97,15 +97,19 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     *@param $p_plugins_id Module plugin id
     *@param $a_profile array with Right type ('wol', 'agents'...) and Right (NULL, r, w)
     **/
-   static function initProfile($p_plugins_id, $a_profile = array()) {
+   static function initProfile($pluginname, $plugins_id) {
       global $DB;
 
-      $pfp = new PluginFusioninventoryProfile;
-      foreach ($a_profile as $type=>$right) {
-         $pfp->addProfile($p_plugins_id, $type, $right);
+      if (isset($pluginname)) {
+         if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
+            $a_profile = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
+
+            $pfp = new PluginFusioninventoryProfile;
+            foreach ($a_profile as $num => $data) {
+               $pfp->addProfile($plugins_id, $data['profil'], 'w');
+            }
+         }
       }
-      $pfp = new PluginFusioninventoryProfile;
-     $pfp->changeProfile($p_plugins_id);
    }
 
 
@@ -119,7 +123,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       $moduleName = PluginFusioninventoryModule::getModuleName($p_plugins_id);
       if ($moduleName != false) {
          if (isset($_SESSION['glpiactiveprofile']['id'])) {
-            $pfp=new PluginFusioninventoryProfile;
+            $pfp = new PluginFusioninventoryProfile;
             $a_rights = $pfp->find("`profiles_id` = '".$_SESSION['glpiactiveprofile']['id'].
                                    "' AND `plugins_id`='".$p_plugins_id."'");
             $i = 0;
@@ -183,6 +187,25 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 
 
+   static function getRightDB($p_moduleName, $p_type, $profiles_id='') {
+
+      if ($profiles_id == '') {
+         $profiles_id = $_SESSION['glpiactiveprofile']['id'];
+      }
+      $p_plugins_id = PluginFusioninventoryModule::getModuleId($p_moduleName);
+      $pfp = new PluginFusioninventoryProfile;
+      $a_rights = $pfp->find("`profiles_id` = '".$profiles_id."'
+                                   AND `plugins_id`='".$p_plugins_id."'
+                                   AND `type`='".$p_type."' ");
+      $right = "NULL";
+      foreach ($a_rights as $id => $data) {
+         $right = $data['right'];
+      }
+      return $right;
+   }
+
+
+
    /**
     * Clean profile
     *
@@ -215,53 +238,96 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
 
    
-   function showProfileForm($target,$id) {
+   function showProfileForm($items_id, $target) {
       global $LANG,$CFG_GLPI;
 
       if (!haveRight("profile","r")) return false;
 
-      $onfocus="";
-      if ($id) {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-         $onfocus="onfocus=\"this.value=''\"";
-      }
-
-      if (empty($this->fields["interface"])) $this->fields["interface"]="fusioninventory";
-      if (empty($this->fields["name"])) $this->fields["name"]=$LANG["common"][0];
-
-
       echo "<form name='form' method='post' action=\"$target\">";
       echo "<div align='center'>";
-      echo "<table class='tab_cadre'><tr>";
       echo "<table class='tab_cadre_fixe'>";
-      echo "<th>".$LANG["common"][16].":</th>";
-      echo "<th><input type='text' name='name' value=\"".$this->fields["name"]."\" $onfocus></th>";
-      echo "<tr><th colspan='2' align='center'><strong>TEST ".$this->fields["name"]."</strong></th></tr>";
 
-      echo "<th>".$LANG["profiles"][2].":</th>";
-      echo "<th><select name='interface' id='profile_interface'>";
-      echo "<option value='fusioninventory' ".($this->fields["interface"]!="fusioninventory"?"selected":"").">".$LANG['plugin_fusioninventory']["profile"][1]."</option>";
+      $a_modules_temp = PluginFusioninventoryModule::getAll();
+      $a_module[] = 'fusioninventory';
+      foreach($a_modules_temp as $num => $data) {
+         $a_module[] = $data['directory'];
+      }
 
-      echo "</select></th>";
-      echo "</tr></table>";
-      echo "</div>";
-      
-      $params=array('interface'=>'__VALUE__',
-            'id'=>$id,
-         );
-      ajaxUpdateItemOnSelectEvent("profile_interface","profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false);
-      ajaxUpdateItem("profile_form",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/profiles.php",$params,false,'profile_interface');
+      foreach ($a_module as $pluginname) {
+         if (is_callable(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"))) {
+            $a_profil = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
 
-      echo "<br>";
+            echo "<tr>";
+            echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['profile'][0]." ".$LANG['plugin_'.$pluginname]['profile'][1]." :</th>";
+            echo "</tr>";
 
-      echo "<div align='center' id='profile_form'>";
+            $i = 0;
+            foreach ($a_profil as $num => $data) {
+               if ($i == '0') {
+                  echo "<tr class='tab_bg_1'>";
+               }
+               echo "<td>";
+               echo $data['name']."&nbsp;:";
+               echo "</td>";
+               echo "<td>";
+               echo Profile::dropdownNoneReadWrite($pluginname."-".$data['profil'],
+                              $this->getRightDB($pluginname, $data['profil'], $items_id),1,1,1);
+               echo "</td>";
+               $i++;
+               if ($i == '2') {
+                  echo "</tr>";
+                  $i = 0;
+               }
+            }
+            if ($i == '1') {
+               echo "<td></td>";
+               echo "</tr>";
+            }
+         }
+      }
+
+      echo "<tr>";
+      echo "<th colspan='4'>";
+      echo "<input type='hidden' name='profile_id' value='".$items_id."'/>";
+      echo "<input type='submit' value='".$LANG["buttons"][2]."' class='submit' >";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
       echo "</div>";
 
       echo "</form>";
-
    }
+
+
+   // Udpate profiles from Profil management
+   function updateProfiles($profiles) {
+      foreach($profiles as $key => $value) {
+         if (strstr($key, "-")) {
+            $profilName = explode("-", $key);
+            $a_profile = $this->find("`plugins_id`='".PluginFusioninventoryModule::getModuleId($profilName[0])."'
+                        AND `profiles_id`='".$profiles['profile_id']."'
+                        AND `type`='".$profilName[1]."' ");
+            if (count($a_profile) > 0) {
+               foreach ($a_profile as $id => $data) {
+                  $this->updateProfile($data['id'],
+                                       PluginFusioninventoryModule::getModuleId($profilName[0]),
+                                       $data['type'],
+                                       $value,
+                                       $data['profiles_id']);
+               }
+            } else {
+               $this->addProfile(PluginFusioninventoryModule::getModuleId($profilName[0]),
+                                 $profilName[1],
+                                 $value,
+                                 $profiles['profile_id']);
+            }
+         }
+
+      }
+   }
+
+
 }
 
 ?>

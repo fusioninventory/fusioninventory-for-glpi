@@ -217,7 +217,7 @@ function plugin_headings_actions_fusioninventory($item) {
 
       case 'Profile' :
          return array(
-            1 => "plugin_headings_fusioninventory",
+            1 => "plugin_headings_fusioninventory"
             );
          break;
 
@@ -250,6 +250,24 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'nostarted');
    // see tasks finished
    $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
+}
+
+
+
+
+function plugin_headings_fusioninventory($item, $withtemplate=0) {
+	global $CFG_GLPI;
+
+	switch (get_class($item)) {
+		case 'Profile' :
+
+			$PluginFusioninventoryProfile = new PluginFusioninventoryProfile();
+//			if (!$prof->GetfromDB($id)) {
+//				PluginFusioninventoryDb::createaccess($id);
+//         }
+			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), GLPI_ROOT."/plugins/fusioninventory/front/profile.php");
+		break;
+	}
 }
 
 

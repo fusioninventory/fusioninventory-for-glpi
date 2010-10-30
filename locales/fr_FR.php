@@ -52,35 +52,14 @@ $LANG['plugin_fusioninventory']['config'][5] = "Controle de l'agent à partir de
 $LANG['plugin_fusioninventory']['config'][6] = "Wake On Lan";
 $LANG['plugin_fusioninventory']['config'][7] = "Interrogation SNMP";
 
-$LANG['plugin_fusioninventory']["profile"][0]="Gestion des droits";
-$LANG['plugin_fusioninventory']["profile"][1]="$title"; //interface
-
-$LANG['plugin_fusioninventory']["profile"][10]="Listes des profils déjà configurés";
-$LANG['plugin_fusioninventory']["profile"][11]="Historique Ordinateurs";
-$LANG['plugin_fusioninventory']["profile"][12]="Historique Imprimantes";
-$LANG['plugin_fusioninventory']["profile"][13]="Infos Imprimantes";
-$LANG['plugin_fusioninventory']["profile"][14]="Infos Réseau";
-$LANG['plugin_fusioninventory']["profile"][15]="Erreurs courantes";
-
-$LANG['plugin_fusioninventory']["profile"][16]="SNMP Réseaux";
-$LANG['plugin_fusioninventory']["profile"][17]="SNMP Périphériques";
-$LANG['plugin_fusioninventory']["profile"][18]="SNMP Imprimantes";
-$LANG['plugin_fusioninventory']["profile"][19]="Modèles SNMP";
-$LANG['plugin_fusioninventory']["profile"][20]="Authentification SNMP";
-$LANG['plugin_fusioninventory']["profile"][21]="Infos scripts";
-$LANG['plugin_fusioninventory']["profile"][22]="Découverte réseau";
-$LANG['plugin_fusioninventory']["profile"][23]="Configuration";
-$LANG['plugin_fusioninventory']["profile"][24]="Modèle SNMP";
-$LANG['plugin_fusioninventory']["profile"][25]="Plages IP";
-$LANG['plugin_fusioninventory']["profile"][26]="Agents";
-$LANG['plugin_fusioninventory']["profile"][27]="Processus des agents";
-$LANG['plugin_fusioninventory']["profile"][28]="Rapport";
-$LANG['plugin_fusioninventory']["profile"][29]="Controle des agents à distance";
-$LANG['plugin_fusioninventory']["profile"][30]="Matériel inconnu";
-$LANG['plugin_fusioninventory']["profile"][31]="Inventaire machine FusionInventory";
-$LANG['plugin_fusioninventory']["profile"][32]="Interrogation SNMP";
-$LANG['plugin_fusioninventory']["profile"][33]="WakeOnLan";
-$LANG['plugin_fusioninventory']["profile"][34]="Actions";
+$LANG['plugin_fusioninventory']['profile'][0]="Gestion des droits";
+$LANG['plugin_fusioninventory']['profile'][1]="$title"; //interface
+$LANG['plugin_fusioninventory']['profile'][2]="Agents";
+$LANG['plugin_fusioninventory']['profile'][3]="Controle à distance des agents";
+$LANG['plugin_fusioninventory']['profile'][4]="Configuration";
+$LANG['plugin_fusioninventory']['profile'][5]="WakeOnLan";
+$LANG['plugin_fusioninventory']['profile'][6]="Matériel inconnu";
+$LANG['plugin_fusioninventory']['profile'][7]="Tâches";
 
 $LANG['plugin_fusioninventory']["setup"][2]="Merci de vous placer sur l'entité racine (voir tous)";
 $LANG['plugin_fusioninventory']["setup"][3]="Configuration du plugin ".$title;

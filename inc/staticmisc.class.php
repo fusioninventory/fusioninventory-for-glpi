@@ -69,6 +69,26 @@ class PluginFusioninventoryStaticmisc {
       return $a_methods;
    }
 
+   static function profiles() {
+      global $LANG;
+
+      $a_profil = array();
+      $a_profil[] = array('profil'  => 'agent',
+                          'name'    => $LANG['plugin_fusioninventory']['profile'][2]);
+      $a_profil[] = array('profil'  => 'remotecontrol',
+                          'name'    => $LANG['plugin_fusioninventory']['profile'][3]);
+      $a_profil[] = array('profil'  => 'configuration',
+                          'name'    => $LANG['plugin_fusioninventory']['profile'][4]);
+      $a_profil[] = array('profil'  => 'wol',
+                          'name'    => $LANG['plugin_fusioninventory']['profile'][5]);
+      $a_profil[] = array('profil'  => 'unknowndevice',
+                          'name'    => $LANG['plugin_fusioninventory']['profile'][6]);
+      $a_profil[] = array('profil'  => 'task',
+                          'name'    => $LANG['plugin_fusioninventory']['profile'][7]);
+
+      return $a_profil;
+   }
+
 }
 
 ?>

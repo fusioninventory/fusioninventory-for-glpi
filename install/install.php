@@ -41,6 +41,7 @@ function pluginFusioninventoryInstall($version) {
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
    }
    // Get informations of plugin
    $a_plugin = plugin_version_fusioninventory();
@@ -64,13 +65,7 @@ function pluginFusioninventoryInstall($version) {
    $data = $plugin->find("`name` = 'FusionInventory'");
    $fields = current($data);
    $plugins_id = $fields['id'];
-   $a_rights = array();
-   $a_rights['agents'] = 'w';
-//   $a_rights['agentsprocesses'] = 'w';
-   $a_rights['remotecontrol'] = 'w';
-   $a_rights['wol'] = 'w';
-   $a_rights['configuration'] = 'w';
-   PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
+   PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
 
    // glpi_plugin_fusioninventory_configs
    $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
