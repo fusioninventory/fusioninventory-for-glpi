@@ -1049,18 +1049,6 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			}
 			break;
 
-		case PROFILE_TYPE :
-			// template case
-			if ($withtemplate) {
-				return array();
-			// Non template case
-         } else {
-				return array(
-					1 => $LANG['plugin_fusinvsnmp']["title"][0],
-					);
-         }
-			break;
-
        case 'PluginFusioninventoryAgent' :
           $array = array ();
           $array[1] = $LANG['plugin_fusinvsnmp']["agents"][24];
@@ -1089,12 +1077,6 @@ function plugin_headings_actions_fusinvsnmp($item) {
 				$array[1] = "plugin_headings_fusinvsnmp_networkingInfo";
 			}
 			return $array;
-			break;
-
-		case 'Profile' :
-			return array(
-				1 => "plugin_headings_fusinvsnmp",
-				);
 			break;
 
       case 'PluginFusioninventoryAgent' :
@@ -1138,20 +1120,6 @@ function plugin_headings_fusinvsnmp_networkingInfo($type, $id) {
            array('target'=>GLPI_ROOT.'/plugins/fusinvsnmp/front/switch_info.form.php'));
 }
 
-function plugin_headings_fusinvsnmp($type,$id,$withtemplate=0) {
-	global $CFG_GLPI;
-
-	switch ($type) {
-		case PROFILE_TYPE :
-			$prof=new PluginFusinvsnmpProfile;
-			if (!$prof->GetfromDB($id)) {
-				PluginFusinvsnmpDb::createaccess($id);
-         }
-			$prof->showForm($id, 
-              array('target'=>$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/profile.php"));
-		break;
-	}
-}
 
 function plugin_headings_fusinvsnmp_agents($type,$id) {
    $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig;
