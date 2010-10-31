@@ -69,7 +69,6 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpIPRange');
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
    Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
-   Plugin::registerClass('PluginFusinvsnmpUnknownDevice');
    Plugin::registerClass('PluginFusinvsnmpAgentconfig');
    Plugin::registerClass('PluginFusinvsnmpNetworkport',
                          array('classname'=>'glpi_networkports'));

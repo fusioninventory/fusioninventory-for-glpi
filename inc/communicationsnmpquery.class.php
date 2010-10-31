@@ -1057,7 +1057,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
     *@param $p_cdp CDP value (1 or <>1)
     *@return errors string to be alimented if import ko / '' if ok
     **/
-   function importConnection($p_connection, $p_oPort, $p_cdp) {
+   function  importConnection($p_connection, $p_oPort, $p_cdp) {
       global $LANG;
 
       PluginFusioninventoryCommunication::addLog(
@@ -1086,12 +1086,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
                case 'MAC' :
-                  $mac=$child;
+                  $mac=strval($child);
                   $portID=$ptsnmp->getPortIDfromDeviceMAC($child, $p_oPort->getValue('id'));
                   $p_oPort->addMac($mac);
                   break;
                case 'IP' ://TODO : si ip ajouter une tache de decouverte sur l'ip pour recup autre info // utile seulement si mac inconnu dans glpi
-                  $ip=$child;
+                  $ip=strval($child);
                   $p_oPort->addIp($ip);
                   break;
                default :

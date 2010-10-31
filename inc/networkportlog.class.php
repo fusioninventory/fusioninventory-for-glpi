@@ -533,7 +533,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       }
       $input['networkports_id_destination'] = $opposite_port;
 
-      $input['date'] = date("Y-m-d H:i:s");
+      $input['date_mod'] = date("Y-m-d H:i:s");
 
       if ($status == 'remove') {
          $input['creation'] = 0;
@@ -541,7 +541,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
          $input['creation'] = 1;
       }
 
-      $pthc->add($input);
+      //$pthc->add($input);
    }
 
    // List of history in networking display
