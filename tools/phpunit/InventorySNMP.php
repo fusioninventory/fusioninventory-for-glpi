@@ -8,6 +8,7 @@ if (!defined('GLPI_ROOT')) {
    session_start();
    require_once GLPI_ROOT."/inc/includes.php";
    $_SESSION['glpi_use_mode'] = 2;
+   $_SESSION['glpiactiveprofile']['id'] = 4;
 
    ini_set('display_errors','On');
    error_reporting(E_ALL | E_STRICT);
@@ -116,36 +117,126 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
       $NetworkPort = new NetworkPort();
       $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
-      $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
-                                    AND `name`='Fa0/1'");
-      $data = array();
-      foreach ($a_ports as $id => $data) {
 
+      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+
+      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
+         if ($child->IFTYPE[0] == '6') {
+            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
+                                          AND `name`='".$child->IFNAME[0]."'");
+            $data = array();
+            foreach ($a_ports as $id => $data) {
+
+            }
+            $oFusioninventory_networkport = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
+            $a_portsExt = $oFusioninventory_networkport->find("`networkports_id`='".$id."'");
+            $dataExt = array();
+            foreach ($a_portsExt as $idExt => $dataExt) {
+
+            }
+            
+            $this->assertEquals($data['name'], strval($child->IFNAME[0]) , 'Name of port not good ("'.$data['name'].'" instead of "'.$child->IFNAME[0].'")');
+            $this->assertEquals($data['mac'], strval($child->MAC[0]) , 'Mac of port not good ("'.$data['mac'].'" instead of "'.$child->MAC[0].'")');
+            $this->assertEquals($data['logical_number'], strval($child->IFNUMBER[0]) , 'Number of port not good ("'.$data['logical_number'].'" instead of "'.$child->IFNUMBER[0].'")');
+
+            $this->assertEquals($dataExt['ifdescr'], strval($child->IFDESCR[0]) , 'Description of port not good ("'.$data['ifdescr'].'" instead of "'.$child->IFDESCR[0].'")');
+            $this->assertEquals($dataExt['ifmtu'], strval($child->IFMTU[0]) , 'MTU of port not good ("'.$data['ifmtu'].'" instead of "'.$child->IFMTU[0].'")');
+            $this->assertEquals($dataExt['ifspeed'], strval($child->IFSPEED[0]) , 'Speed of port not good ("'.$data['ifspeed'].'" instead of "'.$child->IFSPEED[0].'")');
+            $this->assertEquals($dataExt['ifinternalstatus'], strval($child->IFINTERNALSTATUS[0]) , 'Internal status of port not good ("'.$data['ifinternalstatus'].'" instead of "'.$child->IFINTERNALSTATUS[0].'")');
+            $this->assertEquals($dataExt['iflastchange'], strval($child->IFLASTCHANGE[0]) , 'Last change of port not good ("'.$data['iflastchange'].'" instead of "'.$child->IFLASTCHANGE[0].'")');
+            $this->assertEquals($dataExt['ifinoctets'], strval($child->IFINOCTETS[0]) , 'In octets of port not good ("'.$data['ifinoctets'].'" instead of "'.$child->IFINOCTETS[0].'")');
+            $this->assertEquals($dataExt['ifinerrors'], strval($child->IFINERRORS[0]) , 'In errors of port not good ("'.$data['ifinerrors'].'" instead of "'.$child->IFINERRORS[0].'")');
+            $this->assertEquals($dataExt['ifoutoctets'], strval($child->IFOUTOCTETS[0]) , 'Out octets of port not good ("'.$data['ifoutoctets'].'" instead of "'.$child->IFOUTOCTETS[0].'")');
+            $this->assertEquals($dataExt['ifouterrors'], strval($child->IFOUTERRORS[0]) , 'out errors of port not good ("'.$data['ifouterrors'].'" instead of "'.$child->IFOUTERRORS[0].'")');
+            $this->assertEquals($dataExt['ifstatus'], strval($child->IFSTATUS[0]) , 'Status of port not good ("'.$data['ifstatus'].'" instead of "'.$child->IFSTATUS[0].'")');
+         }
       }
-      $oFusioninventory_networkport = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
-      $a_portsExt = $oFusioninventory_networkport->find("`networkports_id`='".$id."'");
-      $dataExt = array();
-      foreach ($a_portsExt as $idExt => $dataExt) {
-
-      }
-
-      $this->assertEquals($data['name'], 'Fa0/1' , 'Name of port not good (Fa0/1)');
-      $this->assertEquals($data['mac'], '00:24:51:2c:93:01' , 'Mac of port not good (00:24:51:2c:93:01)');
-      $this->assertEquals($data['logical_number'], '10001' , 'Number of port not good (10001)');
-
-      $this->assertEquals($dataExt['ifdescr'], 'FastEthernet0/1' , 'Description of port not good '.$dataExt['ifdescr'].' (FastEthernet0/1)');
-      $this->assertEquals($dataExt['ifmtu'], '1500' , 'MTU of port not good (1500)');
-      $this->assertEquals($dataExt['ifspeed'], '100000000' , 'Speed of port not good (100000000)');
-      $this->assertEquals($dataExt['ifinternalstatus'], '1' , 'Internal status of port not good (1)');
-      $this->assertEquals($dataExt['iflastchange'], '50 days, 16:41:29.21' , 'Last change of port not good (50 days, 16:41:29.21)');
-      $this->assertEquals($dataExt['ifinoctets'], '18847653' , 'In octets of port not good (18847653)');
-      $this->assertEquals($dataExt['ifinerrors'], '0' , 'In errors of port not good (0)');
-      $this->assertEquals($dataExt['ifoutoctets'], '2026316806' , 'Out octets of port not good (2026316806)');
-      $this->assertEquals($dataExt['ifouterrors'], '0' , 'out errors of port not good (0)');
-      $this->assertEquals($dataExt['ifstatus'], '1' , 'Status of port not good (1)');
 
    }
 
+
+   public function testPortsVlan() {
+      
+      $NetworkPort = new NetworkPort();
+      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+
+      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+
+      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
+         if ($child->IFTYPE[0] == '6') {
+
+            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
+                                          AND `name`='".$child->IFNAME[0]."'");
+            $data = array();
+            foreach ($a_ports as $id => $data) {
+            }
+            
+            $vlanDB = NetworkPort_Vlan::getVlansForNetworkPort($id);
+            $vlanDB_Name_Comment = array();
+            foreach ($vlanDB as $vlans_id=>$datas) {
+               $temp = Dropdown::getDropdownName('glpi_vlans', $vlans_id, 1);
+               $vlanDB_Name_Comment[$temp['name']."-".$temp['comment']] = 1;
+            }
+            $nb_errors = 0;
+            $forgotvlan = '';
+            if (isset($child->VLANS)) {
+               foreach ($child->VLANS->children() as $namevlan => $childvlan) {
+                  if (!isset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)])) {
+                     $nb_errors++;
+                     $forgotvlan .= strval($childvlan->NUMBER)."-".strval($childvlan->NAME)." | ";
+                  } else {
+                     unset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)]);
+                  }
+               }
+            }
+            $this->assertEquals($forgotvlan, '' , 'Vlans not in DB ("'.$forgotvlan.'")');
+            $this->assertEquals(count($vlanDB_Name_Comment), 0 , 'Vlans in DB but not in the XML ("'.print_r($vlanDB_Name_Comment, true).'")');
+         }
+      }
+   }
+
+   public function testPortsConnections() {
+
+      $NetworkPort = new NetworkPort();
+      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+
+      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+
+      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
+         if ($child->IFTYPE[0] == '6') {
+
+            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
+                                          AND `name`='".$child->IFNAME[0]."'");
+            $data = array();
+            foreach ($a_ports as $id => $data) {
+            }
+
+            if (isset($child->CONNECTIONS)) {
+               foreach ($child->CONNECTIONS->children() as $nameconnect => $childconnect) {
+                  if (isset($child->CONNECTIONS->CDP)) { // Manage CDP
+                     
+
+                  } else { // Manage tradictionnal connections
+                     // Search in DB if MAC exist
+
+                     $a_port = $NetworkPort->find("`mac`='".strval($childconnect->MAC)."'
+                                                   AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
+                     $this->assertEquals(count($a_port), 1 , 'Connection not good create ('.count($a_port).' instead of 1 port ('.strval($childconnect->MAC).')');
+                     if (count($child->CONNECTIONS->children()) > 1) {
+                        // Hub management
+
+                     } else {
+                        foreach($a_port as $ports_id => $datas) {
+                        }
+                        $this->assertTrue(NetworkPort_NetworkPort::getFromDBForNetworkPort($ports_id) , 'Unknown port connection not connected with an other device');
+                        
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
 
 }
 
