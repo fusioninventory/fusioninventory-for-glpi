@@ -41,13 +41,17 @@ if (!defined('GLPI_ROOT')) {
 }
 
 session_start();
+$_SESSION['glpi_use_mode'] = 2;
 include (GLPI_ROOT."/inc/includes.php");
 
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
-error_reporting(E_ALL);
-$_SESSION["glpi_use_mode"] = 2;
+
+ini_set('display_errors','On');
+error_reporting(E_ALL | E_STRICT);
+set_error_handler('userErrorHandlerDebug');
+$_SESSION['glpi_use_mode'] = 2;
 
 //// Load all plugin files
 //   call_user_func("plugin_init_fusinvinventory");

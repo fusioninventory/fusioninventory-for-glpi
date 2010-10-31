@@ -40,7 +40,11 @@ function pluginFusioninventoryInstall($version) {
 
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryAgentmodule')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
    }
    // Get informations of plugin
@@ -78,7 +82,7 @@ function pluginFusioninventoryInstall($version) {
    $DB->query($query);
 
    PluginFusioninventoryProfile::changeProfile($plugins_id);
-   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
    $input = array();
    $input['plugins_id'] = $plugins_id;
    $input['modulename'] = "WAKEONLAN";

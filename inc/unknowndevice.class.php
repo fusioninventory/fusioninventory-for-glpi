@@ -420,9 +420,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $used_id = $this->connectPortToHub($a_ports, $hub_id);
             }
          } else if (count($a_ports) == "0") {
+
             // Port don't exist
             // Create unknown device
             $input = array();
+            $input['name'] = '';
                // get source entity :
 //               $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
 //               if (isset($Netport->entities_id)) {
@@ -554,7 +556,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input = array();
       $input['hub'] = "1";
       $input['name'] = "hub";
-      $input["FK_agent"] = $agent_id;
+//      $input["plugin_fusioninventory_agents_id"] = $agent_id;
          // get source entity :
 //         $datas = $Netport->getDeviceData($p_oPort->getValue("items_id"),$p_oPort->getValue("itemtype"));
 //         if (isset($Netport->entities_id)) {
@@ -600,7 +602,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
       foreach ($releasePorts as $port_id=>$data) {
          //plugin_fusioninventory_addLogConnection("remove",$port_id);
-         removeConnector($port_id);
+         $nn->delete(array('id' => $port_id));
       }
    }
 
