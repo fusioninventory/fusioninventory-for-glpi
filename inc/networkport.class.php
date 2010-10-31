@@ -199,13 +199,13 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function PortUnknownConnection($p_mac, $p_ip) {
-      $ptud = new PluginFusinvsnmpUnknownDevice;
+      $ptud = new PluginFusioninventoryUnknownDevice;
       $unknown_infos["name"] = '';
       $newID=$ptud->add($unknown_infos);
       // Add networking_port
       $np=new NetworkPort;
       $port_add["items_id"] = $newID;
-      $port_add["itemtype"] = 'PluginFusinvsnmpUnknownDevice';
+      $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
       $port_add["ip"] = $p_ip;
       $port_add['mac'] = $p_mac;
       $dport = $np->add($port_add);
@@ -257,7 +257,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 	function connectDB($destination_port='') {
 		global $DB;
 
-      $ptap = new PluginFusioninventoryAgentProcess;
+      //$ptap = new PluginFusioninventoryAgentProcess;
 
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
@@ -269,10 +269,10 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
             $this->disconnectDB($this->getValue('id')); // disconnect this port
             $this->disconnectDB($destination_port);     // disconnect destination port
             $nn = new NetworkPort_NetworkPort();
-            if ($nn->add(array('networkports_id_source'=> $this->getValue('id'),
-                               'networkports_id_destination' => $destination_port))) { //connect those 2 ports
-               $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                                    array('query_nb_connections_created' => '1'));
+            if ($nn->add(array('networkports_id_1'=> $this->getValue('id'),
+                               'networkports_id_2' => $destination_port))) { //connect those 2 ports
+               //$ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+               //                     array('query_nb_connections_created' => '1'));
                PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$this->getValue('id'));
             }
          }
@@ -362,7 +362,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
                       FROM `glpi_networkports_vlans`
                            LEFT JOIN `glpi_vlans`
                               ON `glpi_networkports_vlans`.`vlans_id`=`glpi_vlans`.`id`
-                      WHERE `ports_id`='$tmp_port'";
+                      WHERE `networkports_id`='$tmp_port'";
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "0") { // this port has no vlan
                   foreach ($vlans as $vlans_id) {

@@ -88,7 +88,7 @@ class PluginFusinvsnmpCommunicationSNMP {
     *@return nothing
     **/
    function setXML($p_xml) {
-      $this->sxml = @simplexml_load_string($p_xml); // @ to avoid xml warnings
+      $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA); // @ to avoid xml warnings
    }
 
    

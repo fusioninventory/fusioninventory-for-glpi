@@ -206,7 +206,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
       $sysdescr = str_replace("\r", "", $sysdescr);
       if (!empty($sysdescr)) {
-         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusioninventory/tool/discovery.xml');
+         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusioninventory/tool/discovery.xml','SimpleXMLElement', LIBXML_NOCDATA);
          foreach ($xml->DEVICE as $device) {
             $device['SYSDESCR'] = str_replace("\r", "", $device['SYSDESCR']);
             if ($sysdescr == $device['SYSDESCR']) {

@@ -164,7 +164,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		if ($installation != 1) {
 			PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models","w");
       }
-		$xml = simplexml_load_file($file);
+		$xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);
 
 		// Verify same model exist
 		$query = "SELECT id
@@ -492,7 +492,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 	function import_agentonly($content_dir,$file) {
 		global $DB,$LANG;
 		
-		$xml = simplexml_load_file($content_dir.$file);
+		$xml = simplexml_load_file($content_dir.$file,'SimpleXMLElement', LIBXML_NOCDATA);
 		
 		$num_files = $xml->agent->num_files;
 		
@@ -519,7 +519,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		fwrite($handle, "</snmp>\n");
 		fclose($handle);
 
-		$xml_device = simplexml_load_file($target);
+		$xml_device = simplexml_load_file($target,'SimpleXMLElement', LIBXML_NOCDATA);
 
 		$device_queried_networking = 0;
 		$device_queried_printer = 0;

@@ -154,7 +154,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 			echo "</tr>";
 		}
 
-		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
+		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 		
 		$i = -1;
 		foreach($xml->auth[0] as $num) {
@@ -250,7 +250,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 	// for file stored snmp authentication
 	function add_xml() {
 		// Get new id
-		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
+		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 		
 		$id = $xml->incrementID[0];
 		$id = $id + 1;
@@ -422,7 +422,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    }
 
 	function selectbox($selected=0) {
-		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml");
+		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 		$i = -1;
 		$selectbox = "<select name='plugin_fusioninventory_snmpauths_id' size='1'>\n
                        <option value='0'>-----</option>\n";
@@ -512,7 +512,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		}
 
 		if ($config->getValue("storagesnmpauth") == "file") {
-			$xml = simplexml_load_file($xml_auth_rep."auth.xml");
+			$xml = simplexml_load_file($xml_auth_rep."auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 		
 			$i=-1;
 			foreach($xml->auth[0] as $num) {
@@ -707,7 +707,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 
 	function GetSNMPAuthName_XML($ID_auth,$xml_auth_rep) {
-		$xml = simplexml_load_file($xml_auth_rep."auth.xml");
+		$xml = simplexml_load_file($xml_auth_rep."auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 		
 		$i=-1;
 		foreach($xml->auth[0] as $num) {

@@ -176,7 +176,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	function getPortIDfromDeviceIP($IP, $ifDescr) {
 		global $DB;
 
-      $pfiud = new PluginFusinvsnmpUnknownDevice;
+      $pfiud = new PluginFusioninventoryUnknownDevice;
       $np = new NetworkPort;
 
       $PortID = "";
@@ -213,7 +213,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
             $PortID = $dataPort["networkports_id"];
          }
       } else {
-         $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_unknowndevices`
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
             WHERE `ip`='".$IP."'
             LIMIT 1";
          $result = $DB->query($query);
@@ -222,7 +222,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
             // Search port and add if required
             $query1 = "SELECT *
                 FROM `glpi_networkports`
-                WHERE `itemtype`='PluginFusinvsnmpUnknownDevice'
+                WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
                    AND `items_id`='".$data['id']."'
                    AND `name`='".$ifDescr."'
                 LIMIT 1";
@@ -234,7 +234,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                // Add port
                $input = array();
                $input['items_id'] = $data['id'];
-               $input['itemtype'] = 'PluginFusinvsnmpUnknownDevice';
+               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $PortID = $np->add($input);
@@ -244,7 +244,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
          $query = "SELECT *
              FROM `glpi_networkports`
-             WHERE `itemtype`='PluginFusinvsnmpUnknownDevice'
+             WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
                AND`ip`='".$IP."'
              LIMIT 1";
          $result = $DB->query($query);
@@ -254,7 +254,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                // Add port
                $input = array();
                $input['items_id'] = $data['items_id'];
-               $input['itemtype'] = 'PluginFusinvsnmpUnknownDevice';
+               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $PortID = $np->add($input);
@@ -268,7 +268,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          // Add port
          $input = array();
          $input['items_id'] = $unkonwn_id;
-         $input['itemtype'] = 'PluginFusinvsnmpUnknownDevice';
+         $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
          $input['ip'] = $IP;
          $input['name'] = $ifDescr;
          $PortID = $np->add($input);

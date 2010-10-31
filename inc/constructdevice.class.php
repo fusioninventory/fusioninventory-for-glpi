@@ -801,7 +801,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          $token   = strtok("\n");
          $pad    += $indent;
       }
-      $sxml = simplexml_load_string($result);
+      $sxml = simplexml_load_string($result,'SimpleXMLElement', LIBXML_NOCDATA);
       return $sxml;
    }
 

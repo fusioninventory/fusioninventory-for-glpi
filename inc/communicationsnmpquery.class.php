@@ -789,7 +789,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'CONNECTIONS' :
-                  //$errors.=$this->importConnections($child, $ptp);
+                  $errors.=$this->importConnections($child, $ptp);
                   break;
                case 'VLANS' :
                   $errors.=$this->importVlans($child, $ptp);
@@ -1064,7 +1064,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
       $errors='';
       $portID=''; $mac=''; $ip='';
-      $ptsnmp= new PluginFusioninventorySNMP;
+      $ptsnmp= new PluginFusinvsnmpSNMP;
       if ($p_cdp==1) {
          $ifdescr='';
          foreach ($p_connection->children() as $name=>$child) {
@@ -1097,7 +1097,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
                default :
                   $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
-            }            
+            }
          }
       }
       if ($portID != '') {
