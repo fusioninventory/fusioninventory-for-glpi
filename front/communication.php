@@ -96,7 +96,7 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
          $res .= "1'".$errors."'";
 
          $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-         $pxml = @simplexml_load_string($p_xml);
+         $pxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
          if (isset($pxml->DEVICEID)) {
 

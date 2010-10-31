@@ -178,7 +178,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    function importToken($p_xml) {
-      $sxml = @simplexml_load_string($p_xml);
+      $sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
       if ((isset($sxml->DEVICEID)) AND (isset($sxml->TOKEN))) {
          $pta = new PluginFusioninventoryAgent;

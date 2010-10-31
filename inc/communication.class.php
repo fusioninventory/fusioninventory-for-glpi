@@ -81,7 +81,7 @@ class PluginFusioninventoryCommunication {
     *@return nothing
     **/
    function setXML($p_xml) {
-      $this->sxml = @simplexml_load_string($p_xml); // @ to avoid xml warnings
+      $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA); // @ to avoid xml warnings
    }
 
    /**
@@ -117,7 +117,7 @@ class PluginFusioninventoryCommunication {
       // pas gérer le REQUEST (tjs pareil)
       $get=$this->get();
       $errors='';
-      $sxml_prolog = @simplexml_load_string($get); // @ to avoid xml warnings
+      $sxml_prolog = @simplexml_load_string($get,'SimpleXMLElement', LIBXML_NOCDATA); // @ to avoid xml warnings
 
 
       if ($sxml_prolog->DEVICEID=='') {
