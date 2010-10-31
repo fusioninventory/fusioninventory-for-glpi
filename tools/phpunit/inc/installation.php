@@ -43,7 +43,17 @@ function installFusionPlugins() {
       $Plugin->install($fields['id']);
       $Plugin->activate($fields['id']);
    }
+
+   $Plugin->init();
    
+   if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+      //doHook("config");
+      if (count($_SESSION["glpi_plugins"])) {
+         foreach ($_SESSION["glpi_plugins"] as $name) {
+            Plugin::load($name);
+         }
+      }
+   }
 }
 
 

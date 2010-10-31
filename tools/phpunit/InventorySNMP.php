@@ -5,7 +5,7 @@ define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventorySNMP::main');
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
 
-   session_start();
+//   session_start();
    require_once GLPI_ROOT."/inc/includes.php";
    $_SESSION['glpi_use_mode'] = 2;
    $_SESSION['glpiactiveprofile']['id'] = 4;
@@ -22,6 +22,10 @@ if (!defined('GLPI_ROOT')) {
    include_once("inc/installation.php");
    installGLPI();
    installFusionPlugins();
+
+   $_SESSION["glpilanguage"] = 'fr_FR';
+   loadLanguage();
+
 }
 
 include_once('emulatoragent.php');
@@ -199,6 +203,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
       $NetworkPort = new NetworkPort();
       $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+      $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
 
       $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -221,14 +226,14 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
                      $a_port = $NetworkPort->find("`mac`='".strval($childconnect->MAC)."'
                                                    AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
-                     $this->assertEquals(count($a_port), 1 , 'Connection not good create ('.count($a_port).' instead of 1 port ('.strval($childconnect->MAC).')');
+                     $this->assertEquals(count($a_port), 1 , 'Port (connection) not good create ('.count($a_port).' instead of 1 port ('.strval($childconnect->MAC).')');
                      if (count($child->CONNECTIONS->children()) > 1) {
                         // Hub management
 
                      } else {
                         foreach($a_port as $ports_id => $datas) {
                         }
-                        $this->assertTrue(NetworkPort_NetworkPort::getFromDBForNetworkPort($ports_id) , 'Unknown port connection not connected with an other device');
+                        $this->assertTrue($NetworkPort_NetworkPort->getFromDBForNetworkPort($ports_id) , 'Unknown port connection not connected with an other device');
                         
                      }
                   }
