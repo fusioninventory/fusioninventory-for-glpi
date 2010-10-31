@@ -108,7 +108,9 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
    switch (get_class($item)) {
       case 'Computer' :
          $array = array ();
-         $array[1] = $LANG['plugin_fusinvinventory']["xml"][0];
+         if ($_GET['id'] > 0) {
+            $array[1] = $LANG['plugin_fusinvinventory']["xml"][0];
+         }
          return $array;
          break;
    }
