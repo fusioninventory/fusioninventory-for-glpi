@@ -76,7 +76,7 @@ class PluginFusinvinventoryInventory {
 
       define('SOURCEXML', $p_xml);
 
-      $xml = simplexml_load_string($p_xml);
+      $xml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
       $input = array();
 
       // Global criterias
@@ -168,7 +168,7 @@ class PluginFusinvinventoryInventory {
       //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
       $action->checkConfig("", $config);
       ob_start();
-      $action->startAction(simplexml_load_string(SOURCEXML));
+      $action->startAction(simplexml_load_string(SOURCEXML),'SimpleXMLElement', LIBXML_NOCDATA);
       $output = ob_flush();
       if (!empty($output)) {
          logInFile("fusinvinventory", $output);
