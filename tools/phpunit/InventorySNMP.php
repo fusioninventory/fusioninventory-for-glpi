@@ -96,7 +96,29 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
       }
       $this->assertEquals($data['name'], 'switch2960-001' , 'Problem on update name of switch');
+      $this->assertEquals($data['ip'], '192.168.0.80' , 'Problem on update ip of switch');
+      $this->assertEquals($data['mac'], '00:1a:6c:9a:fc:80' , 'Problem on update mac of switch');
+      $this->assertEquals($data['ram'], '60' , 'Problem on update ram of switch');
+      $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentmodels',
+                           $data['networkequipmentmodels_id']), 'WS-C2960-24PC-L' , 'Problem on update model of switch');
+      $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentfirmwares',
+                           $data['networkequipmentfirmwares_id']), '12.2(44)SE3' , 'Problem on update firmware of switch');
+      $this->assertEquals(Dropdown::getDropdownName('glpi_locations',
+                           $data['locations_id']), 'Baie_01' , 'Problem on update location of switch');
 
+      $this->assertEquals($data['comment'], '' , 'Comment must be empty');
+
+
+      $fusinvsnmp_networkequipments = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+      $a_snmpswitch = $fusinvsnmp_networkequipments->find("`networkequipments_id`='".$data['id']."' ");
+      $this->assertEquals(count($a_snmpswitch), 1 , 'Extension of switch informations are missing');
+      foreach($a_snmpswitch as $idsnmp=>$datasnmp){
+         $this->assertEquals($datasnmp['sysdescr'], 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE3, RELEASE SOFTWARE (fc2)
+Copyright (c) 1986-2008 by Cisco Systems, Inc.
+Compiled Mon 29-Sep-08 00:59 by nachen' , 'Problem on sysdescr not in DB');
+         $this->assertEquals($datasnmp['memory'], '24' , 'Problem on update memory of switch');
+         $this->assertEquals($datasnmp['uptime'], '86 days, 11:21:56.76' , 'Problem on update uptime of switch');
+      }
    }
 
 
