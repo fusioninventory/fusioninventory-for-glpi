@@ -606,4 +606,6 @@ $LANG['plugin_fusinvsnmp']["stats"][0]="Compteur total";
 $LANG['plugin_fusinvsnmp']["stats"][1]="pages par jour";
 $LANG['plugin_fusinvsnmp']["stats"][2]="Affichage";
 
+
+$LANG['plugin_fusinvsnmp']["xml"][0]="XML FusionInventory";
 ?>

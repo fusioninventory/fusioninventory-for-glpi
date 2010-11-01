@@ -1020,31 +1020,35 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			}
 			break;
 
-		case NETWORKING_TYPE :
+		case 'NetworkEquipment' :
 			if ($withtemplate) {
 				return array();
 			// Non template case
          } else {
             $array = array ();
-//				if ((PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) AND ($config->getValue("snmp") == "1")) {
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
+            if ($_GET['id'] > 0) {
+               $array[2] = $LANG['plugin_fusinvsnmp']['xml'][0];
+            }
             return $array;
 			}
 			break;
 
-		case PRINTER_TYPE :
+		case 'Printer' :
 			// template case
 			if ($withtemplate) {
 				return array();
 			// Non template case
          } else {
             $array = array ();
-//				if ((PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) AND ($configModules->getValue("snmp") == "1")) {
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
+            if ($_GET['id'] > 0) {
+               $array[2] = $LANG['plugin_fusinvsnmp']['xml'][0];
+            }
             return $array;
 			}
 			break;
@@ -1076,6 +1080,7 @@ function plugin_headings_actions_fusinvsnmp($item) {
 			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_networkingInfo";
 			}
+         $array[2] = "plugin_headings_fusinvsnmp_xml";
 			return $array;
 			break;
 
@@ -1083,6 +1088,7 @@ function plugin_headings_actions_fusinvsnmp($item) {
          $array = array ();
          $array[1] = "plugin_headings_fusinvsnmp_agents";
          // $array[1] = "plugin_headings_fusinvsnmp_agents";  => $array[1] = array('taclasse', 'taméthode');
+         $array[2] = "plugin_headings_fusinvsnmp_xml";
          return $array;
          break;
 
@@ -1125,6 +1131,41 @@ function plugin_headings_fusinvsnmp_agents($type,$id) {
    $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig;
    $PluginFusinvsnmpAgentconfig->showForm($_POST['id']);
 }
+
+
+function plugin_headings_fusinvsnmp_xml($item) {
+   global $LANG;
+
+   $type = get_Class($item);
+   $id = $item->getField('id');
+
+   $folder = substr($id,0,-1);
+   if (empty($folder)) {
+      $folder = '0';
+   }
+   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type.$folder."/".$id)) {
+      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type.$folder."/".$id);
+      $xml = str_replace("<", "&lt;", $xml);
+      $xml = str_replace(">", "&gt;", $xml);
+      $xml = str_replace("\n", "<br/>", $xml);
+      echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+      echo "<tr>";
+      echo "<th>".$LANG['plugin_fusinvinventory']["xml"][0];
+      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type.$folder."/".$id))).")";
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td width='130'>";
+      echo "<pre width='130'>".$xml."</pre>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+   }
+
+}
+
+
 
 
 function plugin_fusinvsnmp_MassiveActions($type) {

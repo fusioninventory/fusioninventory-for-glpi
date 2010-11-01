@@ -429,6 +429,20 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
 
       $p_xml = $_SESSION['glpi_plugin_fusinvsnmp_xmlDevice'];
 
+      // Write XML file
+      if (isset($p_xml)) {
+         $folder = substr($items_id,0,-1);
+         if (empty($folder)) {
+            $folder = '0';
+         }
+         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$itemtype.$folder)) {
+            mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$itemtype.$folder);
+         }
+         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$itemtype.$folder."/".$items_id, 'w');
+         fwrite($fileopen, $p_xml->asXML());
+         fclose($fileopen);
+       }
+
       $errors='';
       $this->deviceId=$items_id;
       switch ($itemtype) {
