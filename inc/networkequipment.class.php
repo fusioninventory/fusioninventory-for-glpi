@@ -360,26 +360,9 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       }
 
       $PID = $this->oFusionInventory_networkequipment->fields['last_PID_update'];
-//      $PID = $this->getValue('last_PID_update');
 
 		// Form networking informations
       $this->oFusionInventory_networkequipment->showFormHeader($options);
-/*
- * sysdescr
- * plugin_fusinvsnmp_models_id
- * plugin_fusinvsnmp_configsecurities_id
- * uptime
- * cpu
- * memory
- * last_fusioninventory_update
- * last_PID_update
- *
- *
- * sysdescr                | last_fusioninventory_update
- * model                   | cpu
- * Button autoloadmodel    | memory
- * configsecurity          | uptime
- */
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
