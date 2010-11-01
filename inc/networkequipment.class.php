@@ -386,7 +386,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo $LANG['plugin_fusinvsnmp']["snmp"][4]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo "<textarea name='sysdescr' cols='45' rows='8'>";
+      echo "<textarea name='sysdescr' cols='45' rows='5'>";
       echo $this->oFusionInventory_networkequipment->fields['sysdescr'];
       echo "</textarea>";
       echo "</td>";
@@ -420,8 +420,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo $LANG['plugin_fusinvsnmp']["snmp"][13]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-//      PluginFusinvsnmpDisplay::bar($this->oFusionInventory_networkequipment->fields['cpu'],'','inverse');
-      echo $this->oFusionInventory_networkequipment->fields['cpu'];
+      displayProgressBar(250, $this->oFusionInventory_networkequipment->fields['cpu'],
+                  array('simple' => true));
       echo "</td>";
 		echo "</tr>";
 
@@ -444,10 +444,9 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       } else {
          $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
       }
-//	   PluginFusinvsnmpDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
-//                         $data2["ram"]." Mo)",'inverse');
-      echo " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
-                            $data2["ram"]." Mo)";
+      displayProgressBar(250, $ram_pourcentage,
+                        array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
+                         $data2["ram"]." Mo)"));
       echo "</td>";
       echo "</tr>";
 
