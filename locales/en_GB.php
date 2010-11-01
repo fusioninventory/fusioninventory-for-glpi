@@ -156,6 +156,7 @@ $LANG['plugin_fusinvsnmp']["snmp"][0]="SNMP information of equipment";
 $LANG['plugin_fusinvsnmp']["snmp"][1]="General";
 $LANG['plugin_fusinvsnmp']["snmp"][2]="Cabling";
 $LANG['plugin_fusinvsnmp']["snmp"][3]="SNMP data";
+$LANG['plugin_fusinvsnmp']["snmp"][4]="Sysdescr";
 
 $LANG['plugin_fusinvsnmp']["snmp"][11]="Additional information";
 $LANG['plugin_fusinvsnmp']["snmp"][12]="Uptime";

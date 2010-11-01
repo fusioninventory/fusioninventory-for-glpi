@@ -364,20 +364,42 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		// Form networking informations
       $this->oFusionInventory_networkequipment->showFormHeader($options);
+/*
+ * sysdescr
+ * plugin_fusinvsnmp_models_id
+ * plugin_fusinvsnmp_configsecurities_id
+ * uptime
+ * cpu
+ * memory
+ * last_fusioninventory_update
+ * last_PID_update
+ *
+ *
+ * sysdescr                | last_fusioninventory_update
+ * model                   | cpu
+ * Button autoloadmodel    | memory
+ * configsecurity          | uptime
+ */
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][4];
+      echo $LANG['plugin_fusinvsnmp']["snmp"][4]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo "<textarea name='toto' rows='3' cols='45'>";
+      echo "<textarea name='sysdescr' cols='45' rows='8'>";
       echo $this->oFusionInventory_networkequipment->fields['sysdescr'];
       echo "</textarea>";
+      echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']["snmp"][53]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
       echo "</td>";
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusioninventory']["profile"][24]."</td>";
+		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusioninventory']["profile"][24]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -394,20 +416,79 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                            'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']["snmp"][13]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+//      PluginFusinvsnmpDisplay::bar($this->oFusionInventory_networkequipment->fields['cpu'],'','inverse');
+      echo $this->oFusionInventory_networkequipment->fields['cpu'];
+      echo "</td>";
 		echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<input type='submit' name='GetRightModel'
+              value='".$LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/>";
+      echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']["snmp"][14]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $query2 = "SELECT *
+                 FROM `glpi_networkequipments`
+                 WHERE `id`='".$id."';";
+      $result2 = $DB->query($query2);
+      $data2 = $DB->fetch_assoc($result2);
+      if (empty($data2["ram"])) {
+         $ram_pourcentage = 0;
+      } else {
+         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
+      }
+//	   PluginFusinvsnmpDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
+//                         $data2["ram"]." Mo)",'inverse');
+      echo " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
+                            $data2["ram"]." Mo)";
+      echo "</td>";
+      echo "</tr>";
+
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."</td>";
+		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
 		echo "</td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']["snmp"][12]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $sysUpTime = $this->oFusionInventory_networkequipment->fields['uptime'];
+      if (strstr($sysUpTime, "days")) {
+         list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
+      } else if (strstr($sysUpTime, "hours")) {
+         $day = 0;
+         list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d hours, %d:%d.%d");
+      } else if (strstr($sysUpTime, "minutes")) {
+         $day = 0;
+         $hour = 0;
+         list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
+      } else if($sysUpTime == "0") {
+         $day = 0;
+         $hour = 0;
+         $minute = 0;
+         $sec = 0;
+      } else {
+         list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d:%d:%d.%d");
+         $day = 0;
+      }
+
+      echo "<b>$day</b> ".$LANG["stats"][31]." ";
+      echo "<b>$hour</b> ".$LANG["job"][21]." ";
+      echo "<b>$minute</b> ".$LANG["job"][22]." ";
+      echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";
+      echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1 center'>";
-      echo "<td>";
-      echo " <input type='submit' name='GetRightModel'
-              value='".$LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/></td>";
-		echo "<td>";
+		echo "<td colspan='4'>";
 		echo "<input type='hidden' name='id' value='".$id."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
 		echo "</td>";
@@ -415,105 +496,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		$this->oFusionInventory_networkequipment->showFormButtons($options);
 
-      // SNMP Informations
-//		echo "<div align='center'>
-      echo "<form method='post' name='snmp_form' id='snmp_form'  action=\"".$options['target']."\">";
-
-		echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']["title"][1];
-		echo "</th>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1 center'>";
-		echo "<td colspan='2' height='30'>";
-		echo $LANG['plugin_fusinvsnmp']["snmp"][52].": ";
-      if (!empty($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update'])) {
-         convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
-      }
-		echo "</td>";
-		echo "</tr>";
-
-		// Get link field to detect if cpu, memory and uptime are get onthis network device
-		$Array_Object_TypeNameConstant =
-                    $plugin_fusioninventory_snmp->GetLinkOidToFields($id,NETWORKING_TYPE);
-		$mapping_name=array();
-		foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
-			$mapping_name[$mapping_type_name] = "1";
-		}
-
-		if ((isset($mapping_name['uptime']))  AND ($mapping_name['uptime'] == "1")) {
-
-			echo "<tr class='tab_bg_1 center'>";
-			echo "<td>".$LANG['plugin_fusinvsnmp']["snmp"][12]."</td>";
-			echo "<td>";
-			$sysUpTime = $this->oFusionInventory_networkequipment->fields['uptime'];
-			if (strstr($sysUpTime, "days")) {
-				list($day, $hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d days, %d:%d:%d.%d");
-         } else if (strstr($sysUpTime, "hours")) {
-				$day = 0;
-				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d hours, %d:%d.%d");
-			} else if (strstr($sysUpTime, "minutes")) {
-				$day = 0;
-				$hour = 0;
-				list($minute, $sec, $ticks) = sscanf($sysUpTime, "%d minutes, %d.%d");
-			} else if($sysUpTime == "0") {
-				$day = 0;
-				$hour = 0;
-				$minute = 0;
-				$sec = 0;
-			} else {
-				list($hour, $minute, $sec, $ticks) = sscanf($sysUpTime, "%d:%d:%d.%d");
-				$day = 0;
-			}
-
-			echo "<b>$day</b> ".$LANG["stats"][31]." ";
-			echo "<b>$hour</b> ".$LANG["job"][21]." ";
-			echo "<b>$minute</b> ".$LANG["job"][22]." ";
-			echo " ".strtolower($LANG["rulesengine"][42])." <b>$sec</b> ".$LANG["stats"][34]." ";
-
-			echo "</td>";
-			echo "</tr>";
-		}
-
-		if (((isset($mapping_name['cpu']))  AND ($mapping_name['cpu'] == "1"))
-			OR (((isset($mapping_name['cpuuser']))  AND ($mapping_name['cpuuser'] == "1"))
-				AND ((isset($mapping_name['cpusystem']))  AND ($mapping_name['cpusystem'] == "1"))
-			)) {
-
-			echo "<tr class='tab_bg_1 center'>";
-			echo "<td>".$LANG['plugin_fusinvsnmp']["snmp"][13]."</td>";
-			echo "<td>";
-			PluginFusinvsnmpDisplay::bar($this->oFusionInventory_networkequipment->fields['cpu'],'','inverse');
-			echo "</td>";
-			echo "</tr>";
-		}
-
-		if ((isset($mapping_name['memory']))  AND ($mapping_name['memory'] == "1")) {
-			echo "<tr class='tab_bg_1 center'>";
-			echo "<td>".$LANG['plugin_fusinvsnmp']["snmp"][14]."</td>";
-			echo "<td>";
-			$query2 = "SELECT *
-                    FROM `glpi_networkequipments`
-                    WHERE `id`='".$id."';";
-			$result2 = $DB->query($query2);
-			$data2 = $DB->fetch_assoc($result2);
-
-			if (empty($data2["ram"])) {
-				$ram_pourcentage = 0;
-			} else {
-				$ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
-			}
-			PluginFusinvsnmpDisplay::bar($ram_pourcentage," (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
-                            $data2["ram"]." Mo)",'inverse');
-			echo "</td>";
-			echo "</tr>";
-		}
-
-		echo "</table></form>";
-
+      echo "<br/>";
 
 // ********************************************************************************************** //
 // *********************************** METTRE TABLEAU DES PORTS ********************************* //
