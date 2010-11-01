@@ -487,7 +487,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
 		echo "</tr>";
 
-		echo "<tr class='tab_bg_1 center'>";
+		echo "<tr class='tab_bg_2 center'>";
 		echo "<td colspan='4'>";
 		echo "<input type='hidden' name='id' value='".$id."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
