@@ -39,6 +39,18 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->dohistory=true;
 	}
 
+
+   function canCreate() {
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w");
+   }
+
+
+   function canView() {
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r");
+   }
+
+
+
    function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
 
@@ -83,13 +95,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][16] . " :</td>";
+		echo "<td align='center'>" . $LANG["common"][16] . "&nbsp;:</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
 		echo "</td>";
 
       if (isMultiEntitiesMode()) {
-         echo "<td align='center'>" . $LANG['entity'][0] . " : </td>";
+         echo "<td align='center'>" . $LANG['entity'][0] . "&nbsp;:</td>";
          echo "</td>";
          echo "<td align='center'>";
          Dropdown::show("Entity",
@@ -112,7 +124,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<td align='center'>";
 		echo "</td>";
 
-      echo "<td align='center'>" . $LANG['common'][18] . " : </td>";
+      echo "<td align='center'>" . $LANG['common'][18] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
 		echo "<input type='text' name='contact' value='" . $this->fields["contact"] . "' size='35'/>";
@@ -120,7 +132,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['common'][17] . " :</td>";
+		echo "<td align='center'>" . $LANG['common'][17] . "&nbsp;:</td>";
 		echo "<td align='center'>";
 			$type_list[] = COMPUTER_TYPE;
 			$type_list[] = NETWORKING_TYPE;
@@ -145,7 +157,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 //			Device::dropdownTypes('type',$this->fields["type"],$type_list);
 		echo "</td>";
 
-      echo "<td align='center'>" . $LANG['setup'][89] . " : </td>";
+      echo "<td align='center'>" . $LANG['setup'][89] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
       Dropdown::show("Domain",
@@ -155,14 +167,14 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['common'][15] . " :</td>";
+		echo "<td align='center'>" . $LANG['common'][15] . "&nbsp;:</td>";
 		echo "<td align='center'>";
       Dropdown::show("Location",
                      array('name'=>"location",
                            'value'=>$this->fields["location"]));
 		echo "</td>";
 
-      echo "<td align='center'>" . $LANG['common'][19] . " : </td>";
+      echo "<td align='center'>" . $LANG['common'][19] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
 		echo "<input type='text' name='serial' value='" . $this->fields["serial"] . "' size='35'/>";
@@ -175,7 +187,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       Dropdown::showYesNo("accepted", $this->fields["accepted"]);
 		echo "</td>";
 
-      echo "<td align='center'>" . $LANG['common'][20] . " : </td>";
+      echo "<td align='center'>" . $LANG['common'][20] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
 		echo "<input type='text' name='otherserial' value='" . $this->fields["otherserial"] . "' size='35'/>";
@@ -189,7 +201,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "<input type='text' name='otherserial' value='" . $this->fields["ip"] . "' size='35'/>";
          echo "</td>";
 
-         echo "<td align='center'>" . $LANG['networking'][15] . " : </td>";
+         echo "<td align='center'>" . $LANG['networking'][15] . "&nbsp;:</td>";
          echo "</td>";
          echo "<td align='center'>";
          echo "<input type='text' name='otherserial' value='" . $this->fields["mac"] . "' size='35'/>";
