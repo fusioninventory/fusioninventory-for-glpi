@@ -77,6 +77,13 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
             $fusioninventory = $DB->fetch_assoc($result);
             $this->oFusionInventory_networkequipment->load($fusioninventory['id']);
             $this->ptcdLinkedObjects[]=$this->oFusionInventory_networkequipment;
+         } else {
+            $input = array();
+            $input['networkequipments_id'] = $this->getValue('id');
+            $id = $this->oFusionInventory_networkequipment->add($input);
+            $this->oFusionInventory_networkequipment->load($id);
+            $this->ptcdLinkedObjects[]=$this->oFusionInventory_networkequipment;
+            $this->ptcdLinkedObjects[]=$input;
          }
       }
    }
@@ -87,24 +94,27 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function updateDB() {
-      if (array_key_exists('model', $this->ptcdUpdates)) {
-         $manufacturer = Dropdown::getDropdownName("glpi_manufacturers",
-                                         $this->getValue('manufacturers_id'));
-         $this->ptcdUpdates['model'] = Dropdown::importExternal("NetworkEquipmentModel",
-                                                   $this->ptcdUpdates['model']);
+      if (array_key_exists('networkequipmentmodels_id', $this->ptcdUpdates)) {
+         $this->ptcdUpdates['networkequipmentmodels_id'] = Dropdown::importExternal("NetworkEquipmentModel",
+                                                   $this->ptcdUpdates['networkequipmentmodels_id']);
       }
-      if (array_key_exists('firmware', $this->ptcdUpdates)) {
-         $this->ptcdUpdates['firmware'] = Dropdown::importExternal("NetworkEquipmentFirmware",
-                                                   $this->ptcdUpdates['firmware']);
+      if (array_key_exists('networkequipmentfirmwares_id', $this->ptcdUpdates)) {
+         $this->ptcdUpdates['networkequipmentfirmwares_id'] = Dropdown::importExternal("NetworkEquipmentFirmware",
+                                                   $this->ptcdUpdates['networkequipmentfirmwares_id']);
       }
-      if (array_key_exists('location', $this->ptcdUpdates)) {
+      if (array_key_exists('locations_id', $this->ptcdUpdates)) {
          $entity = $this->getValue('entities_id');
-         $this->ptcdUpdates['location'] = Dropdown::importExternal("Location",
-                                                   $this->ptcdUpdates['location'],
+         if (!isset($entity)) {
+            $entity = '-1';
+         }
+         $this->ptcdUpdates['locations_id'] = Dropdown::importExternal('Location',
+                                                   $this->ptcdUpdates['locations_id'],
                                                    $entity);
       }
-      
+
       parent::updateDB();
+      //$a_networkequipment = $this->ptcdUpdates;
+
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
       $this->oFusionInventory_networkequipment->updateDB();
