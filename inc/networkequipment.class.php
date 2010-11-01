@@ -328,10 +328,10 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		$history = new PluginFusinvsnmpNetworkPortLog;
 
-		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking","r")) {
+		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment","r")) {
 			return false;
       }
-		if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking","w")) {
+		if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment","w")) {
 			$canedit = true;
       } else {
 			$canedit = false;

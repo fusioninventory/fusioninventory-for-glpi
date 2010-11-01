@@ -1026,7 +1026,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) {
+				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
             if ($_GET['id'] > 0) {
@@ -1077,7 +1077,7 @@ function plugin_headings_actions_fusinvsnmp($item) {
 			break;
 
 		case 'NetworkEquipment' :
-			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networking", "r")) {
+			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_networkingInfo";
 			}
          $array[2] = "plugin_headings_fusinvsnmp_xml";
