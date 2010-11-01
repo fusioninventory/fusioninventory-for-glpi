@@ -382,7 +382,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusioninventory']["profile"][24]."&nbsp;:</td>";
+		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']["model_info"][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -434,7 +434,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusioninventory']["functionalities"][43]."&nbsp;:</td>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["functionalities"][43]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
 		echo "</td>";
