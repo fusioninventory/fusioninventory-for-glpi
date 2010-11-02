@@ -33,7 +33,7 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-$title="Fusinvdeploy";
+$title="FusionInventory DEPLOY";
 $version="2.3.0-1";
 
 $LANG['plugin_fusinvdeploy']["title"][0]="$title";
@@ -52,4 +52,10 @@ $LANG['plugin_fusinvdeploy']["deploystatus"][0]="Etat des deploiements";
 
 $LANG['plugin_fusinvdeploy']["config"][0]="Addresse du serveur GLPI (sans le http://)";
 
+$LANG['plugin_fusinvdeploy']["setup"][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
+$LANG['plugin_fusinvdeploy']["setup"][18]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";
+
+$LANG['plugin_fusinvdeploy']['profile'][1]="$title";
+$LANG['plugin_fusinvdeploy']['profile'][2]="Gestion des packages";
+$LANG['plugin_fusinvdeploy']['profile'][3]="Statut des déploiements";
 ?>

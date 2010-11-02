@@ -67,7 +67,7 @@ class PluginFusinvdeployCommunicationOcsdeploy extends PluginFusinvsnmpCommunica
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvdeployCommunicationOcsdeploy->import().');
 //      $this->setXML($p_CONTENT);
-      $this->sxml = @simplexml_load_string($p_xml);
+      $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
       $errors = '';
 
       if (isset($this->sxml->ERR)) {

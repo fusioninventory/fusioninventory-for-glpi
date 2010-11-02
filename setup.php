@@ -40,6 +40,27 @@ include_once ("includes.php");
 function plugin_init_fusinvdeploy() {
 	global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   // ##### 1. Stop if fusioninventory not activated #####
+
+   $plugin = new Plugin;
+   if (!$plugin->isActivated("fusioninventory")) {
+      if (isset($_GET['id']) AND isset($_GET['action'])
+            AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
+         switch ($_GET['action']) {
+            case 'activate':
+               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][17]);
+               break;
+            case 'uninstall':
+               addMessageAfterRedirect($LANG['plugin_fusinvdeploy']["setup"][18]);
+               glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
+               break;
+         }
+      }
+      return false;
+   }
+
+   // ##### 2. register class #####
+
    Plugin::registerClass('PluginFusinvdeployPackage');
    Plugin::registerClass('PluginFusinvdeployFile');
    Plugin::registerClass('PluginFusinvdeployPackageFile');
@@ -47,10 +68,22 @@ function plugin_init_fusinvdeploy() {
    Plugin::registerClass('PluginFusinvdeployHistory');
    Plugin::registerClass('PluginFusinvDeployConfig');
 
-   $a_plugin = plugin_version_fusinvdeploy();
+   // ##### 3. get informations of the plugin #####
 
+   $a_plugin = plugin_version_fusinvdeploy();
    $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+
+   // ##### 4. Set in session module_id #####
+   
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
+
+   // ##### 5. Set in session XMLtags of methods #####
+
+   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['DOWNLOAD'] = 'PluginFusinvdeployCommunicationOcsdeploy';
+
+
+
+
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]])) {
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvdeploy'][$LANG['plugin_fusinvdeploy']["title"][0]] = array('class'=>'PluginFusinvDeployConfig',
@@ -69,7 +102,6 @@ function plugin_init_fusinvdeploy() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['files'] = '../fusinvdeploy/front/file.form.php?add=1';
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['files'] = '../fusinvdeploy/front/file.php';
 
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['DOWNLOAD'] = 'PluginFusinvdeployCommunicationOcsdeploy';
 
 }
 
@@ -93,6 +125,10 @@ function plugin_version_fusinvdeploy() {
 function plugin_fusinvdeploy_check_prerequisites() {
    global $LANG;
 	if (GLPI_VERSION >= '0.78') {
+      $plugin = new Plugin;
+      if (!$plugin->isActivated("fusioninventory")) {
+         return false;
+      }
 		return true;
    } else {
 		echo $LANG['plugin_fusinvdeploy']["errors"][50];

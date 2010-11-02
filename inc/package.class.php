@@ -205,6 +205,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
 
    function generatePackage($id, $regenerate=0) {
+      global $CFG_GLPI;
 
       $zip = new ZipArchive();
       $PluginFusinvdeployPackage_File = new PluginFusinvdeployPackage_File;
@@ -212,7 +213,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       $this->getFromDB($id);
 
-      $path_package = GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/";
+      $path_package = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/packages/";
 
       if ($regenerate == '1') {
          unlink($path_package.$this->fields['sha1sum']);
@@ -232,7 +233,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $filename_sum = $PluginFusinvdeployFile->fields['sha1sum'];
          $filename = $PluginFusinvdeployFile->fields['filename'];
 
-         $zip->addFile(GLPI_ROOT."/files/_plugins/fusinvdeploy/files/".$filename_sum,
+         $zip->addFile(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/".$filename_sum,
                         $data['packagepath'].$filename);
 
       }
@@ -246,6 +247,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
 
    function downloadFragments ($fileSha1sum) {
+      global $CFG_GLPI;
 
       if (strstr($fileSha1sum, "-")) {
          list($package_id, $numFragment) = explode("-", $fileSha1sum);
@@ -256,7 +258,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       if (isset($numFragment)) {
          // Send fragment
-         $fileSize = filesize(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum);
+         $fileSize = filesize(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/packages/".$fileSha1sum);
          $fragmentSize = ceil($fileSize / $this->fields['fragments']);
          if ($numFragment == $this->fields['fragments']) {
             echo file_get_contents(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum,
@@ -267,16 +269,17 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          }
       } else {
          // send all file
-         echo file_get_contents(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$fileSha1sum);
+         echo file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/packages/".$fileSha1sum);
       }
 
    }
 
 
    function downloadFileinfo ($package_id) {
+      global $CFG_GLPI;
 
       $this->getFromDB($package_id);
-      $md5 = md5_file(GLPI_ROOT."/files/_plugins/fusinvdeploy/packages/".$this->fields['sha1sum']);
+      $md5 = md5_file(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/packages/".$this->fields['sha1sum']);
       echo '<DOWNLOAD ID="'.$package_id.'" PRI="5" ACT="STORE" DIGEST="'.$md5.'" PROTO="HTTP" FRAGS="'.$this->fields['fragments'].'" DIGEST_ALGO="MD5" DIGEST_ENCODE="Hexa" PATH="./" NAME="" COMMAND="" NOTIFY_USER="0"  NOTIFY_TEXT="" NOTIFY_COUNTDOWN="" NOTIFY_CAN_ABORT="0" NOTIFY_CAN_DELAY="0" NEED_DONE_ACTION="0" NEED_DONE_ACTION_TEXT="" GARDEFOU="rien" />';
 
    }

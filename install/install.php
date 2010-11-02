@@ -67,10 +67,7 @@ function pluginFusinvdeployInstall() {
       }
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
-      $a_rights = array();
-      $a_rights['packages'] = 'w';
-      $a_rights['status'] = 'w';
-      PluginFusioninventoryProfile::initProfile($plugins_id,$a_rights);
+      PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
@@ -106,7 +103,7 @@ function pluginFusinvdeployUninstall() {
             if($f > '0' and filetype($current_dir.$f) == "file") {
                unlink($current_dir.$f);
             } else if ($f > '0' and filetype($current_dir.$f) == "dir") {
-               Plugin_Fusioninventory_delTree($current_dir.$f);
+               deleteDir($current_dir.$f);
             }
          }
          closedir($dir);
@@ -125,8 +122,14 @@ function pluginFusinvdeployUninstall() {
       }
    }
 
+<<<<<<< HEAD
    $config = new PluginFusionInventoryConfig;
    $config->cleanConfig($a_plugin['shortname']);
+=======
+   $config = new PluginFusioninventoryConfig;
+   $config->cleanConfig(
+           PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
+>>>>>>> d5c323f62a82386fa7a6a514e16063fb796fbd80
 
    return true;
 }
