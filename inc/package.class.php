@@ -280,7 +280,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
       $this->getFromDB($package_id);
       $md5 = md5_file(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/packages/".$this->fields['sha1sum']);
-      echo '<DOWNLOAD ID="'.$package_id.'" PRI="5" ACT="STORE" DIGEST="'.$md5.'" PROTO="HTTP" FRAGS="'.$this->fields['fragments'].'" DIGEST_ALGO="MD5" DIGEST_ENCODE="Hexa" PATH="./" NAME="" COMMAND="" NOTIFY_USER="0"  NOTIFY_TEXT="" NOTIFY_COUNTDOWN="" NOTIFY_CAN_ABORT="0" NOTIFY_CAN_DELAY="0" NEED_DONE_ACTION="0" NEED_DONE_ACTION_TEXT="" GARDEFOU="rien" />';
+      echo '<DOWNLOAD ID="'.$package_id.'" PRI="5" ACT="STORE" DIGEST="';
+      echo $md5.'" PROTO="HTTP" FRAGS="'.$this->fields['fragments'].'" DIGEST_ALGO="MD5" DIGEST_ENCODE="Hexa" PATH="./" NAME="" COMMAND="" NOTIFY_USER="0"  NOTIFY_TEXT="" NOTIFY_COUNTDOWN="" NOTIFY_CAN_ABORT="0" NOTIFY_CAN_DELAY="0" NEED_DONE_ACTION="0" NEED_DONE_ACTION_TEXT="" GARDEFOU="rien" />';
 
    }
 

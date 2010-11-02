@@ -68,9 +68,6 @@ class PluginFusinvdeployStaticmisc {
       switch ($itemtype) {
 
          case 'PluginFusinvdeployPackage':
-            $selection_type = 'devices';
-            break;
-
          case 'Computer';
             $selection_type = 'devices';
             break;
@@ -82,10 +79,11 @@ class PluginFusinvdeployStaticmisc {
 
    # Select arguments if exist
    static function task_argument_ocsdeploy() {
+      global $LANG;
       $PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
 
       //$a_list = $PluginFusinvdeployPackage->find();
-      echo "Package : ";
+      echo $LANG['plugin_fusinvdeploy']["package"][7]." : ";
       echo "</td>";
       echo "<td>";
       $options = array();
