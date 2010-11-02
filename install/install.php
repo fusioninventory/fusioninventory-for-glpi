@@ -126,7 +126,7 @@ function pluginFusinvdeployUninstall() {
    }
 
    $config = new PluginFusionInventoryConfig;
-   $config->cleanConfig($plugins_id);
+   $config->cleanConfig($a_plugin['shortname']);
 
    return true;
 }
