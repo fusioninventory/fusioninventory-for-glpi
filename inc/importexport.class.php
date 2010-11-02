@@ -373,7 +373,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                unset($data);
                // Add networking_port
                $port_add["items_id"] = $newID;
-               $port_add["itemtype"] = 'PluginFusinvsnmpUnknownDevice';
+               $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
                $port_add["ip"] = $discovery->IP;
                $port_add['mac'] = $discovery->MAC;
                $port_add['name'] = $discovery->NETPORTVENDOR;
@@ -392,7 +392,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
                $data['id'] = $ci->getField('id');
                $data['plugin_fusioninventory_snmpauths_id'] = 0;
 
-               if ($a_device[1] == 'PluginFusinvsnmpUnknownDevice') {
+               if ($a_device[1] == 'PluginFusioninventoryUnknownDevice') {
                   if ($ci->getField('name') && !in_array('name', $a_lockable)) {
                      if (!empty($discovery->NETBIOSNAME)) {
                         $data['name'] = $discovery->NETBIOSNAME;

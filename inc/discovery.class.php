@@ -114,13 +114,13 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
       global $DB,$CFG_GLPI,$LANG;
 
       $NetworkPort = new NetworkPort;
-      $ptud = new PluginFusinvsnmpUnknownDevice;
+      $ptud = new PluginFusioninventoryUnknownDevice;
 
       $ptud->getFromDB($discovery_ID);
       $query = "SELECT `id`
                 FROM `glpi_networkports`
                 WHERE `items_id` = '".$discovery_ID."'
-                      AND `itemtype` = 'PluginFusinvsnmpUnknownDevice';";
+                      AND `itemtype` = 'PluginFusioninventoryUnknownDevice';";
       if ($result = $DB->query($query)) {
          $data = $DB->fetch_assoc($result);
          $NetworkPort->getFromDB($data["id"]);
@@ -482,7 +482,7 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
          $a_types = array($p_type);
       } else {
          $a_types = array(COMPUTER_TYPE, NETWORKING_TYPE, PRINTER_TYPE, PERIPHERAL_TYPE,
-                           PHONE_TYPE, 'PluginFusinvsnmpUnknownDevice');
+                           PHONE_TYPE, 'PluginFusioninventoryUnknownDevice');
       }
 
       $condition = "";
@@ -524,7 +524,7 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
 
       foreach ($a_types as $type) {
          $ci->setType($type,true);
-         if ($type == 'PluginFusinvsnmpUnknownDevice') {
+         if ($type == 'PluginFusioninventoryUnknownDevice') {
             $query = "SELECT ".$ci->obj->table.".id ".$select_unknown." FROM ".$ci->obj->table;
          } else {
             $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
@@ -532,7 +532,7 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
          if ($ci->obj->table != "glpi_networkequipments") {
             $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".id AND itemtype=".$type;
          }
-         if ($type == 'PluginFusinvsnmpUnknownDevice') {
+         if ($type == 'PluginFusioninventoryUnknownDevice') {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;
          } else {
             $query .= " WHERE is_deleted=0 ".$condition;
@@ -548,8 +548,8 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
          }
       }
 
-      // Search in 'PluginFusinvsnmpUnknownDevice' when ip in not empty (so when it's a switch)
-      $ci->setType('PluginFusinvsnmpUnknownDevice',true);
+      // Search in 'PluginFusioninventoryUnknownDevice' when ip in not empty (so when it's a switch)
+      $ci->setType('PluginFusioninventoryUnknownDevice',true);
       $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
       $query .= " WHERE is_deleted=0 ".$condition;
       $result = $DB->query($query);

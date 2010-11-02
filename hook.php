@@ -741,7 +741,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusinvsnmp/report/unknown_mac.php)
-		case 'PluginFusinvsnmpUnknownDevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.'.'.$field) {
 
 				// ** FusionInventory - switch
@@ -750,9 +750,9 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                $NetworkPort = new NetworkPort;
                $list = explode("$$$$",$data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
-                  $NetworkPort->getDeviceData($vartmp,'PluginFusinvsnmpUnknownDevice');
+                  $NetworkPort->getDeviceData($vartmp,'PluginFusioninventoryUnknownDevice');
 
-                  $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES['PluginFusinvsnmpUnknownDevice']."?id=".$vartmp."\">";
+                  $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/".$INFOFORM_PAGES['PluginFusioninventoryUnknownDevice']."?id=".$vartmp."\">";
                   $out .=  $NetworkPort->device_name;
                   if ($CFG_GLPI["view_ID"]) $out .= " (".$vartmp.")";
                   $out .=  "</a><br/>";
@@ -939,7 +939,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 /* Cron */
 function cron_plugin_fusinvsnmp() {
    // TODO :Disable for the moment (may be check if functions is good or not
-//	$ptud = new PluginFusinvsnmpUnknownDevice;
+//	$ptud = new PluginFusioninventoryUnknownDevice;
 //   $ptud->CleanOrphelinsConnections();
 //	$ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
@@ -1187,7 +1187,7 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 			);
 			break;
 
-		case 'PluginFusinvsnmpUnknownDevice';
+		case 'PluginFusioninventoryUnknownDevice';
 			return array (
 				"plugin_fusinvsnmp_discovery_import" => $LANG["buttons"][37]
 			);
@@ -1279,7 +1279,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 			}
 			break;
 
-		case 'PluginFusinvsnmpUnknownDevice';
+		case 'PluginFusioninventoryUnknownDevice';
 			switch ($action) {
 				case "plugin_fusinvsnmp_discovery_import" :
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices","w")) {
@@ -1510,7 +1510,7 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          }
          break;
 
-		case 'PluginFusinvsnmpUnknownDevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.".".$field) {
 
 				case "glpi_networkequipments.device" :
@@ -1706,7 +1706,7 @@ function plugin_fusinvsnmp_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusinvsnmp/report/unknown_mac.php)
-		case 'PluginFusinvsnmpUnknownDevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($new_table.".".$linkfield) {
 
 				// ** FusionInventory - switch
@@ -1875,7 +1875,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusinvsnmp/report/unknown_mac.php)
-		case 'PluginFusinvsnmpUnknownDevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
@@ -2100,7 +2100,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
 			break;
 
 		// * Unknown mac addresses connectd on switch - report (plugins/fusinvsnmp/report/unknown_mac.php)
-		case 'PluginFusinvsnmpUnknownDevice' :
+		case 'PluginFusioninventoryUnknownDevice' :
 			switch ($table.".".$field) {
 
 				// ** FusionInventory - switch
@@ -2295,14 +2295,14 @@ function plugin_pre_item_purge_fusinvsnmp($parm) {
 				$DB->query($query_delete);
             break;
 
-         case 'PluginFusinvsnmpUnknownDevice' :
+         case 'PluginFusioninventoryUnknownDevice' :
             // Delete ports and connections if exists
             $np=new NetworkPort;
             $nn = new NetworkPort_NetworkPort();
             $query = "SELECT `id`
                       FROM `glpi_networkports`
                       WHERE `items_id` = '".$parm["id"]."'
-                            AND `itemtype` = 'PluginFusinvsnmpUnknownDevice';";
+                            AND `itemtype` = 'PluginFusioninventoryUnknownDevice';";
             $result = $DB->query($query);
             while ($data = $DB->fetch_array($result)) {
                if ($nn->getFromDBForNetworkPort($data['id'])) {
@@ -2357,12 +2357,12 @@ function plugin_item_add_fusinvsnmp($parm) {
          case NETWORKING_PORT_TYPE :
             // Verify when add networking port on object (not unknown device) if port
             // of an unknown device exist.
-            if ($parm["input"]["itemtype"] != 'PluginFusinvsnmpUnknownDevice') {
+            if ($parm["input"]["itemtype"] != 'PluginFusioninventoryUnknownDevice') {
                // Search in DB
                $np = new NetworkPort;
                $nw = new NetworkPort_NetworkPort;
-               $pfiud = new PluginFusinvsnmpUnknownDevice;
-               $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusinvsnmpUnknownDevice' ");
+               $pfiud = new PluginFusioninventoryUnknownDevice;
+               $a_ports = $np->find("`mac`='".$parm["input"]["mac"]."' AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
                if (count($a_ports) == "1") {
                   $nn = new NetworkPort_NetworkPort();
                   foreach ($a_ports as $port_infos) {
@@ -2379,7 +2379,7 @@ function plugin_item_add_fusinvsnmp($parm) {
                      // Delete port
                      $np->deleteFromDB($port_infos['id']);
                      // Delete unknown device (if it has no port)
-                     if (count($np->find("`items_id`='".$port_infos['items_id']."' AND `itemtype`='PluginFusinvsnmpUnknownDevice' ")) == "0") {
+                     if (count($np->find("`items_id`='".$port_infos['items_id']."' AND `itemtype`='PluginFusioninventoryUnknownDevice' ")) == "0") {
                         $pfiud->deleteFromDB($port_infos['items_id']);
                      }
                   }

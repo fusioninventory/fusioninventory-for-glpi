@@ -511,7 +511,7 @@ function appear_array(id){
 		echo "<tr class='tab_bg_1'>";
 		$query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `itemtype`='PluginFusinvsnmpNetworkPort'
+                      WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
                             AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
@@ -534,13 +534,13 @@ function appear_array(id){
                      title="'.$LANG['setup'][252].'"
                      src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
                      onclick="var w = window.open(\''.GLPI_ROOT.
-                        '/front/popup.php?popup=search_config&type=5157\' ,\'glpipopup\',
+                        '/front/popup.php?popup=search_config&type=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
                         \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
 
 		$query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `itemtype`='5157'
+                      WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
                              AND `users_id`='0'
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
@@ -607,7 +607,7 @@ function appear_array(id){
 			echo "</th>";
 		}
 		echo "</tr>";
-		// Fin de l'entÃªte du tableau
+		// Fin de l'entête du tableau
 
 		if ($result) {
 			while ($data=$DB->fetch_array($result)) {
@@ -633,7 +633,7 @@ function appear_array(id){
 
 				$query_array = "SELECT *
                             FROM `glpi_displaypreferences`
-                            WHERE `itemtype`='5157'
+                            WHERE `itemtype`='PluginFusinvsnmpNetworkEquipment'
                                   AND `users_id`='0'
                             ORDER BY `rank`;";
 				$result_array=$DB->query($query_array);
@@ -732,7 +732,7 @@ function appear_array(id){
                                             $item->getLink());
                         $link2 = str_replace($item->getName(0), $data_device["ip"],
                                              $item->getLink());
-								if ($data_device["itemtype"] == 'PluginFusinvsnmpUnknownDevice') {
+								if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
                            if ($item->getField("accepted") == "1") {
                               echo "<td style='background:#bfec75'
                                         class='tab_bg_1_2'>".$link1;
