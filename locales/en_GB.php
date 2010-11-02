@@ -54,33 +54,12 @@ $LANG['plugin_fusioninventory']['config'][7] = "SNMP query";
 
 $LANG['plugin_fusioninventory']["profile"][0]="Rights management";
 $LANG['plugin_fusioninventory']["profile"][1]="$title"; //interface
-
-$LANG['plugin_fusioninventory']["profile"][10]="Profiles configured";
-$LANG['plugin_fusioninventory']["profile"][11]="Computer history";
-$LANG['plugin_fusioninventory']["profile"][12]="Printer history";
-$LANG['plugin_fusioninventory']["profile"][13]="Printer information";
-$LANG['plugin_fusioninventory']["profile"][14]="Network information";
-$LANG['plugin_fusioninventory']["profile"][15]="Errors";
-
-$LANG['plugin_fusioninventory']["profile"][16]="SNMP networking";
-$LANG['plugin_fusioninventory']["profile"][17]="SNMP peripheral";
-$LANG['plugin_fusioninventory']["profile"][18]="SNMP printers";
-$LANG['plugin_fusioninventory']["profile"][19]="SNMP models";
-$LANG['plugin_fusioninventory']["profile"][20]="SNMP authentication";
-$LANG['plugin_fusioninventory']["profile"][21]="Script information";
-$LANG['plugin_fusioninventory']["profile"][22]="Network discovery";
-$LANG['plugin_fusioninventory']["profile"][23]="General configuration";
-$LANG['plugin_fusioninventory']["profile"][24]="SNMP model";
-$LANG['plugin_fusioninventory']["profile"][25]="IP range";
-$LANG['plugin_fusioninventory']["profile"][26]="Agent";
-$LANG['plugin_fusioninventory']["profile"][27]="Agents processes";
-$LANG['plugin_fusioninventory']["profile"][28]="Report";
-$LANG['plugin_fusioninventory']["profile"][29]="Remote control of agents";
-$LANG['plugin_fusioninventory']["profile"][30]="Unknown devices";
-$LANG['plugin_fusioninventory']["profile"][31]="device inventory FusionInventory";
-$LANG['plugin_fusioninventory']["profile"][32]="SNMP query";
-$LANG['plugin_fusioninventory']["profile"][33]="WakeOnLan";
-$LANG['plugin_fusioninventory']["profile"][34]="Actions";
+$LANG['plugin_fusioninventory']['profile'][2]="Agents";
+$LANG['plugin_fusioninventory']['profile'][3]="Agent remote controle";
+$LANG['plugin_fusioninventory']['profile'][4]="Configuration";
+$LANG['plugin_fusioninventory']['profile'][5]="WakeOnLan";
+$LANG['plugin_fusioninventory']['profile'][6]="Unknown devices";
+$LANG['plugin_fusioninventory']['profile'][7]="Tasks";
 
 $LANG['plugin_fusioninventory']["setup"][2]="Thanks to put all in root entity (see all)";
 $LANG['plugin_fusioninventory']["setup"][3]="Plugin configuration".$title;
