@@ -611,11 +611,11 @@ class PluginFusionInventoryUnknownDevice extends CommonDBTM {
                         AND `on_device`='".$this->fields['ID']."'
                         AND `device_type`='".$this->type."'");
                      foreach ($a_portLink as $portLink_id=>$dataLink) {
-                        if ($Netwire->getOppositeContact(portLink_id)) {
+                        if ($Netwire->getOppositeContact($portLink_id)) {
 
                         } else {
                            // We have founded a hub orphelin
-                           if (makeConnector($p_oPort->getValue('ID'), portLink_id)) {
+                           if (makeConnector($p_oPort->getValue('ID'), $portLink_id)) {
                               $PluginFusionInventoryAgentsProcesses->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                                           array('query_nb_connections_created' => '1'));
                               plugin_fusioninventory_addLogConnection("make",$p_oPort->getValue('ID'));
