@@ -53,4 +53,7 @@ $LANG['plugin_fusinvdeploy']["deploystatus"][0]="Deployement state";
 $LANG['plugin_fusinvdeploy']["setup"][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
 $LANG['plugin_fusinvdeploy']["setup"][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
 
+$LANG['plugin_fusinvdeploy']['profile'][1]="$title";
+$LANG['plugin_fusinvdeploy']['profile'][2]="Manage packages";
+$LANG['plugin_fusinvdeploy']['profile'][3]="Deployment status";
 ?>
