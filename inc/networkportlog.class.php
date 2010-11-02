@@ -553,20 +553,20 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $query = "
          SELECT * FROM(
             SELECT * FROM (
-               SELECT `id`, `date`, `plugin_fusioninventory_agentprocesses_id`,
+               SELECT `id`, `date_mod`, `plugin_fusioninventory_agentprocesses_id`,
                   `networkports_id_source`, `networkports_id_destination`,
                   `creation` as `field`, NULL as `value_old`, NULL as `value_new`
                FROM `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
                WHERE `networkports_id_source`='".$ID_port."'
                   OR `networkports_id_destination`='".$ID_port."'
-               ORDER BY `date` DESC
+               ORDER BY `date_mod` DESC
                LIMIT 0,30
                )
             AS `DerivedTable1`
             UNION ALL
             SELECT * FROM (
                SELECT `glpi_plugin_fusinvsnmp_networkportlogs`.`id`,
-                  `date_mod` as `date`, `plugin_fusioninventory_agentprocesses_id`,
+                  `date_mod` as `date_mod`, `plugin_fusioninventory_agentprocesses_id`,
                   `networkports_id` AS `networkports_id_source`,
                   NULL as `networkports_id_destination`,
                   `tablefield` AS `field`, `value_old`, `value_new`
@@ -575,12 +575,12 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                      ON `glpi_plugin_fusinvsnmp_networkportlogs`.`plugin_fusioninventory_mappings_id` =
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE `networkports_id`='".$ID_port."'
-               ORDER BY `date` DESC
+               ORDER BY `date_mod` DESC
                LIMIT 0,30
                )
             AS `DerivedTable2`)
          AS `MainTable`
-         ORDER BY `date` DESC, `id` DESC
+         ORDER BY `date_mod` DESC, `id` DESC
          LIMIT 0,30";
    //echo $query."<br/>";
       $text = "<table class='tab_cadre' cellpadding='5' width='950'>";
