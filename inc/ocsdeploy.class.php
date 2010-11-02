@@ -92,9 +92,9 @@ class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
                      }
                   } else if ($communication == 'pull') {
                      $return = array();
-                     $return['ip'] = $ip;
+                     $return['ip'] = $PluginFusioninventoryAgent->fields['ip'];
                      $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-                     $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                     $return['agents_id'] = $PluginFusioninventoryAgent->fields['a_id'];
                      return $return;
                   }
                }

@@ -38,25 +38,25 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-Function plugin_fusinvdeploy_statedeploy_packages() {
+function plugin_fusinvdeploy_statedeploy_packages() {
    global $DB;
 
    $query = "SELECT DISTINCT(`glpi_plugin_fusinvdeploy_packages`.`name`),`glpi_plugin_fusinvdeploy_packages`.*
-         FROM `glpi_plugin_fusinvdeploy_packages`
-      LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `argument`=`glpi_plugin_fusinvdeploy_packages`.`ID`
-      WHERE `method`='ocsdeploy'
-      ORDER BY `glpi_plugin_fusinvdeploy_packages`.`name`";
+             FROM `glpi_plugin_fusinvdeploy_packages`
+             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON `argument`=`glpi_plugin_fusinvdeploy_packages`.`ID`
+             WHERE `method`='ocsdeploy'
+             ORDER BY `glpi_plugin_fusinvdeploy_packages`.`name`";
 
    $result=$DB->query($query);
    if ($result=$DB->query($query)) {
       while ($data=$DB->fetch_array($result)) {
          echo $data['name']."<br/>";
 
-         
+
       }
    }
 
-   
+
 }
 
 
