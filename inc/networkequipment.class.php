@@ -57,6 +57,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $this->oFusionInventory_networkequipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
    }
 
+
+   
    /**
     * Load an existing networking switch
     *
@@ -362,7 +364,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       $PID = $this->oFusionInventory_networkequipment->fields['last_PID_update'];
 
 		// Form networking informations
-      $this->oFusionInventory_networkequipment->showFormHeader($options);
+      echo "<form name='form' method='post' action='".$options['target']."'>";
+      echo "<table class='tab_cadre_fixe'>";
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
@@ -476,7 +479,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "</td>";
 		echo "</tr>";
 
-		$this->oFusionInventory_networkequipment->showFormButtons($options);
+		echo "</table>";
+      echo "</form>";
 
       echo "<br/>";
 

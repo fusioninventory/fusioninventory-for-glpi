@@ -54,10 +54,11 @@ $LANG['plugin_fusinvsnmp']['config'][7] = "Interrogation SNMP";
 
 $LANG['plugin_fusinvsnmp']['profile'][1]="$title";
 $LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";
-$LANG['plugin_fusinvsnmp']["profile"][3]="Authentification SNMP";
-$LANG['plugin_fusinvsnmp']["profile"][4]="Plages IP";
-$LANG['plugin_fusinvsnmp']["profile"][5]="SNMP des équipements réseaux";
-$LANG['plugin_fusinvsnmp']["profile"][6]="SNMP des imprimantes";
+$LANG['plugin_fusinvsnmp']['profile'][3]="Authentification SNMP";
+$LANG['plugin_fusinvsnmp']['profile'][4]="Plages IP";
+$LANG['plugin_fusinvsnmp']['profile'][5]="SNMP des équipements réseaux";
+$LANG['plugin_fusinvsnmp']['profile'][6]="SNMP des imprimantes";
+$LANG['plugin_fusinvsnmp']['profile'][7]="Modèles SNMP";
 
 $LANG['plugin_fusinvsnmp']["setup"][2]="Merci de vous placer sur l'entité racine (voir tous)";
 $LANG['plugin_fusinvsnmp']["setup"][3]="Configuration du plugin ".$title;

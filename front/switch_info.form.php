@@ -38,16 +38,15 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("networking","r");
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "networking","r");
+PluginFusioninventoryProfile::checkRight("fusinvsnmp", "networkequipment","w");
 
-$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
+$PluginFusinvsnmpSNMP = new PluginFusinvsnmpSNMP;
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
-	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "networking","w");
-	$plugin_fusioninventory_snmp->update_network_infos($_POST['id'], $_POST['model_infos'], $_POST['plugin_fusioninventory_snmpauths_id']);
+	$PluginFusinvsnmpSNMP->update_network_infos($_POST['id'], $_POST['model_infos'], $_POST['plugin_fusioninventory_snmpauths_id']);
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
-   $plugin_fusioninventory_model_infos = new PluginFusinvsnmpModel;
-   $plugin_fusioninventory_model_infos->getrightmodel($_POST['id'], NETWORKING_TYPE);
+   $PluginFusinvsnmpModel = new PluginFusinvsnmpModel;
+   $PluginFusinvsnmpModel->getrightmodel($_POST['id'], NETWORKING_TYPE);
 }
 
 glpi_header($_SERVER['HTTP_REFERER']);

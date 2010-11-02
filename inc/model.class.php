@@ -47,7 +47,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models","r");
+		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
 		if ($id!='') {
 			$this->getFromDB($id);
@@ -108,7 +108,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 
 
 		echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
                  "\" class='submit' >";
@@ -188,14 +188,14 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       } else {
          switch($type) {
 
-            case NETWORKING_TYPE:
+            case 'NetworkEquipment':
                $Netdevice = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
                //$Netdevice = new Netdevice;
                $Netdevice->check($device_id,'r');
                $sysdescr = $Netdevice->fields["sysdescr"];
                break;
 
-            case PRINTER_TYPE:
+            case 'Printer':
                $printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
                //$Printer = new Printer;
                $Printer->check($device_id,'r');
@@ -230,14 +230,14 @@ class PluginFusinvsnmpModel extends CommonDBTM {
                // Udpate Device with this model
                switch($type) {
 
-                  case NETWORKING_TYPE:
+                  case 'NetworkEquipment':
                      $query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
                                SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."'
                                WHERE `networkequipments_id`='".$device_id."'";
                      $DB->query($query);
                      break;
 
-                  case PRINTER_TYPE:
+                  case 'Printer':
                      $query = "UPDATE `glpi_plugin_fusinvsnmp_printers`
                                SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."'
                                WHERE `printers_id`='".$device_id."'";

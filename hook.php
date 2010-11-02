@@ -1203,13 +1203,13 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusinvsnmp_get_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusinvsnmp_assign_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusinvsnmp_models`
                                    WHERE `itemtype`!='2'
@@ -1243,13 +1243,13 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 			switch ($action) {
 
             case "plugin_fusinvsnmp_get_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
                }
                break;
 
 				case "plugin_fusinvsnmp_assign_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+               if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusinvsnmp_models`
                                    WHERE `itemtype`!='3'

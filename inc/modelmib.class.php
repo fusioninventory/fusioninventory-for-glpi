@@ -46,7 +46,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
    function showFormList($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG,$IMPORT_TYPES;
 
-		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","r")) {
+		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
 			return false;
       } else if ((isset($id)) AND (!empty($id))) {
 			$query = "SELECT `itemtype`
@@ -192,7 +192,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      $LANG["buttons"][19]."</a>";
             echo "</td><td align='left' colspan='6' width='80%'>";
-            if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+            if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                echo "<input class='submit' type='submit' name='delete_oid' value='" .
                      $LANG["buttons"][6] . "'>";
             }
@@ -286,7 +286,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          echo "<input type='hidden' name='plugin_fusinvsnmp_models_id' value='".$id."'/>";
          echo "<input type='submit' name='add_oid' value=\"".$LANG["buttons"][2].
                "\" class='submit' >";
@@ -301,7 +301,7 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
 	function deleteMib($item_coche) {
 		global $DB;
 		
-		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "models","w");
+		PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
 		for ($i = 0; $i < count($item_coche); $i++) {
          $this->getFromDB($item_coche[$i]);
          $this->deleteFromDB(1);

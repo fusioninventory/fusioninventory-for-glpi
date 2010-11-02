@@ -182,7 +182,8 @@ class PluginFusinvsnmpStaticmisc {
                           'name'    => $LANG['plugin_fusinvsnmp']['profile'][5]);
       $a_profil[] = array('profil'  => 'printer',
                           'name'    => $LANG['plugin_fusinvsnmp']['profile'][6]);
-
+      $a_profil[] = array('profil'  => 'model',
+                          'name'    => $LANG['plugin_fusinvsnmp']['profile'][7]);
       return $a_profil;
    }
    

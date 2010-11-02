@@ -52,8 +52,13 @@ $LANG['plugin_fusinvsnmp']['config'][5] = "Manage agent directly from GLPI";
 $LANG['plugin_fusinvsnmp']['config'][6] = "Wake On Lan";
 $LANG['plugin_fusinvsnmp']['config'][7] = "SNMP query";
 
-$LANG['plugin_fusinvsnmp']["profile"][0]="Rights management";
-$LANG['plugin_fusinvsnmp']["profile"][1]="$title"; //interface
+$LANG['plugin_fusinvsnmp']['profile'][1]="$title";
+$LANG['plugin_fusinvsnmp']['profile'][2]="Configuration";
+$LANG['plugin_fusinvsnmp']['profile'][3]="SNMP authentication";
+$LANG['plugin_fusinvsnmp']['profile'][4]="IP Range";
+$LANG['plugin_fusinvsnmp']['profile'][5]="Network equipment SNMP";
+$LANG['plugin_fusinvsnmp']['profile'][6]="Printer SNMP";
+$LANG['plugin_fusinvsnmp']['profile'][7]="SNMP model";
 
 $LANG['plugin_fusinvsnmp']["profile"][10]="Profiles configured";
 $LANG['plugin_fusinvsnmp']["profile"][11]="Computer history";
@@ -550,6 +555,8 @@ $LANG['plugin_fusinvsnmp']["menu"][3]="Menu";
 $LANG['plugin_fusinvsnmp']["menu"][4]="Unknown device";
 $LANG['plugin_fusinvsnmp']["menu"][5]="Switchs ports history";
 $LANG['plugin_fusinvsnmp']["menu"][6]="Unused switchs ports";
+$LANG['plugin_fusinvsnmp']["menu"][7]="Discovery criteria rules";
+$LANG['plugin_fusinvsnmp']["menu"][8]="Inventory criteria rules";
 
 $LANG['plugin_fusinvsnmp']["buttons"][0]="Discover";
 

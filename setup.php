@@ -141,7 +141,7 @@ function plugin_init_fusinvsnmp() {
 			$PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
 //			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {
-//			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models", "r")
+//			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")
 //             || PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
 ////				$PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
 //         }
@@ -151,7 +151,7 @@ function plugin_init_fusinvsnmp() {
          $PLUGIN_HOOKS['headings_action']['fusinvsnmp'] = 'plugin_headings_actions_fusinvsnmp';
 
 //         if (PluginFusinvsnmpAuth::haveRight("models","r")
-         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","r")
+         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","r")
             OR PluginFusioninventoryProfile::haveRight("fusinvsnmp", "agents","r")
@@ -161,7 +161,7 @@ function plugin_init_fusinvsnmp() {
             ) {
 
 //            $PLUGIN_HOOKS['menu_entry']['fusinvsnmp'] = true;
-//            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "models","w")) {
+//            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = '../fusinvsnmp/front/model.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = '../fusinvsnmp/front/model.php';
 //            }
