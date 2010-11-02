@@ -386,14 +386,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
 
             case 'AGENT' :
                if (isset($this->sxml->CONTENT->AGENT->START)) {
-                  $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                                       array('start_time_query' => date("Y-m-d H:i:s")));
+//                  $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                                       array('start_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->END)) {
-                  $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                                       array('end_time_query' => date("Y-m-d H:i:s")));
+//                  $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                                       array('end_time_query' => date("Y-m-d H:i:s")));
                } else if (isset($this->sxml->CONTENT->AGENT->EXIT)) {
-                  $ptap->endProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                                       date("Y-m-d H:i:s"));
+//                  $ptap->endProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                                       date("Y-m-d H:i:s"));
                }
                if (isset($this->sxml->CONTENT->AGENT->AGENTVERSION)) {
                   $agent = $pta->InfosByKey($this->sxml->DEVICEID);

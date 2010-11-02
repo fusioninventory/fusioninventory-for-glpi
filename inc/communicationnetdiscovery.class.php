@@ -147,10 +147,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
       }
+      $moduleversion = "1.0";
       if (isset($p_CONTENT->MODULEVERSION)) {
          $moduleversion = $p_CONTENT->PROCESSNUMBER;
-      } else {
-         $moduleversion = "1.0";
       }
       $pti = new PluginFusinvsnmpImportExport;
       $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID, $moduleversion);

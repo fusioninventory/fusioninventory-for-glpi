@@ -328,7 +328,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
-		$history = new PluginFusinvsnmpNetworkPortLog;
+		$history = new PluginFusinvsnmpNetworkPortLog();
 
 		if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment","r")) {
 			return false;
@@ -342,7 +342,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		$this->oFusionInventory_networkequipment->id = $id;
 
 		$nw=new NetworkPort_NetworkPort();
-		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP;
+		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP();
 
 		echo "<script type='text/javascript' src='".GLPI_ROOT.
                "/lib/extjs/adapter/prototype/prototype.js'></script>";
@@ -425,9 +425,8 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                  WHERE `id`='".$id."';";
       $result2 = $DB->query($query2);
       $data2 = $DB->fetch_assoc($result2);
-      if (empty($data2["ram"])) {
-         $ram_pourcentage = 0;
-      } else {
+      $ram_pourcentage = 0;
+      if (!empty($data2["ram"])) {
          $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
       }
       displayProgressBar(250, $ram_pourcentage,
@@ -523,10 +522,9 @@ function appear_array(id){
 		echo $LANG['plugin_fusinvsnmp']["snmp"][40];
       $result=$DB->query($query);
       echo ' ('.$DB->numrows($result).')';
+      $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/En_VI_visualisationsdonnees_2_reseau";
       if ($_SESSION["glpilanguage"] == "fr_FR") {
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
-      } else {
-         $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/En_VI_visualisationsdonnees_2_reseau";
       }
       echo " <a href='".$url_legend."'>[ ".$LANG['plugin_fusioninventory']["functionalities"][6]." ]</a>";
 		echo "</th>";
