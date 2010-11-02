@@ -123,7 +123,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<td align='center'></td>";
 		echo "<td align='center'>";
 		echo "</td>";
-
       echo "<td align='center'>" . $LANG['common'][18] . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
@@ -134,12 +133,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>" . $LANG['common'][17] . "&nbsp;:</td>";
 		echo "<td align='center'>";
-			$type_list[] = COMPUTER_TYPE;
-			$type_list[] = NETWORKING_TYPE;
-			$type_list[] = PRINTER_TYPE;
-			$type_list[] = PERIPHERAL_TYPE;
-			$type_list[] = PHONE_TYPE;
-
+         $type_list = array();
+			$type_list[] = 'Computer';
+			$type_list[] = 'NetworkEquipment';
+			$type_list[] = 'Printer';
+			$type_list[] = 'Peripheral';
+			$type_list[] = 'Phone';
 //         // GENERIC OBJECT : Search types in generic object
 //         $plugin = new Plugin;
 //         if ($plugin->isActivated('genericobject')) {
@@ -154,7 +153,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 //            }
 //         }
 //         // END GENERIC OBJECT
-//			Device::dropdownTypes('type',$this->fields["type"],$type_list);
+      Dropdown::dropdownTypes('type',$this->fields["type"],$type_list);
 		echo "</td>";
 
       echo "<td align='center'>" . $LANG['setup'][89] . "&nbsp;:</td>";
