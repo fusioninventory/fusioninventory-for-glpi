@@ -65,4 +65,9 @@ $LANG['plugin_fusinvinventory']["xml"][0]="XML FusionInventory";
 
 $LANG['plugin_fusinvinventory']["blacklist"][0]="blacklisted values";
 $LANG['plugin_fusinvinventory']["blacklist"][1]="New value to blacklist";
+
+$LANG['plugin_fusinvinventory']['profile'][1]="$title";
+$LANG['plugin_fusinvinventory']['profile'][2]="Existent rules";
+$LANG['plugin_fusinvinventory']['profile'][3]="XML file manual import";
+$LANG['plugin_fusinvinventory']['profile'][4]="Fields blacklist";
 ?>
