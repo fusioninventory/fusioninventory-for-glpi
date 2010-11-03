@@ -46,9 +46,20 @@ $LANG['plugin_fusinvdeploy']["package"][4]="Stocker";
 $LANG['plugin_fusinvdeploy']["package"][5]="Paquets";
 $LANG['plugin_fusinvdeploy']["package"][6]="Gestion des packages";
 $LANG['plugin_fusinvdeploy']["package"][7]="Paquet";
+$LANG['plugin_fusinvdeploy']['package'][8]="Gestion des paquets";
+$LANG['plugin_fusinvdeploy']['package'][9]="Nombre de fragments";
+$LANG['plugin_fusinvdeploy']['package'][10]="Module";
+$LANG['plugin_fusinvdeploy']['package'][11]="Ce paquet n'a pas encore été généré";
+$LANG['plugin_fusinvdeploy']['package'][12]="générer le paquet";
+$LANG['plugin_fusinvdeploy']['package'][13]="re-générer le package";
 
+$LANG['plugin_fusinvdeploy']['files'][0]="Gestion des fichiers";
+$LANG['plugin_fusinvdeploy']['files'][1]="Nom de fichier";
+$LANG['plugin_fusinvdeploy']['files'][2]="Version";
+$LANG['plugin_fusinvdeploy']['files'][3]="Plateforme";
+$LANG['plugin_fusinvdeploy']['files'][4]="Fichier à télécharger";
 
-$LANG['plugin_fusinvdeploy']["files"][0]="Gestion des fichiers";
+$LANG['plugin_fusinvdeploy']['packagefiles'][0]="Fichiers liés aux packages";
 
 $LANG['plugin_fusinvdeploy']["deploystatus"][0]="Etat des deploiements";
 

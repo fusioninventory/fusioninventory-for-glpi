@@ -49,7 +49,7 @@ class PluginFusinvdeployPackage_File extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return "Fichiers liés aux packages";
+      return $LANG['plugin_fusinvdeploy']['packagefiles'][0];
    }
 
    function canCreate() {

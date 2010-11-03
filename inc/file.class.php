@@ -49,7 +49,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return "Fichier";
+      return $LANG['plugin_fusinvdeploy']["files"][0];
    }
 
    function canCreate() {
@@ -100,22 +100,22 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][16]." :</td>";
+      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' value='".$this->fields["name"]."' size='30'/>";
       echo "</td>";
-      echo "<td>Nom de fichier :</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][1]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='filename' value='".$this->fields["filename"]."' size='30'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>Version :</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][2]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='version' value='".$this->fields["version"]."' size='30'/>";
       echo "</td>";
-      echo "<td>Plateforme :</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][3]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "";
       echo "</td>";
@@ -128,7 +128,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
       echo "</td>";
       
       if ($this->fields["filename"] == "") {
-         echo "<td>Upload file :</td>";
+         echo "<td>".$LANG['plugin_fusinvdeploy']['files'][4]."&nbsp;:</td>";
          echo "<td align='center'>";
          echo "<input type='file' name='uploadfile' size='39'>";
       } else {

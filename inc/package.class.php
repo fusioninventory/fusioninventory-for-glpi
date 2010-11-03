@@ -50,7 +50,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return "Packages";
+      return $LANG['plugin_fusinvdeploy']['package'][8];
    }
 
    function canCreate() {
@@ -108,19 +108,19 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td>Nom de fichier&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][1]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='filename' size='40' value='".$this->fields["filename"]."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>Version&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['files'][2]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='version' size='40' value='".$this->fields["version"]."'/>";
       echo "</td>";
 
-      echo "<td>Nombre de fragments&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['package'][9]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("fragments",$this->fields["fragments"] , 1, 100);
       echo "</td>";
@@ -134,7 +134,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $a_actions[] = $LANG['plugin_fusinvdeploy']["package"][4];
       Dropdown::showFromArray('action',$a_actions, array('value' => $this->fields["action"]));
       echo "</td>";
-      echo "<td>Module&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusinvdeploy']['package'][10]."&nbsp;:</td>";
       echo "<td align='center'>";
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $a_modules = $PluginFusioninventoryAgentmodule->find("`plugins_id`='".$_SESSION["plugin_fusinvdeploy_moduleid"]."'");
@@ -153,7 +153,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       echo "<input type='text' name='commandline' size='40' value='".$this->fields["commandline"]."'/>";
       echo "</td>";
 
-      echo "<td rowspan='2'>Operating system&nbsp;:</td>";
+      echo "<td rowspan='2'>".$LANG['computers'][9]."&nbsp;:</td>";
       echo "<td rowspan='2' align='center'>";
       $OperatingSystem = new OperatingSystem;
       $list = $OperatingSystem->find();
@@ -194,10 +194,10 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<input type='hidden' name='id' value='".$id."'/>";
       if ($this->fields['sha1sum'] == "") {
-         echo "Ce paquet n'a pas encore été généré<br/>";
-         echo "<input type='submit' name='generate' value='générer le package' class='submit'/><br/>";
+         echo "".$LANG['plugin_fusinvdeploy']['package'][11]."<br/>";
+         echo "<input type='submit' name='generate' value='".$LANG['plugin_fusinvdeploy']['package'][12]."' class='submit'/><br/>";
       } else {
-         echo "<input type='submit' name='regenerate' value='re-générer le package' class='submit'/><br/>";
+         echo "<input type='submit' name='regenerate' value='".$LANG['plugin_fusinvdeploy']['package'][13]."' class='submit'/><br/>";
       }
       echo "</form>";
    }
