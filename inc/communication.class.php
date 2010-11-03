@@ -143,6 +143,9 @@ class PluginFusioninventoryCommunication {
    function import($p_xml, &$p_errors='') {
       global $LANG;
 
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
       PluginFusioninventoryCommunication::addLog('Function import().');
       // TODO : gérer l'encodage, la version
       // Do not manage <REQUEST> element (always the same)
@@ -150,9 +153,15 @@ class PluginFusioninventoryCommunication {
       $errors = '';
 
       $xmltag = $this->sxml->QUERY;
+      $agent = $PluginFusioninventoryAgent->InfosByKey($this->sxml->DEVICEID);
+      if (!$PluginFusioninventoryAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
+         return true;
+      }
+
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
-         $moduleCommunication = new $moduleClass; 
+
+         $moduleCommunication = new $moduleClass;
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {
          $errors.=$LANG['plugin_fusioninventory']["errors"][22].' QUERY : *'.$xmltag."*\n";
