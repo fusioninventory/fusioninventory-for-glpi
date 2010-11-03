@@ -88,7 +88,7 @@ class PluginFusinvdeployPackage_File extends CommonDBTM {
       echo "Fichier";
       echo "</th>";
       echo "<th>";
-      echo "Dossier dans le package";
+      echo $LANG['plugin_fusinvdeploy']['files'][5];
       echo "</th>";
       echo "</tr>";
       foreach($a_list as $packagefile_id=>$data) {
@@ -123,7 +123,7 @@ class PluginFusinvdeployPackage_File extends CommonDBTM {
       echo "</td>";
       
       echo "<td>";
-      echo "Dossier dans le package : ";
+      echo $LANG['plugin_fusinvdeploy']['files'][5]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='packagepath' size='40' value='/'/>";

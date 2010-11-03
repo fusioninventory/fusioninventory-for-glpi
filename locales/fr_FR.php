@@ -58,6 +58,7 @@ $LANG['plugin_fusinvdeploy']['files'][1]="Nom de fichier";
 $LANG['plugin_fusinvdeploy']['files'][2]="Version";
 $LANG['plugin_fusinvdeploy']['files'][3]="Plateforme";
 $LANG['plugin_fusinvdeploy']['files'][4]="Fichier à télécharger";
+$LANG['plugin_fusinvdeploy']['files'][5]="Dossier dans le package";
 
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Fichiers liés aux packages";
 
