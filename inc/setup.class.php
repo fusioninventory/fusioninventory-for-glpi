@@ -61,11 +61,7 @@ class PluginFusioninventorySetup {
       }
 
       $query="DELETE FROM `glpi_displaypreferences`
-              WHERE `itemtype`='PluginFusioninventoryError'
-                    OR `itemtype`='PluginFusioninventoryAgent'
-                    OR `itemtype`='PluginFusioninventoryConfig'
-                    OR `itemtype`='PluginFusioninventoryTask'
-                    OR `itemtype`='PluginFusioninventoryTaskjob';";
+              WHERE `itemtype` LIKE 'PluginFusioninventory%';";
       $DB->query($query) or die($DB->error());
 
       return true;
