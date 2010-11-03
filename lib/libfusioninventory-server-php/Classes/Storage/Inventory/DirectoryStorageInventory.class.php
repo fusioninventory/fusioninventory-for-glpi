@@ -442,14 +442,17 @@ INFOCONTENT;
         }
 
         /* Complete info file */
-        ob_start();
+        //ob_start();
+        $serializedSections = "";
         foreach($infoSections["sections"] as $key => $serializedSection)
         {
-            echo "\t".$key."<<=>>".$serializedSection."
+//            echo "\t".$key."<<=>>".$serializedSection."
+//";
+            $serializedSections .= "\t".$key."<<=>>".$serializedSection."
 ";
         }
-        $serializedSections = ob_get_contents();
-        ob_end_clean();
+//        $serializedSections = ob_get_contents();
+//        ob_end_clean();
         $externalId=$infoSections["externalId"];
 
         $data = <<<INFOCONTENT
