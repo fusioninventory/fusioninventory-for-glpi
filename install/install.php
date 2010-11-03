@@ -123,14 +123,7 @@ function pluginFusinvsnmpUninstall() {
    }
 
    $query="DELETE FROM `glpi_displaypreferences`
-           WHERE `itemtype`='PluginFusinvsnmpConfigSecurity'
-                 OR `itemtype`='PluginFusioninventoryUnknownDevice'
-                 OR `itemtype`='PluginFusinvsnmpAgent'
-                 OR `itemtype`='PluginFusinvsnmpIPRange'
-                 OR `itemtype`='PluginFusinvsnmpAgentProcess'
-                 OR `itemtype`='PluginFusinvsnmpModel'
-                 OR `itemtype`='PluginFusinvsnmpNetworkPortLog'
-                 OR `itemtype`='PluginFusinvsnmpNetworkPort' ;";
+           WHERE `itemtype` LIKE 'PluginFusinvsnmp%';";
    $DB->query($query) or die($DB->error());
 //   $a_netports = $np->find("`itemtype`='PluginFusioninventoryUnknownDevice' ");
 //   foreach ($a_netports as $NetworkPort){
