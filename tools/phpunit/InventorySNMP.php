@@ -5,7 +5,6 @@ define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventorySNMP::main');
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
 
-//   session_start();
    require_once GLPI_ROOT."/inc/includes.php";
    $_SESSION['glpi_use_mode'] = 2;
    $_SESSION['glpiactiveprofile']['id'] = 4;
@@ -25,7 +24,6 @@ if (!defined('GLPI_ROOT')) {
 
    $_SESSION["glpilanguage"] = 'fr_FR';
    loadLanguage();
-
 }
 
 include_once('emulatoragent.php');

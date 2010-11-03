@@ -5,16 +5,25 @@ define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventoryLocal::main');
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
 
-   if (!isset($_SESSION['glpilanguage'])) {
-      $_SESSION['glpilanguage'] = 'en_GB';
-   }
-   $_SESSION['glpi_use_mode'] = 2;
    require_once GLPI_ROOT."/inc/includes.php";
+   $_SESSION['glpi_use_mode'] = 2;
+   $_SESSION['glpiactiveprofile']['id'] = 4;
 
    ini_set('display_errors','On');
    error_reporting(E_ALL | E_STRICT);
    set_error_handler("userErrorHandler");
 
+   // Backup present DB
+   include_once("inc/backup.php");
+   backupMySQL();
+
+   // Install
+   include_once("inc/installation.php");
+   installGLPI();
+   installFusionPlugins();
+
+   $_SESSION["glpilanguage"] = 'fr_FR';
+   loadLanguage();
 }
 
 /**
@@ -34,7 +43,42 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
     public function testSetModuleInventoryOff() {
        global $DB;
-       
+
+         // Create rule
+         $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
+         $input = array();
+         $input['is_active']=1;
+         $input['name']='serial + uuid';
+         $input['match']='AND';
+         $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+         $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "globalcriteria";
+         $input['pattern']= 1;
+         $rulecriteria->add($input);
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "globalcriteria";
+         $input['pattern']= 2;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_import';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+         deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
+         deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
+
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active`='0'
@@ -83,13 +127,13 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 </REQUEST>';
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi0780/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
       // PROLOG. What can I do?
       $return_xml = $emulatorAgent->sendProlog($input_xml);
       echo "========== Prolog ==========\n";
       print_r($return_xml);
 
-      $input_xml = file_get_contents("xml/inventory_local/2.1.5/port003-2010-06-08-08-13-45.xml");
+      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
       $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
       // Return Inventory you want
       $return_xml = $emulatorAgent->sendProlog($input_xml);
@@ -120,22 +164,22 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 //   }
 
 
-   public function testSendinventoryByWebservice() {
-
-
-      system('php ../../../webservices/scripts/testxmlrpc.php --method=glpi.doLogin --login_name=glpi login_password=glpi',$data);
-
-
-      $a_data = explode("\n", $output);
-      foreach($a_data as $num=>$value) {
-         if (strstr($value, "[session] => ")) {
-            $session_num = str_replace("[session] => ", $value);
-         }
-      }
-
-      system('php ../../../webservices/scripts/testxmlrpc.php method=fusioninventory.test --base64=plugins/fusioninventory/tools/phpunit/xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml --session='.$session_num, $data);
-      print_r($data);
-   }
+//   public function testSendinventoryByWebservice() {
+//
+//
+//      system('php ../../../webservices/scripts/testxmlrpc.php --method=glpi.doLogin --login_name=glpi login_password=glpi',$data);
+//
+//
+//      $a_data = explode("\n", $output);
+//      foreach($a_data as $num=>$value) {
+//         if (strstr($value, "[session] => ")) {
+//            $session_num = str_replace("[session] => ", $value);
+//         }
+//      }
+//
+//      system('php ../../../webservices/scripts/testxmlrpc.php method=fusioninventory.test --base64=plugins/fusioninventory/tools/phpunit/xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml --session='.$session_num, $data);
+//      print_r($data);
+//   }
 
 
 }
