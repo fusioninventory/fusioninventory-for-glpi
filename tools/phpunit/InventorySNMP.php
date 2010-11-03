@@ -43,6 +43,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
     }
 
    public function testSend() {
+      global $DB;
 
       // Create switch in asset
       $NetworkEquipment = new NetworkEquipment();
@@ -76,6 +77,29 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
          $input['field'] = '_import';
          $input['value'] = '1';
          $ruleaction->add($input);
+
+     // set in config module inventory = yes by default
+     $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+        SET `is_active`='1'
+        WHERE `modulename`='SNMPQUERY' ";
+     $result = $DB->query($query);
+
+
+     // Prolog
+      $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>
+  <QUERY>PROLOG</QUERY>
+  <TOKEN>NTMXKUBJ</TOKEN>
+</REQUEST>';
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      // PROLOG. What can I do?
+      $return_xml = $emulatorAgent->sendProlog($input_xml);
+      echo "========== Prolog ==========\n";
+      print_r($return_xml);
+
 
       // Send inventory to GLPI
       $emulatorAgent = new emulatorAgent;
