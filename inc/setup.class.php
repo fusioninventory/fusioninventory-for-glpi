@@ -48,18 +48,7 @@ class PluginFusioninventorySetup {
       $np = new NetworkPort;
 
       if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-            $current_dir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/';
-            while (($f = readdir($dir)) !== false) {
-               if($f > '0' and filetype($current_dir.$f) == "file") {
-                  unlink($current_dir.$f);
-               } else if ($f > '0' and filetype($current_dir.$f) == "dir") {
-                  deleteDir($current_dir.$f);
-               }
-            }
-            closedir($dir);
-            rmdir($current_dir);
-         }
+         deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
 
       $query = "SHOW TABLES;";
@@ -72,11 +61,7 @@ class PluginFusioninventorySetup {
       }
 
       $query="DELETE FROM `glpi_displaypreferences`
-              WHERE `itemtype`='PluginFusioninventoryError'
-                    OR `itemtype`='PluginFusioninventoryAgent'
-                    OR `itemtype`='PluginFusioninventoryConfig'
-                    OR `itemtype`='PluginFusioninventoryTask'
-                    OR `itemtype`='PluginFusioninventoryTaskjob';";
+              WHERE `itemtype` LIKE 'PluginFusioninventory%';";
       $DB->query($query) or die($DB->error());
 
       return true;
