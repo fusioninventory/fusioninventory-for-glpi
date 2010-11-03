@@ -95,18 +95,7 @@ function pluginFusinvinventoryUninstall() {
    $a_plugin = plugin_version_fusinvinventory();
 
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      if($dir = @opendir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-         $current_dir = GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/';
-         while (($f = readdir($dir)) !== false) {
-            if($f > '0' and filetype($current_dir.$f) == "file") {
-               unlink($current_dir.$f);
-            } else if ($f > '0' and filetype($current_dir.$f) == "dir") {
-               deleteDir($current_dir.$f);
-            }
-         }
-         closedir($dir);
-         rmdir($current_dir);
-      }
+      deleteDir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
    }
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
