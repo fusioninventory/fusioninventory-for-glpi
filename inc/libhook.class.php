@@ -204,28 +204,6 @@ class PluginFusinvinventoryLibhook {
                   $j++;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_processor);
-
-
-
-               $DeviceProcessor = new DeviceProcessor();
-               $Computer_Device = new Computer_Device('DeviceProcessor');
-
-               $input = array();
-               $input['designation'] = $dataSection['NAME'];
-               $input['frequence'] = $dataSection['SPEED'];
-               $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer',
-                                                                          $dataSection['MANUFACTURER']);
-               $input['specif_default'] = $dataSection['SPEED'];
-
-               $proc_id = $DeviceProcessor->import($input);
-               $input = array();
-               $input['computers_id'] = $idmachine;
-               $input['deviceprocessors_id'] = $proc_id;
-               $input['specificity'] = $dataSection['SPEED'];
-               $input['_itemtype'] = 'DeviceProcessor';
-               $id_link_device = $Computer_Device->add($input);
-
-               array_push($sectionsId,$section['sectionName']."/".$id_link_device);
                break;
 
             case 'DRIVES':
@@ -399,13 +377,13 @@ class PluginFusinvinventoryLibhook {
                   $PluginFusinvinventoryImport_Peripheral =  new PluginFusinvinventoryImport_Peripheral();
                   $id_peripheral = $PluginFusinvinventoryImport_Peripheral->AddUpdateItem("add", $idmachine, $dataSection);
                }
+               
                if (!isset($id_peripheral)) {
                   $id_peripheral = $j;
                   $j++;
                }
 
                array_push($sectionsId,$section['sectionName']."/".$id_peripheral);
-               $j++;
                break;
 
             case 'PRINTERS':
