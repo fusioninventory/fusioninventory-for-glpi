@@ -302,9 +302,8 @@ INFOCONTENT;
         $infoSections["sections"] = array();
         $infoSections["sectionsToModify"] = array();
 
-        while(!feof($infoFileHandler))
+        while ( ($buffer = fgets($infoFileHandler, 4096)) !== false )
         {
-            $buffer = fgets($infoFileHandler, 4096);
 
             $stack = array();
             if (preg_match("/^\t(.+)/i", $buffer, $stack))
