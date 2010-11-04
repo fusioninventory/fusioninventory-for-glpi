@@ -70,7 +70,7 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
       if (isset($dataSection['NAME'])) {
          $graphiccard['designation'] = $dataSection['NAME'];
       }
-      if (isset($dataSection['MEMORY'])) {
+      if ((isset($dataSection['MEMORY'])) AND (!empty($dataSection['MEMORY']))) {
          $graphiccard['specif_default'] = $dataSection['MEMORY'];
       } else {
          $graphiccard['specif_default'] = "0";

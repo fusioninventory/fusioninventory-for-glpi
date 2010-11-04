@@ -96,7 +96,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
       if (isset($dataSection['TOTAL'])) {
          $disk['totalsize']=$dataSection['TOTAL'];
       }
-      if (isset($dataSection['FREE'])) {
+      if ((isset($dataSection['FREE'])) AND (!empty($dataSection['FREE']))) {
          $disk['freesize']=$dataSection['FREE'];
       }
       if (isset($disk['name']) && !empty($disk["name"])) {
