@@ -52,8 +52,9 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
-      if (($dataSection['TYPE'] == "Removable Disk")
-             OR ($dataSection['TYPE'] == "Compact Disc")) {
+      if ((isset($dataSection['TYPE'])) AND
+              (($dataSection['TYPE'] == "Removable Disk")
+             OR ($dataSection['TYPE'] == "Compact Disc"))) {
 
          return "";
       }
@@ -64,6 +65,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
 
       $ComputerDisk = new ComputerDisk;
 
+      $disk=array();
       if ($type == "update") {
          $id_disk = $items_id;
          $ComputerDisk->getFromDB($items_id);
@@ -96,8 +98,12 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
       if (isset($dataSection['TOTAL'])) {
          $disk['totalsize']=$dataSection['TOTAL'];
       }
+      $disk['freesize'] = 0;
       if ((isset($dataSection['FREE'])) AND (!empty($dataSection['FREE']))) {
          $disk['freesize']=$dataSection['FREE'];
+      }
+      if ($disk['freesize'] == '') {
+         $disk['freesize'] = 0;
       }
       if (isset($disk['name']) && !empty($disk["name"])) {
          if ($type == "update") {
