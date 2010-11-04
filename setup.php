@@ -98,9 +98,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['tasks'] = 'front/task.form.php?add=1';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['tasks'] = 'front/task.php';
 
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","r")
-            OR PluginFusioninventoryProfile::haveRight("fusioninventory", "agentsprocesses","r")
-            ) {
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
 
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents","w")) {
    //               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['agents'] = 'front/agent.form.php?add=1';
