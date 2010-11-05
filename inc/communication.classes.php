@@ -924,7 +924,7 @@ class PluginFusionInventoryCommunication {
                $this->ptd->setValue('comments', $p_info->COMMENTS);
                break;
             case 'MEMORY' :
-               $this->ptd->setValue('memory', $p_info->MEMORY);
+               $this->ptd->setValue('ramSize', $p_info->MEMORY);
                break;
             case 'MODEL' :
                $this->ptd->setValue('model', $p_info->MODEL);
@@ -945,7 +945,7 @@ class PluginFusionInventoryCommunication {
                $this->ptd->setValue('contact', $p_info->CONTACT);
                break;
             case 'MANUFACTURER' :
-               $this->ptd->setValue('manufacturer', $p_info->MANUFACTURER); // TODO : regrouper tout ces cases
+               $this->ptd->setValue('FK_glpi_enterprise', $p_info->MANUFACTURER); // TODO : regrouper tout ces cases
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']["errors"][22].' INFO : '.$child->getName()."\n";
