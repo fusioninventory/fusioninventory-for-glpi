@@ -63,11 +63,10 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
          return "";
       }
       // Else (type == "add")
-      // Search if a printer yet exist
+      // Search if a monitor yet exist
       if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
          $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
-         if (count($a_monitors) > 0) {
-
+         if (count($a_monitors) == 0) {
             $a_monitor = array();
          } else {
             foreach($a_monitors as $monitor_id=>$data) {
