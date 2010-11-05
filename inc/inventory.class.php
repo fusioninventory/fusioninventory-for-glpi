@@ -168,14 +168,65 @@ class PluginFusinvinventoryInventory {
       //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
       $action->checkConfig("", $config);
       ob_start();
-      $action->startAction(simplexml_load_string(SOURCEXML),'SimpleXMLElement', LIBXML_NOCDATA);
+      $action->startAction(simplexml_load_string(SOURCEXML,'SimpleXMLElement', LIBXML_NOCDATA));
       $output = ob_flush();
       if (!empty($output)) {
          logInFile("fusinvinventory", $output);
       }
-
    }
-   
+
+
+   function sendUnknownDevice() {
+
+      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $NetworkPort = new NetworkPort();
+
+      $xml = simplexml_load_string(SOURCEXML,'SimpleXMLElement', LIBXML_NOCDATA);
+      //Search with serial
+      if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
+         $a_device = $PluginFusioninventoryUnknownDevice->find("`serial`='".$xml->CONTENT->BIOS->SSN."'");
+         if (count($a_device) == "1") {
+            foreach ($a_device as $id => $datas) {
+               if (isset($xml->CONTENT->HARDWARE->NAME)) {
+                  $datas['name'] = $xml->CONTENT->HARDWARE->NAME;
+               }
+               if (isset($xml->CONTENT->HARDWARE->USERID)) {
+                  $datas['contact'] = $xml->CONTENT->HARDWARE->USERID;
+               }
+               if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
+                  $datas['domain'] = Dropdown::importExternal('glpi_domains', $xml->CONTENT->HARDWARE->USERDOMAIN);
+               }
+               $datas['type'] = 'Computer';
+               $PluginFusioninventoryUnknownDevice->add($datas);
+               return;
+            }
+         }
+      }
+      //Search with mac address
+//      if (isset($XML->CONTENT->NETWORKS)) {
+//         foreach ($xml->CONTENT->NETWORKS->children() as $name=>$child) {
+//            $a_port = $NetworkPort->find("`mac`='".$child->MACADDR."' AND `itemtype`='PluginFusioninventoryUnknownDevice'");
+//
+//
+//         }
+//      }
+      //Else add unknown device
+      $input = array();
+      if (isset($xml->CONTENT->HARDWARE->NAME)) {
+         $input['name'] = $xml->CONTENT->HARDWARE->NAME;
+      }
+      if (isset($xml->CONTENT->HARDWARE->USERID)) {
+         $input['contact'] = $xml->CONTENT->HARDWARE->USERID;
+      }
+      if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
+         $input['domain'] = Dropdown::importExternal('glpi_domains', $xml->CONTENT->HARDWARE->USERDOMAIN);
+      }
+      if (isset($xml->CONTENT->BIOS->SSN)) {
+         $input['serial'] = $xml->CONTENT->BIOS->SSN;
+      }
+      $input['type'] = 'Computer';
+      $PluginFusioninventoryUnknownDevice->add($input);
+   }
 }
 
 ?>

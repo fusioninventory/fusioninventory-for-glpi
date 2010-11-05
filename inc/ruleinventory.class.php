@@ -134,7 +134,8 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
                         break;
 
                      case "_import_unknowndevice" :
-                        // Import dans le matos inconnu
+                        // Import device in unknown device
+                           $import = 2;
 
                         break;
                   }
@@ -156,6 +157,10 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
             $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
             $PluginFusinvinventoryInventory->sendLib($globalcriteria);
          }
+      } else if ($import == "2") {
+         // Import device in unknown device
+         $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+         $PluginFusinvinventoryInventory->sendUnknownDevice();         
       }
       return $output;
    }
