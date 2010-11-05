@@ -648,6 +648,21 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
    }
 
+   function writeXML($items_id, $xml) {
+
+      $folder = substr($items_id,0,-1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder);
+      }
+      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$items_id, 'w');
+      fwrite($fileopen, $xml);
+      fclose($fileopen);
+
+
+   }
 
 }
 

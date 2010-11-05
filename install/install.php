@@ -62,7 +62,12 @@ function pluginFusioninventoryInstall($version) {
 
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
    }
 
    $plugin = new Plugin();

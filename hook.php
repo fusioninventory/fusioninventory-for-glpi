@@ -177,6 +177,15 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return $array;
          }
          break;
+
+      case 'PluginFusioninventoryUnknownDevice' :
+         $array = array ();
+         if ($_GET['id'] > 0) {
+            $array[1] = $LANG['plugin_fusioninventory']["xml"][0];
+         }
+         return $array;
+         break;
+
    }
    return false;
 }
@@ -219,6 +228,12 @@ function plugin_headings_actions_fusioninventory($item) {
          return array(
             1 => "plugin_headings_fusioninventory"
             );
+         break;
+
+      case 'PluginFusioninventoryUnknownDevice' :
+         $array = array ();
+         $array[1] = "plugin_headings_fusioninventory_xml";
+         return $array;
          break;
 
    }
@@ -268,6 +283,39 @@ function plugin_headings_fusioninventory($item, $withtemplate=0) {
 			$PluginFusioninventoryProfile->showProfileForm($item->getField('id'), GLPI_ROOT."/plugins/fusioninventory/front/profile.php");
 		break;
 	}
+}
+
+
+
+function plugin_headings_fusioninventory_xml($item) {
+   global $LANG;
+   
+   $type = get_Class($item);
+   $id = $_POST['id'];
+
+   $folder = substr($id,0,-1);
+   if (empty($folder)) {
+      $folder = '0';
+   }
+   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id)) {
+      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id);
+      $xml = str_replace("<", "&lt;", $xml);
+      $xml = str_replace(">", "&gt;", $xml);
+      $xml = str_replace("\n", "<br/>", $xml);
+      echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+      echo "<tr>";
+      echo "<th>".$LANG['plugin_fusioninventory']["xml"][0];
+      echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/u".$folder."/u".$id))).")";
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td width='130'>";
+      echo "<pre width='130'>".$xml."</pre>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+   }
 }
 
 

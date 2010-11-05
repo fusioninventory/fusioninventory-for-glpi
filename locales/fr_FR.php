@@ -537,4 +537,6 @@ $LANG['plugin_fusioninventory']["wakeonlan"][1]="Choix de groupes dynamiques";
 $LANG['plugin_fusioninventory']["wakeonlan"][2]="Choix de groupes simples";
 $LANG['plugin_fusioninventory']["wakeonlan"][3]="Choix d'ordinateur d'une autres action de cette tâche";
 
+$LANG['plugin_fusioninventory']["xml"][0]="XML FusionInventory";
+
 ?>
