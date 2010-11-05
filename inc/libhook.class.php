@@ -394,6 +394,7 @@ class PluginFusinvinventoryLibhook {
                   $j++;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_printer);
+               break;
 
             case 'MONITORS':
                $PluginFusinvinventoryImport_Monitor =  new PluginFusinvinventoryImport_Monitor();
