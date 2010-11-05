@@ -198,6 +198,7 @@ class PluginFusinvinventoryInventory {
                }
                $datas['type'] = 'Computer';
                $PluginFusioninventoryUnknownDevice->add($datas);
+               $PluginFusioninventoryUnknownDevice->writeXML($datas['id'], SOURCEXML);
                return;
             }
          }
@@ -225,7 +226,8 @@ class PluginFusinvinventoryInventory {
          $input['serial'] = $xml->CONTENT->BIOS->SSN;
       }
       $input['type'] = 'Computer';
-      $PluginFusioninventoryUnknownDevice->add($input);
+      $unknown_id = $PluginFusioninventoryUnknownDevice->add($input);
+      $PluginFusioninventoryUnknownDevice->writeXML($unknown_id, SOURCEXML);
    }
 }
 

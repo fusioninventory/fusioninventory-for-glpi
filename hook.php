@@ -163,7 +163,6 @@ function plugin_headings_fusinvinventory_xml($item) {
       echo "</tr>";
       echo "</table>";
    }
-
 }
 
 
