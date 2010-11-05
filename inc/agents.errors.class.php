@@ -125,7 +125,7 @@ class PluginFusionInventoryAgentsErrors extends CommonDBTM {
       }
       $input['device_type'] = $a_input['TYPE'];
       $input['process_number'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
-      $input['error_message'] = $a_input['MESSAGE'];
+      $input['error_message'] = htmlentities($a_input['MESSAGE']);
       $input['agent_type'] = $a_input['agent_type'];
       $input['date'] = date("Y-m-d H:i:s");
 
