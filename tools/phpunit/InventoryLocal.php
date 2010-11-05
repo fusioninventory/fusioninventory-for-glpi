@@ -25,6 +25,7 @@ if (!defined('GLPI_ROOT')) {
    $_SESSION["glpilanguage"] = 'fr_FR';
    loadLanguage();
 }
+require_once 'emulatoragent.php';
 
 /**
  * Test class for MyFile.
@@ -44,7 +45,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
     public function testSetModuleInventoryOff() {
        global $DB;
 
-         // Create rule
+         // *** Create first rule
          $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
          $input = array();
          $input['is_active']=1;
@@ -76,6 +77,61 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['value'] = '1';
          $ruleaction->add($input);
 
+         // *** Create second rule
+         $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
+         $input = array();
+         $input['is_active']=1;
+         $input['name']='mac address';
+         $input['match']='AND';
+         $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+         $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "globalcriteria";
+         $input['pattern']= 3;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_import';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+         // *** Add rule for import in unknown devices
+         $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
+         $input = array();
+         $input['is_active']=1;
+         $input['name']='unknown device';
+         $input['match']='AND';
+         $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+         $rule_id = $rulecollection->add($input);
+         
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= "*";
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_import_unknowndevice';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+
          deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
          deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
 
@@ -88,18 +144,18 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
     }
 
 
-    public function testSendinventoryOff() {
-       $this->testSendinventory();
-    }
-
-
-   public function testMachinesCriteriasFoldersOff() {
-      $exist = 0;
-      if (file_exists(GLPI_ROOT."/files/_plugins/fusioninventory/machines")) {
-         $exist = 1;
-      }
-      $this->assertEquals($exist, 0 , 'Problem on inventory, machines & criterias folder must not create because inventory not allowed on this agent');
-   }
+//    public function testSendinventoryOff() {
+//       $this->testSendinventory();
+//    }
+//
+//
+//   public function testMachinesCriteriasFoldersOff() {
+//      $exist = 0;
+//      if (file_exists(GLPI_ROOT."/files/_plugins/fusioninventory/machines")) {
+//         $exist = 1;
+//      }
+//      $this->assertEquals($exist, 0 , 'Problem on inventory, machines & criterias folder must not create because inventory not allowed on this agent');
+//   }
 
 
 
@@ -115,31 +171,42 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
     }
 
 
-    public function testSendinventory() {
-      require_once 'emulatoragent.php';
-
+    public function testSendinventories() {
       
-      $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
+      $MyDirectory = opendir("xml/inventory_local");
+      while(false !== ($Entry = readdir($MyDirectory))) {
+         if(is_dir('xml/inventory_local/'.$Entry)&& $Entry != '.' && $Entry != '..') {
+            $myVersion = opendir("xml/inventory_local/".$Entry);
+            while(false !== ($xmlFilename = readdir($myVersion))) {
+               if ($xmlFilename != '.' && $xmlFilename != '..') {
+
+                  // We have the XML of each computer inventory
+                  $xml = simplexml_load_file("xml/inventory_local/".$Entry."/".$xmlFilename,'SimpleXMLElement', LIBXML_NOCDATA);
+
+                  $deviceid_ok = 0;
+                  if (!empty($xml->DEVICEID)) {
+                     $deviceid_ok = 1;
+                  }
+                  $this->assertEquals($deviceid_ok, 1 , 'Problem on XML, DEVICEID of file xml/inventory_local/'.$Entry.'/'.$xmlFilename.' not good!');
+
+                  $inputProlog = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
-  <DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>
+  <DEVICEID>'.$xml->DEVICEID.'</DEVICEID>
   <QUERY>PROLOG</QUERY>
   <TOKEN>NTMXKUBJ</TOKEN>
 </REQUEST>';
 
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-      // PROLOG. What can I do?
-      $return_xml = $emulatorAgent->sendProlog($input_xml);
-      echo "========== Prolog ==========\n";
-      print_r($return_xml);
+                  $this->testProlog($inputProlog, $xml->DEVICEID);
 
-      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
-      $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
-      // Return Inventory you want
-      $return_xml = $emulatorAgent->sendProlog($input_xml);
-      echo "========== Send local inventory ==========\n";
-      print_r($return_xml);
+                  $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
 
+                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename);
+
+                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename);
+               }
+            }
+         }
+      }
    }
 
    
@@ -152,6 +219,104 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $this->assertEquals($exist, 1 , 'Problem on inventory, machines & criterias folder not create successfully!');
    }
 
+
+   function testProlog($inputXML='', $deviceID='') {
+      global $DB;
+
+      if (empty($inputXML)) {
+         echo "testProlog with no arguments...\n";
+         return;
+      }
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->sendProlog($inputXML);
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
+      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.$deviceID.') not right created!');
+   }
+
+   function testSendinventory($xmlFile='') {
+      
+      if (empty($xmlFile)) {
+         echo "testSendinventory with no arguments...\n";
+         return;
+      }
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      $input_xml = file_get_contents($xmlFile);
+      $emulatorAgent->sendProlog($input_xml);
+
+      $Computer = new Computer();
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      $serial = "`serial` IS NULL";
+      if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
+         $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
+      }
+      $a_computers = $Computer->find("`name`='".$xml->CONTENT->HARDWARE->NAME."' AND ".$serial);
+      $this->assertEquals(count($a_computers), 1 , 'Problem on creation computer, not created ('.$xmlFile.')');
+   }
+
+
+   function testPrinter($xmlFile='') {
+      if (empty($xmlFile)) {
+         echo "testPrinter with no arguments...\n";
+         return;
+      }
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+
+      $Computer = new Computer();
+      $Printer  = new Printer();
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      // Verify not have 2 printer in DB with same printer serial
+      foreach ($xml->CONTENT->PRINTERS as $child) {
+         if (isset($child->SERIAL)) {
+            $a_printer = $Printer->find("`serial`='".$child->SERIAL."'");
+            $this->assertEquals(count($a_printer), 1 , 'Problem on printers, printer created "'.count($a_printer).'" instead 1 times');
+         }         
+      }
+
+      // Verify all printers are connected to the computer
+      
+   }
+
+
+   function testMonitor($xmlFile='') {
+      if (empty($xmlFile)) {
+         echo "testMonitor with no arguments...\n";
+         return;
+      }
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+
+      $Computer = new Computer();
+      $Monitor  = new Monitor();
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      // Verify not have 2 printer in DB with same printer serial
+      foreach ($xml->CONTENT->MONITORS as $child) {
+         if (isset($child->SERIAL)) {
+            $a_monitor = $Monitor->find("`serial`='".$child->SERIAL."'");
+            $this->assertEquals(count($a_monitor), 1 , 'Problem on monitors, monitor created "'.count($a_monitor).'" instead 1 times');
+         }
+      }
+
+      // Verify all printers are connected to the computer
+
+   }
+
+
+
+
+
+
+
 //
 //
 //   public function testComputerCreation() {
@@ -159,9 +324,36 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 //   }
 //
 //
-//   public function testComputerVolumes() {
-//
-//   }
+
+   public function testComputerVolumes() {
+      global $DB;
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+
+      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
+      $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
+
+      // modify space of a volume
+      $input_xml = str_replace("<FREE>12779</FREE>", "<FREE>10000</FREE>", $input_xml);
+
+      // Return Inventory you want
+      $return_xml = $emulatorAgent->sendProlog($input_xml);
+      echo "========== Send local inventory ==========\n";
+      print_r($return_xml);
+      
+      $ComputerDisk = new ComputerDisk();
+      $a_disk = $ComputerDisk->find();
+      $this->assertEquals(count($a_disk), 5 , 'Problem on inventory, we have not good number of disks ('.count($a_disk).' instead of 5)!');
+
+      $size = 0;
+      foreach ($a_disk as $id => $datas) {
+         if ($datas['device'] == "/dev/ad4s1g") {
+            $size = $datas['freesize'];
+         }
+      }
+      $this->assertEquals($size, 10000 , 'Problem on inventory, freesize of a disk is not good ('.$size.' instead of 10000)!');
+   }
 
 
 //   public function testSendinventoryByWebservice() {
