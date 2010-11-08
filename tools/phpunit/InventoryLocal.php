@@ -198,9 +198,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
                   $this->testProlog($inputProlog, $xml->DEVICEID);
 
-                  $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $items_id = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
 
-                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
 
                   $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename);
                }
@@ -255,10 +255,13 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
       $a_computers = $Computer->find("`name`='".$xml->CONTENT->HARDWARE->NAME."' AND ".$serial);
       $this->assertEquals(count($a_computers), 1 , 'Problem on creation computer, not created ('.$xmlFile.')');
+      return $a_computers['id'];
    }
 
 
-   function testPrinter($xmlFile='') {
+   function testPrinter($xmlFile='', $items_id=0) {
+      global $DB;
+
       if (empty($xmlFile)) {
          echo "testPrinter with no arguments...\n";
          return;
@@ -279,9 +282,24 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
             $this->assertEquals(count($a_printer), 1 , 'Problem on printers, printer created "'.count($a_printer).'" instead 1 times');
          }         
       }
-
       // Verify all printers are connected to the computer
-      
+         // Get all printers connected to computer in DB
+         $query = "SELECT * FROM `glpi_computers_items`
+                      WHERE `computers_id` = '".$items_id."'
+                            AND `itemtype` = 'Printer'";
+         $result=$DB->query($query);
+         $a_printerDB = array();
+         while ($data=$DB->fetch_array($result)) {
+            $a_printerDB[$data['name']] = 1;
+         }
+         // Verifiy printers in XML
+         $a_printerXML = array();
+         foreach ($xml->CONTENT->PRINTERS as $child) {
+            $a_printerXML[$child->NAME] = 1;
+         }
+         // Display (test) differences
+         $a_printerDiff = array_diff_key($a_printerDB, $a_printerXML);
+         $this->assertEquals(count($a_printerDiff), 0 , 'Difference of printers "'.print_r($a_printerDiff, true).'"');
    }
 
 
