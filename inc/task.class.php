@@ -623,7 +623,10 @@ class PluginFusionInventoryTask extends CommonDBTM {
 
       plugin_fusioninventory_disableDebug();
       $state = false;
-      if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
+      ini_set('default_socket_timeout', 2);
+      //if($fp = fsockopen($ip, 62354, $errno, $errstr, 1)) {
+      $data = file_get_contents("http://".$ip.":62354/status");
+      if (isset($data) && !empty($data)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          echo "<input type='checkbox' name='agent-ip[]' value='$agentid-$ip-$type'/>";
@@ -635,7 +638,7 @@ class PluginFusionInventoryTask extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
 
-         fclose($fp);
+         //fclose($fp);
          $state = true;
       }
       plugin_fusioninventory_reenableusemode();
