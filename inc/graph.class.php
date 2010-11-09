@@ -62,7 +62,7 @@ class PluginFusionInventoryGraph {
       
       $this->pChartPath = GLPI_ROOT.'/plugins/fusioninventory/lib/pChart/';
       $this->fontsPath = GLPI_ROOT.'/plugins/fusioninventory/lib/fonts/';
-      $this->tmpPath = GLPI_ROOT.'/files/_plugins/fusioninventory/tmp/';
+      $this->tmpPath = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp/';
       include($this->pChartPath."pData.class");
       include($this->pChartPath."pChart.class");
 

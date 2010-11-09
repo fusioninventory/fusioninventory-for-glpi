@@ -36,9 +36,8 @@
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
-if (!defined("GLPI_PLUGIN_DOC_DIR")){
-	define("GLPI_PLUGIN_DOC_DIR",GLPI_ROOT . "/files/_plugins");
-}
+include (GLPI_ROOT."/inc/includes.php");
+
 $docDir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory';
 
 if (isset($_GET['file'])) {
