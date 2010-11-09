@@ -92,6 +92,7 @@ class PluginFusionInventoryConstructDevice extends CommonDBTM {
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001']    = 'serial';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1']       = 'serial';
       $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.2']       = 'serial';
+      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.9']       = 'serial';
       $mapping_pre[2]['.1.3.6.1.2.1.1.3.0']                 = 'uptime';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.6.1.1.14']     = 'vlanTrunkPortDynamicStatus';
       $mapping_pre[2]['.1.3.6.1.4.1.9.9.68.1.2.2.1.2']      = 'vmvlan';

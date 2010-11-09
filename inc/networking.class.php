@@ -210,7 +210,7 @@ class PluginFusionInventoryNetworking2 extends PluginFusionInventoryCommonDBTM {
     **/
    function savePorts() {
       $CFG_GLPI["deleted_tables"][]="glpi_networking_ports"; // TODO : to clean
-      
+
       foreach ($this->ports as $index=>$ptp) {
          if (!in_array($index, $this->updatesPorts)) { // delete ports which don't exist any more
             $ptp->deleteDB();
