@@ -154,10 +154,13 @@ class PluginFusioninventoryCommunication {
 
       $xmltag = $this->sxml->QUERY;
       $agent = $PluginFusioninventoryAgent->InfosByKey($this->sxml->DEVICEID);
+      if ($xmltag == "PROLOG") {
+         return false;
+      }
       if (!$PluginFusioninventoryAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
          return true;
       }
-
+      
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
 
