@@ -131,9 +131,10 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['value'] = '1';
          $ruleaction->add($input);
 
-
-         deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
-         deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
+         //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
+         //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
+         system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
+         system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/machines");
 
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
@@ -166,10 +167,10 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active`='1'
            WHERE `modulename`='INVENTORY' ";
-        $result = $DB->query($query);
-       
-    }
+        $result = $DB->query($query);       
+     }
 
+     
 
     public function testSendinventories() {
       
@@ -202,7 +203,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
                   $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
 
-                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
                }
             }
          }
@@ -229,10 +230,12 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-      $emulatorAgent->sendProlog($inputXML);
+      $prologXML = $emulatorAgent->sendProlog($inputXML);
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $a_agent = $PluginFusioninventoryAgent->find("`device_id`='".$deviceID."'");
       $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.$deviceID.') not right created!');
+
+      $this->assertEquals(preg_match("/<RESPONSE>SEND<\/RESPONSE>/",$prologXML), 1, 'Prolog not send to agent!');
    }
 
    function testSendinventory($xmlFile='') {
@@ -254,8 +257,15 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
       }
       $a_computers = $Computer->find("`name`='".$xml->CONTENT->HARDWARE->NAME."' AND ".$serial);
+      if (count($a_computers) == 0) {
+         // Search in unknown device
+         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+         $a_computers = $PluginFusioninventoryUnknownDevice->find("`name`='".$xml->CONTENT->HARDWARE->NAME."'");
+      }
       $this->assertEquals(count($a_computers), 1 , 'Problem on creation computer, not created ('.$xmlFile.')');
-      return $a_computers['id'];
+      foreach($a_computers as $items_id => $data) {
+         return $items_id;
+      }
    }
 
 
@@ -285,25 +295,29 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       // Verify all printers are connected to the computer
          // Get all printers connected to computer in DB
          $query = "SELECT * FROM `glpi_computers_items`
+                  INNER JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
                       WHERE `computers_id` = '".$items_id."'
                             AND `itemtype` = 'Printer'";
          $result=$DB->query($query);
          $a_printerDB = array();
          while ($data=$DB->fetch_array($result)) {
-            $a_printerDB[$data['name']] = 1;
+            $a_printerDB["'".$data['name']."'"] = 1;
          }
          // Verifiy printers in XML
          $a_printerXML = array();
          foreach ($xml->CONTENT->PRINTERS as $child) {
-            $a_printerXML[$child->NAME] = 1;
+            $a_printerXML["'".$child->NAME."'"] = 1;
          }
          // Display (test) differences
+         $a_printerDiff = array();
          $a_printerDiff = array_diff_key($a_printerDB, $a_printerXML);
-         $this->assertEquals(count($a_printerDiff), 0 , 'Difference of printers "'.print_r($a_printerDiff, true).'"');
+         $this->assertEquals(count($a_printerDiff), 0 , 'Difference of printers "'.print_r($a_printerDiff, true).'" ['.$xmlFile.']');
    }
 
 
-   function testMonitor($xmlFile='') {
+   function testMonitor($xmlFile='', $items_id=0) {
+      global $DB;
+
       if (empty($xmlFile)) {
          echo "testMonitor with no arguments...\n";
          return;
@@ -317,7 +331,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
 
-      // Verify not have 2 printer in DB with same printer serial
+      // Verify not have 2 monitor in DB with same printer serial
       foreach ($xml->CONTENT->MONITORS as $child) {
          if (isset($child->SERIAL)) {
             $a_monitor = $Monitor->find("`serial`='".$child->SERIAL."'");
@@ -325,7 +339,26 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          }
       }
 
-      // Verify all printers are connected to the computer
+      // Verify all monitors are connected to the computer
+         // Get all monitors connected to computer in DB
+         $query = "SELECT * FROM `glpi_computers_items`
+                  INNER JOIN `glpi_monitors` on `glpi_monitors`.`id`=`items_id`
+                      WHERE `computers_id` = '".$items_id."'
+                            AND `itemtype` = 'Monitor'";
+         $result=$DB->query($query);
+         $a_monitorDB = array();
+         while ($data=$DB->fetch_array($result)) {
+            $a_monitorDB["'".$data['name']."'"] = 1;
+         }
+         // Verifiy monitors in XML
+         $a_monitorXML = array();
+         foreach ($xml->CONTENT->MONITORS as $child) {
+            $a_monitorXML["'".$child->CAPTION."'"] = 1;
+         }
+         // Display (test) differences
+         $a_monitorDiff = array();
+         $a_monitorDiff = array_diff_key($a_monitorDB, $a_monitorXML);
+         $this->assertEquals(count($a_monitorDiff), 0 , 'Difference of monitors "'.print_r($a_monitorDiff, true).'"');
 
    }
 
