@@ -37,10 +37,12 @@ if(!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../..');
 }
 include (GLPI_ROOT."/inc/includes.php");
+if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+   include(GLPI_ROOT ."/plugins/fusioninventory/front/communication.php");
+} else {
+   commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
-
-glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/menu.php");
-commonFooter();
-
+   glpi_header(GLPI_ROOT ."/plugins/fusioninventory/front/menu.php");
+   commonFooter();
+}
 ?>
