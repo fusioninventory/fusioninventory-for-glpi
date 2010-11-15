@@ -102,7 +102,7 @@ SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `model`, `glpi_networking`.`ID` as `network_id`, 0 as `printer_id`,
    `FK_model_infos`, `FK_snmp_connection`, `ifaddr` FROM `glpi_plugin_fusioninventory_networking`
 JOIN `glpi_networking` on `FK_networking` = `glpi_networking`.`ID`
-WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL
+WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
    ".$state_sql.")
 UNION
 SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
