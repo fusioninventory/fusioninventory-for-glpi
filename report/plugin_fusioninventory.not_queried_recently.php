@@ -48,21 +48,34 @@ $nbdays = 1;
 if (isset($_GET["nbdays"])) {
 	$nbdays = $_GET["nbdays"];
 }
+$state = '';
+if (isset($_GET["state"])) {
+   $state = $_GET["state"];
+}
 
 echo "<form action='".$_SERVER["PHP_SELF"]."' method='get'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
-echo "<tr class='tab_bg_1' align='center'>";
 
+echo "<tr class='tab_bg_1' align='center'>";
 echo "<td>";
 echo $LANG['plugin_fusioninventory']["report"][0]." :&nbsp;";
-
+echo "</td>";
+echo "<td>";
 dropdownInteger("nbdays", $nbdays, 1, 365);
-
 echo "</td>";
 echo "</tr>";
 
-echo "<tr>";
-echo "<td align='center'>";
+echo "<tr class='tab_bg_1' align='center'>";
+echo "<td>";
+echo $LANG['state'][0];
+echo "</td>";
+echo "<td>";
+dropdownValue('glpi_dropdown_state', 'state', $state);
+echo "</td>";
+echo "</tr>";
+
+echo "<tr class='tab_bg_2'>";
+echo "<td align='center' colspan='2'>";
 echo "<input type='submit' value='Valider' class='submit' />";
 echo "</td>";
 echo "</tr>";
@@ -79,13 +92,18 @@ if(isset($_GET["FK_networking_ports"])) {
 
 echo "</form>";
 
+$state_sql = "";
+if (($state != "") AND ($state != "0")) {
+   $state_sql = " AND `state` = '".$state."' ";
+}
 
 $query = "SELECT * FROM (
 SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `model`, `glpi_networking`.`ID` as `network_id`, 0 as `printer_id`,
    `FK_model_infos`, `FK_snmp_connection`, `ifaddr` FROM `glpi_plugin_fusioninventory_networking`
 JOIN `glpi_networking` on `FK_networking` = `glpi_networking`.`ID`
-WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
+WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL
+   ".$state_sql.")
 UNION
 SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `model`, 0 as `network_id`, `glpi_printers`.`ID` as `printer_id`,
@@ -93,7 +111,8 @@ SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherse
 JOIN `glpi_printers` on `FK_printers` = `glpi_printers`.`ID`
 LEFT JOIN `glpi_networking_ports` on `glpi_networking_ports`.`on_device` = `glpi_printers`.`ID`
 WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
-AND `glpi_networking_ports`.`device_type`='".PRINTER_TYPE."') as `table`
+AND `glpi_networking_ports`.`device_type`='".PRINTER_TYPE."' ".$state_sql.") as `table`
+
 ORDER BY last_fusioninventory_update DESC";
 
 $CommonItem = new CommonItem;
