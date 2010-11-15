@@ -2349,12 +2349,12 @@ function plugin_fusioninventory_addLeftJoin($type,$ref_table,$new_table,$linkfie
 
       case PLUGIN_FUSIONINVENTORY_PRINTER_HISTORY:
          if ($new_table== "glpi_infocoms") {
-            return "LEFT JOIN glpi_infocoms ON (glpi_printers.ID = glpi_infocoms.FK_device AND glpi_infocoms.device_type='".PRINTER_TYPE."')
+            return " LEFT JOIN glpi_infocoms ON (glpi_printers.ID = glpi_infocoms.FK_device AND glpi_infocoms.device_type='".PRINTER_TYPE."')
                     LEFT JOIN glpi_dropdown_budget ON glpi_dropdown_budget.ID = glpi_infocoms.budget ";
          } else if ($new_table== "glpi_networking_ports") {
-            return "LEFT JOIN glpi_networking_ports ON (glpi_printers.ID = glpi_networking_ports.on_device AND glpi_networking_ports.device_type='".PRINTER_TYPE."')  ";
+            return " LEFT JOIN glpi_networking_ports ON (glpi_printers.ID = glpi_networking_ports.on_device AND glpi_networking_ports.device_type='".PRINTER_TYPE."')  ";
          } else if ($new_table == "glpi_plugin_fusioninventory_printers") {
-            return "LEFT JOIN glpi_plugin_fusioninventory_printers ON (glpi_printers.ID = glpi_plugin_fusioninventory_printers.FK_printers) ";
+            return " LEFT JOIN glpi_plugin_fusioninventory_printers ON (glpi_printers.ID = glpi_plugin_fusioninventory_printers.FK_printers) ";
          }
          break;
 
