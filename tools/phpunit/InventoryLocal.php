@@ -17,13 +17,16 @@ if (!defined('GLPI_ROOT')) {
    include_once("inc/backup.php");
    backupMySQL();
 
+   $_SESSION["glpilanguage"] = 'fr_FR';
+   
    // Install
    include_once("inc/installation.php");
    installGLPI();
    installFusionPlugins();
 
-   $_SESSION["glpilanguage"] = 'fr_FR';
    loadLanguage();
+
+   $CFG_GLPI["root_doc"] = GLPI_ROOT;
 }
 require_once 'emulatoragent.php';
 
@@ -43,7 +46,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
 
     public function testSetModuleInventoryOff() {
-       global $DB;
+       global $DB,$LANG;
+       loadLanguage();
 
          // *** Create first rule
          $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
@@ -61,11 +65,13 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "globalcriteria";
          $input['pattern']= 1;
+         $input['condition']=0;
          $rulecriteria->add($input);
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "globalcriteria";
          $input['pattern']= 2;
+         $input['condition']=0;
          $rulecriteria->add($input);
 
          // Add action
@@ -93,6 +99,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "globalcriteria";
          $input['pattern']= 3;
+         $input['condition']=0;
          $rulecriteria->add($input);
 
          // Add action
@@ -120,6 +127,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "mac";
          $input['pattern']= "*";
+         $input['condition']=0;
          $rulecriteria->add($input);
 
          // Add action
@@ -165,9 +173,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
        
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
-           SET `is_active`='1'
-           WHERE `modulename`='INVENTORY' ";
-        $result = $DB->query($query);       
+           SET `is_active` = '1'
+           WHERE `modulename` = 'INVENTORY'";
+        $DB->query($query);
      }
 
      
