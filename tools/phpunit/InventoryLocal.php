@@ -204,6 +204,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                   $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
 
                   $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+
+                  $this->testCPU("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
                }
             }
          }
@@ -277,14 +279,14 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          return;
       }
 
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-
       $Computer = new Computer();
       $Printer  = new Printer();
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
 
+      if (!isset($xml->CONTENT->PRINTERS)) {
+         return;
+      }
       // Verify not have 2 printer in DB with same printer serial
       foreach ($xml->CONTENT->PRINTERS as $child) {
          if (isset($child->SERIAL)) {
@@ -311,6 +313,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          // Display (test) differences
          $a_printerDiff = array();
          $a_printerDiff = array_diff_key($a_printerDB, $a_printerXML);
+         if (count($a_printerDiff) < count(array_diff_key($a_printerXML, $a_printerDB))) {
+            $a_printerDiff = array_diff_key($a_printerXML, $a_printerDB);
+         }
          $this->assertEquals(count($a_printerDiff), 0 , 'Difference of printers "'.print_r($a_printerDiff, true).'" ['.$xmlFile.']');
    }
 
@@ -323,13 +328,14 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          return;
       }
 
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-
       $Computer = new Computer();
       $Monitor  = new Monitor();
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->MONITORS)) {
+         return;
+      }
 
       // Verify not have 2 monitor in DB with same printer serial
       foreach ($xml->CONTENT->MONITORS as $child) {
@@ -358,12 +364,44 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          // Display (test) differences
          $a_monitorDiff = array();
          $a_monitorDiff = array_diff_key($a_monitorDB, $a_monitorXML);
+         if (count($a_monitorDiff) < count(array_diff_key($a_monitorXML, $a_monitorDB))) {
+            $a_monitorDiff = array_diff_key($a_monitorXML, $a_monitorDB);
+         }
          $this->assertEquals(count($a_monitorDiff), 0 , 'Difference of monitors "'.print_r($a_monitorDiff, true).'"');
 
    }
 
 
+   function testCPU($xmlFile='', $items_id=0) {
+      global $DB;
 
+      if (empty($xmlFile)) {
+         echo "testCPU with no arguments...\n";
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->CPUS)) {
+         return;
+      }
+
+      $a_cpuXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->CPUS as $child) {
+         if (isset($child->NAME)) {
+            $a_cpuXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_deviceprocessors`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_cpuXML) , 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
+   }
 
 
 
@@ -376,35 +414,35 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 //
 //
 
-   public function testComputerVolumes() {
-      global $DB;
-
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-
-      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
-      $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
-
-      // modify space of a volume
-      $input_xml = str_replace("<FREE>12779</FREE>", "<FREE>10000</FREE>", $input_xml);
-
-      // Return Inventory you want
-      $return_xml = $emulatorAgent->sendProlog($input_xml);
-      echo "========== Send local inventory ==========\n";
-      print_r($return_xml);
-      
-      $ComputerDisk = new ComputerDisk();
-      $a_disk = $ComputerDisk->find();
-      $this->assertEquals(count($a_disk), 5 , 'Problem on inventory, we have not good number of disks ('.count($a_disk).' instead of 5)!');
-
-      $size = 0;
-      foreach ($a_disk as $id => $datas) {
-         if ($datas['device'] == "/dev/ad4s1g") {
-            $size = $datas['freesize'];
-         }
-      }
-      $this->assertEquals($size, 10000 , 'Problem on inventory, freesize of a disk is not good ('.$size.' instead of 10000)!');
-   }
+//   public function testComputerVolumes() {
+//      global $DB;
+//
+//      $emulatorAgent = new emulatorAgent;
+//      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+//
+//      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
+//      $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
+//
+//      // modify space of a volume
+//      $input_xml = str_replace("<FREE>12779</FREE>", "<FREE>10000</FREE>", $input_xml);
+//
+//      // Return Inventory you want
+//      $return_xml = $emulatorAgent->sendProlog($input_xml);
+//      echo "========== Send local inventory ==========\n";
+//      print_r($return_xml);
+//
+//      $ComputerDisk = new ComputerDisk();
+//      $a_disk = $ComputerDisk->find();
+//      $this->assertEquals(count($a_disk), 5 , 'Problem on inventory, we have not good number of disks ('.count($a_disk).' instead of 5)!');
+//
+//      $size = 0;
+//      foreach ($a_disk as $id => $datas) {
+//         if ($datas['device'] == "/dev/ad4s1g") {
+//            $size = $datas['freesize'];
+//         }
+//      }
+//      $this->assertEquals($size, 10000 , 'Problem on inventory, freesize of a disk is not good ('.$size.' instead of 10000)!');
+//   }
 
 
 //   public function testSendinventoryByWebservice() {
