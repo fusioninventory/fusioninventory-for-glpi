@@ -129,10 +129,12 @@ class DataFilter
         "DataFilter",
         "oui",
         strtoupper($macOUI));
+        
+        if (is_dir($dataPath)) {
+            $manufacturer = scandir($dataPath);
 
-        $manufacturer = scandir($dataPath);
-
-        return $manufacturer[2];
+            return $manufacturer[2];
+        }
     }
 
     /**
