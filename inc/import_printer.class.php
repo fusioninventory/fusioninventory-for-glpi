@@ -104,8 +104,10 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
 
 
-   function deleteItem() {
-
+   function deleteItem($items_id) {
+      $Computer_Item = new Computer_Item();
+      $Computer_Item->delete(array("id" => $items_id,
+                                   "itemtype" => "Printer"));
    }
 
 }

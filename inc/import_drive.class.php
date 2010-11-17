@@ -117,8 +117,9 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
 
 
    
-   function deleteItem() {
-
+   function deleteItem($items_id) {
+      $ComputerDisk = new ComputerDisk;
+      $ComputerDisk->delete(array("id" => $items_id));
    }
 
 }

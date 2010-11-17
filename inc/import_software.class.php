@@ -102,7 +102,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
 
 
 
-   function removeSoftware($items_id) {
+   function deleteItem($items_id) {
       $Computer_SoftwareVersion = new Computer_SoftwareVersion;
 
       $Computer_SoftwareVersion->delete(array("id" => $items_id));

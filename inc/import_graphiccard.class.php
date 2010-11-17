@@ -102,8 +102,9 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
 
 
 
-   function deleteItem() {
-
+   function deleteItem($items_id) {
+      $CompDevice = new Computer_Device('DeviceGraphicCard');
+      $CompDevice->delete(array("id" => $items_id));
    }
 
 }

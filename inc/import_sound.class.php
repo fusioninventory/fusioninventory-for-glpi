@@ -103,8 +103,9 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
 
 
    
-   function deleteItem() {
-
+   function deleteItem($items_id) {
+      $CompDevice = new Computer_Device('DeviceSoundCard');
+      $CompDevice->delete(array("id" => $items_id));
    }
 
 }

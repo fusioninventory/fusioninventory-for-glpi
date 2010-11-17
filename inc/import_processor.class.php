@@ -100,8 +100,9 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
 
 
    
-   function deleteItem() {
-
+   function deleteItem($items_id) {
+      $CompDevice = new Computer_Device('DeviceProcessor');
+      $CompDevice->delete(array("id" => $items_id));
    }
 
 }

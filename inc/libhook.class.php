@@ -392,11 +392,8 @@ class PluginFusinvinventoryLibhook {
     public static function removeSections($idsections, $idmachine)
     {
         echo "section removed";
-
-        // case 'CPUS':
-
+        
         logInFile("removesection", "[".$idmachine."] ".print_r($idsections, true));
-
 
         foreach ($idsections as $section) {
             $split = explode("/", $section);
@@ -405,10 +402,60 @@ class PluginFusinvinventoryLibhook {
 
             switch ($sectionName) {
 
+               case 'CPUS':
+                  $PluginFusinvinventoryImport_Processor = new PluginFusinvinventoryImport_Processor();
+                  $PluginFusinvinventoryImport_Processor->deleteItem($items_id);
+                  break;
+               
+               case 'DRIVES':
+                  $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
+                  $PluginFusinvinventoryImport_Drive->deleteItem($items_id);
+                  break;
+
+               case 'CONTROLLERS':
+                  $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
+                  $PluginFusinvinventoryImport_Controller->deleteItem($items_id);
+                  break;
+
+               case 'SOUNDS':
+                  $PluginFusinvinventoryImport_Sound = new PluginFusinvinventoryImport_Sound();
+                  $PluginFusinvinventoryImport_Sound->deleteItem($items_id);
+                  break;
+
+               case 'VIDEOS':
+                  $PluginFusinvinventoryImport_Graphiccard = new PluginFusinvinventoryImport_Graphiccard();
+                  $PluginFusinvinventoryImport_Graphiccard->deleteItem($items_id);
+                  break;
+
+               case 'MEMORIES':
+                  $PluginFusinvinventoryImport_Memory = new PluginFusinvinventoryImport_Memory();
+                  $PluginFusinvinventoryImport_Memory->deleteItem($items_id);
+                  break;
+
+               case 'NETWORKS':
+                  // TODO : add a class for this !!!
+                  break;
+
                case 'SOFTWARES':
                   $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software();
-                  $PluginFusinvinventoryImport_Software->removeSoftware($items_id);
+                  $PluginFusinvinventoryImport_Software->deleteItem($items_id);
                   break;
+
+               case 'USBDEVICES':
+                  $PluginFusinvinventoryImport_Peripheral =  new PluginFusinvinventoryImport_Peripheral();
+                  $PluginFusinvinventoryImport_Peripheral->deleteItem($items_id);
+                  break;
+
+               case 'PRINTERS':
+                  $PluginFusinvinventoryImport_Printer =  new PluginFusinvinventoryImport_Printer();
+                  $PluginFusinvinventoryImport_Printer->deleteItem($items_id);
+                  break;
+
+               case 'MONITORS':
+                  $PluginFusinvinventoryImport_Monitor =  new PluginFusinvinventoryImport_Monitor();
+                  $PluginFusinvinventoryImport_Monitor->deleteItem($items_id);
+                  break;
+
             }
            
         }
