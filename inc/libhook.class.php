@@ -397,6 +397,22 @@ class PluginFusinvinventoryLibhook {
 
         logInFile("removesection", "[".$idmachine."] ".print_r($idsections, true));
 
+
+        foreach ($idsections as $section) {
+            $split = explode("/", $section);
+            $sectionName = $split[0];
+            $items_id = $split[1];
+
+            switch ($sectionName) {
+
+               case 'SOFTWARES':
+                  $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software();
+                  $PluginFusinvinventoryImport_Software->removeSoftware($items_id);
+                  break;
+            }
+           
+        }
+
         $sectionsId = array();
         return $sectionsId;
     }
