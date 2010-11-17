@@ -108,10 +108,13 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
 
 
 
-   function deleteItem($items_id) {
+   function deleteItem($items_id, $idmachine) {
       $Computer_Item = new Computer_Item();
-      $Computer_Item->delete(array("id" => $items_id,
-                                   "itemtype" => "Peripheral"));
+      $Computer_Item->getFromDB($items_id);
+      if ($Computer_Item->fields['computers_id'] == $idmachine) {
+         $Computer_Item->delete(array("id" => $items_id,
+                                      "itemtype" => "Peripheral"));
+      }
    }
 
 }

@@ -99,9 +99,12 @@ class PluginFusinvinventoryImport_Controller extends CommonDBTM {
 
 
    
-   function deleteItem($items_id) {
+   function deleteItem($items_id, $idmachine) {
       $CompDevice = new Computer_Device('DeviceControl');
-      $CompDevice->delete(array("id" => $items_id));
+      $CompDevice->getFromDB($items_id);
+      if ($CompDevice->fields['computers_id'] == $idmachine) {
+         $CompDevice->delete(array("id" => $items_id));
+      }
    }
 
 }

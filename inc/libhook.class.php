@@ -404,32 +404,32 @@ class PluginFusinvinventoryLibhook {
 
                case 'CPUS':
                   $PluginFusinvinventoryImport_Processor = new PluginFusinvinventoryImport_Processor();
-                  $PluginFusinvinventoryImport_Processor->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Processor->deleteItem($items_id, $idmachine);
                   break;
                
                case 'DRIVES':
                   $PluginFusinvinventoryImport_Drive = new PluginFusinvinventoryImport_Drive();
-                  $PluginFusinvinventoryImport_Drive->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Drive->deleteItem($items_id, $idmachine);
                   break;
 
                case 'CONTROLLERS':
                   $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
-                  $PluginFusinvinventoryImport_Controller->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Controller->deleteItem($items_id, $idmachine);
                   break;
 
                case 'SOUNDS':
                   $PluginFusinvinventoryImport_Sound = new PluginFusinvinventoryImport_Sound();
-                  $PluginFusinvinventoryImport_Sound->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Sound->deleteItem($items_id, $idmachine);
                   break;
 
                case 'VIDEOS':
                   $PluginFusinvinventoryImport_Graphiccard = new PluginFusinvinventoryImport_Graphiccard();
-                  $PluginFusinvinventoryImport_Graphiccard->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Graphiccard->deleteItem($items_id, $idmachine);
                   break;
 
                case 'MEMORIES':
                   $PluginFusinvinventoryImport_Memory = new PluginFusinvinventoryImport_Memory();
-                  $PluginFusinvinventoryImport_Memory->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Memory->deleteItem($items_id, $idmachine);
                   break;
 
                case 'NETWORKS':
@@ -438,22 +438,22 @@ class PluginFusinvinventoryLibhook {
 
                case 'SOFTWARES':
                   $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software();
-                  $PluginFusinvinventoryImport_Software->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Software->deleteItem($items_id, $idmachine);
                   break;
 
                case 'USBDEVICES':
                   $PluginFusinvinventoryImport_Peripheral =  new PluginFusinvinventoryImport_Peripheral();
-                  $PluginFusinvinventoryImport_Peripheral->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Peripheral->deleteItem($items_id, $idmachine);
                   break;
 
                case 'PRINTERS':
                   $PluginFusinvinventoryImport_Printer =  new PluginFusinvinventoryImport_Printer();
-                  $PluginFusinvinventoryImport_Printer->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Printer->deleteItem($items_id, $idmachine);
                   break;
 
                case 'MONITORS':
                   $PluginFusinvinventoryImport_Monitor =  new PluginFusinvinventoryImport_Monitor();
-                  $PluginFusinvinventoryImport_Monitor->deleteItem($items_id);
+                  $PluginFusinvinventoryImport_Monitor->deleteItem($items_id, $idmachine);
                   break;
 
             }
