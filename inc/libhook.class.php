@@ -431,7 +431,7 @@ class PluginFusinvinventoryLibhook {
 
         // case 'CPUS':
 
-        logInFile("removesection", print_r($idsections, true));
+        logInFile("removesection", "[".$idmachine."] ".print_r($idsections, true));
 
         $sectionsId = array();
         return $sectionsId;
@@ -475,7 +475,7 @@ class PluginFusinvinventoryLibhook {
 
 
 
-       logInFile("updatesection", print_r($data, true));
+       logInFile("updatesection", "[".$idmachine."] ".print_r($data, true));
     }
 }
 
