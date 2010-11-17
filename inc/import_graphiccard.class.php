@@ -85,7 +85,6 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
       if ($graphiccard_id) {
          if ($type == "update") {
             $devID = $CompDevice->update(array('id' => $items_id,
-                                         '_no_history' => true,
                                          'computers_id' => $computer_graphiccard['computers_id'],
                                          '_itemtype'     => 'DeviceGraphicCard',
                                          'devicegraphiccards_id'     => $graphiccard_id));

@@ -83,7 +83,12 @@ class PluginFusinvinventoryLibhook {
          fwrite($fileopen, SOURCEXML);
          fclose($fileopen);
        }
-
+       
+       $changes = array();
+       $changes[0]='0';
+       $changes[1]="";
+       $changes[2]='Create computer by FusionInventory';
+       Log::history($computer_id,'Computer',$changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
        return $computer_id;
     }
 
@@ -188,8 +193,7 @@ class PluginFusinvinventoryLibhook {
 
          }
       }
-
-      $Computer->update($Computer->fields);
+      $Computer->update($Computer->fields, 0);
       $j = 0;
 
       foreach($data as $section) {
@@ -284,6 +288,7 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection["IPSUBNET"]))
                   $network['subnet'] = $dataSection["IPSUBNET"];
 
+               $network['_no_history'] = true;
                $devID = $NetworkPort->add($network);
 
                array_push($sectionsId,$section['sectionName']."/".$devID);
