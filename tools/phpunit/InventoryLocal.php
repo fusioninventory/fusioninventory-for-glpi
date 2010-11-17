@@ -228,6 +228,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                   $this->testMemory("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
                   $this->testNetwork("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
                }
             }
          }
@@ -659,6 +661,41 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.']');
    }
 
+
+
+   function testSoftware($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testSoftware with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->SOFTWARES)) {
+         return;
+      }
+
+      $a_softwareXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->SOFTWARES as $child) {
+         if (isset($child->NAME)) {
+            $a_softwareXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_softwareversions`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']');
+   }
 
    
 
