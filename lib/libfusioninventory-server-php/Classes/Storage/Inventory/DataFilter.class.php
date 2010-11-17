@@ -129,10 +129,12 @@ class DataFilter
         "DataFilter",
         "oui",
         strtoupper($macOUI));
+        
+        if (is_dir($dataPath)) {
+            $manufacturer = scandir($dataPath);
 
-        $manufacturer = scandir($dataPath);
-
-        return $manufacturer[2];
+            return $manufacturer[2];
+        }
     }
 
     /**
@@ -150,9 +152,11 @@ class DataFilter
         strtolower($vendorId),
         strtolower($productId).".info");
 
-        $dataArray = explode("\n", file_get_contents($dataPath));
+        if (file_exists($dataPath)) {
+            $dataArray = explode("\n", file_get_contents($dataPath));
 
-        return $dataArray;
+            return $dataArray;
+        }
     }
 
 

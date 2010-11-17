@@ -37,7 +37,7 @@ class DirectoryStorageInventory extends StorageInventory
     {
         $falseCriteriaNb=-1;
         $internalId;
-
+        
         foreach($this->_configs["criterias"] as $criteria)
         {
 
@@ -89,13 +89,14 @@ class DirectoryStorageInventory extends StorageInventory
                             {
 //                                if ($networks->VIRTUALDEV!=1 AND $networks->DESCRIPTION=="eth0")
 //                                {
+                                  if (!empty($networks->MACADDR)) {
                                     if (file_exists($this->_getCriteriaDSN($criteria, $networks->MACADDR)))
                                     {
                                         $internalId = scandir($this->_getCriteriaDSN($criteria, $networks->MACADDR));
                                     } else {
                                         $falseCriteriaNb++;
                                     }
-//                                }
+                                }
                             }
                             break;
 
@@ -310,9 +311,12 @@ INFOCONTENT;
             {
                 $sectionArray= explode('<<=>>', $stack[1]);
                 $infoSections["sections"][$sectionArray[0]] = $sectionArray[1];
-
             }
-            else if($buffer)
+            else if (($buffer) AND (!empty($infoSections["externalId"])))
+            {
+                $infoSections["sections"][$sectionArray[0]] .= $stack[1];
+            }
+            else if (($buffer) AND (empty($infoSections["externalId"])))
             {
                 $infoSections["externalId"]= trim($buffer);
             }
@@ -452,7 +456,8 @@ INFOCONTENT;
         }
 //        $serializedSections = ob_get_contents();
 //        ob_end_clean();
-        $externalId=$infoSections["externalId"];
+
+         $externalId=$infoSections["externalId"];
 
         $data = <<<INFOCONTENT
 $externalId

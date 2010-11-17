@@ -17,13 +17,16 @@ if (!defined('GLPI_ROOT')) {
    include_once("inc/backup.php");
    backupMySQL();
 
+   $_SESSION["glpilanguage"] = 'fr_FR';
+   
    // Install
    include_once("inc/installation.php");
    installGLPI();
    installFusionPlugins();
 
-   $_SESSION["glpilanguage"] = 'fr_FR';
    loadLanguage();
+
+   $CFG_GLPI["root_doc"] = GLPI_ROOT;
 }
 require_once 'emulatoragent.php';
 
@@ -43,7 +46,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
 
     public function testSetModuleInventoryOff() {
-       global $DB;
+       global $DB,$LANG;
+       loadLanguage();
 
          // *** Create first rule
          $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
@@ -61,11 +65,13 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "globalcriteria";
          $input['pattern']= 1;
+         $input['condition']=0;
          $rulecriteria->add($input);
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "globalcriteria";
          $input['pattern']= 2;
+         $input['condition']=0;
          $rulecriteria->add($input);
 
          // Add action
@@ -93,6 +99,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "globalcriteria";
          $input['pattern']= 3;
+         $input['condition']=0;
          $rulecriteria->add($input);
 
          // Add action
@@ -120,6 +127,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "mac";
          $input['pattern']= "*";
+         $input['condition']=0;
          $rulecriteria->add($input);
 
          // Add action
@@ -165,9 +173,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
        
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
-           SET `is_active`='1'
-           WHERE `modulename`='INVENTORY' ";
-        $result = $DB->query($query);       
+           SET `is_active` = '1'
+           WHERE `modulename` = 'INVENTORY'";
+        $DB->query($query);
      }
 
      
@@ -199,11 +207,29 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
                   $this->testProlog($inputProlog, $xml->DEVICEID);
 
-                  $items_id = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $array = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $items_id = $array[0];
+                  $unknown  = $array[1];
 
-                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
-                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testCPU("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testDrive("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testController("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testSound("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testVideo("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testMemory("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testNetwork("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
                }
             }
          }
@@ -257,34 +283,39 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
       }
       $a_computers = $Computer->find("`name`='".$xml->CONTENT->HARDWARE->NAME."' AND ".$serial);
+      $unknown = 0;
       if (count($a_computers) == 0) {
          // Search in unknown device
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
          $a_computers = $PluginFusioninventoryUnknownDevice->find("`name`='".$xml->CONTENT->HARDWARE->NAME."'");
+         $unknown = 1;
       }
       $this->assertEquals(count($a_computers), 1 , 'Problem on creation computer, not created ('.$xmlFile.')');
       foreach($a_computers as $items_id => $data) {
-         return $items_id;
+         return array($items_id, $unknown);
       }
    }
 
 
-   function testPrinter($xmlFile='', $items_id=0) {
+   function testPrinter($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
 
       if (empty($xmlFile)) {
          echo "testPrinter with no arguments...\n";
          return;
       }
-
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      if ($unknown == '1') {
+         return;
+      }
 
       $Computer = new Computer();
       $Printer  = new Printer();
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
 
+      if (!isset($xml->CONTENT->PRINTERS)) {
+         return;
+      }
       // Verify not have 2 printer in DB with same printer serial
       foreach ($xml->CONTENT->PRINTERS as $child) {
          if (isset($child->SERIAL)) {
@@ -311,25 +342,32 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          // Display (test) differences
          $a_printerDiff = array();
          $a_printerDiff = array_diff_key($a_printerDB, $a_printerXML);
+         if (count($a_printerDiff) < count(array_diff_key($a_printerXML, $a_printerDB))) {
+            $a_printerDiff = array_diff_key($a_printerXML, $a_printerDB);
+         }
          $this->assertEquals(count($a_printerDiff), 0 , 'Difference of printers "'.print_r($a_printerDiff, true).'" ['.$xmlFile.']');
    }
 
 
-   function testMonitor($xmlFile='', $items_id=0) {
+   function testMonitor($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
 
       if (empty($xmlFile)) {
          echo "testMonitor with no arguments...\n";
          return;
       }
-
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      if ($unknown == '1') {
+         return;
+      }
 
       $Computer = new Computer();
       $Monitor  = new Monitor();
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->MONITORS)) {
+         return;
+      }
 
       // Verify not have 2 monitor in DB with same printer serial
       foreach ($xml->CONTENT->MONITORS as $child) {
@@ -358,15 +396,311 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          // Display (test) differences
          $a_monitorDiff = array();
          $a_monitorDiff = array_diff_key($a_monitorDB, $a_monitorXML);
+         if (count($a_monitorDiff) < count(array_diff_key($a_monitorXML, $a_monitorDB))) {
+            $a_monitorDiff = array_diff_key($a_monitorXML, $a_monitorDB);
+         }
          $this->assertEquals(count($a_monitorDiff), 0 , 'Difference of monitors "'.print_r($a_monitorDiff, true).'"');
 
    }
 
 
+   function testCPU($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testCPU with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->CPUS)) {
+         return;
+      }
+
+      $a_cpuXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->CPUS as $child) {
+         if (isset($child->NAME)) {
+            $a_cpuXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_deviceprocessors`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_cpuXML) , 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
+   }
 
 
 
+   function testDrive($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
 
+      if (empty($xmlFile)) {
+         echo "testDrive with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->DRIVES)) {
+         return;
+      }
+
+      $a_driveXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->DRIVES as $child) {
+         if (isset($child->CAPTION)) {
+            $a_driveXML["'".$i."-".$child->CAPTION."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicedrives`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_driveXML) , 'Difference of Drives, created '.$DB->numrows($result).' times instead '.count($a_driveXML).' ['.$xmlFile.']');
+   }
+
+
+   function testController($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testController with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->CONTROLLERS)) {
+         return;
+      }
+
+      // Controller to ignore
+      $ignore_controllers = array();
+      foreach ($xml->CONTENT->VIDEOS as $child) {
+         $ignore_controllers["'".$child->NAME."'"] = 1;
+      }
+      foreach ($xml->CONTENT->SOUNDS as $child) {
+         $ignore_controllers["'".$child->NAME."'"] = 1;
+      }
+
+      $a_controllerXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->CONTROLLERS as $child) {
+         if ((isset($child->NAME)) AND (!isset($ignore_controllers["'".$child->NAME."'"]))) {
+            $a_controllerXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicecontrols`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_controllerXML) , 'Difference of Controllers, created '.$DB->numrows($result).' times instead '.count($a_controllerXML).' ['.$xmlFile.']');
+   }
+
+
+   function testSound($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testSound with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->SOUNDS)) {
+         return;
+      }
+
+      $a_soundXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->SOUNDS as $child) {
+         if (isset($child->NAME)) {
+            $a_soundXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicesoundcards`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_soundXML) , 'Difference of Sounds, created '.$DB->numrows($result).' times instead '.count($a_soundXML).' ['.$xmlFile.']');
+   }
+
+
+  function testVideo($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testVideo with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->VIDEOS)) {
+         return;
+      }
+
+      $a_videoXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->VIDEOS as $child) {
+         if (isset($child->NAME)) {
+            $a_videoXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicegraphiccards`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_videoXML) , 'Difference of Videos, created '.$DB->numrows($result).' times instead '.count($a_videoXML).' ['.$xmlFile.']');
+   }
+
+
+  function testMemory($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testMemory with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->MEMORIES)) {
+         return;
+      }
+
+      $a_memoryXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->MEMORIES as $child) {
+         if (isset($child->CAPTION)) {
+            $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicememories`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_memoryXML) , 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
+   }
+
+
+
+  function testNetwork($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testNetwork with no arguments...\n";
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->NETWORKS)) {
+         return;
+      }
+
+      $a_networkXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->NETWORKS as $child) {
+         if (isset($child->DESCRIPTION)) {
+            $a_networkXML["'".$i."-".$child->DESCRIPTION."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_networkports`
+         WHERE `items_id`='".$items_id."'
+            AND `itemtype`='Computer'";
+      if ($unknown == '1') {
+         $query = "SELECT * FROM `glpi_networkports`
+            WHERE `items_id`='".$items_id."'
+               AND `itemtype`='PluginFusioninventoryUnknownDevice'";      }
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.']');
+   }
+
+
+
+   function testSoftware($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testSoftware with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->SOFTWARES)) {
+         return;
+      }
+
+      $a_softwareXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->SOFTWARES as $child) {
+         if (isset($child->NAME)) {
+            $a_softwareXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_softwareversions`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']');
+   }
+
+   
+
+
+   
 
 //
 //
@@ -376,35 +710,35 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 //
 //
 
-   public function testComputerVolumes() {
-      global $DB;
-
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-
-      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
-      $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
-
-      // modify space of a volume
-      $input_xml = str_replace("<FREE>12779</FREE>", "<FREE>10000</FREE>", $input_xml);
-
-      // Return Inventory you want
-      $return_xml = $emulatorAgent->sendProlog($input_xml);
-      echo "========== Send local inventory ==========\n";
-      print_r($return_xml);
-      
-      $ComputerDisk = new ComputerDisk();
-      $a_disk = $ComputerDisk->find();
-      $this->assertEquals(count($a_disk), 5 , 'Problem on inventory, we have not good number of disks ('.count($a_disk).' instead of 5)!');
-
-      $size = 0;
-      foreach ($a_disk as $id => $datas) {
-         if ($datas['device'] == "/dev/ad4s1g") {
-            $size = $datas['freesize'];
-         }
-      }
-      $this->assertEquals($size, 10000 , 'Problem on inventory, freesize of a disk is not good ('.$size.' instead of 10000)!');
-   }
+//   public function testComputerVolumes() {
+//      global $DB;
+//
+//      $emulatorAgent = new emulatorAgent;
+//      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+//
+//      $input_xml = file_get_contents("xml/inventory_local/2.1.6/port003-2010-06-08-08-13-45.xml");
+//      $input_xml = str_replace("<DEVICEID></DEVICEID>", "<DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>", $input_xml);
+//
+//      // modify space of a volume
+//      $input_xml = str_replace("<FREE>12779</FREE>", "<FREE>10000</FREE>", $input_xml);
+//
+//      // Return Inventory you want
+//      $return_xml = $emulatorAgent->sendProlog($input_xml);
+//      echo "========== Send local inventory ==========\n";
+//      print_r($return_xml);
+//
+//      $ComputerDisk = new ComputerDisk();
+//      $a_disk = $ComputerDisk->find();
+//      $this->assertEquals(count($a_disk), 5 , 'Problem on inventory, we have not good number of disks ('.count($a_disk).' instead of 5)!');
+//
+//      $size = 0;
+//      foreach ($a_disk as $id => $datas) {
+//         if ($datas['device'] == "/dev/ad4s1g") {
+//            $size = $datas['freesize'];
+//         }
+//      }
+//      $this->assertEquals($size, 10000 , 'Problem on inventory, freesize of a disk is not good ('.$size.' instead of 10000)!');
+//   }
 
 
 //   public function testSendinventoryByWebservice() {
