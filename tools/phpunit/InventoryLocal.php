@@ -207,13 +207,27 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
                   $this->testProlog($inputProlog, $xml->DEVICEID);
 
-                  $items_id = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $array = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $items_id = $array[0];
+                  $unknown  = $array[1];
 
-                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+                  $this->testPrinter("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
-                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+                  $this->testMonitor("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
-                  $this->testCPU("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id);
+                  $this->testCPU("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testDrive("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testController("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testSound("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testVideo("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testMemory("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testNetwork("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
                }
             }
          }
@@ -267,23 +281,28 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
       }
       $a_computers = $Computer->find("`name`='".$xml->CONTENT->HARDWARE->NAME."' AND ".$serial);
+      $unknown = 0;
       if (count($a_computers) == 0) {
          // Search in unknown device
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
          $a_computers = $PluginFusioninventoryUnknownDevice->find("`name`='".$xml->CONTENT->HARDWARE->NAME."'");
+         $unknown = 1;
       }
       $this->assertEquals(count($a_computers), 1 , 'Problem on creation computer, not created ('.$xmlFile.')');
       foreach($a_computers as $items_id => $data) {
-         return $items_id;
+         return array($items_id, $unknown);
       }
    }
 
 
-   function testPrinter($xmlFile='', $items_id=0) {
+   function testPrinter($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
 
       if (empty($xmlFile)) {
          echo "testPrinter with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
          return;
       }
 
@@ -328,11 +347,14 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
    }
 
 
-   function testMonitor($xmlFile='', $items_id=0) {
+   function testMonitor($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
 
       if (empty($xmlFile)) {
          echo "testMonitor with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
          return;
       }
 
@@ -380,11 +402,14 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
    }
 
 
-   function testCPU($xmlFile='', $items_id=0) {
+   function testCPU($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
 
       if (empty($xmlFile)) {
          echo "testCPU with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
          return;
       }
 
@@ -413,6 +438,232 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
 
 
+   function testDrive($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testDrive with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->DRIVES)) {
+         return;
+      }
+
+      $a_driveXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->DRIVES as $child) {
+         if (isset($child->CAPTION)) {
+            $a_driveXML["'".$i."-".$child->CAPTION."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicedrives`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_driveXML) , 'Difference of Drives, created '.$DB->numrows($result).' times instead '.count($a_driveXML).' ['.$xmlFile.']');
+   }
+
+
+   function testController($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testController with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->CONTROLLERS)) {
+         return;
+      }
+
+      // Controller to ignore
+      $ignore_controllers = array();
+      foreach ($xml->CONTENT->VIDEOS as $child) {
+         $ignore_controllers["'".$child->NAME."'"] = 1;
+      }
+      foreach ($xml->CONTENT->SOUNDS as $child) {
+         $ignore_controllers["'".$child->NAME."'"] = 1;
+      }
+
+      $a_controllerXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->CONTROLLERS as $child) {
+         if ((isset($child->NAME)) AND (!isset($ignore_controllers["'".$child->NAME."'"]))) {
+            $a_controllerXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicecontrols`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_controllerXML) , 'Difference of Controllers, created '.$DB->numrows($result).' times instead '.count($a_controllerXML).' ['.$xmlFile.']');
+   }
+
+
+   function testSound($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testSound with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->SOUNDS)) {
+         return;
+      }
+
+      $a_soundXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->SOUNDS as $child) {
+         if (isset($child->NAME)) {
+            $a_soundXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicesoundcards`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_soundXML) , 'Difference of Sounds, created '.$DB->numrows($result).' times instead '.count($a_soundXML).' ['.$xmlFile.']');
+   }
+
+
+  function testVideo($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testVideo with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->VIDEOS)) {
+         return;
+      }
+
+      $a_videoXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->VIDEOS as $child) {
+         if (isset($child->NAME)) {
+            $a_videoXML["'".$i."-".$child->NAME."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicegraphiccards`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_videoXML) , 'Difference of Videos, created '.$DB->numrows($result).' times instead '.count($a_videoXML).' ['.$xmlFile.']');
+   }
+
+
+  function testMemory($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testMemory with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->MEMORIES)) {
+         return;
+      }
+
+      $a_memoryXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->MEMORIES as $child) {
+         if (isset($child->CAPTION)) {
+            $a_memoryXML["'".$i."-".$child->CAPTION."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_computers_devicememories`
+         WHERE `computers_id`='".$items_id."' ";
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_memoryXML) , 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
+   }
+
+
+
+  function testNetwork($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testNetwork with no arguments...\n";
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if (!isset($xml->CONTENT->NETWORKS)) {
+         return;
+      }
+
+      $a_networkXML = array();
+      $i = 0;
+      foreach ($xml->CONTENT->NETWORKS as $child) {
+         if (isset($child->DESCRIPTION)) {
+            $a_networkXML["'".$i."-".$child->DESCRIPTION."'"] = 1;
+            $i++;
+         }
+      }
+
+      $Computer = new Computer();
+      $query = "SELECT * FROM `glpi_networkports`
+         WHERE `items_id`='".$items_id."'
+            AND `itemtype`='Computer'";
+      if ($unknown == '1') {
+         $query = "SELECT * FROM `glpi_networkports`
+            WHERE `items_id`='".$items_id."'
+               AND `itemtype`='PluginFusioninventoryUnknownDevice'";      }
+      $result=$DB->query($query);
+
+      $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.']');
+   }
+
+
+   
+
+
+   
 
 //
 //
