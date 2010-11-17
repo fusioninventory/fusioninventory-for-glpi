@@ -152,9 +152,11 @@ class DataFilter
         strtolower($vendorId),
         strtolower($productId).".info");
 
-        $dataArray = explode("\n", file_get_contents($dataPath));
+        if (file_exists($dataPath)) {
+            $dataArray = explode("\n", file_get_contents($dataPath));
 
-        return $dataArray;
+            return $dataArray;
+        }
     }
 
 
