@@ -230,6 +230,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                   $this->testNetwork("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
                   $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testHardware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
                }
             }
          }
@@ -278,6 +280,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $Computer = new Computer();
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      if (isset($xml->CONTENT->BIOS->SSN)) {
+         $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
+      }
       $serial = "`serial` IS NULL";
       if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
@@ -696,6 +701,49 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']');
    }
+
+
+   function testHardware($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testHardware with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         // MANAGE SOME OF DATAS !!!!
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      $Computer = new Computer();
+      $Computer->getFromDB($items_id);
+
+      foreach ($xml->CONTENT->BIOS as $child) {
+         if ((isset($child->SMANUFACTURER))
+               AND (!empty($child->SMANUFACTURER))) {
+
+            $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', $child->SMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', $child->SMANUFACTURER).' ['.$xmlFile.']');
+         } else if ((isset($child->BMANUFACTURER))
+                      AND (!empty($dataSection['BMANUFACTURER']))) {
+
+            $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', $child->BMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', $child->BMANUFACTURER).' ['.$xmlFile.']');
+         }
+         if (isset($child->SMODEL)) {
+            $ComputerModel = new ComputerModel;
+
+            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->import(array('name'=>$child->SMODEL)) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->import(array('name'=>$child->SMODEL)).' ['.$xmlFile.']');
+         }
+         if (isset($child->SSN)) {
+            if (!empty($child->SSN)) {
+               $this->assertEquals($Computer->fields['serial'], trim($child->SSN) , 'Difference of Hardware serial number, have '.$Computer->fields['serial'].' instead '.$child->SSN.' ['.$xmlFile.']');
+            }
+         }
+      }
+  }
+
+
 
    
 
