@@ -81,7 +81,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
          $disk['name']=$dataSection['LABEL'];
       } else if (((!isset($dataSection['VOLUMN'])) OR (empty($dataSection['VOLUMN']))) AND (isset($dataSection['LETTER']))) {
          $disk['name']=$dataSection['LETTER'];
-      } else {
+      } else if (isset($dataSection['TYPE'])) {
          $disk['name']=$dataSection['TYPE'];
       }
       if (isset($dataSection['VOLUMN'])) {
