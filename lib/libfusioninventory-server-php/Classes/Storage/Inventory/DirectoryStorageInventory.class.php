@@ -337,7 +337,6 @@ INFOCONTENT;
         $log = new Logger();
         // Retrieve all sections stored in info file
         $infoSections = $this->_getInfoSections($internalId);
-logInFile('toto', $infoSections["externalId"]."\n");
         // Retrieve all sections from xml file
         $serializedSectionsFromXML = array();
         foreach($xmlSections as $xmlSection)
