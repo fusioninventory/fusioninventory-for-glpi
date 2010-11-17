@@ -250,49 +250,13 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'MEMORIES':
-               $CompDevice = new Computer_Device('DeviceMemory');
-               if (!empty ($dataSection["CAPACITY"])) {
-                  $ram = array();
-                  $ram["designation"]="";
-                  if ($dataSection["TYPE"]!="Empty Slot" && $dataSection["TYPE"] != "Unknown") {
-                     $ram["designation"]=$dataSection["TYPE"];
-                  }
-                  if ($dataSection["DESCRIPTION"]) {
-                     if (!empty($ram["designation"])) {
-                        $ram["designation"].=" - ";
-                     }
-                     $ram["designation"] .= $dataSection["DESCRIPTION"];
-                  }
-                  if (!is_numeric($dataSection["CAPACITY"])) {
-                     $dataSection["CAPACITY"]=0;
-                  }
-
-                  $ram["specif_default"] = $dataSection["CAPACITY"];
-
-                  if (isset($dataSection["SPEED"])) {
-                     $ram["frequence"] = $dataSection["SPEED"];
-                  }
-                  if (isset($dataSection["TYPE"])) {
-                     $ram["devicememorytypes_id"]
-                           = Dropdown::importExternal('DeviceMemoryType', $dataSection["TYPE"]);
-                  }
-
-                  $DeviceMemory = new DeviceMemory();
-                  $ram_id = $DeviceMemory->import($ram);
-                  if ($ram_id) {
-                     $devID = $CompDevice->add(array('computers_id' => $idmachine,
-                                                     '_itemtype'     => 'DeviceMemory',
-                                                     'devicememories_id'     => $ram_id,
-                                                     'specificity'  => $dataSection["CAPACITY"]));
-                     array_push($sectionsId,$section['sectionName']."/".$devID);
-                  } else {
-                     array_push($sectionsId,$section['sectionName']."/".$j);
-                     $j++;
-                  }
-               } else {
-                  array_push($sectionsId,$section['sectionName']."/".$j);
+               $PluginFusinvinventoryImport_Memory = new PluginFusinvinventoryImport_Memory();
+               $id_memory = $PluginFusinvinventoryImport_Memory->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_memory)) {
+                  $id_memory = $j;
                   $j++;
                }
+               array_push($sectionsId,$section['sectionName']."/".$id_memory);
                break;
 
             case 'NETWORKS':
