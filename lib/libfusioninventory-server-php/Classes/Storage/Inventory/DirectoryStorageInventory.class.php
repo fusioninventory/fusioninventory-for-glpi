@@ -311,9 +311,12 @@ INFOCONTENT;
             {
                 $sectionArray= explode('<<=>>', $stack[1]);
                 $infoSections["sections"][$sectionArray[0]] = $sectionArray[1];
-
             }
-            else if($buffer)
+            else if (($buffer) AND (!empty($infoSections["externalId"])))
+            {
+                $infoSections["sections"][$sectionArray[0]] .= $stack[1];
+            }
+            else if (($buffer) AND (empty($infoSections["externalId"])))
             {
                 $infoSections["externalId"]= trim($buffer);
             }
@@ -334,6 +337,7 @@ INFOCONTENT;
         $log = new Logger();
         // Retrieve all sections stored in info file
         $infoSections = $this->_getInfoSections($internalId);
+logInFile('toto', $infoSections["externalId"]."\n");
         // Retrieve all sections from xml file
         $serializedSectionsFromXML = array();
         foreach($xmlSections as $xmlSection)
