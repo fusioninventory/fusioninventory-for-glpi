@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_blacklist`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_criterii_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_criterium_id` int(11) NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -31,7 +31,7 @@ INSERT INTO `glpi_plugin_fusinvinventory_criteria` (`id`, `name`, `comment`) VAL
 (8, 'Asset Tag', 'assetTag');
 
 
-INSERT INTO `glpi_plugin_fusinvinventory_blacklist` (`id`, `plugin_fusioninventory_criterii_id`, `value`) VALUES
+INSERT INTO `glpi_plugin_fusinvinventory_blacklist` (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
 (1, 3, '50:50:54:50:30:30'),
 (2, 1, 'N/A'),
 (3, 1, '(null string)'),

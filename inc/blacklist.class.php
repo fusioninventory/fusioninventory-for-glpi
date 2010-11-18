@@ -107,7 +107,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       echo "<tr>";
 
 
-      $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+      $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
       $i = 0;
       foreach ($a_blacklist as $idblacklist=>$datablacklist) {
          if ($i == 0) {
@@ -141,7 +141,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'>".$LANG['plugin_fusinvinventory']["blacklist"][1]."</td>";
       echo "<td colspan='2'><input type='text' name='value'/>";
-      echo "<input type='hidden' name='plugin_fusioninventory_criterii_id' value='".$id."'/>";
+      echo "<input type='hidden' name='plugin_fusioninventory_criterium_id' value='".$id."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -166,7 +166,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
          switch($data['comment']) {
 
             case 'ssn':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($xml->CONTENT->BIOS->SSN)) AND ($xml->CONTENT->BIOS->SSN ==$blacklist_data['value'])) {
@@ -176,7 +176,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
                break;
 
             case 'uuid':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($xml->CONTENT->HARDWARE->UUID)) AND ($xml->CONTENT->HARDWARE->UUID == $blacklist_data['value'])) {
@@ -186,7 +186,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
                break;
 
             case 'macAddress':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
                
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($xml->CONTENT->NETWORKS)) {
@@ -200,7 +200,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
                break;
 
            case 'winProdKey':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY)) AND ($xml->CONTENT->HARDWARE->WINPRODKEY == $blacklist_data['value'])) {
@@ -210,7 +210,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
               break;
 
            case 'smodel':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($xml->CONTENT->BIOS->SMODEL)) AND ($xml->CONTENT->BIOS->SMODEL == $blacklist_data['value'])) {
@@ -220,7 +220,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
               break;
 
            case 'storagesSerial':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($xml->CONTENT->STORAGES)) {
@@ -234,7 +234,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
               break;
 
            case 'drivesSerial':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if (isset($xml->CONTENT->DRIVES)) {
@@ -248,7 +248,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
               break;
 
            case 'assetTag':
-               $a_blacklist = $this->find("`plugin_fusioninventory_criterii_id`='".$id."'");
+               $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                   if ((isset($xml->CONTENT->BIOS->ASSETTAG)) AND ($xml->CONTENT->BIOS->ASSETTAG == $blacklist_data['value'])) {

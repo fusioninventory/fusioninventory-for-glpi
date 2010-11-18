@@ -42,14 +42,14 @@ $LANG['plugin_fusinvinventory']["setup"][17]="Plugin ".$title." need plugin Fusi
 $LANG['plugin_fusinvinventory']["setup"][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
 
 $LANG['plugin_fusinvinventory']["menu"][0]="Import agent XML file";
-$LANG['plugin_fusinvinventory']["menu"][1]="Criterii rules";
+$LANG['plugin_fusinvinventory']["menu"][1]="Criteria rules";
 $LANG['plugin_fusinvinventory']["menu"][2]="BlackList";
 
 $LANG['plugin_fusinvinventory']["importxml"][0]="Import Agent XML file";
 $LANG['plugin_fusinvinventory']["importxml"][1]="Computer injected into GLPI";
 
-$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criterii rules";
-$LANG['plugin_fusinvinventory']['rule'][1]="Existant criterii";
+$LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
+$LANG['plugin_fusinvinventory']['rule'][1]="Existant criterium";
 $LANG['plugin_fusinvinventory']['rule'][2]="Serial Number";
 $LANG['plugin_fusinvinventory']['rule'][3]="MAC address";
 $LANG['plugin_fusinvinventory']['rule'][4]="Microsoft product key";
