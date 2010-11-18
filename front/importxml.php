@@ -36,8 +36,6 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$ptcd = new PluginFusinvsnmpConstructDevice;
-
 commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 
 PluginFusioninventoryProfile::checkRight("fusinvinventory", "importxml","r");
