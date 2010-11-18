@@ -264,8 +264,8 @@ $LANG['plugin_fusinvsnmp']["type"][3]="Printer";
 
 $LANG['plugin_fusinvsnmp']["rules"][1]="Rules";
 
-$LANG['plugin_fusinvsnmp']['rule'][0]="Networking equipment existent criterii rules";
-$LANG['plugin_fusinvsnmp']['rule'][1]="Existant criterii";
+$LANG['plugin_fusinvsnmp']['rule'][0]="Networking equipment existent criteria rules";
+$LANG['plugin_fusinvsnmp']['rule'][1]="Existant criterium";
 $LANG['plugin_fusinvsnmp']['rule'][2]="Serial Number";
 $LANG['plugin_fusinvsnmp']['rule'][3]="MAC address";
 $LANG['plugin_fusinvsnmp']['rule'][5]="Networking equipment model";
