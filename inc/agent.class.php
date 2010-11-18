@@ -235,6 +235,22 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return false;
    }
 
+
+   function setAgentWithComputerid($items_id, $device_id) {
+      global $DB;
+
+      // Reset if computer connected with an other agent
+      $query = "UPDATE `".$this->table."`
+         SET `items_id`='0'
+         WHERE `items_id`='".$items_id."'
+            AND `device_id`!='".$device_id."' ";
+      $DB->query($query);
+
+      $agent = $this->InfosByKey($device_id);
+      $agent['items_id'] = $items_id;
+      $this->update($agent);
+   }
+
 }
 
 ?>
