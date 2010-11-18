@@ -90,8 +90,8 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          // Use $cfg_ocs["states_id_default"] or create a specific one ?
          $input["softwares_id"] = $software_id;
          $input["name"] = $modified_version;
-         if (isset(array['PUBLISHER'])) {
-            $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer', $dataSection['PUBLISHER']);
+         if (isset($array['PUBLISHER'])) {
+            $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer', $array['PUBLISHER']);
          }
          $isNewVers = $SoftwareVersion->add($input);
       }
