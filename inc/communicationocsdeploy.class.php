@@ -42,12 +42,10 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
-
 /**
  * Class to communicate with agents using XML
  **/
-class PluginFusinvdeployCommunicationOcsdeploy extends PluginFusinvsnmpCommunicationSNMP {
+class PluginFusinvdeployCommunicationOcsdeploy extends PluginFusioninventoryCommunication {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
 
 
