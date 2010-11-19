@@ -47,7 +47,7 @@ include_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 /**
  * Class to communicate with agents using XML
  **/
-class PluginFusinvdeployCommunicationOcsdeploy extends PluginFusioninventoryCommunication {
+class PluginFusinvdeployCommunicationOcsdeploy {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
 
 
