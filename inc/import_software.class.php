@@ -51,9 +51,6 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
    
    function addSoftware($idmachine, $array) {
       global $DB;
-      // COMMENTS = Build tool from the boost.org
-      // NAME = boost-jam
-      // VERSION = 1.43.0<br />
 
       $rulecollection = new RuleDictionnarySoftwareCollection;
       $Software = new Software;

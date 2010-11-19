@@ -62,7 +62,12 @@ class PluginFusinvinventoryLibhook {
     */
     public static function createMachine() {
 
+       // If import computer from GLPI DB
+       if (isset($_SESSION['pluginFusinvinventoryImportMachine'])) {
+          return $_SESSION['pluginFusinvinventoryImportMachine']['HARDWARE'];
+       }
 
+       // Else create computer
       $Computer = new Computer;
       $input = array();
       $input['is_deleted'] = 0;
@@ -70,7 +75,7 @@ class PluginFusinvinventoryLibhook {
 
       $computer_id = $Computer->add($input);
 
-      if (defined('SOURCEXML')) {
+      if (isset($_SESSION['SOURCEXML'])) {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
          $folder = substr($computer_id,0,-1);
          if (empty($folder)) {
@@ -80,7 +85,7 @@ class PluginFusinvinventoryLibhook {
             mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
          }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$computer_id, 'w');
-         fwrite($fileopen, SOURCEXML);
+         fwrite($fileopen, $_SESSION['SOURCEXML']);
          fclose($fileopen);
        }
        
@@ -92,7 +97,7 @@ class PluginFusinvinventoryLibhook {
 
        // Link computer to agent FusionInventory
        $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-       $xml = simplexml_load_string(SOURCEXML,'SimpleXMLElement', LIBXML_NOCDATA);
+       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
        $PluginFusioninventoryAgent->setAgentWithComputerid($computer_id, $xml->DEVICEID);
        
        return $computer_id;
@@ -302,17 +307,23 @@ class PluginFusinvinventoryLibhook {
 
             case 'SOFTWARES':
 
-               // Add software name
-               // Add version of software
-               // link version with computer : glpi_computers_softwareversions
-               $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software;
-               if (isset($dataSection['VERSION'])) {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                              'version'=>$dataSection['VERSION']));
-               } else {
-                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                              'version'=>''));
-               }
+                // If import computer from GLPI DB
+                if (isset($_SESSION['pluginFusinvinventoryImportMachine'])) {
+                   $Computer_SoftwareVersion_id = array_shift($_SESSION['pluginFusinvinventoryImportMachine']['SOFTWARES']);
+                } else {
+              
+                  // Add software name
+                  // Add version of software
+                  // link version with computer : glpi_computers_softwareversions
+                  $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software;
+                  if (isset($dataSection['VERSION'])) {
+                     $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                                                                                 'version'=>$dataSection['VERSION']));
+                  } else {
+                     $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                                                                                 'version'=>''));
+                  }
+                }
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
 
@@ -507,6 +518,8 @@ class PluginFusinvinventoryLibhook {
                $PluginFusinvinventoryImport_Controller = new PluginFusinvinventoryImport_Controller();
                $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
                break;
+
+
 
          }
       }

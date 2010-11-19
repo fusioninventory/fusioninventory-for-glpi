@@ -62,7 +62,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
       $memory = array();
 
       $memory["designation"]="";
-      if ($dataSection["TYPE"]!="Empty Slot" && $dataSection["TYPE"] != "Unknown") {
+      if (isset($dataSection["TYPE"]) && $dataSection["TYPE"]!="Empty Slot" && $dataSection["TYPE"] != "Unknown") {
          $memory["designation"]=$dataSection["TYPE"];
       }
       if (isset($dataSection["DESCRIPTION"])) {
@@ -71,7 +71,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          }
          $memory["designation"] .= $dataSection["DESCRIPTION"];
       }
-      if (!is_numeric($dataSection["CAPACITY"])) {
+      if ((!isset($dataSection["CAPACITY"])) OR ((isset($dataSection["CAPACITY"])) AND (!is_numeric($dataSection["CAPACITY"])))) {
          $dataSection["CAPACITY"]=0;
       }
 

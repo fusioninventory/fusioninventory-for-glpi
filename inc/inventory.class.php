@@ -72,7 +72,7 @@ class PluginFusinvinventoryInventory {
       $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
       $p_xml = $PluginFusinvinventoryBlacklist->cleanBlacklist($p_xml);
 
-      define('SOURCEXML', $p_xml);
+      $_SESSION['SOURCEXML'] = $p_xml;
 
       $xml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
       $input = array();
@@ -166,7 +166,7 @@ class PluginFusinvinventoryInventory {
       //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
       $action->checkConfig("", $config);
       ob_start();
-      $action->startAction(simplexml_load_string(SOURCEXML,'SimpleXMLElement', LIBXML_NOCDATA));
+      $action->startAction(simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA));
       $output = ob_flush();
       if (!empty($output)) {
          logInFile("fusinvinventory", $output);
@@ -179,7 +179,7 @@ class PluginFusinvinventoryInventory {
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $NetworkPort = new NetworkPort();
 
-      $xml = simplexml_load_string(SOURCEXML,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
       //Search with serial
       if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
          $a_device = $PluginFusioninventoryUnknownDevice->find("`serial`='".$xml->CONTENT->BIOS->SSN."'");
@@ -196,7 +196,7 @@ class PluginFusinvinventoryInventory {
                }
                $datas['type'] = 'Computer';
                $PluginFusioninventoryUnknownDevice->add($datas);
-               $PluginFusioninventoryUnknownDevice->writeXML($datas['id'], SOURCEXML);
+               $PluginFusioninventoryUnknownDevice->writeXML($datas['id'], $_SESSION['SOURCEXML']);
                return;
             }
          }
@@ -225,7 +225,192 @@ class PluginFusinvinventoryInventory {
       }
       $input['type'] = 'Computer';
       $unknown_id = $PluginFusioninventoryUnknownDevice->add($input);
-      $PluginFusioninventoryUnknownDevice->writeXML($unknown_id, SOURCEXML);
+      $PluginFusioninventoryUnknownDevice->writeXML($unknown_id, $_SESSION['SOURCEXML']);
+   }
+
+
+   // Only for computer yet in GLPI DB or added manually
+   function createMachinesInLib() {
+
+      $Computer = new Computer();
+
+      $computerInLib = array();
+      $a_machines = scandir(GLPI_DOC_DIR."/_plugins/fusioninventory/machines");
+      foreach ($a_machines as $machine) {
+         if (($machine != ".") AND ($machine != "..")) {
+
+            $fileinfo = fopen(GLPI_DOC_DIR."/_plugins/fusioninventory/machines/".$machine."/infos.file","r" );
+            $i = 0;
+            while ($i < 1) {
+               $computerInLib[trim(fgets($fileinfo))] = 1;
+               $i++;
+            }
+            fclose($fileinfo);
+         }
+      }
+
+      $a_computersDB = $Computer->find();
+      foreach ($a_computersDB as $items_id => $datas) {
+         if (!isset($computerInLib[$items_id])) {
+            $this->createMachineInLib($items_id);           
+         }
+      }
+   }
+
+
+   function createMachineInLib($items_id) {
+
+      $NetworkPort = new NetworkPort();
+      $Computer = new Computer();
+
+      $Computer->getFromDB($items_id);
+      $datas = $Computer->fields;
+
+      $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
+      $xml_content = $xml->addChild('CONTENT');
+
+      // ** NETWORKS
+      $a_networkport = $NetworkPort->find("`items_id`='".$items_id."' AND `itemtype`='Computer' ");
+      foreach ($a_networkport as $networkport_id => $networkport_data) {
+         $xml_networks = $xml_content->addChild("NETWORKS");
+         $_SESSION['pluginFusinvinventoryImportMachine']['NETWORKS'][] = $networkport_id;
+         $xml_networks->addChild("MACADDR", $networkport_data['mac']);
+         $xml_networks->addChild("IPADDRESS", $networkport_data['ip']);
+         $xml_networks->addChild("IPMASK", $networkport_data['netmask']);
+         $xml_networks->addChild("IPSUBNET", $networkport_data['subnet']);
+         $xml_networks->addChild("IPGATEWAY", $networkport_data['gateway']);
+         $xml_networks->addChild("DESCRIPTION", $networkport_data['name']);
+         $network_type = Dropdown::getDropdownName('glpi_networkinterfaces', $networkport_data['networkinterfaces_id']);
+         if ($network_type != "&nbsp;") {
+            $xml_networks->addChild("TYPE", $network_type);
+         }
+      }
+
+      // ** BIOS
+      $xml_bios = $xml_content->addChild("BIOS");
+      $_SESSION['pluginFusinvinventoryImportMachine']['BIOS'] = $items_id;
+      $xml_bios->addChild("SSN", $datas['serial']);
+      $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $datas['manufacturers_id']);
+      if ($manufacturer != "&nbsp;") {
+         $xml_bios->addChild("SMANUFACTURER", $manufacturer);
+      }
+      $model = Dropdown::getDropdownName(getTableForItemType('ComputerModel'), $datas['computermodels_id']);
+      if ($model != "&nbsp;") {
+         $xml_bios->addChild("SMODEL", $model);
+      }
+      $type = Dropdown::getDropdownName(getTableForItemType('ComputerType'), $datas['computertypes_id']);
+      if ($type != "&nbsp;") {
+         $xml_bios->addChild("TYPE", $type);
+      }
+
+      // ** HARDWARE
+      $xml_hardware = $xml_content->addChild("HARDWARE");
+      $_SESSION['pluginFusinvinventoryImportMachine']['HARDWARE'] = $items_id;
+      $xml_hardware->addChild("NAME", $datas['name']);
+      $osname = Dropdown::getDropdownName(getTableForItemType('OperatingSystem'), $datas['operatingsystems_id']);
+      if ($osname != "&nbsp;") {
+         $xml_bios->addChild("OSNAME", $osname);
+      }
+      $osversion = Dropdown::getDropdownName(getTableForItemType('OperatingSystemVersion'), $datas['operatingsystemversions_id']);
+      if ($osversion != "&nbsp;") {
+         $xml_bios->addChild("OSVERSION", $osversion);
+      }
+      $xml_hardware->addChild("WINPRODID", $datas['os_licenseid']);
+      $xml_hardware->addChild("WINPRODKEY", $datas['os_license_number']);
+      $workgroup = Dropdown::getDropdownName(getTableForItemType('Domain'), $datas['domains_id']);
+      if ($workgroup != "&nbsp;") {
+         $xml_bios->addChild("WORKGROUP", $workgroup);
+      }
+
+      // TODO
+      $xml_controller = $xml_content->addChild("CONTROLLERS");
+
+      // ** CPUS
+      $CompDeviceProcessor = new Computer_Device('DeviceProcessor');
+      $DeviceProcessor = new DeviceProcessor();
+      $a_deviceProcessor = $CompDeviceProcessor->find("`computers_id`='".$items_id."' ");
+      foreach ($a_deviceProcessor as $deviceProcessor_id => $deviceProcessor_data) {
+         $xml_cpu = $xml_content->addChild("CPUS");
+         $DeviceProcessor->getFromDB($deviceProcessor_data['deviceprocessors_id']);
+         $xml_cpu->addChild("NAME", $DeviceProcessor->fields['name']);
+         $xml_cpu->addChild("SPEED", $deviceProcessor_data['specificity']);
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceProcessor->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_cpu->addChild("MANUFACTURER", $manufacturer);
+         }
+      }
+
+      // TODO
+      $xml_drive = $xml_content->addChild("DRIVES");
+
+      // TODO
+      $xml_input = $xml_content->addChild("INPUTS");
+
+      // TODO
+      $xml_memory = $xml_content->addChild("MEMORIES");
+
+      // TODO
+      $xml_monitor = $xml_content->addChild("MONITORS");
+
+      // TODO
+      $xml_printer = $xml_content->addChild("PRINTERS");
+
+      // ** SOFTWARE
+      $Computer_SoftwareVersion = new Computer_SoftwareVersion();
+      $SoftwareVersion = new SoftwareVersion();
+      $Software = new Software();
+      $a_softwareVersion = $Computer_SoftwareVersion->find("`computers_id`='".$items_id."' ");
+      foreach ($a_softwareVersion as $softwareversion_id => $softwareversion_data) {
+         $SoftwareVersion->getFromDB($softwareversion_data['softwareversions_id']);
+         $Software->getFromDB($SoftwareVersion->fields['softwares_id']);
+         $xml_software = $xml_content->addChild("SOFTWARES");
+         $_SESSION['pluginFusinvinventoryImportMachine']['SOFTWARES'][] = $softwareversion_id;
+         $xml_software->addChild("VERSION", $SoftwareVersion->fields['name']);
+         $xml_software->addChild("NAME", $Software->fields['name']);
+//               $xml_software->addChild("PUBLISHER", Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Software->fields['manufacturers_id']));
+      }
+
+      // TODO
+      $xml_sound = $xml_content->addChild("SOUNDS");
+
+      // TODO
+      $xml_storage = $xml_content->addChild("STORAGES");
+
+      // TODO
+      $xml_video = $xml_content->addChild("VIDEOS");
+
+      // TODO : Initilize constant name to not import but make relation between lib and GLPI
+
+      // Convert XML
+      $xmlXml = str_replace("><", ">\n<", $xml->asXML());
+      $token      = strtok($xmlXml, "\n");
+      $result     = '';
+      $pad        = 0;
+      $matches    = array();
+      $indent     = 0;
+
+      while ($token !== false) {
+         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
+            $indent=0;
+         elseif (preg_match('/^<\/\w/', $token, $matches)) :
+            $pad = $pad-3;
+         elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
+            $indent=3;
+         else :
+            $indent = 0;
+         endif;
+         $line    = str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
+         $result .= $line . "\n";
+         $token   = strtok("\n");
+         $pad    += $indent;
+      }
+      $xml = simplexml_load_string($result,'SimpleXMLElement', LIBXML_NOCDATA);
+print_r($xml->asXML());
+      // ** Send to rules => lib fusioninventory
+      $this->sendCriteria("", "", $xml->asXML());
+      unset($_SESSION['pluginFusinvinventoryImportMachine']);
+
+
    }
 }
 
