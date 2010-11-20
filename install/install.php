@@ -79,7 +79,7 @@ function pluginFusinvinventoryInstall() {
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "INVENTORY";
-      $input['is_active']  = 0;
+      $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
