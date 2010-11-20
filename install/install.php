@@ -83,6 +83,10 @@ function pluginFusinvinventoryInstall() {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
+      // Create rules by default
+      $PluginFusinvinventoryRuleInventoryCollection = new PluginFusinvinventoryRuleInventoryCollection();
+      $PluginFusinvinventoryRuleInventoryCollection->initRules();
+
 
    }
 }
