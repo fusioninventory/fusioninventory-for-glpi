@@ -390,7 +390,16 @@ class PluginFusinvinventoryLibhook {
                   $j++;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_monitor);
+               break;
 
+            case 'STORAGES':
+               $PluginFusinvinventoryImport_Storage =  new PluginFusinvinventoryImport_Storage();
+               $id_storage = $PluginFusinvinventoryImport_Storage->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_storage)) {
+                  $id_storage = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_storage);
                break;
 
             default:
@@ -476,6 +485,11 @@ class PluginFusinvinventoryLibhook {
                case 'MONITORS':
                   $PluginFusinvinventoryImport_Monitor =  new PluginFusinvinventoryImport_Monitor();
                   $PluginFusinvinventoryImport_Monitor->deleteItem($items_id, $idmachine);
+                  break;
+
+               case 'STORAGES':
+                  $PluginFusinvinventoryImport_Storage = new PluginFusinvinventoryImport_Storage();
+                  $PluginFusinvinventoryImport_Storage->deleteItem($items_id, $idmachine);
                   break;
 
             }
