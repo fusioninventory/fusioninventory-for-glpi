@@ -369,13 +369,24 @@ class PluginFusinvinventoryInventory {
       }
 
 
+      // ** MEMORIES
+      $CompDeviceMemory = new Computer_Device('DeviceMemory');
+      $DeviceMemory = new DeviceMemory();
+      $a_deviceMemory = $CompDeviceMemory->find("`computers_id`='".$items_id."' ");
+      foreach ($a_deviceMemory as $deviceMemory_id => $deviceMemory_data) {
+         $xml_memory = $xml_content->addChild("MEMORIES");
+         $DeviceMemory->getFromDB($deviceMemory_data['devicememories_id']);
+         $xml_memory->addChild("DESCRIPTION", $DeviceMemory->fields['designation']);
+         $xml_memory->addChild("CAPACITY", $deviceMemory_data['specificity']);
+         $xml_memory->addChild("SPEED", $DeviceMemory->fields['frequence']);
+         $type = Dropdown::getDropdownName(getTableForItemType('DeviceMemoryType'), $DeviceMemory->fields['devicememorytypes_id']);
+         if ($type != "&nbsp;") {
+            $xml_memory->addChild("TYPE", $type);
+         }
+      }
 
 
-      // TODO
-      $xml_input = $xml_content->addChild("INPUTS");
 
-      // TODO
-      $xml_memory = $xml_content->addChild("MEMORIES");
 
       // TODO
       $xml_monitor = $xml_content->addChild("MONITORS");
