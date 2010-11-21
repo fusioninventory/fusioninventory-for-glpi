@@ -352,8 +352,24 @@ class PluginFusinvinventoryInventory {
          }
       }
 
-      // TODO
-      $xml_drive = $xml_content->addChild("DRIVES");
+      // ** DRIVES
+      $ComputerDisk = new ComputerDisk;
+      $a_disk = $ComputerDisk->find("`computers_id`='".$items_id."' ");
+      foreach ($a_disk as $disk_id => $disk_data) {
+         $xml_drive = $xml_content->addChild("DRIVES");
+         $xml_drive->addChild("LABEL", $disk_data['name']);
+         $xml_drive->addChild("VOLUMN", $disk_data['device']);
+         $xml_drive->addChild("MOUNTPOINT", $disk_data['mountpoint']);
+         $filesystem = Dropdown::importExternal('Filesystem', $disk_data['filesystems_id']);
+         if ($filesystem != "&nbsp;") {
+            $xml_drive->addChild("FILESYSTEM", $filesystem);
+         }
+         $xml_drive->addChild("TOTAL", $disk_data['totalsize']);
+         $xml_drive->addChild("FREE", $disk_data['freesize']);
+      }
+
+
+
 
       // TODO
       $xml_input = $xml_content->addChild("INPUTS");
