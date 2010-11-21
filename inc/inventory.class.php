@@ -461,13 +461,23 @@ class PluginFusinvinventoryInventory {
       }
 
 
-
-
       // TODO
       $xml_storage = $xml_content->addChild("STORAGES");
 
-      // TODO
-      $xml_video = $xml_content->addChild("VIDEOS");
+
+      // ** VIDEOS
+      $CompDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
+      $DeviceGraphicCard = new DeviceGraphicCard();
+      $a_deviceGraphicCard = $DeviceGraphicCard->find("`computers_id`='".$items_id."' ");
+      foreach ($a_deviceGraphicCard as $deviceGraphicCard_id => $deviceGraphicCard_data) {
+         $xml_video = $xml_content->addChild("VIDEOS");
+         $_SESSION['pluginFusinvinventoryImportMachine']['VIDEOS'][] = $deviceGraphicCard_id;
+         $DeviceGraphicCard->getFromDB($deviceGraphicCard_data['devicegraphiccards_id']);
+         $xml_video->addChild("NAME", $DeviceSoundCard->fields['designation']);
+         $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
+      }
+
+      
 
       // Convert XML
       $xmlXml = str_replace("><", ">\n<", $xml->asXML());
