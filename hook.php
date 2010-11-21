@@ -109,10 +109,7 @@ function plugin_fusioninventory_uninstall() {
 // Define headings added by the plugin //
 function plugin_get_headings_fusioninventory($item,$withtemplate) {
    global $LANG;
-   $pfc = new PluginFusioninventoryConfig;
 
-   $type = get_Class($item);
-//   switch ($type) {
    switch (get_class($item)) {
       case 'Computer' :
          if ($withtemplate) { // new object / template case
@@ -197,8 +194,6 @@ function plugin_headings_actions_fusioninventory($item) {
    switch (get_class($item)) {
       case 'Computer' :
          $array = array ();
-         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-         $pfc = new PluginFusioninventoryConfig;
          $array[2] = "plugin_headings_fusioninventory_locks";
          $array[3] = "plugin_headings_fusioninventory_tasks";
          return $array;
