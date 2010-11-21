@@ -414,6 +414,8 @@ class PluginFusinvinventoryInventory {
       // TODO
       $xml_printer = $xml_content->addChild("PRINTERS");
 
+      
+
       // ** SOFTWARE
       $Computer_SoftwareVersion = new Computer_SoftwareVersion();
       $SoftwareVersion = new SoftwareVersion();
@@ -426,7 +428,10 @@ class PluginFusinvinventoryInventory {
          $_SESSION['pluginFusinvinventoryImportMachine']['SOFTWARES'][] = $softwareversion_id;
          $xml_software->addChild("VERSION", $SoftwareVersion->fields['name']);
          $xml_software->addChild("NAME", $Software->fields['name']);
-//               $xml_software->addChild("PUBLISHER", Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Software->fields['manufacturers_id']));
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Software->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_software->addChild("PUBLISHER", $manufacturer);
+         }
       }
 
       // TODO
