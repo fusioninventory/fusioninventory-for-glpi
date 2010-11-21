@@ -327,12 +327,6 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
 
-//              case 'INPUTS':
-//                 $Peripheral = new Peripheral;
-//
-//
-//                 break;
-
 //            case 'VERSIONCLIENT':
 //               // Verify agent is created
 //               $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
@@ -401,6 +395,30 @@ class PluginFusinvinventoryLibhook {
                }
                array_push($sectionsId,$section['sectionName']."/".$id_storage);
                break;
+
+            case 'ANTIVIRUS':
+               $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
+               $id_antivirus = $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_antivirus)) {
+                  $id_antivirus = $j;
+                  $j++;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_antivirus);
+               break;
+
+            // TODO :
+            /*
+             *
+             * VIRTUALMACHINES
+             * MODEMS
+             * ENVS
+             * UPDATES
+             * BATTERIES
+             * PROCESSES
+             * ANTIVIRUS
+             *
+             */
+
 
             default:
                array_push($sectionsId,$section['sectionName']."/".$j);
@@ -492,6 +510,11 @@ class PluginFusinvinventoryLibhook {
                   $PluginFusinvinventoryImport_Storage->deleteItem($items_id, $idmachine);
                   break;
 
+               case 'ANTIVIRUS':
+                  $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
+                  $PluginFusinvinventoryImport_Antivirus->deleteItem($items_id, $idmachine);
+                  break;
+
             }
            
         }
@@ -533,7 +556,10 @@ class PluginFusinvinventoryLibhook {
                $id_controller = $PluginFusinvinventoryImport_Controller->AddUpdateItem("update", $items_id, $dataSection);
                break;
 
-
+            case 'ANTIVIRUS':
+               $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
+               $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
+               break;
 
          }
       }

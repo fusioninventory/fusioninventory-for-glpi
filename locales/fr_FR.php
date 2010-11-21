@@ -70,4 +70,11 @@ $LANG['plugin_fusinvinventory']['profile'][1]="$title";
 $LANG['plugin_fusinvinventory']['profile'][2]="Règles d'existence";
 $LANG['plugin_fusinvinventory']['profile'][3]="Import manuel de fichier XML";
 $LANG['plugin_fusinvinventory']['profile'][4]="Blacklist de champs";
+
+$LANG['plugin_fusinvinventory']['antivirus'][0]="Antivirus";
+$LANG['plugin_fusinvinventory']['antivirus'][1]="Pas d'antivirus sur cet ordinateur";
+$LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
+$LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
+
+
 ?>

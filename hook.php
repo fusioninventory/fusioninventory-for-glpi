@@ -34,9 +34,36 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_fusinvinventory_getSearchOption() {
+function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
+   global $LANG;
 
-   
+   $sopt = array();
+   if ($itemtype == 'Computer') {
+         $sopt[1071]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[1071]['field']     = 'name';
+         $sopt[1071]['linkfield'] = '';
+         $sopt[1071]['name']      = 'Antivirus name';
+         $sopt[1071]['datatype']  = 'text';
+
+         $sopt[1072]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[1072]['field']     = 'version';
+         $sopt[1072]['linkfield'] = '';
+         $sopt[1072]['name']      = 'Antivirus version';
+         $sopt[1072]['datatype']  = 'text';
+
+         $sopt[1073]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[1073]['field']     = 'is_active';
+         $sopt[1073]['linkfield'] = '';
+         $sopt[1073]['name']      = 'Antivirus activé';
+         $sopt[1073]['datatype']  = 'bool';
+
+         $sopt[1074]['table']     = 'glpi_plugin_fusinvinventory_antivirus';
+         $sopt[1074]['field']     = 'uptodate';
+         $sopt[1074]['linkfield'] = '';
+         $sopt[1074]['name']      = 'Antivirus à jour';
+         $sopt[1074]['datatype']  = 'bool';
+   }
+   return $sopt;
 }
 
 
@@ -110,6 +137,7 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
          $array = array ();
          if ($_GET['id'] > 0) {
             $array[1] = $LANG['plugin_fusinvinventory']["xml"][0];
+            $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
          }
          return $array;
          break;
@@ -127,6 +155,7 @@ function plugin_headings_actions_fusinvinventory($item) {
    case 'Computer' :
       $array = array ();
       $array[1] = "plugin_headings_fusinvinventory_xml";
+      $array[2] = "plugin_headings_fusinvinventory_antivirus";
       return $array;
       break;
    }
@@ -163,6 +192,17 @@ function plugin_headings_fusinvinventory_xml($item) {
       echo "</tr>";
       echo "</table>";
    }
+}
+
+
+
+function plugin_headings_fusinvinventory_antivirus($item) {
+   global $LANG;
+
+   $items_id = $item->getField('id');
+
+   $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
+   $PluginFusinvinventoryAntivirus->showForm($items_id);
 }
 
 
@@ -217,7 +257,12 @@ function plugin_fusinvinventory_forceGroupBy($type) {
 
 
 
-function plugin_fusinvinventory_addLeftJoin($type,$ref_table,$new_table,$linkfield,&$already_link_tables) {
+function plugin_fusinvinventory_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
+   
+   if ($itemtype == 'Computer') {
+      return " LEFT JOIN `$new_table` ON (`$ref_table`.`id` = `$new_table`.`computers_id`) ";
+   }
+
 	return "";
 }
 
