@@ -267,6 +267,7 @@ class PluginFusinvinventoryInventory {
       $datas = $Computer->fields;
 
       $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
+      $xml_content = $xml->addChild('IMPORT', 'GLPI');
       $xml_content = $xml->addChild('CONTENT');
 
       // ** NETWORKS
@@ -443,8 +444,24 @@ class PluginFusinvinventoryInventory {
       }
 
       
-      // TODO
-      $xml_sound = $xml_content->addChild("SOUNDS");
+      // ** SOUNDS
+      $CompDeviceSoundCard = new Computer_Device('DeviceSoundCard');
+      $DeviceSoundCard = new DeviceSoundCard();
+      $a_deviceSoundCard = $CompDeviceSoundCard->find("`computers_id`='".$items_id."' ");
+      foreach ($a_deviceSoundCard as $deviceSoundCard_id => $deviceSoundCard_data) {
+         $xml_sound = $xml_content->addChild("SOUNDS");
+         $_SESSION['pluginFusinvinventoryImportMachine']['SOUNDS'][] = $deviceSoundCard_id;
+         $DeviceSoundCard->getFromDB($deviceSoundCard_data['devicesoundcards_id']);
+         $xml_sound->addChild("NAME", $DeviceSoundCard->fields['designation']);
+         $xml_sound->addChild("DESCRIPTION", $DeviceSoundCard->fields['comment']);
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceSoundCard->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_sound->addChild("MANUFACTURER", $manufacturer);
+         }
+      }
+
+
+
 
       // TODO
       $xml_storage = $xml_content->addChild("STORAGES");
