@@ -322,8 +322,20 @@ class PluginFusinvinventoryInventory {
          $xml_bios->addChild("WORKGROUP", $workgroup);
       }
 
-      // TODO
-      $xml_controller = $xml_content->addChild("CONTROLLERS");
+      // ** CONTROLLERS
+      $CompDeviceControl = new Computer_Device('DeviceControl');
+      $DeviceControl = new DeviceControl();
+      $a_deviceControl = $CompDeviceControl->find("`computers_id`='".$items_id."' ");
+      foreach ($a_deviceControl as $deviceControl_id => $deviceControl_data) {
+         $xml_controller = $xml_content->addChild("CONTROLLERS");
+         $DeviceControl->getFromDB($deviceControl_data['devicecontrols_id']);
+         $xml_controller->addChild("NAME", $DeviceControl->fields['name']);
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceControl->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_controller->addChild("MANUFACTURER", $manufacturer);
+         }
+      }
+
 
       // ** CPUS
       $CompDeviceProcessor = new Computer_Device('DeviceProcessor');
