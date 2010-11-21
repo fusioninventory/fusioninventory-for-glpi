@@ -328,6 +328,7 @@ class PluginFusinvinventoryInventory {
       $a_deviceControl = $CompDeviceControl->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceControl as $deviceControl_id => $deviceControl_data) {
          $xml_controller = $xml_content->addChild("CONTROLLERS");
+         $_SESSION['pluginFusinvinventoryImportMachine']['CONTROLLERS'][] = $deviceControl_id;
          $DeviceControl->getFromDB($deviceControl_data['devicecontrols_id']);
          $xml_controller->addChild("NAME", $DeviceControl->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceControl->fields['manufacturers_id']);
@@ -343,6 +344,7 @@ class PluginFusinvinventoryInventory {
       $a_deviceProcessor = $CompDeviceProcessor->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceProcessor as $deviceProcessor_id => $deviceProcessor_data) {
          $xml_cpu = $xml_content->addChild("CPUS");
+         $_SESSION['pluginFusinvinventoryImportMachine']['CPUS'][] = $deviceProcessor_id;
          $DeviceProcessor->getFromDB($deviceProcessor_data['deviceprocessors_id']);
          $xml_cpu->addChild("NAME", $DeviceProcessor->fields['name']);
          $xml_cpu->addChild("SPEED", $deviceProcessor_data['specificity']);
@@ -357,6 +359,7 @@ class PluginFusinvinventoryInventory {
       $a_disk = $ComputerDisk->find("`computers_id`='".$items_id."' ");
       foreach ($a_disk as $disk_id => $disk_data) {
          $xml_drive = $xml_content->addChild("DRIVES");
+         $_SESSION['pluginFusinvinventoryImportMachine']['DRIVES'][] = $disk_id;
          $xml_drive->addChild("LABEL", $disk_data['name']);
          $xml_drive->addChild("VOLUMN", $disk_data['device']);
          $xml_drive->addChild("MOUNTPOINT", $disk_data['mountpoint']);
@@ -375,6 +378,7 @@ class PluginFusinvinventoryInventory {
       $a_deviceMemory = $CompDeviceMemory->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceMemory as $deviceMemory_id => $deviceMemory_data) {
          $xml_memory = $xml_content->addChild("MEMORIES");
+         $_SESSION['pluginFusinvinventoryImportMachine']['MEMORIES'][] = $deviceMemory_id;
          $DeviceMemory->getFromDB($deviceMemory_data['devicememories_id']);
          $xml_memory->addChild("DESCRIPTION", $DeviceMemory->fields['designation']);
          $xml_memory->addChild("CAPACITY", $deviceMemory_data['specificity']);
@@ -392,6 +396,7 @@ class PluginFusinvinventoryInventory {
       $a_ComputerMonitor = $Monitor->find("`computers_id`='".$items_id."' AND 'itemtype' = 'Monitor'");
       foreach ($a_ComputerMonitor as $ComputerMonitor_id => $ComputerMonitor_data) {
          $xml_monitor = $xml_content->addChild("MONITORS");
+         $_SESSION['pluginFusinvinventoryImportMachine']['MONITORS'][] = $ComputerMonitor_id;
          $Monitor->getFromDB($ComputerMonitor_data['items_id']);
          $xml_monitor->addChild("CAPTION", $Monitor->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Monitor->fields['manufacturers_id']);
@@ -432,8 +437,6 @@ class PluginFusinvinventoryInventory {
 
       // TODO
       $xml_video = $xml_content->addChild("VIDEOS");
-
-      // TODO : Initilize constant name to not import but make relation between lib and GLPI
 
       // Convert XML
       $xmlXml = str_replace("><", ">\n<", $xml->asXML());
