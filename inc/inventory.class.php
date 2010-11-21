@@ -393,7 +393,7 @@ class PluginFusinvinventoryInventory {
       // ** MONITORS
       $Monitor = new Monitor();
       $Computer_Item = new Computer_Item();
-      $a_ComputerMonitor = $Monitor->find("`computers_id`='".$items_id."' AND 'itemtype' = 'Monitor'");
+      $a_ComputerMonitor = $Computer_Item->find("`computers_id`='".$items_id."' AND 'itemtype' = 'Monitor'");
       foreach ($a_ComputerMonitor as $ComputerMonitor_id => $ComputerMonitor_data) {
          $xml_monitor = $xml_content->addChild("MONITORS");
          $_SESSION['pluginFusinvinventoryImportMachine']['MONITORS'][] = $ComputerMonitor_id;
@@ -401,19 +401,27 @@ class PluginFusinvinventoryInventory {
          $xml_monitor->addChild("CAPTION", $Monitor->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Monitor->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
-            $xml_cpu->addChild("MANUFACTURER", $manufacturer);
+            $xml_monitor->addChild("MANUFACTURER", $manufacturer);
          }
          $xml_monitor->addChild("SERIAL", $Monitor->fields['serial']);
          $xml_monitor->addChild("DESCRIPTION", $Monitor->fields['comment']);
       }
 
 
-
-
-
-      // TODO
-      $xml_printer = $xml_content->addChild("PRINTERS");
-
+      // ** PRINTERS
+      $Printer = new Printer();
+      $Computer_Item = new Computer_Item();
+      $a_ComputerPrinter = $Computer_Item->find("`computers_id`='".$items_id."' AND 'itemtype' = 'Printer'");
+      foreach ($a_ComputerPrinter as $ComputerPrinter_id => $ComputerPrinter_data) {
+         $xml_printer = $xml_content->addChild("PRINTERS");
+         $_SESSION['pluginFusinvinventoryImportMachine']['PRINTERS'][] = $ComputerPrinter_id;
+         $Printer->getFromDB($ComputerPrinter_data['items_id']);
+         $xml_printer->addChild("NAME", $Printer->fields['name']);
+         $xml_printer->addChild("SERIAL", $Printer->fields['serial']);
+         if ($Printer->fields['have_usb'] == "1") {
+            $xml_printer->addChild("PORT", 'USB');
+         }
+      }
       
 
       // ** SOFTWARE
@@ -434,6 +442,7 @@ class PluginFusinvinventoryInventory {
          }
       }
 
+      
       // TODO
       $xml_sound = $xml_content->addChild("SOUNDS");
 
