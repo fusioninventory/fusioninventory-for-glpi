@@ -60,7 +60,7 @@ class PluginFusinvinventoryLibhook {
     * @access public
     * @return int $externalId Id to match application data with the library
     */
-    public static function createMachine() {
+    public static function createMachine($libFilename) {
 
        // If import computer from GLPI DB
        if (isset($_SESSION['pluginFusinvinventoryImportMachine'])) {
@@ -99,7 +99,9 @@ class PluginFusinvinventoryLibhook {
        $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
        $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
        $PluginFusioninventoryAgent->setAgentWithComputerid($computer_id, $xml->DEVICEID);
-       
+
+       PluginFusinvinventoryLiblink::addComputerInDB($computer_id, $libFilename);
+
        return $computer_id;
     }
 
@@ -415,7 +417,6 @@ class PluginFusinvinventoryLibhook {
              * UPDATES
              * BATTERIES
              * PROCESSES
-             * ANTIVIRUS
              *
              */
 

@@ -33,6 +33,16 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_liblink`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_liblink` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL default '0',
+  `filename` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 
 INSERT INTO `glpi_plugin_fusinvinventory_criteria` (`id`, `name`, `comment`) VALUES
 (1, 'Serial number', 'ssn'),

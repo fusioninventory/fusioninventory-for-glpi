@@ -280,19 +280,16 @@ function plugin_fusinvinventory_addWhere($link,$nott,$type,$id,$val) {
 
 
 
-function plugin_pre_item_purge_fusinvinventory($parm) {
-   logInFile("purge", print_r($parm, true));
-//   $parm->fields['id']
-//
-
-   // Scan folders in files/_plugins/fusioninventory/machine/xxx/
-
-   //in file infos.file, read first line
-
-   // if first line = $parm->fields['id']
-
-   // Delete all folders with hash xxx
+function plugin_pre_item_purge_fusinvinventory($item) {
    
+   switch (get_class($item)) {
+
+      case 'Computer' :
+         $PluginFusinvinventoryLiblink = new PluginFusinvinventoryLiblink();
+         $PluginFusinvinventoryLiblink->deleteComputerInLib($item->getField('id'));
+         break;
+
+   }
 
 }
 
