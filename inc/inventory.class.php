@@ -386,10 +386,25 @@ class PluginFusinvinventoryInventory {
       }
 
 
+      // ** MONITORS
+      $Monitor = new Monitor();
+      $Computer_Item = new Computer_Item();
+      $a_ComputerMonitor = $Monitor->find("`computers_id`='".$items_id."' AND 'itemtype' = 'Monitor'");
+      foreach ($a_ComputerMonitor as $ComputerMonitor_id => $ComputerMonitor_data) {
+         $xml_monitor = $xml_content->addChild("MONITORS");
+         $Monitor->getFromDB($ComputerMonitor_data['items_id']);
+         $xml_monitor->addChild("CAPTION", $Monitor->fields['name']);
+         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Monitor->fields['manufacturers_id']);
+         if ($manufacturer != "&nbsp;") {
+            $xml_cpu->addChild("MANUFACTURER", $manufacturer);
+         }
+         $xml_monitor->addChild("SERIAL", $Monitor->fields['serial']);
+         $xml_monitor->addChild("DESCRIPTION", $Monitor->fields['comment']);
+      }
 
 
-      // TODO
-      $xml_monitor = $xml_content->addChild("MONITORS");
+
+
 
       // TODO
       $xml_printer = $xml_content->addChild("PRINTERS");
