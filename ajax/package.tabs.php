@@ -3,7 +3,7 @@
  * @version $Id: computer.tabs.php 8003 2009-02-26 11:03:19Z moyo $
  -------------------------------------------------------------------------
  FusionInventory
- Copyright (C) 2003-2009 by the INDEPNET Development Team.
+ Coded by the FusionInventory Development Team.
 
  http://www.fusioninventory.org/   http://forge.fusioninventory.org/
  -------------------------------------------------------------------------
