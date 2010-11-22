@@ -3,7 +3,7 @@
  * @version $Id$
  -------------------------------------------------------------------------
  FusionInventory
- Copyright (C) 2003-2009 by the INDEPNET Development Team.
+ Coded by the FusionInventory Development Team.
 
  http://www.fusioninventory.org/   http://forge.fusioninventory.org/
  -------------------------------------------------------------------------
