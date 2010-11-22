@@ -2,28 +2,28 @@
 /*
  * @version $Id$
  ----------------------------------------------------------------------
- GLPI - Gestionnaire Libre de Parc Informatique
- Copynetwork (C) 2003-2006 by the INDEPNET Development Team.
+ FusionInventory
+ Coded by the FusionInventory Development Team.
 
- http://indepnet.net/   http://glpi-project.org/
+ http://www.fusioninventory.org/   http://forge.fusioninventory.org//
  ----------------------------------------------------------------------
 
  LICENSE
 
- This file is part of GLPI.
+ This file is part of FusionInventory plugins.
 
- GLPI is free software; you can redistribute it and/or modify
+ FusionInventory is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
 
- GLPI is distributed in the hope that it will be useful,
+ FusionInventory is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with GLPI; if not, write to the Free Software
+ along with FusionInventory; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ------------------------------------------------------------------------
  */
@@ -40,6 +40,14 @@ $LANG['plugin_fusinvinventory']["title"][0]="$title";
 
 $LANG['plugin_fusinvinventory']["setup"][17]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même activé.";
 $LANG['plugin_fusinvinventory']["setup"][18]="Le plugin ".$title." a besoin que le plugin FusionInventory soit activé pour être lui-même désinstallé.";
+$LANG['plugin_fusinvinventory']["setup"][20]="Options d'importation";
+$LANG['plugin_fusinvinventory']["setup"][21]="Composants";
+$LANG['plugin_fusinvinventory']["setup"][22]="Import global";
+$LANG['plugin_fusinvinventory']["setup"][23]="Pas d'import";
+$LANG['plugin_fusinvinventory']["setup"][24]="Import unique";
+$LANG['plugin_fusinvinventory']["setup"][25]="Base de registre";
+$LANG['plugin_fusinvinventory']["setup"][26]="Processus";
+$LANG['plugin_fusinvinventory']["setup"][27]="Import unique sur numéro de série";
 
 $LANG['plugin_fusinvinventory']["menu"][0]="Importer un fichier XML de l'agent";
 $LANG['plugin_fusinvinventory']["menu"][1]="Règles de critères";
