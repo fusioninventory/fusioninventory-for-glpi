@@ -3,7 +3,7 @@
  * @version $Id$
  -------------------------------------------------------------------------
  FusionInventory
- Copyright (C) 2003-2010 by the INDEPNET Development Team.
+ Coded by the FusionInventory Development Team.
 
  http://www.fusioninventory.org/   http://forge.fusioninventory.org/
  -------------------------------------------------------------------------
@@ -50,6 +50,8 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      
       foreach($dataSection as $key=>$value) {
          $dataSection[$key] = addslashes_deep($value);
       }
@@ -60,14 +62,22 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
       $CompDevice = "";
 
       $type_tmp = $this->getTypeDrive($dataSection);
-      if ($type_tmp == "Drive") {         
+      if ($type_tmp == "Drive") {
          // it's cd-rom / dvd
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+              "component_drive") == '0') {
+            return;
+         }
          $CompDevice = new Computer_Device('DeviceDrive');
          $DeviceDrive = new DeviceDrive();
          $type_tmp = "Drive";
          $drive_idfield = 'devicedrives_id';
       } else {
          // it's harddisk
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+              "component_harddrive") == '0') {
+            return;
+         }
          $CompDevice = new Computer_Device('DeviceHardDrive');
          $DeviceDrive = new DeviceHardDrive();
          $drive_idfield = 'deviceharddrives_id';

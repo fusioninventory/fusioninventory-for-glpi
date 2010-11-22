@@ -50,6 +50,12 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+              "component_graphiccard") == '0') {
+         return;
+      }
+
       foreach($dataSection as $key=>$value) {
          $dataSection[$key] = addslashes_deep($value);
       }

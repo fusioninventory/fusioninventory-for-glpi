@@ -50,6 +50,12 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+              "component_drive") == '0') {
+         return;
+      }
+
       if ((isset($dataSection['TYPE'])) AND
               (($dataSection['TYPE'] == "Removable Disk")
              OR ($dataSection['TYPE'] == "Compact Disc"))) {

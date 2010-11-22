@@ -49,6 +49,14 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection) {
 
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
+      $Computer_Item = new Computer_Item();
+            
+      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+              "import_printer") == '0') {
+         return;
+      }
+
       foreach($dataSection as $key=>$value) {
          $dataSection[$key] = addslashes_deep($value);
       }
@@ -57,19 +65,39 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
       $a_printer = array();
 
-      if ($type == "update") {
-         return "";
-      }
-      // Else (type == "add")
-      // Search if a printer yet exist
-      if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
-         $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+      if ($type == 'update') {
+         $Computer_Item->getFromDB($items_id);
+         $a_printer = $printer->getFromDB($Computer_Item->fields['items_id']);
+      } else {
+         // Search if a printer yet exist
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_printer") == '3') {
+
+            if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
+               $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+               if (count($a_printers) > 0) {
+                  foreach($a_printers as $printer_id=>$data) {
+                     $a_printer = $data;
+                  }
+               }
+            }
+         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_printer") == '1') {
+            if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
+               $a_printers = $printer->find("`name`='".$dataSection['NAME']."'","", 1);
+               if (count($a_printers) > 0) {
+                  foreach($a_printers as $printer_id=>$data) {
+                     $a_printer = $data;
+                  }
+               } else {
+                  $a_printer = array();
+               }
+               $a_printer['is_global'] = 'yes';
+            }
+
+         }
          if (count($a_printers) == 0) {
             $a_printer = array();
-         } else {
-            foreach($a_printers as $printer_id=>$data) {
-               $a_printer = $data;
-            }
          }
       }
 
@@ -92,7 +120,6 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
          $printer_id = $a_printer['id'];
       }
 
-      $Computer_Item = new Computer_Item();
       $devID = $Computer_Item->add(array('computers_id' => $items_id,
                                  'itemtype'     => 'Printer',
                                  'items_id'     => $printer_id,

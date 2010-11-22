@@ -164,12 +164,7 @@ class PluginFusinvinventoryConfig extends CommonDBTM {
       echo $LANG['Menu'][4];
       echo "</td>";
       echo "<td>";
-      $array = array();
-      $array[0] = $LANG['plugin_fusinvinventory']["setup"][23];
-      $array[1] = $LANG['plugin_fusinvinventory']["setup"][22];
-      $array[2] = $LANG['plugin_fusinvinventory']["setup"][24];
-      $array[3] = $LANG['plugin_fusinvinventory']["setup"][27];
-      Dropdown::showFromArray("import_software", $array, array('value' => $PluginFusioninventoryConfig->getValue($plugins_id, 'import_software')));
+      Dropdown::showYesNo("import_software", $PluginFusioninventoryConfig->getValue($plugins_id, 'import_software'));
       echo "</td>";
       echo "<td>";
       echo $LANG['devices'][1];
