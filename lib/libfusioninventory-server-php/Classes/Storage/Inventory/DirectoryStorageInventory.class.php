@@ -215,7 +215,9 @@ INFOCONTENT;
                             $criteriaPath,
                             $internalId);
 
-                            mkdir($internalIdPath,0777,true);
+                            if (!is_dir($internalIdPath)) {
+                               mkdir($internalIdPath,0777,true);
+                            }
 
                             array_push($criteriasPathList, $criteriaPath);
 //                        }
