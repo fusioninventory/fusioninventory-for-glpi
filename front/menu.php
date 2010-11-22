@@ -46,8 +46,11 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
 } else {
 	displayRightError();
 }
-$PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
-$PluginFusinvinventoryInventory->createMachinesInLib();
+
+// For test import computers
+//$PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+//$PluginFusinvinventoryInventory->createMachinesInLib();
+
 commonFooter();
 
 ?>
