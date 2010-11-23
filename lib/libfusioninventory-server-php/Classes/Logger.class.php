@@ -16,7 +16,7 @@ class Logger
 
     public function __construct()
     {
-        if(!file_exists(LIBSERVERFUSIONINVENTORY_LOG_FILE))
+        if(!file_exists(LIBSERVERFUSIONINVENTORY_LOG_DIR))
         {
             mkdir(LIBSERVERFUSIONINVENTORY_LOG_DIR,0777,true);
         }
