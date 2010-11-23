@@ -44,6 +44,7 @@ $LANG['plugin_fusinvdeploy']['package'][2]="Lancer (exécutable dans le paquet)"
 $LANG['plugin_fusinvdeploy']['package'][3]="Exécuter (exécutable du système)";
 $LANG['plugin_fusinvdeploy']['package'][4]="Stocker";
 $LANG['plugin_fusinvdeploy']['package'][5]="Paquets";
+$LANG['plugin_fusinvdeploy']['package'][6]="Gestion des paquets";
 $LANG['plugin_fusinvdeploy']['package'][7]="Paquet";
 $LANG['plugin_fusinvdeploy']['package'][8]="Gestion des paquets";
 $LANG['plugin_fusinvdeploy']['package'][9]="Nombre de fragments";
