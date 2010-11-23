@@ -97,8 +97,10 @@ class PluginFusinvinventoryLibhook {
          if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
             $input_rules['domain'] = $xml->CONTENT->HARDWARE->USERDOMAIN;
          }
-         if ((isset($xml->TAG)) AND (!empty($xml->TAG))) {
-            $input_rules['tag'] = $xml->TAG;
+         if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
+            if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
+               $input_rules['tag'] = $xml->CONTENT->ACCOUNTINFO->KEYVALUE;
+            }
          }
 
          $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
