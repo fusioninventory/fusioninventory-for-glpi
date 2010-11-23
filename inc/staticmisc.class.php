@@ -65,10 +65,16 @@ class PluginFusinvinventoryStaticmisc {
          $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleinventory.php";
       }
 
+      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "existantrule", "r")) {
+         $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']["menu"][3];
+         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_rules.png";
+         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleentity.php";
+      }
+
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r")) {
-         $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']["menu"][2];
-         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
-         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.form.php";
+         $a_menu[3]['name'] = $LANG['plugin_fusinvinventory']["menu"][2];
+         $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_blacklist.png";
+         $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/blacklist.form.php";
       }
 
       return $a_menu;

@@ -65,6 +65,9 @@ function plugin_init_fusinvinventory() {
    Plugin::registerClass('PluginFusinvinventoryRuleInventory');
    Plugin::registerClass('PluginFusinvinventoryRuleInventoryCollection',
                          array('rulecollections_types'=>true));
+   Plugin::registerClass('PluginFusinvinventoryRuleEntity');
+   Plugin::registerClass('PluginFusinvinventoryRuleEntityCollection',
+                         array('rulecollections_types'=>true));
 
 
    // ##### 3. get informations of the plugin #####
@@ -104,6 +107,8 @@ function plugin_init_fusinvinventory() {
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleinventory']
       = '../fusinvinventory/front/ruleinventory.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleentity']
+      = '../fusinvinventory/front/ruleentity.form.php';
 
    // Tabs for each type
    $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';

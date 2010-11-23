@@ -73,6 +73,39 @@ class PluginFusinvinventoryLibhook {
       $input['is_deleted'] = 0;
       $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
 
+      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
+      // ** Get entity with rules
+         $input_rules = array();
+         if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
+            $input_rules['serialnumber'] = $xml->CONTENT->BIOS->SSN;
+         }
+         if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
+            $input_rules['name'] = $xml->CONTENT->HARDWARE->NAME;
+         }
+         if (isset($xml->CONTENT->NETWORKS)) {
+            foreach($xml->CONTENT->NETWORKS as $network) {
+               if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
+                  $input_rules['ip'][] = $network->IPADDRESS;
+               }
+               if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
+                  $input_rules['subnet'][] = $network->IPADDRESS;
+               }
+            }
+         }
+         if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
+            $input_rules['domain'] = $xml->CONTENT->HARDWARE->USERDOMAIN;
+         }
+         if ((isset($xml->TAG)) AND (!empty($xml->TAG))) {
+            $input_rules['tag'] = $xml->TAG;
+         }
+
+         $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+         $dataEntity = array ();
+         $dataEntity = $ruleEntity->processAllRules($input_rules, array());
+         if (isset($dataEntity['entities_id'])) {
+            $input['entities_id'] = $dataEntity['entities_id'];
+         }
+
       $computer_id = $Computer->add($input);
 
       if (isset($_SESSION['SOURCEXML'])) {
@@ -97,7 +130,6 @@ class PluginFusinvinventoryLibhook {
 
        // Link computer to agent FusionInventory
        $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
        $PluginFusioninventoryAgent->setAgentWithComputerid($computer_id, $xml->DEVICEID);
 
        PluginFusinvinventoryLiblink::addComputerInDB($computer_id, $libFilename);

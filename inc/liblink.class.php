@@ -66,6 +66,18 @@ class PluginFusinvinventoryLiblink extends CommonDBTM {
             $a_filename = explode('_plugins/fusioninventory', $filename);
             if (file_exists(GLPI_DOC_DIR."/_plugins/fusioninventory/".$a_filename[1]."/".$data['filename'])) {
                rmdir(GLPI_DOC_DIR."/_plugins/fusioninventory/".$a_filename[1]."/".$data['filename']);
+               $files = scandir(GLPI_DOC_DIR."/_plugins/fusioninventory/".$a_filename[1]);
+               $key = array_search('.', $files);
+               if (isset($key)) {
+                  unset($files[$key]);
+               }
+               $key = array_search('..', $files);
+               if (isset($key)) {
+                  unset($files[$key]);
+               }
+               if (count($files) == "0") {
+                  rmdir(GLPI_DOC_DIR."/_plugins/fusioninventory/".$a_filename[1]);
+               }
             }
          }
          unlink(GLPI_DOC_DIR."/_plugins/fusioninventory/machines/".$data['filename']."/criterias");
