@@ -79,6 +79,9 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
                   }
                }
             }
+            if (count($a_monitor) == 0) {
+               return;
+            }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_monitor") == '1') {
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {

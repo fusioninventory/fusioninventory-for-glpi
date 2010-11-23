@@ -80,6 +80,9 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
                   }
                }
             }
+            if (count($a_Peripheral) == 0) {
+               return;
+            }
          } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_peripheral") == '1') {
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
