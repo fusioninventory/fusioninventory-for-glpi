@@ -44,7 +44,6 @@ $LANG['plugin_fusinvdeploy']['package'][2]="Lancer (running file in package)";
 $LANG['plugin_fusinvdeploy']['package'][3]="Exécuter (running file of system)";
 $LANG['plugin_fusinvdeploy']['package'][4]="Store";
 $LANG['plugin_fusinvdeploy']['package'][5]="Packages";
-$LANG['plugin_fusinvdeploy']['package'][6]="Package management";
 $LANG['plugin_fusinvdeploy']['package'][7]="Package";
 $LANG['plugin_fusinvdeploy']['package'][8]="Package management";
 $LANG['plugin_fusinvdeploy']['package'][9]="Fragments number";
