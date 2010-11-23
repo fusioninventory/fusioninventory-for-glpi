@@ -203,6 +203,12 @@ class PluginFusinvinventoryLibhook {
                   $Domain = new Domain;
                   $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
                }
+               if (isset($dataSection['OSCOMMENTS'])) {
+                  if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
+                     $OperatingSystemServicePack = new OperatingSystemServicePack;
+                     $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                  }
+               }
                break;
 
             case 'USERS':
