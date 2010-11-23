@@ -51,8 +51,9 @@ class PluginFusinvinventoryLibhook {
     * @access private
     *
     */
-    private function __construct()
-    {
+    private function __construct() {
+       $_SESSION["plugin_fusinvinventory_history_add"] = true;
+       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
     }
 
     /**
@@ -67,6 +68,8 @@ class PluginFusinvinventoryLibhook {
           return $_SESSION['pluginFusinvinventoryImportMachine']['HARDWARE'];
        }
 
+       $_SESSION["plugin_fusinvinventory_history_add"] = false;
+       $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
        // Else create computer
       $Computer = new Computer;
       $input = array();
@@ -250,7 +253,7 @@ class PluginFusinvinventoryLibhook {
 
          }
       }
-      $Computer->update($Computer->fields, 0);
+      $Computer->update($Computer->fields, $_SESSION["plugin_fusinvinventory_history_add"]);
       $j = -1;
 
       foreach($data as $section) {
@@ -347,7 +350,7 @@ class PluginFusinvinventoryLibhook {
 
                $network['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
-               $network['_no_history'] = true;
+               $network['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
                $devID = $NetworkPort->add($network);
 
                array_push($sectionsId,$section['sectionName']."/".$devID);

@@ -93,7 +93,7 @@ class PluginFusinvinventoryImport_Antivirus extends CommonDBTM {
          if ($type == "update") {
             $id_antivirus = $PluginFusinvinventoryAntivirus->update($antivirus);
          } else if ($type == "add") {
-            $antivirus['_no_history'] = true;
+            $antivirus['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             $id_antivirus = $PluginFusinvinventoryAntivirus->add($antivirus);
          }
       }
