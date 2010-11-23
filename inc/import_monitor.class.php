@@ -68,7 +68,19 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
          $a_monitor = $monitor->getFromDB($Computer_Item->fields['items_id']);
       } else {
          // Search if a monitor yet exist
+
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_monitor") == '2') {
+
+            if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
+               $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+               if (count($a_monitors) > 0) {
+                  foreach($a_monitors as $monitor_id=>$data) {
+                     $a_monitor = $data;
+                  }
+               }
+            }
+         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_monitor") == '3') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {

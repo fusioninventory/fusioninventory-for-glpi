@@ -71,6 +71,17 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       } else {
          // Search if a printer yet exist
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_printer") == '2') {
+
+            if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
+               $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+               if (count($a_printers) > 0) {
+                  foreach($a_printers as $printer_id=>$data) {
+                     $a_printer = $data;
+                  }
+               }
+            }
+         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_printer") == '3') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {

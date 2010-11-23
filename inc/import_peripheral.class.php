@@ -70,6 +70,17 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       } else {
          // Search if a peripheral yet exist
          if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_peripheral") == '2') {
+
+            if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
+               $a_peripherals = $Peripheral->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+               if (count($a_peripherals) > 0) {
+                  foreach($a_peripherals as $peripheral_id=>$data) {
+                     $a_Peripheral = $data;
+                  }
+               }
+            }
+         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
                  "import_peripheral") == '3') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
