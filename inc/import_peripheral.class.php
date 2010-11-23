@@ -63,19 +63,40 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       $Peripheral = new Peripheral();
 
       $a_Peripheral = array();
+      
       if ($type == "update") {
-         $devID = $items_id;
-         $Peripheral->getFromDB($items_id);
-         $a_Peripheral = $Peripheral->fields;
-      } else if ($type == "add") {
-         $id_Peripheral = 0;
-      }
+         $Computer_Item->getFromDB($items_id);
+         $a_Peripheral = $Peripheral->getFromDB($Computer_Item->fields['items_id']);
+      } else {
+         // Search if a peripheral yet exist
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_peripheral") == '3') {
 
-      // Search if exists peripheral with with serial
-      if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
-         $a_array = $Peripheral->find("`serial`='".$dataSection['SERIAL']."'", "", "1");
-         foreach ($a_array as $id => $a_Peripheral) {
-            $type = "update";
+            if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
+               $a_peripherals = $Peripheral->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+               if (count($a_peripherals) > 0) {
+                  foreach($a_peripherals as $peripheral_id=>$data) {
+                     $a_Peripheral = $data;
+                  }
+               }
+            }
+         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_peripheral") == '1') {
+            if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
+               $a_peripherals = $Peripheral->find("`name`='".$dataSection['NAME']."'","", 1);
+               if (count($a_peripherals) > 0) {
+                  foreach($a_peripherals as $peripheral_id=>$data) {
+                     $a_Peripheral = $data;
+                  }
+               } else {
+                  $a_Peripheral = array();
+               }
+               $a_Peripheral['is_global'] = 'yes';
+            }
+
+         }
+         if (count($a_Peripheral) == 0) {
+            $a_Peripheral = array();
          }
       }
 
