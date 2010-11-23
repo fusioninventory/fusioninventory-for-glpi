@@ -49,95 +49,6 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
        global $DB,$LANG;
        loadLanguage();
 
-         // *** Create first rule
-         $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
-         $input = array();
-         $input['is_active']=1;
-         $input['name']='serial + uuid';
-         $input['match']='AND';
-         $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
-         $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "globalcriteria";
-         $input['pattern']= 1;
-         $input['condition']=0;
-         $rulecriteria->add($input);
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "globalcriteria";
-         $input['pattern']= 2;
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_import';
-         $input['value'] = '1';
-         $ruleaction->add($input);
-
-         // *** Create second rule
-         $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
-         $input = array();
-         $input['is_active']=1;
-         $input['name']='mac address';
-         $input['match']='AND';
-         $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
-         $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "globalcriteria";
-         $input['pattern']= 3;
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_import';
-         $input['value'] = '1';
-         $ruleaction->add($input);
-
-         // *** Add rule for import in unknown devices
-         $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
-         $input = array();
-         $input['is_active']=1;
-         $input['name']='unknown device';
-         $input['match']='AND';
-         $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
-         $rule_id = $rulecollection->add($input);
-         
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "mac";
-         $input['pattern']= "*";
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_import_unknowndevice';
-         $input['value'] = '1';
-         $ruleaction->add($input);
 
          //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
          //deleteDir(GLPI_ROOT."/files/_plugins/fusioninventory/machines");
@@ -508,7 +419,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
 
-      if (!isset($xml->CONTENT->DRIVES)) {
+      if (!isset($xml->CONTENT->DRIVE)) {
          return;
       }
 
@@ -522,7 +433,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
 
       $Computer = new Computer();
-      $query = "SELECT * FROM `glpi_computers_devicedrives`
+      $query = "SELECT * FROM `glpi_computerdisks`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
@@ -750,6 +661,27 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']');
+
+      // Verify fields in GLPI
+      foreach($xml->CONTENT->SOFTWARES as $child) {
+         if (!isset($child->VERSION)) {
+            $child->VERSION = '0';
+         }
+         // Search in GLPI if it's ok
+         $query = "SELECT * FROM `glpi_computers_softwareversions`
+            LEFT JOIN `glpi_softwareversions` ON `softwareversions_id`=`glpi_softwareversions`.`id`
+            LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
+            WHERE `computers_id`='".$items_id."'
+               AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
+               AND `glpi_softwares`.`name` = '".$child->NAME."'
+                  LIMIT 1";
+         $result=$DB->query($query);
+
+         $this->assertEquals($DB->numrows($result), 1 , 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ['.$xmlFile.']');
+
+      }
+
+
    }
 
 
