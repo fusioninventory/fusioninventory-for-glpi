@@ -557,6 +557,8 @@ $LANG['plugin_fusinvsnmp']["menu"][5]="Switchs ports history";
 $LANG['plugin_fusinvsnmp']["menu"][6]="Unused switchs ports";
 $LANG['plugin_fusinvsnmp']["menu"][7]="Discovery criteria rules";
 $LANG['plugin_fusinvsnmp']["menu"][8]="Inventory criteria rules";
+$LANG['plugin_fusinvsnmp']["menu"][9]="Discovery status";
+$LANG['plugin_fusinvsnmp']["menu"][10]="Network inventory status";
 
 $LANG['plugin_fusinvsnmp']["buttons"][0]="Discover";
 
