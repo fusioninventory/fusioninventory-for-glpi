@@ -230,6 +230,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                   $this->testNetwork("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
                   $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+
+                  $this->testHardware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
                }
             }
          }
@@ -278,6 +280,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $Computer = new Computer();
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      if (isset($xml->CONTENT->BIOS->SSN)) {
+         $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
+      }
       $serial = "`serial` IS NULL";
       if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
@@ -334,7 +339,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          while ($data=$DB->fetch_array($result)) {
             $a_printerDB["'".$data['name']."'"] = 1;
          }
-         // Verifiy printers in XML
+         // Verify printers in XML
          $a_printerXML = array();
          foreach ($xml->CONTENT->PRINTERS as $child) {
             $a_printerXML["'".$child->NAME."'"] = 1;
@@ -346,6 +351,56 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
             $a_printerDiff = array_diff_key($a_printerXML, $a_printerDB);
          }
          $this->assertEquals(count($a_printerDiff), 0 , 'Difference of printers "'.print_r($a_printerDiff, true).'" ['.$xmlFile.']');
+
+
+         // Verify fields in GLPI
+         foreach($xml->CONTENT->PRINTERS as $child) {
+            if (isset($child->SERIAL)) {
+               $a_printer = $Printer->find("`serial`='".$child->SERIAL."' ");
+               foreach ($a_printer as $printer_id => $datas) {
+                  if (isset($child->NAME)) {
+                     $this->assertEquals(trim($child->NAME), $datas['name'] , 'Difference of printers fields ['.$xmlFile.']');
+                  } else if (isset($child->DRIVER)) {
+                     $this->assertEquals($child->DRIVER, $datas['name'] , 'Difference of printers fields ['.$xmlFile.']');
+                  }
+                  if (strstr($child->PORT, "USB")) {
+                     $this->assertEquals("1", $datas['have_usb'] , 'Difference of printers fields ['.$xmlFile.']');
+                  }
+                  // Find in USBDEVICES to find manufacturer
+                  foreach($xml->CONTENT->USBDEVICES as $childusb) {
+                     if (isset($childusb->SERIAL)) {
+                        if (file_exists(GLPI_ROOT."/files/_plugins/fusioninventory/DataFilter/usbids/".strtolower($childusb->VENDORID)."/".strtolower($childusb->PRODUCTID)."info")) {
+                           $info = file_get_contents(GLPI_ROOT."/files/_plugins/fusioninventory/DataFilter/usbids/".strtolower($childusb->VENDORID)."/".strtolower($childusb->PRODUCTID)."info");
+                           $array = explode("\n", $info);
+                           $manufacturer_id = Dropdown::importExternal('Manufacturer', $array[0]);
+                           $this->assertEquals($manufacturer_id, $datas['manufacturers_id'] , 'Difference of printers fields ['.$xmlFile.']');
+                        }
+                     }
+                  }
+               }
+            } else {
+               $query = "SELECT * FROM `glpi_computers_items`
+                        INNER JOIN `glpi_printers` on `glpi_printers`.`id`=`items_id`
+                        WHERE `computers_id` = '".$items_id."'
+                            AND `itemtype` = 'Printer'";
+               $result=$DB->query($query);
+               $printer_select = array();
+               while ($data=$DB->fetch_array($result)) {
+                  if (count($printer_select) < 1) {
+                     if ((isset($child->NAME)) AND ($data['name'] == $child->NAME)) {
+                        $printer_select = $data;
+                     } else if ((isset($child->DRIVER)) AND ($data['name'] == $child->DRIVER)) {
+                        $printer_select = $data;
+                     }
+                  }
+               }
+               $this->assertEquals(count($printer_select['id']), "1" , 'Problem to find printer for fields verification ['.$xmlFile.']');
+               if (strstr($child->PORT, "USB")) {
+                  $this->assertEquals("1", $datas['have_usb'] , 'Difference of printers fields ['.$xmlFile.']');
+               }
+            }
+
+         }
    }
 
 
@@ -696,6 +751,49 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $this->assertEquals($DB->numrows($result), count($a_softwareXML) , 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.count($a_softwareXML).' ['.$xmlFile.']');
    }
+
+
+   function testHardware($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+
+      if (empty($xmlFile)) {
+         echo "testHardware with no arguments...\n";
+         return;
+      }
+      if ($unknown == '1') {
+         // MANAGE SOME OF DATAS !!!!
+         return;
+      }
+
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      $Computer = new Computer();
+      $Computer->getFromDB($items_id);
+
+      foreach ($xml->CONTENT->BIOS as $child) {
+         if ((isset($child->SMANUFACTURER))
+               AND (!empty($child->SMANUFACTURER))) {
+
+            $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', $child->SMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', $child->SMANUFACTURER).' ['.$xmlFile.']');
+         } else if ((isset($child->BMANUFACTURER))
+                      AND (!empty($dataSection['BMANUFACTURER']))) {
+
+            $this->assertEquals($Computer->fields['manufacturers_id'], Dropdown::importExternal('Manufacturer', $child->BMANUFACTURER) , 'Difference of Hardware manufacturer, have '.$Computer->fields['manufacturers_id'].' instead '.Dropdown::importExternal('Manufacturer', $child->BMANUFACTURER).' ['.$xmlFile.']');
+         }
+         if (isset($child->SMODEL)) {
+            $ComputerModel = new ComputerModel;
+
+            $this->assertEquals($Computer->fields['computermodels_id'], $ComputerModel->import(array('name'=>$child->SMODEL)) , 'Difference of Hardware model, have '.$Computer->fields['computermodels_id'].' instead '.$ComputerModel->import(array('name'=>$child->SMODEL)).' ['.$xmlFile.']');
+         }
+         if (isset($child->SSN)) {
+            if (!empty($child->SSN)) {
+               $this->assertEquals($Computer->fields['serial'], trim($child->SSN) , 'Difference of Hardware serial number, have '.$Computer->fields['serial'].' instead '.$child->SSN.' ['.$xmlFile.']');
+            }
+         }
+      }
+  }
+
+
 
    
 

@@ -107,7 +107,7 @@ class InventoryAction extends Action
 
             try {
                $classhook = LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME;
-                $externalId = call_user_func(array($classhook,"createMachine"));
+                $externalId = call_user_func(array($classhook,"createMachine"), $internalId);
 
                 $libData->addLibMachine($internalId, $externalId);
                 $libData->addLibCriteriasMachine($internalId);

@@ -3,28 +3,28 @@
 /*
  * @version $Id: connection.function.php 6975 2008-06-13 15:43:18Z remi $
  -------------------------------------------------------------------------
- GLPI - Gestionnaire Libre de Parc Informatique
+ FusionInventory
  Copyright (C) 2003-2008 by the INDEPNET Development Team.
 
- http://indepnet.net/   http://glpi-project.org
+ http://www.fusioninventory.org/   http://forge.fusioninventory.org/
  -------------------------------------------------------------------------
 
  LICENSE
 
- This file is part of GLPI.
+ This file is part of FusionInventory plugins.
 
- GLPI is free software; you can redistribute it and/or modify
+ FusionInventory is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
 
- GLPI is distributed in the hope that it will be useful,
+ FusionInventory is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with GLPI; if not, write to the Free Software
+ along with FusionInventory; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
  */
@@ -109,10 +109,7 @@ function plugin_fusioninventory_uninstall() {
 // Define headings added by the plugin //
 function plugin_get_headings_fusioninventory($item,$withtemplate) {
    global $LANG;
-   $pfc = new PluginFusioninventoryConfig;
 
-   $type = get_Class($item);
-//   switch ($type) {
    switch (get_class($item)) {
       case 'Computer' :
          if ($withtemplate) { // new object / template case
@@ -197,8 +194,6 @@ function plugin_headings_actions_fusioninventory($item) {
    switch (get_class($item)) {
       case 'Computer' :
          $array = array ();
-         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-         $pfc = new PluginFusioninventoryConfig;
          $array[2] = "plugin_headings_fusioninventory_locks";
          $array[3] = "plugin_headings_fusioninventory_tasks";
          return $array;
