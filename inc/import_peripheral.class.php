@@ -115,6 +115,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
          $a_Peripheral['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
                                                                           $dataSection['MANUFACTURER']);
       }
+      $a_Peripheral['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
       if ($type == "update") {
          $peripheral_id = $Peripheral->update($a_Peripheral);

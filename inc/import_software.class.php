@@ -75,6 +75,8 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          $modified_version = $array['version'];
       }
 
+      $modified_version['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+
       $software_id = $Software->addOrRestoreFromTrash($modified_name, 0, 0);
 
 
@@ -97,6 +99,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          if (isset($array['PUBLISHER'])) {
             $input["manufacturers_id"] = Dropdown::importExternal('Manufacturer', $array['PUBLISHER']);
          }
+         $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
          $isNewVers = $SoftwareVersion->add($input);
       }
 

@@ -112,7 +112,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
             $a_printer['have_usb'] = 1;
          }
       }
-
+      $a_printer['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
       if (!isset($a_printer['id'])) {
          $printer_id = $printer->add($a_printer);

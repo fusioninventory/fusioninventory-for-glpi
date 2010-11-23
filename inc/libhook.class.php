@@ -73,6 +73,8 @@ class PluginFusinvinventoryLibhook {
       $input['is_deleted'] = 0;
       $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
 
+      $_SESSION["plugin_fusinvinventory_entity"] = "0";
+
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
       // ** Get entity with rules
          $input_rules = array();
@@ -104,6 +106,7 @@ class PluginFusinvinventoryLibhook {
          $dataEntity = $ruleEntity->processAllRules($input_rules, array());
          if (isset($dataEntity['entities_id'])) {
             $input['entities_id'] = $dataEntity['entities_id'];
+            $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
          }
 
       $computer_id = $Computer->add($input);
@@ -338,6 +341,8 @@ class PluginFusinvinventoryLibhook {
                   $network['gateway'] = $dataSection["IPGATEWAY"];
                if (isset($dataSection["IPSUBNET"]))
                   $network['subnet'] = $dataSection["IPSUBNET"];
+
+               $network['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
                $network['_no_history'] = true;
                $devID = $NetworkPort->add($network);

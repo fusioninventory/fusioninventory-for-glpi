@@ -113,6 +113,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
       if (isset($dataSection['DESCRIPTION'])) {
          $a_monitor['comment'] = $dataSection['DESCRIPTION'];
       }
+      $a_monitor['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
       $a_monitor['is_global'] = 0;
 
