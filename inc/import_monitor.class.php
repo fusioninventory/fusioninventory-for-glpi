@@ -64,18 +64,38 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
       $a_monitor = array();
 
       if ($type == "update") {
-         return "";
-      }
-      // Else (type == "add")
-      // Search if a monitor yet exist
-      if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
-         $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+         $Computer_Item->getFromDB($items_id);
+         $a_monitor = $monitor->getFromDB($Computer_Item->fields['items_id']);
+      } else {
+         // Search if a monitor yet exist
+         if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_monitor") == '3') {
+
+            if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
+               $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
+               if (count($a_monitors) > 0) {
+                  foreach($a_monitors as $monitor_id=>$data) {
+                     $a_monitor = $data;
+                  }
+               }
+            }
+         } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                 "import_monitor") == '1') {
+            if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
+               $a_monitors = $monitor->find("`name`='".$dataSection['NAME']."'","", 1);
+               if (count($a_monitors) > 0) {
+                  foreach($a_monitors as $monitor_id=>$data) {
+                     $a_monitor = $data;
+                  }
+               } else {
+                  $a_monitor = array();
+               }
+               $a_monitor['is_global'] = 'yes';
+            }
+
+         }
          if (count($a_monitors) == 0) {
             $a_monitor = array();
-         } else {
-            foreach($a_monitors as $monitor_id=>$data) {
-               $a_monitor = $data;
-            }
          }
       }
 
