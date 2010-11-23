@@ -493,6 +493,7 @@ $LANG['plugin_fusioninventory']["agents"][25]="Version";
 $LANG['plugin_fusioninventory']["agents"][26]="Gestion des agents";
 $LANG['plugin_fusioninventory']["agents"][27]="Modules des agents";
 $LANG['plugin_fusioninventory']["agents"][28]="Agent";
+$LANG['plugin_fusioninventory']["agents"][29]="Activation des modules";
 
 $LANG['plugin_fusioninventory']["unknown"][0]="Nom DNS";
 $LANG['plugin_fusioninventory']["unknown"][1]="Nom port réseau";
