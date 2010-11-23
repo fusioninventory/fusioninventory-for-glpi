@@ -110,7 +110,7 @@ class PluginFusinvinventoryLibhook {
             $input['entities_id'] = $dataEntity['entities_id'];
             $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
          }
-
+         
       $computer_id = $Computer->add($input);
 
       if (isset($_SESSION['SOURCEXML'])) {
@@ -156,6 +156,7 @@ class PluginFusinvinventoryLibhook {
       $Computer = new Computer;
       $sectionsId = array();
       $Computer->getFromDB($idmachine);
+      $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
       $ignore_controllers = array();
       $ignore_USB = array();
@@ -490,7 +491,11 @@ class PluginFusinvinventoryLibhook {
     */
     public static function removeSections($idsections, $idmachine)
     {
-        echo "section removed";
+
+      $Computer = new Computer;
+      $Computer->getFromDB($idmachine);
+      $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
+
         
         logInFile("removesection", "[".$idmachine."] ".print_r($idsections, true));
 
@@ -576,6 +581,11 @@ class PluginFusinvinventoryLibhook {
 
 
     public static function updateSections($data, $idmachine) {
+
+      $Computer = new Computer;
+      $Computer->getFromDB($idmachine);
+      $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
+
 
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);

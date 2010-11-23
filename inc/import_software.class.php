@@ -64,6 +64,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
 
       $res_rule = $rulecollection->processAllRules(array("name"=>$array['name'],
                                                          "old_version"=>$array['version']));
+      $modified_name = "";
       if (isset($res_rule["name"])) {
          $modified_name = $res_rule["name"];
       } else {
@@ -76,7 +77,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       }
 
       $modified_version['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-
+      $manufacturer = 0;
       if (isset($array['PUBLISHER'])) {
          $manufacturer = Dropdown::importExternal('Manufacturer', $array['PUBLISHER']);
       }
@@ -94,8 +95,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       if ($DB->numrows($result) > 0) {
          $data = $DB->fetch_array($result);
          $isNewVers = $data["id"];
-      }
-      if (!$isNewVers) {
+      } else {
          $SoftwareVersion = new SoftwareVersion;
          // TODO : define a default state ? Need a new option in config
          // Use $cfg_ocs["states_id_default"] or create a specific one ?
@@ -109,7 +109,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       }
 
       $Computer_SoftwareVersion = new Computer_SoftwareVersion;
-      $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add(array('computers_id'        => $idmachine,
+      $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add(array('computers_id' => $idmachine,
                                            '_no_history' => true,
                                            'softwareversions_id' => $isNewVers));
       return $Computer_SoftwareVersion_id;
@@ -124,7 +124,6 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          $Computer_SoftwareVersion->delete(array("id" => $items_id));
       }
    }
-
    
 }
 

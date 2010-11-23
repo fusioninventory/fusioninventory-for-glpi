@@ -97,7 +97,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
             }
 
          }
-         if (count($a_monitors) == 0) {
+         if (count($a_monitor) == 0) {
             $a_monitor = array();
          }
       }
