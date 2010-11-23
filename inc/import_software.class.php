@@ -77,14 +77,15 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
 
       $modified_version['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
-      $software_id = $Software->addOrRestoreFromTrash($modified_name, 0, 0);
+      $software_id = $Software->addOrRestoreFromTrash($modified_name, $_SESSION["plugin_fusinvinventory_entity"], 0);
 
 
       $isNewVers = 0;
       $query = "SELECT `id`
                 FROM `glpi_softwareversions`
                 WHERE `softwares_id` = '$software_id'
-                      AND `name` = '$modified_version'";
+                      AND `name` = '$modified_version'
+                      AND `entities_id` = '".$_SESSION["plugin_fusinvinventory_entity"]."' ";
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
          $data = $DB->fetch_array($result);
