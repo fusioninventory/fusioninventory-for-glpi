@@ -51,7 +51,7 @@ class PluginFusinvinventoryLibhook {
     * @access private
     *
     */
-    private function __construct() {
+    function __construct() {
        $_SESSION["plugin_fusinvinventory_history_add"] = true;
        $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
     }
@@ -372,7 +372,7 @@ class PluginFusinvinventoryLibhook {
                                                                                  'version'=>$dataSection['VERSION']));
                   } else {
                      $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                                 'version'=>''));
+                                                                                 'version'=>'0'));
                   }
                }
                if (empty($Computer_SoftwareVersion_id)) {
