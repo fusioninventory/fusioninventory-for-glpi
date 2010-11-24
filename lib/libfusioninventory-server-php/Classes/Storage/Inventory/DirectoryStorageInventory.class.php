@@ -316,7 +316,8 @@ INFOCONTENT;
             }
             else if (($buffer) AND (!empty($infoSections["externalId"])))
             {
-                $infoSections["sections"][$sectionArray[0]] .= $stack[1];
+               $buffer = str_replace("\n","",$buffer);
+               $infoSections["sections"][$sectionArray[0]] .= $buffer;
             }
             else if (($buffer) AND (empty($infoSections["externalId"])))
             {
