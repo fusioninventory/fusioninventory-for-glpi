@@ -89,4 +89,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklist` (`id`, `plugin_fusioninvento
 (31, 1, 'To Be Filled By O.E.M.'),
 (32, 1, 'Tulip Computers'),
 (33, 1, 'Serial Number xxxxxx'),
-(34, 1, 'SN-123456fvgv3i0b8o5n6n7k');
+(34, 1, 'SN-123456fvgv3i0b8o5n6n7k'),
+(35, 1, 'Unknow'),
+(36, 5, 'Unknow');
