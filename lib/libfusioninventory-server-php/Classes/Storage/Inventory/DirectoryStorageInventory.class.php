@@ -26,7 +26,8 @@ class DirectoryStorageInventory extends StorageInventory
         "enclosureSerial" => $simpleXMLData->CONTENT->BIOS->ENCLOSURESERIAL,
         "smodel" => $simpleXMLData->CONTENT->BIOS->SMODEL,
         "storagesSerial" => $simpleXMLData->CONTENT->STORAGES,
-        "drivesSerial" => $simpleXMLData->CONTENT->DRIVES);
+        "drivesSerial" => $simpleXMLData->CONTENT->DRIVES,
+        "name" => $simpleXMLData->CONTENT->HARDWARE->NAME);
     }
 
     /**

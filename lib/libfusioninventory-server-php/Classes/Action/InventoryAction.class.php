@@ -19,7 +19,8 @@ class InventoryAction extends Action
         "enclosureSerial",
         "smodel",
         "storagesSerial",
-        "drivesSerial");
+        "drivesSerial",
+        "name");
 
     /**
     * Config :
