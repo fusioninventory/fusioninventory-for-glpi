@@ -98,6 +98,9 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
       $criterias['assettag']['field'] = 'name';
       $criterias['assettag']['name']  = $LANG['plugin_fusinvinventory']['rule'][8];
 
+      $criterias['name']['field'] = 'name';
+      $criterias['name']['name']  = $LANG['common'][16];
+
       return $criterias;
    }
 

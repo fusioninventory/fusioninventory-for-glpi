@@ -52,7 +52,8 @@ INSERT INTO `glpi_plugin_fusinvinventory_criteria` (`id`, `name`, `comment`) VAL
 (5, 'Model', 'smodel'),
 (6, 'storage serial', 'storagesSerial'),
 (7, 'drives serial', 'drivesSerial'),
-(8, 'Asset Tag', 'assetTag');
+(8, 'Asset Tag', 'assetTag'),
+(9, 'Computer name', 'name');
 
 
 INSERT INTO `glpi_plugin_fusinvinventory_blacklist` (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
