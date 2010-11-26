@@ -1,32 +1,32 @@
-<?php
+﻿<?php
 /*
- * @version $Id$
- ----------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+ * @version $Id$
+ ----------------------------------------------------------------------
+ FusionInventory
+ Coded by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org//
- ----------------------------------------------------------------------
+ http://www.fusioninventory.org/   http://forge.fusioninventory.org//
+ ----------------------------------------------------------------------
 
- LICENSE
+ LICENSE
 
- This file is part of FusionInventory plugins.
+ This file is part of FusionInventory plugins.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+ FusionInventory is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+ FusionInventory is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- ------------------------------------------------------------------------
- */
+ You should have received a copy of the GNU General Public License
+ along with FusionInventory; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ ------------------------------------------------------------------------
+ */
 
 // ----------------------------------------------------------------------
 // Original Author of file: David DURIEUX
@@ -243,139 +243,139 @@ $LANG['plugin_fusioninventory']["processes"][37]="IP итого";
 
 $LANG['plugin_fusioninventory']["state"][0]="Компьютер запущен";
 $LANG['plugin_fusioninventory']["state"][1]="Компьютер остановлен";
-$LANG['plugin_fusioninventory']["state"][2]="User connection";
-$LANG['plugin_fusioninventory']["state"][3]="User disconnection";
+$LANG['plugin_fusioninventory']["state"][2]="Подключение пользователя";
+$LANG['plugin_fusioninventory']["state"][3]="Отключение пользователя";
 
-$LANG['plugin_fusioninventory']["mapping"][1]="networking > location";
-$LANG['plugin_fusioninventory']["mapping"][2]="networking > firmware";
-$LANG['plugin_fusioninventory']["mapping"][3]="networking > uptime";
-$LANG['plugin_fusioninventory']["mapping"][4]="networking > port > mtu";
-$LANG['plugin_fusioninventory']["mapping"][5]="networking > port > speed";
-$LANG['plugin_fusioninventory']["mapping"][6]="networking > port > internal status";
-$LANG['plugin_fusioninventory']["mapping"][7]="networking > ports > Last Change";
-$LANG['plugin_fusioninventory']["mapping"][8]="networking > port > number of bytes entered";
-$LANG['plugin_fusioninventory']["mapping"][9]="networking > port > number of bytes out";
-$LANG['plugin_fusioninventory']["mapping"][10]="networking > port > number of input errors";
-$LANG['plugin_fusioninventory']["mapping"][11]="networking > port > number of errors output";
-$LANG['plugin_fusioninventory']["mapping"][12]="networking > CPU usage";
-$LANG['plugin_fusioninventory']["mapping"][13]="networking > serial number";
-$LANG['plugin_fusioninventory']["mapping"][14]="networking > port > connection status";
-$LANG['plugin_fusioninventory']["mapping"][15]="networking > port > MAC address";
-$LANG['plugin_fusioninventory']["mapping"][16]="networking > port > name";
-$LANG['plugin_fusioninventory']["mapping"][17]="networking > model";
-$LANG['plugin_fusioninventory']["mapping"][18]="networking > ports > type";
-$LANG['plugin_fusioninventory']["mapping"][19]="networking > VLAN";
-$LANG['plugin_fusioninventory']["mapping"][20]="networking > name";
-$LANG['plugin_fusioninventory']["mapping"][21]="networking > total memory";
-$LANG['plugin_fusioninventory']["mapping"][22]="networking > free memory";
-$LANG['plugin_fusioninventory']["mapping"][23]="networking > port > port description";
-$LANG['plugin_fusioninventory']["mapping"][24]="printer > name";
-$LANG['plugin_fusioninventory']["mapping"][25]="printer > model";
-$LANG['plugin_fusioninventory']["mapping"][26]="printer > total memory";
-$LANG['plugin_fusioninventory']["mapping"][27]="printer > serial number";
-$LANG['plugin_fusioninventory']["mapping"][28]="printer > meter > total number of printed pages";
-$LANG['plugin_fusioninventory']["mapping"][29]="printer > meter > number of printed black and white pages";
-$LANG['plugin_fusioninventory']["mapping"][30]="printer > meter > number of printed color pages";
-$LANG['plugin_fusioninventory']["mapping"][31]="printer > meter > number of printed monochrome pages";
-$LANG['plugin_fusioninventory']["mapping"][32]="printer > meter > number of printed color pages";
-$LANG['plugin_fusioninventory']["mapping"][33]="networking > port > duplex type";
-$LANG['plugin_fusioninventory']["mapping"][34]="printer > consumables > black cartridge (%)";
-$LANG['plugin_fusioninventory']["mapping"][35]="printer > consumables > photo black cartridge (%)";
-$LANG['plugin_fusioninventory']["mapping"][36]="printer > consumables > cyan cartridge (%)";
-$LANG['plugin_fusioninventory']["mapping"][37]="printer > consumables > yellow cartridge (%)";
-$LANG['plugin_fusioninventory']["mapping"][38]="printer > consumables > magenta cartridge (%)";
-$LANG['plugin_fusioninventory']["mapping"][39]="printer > consumables > light cyan cartridge (%)";
-$LANG['plugin_fusioninventory']["mapping"][40]="printer > consumables > light magenta cartridge (%)";
-$LANG['plugin_fusioninventory']["mapping"][41]="printer > consumables > photoconductor (%)";
-$LANG['plugin_fusioninventory']["mapping"][42]="printer > consumables > black photoconductor (%)";
-$LANG['plugin_fusioninventory']["mapping"][43]="printer > consumables > color photoconductor (%)";
-$LANG['plugin_fusioninventory']["mapping"][44]="printer > consumables > cyan photoconductor (%)";
-$LANG['plugin_fusioninventory']["mapping"][45]="printer > consumables > yellow photoconductor (%)";
-$LANG['plugin_fusioninventory']["mapping"][46]="printer > consumables > magenta photoconductor (%)";
-$LANG['plugin_fusioninventory']["mapping"][47]="printer > consumables > black transfer unit (%)";
-$LANG['plugin_fusioninventory']["mapping"][48]="printer > consumables > cyan transfer unit (%)";
-$LANG['plugin_fusioninventory']["mapping"][49]="printer > consumables > yellow transfer unit (%)";
-$LANG['plugin_fusioninventory']["mapping"][50]="printer > consumables > magenta transfer unit (%)";
-$LANG['plugin_fusioninventory']["mapping"][51]="printer > consumables > waste bin (%)";
-$LANG['plugin_fusioninventory']["mapping"][52]="printer > consumables > four (%)";
-$LANG['plugin_fusioninventory']["mapping"][53]="printer > consumables > cleaning module (%)";
-$LANG['plugin_fusioninventory']["mapping"][54]="printer > meter > number of printed duplex pages";
-$LANG['plugin_fusioninventory']["mapping"][55]="printer > meter > nomber of scanned pages";
-$LANG['plugin_fusioninventory']["mapping"][56]="printer > location";
-$LANG['plugin_fusioninventory']["mapping"][57]="printer > port > name";
-$LANG['plugin_fusioninventory']["mapping"][58]="printer > port > MAC address";
-$LANG['plugin_fusioninventory']["mapping"][59]="printer > consumables > black cartridge (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][60]="printer > consumables > black cartridge (remaining ink )";
-$LANG['plugin_fusioninventory']["mapping"][61]="printer > consumables > cyan cartridge (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][62]="printer > consumables > cyan cartridge (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][63]="printer > consumables > yellow cartridge (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][64]="printer > consumables > yellow cartridge (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][65]="printer > consumables > magenta cartridge (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][66]="printer > consumables > magenta cartridge (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][67]="printer > consumables > light cyan cartridge (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][68]="printer > consumables > light cyan cartridge (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][69]="printer > consumables > light magenta cartridge (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][70]="printer > consumables > light magenta cartridge (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][71]="printer > consumables > photoconductor (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][72]="printer > consumables > photoconductor (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][73]="printer > consumables > black photoconductor (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][74]="printer > consumables > black photoconductor (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][75]="printer > consumables > color photoconductor (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][76]="printer > consumables > color photoconductor (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][77]="printer > consumables > cyan photoconductor (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][78]="printer > consumables > cyan photoconductor (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][79]="printer > consumables > yellow photoconductor (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][80]="printer > consumables > yellow photoconductor (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][81]="printer > consumables > magenta photoconductor (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][82]="printer > consumables > magenta photoconductor (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][83]="printer > consumables > black transfer unit (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][84]="printer > consumables > black transfer unit (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][85]="printer > consumables > cyan transfer unit (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][86]="printer > consumables > cyan transfer unit (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][87]="printer > consumables > yellow transfer unit (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][88]="printer > consumables > yellow transfer unit (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][89]="printer > consumables > magenta transfer unit (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][90]="printer > consumables > magenta transfer unit (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][91]="printer > consumables > waste bin (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][92]="printer > consumables > waste bin (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][93]="printer > consumables > four (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][94]="printer > consumables > four (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][95]="printer > consumables > cleaning module (max ink)";
-$LANG['plugin_fusioninventory']["mapping"][96]="printer > consumables > cleaning module (remaining ink)";
-$LANG['plugin_fusioninventory']["mapping"][97]="printer > port > type";
-$LANG['plugin_fusioninventory']["mapping"][98]="printer > consumables > Maintenance kit (max)";
-$LANG['plugin_fusioninventory']["mapping"][99]="printer > consumables > Maintenance kit (remaining)";
-$LANG['plugin_fusioninventory']["mapping"][400]="printer > consumables > Maintenance kit (%)";
-$LANG['plugin_fusioninventory']["mapping"][401]="networking > CPU user";
-$LANG['plugin_fusioninventory']["mapping"][402]="networking > CPU system";
-$LANG['plugin_fusioninventory']["mapping"][403]="networking > contact";
-$LANG['plugin_fusioninventory']["mapping"][404]="networking > comments";
-$LANG['plugin_fusioninventory']["mapping"][405]="printer > contact";
-$LANG['plugin_fusioninventory']["mapping"][406]="printer > comments";
-$LANG['plugin_fusioninventory']["mapping"][407]="printer > port > IP address";
-$LANG['plugin_fusioninventory']["mapping"][408]="networking > port > numÃ©ro index";
-$LANG['plugin_fusioninventory']["mapping"][409]="networking > Adress CDP";
-$LANG['plugin_fusioninventory']["mapping"][410]="networking > Port CDP";
-$LANG['plugin_fusioninventory']["mapping"][411]="networking > port > trunk/tagged";
-$LANG['plugin_fusioninventory']["mapping"][412]="networking > MAC address filters (dot1dTpFdbAddress)";
-$LANG['plugin_fusioninventory']["mapping"][413]="networking > Physical addresses in memory (ipNetToMediaPhysAddress)";
-$LANG['plugin_fusioninventory']["mapping"][414]="networking > instances de ports (dot1dTpFdbPort)";
-$LANG['plugin_fusioninventory']["mapping"][415]="networking > numÃ©ro de ports associÃ© id du port (dot1dBasePortIfIndex)";
-$LANG['plugin_fusioninventory']["mapping"][416]="printer > port > index number";
-$LANG['plugin_fusioninventory']["mapping"][417]="networking > MAC address";
-$LANG['plugin_fusioninventory']["mapping"][418]="printer > Inventory number";
-$LANG['plugin_fusioninventory']["mapping"][419]="networking > Inventory number";
-$LANG['plugin_fusioninventory']["mapping"][420]="printer > manufacturer";
-$LANG['plugin_fusioninventory']["mapping"][421]="networking > IP addresses";
-$LANG['plugin_fusioninventory']["mapping"][422]="networking > portVlanIndex";
-$LANG['plugin_fusioninventory']["mapping"][423]="printer > meter > total number of printed pages (print)";
-$LANG['plugin_fusioninventory']["mapping"][424]="printer > meter > number of printed black and white pages (print)";
-$LANG['plugin_fusioninventory']["mapping"][425]="printer > meter > number of printed color pages (print)";
-$LANG['plugin_fusioninventory']["mapping"][426]="printer > meter > total number of printed pages (copy)";
-$LANG['plugin_fusioninventory']["mapping"][427]="printer > meter > number of printed black and white pages (copy)";
-$LANG['plugin_fusioninventory']["mapping"][428]="printer > meter > number of printed color pages (copy)";
-$LANG['plugin_fusioninventory']["mapping"][429]="printer > meter > total number of printed pages (fax)";
-$LANG['plugin_fusioninventory']["mapping"][430]="networking > port > vlan";
+$LANG['plugin_fusioninventory']["mapping"][1]="сеть > местонахождение";
+$LANG['plugin_fusioninventory']["mapping"][2]="сеть > firmware";
+$LANG['plugin_fusioninventory']["mapping"][3]="сеть > uptime";
+$LANG['plugin_fusioninventory']["mapping"][4]="сеть > порт > mtu";
+$LANG['plugin_fusioninventory']["mapping"][5]="сеть > порт > скорость";
+$LANG['plugin_fusioninventory']["mapping"][6]="сеть > порт > internal status";
+$LANG['plugin_fusioninventory']["mapping"][7]="сеть > Порты > Last Change";
+$LANG['plugin_fusioninventory']["mapping"][8]="сеть > порт > количество байтов принято";
+$LANG['plugin_fusioninventory']["mapping"][9]="сеть > порт > количество байтов передано";
+$LANG['plugin_fusioninventory']["mapping"][10]="сеть > порт > количество входящих ошибок";
+$LANG['plugin_fusioninventory']["mapping"][11]="сеть > порт > количество изходящих ошибок";
+$LANG['plugin_fusioninventory']["mapping"][12]="сеть > использование CPU";
+$LANG['plugin_fusioninventory']["mapping"][13]="сеть > серийный номер";
+$LANG['plugin_fusioninventory']["mapping"][14]="сеть > порт > статус подключения";
+$LANG['plugin_fusioninventory']["mapping"][15]="сеть > порт > MAC адресс";
+$LANG['plugin_fusioninventory']["mapping"][16]="сеть > порт > имя";
+$LANG['plugin_fusioninventory']["mapping"][17]="сеть > модель";
+$LANG['plugin_fusioninventory']["mapping"][18]="сеть > порты > тип";
+$LANG['plugin_fusioninventory']["mapping"][19]="сеть > VLAN";
+$LANG['plugin_fusioninventory']["mapping"][20]="сеть > имя";
+$LANG['plugin_fusioninventory']["mapping"][21]="сеть > итого памяти";
+$LANG['plugin_fusioninventory']["mapping"][22]="сеть > свободной памяти";
+$LANG['plugin_fusioninventory']["mapping"][23]="сеть > порт > описание порта";
+$LANG['plugin_fusioninventory']["mapping"][24]="принтер > имя";
+$LANG['plugin_fusioninventory']["mapping"][25]="принтер > модель";
+$LANG['plugin_fusioninventory']["mapping"][26]="принтер > итого памяти";
+$LANG['plugin_fusioninventory']["mapping"][27]="принтер > серийный номер";
+$LANG['plugin_fusioninventory']["mapping"][28]="принтер > meter > total number of printed pages";
+$LANG['plugin_fusioninventory']["mapping"][29]="принтер > meter > number of printed black and white pages";
+$LANG['plugin_fusioninventory']["mapping"][30]="принтер > meter > number of printed color pages";
+$LANG['plugin_fusioninventory']["mapping"][31]="принтер > meter > number of printed monochrome pages";
+$LANG['plugin_fusioninventory']["mapping"][32]="принтер > meter > number of printed color pages";
+$LANG['plugin_fusioninventory']["mapping"][33]="сеть > порт > duplex type";
+$LANG['plugin_fusioninventory']["mapping"][34]="принтер > consumables > black cartridge (%)";
+$LANG['plugin_fusioninventory']["mapping"][35]="принтер > consumables > photo black cartridge (%)";
+$LANG['plugin_fusioninventory']["mapping"][36]="принтер > consumables > cyan cartridge (%)";
+$LANG['plugin_fusioninventory']["mapping"][37]="принтер > consumables > yellow cartridge (%)";
+$LANG['plugin_fusioninventory']["mapping"][38]="принтер > consumables > magenta cartridge (%)";
+$LANG['plugin_fusioninventory']["mapping"][39]="принтер > consumables > light cyan cartridge (%)";
+$LANG['plugin_fusioninventory']["mapping"][40]="принтер > consumables > light magenta cartridge (%)";
+$LANG['plugin_fusioninventory']["mapping"][41]="принтер > consumables > photoconductor (%)";
+$LANG['plugin_fusioninventory']["mapping"][42]="принтер > consumables > black photoconductor (%)";
+$LANG['plugin_fusioninventory']["mapping"][43]="принтер > consumables > color photoconductor (%)";
+$LANG['plugin_fusioninventory']["mapping"][44]="принтер > consumables > cyan photoconductor (%)";
+$LANG['plugin_fusioninventory']["mapping"][45]="принтер > consumables > yellow photoconductor (%)";
+$LANG['plugin_fusioninventory']["mapping"][46]="принтер > consumables > magenta photoconductor (%)";
+$LANG['plugin_fusioninventory']["mapping"][47]="принтер > consumables > black transfer unit (%)";
+$LANG['plugin_fusioninventory']["mapping"][48]="принтер > consumables > cyan transfer unit (%)";
+$LANG['plugin_fusioninventory']["mapping"][49]="принтер > consumables > yellow transfer unit (%)";
+$LANG['plugin_fusioninventory']["mapping"][50]="принтер > consumables > magenta transfer unit (%)";
+$LANG['plugin_fusioninventory']["mapping"][51]="принтер > consumables > waste bin (%)";
+$LANG['plugin_fusioninventory']["mapping"][52]="принтер > consumables > four (%)";
+$LANG['plugin_fusioninventory']["mapping"][53]="принтер > consumables > cleaning module (%)";
+$LANG['plugin_fusioninventory']["mapping"][54]="принтер > meter > number of printed duplex pages";
+$LANG['plugin_fusioninventory']["mapping"][55]="принтер > meter > nomber of scanned pages";
+$LANG['plugin_fusioninventory']["mapping"][56]="принтер > местонахождение";
+$LANG['plugin_fusioninventory']["mapping"][57]="принтер > порт > name";
+$LANG['plugin_fusioninventory']["mapping"][58]="принтер > порт > MAC address";
+$LANG['plugin_fusioninventory']["mapping"][59]="принтер > consumables > black cartridge (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][60]="принтер > consumables > black cartridge (remaining ink )";
+$LANG['plugin_fusioninventory']["mapping"][61]="принтер > consumables > cyan cartridge (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][62]="принтер > consumables > cyan cartridge (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][63]="принтер > consumables > yellow cartridge (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][64]="принтер > consumables > yellow cartridge (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][65]="принтер > consumables > magenta cartridge (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][66]="принтер > consumables > magenta cartridge (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][67]="принтер > consumables > light cyan cartridge (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][68]="принтер > consumables > light cyan cartridge (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][69]="принтер > consumables > light magenta cartridge (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][70]="принтер > consumables > light magenta cartridge (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][71]="принтер > consumables > photoconductor (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][72]="принтер > consumables > photoconductor (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][73]="принтер > consumables > black photoconductor (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][74]="принтер > consumables > black photoconductor (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][75]="принтер > consumables > color photoconductor (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][76]="принтер > consumables > color photoconductor (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][77]="принтер > consumables > cyan photoconductor (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][78]="принтер > consumables > cyan photoconductor (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][79]="принтер > consumables > yellow photoconductor (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][80]="принтер > consumables > yellow photoconductor (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][81]="принтер > consumables > magenta photoconductor (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][82]="принтер > consumables > magenta photoconductor (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][83]="принтер > consumables > black transfer unit (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][84]="принтер > consumables > black transfer unit (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][85]="принтер > consumables > cyan transfer unit (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][86]="принтер > consumables > cyan transfer unit (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][87]="принтер > consumables > yellow transfer unit (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][88]="принтер > consumables > yellow transfer unit (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][89]="принтер > consumables > magenta transfer unit (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][90]="принтер > consumables > magenta transfer unit (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][91]="принтер > consumables > waste bin (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][92]="принтер > consumables > waste bin (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][93]="принтер > consumables > four (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][94]="принтер > consumables > four (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][95]="принтер > consumables > cleaning module (max ink)";
+$LANG['plugin_fusioninventory']["mapping"][96]="принтер > consumables > cleaning module (remaining ink)";
+$LANG['plugin_fusioninventory']["mapping"][97]="принтер > порт > тип";
+$LANG['plugin_fusioninventory']["mapping"][98]="принтер > consumables > Maintenance kit (max)";
+$LANG['plugin_fusioninventory']["mapping"][99]="принтер > consumables > Maintenance kit (remaining)";
+$LANG['plugin_fusioninventory']["mapping"][400]="принтер > consumables > Maintenance kit (%)";
+$LANG['plugin_fusioninventory']["mapping"][401]="сеть > CPU user";
+$LANG['plugin_fusioninventory']["mapping"][402]="сеть > CPU system";
+$LANG['plugin_fusioninventory']["mapping"][403]="сеть > contact";
+$LANG['plugin_fusioninventory']["mapping"][404]="сеть > comments";
+$LANG['plugin_fusioninventory']["mapping"][405]="принтер > contact";
+$LANG['plugin_fusioninventory']["mapping"][406]="принтер > comments";
+$LANG['plugin_fusioninventory']["mapping"][407]="принтер > порт > IP адрес";
+$LANG['plugin_fusioninventory']["mapping"][408]="сеть > порт > numÃ©ro index";
+$LANG['plugin_fusioninventory']["mapping"][409]="сеть > Adress CDP";
+$LANG['plugin_fusioninventory']["mapping"][410]="сеть > Port CDP";
+$LANG['plugin_fusioninventory']["mapping"][411]="сеть > порт > trunk/tagged";
+$LANG['plugin_fusioninventory']["mapping"][412]="сеть > MAC address filters (dot1dTpFdbAddress)";
+$LANG['plugin_fusioninventory']["mapping"][413]="сеть > Physical addresses in memory (ipNetToMediaPhysAddress)";
+$LANG['plugin_fusioninventory']["mapping"][414]="сеть > instances de ports (dot1dTpFdbPort)";
+$LANG['plugin_fusioninventory']["mapping"][415]="сеть > numÃ©ro de ports associÃ© id du port (dot1dBasePortIfIndex)";
+$LANG['plugin_fusioninventory']["mapping"][416]="принтер > порт > index number";
+$LANG['plugin_fusioninventory']["mapping"][417]="сеть > MAC адрес";
+$LANG['plugin_fusioninventory']["mapping"][418]="принтер > Инвентаризационный номер";
+$LANG['plugin_fusioninventory']["mapping"][419]="сеть > Инвентаризационный номер";
+$LANG['plugin_fusioninventory']["mapping"][420]="принтер > manufacturer";
+$LANG['plugin_fusioninventory']["mapping"][421]="сеть > IP адрес";
+$LANG['plugin_fusioninventory']["mapping"][422]="сеть > portVlanIndex";
+$LANG['plugin_fusioninventory']["mapping"][423]="принтер > meter > total number of printed pages (print)";
+$LANG['plugin_fusioninventory']["mapping"][424]="принтер > meter > number of printed black and white pages (print)";
+$LANG['plugin_fusioninventory']["mapping"][425]="принтер > meter > number of printed color pages (print)";
+$LANG['plugin_fusioninventory']["mapping"][426]="принтер > meter > total number of printed pages (copy)";
+$LANG['plugin_fusioninventory']["mapping"][427]="принтер > meter > number of printed black and white pages (copy)";
+$LANG['plugin_fusioninventory']["mapping"][428]="принтер > meter > number of printed color pages (copy)";
+$LANG['plugin_fusioninventory']["mapping"][429]="принтер > meter > total number of printed pages (fax)";
+$LANG['plugin_fusioninventory']["mapping"][430]="сеть > порт > vlan";
 
 
 $LANG['plugin_fusioninventory']["mapping"][101]="";
@@ -444,9 +444,9 @@ $LANG['plugin_fusioninventory']["mapping"][1428]="Number of printed color pages 
 $LANG['plugin_fusioninventory']["mapping"][1429]="Total number of printed pages (fax)";
 
 
-$LANG['plugin_fusioninventory']["printer"][0]="pages";
+$LANG['plugin_fusioninventory']["printer"][0]="страниц";
 
-$LANG['plugin_fusioninventory']["menu"][0]="Information about discovered devices";
+$LANG['plugin_fusioninventory']["menu"][0]="Информация об обнаруженных устройствах";
 $LANG['plugin_fusioninventory']["menu"][1]="Agents management";
 $LANG['plugin_fusioninventory']["menu"][2]="IP range configuration";
 $LANG['plugin_fusioninventory']["menu"][3]="Menu";
@@ -455,81 +455,81 @@ $LANG['plugin_fusioninventory']["menu"][5]="Switchs ports history";
 $LANG['plugin_fusioninventory']["menu"][6]="Unused switchs ports";
 $LANG['plugin_fusioninventory']["menu"][7]="Running jobs";
 
-$LANG['plugin_fusioninventory']["buttons"][0]="Discover";
+$LANG['plugin_fusioninventory']["buttons"][0]="Обнаружить";
 
-$LANG['plugin_fusioninventory']["discovery"][0]="IP range to scan";
-$LANG['plugin_fusioninventory']["discovery"][1]="Discovered devices";
+$LANG['plugin_fusioninventory']["discovery"][0]="Область обнаружения IP";
+$LANG['plugin_fusioninventory']["discovery"][1]="Обнаруженные устройства";
 $LANG['plugin_fusioninventory']["discovery"][2]="Activation in the script automatically";
-$LANG['plugin_fusioninventory']["discovery"][3]="Discover";
-$LANG['plugin_fusioninventory']["discovery"][4]="Serial number";
-$LANG['plugin_fusioninventory']["discovery"][5]="Number of imported devices";
-$LANG['plugin_fusioninventory']["discovery"][6]="Primary criteria for existence";
-$LANG['plugin_fusioninventory']["discovery"][7]="Secondary criteria for existence ";
+$LANG['plugin_fusioninventory']["discovery"][3]="Обнаружение";
+$LANG['plugin_fusioninventory']["discovery"][4]="Серийный номер";
+$LANG['plugin_fusioninventory']["discovery"][5]="Количество импортированных устройств";
+$LANG['plugin_fusioninventory']["discovery"][6]="Главный критерий существования";
+$LANG['plugin_fusioninventory']["discovery"][7]="Вторичный критерий существования ";
 $LANG['plugin_fusioninventory']["discovery"][8]="If a device returns empty fields on first ciriteria, second one will be used.";
 $LANG['plugin_fusioninventory']["discovery"][9]="Number of devices not imported because type non defined";
 
-$LANG['plugin_fusioninventory']["agents"][0]="SNMP Agent";
+$LANG['plugin_fusioninventory']["agents"][0]="SNMP Агент";
 $LANG['plugin_fusioninventory']["agents"][2]="Number of threads used by core for querying devices";
 $LANG['plugin_fusioninventory']["agents"][3]="Number of threads used by core for network discovery";
-$LANG['plugin_fusioninventory']["agents"][4]="Last scan";
-$LANG['plugin_fusioninventory']["agents"][5]="Agent version";
-$LANG['plugin_fusioninventory']["agents"][6]="Lock";
-$LANG['plugin_fusioninventory']["agents"][7]="Export agent configuration";
+$LANG['plugin_fusioninventory']["agents"][4]="Последнее сканирование";
+$LANG['plugin_fusioninventory']["agents"][5]="Версия агента";
+$LANG['plugin_fusioninventory']["agents"][6]="Блокировка";
+$LANG['plugin_fusioninventory']["agents"][7]="Экспортировать конфигурацию агента";
 $LANG['plugin_fusioninventory']["agents"][9]="Advanced options";
-$LANG['plugin_fusioninventory']["agents"][12]="Discovery Agent";
-$LANG['plugin_fusioninventory']["agents"][13]="Query Agent";
-$LANG['plugin_fusioninventory']["agents"][14]="Agent actions";
-$LANG['plugin_fusioninventory']["agents"][15]="Agent state";
-$LANG['plugin_fusioninventory']["agents"][16]="Initialized";
-$LANG['plugin_fusioninventory']["agents"][17]="Agent is running";
-$LANG['plugin_fusioninventory']["agents"][18]="Inventory has been received";
-$LANG['plugin_fusioninventory']["agents"][19]="Inventory has been sended to OCS server";
-$LANG['plugin_fusioninventory']["agents"][20]="Synchronisation between OCS and GLPI is running";
-$LANG['plugin_fusioninventory']["agents"][21]="Inventory terminated";
-$LANG['plugin_fusioninventory']["agents"][22]="Wait";
-$LANG['plugin_fusioninventory']["agents"][23]="Computer link";
-$LANG['plugin_fusioninventory']["agents"][24]="Token";
-$LANG['plugin_fusioninventory']["agents"][25]="Version";
-$LANG['plugin_fusioninventory']["agents"][26]="Agents management";
-$LANG['plugin_fusioninventory']["agents"][27]="Agents modules";
-$LANG['plugin_fusioninventory']["agents"][28]="Agent";
-$LANG['plugin_fusioninventory']["agents"][29]="Module activation";
+$LANG['plugin_fusioninventory']["agents"][12]="Агент обнаружения";
+$LANG['plugin_fusioninventory']["agents"][13]="Опросить Агента";
+$LANG['plugin_fusioninventory']["agents"][14]="Действия Агента";
+$LANG['plugin_fusioninventory']["agents"][15]="Статус Агента";
+$LANG['plugin_fusioninventory']["agents"][16]="Инициализирован";
+$LANG['plugin_fusioninventory']["agents"][17]="Агент запущен";
+$LANG['plugin_fusioninventory']["agents"][18]="Инвенторизация прошла";
+$LANG['plugin_fusioninventory']["agents"][19]="Инвенторизация была отправлена на сервер OCSr";
+$LANG['plugin_fusioninventory']["agents"][20]="Запущена инвенторизация между OCS и GLPI";
+$LANG['plugin_fusioninventory']["agents"][21]="Инвенторизация прекращена";
+$LANG['plugin_fusioninventory']["agents"][22]="Ждите";
+$LANG['plugin_fusioninventory']["agents"][23]="Линк Компьютера";
+$LANG['plugin_fusioninventory']["agents"][24]="Токен";
+$LANG['plugin_fusioninventory']["agents"][25]="Версия";
+$LANG['plugin_fusioninventory']["agents"][26]="Управление Агентами";
+$LANG['plugin_fusioninventory']["agents"][27]="Модули Агентов";
+$LANG['plugin_fusioninventory']["agents"][28]="Агент";
+$LANG['plugin_fusioninventory']["agents"][29]="Активация модулей";
 
-$LANG['plugin_fusioninventory']["unknown"][0]="DNS Name";
-$LANG['plugin_fusioninventory']["unknown"][1]="Network port name";
-$LANG['plugin_fusioninventory']["unknown"][2]="Approved devices";
-$LANG['plugin_fusioninventory']["unknown"][3]="Discovered by agent";
-$LANG['plugin_fusioninventory']["unknown"][4]="Network hub";
-$LANG['plugin_fusioninventory']["unknown"][5]="Imported from unknown devices (FusionInventory)";
+$LANG['plugin_fusioninventory']["unknown"][0]="DNS Имя";
+$LANG['plugin_fusioninventory']["unknown"][1]="Имя сетевого порта";
+$LANG['plugin_fusioninventory']["unknown"][2]="Подтверждённые устройства";
+$LANG['plugin_fusioninventory']["unknown"][3]="Обнаружено агентом";
+$LANG['plugin_fusioninventory']["unknown"][4]="Сетевой хаб";
+$LANG['plugin_fusioninventory']["unknown"][5]="Импортировано с неизвестного устройства (FusionInventory)";
 
-$LANG['plugin_fusioninventory']["task"][0]="Task";
-$LANG['plugin_fusioninventory']["task"][1]="Task management";
-$LANG['plugin_fusioninventory']["task"][2]="Action";
-$LANG['plugin_fusioninventory']["task"][3]="Unit";
+$LANG['plugin_fusioninventory']["task"][0]="Задача";
+$LANG['plugin_fusioninventory']["task"][1]="Менеджмент Задач";
+$LANG['plugin_fusioninventory']["task"][2]="Действие";
+$LANG['plugin_fusioninventory']["task"][3]="Единица";
 $LANG['plugin_fusioninventory']["task"][4]="Get now informations";
-$LANG['plugin_fusioninventory']["task"][5]="Select OCS Agent";
+$LANG['plugin_fusioninventory']["task"][5]="Выбрать агента OCS";
 $LANG['plugin_fusioninventory']["task"][6]="Get state";
 $LANG['plugin_fusioninventory']["task"][7]="State";
-$LANG['plugin_fusioninventory']["task"][8]="Ready";
-$LANG['plugin_fusioninventory']["task"][9]="Not respond";
-$LANG['plugin_fusioninventory']["task"][10]="Running... not available";
-$LANG['plugin_fusioninventory']["task"][11]="Agent has been notified and begin running";
-$LANG['plugin_fusioninventory']["task"][12]="Wake agent";
-$LANG['plugin_fusioninventory']["task"][13]="Agent(s) unvailable";
+$LANG['plugin_fusioninventory']["task"][8]="Готово";
+$LANG['plugin_fusioninventory']["task"][9]="Не отвечает";
+$LANG['plugin_fusioninventory']["task"][10]="Запуск... не доступен";
+$LANG['plugin_fusioninventory']["task"][11]="Агент получил задание и начал работу";
+$LANG['plugin_fusioninventory']["task"][12]="Разбудить агента";
+$LANG['plugin_fusioninventory']["task"][13]="Агент(ы) не доступен";
 $LANG['plugin_fusioninventory']["task"][14]="Dunning date";
-$LANG['plugin_fusioninventory']["task"][16]="New action";
-$LANG['plugin_fusioninventory']["task"][17]="Périodicité";
-$LANG['plugin_fusioninventory']["task"][18]="Tasks";
-$LANG['plugin_fusioninventory']["task"][19]="Running tasks";
-$LANG['plugin_fusioninventory']["task"][20]="Finished tasks";
-$LANG['plugin_fusioninventory']["task"][21]="Action sur ce matériel";
+$LANG['plugin_fusioninventory']["task"][16]="Новое действие";
+$LANG['plugin_fusioninventory']["task"][17]="Частота";
+$LANG['plugin_fusioninventory']["task"][18]="Задачи";
+$LANG['plugin_fusioninventory']["task"][19]="Запущеные задачи";
+$LANG['plugin_fusioninventory']["task"][20]="Законченые задачи";
+$LANG['plugin_fusioninventory']["task"][21]="Действует на этот материал ";
 $LANG['plugin_fusioninventory']["task"][22]="Only planified tasks";
 
-$LANG['plugin_fusioninventory']["taskjoblog"][1]="Started";
+$LANG['plugin_fusioninventory']["taskjoblog"][1]="Начато";
 $LANG['plugin_fusioninventory']["taskjoblog"][2]="Ok";
-$LANG['plugin_fusioninventory']["taskjoblog"][3]="Error / replaned";
-$LANG['plugin_fusioninventory']["taskjoblog"][4]="Error";
-$LANG['plugin_fusioninventory']["taskjoblog"][5]="unknow";
+$LANG['plugin_fusioninventory']["taskjoblog"][3]="Ошибка / Перепланировано";
+$LANG['plugin_fusioninventory']["taskjoblog"][4]="Ошибка";
+$LANG['plugin_fusioninventory']["taskjoblog"][5]="неизвестно";
 
 $LANG['plugin_fusioninventory']["update"][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 
