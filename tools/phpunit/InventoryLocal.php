@@ -55,6 +55,42 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/criterias");
          system("rm -fr ".GLPI_ROOT."/files/_plugins/fusioninventory/machines");
 
+
+         // Modify criteria rules
+         $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
+         $query = "UPDATE `glpi_rules` SET `ranking` = '5'
+            WHERE `sub_type` ='PluginFusinvinventoryRuleInventory'
+               AND `ranking` = '4' ";
+         $DB->query($query);
+
+         $input = array();
+         $input['is_active']=1;
+         $input['name']='name';
+         $input['match']='AND';
+         $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+         $input['ranking'] = 4;
+         $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "globalcriteria";
+         $input['pattern']= 9;
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_import';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active`='0'
