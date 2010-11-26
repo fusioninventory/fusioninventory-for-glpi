@@ -61,6 +61,7 @@ class PluginFusinvinventoryRuleInventoryCollection extends PluginFusioninventory
       $input['name']='serial number + uuid';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+      $input['ranking'] = 1;
       $rule_id = $rulecollection->add($input);
 
       // Add criteria
@@ -95,6 +96,7 @@ class PluginFusinvinventoryRuleInventoryCollection extends PluginFusioninventory
       $input['name']='mac address';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+      $input['ranking'] = 2;
       $rule_id = $rulecollection->add($input);
 
       // Add criteria
@@ -123,6 +125,7 @@ class PluginFusinvinventoryRuleInventoryCollection extends PluginFusioninventory
       $input['name']='serial number';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+      $input['ranking'] = 3;
       $rule_id = $rulecollection->add($input);
 
       // Add criteria
@@ -151,6 +154,7 @@ class PluginFusinvinventoryRuleInventoryCollection extends PluginFusioninventory
       $input['name']='unknown device';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
+      $input['ranking'] = 4;
       $rule_id = $rulecollection->add($input);
 
       // Add criteria
