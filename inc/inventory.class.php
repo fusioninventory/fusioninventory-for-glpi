@@ -125,6 +125,10 @@ class PluginFusinvinventoryInventory {
             $input['globalcriteria'][] = 8;
             $input['assettag'] = $xml->CONTENT->BIOS->ASSETTAG;
          }
+         if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
+            $input['globalcriteria'][] = 9;
+            $input['name'] = $xml->CONTENT->HARDWARE->NAME;
+         }
       $rule = new PluginFusinvinventoryRuleInventoryCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
@@ -155,6 +159,7 @@ class PluginFusinvinventoryInventory {
       $config['sections'][] = "DRIVES";
       $config['sections'][] = "NETWORKS";
       $config['sections'][] = "PROCESSES";
+      $config['sections'][] = "SOFTWARES";
 
       define("LIBSERVERFUSIONINVENTORY_LOG_FILE",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/logs');
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
