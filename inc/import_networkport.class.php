@@ -43,7 +43,7 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
-   function AddUpdateItem($type, $items_id, $dataSection) {
+   function AddUpdateItem($type, $items_id, $dataSection, $itemtype='Computer') {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $Computer_Item = new Computer_Item();
@@ -64,10 +64,10 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
       if ($type == 'update') {
          $a_NetworkPort = $NetworkPort->getFromDB($Computer_Item->fields['items_id']);
       } else {
-         $a_NetworkPort['items_id']=$idmachine;
+         $a_NetworkPort['items_id']=$items_id;
       }
 
-      $a_NetworkPort['itemtype'] = 'Computer';
+      $a_NetworkPort['itemtype'] = $itemtype;
       if (isset($dataSection["DESCRIPTION"])) {
          $a_NetworkPort['name'] = addslashes($dataSection["DESCRIPTION"]);
       }
