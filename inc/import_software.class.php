@@ -58,6 +58,9 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          return;
       }
 
+      foreach($dataSection as $key=>$value) {
+         $dataSection[$key] = addslashes_deep($value);
+      }
 
       $rulecollection = new RuleDictionnarySoftwareCollection;
       $Software = new Software;
