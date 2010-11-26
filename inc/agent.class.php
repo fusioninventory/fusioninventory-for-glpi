@@ -137,7 +137,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['title'][26];
       }
-       $ong[2] = $LANG['plugin_fusioninventory']["agents"][29];
+       $ong[2] = $LANG['plugin_fusioninventory']["agents"][27];
       // $ong[3] = actions (tâches)
       return $ong;
    }
