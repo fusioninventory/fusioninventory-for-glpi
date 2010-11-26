@@ -57,10 +57,6 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
          return;
       }
 
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
       $printer = new Printer();
 
       $a_printer = array();

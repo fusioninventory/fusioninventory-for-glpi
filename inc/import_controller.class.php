@@ -56,10 +56,6 @@ class PluginFusinvinventoryImport_Controller extends CommonDBTM {
          return;
       }
 
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
       $CompDevice = new Computer_Device('DeviceControl');
 
       if ($type == "update") {

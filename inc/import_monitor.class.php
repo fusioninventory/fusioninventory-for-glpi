@@ -55,10 +55,6 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
          return;
       }
 
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
       $monitor = new Monitor();
 
       $a_monitor = array();

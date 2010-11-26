@@ -56,10 +56,6 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
          return;
       }
 
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
       $Peripheral = new Peripheral();
 
       $a_Peripheral = array();

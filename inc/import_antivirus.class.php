@@ -56,10 +56,6 @@ class PluginFusinvinventoryImport_Antivirus extends CommonDBTM {
          return;
       }
 
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
       $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
 
       $antivirus=array();

@@ -51,11 +51,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
               "component_memory") == '0') {
          return;
       }
-
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
+      
       $CompDevice = new Computer_Device('DeviceMemory');
 
       if ($type == "update") {

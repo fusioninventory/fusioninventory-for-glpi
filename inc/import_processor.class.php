@@ -56,10 +56,6 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
          return;
       }
 
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
       $CompDevice = new Computer_Device('DeviceProcessor');
 
       if ($type == "update") {
@@ -99,7 +95,6 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
                                          'deviceprocessors_id'     => $Processor_id));
       }
       return $devID;
-
    }
 
 

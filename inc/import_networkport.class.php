@@ -53,10 +53,6 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 //         return;
 //      }
 
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-
       $NetworkPort = new NetworkPort();
 
       $a_NetworkPort = array();

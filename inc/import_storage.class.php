@@ -52,10 +52,6 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       
-      foreach($dataSection as $key=>$value) {
-         $dataSection[$key] = addslashes_deep($value);
-      }
-      
       $type_tmp = "";
       $drive_idfield = "";
       $DeviceDrive = "";
