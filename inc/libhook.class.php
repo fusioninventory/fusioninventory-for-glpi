@@ -324,36 +324,13 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'NETWORKS':
-               $NetworkPort = new NetworkPort();
-               $network = array();
-               $network['items_id']=$idmachine;
-               $network['itemtype'] = 'Computer';
-               if (isset($dataSection["DESCRIPTION"])) {
-                  $network['name'] = addslashes($dataSection["DESCRIPTION"]);
+               $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
+               $id_network = $PluginFusinvinventoryImport_Networkport->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_network)) {
+                  $id_network = $j;
+                  $j--;
                }
-               if (isset($dataSection["IPADDRESS"])) {
-                  $network['ip'] = $dataSection["IPADDRESS"];
-               }
-               if (isset($dataSection["MACADDR"])) {
-                  $network['mac'] = $dataSection["MACADDR"];
-               }
-               if (isset($dataSection["TYPE"])) {
-                  $network["networkinterfaces_id"]
-                              = Dropdown::importExternal('NetworkInterface', $dataSection["TYPE"]);
-               }
-               if (isset($dataSection["IPMASK"]))
-                  $network['netmask'] = $dataSection["IPMASK"];
-               if (isset($dataSection["IPGATEWAY"]))
-                  $network['gateway'] = $dataSection["IPGATEWAY"];
-               if (isset($dataSection["IPSUBNET"]))
-                  $network['subnet'] = $dataSection["IPSUBNET"];
-
-               $network['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-
-               $network['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
-               $devID = $NetworkPort->add($network);
-
-               array_push($sectionsId,$section['sectionName']."/".$devID);
+               array_push($sectionsId,$section['sectionName']."/".$id_network);
                break;
 
             case 'SOFTWARES':
@@ -540,7 +517,8 @@ class PluginFusinvinventoryLibhook {
                      break;
 
                   case 'NETWORKS':
-                     // TODO : add a class for this !!!
+                     $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
+                     $PluginFusinvinventoryImport_Networkport->deleteItem($items_id, $idmachine);
                      break;
 
                   case 'SOFTWARES':
@@ -623,6 +601,11 @@ class PluginFusinvinventoryLibhook {
                case 'ANTIVIRUS':
                   $PluginFusinvinventoryImport_Antivirus =  new PluginFusinvinventoryImport_Antivirus();
                   $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("update", $items_id, $dataSection);
+                  break;
+
+               case 'NETWORKS' :
+                  $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
+                  $PluginFusinvinventoryImport_Networkport->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
             }

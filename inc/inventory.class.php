@@ -227,6 +227,10 @@ class PluginFusinvinventoryInventory {
       }
       $input['type'] = 'Computer';
       $unknown_id = $PluginFusioninventoryUnknownDevice->add($input);
+      // Create ports
+      
+
+
       $PluginFusioninventoryUnknownDevice->writeXML($unknown_id, $_SESSION['SOURCEXML']);
    }
 
