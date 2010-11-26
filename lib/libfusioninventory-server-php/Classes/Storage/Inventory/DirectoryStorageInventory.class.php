@@ -386,7 +386,7 @@ INFOCONTENT;
                                     }
                                 break;
                                 case "SOFTWARES":
-                                    if($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"] OR $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
+                                    if ((isset($arrSectionToAdd["GUID"]) AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])) OR $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
                                     {
                                         $boolUpdate = true;
                                     }
@@ -500,8 +500,8 @@ INFOCONTENT;
                                 $existUpdate++;
                             } else {
                                 //push element onto the end of array, to allow update transposition 
-                                array_push($sectionsToAdd, $sectionsToAdd[$arrayId]);
-                                unset($sectionsToAdd[$arrayId]);
+//                                array_push($sectionsToAdd, $sectionsToAdd[$arrayId]);
+//                                unset($sectionsToAdd[$arrayId]);
                             }
                             break;
                         }
