@@ -89,9 +89,11 @@ class PluginFusinvinventoryInventory {
          }
          if (isset($xml->CONTENT->NETWORKS)) {
             foreach($xml->CONTENT->NETWORKS as $network) {
-               if ((isset($network->MACADDR)) AND (!empty($network->MACADDR))) {
-                  $input['globalcriteria'][] = 3;
-                  $input['mac'][] = $network->MACADDR;
+               if ((isset($network->VIRTUALDEV)) AND ($network->VIRTUALDEV != '1')) {
+                  if ((isset($network->MACADDR)) AND (!empty($network->MACADDR))) {
+                     $input['globalcriteria'][] = 3;
+                     $input['mac'][] = $network->MACADDR;
+                  }
                }
             }
          }
