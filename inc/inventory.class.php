@@ -228,8 +228,41 @@ class PluginFusinvinventoryInventory {
       $input['type'] = 'Computer';
       $unknown_id = $PluginFusioninventoryUnknownDevice->add($input);
       // Create ports
-      
-
+      $PluginFusinvinventoryImport_Networkport = new PluginFusinvinventoryImport_Networkport();
+      foreach ($xml->CONTENT->NETWORKS as $child) {
+         $dataSection = array();
+         if (isset($child->DESCRIPTION)) {
+            $dataSection['DESCRIPTION'] = $child->DESCRIPTION;
+         }
+         if (isset($child->IPADDRESS)) {
+            $dataSection['IPADDRESS'] = $child->IPADDRESS;
+         }
+         if (isset($child->IPADDRESS6)) {
+            $dataSection['IPADDRESS6'] = $child->IPADDRESS6;
+         }
+         if (isset($child->IPDHCP)) {
+            $dataSection['IPDHCP'] = $child->IPDHCP;
+         }
+         if (isset($child->IPGATEWAY)) {
+            $dataSection['IPGATEWAY'] = $child->IPGATEWAY;
+         }
+         if (isset($child->IPMASK)) {
+            $dataSection['IPMASK'] = $child->IPMASK;
+         }
+         if (isset($child->IPSUBNET)) {
+            $dataSection['IPSUBNET'] = $child->IPSUBNET;
+         }
+         if (isset($child->MACADDR)) {
+            $dataSection['MACADDR'] = $child->MACADDR;
+         }
+         if (isset($child->STATUS)) {
+            $dataSection['STATUS'] = $child->STATUS;
+         }
+         if (isset($child->VIRTUALDEV)) {
+            $dataSection['VIRTUALDEV'] = $child->VIRTUALDEV;
+         }
+         $PluginFusinvinventoryImport_Networkport->AddUpdateItem("add", $unknown_id, $dataSection, 'PluginFusioninventoryUnknownDevice');
+      }
 
       $PluginFusioninventoryUnknownDevice->writeXML($unknown_id, $_SESSION['SOURCEXML']);
    }
