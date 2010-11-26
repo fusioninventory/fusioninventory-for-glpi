@@ -220,7 +220,7 @@ class PluginFusinvinventoryInventory {
          $input['contact'] = $xml->CONTENT->HARDWARE->USERID;
       }
       if ((isset($xml->CONTENT->HARDWARE->USERDOMAIN)) AND (!empty($xml->CONTENT->HARDWARE->USERDOMAIN))) {
-         $input['domain'] = Dropdown::importExternal('glpi_domains', $xml->CONTENT->HARDWARE->USERDOMAIN);
+         $input['domain'] = Dropdown::importExternal('Domain', $xml->CONTENT->HARDWARE->USERDOMAIN);
       }
       if (isset($xml->CONTENT->BIOS->SSN)) {
          $input['serial'] = $xml->CONTENT->BIOS->SSN;
