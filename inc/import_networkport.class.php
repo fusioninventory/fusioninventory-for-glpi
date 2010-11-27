@@ -47,7 +47,15 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $Computer_Item = new Computer_Item();
-            
+
+      if ((!isset($dataSection['DESCRIPTION'])) AND
+              (!isset($dataSection['IPADDRESS']))
+             AND (!isset($dataSection['MACADDR']))
+             AND (!isset($dataSection['TYPE']))) {
+
+         return "";
+      }
+
 //      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
 //              "import_printer") == '0') {
 //         return;

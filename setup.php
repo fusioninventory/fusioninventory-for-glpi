@@ -105,10 +105,10 @@ function plugin_init_fusinvinventory() {
 
    }
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleinventory']
-      = '../fusinvinventory/front/ruleinventory.form.php';
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['ruleentity']
-      = '../fusinvinventory/front/ruleentity.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleinventory']
+                  = '../fusinvinventory/front/ruleinventory.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']
+                  = '../fusinvinventory/front/ruleentity.form.php';
 
    // Tabs for each type
    $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';
@@ -118,6 +118,18 @@ function plugin_init_fusinvinventory() {
    $PLUGIN_HOOKS['webservices']['fusinvinventory'] = 'plugin_fusinvinventory_registerMethods';
 
 
+   // Fil ariane
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = $LANG['plugin_fusinvinventory']["menu"][2];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusinvinventory/front/blacklist.form.php';
+
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = $LANG['plugin_fusinvinventory']["menu"][1];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.form.php';
+
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = $LANG['plugin_fusinvinventory']["menu"][3];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['page']  = '/plugins/fusinvinventory/front/ruleentity.form.php';
+
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = $LANG['plugin_fusinvinventory']["menu"][0];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/importxml.php';
 }
 
 
