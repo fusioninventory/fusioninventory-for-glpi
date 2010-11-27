@@ -530,6 +530,8 @@ $LANG['plugin_fusinvsnmp']['menu'][5]="Historique des ports de switchs";
 $LANG['plugin_fusinvsnmp']['menu'][6]="Ports de switchs inutilisés";
 $LANG['plugin_fusinvsnmp']['menu'][7]="Règles de critères découverte";
 $LANG['plugin_fusinvsnmp']['menu'][8]="Règles de critères inventaire";
+$LANG['plugin_fusinvsnmp']["menu"][9]="Etat des découvertes";
+$LANG['plugin_fusinvsnmp']["menu"][10]="Etat des inventaires réseaux";
 
 $LANG['plugin_fusinvsnmp']['buttons'][0]="Découvrir";
 
