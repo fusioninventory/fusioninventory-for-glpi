@@ -36,7 +36,7 @@
 $title="FusionInventory DEPLOY";
 $version="2.3.0-1";
 
-$LANG['plugin_fusinvdeploy']["title"][0]="$title";
+$LANG['plugin_fusinvdeploy']['title'][0]="$title";
 
 $LANG['plugin_fusinvdeploy']['package'][0]="Action";
 $LANG['plugin_fusinvdeploy']['package'][1]="Command";
@@ -62,12 +62,12 @@ $LANG['plugin_fusinvdeploy']['files'][5]="Folder in package";
 
 $LANG['plugin_fusinvdeploy']['packagefiles'][0]="Files linked with package";
 
-$LANG['plugin_fusinvdeploy']["deploystatus"][0]="Deployement state";
+$LANG['plugin_fusinvdeploy']['deploystatus'][0]="Deployement state";
 
-$LANG['plugin_fusinvdeploy']["config"][0]="Addresse du serveur GLPI (sans le http://)";
+$LANG['plugin_fusinvdeploy']['config'][0]="Addresse du serveur GLPI (sans le http://)";
 
-$LANG['plugin_fusinvdeploy']["setup"][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
-$LANG['plugin_fusinvdeploy']["setup"][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
+$LANG['plugin_fusinvdeploy']['setup'][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
+$LANG['plugin_fusinvdeploy']['setup'][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
 
 $LANG['plugin_fusinvdeploy']['profile'][1]="$title";
 $LANG['plugin_fusinvdeploy']['profile'][2]="Manage packages";
