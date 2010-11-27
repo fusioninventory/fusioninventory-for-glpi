@@ -45,7 +45,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-
+   
    /* Function to get the value of a field */
    function getValue($p_plugins_id, $p_type) {
       global $DB;

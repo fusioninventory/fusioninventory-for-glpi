@@ -39,7 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 checkRight("config","w");
 
-commonHeader($LANG['plugin_fusioninventory']["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","summary");
+commonHeader($LANG['plugin_fusioninventory']["functionalities"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","configuration");
 
 if (isset($_POST['plugin_fusioninventory_config_set'])) {
    $config = new PluginFusioninventoryConfig;
