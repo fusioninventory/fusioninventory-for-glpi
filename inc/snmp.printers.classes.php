@@ -233,7 +233,12 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
                         break;
                      
                      default:
-                        $mapping_name[$mapping_type_name] = "19";
+                        if ((!strstr($mapping_type_name, "max"))
+                                AND (!strstr($mapping_type_name, "used"))
+                                AND (!strstr($mapping_type_name, "remain"))) {
+                        
+                           $mapping_name[$mapping_type_name] = "19";
+                        }
                }
 				}
 			}
