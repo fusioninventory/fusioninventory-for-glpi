@@ -158,7 +158,12 @@ class PluginFusionInventoryPrinters extends CommonDBTM {
 			$Array_Object_TypeNameConstant= $plugin_fusioninventory_snmp->GetLinkOidToFields($ID,PRINTER_TYPE); 
 			$mapping_name=array();
 			foreach ($Array_Object_TypeNameConstant as $object=>$mapping_type_name) {
-				if ((strstr($mapping_type_name, "cartridge")) OR (strstr($mapping_type_name, "toner"))) {
+				if ((strstr($mapping_type_name, "cartridge"))
+                    OR (strstr($mapping_type_name, "toner"))
+                    OR (strstr($mapping_type_name, "drum"))
+                    OR (strstr($mapping_type_name, "maintenancekit"))) {
+
+
                switch($mapping_type_name) {
                      CASE "cartridgeblack":
                         $mapping_name[$mapping_type_name] = "1";
