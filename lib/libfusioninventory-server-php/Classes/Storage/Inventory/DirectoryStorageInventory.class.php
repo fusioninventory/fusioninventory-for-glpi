@@ -444,7 +444,7 @@ INFOCONTENT;
                                     }
                                 break;
                                 case "PROCESSES":
-                                    if($arrSectionToAdd["STARTED"] == $arrSectionToRemove["STARTED"] AND $arrSectionToAdd["PID"] == $arrSectionToRemove["PID"])
+                                    if ((isset($arrSectionToAdd["STARTED"]) AND ($arrSectionToAdd["STARTED"] == $arrSectionToRemove["STARTED"])) AND ($arrSectionToAdd["PID"] == $arrSectionToRemove["PID"]))
                                     {
                                         $boolUpdate = true;
                                     }
