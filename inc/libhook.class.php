@@ -257,7 +257,7 @@ class PluginFusinvinventoryLibhook {
          }
       }
       $Computer->update($Computer->fields, $_SESSION["plugin_fusinvinventory_history_add"]);
-      $j = 1000000000;
+      $j = -1;
 
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);
@@ -271,7 +271,7 @@ class PluginFusinvinventoryLibhook {
                $id_processor = $PluginFusinvinventoryImport_Processor->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_processor)) {
                   $id_processor = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_processor);
                break;
@@ -281,7 +281,7 @@ class PluginFusinvinventoryLibhook {
                $id_disk = $PluginFusinvinventoryImport_Drive->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_disk)) {
                   $id_disk = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_disk);
                break;
@@ -294,7 +294,7 @@ class PluginFusinvinventoryLibhook {
                }
                if (empty($id_controller)) {
                   $id_controller = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_controller);
                break;
@@ -304,7 +304,7 @@ class PluginFusinvinventoryLibhook {
                $id_sound = $PluginFusinvinventoryImport_Sound->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_sound)) {
                   $id_sound = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_sound);
                break;
@@ -314,7 +314,7 @@ class PluginFusinvinventoryLibhook {
                $id_graphiccard = $PluginFusinvinventoryImport_Graphiccard->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_graphiccard)) {
                   $id_graphiccard = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_graphiccard);
                break;
@@ -324,7 +324,7 @@ class PluginFusinvinventoryLibhook {
                $id_memory = $PluginFusinvinventoryImport_Memory->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_memory)) {
                   $id_memory = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_memory);
                break;
@@ -334,7 +334,7 @@ class PluginFusinvinventoryLibhook {
                $id_network = $PluginFusinvinventoryImport_Networkport->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_network)) {
                   $id_network = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_network);
                break;
@@ -360,7 +360,7 @@ class PluginFusinvinventoryLibhook {
                }
                if (empty($Computer_SoftwareVersion_id)) {
                   $Computer_SoftwareVersion_id = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$Computer_SoftwareVersion_id);
                break;
@@ -398,7 +398,7 @@ class PluginFusinvinventoryLibhook {
                
                if (!isset($id_peripheral)) {
                   $id_peripheral = $j;
-                  $j++;
+                  $j--;
                }
 
                array_push($sectionsId,$section['sectionName']."/".$id_peripheral);
@@ -409,7 +409,7 @@ class PluginFusinvinventoryLibhook {
                $id_printer = $PluginFusinvinventoryImport_Printer->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_printer)) {
                   $id_printer = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_printer);
                break;
@@ -419,7 +419,7 @@ class PluginFusinvinventoryLibhook {
                $id_monitor = $PluginFusinvinventoryImport_Monitor->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_monitor)) {
                   $id_monitor = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_monitor);
                break;
@@ -429,7 +429,7 @@ class PluginFusinvinventoryLibhook {
                $id_storage = $PluginFusinvinventoryImport_Storage->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_storage)) {
                   $id_storage = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_storage);
                break;
@@ -439,7 +439,7 @@ class PluginFusinvinventoryLibhook {
                $id_antivirus = $PluginFusinvinventoryImport_Antivirus->AddUpdateItem("add", $idmachine, $dataSection);
                if (empty($id_antivirus)) {
                   $id_antivirus = $j;
-                  $j++;
+                  $j--;
                }
                array_push($sectionsId,$section['sectionName']."/".$id_antivirus);
                break;
@@ -459,7 +459,7 @@ class PluginFusinvinventoryLibhook {
 
             default:
                array_push($sectionsId,$section['sectionName']."/".$j);
-               $j++;
+               $j--;
                break;
 
          }
