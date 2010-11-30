@@ -115,7 +115,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
          $CompDevice->delete(array("id" => $items_id,
-                                   "_itemtye" => 'DeviceMemory'));
+                                   "_itemtype" => 'DeviceMemory'));
       }
    }
 
