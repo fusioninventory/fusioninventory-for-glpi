@@ -379,9 +379,12 @@ INFOCONTENT;
                             switch($sectionName)
                             {
                                 case "DRIVES":
-                                    if($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"] OR 
-                                        $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"] OR
-                                        $arrSectionToAdd["VOLUMN"] == $arrSectionToRemove["VOLUMN"])
+                                    if ((((isset($arrSectionToAdd["SERIAL"]))
+                                            AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))
+                                       OR ((isset($arrSectionToAdd['name'])) 
+                                            AND ($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]))
+                                       OR ((isset($arrSectionToAdd['VOLUMN'])))
+                                            AND ($arrSectionToAdd["VOLUMN"] == $arrSectionToRemove["VOLUMN"])))
                                     {
                                         $boolUpdate = true;
                                     }
