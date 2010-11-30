@@ -106,7 +106,8 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
       $CompDevice = new Computer_Device('DeviceSoundCard');
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
-         $CompDevice->delete(array("id" => $items_id));
+         $CompDevice->delete(array("id" => $items_id,
+                                   "_itemtype" => 'DeviceSoundCard'));
       }
    }
 
