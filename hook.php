@@ -250,16 +250,9 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
       $itemtype = get_Class($item);
       $items_id = $item->getField('id');
    }
-   // Create task
-   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-   $PluginFusioninventoryTaskjob->showActions($items_id, $itemtype);
-   // See task runing
-   $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-   $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'running');
-   // see tasks finished
-   $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'nostarted');
-   // see tasks finished
-   $PluginFusioninventoryTaskjobstatus->stateTaskjobItem($items_id, $itemtype, 'finished');
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
+
 }
 
 
