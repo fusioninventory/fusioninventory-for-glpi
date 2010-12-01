@@ -390,7 +390,9 @@ INFOCONTENT;
                                     }
                                 break;
                                 case "SOFTWARES":
-                                    if ((isset($arrSectionToAdd["GUID"]) AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"])) OR $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
+                                    if (((isset($arrSectionToAdd["GUID"]) AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"]))
+                                            OR $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
+                                            AND ($arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"]))
                                     {
                                         $boolUpdate = true;
                                     }
