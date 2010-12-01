@@ -90,6 +90,13 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          $input['value'] = '1';
          $ruleaction->add($input);
 
+         // Add in blacklit : 30003000000000000000000000300000000000000000000000000000000000000000000000000000000000
+         $PluginFusinvinventoryBlacklist = new PluginFusinvinventoryBlacklist();
+         $input = array();
+         $input['plugin_fusioninventory_criterium_id'] = '1';
+         $input['value'] = '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000';
+         $PluginFusinvinventoryBlacklist->add($input);
+
 
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
@@ -228,7 +235,11 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $Computer = new Computer();
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       if (isset($xml->CONTENT->BIOS->SSN)) {
-         $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
+         if ($xml->CONTENT->BIOS->SSN == '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000') {
+            unset($xml->CONTENT->BIOS->SSN);
+         } else {
+            $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
+         }
       }
       $serial = "`serial` IS NULL";
       if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
@@ -709,11 +720,11 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
             LEFT JOIN `glpi_softwares` ON `glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`
             WHERE `computers_id`='".$items_id."'
                AND `glpi_softwareversions`.`name` = '".$child->VERSION."'
-               AND `glpi_softwares`.`name` = '".$child->NAME."'
+               AND `glpi_softwares`.`name` = '".addslashes_deep($child->NAME)."'
                   LIMIT 1";
          $result=$DB->query($query);
 
-         $this->assertEquals($DB->numrows($result), 1 , 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ['.$xmlFile.']');
+         $this->assertEquals($DB->numrows($result), 1 , 'Software not find in GLPI '.$DB->numrows($result).' times instead 1 ('.addslashes_deep($child->NAME).') ['.$xmlFile.']');
 
       }
 
@@ -734,6 +745,10 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      if ($xml->CONTENT->BIOS->SSN == '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000') {
+         unset($xml->CONTENT->BIOS->SSN);
+      }
+
 
       $Computer = new Computer();
       $Computer->getFromDB($items_id);
