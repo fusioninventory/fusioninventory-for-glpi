@@ -62,7 +62,8 @@ switch($_POST['glpi_tab']) {
       break;
 
    case 3:
-      plugin_headings_fusioninventory_tasks("", "PluginFusinvsnmpIPRange", $_POST['id']);
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvsnmpIPRange", $_POST['id']);
       break;
 
    default:
