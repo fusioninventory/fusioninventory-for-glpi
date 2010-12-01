@@ -62,7 +62,8 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 4 :
-      plugin_headings_fusioninventory_tasks("", "PluginFusinvdeployPackage", $_POST['id']);
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjob->manageTasksByObject("PluginFusinvdeployPackage", $_POST['id']);
       break;
 
    default :
