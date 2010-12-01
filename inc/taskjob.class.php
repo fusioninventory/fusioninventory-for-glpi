@@ -613,8 +613,8 @@ $this->cronTaskscheduler();
       $a_parseMethods = array();
       $a_parseMethods[''] = "------";
       foreach($a_methods as $num=>$data) {
-         if (function_exists('plugin_'.$data['module'].'_task_action_'.$data['method'])) {
-            $a_itemtype = call_user_func('plugin_'.$data['module'].'_task_action_'.$data['method']);
+         if (is_callable(array('Plugin'.$data['module'].'Staticmisc', 'task_action_'.$data['method']))) {
+            $a_itemtype = call_user_func(array('Plugin'.$data['module'].'Staticmisc', 'task_action_'.$data['method']));
             if (in_array($itemtype, $a_itemtype)) {
                $a_parseMethods[$data['module']."||".$data['method']] = $data['method'];
             }
