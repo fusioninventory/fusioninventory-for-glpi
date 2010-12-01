@@ -156,6 +156,8 @@ class PluginFusinvinventoryLibhook {
     public static function addSections($data, $idmachine) {
        global $DB;
 
+      //logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
+
       $Computer = new Computer;
       $sectionsId = array();
       $Computer->getFromDB($idmachine);
