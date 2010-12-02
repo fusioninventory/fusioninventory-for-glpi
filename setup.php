@@ -172,7 +172,7 @@ function plugin_init_fusinvsnmp() {
 //                                                      = '/plugins/fusinvsnmp/front/configsecurity.form.php';
             }
 
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulenetdiscovery'] = '../fusinvsnmp/front/rulenetdiscovery.php?add=1';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulenetdiscovery'] = '../fusinvsnmp/front/rulenetdiscovery.form.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulesnmpinventory']
       = '../fusinvsnmp/front/ruleinventory.form.php';

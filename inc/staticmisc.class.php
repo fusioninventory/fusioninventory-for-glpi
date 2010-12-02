@@ -150,7 +150,7 @@ class PluginFusinvsnmpStaticmisc {
 
       $a_menu[3]['name'] = $LANG['plugin_fusinvsnmp']["menu"][7];
       $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rules.png";
-      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/rulediscovery.php";
+      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusinvsnmp/front/rulenetdiscovery.php";
 
       $a_menu[4]['name'] = $LANG['plugin_fusinvsnmp']["menu"][8];
       $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusinvsnmp/pics/menu_rules.png";
