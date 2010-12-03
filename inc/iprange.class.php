@@ -312,7 +312,6 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $options = array();
       $this->showFormHeader($options);
-// TODO: ajouter communicztion (push ou pull)
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -341,7 +340,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       echo "<td>";
       $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo($module_name);
       $a_list = array();
-      $a_list[0] = "[ Sélection dynamique des agents ]";
+      $a_list[0] = "[ ".$LANG['plugin_fusinvsnmp']['agents'][28]." ]";
       foreach($a_agents as $agent_id=>$data) {
          // TODO : display only agent associated with computer and have ip in this range
          $a_list[$agent_id] = $data['name']." / ".$data['version'];

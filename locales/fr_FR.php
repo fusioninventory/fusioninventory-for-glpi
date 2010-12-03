@@ -586,6 +586,7 @@ $LANG['plugin_fusinvsnmp']['agents'][24]="Nombre de threads";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
 $LANG['plugin_fusinvsnmp']['agents'][26]="Version du module netdiscovery";
 $LANG['plugin_fusinvsnmp']['agents'][27]="Version du module snmpquery";
+$LANG['plugin_fusinvsnmp']['agents'][28]="Auto-gestion dynamique des agents";
 
 $LANG['plugin_fusinvsnmp']['task'][0]="Tâche";
 $LANG['plugin_fusinvsnmp']['task'][1]="Gestion des tâches";
