@@ -78,19 +78,20 @@ class PluginFusinvdeployStaticmisc {
    }
 
    # Select arguments if exist
-   static function task_argument_ocsdeploy() {
+   static function task_argument_ocsdeploy($title) {
       global $LANG;
       $PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
 
       //$a_list = $PluginFusinvdeployPackage->find();
-      echo $LANG['plugin_fusinvdeploy']["package"][7]." : ";
-      echo "</td>";
-      echo "<td>";
-      $options = array();
-      $options['entity'] = $_SESSION['glpiactive_entity'];
-      $options['entity_sons'] = 1;
-      $options['name'] = 'argument';
-      Dropdown::show("PluginFusinvdeployPackage", $options);
+      if ($title == '1') {
+         echo $LANG['plugin_fusinvdeploy']["package"][7]."&nbsp;:";
+      } else {
+         $options = array();
+         $options['entity'] = $_SESSION['glpiactive_entity'];
+         $options['entity_sons'] = 1;
+         $options['name'] = 'argument';
+         Dropdown::show("PluginFusinvdeployPackage", $options);
+      }
    }
 
    static function displayMenu() {
