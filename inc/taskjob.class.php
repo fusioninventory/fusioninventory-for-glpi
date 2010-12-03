@@ -377,6 +377,7 @@ $this->cronTaskscheduler();
       } else {
          // <select> personalisé :
          $a_methods = array();
+         $a_list = array();
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          $a_selectiontype = array();
          foreach ($a_methods as $num=>$datas) {
@@ -384,7 +385,9 @@ $this->cronTaskscheduler();
                $module = $datas['module'];
             }
          }
-         $a_list = call_user_func('plugin_'.$module.'_task_'.$method.'_'.$selectiontype);
+         if (is_callable(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype))) {
+            $a_list = call_user_func(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype));
+         }
          echo "<div style='visibility:hidden'>";
          echo "<select name='itemtype'><option value='0' selected>0</option></select>";
          echo "</div>";

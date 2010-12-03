@@ -448,7 +448,7 @@ $LANG['plugin_fusioninventory']['printer'][0]="pages";
 
 $LANG['plugin_fusioninventory']['menu'][0]="Information about discovered devices";
 $LANG['plugin_fusioninventory']['menu'][1]="Agents management";
-$LANG['plugin_fusioninventory']['menu'][2]="IP range configuration";
+$LANG['plugin_fusioninventory']['menu'][2]="IP range";
 $LANG['plugin_fusioninventory']['menu'][3]="Menu";
 $LANG['plugin_fusioninventory']['menu'][4]="Unknown device";
 $LANG['plugin_fusioninventory']['menu'][5]="Switchs ports history";
