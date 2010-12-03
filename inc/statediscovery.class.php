@@ -61,19 +61,19 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       echo "</th>";
 
       echo "<th>";
-      echo "Start_date";
+      echo $LANG['plugin_fusinvsnmp']['state'][4];
       echo "</th>";
 
       echo "<th>";
-      echo "end_date";
+      echo $LANG['plugin_fusinvsnmp']['state'][5];
       echo "</th>";
 
       echo "<th>";
-      echo "threads";
+      echo $LANG['plugin_fusinvsnmp']['agents'][24];
       echo "</th>";
 
       echo "<th>";
-      echo "IP total";
+      echo $LANG['plugin_fusinvsnmp']['processes'][37];
       echo "</th>";
 
       echo "<th>";

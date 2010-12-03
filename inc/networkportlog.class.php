@@ -232,7 +232,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "<center><table align='center' width='500'>";
       echo "<tr>";
       echo "<td>";
-      echo "Converting history port ...";
+      echo $LANG['plugin_fusinvsnmp']['setup'][19]."...";
       echo "</td>";
       echo "</tr>";
       echo "<tr>";
@@ -280,7 +280,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "<br/><center><table align='center' width='500'>";
       echo "<tr>";
       echo "<td>";
-      echo "Moving creation connections history ...";
+      echo $LANG['plugin_fusinvsnmp']['setup'][20]."...";
       echo "</td>";
       echo "</tr>";
       echo "<tr>";
@@ -341,7 +341,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "<br/><center><table align='center' width='500'>";
       echo "<tr>";
       echo "<td>";
-      echo "Moving deleted connections history ..."; //TODO : translate
+      echo $LANG['plugin_fusinvsnmp']['setup'][21]."...";
       echo "</td>";
       echo "</tr>";
       echo "<tr>";

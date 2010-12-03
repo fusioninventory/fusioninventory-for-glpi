@@ -101,6 +101,9 @@ $LANG['plugin_fusinvsnmp']['setup'][15]="PHP/PECL runkit extension isn't load";
 $LANG['plugin_fusinvsnmp']['setup'][16]="Documentation";
 $LANG['plugin_fusinvsnmp']['setup'][17]="Plugin ".$title." need plugin FusionInventory activated before activation.";
 $LANG['plugin_fusinvsnmp']['setup'][18]="Plugin ".$title." need plugin FusionInventory activated before uninstall.";
+$LANG['plugin_fusinvsnmp']['setup'][19]="Converting history port";
+$LANG['plugin_fusinvsnmp']['setup'][20]="Moving creation connections history";
+$LANG['plugin_fusinvsnmp']['setup'][21]="Moving deleted connections history";
 
 $LANG['plugin_fusinvsnmp']['functionalities'][0]="Features";
 $LANG['plugin_fusinvsnmp']['functionalities'][1]="Add / Delete features";
@@ -347,6 +350,13 @@ $LANG['plugin_fusinvsnmp']['state'][0]="Computer start";
 $LANG['plugin_fusinvsnmp']['state'][1]="Computer stop";
 $LANG['plugin_fusinvsnmp']['state'][2]="User connection";
 $LANG['plugin_fusinvsnmp']['state'][3]="User disconnection";
+$LANG['plugin_fusinvsnmp']['state'][4]="Starting date";
+$LANG['plugin_fusinvsnmp']['state'][5]="Ending date";
+$LANG['plugin_fusinvsnmp']['state'][6]="";
+$LANG['plugin_fusinvsnmp']['state'][7]="";
+$LANG['plugin_fusinvsnmp']['state'][8]="";
+$LANG['plugin_fusinvsnmp']['state'][9]="";
+$LANG['plugin_fusinvsnmp']['state'][10]="";
 
 $LANG['plugin_fusinvsnmp']['mapping'][1]="networking > location";
 $LANG['plugin_fusinvsnmp']['mapping'][2]="networking > firmware";
@@ -603,8 +613,10 @@ $LANG['plugin_fusinvsnmp']['agents'][20]="Synchronisation between OCS and GLPI i
 $LANG['plugin_fusinvsnmp']['agents'][21]="Inventory terminated";
 $LANG['plugin_fusinvsnmp']['agents'][22]="Wait";
 $LANG['plugin_fusinvsnmp']['agents'][23]="Computer link";
-$LANG['plugin_fusinvsnmp']['agents'][24]="SNMP - Threads";
+$LANG['plugin_fusinvsnmp']['agents'][24]="Threads number";
 $LANG['plugin_fusinvsnmp']['agents'][25]="Agent(s)";
+$LANG['plugin_fusinvsnmp']['agents'][26]="Netdiscovery module version";
+$LANG['plugin_fusinvsnmp']['agents'][27]="Snmpquery module version";
 
 $LANG['plugin_fusinvsnmp']['task'][0]="Task";
 $LANG['plugin_fusinvsnmp']['task'][1]="Task management";
@@ -623,6 +635,7 @@ $LANG['plugin_fusinvsnmp']['task'][13]="Agent(s) unvailable";
 $LANG['plugin_fusinvsnmp']['task'][14]="Planified on";
 $LANG['plugin_fusinvsnmp']['task'][15]="Permanent task - Discovery";
 $LANG['plugin_fusinvsnmp']['task'][16]="Permanent task - Inventory";
+$LANG['plugin_fusinvsnmp']['task'][17]="Communication type";
 
 $LANG['plugin_fusinvsnmp']['constructdevice'][0]="Gestion des mib de matériel";
 $LANG['plugin_fusinvsnmp']['constructdevice'][1]="Automatic creation of models";

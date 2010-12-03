@@ -335,10 +335,10 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'>";
+      echo "<td>";
       echo $LANG['plugin_fusinvsnmp']["agents"][25];
       echo "</td>";
-      echo "<td colspan='2'>";
+      echo "<td>";
       $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo($module_name);
       $a_list = array();
       $a_list[0] = "[ Sélection dynamique des agents ]";
@@ -348,11 +348,20 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       }
       Dropdown::showFromArray('selection', $a_list);
       echo "</td>";
+      echo "<td>";
+      echo $LANG['plugin_fusinvsnmp']['task'][17]."&nbsp:";
+      echo "</td>";
+      echo "<td>";
+      $com = array();
+      $com['push'] = "push";
+      $com['pull'] = "pull";
+      Dropdown::showFromArray("communication", $com, array('value'=>$data["communication"]));
+      echo "</td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
 
-      echo "Historique <br/>";
+      echo $LANG['title'][38]."<br/>";
    }
 
 }
