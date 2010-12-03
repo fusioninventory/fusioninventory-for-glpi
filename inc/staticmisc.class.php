@@ -46,10 +46,10 @@ class PluginFusinvsnmpStaticmisc {
                          'method'         => 'netdiscovery',
                          'selection_type' => 'agents',
                          'selection_type_name' => $LANG['plugin_fusioninventory']['agents'][28]);
-      $a_tasks[] = array('module'         => 'fusinvsnmp',
-                         'method'         => 'netdiscovery',
-                         'selection_type' => 'dynamicagent',
-                         'selection_type_name' => $LANG['plugin_fusinvsnmp']['agents'][28]);
+//      $a_tasks[] = array('module'         => 'fusinvsnmp',
+//                         'method'         => 'netdiscovery',
+//                         'selection_type' => 'dynamicagent',
+//                         'selection_type_name' => $LANG['plugin_fusinvsnmp']['agents'][28]);
 
       
       $a_tasks[] = array('module'         => 'fusinvsnmp',
@@ -71,8 +71,12 @@ class PluginFusinvsnmpStaticmisc {
       global $LANG;
 
       $array = array();
-      $array[] = $LANG['plugin_fusioninventory']['agents'][28];
-
+      $array[0] = $LANG['plugin_fusinvsnmp']['agents'][28];
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
+      foreach ($array1 as $id => $data) {
+         $array[$id] = $data['name'];
+      }
       return $array;
    }
 
@@ -132,6 +136,7 @@ class PluginFusinvsnmpStaticmisc {
 
    static function task_selection_type_netdiscovery($itemtype) {
       echo $itemtype;
+      echo "TOTO";
       switch ($itemtype) {
 
          case 'PluginFusinvsnmpIPRange':
