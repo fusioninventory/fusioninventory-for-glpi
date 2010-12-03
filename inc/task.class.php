@@ -219,9 +219,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>Permanent&nbsp;:</td>";
       echo "<td align='center'>";
       if ($this->fields['permanent'] != NULL) {
-         echo "OUI";
+         echo $LANG['choice'][1];
       } else {
-         echo "non";
+         echo $LANG['choice'][0];
       }
       echo "</td>";
       echo "</tr>";

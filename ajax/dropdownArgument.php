@@ -41,13 +41,15 @@ if (strpos($_SERVER['PHP_SELF'],"dropdownArgument.php")) {
 
 checkCentralAccess();
 $value = 0;
+$title = 0;
 if (isset($_POST['value'])) {
    $value = $_POST['value'];
-} else {
-
+}
+if (isset($_POST['title'])) {
+   $title = 1;
 }
 $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-$PluginFusioninventoryTaskjob->dropdownArgument("selection_type", $_POST['method_id'], $value);
+$PluginFusioninventoryTaskjob->dropdownArgument("selection_type", $_POST['method_id'], $value, "", $title);
 
 
 ?>

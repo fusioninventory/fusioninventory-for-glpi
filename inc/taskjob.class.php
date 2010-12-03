@@ -142,7 +142,11 @@ $this->cronTaskscheduler();
       echo "<td align='center'>";
       echo getUserName($this->fields["users_id"],1);
       echo "</td>";
-      echo "<td colspan='2'>";
+      echo "<td>";
+      echo "<span id='show_arguments_title_id'>";
+      echo "</span>";
+      echo "</td>";
+      echo "<td>";
       echo "<span id='show_arguments_id'>";
       echo "</span>";
       echo "</td>";
@@ -265,9 +269,18 @@ $this->cronTaskscheduler();
       $params=array('method_id'=>'__VALUE__',
                      'entity_restrict'=>$entity_restrict,
                      'rand'=>$rand,
-                     'myname'=>$myname
+                     'myname'=>$myname,
+                     'title'=>'1'
+                     );
+      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_arguments_title_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownArgument.php",$params);
+
+      $params=array('method_id'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'rand'=>$rand,
+                     'myname'=>$myname,
                      );
       ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_arguments_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownArgument.php",$params);
+
 
 
       if ($value != "0") {
@@ -390,7 +403,7 @@ $this->cronTaskscheduler();
 
 
 
-   function dropdownArgument($myname,$method,$value=0,$entity_restrict='') {
+   function dropdownArgument($myname,$method,$value=0,$entity_restrict='', $title = 0) {
       global $DB,$CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -401,9 +414,10 @@ $this->cronTaskscheduler();
          }
       }
 
-      if (function_exists('plugin_'.$module.'_task_argument_'.$method)) {
-         call_user_func('plugin_'.$module.'_task_argument_'.$method);
+      if (is_callable(array("Plugin".$module."Staticmisc", "task_argument_".$method))) {
+         call_user_func(array("Plugin".$module."Staticmisc", "task_argument_".$method), $title);
       }
+
    }
    
    
