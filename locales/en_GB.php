@@ -352,6 +352,8 @@ $LANG['plugin_fusinvsnmp']['state'][2]="User connection";
 $LANG['plugin_fusinvsnmp']['state'][3]="User disconnection";
 $LANG['plugin_fusinvsnmp']['state'][4]="Starting date";
 $LANG['plugin_fusinvsnmp']['state'][5]="Ending date";
+$LANG['plugin_fusinvsnmp']['state'][6]="Total discovery devices";
+$LANG['plugin_fusinvsnmp']['state'][7]="Total in error";
 
 $LANG['plugin_fusinvsnmp']['mapping'][1]="networking > location";
 $LANG['plugin_fusinvsnmp']['mapping'][2]="networking > firmware";
