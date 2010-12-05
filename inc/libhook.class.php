@@ -679,6 +679,20 @@ class PluginFusinvinventoryLibhook {
                   $Computer->update($Computer->fields);
                   break;
 
+               case 'USERS':
+                  if (isset($dataSection['LOGIN'])) {
+                     $Computer->fields['contact'] = $dataSection['LOGIN'];
+                     $query = "SELECT `id`
+                               FROM `glpi_users`
+                               WHERE `name` = '" . $dataSection['LOGIN'] . "';";
+                     $result = $DB->query($query);
+                     if ($DB->numrows($result) == 1) {
+                        $Computer->fields["users_id"] = $DB->result($result, 0, 0);
+                     }
+                  }
+                  $Computer->update($Computer->fields);
+                  break;
+
             }
          }
       }
