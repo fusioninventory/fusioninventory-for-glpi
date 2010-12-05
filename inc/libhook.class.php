@@ -626,6 +626,59 @@ class PluginFusinvinventoryLibhook {
                   $PluginFusinvinventoryImport_Networkport->AddUpdateItem("update", $items_id, $dataSection);
                   break;
 
+
+               case 'HARDWARE':
+                  if (isset($dataSection['NAME']))
+                     $Computer->fields['name'] = $dataSection['NAME'];
+                  if (isset($dataSection['OSNAME'])) {
+                     $OperatingSystem = new OperatingSystem;
+                     $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
+                  }
+                  if (isset($dataSection['OSVERSION'])) {
+                     $OperatingSystemVersion = new OperatingSystemVersion;
+                     $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                  }
+                  if (isset($dataSection['WINPRODID'])) {
+                     $Computer->fields['os_licenseid'] = $dataSection['WINPRODID'];
+                  }
+                  if (isset($dataSection['WINPRODKEY'])) {
+                     $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+                  }
+                  if (isset($dataSection['WORKGROUP'])) {
+                     $Domain = new Domain;
+                     $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
+                  }
+                  if (isset($dataSection['OSCOMMENTS'])) {
+                     if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
+                        $OperatingSystemServicePack = new OperatingSystemServicePack;
+                        $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                     }
+                  }
+                  $Computer->update($Computer->fields);
+                  break;
+
+               case 'BIOS':
+                  if ((isset($dataSection['SMANUFACTURER']))
+                        AND (!empty($dataSection['SMANUFACTURER']))) {
+
+                     $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                             $dataSection['SMANUFACTURER']);
+                  } else if ((isset($dataSection['BMANUFACTURER']))
+                               AND (!empty($dataSection['BMANUFACTURER']))) {
+
+                     $Computer->fields['manufacturers_id'] = Dropdown::importExternal('Manufacturer',
+                                                                             $dataSection['BMANUFACTURER']);
+                  }
+                  if (isset($dataSection['SMODEL'])) {
+                     $ComputerModel = new ComputerModel;
+                     $Computer->fields['computermodels_id'] = $ComputerModel->import(array('name'=>$dataSection['SMODEL']));
+                  }
+                  if (isset($dataSection['SSN']))
+                     $Computer->fields['serial'] = $dataSection['SSN'];
+                  
+                  $Computer->update($Computer->fields);
+                  break;
+
             }
          }
       }
