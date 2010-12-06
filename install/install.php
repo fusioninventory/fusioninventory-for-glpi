@@ -112,6 +112,19 @@ function pluginFusinvinventoryUninstall() {
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
    $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
 
+   // Delete rules
+   $Rule = new Rule();
+   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleInventory'");
+   foreach ($a_rules as $id => $data) {
+      $Rule->delete($data);
+   }
+   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleEntity'");
+   foreach ($a_rules as $id => $data) {
+      $Rule->delete($data);
+   }
+
+
+
    $query = "SHOW TABLES;";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
