@@ -582,6 +582,9 @@ class PluginFusinvinventoryLibhook {
       $Computer->getFromDB($idmachine);
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
+      $_SESSION["plugin_fusinvinventory_history_add"] = true;
+      $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
+
 
       foreach($data as $section) {
          $dataSection = unserialize($section['dataSection']);

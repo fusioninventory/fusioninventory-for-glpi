@@ -90,18 +90,20 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
       $DeviceMemory = new DeviceMemory();
       $memory_id = $DeviceMemory->import($memory);
       if ($memory_id) {
+         $array = array();
+         $array['_itemtype'] = 'DeviceMemory';
+         $array['devicememories_id'] = $memory_id;
+         $array['specificity'] = $dataSection["CAPACITY"];
          if ($type == "update") {
-            $devID = $CompDevice->add(array('computers_id' => $items_id,
-                                            '_no_history'  => $_SESSION["plugin_fusinvinventory_no_history_add"],
-                                            '_itemtype'     => 'DeviceMemory',
-                                            'devicememories_id'     => $memory_id,
-                                            'specificity'  => $dataSection["CAPACITY"]));
+            $array['computers_id'] = $computer_memory['computers_id'];
+            $array['id'] = $items_id;
+            $devID = $CompDevice->update($array);
          } else if ($type == "add") {
-            $devID = $CompDevice->add(array('computers_id' => $items_id,
-                                            '_no_history' => $_SESSION["plugin_fusinvinventory_no_history_add"],
-                                            '_itemtype'     => 'DeviceMemory',
-                                            'devicememories_id'     => $memory_id,
-                                            'specificity'  => $dataSection["CAPACITY"]));
+            $array['computers_id'] = $items_id;
+            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+               $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            }
+            $devID = $CompDevice->add($array);
          }
          return $devID;
       }

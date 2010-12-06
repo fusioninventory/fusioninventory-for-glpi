@@ -97,7 +97,9 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
       if ($type == 'update') {
          $devID = $NetworkPort->update($a_NetworkPort);
       } else {
-         $a_NetworkPort['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+            $a_NetworkPort['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+         }
          $devID = $NetworkPort->add($a_NetworkPort);
       }
 

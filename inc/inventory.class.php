@@ -157,9 +157,21 @@ class PluginFusinvinventoryInventory {
       $config['printError'] = 0;
 
       $config['sections'][] = "DRIVES";
-      $config['sections'][] = "NETWORKS";
-      $config['sections'][] = "PROCESSES";
       $config['sections'][] = "SOFTWARES";
+      $config['sections'][] = "CONTROLLERS";
+      $config['sections'][] = "ENVS";
+      $config['sections'][] = "INPUTS";
+      $config['sections'][] = "MEMORIES";
+      $config['sections'][] = "MONITORS";
+      $config['sections'][] = "NETWORKS";
+      $config['sections'][] = "PORTS";
+      $config['sections'][] = "PRINTERS";
+      $config['sections'][] = "PROCESSES";
+      $config['sections'][] = "SOUNDS";
+      $config['sections'][] = "STORAGES";
+      $config['sections'][] = "USERS";
+      $config['sections'][] = "VIDEOS";
+      $config['sections'][] = "USBDEVICES";
 
       define("LIBSERVERFUSIONINVENTORY_LOG_FILE",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/logs');
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');

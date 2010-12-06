@@ -84,16 +84,19 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
       $sound_id = $DeviceSoundCard->import($sound);
 
       if ($sound_id) {
+         $array = array();
+         $array['_itemtype'] = 'DeviceSoundCard';
+         $array['devicesoundcards_id'] = $sound_id;
          if ($type == "update") {
-            $devID = $CompDevice->update(array('id' => $items_id,
-                                         'computers_id' => $computer_sound['computers_id'],
-                                         '_itemtype'     => 'DeviceSoundCard',
-                                         'devicesoundcards_id'     => $sound_id));
+            $array['id'] = $items_id;
+            $array['computers_id'] = $computer_sound['computers_id'];
+            $devID = $CompDevice->update($array);
          } else if ($type == "add") {
-            $devID = $CompDevice->add(array('computers_id' => $items_id,
-                                         '_no_history' => $_SESSION["plugin_fusinvinventory_no_history_add"],
-                                         '_itemtype'     => 'DeviceSoundCard',
-                                         'devicesoundcards_id'     => $sound_id));
+            $array['computers_id'] = $items_id;
+            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+               $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            }
+            $devID = $CompDevice->add($array);
          }
          return $devID;         
       }

@@ -134,10 +134,14 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       }
 
       $Computer_Item = new Computer_Item();
-      $devID = $Computer_Item->add(array('computers_id' => $items_id,
-                                         'itemtype'     => 'Peripheral',
-                                         '_no_history'  => $_SESSION["plugin_fusinvinventory_no_history_add"],
-                                         'items_id'     => $peripheral_id));
+      $array = array();
+      $array['computers_id'] = $items_id;
+      $array['itemtype'] = 'Peripheral';
+      $array['items_id'] = $peripheral_id;
+      if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+         $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+      }
+      $devID = $Computer_Item->add($array);
 
       return $devID;
    }

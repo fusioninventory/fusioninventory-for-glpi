@@ -81,16 +81,19 @@ class PluginFusinvinventoryImport_Controller extends CommonDBTM {
       $controller_id = $DeviceControl->import($controller);
 
       if ($controller_id) {
+         $array = array();
+         $array['devicecontrols_id'] = $controller_id;
+         $array['_itemtype'] = 'DeviceControl';
          if ($type == "update") {
-            $devID = $CompDevice->update(array('id' => $items_id,
-                                         'computers_id' => $computer_controller['computers_id'],
-                                         '_itemtype'     => 'DeviceControl',
-                                         'devicecontrols_id'     => $controller_id));
+            $array['id'] = $items_id;
+            $array['computers_id'] = $computer_controller['computers_id'];
+            $devID = $CompDevice->update($array);
          } else if ($type == "add") {
-            $devID = $CompDevice->add(array('computers_id' => $items_id,
-                                         '_no_history' => $_SESSION["plugin_fusinvinventory_no_history_add"],
-                                         '_itemtype'     => 'DeviceControl',
-                                         'devicecontrols_id'     => $controller_id));
+            $array['computers_id'] = $items_id;
+            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+               $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            }
+            $devID = $CompDevice->add($array);
          }
          return $devID;         
       }

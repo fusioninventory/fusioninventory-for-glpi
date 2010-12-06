@@ -131,14 +131,19 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
       if (!isset($a_monitor['id'])) {
          $monitor_id = $monitor->add($a_monitor);
       } else {
+         $monitor->update($a_monitor);
          $monitor_id = $a_monitor['id'];
       }
 
       $Computer_Item = new Computer_Item();
-      $devID = $Computer_Item->add(array('computers_id' => $items_id,
-                                 'itemtype'     => 'Monitor',
-                                 '_no_history'  => $_SESSION["plugin_fusinvinventory_no_history_add"],
-                                 'items_id'     => $monitor_id));
+      $array = array();
+      $array['computers_id'] = $items_id;
+      $array['itemtype'] = 'Monitor';
+      $array['items_id'] = $monitor_id;
+      if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+         $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+      }
+      $devID = $Computer_Item->add($array);
       return $devID;
    }
 

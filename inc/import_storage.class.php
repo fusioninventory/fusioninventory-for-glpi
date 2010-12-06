@@ -122,7 +122,9 @@ class PluginFusinvinventoryImport_Storage extends CommonDBTM {
          } else if ($type == "add") {
             $array = array();
             $array['computers_id'] = $items_id;
-            $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+               $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            }
             $array['_itemtype'] =  $DeviceDrive->getType();
             $array[$drive_idfield] =  $drive_id;
             if ($type_tmp == "HardDrive") {
