@@ -105,6 +105,22 @@ function pluginFusinvinventoryUninstall() {
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
       deleteDir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
    }
+   // Delete files of lib
+   if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter')) {
+      deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter');
+   }
+   if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias')) {
+      deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias');
+   }
+   if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines')) {
+      deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines');
+   }
+
+   // Delete config
+   $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+   $PluginFusioninventoryConfig->cleanConfig($plugins_id);
+
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
 
@@ -123,8 +139,7 @@ function pluginFusinvinventoryUninstall() {
       $Rule->delete($data);
    }
 
-
-
+   
    $query = "SHOW TABLES;";
    $result=$DB->query($query);
    while ($data=$DB->fetch_array($result)) {
