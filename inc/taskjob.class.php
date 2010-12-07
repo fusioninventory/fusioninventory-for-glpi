@@ -110,7 +110,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-   function showForm($id, $options=array()) {
+   function  showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
@@ -131,24 +131,15 @@ $this->cronTaskscheduler();
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
-      echo "<td>Méthode&nbsp;:</td>";
-      echo "<td align='center'>";
-      $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['selection_type']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo getUserName($this->fields["users_id"],1);
-      echo "</td>";
-      echo "<td>";
-      echo "<span id='show_arguments_title_id'>";
-      echo "</span>";
-      echo "</td>";
-      echo "<td>";
-      echo "<span id='show_arguments_id'>";
-      echo "</span>";
+      echo "<td rowspan='4'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='4'>";
+      echo "<textarea cols='40' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
+      $a_methods = array();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      foreach ($a_methods as $num=>$datas) {
+         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+      }
       echo "</td>";
       echo "</tr>";
 
@@ -161,20 +152,64 @@ $this->cronTaskscheduler();
          showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
       }
       echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][24]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][25]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
+      echo "</td>";
+      echo "</tr>";
+      echo "</tr>";
+
+      // Actions
+      echo "<tr>";
+      echo "<th colspan='4'>".$LANG['rulesengine'][7]."&nbsp;:</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['rulesengine'][30]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['selection_type']);
+      echo "</td>";
+      echo "<td>";
+      echo "<span id='show_arguments_title_id'>";
+      echo "</span>";
+      echo "</td>";
+      echo "<td>";
+      echo "<span id='show_arguments_id'>";
+      echo "</span>";
+      echo "</td>";
+      echo "</tr>";
+
+      // Run on
+      echo "<tr>";
+      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['task'][23]."</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>selection_type&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<span id='show_SelectionType_id'>";
       //$this->dropdownSelectionType("selection_type");
       echo "</span>";
       echo "</td>";
+      echo "<td colspan='2'>";
+      echo "<span id='show_Selection_id'>";
+      echo "</span>";
+      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      echo "<td rowspan='4'>Selection&nbsp;:</td>";
-      echo "<td align='center' rowspan='4'>";
-      echo "<span id='show_Selection_id'>";
-      echo "</span>";
+      echo "<td>Selection&nbsp;:</td>";
+      echo "<td align='center' colspan='3'>";
       echo "<span id='show_selectionList'>";
       echo "</span>";
       $a_deviceList = importArrayFromDB($this->fields['selection']);
@@ -196,34 +231,9 @@ $this->cronTaskscheduler();
       echo "</div>";
       echo "</td>";
       echo "</tr>";
+      
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>Nombre d'essais&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
-      echo "</td>";
-      echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>Temps entre 2 essais (en minutes)&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
-      echo "</td>";
-      echo "</tr>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo "<textarea cols='40' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
-      $a_methods = array();
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      foreach ($a_methods as $num=>$datas) {
-         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
-      }
-      echo "</td>";
-      echo "</tr>";
 
       if ($id) {
          if (count($PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$id."'")) > 0) {

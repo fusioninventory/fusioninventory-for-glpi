@@ -524,6 +524,9 @@ $LANG['plugin_fusioninventory']['task'][19]="Running tasks";
 $LANG['plugin_fusioninventory']['task'][20]="Finished tasks";
 $LANG['plugin_fusioninventory']['task'][21]="Action sur ce matériel";
 $LANG['plugin_fusioninventory']['task'][22]="Only planified tasks";
+$LANG['plugin_fusioninventory']['task'][23]="Run on";
+$LANG['plugin_fusioninventory']['task'][24]="Number of trials";
+$LANG['plugin_fusioninventory']['task'][25]="Time between 2 trials (in minutes)";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
