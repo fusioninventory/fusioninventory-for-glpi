@@ -57,7 +57,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       echo "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
       echo "<tr>";
-      echo "<th colspan='4'>Historique</th>";
+      echo "<th colspan='4'>".$LANG['title'][38]."</th>";
       echo "</tr>";
 
       echo "<tr>";
