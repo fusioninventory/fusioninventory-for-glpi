@@ -138,6 +138,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       global $LANG;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pta  = new PluginFusioninventoryAgent();
+
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationNetDiscovery->import().');
@@ -146,7 +150,25 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
+         $a_agent = $pta->InfosByKey($p_DEVICEID);
+         $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$p_CONTENT->PROCESSNUMBER."'
+            AND `plugin_fusioninventory_agents_id`='".$a_agent['id']."' ");
+         foreach($a_jobstatus as $jobstatus_id=>$data) {
+            
+         }
+         $PluginFusioninventoryTaskjobstatus->getFromDB($jobstatus_id);
+         $PluginFusioninventoryTaskjobstatus->changeStatus($jobstatus_id, 2);
+         $nb_devices = 0;
+         foreach($p_CONTENT->DEVICE as $child) {
+            $nb_devices++;
+         }
+         $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
+                                                   $PluginFusioninventoryTaskjobstatus->fields['items_id'],
+                                                   $PluginFusioninventoryTaskjobstatus->fields['itemtype'],
+                                                   '0',
+                                                   $nb_devices.' devices founded');
       }
+
       $moduleversion = "1.0";
       if (isset($p_CONTENT->MODULEVERSION)) {
          $moduleversion = $p_CONTENT->PROCESSNUMBER;
