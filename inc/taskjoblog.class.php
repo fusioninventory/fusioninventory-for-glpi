@@ -114,8 +114,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
                echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][5]."</strong>";
                break;
 
+            default:
+               echo "<td>";
+               break;
          }
-
+         
          echo "</td>";
          echo "<td align='center'>";
          echo $datas['comment'];
@@ -133,6 +136,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    function addTaskjoblog($taskjobs_id, $items_id, $itemtype, $state, $comment) {
 
       $this->getEmpty();
+      unset($this->fields['id']);
       $this->fields['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
       $this->fields['date'] = date("Y-m-d H:i:s");
       $this->fields['items_id'] = $items_id;

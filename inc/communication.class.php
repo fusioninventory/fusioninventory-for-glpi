@@ -164,10 +164,6 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
 
-         //get jobstatus
-         
-
-
          $moduleCommunication = new $moduleClass;
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {
