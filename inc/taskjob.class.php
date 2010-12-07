@@ -503,6 +503,7 @@ $this->cronTaskscheduler();
 
                   } else if (is_array($a_agents)) {
                      // Add jobstatus and put status (waiting on server = 0)
+                     $a_input = array();
                      $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
                      $a_input['items_id'] = $items_id;
                      $a_input['itemtype'] = $itemtype;
@@ -517,7 +518,7 @@ $this->cronTaskscheduler();
                      $PluginFusioninventoryTaskjoblog->add($a_input);
 
                      if ($data['communication'] == 'push') {
-                        $remoteStartAgents[$a_agents['ip']] = $a_agents['token'];
+                        $this->remoteStartAgent($a_agents['ip'], $a_agents['token']);
                      }
                      $this->getFromDB($data['id']);
                      $this->fields['status'] = 1;
