@@ -50,20 +50,17 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-
-      // Only rangeip can arrive here
-
-      // Search on rangeip if agent associated with agentdiscovery
-      $PluginFusinvsnmpIPRange->getFromDB($items_id);
-      if ($PluginFusinvsnmpIPRange->fields['plugin_fusioninventory_agents_id_discover'] != "0") {
-         // yes => try to associated to this agent
-         if ($PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY', $PluginFusinvsnmpIPRange->fields['plugin_fusioninventory_agents_id_discover'])) {
-            $a_ip = $PluginFusioninventoryAgent->getIPs($PluginFusinvsnmpIPRange->fields['plugin_fusioninventory_agents_id_discover']);
-            $PluginFusioninventoryAgent->getFromDB($PluginFusinvsnmpIPRange->fields['plugin_fusioninventory_agents_id_discover']);
+      
+      if ($items_id == '-1') {
+         // no => search an agent can do snmp
+         $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
+         foreach($a_agents as $agents_id=>$data) {
+            $a_ip = $PluginFusioninventoryAgent->getIPs($agents_id);
+            $PluginFusioninventoryAgent->getFromDB($agents_id);
             foreach($a_ip as $num=>$ip) {
                if ($communication == 'push') {
                   $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-                  if ($agentStatus == true) {
+                  if ($agentStatus ==  true) {
                      $return = array();
                      $return['ip'] = $ip;
                      $return['token'] = $PluginFusioninventoryAgent->fields['token'];
@@ -79,30 +76,12 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                }
             }
          }
-      }
-      // no => search an agent can do snmp
-      $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
-      foreach($a_agents as $agents_id=>$data) {
-         $a_ip = $PluginFusioninventoryAgent->getIPs($agents_id);
-         $PluginFusioninventoryAgent->getFromDB($agents_id);
-         foreach($a_ip as $num=>$ip) {
-            if ($communication == 'push') {
-               $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-               if ($agentStatus ==  true) {
-                  $return = array();
-                  $return['ip'] = $ip;
-                  $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-                  $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
-                  return $return;
-               }
-            } else  if ($communication == 'pull') {
-               $return = array();
-               $return['ip'] = $ip;
-               $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-               $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
-               return $return;
-            }
-         }
+      } else {
+         $PluginFusioninventoryAgent->getFromDB($items_id);
+         $return = array();
+         $return['token'] = $PluginFusioninventoryAgent->fields['token'];
+         $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+         return $return;
       }
    }
 
@@ -116,12 +95,14 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
       $PluginFusinvsnmpAgentconfig = new  PluginFusinvsnmpAgentconfig;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity;
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
 
       $PluginFusioninventoryTaskjobstatus->getFromDB($taskjobstatus_id);
       $PluginFusioninventoryAgent->getFromDB($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id']);
+      $PluginFusioninventoryTaskjob->getFromDB($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_taskjobs_id']);
 
       $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id']);
 
@@ -131,7 +112,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $sxml_param->addAttribute('CORE_DISCOVERY', "1");
          $sxml_param->addAttribute('THREADS_DISCOVERY', $PluginFusinvsnmpAgentconfig->fields["threads_netdiscovery"]);
          $sxml_param->addAttribute('PID', $taskjobs_id);
-      $PluginFusinvsnmpIPRange->getFromDB($PluginFusioninventoryTaskjobstatus->fields['items_id']);
+      $PluginFusinvsnmpIPRange->getFromDB($PluginFusioninventoryTaskjob->fields['argument']);
       $sxml_rangeip = $sxml_option->addChild('RANGEIP');
          $sxml_rangeip->addAttribute('ID', $PluginFusinvsnmpIPRange->fields['id']);
          $sxml_rangeip->addAttribute('IPSTART', $PluginFusinvsnmpIPRange->fields["ip_start"]);

@@ -71,11 +71,11 @@ class PluginFusinvsnmpStaticmisc {
       global $LANG;
 
       $array = array();
-      $array[0] = $LANG['plugin_fusinvsnmp']['agents'][28];
+      $array[-1] = $LANG['plugin_fusinvsnmp']['agents'][28];
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
       foreach ($array1 as $id => $data) {
-         $array[$id] = $data['name'];
+         $array["PluginFusioninventoryAgent-".$id] = $LANG['plugin_fusioninventory']['agents'][28]." - ".$data['name'];
       }
       return $array;
    }
