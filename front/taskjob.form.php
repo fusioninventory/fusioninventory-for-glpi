@@ -52,7 +52,6 @@ if (isset ($_POST["add"])) {
    $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
 
    if (!empty($_POST['selection'])) {
-      logInFile('toto', print_r($_POST['selection'], true));
       $a_selection = explode(',', $_POST['selection']);
       foreach ($a_selection as $num=>$data) {
          $dataDB = explode('-', $data);
