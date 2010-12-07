@@ -164,6 +164,10 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
 
+         //get jobstatus
+         
+
+
          $moduleCommunication = new $moduleClass;
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {
@@ -274,6 +278,7 @@ class PluginFusioninventoryCommunication {
       foreach ($moduleRun as $className=>$data) {
          $class = new $className;
          $this->sxml = $class->Run($data['items_id'], $data['itemtype'], $data['plugin_fusioninventory_taskjobs_id'], $data['id']);
+         $PluginFusioninventoryTaskjobstatus->changeStatus($data['id'], 1);
       }
    }
 
@@ -288,8 +293,11 @@ class PluginFusioninventoryCommunication {
 
 
    // Put in INVENTORY plugin
-   function addInventory() {
-      $this->sxml->addChild('RESPONSE', "SEND");
+   function addInventory($items_id) {
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      if ($PluginFusioninventoryAgentmodule->getAgentsCanDo('INVENTORY', $items_id)) {
+         $this->sxml->addChild('RESPONSE', "SEND");
+      }
    }
 
 }

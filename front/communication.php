@@ -119,10 +119,9 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
             // Get taskjob in waiting
             $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
-
             // ******** Send XML
             
-            $PluginFusioninventoryCommunication->addInventory();
+            $PluginFusioninventoryCommunication->addInventory($a_agent['id']);
             $PluginFusioninventoryCommunication->addProlog();
             $PluginFusioninventoryCommunication->setXML($PluginFusioninventoryCommunication->getXML());
 

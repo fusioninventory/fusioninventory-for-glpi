@@ -41,7 +41,6 @@ if (strpos($_SERVER['PHP_SELF'],"dropdownSelection.php")) {
 if (!defined('GLPI_ROOT')) {
    die("Can not acces directly to this file");
 }
-
 checkCentralAccess();
 
 echo "<script type='text/javascript'>
@@ -55,7 +54,11 @@ if ((list.match(pattern1)) || (list.match(pattern2))) {
 
 } else {
    select.options[select.options.length] = new Option(obj.options[obj.selectedIndex].text, document.getElementsByName('itemtype').item(0).value + '-' + obj.value);
-   document.getElementById('selection').value = list + ',' + document.getElementsByName('itemtype').item(0).value + '-' + obj.value;
+   if (document.getElementsByName('itemtype').item(0).value !== '0') {
+      document.getElementById('selection').value = list + ',' + document.getElementsByName('itemtype').item(0).value + '-' + obj.value;
+   } else {
+      document.getElementById('selection').value = list + ',' + obj.value;
+   }
 }
 
  </script>";
