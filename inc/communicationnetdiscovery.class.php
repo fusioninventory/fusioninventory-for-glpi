@@ -158,15 +158,17 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          }
          $PluginFusioninventoryTaskjobstatus->getFromDB($jobstatus_id);
          $PluginFusioninventoryTaskjobstatus->changeStatus($jobstatus_id, 2);
-         $nb_devices = 0;
-         foreach($p_CONTENT->DEVICE as $child) {
-            $nb_devices++;
-         }
-         $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
+         if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
+            $nb_devices = 0;
+            foreach($p_CONTENT->DEVICE as $child) {
+               $nb_devices++;
+            }
+            $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
                                                    $PluginFusioninventoryTaskjobstatus->fields['items_id'],
                                                    $PluginFusioninventoryTaskjobstatus->fields['itemtype'],
                                                    '0',
                                                    $nb_devices.' devices founded');
+         }
       }
 
       $moduleversion = "1.0";
@@ -175,6 +177,11 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       }
       $pti = new PluginFusinvsnmpImportExport;
       $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID, $moduleversion);
+      if (isset($p_CONTENT->AGENT->END)) {
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                                                   $PluginFusioninventoryTaskjobstatus->fields['items_id'],
+                                                   $PluginFusioninventoryTaskjobstatus->fields['itemtype']);
+      }
       return $errors;
    }
 }

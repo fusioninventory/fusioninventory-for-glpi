@@ -115,10 +115,13 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          echo "<td>";
          echo $data['status'];
          echo "</td>";
-         echo "<td>";
 
-         echo "</td>";
          echo "<td>";
+         echo convDateTime($data['start_time']);
+         echo "</td>";
+
+         echo "<td>";
+         echo convDateTime($data['end_time']);
          echo "</td>";
 
          echo "<td>";
@@ -173,11 +176,11 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          $input['plugin_fusioninventory_taskjob_id'] = $p_number;
          $input['plugin_fusioninventory_agents_id'] = $agent_id;
          $id = $this->add($input);
-         $data[$id] = $this->getFromDB($id);
+         $this->getFromDB($id);
+         $data[$id] = $this->fields;
       }
       
-      foreach ($data as $process_id=>$dataInfos) {
-         $input['id'] = $process_id;
+      foreach ($data as $process_id=>$input) {
          foreach ($a_input as $field=>$value) {
             if ($field == 'nb_ip'
                     || $field == 'nb_found'
@@ -208,8 +211,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
    function endState($p_number, $date_end, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
-      foreach ($data as $process_id=>$dataInfos) {
-         $input = array();
+      foreach ($data as $process_id=>$input) {
          $input['end_time'] = $date_end;
          $this->update($input);
       }
