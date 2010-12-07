@@ -141,6 +141,18 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_inventorycriteria` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_netdiscoverycriteria`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_netdiscoverycriteria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comment` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportconnectionlogs`;
 
@@ -638,4 +650,11 @@ INSERT INTO `glpi_plugin_fusinvsnmp_inventorycriteria` (`id`, `name`, `comment`)
 (1, 'Serial number', 'serial'),
 (2, 'Mac address', 'mac'),
 (3, 'Model', 'model'),
-(8, 'Name', 'name');
+(4, 'Name', 'name');
+
+
+INSERT INTO `glpi_plugin_fusinvsnmp_netdiscoverycriteria` (`id`, `name`, `comment`) VALUES
+(1, 'Serial number', 'serial'),
+(2, 'Mac address', 'mac'),
+(3, 'Model', 'model'),
+(4, 'Name', 'name');

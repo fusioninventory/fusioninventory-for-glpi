@@ -167,7 +167,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                                                    $PluginFusioninventoryTaskjobstatus->fields['items_id'],
                                                    $PluginFusioninventoryTaskjobstatus->fields['itemtype'],
                                                    '0',
-                                                   $nb_devices.' devices founded');
+                                                   $nb_devices.' devices found');
          }
       }
 
@@ -185,5 +185,40 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       return $errors;
    }
 }
+
+
+   function sendCriteria($p_xml) {
+
+      $_SESSION['glpi_plugin_fusinvsnmp_xmlDevice'] = $p_xml;
+
+      $input = array();
+
+      // Global criterias
+
+      if ((isset($p_xml->SERIAL)) AND (!empty($p_xml->SERIAL))) {
+         $input['globalcriteria'][] = 1;
+         $input['serial'] = strval($p_xml->SERIAL);
+      }
+      if ((isset($p_xml->MAC)) AND (!empty($p_xml->MAC))) {
+         $input['globalcriteria'][] = 2;
+         $input['mac'] = strval($p_xml->MAC);
+      }
+      if ((isset($p_xml->MODELSNMP)) AND (!empty($p_xml->MODELSNMP))) {
+         $input['globalcriteria'][] = 3;
+         $input['model'] = strval($p_xml->MODELSNMP);
+      }
+      if ((isset($p_xml->NETBIOSNAME)) AND (!empty($p_xml->NETBIOSNAME))) {
+         $input['globalcriteria'][] = 4;
+         $input['name'] = strval($p_xml->NETBIOSNAME);
+      } else if ((isset($p_xml->SNMPHOSTNAME)) AND (!empty($p_xml->SNMPHOSTNAME))) {
+         $input['globalcriteria'][] = 4;
+         $input['name'] = strval($p_xml->SNMPHOSTNAME);
+      }
+
+      define('DATACRITERIA', serialize($input));
+      $rule = new PluginFusinvsnmpRuleNetdiscovery();
+      $data = array ();
+      $data = $rule->processAllRules($input, array());
+   }
 
 ?>

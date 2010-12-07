@@ -101,7 +101,7 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
             return;
          }
       }
-      // If we are here, agentconfig has been not founded
+      // If we are here, agentconfig has been not found
       $this->getEmpty();
       $this->fields['plugin_fusioninventory_agents_id'] = $agents_id;
       $this->fields['threads_netdiscovery'] = 1;

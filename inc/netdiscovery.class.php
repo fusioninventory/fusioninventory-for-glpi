@@ -80,7 +80,18 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $PluginFusioninventoryAgent->getFromDB($items_id);
          $return = array();
          $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-         $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+         $return['agents_id'] = $items_id;
+         if ($communication == 'push') {
+            $a_ip = $PluginFusioninventoryAgent->getIPs($items_id);
+            $PluginFusioninventoryAgent->getFromDB($items_id);
+            foreach($a_ip as $num=>$ip) {
+               $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+               if ($agentStatus ==  true) {
+                  $return['ip'] = $ip;
+                  return $return;
+               }
+            }
+         }
          return $return;
       }
    }
