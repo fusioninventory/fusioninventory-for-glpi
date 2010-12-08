@@ -399,6 +399,7 @@ class PluginFusionInventoryImportExport extends CommonDBTM {
                $newID = $ptud->add($data);
                unset($data);
                // Add networking_port
+               $port_add = array();
                $port_add["on_device"] = $newID;
                $port_add["device_type"] = PLUGIN_FUSIONINVENTORY_MAC_UNKNOWN;
                $port_add["ifaddr"] = $discovery->IP;
