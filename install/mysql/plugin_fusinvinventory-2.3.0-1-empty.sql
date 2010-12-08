@@ -93,4 +93,9 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklist` (`id`, `plugin_fusioninvento
 (34, 1, 'SN-123456fvgv3i0b8o5n6n7k'),
 (35, 1, 'Unknow'),
 (36, 5, 'Unknow'),
-(37, 1, 'System Serial Number');
+(37, 1, 'System Serial Number'),
+(38, 5, 'To Be Filled By O.E.M.'),
+(39, 5, '*'),
+(40, 5, 'System Product Name'),
+(41, 5, 'Product Name'),
+(42, 5, 'System Name');
