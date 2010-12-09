@@ -337,6 +337,7 @@ function getPortIDfromDeviceSysname($sysname, $ifDescr) {
                $a_ports = $np->find("`on_device`='".$data_unknown['ID']."' ");
                foreach ($a_ports as $id_port=>$dataport) {
                   // Delete Wire :
+                  plugin_fusioninventory_addLogConnection("remove",$id_port);
                   removeConnector($id_port);
                   // Delete port :
                   $np->deleteFromDB($id_port);

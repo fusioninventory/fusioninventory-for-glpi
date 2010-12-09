@@ -57,8 +57,7 @@ class PluginFusionInventorySNMPHistory extends CommonDBTM {
 	function insert_connection($status,$array,$FK_process=0) {
 		global $DB,$CFG_GLPI;
 
-      $pthc = new PluginFusionInventoryHistoryConnections;
-
+      $input = array();
       $input['date'] = date("Y-m-d H:i:s");
       $input['FK_ports'] = $array['FK_ports'];
 
