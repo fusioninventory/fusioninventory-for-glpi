@@ -485,9 +485,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
 
-      foreach ($a_ports as $port_id=>$data) {
+      foreach ($a_ports as $data) {
          //plugin_fusioninventory_addLogConnection("remove",$port_id);
-         $nn->delete(array('id' => $port_id));
+         $nn->delete(array('id' => $data['id']));
          // Search free port
          $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
             LEFT JOIN `glpi_networkports_networkports`
@@ -497,6 +497,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                AND `networkports_id_1` is null
             LIMIT 1;";
          $result = $DB->query($query);
+         $freeport_id = 0;
          if ($DB->numrows($result) == 1) {
             $freeport = $DB->fetch_assoc($result);
             $freeport_id = $freeport['id'];
@@ -507,7 +508,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $input["itemtype"] = $this->type;
             $freeport_id = $Netport->add($input);
          }
-         $nn->add(array('networkports_id_1'=> $port_id, 'networkports_id_2' => $freeport_id));
+         $nn->add(array('networkports_id_1'=> $data['id'], 'networkports_id_2' => $freeport_id));
 
          //plugin_fusioninventory_addLogConnection("make",$port_id);
          return $freeport_id;
@@ -518,9 +519,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
    function searchIfmacOnHub($a_ports, $a_portglpi) {
 
-      foreach ($a_ports as $port_id=>$data) {
-         if (isset($a_portglpi[$port_id])) {
-            return $a_portglpi[$port_id];
+      foreach ($a_ports as $data) {
+         if (isset($a_portglpi[$data['id']])) {
+            return $a_portglpi[$data['id']];
          }
       }
       return false;
@@ -538,7 +539,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       // Find in the mac connected to the if they are in hub without link port connected
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
-         foreach ($a_ports as $port_id=>$data) {
+         foreach ($a_ports as $data) {
             if ($ID = $nn->getOppositeContact($p_oPort->getValue('id'))) {
                $Netport->getFromDB($ID);
                if ($Netport->fields["itemtype"] == $this->type) {
@@ -546,8 +547,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                      $a_portLink = $Netport->find("`name`='Link'
                         AND `items_id`='".$this->fields['id']."'
                         AND `itemtype`='".$this->type."'");
-                     foreach ($a_portLink as $portLink_id=>$dataLink) {
-                        if ($nn->getOppositeContact($portLink_id)) {
+                     foreach ($a_portLink as $dataLink) {
+                        if ($nn->getOppositeContact($dataLink['id'])) {
 
                         } else {
                            // We have founded a hub orphelin

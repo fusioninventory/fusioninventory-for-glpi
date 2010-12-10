@@ -39,6 +39,7 @@ include_once(GLPI_ROOT."/inc/includes.php");
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
 
+   $moduleId = 0;
    if (class_exists('PluginFusioninventoryModule')) { // check if plugin is active
       // ##### 1. (Not required here) #####
 
@@ -136,7 +137,7 @@ function plugin_init_fusioninventory() {
    }
 
    // Check for uninstall
-   if (isset($_GET['id']) AND $_GET['id'] == $moduleId
+   if (isset($_GET['id']) AND ($_GET['id'] == $moduleId)
             AND (isset($_GET['action']) AND $_GET['action'] == 'uninstall')
             AND (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 

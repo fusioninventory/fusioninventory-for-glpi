@@ -116,7 +116,6 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
             if(PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $array[2] = $LANG['plugin_fusioninventory']["title"][5];
             }
@@ -277,8 +276,7 @@ function plugin_headings_fusioninventory($item, $withtemplate=0) {
 
 function plugin_headings_fusioninventory_xml($item) {
    global $LANG;
-   
-   $type = get_Class($item);
+
    $id = $_POST['id'];
 
    $folder = substr($id,0,-1);
@@ -395,6 +393,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($type,$table,$field,
          break;
 
       case 'glpi_plugin_fusioninventory_agents.logs' :
+         $ArrayValues = array();
          $ArrayValues[]= $LANG["choice"][0];
          $ArrayValues[]= $LANG["choice"][1];
          $ArrayValues[]= $LANG["setup"][137];
@@ -466,8 +465,8 @@ function plugin_pre_item_update_fusioninventory($parm) {
       $plugin = new Plugin();
 
       $a_plugins = PluginFusioninventoryModule::getAll();
-      foreach($a_plugins as $plugin_id=>$datas) {
-         $plugin->unactivate($plugin_id);
+      foreach($a_plugins as $datas) {
+         $plugin->unactivate($datas['id']);
       }
    }
 }

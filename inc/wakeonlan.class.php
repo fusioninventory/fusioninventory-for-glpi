@@ -88,11 +88,11 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
                      $i = 0;
                      $sep  = '';
-                     foreach ($a_agentList as $agent_id=>$num) {
+                     foreach ($a_agentList as $agent) {
                         if ($i> 1) {
                            $sep  = ',';
                         }
-                        $where .= $agent_id.$sep;
+                        $where .= $agent['id'].$sep;
                         $i++;
                      }
                      $where .= ") ";
@@ -103,11 +103,11 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` NOT IN (";
                      $i = 0;
                      $sep  = '';
-                     foreach ($a_agentList as $agent_id=>$num) {
+                     foreach ($a_agentList as $agent) {
                         if ($i> 1) {
                            $sep  = ',';
                         }
-                        $where .= $agent_id.$sep;
+                        $where .= $agent['id'].$sep;
                         $i++;
                      }
                      $where .= ") ";
@@ -161,7 +161,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
       // Get ip
       $a_networkPort = $NetworkPort->find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."' ");
-      foreach ($a_networkPort as $networkPort_id=>$data) {
+      foreach ($a_networkPort as $data) {
          if ($data['ip'] != "127.0.0.1") {
             $sxml_param = $sxml_option->addChild('PARAM');
             $sxml_param->addAttribute('MAC', $data['mac']);

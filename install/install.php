@@ -48,7 +48,6 @@ function pluginFusioninventoryInstall($version) {
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
    }
    // Get informations of plugin
-   $a_plugin = plugin_version_fusioninventory();
 
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
               .$version."-empty.sql";
