@@ -60,7 +60,7 @@ class PluginFusioninventoryStaticmisc {
    static function getmethods() {
       $a_methods = call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods'));
       $a_modules = PluginFusioninventoryModule::getAll();
-      foreach ($a_modules as $num=>$data) {
+      foreach ($a_modules as $data) {
          if (is_callable(array('Plugin'.$data['directory'].'Staticmisc', 'task_methods'))) {
             $a_methods = array_merge($a_methods, 
                call_user_func(array('Plugin'.$data['directory'].'Staticmisc', 'task_methods')));

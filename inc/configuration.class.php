@@ -44,6 +44,7 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
       global $LANG,$CFG_GLPI;
 
       $tabs = array();
+      $moduleTabs = array();
       $tabs[0]=$LANG['plugin_fusioninventory']["functionalities"][2];
       $tabs[1]=$LANG['plugin_fusioninventory']["functionalities"][7];
       $tabs[2]=$LANG['plugin_fusioninventory']["agents"][27];

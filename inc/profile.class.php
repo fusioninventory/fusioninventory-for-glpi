@@ -105,7 +105,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             $a_profile = call_user_func(array("Plugin".ucfirst($pluginname)."Staticmisc", "profiles"));
 
             $pfp = new PluginFusioninventoryProfile;
-            foreach ($a_profile as $num => $data) {
+            foreach ($a_profile as $data) {
                $pfp->addProfile($plugins_id, $data['profil'], 'w');
             }
          }
@@ -127,7 +127,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             $a_rights = $pfp->find("`profiles_id` = '".$_SESSION['glpiactiveprofile']['id'].
                                    "' AND `plugins_id`='".$p_plugins_id."'");
             $i = 0;
-            foreach ($a_rights as $id=>$datas) {
+            foreach ($a_rights as $datas) {
                $i++;
                $_SESSION["glpi_plugin_".$moduleName."_profile"][$datas['type']] = $datas['right'];
             }
@@ -198,7 +198,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                                    AND `plugins_id`='".$p_plugins_id."'
                                    AND `type`='".$p_type."' ");
       $right = "NULL";
-      foreach ($a_rights as $id => $data) {
+      foreach ($a_rights as $data) {
          $right = $data['right'];
       }
       return $right;
@@ -248,6 +248,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       $a_modules_temp = PluginFusioninventoryModule::getAll();
+      $a_module = array();
       $a_module[] = 'fusioninventory';
       foreach($a_modules_temp as $num => $data) {
          $a_module[] = $data['directory'];
@@ -309,7 +310,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                         AND `profiles_id`='".$profiles['profile_id']."'
                         AND `type`='".$profilName[1]."' ");
             if (count($a_profile) > 0) {
-               foreach ($a_profile as $id => $data) {
+               foreach ($a_profile as $data) {
                   $this->updateProfile($data['id'],
                                        PluginFusioninventoryModule::getModuleId($profilName[0]),
                                        $data['type'],

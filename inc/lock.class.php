@@ -90,7 +90,8 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
                   ".$LANG['plugin_fusioninventory']["functionalities"][76]."</td></tr>";
       } else {
-         foreach ($lockable_fields as $key => $val) {
+         $checked = '';
+         foreach ($lockable_fields as $val) {
             if (in_array($val, $locked)) {
                $checked = 'checked';
             } else {

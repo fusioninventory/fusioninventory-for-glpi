@@ -227,13 +227,13 @@ class PluginFusioninventoryLockable extends CommonDBTM{
          $lockable = importArrayFromDB($lockable_fields);
 
          if (isset($p_post['plugin_fusioninventory_lockable_add']) AND isset($p_post['columnSelect'])) { // add
-            foreach ($p_post['columnSelect'] as $key=>$id_value) {
+            foreach ($p_post['columnSelect'] as $id_value) {
                array_push($lockable, $id_value);
             }
          }
 
          if (isset($_POST['plugin_fusioninventory_lockable_delete']) AND isset($p_post['columnLockable'])) { // delete
-            foreach ($p_post['columnLockable'] as $key=>$id_value) {
+            foreach ($p_post['columnLockable'] as $id_value) {
                $fieldToDel = array_search($id_value, $lockable);
                if (isset($lockable[$fieldToDel])){
                   $fieldName = $lockable[$fieldToDel];
@@ -292,7 +292,7 @@ class PluginFusioninventoryLockable extends CommonDBTM{
          $lockable_fields=PluginFusioninventoryLockable::getLockableFields('', $p_table);
          echo '<SELECT NAME="columnLockable[]" MULTIPLE SIZE="15">';
          if (count($lockable_fields)){
-            foreach ($lockable_fields as $key => $val){
+            foreach ($lockable_fields as $val){
                echo "<OPTION value='$val'>$val</OPTION>\n";
             }
          }

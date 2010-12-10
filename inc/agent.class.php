@@ -131,8 +131,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI;
 
-      $ptc = new PluginFusioninventoryConfig;
-
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['title'][26];
@@ -245,9 +243,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $pta->add($a_input);
             return 2;
          } else {
-            foreach ($a_agent as $id_agent=>$dataInfos) {
+            foreach ($a_agent as $data) {
                $input = array();
-               $input['id'] = $id_agent;
+               $input['id'] = $data['id'];
                $input['token'] = $sxml->TOKEN;
                $input['last_contact'] = date("Y-m-d H:i:s");
                $pta->update($input);
@@ -267,7 +265,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $a_ports = $NetworkPort->find("`itemtype`='Computer'
                              AND `items_id`='".$this->fields['items_id']."'
                              AND `ip` IS NOT NULL");
-         foreach($a_ports as $ports_id=>$data) {
+         foreach($a_ports as $data) {
             $ip[] = $data['ip'];
          }         
       }
@@ -281,8 +279,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $agent = $this->find("`itemtype`='Computer' AND `items_id`='".$items_id."'");
 
       if ($agent) {
-         foreach($agent as $agent_id=>$data) {
-            return $agent_id;
+         foreach($agent as $data) {
+            return $data['id'];
          }
       }
       return false;

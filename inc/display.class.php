@@ -125,6 +125,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    static function getProgressBar($width,$percent,$options=array()) {
       global  $CFG_GLPI,$LANG;
 
+      $param = array();
       $param['title']=$LANG['common'][47];
       $param['simple']=false;
       $param['forcepadding']=false;

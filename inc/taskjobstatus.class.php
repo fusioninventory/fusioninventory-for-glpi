@@ -60,11 +60,11 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $state[3] = 0;
       $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'");
       $total = 0;
-      foreach ($a_taskjobstatus as $taskjobstatus_id=>$data) {
+      foreach ($a_taskjobstatus as $data) {
          $total++;
          $state[$data['state']]++;         
       }
-
+      $globalState = 0;
       if ($total == '0') {
          $globalState = 0;
       } else {
@@ -99,6 +99,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
       $PluginFusioninventoryTaskjob     = new PluginFusioninventoryTaskjob;
       $PluginFusioninventoryTask        = new PluginFusioninventoryTask;
+      $icon = "";
+      $title = "";
 
       switch ($state) {
 
@@ -136,6 +138,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             break;
 
       }
+      $a_taskjobs = array();
       if (isset($search)) {
          $query = "SELECT * FROM ".$this->table."
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
@@ -166,7 +169,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       echo "</table>";
       echo "<br/>";
 
-      foreach ($a_taskjobs as $num=>$data) {
+      foreach ($a_taskjobs as $data) {
          echo "<table  class='tab_cadre_fixe' style='width: 800px'>";
          echo "<tr>";
          echo "<th>";
@@ -184,7 +187,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
             $PluginFusioninventoryTaskjob->showMiniAction($data['tjid'], '750');
          } else {
             if ($state != 'finished') {
-               $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], $width = '730');
+               $this->stateTaskjob($data['plugin_fusioninventory_taskjobs_id'], '730');
                echo "<br/>";
             }
             $PluginFusioninventoryTaskjoblog->showHistory($data['plugin_fusioninventory_taskjobs_id'], '750');
@@ -215,7 +218,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       $moduleRun = array();
 
       $a_taskjobstatus = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id."' AND `state`='0'");
-      foreach ($a_taskjobstatus as $taskjobstatus_id=>$data) {
+      foreach ($a_taskjobstatus as $data) {
 
          // Get job and data to send to agent
          $PluginFusioninventoryTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
@@ -244,13 +247,13 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          $input['state'] = 3;
          $this->add($input);
       } else {
-         foreach($a_taskjobstatus as $taskjobstatus_id=>$data) {
-            $this->getFromDB($taskjobstatus_id);
+         foreach($a_taskjobstatus as $data) {
+            $this->getFromDB($data['id']);
             $this->fields['state'] = 3;
             $this->update($this->fields);
          }
       }
-      $input = array();
+      $a_input = array();
       if ($unknown ==  "1") {
          $a_input['state'] = 5;
       } else if ($error == "1") {

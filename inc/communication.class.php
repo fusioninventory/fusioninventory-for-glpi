@@ -231,10 +231,10 @@ class PluginFusioninventoryCommunication {
          $sxml_option->addChild('NAME', 'WAKEONLAN');
 
       $tasks = $ptt->ListTask($agent["id"], "WAKEONLAN");
-      foreach ($tasks as $task_id=>$taskInfos) {
+      foreach ($tasks as $taskInfos) {
          if ($taskInfos['itemtype'] == COMPUTER_TYPE) {
             $a_portsList = $np->find('items_id='.$taskInfos['items_id'].' AND itemtype="'.COMPUTER_TYPE.'"');
-            foreach ($a_portsList as $id=>$data) {
+            foreach ($a_portsList as $data) {
                if ($data['ip'] != "127.0.0.1") {
                   $sxml_param = $sxml_option->addChild('PARAM');
                   $sxml_param->addAttribute('MAC', $data['mac']);
@@ -281,7 +281,6 @@ class PluginFusioninventoryCommunication {
 
    function addProlog() {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
-      $ptc  = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
       $this->sxml->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue($plugins_id, "inventory_frequence"));
    }

@@ -45,8 +45,6 @@ class PluginFusioninventorySetup {
 
       CronTask::Unregister('fusioninventory');
 
-      $np = new NetworkPort;
-
       if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
          deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }

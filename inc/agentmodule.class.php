@@ -52,8 +52,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
 
       $a_modules = $this->find();
-      $i = 0;
-      foreach ($a_modules as $module_id=>$data) {
+      foreach ($a_modules as $data) {
          echo "<form name='form_ic' method='post' action='".GLPI_ROOT.
                "/plugins/fusioninventory/front/agentmodule.form.php'>";
          echo "<table class='tab_cadre_fixe'>";
@@ -137,7 +136,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       $a_modules = $this->find();
       $i = 0;
-      foreach ($a_modules as $module_id=>$data) {
+      foreach ($a_modules as $data) {
          if ($i == 0)
             echo "<tr class='tab_bg_1'>";
          echo "<td width='50%'>".$data["modulename"]." :</td>";
@@ -184,7 +183,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
    function getActivationExceptions($module_name) {
       $a_modules = $this->find("`modulename`='".$module_name."' ");
-      foreach ($a_modules as $module_id=>$data) {
+      foreach ($a_modules as $data) {
          return $data;
       }
    }
@@ -203,7 +202,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $where = " `id` IN (";
             $i = 0;
             $sep  = '';
-            foreach ($a_agentList as $num=>$agent_id) {
+            foreach ($a_agentList as $agent_id) {
                if (($items_id != '0') AND ($items_id == $agent_id)) {
                   return true;
                }
@@ -222,7 +221,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $where = " `id` NOT IN (";
             $i = 0;
             $sep  = '';
-            foreach ($a_agentList as $num=>$agent_id) {
+            foreach ($a_agentList as $agent_id) {
                if ($i> 0) {
                   $sep  = ',';
                }
@@ -252,8 +251,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function deleteModule($plugins_id) {
 
       $a_agentmodule = $this->find("`plugins_id`='".$plugins_id."'");
-      foreach($a_agentmodule as $id=>$data) {
-         $this->fields['id'] = $id;
+      foreach($a_agentmodule as $data) {
+         $this->fields['id'] = $data['id'];
          $this->deleteFromDB();
       }
    }

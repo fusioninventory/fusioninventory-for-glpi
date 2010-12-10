@@ -137,7 +137,7 @@ $this->cronTaskscheduler();
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
       $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      foreach ($a_methods as $num=>$datas) {
+      foreach ($a_methods as $datas) {
          echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
       }
       echo "</td>";
@@ -264,7 +264,7 @@ $this->cronTaskscheduler();
 
       $a_methods2 = array();
       $a_methods2[''] = "------";
-      foreach ($a_methods as $num=>$datas) {
+      foreach ($a_methods as $datas) {
          $a_methods2[$datas['method']] = $datas['method'];
       }
       $rand = Dropdown::showFromArray($myname, $a_methods2);
@@ -295,6 +295,7 @@ $this->cronTaskscheduler();
 
       if ($value != "0") {
          $i = -1;
+         $numSelected = 0;
          foreach ($a_methods2 as $method) {
             $i++;
             if ($method == $value) {
@@ -324,7 +325,7 @@ $this->cronTaskscheduler();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_selectiontype = array();
       $a_selectiontype[''] = "------";
-      foreach ($a_methods as $num=>$datas) {
+      foreach ($a_methods as $datas) {
          if ($datas['method'] == $method) {
             if (isset($datas['selection_type_name'])) {
                $a_selectiontype[$datas['selection_type']] = $datas['selection_type_name'];
@@ -347,6 +348,7 @@ $this->cronTaskscheduler();
 
       if ($value != "0") {
          $i = -1;
+         $numSelected = 0;
          foreach ($a_selectiontype as $type) {
             $i++;
             if ($type == $value) {
@@ -388,9 +390,9 @@ $this->cronTaskscheduler();
          // <select> personalisé :
          $a_methods = array();
          $a_list = array();
+         $module = '';
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-         $a_selectiontype = array();
-         foreach ($a_methods as $num=>$datas) {
+         foreach ($a_methods as $datas) {
             if ($datas['method'] == $method) {
                $module = $datas['module'];
             }
@@ -420,8 +422,8 @@ $this->cronTaskscheduler();
       global $DB,$CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-
-      foreach ($a_methods as $num=>$datas) {
+      $module = '';
+      foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
             $module = $datas['module'];
          }
@@ -440,7 +442,6 @@ $this->cronTaskscheduler();
 
       $dateNow = date("Y-m-d H:i:s");
 
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask;
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
@@ -482,7 +483,7 @@ $this->cronTaskscheduler();
             if (isset($a_deviceList)) {
 
                // Run function of this method for each device
-               foreach ($a_deviceList as $num=>$devicecomposed_id) {
+               foreach ($a_deviceList as $devicecomposed_id) {
                   foreach ($devicecomposed_id as $itemtype=>$items_id) {
                      
                   }
@@ -568,6 +569,7 @@ $this->cronTaskscheduler();
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
+      $input = '';
       if(!($fp = fsockopen($ip, $PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port'), $errno, $errstr, 1))) {
          $input = 'Agent don\'t respond';
          return false;
@@ -587,7 +589,6 @@ $this->cronTaskscheduler();
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
-      $a_taskjob = $this->find();
       $query = "SELECT * FROM ".$this->table."
          WHERE status='1' ";
 

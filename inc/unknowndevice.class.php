@@ -265,6 +265,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                                ON `items_id`=`glpi_plugin_fusioninventory_unknowndevices`.`id`
                      WHERE `itemtype`=".'PluginFusioninventoryUnknownDevice'."
                            AND `glpi_plugin_fusioninventory_unknowndevices`.`id` IS NULL;";
+      $unknown_infos = array();
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             $unknown_infos["name"] = '';
@@ -382,6 +383,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       //$PluginFusionInventoryAgentsProcesses = new PluginFusioninventoryAgentsProcesses;
 
       // Get port connected on switch port
+      $hub_id = 0;
       if ($ID = $nn->getOppositeContact($p_oPort->getValue('id'))) {
          $Netport->getFromDB($ID);
          if ($Netport->fields["itemtype"] == $this->type) {
@@ -414,14 +416,14 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $a_portglpi = array();
       $a_ports = $Netport->find("`items_id`='".$hub_id."'
           AND `itemtype`='".$this->type."'");
-      foreach ($a_ports as $port_id=>$data) {
-         if ($id = $nn->getOppositeContact($port_id)) {
-            $a_portglpi[$id] = $port_id;
+      foreach ($a_ports as $data) {
+         if ($id = $nn->getOppositeContact($data['id'])) {
+            $a_portglpi[$id] = $data['id'];
          }
       }
 
       $a_portUsed = array();
-
+      $used_id = 0;
       foreach ($p_oPort->getMacsToConnect() as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          if (count($a_ports) == "1") {
@@ -466,11 +468,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $a_ports = $Netport->find("`items_id`='".$hub_id."'
           AND `itemtype`='".$this->type."'
           AND (`name` != 'Link' OR `name` IS NULL)");
-      foreach ($a_ports as $port_id=>$data) {
-         if (!isset($a_portUsed[$port_id])) {
+      foreach ($a_ports as $data) {
+         if (!isset($a_portUsed[$data['id']])) {
             //plugin_fusioninventory_addLogConnection("remove",$port_id);
-            $nn->delete(array('id' => $port_id));
-            $Netport->deleteFromDB($port_id);
+            $nn->delete(array('id' => $data['id']));
+            $Netport->deleteFromDB($data['id']);
          }
       }
    }

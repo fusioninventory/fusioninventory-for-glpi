@@ -77,7 +77,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $a_history = $this->find('plugin_fusioninventory_taskjobs_id="'.$id.'" ', 'id');
 
-      foreach($a_history as $history_id=>$datas) {
+      foreach($a_history as $datas) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          echo convDateTime($datas['date']);
@@ -160,7 +160,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       // Get logs information (ok, error, replanned, unknow)
       $a_joblogs = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
             AND `state` IN (2, 3, 4, 5)");
-      foreach($a_joblogs as $joblog_id=>$datajob) {
+      foreach($a_joblogs as $datajob) {
          $finishState[$datajob['state']]++;
       }
       $input = array();

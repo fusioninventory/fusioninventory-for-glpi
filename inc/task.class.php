@@ -136,7 +136,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'
                AND `rescheduled_taskjob_id`='0' ", "date_scheduled,id");
          $i = 1;
-         foreach($a_taskjob as $taskjob_id=>$datas) {
+         foreach($a_taskjob as $datas) {
             $i++;
             $ong[$i] = $LANG['plugin_fusioninventory']["task"][2]." ".($i-1);
          }
@@ -169,6 +169,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
       echo "<td align='center'>";
+      $a_periodicity = array();
       if (strstr($this->fields['periodicity'], "-")) {
          $a_periodicity = explode("-", $this->fields['periodicity']);
       } else {
@@ -239,7 +240,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $tasks = array();
       $list = $this->find("`agent_id`='".$agent_id."' AND `action`='".$action."' ");
-      foreach ($list as $task_id=>$data) {
+      foreach ($list as $data) {
          switch ($data['itemtype']) {
 
             case NETWORKING_TYPE:
@@ -270,7 +271,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
          if ($DB->numrows($result) != 0) {
             while ($data=$DB->fetch_array($result)) {
                $tasks[$data["id"]] = $data;
-               $type='';
                switch ($tasks[$data["id"]]["itemtype"]) {
                   case "networking":
                      $tasks[$data["id"]]["itemtype"]='NETWORKING';

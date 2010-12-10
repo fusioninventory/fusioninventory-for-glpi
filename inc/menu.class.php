@@ -85,7 +85,7 @@ class PluginFusioninventoryMenu {
 
       // Get menu from plugins fusinv...
       $a_modules = PluginFusioninventoryModule::getAll();
-      foreach ($a_modules as $module_id=>$datas) {
+      foreach ($a_modules as $datas) {
          if (is_callable(array("Plugin".$datas['directory']."Staticmisc", "displayMenu"))) {
             $a_menu = call_user_func(array("Plugin".ucfirst($datas['directory'])."Staticmisc", "displayMenu"));
             if (!empty($a_menu)) {
@@ -113,11 +113,13 @@ class PluginFusioninventoryMenu {
     *@param $width_status
     *@return $width_status and print menu
     **/
-   static function htmlMenu($plugin_name, $a_menu = array(), $type = "big", $width_status) {
+   static function htmlMenu($plugin_name, $a_menu = array(), $type = "big", $width_status='300') {
       global $LANG;
 
       $width_max = 950;
 
+      $width = 0;
+      $height = 0;
       if ($type == "big") {
          $width="140";
          $height="120";

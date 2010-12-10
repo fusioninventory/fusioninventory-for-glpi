@@ -38,8 +38,11 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryDb extends CommonDBTM {
+   
    static function getDeviceFieldFromId($type, $id, $field, $return) {
       global $DB;
+      $table = "";
+
       switch($type) {
          case COMPUTER_TYPE:
             $table = "`glpi_computers`";
