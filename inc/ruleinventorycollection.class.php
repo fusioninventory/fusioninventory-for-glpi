@@ -62,5 +62,4 @@ class PluginFusinvsnmpRuleInventoryCollection extends PluginFusioninventoryRuleC
 
 }
 
-
 ?>

@@ -184,7 +184,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       }
       return $errors;
    }
-}
 
 
    function sendCriteria($p_xml) {
@@ -220,5 +219,77 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $data = array ();
       $data = $rule->processAllRules($input, array());
    }
+
+
+
+   function checkCriteria($a_criteria) {
+      global $DB;
+
+      $condition = "WHERE 1 ";
+      $condition_ports = "WHERE 1 ";
+      $select = "id";
+      $select_ports = "id";
+      $datacriteria = unserialize(DATACRITERIA);
+
+      foreach ($a_criteria as $criteria) {
+         switch ($criteria) {
+
+           case 'serial':
+               $condition .= "AND `serial`='".$datacriteria['serial']."' ";
+               $select .= ", serial";
+               $condition_ports .= "AND `serial`='".$datacriteria['serial']."' ";
+               $select_ports .= ", serial";
+               break;
+
+            case 'mac':
+               $condition .= "AND `mac`='".$datacriteria['mac']."' ";
+               $select .= ", mac";
+               $condition_ports .= "AND `glpi_networkports`.`mac`='".$datacriteria['mac']."' ";
+               $select_ports .= ", `glpi_networkports`.`mac`";
+               break;
+
+            case 'model':
+               $condition .= "AND `models_id`='".$datacriteria['model']."' ";
+               $select .= ", models_id";
+               $condition_ports .= "AND `models_id`='".$datacriteria['model']."' ";
+               $select_ports .= ", models_id";
+               break;
+
+            case 'name':
+               $condition .= "AND `name`='".$datacriteria['name']."' ";
+               $select .= ", name";
+               $condition_ports .= "AND `name`='".$datacriteria['name']."' ";
+               $select_ports .= ", name";
+               break;
+         }
+      }
+
+      $query1 = "SELECT ".str_replace('models_id', 'printermodels_id', $select_ports)." FROM `".getTableForItemType("Printer")."`
+         ".str_replace('models_id', 'printermodels_id', $condition_ports)." ";
+      $result1=$DB->query($query1);
+
+      $query2 = "SELECT ".str_replace('models_id', 'networkequipmentmodels_id', $select)." FROM `".getTableForItemType("NetworkEquipment")."`
+         ".str_replace('models_id', 'networkequipmentmodels_id', $condition)." ";
+      $result2=$DB->query($query2);
+
+      $query3 = "SELECT ".str_replace('models_id', 'computermodels_id', $select)." FROM `".getTableForItemType("Computer")."`
+         ".str_replace('models_id', 'computermodels_id', $condition_ports)." ";
+      $result3=$DB->query($query3);
+
+      if (($DB->numrows($result1) + $DB->numrows($result2)) == "1") {
+         if ($DB->numrows($result1) == "1") {
+   			$data = $DB->fetch_assoc($result1);
+            $this->importDevice('Printer', $data['id']);
+         } else if ($DB->numrows($result2) == "1") {
+            $data = $DB->fetch_assoc($result2);
+            $this->importDevice('NetworkEquipment', $data['id']);
+         } else if ($DB->numrows($result3) == "1") {
+            $data = $DB->fetch_assoc($result3);
+            $this->importDevice('Computer', $data['id']);
+         }
+      }
+   }
+
+}
 
 ?>

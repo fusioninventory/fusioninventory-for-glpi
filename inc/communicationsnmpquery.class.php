@@ -1298,18 +1298,18 @@ class PluginFusinvsnmpCommunicationSNMPQuery extends PluginFusinvsnmpCommunicati
                $select_ports .= ", `glpi_networkports`.`mac`";
                break;
 
-            case 'modal':
+            case 'model':
+               $condition .= "AND `models_id`='".$value."' ";
+               $select .= ", models_id";
+               $condition_ports .= "AND `models_id`='".$value."' ";
+               $select_ports .= ", models_id";
+               break;
+
+            case 'name':
                $condition .= "AND `name`='".$value."' ";
                $select .= ", name";
                $condition_ports .= "AND `name`='".$value."' ";
                $select_ports .= ", name";
-               break;
-
-            case 'name':
-               $condition .= "AND `serial`='".$value."' ";
-               $select .= ", serial";
-               $condition_ports .= "AND `serial`='".$value."' ";
-               $select_ports .= ", serial";
                break;
          }
       }

@@ -136,13 +136,13 @@ class PluginFusinvsnmpRuleNetdiscovery extends PluginFusioninventoryRule {
          $globalcriteria = array();
          foreach ($this->criterias as $criteria) {
             if ($criteria->fields['criteria'] == 'globalcriteria') {
-               $array = Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_inventorycriteria', $criteria->fields['pattern'], 1);
+               $array = Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_netdiscoverycriteria', $criteria->fields['pattern'], 1);
                $globalcriteria[] = $array['comment'];
             }
          }
          if (count($globalcriteria) > 0) {
-            $PluginFusinvsnmpCommunicationSNMPQuery = new PluginFusinvsnmpCommunicationSNMPQuery();
-            $PluginFusinvsnmpCommunicationSNMPQuery->checkCriteria($globalcriteria);
+            $PluginFusinvsnmpCommunicationNetDiscovery = new PluginFusinvsnmpCommunicationNetDiscovery();
+            $PluginFusinvsnmpCommunicationNetDiscovery->checkCriteria($globalcriteria);
          }
       }
       return $output;
