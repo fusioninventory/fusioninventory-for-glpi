@@ -57,6 +57,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       }
 
       $Peripheral = new Peripheral();
+      $Computer_Item = new Computer_Item();
 
       $a_Peripheral = array();
       
@@ -71,7 +72,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_peripherals = $Peripheral->find("`serial`='".$dataSection['SERIAL']."'","", 1);
                if (count($a_peripherals) > 0) {
-                  foreach($a_peripherals as $peripheral_id=>$data) {
+                  foreach($a_peripherals as $data) {
                      $a_Peripheral = $data;
                   }
                }
@@ -82,7 +83,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_peripherals = $Peripheral->find("`serial`='".$dataSection['SERIAL']."'","", 1);
                if (count($a_peripherals) > 0) {
-                  foreach($a_peripherals as $peripheral_id=>$data) {
+                  foreach($a_peripherals as $data) {
                      $a_Peripheral = $data;
                   }
                }
@@ -95,7 +96,7 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
                $a_peripherals = $Peripheral->find("`name`='".$dataSection['NAME']."'","", 1);
                if (count($a_peripherals) > 0) {
-                  foreach($a_peripherals as $peripheral_id=>$data) {
+                  foreach($a_peripherals as $data) {
                      $a_Peripheral = $data;
                   }
                } else {
@@ -127,13 +128,13 @@ class PluginFusinvinventoryImport_Peripheral extends CommonDBTM {
       }
       $a_Peripheral['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
+      $peripheral_id = 0;
       if ($type == "update") {
-         $peripheral_id = $Peripheral->update($a_Peripheral);
+         $Peripheral->update($a_Peripheral);
       } else if ($type == "add") {
          $peripheral_id = $Peripheral->add($a_Peripheral);
       }
 
-      $Computer_Item = new Computer_Item();
       $array = array();
       $array['computers_id'] = $items_id;
       $array['itemtype'] = 'Peripheral';

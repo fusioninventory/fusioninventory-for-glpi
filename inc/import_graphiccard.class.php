@@ -58,12 +58,14 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
 
       $CompDevice = new Computer_Device('DeviceGraphicCard');
 
+      $devID = 0;
+      $computer_graphiccard = array();
       if ($type == "update") {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
          $computer_graphiccard = $CompDevice->fields;
       } else if ($type == "add") {
-         $id_disk = 0;
+         $devID = 0;
       }
       $graphiccard = array();
 
@@ -89,7 +91,7 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
          if ($type == "update") {
             $array['computers_id'] = $computer_graphiccard['computers_id'];
             $array['id'] = $items_id;
-            $devID = $CompDevice->update($array);
+            $CompDevice->update($array);
          } else if ($type == "add") {
             $array['computers_id'] = $items_id;
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {

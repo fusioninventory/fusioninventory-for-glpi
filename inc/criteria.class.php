@@ -44,8 +44,6 @@ class PluginFusinvinventoryCriteria extends CommonDBTM {
       $this->table = "glpi_plugin_fusinvinventory_criteria";
       $this->type = 'PluginFusinvinventoryCriteria';
    }
-
-
 }
 
 ?>

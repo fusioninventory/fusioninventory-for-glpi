@@ -45,7 +45,6 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection, $itemtype='Computer') {
 
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $Computer_Item = new Computer_Item();
 
       if ((!isset($dataSection['DESCRIPTION'])) AND
@@ -55,11 +54,6 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
          return "";
       }
-
-//      if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
-//              "import_printer") == '0') {
-//         return;
-//      }
 
       $NetworkPort = new NetworkPort();
 
@@ -94,8 +88,9 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
       $a_NetworkPort['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
+      $devID = 0;
       if ($type == 'update') {
-         $devID = $NetworkPort->update($a_NetworkPort);
+         $NetworkPort->update($a_NetworkPort);
       } else {
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
             $a_NetworkPort['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
@@ -107,10 +102,10 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
    }
 
 
-   function deleteItem($items_id) {
+   function deleteItem($items_id, $idmachine) {
       $NetworkPort = new NetworkPort();
       $NetworkPort->getFromDB($items_id);
-      if ($NetworkPort->fields['items_id'] == $idmachine) {
+      if (($NetworkPort->fields['items_id'] == $idmachine) AND ($NetworkPort->fields['itemtype'] == 'Computer')) {
          $NetworkPort->delete(array("id" => $items_id));
       }
    }

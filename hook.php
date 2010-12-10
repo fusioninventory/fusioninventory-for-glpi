@@ -166,7 +166,6 @@ function plugin_headings_actions_fusinvinventory($item) {
 function plugin_headings_fusinvinventory_xml($item) {
    global $LANG;
 
-   $type = get_Class($item);
    $id = $item->getField('id');
 
    $folder = substr($id,0,-1);

@@ -167,4 +167,5 @@ function plugin_fusinvinventory_check_prerequisites() {
 function plugin_fusinvinventory_check_config() {
    return true;
 }
+
 ?>

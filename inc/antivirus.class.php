@@ -79,7 +79,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
 
       $a_antivirus = $this->find("`computers_id`='".$items_id."'");
       $antivirusData = array();
-      foreach ($a_antivirus as $antivirus_id => $antivirusData) {
+      foreach ($a_antivirus as $antivirusData) {
 
       }
 

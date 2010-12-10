@@ -182,11 +182,6 @@ class PluginFusinvinventoryRuleInventoryCollection extends PluginFusioninventory
 
       return $input;
    }
-
-
-  
-
 }
-
 
 ?>

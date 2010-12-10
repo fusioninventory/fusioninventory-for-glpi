@@ -65,6 +65,7 @@ class PluginFusinvinventoryImport_Drive extends CommonDBTM {
 
       $ComputerDisk = new ComputerDisk;
 
+      $id_disk = 0;
       $disk=array();
       if ($type == "update") {
          $id_disk = $items_id;

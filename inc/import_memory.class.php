@@ -54,12 +54,14 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
       
       $CompDevice = new Computer_Device('DeviceMemory');
 
+      $devID = 0;
+      $computer_memory = array();
       if ($type == "update") {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
          $computer_memory = $CompDevice->fields;
       } else if ($type == "add") {
-         $id_memory = 0;
+         $devID = 0;
       }
       $memory = array();
 
@@ -97,7 +99,7 @@ class PluginFusinvinventoryImport_Memory extends CommonDBTM {
          if ($type == "update") {
             $array['computers_id'] = $computer_memory['computers_id'];
             $array['id'] = $items_id;
-            $devID = $CompDevice->update($array);
+            $CompDevice->update($array);
          } else if ($type == "add") {
             $array['computers_id'] = $items_id;
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {

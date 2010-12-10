@@ -351,6 +351,7 @@ class PluginFusinvinventoryLibhook {
             case 'SOFTWARES':
 
                 // If import computer from GLPI DB
+                $Computer_SoftwareVersion_id = 0;
                 if (isset($_SESSION['pluginFusinvinventoryImportMachine'])) {
                    $Computer_SoftwareVersion_id = array_shift($_SESSION['pluginFusinvinventoryImportMachine']['SOFTWARES']);
                 } else {
@@ -398,6 +399,7 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'USBDEVICES':
+               $id_peripheral = 0;
                if ((isset($dataSection['SERIAL'])) AND (isset($ignore_USB[$dataSection['SERIAL']]))) {
                   // Ignore
                } else {
@@ -577,6 +579,7 @@ class PluginFusinvinventoryLibhook {
 
 
     public static function updateSections($data, $idmachine) {
+       global $DB;
 
       $Computer = new Computer;
       $Computer->getFromDB($idmachine);

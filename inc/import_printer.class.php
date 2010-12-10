@@ -72,7 +72,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
                if (count($a_printers) > 0) {
-                  foreach($a_printers as $printer_id=>$data) {
+                  foreach($a_printers as $data) {
                      $a_printer = $data;
                   }
                }
@@ -83,7 +83,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_printers = $printer->find("`serial`='".$dataSection['SERIAL']."'","", 1);
                if (count($a_printers) > 0) {
-                  foreach($a_printers as $printer_id=>$data) {
+                  foreach($a_printers as $data) {
                      $a_printer = $data;
                   }
                }
@@ -96,7 +96,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
                $a_printers = $printer->find("`name`='".$dataSection['NAME']."'","", 1);
                if (count($a_printers) > 0) {
-                  foreach($a_printers as $printer_id=>$data) {
+                  foreach($a_printers as $data) {
                      $a_printer = $data;
                   }
                } else {
@@ -124,6 +124,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
       }
       $a_printer['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
+      $printer_id = 0;
       if (!isset($a_printer['id'])) {
          $printer_id = $printer->add($a_printer);
       } else {
@@ -143,7 +144,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
 
 
-   function deleteItem($items_id) {
+   function deleteItem($items_id, $idmachine) {
       $Computer_Item = new Computer_Item();
       $Computer_Item->getFromDB($items_id);
       if ($Computer_Item->fields['computers_id'] == $idmachine) {

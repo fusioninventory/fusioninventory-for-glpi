@@ -196,14 +196,13 @@ class PluginFusinvinventoryInventory {
    function sendUnknownDevice() {
 
       $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $NetworkPort = new NetworkPort();
 
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
       //Search with serial
       if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
          $a_device = $PluginFusioninventoryUnknownDevice->find("`serial`='".$xml->CONTENT->BIOS->SSN."'");
          if (count($a_device) == "1") {
-            foreach ($a_device as $id => $datas) {
+            foreach ($a_device as $datas) {
                if (isset($xml->CONTENT->HARDWARE->NAME)) {
                   $datas['name'] = $xml->CONTENT->HARDWARE->NAME;
                }
@@ -221,6 +220,7 @@ class PluginFusinvinventoryInventory {
          }
       }
       //Search with mac address
+//       $NetworkPort = new NetworkPort();
 //      if (isset($XML->CONTENT->NETWORKS)) {
 //         foreach ($xml->CONTENT->NETWORKS->children() as $name=>$child) {
 //            $a_port = $NetworkPort->find("`mac`='".$child->MACADDR."' AND `itemtype`='PluginFusioninventoryUnknownDevice'");
@@ -306,9 +306,9 @@ class PluginFusinvinventoryInventory {
       }
 
       $a_computersDB = $Computer->find();
-      foreach ($a_computersDB as $items_id => $datas) {
-         if (!isset($computerInLib[$items_id])) {
-            $this->createMachineInLib($items_id);           
+      foreach ($a_computersDB as $datas) {
+         if (!isset($computerInLib[$datas['id']])) {
+            $this->createMachineInLib($datas['id']);
          }
       }
    }
@@ -543,7 +543,7 @@ class PluginFusinvinventoryInventory {
       // ** VIDEOS
       $CompDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
       $DeviceGraphicCard = new DeviceGraphicCard();
-      $a_deviceGraphicCard = $DeviceGraphicCard->find("`computers_id`='".$items_id."' ");
+      $a_deviceGraphicCard = $CompDeviceGraphicCard->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceGraphicCard as $deviceGraphicCard_id => $deviceGraphicCard_data) {
          $xml_video = $xml_content->addChild("VIDEOS");
          $_SESSION['pluginFusinvinventoryImportMachine']['VIDEOS'][] = $deviceGraphicCard_id;

@@ -69,6 +69,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
       } else {
          $modified_name = $array['name'];
       }
+      $modified_version = "";
       if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
          $modified_version = $res_rule["version"];
       } else {
@@ -97,6 +98,7 @@ class PluginFusinvinventoryImport_Software extends CommonDBTM  {
          $SoftwareVersion = new SoftwareVersion;
          // TODO : define a default state ? Need a new option in config
          // Use $cfg_ocs["states_id_default"] or create a specific one ?
+         $input = array();
          $input["softwares_id"] = $software_id;
          $input["name"] = $modified_version;
          if (isset($array['PUBLISHER'])) {

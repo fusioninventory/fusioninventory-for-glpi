@@ -58,17 +58,17 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
 
       $CompDevice = new Computer_Device('DeviceProcessor');
 
+      $devID = 0;
+      $processor = array();
+      $specificity = "";
       if ($type == "update") {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
-         $computer_Processor = $CompDevice->fields;
+         $specificity = $CompDevice->fields['specificity'];
       } else if ($type == "add") {
-         $id_disk = 0;
+         $devID = 0;
       }
-      $processor = array();
-      $specificity = "";
 
-      $processor = array();
       $processor['specif_default'] = 0;
       if (isset($dataSection['NAME'])) {
          $processor['designation'] = $dataSection['NAME'];
@@ -86,7 +86,6 @@ class PluginFusinvinventoryImport_Processor extends CommonDBTM {
       $DeviceProcessor = new DeviceProcessor();
       $Processor_id = $DeviceProcessor->import($processor);
 
-      $devID = "";
       if ($type == "add") {
          $array = array();
          $array['computers_id'] = $items_id;

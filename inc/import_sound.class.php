@@ -58,12 +58,12 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
 
       $CompDevice = new Computer_Device('DeviceSoundCard');
 
+      $devID = 0;
       if ($type == "update") {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
-         $computer_sound = $CompDevice->fields;
       } else if ($type == "add") {
-         $id_disk = 0;
+         $devID = 0;
       }
       $sound = array();
       if (isset($dataSection['NAME'])) {
@@ -89,7 +89,7 @@ class PluginFusinvinventoryImport_Sound extends CommonDBTM {
          $array['devicesoundcards_id'] = $sound_id;
          if ($type == "update") {
             $array['id'] = $items_id;
-            $array['computers_id'] = $computer_sound['computers_id'];
+            $array['computers_id'] = $CompDevice->fields['computers_id'];
             $devID = $CompDevice->update($array);
          } else if ($type == "add") {
             $array['computers_id'] = $items_id;

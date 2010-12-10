@@ -42,4 +42,5 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 $rulecollection = new PluginFusinvinventoryRuleInventoryCollection();
 
 include (GLPI_ROOT . "/plugins/fusioninventory/front/rule.common.php");
+
 ?>

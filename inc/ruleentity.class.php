@@ -138,6 +138,6 @@ class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
 
       return $actions;
    }
-
 }
+
 ?>

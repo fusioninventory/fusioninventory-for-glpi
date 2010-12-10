@@ -43,4 +43,5 @@ function pluginFusinvinventoryGetCurrentVersion($version) {
 function pluginFusinvinventoryUpdate($current_version) {
 
 }
+
 ?>

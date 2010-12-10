@@ -59,7 +59,7 @@ class PluginFusinvinventoryLiblink extends CommonDBTM {
    function deleteComputerInLib($items_id) {
 
       $a_link = $this->find("`computers_id`='".$items_id."' ");
-      foreach ($a_link as $id => $data) {
+      foreach ($a_link as $data) {
          $criterias = file_get_contents(GLPI_DOC_DIR."/_plugins/fusioninventory/machines/".$data['filename']."/criterias");
          $a_criteria = explode(",", $criterias);
          foreach ($a_criteria as $filename) {

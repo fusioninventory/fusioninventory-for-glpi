@@ -40,4 +40,5 @@ include (GLPI_ROOT . "/inc/includes.php");
 $rulecollection = new PluginFusinvinventoryRuleEntityCollection();
 
 include (GLPI_ROOT . "/plugins/fusioninventory/front/rule.common.form.php");
+
 ?>

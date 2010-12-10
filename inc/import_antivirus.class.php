@@ -59,6 +59,7 @@ class PluginFusinvinventoryImport_Antivirus extends CommonDBTM {
       $PluginFusinvinventoryAntivirus = new PluginFusinvinventoryAntivirus();
 
       $antivirus=array();
+      $id_antivirus = 0;
       if ($type == "update") {
          $id_antivirus = $items_id;
          $PluginFusinvinventoryAntivirus->getFromDB($items_id);

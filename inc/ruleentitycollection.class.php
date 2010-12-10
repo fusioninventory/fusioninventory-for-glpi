@@ -181,5 +181,4 @@ class PluginFusinvinventoryRuleEntityCollection extends PluginFusioninventoryRul
 
 }
 
-
 ?>

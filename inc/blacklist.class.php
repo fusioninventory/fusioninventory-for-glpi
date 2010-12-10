@@ -78,13 +78,12 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    function defineTabs($options=array()){
       global $LANG,$CFG_GLPI;
 
-      $ptc = new PluginFusioninventoryConfig;
       $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
 
       $ong = array();
       $i = 1;
       $fields = $PluginFusinvinventoryCriteria->find("");
-      foreach($fields as $id=>$data) {
+      foreach($fields as $data) {
          $ong[$i] = $data['name'];
          $i++;
       }
@@ -96,9 +95,6 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
    function showArray($id) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $PluginFusinvinventoryCriteria = new PluginFusinvinventoryCriteria();
-     // $fields = $PluginFusinvinventoryCriteria->getFromDB($id);
-
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
       echo "<th colspan='4'>";
@@ -109,7 +105,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
 
       $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
       $i = 0;
-      foreach ($a_blacklist as $idblacklist=>$datablacklist) {
+      foreach ($a_blacklist as $datablacklist) {
          if ($i == 0) {
             echo "<tr class='tab_bg_1'>";
          }

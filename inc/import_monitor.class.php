@@ -56,6 +56,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
       }
 
       $monitor = new Monitor();
+      $Computer_Item = new Computer_Item();
 
       $a_monitor = array();
 
@@ -71,7 +72,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
                if (count($a_monitors) > 0) {
-                  foreach($a_monitors as $monitor_id=>$data) {
+                  foreach($a_monitors as $data) {
                      $a_monitor = $data;
                   }
                }
@@ -82,7 +83,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
                $a_monitors = $monitor->find("`serial`='".$dataSection['SERIAL']."'","", 1);
                if (count($a_monitors) > 0) {
-                  foreach($a_monitors as $monitor_id=>$data) {
+                  foreach($a_monitors as $data) {
                      $a_monitor = $data;
                   }
                }
@@ -95,7 +96,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
             if ((isset($dataSection['NAME'])) AND (!empty($dataSection['NAME']))) {
                $a_monitors = $monitor->find("`name`='".$dataSection['NAME']."'","", 1);
                if (count($a_monitors) > 0) {
-                  foreach($a_monitors as $monitor_id=>$data) {
+                  foreach($a_monitors as $data) {
                      $a_monitor = $data;
                   }
                } else {
@@ -128,6 +129,7 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
 
       $a_monitor['is_global'] = 0;
 
+      $monitor_id = 0;
       if (!isset($a_monitor['id'])) {
          $monitor_id = $monitor->add($a_monitor);
       } else {
@@ -135,7 +137,6 @@ class PluginFusinvinventoryImport_Monitor extends CommonDBTM {
          $monitor_id = $a_monitor['id'];
       }
 
-      $Computer_Item = new Computer_Item();
       $array = array();
       $array['computers_id'] = $items_id;
       $array['itemtype'] = 'Monitor';

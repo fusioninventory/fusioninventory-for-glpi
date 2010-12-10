@@ -167,6 +167,6 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
       }
       return $output;
    }
-
 }
+
 ?>
