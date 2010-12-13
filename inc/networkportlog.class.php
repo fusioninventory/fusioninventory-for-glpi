@@ -499,17 +499,17 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       $ptp->load($port_id);
       //echo $ptp->getValue($db_field);
-      if ($ptp->getValue($db_field) != $value_new) {
-         $days = $pficlf->getValue($field);
-
-         if ((isset($days)) AND ($days != '-1')) {
-            $array["networkports_id"] = $port_id;
-            $array["field"] = $field;
-            $array["value_old"] = $ptp->getValue($db_field);
-            $array["value_new"] = $value_new;
-            $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
-         }
-      }
+//      if ($ptp->getValue($db_field) != $value_new) {
+//         $days = $pficlf->getValue($field);
+//
+//         if ((isset($days)) AND ($days != '-1')) {
+//            $array["networkports_id"] = $port_id;
+//            $array["field"] = $field;
+//            $array["value_old"] = $ptp->getValue($db_field);
+//            $array["value_new"] = $value_new;
+//            $ptsnmph->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
+//         }
+//      }
    }
 
    // $status = connection or disconnection

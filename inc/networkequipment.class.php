@@ -55,6 +55,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
       $this->oFusionInventory_networkequipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+      $this->oFusionInventory_networkequipment->type = 'PluginFusinvsnmpNetworkEquipment';
    }
 
 

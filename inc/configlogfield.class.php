@@ -91,6 +91,8 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 	function getValue($field) {
 		global $DB;
 
+      
+
 		$query = "SELECT days
                 FROM ".$this->table."
                 WHERE `field`='".$field."'

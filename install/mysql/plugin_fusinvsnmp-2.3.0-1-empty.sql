@@ -647,14 +647,14 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
 
 
 INSERT INTO `glpi_plugin_fusinvsnmp_inventorycriteria` (`id`, `name`, `comment`) VALUES
-(1, 'Serial number', 'serial'),
+(1, 'Serial number', 'serialnumber'),
 (2, 'Mac address', 'mac'),
 (3, 'Model', 'model'),
 (4, 'Name', 'name');
 
 
 INSERT INTO `glpi_plugin_fusinvsnmp_netdiscoverycriteria` (`id`, `name`, `comment`) VALUES
-(1, 'Serial number', 'serial'),
+(1, 'Serial number', 'serialnumber'),
 (2, 'Mac address', 'mac'),
 (3, 'Model', 'model'),
 (4, 'Name', 'name');
