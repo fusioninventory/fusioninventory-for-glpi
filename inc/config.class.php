@@ -204,10 +204,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *@param $p_insert Array('type'=>'value')
     *@return nothing
     **/
-   function initConfig($p_plugins_id, $p_insert) {
+   function initConfig($plugins_id, $p_insert) {
       global $DB;
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       foreach ($p_insert as $type=>$value) {
          $this->addConfig($plugins_id, $type, $value);
       }
