@@ -1260,7 +1260,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $input['globalcriteria'][] = 4;
             $input['name'] = strval($p_CONTENT->INFO->NAME);
          }
-
+         logInFile('crit', print_r($input, true));
       define('DATACRITERIA', serialize($input));
       $rule = new PluginFusinvsnmpRuleInventoryCollection();
       $data = array ();
@@ -1333,7 +1333,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          foreach ($a_criteria as $criteria) {
             switch ($criteria) {
 
-              case 'serial':
+              case 'serialnumber':
                   $condition .= "AND `serial`='".$datacriteria['serial']."' ";
                   $select .= ", serial";
                   $input['serial'] = $datacriteria['serial'];
@@ -1360,7 +1360,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $query = "SELECT ".$select." FROM `".getTableForItemType("NetworkEquipment")."`
             ".$condition." ";
          $result=$DB->query($query);
-
+         logInFile('query', $query);
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
             $this->importDevice('NetworkEquipment', $data['id']);
