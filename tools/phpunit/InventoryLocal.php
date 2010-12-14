@@ -186,6 +186,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
                   $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
                   $this->testHardware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+                  $this->testHardwareModifications("xml/inventory_local/".$Entry."/".$xmlFilename);
                }
             }
          }
@@ -774,11 +775,63 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
             }
          }
       }
+
+      foreach ($xml->COTENT->HARDWARE as $child) {
+         if (isset($child->NAME))
+            $this->assertEquals($Computer->fields['name'], $child->NAME , 'Difference of Hardware name, have '.$Computer->fields['name'].' instead '.$child->NAME.' ['.$xmlFile.']');
+
+         if (isset($child->OSNAME)) {
+            $OperatingSystem = new OperatingSystem;
+            $this->assertEquals($Computer->fields['operatingsystems_id'], $OperatingSystem->import(array('name'=>$child->OSNAME)) , 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.$OperatingSystem->import(array('name'=>$child->OSNAME)).' ['.$xmlFile.']');
+         }
+         if (isset($child->OSVERSION)) {
+            $OperatingSystemVersion = new OperatingSystemVersion;
+            $this->assertEquals($Computer->fields['operatingsystemversions_id'], $OperatingSystemVersion->import(array('name'=>$child->OSVERSION)) , 'Difference of Hardware operatingsystemversions, have '.$Computer->fields['operatingsystemversions_id'].' instead '.$OperatingSystemVersion->import(array('name'=>$child->OSVERSION)).' ['.$xmlFile.']');
+         }
+         if (isset($child->WINPRODID)) {
+            $this->assertEquals($Computer->fields['os_licenseid'], $child->WINPRODID , 'Difference of Hardware os_licenseid, have '.$Computer->fields['os_licenseid'].' instead '.$child->WINPRODID.' ['.$xmlFile.']');
+         }
+         if (isset($child->WINPRODKEY)) {
+            $this->assertEquals($Computer->fields['os_license_number'], $child->WINPRODKEY , 'Difference of Hardware os_license_number, have '.$Computer->fields['os_license_number'].' instead '.$child->WINPRODKEY.' ['.$xmlFile.']');
+         }
+         if (isset($child->WORKGROUP)) {
+            $Domain = new Domain;
+            $this->assertEquals($Computer->fields['domains_id'], $Domain->import(array('name'=>$child->WORKGROUP)) , 'Difference of Hardware domain, have '.$Computer->fields['domains_id'].' instead '.$Domain->import(array('name'=>$child->WORKGROUP)).' ['.$xmlFile.']');
+         }
+         if (isset($child->OSCOMMENTS)) {
+            if (strstr($child->OSCOMMENTS, 'Service Pack')) {
+               $OperatingSystemServicePack = new OperatingSystemServicePack;
+               $this->assertEquals($Computer->fields['operatingsystemservicepacks_id'], $OperatingSystemServicePack->import(array('name'=>$child->OSCOMMENTS)) , 'Difference of Hardware operatingsystemservicepacks_id, have '.$Computer->fields['operatingsystemservicepacks_id'].' instead '.$OperatingSystemServicePack->import(array('name'=>$child->OSCOMMENTS)).' ['.$xmlFile.']');
+
+               $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$child->OSCOMMENTS));
+            }
+         }
+
+
+      }
+
   }
 
+   function testHardwareModifications($xmlFile='') {
+      global $DB;
 
+      if (empty($xmlFile)) {
+         echo "testHardwareModifications with no arguments...\n";
+         return;
+      }
 
-   
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      $xml->CONTENT->HARDWARE->NAME = rand();
+      $xml->CONTENT->HARDWARE->OSNAME = "Microsoft blablabla".rand();
+      $xml->CONTENT->HARDWARE->OSVERSION = rand();
+      $xml->CONTENT->HARDWARE->WINPRODID = rand();
+      $xml->CONTENT->HARDWARE->WINPRODKEY = rand();
+      $xml->CONTENT->HARDWARE->WORKGROUP = "work".rand();
+      $xml->CONTENT->HARDWARE->USERDOMAIN = rand();
+
+   }
+
 
 
    

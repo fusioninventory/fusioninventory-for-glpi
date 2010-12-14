@@ -17,15 +17,17 @@ if (!defined('GLPI_ROOT')) {
    include_once("inc/backup.php");
    backupMySQL();
 
+   $_SESSION["glpilanguage"] = 'fr_FR';
+
    // Install
    include_once("inc/installation.php");
    installGLPI();
    installFusionPlugins();
 
-   $_SESSION["glpilanguage"] = 'fr_FR';
    loadLanguage();
-}
 
+   $CFG_GLPI["root_doc"] = GLPI_ROOT;
+}
 include_once('emulatoragent.php');
 
 /**
@@ -42,14 +44,8 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
     }
 
-   public function testSend() {
+   public function testSetModuleInventoryOff() {
       global $DB;
-
-      // Create switch in asset
-      $NetworkEquipment = new NetworkEquipment();
-      $input = array();
-      $input['serial']='FOC1567KYBT';
-      $NetworkEquipment->add($input);
 
       // Create rule
       $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
@@ -67,6 +63,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "globalcriteria";
          $input['pattern']= 1;
+         $input['condition']=0;
          $rulecriteria->add($input);
 
          // Add action
@@ -80,210 +77,323 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
      // set in config module inventory = yes by default
      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+        SET `is_active`='0'
+        WHERE `modulename`='SNMPQUERY' ";
+     $result = $DB->query($query);
+
+   }
+
+
+
+    public function testSetModuleInventoryOn() {
+       global $DB;
+
+     $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
         SET `is_active`='1'
         WHERE `modulename`='SNMPQUERY' ";
      $result = $DB->query($query);
 
+    }
 
-     // Prolog
+
+
+    public function testSendinventories() {
+       
+      $MyDirectory = opendir("xml/inventory_snmp");
+      while(false !== ($Entry = readdir($MyDirectory))) {
+         if(is_dir('xml/inventory_snmp/'.$Entry)&& $Entry != '.' && $Entry != '..') {
+            $myVersion = opendir("xml/inventory_snmp/".$Entry);
+            while(false !== ($xmlFilename = readdir($myVersion))) {
+               if ($xmlFilename != '.' && $xmlFilename != '..') {
+
+                  // We have the XML of each computer inventory
+                  $xml = simplexml_load_file("xml/inventory_snmp/".$Entry."/".$xmlFilename,'SimpleXMLElement', LIBXML_NOCDATA);
+
+                  $array = $this->testSendinventory("xml/inventory_snmp/".$Entry."/".$xmlFilename);
+                  $items_id = $array[0];
+                  $itemtype = $array[1];
+                  $unknown  = $array[2];
+
+                  $this->testInfo("xml/inventory_snmp/".$Entry."/".$xmlFilename, $items_id, $itemtype, $unknown);
+               }
+            }
+         }
+      }
+    }
+                  
+
+      function testInfo($xmlFile='', $items_id=0, $itemtype='', $unknown=0) {
+
+         if (empty($xmlFile)) {
+            echo "testInfo with no arguments...\n";
+            return;
+         }
+         $class = new $itemtype;
+         $class->getFromDB($items_id);
+
+         $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+         foreach ($xml->CONTENT->DEVICE->INFO as $child2) {
+            $this->assertEquals($class->fields['name'], (string)$child2->NAME , 'Difference of Hardware name, have '.$class->fields['name'].' instead '.$child2->NAME.' ['.$xmlFile.']');
+            $this->assertEquals($class->fields['serial'], (string)$child2->SERIAL , 'Difference of Hardware serial, have '.$class->fields['serial'].' instead '.$child2->SERIAL.' ['.$xmlFile.']');
+
+            if ($child2->TYPE == 'PRINTER') {
+               $PrinterModel = new PrinterModel();
+               $this->assertEquals($class->fields['printermodels_id'], $PrinterModel->import(array('name'=>(string)$child2->MODEL)) , 'Difference of Hardware model, have '.$class->fields['printermodels_id'].' instead '.$PrinterModel->import(array('name'=>$child2->MODEL)).' ['.$xmlFile.']');
+               $Manufacturer = new Manufacturer();
+               $this->assertEquals($class->fields['manufacturers_id'], $Manufacturer->import(array('name'=>(string)$child2->MANUFACTURER)) , 'Difference of Hardware manufacturer, have '.$class->fields['manufacturers_id'].' instead '.$Manufacturer->import(array('name'=>$child2->MANUFACTURER)).' ['.$xmlFile.']');
+               $this->assertEquals($class->fields['memory_size'], (string)$child2->MEMORY , 'Difference of Hardware memory size, have '.$class->fields['memory_size'].' instead '.$child2->MEMORY.' ['.$xmlFile.']');
+            } else if ($child2->TYPE == 'NETWORKING') {
+               $this->assertEquals($class->fields['ram'], (string)$child2->RAM , 'Difference of Hardware ram size, have '.$class->fields['ram'].' instead '.$child2->RAM.' ['.$xmlFile.']');
+            }
+            $Location = new Location();
+            $this->assertEquals($class->fields['locations_id'], $Location->import(array('name' => (string)$child2->LOCATION, 'entities_id' => '0')) , 'Difference of Hardware location, have '.$class->fields['locations_id'].' instead '.$Location->import(array('name' => $child2->LOCATION)).' ['.$xmlFile.']');
+            
+            /*
+ *         <COMMENTS>Xerox WorkCentre M20i ; OS 1.22   Engine 4.1.08 NIC V2.22(M20i) DADF 1.04</COMMENTS>
+ */
+         }
+
+
+//      foreach ($xml->CONTENT->DEVICE[0]->INFO as $child) {
+//         $this->assertEquals($data['name'], $child->NAME , 'Difference of Hardware name, have '.$data['name'].' instead '.$child->NAME.' []');
+//         $this->assertEquals($data['ip'], '192.168.0.80' , 'Problem on update ip of switch');
+//         $this->assertEquals($data['mac'], $child->MAC , 'Problem on update mac of switch');
+//         $this->assertEquals($data['ram'], $child->RAM , 'Problem on update ram of switch');
+//         $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentmodels',
+//                              $data['networkequipmentmodels_id']), $child->MODEL , 'Problem on update model of switch');
+//         $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentfirmwares',
+//                              $data['networkequipmentfirmwares_id']), $child->FIRMWARE , 'Problem on update firmware of switch');
+//         $this->assertEquals(Dropdown::getDropdownName('glpi_locations',
+//                              $data['locations_id']), $child->LOCATION , 'Problem on update location of switch');
+//
+//         $this->assertEquals($data['comment'], '' , 'Comment must be empty');
+//
+//
+//         $fusinvsnmp_networkequipments = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+//         $a_snmpswitch = $fusinvsnmp_networkequipments->find("`networkequipments_id`='".$data['id']."' ");
+//         $this->assertEquals(count($a_snmpswitch), 1 , 'Extension of switch informations are missing');
+//         foreach($a_snmpswitch as $idsnmp=>$datasnmp){
+//            $this->assertEquals($datasnmp['sysdescr'], $child->COMMENTS);
+//            $this->assertEquals($datasnmp['memory'], $child->MEMORY , 'Problem on update memory of switch');
+//            $this->assertEquals($datasnmp['uptime'], $child->UPTIME , 'Problem on update uptime of switch');
+//         }
+      }
+
+
+
+//   public function testIPs() {
+//      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
+//      $a_ips = $PluginFusinvsnmpNetworkEquipmentIP->find("`networkequipments_id`='1'
+//                                                AND `ip`='192.168.0.80'");
+//      $this->assertEquals(count($a_ips), 1 , 'Problem on manage IPs of the switch');
+//   }
+//
+//
+//   public function testPorts() {
+//
+//      $NetworkPort = new NetworkPort();
+//      $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'");
+//
+//      $this->assertEquals(count($a_ports), 26 , 'Problem oN CREATION OF PORTS');
+//   }
+//
+//
+//   public function testPortsinfo() {
+//
+//      $NetworkPort = new NetworkPort();
+//      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+//
+//      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+//
+//      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
+//         if ($child->IFTYPE[0] == '6') {
+//            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
+//                                          AND `name`='".$child->IFNAME[0]."'");
+//            $data = array();
+//            foreach ($a_ports as $id => $data) {
+//
+//            }
+//            $oFusioninventory_networkport = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
+//            $a_portsExt = $oFusioninventory_networkport->find("`networkports_id`='".$id."'");
+//            $dataExt = array();
+//            foreach ($a_portsExt as $idExt => $dataExt) {
+//
+//            }
+//
+//            $this->assertEquals($data['name'], strval($child->IFNAME[0]) , 'Name of port not good ("'.$data['name'].'" instead of "'.$child->IFNAME[0].'")');
+//            $this->assertEquals($data['mac'], strval($child->MAC[0]) , 'Mac of port not good ("'.$data['mac'].'" instead of "'.$child->MAC[0].'")');
+//            $this->assertEquals($data['logical_number'], strval($child->IFNUMBER[0]) , 'Number of port not good ("'.$data['logical_number'].'" instead of "'.$child->IFNUMBER[0].'")');
+//
+//            $this->assertEquals($dataExt['ifdescr'], strval($child->IFDESCR[0]) , 'Description of port not good ("'.$data['ifdescr'].'" instead of "'.$child->IFDESCR[0].'")');
+//            $this->assertEquals($dataExt['ifmtu'], strval($child->IFMTU[0]) , 'MTU of port not good ("'.$data['ifmtu'].'" instead of "'.$child->IFMTU[0].'")');
+//            $this->assertEquals($dataExt['ifspeed'], strval($child->IFSPEED[0]) , 'Speed of port not good ("'.$data['ifspeed'].'" instead of "'.$child->IFSPEED[0].'")');
+//            $this->assertEquals($dataExt['ifinternalstatus'], strval($child->IFINTERNALSTATUS[0]) , 'Internal status of port not good ("'.$data['ifinternalstatus'].'" instead of "'.$child->IFINTERNALSTATUS[0].'")');
+//            $this->assertEquals($dataExt['iflastchange'], strval($child->IFLASTCHANGE[0]) , 'Last change of port not good ("'.$data['iflastchange'].'" instead of "'.$child->IFLASTCHANGE[0].'")');
+//            $this->assertEquals($dataExt['ifinoctets'], strval($child->IFINOCTETS[0]) , 'In octets of port not good ("'.$data['ifinoctets'].'" instead of "'.$child->IFINOCTETS[0].'")');
+//            $this->assertEquals($dataExt['ifinerrors'], strval($child->IFINERRORS[0]) , 'In errors of port not good ("'.$data['ifinerrors'].'" instead of "'.$child->IFINERRORS[0].'")');
+//            $this->assertEquals($dataExt['ifoutoctets'], strval($child->IFOUTOCTETS[0]) , 'Out octets of port not good ("'.$data['ifoutoctets'].'" instead of "'.$child->IFOUTOCTETS[0].'")');
+//            $this->assertEquals($dataExt['ifouterrors'], strval($child->IFOUTERRORS[0]) , 'out errors of port not good ("'.$data['ifouterrors'].'" instead of "'.$child->IFOUTERRORS[0].'")');
+//            $this->assertEquals($dataExt['ifstatus'], strval($child->IFSTATUS[0]) , 'Status of port not good ("'.$data['ifstatus'].'" instead of "'.$child->IFSTATUS[0].'")');
+//         }
+//      }
+//
+//   }
+//
+//
+//   public function testPortsVlan() {
+//
+//      $NetworkPort = new NetworkPort();
+//      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+//
+//      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+//
+//      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
+//         if ($child->IFTYPE[0] == '6') {
+//
+//            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
+//                                          AND `name`='".$child->IFNAME[0]."'");
+//            $data = array();
+//            foreach ($a_ports as $id => $data) {
+//            }
+//
+//            $vlanDB = NetworkPort_Vlan::getVlansForNetworkPort($id);
+//            $vlanDB_Name_Comment = array();
+//            foreach ($vlanDB as $vlans_id=>$datas) {
+//               $temp = Dropdown::getDropdownName('glpi_vlans', $vlans_id, 1);
+//               $vlanDB_Name_Comment[$temp['name']."-".$temp['comment']] = 1;
+//            }
+//            $nb_errors = 0;
+//            $forgotvlan = '';
+//            if (isset($child->VLANS)) {
+//               foreach ($child->VLANS->children() as $namevlan => $childvlan) {
+//                  if (!isset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)])) {
+//                     $nb_errors++;
+//                     $forgotvlan .= strval($childvlan->NUMBER)."-".strval($childvlan->NAME)." | ";
+//                  } else {
+//                     unset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)]);
+//                  }
+//               }
+//            }
+//            $this->assertEquals($forgotvlan, '' , 'Vlans not in DB ("'.$forgotvlan.'")');
+//            $this->assertEquals(count($vlanDB_Name_Comment), 0 , 'Vlans in DB but not in the XML ("'.print_r($vlanDB_Name_Comment, true).'")');
+//         }
+//      }
+//   }
+//
+//   public function testPortsConnections() {
+//
+//      $NetworkPort = new NetworkPort();
+//      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+//      $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+//
+//      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+//
+//      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
+//         if ($child->IFTYPE[0] == '6') {
+//
+//            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
+//                                          AND `name`='".$child->IFNAME[0]."'");
+//            $data = array();
+//            foreach ($a_ports as $id => $data) {
+//            }
+//
+//            if (isset($child->CONNECTIONS)) {
+//               foreach ($child->CONNECTIONS->children() as $nameconnect => $childconnect) {
+//                  if (isset($child->CONNECTIONS->CDP)) { // Manage CDP
+//
+//
+//                  } else { // Manage tradictionnal connections
+//                     // Search in DB if MAC exist
+//
+//                     $a_port = $NetworkPort->find("`mac`='".strval($childconnect->MAC)."'
+//                                                   AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
+//                     $this->assertEquals(count($a_port), 1 , 'Port (connection) not good create ('.count($a_port).' instead of 1 port ('.strval($childconnect->MAC).')');
+//                     if (count($child->CONNECTIONS->children()) > 1) {
+//                        // Hub management
+//
+//                     } else {
+//                        foreach($a_port as $ports_id => $datas) {
+//                        }
+//                        $this->assertTrue($NetworkPort_NetworkPort->getFromDBForNetworkPort($ports_id) , 'Unknown port connection not connected with an other device');
+//
+//                     }
+//                  }
+//               }
+//            }
+//         }
+//      }
+//   }
+//
+
+   function testSendinventory($xmlFile='') {
+
+      if (empty($xmlFile)) {
+         echo "testSendinventory with no arguments...\n";
+         return;
+      }
+
+      $emulatorAgent = new emulatorAgent;
+      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
+      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+
+      // Send prolog for creation of agent in GLPI
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
-  <DEVICEID>agenttest-2010-03-09-09-41-28</DEVICEID>
+  <DEVICEID>'.$xml->DEVICEID.'</DEVICEID>
   <QUERY>PROLOG</QUERY>
-  <TOKEN>NTMXKUBJ</TOKEN>
+  <TOKEN>CBXTMXLU</TOKEN>
 </REQUEST>';
+      $emulatorAgent->sendProlog($input_xml);
 
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-      // PROLOG. What can I do?
-      $return_xml = $emulatorAgent->sendProlog($input_xml);
-      echo "========== Prolog ==========\n";
-      print_r($return_xml);
-
-
-      // Send inventory to GLPI
-      $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-
-      $input_xml = file_get_contents("xml/inventory_snmp/1.2/cisco2960.xml");
-
-      $return = $emulatorAgent->sendProlog($input_xml);
-      print_r($return);
-
-      $a_switchs = $NetworkEquipment->find("");
-      $this->assertEquals(count($a_switchs), 1 , 'Problem, have more than 1 switch in DB');
-
-      $a_switchs = $NetworkEquipment->find("`serial`='FOC1567KYBT'");
-      foreach($a_switchs as $id=>$data){
-
-      }
-      $this->assertEquals($data['name'], 'switch2960-001' , 'Problem on update name of switch');
-      $this->assertEquals($data['ip'], '192.168.0.80' , 'Problem on update ip of switch');
-      $this->assertEquals($data['mac'], '00:1a:6c:9a:fc:80' , 'Problem on update mac of switch');
-      $this->assertEquals($data['ram'], '60' , 'Problem on update ram of switch');
-      $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentmodels',
-                           $data['networkequipmentmodels_id']), 'WS-C2960-24PC-L' , 'Problem on update model of switch');
-      $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentfirmwares',
-                           $data['networkequipmentfirmwares_id']), '12.2(44)SE3' , 'Problem on update firmware of switch');
-      $this->assertEquals(Dropdown::getDropdownName('glpi_locations',
-                           $data['locations_id']), 'Baie_01' , 'Problem on update location of switch');
-
-      $this->assertEquals($data['comment'], '' , 'Comment must be empty');
-
-
-      $fusinvsnmp_networkequipments = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-      $a_snmpswitch = $fusinvsnmp_networkequipments->find("`networkequipments_id`='".$data['id']."' ");
-      $this->assertEquals(count($a_snmpswitch), 1 , 'Extension of switch informations are missing');
-      foreach($a_snmpswitch as $idsnmp=>$datasnmp){
-         $this->assertEquals($datasnmp['sysdescr'], 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE3, RELEASE SOFTWARE (fc2)
-Copyright (c) 1986-2008 by Cisco Systems, Inc.
-Compiled Mon 29-Sep-08 00:59 by nachen' , 'Problem on sysdescr not in DB');
-         $this->assertEquals($datasnmp['memory'], '24' , 'Problem on update memory of switch');
-         $this->assertEquals($datasnmp['uptime'], '86 days, 11:21:56.76' , 'Problem on update uptime of switch');
-      }
-   }
-
-
-   public function testIPs() {
-      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
-      $a_ips = $PluginFusinvsnmpNetworkEquipmentIP->find("`networkequipments_id`='1'
-                                                AND `ip`='192.168.0.80'");
-      $this->assertEquals(count($a_ips), 1 , 'Problem on manage IPs of the switch');
-   }
-
-
-   public function testPorts() {
-
-      $NetworkPort = new NetworkPort();
-      $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'");
-
-      $this->assertEquals(count($a_ports), 26 , 'Problem oN CREATION OF PORTS');
-   }
-
-
-   public function testPortsinfo() {
-
-      $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
-
-      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-
-      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
-         if ($child->IFTYPE[0] == '6') {
-            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
-                                          AND `name`='".$child->IFNAME[0]."'");
-            $data = array();
-            foreach ($a_ports as $id => $data) {
-
-            }
-            $oFusioninventory_networkport = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkports");
-            $a_portsExt = $oFusioninventory_networkport->find("`networkports_id`='".$id."'");
-            $dataExt = array();
-            foreach ($a_portsExt as $idExt => $dataExt) {
-
-            }
-            
-            $this->assertEquals($data['name'], strval($child->IFNAME[0]) , 'Name of port not good ("'.$data['name'].'" instead of "'.$child->IFNAME[0].'")');
-            $this->assertEquals($data['mac'], strval($child->MAC[0]) , 'Mac of port not good ("'.$data['mac'].'" instead of "'.$child->MAC[0].'")');
-            $this->assertEquals($data['logical_number'], strval($child->IFNUMBER[0]) , 'Number of port not good ("'.$data['logical_number'].'" instead of "'.$child->IFNUMBER[0].'")');
-
-            $this->assertEquals($dataExt['ifdescr'], strval($child->IFDESCR[0]) , 'Description of port not good ("'.$data['ifdescr'].'" instead of "'.$child->IFDESCR[0].'")');
-            $this->assertEquals($dataExt['ifmtu'], strval($child->IFMTU[0]) , 'MTU of port not good ("'.$data['ifmtu'].'" instead of "'.$child->IFMTU[0].'")');
-            $this->assertEquals($dataExt['ifspeed'], strval($child->IFSPEED[0]) , 'Speed of port not good ("'.$data['ifspeed'].'" instead of "'.$child->IFSPEED[0].'")');
-            $this->assertEquals($dataExt['ifinternalstatus'], strval($child->IFINTERNALSTATUS[0]) , 'Internal status of port not good ("'.$data['ifinternalstatus'].'" instead of "'.$child->IFINTERNALSTATUS[0].'")');
-            $this->assertEquals($dataExt['iflastchange'], strval($child->IFLASTCHANGE[0]) , 'Last change of port not good ("'.$data['iflastchange'].'" instead of "'.$child->IFLASTCHANGE[0].'")');
-            $this->assertEquals($dataExt['ifinoctets'], strval($child->IFINOCTETS[0]) , 'In octets of port not good ("'.$data['ifinoctets'].'" instead of "'.$child->IFINOCTETS[0].'")');
-            $this->assertEquals($dataExt['ifinerrors'], strval($child->IFINERRORS[0]) , 'In errors of port not good ("'.$data['ifinerrors'].'" instead of "'.$child->IFINERRORS[0].'")');
-            $this->assertEquals($dataExt['ifoutoctets'], strval($child->IFOUTOCTETS[0]) , 'Out octets of port not good ("'.$data['ifoutoctets'].'" instead of "'.$child->IFOUTOCTETS[0].'")');
-            $this->assertEquals($dataExt['ifouterrors'], strval($child->IFOUTERRORS[0]) , 'out errors of port not good ("'.$data['ifouterrors'].'" instead of "'.$child->IFOUTERRORS[0].'")');
-            $this->assertEquals($dataExt['ifstatus'], strval($child->IFSTATUS[0]) , 'Status of port not good ("'.$data['ifstatus'].'" instead of "'.$child->IFSTATUS[0].'")');
-         }
-      }
-
-   }
-
-
-   public function testPortsVlan() {
-      
-      $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
-
-      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-
-      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
-         if ($child->IFTYPE[0] == '6') {
-
-            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
-                                          AND `name`='".$child->IFNAME[0]."'");
-            $data = array();
-            foreach ($a_ports as $id => $data) {
-            }
-            
-            $vlanDB = NetworkPort_Vlan::getVlansForNetworkPort($id);
-            $vlanDB_Name_Comment = array();
-            foreach ($vlanDB as $vlans_id=>$datas) {
-               $temp = Dropdown::getDropdownName('glpi_vlans', $vlans_id, 1);
-               $vlanDB_Name_Comment[$temp['name']."-".$temp['comment']] = 1;
-            }
-            $nb_errors = 0;
-            $forgotvlan = '';
-            if (isset($child->VLANS)) {
-               foreach ($child->VLANS->children() as $namevlan => $childvlan) {
-                  if (!isset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)])) {
-                     $nb_errors++;
-                     $forgotvlan .= strval($childvlan->NUMBER)."-".strval($childvlan->NAME)." | ";
-                  } else {
-                     unset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)]);
-                  }
-               }
-            }
-            $this->assertEquals($forgotvlan, '' , 'Vlans not in DB ("'.$forgotvlan.'")');
-            $this->assertEquals(count($vlanDB_Name_Comment), 0 , 'Vlans in DB but not in the XML ("'.print_r($vlanDB_Name_Comment, true).'")');
-         }
-      }
-   }
-
-   public function testPortsConnections() {
-
-      $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
-      $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
-
-      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-
-      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
-         if ($child->IFTYPE[0] == '6') {
-
-            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
-                                          AND `name`='".$child->IFNAME[0]."'");
-            $data = array();
-            foreach ($a_ports as $id => $data) {
-            }
-
-            if (isset($child->CONNECTIONS)) {
-               foreach ($child->CONNECTIONS->children() as $nameconnect => $childconnect) {
-                  if (isset($child->CONNECTIONS->CDP)) { // Manage CDP
-                     
-
-                  } else { // Manage tradictionnal connections
-                     // Search in DB if MAC exist
-
-                     $a_port = $NetworkPort->find("`mac`='".strval($childconnect->MAC)."'
-                                                   AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
-                     $this->assertEquals(count($a_port), 1 , 'Port (connection) not good create ('.count($a_port).' instead of 1 port ('.strval($childconnect->MAC).')');
-                     if (count($child->CONNECTIONS->children()) > 1) {
-                        // Hub management
-
-                     } else {
-                        foreach($a_port as $ports_id => $datas) {
-                        }
-                        $this->assertTrue($NetworkPort_NetworkPort->getFromDBForNetworkPort($ports_id) , 'Unknown port connection not connected with an other device');
-                        
-                     }
-                  }
-               }
+      foreach ($xml->CONTENT->DEVICE as $child) {
+         foreach ($child->INFO as $child2) {
+            if ($child2->TYPE == 'PRINTER') {
+               // Create switch in asset
+               $Printer = new Printer();
+               $input = array();
+               $input['serial']=$child2->SERIAL;
+               $Printer->add($input);
+               $name = $child2->NAME;
+            } else if ($child2->TYPE == 'NETWORKING') {
+               // Create switch in asset
+               $NetworkEquipment = new NetworkEquipment();
+               $input = array();
+               $input['serial']=$child2->SERIAL;
+               $NetworkEquipment->add($input);
+               $name = $child2->NAME;
             }
          }
+      }
+      $serial = "`serial` IS NULL";
+
+      if ((isset($input['serial'])) && (!empty($input["serial"]))) {
+         $serial = "`serial`='".$input['serial']."'";
+      }
+
+      $input_xml = file_get_contents($xmlFile);
+      $emulatorAgent->sendProlog($input_xml);
+
+      $itemtype = '';
+      if (strstr($xmlFile, 'printer')) {
+         $itemtype = 'printer';
+         $Printer = new Printer();
+         $a_devices = $Printer->find("`name`='".$name."' AND ".$serial);
+      } else if (strstr($xmlFile, 'networkequipment')) {
+         $itemtype = 'networkequipment';
+         $NetworkEquipment = new NetworkEquipment();
+         $a_devices = $NetworkEquipment->find("`name`='".$name."' AND ".$serial);
+      }
+      $unknown = 0;
+      if (count($a_devices) == 0) {
+         // Search in unknown device
+         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+         $a_devices = $PluginFusioninventoryUnknownDevice->find("`name`='".$name."'");
+         $unknown = 1;
+      }
+      $this->assertEquals(count($a_devices), 1 , 'Problem on creation device, not created ('.$xmlFile.')');
+      foreach($a_devices as $items_id => $data) {
+         return array($items_id, $itemtype, $unknown);
       }
    }
 
