@@ -1043,7 +1043,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 			// Non template case
          } else {
             $array = array ();
-				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) {
+				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
 					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
 				}
             if ($_GET['id'] > 0) {
@@ -1070,7 +1070,7 @@ function plugin_headings_actions_fusinvsnmp($item) {
 
       case 'Printer' :
 			$array = array ();
-			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printers", "r")) {
+			if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
 				$array[1] = "plugin_headings_fusinvsnmp_printerInfo";
 			}
 			return $array;

@@ -696,7 +696,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             case 'LOCATION' :
                $Location = new Location();
-               $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION)));
+               $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
+                                                                           'entities_id' => $this->ptd->getValue('entities_id'))));
                break;
             case 'CONTACT' :
                $this->ptd->setValue('contact', (string)$p_info->CONTACT);
