@@ -193,7 +193,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
    function showGraph($id, $options=array()) {
       global $LANG, $DB;
 
-      $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $printersComp = array();$graphType='day';
+      $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $pagecounters = array();$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
@@ -272,7 +272,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       $mapping = new PluginFusioninventoryMapping;
       $maps = $mapping->find("`itemtype`='Printer'");
-      foreach ($maps as $num=>$mapfields) {
+      foreach ($maps as $mapfields) {
          if (!isset($mapfields["shortlocale"])) {
             $mapfields["shortlocale"] = $mapfields["locale"];
          }
