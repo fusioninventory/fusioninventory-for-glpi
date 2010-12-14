@@ -204,7 +204,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_type'])) {
          $graphType = $_SESSION['glpi_plugin_fusioninventory_graph_type'];
       }
-      if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d");; // today
+      if ( $end == 'NULL' OR $end == '' ) $end=date("Y-m-d"); // today
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'])) $timeUnit=$_SESSION['glpi_plugin_fusioninventory_graph_timeUnit'];
       if (!isset($_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) $_SESSION['glpi_plugin_fusioninventory_graph_printersComp']=array();
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {

@@ -97,23 +97,6 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function updateDB() {
-      if (array_key_exists('networkequipmentmodels_id', $this->ptcdUpdates)) {
-         $this->ptcdUpdates['networkequipmentmodels_id'] = Dropdown::importExternal("NetworkEquipmentModel",
-                                                   $this->ptcdUpdates['networkequipmentmodels_id']);
-      }
-      if (array_key_exists('networkequipmentfirmwares_id', $this->ptcdUpdates)) {
-         $this->ptcdUpdates['networkequipmentfirmwares_id'] = Dropdown::importExternal("NetworkEquipmentFirmware",
-                                                   $this->ptcdUpdates['networkequipmentfirmwares_id']);
-      }
-      if (array_key_exists('locations_id', $this->ptcdUpdates)) {
-         $entity = $this->getValue('entities_id');
-         if (!isset($entity)) {
-            $entity = '-1';
-         }
-         $this->ptcdUpdates['locations_id'] = Dropdown::importExternal('Location',
-                                                   $this->ptcdUpdates['locations_id'],
-                                                   $entity);
-      }
 
       parent::updateDB();
       //$a_networkequipment = $this->ptcdUpdates;

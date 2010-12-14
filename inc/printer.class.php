@@ -447,7 +447,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
+		echo "<tr class='tab_bg_2 center'>";
 		echo "<td colspan='4'>";
 		echo "<div align='center'>";
 		echo "<input type='hidden' name='id' value='".$id."'>";

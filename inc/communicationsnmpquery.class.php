@@ -618,7 +618,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('cpu', $p_info->CPU[0]);
                break;
             case 'FIRMWARE' :
-               $this->ptd->setValue('networkequipmentfirmwares_id', $p_info->FIRMWARE[0]);
+               $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
+               $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => (string)$p_info->FIRMWARE)));
                break;
             case 'MAC' :
                $this->ptd->setValue('mac', $p_info->MAC[0]);
@@ -627,10 +628,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('memory', $p_info->MEMORY[0]);
                break;
             case 'MODEL' :
-               $this->ptd->setValue('networkequipmentmodels_id', $p_info->MODEL[0]);
+               $NetworkEquipmentModel = new NetworkEquipmentModel();
+               $this->ptd->setValue('networkequipmentmodels_id', $NetworkEquipmentModel->import(array('name' => (string)$p_info->MODEL)));
                break;
             case 'LOCATION' :
-               $this->ptd->setValue('locations_id', $p_info->LOCATION[0]);
+              $Location = new Location();
+              $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION,
+                                                                           'entities_id' => $this->ptd->getValue('entities_id'))));
                break;
             case 'NAME' :
                $this->ptd->setValue('name', $p_info->NAME[0]);
