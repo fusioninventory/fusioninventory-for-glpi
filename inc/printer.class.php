@@ -383,7 +383,6 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       }
       
 		// Form printer informations
-// Don't work in this case :      $this->oFusionInventory_printer->showFormHeader($options);
 
 		echo "<div align='center'>";
       echo "<form method='post' name='snmp_form' id='snmp_form'
@@ -395,15 +394,20 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo $LANG['plugin_fusinvsnmp']["snmp"][4];
       echo "</td>";
       echo "<td>";
-      echo "<textarea name='toto' rows='3' cols='45'>";
+      echo "<textarea name='sysdescr' cols='45' rows='5'>";
       echo $this->oFusionInventory_printer->fields['sysdescr'];
       echo "</textarea>";
       echo "</td>";
-      echo "<td colspan='2'></td>";
+      echo "<td align='center'>";
+      echo $LANG['plugin_fusinvsnmp']["snmp"][53]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo convDateTime($this->oFusionInventory_printer->fields['last_fusioninventory_update']);
+      echo "</td>";
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["model_info"][4]."</td>";
+		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']["model_info"][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -420,31 +424,31 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
-      echo "<td align='center'>";
-      echo "<input type='submit' name='GetRightModel' value='".
-             $LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/></td>";
+      echo "<td colspan='2'>";
+
       echo "</td>";
 		echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<input type='submit' name='GetRightModel'
+              value='".$LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/>";
+      echo "</td>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "</tr";
+
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["functionalities"][43]."</td>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["functionalities"][43]."&nbsp;:</td>";
 		echo "<td align='center'>";
       PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
 		echo "</td>";
-      echo "<td>";
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' colspan='2' height='30'>";
-		echo $LANG['plugin_fusinvsnmp']["snmp"][52].": ".convDateTime($this->oFusionInventory_printer->fields["last_fusioninventory_update"]);
-		echo "</td>";
-      echo "<td>";
-      echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td colspan='3'>";
+		echo "<td colspan='4'>";
 		echo "<div align='center'>";
 		echo "<input type='hidden' name='id' value='".$id."'>";
 		echo "<input type='submit' name='update' value=\"".$LANG["buttons"][7]."\" class='submit' >";
