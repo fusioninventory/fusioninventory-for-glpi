@@ -180,6 +180,7 @@ $LANG['plugin_fusinvsnmp']['snmp'][50]="Verbindung";
 $LANG['plugin_fusinvsnmp']['snmp'][51]="Duplex";
 $LANG['plugin_fusinvsnmp']['snmp'][52]="Datum des letzen FusionInventory Inventarisierung";
 $LANG['plugin_fusinvsnmp']['snmp'][53]="Letzte Inventarisierung";
+$LANG['plugin_fusinvsnmp']['snmp'][54]="Datas not available";
 
 $LANG['plugin_fusinvsnmp']['snmpauth'][1]="Gemeinschaft";
 $LANG['plugin_fusinvsnmp']['snmpauth'][2]="Benutzer";

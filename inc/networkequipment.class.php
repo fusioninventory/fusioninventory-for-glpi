@@ -401,7 +401,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
               value='".$LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/>";
       echo "</td>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][14]."&nbsp;:";
+        echo $LANG['plugin_fusinvsnmp']["snmp"][14]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $query2 = "SELECT *
@@ -413,9 +413,13 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       if (!empty($data2["ram"])) {
          $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
       }
-      displayProgressBar(250, $ram_pourcentage,
+      if (($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0) {
+         echo "<center><strong>".$LANG['plugin_fusinvsnmp']['snmp'][54]."</strong></center>";
+      } else {
+         displayProgressBar(250, $ram_pourcentage,
                         array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
                          $data2["ram"]." Mo)"));
+      }
       echo "</td>";
       echo "</tr>";
 

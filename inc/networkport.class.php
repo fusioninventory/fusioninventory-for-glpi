@@ -114,7 +114,9 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     **/
    function updateDB() {
       parent::updateDB(); // update core
-      $this->oFusioninventory_networkport->updateDB(); // update fusioninventory
+      if ($this->glpi_type == 'NetworkEquipment') {
+         $this->oFusioninventory_networkport->updateDB(); // update fusioninventory
+      }
       $this->connect(); // update connections
       $this->assignVlans(); // update vlans
    }
@@ -135,10 +137,12 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
          $portID=parent::add($this->ptcdUpdates);
          $this->load($portID);
          // update fusioninventory
+         if ($this->glpi_type == 'NetworkEquipment') {
          if (count($this->oFusioninventory_networkport->ptcdUpdates) OR $p_force) {
 //            $this->oFusioninventory_networkport->ptcdUpdates['networkports_id']=$this->getValue('id');
 //            $this->oFusioninventory_networkport->add($this->oFusioninventory_networkport->ptcdUpdates);
             $this->fusinvsnmp_networkports_id = $this->addDBFusionInventory();
+         }
          }
          $this->load($portID);
          $this->connect();       // update connections
