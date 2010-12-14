@@ -464,9 +464,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 //                              array('query_nb_error' => '1'));
          $a_input = array();
          $a_input['id'] = $p_xml->ERROR->ID;
-         if ($p_xml->ERROR->TYPE=='NetworkEquipment') {
+         if ($p_xml->ERROR->TYPE=='NETWORKING') {
             $a_input['TYPE'] = 'NetworkEquipment';
-         } elseif ($p_xml->ERROR->TYPE=='Printer') {
+         } elseif ($p_xml->ERROR->TYPE=='PRINTER') {
             $a_input['TYPE'] = 'Printer';
          }
          $a_input['MESSAGE'] = $p_xml->ERROR->MESSAGE;
@@ -676,37 +676,40 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             case 'TYPE' : // already managed
                break;
             case 'COMMENTS' :
-               $this->ptd->setValue('comment', $p_info->COMMENTS);
+               $this->ptd->setValue('sysdescr', (string)$p_info->COMMENTS);
                break;
             case 'MEMORY' :
-               $this->ptd->setValue('memory', $p_info->MEMORY);
+               $this->ptd->setValue('memory_size', (string)$p_info->MEMORY);
                break;
             case 'MODEL' :
-               $this->ptd->setValue('model', $p_info->MODEL);
+               $PrinterModel = new PrinterModel();
+               $this->ptd->setValue('printermodels_id', $PrinterModel->import(array('name' => (string)$p_info->MODEL)));
                break;
             case 'NAME' :
-               $this->ptd->setValue('name', $p_info->NAME);
+               $this->ptd->setValue('name', (string)$p_info->NAME);
                break;
             case 'SERIAL' :
-               $this->ptd->setValue('serial', $p_info->SERIAL);
+               $this->ptd->setValue('serial', (string)$p_info->SERIAL);
                break;
             case 'OTHERSERIAL' :
-               $this->ptd->setValue('otherserial', $p_info->OTHERSERIAL);
+               $this->ptd->setValue('otherserial', (string)$p_info->OTHERSERIAL);
                break;
             case 'LOCATION' :
-               $this->ptd->setValue('location', $p_info->LOCATION);
+               $Location = new Location();
+               $this->ptd->setValue('locations_id', $Location->import(array('name' => (string)$p_info->LOCATION)));
                break;
             case 'CONTACT' :
-               $this->ptd->setValue('contact', $p_info->CONTACT);
+               $this->ptd->setValue('contact', (string)$p_info->CONTACT);
                break;
             case 'MANUFACTURER' :
-               $this->ptd->setValue('manufacturer', $p_info->MANUFACTURER); // TODO : regrouper tout ces cases
+               $Manufacturer = new Manufacturer();
+               $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
                break;
             default :
                $errors.=$LANG['plugin_fusioninventory']["errors"][22].' INFO : '.$child->getName()."\n";
          }
       }
-
+      
       return $errors;
    }
 
@@ -1314,11 +1317,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
          $query = "SELECT ".$select." FROM `".getTableForItemType("Printer")."`
             ".$condition." ";
-         $result=$DB->query($query);
-         logInFile('logo', $query);
-         if ($DB->numrows($result) == "1") {
-            $data = $DB->fetch_assoc($result);
-            $this->importDevice('Printer', $data['id']);
+         $result = $DB->query($query);
+         logInFile('result', "*".$query."* \n ".$DB->numrows($result));
+         if ($DB->numrows($result)) {
+            $this->importDevice('Printer', $DB->result($result,0,'id'));
          } else {
             // Creation of printer
             $Printer = new Printer();
@@ -1334,9 +1336,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             switch ($criteria) {
 
               case 'serialnumber':
-                  $condition .= "AND `serial`='".$datacriteria['serial']."' ";
+                  $condition .= "AND `serial`='".$datacriteria['serialnumber']."' ";
                   $select .= ", serial";
-                  $input['serial'] = $datacriteria['serial'];
+                  $input['serial'] = $datacriteria['serialnumber'];
                   break;
 
                case 'mac':

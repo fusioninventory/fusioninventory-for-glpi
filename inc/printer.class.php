@@ -136,13 +136,12 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    function updateDB() {
       global $DB;
 
-      if (array_key_exists('model', $this->ptcdUpdates)) {
-         $manufacturer = Dropdown::getDropdownName("glpi_manufacturers",
-                                         $this->getValue('manufacturers_id'));
-         $this->ptcdUpdates['model'] = Dropdown::importExternal("PrinterModel",
-                                                   $this->ptcdUpdates['model'], 0,
-                                                   array('manufacturer'=>$manufacturer));
-      }
+//         $manufacturer = Dropdown::getDropdownName("glpi_manufacturers",
+//                                         $this->getValue('manufacturers_id'));
+//         $this->ptcdUpdates['model'] = Dropdown::importExternal("PrinterModel",
+//                                                   $this->ptcdUpdates['model'], 0,
+//                                                   array('manufacturer'=>$manufacturer));
+//      }
       if (array_key_exists('location', $this->ptcdUpdates)) {
          $entity = $this->getValue('entities_id');
          $this->ptcdUpdates['location'] = Dropdown::importExternal("Location",
