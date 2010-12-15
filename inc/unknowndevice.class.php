@@ -450,7 +450,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $input["mac"] = $ifmac;
             $id_port = $Netport->add($input);
             $a_portcreate = array();
-            $a_portcreate[$id_port] = 1;
+            $Netport->getFromDB($id_port);
+            $a_portcreate[$id_port] = $Netport->fields;
             $used_id = $this->connectPortToHub($a_portcreate, $hub_id);
          }
          $a_portUsed[$used_id] = 1;
