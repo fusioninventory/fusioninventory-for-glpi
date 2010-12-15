@@ -255,7 +255,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_networkports` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `networkports_id` int(11) NOT NULL,
    `ifmtu` int(8) NOT NULL DEFAULT '0',
-   `ifspeed` int(12) NOT NULL DEFAULT '0',
+   `ifspeed` bigint(50) NOT NULL DEFAULT '0',
    `ifinternalstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `ifconnectionstatus` int(8) NOT NULL DEFAULT '0',
    `iflastchange` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

@@ -47,7 +47,12 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusinvsnmpCommunicationSNMPQuery {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
-   private $sxml, $ptd;
+   private $sxml, $ptd, $logFile, $agent;
+
+   function __construct() {
+      $this->logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/communication.log';
+   }
+
 
    /**
     * Add SNMPQUERY string to XML code
@@ -338,6 +343,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->import().');
+
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $this->agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
+
       $this->sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
       $errors = '';
 
@@ -656,6 +665,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
       }
       return $errors;
+      
    }
 
    /**
@@ -1053,7 +1063,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ($count > 1) { // MultipleMac
             $p_oPort->setNoTrunk();
             $pfiud = new PluginFusioninventoryUnknownDevice;
-            $pfiud->hubNetwork($p_oPort);
+            $pfiud->hubNetwork($p_oPort, $this->agent);
          } else {
             if (!$p_oPort->getNoTrunk()) {
                $p_oPort->setValue('trunk', 0);
@@ -1269,7 +1279,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $input['name'] = strval($p_CONTENT->INFO->NAME);
          }
          logInFile('crit', print_r($input, true));
-      define('DATACRITERIA', serialize($input));
+      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $rule = new PluginFusinvsnmpRuleInventoryCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
@@ -1286,7 +1296,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $datacriteria = unserialize(DATACRITERIA);
+      $datacriteria = unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']);
 
       if ($xml->INFO->TYPE == 'PRINTER') {
          $condition = "WHERE 1 ";
@@ -1323,7 +1333,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $query = "SELECT ".$select." FROM `".getTableForItemType("Printer")."`
             ".$condition." ";
          $result = $DB->query($query);
-         logInFile('result', "*".$query."* \n ".$DB->numrows($result));
          if ($DB->numrows($result)) {
             $this->importDevice('Printer', $DB->result($result,0,'id'));
          } else {
@@ -1367,10 +1376,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $query = "SELECT ".$select." FROM `".getTableForItemType("NetworkEquipment")."`
             ".$condition." ";
          $result=$DB->query($query);
-         logInFile('query', $query);
-         if ($DB->numrows($result) == "1") {
-            $data = $DB->fetch_assoc($result);
-            $this->importDevice('NetworkEquipment', $data['id']);
+         if ($DB->numrows($result)) {
+            $this->importDevice('NetworkEquipment', $DB->result($result,0,'id'));
          } else {
             // Creation of printer
             $NetworkEquipment = new NetworkEquipment();
