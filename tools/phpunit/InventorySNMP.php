@@ -25,7 +25,8 @@ if (!defined('GLPI_ROOT')) {
    installFusionPlugins();
 
    loadLanguage();
-
+   include_once(GLPI_ROOT."/locales/fr_FR.php");
+   include_once(GLPI_ROOT."/plugins/fusinvsnmp/locales/fr_FR.php");
    $CFG_GLPI["root_doc"] = GLPI_ROOT;
 }
 include_once('emulatoragent.php');
@@ -49,7 +50,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
       // Create rule
       $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
-      $input = array();;
+      $input = array();
       $input['is_active']=1;
       $input['name']='serial';
       $input['match']='AND';
@@ -85,15 +86,15 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
 
 
-    public function testSetModuleInventoryOn() {
-       global $DB;
+   public function testSetModuleInventoryOn() {
+      global $DB;
 
-     $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
-        SET `is_active`='1'
-        WHERE `modulename`='SNMPQUERY' ";
-     $result = $DB->query($query);
+      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+         SET `is_active`='1'
+         WHERE `modulename`='SNMPQUERY' ";
+      $DB->query($query);
 
-    }
+   }
 
 
 
@@ -109,12 +110,19 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
                   // We have the XML of each computer inventory
                   $xml = simplexml_load_file("xml/inventory_snmp/".$Entry."/".$xmlFilename,'SimpleXMLElement', LIBXML_NOCDATA);
 
-                  $array = $this->testSendinventory("xml/inventory_snmp/".$Entry."/".$xmlFilename);
-                  $items_id = $array[0];
-                  $itemtype = $array[1];
-                  $unknown  = $array[2];
+                  // Send all of xml
+                  $this->testSendinventory("xml/inventory_snmp/".$Entry."/".$xmlFilename);
+                  foreach ($xml->CONTENT->DEVICE as $child) {
+                     // Get device information in GLPI and items_id
+                     $array = $this->testGetGLPIDevice("xml/inventory_snmp/".$Entry."/".$xmlFilename, $child);
+                     $items_id = $array[0];
+                     $itemtype = $array[1];
+                     $unknown  = $array[2];
+                     // test Infos
+                     $this->testInfo($child, "xml/inventory_snmp/".$Entry."/".$xmlFilename, $items_id, $itemtype, $unknown);
 
-                  $this->testInfo("xml/inventory_snmp/".$Entry."/".$xmlFilename, $items_id, $itemtype, $unknown);
+                     $this->testIPs($child, "xml/inventory_snmp/".$Entry."/".$xmlFilename,$items_id,$itemtype);
+                  }
                }
             }
          }
@@ -122,7 +130,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
     }
                   
 
-      function testInfo($xmlFile='', $items_id=0, $itemtype='', $unknown=0) {
+      function testInfo($xml, $xmlFile='', $items_id=0, $itemtype='', $unknown=0) {
 
          if (empty($xmlFile)) {
             echo "testInfo with no arguments...\n";
@@ -131,24 +139,27 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
          $class = new $itemtype;
          $class->getFromDB($items_id);
 
-         $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
-
-         foreach ($xml->CONTENT->DEVICE->INFO as $child2) {
+         foreach ($xml->INFO as $child2) {
             $this->assertEquals($class->fields['name'], (string)$child2->NAME , 'Difference of Hardware name, have '.$class->fields['name'].' instead '.$child2->NAME.' ['.$xmlFile.']');
             $this->assertEquals($class->fields['serial'], (string)$child2->SERIAL , 'Difference of Hardware serial, have '.$class->fields['serial'].' instead '.$child2->SERIAL.' ['.$xmlFile.']');
 
             if ($child2->TYPE == 'PRINTER') {
-               $PrinterModel = new PrinterModel();
-               $this->assertEquals($class->fields['printermodels_id'], $PrinterModel->import(array('name'=>(string)$child2->MODEL)) , 'Difference of Hardware model, have '.$class->fields['printermodels_id'].' instead '.$PrinterModel->import(array('name'=>$child2->MODEL)).' ['.$xmlFile.']');
-               $Manufacturer = new Manufacturer();
-               $this->assertEquals($class->fields['manufacturers_id'], $Manufacturer->import(array('name'=>(string)$child2->MANUFACTURER)) , 'Difference of Hardware manufacturer, have '.$class->fields['manufacturers_id'].' instead '.$Manufacturer->import(array('name'=>$child2->MANUFACTURER)).' ['.$xmlFile.']');
+               if (isset($child2->MODEL)) {
+                  $PrinterModel = new PrinterModel();
+                  $this->assertEquals($class->fields['printermodels_id'], $PrinterModel->import(array('name'=>(string)$child2->MODEL)) , 'Difference of Hardware model, have '.$class->fields['printermodels_id'].' instead '.$PrinterModel->import(array('name'=>$child2->MODEL)).' ['.$xmlFile.']');
+               }
+               if (isset($child2->MANUFACTURER)) {
+                  $Manufacturer = new Manufacturer();
+                  $this->assertEquals($class->fields['manufacturers_id'], $Manufacturer->import(array('name'=>(string)$child2->MANUFACTURER)) , 'Difference of Hardware manufacturer, have '.$class->fields['manufacturers_id'].' instead '.$Manufacturer->import(array('name'=>$child2->MANUFACTURER)).' ['.$xmlFile.']');
+               }
                $this->assertEquals($class->fields['memory_size'], (string)$child2->MEMORY , 'Difference of Hardware memory size, have '.$class->fields['memory_size'].' instead '.$child2->MEMORY.' ['.$xmlFile.']');
             } else if ($child2->TYPE == 'NETWORKING') {
                $this->assertEquals($class->fields['ram'], (string)$child2->RAM , 'Difference of Hardware ram size, have '.$class->fields['ram'].' instead '.$child2->RAM.' ['.$xmlFile.']');
             }
-            $Location = new Location();
-            $this->assertEquals($class->fields['locations_id'], $Location->import(array('name' => (string)$child2->LOCATION, 'entities_id' => '0')) , 'Difference of Hardware location, have '.$class->fields['locations_id'].' instead '.$Location->import(array('name' => $child2->LOCATION)).' ['.$xmlFile.']');
-            
+            if (isset($child2->LOCATION)) {
+               $Location = new Location();
+               $this->assertEquals($class->fields['locations_id'], $Location->import(array('name' => (string)$child2->LOCATION, 'entities_id' => '0')) , 'Difference of Hardware location, have '.$class->fields['locations_id'].' instead '.$Location->import(array('name' => $child2->LOCATION)).' ['.$xmlFile.']');
+            }
             /*
  *         <COMMENTS>Xerox WorkCentre M20i ; OS 1.22   Engine 4.1.08 NIC V2.22(M20i) DADF 1.04</COMMENTS>
  */
@@ -182,12 +193,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
 
 
-//   public function testIPs() {
-//      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
-//      $a_ips = $PluginFusinvsnmpNetworkEquipmentIP->find("`networkequipments_id`='1'
-//                                                AND `ip`='192.168.0.80'");
-//      $this->assertEquals(count($a_ips), 1 , 'Problem on manage IPs of the switch');
-//   }
+  
 //
 //
 //   public function testPorts() {
@@ -354,27 +360,46 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
                $input = array();
                $input['serial']=$child2->SERIAL;
                $Printer->add($input);
-               $name = $child2->NAME;
             } else if ($child2->TYPE == 'NETWORKING') {
                // Create switch in asset
                $NetworkEquipment = new NetworkEquipment();
                $input = array();
                $input['serial']=$child2->SERIAL;
                $NetworkEquipment->add($input);
-               $name = $child2->NAME;
             }
          }
-      }
-      $serial = "`serial` IS NULL";
-
-      if ((isset($input['serial'])) && (!empty($input["serial"]))) {
-         $serial = "`serial`='".$input['serial']."'";
       }
 
       $input_xml = file_get_contents($xmlFile);
       $emulatorAgent->sendProlog($input_xml);
 
+   }
+
+
+   function testGetGLPIDevice($xmlFile='', $xml='') {
+      
+      if (empty($xmlFile)) {
+         echo "testGetGLPIDevice with no arguments...\n";
+         return;
+      }
+
+      $input = array();
+      if ((string)$xml->INFO->TYPE == 'PRINTER') {
+         $input['serial']=(string)$xml->INFO->SERIAL;
+         $name = (string)$xml->INFO->NAME;
+      } else if ((string)$xml->INFO->TYPE == 'NETWORKING') {
+         $input['serial']=(string)$xml->INFO->SERIAL;
+         $name = (string)$xml->INFO->NAME;
+      }
+ 
+      $serial = "`serial` IS NULL";
+
+      if ((isset($input['serial'])) && (!empty($input["serial"]))) {
+         $serial = "`serial`='".$input['serial']."'";
+      }
+      
       $itemtype = '';
+      $a_devices = array();
       if (strstr($xmlFile, 'printer')) {
          $itemtype = 'printer';
          $Printer = new Printer();
@@ -395,6 +420,31 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       foreach($a_devices as $items_id => $data) {
          return array($items_id, $itemtype, $unknown);
       }
+   }
+
+
+   function testIPs($xml='', $xmlFile='',$items_id=0,$itemtype='') {
+
+      if (empty($xmlFile)) {
+         echo "testIPs with no arguments...\n";
+         return;
+      }
+
+      if ($itemtype != 'networkequipment') {
+         echo "testIPs with itemtype not networkequipment...\n";
+         return;
+      }
+
+      $count_ips = 0;
+      foreach ($xml->INFO->IPS->IP as $child) {
+         if ($child != "127.0.0.1") {
+            $count_ips++;
+         }
+      }
+
+      $PluginFusinvsnmpNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
+      $a_ips = $PluginFusinvsnmpNetworkEquipmentIP->find("`networkequipments_id`='".$items_id."'");
+      $this->assertEquals(count($a_ips), $count_ips , 'Problem on manage IPs of the switch, '.count($a_ips).' instead '.$count_ips.' ['.$xmlFile.']');
    }
 
 }
