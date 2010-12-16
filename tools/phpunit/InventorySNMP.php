@@ -129,6 +129,8 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
                      $this->testPortsVlan($child, "xml/inventory_snmp/".$Entry."/".$xmlFilename,$items_id,$itemtype);
 
+                     $this->testPortsConnections($child, "xml/inventory_snmp/".$Entry."/".$xmlFilename,$items_id,$itemtype);
+
                   }
                }
             }
@@ -199,53 +201,6 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       }
 
 
-
-     
-//
-//   public function testPortsConnections() {
-//
-//      $NetworkPort = new NetworkPort();
-//      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
-//      $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
-//
-//      $xml = simplexml_load_file("xml/inventory_snmp/1.2/cisco2960.xml",'SimpleXMLElement', LIBXML_NOCDATA);
-//
-//      foreach ($xml->CONTENT->DEVICE->PORTS->children() as $name=>$child) {
-//         if ($child->IFTYPE[0] == '6') {
-//
-//            $a_ports = $NetworkPort->find("`itemtype`='NetworkEquipment' AND `items_id`='1'
-//                                          AND `name`='".$child->IFNAME[0]."'");
-//            $data = array();
-//            foreach ($a_ports as $id => $data) {
-//            }
-//
-//            if (isset($child->CONNECTIONS)) {
-//               foreach ($child->CONNECTIONS->children() as $nameconnect => $childconnect) {
-//                  if (isset($child->CONNECTIONS->CDP)) { // Manage CDP
-//
-//
-//                  } else { // Manage tradictionnal connections
-//                     // Search in DB if MAC exist
-//
-//                     $a_port = $NetworkPort->find("`mac`='".strval($childconnect->MAC)."'
-//                                                   AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
-//                     $this->assertEquals(count($a_port), 1 , 'Port (connection) not good create ('.count($a_port).' instead of 1 port ('.strval($childconnect->MAC).')');
-//                     if (count($child->CONNECTIONS->children()) > 1) {
-//                        // Hub management
-//
-//                     } else {
-//                        foreach($a_port as $ports_id => $datas) {
-//                        }
-//                        $this->assertTrue($NetworkPort_NetworkPort->getFromDBForNetworkPort($ports_id) , 'Unknown port connection not connected with an other device');
-//
-//                     }
-//                  }
-//               }
-//            }
-//         }
-//      }
-//   }
-//
 
    function testSendinventory($xmlFile='') {
 
@@ -487,6 +442,60 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
    }
 
 
+   public function testPortsConnections($xml='', $xmlFile='',$items_id=0,$itemtype='') {
+
+      if (empty($xmlFile)) {
+         echo "testPortsConnections with no arguments...\n";
+         return;
+      }
+
+      $NetworkPort = new NetworkPort();
+      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
+      $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+
+      foreach ($xml->PORTS->children() as $name=>$child) {
+         if ((string)$child->IFTYPE == '6') {
+
+            $a_ports = $NetworkPort->find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."'
+                                          AND `name`='".(string)$child->IFNAME."'");
+            $data = array();
+            foreach ($a_ports as $id => $data) {
+            }
+
+            if (isset($child->CONNECTIONS)) {
+               foreach ($child->CONNECTIONS->children() as $nameconnect => $childconnect) {
+                  if (isset($child->CONNECTIONS->CDP)) { // Manage CDP
+
+
+                  } else { // Manage tradictionnal connections
+                     // Search in DB if MAC exist
+
+                     $a_port = $NetworkPort->find("`mac`='".strval($childconnect->MAC)."'
+                                                   AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
+                     $this->assertEquals(count($a_port), 1 , 'Port (connection) not good created, '.count($a_port).' instead of 1 port ('.strval($childconnect->MAC).' (test on mac : '.$childconnect->MAC.' on portname '.$child->IFNAME.')['.$xmlFile.']');
+                     foreach($a_port as $ports_id => $datas) {
+                     }
+                     if (count($child->CONNECTIONS->CONNECTION->children()) > 1) {
+                        // Hub management
+                        $hubLink_id = $NetworkPort_NetworkPort->getOppositeContact($ports_id);
+                        $NetworkPort->getFromDB($hubLink_id);
+                        $a_portHub = $NetworkPort->find("`items_id`='".$NetworkPort->fields['items_id']."'
+                                                   AND `itemtype`='PluginFusioninventoryUnknownDevice' ");
+                        $this->assertEquals(count($a_portHub), count($child->CONNECTIONS->CONNECTION->children()) + 1 , 'Number of ports on hub not correct, '.count($a_portHub).' instead of '.(count($child->CONNECTIONS->CONNECTION->children()) + 1).' port (hub id : '.$NetworkPort->fields['items_id'].') ['.$xmlFile.']');
+
+                     } else {
+                        
+                        $this->assertTrue($NetworkPort_NetworkPort->getFromDBForNetworkPort($ports_id) , 'Unknown port connection not connected with an other device['.$xmlFile.']');
+
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   
 
 }
 
