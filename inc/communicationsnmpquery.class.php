@@ -311,7 +311,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
             break;
          
-         default: // type non géré
+         default: // type non gÃ©rÃ©
             return $modelslistused;
       }
       $result=$DB->query($query);
@@ -827,7 +827,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
                case 'MAC' :
                   //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                  $ptp->setValue('mac', $child);
+                  if (!strstr($child, '00:00:00')) {
+                     $ptp->setValue('mac', $child);
+                  }
                   break;
                case 'IFNUMBER' :
                   //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
@@ -843,6 +845,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                case 'IFDESCR' :
+                  if (!isset($p_port->IFNAME)) {
+                     $ptp->setValue('name', $p_port->IFDESCR);
+                  }
+                  $ptp->setValue(strtolower($name), $p_port->$name);
+                  break;
                case 'IFINERRORS' :
                case 'IFINOCTETS' :
                case 'IFINTERNALSTATUS' :
