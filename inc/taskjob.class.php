@@ -570,16 +570,17 @@ $this->cronTaskscheduler();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $input = '';
-      if(!($fp = fsockopen($ip, $PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port'), $errno, $errstr, 1))) {
-         $input = 'Agent don\'t respond';
-         return false;
-      } else {
+      ini_set('default_socket_timeout', 2);
+      $data = file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status");
+      if (isset($data) && !empty($data)) {
          $handle = fopen("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, "r");
          $input = 'Agent run Now';
          fclose($fp);
          return true;
+      } else {
+         $input = 'Agent don\'t respond';
+         return false;
       }
-
    }
 
 
