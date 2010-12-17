@@ -502,28 +502,30 @@ $this->cronTaskscheduler();
                      $this->fields['status'] = 1;
                      $this->update($this->fields);
 
-                  } else if (is_array($a_agents)) {
-                     // Add jobstatus and put status (waiting on server = 0)
-                     $a_input = array();
-                     $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
-                     $a_input['items_id'] = $items_id;
-                     $a_input['itemtype'] = $itemtype;
-                     $a_input['state'] = 0;
-                     $a_input['plugin_fusioninventory_agents_id'] = $a_agents['agents_id'];
-                     $PluginFusioninventoryTaskjobstatus->add($a_input);
+                  } else {
+                     foreach ($a_agents as $agentsdatas) {
+                        // Add jobstatus and put status (waiting on server = 0)
+                        $a_input = array();
+                        $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
+                        $a_input['items_id'] = $items_id;
+                        $a_input['itemtype'] = $itemtype;
+                        $a_input['state'] = 0;
+                        $a_input['plugin_fusioninventory_agents_id'] = $agentsdatas['agents_id'];
+                        $PluginFusioninventoryTaskjobstatus->add($a_input);
 
-                     //Add log of taskjob
-                     unset($a_input['plugin_fusioninventory_agents_id']);
-                     $a_input['state'] = 1;
-                     $a_input['date'] = date("Y-m-d H:i:s");
-                     $PluginFusioninventoryTaskjoblog->add($a_input);
+                        //Add log of taskjob
+                        unset($a_input['plugin_fusioninventory_agents_id']);
+                        $a_input['state'] = 1;
+                        $a_input['date'] = date("Y-m-d H:i:s");
+                        $PluginFusioninventoryTaskjoblog->add($a_input);
 
-                     if ($data['communication'] == 'push') {
-                        $this->remoteStartAgent($a_agents['ip'], $a_agents['token']);
+                        if ($data['communication'] == 'push') {
+                           $this->remoteStartAgent($agentsdatas['ip'], $agentsdatas['token']);
+                        }
+                        $this->getFromDB($data['id']);
+                        $this->fields['status'] = 1;
+                        $this->update($this->fields);
                      }
-                     $this->getFromDB($data['id']);
-                     $this->fields['status'] = 1;
-                     $this->update($this->fields);
                   }
                }
             }

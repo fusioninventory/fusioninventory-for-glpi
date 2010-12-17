@@ -127,16 +127,16 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                         $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($data['ip'],0);
                         if ($agentStatus ==  true) {
                            $return = array();
-                           $return['ip'] = $data['ip'];
-                           $return['token'] = $data['token'];
-                           $return['agents_id'] = $data['a_id'];
+                           $return[0]['ip'] = $data['ip'];
+                           $return[0]['token'] = $data['token'];
+                           $return[0]['agents_id'] = $data['a_id'];
                            return $return;
                         }
                      } else if ($communication == 'pull') {
                         $return = array();
-                        $return['ip'] = $data['ip'];
-                        $return['token'] = $data['token'];
-                        $return['agents_id'] = $data['a_id'];
+                        $return[0]['ip'] = $data['ip'];
+                        $return[0]['token'] = $data['token'];
+                        $return[0]['agents_id'] = $data['a_id'];
                         return $return;
                      }
                   }
