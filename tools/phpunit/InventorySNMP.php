@@ -137,9 +137,86 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
          }
       }
     }
+
+
+   function testAddNetworkEquipmentCDP() {
+      // Add a networkequipment which are already created but in unknwon device
+      global $DB;
+
+      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $NetworkPort = new NetworkPort();
+      $a_networkport = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+         AND `name` like 'GigabitEthernet%'", 'id', '1');
+      foreach($a_networkport as $datas) {
+         
+      }
+      $PluginFusioninventoryUnknownDevice->getFromDB($datas['items_id']);
+      $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
+      $xml->addChild('DEVICEID', 'testCDP.toto.local');
+      $xml->addChild('QUERY', 'SNMPQUERY');
+      $xml_content = $xml->addChild('CONTENT');
+      $xml_device = $xml_content->addChild('DEVICE');
+      $xml_info = $xml_device->addChild('INFO');
+      $xml_info->addChild('NAME', 'testCDP');
+      $xml_info->addChild('SERIAL', 'GTFD6IYJHGTFTY7');
+      $xml_info->addChild('TYPE', 'NETWORKING');
+      $xml_ips = $xml_info->addChild('IPS');
+      $xml_ips->addChild('IP', $datas['ip']);
+
+      $xml_ports = $xml_device->addChild('PORTS');
+
+      $xml_port = $xml_ports->addChild('PORT');
+      $xml_port->addChild('IFDESCR', 'GigabitEthernet45/1');
+      $xml_port->addChild('IFTYPE', '6');
+      $xml_port->addChild('IFNAME', 'GigabitEthernet45/1');
+      $xml_port->addChild('IFSTATUS', '1');
+      $xml_port->addChild('IFNUMBER', '9');
+      $xml_port->addChild('IFINTERNALSTATUS', '1');
+
+      $xml_port = $xml_ports->addChild('PORT');
+      $xml_port->addChild('IFDESCR', $datas['name']);
+      $xml_port->addChild('IFTYPE', '6');
+      $xml_port->addChild('IFNAME', $datas['name']);
+      $xml_port->addChild('IFSTATUS', '1');
+      $xml_port->addChild('IFNUMBER', '10');
+      $xml_port->addChild('IFINTERNALSTATUS', '1');
+
+      $xml_port = $xml_ports->addChild('PORT');
+      $xml_port->addChild('IFDESCR', 'GigabitEthernet10/54');
+      $xml_port->addChild('IFTYPE', '6');
+      $xml_port->addChild('IFNAME', 'GigabitEthernet10/54');
+      $xml_port->addChild('IFSTATUS', '1');
+      $xml_port->addChild('IFNUMBER', '11');
+      $xml_port->addChild('IFINTERNALSTATUS', '1');
+
+
+      $this->testSendinventory('test', $xml);
+
+      $array = $this->testGetGLPIDevice("networkequipment-testcdp.xml", $xml_device);
+      $items_id = $array[0];
+      $itemtype = $array[1];
+      $unknown  = $array[2];
+
+      $a_unknown = $PluginFusioninventoryUnknownDevice->find("`id` = '".$datas['items_id']."'");
+
+      $this->assertEquals(count($a_unknown), 0, 'Switch has been added in GLPI but unknown device with CDP yet added is not fusionned with switch');
+
+      // Test if port is moved from unknown device to switch
+      $NetworkPort->getFromDB($datas['id']);
+      $this->assertEquals($NetworkPort->fields['itemtype'], 'NetworkEquipment', 'Port has not been transfered from unknown device to switch port');
+      // Test if extension of port informations have been right created
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkports`
+         WHERE `networkports_id`='".$datas['id']."'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, 'Port extension has not been created');
+
+      // Test if port connected on unknown device is connected on switch port
+
+      
+   }
                   
 
-      function testInfo($xml, $xmlFile='', $items_id=0, $itemtype='', $unknown=0) {
+      function testInfo($xml='', $xmlFile='', $items_id=0, $itemtype='', $unknown=0) {
 
          if (empty($xmlFile)) {
             echo "testInfo with no arguments...\n";
@@ -202,7 +279,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
 
 
-   function testSendinventory($xmlFile='') {
+   function testSendinventory($xmlFile='', $xml='') {
 
       if (empty($xmlFile)) {
          echo "testSendinventory with no arguments...\n";
@@ -211,8 +288,10 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
-
+      if (empty($xml)) {
+         $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+      }
+      
       // Send prolog for creation of agent in GLPI
       $input_xml = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
@@ -239,8 +318,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
             }
          }
       }
-
-      $input_xml = file_get_contents($xmlFile);
+      $input_xml = $xml->asXML();
       $emulatorAgent->sendProlog($input_xml);
 
    }
@@ -379,17 +457,36 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
                   $this->assertEquals($data['mac'], (string)$child->MAC , 'Mac of port not good ("'.$data['mac'].'" instead of "'.(string)$child->MAC.'")['.$xmlFile.']');
                }
                $this->assertEquals($data['logical_number'], (string)$child->IFNUMBER , 'Number of port not good ("'.$data['logical_number'].'" instead of "'.(string)$child->IFNUMBER.'")['.$xmlFile.']');
-
-               $this->assertEquals($dataExt['ifdescr'], (string)$child->IFDESCR , 'Description of port not good ("'.$data['ifdescr'].'" instead of "'.(string)$child->IFDESCR.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifmtu'], (string)$child->IFMTU , 'MTU of port not good ("'.$data['ifmtu'].'" instead of "'.(string)$child->IFMTU.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifspeed'], (string)$child->IFSPEED , 'Speed of port not good ("'.$data['ifspeed'].'" instead of "'.(string)$child->IFSPEED.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifinternalstatus'], (string)$child->IFINTERNALSTATUS , 'Internal status of port not good ("'.$data['ifinternalstatus'].'" instead of "'.(string)$child->IFINTERNALSTATUS.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['iflastchange'], (string)$child->IFLASTCHANGE , 'Last change of port not good ("'.$data['iflastchange'].'" instead of "'.(string)$child->IFLASTCHANGE.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifinoctets'], (string)$child->IFINOCTETS , 'In octets of port not good ("'.$data['ifinoctets'].'" instead of "'.(string)$child->IFINOCTETS.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifinerrors'], (string)$child->IFINERRORS , 'In errors of port not good ("'.$data['ifinerrors'].'" instead of "'.(string)$child->IFINERRORS.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifoutoctets'], (string)$child->IFOUTOCTETS , 'Out octets of port not good ("'.$data['ifoutoctets'].'" instead of "'.(string)$child->IFOUTOCTETS.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifouterrors'], (string)$child->IFOUTERRORS , 'out errors of port not good ("'.$data['ifouterrors'].'" instead of "'.(string)$child->IFOUTERRORS.'")['.$xmlFile.']');
-               $this->assertEquals($dataExt['ifstatus'], (string)$child->IFSTATUS , 'Status of port not good ("'.$data['ifstatus'].'" instead of "'.(string)$child->IFSTATUS.'")['.$xmlFile.']');
+               if (isset($child->IFDESCR)) {
+                  $this->assertEquals($dataExt['ifdescr'], (string)$child->IFDESCR , 'Description of port not good ("'.$dataExt['ifdescr'].'" instead of "'.(string)$child->IFDESCR.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFMTU)) {
+                  $this->assertEquals($dataExt['ifmtu'], (string)$child->IFMTU , 'MTU of port not good ("'.$dataExt['ifmtu'].'" instead of "'.(string)$child->IFMTU.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFSPEED)) {
+                  $this->assertEquals($dataExt['ifspeed'], (string)$child->IFSPEED , 'Speed of port not good ("'.$dataExt['ifspeed'].'" instead of "'.(string)$child->IFSPEED.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFINTERNALSTATUS)) {
+                  $this->assertEquals($dataExt['ifinternalstatus'], (string)$child->IFINTERNALSTATUS , 'Internal status of port not good ("'.$dataExt['ifinternalstatus'].'" instead of "'.(string)$child->IFINTERNALSTATUS.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFLASTCHANGE)) {
+                  $this->assertEquals($dataExt['iflastchange'], (string)$child->IFLASTCHANGE , 'Last change of port not good ("'.$dataExt['iflastchange'].'" instead of "'.(string)$child->IFLASTCHANGE.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFINOCTETS)) {
+                  $this->assertEquals($dataExt['ifinoctets'], (string)$child->IFINOCTETS , 'In octets of port not good ("'.$dataExt['ifinoctets'].'" instead of "'.(string)$child->IFINOCTETS.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFINERRORS)) {
+                  $this->assertEquals($dataExt['ifinerrors'], (string)$child->IFINERRORS , 'In errors of port not good ("'.$dataExt['ifinerrors'].'" instead of "'.(string)$child->IFINERRORS.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFOUTOCTETS)) {
+                  $this->assertEquals($dataExt['ifoutoctets'], (string)$child->IFOUTOCTETS , 'Out octets of port not good ("'.$dataExt['ifoutoctets'].'" instead of "'.(string)$child->IFOUTOCTETS.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFOUTERRORS)) {
+                  $this->assertEquals($dataExt['ifouterrors'], (string)$child->IFOUTERRORS , 'out errors of port not good ("'.$dataExt['ifouterrors'].'" instead of "'.(string)$child->IFOUTERRORS.'")['.$xmlFile.']');
+               }
+               if (isset($child->IFSTATUS)) {
+                  $this->assertEquals($dataExt['ifstatus'], (string)$child->IFSTATUS , 'Status of port not good ("'.$dataExt['ifstatus'].'" instead of "'.(string)$child->IFSTATUS.'")['.$xmlFile.']');
+               }
             }
          }
       }
@@ -465,6 +562,8 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
             if (isset($child->CONNECTIONS)) {
                foreach ($child->CONNECTIONS->children() as $nameconnect => $childconnect) {
                   if (isset($child->CONNECTIONS->CDP)) { // Manage CDP
+
+                     
 
 
                   } else { // Manage tradictionnal connections
