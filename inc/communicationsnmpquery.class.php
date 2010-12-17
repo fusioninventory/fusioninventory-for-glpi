@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusinvsnmpCommunicationSNMPQuery {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
-   private $sxml, $ptd, $logFile, $agent;
+   private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP;
 
    function __construct() {
       $this->logFile = GLPI_ROOT.'/files/_plugins/fusioninventory/communication.log';
@@ -485,7 +485,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 //         $ptap->updateProcess($this->sxml->CONTENT->PROCESSNUMBER, array('query_nb_query' => '1'));
 
          $errors.=$this->importInfo($itemtype, $items_id);
-
          if ($this->deviceId!='') {
             foreach ($p_xml->children() as $child) {
                switch ($child->getName()) {
@@ -560,28 +559,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $p_info = $xml->INF0;
       if ($itemtype == 'NetworkEquipment') {
          $errors.=$this->importInfoNetworking($xml->INFO);
-
       } elseif ($itemtype == 'Printer') {
          $errors.=$this->importInfoPrinter($xml->INFO);
-//         //TODO Get MAC address in port
-//         foreach ($xml->children() as $child) {
-//            switch ($child->getName()) {
-//               case 'PORTS' :
-//                  foreach ($child->children() as $child_port) {
-//                     switch ($child_port->getName()) {
-//                        case 'PORT' :
-//                           $criteria['macaddr'] = $child_port->MAC;
-//                           if ($this->deviceId == '') {
-//                              $this->deviceId = PluginFusinvsnmpDiscovery::criteria($criteria, 'Printer');
-//                           }
-//                           break;
-//                     }
-//                  }
-//                  break;
-//            }
-//         }
-
-         //$this->deviceId = PluginFusioninventoryDiscovery::criteria($criteria, PRINTER_TYPE);
       }
       if (!empty($errors)) {
          //$pfiae = new PluginFusioninventoryAgentProcessError;
@@ -739,6 +718,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $errors='';
       $pti = new PluginFusinvsnmpNetworkEquipmentIP();
+      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
@@ -752,6 +732,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   }
                   $pti->setValue('ip', $child);
                   $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
+                  // Search in unknown device if device with IP (CDP) is yet added, in this case,
+                  // we get id of this unknown device
+                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".$child."'");
+                  if (count($a_unknown) > 0) {
+                     foreach ($a_unknown as $datas) {
+                     }
+                     $this->unknownDeviceCDP = $datas['id'];
+                  }
                }
                break;
             default :
@@ -798,7 +786,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     **/
    function importPortNetworking($p_port) {
       global $LANG;
-
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
       $errors='';
@@ -806,13 +793,44 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $ptp = new PluginFusinvsnmpNetworkPort("NetworkEquipment", $this->logFile);
       $ifType = $p_port->IFTYPE;
       if ( $ptp->isReal($ifType) ) { // not virtual port
-         $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
-         if (is_int($portIndex)) {
-            $oldPort = $this->ptd->getPort($portIndex);
-            $ptp->load($oldPort->getValue('id'));
-         } else {
-            $ptp->addDB($this->deviceId, TRUE);
+         // Get port of unknown device CDP if exist
+         $portloaded = 0;
+         if (!empty($this->unknownDeviceCDP)) {
+            $NetworkPort = new NetworkPort();
+            
+            $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+                     AND `items_id`='".$this->unknownDeviceCDP."'");
+            foreach($a_unknownPorts as $dataport) {
+               if ((isset($p_port->IFNAME))
+                       AND ($p_port->IFNAME == $dataport['name'])
+                       AND ($portloaded != '1')) {
+
+                  // get this port and put in this switch
+                  $dataport['itemtype'] = 'NetworkEquipment';
+                  $dataport['items_id'] = $this->ptd->getValue('id');
+                  $NetworkPort->update($dataport);
+                  $ptp->load($dataport['id']);
+                  $portloaded = 1;
+               }
+            }
+            $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+                     AND `items_id`='".$this->unknownDeviceCDP."'");
+            if (count($a_unknownPorts) == '0') {
+               $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+               $PluginFusioninventoryUnknownDevice->getFromDB($this->unknownDeviceCDP);
+               $PluginFusioninventoryUnknownDevice->delete($PluginFusioninventoryUnknownDevice->fields, 1);
+            }
          }
+         if ($portloaded == '0') {
+            $portIndex = $this->ptd->getPortIndex($p_port->IFNUMBER, $this->getConnectionIP($p_port));
+            if (is_int($portIndex)) {
+               $oldPort = $this->ptd->getPort($portIndex);
+               $ptp->load($oldPort->getValue('id'));
+            } else {
+               $ptp->addDB($this->deviceId, TRUE);
+            }
+         }
+
          foreach ($p_port->children() as $name=>$child) {
             switch ($name) {
                case 'CONNECTIONS' :
@@ -850,6 +868,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   }
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
+                  
                case 'IFINERRORS' :
                case 'IFINOCTETS' :
                case 'IFINTERNALSTATUS' :

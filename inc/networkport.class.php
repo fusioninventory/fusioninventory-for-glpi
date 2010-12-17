@@ -95,6 +95,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
                $this->fusinvsnmp_networkports_id = NULL;
                $this->oFusioninventory_networkport->load();
                $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
+               $this->oFusioninventory_networkport->setValue('networkports_id', $p_id);
 //               $this->fusinvsnmp_networkports_id = $this->addDBFusionInventory();
 //               $this->oFusioninventory_networkport->load($this->fusinvsnmp_networkports_id);
 //               $this->ptcdLinkedObjects[]=$this->oFusioninventory_networkport;
