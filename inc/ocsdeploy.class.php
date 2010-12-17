@@ -85,16 +85,16 @@ class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
                      $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
                      if ($agentStatus == true) {
                         $return = array();
-                        $return['ip'] = $ip;
-                        $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-                        $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                        $return[0]['ip'] = $ip;
+                        $return[0]['token'] = $PluginFusioninventoryAgent->fields['token'];
+                        $return[0]['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
                         return $return;
                      }
                   } else if ($communication == 'pull') {
                      $return = array();
-                     $return['ip'] = $PluginFusioninventoryAgent->fields['ip'];
-                     $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-                     $return['agents_id'] = $PluginFusioninventoryAgent->fields['a_id'];
+                     $return[0]['ip'] = $PluginFusioninventoryAgent->fields['ip'];
+                     $return[0]['token'] = $PluginFusioninventoryAgent->fields['token'];
+                     $return[0]['agents_id'] = $PluginFusioninventoryAgent->fields['a_id'];
                      return $return;
                   }
                }

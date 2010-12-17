@@ -80,8 +80,7 @@ class PluginFusinvdeployStaticmisc {
    # Select arguments if exist
    static function task_argument_ocsdeploy($title) {
       global $LANG;
-      $PluginFusinvdeployPackage = new PluginFusinvdeployPackage;
-
+      
       //$a_list = $PluginFusinvdeployPackage->find();
       if ($title == '1') {
          echo $LANG['plugin_fusinvdeploy']["package"][7]."&nbsp;:";
