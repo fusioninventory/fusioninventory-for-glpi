@@ -54,40 +54,45 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       if ($items_id == '-1') {
          // no => search an agent can do snmp
          $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
-         foreach($a_agents as $agents_id=>$data) {
-            $a_ip = $PluginFusioninventoryAgent->getIPs($agents_id);
-            $PluginFusioninventoryAgent->getFromDB($agents_id);
-            foreach($a_ip as $num=>$ip) {
+         $i = 0;
+         foreach($a_agents as $data) {
+            $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
+            $PluginFusioninventoryAgent->getFromDB($data['id']);
+            foreach($a_ip as $ip) {
                if ($communication == 'push') {
                   $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
                   if ($agentStatus ==  true) {
                      $return = array();
-                     $return['ip'] = $ip;
-                     $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-                     $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
-                     return $return;
+                     $return[$i]['ip'] = $ip;
+                     $return[$i]['token'] = $PluginFusioninventoryAgent->fields['token'];
+                     $return[$i]['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                     // Distapch range ip into many range like you have agents
+                     $i++;
                   }
                } else  if ($communication == 'pull') {
                   $return = array();
-                  $return['ip'] = $ip;
-                  $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-                  $return['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                  $return[0]['ip'] = $ip;
+                  $return[0]['token'] = $PluginFusioninventoryAgent->fields['token'];
+                  $return[0]['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
                   return $return;
                }
             }
          }
+         if (count($return) > 0) {
+            return $return;
+         }
       } else {
          $PluginFusioninventoryAgent->getFromDB($items_id);
          $return = array();
-         $return['token'] = $PluginFusioninventoryAgent->fields['token'];
-         $return['agents_id'] = $items_id;
+         $return[0]['token'] = $PluginFusioninventoryAgent->fields['token'];
+         $return[0]['agents_id'] = $items_id;
          if ($communication == 'push') {
             $a_ip = $PluginFusioninventoryAgent->getIPs($items_id);
             $PluginFusioninventoryAgent->getFromDB($items_id);
             foreach($a_ip as $num=>$ip) {
                $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
                if ($agentStatus ==  true) {
-                  $return['ip'] = $ip;
+                  $return[0]['ip'] = $ip;
                   return $return;
                }
             }
