@@ -293,14 +293,16 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 	function disconnectDB($p_port='') {
       if ($p_port=='') $p_port=$this->getValue('id');
       $netwire = new NetworkPort_NetworkPort;
+      $nn = new NetworkPort_NetworkPort();
+
       PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$netwire->getOppositeContact($p_port));
       //PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
-      $nn = new NetworkPort_NetworkPort();
+      
       if ($nn->getFromDBForNetworkPort($p_port)) {
-         if ($nn->delete(array('id'=>$p_port))) {
-            $ptap = new PluginFusioninventoryAgentProcess;
-            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-                                 array('query_nb_connections_deleted' => '1'));
+         if ($nn->delete(array('id'=>$nn->fields['id']))) {
+//            $ptap = new PluginFusioninventoryAgentProcess;
+//            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
+//                                 array('query_nb_connections_deleted' => '1'));
          }
       }
    }

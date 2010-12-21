@@ -819,6 +819,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
                $PluginFusioninventoryUnknownDevice->getFromDB($this->unknownDeviceCDP);
                $PluginFusioninventoryUnknownDevice->delete($PluginFusioninventoryUnknownDevice->fields, 1);
+               $this->unknownDeviceCDP = 0;
             }
          }
          if ($portloaded == '0') {
@@ -1061,6 +1062,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnections().');
       $errors='';
+      $cdp = 0;
       if (isset($p_connections->CDP)) {
          $cdp = $p_connections->CDP;
          if ($cdp==1) {
@@ -1068,11 +1070,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          } else {
             $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTIONS : CDP='.$cdp."\n";
          }
-      } else {
-         $cdp = 0;
       }
       $count = 0;
-      foreach ($p_connections->children() as $name=>$child) {
+      foreach ($p_connections->children() as $child) {
          switch ($child->getName()) {
             case 'CDP' : // already managed
                break;

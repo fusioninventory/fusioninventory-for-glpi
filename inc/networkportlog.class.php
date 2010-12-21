@@ -516,11 +516,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB,$CFG_GLPI;
 
-      $pthc = new PluginFusinvsnmpNetworkPortConnectionLog;
+      $PluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
       $nw=new NetworkPort_NetworkPort;
 
+      $input = array();
+
       if (($plugin_fusioninventory_agentprocesses_id == '0') AND (isset($_SESSION['glpi_plugin_fusioninventory_processnumber']))) {
-         $input['plugin_fusioninventory_agentprocesses_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
+//         $input['plugin_fusioninventory_agentprocesses_id'] = $_SESSION['glpi_plugin_fusioninventory_processnumber'];
       }
 
       // Récupérer le port de la machine associé au port du switch
@@ -541,9 +543,11 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
          $input['creation'] = 1;
       }
 
-      //$pthc->add($input);
+      $PluginFusinvsnmpNetworkPortConnectionLog->add($input);
    }
 
+
+   
    // List of history in networking display
    static function showHistory($ID_port) {
       global $DB,$LANG,$INFOFORM_PAGES,$CFG_GLPI;
