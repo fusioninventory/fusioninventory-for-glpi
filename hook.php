@@ -473,20 +473,19 @@ function plugin_pre_item_update_fusioninventory($parm) {
 
 function plugin_pre_item_purge_fusioninventory($parm) {
    global $DB;
+   
+   switch (get_class($parm)) {
 
-   if (isset($parm["_item_type_"])) {
-      switch ($parm["_item_type_"]) {
-         case COMPUTER_TYPE :
-            // Delete link between computer and agent fusion
-            $query = "UPDATE `glpi_plugin_fusioninventory_agents`
-                        SET `items_id` = '0'
-                           AND `itemtype` = '0'
-                        WHERE `items_id` = '".$parm["id"]."'
-                           AND `itemtype` = '1' ";
-            $DB->query($query);
-            break;
+      case 'Computer':
+         // Delete link between computer and agent fusion
+         $query = "UPDATE `glpi_plugin_fusioninventory_agents`
+                     SET `items_id` = '0'
+                        AND `itemtype` = '0'
+                     WHERE `items_id` = '".$parm["id"]."'
+                        AND `itemtype` = '1' ";
+         $DB->query($query);
+         break;
 
-      }
    }
    return $parm;
 }
@@ -524,5 +523,31 @@ function plugin_item_update_fusioninventory($parm) {
 
 function plugin_item_add_fusioninventory($parm) {
 }
+
+
+function plugin_item_purge_fusioninventory($parm) {
+   global $DB;
+
+   switch (get_class($parm)) {
+
+      case 'NetworkPort_NetworkPort':
+         // If remove connection of a hub port (unknown device), we must delete this port too
+         $NetworkPort = new NetworkPort();
+         $NetworkPort->getFromDB($parm->getField('networkports_id_1'));
+         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            $NetworkPort->delete($NetworkPort->fields);
+         }
+         $NetworkPort->getFromDB($parm->getField('networkports_id_2'));
+         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            $NetworkPort->delete($NetworkPort->fields);
+         }
+
+         break;
+
+   }
+   return $parm;
+}
+
+
 
 ?>
