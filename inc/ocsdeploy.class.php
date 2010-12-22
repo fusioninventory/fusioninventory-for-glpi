@@ -43,7 +43,7 @@ require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 class PluginFusinvdeployOcsdeploy extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
-   function prepareRun($itemtype, $items_id, $communication) {
+   function prepareRun($itemtype, $items_id, $communication, $taskjobs_id) {
       global $DB;
 
 
