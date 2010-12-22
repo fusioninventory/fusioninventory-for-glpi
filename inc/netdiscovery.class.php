@@ -43,42 +43,53 @@ require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
-   function prepareRun($itemtype, $items_id, $communication) {
+   function prepareRun($itemtype, $items_id, $communication, $taskjobs_id) {
       global $DB;
       
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-      
-      if ($items_id == '-1') {
+
+      // Count ips of this range
+      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+      $PluginFusinvsnmpIPRange->getFromDB($PluginFusioninventoryTaskjob->fields['argument']);
+      $s = ip2long($PluginFusinvsnmpIPRange->fields['ip_start']);
+      $e = ip2long($PluginFusinvsnmpIPRange->fields['ip_end']);
+      $count_ip = $e-$s+1;
+
+      if ($items_id == '.1') {
          // no => search an agent can do snmp
          $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
          $i = 0;
+         $return = array();
          foreach($a_agents as $data) {
-            $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
-            $PluginFusioninventoryAgent->getFromDB($data['id']);
-            foreach($a_ip as $ip) {
-               if ($communication == 'push') {
-                  $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
-                  if ($agentStatus ==  true) {
-                     $return = array();
-                     $return[$i]['ip'] = $ip;
-                     $return[$i]['token'] = $PluginFusioninventoryAgent->fields['token'];
-                     $return[$i]['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
-                     // Distapch range ip into many range like you have agents
-                     $i++;
+            if (($count_ip / 10) >= $i) {
+               $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
+               $PluginFusioninventoryAgent->getFromDB($data['id']);
+               foreach($a_ip as $ip) {
+                  if ($communication == 'push') {
+                     $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+                     if ($agentStatus) {
+                        $return[$i]['ip'] = $ip;
+                        $return[$i]['token'] = $PluginFusioninventoryAgent->fields['token'];
+                        $return[$i]['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                        // Distapch range ip into many range like you have agents
+                        $i++;
+                     }
+                  } else  if ($communication == 'pull') {
+                     $return[0]['ip'] = $ip;
+                     $return[0]['token'] = $PluginFusioninventoryAgent->fields['token'];
+                     $return[0]['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
+                     return $return;
                   }
-               } else  if ($communication == 'pull') {
-                  $return = array();
-                  $return[0]['ip'] = $ip;
-                  $return[0]['token'] = $PluginFusioninventoryAgent->fields['token'];
-                  $return[0]['agents_id'] = $PluginFusioninventoryAgent->fields['id'];
-                  return $return;
                }
             }
          }
          if (count($return) > 0) {
+            foreach ($return as $num => $datas) {
+               $return[$num]['specificity'] = ceil($count_ip / count($return));
+            }
             return $return;
          }
       } else {
