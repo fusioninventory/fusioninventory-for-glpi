@@ -2,7 +2,9 @@
 	<name><![CDATA[9862658]]></name>
 	<type>2</type>
 	<key>Networking0357</key>
-	<comments><![CDATA[ProCurve J8164A Switch 2626-PWR, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))
+	<comments><![CDATA[ProCurve J4899B Switch 2650, revision H.10.67, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J8164A Switch 2626-PWR, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))
 
 ]]></comments>
 	<oidlist>
