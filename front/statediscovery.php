@@ -44,7 +44,12 @@ commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"p
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$PluginFusinvsnmpStateDiscovery->displayState();
+$_GET['target']="statediscovery.php";
+
+if (!isset($_GET['order'])) {
+   $_GET['order'] = 'DESC';
+}
+Search::show('PluginFusinvsnmpStateDiscovery');
 
 commonFooter();
 

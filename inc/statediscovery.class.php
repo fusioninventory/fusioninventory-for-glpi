@@ -40,133 +40,99 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
    
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvsnmp_state_discovery";
-      $this->type = 'PluginFusinvsnmpStateDiscovery';
+
+   function canView() {
+      return true;
    }
 
+   
+   function getSearchOptions() {
+      global $LANG;
 
-   function displayState() {
-      global $DB,$CFG_GLPI,$LANG;
+      $tab = array();
 
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
+      $tab['common'] = $LANG['plugin_fusioninventory']["agents"][28];
+
+		$tab[1]['table'] = $this->getTable();
+		$tab[1]['field'] = 'id';
+		$tab[1]['linkfield'] = 'id';
+		$tab[1]['name'] = 'id';
+		$tab[1]['datatype'] = 'number';
+
+		$tab[2]['table'] = "glpi_plugin_fusioninventory_agents";
+		$tab[2]['field'] = 'name';
+		$tab[2]['linkfield'] = 'plugin_fusioninventory_agents_id';
+		$tab[2]['name'] = $LANG['plugin_fusioninventory']["agents"][28];
+		$tab[2]['datatype'] = 'itemlink';
+      $tab[2]['itemlink_type']  = 'PluginFusioninventoryAgent';
+
+//		$tab[3]['table'] = "glpi_plugin_fusioninventory_taskjobs";
+//		$tab[3]['field'] = 'name';
+//		$tab[3]['linkfield'] = 'plugin_fusioninventory_taskjob_id';
+//		$tab[3]['name'] = 'task job';
+//		$tab[3]['datatype'] = 'itemlink';
+//		$tab[3]['itemlink_type']  = 'PluginFusioninventoryTaskjob';
+//
+		$tab[4]['table'] = 'glpi_plugin_fusioninventory_taskjobs';
+		$tab[4]['field'] = 'status';
+		$tab[4]['linkfield'] = 'plugin_fusioninventory_taskjob_id';
+		$tab[4]['name'] = 'state';
+		$tab[4]['datatype'] = 'number';
+      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTaskjob';
+
+		$tab[5]['table'] = $this->getTable();
+		$tab[5]['field'] = 'start_time';
+		$tab[5]['linkfield'] = 'start_time';
+		$tab[5]['name'] = $LANG['plugin_fusinvsnmp']['state'][4];
+		$tab[5]['datatype'] = 'datetime';
+
+		$tab[6]['table'] = $this->getTable();
+		$tab[6]['field'] = 'end_time';
+		$tab[6]['linkfield'] = 'end_time';
+		$tab[6]['name'] = $LANG['plugin_fusinvsnmp']['state'][5];
+		$tab[6]['datatype'] = 'datetime';
+
+		$tab[7]['table'] = $this->getTable();
+		$tab[7]['field'] = 'threads';
+		$tab[7]['linkfield'] = 'threads';
+		$tab[7]['name'] = $LANG['plugin_fusinvsnmp']['agents'][24];
+		$tab[7]['datatype'] = 'number';
+
+		$tab[8]['table'] = $this->getTable();
+		$tab[8]['field'] = 'nb_ip';
+		$tab[8]['linkfield'] = 'nb_ip';
+		$tab[8]['name'] = $LANG['plugin_fusinvsnmp']['processes'][37];
+		$tab[8]['datatype'] = 'number';
+
+		$tab[9]['table'] = $this->getTable();
+		$tab[9]['field'] = 'nb_found';
+		$tab[9]['linkfield'] = 'nb_found';
+		$tab[9]['name'] = $LANG['plugin_fusinvsnmp']['state'][6];
+		$tab[9]['datatype'] = 'number';
+
+		$tab[10]['table'] = $this->getTable();
+		$tab[10]['field'] = 'nb_error';
+		$tab[10]['linkfield'] = 'nb_error';
+		$tab[10]['name'] = $LANG['plugin_fusinvsnmp']['state'][7];
+		$tab[10]['datatype'] = 'number';
+
+		$tab[11]['table'] = $this->getTable();
+		$tab[11]['field'] = 'nb_exists';
+		$tab[11]['linkfield'] = 'nb_exists';
+		$tab[11]['name'] = 'Devices existent';
+		$tab[11]['datatype'] = 'number';
+
+		$tab[12]['table'] = $this->getTable();
+		$tab[12]['field'] = 'nb_import';
+		$tab[12]['linkfield'] = 'nb_import';
+		$tab[12]['name'] = 'devices imported';
+		$tab[12]['datatype'] = 'number';
       
-      echo "<th>";
-      echo $LANG['plugin_fusioninventory']["agents"][28];
-      echo "</th>";
-
-      echo "<th>";
-      echo "State";
-      echo "</th>";
-
-      echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['state'][4];
-      echo "</th>";
-
-      echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['state'][5];
-      echo "</th>";
-
-      echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['agents'][24];
-      echo "</th>";
-
-      echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['processes'][37];
-      echo "</th>";
-
-      echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['state'][6];
-      echo "</th>";
-
-      echo "<th>";
-      echo $LANG['plugin_fusinvsnmp']['state'][7];
-      echo "</th>";
-
-      echo "<th>";
-      echo "Devices existent";
-      echo "</th>";
-
-      echo "<th>";
-      echo "devices imported";
-      echo "</th>";
-
-      echo "<th>";
-      echo "task job";
-      echo "</th>";
-      echo "</tr>";
-
-
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjobs`.*, `glpi_plugin_fusinvsnmp_state_discovery`.* FROM `glpi_plugin_fusinvsnmp_state_discovery`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjob_id`=`glpi_plugin_fusioninventory_taskjobs`.`id`
-         WHERE `status`!=0
-            AND `method`='netdiscovery'
-         ORDER BY `glpi_plugin_fusinvsnmp_state_discovery`.`date_mod` DESC";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo Dropdown::getDropdownName('glpi_plugin_fusioninventory_agents', $data['plugin_fusioninventory_agents_id']);
-         echo "</td>";
-         
-         echo "<td>";
-         echo $data['status'];
-         echo "</td>";
-
-         echo "<td>";
-         echo convDateTime($data['start_time']);
-         echo "</td>";
-
-         echo "<td>";
-         echo convDateTime($data['end_time']);
-         echo "</td>";
-
-         echo "<td>";
-         echo $data['threads'];
-         echo "</td>";
-
-         echo "<td>";
-         echo $data['nb_ip'];
-         echo "</td>";
-
-         echo "<td>";
-         echo $data['nb_found'];
-         echo "</td>";
-
-         echo "<td>";
-         echo $data['nb_error'];
-         echo "</td>";
-
-         echo "<td>";
-         echo $data['nb_exists'];
-         echo "</td>";
-
-         echo "<td>";
-         echo $data['nb_import'];
-         echo "</td>";
-
-         echo "<td>";
-         echo $data['id'];
-         echo "</td>";
-         echo "</tr>";
-         
-      }
-      echo "</table>";
-      // Taskjob id=4
-         // agent | State | Start_date | end_date | threads | IP total | Total discovery | Total in error | Devices existent | devices mported
-         // agent | nb_ip | nb_ip_ok | nb_iperror ...
-         // agent | nb_ip | nb_ip_ok | nb_iperror ...
-         //-------------------------------------------
-         // Resume | nb_ip | nb_ip_ok | nb_iperror ...
-
-
-
+      return $tab;
    }
 
 
-
+   
    function updateState($p_number, $a_input, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'
                               AND `plugin_fusioninventory_agents_id`='".$agent_id."'");
