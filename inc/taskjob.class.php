@@ -491,7 +491,7 @@ $this->cronTaskscheduler();
                   $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
                   $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
                   $class = new $className;
-                  $a_agents = $class->prepareRun($itemtype, $items_id, $data['communication']);
+                  $a_agents = $class->prepareRun($itemtype, $items_id, $data['communication'], $data['id']);
                   if (!$a_agents) {
                      $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'], 
                                                                              $items_id, 
@@ -511,6 +511,9 @@ $this->cronTaskscheduler();
                         $a_input['itemtype'] = $itemtype;
                         $a_input['state'] = 0;
                         $a_input['plugin_fusioninventory_agents_id'] = $agentsdatas['agents_id'];
+                        if (isset($agentsdatas['specificity'])) {
+                           $a_input['specificity'] = $agentsdatas['specificity'];
+                        }
                         $PluginFusioninventoryTaskjobstatus->add($a_input);
 
                         //Add log of taskjob
