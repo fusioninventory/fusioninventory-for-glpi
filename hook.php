@@ -52,7 +52,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 
       case "glpi_plugin_fusioninventory_taskjobs.status":
          $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
-         return $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '400', 'htmlvar', 'simple');
+         return $PluginFusioninventoryTaskjobstatus->stateTaskjob($data['id'], '200', 'htmlvar', 'simple');
          break;
 
    }
