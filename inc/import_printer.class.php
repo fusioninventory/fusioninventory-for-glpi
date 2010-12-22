@@ -51,7 +51,7 @@ class PluginFusinvinventoryImport_Printer extends CommonDBTM {
 
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $Computer_Item = new Computer_Item();
-            
+      
       if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
               "import_printer") == '0') {
          return;
