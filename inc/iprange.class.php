@@ -129,10 +129,10 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          }
          $i++;
       }
-		echo "<input type='text' value='".$ipexploded[0]."' name='ip_start0' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[1]."' name='ip_start1' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' size='3' maxlength='3' >";
+		echo "<input type='text' value='".$ipexploded[0]."' name='ip_start0' id='ip_start0' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[1]."' name='ip_start1' id='ip_start1' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
+		echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
 		echo "</td>";
 
 		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][3] . "</td>";
@@ -155,10 +155,23 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          }
          $i++;
       }
-		echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' size='3' maxlength='3' >.";
-		echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' size='3' maxlength='3' >";
+      
+      echo "<SCRIPT language=javascript>
+      function test(id) {
+         if (document.getElementById('ip_end' + id).value == '') {
+            if (id == 3) {
+               document.getElementById('ip_end' + id).value = '254';
+            } else {
+               document.getElementById('ip_end' + id).value = document.getElementById('ip_start' + id).value;
+            }
+         }
+      }
+      </SCRIPT>";
+
+		echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' id='ip_end0' size='3' maxlength='3' onSelect='test(0)'>.";
+		echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' id='ip_end1' size='3' maxlength='3' onSelect='test(1)'>.";
+		echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' id='ip_end2' size='3' maxlength='3' onSelect='test(2)'>.";
+		echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' id='ip_end3' size='3' maxlength='3' onSelect='test(3)'>";
 		echo "</td>";
 
       echo "<th colspan='2'>";
