@@ -266,7 +266,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                              AND `items_id`='".$this->fields['items_id']."'
                              AND `ip` IS NOT NULL");
          foreach($a_ports as $data) {
-            $ip[] = $data['ip'];
+            if ($data['ip'] != '127.0.0.1') {
+               $ip[] = $data['ip'];
+            }
          }         
       }
       return $ip;
