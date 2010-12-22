@@ -181,7 +181,7 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
 
             $nn = new NetworkPort_NetworkPort();
             if ($nn->getFromDBForNetworkPort($NetworkPort->fields["id"])) {
-               $nn->delete($NetworkPort->fields);
+               $nn->delete($nn->fields);
             }
             $Netdevice->deleteFromDB($NetworkPort->fields["id"]);
 

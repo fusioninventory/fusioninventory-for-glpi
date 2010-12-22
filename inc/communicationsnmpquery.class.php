@@ -448,7 +448,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $folder = '0';
          }
          if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$itemtype."/".$folder)) {
-            mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$itemtype."/".$folder, '0777', true);
+            mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$itemtype."/".$folder, 0777, true);
          }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$itemtype."/".$folder."/".$items_id, 'w');
          fwrite($fileopen, $p_xml->asXML());
@@ -811,6 +811,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $NetworkPort->update($dataport);
                   $ptp->load($dataport['id']);
                   $portloaded = 1;
+                  $portIndex = $p_port->IFNUMBER;
                }
             }
             $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
