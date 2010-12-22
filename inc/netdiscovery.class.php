@@ -88,7 +88,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          }
          if (count($return) > 0) {
             foreach ($return as $num => $datas) {
-               $return[$num]['specificity'] = ceil($count_ip / count($return));
+               $return[$num]['specificity'] = $num."-".ceil($count_ip / count($return));
             }
             return $return;
          }
@@ -139,11 +139,22 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $sxml_param->addAttribute('CORE_DISCOVERY', "1");
          $sxml_param->addAttribute('THREADS_DISCOVERY', $PluginFusinvsnmpAgentconfig->fields["threads_netdiscovery"]);
          $sxml_param->addAttribute('PID', $taskjobs_id);
-      $PluginFusinvsnmpIPRange->getFromDB($PluginFusioninventoryTaskjob->fields['argument']);
+
+         $PluginFusinvsnmpIPRange->getFromDB($PluginFusioninventoryTaskjob->fields['argument']);
       $sxml_rangeip = $sxml_option->addChild('RANGEIP');
          $sxml_rangeip->addAttribute('ID', $PluginFusinvsnmpIPRange->fields['id']);
-         $sxml_rangeip->addAttribute('IPSTART', $PluginFusinvsnmpIPRange->fields["ip_start"]);
-         $sxml_rangeip->addAttribute('IPEND', $PluginFusinvsnmpIPRange->fields["ip_end"]);
+
+         if (!is_null($PluginFusioninventoryTaskjobstatus->fields['specificity'])) {
+            $a_split = explode("-", $PluginFusioninventoryTaskjobstatus->fields['specificity']);
+            $first_ip = ip2long($PluginFusinvsnmpIPRange->fields["ip_start"]);
+            $first_ip = long2ip($first_ip + ($a_split[0] * $a_split[1]));
+            $last_ip = long2ip(ip2long($first_ip) + $a_split[1] - 1);
+            $sxml_rangeip->addAttribute('IPSTART', $first_ip);
+            $sxml_rangeip->addAttribute('IPEND', $last_ip);
+         } else {
+            $sxml_rangeip->addAttribute('IPSTART', $PluginFusinvsnmpIPRange->fields["ip_start"]);
+            $sxml_rangeip->addAttribute('IPEND', $PluginFusinvsnmpIPRange->fields["ip_end"]);
+         }
          $sxml_rangeip->addAttribute('ENTITY', $PluginFusinvsnmpIPRange->fields["entities_id"]);
 
       $snmpauthlist=$PluginFusinvsnmpConfigSecurity->find();
