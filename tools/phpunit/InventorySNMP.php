@@ -80,14 +80,14 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
         SET `is_active`='0'
         WHERE `modulename`='SNMPQUERY' ";
-     $result = $DB->query($query);
+     $DB->query($query);
 
    }
 
 
 
    public function testSetModuleInventoryOn() {
-      global $DB;
+      $DB = new DB();
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1'
@@ -212,9 +212,90 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
       // Test if port connected on unknown device is connected on switch port
 
-      
    }
-                  
+
+
+   
+   /*
+    * If a port is connected on a hub and we disconnect,
+    * port in hub is empty and we must delete this port
+    */
+   function testDisconnectPortHub() {
+      // Get a hub with 3 ports mini
+      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+      $NetworkPort = new NetworkPort();
+
+      $a_hub = $PluginFusioninventoryUnknownDevice->find("`hub`='1'");
+      $hub_found = 0;
+      $port_id = 0;
+      $port_count = 0;
+      $hub_id = 0;
+      foreach ($a_hub as $hub) {
+         if ($hub_found == '0') {
+            $a_ports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+                  AND `items_id`='".$hub['id']."'
+                  AND `name` is NULL");
+
+            if (count($a_ports) > 1) {
+               $port_count = count($a_ports);
+               foreach ($a_ports as $port) {
+                  // Get port connected
+                  $port_id = $NetworkPort_NetworkPort->getOppositeContact($port['id']);
+               }               
+               $hub_found = 1;
+               $hub_id = $hub['id'];
+            }
+         }
+      }
+      
+      // Get mac address
+      $NetworkPort->getFromDB($port_id);
+      // Create a switch with connection with this mac address
+      $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
+      $xml->addChild('DEVICEID', 'testhub.toto.local');
+      $xml->addChild('QUERY', 'SNMPQUERY');
+      $xml_content = $xml->addChild('CONTENT');
+      $xml_device = $xml_content->addChild('DEVICE');
+      $xml_info = $xml_device->addChild('INFO');
+      $xml_info->addChild('NAME', 'testhub');
+      $xml_info->addChild('SERIAL', 'GTIYJHIOH6748HUY');
+      $xml_info->addChild('TYPE', 'NETWORKING');
+      $xml_ips = $xml_info->addChild('IPS');
+      $xml_ips->addChild('IP', '192.168.56.34');
+
+      $xml_ports = $xml_device->addChild('PORTS');
+
+      $xml_port = $xml_ports->addChild('PORT');
+      $xml_connections = $xml_port->addChild('CONNECTIONS');
+      $xml_connection = $xml_connections->addChild('CONNECTION');
+      $xml_connection->addChild('MAC', $NetworkPort->fields['mac']);
+      $xml_port->addChild('IFDESCR', 'GigabitEthernet0/4');
+      $xml_port->addChild('IFTYPE', '6');
+      $xml_port->addChild('IFNAME', 'GigabitEthernet0/4');
+      $xml_port->addChild('IFSTATUS', '1');
+      $xml_port->addChild('IFNUMBER', '9');
+      $xml_port->addChild('IFINTERNALSTATUS', '1');
+
+      $this->testSendinventory('test', $xml);
+
+      $array = $this->testGetGLPIDevice("networkequipment-testcdp.xml", $xml_device);
+      $items_id = $array[0];
+      $itemtype = $array[1];
+      $unknown  = $array[2];
+
+      // verify in the hub the port has been removed
+      $a_ports_verif = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+                  AND `items_id`='".$hub_id."'
+                  AND `name` is NULL");
+
+      $this->assertEquals(count($a_ports_verif), ($port_count - 1), 'Port of hub disconnected not deleted (Hub id : '.$hub_id.')');
+
+   }
+
+
+
+
 
       function testInfo($xml='', $xmlFile='', $items_id=0, $itemtype='', $unknown=0) {
 
@@ -500,40 +581,39 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
          return;
       }
 
-
       $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkPort = new PluginFusinvsnmpNetworkPort();
 
-
-      foreach ($xml->PORTS->children() as $name=>$child) {
+      foreach ($xml->PORTS->children() as $child) {
          if ((string)$child->IFTYPE == '6') {
 
+            $a_ports = array();
             $a_ports = $NetworkPort->find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."'
-                                          AND `name`='".(string)$child->IFNAME."'");
+                                          AND `logical_number`='".(string)$child->IFNUMBER."'");
             $data = array();
             foreach ($a_ports as $id => $data) {
             }
 
             $vlanDB = NetworkPort_Vlan::getVlansForNetworkPort($id);
             $vlanDB_Name_Comment = array();
-            foreach ($vlanDB as $vlans_id=>$datas) {
-               $temp = Dropdown::getDropdownName('glpi_vlans', $vlans_id, 1);
+            foreach ($vlanDB as $vlan_id) {
+               $temp = Dropdown::getDropdownName('glpi_vlans', $vlan_id, 1);
                $vlanDB_Name_Comment[$temp['name']."-".$temp['comment']] = 1;
             }
             $nb_errors = 0;
             $forgotvlan = '';
             if (isset($child->VLANS)) {
-               foreach ($child->VLANS->children() as $namevlan => $childvlan) {
-                  if (!isset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)])) {
+               foreach ($child->VLANS->children() as $childvlan) {
+                  //if (!isset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)])) {
+                  if (!array_key_exists((string)$childvlan->NUMBER."-".(string)$childvlan->NAME, $vlanDB_Name_Comment)) {
                      $nb_errors++;
-                     $forgotvlan .= strval($childvlan->NUMBER)."-".strval($childvlan->NAME)." | ";
+                     $forgotvlan .= (string)$childvlan->NUMBER."-".(string)$childvlan->NAME." | ";
                   } else {
-                     unset($vlanDB_Name_Comment[strval($childvlan->NUMBER)."-".strval($childvlan->NAME)]);
+                     unset($vlanDB_Name_Comment[(string)$childvlan->NUMBER."-".(string)$childvlan->NAME]);
                   }
                }
             }
-            $this->assertEquals($forgotvlan, '' , 'Vlans not in DB ("'.$forgotvlan.'")['.$xmlFile.']');
-            $this->assertEquals(count($vlanDB_Name_Comment), 0 , 'Vlans in DB but not in the XML ("'.print_r($vlanDB_Name_Comment, true).'")['.$xmlFile.']');
+            $this->assertEquals($forgotvlan, '' , 'Vlans not in DB ('.$forgotvlan.' for port '.$child->IFNAME.')['.$xmlFile.']');
+            $this->assertEquals(count($vlanDB_Name_Comment), 0 , 'Vlans in DB but not in the XML ("'.print_r($vlanDB_Name_Comment, true).'"  for port '.(string)$child->IFNAME.')['.$xmlFile.']');
          }
       }
    }
