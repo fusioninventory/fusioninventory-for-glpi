@@ -102,7 +102,6 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjob_id`=`glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `status`!=0
             AND `method`='netdiscovery'
-         GROUP BY `plugin_fusioninventory_taskjob_id`
          ORDER BY `glpi_plugin_fusinvsnmp_state_discovery`.`date_mod` DESC";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
