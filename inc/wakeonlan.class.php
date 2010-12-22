@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
-   function prepareRun($itemtype, $items_id, $communication) {
+   function prepareRun($itemtype, $items_id, $communication, $taskjobs_id) {
       global $DB;
       // Get ids of operating systems which can make real wakeonlan
       $OperatingSystem = new OperatingSystem;
