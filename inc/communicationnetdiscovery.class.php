@@ -164,9 +164,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $nb_devices++;
             }
             $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
-                                                   $PluginFusioninventoryTaskjobstatus->fields['items_id'],
-                                                   $PluginFusioninventoryTaskjobstatus->fields['itemtype'],
-                                                   '0',
+                                                   $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
+                                                   'PluginFusioninventoryAgent',
+                                                   '6',
                                                    $nb_devices.' devices found');
          }
       }
@@ -179,8 +179,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID, $moduleversion);
       if (isset($p_CONTENT->AGENT->END)) {
          $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                   $PluginFusioninventoryTaskjobstatus->fields['items_id'],
-                                                   $PluginFusioninventoryTaskjobstatus->fields['itemtype']);
+                                                   $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
+                                                   'PluginFusioninventoryAgent');
       }
       return $errors;
    }
