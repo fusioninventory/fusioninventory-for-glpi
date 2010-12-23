@@ -533,6 +533,7 @@ $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
 $LANG['plugin_fusioninventory']['taskjoblog'][3]="Erreur / replannifié";
 $LANG['plugin_fusioninventory']['taskjoblog'][4]="Erreur";
 $LANG['plugin_fusioninventory']['taskjoblog'][5]="Inconnu";
+$LANG['plugin_fusioninventory']['taskjoblog'][6]="En cours";
 
 $LANG['plugin_fusioninventory']['update'][0]="Votre historique fait plus de 300 000 lignes, il faut lancer la commande suivante en ligne de commande pour finir la mise à jour : ";
 

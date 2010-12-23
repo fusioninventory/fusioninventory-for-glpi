@@ -42,6 +42,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     * 3 : error / replaned
     * 4 : error
     * 5 : Unknown
+    * 6 : Running
     */
 
 
@@ -75,17 +76,19 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $a_history = $this->find('plugin_fusioninventory_taskjobs_id="'.$id.'" ', 'id');
-
+      $a_history = $this->find('`plugin_fusioninventory_taskjobs_id`="'.$id.'"', 'id');
+      
       foreach($a_history as $datas) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          echo convDateTime($datas['date']);
          echo "</td>";
          echo "<td align='center'>";
-         $device = new $datas["itemtype"]();
-         $device->getFromDB($datas["items_id"]);
-         echo $device->getLink(1);
+         if (!empty($datas["itemtype"])) {
+            $device = new $datas["itemtype"]();
+            $device->getFromDB($datas["items_id"]);
+            echo $device->getLink(1);
+         }
          echo "</td>";
          switch ($datas['state']) {
 
@@ -112,6 +115,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             case 5 :
                echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
                echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][5]."</strong>";
+               break;
+
+            case 6 :
+               echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
+               echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][6]."</strong>";
                break;
 
             default:

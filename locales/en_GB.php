@@ -533,6 +533,7 @@ $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
 $LANG['plugin_fusioninventory']['taskjoblog'][3]="Error / replaned";
 $LANG['plugin_fusioninventory']['taskjoblog'][4]="Error";
 $LANG['plugin_fusioninventory']['taskjoblog'][5]="unknow";
+$LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
 
 $LANG['plugin_fusioninventory']['update'][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 

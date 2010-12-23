@@ -397,8 +397,10 @@ $this->cronTaskscheduler();
                $module = $datas['module'];
             }
          }
-         if (is_callable(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype))) {
-            $a_list = call_user_func(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype));
+         if (!empty($module)) {
+            if (is_callable(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype))) {
+               $a_list = call_user_func(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype));
+            }
          }
          echo "<div style='visibility:hidden'>";
          echo "<select name='itemtype'><option value='0' selected>0</option></select>";
@@ -580,7 +582,7 @@ $this->cronTaskscheduler();
       if (isset($data) && !empty($data)) {
          $handle = fopen("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, "r");
          $input = 'Agent run Now';
-         fclose($fp);
+         fclose($handle);
          return true;
       } else {
          $input = 'Agent don\'t respond';
