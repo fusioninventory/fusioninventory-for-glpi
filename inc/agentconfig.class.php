@@ -45,6 +45,19 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       $this->type = 'PluginFusinvsnmpAgentconfig';
    }
 
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canDelete() {
+      return false;
+   }
+
+
    function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
@@ -86,7 +99,6 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       
-
       $this->showFormButtons($options);
 
       return true;
