@@ -45,8 +45,6 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
    function AddUpdateItem($type, $items_id, $dataSection, $itemtype='Computer') {
 
-      $Computer_Item = new Computer_Item();
-
       if ((!isset($dataSection['DESCRIPTION'])) AND
               (!isset($dataSection['IPADDRESS']))
              AND (!isset($dataSection['MACADDR']))
@@ -60,7 +58,8 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
       $a_NetworkPort = array();
 
       if ($type == 'update') {
-         $a_NetworkPort = $NetworkPort->getFromDB($Computer_Item->fields['items_id']);
+         $NetworkPort->getFromDB($items_id);
+         $a_NetworkPort = $NetworkPort->fields;
       } else {
          $a_NetworkPort['items_id']=$items_id;
       }
