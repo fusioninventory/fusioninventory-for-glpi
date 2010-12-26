@@ -327,6 +327,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $input['argument'] = $_POST['id'];
          $input['selection_type'] = 'agents';
          $input["entities_id"]  = $_SESSION["glpiactive_entity"];
+         $input['date_scheduled'] = date("Y-m-d H:i:s");
 
          $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
       }
@@ -399,7 +400,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $PluginFusioninventoryTaskjob->showFormButtons($options);
 
-      echo $LANG['title'][38]."<br/>";
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjoblog->showHistory($taskjob_id);
    }
 
 }
