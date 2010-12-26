@@ -123,6 +123,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return true;
    }
 
+   function canUpdate() {
+      return true;
+   }
+
 
 
    function defineTabs($options=array()){

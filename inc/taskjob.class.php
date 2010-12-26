@@ -108,6 +108,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       return true;
    }
 
+   function canUpdate() {
+      return true;
+   }
 
 
    function  showForm($id, $options=array()) {
@@ -554,6 +557,10 @@ $this->cronTaskscheduler();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $state = false;
+      if (empty($ip)) {
+         return $state;
+      }
+
       $ctx = stream_context_create(array(
           'http' => array(
               'timeout' => 2

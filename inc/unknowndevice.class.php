@@ -50,6 +50,53 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
+   function getSearchOptions() {
+      global $LANG;
+
+      $tab = array();
+
+      $tab['common'] = $LANG['plugin_fusioninventory']["agents"][28];
+
+		$tab[1]['table'] = $this->getTable();
+		$tab[1]['field'] = 'name';
+		$tab[1]['linkfield'] = 'name';
+		$tab[1]['name'] = $LANG['common'][16];
+		$tab[1]['datatype'] = 'itemlink';
+
+		$tab[2]['table'] = $this->getTable();
+		$tab[2]['field'] = 'location';
+		$tab[2]['linkfield'] = 'location';
+		$tab[2]['name'] = 'location';
+		$tab[2]['datatype'] = 'text';
+
+		$tab[3]['table'] = $this->getTable();
+		$tab[3]['field'] = 'serial';
+		$tab[3]['linkfield'] = 'serial';
+		$tab[3]['name'] = 'serial';
+		$tab[3]['datatype'] = 'text';
+
+		$tab[4]['table'] = $this->getTable();
+		$tab[4]['field'] = 'otherserial';
+		$tab[4]['linkfield'] = 'otherserial';
+		$tab[4]['name'] = 'otherserial';
+		$tab[4]['datatype'] = 'text';
+
+		$tab[5]['table'] = $this->getTable();
+		$tab[5]['field'] = 'contact';
+		$tab[5]['linkfield'] = 'contact';
+		$tab[5]['name'] = 'contact';
+		$tab[5]['datatype'] = 'itemlink';
+
+		$tab[6]['table'] = $this->getTable();
+		$tab[6]['field'] = 'hub';
+		$tab[6]['linkfield'] = 'hub';
+		$tab[6]['name'] ='hub';
+		$tab[6]['datatype'] = 'bool';
+
+      return $tab;
+   }
+
+
 
    function defineTabs($options=array()){
 		global $LANG,$CFG_GLPI;
