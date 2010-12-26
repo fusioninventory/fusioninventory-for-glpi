@@ -1305,7 +1305,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $input['globalcriteria'][] = 4;
             $input['name'] = strval($p_CONTENT->INFO->NAME);
          }
-         logInFile('crit', print_r($input, true));
+
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $rule = new PluginFusinvsnmpRuleInventoryCollection();
       $data = array ();
@@ -1318,6 +1318,8 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function checkCriteria($a_criteria) {
       global $DB;
 
+      $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
+
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->checkCriteria().');
 
@@ -1326,40 +1328,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $datacriteria = unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']);
 
       if ($xml->INFO->TYPE == 'PRINTER') {
-         $condition = "WHERE 1 ";
-         $select = "id";
-         $input = array();
-
-         foreach ($a_criteria as $criteria) {
-            switch ($criteria) {
-
-              case 'serialnumber':
-                  $condition .= "AND `serial`='".$datacriteria['serialnumber']."' ";
-                  $select .= ", serial";
-                  $input['serial'] = $datacriteria['serialnumber'];
-                  break;
-
-               case 'mac':
-                  $condition .= "AND `glpi_networkports`.`mac`='".$datacriteria['mac']."' ";
-                  $select .= ", `glpi_networkports`.`mac`";
-                  break;
-
-               case 'model':
-                  $condition .= "AND `models_id`='".$datacriteria['model']."' ";
-                  $select .= ", models_id";
-                  break;
-
-               case 'name':
-                  $condition .= "AND `name`='".$datacriteria['name']."' ";
-                  $select .= ", name";
-                  $input['name'] = $datacriteria['name'];
-                  break;
-            }
-         }
-
-         $query = "SELECT ".$select." FROM `".getTableForItemType("Printer")."`
-            ".$condition." ";
-         $result = $DB->query($query);
+         $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'Printer');
+         $result = $a_return[0];
+         $input = $a_return[1];
          if ($DB->numrows($result)) {
             $this->importDevice('Printer', $DB->result($result,0,'id'));
          } else {
@@ -1369,40 +1340,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $this->importDevice('Printer', $id);
          }
       } else if ($xml->INFO->TYPE == 'NETWORKING') {
-         $condition = "WHERE 1 ";
-         $select = "id";
-         $input = array();
-
-         foreach ($a_criteria as $criteria) {
-            switch ($criteria) {
-
-              case 'serialnumber':
-                  $condition .= "AND `serial`='".$datacriteria['serialnumber']."' ";
-                  $select .= ", serial";
-                  $input['serial'] = $datacriteria['serialnumber'];
-                  break;
-
-               case 'mac':
-                  $condition .= "AND `mac`='".$datacriteria['mac']."' ";
-                  $select .= ", mac";
-                  break;
-
-               case 'model':
-                  $condition .= "AND `models_id`='".$datacriteria['model']."' ";
-                  $select .= ", models_id";
-                  break;
-
-               case 'name':
-                  $condition .= "AND `name`='".$datacriteria['name']."' ";
-                  $select .= ", name";
-                  $input['serial'] = $datacriteria['name'];
-                  break;
-            }
-         }
-
-         $query = "SELECT ".$select." FROM `".getTableForItemType("NetworkEquipment")."`
-            ".$condition." ";
-         $result=$DB->query($query);
+         $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'NetworkEquipment');
+         $result = $a_return[0];
+         $input = $a_return[1];
          if ($DB->numrows($result)) {
             $this->importDevice('NetworkEquipment', $DB->result($result,0,'id'));
          } else {

@@ -67,7 +67,7 @@ class PluginFusinvsnmpRuleNetdiscovery extends PluginFusioninventoryRule {
       $criterias = array();
       $criterias['globalcriteria']['field'] = 'name';
       $criterias['globalcriteria']['name']  = "* ".$LANG['plugin_fusinvsnmp']['rule'][1];
-      $criterias['globalcriteria']['table'] = 'glpi_plugin_fusinvsnmp_inventorycriteria';
+      $criterias['globalcriteria']['table'] = 'glpi_plugin_fusinvsnmp_netdiscoverycriteria';
       $criterias['globalcriteria']['linkfield'] = '';
       $criterias['globalcriteria']['type'] = 'dropdown';
       $criterias['globalcriteria']['virtual']   = true;

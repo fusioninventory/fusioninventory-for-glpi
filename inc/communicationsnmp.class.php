@@ -96,6 +96,103 @@ class PluginFusinvsnmpCommunicationSNMP {
       $this->sxml->addChild('PROCESSNUMBER', $p_pid);
       //var_dump($this->sxml);
    }
+
+
+   function searchDevice($a_criteria, $itemtype) {
+      global $DB;
+
+      $datacriteria = unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']);
+
+      switch ($itemtype) {
+
+         case 'Computer':
+         case 'Printer':
+            $condition = "WHERE 1 ";
+            $select = "`".getTableForItemType($itemtype)."`.`id`";
+            $leftjoin = '';
+            $input = array();
+
+            foreach ($a_criteria as $criteria) {
+               switch ($criteria) {
+
+                 case 'serialnumber':
+                     $condition .= "AND `serial`='".$datacriteria['serialnumber']."' ";
+                     $select .= ", serial";
+                     $input['serial'] = $datacriteria['serialnumber'];
+                     break;
+
+                  case 'mac':
+                     $condition .= "AND `glpi_networkports`.`mac`='".$datacriteria['mac']."'
+                        AND `itemtype` = '".$itemtype."'";
+                     $select .= ", `glpi_networkports`.`mac`";
+                     $leftjoin = 'LEFT JOIN `glpi_networkports` on `'.getTableForItemType($itemtype).'`.`id`=`items_id`';
+                     break;
+
+                  case 'model':
+                     $condition .= "AND `models_id`='".$datacriteria['model']."' ";
+                     $select .= ", models_id";
+                     break;
+
+                  case 'name':
+                     $condition .= "AND `name`='".$datacriteria['name']."' ";
+                     $select .= ", name";
+                     $input['name'] = $datacriteria['name'];
+                     break;
+               }
+            }
+
+            $query = "SELECT ".$select." FROM `".getTableForItemType($itemtype)."`
+               ".$leftjoin."
+               ".$condition." ";
+            $result = $DB->query($query);
+            return array($result, $input);
+            break;
+
+         case 'NetworkEquipment':
+            $condition = "WHERE 1 ";
+            $select = "id";
+            $input = array();
+
+            foreach ($a_criteria as $criteria) {
+               switch ($criteria) {
+
+                 case 'serialnumber':
+                     $condition .= "AND `serial`='".$datacriteria['serialnumber']."' ";
+                     $select .= ", serial";
+                     $input['serial'] = $datacriteria['serialnumber'];
+                     break;
+
+                  case 'mac':
+                     $condition .= "AND `mac`='".$datacriteria['mac']."' ";
+                     $select .= ", mac";
+                     break;
+
+                  case 'model':
+                     $condition .= "AND `models_id`='".$datacriteria['model']."' ";
+                     $select .= ", models_id";
+                     break;
+
+                  case 'name':
+                     $condition .= "AND `name`='".$datacriteria['name']."' ";
+                     $select .= ", name";
+                     $input['serial'] = $datacriteria['name'];
+                     break;
+               }
+            }
+
+            $query = "SELECT ".$select." FROM `".getTableForItemType("NetworkEquipment")."`
+               ".$condition." ";
+            $result = $DB->query($query);
+            return array($result, $input);
+            break;
+
+         
+      }
+
+      
+      
+   }
+
 }
 
 ?>

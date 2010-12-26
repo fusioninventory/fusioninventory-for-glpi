@@ -274,7 +274,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $pta->update($agent);
       }
 
-		$walkdata = '';
 		$count_discovery_devices = 0;
    	foreach($p_xml->DEVICE as $discovery) {
 			$count_discovery_devices++;
@@ -283,29 +282,29 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_found' => $count_discovery_devices), $agent['id']);
          foreach($p_xml->DEVICE as $discovery) {
             // If module version is 1.0, so try to get right model (discovery file in this agent is too old
-            if (($moduleversion == "1.0") AND ($discovery->AUTHSNMP != "")) {
-               $pfimi = new PluginFusinvsnmpModel;
-               $discovery->MODELSNMP = $pfimi->getrightmodel(0, 0, $discovery->DESCRIPTION);
-            }
-            if ($discovery->MODELSNMP != "") {
-               $query = "SELECT *
-                         FROM `glpi_plugin_fusinvsnmp_models`
-                         WHERE `discovery_key`='".$discovery->MODELSNMP."'
-                         LIMIT 0,1;";
-               $result = $DB->query($query);
-               $data = $DB->fetch_assoc($result);
-				$plugin_fusinvsnmp_models_id = $data['id'];
-            } else {
-				$plugin_fusinvsnmp_models_id = 0;
-            }
-            $discovery->MAC = strtolower($discovery->MAC);
-
-			   if (empty($plugin_fusinvsnmp_models_id)) {
-               $plugin_fusinvsnmp_models_id = 0;
-            }
+//            if (($moduleversion == "1.0") AND ($discovery->AUTHSNMP != "")) {
+//               $pfimi = new PluginFusinvsnmpModel;
+//               $discovery->MODELSNMP = $pfimi->getrightmodel(0, 0, $discovery->DESCRIPTION);
+//            }
+//            if ($discovery->MODELSNMP != "") {
+//               $query = "SELECT *
+//                         FROM `glpi_plugin_fusinvsnmp_models`
+//                         WHERE `discovery_key`='".$discovery->MODELSNMP."'
+//                         LIMIT 0,1;";
+//               $result = $DB->query($query);
+//               $data = $DB->fetch_assoc($result);
+//				$plugin_fusinvsnmp_models_id = $data['id'];
+//            } else {
+//				$plugin_fusinvsnmp_models_id = 0;
+//            }
+//            $discovery->MAC = strtolower($discovery->MAC);
+//
+//			   if (empty($plugin_fusinvsnmp_models_id)) {
+//               $plugin_fusinvsnmp_models_id = 0;
+//            }
 
             $PluginFusinvsnmpCommunicationNetDiscovery = new PluginFusinvsnmpCommunicationNetDiscovery();
-            $PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria($p_xml);
+            $PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria($discovery);
 
 //            unset($p_criteria);
 //            $p_criteria['ip'] = $discovery->IP;

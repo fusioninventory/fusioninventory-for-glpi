@@ -295,16 +295,20 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    function permanentTask($items_id, $module_name) {
       global $LANG;
 
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-      $PluginFusioninventoryTask = new PluginFusioninventoryTask;
-
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
       $permanent = exportArrayToDB(array($this->type=>$items_id, 'module'=>$module_name));
+      
       // Get on task & taskjob (and create this task if not exist)
       if ($a_task = $PluginFusioninventoryTask->find("`permanent` LIKE '".$permanent."'", "`id` DESC", "1")) {
-         foreach($a_task as $task_id=>$datas) {
-            
-         }
+         $data = current($a_task);
+         $task_id = $data['id'];
+
+         $a_taskjob = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+         $data = current($a_taskjob);
+         $taskjob_id = $data['id'];
       } else {
          // Create task
          $input = array();
@@ -312,37 +316,51 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $input['date_creation'] = date("Y-m-d H:i:s");
          $input['is_active'] = 0;
          $input['permanent'] = $permanent;
+         $input["entities_id"]  = $_SESSION["glpiactive_entity"];
 
          $task_id = $PluginFusioninventoryTask->add($input);
+
+         $input = array();
+         $input['plugin_fusioninventory_tasks_id'] = $task_id;
+         $input['plugins_id'] = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+         $input['method'] = 'netdiscovery';
+         $input['argument'] = $_POST['id'];
+         $input['selection_type'] = 'agents';
+         $input["entities_id"]  = $_SESSION["glpiactive_entity"];
+
+         $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
       }
       // Get task job or create if not exist
-
-      
-
-      $this->fields['is_active'] = 0;
-      $this->fields['id'] = 0;
-
+      $PluginFusioninventoryTask->getFromDB($task_id);
+      $PluginFusioninventoryTaskjob->getFromDB($taskjob_id);
 
       $options = array();
-      $this->showFormHeader($options);
+      $options['target'] = GLPI_ROOT.'/plugins/fusinvsnmp/front/iprange.form.php';
+      $PluginFusioninventoryTaskjob->showFormHeader($options);
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      Dropdown::showYesNo("is_active",$PluginFusioninventoryTask->fields["is_active"]);
       echo "</td>";
       echo "</td>";
 
       echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("periodicity", "", 0, 300);
-      echo "&nbsp;";
+      $a_periodicity = array();
+      if (strstr($PluginFusioninventoryTask->fields['periodicity'], "-")) {
+         $a_periodicity = explode("-", $PluginFusioninventoryTask->fields['periodicity']);
+      } else {
+         $a_periodicity[] = 0;
+         $a_periodicity[] = '';
+      }
+      Dropdown::showInteger("periodicity-1", $a_periodicity[0], 0, 300);
       $a_time = array();
       $a_time[] = "------";
       $a_time[] = "minutes";
       $a_time[] = "heures";
       $a_time[] = "jours";
       $a_time[] = "mois";
-      Dropdown::showFromArray("tt", $a_time, array('value'=>0));
+      Dropdown::showFromArray("periodicity-2", $a_time, array('value'=>$a_periodicity[1]));
       echo "</td>";
       echo "</tr>";
 
@@ -351,14 +369,19 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       echo $LANG['plugin_fusinvsnmp']["agents"][25];
       echo "</td>";
       echo "<td>";
-      $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo($module_name);
+
       $a_list = array();
-      $a_list[0] = "[ ".$LANG['plugin_fusinvsnmp']['agents'][28]." ]";
-      foreach($a_agents as $agent_id=>$data) {
-         // TODO : display only agent associated with computer and have ip in this range
-         $a_list[$agent_id] = $data['name']." / ".$data['version'];
+      if (is_callable(array("PluginFusinvsnmpStaticmisc", 'task_netdiscovery_agents'))) {
+         $a_list = call_user_func(array("PluginFusinvsnmpStaticmisc", 'task_netdiscovery_agents'));
       }
-      Dropdown::showFromArray('selection', $a_list);
+      $defaultValue = '';
+      $a_list[''] = "------";
+      if (!empty($PluginFusioninventoryTaskjob->fields['selection'])) {
+         $array = importArrayFromDB($PluginFusioninventoryTaskjob->fields['selection']);
+         $defaultValue = key(current($array))."-".current(current($array));
+      }
+      Dropdown::showFromArray('selection', $a_list, array('value' => $defaultValue));
+      
       echo "</td>";
       echo "<td>";
       echo $LANG['plugin_fusinvsnmp']['task'][17]."&nbsp:";
@@ -367,11 +390,14 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       $com = array();
       $com['push'] = "push";
       $com['pull'] = "pull";
-      Dropdown::showFromArray("communication", $com, array('value'=>$data["communication"]));
+      Dropdown::showFromArray("communication", $com, array('value'=>$PluginFusioninventoryTask->fields["communication"]));
       echo "</td>";
       echo "</tr>";
 
-      $this->showFormButtons($options);
+      echo "<input name='task_id' type='hidden' value='".$task_id."' />";
+      echo "<input name='taskjob_id' type='hidden' value='".$taskjob_id."' />";
+
+      $PluginFusioninventoryTaskjob->showFormButtons($options);
 
       echo $LANG['title'][38]."<br/>";
    }

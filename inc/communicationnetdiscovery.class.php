@@ -188,7 +188,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
    function sendCriteria($p_xml) {
 
-      $_SESSION['glpi_plugin_fusinvsnmp_xmlDevice'] = $p_xml;
+      $_SESSION['SOURCE_XMLDEVICE'] = $p_xml->asXML();
 
       $input = array();
 
@@ -196,26 +196,25 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       if ((isset($p_xml->SERIAL)) AND (!empty($p_xml->SERIAL))) {
          $input['globalcriteria'][] = 1;
-         $input['serial'] = strval($p_xml->SERIAL);
+         $input['serialnumber'] = (string)$p_xml->SERIAL;
       }
       if ((isset($p_xml->MAC)) AND (!empty($p_xml->MAC))) {
          $input['globalcriteria'][] = 2;
-         $input['mac'] = strval($p_xml->MAC);
+         $input['mac'] = (string)$p_xml->MAC;
       }
       if ((isset($p_xml->MODELSNMP)) AND (!empty($p_xml->MODELSNMP))) {
          $input['globalcriteria'][] = 3;
-         $input['model'] = strval($p_xml->MODELSNMP);
+         $input['model'] = (string)$p_xml->MODELSNMP;
       }
       if ((isset($p_xml->NETBIOSNAME)) AND (!empty($p_xml->NETBIOSNAME))) {
          $input['globalcriteria'][] = 4;
-         $input['name'] = strval($p_xml->NETBIOSNAME);
+         $input['name'] = (string)$p_xml->NETBIOSNAME;
       } else if ((isset($p_xml->SNMPHOSTNAME)) AND (!empty($p_xml->SNMPHOSTNAME))) {
          $input['globalcriteria'][] = 4;
-         $input['name'] = strval($p_xml->SNMPHOSTNAME);
+         $input['name'] = (string)$p_xml->SNMPHOSTNAME;
       }
-
-      define('DATACRITERIA', serialize($input));
-      $rule = new PluginFusinvsnmpRuleNetdiscovery();
+      $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
+      $rule = new PluginFusinvsnmpRuleNetdiscoveryCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
    }
@@ -225,69 +224,107 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    function checkCriteria($a_criteria) {
       global $DB;
 
-      $condition = "WHERE 1 ";
-      $condition_ports = "WHERE 1 ";
-      $select = "id";
-      $select_ports = "id";
-      $datacriteria = unserialize(DATACRITERIA);
+      $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
+      
+      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
-      foreach ($a_criteria as $criteria) {
-         switch ($criteria) {
+      switch ($xml->TYPE) {
 
-           case 'serial':
-               $condition .= "AND `serial`='".$datacriteria['serial']."' ";
-               $select .= ", serial";
-               $condition_ports .= "AND `serial`='".$datacriteria['serial']."' ";
-               $select_ports .= ", serial";
-               break;
+         case '0':
+            // Don't know what device type it is
 
-            case 'mac':
-               $condition .= "AND `mac`='".$datacriteria['mac']."' ";
-               $select .= ", mac";
-               $condition_ports .= "AND `glpi_networkports`.`mac`='".$datacriteria['mac']."' ";
-               $select_ports .= ", `glpi_networkports`.`mac`";
-               break;
+            break;
 
-            case 'model':
-               $condition .= "AND `models_id`='".$datacriteria['model']."' ";
-               $select .= ", models_id";
-               $condition_ports .= "AND `models_id`='".$datacriteria['model']."' ";
-               $select_ports .= ", models_id";
-               break;
+         case '1':
+            // Computer
+            $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'Computer');
+            $result = $a_return[0];
+            $input = $a_return[1];
 
-            case 'name':
-               $condition .= "AND `name`='".$datacriteria['name']."' ";
-               $select .= ", name";
-               $condition_ports .= "AND `name`='".$datacriteria['name']."' ";
-               $select_ports .= ", name";
-               break;
+            break;
+
+         case '2':
+            // NetworkEquipment
+            $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'NetworkEquipment');
+            $result = $a_return[0];
+            $input = $a_return[1];
+
+            break;
+
+         case '3':
+            // Printer
+            $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'Printer');
+            $result = $a_return[0];
+            $input = $a_return[1];
+            if ($DB->numrows($result)) {
+               $this->importDevice('Printer', $DB->result($result,0,'id'));
+            } else {
+               // unknowndevice
+               $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'PluginFusioninventoryUnknownDevice');
+               $result = $a_return[0];
+               $input = $a_return[1];
+               if ($DB->numrows($result)) {
+                  $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
+               } else {
+                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $id = $PluginFusioninventoryUnknownDevice->add($input);
+                  $this->importDevice('PluginFusioninventoryUnknownDevice', $id);
+               }
+            }
+            break;
+
+      }
+
+      
+   }
+
+
+   function importDevice($itemtype, $items_id) {
+
+      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $class = new $itemtype();
+      $class->getFromDB($items_id);
+
+      $a_lockable = PluginFusioninventoryLock::getLockFields($itemtype, $items_id);
+      if ($class->fields['name'] && !in_array('name', $a_lockable)) {
+         if (!empty($xml->NETBIOSNAME)) {
+            $class->fields['name'] = $xml->NETBIOSNAME;
+         } else if (!empty($xml->SNMPHOSTNAME)) {
+            $class->fields['name'] = $xml->SNMPHOSTNAME;
+         } else if (!empty($xml->DNSHOSTNAME)) {
+            $class->fields['name'] = $xml->DNSHOSTNAME;
+         }
+      }
+      if (isset($class->fields['dnsname'])) {
+         if ($class->fields['dnsname'] && !in_array('dnsname', $a_lockable)) {
+            $class->fields['dnsname'] = $xml->DNSHOSTNAME;
+         }
+      }
+      if ($class->fields['serial'] && !in_array('serial', $a_lockable))
+         $class->fields['serial'] = trim($xml->SERIAL);
+      if ($class->fields['contact'] && !in_array('contact', $a_lockable))
+         $class->fields['contact'] = $xml->USERSESSION;
+      if (isset($class->fields['domain'])) {
+         if ($class->fields['domain'] && !in_array('domain', $a_lockable)) {
+            if (!empty($xml->WORKGROUP)) {
+            $class->fields['domain'] = Dropdown::importExternal("Domain",
+                                    $xml->WORKGROUP,$xml->ENTITY);
+            }
+         }
+      }
+      if (isset($class->fields['ip'])) {
+         if ($class->fields['ip'] && !in_array('ip', $a_lockable)) {
+            $class->fields['ip'] = $xml->IP;
+         }
+      }
+      if (isset($class->fields['mac'])) {
+         if ($class->fields['mac'] && !in_array('mac', $a_lockable)) {
+            $class->fields['mac'] = $xml->MAC;
          }
       }
 
-      $query1 = "SELECT ".str_replace('models_id', 'printermodels_id', $select_ports)." FROM `".getTableForItemType("Printer")."`
-         ".str_replace('models_id', 'printermodels_id', $condition_ports)." ";
-      $result1=$DB->query($query1);
-
-      $query2 = "SELECT ".str_replace('models_id', 'networkequipmentmodels_id', $select)." FROM `".getTableForItemType("NetworkEquipment")."`
-         ".str_replace('models_id', 'networkequipmentmodels_id', $condition)." ";
-      $result2=$DB->query($query2);
-
-      $query3 = "SELECT ".str_replace('models_id', 'computermodels_id', $select)." FROM `".getTableForItemType("Computer")."`
-         ".str_replace('models_id', 'computermodels_id', $condition_ports)." ";
-      $result3=$DB->query($query3);
-
-      if (($DB->numrows($result1) + $DB->numrows($result2)) == "1") {
-         if ($DB->numrows($result1) == "1") {
-   			$data = $DB->fetch_assoc($result1);
-            $this->importDevice('Printer', $data['id']);
-         } else if ($DB->numrows($result2) == "1") {
-            $data = $DB->fetch_assoc($result2);
-            $this->importDevice('NetworkEquipment', $data['id']);
-         } else if ($DB->numrows($result3) == "1") {
-            $data = $DB->fetch_assoc($result3);
-            $this->importDevice('Computer', $data['id']);
-         }
-      }
+      $class->update($class->fields);
+      
    }
 
 }

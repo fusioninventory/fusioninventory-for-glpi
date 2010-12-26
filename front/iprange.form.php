@@ -53,11 +53,37 @@ if (isset ($_POST["add"])) {
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
-   if ($iprange->checkip($_POST)) {
-      $_POST['ip_start'] = $_POST['ip_start0'].".".$_POST['ip_start1'].".".$_POST['ip_start2'].".".$_POST['ip_start3'];
-      $_POST['ip_end'] = $_POST['ip_end0'].".".$_POST['ip_end1'].".".$_POST['ip_end2'].".".$_POST['ip_end3'];
-      $iprange->update($_POST);
+   if (isset($_POST['communication'])) {
+      //task permanent update
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTask->getFromDB($_POST['task_id']);
+      $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjob_id']);
+      $PluginFusioninventoryTask->fields["is_active"] = $_POST['is_active'];
+      $PluginFusioninventoryTask->fields["periodicity"] = $_POST['periodicity-1']."-".$_POST['periodicity-2'];;
+      if (!empty($_POST['selection'])) {
+         $a_selection = explode(',', $_POST['selection']);
+         foreach ($a_selection as $num=>$data) {
+            $dataDB = explode('-', $data);
+            if (isset($dataDB[1]) AND $dataDB > 0) {
+               $a_selectionDB[][$dataDB[0]] = $dataDB[1];
+            }
+         }
+         $PluginFusioninventoryTaskjob->fields["selection"] = exportArrayToDB($a_selectionDB);
+      } else {
+         $PluginFusioninventoryTaskjob->fields["selection"] = '';
+      }
+      $PluginFusioninventoryTask->fields["communication"] = $_POST['communication'];
+
+      $PluginFusioninventoryTask->update($PluginFusioninventoryTask->fields);
+      $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+   } else {
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","w");
+      if ($iprange->checkip($_POST)) {
+         $_POST['ip_start'] = $_POST['ip_start0'].".".$_POST['ip_start1'].".".$_POST['ip_start2'].".".$_POST['ip_start3'];
+         $_POST['ip_end'] = $_POST['ip_end0'].".".$_POST['ip_end1'].".".$_POST['ip_end2'].".".$_POST['ip_end3'];
+         $iprange->update($_POST);
+      }
    }
 	glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset ($_POST["delete"])) {
