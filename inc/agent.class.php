@@ -277,7 +277,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    
    function getAgentWithComputerid($items_id) {
 
-      $agent = $this->find("`itemtype`='Computer' AND `items_id`='".$items_id."'");
+      $agent = $this->find("`items_id`='".$items_id."'");
 
       if ($agent) {
          foreach($agent as $data) {
@@ -324,7 +324,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $LANG['state'][0]."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      $this->getFromDB($_POST['id']);
+      $agent_id = $this->getAgentWithComputerid($_POST['id']);
+      $this->getFromDB($agent_id);
       $a_ip = $this->getIPs($_POST['id'], 'Computer');
       $waiting = 0;
       foreach($a_ip as $ip) {
@@ -345,7 +346,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ($waiting == '1') {
          echo "<tr>";
          echo "<th colspan='2'>";
-         echo "<input name='startagent' value='".$LANG['plugin_fusioninventory']['agents'][31]."' class='submit' type='submit'>";
+         echo "<input name='startagent' value=\"".$LANG['plugin_fusioninventory']['agents'][31]."\" class='submit' type='submit'>";
          echo "</th>";
          echo "</tr>";
       }
