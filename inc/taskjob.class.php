@@ -244,7 +244,12 @@ $this->cronTaskscheduler();
          $class = new $item_type();
          $itemname = $class->getTypeName();
          $class->getFromDB(current($data));
-         $name = $class->fields['name'];
+         if (current($data) == '.1') {
+            $name = $LANG['plugin_fusioninventory']['agents'][32];
+         } else {
+            $class->getFromDB(current($data));
+            $name = $class->fields['name'];
+         }         
          $actionlist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'delaction("'.$itemname.'->'.$name.'->'.$itemname.'->'.$name.'")\'>';
          $actionlisthidden .= ','.key($data).'->'.current($data);
       }

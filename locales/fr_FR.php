@@ -496,6 +496,7 @@ $LANG['plugin_fusioninventory']['agents'][28]="Agent";
 $LANG['plugin_fusioninventory']['agents'][29]="Activation des modules";
 $LANG['plugin_fusioninventory']['agents'][30]="Impossible de joindre l'agent!";
 $LANG['plugin_fusioninventory']['agents'][31]="Forcer l'inventaire";
+$LANG['plugin_fusioninventory']['agents'][32]="Auto gestion dynamique des agents";
 
 $LANG['plugin_fusioninventory']['unknown'][0]="Nom DNS";
 $LANG['plugin_fusioninventory']['unknown'][1]="Nom port réseau";
