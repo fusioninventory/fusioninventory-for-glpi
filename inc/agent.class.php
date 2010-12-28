@@ -251,13 +251,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    
 
    
-   function getIPs($items_id) {
+   function getIPs($items_id, $type = 'Agent') {
       $ip = array();
-      $this->getFromDB($items_id);
-      if ($this->fields['items_id'] != "0") {
+      if ($type == 'agent') {
+         $this->getFromDB($items_id);
+         $Computers_id = $this->fields['items_id'];
+      } else {
+         $Computers_id = $items_id;
+      }
+      if ($Computers_id != "0") {
          $NetworkPort = new NetworkPort;
          $a_ports = $NetworkPort->find("`itemtype`='Computer'
-                             AND `items_id`='".$this->fields['items_id']."'
+                             AND `items_id`='".$Computers_id."'
                              AND `ip` IS NOT NULL");
          foreach($a_ports as $data) {
             if ($data['ip'] != '127.0.0.1') {
@@ -320,7 +325,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $this->getFromDB($_POST['id']);
-      $a_ip = $this->getIPs($_POST['id']);
+      $a_ip = $this->getIPs($_POST['id'], 'Computer');
       $waiting = 0;
       foreach($a_ip as $ip) {
          $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
