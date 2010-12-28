@@ -119,7 +119,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          case 'nostarted';
             $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid FROM `glpi_plugin_fusioninventory_taskjobs`
                LEFT JOIN ".$this->table." on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
-               WHERE `selection` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
+               WHERE `definition` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
                   AND `plugin_fusioninventory_taskjobs_id` is null";
             $a_taskjobs = array();
             if ($result = $DB->query($query)) {
