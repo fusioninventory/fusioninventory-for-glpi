@@ -331,10 +331,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       foreach($a_ip as $ip) {
          $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
          if ($agentStatus) {
-            $waiting = 1;
-            echo $LANG['plugin_fusioninventory']['agents'][22];
-            echo "<input type='hidden' name='ip' value='".$ip."' />";
-            echo "<input type='hidden' name='token' value='".$this->fields['token']."' />";
+            if ($waiting == '0') {
+               $waiting = 1;
+               echo $LANG['plugin_fusioninventory']['agents'][22];
+               echo "<input type='hidden' name='ip' value='".$ip."' />";
+               echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
+               break;
+            }
          }
       }
       if ($waiting == '0') {

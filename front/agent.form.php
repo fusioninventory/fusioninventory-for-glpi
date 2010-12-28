@@ -46,7 +46,9 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['startagent'])) {
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
-   if ($PluginFusioninventoryTaskjob->RemoteStartAgent($_POST['ip'], $_POST['token'])) {
+   $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+   $PluginFusioninventoryAgent->getFromDB($_POST['agent_id']);
+   if ($PluginFusioninventoryTaskjob->RemoteStartAgent($_POST['ip'], $PluginFusioninventoryAgent->fields['token'])) {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
    } else {
       addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);

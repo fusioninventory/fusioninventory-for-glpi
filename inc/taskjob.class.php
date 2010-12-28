@@ -521,6 +521,7 @@ $this->cronTaskscheduler();
    function getStateAgent($ip, $agentid, $type="") {
       global $LANG;
 
+      $this->disableDebug();
       //PluginFusioninventoryDisplay::disableDebug();
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
@@ -541,6 +542,7 @@ $this->cronTaskscheduler();
       $url = "http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status";
 
       $str = @file_get_contents($url, 0, $ctx);
+      $this->reenableusemode();
       if (strstr($str, "waiting")) {
          return true;
       }
@@ -550,6 +552,8 @@ $this->cronTaskscheduler();
 
 
    function RemoteStartAgent($ip, $token) {
+
+      $this->disableDebug();
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
@@ -566,12 +570,34 @@ $this->cronTaskscheduler();
          $handle = fopen("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, "r");
          $input = 'Agent run Now';
          fclose($handle);
+         $this->reenableusemode();
          return true;
       } else {
          $input = 'Agent don\'t respond';
+         $this->reenableusemode();
          return false;
       }
    }
+
+
+   function disableDebug() {
+      error_reporting(0);
+      set_error_handler(array(new PluginFusioninventoryTaskjob(),'errorempty'));
+   }
+
+   function reenableusemode() {
+      if ($_SESSION['glpi_use_mode']==DEBUG_MODE){
+         ini_set('display_errors','On');
+         error_reporting(E_ALL | E_STRICT);
+         set_error_handler("userErrorHandler");
+      }
+
+   }
+
+   function errorempty() {
+      
+   }
+
 
 
 
