@@ -298,6 +298,59 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->update($agent);
    }
 
+
+
+   function forceRemoteAgent() {
+      global $LANG;
+
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
+      echo "<form method='post' name='' id=''  action=\"".GLPI_ROOT . "/plugins/fusioninventory/front/agent.form.php\">";
+      echo "<table class='tab_cadre' width='500'>";
+      
+      echo "<tr>";
+      echo "<th colspan='2'>";
+      echo $LANG['plugin_fusioninventory']['agents'][15];
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo $LANG['state'][0]."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      $this->getFromDB($_POST['id']);
+      $a_ip = $this->getIPs($_POST['id']);
+      $waiting = 0;
+      foreach($a_ip as $ip) {
+         $agentStatus = $PluginFusioninventoryTaskjob->getStateAgent($ip,0);
+         if ($agentStatus) {
+            $waiting = 1;
+            echo $LANG['plugin_fusioninventory']['agents'][22];
+            echo "<input type='hidden' name='ip' value='".$ip."' />";
+            echo "<input type='hidden' name='token' value='".$this->fields['token']."' />";
+         }
+      }
+      if ($waiting == '0') {
+         echo $LANG['plugin_fusioninventory']['agents'][30];
+      }
+      echo "</td>";
+      echo "</tr>";
+
+      if ($waiting == '1') {
+         echo "<tr>";
+         echo "<th colspan='2'>";
+         echo "<input name='startagent' value='".$LANG['plugin_fusioninventory']['agents'][31]."' class='submit' type='submit'>";
+         echo "</th>";
+         echo "</tr>";
+      }
+
+      echo "</table>";
+      echo "</form>";
+      echo "<br/>";
+   }
+
+
 }
 
 ?>

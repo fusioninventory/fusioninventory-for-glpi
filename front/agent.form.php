@@ -44,7 +44,15 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-if (isset ($_POST["add"])) {
+if (isset($_POST['startagent'])) {
+   $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   if ($PluginFusioninventoryTaskjob->RemoteStartAgent($_POST['ip'], $_POST['token'])) {
+      addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][17]);
+   } else {
+      addMessageAfterRedirect($LANG['plugin_fusioninventory']['agents'][30]);
+   }
+   glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "agent","w");
    if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';

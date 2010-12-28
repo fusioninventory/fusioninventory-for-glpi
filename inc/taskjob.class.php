@@ -554,8 +554,14 @@ $this->cronTaskscheduler();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $input = '';
-      ini_set('default_socket_timeout', 2);
-      $data = file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status");
+//      ini_set('default_socket_timeout', 2);
+      $ctx = stream_context_create(array(
+          'http' => array(
+              'timeout' => 2
+              )
+          )
+      );
+      $data = @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status", 0, $ctx);
       if (isset($data) && !empty($data)) {
          $handle = fopen("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, "r");
          $input = 'Agent run Now';

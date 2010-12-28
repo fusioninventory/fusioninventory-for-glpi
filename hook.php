@@ -249,6 +249,11 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
       $itemtype = get_Class($item);
       $items_id = $item->getField('id');
    }
+   if ($itemtype == 'Computer') {
+      // Possibility to remote agent
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $PluginFusioninventoryAgent->forceRemoteAgent();
+   }
    $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
    $PluginFusioninventoryTaskjob->manageTasksByObject($itemtype, $items_id);
 
