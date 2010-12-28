@@ -37,12 +37,15 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    /*
     * Define different state
     *
+    * 
     * 1 : started
     * 2 : ok
     * 3 : error / replaned
     * 4 : error
     * 5 : Unknown
     * 6 : Running
+    * 7 : prepared
+    * 
     */
 
 
@@ -146,6 +149,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       echo "</td>";
 
       switch ($datas['state']) {
+
+         case 7 :
+            echo "<td align='center'>";
+            echo $LANG['plugin_fusioninventory']['taskjoblog'][7];
+            break;
 
          case 1 :
             echo "<td align='center'>";
