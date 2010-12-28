@@ -147,7 +147,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                      $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                         //Add log of taskjob
                         $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-                        $a_input['state'] = 1;
+                        $a_input['state'] = 7;
                         $a_input['date'] = date("Y-m-d H:i:s");
                         $PluginFusioninventoryTaskjoblog->add($a_input);
                         unset($a_input['state']);
@@ -165,7 +165,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                      $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                         //Add log of taskjob
                         $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-                        $a_input['state'] = 1;
+                        $a_input['state'] = 7;
                         $a_input['date'] = date("Y-m-d H:i:s");
                         $PluginFusioninventoryTaskjoblog->add($a_input);
                         unset($a_input['state']);
@@ -183,7 +183,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
                      $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
                         //Add log of taskjob
                         $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-                        $a_input['state'] = 1;
+                        $a_input['state'] = 7;
                         $a_input['date'] = date("Y-m-d H:i:s");
                         $PluginFusioninventoryTaskjoblog->add($a_input);
                         unset($a_input['state']);
@@ -225,6 +225,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusinvsnmpAgentconfig = new  PluginFusinvsnmpAgentconfig;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity;
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
@@ -265,6 +266,11 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
             if ($changestatus == '0') {
                $PluginFusioninventoryTaskjobstatus->changeStatus($PluginFusioninventoryTaskjobstatus->fields['id'], 1);
+               $PluginFusioninventoryTaskjoblog->addTaskjoblog($PluginFusioninventoryTaskjobstatus->fields['id'],
+                                       '0',
+                                       'PluginFusioninventoryAgent',
+                                       '1',
+                                       '');
                $changestatus = $PluginFusioninventoryTaskjobstatus->fields['id'];
             } else {
                $PluginFusioninventoryTaskjobstatus->changeStatusFinish($PluginFusioninventoryTaskjobstatus->fields['id'],
