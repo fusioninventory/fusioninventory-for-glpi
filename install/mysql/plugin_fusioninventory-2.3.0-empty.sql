@@ -151,7 +151,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
   `state` int(11) NOT NULL DEFAULT '0',
   `comment` text,
   PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`,`state`)
+  KEY `plugin_fusioninventory_taskjobstatus_id` (`plugin_fusioninventory_taskjobstatus_id`,`state`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
