@@ -485,7 +485,7 @@ $this->cronTaskscheduler();
       global $LANG;
 
       $array = array();
-      $array[".1"] = $LANG['plugin_fusinvsnmp']['agents'][28];
+      $array[".1"] = $LANG['plugin_fusioninventory']['agents'][32];
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper($module));
       foreach ($array1 as $id => $data) {
