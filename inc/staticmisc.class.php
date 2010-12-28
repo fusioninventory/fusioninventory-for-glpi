@@ -45,19 +45,8 @@ class PluginFusinvsnmpStaticmisc {
       $a_tasks[] = array('module'         => 'fusinvsnmp',
                          'method'         => 'netdiscovery');
 
-
-
-
       $a_tasks[] = array('module'         => 'fusinvsnmp',
-                         'method'         => 'snmpinventory',
-                         'selection_type' => 'devices');
-      $a_tasks[] = array('module'         => 'fusinvsnmp',
-                         'method'         => 'snmpinventory',
-                         'selection_type' => 'iprange',
-                         'selection_type_name' => $LANG['plugin_fusioninventory']["menu"][2]);
-      $a_tasks[] = array('module'         => 'fusinvsnmp',
-                         'method'         => 'snmpinventory',
-                         'selection_type' => 'ipranges associated');
+                         'method'         => 'snmpinventory');
 
       return $a_tasks;
    }
@@ -87,10 +76,55 @@ class PluginFusinvsnmpStaticmisc {
 
    
 
-
-
-
    // *** SNMPINVENTORY ***
+
+   static function task_definitiontype_snmpinventory($a_itemtype) {
+      global $LANG;
+
+      $a_itemtype['PluginFusinvsnmpIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
+      $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
+      $a_itemtype['Printer'] = printer::getTypeName();
+
+      return $a_itemtype;
+   }
+
+
+   static function task_definitionselection_PluginFusinvsnmpIPRange_snmpinventory($title) {
+
+      return $this->task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title);
+   }
+
+
+   static function task_definitionselection_NetworkEquipment_snmpinventory($title) {
+      global $LANG;
+
+      $options = array();
+      $options['entity'] = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name'] = 'definitionselectiontoadd';
+      $rand = Dropdown::show("NetworkEquipment", $options);
+      return $rand;
+   }
+
+
+   static function task_definitionselection_Printer_snmpinventory($title) {
+      global $LANG;
+
+      $options = array();
+      $options['entity'] = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name'] = 'definitionselectiontoadd';
+      $rand = Dropdown::show("Printer", $options);
+      return $rand;
+   }
+
+
+
+
+
+
+
+   // ===============
 
 
    static function task_netdiscovery_agents() {
