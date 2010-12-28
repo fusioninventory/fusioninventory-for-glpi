@@ -43,15 +43,11 @@ class PluginFusinvsnmpStaticmisc {
       $a_tasks = array();
 
       $a_tasks[] = array('module'         => 'fusinvsnmp',
-                         'method'         => 'netdiscovery',
-                         'selection_type' => 'agents',
-                         'selection_type_name' => $LANG['plugin_fusioninventory']['agents'][28]);
-//      $a_tasks[] = array('module'         => 'fusinvsnmp',
-//                         'method'         => 'netdiscovery',
-//                         'selection_type' => 'dynamicagent',
-//                         'selection_type_name' => $LANG['plugin_fusinvsnmp']['agents'][28]);
+                         'method'         => 'netdiscovery');
 
-      
+
+
+
       $a_tasks[] = array('module'         => 'fusinvsnmp',
                          'method'         => 'snmpinventory',
                          'selection_type' => 'devices');
@@ -65,6 +61,36 @@ class PluginFusinvsnmpStaticmisc {
 
       return $a_tasks;
    }
+
+
+   // *** NETDISCOVERY ***
+
+   static function task_definitiontype_netdiscovery($a_itemtype) {
+      global $LANG;
+
+      $a_itemtype['PluginFusinvsnmpIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
+
+      return $a_itemtype;
+   }
+
+
+   static function task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title) {
+      global $LANG;
+
+      $options = array();
+      $options['entity'] = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name'] = 'definitionselectiontoadd';
+      $rand = Dropdown::show("PluginFusinvsnmpIPRange", $options);
+      return $rand;
+   }
+
+   
+
+
+
+
+   // *** SNMPINVENTORY ***
 
 
    static function task_netdiscovery_agents() {
@@ -91,12 +117,7 @@ class PluginFusinvsnmpStaticmisc {
    }
 
 
-   static function task_action_netdiscovery() {
-      $a_itemtype = array();
-      $a_itemtype[] = 'PluginFusinvsnmpIPRange';
 
-      return $a_itemtype;
-   }
 
    # Selection type for actions
    static function task_selection_type_snmpinventory($itemtype) {
@@ -117,20 +138,6 @@ class PluginFusinvsnmpStaticmisc {
    }
 
 
-   # Select arguments if exist
-   static function task_argument_netdiscovery($title) {
-      global $LANG;
-      
-      if ($title == '1') {
-         echo $LANG['plugin_fusioninventory']['menu'][2]."&nbsp;:";
-      } else {
-         $options = array();
-         $options['entity'] = $_SESSION['glpiactive_entity'];
-         $options['entity_sons'] = 1;
-         $options['name'] = 'argument';
-         Dropdown::show("PluginFusinvsnmpIPRange", $options);
-      }
-   }
 
 
 

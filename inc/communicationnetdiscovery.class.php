@@ -44,90 +44,8 @@ if (!defined('GLPI_ROOT')) {
 
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 
-/**
- * Class to communicate with agents using XML
- **/
 class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunicationSNMP {
-//   private $sxml, $deviceId, $ptd, $type='', $logFile;
 
-   /**
-    * Add NETDISCOVERY string to XML code
-    *
-    *@return nothing
-    **/
-//   function addDiscovery($pxml, $task=0) {
-//      $ptsnmpa = new PluginFusinvsnmpConfigSecurity;
-//      $pta     = new PluginFusioninventoryAgent;
-//      $ptap    = new PluginFusioninventoryAgentProcess;
-//      $ptrip   = new PluginFusioninventoryIPRange;
-//      $ptt     = new PluginFusioninventoryTask;
-//
-//      $agent = $pta->InfosByKey($pxml->DEVICEID);
-//      $count_range = $ptrip->Counter($agent["id"], "discover");
-//      $count_range += $ptt->Counter($agent["id"], "NETDISCOVERY");
-//      if ($task == "1") {
-//         $tasks = $ptt->ListTask($agent["id"], "NETDISCOVERY");
-//         foreach ($tasks as $task_id=>$taskInfos) {
-//            if ($tasks[$task_id]["param"] == 'PluginFusioninventoryAgent') {
-//               $task = "0";
-//            }
-//         }
-//         if ($task == "1") {
-//            $agent["core_discovery"] = 1;
-//            $agent["threads_discovery"] = 1;
-//         }
-//      }
-//
-//      if ((($count_range > 0) && ($agent["lock"] == 0)) OR ($task == "1") ) {
-//         $a_input = array();
-//         if ($_SESSION['glpi_plugin_fusioninventory_addagentprocess'] == '0') {
-//            $this->addProcessNumber($ptap->addProcess($pxml));
-//            $_SESSION['glpi_plugin_fusioninventory_addagentprocess'] = '1';
-//         }
-//         $a_input['discovery_core'] = $agent["core_discovery"];
-//         $a_input['discovery_threads'] = $agent["threads_discovery"];
-//         $ptap->updateProcess($this->sxml->PROCESSNUMBER, $a_input);
-//
-//         $sxml_option = $this->sxml->addChild('OPTION');
-//            $sxml_option->addChild('NAME', 'NETDISCOVERY');
-//            $sxml_param = $sxml_option->addChild('PARAM');
-//               $sxml_param->addAttribute('CORE_DISCOVERY', $agent["core_discovery"]);
-//               $sxml_param->addAttribute('THREADS_DISCOVERY', $agent["threads_discovery"]);
-//               $sxml_param->addAttribute('PID', $this->sxml->PROCESSNUMBER);
-//
-//            if ($task == "1") {
-//               foreach ($tasks as $task_id=>$taskInfos) {
-//                  $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-//                     $sxml_rangeip->addAttribute('ID', $task_id);
-//                     $sxml_rangeip->addAttribute('IPSTART', $tasks[$task_id]["ip"]);
-//                     $sxml_rangeip->addAttribute('IPEND', $tasks[$task_id]["ip"]);
-//                     $sxml_rangeip->addAttribute('ENTITY', "");
-//                     $sxml_rangeip->addAttribute('DEVICEID', $tasks[$task_id]["items_id"]);
-//                     $sxml_rangeip->addAttribute('TYPE', $tasks[$task_id]["itemtype"]);
-//
-//                     $ptt->deleteFromDB($task_id);
-//               }
-//
-//            } else {
-//               $ranges = $ptrip->ListRange($agent["id"], "discover");
-//               foreach ($ranges as $range_id=>$rangeInfos) {
-//                  $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-//                     $sxml_rangeip->addAttribute('ID', $range_id);
-//                     $sxml_rangeip->addAttribute('IPSTART', $ranges[$range_id]["ifaddr_start"]);
-//                     $sxml_rangeip->addAttribute('IPEND', $ranges[$range_id]["ifaddr_end"]);
-//                     $sxml_rangeip->addAttribute('ENTITY', $ranges[$range_id]["entities_id"]);
-//               }
-//            }
-//
-//            $snmpauthlist=$ptsnmpa->find();
-//            if (count($snmpauthlist)){
-//               foreach ($snmpauthlist as $snmpauth){
-//                  $this->addAuth($sxml_option, $snmpauth['id']);
-//               }
-//            }
-//         //$this->sxml->addChild('RESPONSE', 'SEND');
-//      }
-//   }
 
    /**
     * Import data
@@ -148,23 +66,18 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       //$this->setXML($p_CONTENT);
       $errors = '';
 
+      $a_agent = $pta->InfosByKey($p_DEVICEID);
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-         $a_agent = $pta->InfosByKey($p_DEVICEID);
-         $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$p_CONTENT->PROCESSNUMBER."'
-            AND `plugin_fusioninventory_agents_id`='".$a_agent['id']."' ");
-         foreach($a_jobstatus as $jobstatus_id=>$data) {
-            
-         }
-         $PluginFusioninventoryTaskjobstatus->getFromDB($jobstatus_id);
-         $PluginFusioninventoryTaskjobstatus->changeStatus($jobstatus_id, 2);
+         $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
+         $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
          if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
             $nb_devices = 0;
             foreach($p_CONTENT->DEVICE as $child) {
                $nb_devices++;
             }
             $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
-                                                   $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
+                                                   $a_agent['id'],
                                                    'PluginFusioninventoryAgent',
                                                    '6',
                                                    $nb_devices.' devices found');
@@ -179,7 +92,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID, $moduleversion);
       if (isset($p_CONTENT->AGENT->END)) {
          $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                   $PluginFusioninventoryTaskjobstatus->fields['plugin_fusioninventory_agents_id'],
+                                                   $a_agent['id'],
                                                    'PluginFusioninventoryAgent');
       }
       return $errors;

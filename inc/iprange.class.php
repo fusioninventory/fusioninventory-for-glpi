@@ -47,15 +47,19 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
    static function getTypeName() {
       global $LANG;
+      if (strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
 
-      if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
-         // Permanent task discovery
-         return $LANG['plugin_fusinvsnmp']["task"][15];
-      } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
-         // Permanent task inventory
-         return $LANG['plugin_fusinvsnmp']["task"][16];
+         if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
+            // Permanent task discovery
+            return $LANG['plugin_fusinvsnmp']["task"][15];
+         } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
+            // Permanent task inventory
+            return $LANG['plugin_fusinvsnmp']["task"][16];
+         } else {
+            return $LANG['plugin_fusinvsnmp']['iprange'][2];
+         }
       } else {
-         return $LANG['plugin_fusinvsnmp']["iprange"][5];
+         return $LANG['plugin_fusinvsnmp']['iprange'][2];
       }
    }
 
@@ -299,14 +303,19 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+
+
       $permanent = exportArrayToDB(array($this->type=>$items_id, 'module'=>$module_name));
-      
+
+      $task_id = 0;
+      $taskjob_id= 0;
       // Get on task & taskjob (and create this task if not exist)
       if ($a_task = $PluginFusioninventoryTask->find("`permanent` LIKE '".$permanent."'", "`id` DESC", "1")) {
          $data = current($a_task);
          $task_id = $data['id'];
 
-         $a_taskjob = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'");
+         $a_taskjob = $PluginFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$task_id."'", "id DESC");
          $data = current($a_taskjob);
          $taskjob_id = $data['id'];
       } else {
@@ -400,8 +409,9 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $PluginFusioninventoryTaskjob->showFormButtons($options);
 
-      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $PluginFusioninventoryTaskjoblog->showHistory($taskjob_id);
+      foreach ($a_taskjob as $data) {
+         $PluginFusioninventoryTaskjoblog->showHistory($data['id']);
+      }
    }
 
 }
