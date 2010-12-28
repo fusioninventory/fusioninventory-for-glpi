@@ -134,8 +134,8 @@ $this->cronTaskscheduler();
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
-      echo "<td rowspan='4'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='4'>";
+      echo "<td rowspan='5'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='5'>";
       echo "<textarea cols='40' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
       $a_methods = array();
@@ -172,69 +172,110 @@ $this->cronTaskscheduler();
       echo "</tr>";
       echo "</tr>";
 
-      // Actions
-      echo "<tr>";
-      echo "<th colspan='4'>".$LANG['rulesengine'][7]."&nbsp;:</th>";
-      echo "</tr>";
-
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['rulesengine'][30]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
-      $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['selection_type']);
-      echo "</td>";
-      echo "<td>";
-      echo "<span id='show_arguments_title_id'>";
-      echo "</span>";
-      echo "</td>";
-      echo "<td>";
-      echo "<span id='show_arguments_id'>";
-      echo "</span>";
+      $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['method']);
       echo "</td>";
       echo "</tr>";
 
-      // Run on
+
+      // Definition   *   Action
       echo "<tr>";
-      echo "<th colspan='4'>".$LANG['plugin_fusioninventory']['task'][23]."</th>";
+      echo "<th colspan='2'>".$LANG['plugin_fusioninventory']['task'][27]."&nbsp;:</th>";
+      echo "<th colspan='2'>".$LANG['plugin_fusioninventory']['task'][28]."&nbsp;:</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>selection_type&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][29]."&nbsp;:</td>";
+      echo "<td align='center' height='20'>";
+      echo "<span id='show_DefinitionType_id'>";
+      echo "</span>";
+      echo "</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][29]."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<span id='show_SelectionType_id'>";
-      //$this->dropdownSelectionType("selection_type");
-      echo "</span>";
-      echo "</td>";
-      echo "<td colspan='2'>";
-      echo "<span id='show_Selection_id'>";
+      echo "<span id='show_ActionType_id'>";
       echo "</span>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>Selection&nbsp;:</td>";
-      echo "<td align='center' colspan='3'>";
-      echo "<span id='show_selectionList'>";
+      echo "<td rowspan='2'>".$LANG['plugin_fusioninventory']['task'][30]."&nbsp;:</td>";
+      echo "<td align='center' height='20'>";
+      echo "<span id='show_DefinitionList'>";
       echo "</span>";
-      $a_deviceList = importArrayFromDB($this->fields['selection']);
-      $selection = '';
-      $selectionDisplayOptions = '';
-      for ($i=0; $i < count($a_deviceList) ; $i++) {
-         foreach ($a_deviceList[$i] as $itemtype=>$items_id) {
-            $selection .= ','.$itemtype.'-'.$items_id;
-            if (!empty($itemtype)) {
-               $class = new $itemtype();
-               $class->getFromDB($items_id);
-               $selectionDisplayOptions .= "<option value='".$itemtype.'-'.$items_id."'>".$class->fields['name']."</option>";
-            }
-         }
+      echo "</td>";
+      echo "<td rowspan='2'>".$LANG['plugin_fusioninventory']['task'][30]."&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<span id='show_ActionList'>";
+      echo "</span>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      $a_list = importArrayFromDB($this->fields['definition']);
+      $deflist = "";
+      $deflisthidden = "";
+      foreach ($a_list as $data) {
+         $item_type = key($data);
+         $class = new $item_type();
+         $itemname = $class->getTypeName();
+         $class->getFromDB(current($data));
+         $name = $class->fields['name'];
+         $deflist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'deldef("'.$itemname.'->'.$name.'->'.$itemname.'->'.$name.'")\'>';
+         $deflisthidden .= ','.key($data).'->'.current($data);
       }
-      echo "<br/><select name='selectionDisplay' id='selectionDisplay' size='10' multiple='multiple'>".$selectionDisplayOptions."</select>";
+      echo "<span id='definitionselection'>";
+      echo $deflist;
+      echo "</span>";
       echo "<div style='visibility:hidden'>";
-      echo "<textarea name='selection' id='selection'>".$selection."</textarea>";
+      echo "<textarea name='definitionlist' id='definitionlist'>".$deflisthidden."</textarea>";
+      echo "<span id='show_DefinitionListEmpty'>";
+      echo "</span>";
+      echo "</div>";
+      echo "</td>";
+      echo "<td align='center'>";
+      $a_list = importArrayFromDB($this->fields['action']);
+      $actionlist = "";
+      $actionlisthidden = "";
+      foreach ($a_list as $data) {
+         $item_type = key($data);
+         $class = new $item_type();
+         $itemname = $class->getTypeName();
+         $class->getFromDB(current($data));
+         $name = $class->fields['name'];
+         $actionlist .= '<br>'.$itemname.' -> '.$name.' <img src="'.GLPI_ROOT.'/pics/delete2.png" onclick=\'delaction("'.$itemname.'->'.$name.'->'.$itemname.'->'.$name.'")\'>';
+         $actionlisthidden .= ','.key($data).'->'.current($data);
+      }
+      echo "<span id='actionselection'>";
+      echo $actionlist;
+      echo "</span>";
+      echo "<div style='visibility:hidden'>";
+      echo "<textarea name='actionlist' id='actionlist'>".$actionlisthidden."</textarea>";
+      echo "<span id='show_ActionListEmpty'>";
+      echo "</span>";
       echo "</div>";
       echo "</td>";
       echo "</tr>";
       
+      
+      echo "<script type='text/javascript'>
+         function deldef(data) {
+            var elem = data.split('->');
+            document.getElementById('definitionlist').value = document.getElementById('definitionlist').value.replace(',' + elem[2] + '-' + elem[3], '');
+            document.getElementById('definitionselection').innerHTML = document.getElementById('definitionselection').innerHTML.replace('<br>' + elem[0] + ' -&gt; ' + elem[1] +
+            ' <img src=\"".GLPI_ROOT."/pics/delete2.png\" onclick=\'deldef(\"' + elem[0] + '->' + elem[1] + '->' + elem[2] + '->' + elem[3] + '\")\'>', '');
+         }
+
+         function delaction(data) {
+            var elem = data.split('->');
+            document.getElementById('actionlist').value = document.getElementById('actionlist').value.replace(',' + elem[2] + '->' + elem[3], '');
+            document.getElementById('actionselection').innerHTML = document.getElementById('actionselection').innerHTML.replace('<br>' + elem[0] + ' -&gt; ' + elem[1] +
+            ' <img src=\"".GLPI_ROOT."/pics/delete2.png\" onclick=\'delaction(\"' + elem[0] + '->' + elem[1] + '->' + elem[2] + '->' + elem[3] + '\")\'>', '');
+         }
+      </script>";
+
 
 
 
@@ -270,50 +311,33 @@ $this->cronTaskscheduler();
       foreach ($a_methods as $datas) {
          $a_methods2[$datas['method']] = $datas['method'];
       }
-      $rand = Dropdown::showFromArray($myname, $a_methods2);
+      $rand = Dropdown::showFromArray($myname, $a_methods2, array('value'=>$value));
+
+      // ** List methods available
+      $params=array('method_id'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'rand'=>$rand,
+                     'myname'=>$myname
+                     );
+      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params);
+
+      if ($value != "0") {
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method_id".$rand);
+         echo "</script>";
+      }
 
       $params=array('method_id'=>'__VALUE__',
                      'entity_restrict'=>$entity_restrict,
                      'rand'=>$rand,
                      'myname'=>$myname
                      );
-      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params);
-
-      $params=array('method_id'=>'__VALUE__',
-                     'entity_restrict'=>$entity_restrict,
-                     'rand'=>$rand,
-                     'myname'=>$myname,
-                     'title'=>'1'
-                     );
-      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_arguments_title_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownArgument.php",$params);
-
-      $params=array('method_id'=>'__VALUE__',
-                     'entity_restrict'=>$entity_restrict,
-                     'rand'=>$rand,
-                     'myname'=>$myname,
-                     );
-      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_arguments_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownArgument.php",$params);
-
-
+      ajaxUpdateItemOnSelectEvent("dropdown_method_id".$rand,"show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params);
 
       if ($value != "0") {
-         $i = -1;
-         $numSelected = 0;
-         foreach ($a_methods2 as $method) {
-            $i++;
-            if ($method == $value) {
-               $numSelected = $i;
-            } 
-         }
-         $params['value'] = $valueType;
-         if (isset($numSelected)) {
-            echo "<script type='text/javascript'>
-            document.getElementById('dropdown_".$myname.$rand."').selectedIndex = ".$numSelected.";
-";
-            ajaxUpdateItemJsCode("show_SelectionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownMethod.php",$params,true,"dropdown_method_id".$rand);
-
-            echo "</script>";
-         }
+         echo "<script type='text/javascript'>";
+         ajaxUpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method_id".$rand);
+         echo "</script>";
       }
 
       return $rand;
@@ -321,109 +345,38 @@ $this->cronTaskscheduler();
 
 
 
-   function dropdownSelectionType($myname,$method,$value=0,$entity_restrict='') {
+   function dropdownDefinitionType($myname,$method,$value=0,$entity_restrict='', $title = 0) {
       global $DB,$CFG_GLPI;
 
-      $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      $a_selectiontype = array();
-      $a_selectiontype[''] = "------";
+      $a_definitiontype = array();
+      $a_definitiontype[''] = '------';
       foreach ($a_methods as $datas) {
-         if ($datas['method'] == $method) {
-            if (isset($datas['selection_type_name'])) {
-               $a_selectiontype[$datas['selection_type']] = $datas['selection_type_name'];
-            } else {
-               $a_selectiontype[$datas['selection_type']] = $datas['selection_type'];
+         if ($method == $datas['method']) {
+            $module = $datas['module'];
+            if (is_callable(array("Plugin".$module."Staticmisc", "task_definitiontype_".$method))) {
+               $a_definitiontype = call_user_func(array("Plugin".$module."Staticmisc", "task_definitiontype_".$method), $a_definitiontype);
             }
+
          }
       }
 
-      $rand = Dropdown::showFromArray($myname, $a_selectiontype);
+      $rand = Dropdown::showFromArray($myname, $a_definitiontype);
 
-      $params=array('selection_type'=>'__VALUE__',
-                     'entity_restrict'=>$entity_restrict,
-                     'rand'=>$rand,
-                     'myname'=>$myname,
-                     'method'=>$method
-                     );
+      $params=array('DefinitionType'=>'__VALUE__',
+            'entity_restrict'=>$entity_restrict,
+            'rand'=>$rand,
+            'myname'=>$myname,
+            'method'=>$method,
+            'deftypeid'=>'dropdown_'.$myname.$rand
+            );
+      ajaxUpdateItemOnSelectEvent('dropdown_DefinitionType'.$rand,"show_DefinitionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionlist.php",$params);
 
-      ajaxUpdateItemOnSelectEvent("dropdown_selection_type".$rand,"show_Selection_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelectionType.php",$params);
-
-      if ($value != "0") {
-         $i = -1;
-         $numSelected = 0;
-         foreach ($a_selectiontype as $type) {
-            $i++;
-            if ($type == $value) {
-               $numSelected = $i;
-            } 
-         }
-         if (isset($numSelected)) {
-            echo "<script type='text/javascript'>
-            document.getElementById('dropdown_".$myname.$rand."').selectedIndex = ".$numSelected.";
-               ";
-            ajaxUpdateItemJsCode("show_Selection_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelectionType.php",$params,true,"dropdown_selection_type".$rand);
-
-            echo "</script>";
-         }
-      }
-
+      return $rand;
    }
 
 
-
-   function dropdownSelection($myname,$selectiontype,$method,$value=0,$entity_restrict='') {
-      global $DB,$CFG_GLPI;
-      
-      $types = '';
-      $internal = 1;
-      if ($selectiontype == "devices") {
-
-      } else if ($selectiontype == "rules") {
-
-      } else if ($selectiontype == "devicegroups") {
-         $types = array();
-         $types[] = 'Group';
-      } else {
-         $internal = 0;
-      }
-      if ($internal == "1") {
-         Dropdown::showAllItems($myname, 0, 0, -1, $types);
-      } else {
-         // <select> personalisé :
-         $a_methods = array();
-         $a_list = array();
-         $module = '';
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-         foreach ($a_methods as $datas) {
-            if ($datas['method'] == $method) {
-               $module = $datas['module'];
-            }
-         }
-         if (!empty($module)) {
-            if (is_callable(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype))) {
-               $a_list = call_user_func(array("Plugin".$module."Staticmisc", 'task_'.$method.'_'.$selectiontype));
-            }
-         }
-         echo "<div style='visibility:hidden'>";
-         echo "<select name='itemtype'><option value='0' selected>0</option></select>";
-         echo "</div>";
-         Dropdown::showFromArray($myname, $a_list);
-      }
-      echo "<input type='button' name='addObject' id='addObject' value='Ajouter' class='submit'/>";
-
-      $params=array('selection'=>'__VALUE__',
-                     'entity_restrict'=>$entity_restrict,
-                     'myname'=>$myname
-                     );
-
-
-      ajaxUpdateItemOnEvent('addObject','show_selectionList',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownSelection.php",$params,array("click"));
-   }
-
-
-
-   function dropdownArgument($myname,$method,$value=0,$entity_restrict='', $title = 0) {
+   function dropdownDefinition($myname,$definitiontype,$method,$deftypeid,$value=0,$entity_restrict='', $title = 0) {
       global $DB,$CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -434,12 +387,108 @@ $this->cronTaskscheduler();
          }
       }
 
-      if (is_callable(array("Plugin".$module."Staticmisc", "task_argument_".$method))) {
-         call_user_func(array("Plugin".$module."Staticmisc", "task_argument_".$method), $title);
+
+      if (is_callable(array("Plugin".$module."Staticmisc", "task_definitionselection_".$definitiontype."_".$method))) {
+         $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_definitionselection_".$definitiontype."_".$method), $title);
       }
+
+      echo "&nbsp;<input type='button' name='addObject' id='addObject' value='Ajouter' class='submit'/>";
+
+            $params=array('selection'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'myname'=>$myname,
+                     'defselectadd' => 'dropdown_definitionselectiontoadd'.$rand,
+                     'deftypeid'=>$deftypeid
+                     );
+
+
+      ajaxUpdateItemOnEvent('addObject','show_DefinitionListEmpty',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitionselection.php",$params,array("click"));
+
+   }
+
+
+
+   function dropdownActionType($myname,$method,$value=0,$entity_restrict='', $title = 0) {
+      global $DB,$CFG_GLPI,$LANG;
+
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      $a_actioninitiontype = array();
+      $a_actioninitiontype[''] = '------';
+      $a_actioninitiontype['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
+      foreach ($a_methods as $datas) {
+         if ($method == $datas['method']) {
+            $module = $datas['module'];
+            if (is_callable(array("Plugin".$module."Staticmisc", "task_actiontype_".$method))) {
+               $a_actioninitiontype = call_user_func(array("Plugin".$module."Staticmisc", "task_actiontype_".$method), $a_actioninitiontype);
+            }
+
+         }
+      }
+
+      $rand = Dropdown::showFromArray($myname, $a_actioninitiontype);
+
+      $params=array('ActionType'=>'__VALUE__',
+            'entity_restrict'=>$entity_restrict,
+            'rand'=>$rand,
+            'myname'=>$myname,
+            'method'=>$method,
+            'actiontypeid'=>'dropdown_'.$myname.$rand
+            );
+      ajaxUpdateItemOnSelectEvent('dropdown_ActionType'.$rand,"show_ActionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionlist.php",$params);
+
+      return $rand;
+   }
+
+
+   function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='', $title = 0) {
+      global $DB,$CFG_GLPI;
+
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      $module = '';
+      foreach ($a_methods as $datas) {
+         if ($method == $datas['method']) {
+            $module = $datas['module'];
+         }
+      }
+
+//
+//      if (is_callable(array("Plugin".$module."Staticmisc", "task_actionselection_".$actiontype."_".$method))) {
+//         $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_actionselection_".$actiontype."_".$method), $title);
+//      }
+
+      $a_data = $this->get_agents($method);
+
+      $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
+
+      echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='Ajouter' class='submit'/>";
+
+            $params=array('selection'=>'__VALUE__',
+                     'entity_restrict'=>$entity_restrict,
+                     'myname'=>$myname,
+                     'actionselectadd' => 'dropdown_actionselectiontoadd'.$rand,
+                     'actiontypeid'=>$actiontypeid
+                     );
+
+
+      ajaxUpdateItemOnEvent('addAObject','show_ActionListEmpty',$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionselection.php",$params,array("click"));
 
    }
    
+
+
+   function get_agents($module) {
+      global $LANG;
+
+      $array = array();
+      $array[".1"] = $LANG['plugin_fusinvsnmp']['agents'][28];
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper($module));
+      foreach ($array1 as $id => $data) {
+         $array[$id] = $data['name'];
+      }
+      return $array;
+   }
+
    
 
    function cronTaskscheduler() {
@@ -457,93 +506,14 @@ $this->cronTaskscheduler();
          WHERE `is_active`='1'
             AND `status` = '0'
             AND date_scheduled < '".$dateNow."' ";
-      if ($result = $DB->query($query)) {
-         while ($data=$DB->fetch_array($result)) {
-
-            // Get list of devices listed in this job
-            unset($a_deviceList);
-            switch ($data['selection_type']) {
-
-               case 'devices':
-                  $a_deviceList = importArrayFromDB($data['selection']);
-                  break;
-
-               case 'rules':
-
-                  break;
-
-               case 'devicegroups':
-
-                  break;
-
-               case 'fromothertasks':
-
-                  break;
-
-               default:
-                  $a_deviceList = importArrayFromDB($data['selection']);
-                  break;
-            }
-
-            if (isset($a_deviceList)) {
-
-               // Run function of this method for each device
-               foreach ($a_deviceList as $devicecomposed_id) {
-                  foreach ($devicecomposed_id as $itemtype=>$items_id) {
-                     
-                  }
-                  // Get module name
-                  $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-                  $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-                  $class = new $className;
-                  $a_agents = $class->prepareRun($itemtype, $items_id, $data['communication'], $data['id']);
-                  if (!$a_agents) {
-                     $PluginFusioninventoryTaskjobstatus->changeStatusFinish($data['id'], 
-                                                                             $items_id, 
-                                                                             $itemtype,
-                                                                             1,
-                                                                             "Unable to find agent to run this job");
-                     $this->getFromDB($data['id']);
-                     $this->fields['status'] = 1;
-                     $this->update($this->fields);
-
-                  } else {
-                     foreach ($a_agents as $agentsdatas) {
-                        // Add jobstatus and put status (waiting on server = 0)
-                        $a_input = array();
-                        $a_input['plugin_fusioninventory_taskjobs_id'] = $data['id'];
-                        $a_input['items_id'] = $items_id;
-                        $a_input['itemtype'] = $itemtype;
-                        $a_input['state'] = 0;
-                        $a_input['plugin_fusioninventory_agents_id'] = $agentsdatas['agents_id'];
-                        if (isset($agentsdatas['specificity'])) {
-                           $a_input['specificity'] = $agentsdatas['specificity'];
-                        }
-                        $PluginFusioninventoryTaskjobstatus->add($a_input);
-
-                        //Add log of taskjob
-                        unset($a_input['plugin_fusioninventory_agents_id']);
-                        $a_input['state'] = 1;
-                        $a_input['date'] = date("Y-m-d H:i:s");
-                        $PluginFusioninventoryTaskjoblog->add($a_input);
-
-                        if ($data['communication'] == 'push') {
-                           $this->remoteStartAgent($agentsdatas['ip'], $agentsdatas['token']);
-                        }
-                        $this->getFromDB($data['id']);
-                        $this->fields['status'] = 1;
-                        $this->update($this->fields);
-                     }
-                  }
-               }
-            }
-         }
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         // Get module name
+         $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+         $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+         $class = new $className;
+         $class->prepareRun($data['id']);
       }
-      // remote start agents
-      foreach ($remoteStartAgents as $ip=>$token) {
-         $this->RemoteStartAgent($ip, $token);
-      }     
-
    }
 
 

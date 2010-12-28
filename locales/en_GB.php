@@ -527,6 +527,11 @@ $LANG['plugin_fusioninventory']['task'][22]="Only planified tasks";
 $LANG['plugin_fusioninventory']['task'][23]="Run on";
 $LANG['plugin_fusioninventory']['task'][24]="Number of trials";
 $LANG['plugin_fusioninventory']['task'][25]="Time between 2 trials (in minutes)";
+$LANG['plugin_fusioninventory']['task'][26]="Module";
+$LANG['plugin_fusioninventory']['task'][27]="Definition";
+$LANG['plugin_fusioninventory']['task'][28]="Action";
+$LANG['plugin_fusioninventory']['task'][29]="Type";
+$LANG['plugin_fusioninventory']['task'][30]="Selection";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

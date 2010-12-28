@@ -527,6 +527,11 @@ $LANG['plugin_fusioninventory']['task'][22]="Tâches planifiées uniquement";
 $LANG['plugin_fusioninventory']['task'][23]="Exécuter sur";
 $LANG['plugin_fusioninventory']['task'][24]="Nombre d'essais";
 $LANG['plugin_fusioninventory']['task'][25]="Temps entre 2 essais (en minutes)";
+$LANG['plugin_fusioninventory']['task'][26]="Module";
+$LANG['plugin_fusioninventory']['task'][27]="Définition";
+$LANG['plugin_fusioninventory']['task'][28]="Action";
+$LANG['plugin_fusioninventory']['task'][29]="Type";
+$LANG['plugin_fusioninventory']['task'][30]="Selection";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

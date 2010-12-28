@@ -225,41 +225,28 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
          $pluginName = PluginFusioninventoryModule::getModuleName($PluginFusioninventoryTaskjob->fields['plugins_id']);
          $className = "Plugin".ucfirst($pluginName).ucfirst($PluginFusioninventoryTaskjob->fields['method']);
-         $moduleRun[$className] = $data;
+         $data['className'] = $className;
+         $moduleRun[$data['itemtype']][] = $data;
       }
       return $moduleRun;
    }
 
 
-   function changeStatusFinish($taskjobs_id, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
+   function changeStatusFinish($taskjobstatus, $items_id, $itemtype, $error=0, $message='', $unknown=0) {
 
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
 
-      // Add status if not exist
-      $a_taskjobstatus = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
-                     AND `items_id`='".$items_id."'
-                     AND`itemtype`='".$itemtype."'");
-      if (count($a_taskjobstatus) == "0") {
-         $input = array();
-         $input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-         $input['items_id'] = $items_id;
-         $input['itemtype'] = $itemtype;
-         $input['state'] = 3;
-         $this->add($input);
-      } else {
-         foreach($a_taskjobstatus as $data) {
-            $this->getFromDB($data['id']);
-            $this->fields['state'] = 3;
-            $this->update($this->fields);
-         }
-      }
+      $this->getFromDB($taskjobstatus);
+      $this->fields['state'] = 3;
+      $this->update($this->fields);
+            
       $a_input = array();
       if ($unknown ==  "1") {
          $a_input['state'] = 5;
       } else if ($error == "1") {
          $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
          // Check if we have retry
-         $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+         $PluginFusioninventoryTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
          if($PluginFusioninventoryTaskjob->fields['retry_nb'] > 0) {
             // Replanification
             $a_input['state'] = 3;
@@ -278,7 +265,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       } else {
          $a_input['state'] = 2;
       }
-      $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+      $a_input['plugin_fusioninventory_taskjobstatus_id'] = $taskjobstatus;
       $a_input['items_id'] = $items_id;
       $a_input['itemtype'] = $itemtype;
       $a_input['date'] = date("Y-m-d H:i:s");

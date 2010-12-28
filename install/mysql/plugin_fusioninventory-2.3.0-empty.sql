@@ -122,10 +122,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `retry_time` int(11) NOT NULL DEFAULT '0',
   `plugins_id` int(11) NOT NULL DEFAULT '0',
   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `argument` text COLLATE utf8_unicode_ci,
-  `selection_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `selection` text COLLATE utf8_unicode_ci,
-  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `definition` text COLLATE utf8_unicode_ci,
+  `action` text COLLATE utf8_unicode_ci,
   `comment` text COLLATE utf8_unicode_ci,
   `users_id` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
@@ -136,7 +134,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   KEY `entities_id` (`entities_id`),
   KEY `date_scheduled` (`date_scheduled`),
   KEY `plugins_id` (`plugins_id`),
-  KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
   KEY `users_id` (`users_id`),
   KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -147,7 +144,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_taskjoblogs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_taskjoblogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_taskjobs_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_taskjobstatus_id` int(11) NOT NULL DEFAULT '0',
   `date` datetime DEFAULT NULL,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,

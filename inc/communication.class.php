@@ -271,10 +271,11 @@ class PluginFusioninventoryCommunication {
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
-      foreach ($moduleRun as $className=>$data) {
-         $class = new $className;
-         $this->sxml = $class->Run($data['items_id'], $data['itemtype'], $data['plugin_fusioninventory_taskjobs_id'], $data['id']);
-         $PluginFusioninventoryTaskjobstatus->changeStatus($data['id'], 1);
+      foreach ($moduleRun as $itemtype => $array) {
+         $array_tmp = current($array);
+         $className = $array_tmp['className'];
+         $class = new $className();
+         $this->sxml = $class->Run($array_tmp['itemtype'], $array);
       }
    }
 

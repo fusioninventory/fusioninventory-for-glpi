@@ -51,16 +51,28 @@ if (isset ($_POST["add"])) {
    }
    $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
 
-   if (!empty($_POST['selection'])) {
-      $a_selection = explode(',', $_POST['selection']);
-      foreach ($a_selection as $num=>$data) {
-         $dataDB = explode('-', $data);
+   if (!empty($_POST['definitionlist'])) {
+      $a_definitionlist = explode(',', $_POST['definitionlist']);
+      foreach ($a_definitionlist as $num=>$data) {
+         $dataDB = explode('-&gt;', $data);
          if (isset($dataDB[1]) AND $dataDB > 0) {
-            $a_selectionDB[][$dataDB[0]] = $dataDB[1];
+            $a_definitionlistDB[][$dataDB[0]] = $dataDB[1];
          }
       }
-      $_POST['selection'] = exportArrayToDB($a_selectionDB);
+      $_POST['definition'] = exportArrayToDB($a_definitionlistDB);
    }
+   if (!empty($_POST['actionlist'])) {
+      $a_actionlist = explode(',', $_POST['actionlist']);
+      foreach ($a_actionlist as $num=>$data) {
+         $dataDB = explode('-&gt;', $data);
+         if (isset($dataDB[1]) AND $dataDB > 0) {
+            $a_actionlistDB[][$dataDB[0]] = $dataDB[1];
+         }
+      }
+      $_POST['action'] = exportArrayToDB($a_actionlistDB);
+   }
+
+
    $PluginFusioninventoryTaskjob->add($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 } else if (isset($_POST["delete"])) {
@@ -71,15 +83,26 @@ if (isset ($_POST["add"])) {
 } else if (isset($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "task","w");
 
-   if (!empty($_POST['selection'])) {
-      $a_selection = explode(',', $_POST['selection']);
-      foreach ($a_selection as $num=>$data) {
-         $dataDB = explode('-', $data);
+
+   if (!empty($_POST['definitionlist'])) {
+      $a_definitionlist = explode(',', $_POST['definitionlist']);
+      foreach ($a_definitionlist as $num=>$data) {
+         $dataDB = explode('-&gt;', $data);
          if (isset($dataDB[1]) AND $dataDB > 0) {
-            $a_selectionDB[][$dataDB[0]] = $dataDB[1];
+            $a_definitionlistDB[][$dataDB[0]] = $dataDB[1];
          }
       }
-      $_POST['selection'] = exportArrayToDB($a_selectionDB);
+      $_POST['definition'] = exportArrayToDB($a_definitionlistDB);
+   }
+   if (!empty($_POST['actionlist'])) {
+      $a_actionlist = explode(',', $_POST['actionlist']);
+      foreach ($a_actionlist as $num=>$data) {
+         $dataDB = explode('-&gt;', $data);
+         if (isset($dataDB[1]) AND $dataDB > 0) {
+            $a_actionlistDB[][$dataDB[0]] = $dataDB[1];
+         }
+      }
+      $_POST['action'] = exportArrayToDB($a_actionlistDB);
    }
    $PluginFusioninventoryTaskjob->update($_POST);
 

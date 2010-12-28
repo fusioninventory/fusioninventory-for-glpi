@@ -40,17 +40,11 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryAgent extends CommonDBTM {
    
-   function __construct() {
-      $this->table = "glpi_plugin_fusioninventory_agents";
-      $this->type = 'PluginFusioninventoryAgent';
-   }
-
-
    
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusioninventory']["agents"][26];
+      return $LANG['plugin_fusioninventory']['agents'][28];
    }
 
    function canCreate() {
@@ -214,7 +208,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function InfosByKey($device_id) {
       global $DB;
 
-      $query = "SELECT * FROM `".$this->table."`
+      $query = "SELECT * FROM `".$this->getTable()."`
       WHERE `device_id`='".$device_id."' LIMIT 1";
 
       $agent = array();
@@ -293,7 +287,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       global $DB;
 
       // Reset if computer connected with an other agent
-      $query = "UPDATE `".$this->table."`
+      $query = "UPDATE `".$this->getTable()."`
          SET `items_id`='0'
          WHERE `items_id`='".$items_id."'
             AND `device_id`!='".$device_id."' ";
