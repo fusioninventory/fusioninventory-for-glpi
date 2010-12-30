@@ -329,11 +329,11 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
    function oidList($p_sxml_node,$p_id) {
 		global $DB;
 
-      $ptc = new PluginFusioninventoryCommunication();
+      $ptc = new PluginFusinvsnmpCommunicationSNMP();
 
       // oid GET
 		$query = "SELECT `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
-                       `glpi_plugin_fusinvsnmp_miboids`.*
+                       `glpi_plugin_fusinvsnmp_modelmibs`.*
                 FROM `glpi_plugin_fusinvsnmp_modelmibs`
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                                ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=

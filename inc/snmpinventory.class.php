@@ -274,7 +274,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
     */
    function run($itemtype, $a_Taskjobstatus) {
       global $DB;
-
+      
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
       $PluginFusinvsnmpAgentconfig = new  PluginFusinvsnmpAgentconfig;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
@@ -283,13 +283,15 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $PluginFusinvsnmpIPRange = new PluginFusinvsnmpIPRange;
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity;
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
+      $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
 
       $NetworkEquipment = new NetworkEquipment();
       $Printer = new Printer();
       $NetworkPort = new NetworkPort();
-      $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpNetworkEquipment();
-      $PluginFusinvsnmpPrinter = new PluginFusinvsnmpPrinter();
+      $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
+      $PluginFusinvsnmpPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
 
+      $modelslistused = array();
       $current = current($a_Taskjobstatus);
       $PluginFusioninventoryAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
 
@@ -315,6 +317,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   $data = current($a_data);
                   $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
                   $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
+                  $modelslistused[$data['plugin_fusinvsnmp_models_id']] = 1;
                   break;
 
                case 'Printer':
@@ -328,24 +331,25 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                   $sxml_device->addAttribute('TYPE', 'PRINTER');
                   $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
                   $sxml_device->addAttribute('IP', $port_ip);
-                  $a_data = $PluginFusinvsnmpNetworkEquipment->find("`printers_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
+                  $a_data = $PluginFusinvsnmpPrinter->find("`printers_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
                   $data = current($a_data);
                   $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
                   $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
+                  $modelslistused[$data['plugin_fusinvsnmp_models_id']] = 1;
                   break;
                
             }
 
             if ($changestatus == '0') {
-               $PluginFusioninventoryTaskjobstatus->changeStatus($PluginFusioninventoryTaskjobstatus->fields['id'], 1);
-               $PluginFusioninventoryTaskjoblog->addTaskjoblog($PluginFusioninventoryTaskjobstatus->fields['id'],
+               $PluginFusioninventoryTaskjobstatus->changeStatus($taskjobstatusdatas['id'], 1);
+               $PluginFusioninventoryTaskjoblog->addTaskjoblog($taskjobstatusdatas['id'],
                                        '0',
                                        'PluginFusioninventoryAgent',
                                        '1',
                                        '');
                $changestatus = $PluginFusioninventoryTaskjobstatus->fields['id'];
             } else {
-               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($PluginFusioninventoryTaskjobstatus->fields['id'],
+               $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobstatusdatas['id'],
                                                                  $taskjobstatusdatas['items_id'],
                                                                  $taskjobstatusdatas['itemtype'],
                                                                  0,
@@ -359,6 +363,16 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
             $PluginFusinvsnmpCommunicationSNMP->addAuth($sxml_option, $snmpauth['id']);
          }
       }
+
+      $modelslist=$PluginFusinvsnmpModel->find();
+      if (count($modelslist)){
+         foreach ($modelslist as $model){
+            if (isset($modelslistused[$model['id']])) {
+               $PluginFusinvsnmpCommunicationSNMP->addModel($sxml_option, $model['id']);
+            }
+         }
+      }
+
       return $this->sxml;
    }
 }

@@ -81,6 +81,40 @@ class PluginFusinvsnmpCommunicationSNMP {
          $sxml_authentication->addAttribute('PRIVPASSPHRASE', $ptsnmpa->fields['priv_passphrase']);
    }
 
+
+
+   function addModel($p_sxml_node, $p_id) {
+      $models = new PluginFusinvsnmpModel();
+      $mib_networking = new PluginFusinvsnmpModelMib();
+
+      $models->getFromDB($p_id);
+      $sxml_model = $p_sxml_node->addChild('MODEL');
+         $sxml_model->addAttribute('ID', $p_id);
+         $sxml_model->addAttribute('NAME', $models->fields['name']);
+         $mib_networking->oidList($sxml_model,$p_id);
+   }
+
+
+   function addGet($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
+      $sxml_get = $p_sxml_node->addChild('GET');
+         $sxml_get->addAttribute('OBJECT', $p_object);
+         $sxml_get->addAttribute('OID', $p_oid);
+         $sxml_get->addAttribute('VLAN', $p_vlan);
+         $sxml_get->addAttribute('LINK', $p_link);
+   }
+
+
+   function addWalk($p_sxml_node, $p_object, $p_oid, $p_link, $p_vlan) {
+      $sxml_walk = $p_sxml_node->addChild('WALK');
+         $sxml_walk->addAttribute('OBJECT', $p_object);
+         $sxml_walk->addAttribute('OID', $p_oid);
+         $sxml_walk->addAttribute('VLAN', $p_vlan);
+         $sxml_walk->addAttribute('LINK', $p_link);
+   }
+
+
+
+
    /**
     * Set XML code
     *
