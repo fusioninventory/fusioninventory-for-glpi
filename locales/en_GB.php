@@ -577,8 +577,6 @@ $LANG['plugin_fusinvsnmp']['discovery'][2]="is_active in the script automaticall
 $LANG['plugin_fusinvsnmp']['discovery'][3]="Discover";
 $LANG['plugin_fusinvsnmp']['discovery'][4]="Serial number";
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Number of imported devices";
-$LANG['plugin_fusinvsnmp']['discovery'][6]="Primary criteria for existence";
-$LANG['plugin_fusinvsnmp']['discovery'][7]="Secondary criteria for existence ";
 $LANG['plugin_fusinvsnmp']['discovery'][8]="If a device returns empty fields on first ciriteria, second one will be used.";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Number of devices not imported because type non defined";
 

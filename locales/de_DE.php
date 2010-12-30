@@ -549,8 +549,6 @@ $LANG['plugin_fusinvsnmp']['discovery'][2]="is_active in the script automaticall
 $LANG['plugin_fusinvsnmp']['discovery'][3]="Endecker";
 $LANG['plugin_fusinvsnmp']['discovery'][4]="Serien Nummer";
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Anzahl importierter Ger&auml;te";
-$LANG['plugin_fusinvsnmp']['discovery'][6]="Prim&auml;res Kriterium f&uuml;r die Existenz";
-$LANG['plugin_fusinvsnmp']['discovery'][7]="Sekund&auml;res Kriterium für die Existenz ";
 $LANG['plugin_fusinvsnmp']['discovery'][8]="Wenn ein Ger&auml;t ein leeres Feld bim ersten Kriterium bringt dann wird das zweite Benutzt.";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Number of devices not imported because type non defined";
 

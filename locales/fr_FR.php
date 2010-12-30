@@ -549,8 +549,6 @@ $LANG['plugin_fusinvsnmp']['discovery'][2]="² dans le script en automatique";
 $LANG['plugin_fusinvsnmp']['discovery'][3]="Découverte";
 $LANG['plugin_fusinvsnmp']['discovery'][4]="Numéros de série";
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Nombre de matériels importés";
-$LANG['plugin_fusinvsnmp']['discovery'][6]="Critères d'existence";
-$LANG['plugin_fusinvsnmp']['discovery'][7]="Critères d'existence secondaires";
 $LANG['plugin_fusinvsnmp']['discovery'][8]="Si tous les critères d'existence se confrontent à des champs vides, vous pouvez sélectionner des critères secondaires.";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Nombre de matériels non importés car type non défini";
 

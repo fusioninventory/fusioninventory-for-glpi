@@ -45,15 +45,7 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-      $insert = array('storagesnmpauth'=>'DB',
-                      'criteria1_ip'=>'0',
-                      'criteria1_name'=>'0',
-                      'criteria1_serial'=>'0',
-                      'criteria1_macaddr'=>'0',
-                      'criteria2_ip'=>'0',
-                      'criteria2_name'=>'0',
-                      'criteria2_serial'=>'0',
-                      'criteria2_macaddr'=>'0');
+      $insert = array('storagesnmpauth'=>'DB');
       $PluginFusioninventoryConfig->initConfig($plugins_id, $insert);
    }
 
@@ -63,14 +55,6 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
       $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'storagesnmpauth', $p_post['storagesnmpauth']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_ip', $p_post['criteria1_ip']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_name', $p_post['criteria1_name']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_serial', $p_post['criteria1_serial']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria1_macaddr', $p_post['criteria1_macaddr']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_ip', $p_post['criteria2_ip']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_name', $p_post['criteria2_name']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_serial', $p_post['criteria2_serial']);
-      $PluginFusioninventoryConfig->updateConfigType($plugins_id, 'criteria2_macaddr', $p_post['criteria2_macaddr']);
    }
 
 	function showForm($options=array()) {
@@ -93,61 +77,8 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
 		Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
                               array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'storagesnmpauth')));
 		echo "</td>";
-      echo "<td colspan='2'></td>";;
+      echo "<td colspan='2'></td>";
       echo "</tr>";
-
-      echo "<tr>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["discovery"][6]."&nbsp;:";
-		echo "</th>";
-		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["discovery"][6]." 2&nbsp;:";
-		echo "</th>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_ip", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_ip'));
-		echo "</td>";
-		echo "<td width='500'>".$LANG["networking"][14]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_ip", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_ip'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_name", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_name'));
-		echo "</td>";
-		echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_name", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_name'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_serial", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_serial'));
-		echo "</td>";
-		echo "<td>".$LANG["common"][19]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_serial", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_serial'));
-		echo "</td>";
-		echo "</tr>";
-
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria1_macaddr", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria1_macaddr'));
-		echo "</td>";
-		echo "<td>".$LANG['device_iface'][2]."&nbsp;:</td>";
-		echo "<td>";
-		Dropdown::showYesNo("criteria2_macaddr", $PluginFusioninventoryConfig->is_active($plugins_id, 'criteria2_macaddr'));
-		echo "</td>";
-		echo "</tr>";
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
