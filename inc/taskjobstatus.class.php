@@ -219,7 +219,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
       $a_taskjobstatus = $this->find("`plugin_fusioninventory_agents_id`='".$agent_id."' AND `state`='0'");
       foreach ($a_taskjobstatus as $data) {
-
          // Get job and data to send to agent
          $PluginFusioninventoryTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id']);
 
