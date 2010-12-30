@@ -90,8 +90,8 @@ class PluginFusinvsnmpStaticmisc {
 
 
    static function task_definitionselection_PluginFusinvsnmpIPRange_snmpinventory($title) {
-
-      return $this->task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title);
+      $rand = PluginFusinvsnmpStaticmisc::task_definitionselection_PluginFusinvsnmpIPRange_netdiscovery($title);
+      return $rand;
    }
 
 

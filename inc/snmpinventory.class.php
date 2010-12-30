@@ -57,6 +57,8 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
       $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
+      $NetworkEquipment = new NetworkEquipment();
+      $Printer = new Printer();
 
       /*
        * * Different possibilities  :
@@ -67,78 +69,89 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
        * We will count total number of devices to query
        */
 
-       // get items_id by type
-       $a_iprange = array();
-       $a_NetworkEquipment = array();
-       $a_Printer = array();
-       $a_definition = importArrayFromDB($PluginFusioninventoryTaskjob->fields['definition']);
-       foreach ($a_definition as $itemtype=>$items_id) {
-          switch($itemtype) {
+      // get items_id by type
+      $a_iprange = array();
+      $a_NetworkEquipment = array();
+      $a_Printer = array();
+      $a_definition = importArrayFromDB($PluginFusioninventoryTaskjob->fields['definition']);
+      foreach ($a_definition as $datas) {
+         $itemtype = key($datas);
+         $items_id = current($datas);
 
-             case 'PluginFusinvsnmpIPRange':
-                $a_iprange[] = $items_id;
-                break;
+         switch($itemtype) {
 
-             case 'NetworkEquipment':
-                $a_NetworkEquipment[] = $items_id;
-                break;
+            case 'PluginFusinvsnmpIPRange':
+               $a_iprange[] = $items_id;
+               break;
 
-             case 'Printer':
-                $a_Printer[] = $items_id;
-                break;
+            case 'NetworkEquipment':
+               $a_NetworkEquipment[] = $items_id;
+               break;
 
-          }
-       }
+            case 'Printer':
+               $a_Printer[] = $items_id;
+               break;
 
-       $a_iprange_NetworkEquipment = array();
-       $a_iprange_Printer = array();
-       // Get all devices on each iprange
-       foreach ($a_iprange as $items_id) {
-          $PluginFusinvsnmpIPRange->getFromDB($items_id);
-         // Search NetworkEquipment
-            $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
-                             `glpi_networkequipments`.`ip` AS `gnifaddr`,
-                             `plugin_fusioninventory_snmpauths_id`, `plugin_fusinvsnmp_models_id`
-                      FROM `glpi_networkequipments`
-                      LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
-                           ON `networkequipments_id`=`glpi_networkequipments`.`id`
-                      INNER join `glpi_plugin_fusinvsnmp_models`
-                           ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
-                      WHERE `glpi_networkequipments`.`is_deleted`='0'
-                           AND `plugin_fusinvsnmp_models_id`!='0'
-                           AND `plugin_fusioninventory_snmpauths_id`!='0'";
-             if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
-               $query .= "AND `glpi_networkequipments`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
-             }
-             $query .= " AND inet_aton(`ip`)
-                             BETWEEN inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_start']."')
-                             AND inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_end']."') ";
-
-
-
-
-         // Search Printer
-
-       }
-
-
-
-
-
-
-
-      //list all iprange
-      
-      $count_ip = 0;
-      $a_iprangelist = array();
-      foreach ($a_iprange as $iprange) {
-         $iprange_id = current($iprange);
-         $a_iprangelist[] = $iprange_id;
-         $PluginFusinvsnmpIPRange->getFromDB($iprange_id);
-         $s = ip2long($PluginFusinvsnmpIPRange->fields['ip_start']);
-         $e = ip2long($PluginFusinvsnmpIPRange->fields['ip_end']);
-         $count_ip += $e-$s+1;
+         }
       }
+
+      $a_iprange_NetworkEquipment = array();
+      $a_iprange_Printer = array();
+      // Get all devices on each iprange
+      foreach ($a_iprange as $items_id) {
+         $PluginFusinvsnmpIPRange->getFromDB($items_id);
+      // Search NetworkEquipment
+         $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
+                            `glpi_networkequipments`.`ip` AS `gnifaddr`,
+                            `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusinvsnmp_models_id`
+                     FROM `glpi_networkequipments`
+                     LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
+                          ON `networkequipments_id`=`glpi_networkequipments`.`id`
+                     INNER join `glpi_plugin_fusinvsnmp_models`
+                          ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                     WHERE `glpi_networkequipments`.`is_deleted`='0'
+                          AND `plugin_fusinvsnmp_models_id`!='0'
+                          AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
+         if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
+           $query .= "AND `glpi_networkequipments`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
+         }
+         $query .= " AND inet_aton(`ip`)
+                         BETWEEN inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_start']."')
+                         AND inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_end']."') ";
+
+        $result=$DB->query($query);
+        while ($data=$DB->fetch_array($result)) {
+           $a_NetworkEquipment[] = $data['gID'];
+        }
+     // Search Printer
+        $query = "SELECT `glpi_printers`.`ID` AS `gID`,
+                         `glpi_networkports`.`ip` AS `gnifaddr`,
+                         `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusinvsnmp_models_id`
+                  FROM `glpi_printers`
+                  LEFT JOIN `glpi_plugin_fusinvsnmp_printers`
+                          ON `printers_id`=`glpi_printers`.`id`
+                  LEFT JOIN `glpi_networkports`
+                          ON `items_id`=`glpi_printers`.`id`
+                             AND `itemtype`='Printer'
+                  INNER join `glpi_plugin_fusinvsnmp_models`
+                       ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                  INNER join `glpi_plugin_fusinvsnmp_configsecurities`
+                       ON `plugin_fusinvsnmp_configsecurities_id`=`glpi_plugin_fusinvsnmp_configsecurities`.`id`
+                  WHERE `glpi_printers`.`is_deleted`=0
+                        AND `plugin_fusinvsnmp_models_id`!='0'
+                        AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
+         if ($PluginFusinvsnmpIPRange->fields['entities_id'] != '-1') {
+            $query .= "AND `glpi_printers`.`entities_id`='".$PluginFusinvsnmpIPRange->fields['entities_id']."' ";
+         }
+         $query .= " AND inet_aton(`ip`)
+                      BETWEEN inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_start']."')
+                      AND inet_aton('".$PluginFusinvsnmpIPRange->fields['ip_end']."') ";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $a_Printer[] = $data['gID'];
+         }
+      }
+      $count_device = count($a_NetworkEquipment) + count($a_Printer);
 
       //list all agents
       $a_agent = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
@@ -164,7 +177,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          }
       }
       if ($dynagent == '1') {
-         $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
+         $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('SNMPQUERY');
          foreach($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
                $a_ip = $PluginFusioninventoryAgent->getIPs($data['id']);
@@ -193,78 +206,48 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
          $PluginFusioninventoryTaskjob->fields['status'] = 1;
          $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
       } else {
-         $iptimes = 0;
-         $ip_id = current($a_iprangelist);
-         $nbIpRangeip = 0;
-         $numberIpByAgent = ceil($count_ip / (count($a_agentlist)));
          foreach ($a_agentlist as $agent_id => $ip) {
-
             //Add jobstatus and put status (waiting on server = 0)
             $a_input = array();
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 0;
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
-            $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
-
-            $nbIpAgent = $numberIpByAgent;
-            foreach($a_iprangelist as $iprange_id) {
-               if ($ip_id == $iprange_id) {
-                  $PluginFusinvsnmpIPRange->getFromDB($iprange_id);
-                  $s = ip2long($PluginFusinvsnmpIPRange->fields['ip_start']);
-                  $e = ip2long($PluginFusinvsnmpIPRange->fields['ip_end']);
-                  if (($e-$s+1 - $nbIpRangeip) == $nbIpAgent) {
-                     $a_input['items_id'] = $iprange_id;
-                     $a_input['specificity'] = $iptimes."-".$nbIpAgent;
-                     $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-                        //Add log of taskjob
-                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-                        $a_input['state'] = 7;
-                        $a_input['date'] = date("Y-m-d H:i:s");
-                        $PluginFusioninventoryTaskjoblog->add($a_input);
-                        unset($a_input['state']);
-                     if ($ip_id == current($a_iprangelist)) {
-                        $ip_id = next($a_iprangelist);
-                     } else {
-                        $ip_id = current($a_iprangelist);
-                     }
-                     $iptimes = 0;
-                     $nbIpRangeip = 0;
-                     break;
-                  } else if (($e-$s+1 - $nbIpRangeip) < $nbIpAgent) {
-                     $a_input['items_id'] = $iprange_id;
-                     $a_input['specificity'] = $iptimes."-".($e-$s+1 - $nbIpRangeip);
-                     $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-                        //Add log of taskjob
-                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-                        $a_input['state'] = 7;
-                        $a_input['date'] = date("Y-m-d H:i:s");
-                        $PluginFusioninventoryTaskjoblog->add($a_input);
-                        unset($a_input['state']);
-                     if ($ip_id == current($a_iprangelist)) {
-                        $ip_id = next($a_iprangelist);
-                     } else {
-                        $ip_id = current($a_iprangelist);
-                     }
-                     $iptimes = 0;
-                     $nbIpAgent -= ($e-$s+1 - $nbIpRangeip);
-                     $nbIpRangeip = 0;
-                  } else if (($e-$s+1 - $nbIpRangeip) > $nbIpAgent) {
-                     $a_input['items_id'] = $iprange_id;
-                     $a_input['specificity'] = $iptimes."-".$nbIpAgent;
-                     $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
-                        //Add log of taskjob
-                        $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
-                        $a_input['state'] = 7;
-                        $a_input['date'] = date("Y-m-d H:i:s");
-                        $PluginFusioninventoryTaskjoblog->add($a_input);
-                        unset($a_input['state']);
-                     $ip_id = $iprange_id;
-                     $iptimes++;
-                     $nbIpRangeip = ($nbIpRangeip + $nbIpAgent);
-                     $nbIpAgent = 0;
-                     break;
-                  }
+            
+            $alternate = 0;
+            for ($d=0; $d < ceil($count_device / count($a_agentlist)); $d++) {
+               $getdevice = "NetworkEquipment";
+               if ($alternate == "1") {
+                  $getdevice = "Printer";
+                  $alternate = 0;
+               } else {
+                  $getdevice = "NetworkEquipment";
+                  $alternate++;
                }
+               if (count($a_NetworkEquipment) == '0') {
+                  $getdevice = "Printer";
+               } else if (count($a_Printer) == '0') {
+                  $getdevice = "NetworkEquipment";
+               }
+               $a_input['itemtype'] = $getdevice;
+
+               switch($getdevice) {
+
+                  case 'NetworkEquipment':
+                     $a_input['items_id'] = array_pop($a_NetworkEquipment);
+                     break;
+
+                  case 'Printer':
+                     $a_input['items_id'] = array_pop($a_Printer);
+                     break;
+
+               }
+               $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+               //Add log of taskjob
+                  $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+                  $a_input['state'] = 7;
+                  $a_input['date'] = date("Y-m-d H:i:s");
+                  $PluginFusioninventoryTaskjoblog->add($a_input);
+                  unset($a_input['state']);
             }
 
             $PluginFusioninventoryTaskjob->fields['status'] = 1;
@@ -301,39 +284,57 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $PluginFusinvsnmpConfigSecurity = new PluginFusinvsnmpConfigSecurity;
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP;
 
+      $NetworkEquipment = new NetworkEquipment();
+      $Printer = new Printer();
+      $NetworkPort = new NetworkPort();
+      $PluginFusinvsnmpNetworkEquipment = new PluginFusinvsnmpNetworkEquipment();
+      $PluginFusinvsnmpPrinter = new PluginFusinvsnmpPrinter();
 
       $current = current($a_Taskjobstatus);
       $PluginFusioninventoryAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
 
       $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
       $sxml_option = $this->sxml->addChild('OPTION');
-      $sxml_option->addChild('NAME', 'NETDISCOVERY');
+      $sxml_option->addChild('NAME', 'SNMPQUERY');
       $sxml_param = $sxml_option->addChild('PARAM');
-         $sxml_param->addAttribute('CORE_DISCOVERY', "1");
-         $sxml_param->addAttribute('THREADS_DISCOVERY', $PluginFusinvsnmpAgentconfig->fields["threads_netdiscovery"]);
+         $sxml_param->addAttribute('CORE_QUERY', "1");
+         $sxml_param->addAttribute('THREADS_QUERY', $PluginFusinvsnmpAgentconfig->fields["threads_snmpquery"]);
          $sxml_param->addAttribute('PID', $current['id']);
 
       $changestatus = 0;
       foreach ($a_Taskjobstatus as $taskjobstatusdatas) {
-         $sxml_rangeip = $sxml_option->addChild('RANGEIP');
-            $PluginFusioninventoryTaskjob->getFromDB($taskjobstatusdatas['plugin_fusioninventory_taskjobs_id']);
-            $PluginFusioninventoryTaskjobstatus->getFromDB($taskjobstatusdatas['id']);
-            $PluginFusinvsnmpIPRange->getFromDB($taskjobstatusdatas['items_id']);
+         $sxml_device = $sxml_option->addChild('DEVICE');
+            switch ($taskjobstatusdatas['itemtype']) {
 
-            $sxml_rangeip->addAttribute('ID', $PluginFusinvsnmpIPRange->fields['id']);
+               case 'NetworkEquipment':
+                  $NetworkEquipment->getFromDB($taskjobstatusdatas['items_id']);
+                  $sxml_device->addAttribute('TYPE', 'NETWORKING');
+                  $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
+                  $sxml_device->addAttribute('IP', $NetworkEquipment->fields['ip']);
+                  $a_data = $PluginFusinvsnmpNetworkEquipment->find("`networkequipments_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
+                  $data = current($a_data);
+                  $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
+                  $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
+                  break;
 
-            if (!is_null($PluginFusioninventoryTaskjobstatus->fields['specificity'])) {
-               $a_split = explode("-", $PluginFusioninventoryTaskjobstatus->fields['specificity']);
-               $first_ip = ip2long($PluginFusinvsnmpIPRange->fields["ip_start"]);
-               $first_ip = long2ip($first_ip + ($a_split[0] * $a_split[1]));
-               $last_ip = long2ip(ip2long($first_ip) + $a_split[1] - 1);
-               $sxml_rangeip->addAttribute('IPSTART', $first_ip);
-               $sxml_rangeip->addAttribute('IPEND', $last_ip);
-            } else {
-               $sxml_rangeip->addAttribute('IPSTART', $PluginFusinvsnmpIPRange->fields["ip_start"]);
-               $sxml_rangeip->addAttribute('IPEND', $PluginFusinvsnmpIPRange->fields["ip_end"]);
+               case 'Printer':
+                  $a_Printerport = $NetworkPort->find("`itemtype`='".Printer."' AND `items_id`='".$taskjobstatusdatas['items_id']."'");
+                  foreach($a_Printerport as $portdata) {
+                     if (!empty($portdata['ip']) AND ($portdata['ip'] != '127.0.0.1')) {
+                        $port_ip = $portdata['ip'];
+                        break;
+                     }
+                  }
+                  $sxml_device->addAttribute('TYPE', 'PRINTER');
+                  $sxml_device->addAttribute('ID', $taskjobstatusdatas['items_id']);
+                  $sxml_device->addAttribute('IP', $port_ip);
+                  $a_data = $PluginFusinvsnmpNetworkEquipment->find("`printers_id`='".$taskjobstatusdatas['items_id']."'", "", "1");
+                  $data = current($a_data);
+                  $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusinvsnmp_configsecurities_id']);
+                  $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusinvsnmp_models_id']);
+                  break;
+               
             }
-            $sxml_rangeip->addAttribute('ENTITY', $PluginFusinvsnmpIPRange->fields["entities_id"]);
 
             if ($changestatus == '0') {
                $PluginFusioninventoryTaskjobstatus->changeStatus($PluginFusioninventoryTaskjobstatus->fields['id'], 1);
@@ -351,6 +352,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                                                                  "Merged with ".$changestatus);
             }
       }
+      // Add auth
       $snmpauthlist=$PluginFusinvsnmpConfigSecurity->find();
       if (count($snmpauthlist)){
          foreach ($snmpauthlist as $snmpauth){
