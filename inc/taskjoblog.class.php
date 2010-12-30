@@ -72,10 +72,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
          $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
 
-
-
          echo "<tr>";
-         echo "<th colspan='2'><img src='".GLPI_ROOT."/pics/puce.gif' />".$LANG['financial'][4]."&nbsp;: ".$data['id']."</th>";
+         echo "<th colspan='2'><img src='".GLPI_ROOT."/pics/puce.gif' />".$LANG['plugin_fusioninventory']['processes'][38]."&nbsp;: ".$data['id']."</th>";
          echo "<th>";
          echo $LANG['common'][27];
          echo "</th>";

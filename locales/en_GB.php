@@ -240,6 +240,7 @@ $LANG['plugin_fusioninventory']['processes'][34]="In error";
 $LANG['plugin_fusioninventory']['processes'][35]="Created connections";
 $LANG['plugin_fusioninventory']['processes'][36]="Deleted connections";
 $LANG['plugin_fusioninventory']['processes'][37]="IP total";
+$LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['state'][0]="Computer start";
 $LANG['plugin_fusioninventory']['state'][1]="Computer stop";
