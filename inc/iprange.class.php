@@ -47,7 +47,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
    static function getTypeName() {
       global $LANG;
-      if (strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
+      if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
 
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
             // Permanent task discovery
@@ -386,11 +386,11 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       }
       $defaultValue = '';
       $a_list[''] = "------";
-      if (!empty($PluginFusioninventoryTaskjob->fields['selection'])) {
-         $array = importArrayFromDB($PluginFusioninventoryTaskjob->fields['selection']);
+      if (!empty($PluginFusioninventoryTaskjob->fields['action'])) {
+         $array = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
          $defaultValue = key(current($array))."-".current(current($array));
       }
-      Dropdown::showFromArray('selection', $a_list, array('value' => $defaultValue));
+      Dropdown::showFromArray('action', $a_list, array('value' => $defaultValue));
       
       echo "</td>";
       echo "<td>";
@@ -406,6 +406,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       echo "<input name='task_id' type='hidden' value='".$task_id."' />";
       echo "<input name='taskjob_id' type='hidden' value='".$taskjob_id."' />";
+      echo "<input name='iprange' type='hidden' value='".$_POST['id']."' />";
 
       $PluginFusioninventoryTaskjob->showFormButtons($options);
 

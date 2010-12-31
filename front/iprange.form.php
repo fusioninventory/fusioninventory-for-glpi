@@ -61,18 +61,21 @@ if (isset ($_POST["add"])) {
       $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjob_id']);
       $PluginFusioninventoryTask->fields["is_active"] = $_POST['is_active'];
       $PluginFusioninventoryTask->fields["periodicity"] = $_POST['periodicity-1']."-".$_POST['periodicity-2'];;
-      if (!empty($_POST['selection'])) {
-         $a_selection = explode(',', $_POST['selection']);
-         foreach ($a_selection as $num=>$data) {
+      if (!empty($_POST['action'])) {
+         $a_action = explode(',', $_POST['action']);
+         foreach ($a_action as $num=>$data) {
             $dataDB = explode('-', $data);
             if (isset($dataDB[1]) AND $dataDB > 0) {
-               $a_selectionDB[][$dataDB[0]] = $dataDB[1];
+               $a_actionDB[][$dataDB[0]] = $dataDB[1];
             }
          }
-         $PluginFusioninventoryTaskjob->fields["selection"] = exportArrayToDB($a_selectionDB);
+         $PluginFusioninventoryTaskjob->fields["action"] = exportArrayToDB($a_actionDB);
       } else {
-         $PluginFusioninventoryTaskjob->fields["selection"] = '';
+         $PluginFusioninventoryTaskjob->fields["action"] = '';
       }
+      $a_definition = array();
+      $a_definition[]['PluginFusinvsnmpIPRange'] = $_POST['iprange'];
+      $PluginFusioninventoryTaskjob->fields['definition'] = exportArrayToDB($a_definition);
       $PluginFusioninventoryTask->fields["communication"] = $_POST['communication'];
 
       $PluginFusioninventoryTask->update($PluginFusioninventoryTask->fields);

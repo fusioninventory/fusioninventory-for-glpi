@@ -131,7 +131,7 @@ class PluginFusinvsnmpStaticmisc {
       global $LANG;
 
       $array = array();
-      $array["-.1"] = $LANG['plugin_fusinvsnmp']['agents'][28];
+      $array["-.1"] = $LANG['plugin_fusioninventory']['agents'][32];
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
       foreach ($array1 as $id => $data) {
@@ -177,14 +177,13 @@ class PluginFusinvsnmpStaticmisc {
 
    static function task_selection_type_netdiscovery($itemtype) {
       echo $itemtype;
-      echo "TOTO";
       switch ($itemtype) {
 
          case 'PluginFusinvsnmpIPRange':
             $selection_type = 'iprange';
             break;
 
-         // $LANG['plugin_fusinvsnmp']['agents'][28]
+         // $LANG['plugin_fusioninventory']['agents'][32]
 
       }
 
