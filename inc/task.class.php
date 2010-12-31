@@ -192,21 +192,14 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][34]."&nbsp;:</td>";
-      echo "<td align='center'>";
-      echo getUserName($this->fields["users_id"],1);
-      echo "</td>";
-
-      echo "<td rowspan='4'>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td align='center' rowspan='4'>";
-      echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['common'][60]."&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+      echo "</td>";
+
+      echo "<td rowspan='3'>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td align='center' rowspan='3'>";
+      echo "<textarea cols='45' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
 

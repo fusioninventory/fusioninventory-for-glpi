@@ -96,7 +96,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_creation` datetime DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
-  `users_id` int(11) NOT NULL DEFAULT '0',
   `is_active` int(1) NOT NULL DEFAULT '0',
   `communication` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push',
   `permanent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
