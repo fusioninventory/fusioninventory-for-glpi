@@ -410,9 +410,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $PluginFusioninventoryTaskjob->showFormButtons($options);
 
-      foreach ($a_taskjob as $data) {
-         $PluginFusioninventoryTaskjoblog->showHistory($data['id']);
-      }
+      $PluginFusioninventoryTaskjoblog->showHistory($PluginFusioninventoryTaskjob->fields['id']);
    }
 
 }
