@@ -501,8 +501,95 @@ $this->cronTaskscheduler();
 
       $dateNow = date("Y-m-d H:i:s");
 
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+
+      // Search for task with periodicity and must be ok (so reinit state of job to 0)
+      $query = "SELECT * FROM `".$PluginFusioninventoryTask->getTable()."`
+         WHERE `is_active`='1'
+            AND `periodicity` NOT LIKE '0-%'";
+      
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         // Calculate next execution from last
+         $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
+            WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'
+            ORDER BY `date_scheduled` DESC
+            LIMIT 1";
+         $startDateGeneral = date('U');
+         $finished = 2;
+         $resultJob = $DB->query($queryJob);
+         while ($dataJob=$DB->fetch_array($resultJob)) {
+            $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", "id DESC", 1);
+            $a_taskjobstatusfinished = 0;
+            $startDate = date("U");
+            foreach ($a_taskjobstatus as $statusdata) {
+               $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'");
+               foreach($a_joblog as $joblogdata) {
+                  switch ($joblogdata['state']) {
+
+                     case '7':
+                        // Prepared
+                        if (strtotime($joblogdata['date']) < $startDate) {
+                           $startDate = strtotime($joblogdata['date']);
+                        }
+                        break;
+
+                     case '2':
+                     case '3':
+                     case '4':
+                     case '5':
+                        // finished
+                        $a_taskjobstatusfinished++;
+                        break;
+
+                  }
+               }
+            }
+            if ($startDate < $startDateGeneral) {
+               $startDateGeneral = $startDate;
+            }
+            if ((count($a_taskjobstatus) == $a_taskjobstatusfinished) AND ($finished != "0")) {
+               $finished = 1;
+            } else {
+               $finished = 0;
+            }
+         }
+         // if all jobs are finished, we calculate if we reinitialize all jobs
+         if ($finished == "1") {
+            $a_periodicity = explode("-", $data['periodicity']);
+            $period = 0;
+            switch($a_periodicity[1]) {
+
+               case '1':
+                  $period = $a_periodicity[0] * 60;
+                  break;
+
+               case '2':
+                  $period = $a_periodicity[0] * 60 * 60;
+                  break;
+
+               case '3':
+                  $period = $a_periodicity[0] * 60 * 60 * 24;
+                  break;
+
+               case '4':
+                  $period = $a_periodicity[0] * 60 * 60 * 24 * 30; //month
+                  break;
+
+            }
+            if (($startDateGeneral + $period) <= date('U')) {
+               $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
+                  SET `status`='0'
+                  WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
+               $DB->query($queryUpdate);
+            }
+         }
+      }
+
+      // Search task ready
 
       $remoteStartAgents = array();
 
