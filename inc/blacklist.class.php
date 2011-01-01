@@ -98,7 +98,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo $LANG['plugin_fusinvinventory']["blacklist"][0];
+      echo $LANG['plugin_fusinvinventory']['blacklist'][0];
       echo "</th>";
       echo "<tr>";
 
@@ -135,7 +135,7 @@ class PluginFusinvinventoryBlacklist extends CommonDBTM {
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'>".$LANG['plugin_fusinvinventory']["blacklist"][1]."</td>";
+      echo "<td colspan='2'>".$LANG['plugin_fusinvinventory']['blacklist'][1]."</td>";
       echo "<td colspan='2'><input type='text' name='value'/>";
       echo "<input type='hidden' name='plugin_fusioninventory_criterium_id' value='".$id."'/>";
       echo "</td>";

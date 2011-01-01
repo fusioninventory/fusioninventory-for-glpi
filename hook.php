@@ -136,7 +136,7 @@ function plugin_get_headings_fusinvinventory($item,$withtemplate) {
       case 'Computer' :
          $array = array ();
          if ($_GET['id'] > 0) {
-            $array[1] = $LANG['plugin_fusinvinventory']["xml"][0];
+            $array[1] = $LANG['plugin_fusinvinventory']['xml'][0];
             $array[2] = $LANG['plugin_fusinvinventory']['antivirus'][0];
          }
          return $array;
@@ -179,7 +179,7 @@ function plugin_headings_fusinvinventory_xml($item) {
       $xml = str_replace("\n", "<br/>", $xml);
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th>".$LANG['plugin_fusinvinventory']["xml"][0];
+      echo "<th>".$LANG['plugin_fusinvinventory']['xml'][0];
       echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";

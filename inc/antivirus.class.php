@@ -87,7 +87,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
  
       if (count($antivirusData) == '0') {
          echo "<tr>";
-         echo "<th>".$LANG['plugin_fusinvinventory']["antivirus"][0];
+         echo "<th>".$LANG['plugin_fusinvinventory']['antivirus'][0];
          echo "</th>";
          echo "</tr>";
 
@@ -98,7 +98,7 @@ class PluginFusinvinventoryAntivirus extends CommonDBTM {
          echo "</tr>";
       } else {
          echo "<tr>";
-         echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']["antivirus"][0];
+         echo "<th colspan='4'>".$LANG['plugin_fusinvinventory']['antivirus'][0];
          echo "</th>";
          echo "</tr>";
 

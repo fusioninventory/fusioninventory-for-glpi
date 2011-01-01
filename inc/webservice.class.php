@@ -64,7 +64,7 @@ class PluginfusioninventoryWebservice {
       $PluginFusinvinventoryImportXML = new PluginFusinvinventoryImportXML();
       $PluginFusinvinventoryImportXML->importXMLContent($content);
 
-      $msg = $LANG['plugin_fusinvinventory']["importxml"][1];
+      $msg = $LANG['plugin_fusinvinventory']['importxml'][1];
       return self::Error($protocol, WEBSERVICES_ERROR_FAILED, '', $msg);
    }
 

@@ -49,7 +49,7 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
 
    function getTitle() {
       global $LANG;
-      return $LANG['plugin_fusinvinventory']["rule"][0];
+      return $LANG['plugin_fusinvinventory']['rule'][0];
    }
 
    function preProcessPreviewResults($output) {
@@ -66,7 +66,7 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
       
       $criterias = array();
       $criterias['globalcriteria']['field'] = 'name';
-      $criterias['globalcriteria']['name']  = "* ".$LANG['plugin_fusinvinventory']["rule"][1];
+      $criterias['globalcriteria']['name']  = "* ".$LANG['plugin_fusinvinventory']['rule'][1];
       $criterias['globalcriteria']['table'] = 'glpi_plugin_fusinvinventory_criteria';
       $criterias['globalcriteria']['linkfield'] = '';
       $criterias['globalcriteria']['type'] = 'dropdown';
@@ -75,25 +75,25 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
       $criterias['globalcriteria']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
       $criterias['serialnumber']['field'] = 'name';
-      $criterias['serialnumber']['name']  = $LANG['plugin_fusinvinventory']["rule"][2];
+      $criterias['serialnumber']['name']  = $LANG['plugin_fusinvinventory']['rule'][2];
 
       $criterias['uuid']['field'] = 'name';
       $criterias['uuid']['name']  = 'uuid';
 
       $criterias['mac']['field'] = 'name';
-      $criterias['mac']['name']  = $LANG['plugin_fusinvinventory']["rule"][3];
+      $criterias['mac']['name']  = $LANG['plugin_fusinvinventory']['rule'][3];
 
       $criterias['windowskey']['field'] = 'name';
-      $criterias['windowskey']['name']  = $LANG['plugin_fusinvinventory']["rule"][4];
+      $criterias['windowskey']['name']  = $LANG['plugin_fusinvinventory']['rule'][4];
 
       $criterias['model']['field'] = 'name';
-      $criterias['model']['name']  = $LANG['plugin_fusinvinventory']["rule"][5];
+      $criterias['model']['name']  = $LANG['plugin_fusinvinventory']['rule'][5];
 
       $criterias['storageserial']['field'] = 'name';
-      $criterias['storageserial']['name']  = $LANG['plugin_fusinvinventory']["rule"][6];
+      $criterias['storageserial']['name']  = $LANG['plugin_fusinvinventory']['rule'][6];
 
       $criterias['drivesserial']['field'] = 'name';
-      $criterias['drivesserial']['name']  = $LANG['plugin_fusinvinventory']["rule"][7];
+      $criterias['drivesserial']['name']  = $LANG['plugin_fusinvinventory']['rule'][7];
 
       $criterias['assettag']['field'] = 'name';
       $criterias['assettag']['name']  = $LANG['plugin_fusinvinventory']['rule'][8];

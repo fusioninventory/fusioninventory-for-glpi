@@ -49,7 +49,7 @@ class PluginFusinvinventoryRuleEntityCollection extends PluginFusioninventoryRul
    function getTitle() {
       global $LANG;
 
-      return $LANG['plugin_fusinvinventory']["rule"][100];
+      return $LANG['plugin_fusinvinventory']['rule'][100];
    }
 
 

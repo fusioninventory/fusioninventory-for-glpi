@@ -48,10 +48,10 @@ function plugin_init_fusinvinventory() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-               addMessageAfterRedirect($LANG['plugin_fusinvinventory']["setup"][17]);
+               addMessageAfterRedirect($LANG['plugin_fusinvinventory']['setup'][17]);
                break;
             case 'uninstall':
-               addMessageAfterRedirect($LANG['plugin_fusinvinventory']["setup"][18]);
+               addMessageAfterRedirect($LANG['plugin_fusinvinventory']['setup'][18]);
                glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
          }
@@ -85,8 +85,8 @@ function plugin_init_fusinvinventory() {
       = 'PluginFusinvinventoryInventory';
 
 
-   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvinventory'][$LANG['plugin_fusinvinventory']["title"][0]])) {
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvinventory'][$LANG['plugin_fusinvinventory']["title"][0]] = array('class'=>'PluginFusinvinventoryConfig',
+   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvinventory'][$LANG['plugin_fusinvinventory']['title'][0]])) {
+      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvinventory'][$LANG['plugin_fusinvinventory']['title'][0]] = array('class'=>'PluginFusinvinventoryConfig',
                                                                 'submitbutton'=>'plugin_fusinvinventory_config_set',
                                                                 'submitmethod'=>'putForm');
    }
@@ -119,16 +119,16 @@ function plugin_init_fusinvinventory() {
 
 
    // Fil ariane
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = $LANG['plugin_fusinvinventory']["menu"][2];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = $LANG['plugin_fusinvinventory']['menu'][2];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusinvinventory/front/blacklist.form.php';
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = $LANG['plugin_fusinvinventory']["menu"][1];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = $LANG['plugin_fusinvinventory']['menu'][1];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.form.php';
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = $LANG['plugin_fusinvinventory']["menu"][3];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = $LANG['plugin_fusinvinventory']['menu'][3];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['page']  = '/plugins/fusinvinventory/front/ruleentity.form.php';
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = $LANG['plugin_fusinvinventory']["menu"][0];
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = $LANG['plugin_fusinvinventory']['menu'][0];
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/importxml.php';
 }
 
@@ -158,7 +158,7 @@ function plugin_fusinvinventory_check_prerequisites() {
       }
       return true;
    } else {
-      echo $LANG['plugin_fusinvinventory']["errors"][50];
+      echo $LANG['plugin_fusinvinventory']['errors'][50];
    }
 }
 

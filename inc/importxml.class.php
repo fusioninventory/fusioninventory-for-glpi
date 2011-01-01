@@ -61,7 +61,7 @@ class PluginFusinvinventoryImportXML extends CommonDBTM  {
 
 		echo "<br>";
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-		echo $LANG['plugin_fusinvinventory']["importxml"][0]." :</th></tr>";
+		echo $LANG['plugin_fusinvinventory']['importxml'][0]." :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
