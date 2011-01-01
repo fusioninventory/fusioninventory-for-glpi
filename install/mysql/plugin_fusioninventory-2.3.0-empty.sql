@@ -102,7 +102,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `periodicity` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `entities_id` ( `entities_id` ),
-  KEY `users_id` ( `users_id` ),
   KEY `is_active` ( `is_active` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
