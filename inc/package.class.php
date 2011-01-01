@@ -83,7 +83,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
          $ong[1]=$LANG['plugin_fusinvdeploy']["package"][5];
          $ong[2]="Fichiers";
          $ong[3]="Dépendances";
-         $ong[4] = $LANG['plugin_fusioninventory']["title"][0]." - ".$LANG['plugin_fusioninventory']["task"][18];
+         $ong[4] = $LANG['plugin_fusioninventory']['title'][0]." - ".$LANG['plugin_fusioninventory']['task'][18];
       }
       return $ong;
    }
