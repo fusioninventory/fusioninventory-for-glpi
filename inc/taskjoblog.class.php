@@ -66,7 +66,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"');
+      $a_jobstatus = $PluginFusioninventoryTaskjobstatus->find('`plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"', '`id` DESC');
 
       foreach ($a_jobstatus as $data) {
 
