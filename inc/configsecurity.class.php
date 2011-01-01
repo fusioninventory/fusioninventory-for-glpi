@@ -60,8 +60,8 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 //		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 //		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-//		echo ($id =='' ? $LANG['plugin_fusioninventory']["model_info"][7] :
-//            $LANG['plugin_fusioninventory']["model_info"][3]);
+//		echo ($id =='' ? $LANG['plugin_fusioninventory']['model_info'][7] :
+//            $LANG['plugin_fusioninventory']['model_info'][3]);
 //		echo " :</th></tr>";
 
 		echo "<tr class='tab_bg_1'>";
@@ -140,17 +140,17 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 		if ($array == '0') {
 			echo "<div align='center'><table class='tab_cadre_fixe'>";
-			echo "<tr><th colspan='10'>".$LANG['plugin_fusioninventory']["model_info"][3]." :</th></tr>";
+			echo "<tr><th colspan='10'>".$LANG['plugin_fusioninventory']['model_info'][3]." :</th></tr>";
 			echo "<tr><th>".$LANG["common"][2]."</th>";
 			echo "<th>".$LANG["common"][16]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["model_info"][2]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][1]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][2]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][3]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][4]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][5]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][6]."</th>";
-			echo "<th>".$LANG['plugin_fusioninventory']["snmpauth"][7]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['model_info'][2]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][1]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][2]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][3]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][4]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][5]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][6]."</th>";
+			echo "<th>".$LANG['plugin_fusioninventory']['snmpauth'][7]."</th>";
 			echo "</tr>";
 		}
 

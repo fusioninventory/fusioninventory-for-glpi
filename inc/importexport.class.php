@@ -174,7 +174,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 		
 		if ($DB->numrows($result) > 0) {
 			if ($message == '1') {
-				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][8];
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['model_info'][8];
          }
 			return false;
 		} else {
@@ -231,7 +231,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 				$DB->query($query);
 			}
 			if ($message == '1') {
-				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']["model_info"][9].
+				$_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusioninventory']['model_info'][9].
                " : <a href='model.form.php?id=".$plugin_fusinvsnmp_models_id."'>".$xml->name[0]."</a>";
          }
 		}

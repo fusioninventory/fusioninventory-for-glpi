@@ -69,11 +69,11 @@ class PluginFusinvSNMPConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][16]."&nbsp;:</td>";
+		echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][16]."&nbsp;:</td>";
 		echo "<td>";
 		$ArrayValues = array();
-		$ArrayValues['DB']= $LANG['plugin_fusioninventory']["functionalities"][17];
-		$ArrayValues['file']= $LANG['plugin_fusioninventory']["functionalities"][18];
+		$ArrayValues['DB']= $LANG['plugin_fusioninventory']['functionalities'][17];
+		$ArrayValues['file']= $LANG['plugin_fusioninventory']['functionalities'][18];
 		Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
                               array('value'=>$PluginFusioninventoryConfig->getValue($plugins_id, 'storagesnmpauth')));
 		echo "</td>";

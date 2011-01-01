@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -65,19 +65,19 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
 }
 
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][1]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>".$LANG['plugin_fusioninventory']['constructdevice'][1]."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][3]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>".$LANG['plugin_fusioninventory']['constructdevice'][3]."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatecomments=1'>".$LANG['plugin_fusioninventory']["constructdevice"][5]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatecomments=1'>".$LANG['plugin_fusioninventory']['constructdevice'][5]."</a>";
 echo " | ";
 
 echo "<br/>";
 
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>".$LANG['plugin_fusioninventory']["constructdevice"][2]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>".$LANG['plugin_fusioninventory']['constructdevice'][2]."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusioninventory']["constructdevice"][4]."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".$LANG['plugin_fusioninventory']['constructdevice'][4]."</a>";
 echo " | ";
 
 //searchForm('PluginFusioninventoryConstructDevices',$_GET);

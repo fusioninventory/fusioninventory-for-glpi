@@ -153,7 +153,7 @@ class PluginFusinvsnmpPrinterCartridge extends PluginFusinvsnmpCommonDBTM {
          echo "<td align='center'>";
          $mapfields = $mapping->get('Printer', $cartridge_name);
          if ($mapfields != false) {
-            echo $LANG['plugin_fusioninventory']["mapping"][$mapfields['shortlocale']];
+            echo $LANG['plugin_fusioninventory']['mapping'][$mapfields['shortlocale']];
          }
          echo " : ";
          echo "</td>";

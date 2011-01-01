@@ -100,7 +100,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th>";
-      echo $LANG['plugin_fusioninventory']["processes"][1];
+      echo $LANG['plugin_fusioninventory']['processes'][1];
       echo " <a href='".GLPI_ROOT."/plugins/fusioninventory/front/agentprocess.form.php'>(".$LANG['common'][66].")</a>";
       echo "</th>";
 

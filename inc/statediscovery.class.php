@@ -51,7 +51,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusioninventory']["agents"][28];
+      $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
 
 		$tab[1]['table'] = $this->getTable();
 		$tab[1]['field'] = 'id';
@@ -62,7 +62,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
 		$tab[2]['table'] = "glpi_plugin_fusioninventory_agents";
 		$tab[2]['field'] = 'name';
 		$tab[2]['linkfield'] = 'plugin_fusioninventory_agents_id';
-		$tab[2]['name'] = $LANG['plugin_fusioninventory']["agents"][28];
+		$tab[2]['name'] = $LANG['plugin_fusioninventory']['agents'][28];
 		$tab[2]['datatype'] = 'itemlink';
       $tab[2]['itemlink_type']  = 'PluginFusioninventoryAgent';
 

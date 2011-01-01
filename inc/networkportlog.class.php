@@ -81,7 +81,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
 		echo "<tr class='tab_bg_1'>";
 		echo "<td colspan='3'>";
-		echo $LANG['plugin_fusioninventory']["functionalities"][29]." :";
+		echo $LANG['plugin_fusioninventory']['functionalities'][29]." :";
 		echo "</td>";
 		echo "</tr>";
 
@@ -100,7 +100,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $maps = $map->find();
       foreach ($maps as $mapfields) {
          $listName[$mapfields['itemtype']."-".$mapfields['name']]=
-            $LANG['plugin_fusioninventory']["mapping"][$mapfields["locale"]];
+            $LANG['plugin_fusioninventory']['mapping'][$mapfields["locale"]];
       }
 
       if (!empty($listName)) {
@@ -168,7 +168,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
 		echo "<tr>";
 		echo "<th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']["functionalities"][60]." :";
+		echo $LANG['plugin_fusioninventory']['functionalities'][60]." :";
 		echo "</th>";
 		echo "</tr>";
 
@@ -225,7 +225,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $map = new PluginFusioninventoryMapping;
       $maps = $map->find("`itemtype`='NetworkEquipment'");
       foreach ($maps as $mapfields) {
-         $constantsfield[$LANG['plugin_fusioninventory']["mapping"][$mapfields["locale"]]] =
+         $constantsfield[$LANG['plugin_fusioninventory']['mapping'][$mapfields["locale"]]] =
             $mapfields['name'];
       }
 
@@ -245,7 +245,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       if ($result=$DB->query($query)) {
          $nb = $DB->numrows($result);
          if (($nb > 300000) AND ($force == '0')) {
-            echo $LANG['plugin_fusioninventory']["update"][0]."<br/>";
+            echo $LANG['plugin_fusioninventory']['update'][0]."<br/>";
             echo "cd glpi/plugins/fusioninventory/front/ && php -f cli_update.php";
             echo "<br/>Waiting...";
             file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/cli-update.txt", "1");
@@ -660,7 +660,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                $mapfields = $map->get('NetworkEquipment', $data["field"]);
                if ($mapfields != false) {
                   $text .= "<td align='center'>".
-                     $LANG['plugin_fusioninventory']["mapping"][$mapfields["locale"]]."</td>";
+                     $LANG['plugin_fusioninventory']['mapping'][$mapfields["locale"]]."</td>";
                }
                $text .= "<td align='center'>".$data["value_old"]."</td>";
                $text .= "<td align='center'>-></td>";

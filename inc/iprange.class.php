@@ -91,7 +91,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1] = $LANG['plugin_fusinvsnmp']["task"][15];
          $ong[2] = $LANG['plugin_fusinvsnmp']["task"][16];
-         $ong[3] = $LANG['plugin_fusioninventory']["task"][18];
+         $ong[3] = $LANG['plugin_fusioninventory']['task'][18];
       }
       return $ong;
    }
@@ -354,7 +354,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       echo "</td>";
       echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
       echo "<td align='center'>";
       $a_periodicity = array();
       if (strstr($PluginFusioninventoryTask->fields['periodicity'], "-")) {

@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
 
@@ -49,13 +49,13 @@ echo "<th align='center'>".$LANG["Menu"][6]."</th>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
-echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/switch_ports.history.php'>".$LANG['plugin_fusioninventory']["menu"][5]."</a>";
+echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/switch_ports.history.php'>".$LANG['plugin_fusioninventory']['menu'][5]."</a>";
 echo "</td>";
 echo "</tr>";
 
 echo "<tr class='tab_bg_1'>";
 echo "<td align='center'>";
-echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/ports_date_connections.php'>".$LANG['plugin_fusioninventory']["menu"][6]."</a>";
+echo "<a href='".GLPI_ROOT."/plugins/fusioninventory/report/ports_date_connections.php'>".$LANG['plugin_fusioninventory']['menu'][6]."</a>";
 echo "</td>";
 echo "</tr>";
 /*

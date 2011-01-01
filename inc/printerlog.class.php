@@ -116,11 +116,11 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          $this->showFormHeader($options);
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANG['plugin_fusioninventory']["prt_history"][12]." : </td>";
+			echo "<td>".$LANG['plugin_fusioninventory']['prt_history'][12]." : </td>";
 			echo "<td>".$stats["num_pages"]."</td></tr>";
 			
 			echo "<tr class='tab_bg_1'>";
-			echo "<td>".$LANG['plugin_fusioninventory']["prt_history"][13]." : </td>";
+			echo "<td>".$LANG['plugin_fusioninventory']['prt_history'][13]." : </td>";
 			echo "<td>".$stats["pages_per_day"]."</td></tr>";
 			
 			echo "</table></div>";
@@ -152,12 +152,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                  id='printer_history_form'  action=\"".$target."\">";
 
 		echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
-		echo $LANG['plugin_fusioninventory']["prt_history"][20]." :</th></tr>";
+		echo $LANG['plugin_fusioninventory']['prt_history'][20]." :</th></tr>";
 		
 		echo "<tr class='tab_bg_1'>";
 		echo "<th></th>";
-		echo "<th>".$LANG['plugin_fusioninventory']["prt_history"][21]." :</th>";
-		echo "<th>".$LANG['plugin_fusioninventory']["prt_history"][22]." :</th></tr>";
+		echo "<th>".$LANG['plugin_fusioninventory']['prt_history'][21]." :</th>";
+		echo "<th>".$LANG['plugin_fusioninventory']['prt_history'][22]." :</th></tr>";
 
 		for ($i=0 ; $i<$limit ; $i++) {
 			echo "<tr class='tab_bg_1'>";
@@ -294,12 +294,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][31]."&nbsp;:</td>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']['prt_history'][31]."&nbsp;:</td>";
       echo "<td class='left' colspan='2'>";
-      $elementsTime=array('day'=>$LANG['plugin_fusioninventory']["prt_history"][34],
-                          'week'=>$LANG['plugin_fusioninventory']["prt_history"][35],
-                          'month'=>$LANG['plugin_fusioninventory']["prt_history"][36],
-                          'year'=>$LANG['plugin_fusioninventory']["prt_history"][37]);
+      $elementsTime=array('day'=>$LANG['plugin_fusioninventory']['prt_history'][34],
+                          'week'=>$LANG['plugin_fusioninventory']['prt_history'][35],
+                          'month'=>$LANG['plugin_fusioninventory']['prt_history'][36],
+                          'year'=>$LANG['plugin_fusioninventory']['prt_history'][37]);
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
                               array('value'=>$timeUnit));
       echo "</td>";
@@ -331,7 +331,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][32]."&nbsp;:</td>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']['prt_history'][32]."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersused = array();
       foreach($printersView as $printer_id=>$name) {
@@ -347,7 +347,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['plugin_fusioninventory']["prt_history"][33]."&nbsp;:</td>";
+      echo "<td class='left'>".$LANG['plugin_fusioninventory']['prt_history'][33]."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersTmp = $printersView;
       $printersTmp[0] = "-----";

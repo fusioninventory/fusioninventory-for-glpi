@@ -420,7 +420,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONTENT : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONTENT : '.$child->getName()."\n";
          }
       }
       return $errors;
@@ -465,7 +465,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $this->type = 'NetworkEquipment';
             break;
          default:
-            $errors.=$LANG['plugin_fusioninventory']["errors"][22].' TYPE : '
+            $errors.=$LANG['plugin_fusioninventory']['errors'][22].' TYPE : '
                               .$p_xml->INFO->TYPE."\n";
       }
       if (isset($p_xml->ERROR)) {
@@ -504,7 +504,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                         break;
                      }
                   default :
-                     $errors.=$LANG['plugin_fusioninventory']["errors"][22].' DEVICE : '
+                     $errors.=$LANG['plugin_fusioninventory']['errors'][22].' DEVICE : '
                               .$child->getName()."\n";
                }
             }
@@ -640,7 +640,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors.=$this->importIps($child);
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' INFO : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
          }
       }
       return $errors;
@@ -700,7 +700,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' INFO : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
          }
       }
       
@@ -743,7 +743,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                }
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' IPS : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' IPS : '.$child->getName()."\n";
          }
       }
       $this->ptd->saveIfaddrs();
@@ -772,7 +772,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                }
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' PORTS : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORTS : '.$child->getName()."\n";
          }
       }
       return $errors;
@@ -884,7 +884,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $ptp->setValue(strtolower($name), $p_port->$name);
                   break;
                default :
-                  $errors.=$LANG['plugin_fusioninventory']["errors"][22].' PORT : '.$name."\n";
+                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
          }
          $this->ptd->addPort($ptp, $portIndex);
@@ -935,7 +935,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                case 'IFTYPE' : // already managed
                   break;
                default :
-                  $errors.=$LANG['plugin_fusioninventory']["errors"][22].' PORT : '.$name."\n";
+                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
          }
          $this->ptd->addPort($ptp, $portIndex);
@@ -988,7 +988,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $this->ptd->addCartridge($ptc, $cartridgeIndex);
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CARTRIDGES : '.$name."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CARTRIDGES : '.$name."\n";
          }
       }
       return $errors;
@@ -1044,7 +1044,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors.=$this->ptd->addPageCounter('pages_total_fax', $child);
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' PAGECOUNTERS : '.$name."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PAGECOUNTERS : '.$name."\n";
          }
       }
       return $errors;
@@ -1069,7 +1069,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ($cdp==1) {
             $p_oPort->setCDP();
          } else {
-            $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTIONS : CDP='.$cdp."\n";
+            $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : CDP='.$cdp."\n";
          }
       }
       $count = 0;
@@ -1082,7 +1082,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors.=$this->importConnection($child, $p_oPort, $cdp);
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTIONS : '
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTIONS : '
                         .$child->getName()."\n";
          }
       }
@@ -1131,7 +1131,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $ifdescr=$child;
                   break;
                default :
-                  $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
             }
          }
@@ -1149,7 +1149,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $p_oPort->addIp($ip);
                   break;
                default :
-                  $errors.=$LANG['plugin_fusioninventory']["errors"][22].' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
             }
          }
@@ -1182,7 +1182,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $errors.=$this->importVlan($child, $p_oPort);
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' VLANS : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' VLANS : '.$child->getName()."\n";
          }
       }
       return $errors;
@@ -1208,7 +1208,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $name=$child;
                break;
             default :
-               $errors.=$LANG['plugin_fusioninventory']["errors"][22].' VLAN : '.$child->getName()."\n";
+               $errors.=$LANG['plugin_fusioninventory']['errors'][22].' VLAN : '.$child->getName()."\n";
          }
       }
       $p_oPort->addVlan($number, $name);

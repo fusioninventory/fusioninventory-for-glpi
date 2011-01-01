@@ -38,7 +38,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $PluginFusinvsnmpStateDiscovery = new PluginFusinvsnmpStateDiscovery;
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","statediscovery");
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","statediscovery");
 
 //PluginFusioninventoryProfile::checkRight("fusinvsnmp", "statediscovery","r");
 

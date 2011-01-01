@@ -514,7 +514,7 @@ function appear_array(id){
       if ($_SESSION["glpilanguage"] == "fr_FR") {
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
       }
-      echo " <a href='".$url_legend."'>[ ".$LANG['plugin_fusioninventory']["functionalities"][6]." ]</a>";
+      echo " <a href='".$url_legend."'>[ ".$LANG['plugin_fusioninventory']['functionalities'][6]." ]</a>";
 		echo "</th>";
 		echo "</tr>";
 
@@ -574,7 +574,7 @@ function appear_array(id){
 					break;
 
 				case 11 :
-					echo $LANG['plugin_fusioninventory']["mapping"][115];
+					echo $LANG['plugin_fusioninventory']['mapping'][115];
 					break;
 
 				case 12 :

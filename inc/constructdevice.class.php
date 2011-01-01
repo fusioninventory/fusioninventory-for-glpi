@@ -287,7 +287,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            echo "</tr>";
                            echo "<tr>";
                            echo "<th>";
-                           echo $LANG['plugin_fusioninventory']["mib"][9]." : ";
+                           echo $LANG['plugin_fusioninventory']['mib'][9]." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["vlan"] == "1") {
                                  echo "<a href='".$target."?id=".$id."&vlan_update=".$oid_id_before."'>";
@@ -305,7 +305,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            }
                            echo "</th>";
                            echo "<th>";
-                           echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
+                           echo $LANG['plugin_fusioninventory']['mib'][6]." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_counter"] == "1") {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -317,7 +317,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            }
                            echo "</th>";
                            echo "<th>";
-                           echo $LANG['plugin_fusioninventory']["mib"][7]." : ";
+                           echo $LANG['plugin_fusioninventory']['mib'][7]." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_dyn"] == "1") {
                                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -331,7 +331,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            echo "</tr>";
                            echo "<tr>";
                            echo "<th colspan='3'>";
-                           echo $LANG['plugin_fusioninventory']["mib"][8]." : ";
+                           echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
                            if (isset($a_mibs['id'])) {
                               if ($a_mibs["oid_port_counter"] == "0") {
                                  $mapping = new PluginFusioninventoryMapping;
@@ -355,7 +355,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                               foreach ($maps as $mapfields) {
                                  if (($type_model == $type) OR ($type_model == "0")) {
                                     $types[$type."||".$mapfields['name']]=
-                                       $LANG['plugin_fusioninventory']["mapping"]
+                                       $LANG['plugin_fusioninventory']['mapping']
                                           [$mapfields["locale"]].
                                        " (".$mapfields['name'].")";
                                  }
@@ -411,7 +411,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                echo "</tr>";
                echo "<tr>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']["mib"][9]." : ";
+               echo $LANG['plugin_fusioninventory']['mib'][9]." : ";
                if (isset($a_mibs['id'])) {
                   if ($a_mibs["vlan"] == "1") {
                      echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -427,17 +427,17 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                }
                echo "</th>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']["mib"][6]." : ";
+               echo $LANG['plugin_fusioninventory']['mib'][6]." : ";
                Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
                echo "</th>";
                echo "<th>";
-               echo $LANG['plugin_fusioninventory']["mib"][7]." : ";
+               echo $LANG['plugin_fusioninventory']['mib'][7]." : ";
                Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
                echo "</th>";
                echo "</tr>";
                echo "<tr>";
                echo "<th colspan='3'>";
-               echo $LANG['plugin_fusioninventory']["mib"][8]." : ";
+               echo $LANG['plugin_fusioninventory']['mib'][8]." : ";
                if (isset($a_mibs['id'])) {
                   if ($a_mibs["oid_port_counter"] == "0") {
                      $mapping = new PluginFusioninventoryMapping;
@@ -463,7 +463,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   foreach ($maps as $mapfields) {
                      if (($type_model == $type) OR ($type_model == "0")) {
                         $types[$type."||".$mapfields['name']]=
-                           $LANG['plugin_fusioninventory']["mapping"]
+                           $LANG['plugin_fusioninventory']['mapping']
                               [$mapfields["locale"]].
                            " (".$mapfields['name'].")";
                      }

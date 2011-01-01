@@ -40,7 +40,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "reports","r");
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER['PHP_SELF'],"utils","report");
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER['PHP_SELF'],"utils","report");
 
 
 if (isset($_GET["networkports_id"])) {

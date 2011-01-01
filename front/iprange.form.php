@@ -38,7 +38,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $iprange = new PluginFusinvsnmpIPRange;
 
-commonHeader($LANG['plugin_fusioninventory']["title"][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","iprange");
+commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","iprange");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "iprange","r");
 
