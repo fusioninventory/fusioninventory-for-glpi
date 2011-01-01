@@ -391,7 +391,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][4];
+      echo $LANG['plugin_fusinvsnmp']['snmp'][4];
       echo "</td>";
       echo "<td>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
@@ -399,7 +399,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</textarea>";
       echo "</td>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][53]."&nbsp;:";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo convDateTime($this->oFusionInventory_printer->fields['last_fusioninventory_update']);
@@ -407,7 +407,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']["model_info"][4]."&nbsp;:</td>";
+		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -432,14 +432,14 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "<input type='submit' name='GetRightModel'
-              value='".$LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/>";
+              value='".$LANG['plugin_fusinvsnmp']['model_info'][13]."' class='submit'/>";
       echo "</td>";
       echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["functionalities"][43]."&nbsp;:</td>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
 		echo "<td align='center'>";
       PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
 		echo "</td>";

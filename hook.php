@@ -41,7 +41,7 @@
 //	$config = new PluginFusinvsnmpConfig;
 //
 //	// Part header
-//	$sopt['PluginFusinvsnmpModel']['common'] = $LANG['plugin_fusinvsnmp']["profile"][19];
+//	$sopt['PluginFusinvsnmpModel']['common'] = $LANG['plugin_fusinvsnmp']['profile'][19];
 //
 //	$sopt['PluginFusinvsnmpModel'][1]['table'] = 'glpi_plugin_fusinvsnmp_models';
 //	$sopt['PluginFusinvsnmpModel'][1]['field'] = 'name';
@@ -67,20 +67,20 @@
 //	$sopt['PluginFusinvsnmpModel'][6]['table'] = 'glpi_plugin_fusinvsnmp_models';
 //	$sopt['PluginFusinvsnmpModel'][6]['field'] = 'is_active';
 //	$sopt['PluginFusinvsnmpModel'][6]['linkfield'] = 'is_active';
-//	$sopt['PluginFusinvsnmpModel'][6]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][11];
+//	$sopt['PluginFusinvsnmpModel'][6]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][11];
 //	$sopt['PluginFusinvsnmpModel'][6]['datatype']='bool';
 //
 //	$sopt['PluginFusinvsnmpModel'][7]['table'] = 'glpi_plugin_fusinvsnmp_models';
 //	$sopt['PluginFusinvsnmpModel'][7]['field'] = 'discovery_key';
 //	$sopt['PluginFusinvsnmpModel'][7]['linkfield'] = 'discovery_key';
-//	$sopt['PluginFusinvsnmpModel'][7]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][12];
+//	$sopt['PluginFusinvsnmpModel'][7]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][12];
 //
 //	$sopt['PluginFusinvsnmpModel'][8]['table'] = 'glpi_plugin_fusinvsnmp_models';
 //	$sopt['PluginFusinvsnmpModel'][8]['field'] = 'comment';
 //	$sopt['PluginFusinvsnmpModel'][8]['linkfield'] = 'comment';
 //	$sopt['PluginFusinvsnmpModel'][8]['name'] = $LANG['common'][25];
 //
-//	$sopt['PluginFusinvsnmpConfigSecurity']['common'] = $LANG['plugin_fusinvsnmp']["profile"][22];
+//	$sopt['PluginFusinvsnmpConfigSecurity']['common'] = $LANG['plugin_fusinvsnmp']['profile'][22];
 //
 //	$sopt['PluginFusinvsnmpConfigSecurity'][1]['table'] = 'glpi_plugin_fusinvsnmp_configsecurities';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][1]['field'] = 'name';
@@ -96,39 +96,39 @@
 //	$sopt['PluginFusinvsnmpConfigSecurity'][3]['table'] = 'glpi_plugin_fusinvsnmp_snmpversions';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][3]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][3]['linkfield'] = 'plugin_fusinvsnmp_snmpversions_id';
-//	$sopt['PluginFusinvsnmpConfigSecurity'][3]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][2];
+//	$sopt['PluginFusinvsnmpConfigSecurity'][3]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][2];
 //
 //	$sopt['PluginFusinvsnmpConfigSecurity'][4]['table'] = 'glpi_plugin_fusinvsnmp_configsecurities';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][4]['field'] = 'community';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][4]['linkfield'] = 'community';
-//	$sopt['PluginFusinvsnmpConfigSecurity'][4]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][1];
+//	$sopt['PluginFusinvsnmpConfigSecurity'][4]['name'] = $LANG['plugin_fusinvsnmp']['snmpauth'][1];
 //
 //	$sopt['PluginFusinvsnmpConfigSecurity'][5]['table'] = 'glpi_plugin_fusinvsnmp_configsecurities';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][5]['field'] = 'username';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][5]['linkfield'] = 'username';
-//	$sopt['PluginFusinvsnmpConfigSecurity'][5]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][2];
+//	$sopt['PluginFusinvsnmpConfigSecurity'][5]['name'] = $LANG['plugin_fusinvsnmp']['snmpauth'][2];
 //
 //	$sopt['PluginFusinvsnmpConfigSecurity'][7]['table'] = 'glpi_plugin_fusinvsnmp_snmpprotocolauths';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][7]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][7]['linkfield'] = 'authentication';
-//	$sopt['PluginFusinvsnmpConfigSecurity'][7]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][4];
+//	$sopt['PluginFusinvsnmpConfigSecurity'][7]['name'] = $LANG['plugin_fusinvsnmp']['snmpauth'][4];
 //
 //	$sopt['PluginFusinvsnmpConfigSecurity'][8]['table'] = 'glpi_plugin_fusinvsnmp_configsecurities';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][8]['field'] = 'auth_passphrase';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][8]['linkfield'] = 'auth_passphrase';
-//	$sopt['PluginFusinvsnmpConfigSecurity'][8]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][5];
+//	$sopt['PluginFusinvsnmpConfigSecurity'][8]['name'] = $LANG['plugin_fusinvsnmp']['snmpauth'][5];
 //
 //	$sopt['PluginFusinvsnmpConfigSecurity'][9]['table'] = 'glpi_plugin_fusinvsnmp_snmpprotocolprivs';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][9]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][9]['linkfield'] = 'encryption';
-//	$sopt['PluginFusinvsnmpConfigSecurity'][9]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][6];
+//	$sopt['PluginFusinvsnmpConfigSecurity'][9]['name'] = $LANG['plugin_fusinvsnmp']['snmpauth'][6];
 //
 //	$sopt['PluginFusinvsnmpConfigSecurity'][10]['table'] = 'glpi_plugin_fusinvsnmp_configsecurities';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][10]['field'] = 'priv_passphrase';
 //	$sopt['PluginFusinvsnmpConfigSecurity'][10]['linkfield'] = 'priv_passphrase';
-//	$sopt['PluginFusinvsnmpConfigSecurity'][10]['name'] = $LANG['plugin_fusinvsnmp']["snmpauth"][7];
+//	$sopt['PluginFusinvsnmpConfigSecurity'][10]['name'] = $LANG['plugin_fusinvsnmp']['snmpauth'][7];
 //
-//	$sopt['PluginFusinvsnmpUnknownDevice']['common'] = $LANG['plugin_fusinvsnmp']["menu"][4];
+//	$sopt['PluginFusinvsnmpUnknownDevice']['common'] = $LANG['plugin_fusinvsnmp']['menu'][4];
 //
 //	$sopt['PluginFusinvsnmpUnknownDevice'][1]['table'] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][1]['field'] = 'name';
@@ -140,7 +140,7 @@
 //	$sopt['PluginFusinvsnmpUnknownDevice'][2]['table'] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][2]['field'] = 'dnsname';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][2]['linkfield'] = 'dnsname';
-//	$sopt['PluginFusinvsnmpUnknownDevice'][2]['name'] = $LANG['plugin_fusinvsnmp']["unknown"][0];
+//	$sopt['PluginFusinvsnmpUnknownDevice'][2]['name'] = $LANG['plugin_fusinvsnmp']['unknown'][0];
 //
 //	$sopt['PluginFusinvsnmpUnknownDevice'][3]['table'] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][3]['field'] = 'date_mod';
@@ -186,18 +186,18 @@
 //	$sopt['PluginFusinvsnmpUnknownDevice'][11]['table'] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][11]['field'] = 'snmp';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][11]['linkfield'] = 'snmp';
-//	$sopt['PluginFusinvsnmpUnknownDevice'][11]['name'] = $LANG['plugin_fusinvsnmp']["functionalities"][3];
+//	$sopt['PluginFusinvsnmpUnknownDevice'][11]['name'] = $LANG['plugin_fusinvsnmp']['functionalities'][3];
 //   $sopt['PluginFusinvsnmpUnknownDevice'][11]['datatype']='bool';
 //
 //	$sopt['PluginFusinvsnmpUnknownDevice'][12]['table'] = 'glpi_plugin_fusinvsnmp_models';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][12]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][12]['linkfield'] = 'plugin_fusinvsnmp_models_id';
-//	$sopt['PluginFusinvsnmpUnknownDevice'][12]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][4];
+//	$sopt['PluginFusinvsnmpUnknownDevice'][12]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
 //
 //   $sopt['PluginFusinvsnmpUnknownDevice'][13]['table'] = 'glpi_plugin_fusinvsnmp_configsecurities';
 //   $sopt['PluginFusinvsnmpUnknownDevice'][13]['field'] = 'name';
 //   $sopt['PluginFusinvsnmpUnknownDevice'][13]['linkfield'] = 'plugin_fusinvsnmp_snmpauths_id';
-//   $sopt['PluginFusinvsnmpUnknownDevice'][13]['name'] = $LANG['plugin_fusinvsnmp']["model_info"][3];
+//   $sopt['PluginFusinvsnmpUnknownDevice'][13]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][3];
 //
 //   $sopt['PluginFusinvsnmpUnknownDevice'][14]['table'] = 'glpi_networkports';
 //   $sopt['PluginFusinvsnmpUnknownDevice'][14]['field'] = 'ip';
@@ -214,60 +214,60 @@
 //   $sopt['PluginFusinvsnmpUnknownDevice'][16]['table'] = 'glpi_networkequipments';
 //   $sopt['PluginFusinvsnmpUnknownDevice'][16]['field'] = 'device';
 //   $sopt['PluginFusinvsnmpUnknownDevice'][16]['linkfield'] = 'device';
-//   $sopt['PluginFusinvsnmpUnknownDevice'][16]['name'] = $LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG["reports"][52];
+//   $sopt['PluginFusinvsnmpUnknownDevice'][16]['name'] = $LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG["reports"][52];
 //   //$sopt['PluginFusinvsnmpUnknownDevice'][16]['forcegroupby'] = '1';
 //
 //   $sopt['PluginFusinvsnmpUnknownDevice'][17]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
 //   $sopt['PluginFusinvsnmpUnknownDevice'][17]['field'] = 'id';
 //   $sopt['PluginFusinvsnmpUnknownDevice'][17]['linkfield'] = 'id';
-//   $sopt['PluginFusinvsnmpUnknownDevice'][17]['name'] = $LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG["reports"][46];
+//   $sopt['PluginFusinvsnmpUnknownDevice'][17]['name'] = $LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG["reports"][46];
 //   $sopt['PluginFusinvsnmpUnknownDevice'][17]['forcegroupby'] = '1';
 //
 //	$sopt['PluginFusinvsnmpUnknownDevice'][18]['table'] = 'glpi_networkports';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][18]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][18]['linkfield'] = 'id';
-//	$sopt['PluginFusinvsnmpUnknownDevice'][18]['name'] = $LANG['plugin_fusinvsnmp']["unknown"][1];
+//	$sopt['PluginFusinvsnmpUnknownDevice'][18]['name'] = $LANG['plugin_fusinvsnmp']['unknown'][1];
 //   $sopt['PluginFusinvsnmpUnknownDevice'][18]['forcegroupby']='1';
 //
 //	$sopt['PluginFusinvsnmpUnknownDevice'][19]['table'] = 'glpi_plugin_fusinvsnmp_unknowndevices';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][19]['field'] = 'accepted';
 //	$sopt['PluginFusinvsnmpUnknownDevice'][19]['linkfield'] = 'accepted';
-//	$sopt['PluginFusinvsnmpUnknownDevice'][19]['name'] = $LANG['plugin_fusinvsnmp']["unknown"][2];
+//	$sopt['PluginFusinvsnmpUnknownDevice'][19]['name'] = $LANG['plugin_fusinvsnmp']['unknown'][2];
 //   $sopt['PluginFusinvsnmpUnknownDevice'][19]['datatype']='bool';
 //
-//	$sopt['PluginFusinvsnmpNetworkPort']['common'] = $LANG['plugin_fusinvsnmp']["errors"][0];
+//	$sopt['PluginFusinvsnmpNetworkPort']['common'] = $LANG['plugin_fusinvsnmp']['errors'][0];
 //
 //	$sopt['PluginFusinvsnmpNetworkPort'][1]['name'] = $LANG["common"][16];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][2]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][42];
+//	$sopt['PluginFusinvsnmpNetworkPort'][2]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][42];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][3]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][43];
+//	$sopt['PluginFusinvsnmpNetworkPort'][3]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][43];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][4]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][44];
+//	$sopt['PluginFusinvsnmpNetworkPort'][4]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][44];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][5]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][45];
+//	$sopt['PluginFusinvsnmpNetworkPort'][5]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][45];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][6]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][46];
+//	$sopt['PluginFusinvsnmpNetworkPort'][6]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][46];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][7]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][47];
+//	$sopt['PluginFusinvsnmpNetworkPort'][7]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][47];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][8]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][48];
+//	$sopt['PluginFusinvsnmpNetworkPort'][8]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][48];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][9]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][49];
+//	$sopt['PluginFusinvsnmpNetworkPort'][9]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][49];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][10]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][51];
+//	$sopt['PluginFusinvsnmpNetworkPort'][10]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][51];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][11]['name'] = $LANG['plugin_fusinvsnmp']["mapping"][115];
+//	$sopt['PluginFusinvsnmpNetworkPort'][11]['name'] = $LANG['plugin_fusinvsnmp']['mapping'][115];
 //
 //	$sopt['PluginFusinvsnmpNetworkPort'][12]['name'] = $LANG["networking"][17];
 //
-//	$sopt['PluginFusinvsnmpNetworkPort'][13]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][50];
+//	$sopt['PluginFusinvsnmpNetworkPort'][13]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][50];
 //
 //	$sopt['PluginFusinvsnmpNetworkPort'][14]['name'] = $LANG["networking"][56];
 //
-//   $sopt['PluginFusinvsnmpNetworkPort'][15]['name'] = $LANG['plugin_fusinvsnmp']["snmp"][41];
+//   $sopt['PluginFusinvsnmpNetworkPort'][15]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][41];
 //
-//	$sopt['PluginFusinvsnmpIPRange']['common'] = $LANG['plugin_fusinvsnmp']["profile"][25];
+//	$sopt['PluginFusinvsnmpIPRange']['common'] = $LANG['plugin_fusinvsnmp']['profile'][25];
 //
 //	$sopt['PluginFusinvsnmpIPRange'][1]['table'] = 'glpi_plugin_fusinvsnmp_ipranges';
 //	$sopt['PluginFusinvsnmpIPRange'][1]['field'] = 'name';
@@ -278,12 +278,12 @@
 //	$sopt['PluginFusinvsnmpIPRange'][2]['table'] = 'glpi_plugin_fusinvsnmp_ipranges';
 //	$sopt['PluginFusinvsnmpIPRange'][2]['field'] = 'ifaddr_start';
 //	$sopt['PluginFusinvsnmpIPRange'][2]['linkfield'] = 'ifaddr_start';
-//	$sopt['PluginFusinvsnmpIPRange'][2]['name'] = $LANG['plugin_fusinvsnmp']["iprange"][0];
+//	$sopt['PluginFusinvsnmpIPRange'][2]['name'] = $LANG['plugin_fusinvsnmp']['iprange'][0];
 //
 //	$sopt['PluginFusinvsnmpIPRange'][3]['table'] = 'glpi_plugin_fusinvsnmp_ipranges';
 //	$sopt['PluginFusinvsnmpIPRange'][3]['field'] = 'ifaddr_end';
 //	$sopt['PluginFusinvsnmpIPRange'][3]['linkfield'] = 'ifaddr_end';
-//	$sopt['PluginFusinvsnmpIPRange'][3]['name'] = $LANG['plugin_fusinvsnmp']["iprange"][1];
+//	$sopt['PluginFusinvsnmpIPRange'][3]['name'] = $LANG['plugin_fusinvsnmp']['iprange'][1];
 //
 //	$sopt['PluginFusinvsnmpIPRange'][30]['table'] = 'glpi_plugin_fusinvsnmp_ipranges';
 //	$sopt['PluginFusinvsnmpIPRange'][30]['field'] = 'id';
@@ -293,7 +293,7 @@
 //	$sopt['PluginFusinvsnmpIPRange'][5]['table'] = 'glpi_plugin_fusinvsnmp_agents';
 //	$sopt['PluginFusinvsnmpIPRange'][5]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpIPRange'][5]['linkfield'] = 'plugin_fusinvsnmp_agents_id_discover';
-//	$sopt['PluginFusinvsnmpIPRange'][5]['name'] = $LANG['plugin_fusinvsnmp']["agents"][12];
+//	$sopt['PluginFusinvsnmpIPRange'][5]['name'] = $LANG['plugin_fusinvsnmp']['agents'][12];
 //	$sopt['PluginFusinvsnmpIPRange'][5]['datatype']='itemlink';
 //	$sopt['PluginFusinvsnmpIPRange'][5]['itemlink_type']='PluginFusinvsnmpAgent';
 //   $sopt['PluginFusinvsnmpIPRange'][5]['forcegroupby']='1';
@@ -301,13 +301,13 @@
 //	$sopt['PluginFusinvsnmpIPRange'][6]['table'] = 'glpi_plugin_fusinvsnmp_ipranges';
 //	$sopt['PluginFusinvsnmpIPRange'][6]['field'] = 'discover';
 //	$sopt['PluginFusinvsnmpIPRange'][6]['linkfield'] = 'discover';
-//	$sopt['PluginFusinvsnmpIPRange'][6]['name'] = $LANG['plugin_fusinvsnmp']["discovery"][3];
+//	$sopt['PluginFusinvsnmpIPRange'][6]['name'] = $LANG['plugin_fusinvsnmp']['discovery'][3];
 //   $sopt['PluginFusinvsnmpIPRange'][6]['datatype']='bool';
 //
 //	$sopt['PluginFusinvsnmpIPRange'][7]['table'] = 'glpi_plugin_fusinvsnmp_ipranges';
 //	$sopt['PluginFusinvsnmpIPRange'][7]['field'] = 'query';
 //	$sopt['PluginFusinvsnmpIPRange'][7]['linkfield'] = 'query';
-//	$sopt['PluginFusinvsnmpIPRange'][7]['name'] = $LANG['plugin_fusinvsnmp']["iprange"][3];
+//	$sopt['PluginFusinvsnmpIPRange'][7]['name'] = $LANG['plugin_fusinvsnmp']['iprange'][3];
 //   $sopt['PluginFusinvsnmpIPRange'][7]['datatype']='bool';
 //
 //	$sopt['PluginFusinvsnmpIPRange'][8]['table'] = 'glpi_entities';
@@ -318,12 +318,12 @@
 //	$sopt['PluginFusinvsnmpIPRange'][9]['table'] = 'glpi_plugin_fusinvsnmp_agents';
 //	$sopt['PluginFusinvsnmpIPRange'][9]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpIPRange'][9]['linkfield'] = 'plugin_fusinvsnmp_agents_id_query';
-//	$sopt['PluginFusinvsnmpIPRange'][9]['name'] = $LANG['plugin_fusinvsnmp']["agents"][13];
+//	$sopt['PluginFusinvsnmpIPRange'][9]['name'] = $LANG['plugin_fusinvsnmp']['agents'][13];
 //	$sopt['PluginFusinvsnmpIPRange'][9]['datatype']='itemlink';
 //	$sopt['PluginFusinvsnmpIPRange'][9]['itemlink_type']='PluginFusinvsnmpAgent';
 //   $sopt['PluginFusinvsnmpIPRange'][9]['forcegroupby']='1';
 //
-//	$sopt['PluginFusinvsnmpNetworkPortLog']['common'] = $LANG['plugin_fusinvsnmp']["title"][2];
+//	$sopt['PluginFusinvsnmpNetworkPortLog']['common'] = $LANG['plugin_fusinvsnmp']['title'][2];
 //
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][1]['table'] = 'glpi_plugin_fusinvsnmp_networkportlogs';
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][1]['field'] = 'id';
@@ -343,12 +343,12 @@
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][4]['table'] = 'glpi_plugin_fusinvsnmp_networkportlogs';
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][4]['field'] = 'old_value';
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][4]['linkfield'] = 'old_value';
-//	$sopt['PluginFusinvsnmpNetworkPortLog'][4]['name'] = $LANG['plugin_fusinvsnmp']["history"][0];
+//	$sopt['PluginFusinvsnmpNetworkPortLog'][4]['name'] = $LANG['plugin_fusinvsnmp']['history'][0];
 //
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][5]['table'] = 'glpi_plugin_fusinvsnmp_networkportlogs';
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][5]['field'] = 'new_value';
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][5]['linkfield'] = 'new_value';
-//	$sopt['PluginFusinvsnmpNetworkPortLog'][5]['name'] = $LANG['plugin_fusinvsnmp']["history"][1];
+//	$sopt['PluginFusinvsnmpNetworkPortLog'][5]['name'] = $LANG['plugin_fusinvsnmp']['history'][1];
 //
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][6]['table'] = 'glpi_plugin_fusinvsnmp_networkportlogs';
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][6]['field'] = 'date_mod';
@@ -357,7 +357,7 @@
 //	$sopt['PluginFusinvsnmpNetworkPortLog'][6]['datatype']='datetime';
 //
 //
-//	$sopt['PluginFusinvsnmpNetworkport']['common'] = $LANG['plugin_fusinvsnmp']["profile"][28];
+//	$sopt['PluginFusinvsnmpNetworkport']['common'] = $LANG['plugin_fusinvsnmp']['profile'][28];
 //
 //	$sopt['PluginFusinvsnmpNetworkport'][30]['table'] = 'glpi_plugin_fusinvsnmp_networkports';
 //	$sopt['PluginFusinvsnmpNetworkport'][30]['field'] = 'id';
@@ -383,80 +383,80 @@
 //	$sopt[NETWORKING_TYPE][5190]['table']='glpi_plugin_fusinvsnmp_models';
 //	$sopt[NETWORKING_TYPE][5190]['field']='id';
 //	$sopt[NETWORKING_TYPE][5190]['linkfield']='id';
-//	$sopt[NETWORKING_TYPE][5190]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][19];
+//	$sopt[NETWORKING_TYPE][5190]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['profile'][19];
 //
 //	if ($config->getValue("storagesnmpauth") == "file") {
 //		$sopt[NETWORKING_TYPE][5191]['table'] = 'glpi_plugin_fusinvsnmp_networkequipments';
 //		$sopt[NETWORKING_TYPE][5191]['field'] = 'plugin_fusinvsnmp_snmpauths_id';
 //		$sopt[NETWORKING_TYPE][5191]['linkfield'] = 'id';
-//		$sopt[NETWORKING_TYPE][5191]['name'] = $LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][20];
+//		$sopt[NETWORKING_TYPE][5191]['name'] = $LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['profile'][20];
 //	} else {
 //		$sopt[NETWORKING_TYPE][5191]['table']='glpi_plugin_fusinvsnmp_configsecurities';
 //		$sopt[NETWORKING_TYPE][5191]['field']='name';
 //		$sopt[NETWORKING_TYPE][5191]['linkfield']='id';
-//		$sopt[NETWORKING_TYPE][5191]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][20];
+//		$sopt[NETWORKING_TYPE][5191]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['profile'][20];
 //	}
 //
 //	$sopt[NETWORKING_TYPE][5194]['table']='glpi_plugin_fusinvsnmp_networkequipments';
 //	$sopt[NETWORKING_TYPE][5194]['field']='networkequipments_id';
 //	$sopt[NETWORKING_TYPE][5194]['linkfield']='id';
-//	$sopt[NETWORKING_TYPE][5194]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["snmp"][53];
+//	$sopt[NETWORKING_TYPE][5194]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['snmp'][53];
 //
 //	$sopt[NETWORKING_TYPE][5195]['table']='glpi_plugin_fusinvsnmp_networkequipments';
 //	$sopt[NETWORKING_TYPE][5195]['field']='cpu';
 //	$sopt[NETWORKING_TYPE][5195]['linkfield']='id';
-//	$sopt[NETWORKING_TYPE][5195]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["snmp"][13];
+//	$sopt[NETWORKING_TYPE][5195]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['snmp'][13];
 //
 //
 //	$sopt[PRINTER_TYPE][5190]['table']='glpi_plugin_fusinvsnmp_models';
 //	$sopt[PRINTER_TYPE][5190]['field']='id';
 //	$sopt[PRINTER_TYPE][5190]['linkfield']='id';
-//	$sopt[PRINTER_TYPE][5190]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][19];
+//	$sopt[PRINTER_TYPE][5190]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['profile'][19];
 //
 //	if ($config->getValue("storagesnmpauth") == "file") {
 //		$sopt[PRINTER_TYPE][5191]['table'] = 'glpi_plugin_fusinvsnmp_printers';
 //		$sopt[PRINTER_TYPE][5191]['field'] = 'plugin_fusinvsnmp_snmpauths_id';
 //		$sopt[PRINTER_TYPE][5191]['linkfield'] = 'id';
-//		$sopt[PRINTER_TYPE][5191]['name'] = $LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][20];
+//		$sopt[PRINTER_TYPE][5191]['name'] = $LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['profile'][20];
 //	} else {
 //		$sopt[PRINTER_TYPE][5191]['table']='glpi_plugin_fusinvsnmp_configsecurities';
 //		$sopt[PRINTER_TYPE][5191]['field']='id';
 //		$sopt[PRINTER_TYPE][5191]['linkfield']='id';
-//		$sopt[PRINTER_TYPE][5191]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["profile"][20];
+//		$sopt[PRINTER_TYPE][5191]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['profile'][20];
 //	}
 //
 //	$sopt[PRINTER_TYPE][5194]['table']='glpi_plugin_fusinvsnmp_printers';
 //	$sopt[PRINTER_TYPE][5194]['field']='printers_id';
 //	$sopt[PRINTER_TYPE][5194]['linkfield']='id';
-//	$sopt[PRINTER_TYPE][5194]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG['plugin_fusinvsnmp']["snmp"][53];
+//	$sopt[PRINTER_TYPE][5194]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG['plugin_fusinvsnmp']['snmp'][53];
 //
 //	$sopt[PRINTER_TYPE][5196]['table']='glpi_plugin_fusinvsnmp_networkequipments';
 //	$sopt[PRINTER_TYPE][5196]['field']='id';
 //	$sopt[PRINTER_TYPE][5196]['linkfield']='id';
-//	$sopt[PRINTER_TYPE][5196]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG["reports"][52];
+//	$sopt[PRINTER_TYPE][5196]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG["reports"][52];
 //	$sopt[PRINTER_TYPE][5196]['forcegroupby']='1';
 //
 //	$sopt[PRINTER_TYPE][5197]['table']='glpi_plugin_fusinvsnmp_networkports';
 //	$sopt[PRINTER_TYPE][5197]['field']='id';
 //	$sopt[PRINTER_TYPE][5197]['linkfield']='id';
-//	$sopt[PRINTER_TYPE][5197]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG["reports"][46];
+//	$sopt[PRINTER_TYPE][5197]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG["reports"][46];
 //	$sopt[PRINTER_TYPE][5197]['forcegroupby']='1';
 //
 //	$sopt[COMPUTER_TYPE][5192]['table']='glpi_plugin_fusinvsnmp_networkequipments';
 //	$sopt[COMPUTER_TYPE][5192]['field']='id';
 //	$sopt[COMPUTER_TYPE][5192]['linkfield']='id';
-//	$sopt[COMPUTER_TYPE][5192]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG["reports"][52];
+//	$sopt[COMPUTER_TYPE][5192]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG["reports"][52];
 //	$sopt[COMPUTER_TYPE][5192]['forcegroupby']='1';
 //
 //	$sopt[COMPUTER_TYPE][5193]['table']='glpi_plugin_fusinvsnmp_networkports';
 //	$sopt[COMPUTER_TYPE][5193]['field']='id';
 //	$sopt[COMPUTER_TYPE][5193]['linkfield']='id';
-//	$sopt[COMPUTER_TYPE][5193]['name']=$LANG['plugin_fusinvsnmp']["title"][0]." - ".$LANG["reports"][46];
+//	$sopt[COMPUTER_TYPE][5193]['name']=$LANG['plugin_fusinvsnmp']['title'][0]." - ".$LANG["reports"][46];
 //	$sopt[COMPUTER_TYPE][5193]['forcegroupby']='1';
 //
 //
 //
-//	$sopt['PluginFusinvsnmpConstructDevices']['common'] = $LANG['plugin_fusinvsnmp']["constructdevice"][0];
+//	$sopt['PluginFusinvsnmpConstructDevices']['common'] = $LANG['plugin_fusinvsnmp']['constructdevice'][0];
 //
 //	$sopt['PluginFusinvsnmpConstructDevices'][1]['table'] = 'glpi_plugin_fusinvsnmp_constructdevices';
 //	$sopt['PluginFusinvsnmpConstructDevices'][1]['field'] = 'id';
@@ -496,7 +496,7 @@
 //	$sopt['PluginFusinvsnmpConstructDevices'][7]['table'] = 'glpi_plugin_fusinvsnmp_models';
 //	$sopt['PluginFusinvsnmpConstructDevices'][7]['field'] = 'name';
 //	$sopt['PluginFusinvsnmpConstructDevices'][7]['linkfield'] = 'snmpmodel_id';
-//	$sopt['PluginFusinvsnmpConstructDevices'][7]['name'] = $LANG['plugin_fusinvsnmp']["profile"][24];
+//	$sopt['PluginFusinvsnmpConstructDevices'][7]['name'] = $LANG['plugin_fusinvsnmp']['profile'][24];
 //   $sopt['PluginFusinvsnmpConstructDevices'][7]['datatype']='itemptype';
 //
 //
@@ -1002,7 +1002,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 				$array = array ();
             //return array(
             if (($config->is_active('fusioninventory', 'remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
-               $array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
+               $array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
             }
 				//}
 
@@ -1027,7 +1027,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          } else {
             $array = array ();
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment", "r")) {
-					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
+					$array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
 				}
             if ($_GET['id'] > 0) {
                $array[2] = $LANG['plugin_fusinvsnmp']['xml'][0];
@@ -1044,7 +1044,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
          } else {
             $array = array ();
 				if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
-					$array[1] = $LANG['plugin_fusinvsnmp']["title"][0];
+					$array[1] = $LANG['plugin_fusinvsnmp']['title'][0];
 				}
             if ($_GET['id'] > 0) {
                $array[2] = $LANG['plugin_fusinvsnmp']['xml'][0];
@@ -1055,7 +1055,7 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
 
        case 'PluginFusioninventoryAgent' :
           $array = array ();
-          $array[1] = $LANG['plugin_fusinvsnmp']["agents"][24];
+          $array[1] = $LANG['plugin_fusinvsnmp']['agents'][24];
           return $array;
           break;
 
@@ -1150,7 +1150,7 @@ function plugin_headings_fusinvsnmp_xml($item) {
       $xml = str_replace("\n", "<br/>", $xml);
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th>".$LANG['plugin_fusinvinventory']["xml"][0];
+      echo "<th>".$LANG['plugin_fusinvsnmp']['xml'][0];
       echo " (".$LANG['common'][26]."&nbsp;: " . convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type.$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
@@ -1173,17 +1173,17 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 	switch ($type) {
 		case NETWORKING_TYPE :
 			return array (
-            "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']["model_info"][14],
-				"plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']["massiveaction"][1],
-				"plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']["massiveaction"][2]
+            "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']['model_info'][14],
+				"plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
+				"plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']['massiveaction'][2]
 			);
 			break;
 
 		case PRINTER_TYPE :
 			return array (
-            "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']["model_info"][14],
-				"plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']["massiveaction"][1],
-				"plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']["massiveaction"][2]
+            "plugin_fusinvsnmp_get_model" => $LANG['plugin_fusinvsnmp']['model_info'][14],
+				"plugin_fusinvsnmp_assign_model" => $LANG['plugin_fusinvsnmp']['massiveaction'][1],
+				"plugin_fusinvsnmp_assign_auth" => $LANG['plugin_fusinvsnmp']['massiveaction'][2]
 			);
 			break;
 
@@ -1355,8 +1355,8 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                   list($Import, $NoImport) = PluginFusinvsnmpDiscovery::import($key,$Import,$NoImport);
                }
             }
-            addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["discovery"][5]." : ".$Import);
-            addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["discovery"][9]." : ".$NoImport);
+            addMessageAfterRedirect($LANG['plugin_fusinvsnmp']['discovery'][5]." : ".$Import);
+            addMessageAfterRedirect($LANG['plugin_fusinvsnmp']['discovery'][9]." : ".$NoImport);
          }
 			break;
 	}

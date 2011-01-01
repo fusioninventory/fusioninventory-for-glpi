@@ -596,7 +596,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $text .= "</tr>";
 
       $text .= "<tr class='tab_bg_1'>";
-      $text .= "<th>".$LANG['plugin_fusinvsnmp']["snmp"][50]."</th>";
+      $text .= "<th>".$LANG['plugin_fusinvsnmp']['snmp'][50]."</th>";
       $text .= "<th>".$LANG["common"][1]."</th>";
       $text .= "<th>".$LANG["event"][18]."</th>";
       $text .= "<th></th>";

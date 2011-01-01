@@ -353,7 +353,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 		echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][4]."&nbsp;:";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][4]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
@@ -361,7 +361,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</textarea>";
       echo "</td>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][53]."&nbsp;:";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][53]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
@@ -369,7 +369,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']["model_info"][4]."&nbsp;:</td>";
+		echo "<td align='center' rowspan='2'>".$LANG['plugin_fusinvsnmp']['model_info'][4]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
@@ -387,7 +387,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
                            'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][13]."&nbsp;:";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][13]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       displayProgressBar(250, $this->oFusionInventory_networkequipment->fields['cpu'],
@@ -398,10 +398,10 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "<input type='submit' name='GetRightModel'
-              value='".$LANG['plugin_fusinvsnmp']["model_info"][13]."' class='submit'/>";
+              value='".$LANG['plugin_fusinvsnmp']['model_info'][13]."' class='submit'/>";
       echo "</td>";
       echo "<td align='center'>";
-        echo $LANG['plugin_fusinvsnmp']["snmp"][14]."&nbsp;:";
+        echo $LANG['plugin_fusinvsnmp']['snmp'][14]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $query2 = "SELECT *
@@ -424,12 +424,12 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']["functionalities"][43]."&nbsp;:</td>";
+		echo "<td align='center'>".$LANG['plugin_fusinvsnmp']['functionalities'][43]."&nbsp;:</td>";
 		echo "<td align='center'>";
 		PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
 		echo "</td>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["snmp"][12]."&nbsp;:";
+      echo $LANG['plugin_fusinvsnmp']['snmp'][12]."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $sysUpTime = $this->oFusionInventory_networkequipment->fields['uptime'];
@@ -507,7 +507,7 @@ function appear_array(id){
                       ORDER BY `rank`;";
 		$result_array=$DB->query($query_array);
 		echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
-		echo $LANG['plugin_fusinvsnmp']["snmp"][40];
+		echo $LANG['plugin_fusinvsnmp']['snmp'][40];
       $result=$DB->query($query);
       echo ' ('.$DB->numrows($result).')';
       $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/En_VI_visualisationsdonnees_2_reseau";
@@ -538,39 +538,39 @@ function appear_array(id){
 			echo "<th>";
 			switch ($data_array['num']) {
 				case 2 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][42];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][42];
 					break;
 
 				case 3 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][43];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][43];
 					break;
 
 				case 4 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][44];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][44];
 					break;
 
 				case 5 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][45];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][45];
 					break;
 
 				case 6 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][46];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][46];
 					break;
 
 				case 7 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][47];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][47];
 					break;
 
 				case 8 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][48];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][48];
 					break;
 
 				case 9 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][49];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][49];
 					break;
 
 				case 10 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][51];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][51];
 					break;
 
 				case 11 :
@@ -582,7 +582,7 @@ function appear_array(id){
 					break;
 
 				case 13 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][50];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][50];
 					break;
 
 				case 14 :
@@ -590,7 +590,7 @@ function appear_array(id){
 					break;
 
             case 15 :
-					echo $LANG['plugin_fusinvsnmp']["snmp"][41];
+					echo $LANG['plugin_fusinvsnmp']['snmp'][41];
 					break;
 
 			}

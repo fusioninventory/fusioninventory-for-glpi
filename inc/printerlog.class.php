@@ -276,7 +276,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          if (!isset($mapfields["shortlocale"])) {
             $mapfields["shortlocale"] = $mapfields["locale"];
          }
-         $pagecounters[$mapfields['name']] = $LANG['plugin_fusinvsnmp']["mapping"][$mapfields["shortlocale"]];
+         $pagecounters[$mapfields['name']] = $LANG['plugin_fusinvsnmp']['mapping'][$mapfields["shortlocale"]];
       }
 
       echo "<tr class='tab_bg_1'>";
@@ -306,10 +306,10 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".$LANG['plugin_fusinvsnmp']["stats"][2]."&nbsp;:</td>";
+      echo "<td class='left'>".$LANG['plugin_fusinvsnmp']['stats'][2]."&nbsp;:</td>";
       echo "<td class='left' colspan='2'>";
-      $elements=array('total'=>$LANG['plugin_fusinvsnmp']["stats"][0],
-                    'day'=>$LANG['plugin_fusinvsnmp']["stats"][1]);
+      $elements=array('total'=>$LANG['plugin_fusinvsnmp']['stats'][0],
+                    'day'=>$LANG['plugin_fusinvsnmp']['stats'][1]);
       Dropdown::showFromArray('graph_type', $elements,
                               array('value'=>$graphType));
       echo "</td>";

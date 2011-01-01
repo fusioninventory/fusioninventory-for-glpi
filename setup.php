@@ -48,10 +48,10 @@ function plugin_init_fusinvsnmp() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-               addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["setup"][17]);
+               addMessageAfterRedirect($LANG['plugin_fusinvsnmp']['setup'][17]);
                break;
             case 'uninstall':
-               addMessageAfterRedirect($LANG['plugin_fusinvsnmp']["setup"][18]);
+               addMessageAfterRedirect($LANG['plugin_fusinvsnmp']['setup'][18]);
                glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
          }
@@ -93,15 +93,15 @@ function plugin_init_fusinvsnmp() {
    
 
 
-   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']["title"][0]])) {
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']["title"][0]] = array('class'=>'PluginFusinvSNMPConfig',
+   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']['title'][0]])) {
+      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][$LANG['plugin_fusinvsnmp']['title'][0]] = array('class'=>'PluginFusinvSNMPConfig',
                                                                 'submitbutton'=>'plugin_fusinvsnmp_config_set',
                                                                 'submitmethod'=>'putForm');
    }
 //   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-//                       [$LANG['plugin_fusinvsnmp']["title"][5]])) {
+//                       [$LANG['plugin_fusinvsnmp']['title'][5]])) {
 //      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp']
-//               [$LANG['plugin_fusinvsnmp']["title"][5]] = array('class'=>'PluginFusinvsnmpConfigLogField',
+//               [$LANG['plugin_fusinvsnmp']['title'][5]] = array('class'=>'PluginFusinvsnmpConfigLogField',
 //                                                                'submitbutton'=>'plugin_fusinvsnmp_configlogfield_set',
 //                                                                'submitmethod'=>'putForm');
 //   }
@@ -136,8 +136,8 @@ function plugin_init_fusinvsnmp() {
 //         $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = 'plugin_item_add_fusinvsnmp';
 
 			$report_list = array();
-         $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']["menu"][5];
-         $report_list["report/ports_date_connections.php"] = $LANG['plugin_fusinvsnmp']["menu"][6];
+         $report_list["report/switch_ports.history.php"] = $LANG['plugin_fusinvsnmp']['menu'][5];
+         $report_list["report/ports_date_connections.php"] = $LANG['plugin_fusinvsnmp']['menu'][6];
 			$PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
 //			if (haveRight("models", "r") || haveRight("configsecurity", "r")) {
@@ -190,7 +190,7 @@ function plugin_init_fusinvsnmp() {
 //               $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']['config'] = 'front/functionalities.form.php';
 //            }
 			}
-//         $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']["<img  src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/books.png' title='".$LANG['plugin_fusinvsnmp']["setup"][16]."' alt='".$LANG['plugin_fusinvsnmp']["setup"][16]."'>"] = 'front/documentation.php';
+//         $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']["<img  src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/books.png' title='".$LANG['plugin_fusinvsnmp']['setup'][16]."' alt='".$LANG['plugin_fusinvsnmp']['setup'][16]."'>"] = 'front/documentation.php';
 		}
 	}
 }
@@ -217,7 +217,7 @@ function plugin_fusinvsnmp_check_prerequisites() {
       }
 		return true;
    } else {
-		echo $LANG['plugin_fusinvsnmp']["errors"][50];
+		echo $LANG['plugin_fusinvsnmp']['errors'][50];
    }
 }
 

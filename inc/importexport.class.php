@@ -106,7 +106,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
 		echo "<br>";
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-		echo $LANG['plugin_fusinvsnmp']["model_info"][10]." :</th></tr>";
+		echo $LANG['plugin_fusinvsnmp']['model_info'][10]." :</th></tr>";
       
 		echo "	<tr class='tab_bg_1'>";
 		echo "		<td align='center'>";
@@ -140,11 +140,11 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
 		echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th>";
-		echo $LANG['plugin_fusinvsnmp']["model_info"][15]." :</th></tr>";
+		echo $LANG['plugin_fusinvsnmp']['model_info'][15]." :</th></tr>";
 
 		echo "	<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
-      echo $LANG['plugin_fusinvsnmp']["model_info"][16]."<br/>";
+      echo $LANG['plugin_fusinvsnmp']['model_info'][16]."<br/>";
 		echo "<input type='hidden' name='massimport' value='1'/>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";

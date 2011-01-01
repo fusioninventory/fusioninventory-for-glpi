@@ -72,35 +72,35 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["model_info"][2] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['model_info'][2] . "</td>";
 		echo "<td align='center'>";
          $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["snmpauth"][1] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][1] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='community' value='" . $this->fields["community"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 		
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["snmpauth"][2] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][2] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='username' value='" . $this->fields["username"] . "'/>";
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["snmpauth"][4] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][4] . "</td>";
 		echo "<td align='center'>";
          $this->showDropdownSNMPAuth($this->fields["authentication"]);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["snmpauth"][5] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][5] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='auth_passphrase'
                    value='".$this->fields["auth_passphrase"]."'/>";
@@ -108,14 +108,14 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["snmpauth"][6] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][6] . "</td>";
 		echo "<td align='center'>";
          $this->showDropdownSNMPEncryption($this->fields["encryption"]);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["snmpauth"][7] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['snmpauth'][7] . "</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='priv_passphrase'
                    value='" . $this->fields["priv_passphrase"] . "'/>";

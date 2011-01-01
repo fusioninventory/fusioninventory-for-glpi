@@ -85,20 +85,20 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                $nb_col++;
             }
             echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-            echo $LANG['plugin_fusinvsnmp']["mib"][5]."</th></tr>";
+            echo $LANG['plugin_fusinvsnmp']['mib'][5]."</th></tr>";
 
             echo "<tr class='tab_bg_1'>";
             echo "<th align='center'></th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][1]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][2]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][3]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][6]."</th>";
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][7]."</th>";
-            echo "<th align='center' width='250'>".$LANG['plugin_fusinvsnmp']["mib"][8]."</th>";
+            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][1]."</th>";
+            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][2]."</th>";
+            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][3]."</th>";
+            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][6]."</th>";
+            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][7]."</th>";
+            echo "<th align='center' width='250'>".$LANG['plugin_fusinvsnmp']['mib'][8]."</th>";
             if ($type_model == NETWORKING_TYPE) {
-               echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][9]."</th>";
+               echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][9]."</th>";
             }
-            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["model_info"][11]."</th>";
+            echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['model_info'][11]."</th>";
 
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
@@ -222,16 +222,16 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
       echo "<br/>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_fusinvsnmp']["mib"][4].
+      echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['plugin_fusinvsnmp']['mib'][4].
                "</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][1]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][2]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][3]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][6]."</th>";
-      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']["mib"][7]."</th>";
-      echo "<th align='center' width='250'>".$LANG['plugin_fusinvsnmp']["mib"][8]."</th>";
+      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][1]."</th>";
+      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][2]."</th>";
+      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][3]."</th>";
+      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][6]."</th>";
+      echo "<th align='center'>".$LANG['plugin_fusinvsnmp']['mib'][7]."</th>";
+      echo "<th align='center' width='250'>".$LANG['plugin_fusinvsnmp']['mib'][8]."</th>";
       if ($type_model == NETWORKING_TYPE) {
          echo "<th align='center'>".$LANG["networking"][56]."</th>";
       }

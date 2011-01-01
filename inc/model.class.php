@@ -64,8 +64,8 @@ class PluginFusinvsnmpModel extends CommonDBTM {
 		echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
 		echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-		echo ($id =='' ? $LANG['plugin_fusinvsnmp']["model_info"][7] :
-            $LANG['plugin_fusinvsnmp']["model_info"][6]);
+		echo ($id =='' ? $LANG['plugin_fusinvsnmp']['model_info'][7] :
+            $LANG['plugin_fusinvsnmp']['model_info'][6]);
 		echo " :</th></tr>";
 
 

@@ -51,10 +51,10 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
             // Permanent task discovery
-            return $LANG['plugin_fusinvsnmp']["task"][15];
+            return $LANG['plugin_fusinvsnmp']['task'][15];
          } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
             // Permanent task inventory
-            return $LANG['plugin_fusinvsnmp']["task"][16];
+            return $LANG['plugin_fusinvsnmp']['task'][16];
          } else {
             return $LANG['plugin_fusinvsnmp']['iprange'][2];
          }
@@ -89,8 +89,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = $LANG['plugin_fusinvsnmp']["task"][15];
-         $ong[2] = $LANG['plugin_fusinvsnmp']["task"][16];
+         $ong[1] = $LANG['plugin_fusinvsnmp']['task'][15];
+         $ong[2] = $LANG['plugin_fusinvsnmp']['task'][16];
          $ong[3] = $LANG['plugin_fusioninventory']['task'][18];
       }
       return $ong;
@@ -121,7 +121,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][0] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][0] . "</td>";
 		echo "<td align='center'>";
       if (empty($this->fields["ip_start"]))
          $this->fields["ip_start"] = "...";
@@ -139,14 +139,14 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 		echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
 		echo "</td>";
 
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][3] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][3] . "</td>";
 		echo "<td align='center'>";
 		Dropdown::showYesNo("discover",$this->fields["discover"]);
 		echo "</td>";
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][1] . "</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][1] . "</td>";
 		echo "<td align='center'>";
       unset($ipexploded);
       if (empty($this->fields["ip_end"]))
@@ -195,7 +195,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          echo "<td colspan='2'></td>";
       }
 
-      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']["iprange"][3] . "</td>";
+      echo "<td align='center'>" . $LANG['plugin_fusinvsnmp']['iprange'][3] . "</td>";
 		echo "<td align='center'>";
 		Dropdown::showYesNo("query",$this->fields["query"]);
 		echo "</td>";
@@ -283,12 +283,12 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       if ($count == '0') {
          return true;
       } else {
-         addMessageAfterRedirect("<font color='#ff0000'>".$LANG['plugin_fusinvsnmp']["iprange"][7].
+         addMessageAfterRedirect("<font color='#ff0000'>".$LANG['plugin_fusinvsnmp']['iprange'][7].
             "</font><br/>".
-            $LANG['plugin_fusinvsnmp']["iprange"][0]." : ".
+            $LANG['plugin_fusinvsnmp']['iprange'][0]." : ".
             $a_input['ip_start0'].".".$a_input['ip_start1'].".".
             $a_input['ip_start2'].".".$a_input['ip_start3']."<br/>".
-            $LANG['plugin_fusinvsnmp']["iprange"][1]." : ".
+            $LANG['plugin_fusinvsnmp']['iprange'][1]." : ".
             $a_input['ip_end0'].".".$a_input['ip_end1'].".".
             $a_input['ip_end2'].".".$a_input['ip_end3']);
          return false;
@@ -376,7 +376,7 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo $LANG['plugin_fusinvsnmp']["agents"][25];
+      echo $LANG['plugin_fusinvsnmp']['agents'][25];
       echo "</td>";
       echo "<td>";
 
