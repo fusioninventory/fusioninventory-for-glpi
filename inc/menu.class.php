@@ -47,26 +47,26 @@ class PluginFusioninventoryMenu {
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
-         $a_menu[0]['name'] = $LANG['plugin_fusioninventory']["menu"][1];
+         $a_menu[0]['name'] = $LANG['plugin_fusioninventory']['menu'][1];
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/agent.php";
       }
 
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")) {
-         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']["task"][1];
+         $a_menu[2]['name'] = $LANG['plugin_fusioninventory']['task'][1];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/task.php";
       }
 
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[3]['name'] = $LANG['plugin_fusioninventory']["menu"][7];
+         $a_menu[3]['name'] = $LANG['plugin_fusioninventory']['menu'][7];
          $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_runningjob.png";
          $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/taskjob.php";
       }
 
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice", "r")) {
-         $a_menu[4]['name'] = $LANG['plugin_fusioninventory']["menu"][4];
+         $a_menu[4]['name'] = $LANG['plugin_fusioninventory']['menu'][4];
          $a_menu[4]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_unknown_device.png";
          $a_menu[4]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/unknowndevice.php";
       }
@@ -145,7 +145,7 @@ class PluginFusioninventoryMenu {
       echo "<table class='tab_cadre'>";
 
       echo "<tr>";
-      echo "<th colspan='".count($a_menu)."'>".$LANG['plugin_'.$plugin_name]["title"][0]."</th>";
+      echo "<th colspan='".count($a_menu)."'>".$LANG['plugin_'.$plugin_name]['title'][0]."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";

@@ -83,7 +83,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][27]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][27]."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showYesNo("ssl_only", $this->is_active($plugins_id, 'ssl_only'));
       echo "</td>";
@@ -95,14 +95,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
        echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][32]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][32]." :</td>";
       echo "<td>";
       Dropdown::showInteger("delete_task",
                             $this->getValue($plugins_id, 'delete_task'),1,240);
       echo " ".$LANG['gmt'][1];
       echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][8]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][8]." :</td>";
       echo "<td>";
       echo "<input type='text' name='agent_port' value='".$this->getValue($plugins_id, 'agent_port')."'/>";
       echo "</td>";

@@ -167,7 +167,7 @@ class PluginFusioninventoryCommunication {
          $moduleCommunication = new $moduleClass;
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {
-         $errors.=$LANG['plugin_fusioninventory']["errors"][22].' QUERY : *'.$xmltag."*\n";
+         $errors.=$LANG['plugin_fusioninventory']['errors'][22].' QUERY : *'.$xmltag."*\n";
       }
       $result=true;
       if ($errors != '') {

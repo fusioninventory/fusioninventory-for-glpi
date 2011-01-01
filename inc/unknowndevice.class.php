@@ -55,7 +55,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusioninventory']["agents"][28];
+      $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
 
 		$tab[1]['table'] = $this->getTable();
 		$tab[1]['field'] = 'name';
@@ -108,7 +108,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $ong[2]=$LANG['buttons'][37];
          $ptc = new PluginFusioninventoryConfig;
          if (($ptc->is_active('fusioninventory', 'remotehttpagent')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
-            $ong[3]=$LANG['plugin_fusioninventory']["task"][2];
+            $ong[3]=$LANG['plugin_fusioninventory']['task'][2];
          }
          $ong[4]=$LANG['title'][38];
       }
@@ -129,11 +129,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->showTabs($options);
       $this->showFormHeader($options);
 
-		$datestring = $LANG["common"][26].": ";
+		$datestring = $LANG['common'][26].": ";
 		$date = convDateTime($this->fields["date_mod"]);
 		echo "<tr>";
 		echo "<th align='center' width='450' colspan='2'>";
-		echo $LANG["common"][2]." ".$this->fields["id"];
+		echo $LANG['common'][2]." ".$this->fields["id"];
 		echo "</th>";
 	
 		echo "<th align='center' colspan='2' width='50'>";
@@ -142,7 +142,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG["common"][16] . "&nbsp;:</td>";
+		echo "<td align='center'>" . $LANG['common'][16] . "&nbsp;:</td>";
 		echo "<td align='center'>";
 		echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
 		echo "</td>";
@@ -228,7 +228,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][2] . " :</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']['unknown'][2] . " :</td>";
 		echo "<td align='center'>";
       Dropdown::showYesNo("accepted", $this->fields["accepted"]);
 		echo "</td>";
@@ -268,7 +268,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "</tr>";
 
 		echo "<tr class='tab_bg_1'>";
-		echo "<td align='center'>" . $LANG['plugin_fusioninventory']["unknown"][4] . " :</td>";
+		echo "<td align='center'>" . $LANG['plugin_fusioninventory']['unknown'][4] . " :</td>";
 		echo "<td align='center'>";
       echo Dropdown::getYesNo($this->fields["hub"]);
 		echo "</td>";

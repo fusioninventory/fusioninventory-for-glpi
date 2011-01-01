@@ -106,13 +106,13 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
          case 'running':
             $search = " AND `state`!='3'";
-            $title = $LANG['plugin_fusioninventory']["task"][19];
+            $title = $LANG['plugin_fusioninventory']['task'][19];
             $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $search = " AND `state`='3'";
-            $title = $LANG['plugin_fusioninventory']["task"][20];
+            $title = $LANG['plugin_fusioninventory']['task'][20];
             $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
@@ -127,13 +127,13 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
                   $a_taskjobs[] = $data;                  
                }
             }
-            $title = $LANG['plugin_fusioninventory']["task"][22];
+            $title = $LANG['plugin_fusioninventory']['task'][22];
             $icon = "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/>";
             break;
 
          case 'all':
             $search = "";
-            $title = $LANG['plugin_fusioninventory']["task"][18];
+            $title = $LANG['plugin_fusioninventory']['task'][18];
             $icon = "";
             break;
 
@@ -175,8 +175,8 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
          echo "<th>";
          $PluginFusioninventoryTask->getFromDB($data['plugin_fusioninventory_tasks_id']);
          
-         echo $LANG['plugin_fusioninventory']["task"][2]." : ".$data['name']." (".
-            $LANG['plugin_fusioninventory']["task"][0]." : ".$PluginFusioninventoryTask->getLink().")";
+         echo $LANG['plugin_fusioninventory']['task'][2]." : ".$data['name']." (".
+            $LANG['plugin_fusioninventory']['task'][0]." : ".$PluginFusioninventoryTask->getLink().")";
          echo "</th>";
          echo "</tr>";
 

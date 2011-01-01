@@ -72,8 +72,8 @@ class PluginFusioninventoryLockable extends CommonDBTM{
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][72]." :</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']["functionalities"][71]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][72]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['functionalities'][71]." :</td>";
       echo "<td></td><td>".$LANG['plugin_fusioninventory']['functionalities'][7]." :</td>";
 
       echo "</tr>";
@@ -106,9 +106,9 @@ class PluginFusioninventoryLockable extends CommonDBTM{
       
       echo "</td><td class='center'>";
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
-         echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_add' value='" . $LANG["buttons"][8] . " >>'>";
+         echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_add' value='" . $LANG['buttons'][8] . " >>'>";
          echo "<br /><br />";
-         echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_delete' value='<< " . $LANG["buttons"][6] . "'>";
+         echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_lockable_delete' value='<< " . $LANG['buttons'][6] . "'>";
       }
       echo "</td><td class='left'>";
       echo "<span id='columnsLockable'>&nbsp;";

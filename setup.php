@@ -114,21 +114,21 @@ function plugin_init_fusioninventory() {
          }
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".GLPI_ROOT."/plugins/fusioninventory/pics/books.png'
-               title='".$LANG['plugin_fusioninventory']["setup"][16]."'
-               alt='".$LANG['plugin_fusioninventory']["setup"][16]."'>"] =
+               title='".$LANG['plugin_fusioninventory']['setup'][16]."'
+               alt='".$LANG['plugin_fusioninventory']['setup'][16]."'>"] =
             'front/documentation.php';
 
          // Fil ariane
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']["menu"][3];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = $LANG['plugin_fusioninventory']['menu'][3];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/menu.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = $LANG['plugin_fusioninventory']["task"][1];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = $LANG['plugin_fusioninventory']['task'][1];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']["menu"][1];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']['menu'][1];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = $LANG['plugin_fusioninventory']["functionalities"][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = $LANG['plugin_fusioninventory']['functionalities'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/configuration.php';
       }
    } else { // plugin not active, need $moduleId for uninstall check
@@ -142,7 +142,7 @@ function plugin_init_fusioninventory() {
             AND (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
       if (PluginFusioninventoryModule::getAll(true)) {
-         addMessageAfterRedirect($LANG['plugin_fusioninventory']["setup"][17]);
+         addMessageAfterRedirect($LANG['plugin_fusioninventory']['setup'][17]);
          glpi_header($CFG_GLPI["root_doc"]."/front/plugin.php");
          exit;
       }
@@ -168,7 +168,7 @@ function plugin_fusioninventory_check_prerequisites() {
    if (GLPI_VERSION >= '0.78') {
       return true;
    } else {
-      echo $LANG['plugin_fusioninventory']["errors"][50];
+      echo $LANG['plugin_fusioninventory']['errors'][50];
    }
 }
 

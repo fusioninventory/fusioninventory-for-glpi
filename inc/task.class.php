@@ -45,18 +45,18 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $sopt = array();
 
-      $sopt['common'] = $LANG['plugin_fusioninventory']["task"][0];
+      $sopt['common'] = $LANG['plugin_fusioninventory']['task'][0];
 
       $sopt[1]['table']          = $this->getTable();
       $sopt[1]['field']          = 'name';
       $sopt[1]['linkfield']      = '';
-      $sopt[1]['name']           = $LANG["common"][16];
+      $sopt[1]['name']           = $LANG['common'][16];
       $sopt[1]['datatype']       = 'itemlink';
 
       $sopt[2]['table']          = $this->getTable();
       $sopt[2]['field']          = 'date_creation';
       $sopt[2]['linkfield']      = '';
-      $sopt[2]['name']           = $LANG["common"][27];
+      $sopt[2]['name']           = $LANG['common'][27];
       $sopt[2]['datatype']       = 'datetime';
 
       $sopt[3]['table']          = $this->getTable();
@@ -99,7 +99,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusioninventory']["task"][1];
+      return $LANG['plugin_fusioninventory']['task'][1];
    }
 
 
@@ -142,11 +142,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $i = 1;
          foreach($a_taskjob as $datas) {
             $i++;
-            $ong[$i] = $LANG['plugin_fusioninventory']["task"][2]." ".($i-1);
+            $ong[$i] = $LANG['plugin_fusioninventory']['task'][2]." ".($i-1);
          }
 
          $i++;
-         $ong[$i] = $LANG['plugin_fusioninventory']["task"][16];
+         $ong[$i] = $LANG['plugin_fusioninventory']['task'][16];
       }
       return $ong;
    }
@@ -166,12 +166,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $this->showFormHeader($options);
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td>".$LANG['plugin_fusioninventory']["task"][17]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
       echo "<td align='center'>";
       $a_periodicity = array();
       if (strstr($this->fields['periodicity'], "-")) {

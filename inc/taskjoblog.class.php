@@ -155,32 +155,32 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
          case 1 :
             echo "<td align='center'>";
-            echo $LANG['plugin_fusioninventory']["taskjoblog"][1];
+            echo $LANG['plugin_fusioninventory']['taskjoblog'][1];
             break;
 
          case 2 :
             echo "<td style='background-color: rgb(0, 255, 0);' align='center'>";
-            echo $LANG['plugin_fusioninventory']["taskjoblog"][2];
+            echo $LANG['plugin_fusioninventory']['taskjoblog'][2];
             break;
 
          case 3 :
             echo "<td style='background-color: rgb(255, 120, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][3]."</strong>";
+            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong>";
             break;
 
          case 4 :
             echo "<td style='background-color: rgb(255, 0, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][4]."</strong>";
+            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong>";
             break;
 
          case 5 :
             echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][5]."</strong>";
+            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong>";
             break;
 
          case 6 :
             echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
-            echo "<strong>".$LANG['plugin_fusioninventory']["taskjoblog"][6]."</strong>";
+            echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][6]."</strong>";
             break;
 
          default:
@@ -234,10 +234,10 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          $finishState[$datajob['state']]++;
       }
       $input = array();
-      $input[$LANG['plugin_fusioninventory']["taskjoblog"][2]] = $finishState[2];
-      $input[$LANG['plugin_fusioninventory']["taskjoblog"][3]] = $finishState[3];
-      $input[$LANG['plugin_fusioninventory']["taskjoblog"][4]] = $finishState[4];
-      $input[$LANG['plugin_fusioninventory']["taskjoblog"][5]] = $finishState[5];
+      $input[$LANG['plugin_fusioninventory']['taskjoblog'][2]] = $finishState[2];
+      $input[$LANG['plugin_fusioninventory']['taskjoblog'][3]] = $finishState[3];
+      $input[$LANG['plugin_fusioninventory']['taskjoblog'][4]] = $finishState[4];
+      $input[$LANG['plugin_fusioninventory']['taskjoblog'][5]] = $finishState[5];
 
       Stat::showGraph(array('status'=>$input),
                array('title'  => '',

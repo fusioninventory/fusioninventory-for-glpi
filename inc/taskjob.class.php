@@ -43,7 +43,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
       
-      return $LANG['plugin_fusioninventory']["task"][2];
+      return $LANG['plugin_fusioninventory']['task'][2];
    }
 
 
@@ -52,12 +52,12 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = $LANG['plugin_fusioninventory']["task"][0];
+      $tab['common'] = $LANG['plugin_fusioninventory']['task'][0];
 
       $tab[1]['table']          = $this->getTable();
       $tab[1]['field']          = 'name';
       $tab[1]['linkfield']      = '';
-      $tab[1]['name']           = $LANG["common"][16];
+      $tab[1]['name']           = $LANG['common'][16];
       $tab[1]['datatype']       = 'itemlink';
 
       $tab[2]['table']           = 'glpi_entities';
@@ -68,13 +68,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $tab[3]['table']          = $this->getTable();
       $tab[3]['field']          = 'date_scheduled';
       $tab[3]['linkfield']      = '';
-      $tab[3]['name']           = $LANG["common"][27];
+      $tab[3]['name']           = $LANG['common'][27];
       $tab[3]['datatype']       = 'datetime';
 
       $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $tab[4]['field']          = 'name';
       $tab[4]['linkfield']      = 'plugin_fusioninventory_tasks_id';
-      $tab[4]['name']           = $LANG['plugin_fusioninventory']["task"][0];
+      $tab[4]['name']           = $LANG['plugin_fusioninventory']['task'][0];
       $tab[4]['datatype']       = 'itemlink';
       $tab[4]['itemlink_type']  = 'PluginFusioninventoryTask';
       
@@ -130,7 +130,7 @@ $this->cronTaskscheduler();
       $this->showFormHeader($options);
       
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["common"][16]."&nbsp;:</td>";
+      echo "<td>".$LANG['common'][16]."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
@@ -147,7 +147,7 @@ $this->cronTaskscheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["task"][14]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
       echo "<td align='center'>";
       if ($id) {
          showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
@@ -736,13 +736,13 @@ $this->cronTaskscheduler();
 
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo $LANG['plugin_fusioninventory']["task"][21];
+      echo $LANG['plugin_fusioninventory']['task'][21];
       echo " : </th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo $LANG['plugin_fusioninventory']["task"][2]."&nbsp;:";
+      echo $LANG['plugin_fusioninventory']['task'][2]."&nbsp;:";
       echo "</td>";
 
       echo "<td align='center'>";
@@ -762,7 +762,7 @@ $this->cronTaskscheduler();
       echo "</td>";
 
       echo "<td align='center'>";
-      echo $LANG['plugin_fusioninventory']["task"][14]."&nbsp;:";
+      echo $LANG['plugin_fusioninventory']['task'][14]."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
       showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);

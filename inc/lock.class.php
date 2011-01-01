@@ -83,12 +83,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
-      echo "<tr><th>&nbsp;".$LANG['plugin_fusioninventory']["functionalities"][73]."&nbsp;</th>";
-      echo "<th>&nbsp;".$LANG['plugin_fusioninventory']["functionalities"][74]."&nbsp;</th>";
-      echo "<th>&nbsp;".$LANG['plugin_fusioninventory']["functionalities"][75]."&nbsp;</th></tr>";
+      echo "<tr><th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][73]."&nbsp;</th>";
+      echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][74]."&nbsp;</th>";
+      echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][75]."&nbsp;</th></tr>";
       if (empty($lockable_fields)) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
-                  ".$LANG['plugin_fusioninventory']["functionalities"][76]."</td></tr>";
+                  ".$LANG['plugin_fusioninventory']['functionalities'][76]."</td></tr>";
       } else {
          $checked = '';
          foreach ($lockable_fields as $val) {

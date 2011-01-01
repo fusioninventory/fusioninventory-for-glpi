@@ -73,7 +73,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab = array();
     
-      $tab['common'] = $LANG['plugin_fusioninventory']["agents"][28];
+      $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
 
 		$tab[1]['table'] = $this->getTable();
 		$tab[1]['field'] = 'name';
@@ -84,13 +84,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[2]['table'] = $this->getTable();
 		$tab[2]['field'] = 'last_contact';
 		$tab[2]['linkfield'] = 'last_contact';
-		$tab[2]['name'] = $LANG['plugin_fusioninventory']["agents"][4];
+		$tab[2]['name'] = $LANG['plugin_fusioninventory']['agents'][4];
 		$tab[2]['datatype'] = 'datetime';
 
 		$tab[3]['table'] = $this->getTable();
 		$tab[3]['field'] = 'lock';
 		$tab[3]['linkfield'] = 'lock';
-		$tab[3]['name'] = $LANG['plugin_fusioninventory']["agents"][6];
+		$tab[3]['name'] = $LANG['plugin_fusioninventory']['agents'][6];
 		$tab[3]['datatype'] = 'bool';
 
 		$tab[4]['table'] = $this->getTable();
@@ -102,19 +102,19 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 		$tab[5]['table'] = 'glpi_computers';
 		$tab[5]['field'] = 'name';
 		$tab[5]['linkfield'] = 'items_id';
-		$tab[5]['name'] = $LANG['plugin_fusioninventory']["agents"][23];
+		$tab[5]['name'] = $LANG['plugin_fusioninventory']['agents'][23];
 		$tab[5]['datatype'] = 'itemlink';
 
 		$tab[6]['table'] = $this->getTable();
 		$tab[6]['field'] = 'version';
 		$tab[6]['linkfield'] = 'version';
-		$tab[6]['name'] = $LANG['plugin_fusioninventory']["agents"][25];
+		$tab[6]['name'] = $LANG['plugin_fusioninventory']['agents'][25];
 		$tab[6]['datatype'] = 'text';
 
 		$tab[7]['table'] = $this->getTable();
 		$tab[7]['field'] = 'token';
 		$tab[7]['linkfield'] = 'token';
-		$tab[7]['name'] = $LANG['plugin_fusioninventory']["agents"][24];
+		$tab[7]['name'] = $LANG['plugin_fusioninventory']['agents'][24];
 		$tab[7]['datatype'] = 'text';
 
       return $tab;
@@ -129,7 +129,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1]=$LANG['title'][26];
       }
-       $ong[2] = $LANG['plugin_fusioninventory']["agents"][27];
+       $ong[2] = $LANG['plugin_fusioninventory']['agents'][27];
       // $ong[3] = actions (tâches)
       return $ong;
    }
@@ -159,7 +159,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["agents"][23]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][23]." :</td>";
       echo "<td align='center'>";
       if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
          $oComputer = new Computer();
@@ -170,18 +170,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'items_id', $_SESSION['glpiactive_entity']);
       }
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']["agents"][24]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][24]." :</td>";
       echo "<td align='center'>";
       echo $this->fields["token"];
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']["agents"][6]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][6]." :</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo('lock', $this->fields["lock"]);
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']["agents"][25]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][25]." :</td>";
       echo "<td align='center'>";
       echo $this->fields["version"];
       echo "</td>";
@@ -191,7 +191,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td></td>";
       echo "<td align='center'>";
       echo "</td>";
-      echo "<td>".$LANG['plugin_fusioninventory']["agents"][4]." :</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['agents'][4]." :</td>";
       echo "<td align='center'>";
       echo convDateTime($this->fields["last_contact"]);
       echo "</td>";
