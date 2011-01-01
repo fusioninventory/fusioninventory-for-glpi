@@ -568,7 +568,6 @@ $LANG['plugin_fusinvsnmp']['menu'][8]="Inventory criteria rules";
 $LANG['plugin_fusinvsnmp']['menu'][9]="Discovery status";
 $LANG['plugin_fusinvsnmp']['menu'][10]="Network inventory status";
 
-
 $LANG['plugin_fusinvsnmp']['buttons'][0]="Discover";
 
 $LANG['plugin_fusinvsnmp']['discovery'][0]="IP range to scan";
