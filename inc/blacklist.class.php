@@ -39,12 +39,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvinventoryBlacklist extends CommonDBTM {
-   
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvinventory_blacklist";
-      $this->type = 'PluginFusinvinventoryBlacklist';
-   }
-
 
    
    static function getTypeName() {

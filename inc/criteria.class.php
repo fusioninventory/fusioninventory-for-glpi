@@ -40,10 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryCriteria extends CommonDBTM {
    
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvinventory_criteria";
-      $this->type = 'PluginFusinvinventoryCriteria';
-   }
 }
 
 ?>

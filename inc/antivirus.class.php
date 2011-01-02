@@ -40,12 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryAntivirus extends CommonDBTM {
    
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvinventory_antivirus";
-      $this->type = 'PluginFusinvinventoryAntivirus';
-   }
-
-
    
    static function getTypeName() {
       global $LANG;

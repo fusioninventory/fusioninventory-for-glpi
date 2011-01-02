@@ -47,11 +47,6 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusinvinventoryImportXML extends CommonDBTM  {
 
-   function __construct() {
-      //$this->table = "glpi_plugin_fusinvinventory_agents";
-      //$this->type = 'PluginFusioninventoryAgent';
-   }
-
 
    function showForm() {
       global $DB,$CFG_GLPI,$LANG;

@@ -40,11 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryLiblink extends CommonDBTM {
    
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvinventory_liblink";
-      $this->type = 'PluginFusinvinventoryLiblink';
-   }
-
 
    static function addComputerInDB($Computer_id, $libFilename) {
       $input = array();
