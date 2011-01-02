@@ -40,13 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvdeployPackage extends CommonDBTM {
 
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvdeploy_packages";
-      $this->type = "PluginFusinvdeployPackage";
-   }
-
-
-
    static function getTypeName() {
       global $LANG;
 
