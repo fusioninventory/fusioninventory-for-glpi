@@ -44,12 +44,6 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
     */
 
 
-   function __construct() {
-      $this->table = "glpi_plugin_fusioninventory_taskjobstatus";
-      $this->type = 'PluginFusioninventoryTaskjobstatus';
-   }
-
-
    function stateTaskjob ($taskjobs_id, $width = '930', $return = 'html', $style = '') {
       global $DB;
 
@@ -118,7 +112,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
 
          case 'nostarted';
             $query = "SELECT *, `glpi_plugin_fusioninventory_taskjobs`.`id` as tjid FROM `glpi_plugin_fusioninventory_taskjobs`
-               LEFT JOIN ".$this->table." on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+               LEFT JOIN ".$this->getTable()." on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
                WHERE `definition` LIKE '%\"".$itemtype."\":\"".$items_id."\"%'
                   AND `plugin_fusioninventory_taskjobs_id` is null";
             $a_taskjobs = array();
@@ -140,7 +134,7 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       }
       $a_taskjobs = array();
       if (isset($search)) {
-         $query = "SELECT * FROM ".$this->table."
+         $query = "SELECT * FROM ".$this->getTable()."
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
             WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
             ORDER BY `date_scheduled` DESC";

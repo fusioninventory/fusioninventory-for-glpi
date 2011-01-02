@@ -40,10 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryModule extends CommonDBTM {
 
-   function __construct() {
-      $this->table="glpi_plugins";
-   }
-
    /**
     * Get all installed modules
     *

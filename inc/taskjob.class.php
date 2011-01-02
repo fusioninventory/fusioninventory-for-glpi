@@ -34,11 +34,6 @@
 
 class PluginFusioninventoryTaskjob extends CommonDBTM {
 
-   function __construct() {
-      $this->table = "glpi_plugin_fusioninventory_taskjobs";
-      $this->type = 'PluginFusioninventoryTaskjob';
-   }
-
 
    static function getTypeName() {
       global $LANG;
@@ -593,7 +588,7 @@ $this->cronTaskscheduler();
 
       $remoteStartAgents = array();
 
-      $query = "SELECT `".$this->table."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`  FROM ".$this->table."
+      $query = "SELECT `".$this->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`  FROM ".$this->getTable()."
          LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
          WHERE `is_active`='1'
             AND `status` = '0'
@@ -698,7 +693,7 @@ $this->cronTaskscheduler();
 
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
-      $query = "SELECT * FROM ".$this->table."
+      $query = "SELECT * FROM ".$this->getTable()."
          WHERE status='1' ";
 
       if ($result = $DB->query($query)) {

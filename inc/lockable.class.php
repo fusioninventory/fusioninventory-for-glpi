@@ -41,13 +41,6 @@ if (!defined('GLPI_ROOT')) {
 /// Plugin FusionInventory lock class
 class PluginFusioninventoryLockable extends CommonDBTM{
 
-   /**
-    * Constructor
-   **/
-   function __construct () {
-      $this->table="glpi_plugin_fusioninventory_lockables";
-   }
-
 
    /**
     * Show lockables form.

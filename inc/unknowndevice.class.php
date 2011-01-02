@@ -34,9 +34,7 @@
 class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_unknowndevices";
-      $this->type = "PluginFusioninventoryUnknownDevice";
-      $this->dohistory=true;
+		$this->dohistory=true;
 	}
 
 

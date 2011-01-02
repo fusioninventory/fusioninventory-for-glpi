@@ -40,10 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryMapping extends CommonDBTM {
 
-   function __construct() {
-      $this->table = "glpi_plugin_fusioninventory_mappings";
-   }
-
    /**
     * Get mapping
     *

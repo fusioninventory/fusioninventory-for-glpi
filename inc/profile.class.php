@@ -40,11 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryProfile extends CommonDBTM {
 
-   function __construct() {
-      $this->table="glpi_plugin_fusioninventory_profiles";
-   }
-
-
    
    /**
     * Add profile

@@ -40,11 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryConfig extends CommonDBTM {
 
-   function __construct() {
-      $this->table="glpi_plugin_fusioninventory_configs";
-   }
-
-
    
    /* Function to get the value of a field */
    function getValue($p_plugins_id, $p_type) {
@@ -190,7 +185,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    function cleanConfig($p_plugins_id) {
       global $DB;
 
-      $delete = "DELETE FROM `".$this->table."`
+      $delete = "DELETE FROM `".$this->getTable()."`
                  WHERE `plugins_id`='".$p_plugins_id."';";
       return $DB->query($delete);
    }

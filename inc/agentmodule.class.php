@@ -39,12 +39,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
-   function __construct() {
-      $this->table = "glpi_plugin_fusioninventory_agentmodules";
-      $this->type = 'PluginFusioninventoryAgentmodule';
-   }
 
-
+   
    // Configuration of agentmodule
    function showForm() {
       global $DB,$CFG_GLPI,$LANG;
