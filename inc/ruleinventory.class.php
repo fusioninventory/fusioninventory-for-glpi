@@ -67,7 +67,7 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
       $criterias = array();
       $criterias['globalcriteria']['field'] = 'name';
       $criterias['globalcriteria']['name']  = "* ".$LANG['plugin_fusinvinventory']['rule'][1];
-      $criterias['globalcriteria']['table'] = 'glpi_plugin_fusinvinventory_criteria';
+      $criterias['globalcriteria']['table'] = 'glpi_plugin_fusinvinventory_criterias';
       $criterias['globalcriteria']['linkfield'] = '';
       $criterias['globalcriteria']['type'] = 'dropdown';
       $criterias['globalcriteria']['virtual']   = true;
