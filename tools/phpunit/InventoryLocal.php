@@ -832,6 +832,20 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
    }
 
+//
+//   function testNetwork($xmlFile='') {
+//
+//      if (empty($xmlFile)) {
+//         echo "testNetwork with no arguments...\n";
+//         return;
+//      }
+//
+//      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+//
+//         //$xml->CONTENT->NETWORKS
+//
+//
+//   }
 
 
    
