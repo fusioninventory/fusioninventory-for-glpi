@@ -35,9 +35,6 @@
 
 class PluginFusinvsnmpDiscovery extends CommonDBTM {
 
-	function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_discovery";
-	}
 
    /**
     * Add discovered device to discovered table in MySQL
@@ -525,12 +522,12 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
       foreach ($a_types as $type) {
          $ci->setType($type,true);
          if ($type == 'PluginFusioninventoryUnknownDevice') {
-            $query = "SELECT ".$ci->obj->table.".id ".$select_unknown." FROM ".$ci->obj->table;
+            $query = "SELECT ".$ci->obj->getTable().".id ".$select_unknown." FROM ".$ci->obj->getTable();
          } else {
-            $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
+            $query = "SELECT ".$ci->obj->getTable().".id ".$select." FROM ".$ci->obj->getTable();
          }
-         if ($ci->obj->table != "glpi_networkequipments") {
-            $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->table.".id AND itemtype=".$type;
+         if ($ci->obj->getTable() != "glpi_networkequipments") {
+            $query .= " LEFT JOIN glpi_networkports on items_id=".$ci->obj->getTable().".id AND itemtype=".$type;
          }
          if ($type == 'PluginFusioninventoryUnknownDevice') {
             $query .= " WHERE is_deleted=0 ".$condition_unknown;
@@ -550,7 +547,7 @@ class PluginFusinvsnmpDiscovery extends CommonDBTM {
 
       // Search in 'PluginFusioninventoryUnknownDevice' when ip in not empty (so when it's a switch)
       $ci->setType('PluginFusioninventoryUnknownDevice',true);
-      $query = "SELECT ".$ci->obj->table.".id ".$select." FROM ".$ci->obj->table;
+      $query = "SELECT ".$ci->obj->getTable().".id ".$select." FROM ".$ci->obj->getTable();
       $query .= " WHERE is_deleted=0 ".$condition;
       $result = $DB->query($query);
       if($DB->numrows($result) > 0) {

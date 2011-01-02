@@ -40,11 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpPrinterCartridge extends PluginFusinvsnmpCommonDBTM {
    
-	function __construct() {
-      $this->table = "glpi_plugin_fusinvsnmp_printercartridges";
-      $this->type = 'PluginFusinvsnmpPrinterCartridge';
-	}
-
 
    function showForm($id, $options=array()) {
       global $LANG;

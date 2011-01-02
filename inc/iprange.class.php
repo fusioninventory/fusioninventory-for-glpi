@@ -40,10 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpIPRange extends CommonDBTM {
 
-	function __construct() {
-		$this->table = "glpi_plugin_fusinvsnmp_ipranges";
-      $this->type  = "PluginFusinvsnmpIPRange";
-	}
 
    static function getTypeName() {
       global $LANG;

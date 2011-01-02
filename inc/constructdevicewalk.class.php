@@ -40,9 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpConstructDeviceWalk extends CommonDBTM {
 
-   function __construct() {
-		$this->table = "glpi_plugin_fusioninventory_constructdevice_walks";
-	}
 }
 
 ?>

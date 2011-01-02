@@ -40,9 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpConstructDevice_MibOid extends CommonDBTM {
 
-   function __construct() {
-		$this->table = "glpi_plugin_fusinvsnmp_constructdevice_miboids";
-	}
 }
 
 ?>

@@ -39,16 +39,13 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
-	function __construct() {
-		$this->table="glpi_plugin_fusinvsnmp_printerlogs";
-	}
 	
 	function countAllEntries($id) {
 		global $DB;
 		
 		$num = 0;
 		$query = "SELECT count(DISTINCT `id`)
-                FROM ".$this->table."
+                FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$id."';";
 		if ($result_num=$DB->query($query)) {
 			if ($field = $DB->result($result_num,0,0)) {
@@ -64,7 +61,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 		
 		$datas=array();
 		$query = "SELECT *
-                FROM ".$this->table."
+                FROM ".$this->getTable()."
 				    WHERE `printers_id` = '".$id."'
                 LIMIT ".$begin.", ".$limit.";";
 
@@ -87,7 +84,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 		
 		$query = "SELECT MIN(`date`) AS `min_date`, MIN(`pages`) AS `min_pages`, ".
 				 		"MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
-                FROM ".$this->table."
+                FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$id."';";
 
 		if ($result = $DB->query($query)) {

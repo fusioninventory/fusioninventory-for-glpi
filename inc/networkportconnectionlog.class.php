@@ -40,9 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
 
-   function __construct() {
-		$this->table = "glpi_plugin_fusinvsnmp_networkportconnectionlogs";
-	}
 
    function migration() {
       global $DB;
@@ -131,7 +128,7 @@ class PluginFusinvsnmpNetworkPortConnectionLog extends CommonDBTM {
             $condition .= " AND `creation`='".$input['created']."' ";
          }
       }
-      $query = "SELECT * FROM `".$this->table."`
+      $query = "SELECT * FROM `".$this->getTable()."`
          ".$condition."
          ORDER BY `date`DESC , `plugin_fusioninventory_agentprocesses_id` DESC";
       if (!isset($input['process_number'])) {

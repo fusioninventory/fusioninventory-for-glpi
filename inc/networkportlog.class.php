@@ -40,9 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
-	function __construct() {
-		$this->table = "glpi_plugin_fusinvsnmp_networkportlogs";
-	}
 
 	/**
 	 * Insert port history with connection and disconnection
@@ -240,7 +237,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       createProgressBar("Update Ports history");
 
       $query = "SELECT *
-                FROM ".$this->table."
+                FROM ".$this->getTable()."
                 WHERE `field` != '0';";
       if ($result=$DB->query($query)) {
          $nb = $DB->numrows($result);
@@ -258,7 +255,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $i++;
             if (isset($constantsfield[$data['field']])) {
                $data['field'] = $constantsfield[$data['field']];
-               $query_update = "UPDATE `".$this->table."`
+               $query_update = "UPDATE `".$this->getTable()."`
                   SET `field`='".$data['field']."'
                   WHERE `id`='".$data['id']."' ";
                $DB->query($query_update);
@@ -287,7 +284,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "<td>";
       createProgressBar("Move create connections");
       $query = "SELECT *
-                FROM ".$this->table."
+                FROM ".$this->getTable()."
                 WHERE `field` = '0' 
                   AND ((`value_old` NOT LIKE '%:%')
                         OR (`value_old` IS NULL))";
@@ -324,7 +321,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                }
             }
 
-            $query_delete = "DELETE FROM `".$this->table."`
+            $query_delete = "DELETE FROM `".$this->getTable()."`
                   WHERE `id`='".$data['id']."' ";
             $DB->query($query_delete);
             if (preg_match("/00$/", $i)) {
@@ -348,7 +345,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       echo "<td>";
       createProgressBar("Move delete connections");
       $query = "SELECT *
-                FROM ".$this->table."
+                FROM ".$this->getTable()."
                 WHERE `field` = '0'
                   AND ((`value_new` NOT LIKE '%:%')
                         OR (`value_new` IS NULL))";
@@ -387,7 +384,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                }
             }
 
-            $query_delete = "DELETE FROM `".$this->table."`
+            $query_delete = "DELETE FROM `".$this->getTable()."`
                   WHERE `id`='".$data['id']."' ";
             $DB->query($query_delete);
             if (preg_match("/00$/", $i)) {
@@ -411,7 +408,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       if (count($a_list)){
          foreach ($a_list as $data){
 
-            $query_delete = "DELETE FROM `".$this->table."`
+            $query_delete = "DELETE FROM `".$this->getTable()."`
                WHERE `field`='".$data['field']."' ";
 
             switch($data['days']) {

@@ -40,9 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
    
-	function __construct() {
-		$this->table = "glpi_plugin_fusinvsnmp_configsecurities";
-	}
 
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;

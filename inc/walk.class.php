@@ -39,13 +39,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpWalk extends CommonDBTM {
-/*	function __construct()
-	{
-		$this->table = "glpi_plugin_fusioninventory_walks";
-		$this->type = -1;
-	}
-*/
-
 
 	function GetoidValues($device_snmp) {
 		global $DB;

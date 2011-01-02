@@ -40,9 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpConfigLogField extends CommonDBTM {
 
-	function __construct() {
-		$this->table="glpi_plugin_fusinvsnmp_configlogfields";
-	}
 
    /**
     * Init config log fields : add default values in table
@@ -94,7 +91,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       
 
 		$query = "SELECT days
-                FROM ".$this->table."
+                FROM ".$this->getTable()."
                 WHERE `field`='".$field."'
                 LIMIT 1;";
 		if ($result = $DB->query($query)) {
@@ -131,7 +128,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       $rights['macaddr'] = '-1';
 
       $query = "SELECT *
-                FROM ".$this->table.";";
+                FROM ".$this->getTable().";";
       if ($result=$DB->query($query)) {
 			while ($data=$DB->fetch_array($result)) {
             $val = str_replace("2-", "", $data['field']);
@@ -141,7 +138,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
          }
       }
 
-      $query = "TRUNCATE TABLE `".$this->table."`";
+      $query = "TRUNCATE TABLE `".$this->getTable()."`";
       $DB->query($query);
 
       // Add rights in DB
@@ -178,9 +175,9 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
          $days[$i]  = "$i";
       }
 
-      $query = "SELECT `".$this->table."`.`id`, `locale`, `days`, `itemtype`, `name`
-                FROM `".$this->table."`, `glpi_plugin_fusioninventory_mappings`
-                WHERE `".$this->table."`.`plugin_fusioninventory_mappings_id`=
+      $query = "SELECT `".$this->getTable()."`.`id`, `locale`, `days`, `itemtype`, `name`
+                FROM `".$this->getTable()."`, `glpi_plugin_fusioninventory_mappings`
+                WHERE `".$this->getTable()."`.`plugin_fusioninventory_mappings_id`=
                          `glpi_plugin_fusioninventory_mappings`.`id`
                 ORDER BY `itemtype`, `name`;";
       if ($result=$DB->query($query)) {

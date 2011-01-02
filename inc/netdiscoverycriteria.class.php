@@ -40,11 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpNetdiscoverycriteria extends CommonDBTM {
    
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvsnmp_netdiscoverycriteria";
-      $this->type = 'PluginFusinvsnmpNetdiscoverycriteria';
-   }
-
 
 }
 

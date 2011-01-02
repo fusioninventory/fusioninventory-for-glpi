@@ -40,10 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpAgentconfig extends CommonDBTM {
 
-   function __construct() {
-      $this->table = "glpi_plugin_fusinvsnmp_agentconfigs";
-      $this->type = 'PluginFusinvsnmpAgentconfig';
-   }
 
    function canCreate() {
       return true;

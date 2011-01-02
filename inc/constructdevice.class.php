@@ -40,12 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
-   function __construct() {
-		$this->table = "glpi_plugin_fusinvsnmp_constructdevices";
-		$this->type = 'PluginFusioninventoryConstructDevices';
-	}
-
-
    function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
@@ -702,7 +696,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       //$sxml = simplexml_load_file($xmlstr);
 
       $query = "SELECT *
-               FROM `".$this->table."`
+               FROM `".$this->getTable()."`
                WHERE type NOT IN('', 0) ";
       if ($result = $DB->query($query)) {
 			while ($data = $DB->fetch_array($result)) {

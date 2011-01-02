@@ -40,10 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpModel extends CommonDBTM {
    
-	function __construct() {
-		$this->table = "glpi_plugin_fusinvsnmp_models";
-	}
-
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
