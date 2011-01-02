@@ -54,33 +54,12 @@ $LANG['plugin_fusioninventory']['config'][7] = "Consulta SNMP";
 
 $LANG['plugin_fusioninventory']['profile'][0]="Gerenciamento de permissões";
 $LANG['plugin_fusioninventory']['profile'][1]="$title"; //interface
-
-$LANG['plugin_fusioninventory']['profile'][10]="Perfis configurados";
-$LANG['plugin_fusioninventory']['profile'][11]="Histórico de computador";
-$LANG['plugin_fusioninventory']['profile'][12]="Histórico de impressora";
-$LANG['plugin_fusioninventory']['profile'][13]="Imformação de impressora";
-$LANG['plugin_fusioninventory']['profile'][14]="Informação de rede";
-$LANG['plugin_fusioninventory']['profile'][15]="Erros";
-
-$LANG['plugin_fusioninventory']['profile'][16]="Rede SNMP";
-$LANG['plugin_fusioninventory']['profile'][17]="Periférico SNMP";
-$LANG['plugin_fusioninventory']['profile'][18]="Impressoras SNMP";
-$LANG['plugin_fusioninventory']['profile'][19]="Modelos SNMP";
-$LANG['plugin_fusioninventory']['profile'][20]="Autenticação SNMP";
-$LANG['plugin_fusioninventory']['profile'][21]="Informação de script";
-$LANG['plugin_fusioninventory']['profile'][22]="Descoberta de rede";
-$LANG['plugin_fusioninventory']['profile'][23]="Configuração geral";
-$LANG['plugin_fusioninventory']['profile'][24]="Modelo SNMP";
-$LANG['plugin_fusioninventory']['profile'][25]="Faixa de IP";
-$LANG['plugin_fusioninventory']['profile'][26]="Agente";
-$LANG['plugin_fusioninventory']['profile'][27]="Processos dos agentes";
-$LANG['plugin_fusioninventory']['profile'][28]="Relatório";
-$LANG['plugin_fusioninventory']['profile'][29]="Controle remoto dos agentes";
-$LANG['plugin_fusioninventory']['profile'][30]="Dispositivos desconhecidos";
-$LANG['plugin_fusioninventory']['profile'][31]="inventário de dispositivo FusionInventory";
-$LANG['plugin_fusioninventory']['profile'][32]="Consulta SNMP";
-$LANG['plugin_fusioninventory']['profile'][33]="WakeOnLan";
-$LANG['plugin_fusioninventory']['profile'][34]="Ações";
+$LANG['plugin_fusioninventory']['profile'][2]="Agents";
+$LANG['plugin_fusioninventory']['profile'][3]="Agent remote controle";
+$LANG['plugin_fusioninventory']['profile'][4]="Configuration";
+$LANG['plugin_fusioninventory']['profile'][5]="WakeOnLan";
+$LANG['plugin_fusioninventory']['profile'][6]="Unknown devices";
+$LANG['plugin_fusioninventory']['profile'][7]="Tasks";
 
 $LANG['plugin_fusioninventory']['setup'][2]="Obrigado por colocar tudo na entidade raiz (ver todos)";
 $LANG['plugin_fusioninventory']['setup'][3]="Configuração do plugin".$title;
@@ -104,7 +83,7 @@ $LANG['plugin_fusioninventory']['functionalities'][4]="Conexões";
 $LANG['plugin_fusioninventory']['functionalities'][5]="Script do servidor";
 $LANG['plugin_fusioninventory']['functionalities'][6]="Legenda";
 $LANG['plugin_fusioninventory']['functionalities'][7]="Campos bloqueáveis";
-
+$LANG['plugin_fusioninventory']['functionalities'][8]="Agent port";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Retenção em dias";
 $LANG['plugin_fusioninventory']['functionalities'][10]="Ativação do histórico";
 $LANG['plugin_fusioninventory']['functionalities'][11]="Ativação do módulo de conexão";
@@ -261,6 +240,7 @@ $LANG['plugin_fusioninventory']['processes'][34]="Com erro";
 $LANG['plugin_fusioninventory']['processes'][35]="Conexões criadas";
 $LANG['plugin_fusioninventory']['processes'][36]="Conexões apagadas";
 $LANG['plugin_fusioninventory']['processes'][37]="Total de IP";
+$LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['state'][0]="Iniciar computador";
 $LANG['plugin_fusioninventory']['state'][1]="Parar computador";
@@ -514,6 +494,10 @@ $LANG['plugin_fusioninventory']['agents'][25]="Versão";
 $LANG['plugin_fusioninventory']['agents'][26]="Gerenciamento dos agentes";
 $LANG['plugin_fusioninventory']['agents'][27]="Módulos dos agentes";
 $LANG['plugin_fusioninventory']['agents'][28]="Agente";
+$LANG['plugin_fusioninventory']['agents'][29]="Module activation";
+$LANG['plugin_fusioninventory']['agents'][30]="Impossible to communicate with agent!";
+$LANG['plugin_fusioninventory']['agents'][31]="Force inventory";
+$LANG['plugin_fusioninventory']['agents'][32]="Auto managenement dynamic of agents";
 
 $LANG['plugin_fusioninventory']['unknown'][0]="Nome DNS";
 $LANG['plugin_fusioninventory']['unknown'][1]="Nome da porta de rede";
@@ -544,12 +528,22 @@ $LANG['plugin_fusioninventory']['task'][19]="Tarefas em execução";
 $LANG['plugin_fusioninventory']['task'][20]="Tarefas finalizadas";
 $LANG['plugin_fusioninventory']['task'][21]="Ação sobre este material";
 $LANG['plugin_fusioninventory']['task'][22]="Somente tarefas planejadas";
+$LANG['plugin_fusioninventory']['task'][23]="Run on";
+$LANG['plugin_fusioninventory']['task'][24]="Number of trials";
+$LANG['plugin_fusioninventory']['task'][25]="Time between 2 trials (in minutes)";
+$LANG['plugin_fusioninventory']['task'][26]="Module";
+$LANG['plugin_fusioninventory']['task'][27]="Definition";
+$LANG['plugin_fusioninventory']['task'][28]="Action";
+$LANG['plugin_fusioninventory']['task'][29]="Type";
+$LANG['plugin_fusioninventory']['task'][30]="Selection";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Iniciado";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
 $LANG['plugin_fusioninventory']['taskjoblog'][3]="Erro / replanejado";
 $LANG['plugin_fusioninventory']['taskjoblog'][4]="Erro";
 $LANG['plugin_fusioninventory']['taskjoblog'][5]="desconhecido";
+$LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
+$LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
 
 $LANG['plugin_fusioninventory']['update'][0]="sua tabela de histórico tem mais de 300.000 entradas, você deve executar este comando para finalizar a atualização : ";
 
@@ -557,5 +551,7 @@ $LANG['plugin_fusioninventory']['wakeonlan'][0]="Escolha de computadores";
 $LANG['plugin_fusioninventory']['wakeonlan'][1]="Escolha de grupos dinâmicos";
 $LANG['plugin_fusioninventory']['wakeonlan'][2]="Escolha de grupos simples";
 $LANG['plugin_fusioninventory']['wakeonlan'][3]="Dispositivos de um outro trabalho desta tarefa";
+
+$LANG['plugin_fusioninventory']['xml'][0]="XML FusionInventory";
 
 ?>

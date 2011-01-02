@@ -240,6 +240,7 @@ $LANG['plugin_fusioninventory']['processes'][34]="С ошибкой";
 $LANG['plugin_fusioninventory']['processes'][35]="Создано подключений";
 $LANG['plugin_fusioninventory']['processes'][36]="Удалено подключений";
 $LANG['plugin_fusioninventory']['processes'][37]="IP итого";
+$LANG['plugin_fusioninventory']['processes'][38]="Process number";
 
 $LANG['plugin_fusioninventory']['state'][0]="Компьютер запущен";
 $LANG['plugin_fusioninventory']['state'][1]="Компьютер остановлен";
@@ -494,6 +495,9 @@ $LANG['plugin_fusioninventory']['agents'][26]="Управление Агента
 $LANG['plugin_fusioninventory']['agents'][27]="Модули Агентов";
 $LANG['plugin_fusioninventory']['agents'][28]="Агент";
 $LANG['plugin_fusioninventory']['agents'][29]="Активация модулей";
+$LANG['plugin_fusioninventory']['agents'][30]="Impossible to communicate with agent!";
+$LANG['plugin_fusioninventory']['agents'][31]="Force inventory";
+$LANG['plugin_fusioninventory']['agents'][32]="Auto managenement dynamic of agents";
 
 $LANG['plugin_fusioninventory']['unknown'][0]="DNS Имя";
 $LANG['plugin_fusioninventory']['unknown'][1]="Имя сетевого порта";
@@ -524,12 +528,22 @@ $LANG['plugin_fusioninventory']['task'][19]="Запущеные задачи";
 $LANG['plugin_fusioninventory']['task'][20]="Законченые задачи";
 $LANG['plugin_fusioninventory']['task'][21]="Действует на этот материал ";
 $LANG['plugin_fusioninventory']['task'][22]="Only planified tasks";
+$LANG['plugin_fusioninventory']['task'][23]="Run on";
+$LANG['plugin_fusioninventory']['task'][24]="Number of trials";
+$LANG['plugin_fusioninventory']['task'][25]="Time between 2 trials (in minutes)";
+$LANG['plugin_fusioninventory']['task'][26]="Module";
+$LANG['plugin_fusioninventory']['task'][27]="Definition";
+$LANG['plugin_fusioninventory']['task'][28]="Action";
+$LANG['plugin_fusioninventory']['task'][29]="Type";
+$LANG['plugin_fusioninventory']['task'][30]="Selection";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Начато";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";
 $LANG['plugin_fusioninventory']['taskjoblog'][3]="Ошибка / Перепланировано";
 $LANG['plugin_fusioninventory']['taskjoblog'][4]="Ошибка";
 $LANG['plugin_fusioninventory']['taskjoblog'][5]="неизвестно";
+$LANG['plugin_fusioninventory']['taskjoblog'][6]="Running";
+$LANG['plugin_fusioninventory']['taskjoblog'][7]="Prepared";
 
 $LANG['plugin_fusioninventory']['update'][0]="your history table have more than 300 000 entries, you must run this command to finish update : ";
 
