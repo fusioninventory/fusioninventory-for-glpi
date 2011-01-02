@@ -214,7 +214,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($p_moduleName);
 
-      $delete = "DELETE FROM ".$pfp->table.
+      $delete = "DELETE FROM ".$pfp->getTable().
                 " WHERE `plugins_id`='".$plugins_id."';";
       return $DB->query($delete);
    }
