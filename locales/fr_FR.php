@@ -536,6 +536,7 @@ $LANG['plugin_fusioninventory']['task'][27]="Définition";
 $LANG['plugin_fusioninventory']['task'][28]="Action";
 $LANG['plugin_fusioninventory']['task'][29]="Type";
 $LANG['plugin_fusioninventory']['task'][30]="Selection";
+$LANG['plugin_fusioninventory']['task'][31]="Temps entre le démarrage de la tâche et le démarrage de cette action";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

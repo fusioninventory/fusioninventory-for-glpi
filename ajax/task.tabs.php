@@ -51,7 +51,7 @@ $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
 
 $pftj = new PluginFusioninventoryTaskjob;
 $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
-      AND `rescheduled_taskjob_id`='0' ", "date_scheduled,id");
+      AND `rescheduled_taskjob_id`='0' ", "id");
 $i = 1;
 
 switch($_POST['glpi_tab']) {

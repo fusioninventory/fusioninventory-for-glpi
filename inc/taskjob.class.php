@@ -142,13 +142,16 @@ $this->cronTaskscheduler();
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['plugin_fusioninventory']['task'][14]."&nbsp;:</td>";
+      echo "<td>".$LANG['plugin_fusioninventory']['task'][31]."&nbsp;:</td>";
       echo "<td align='center'>";
-      if ($id) {
-         showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
-      } else {
-         showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
-      }
+      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+      $a_time = array();
+      $a_time[] = "------";
+      $a_time['minutes'] = "minutes";
+      $a_time['hours'] = "heures";
+      $a_time['days'] = "jours";
+      $a_time['months'] = "mois";
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
 
@@ -173,7 +176,6 @@ $this->cronTaskscheduler();
       $this->dropdownMethod("method_id", $this->fields['method'], $this->fields['method']);
       echo "</td>";
       echo "</tr>";
-
 
       // Definition   *   Action
       echo "<tr>";
@@ -504,14 +506,14 @@ $this->cronTaskscheduler();
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
       $query = "SELECT * FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `is_active`='1'
-            AND `periodicity` NOT LIKE '0-%'";
+            AND `periodicity_count` != '0'";
       
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          // Calculate next execution from last
          $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'
-            ORDER BY `date_scheduled` DESC
+            ORDER BY `id` DESC
             LIMIT 1";
          $startDateGeneral = date('U');
          $finished = 2;
@@ -554,24 +556,23 @@ $this->cronTaskscheduler();
          }
          // if all jobs are finished, we calculate if we reinitialize all jobs
          if ($finished == "1") {
-            $a_periodicity = explode("-", $data['periodicity']);
             $period = 0;
-            switch($a_periodicity[1]) {
+            switch($data['periodicity_type']) {
 
-               case '1':
-                  $period = $a_periodicity[0] * 60;
+               case 'minutes':
+                  $period = $data['periodicity_count'] * 60;
                   break;
 
-               case '2':
-                  $period = $a_periodicity[0] * 60 * 60;
+               case 'hours':
+                  $period = $data['periodicity_count'] * 60 * 60;
                   break;
 
-               case '3':
-                  $period = $a_periodicity[0] * 60 * 60 * 24;
+               case 'days':
+                  $period = $data['periodicity_count'] * 60 * 60 * 24;
                   break;
 
-               case '4':
-                  $period = $a_periodicity[0] * 60 * 60 * 24 * 30; //month
+               case 'months':
+                  $period = $data['periodicity_count'] * 60 * 60 * 24 * 30; //month
                   break;
 
             }
@@ -581,6 +582,8 @@ $this->cronTaskscheduler();
                   WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
                $DB->query($queryUpdate);
             }
+            $PluginFusioninventoryTask->fields['date_scheduled'] = date("Y-m-d H:i:s", $startDateGeneral + $period);
+            $PluginFusioninventoryTask->update($PluginFusioninventoryTask->fields);
          }
       }
 
