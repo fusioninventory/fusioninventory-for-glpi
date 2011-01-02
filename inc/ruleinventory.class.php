@@ -152,7 +152,7 @@ class PluginFusinvinventoryRuleInventory extends PluginFusioninventoryRule {
          $globalcriteria = array();
          foreach ($this->criterias as $criteria) {
             if ($criteria->fields['criteria'] == 'globalcriteria') {
-               $array = Dropdown::getDropdownName('glpi_plugin_fusinvinventory_criteria', $criteria->fields['pattern'], 1);
+               $array = Dropdown::getDropdownName('glpi_plugin_fusinvinventory_criterias', $criteria->fields['pattern'], 1);
                $globalcriteria[] = $array['comment'];
             }
          }

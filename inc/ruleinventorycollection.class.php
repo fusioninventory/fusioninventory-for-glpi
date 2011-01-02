@@ -63,7 +63,7 @@ class PluginFusinvinventoryRuleInventoryCollection extends PluginFusioninventory
       $input['sub_type'] = 'PluginFusinvinventoryRuleInventory';
       $input['ranking'] = 1;
       $rule_id = $rulecollection->add($input);
-
+      logInFile('pouet', $rule_id);
       // Add criteria
       $rule = $rulecollection->getRuleClass();
       $rulecriteria = new RuleCriteria(get_class($rule));

@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_criteria`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_criterias`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_criteria` (
+CREATE TABLE `glpi_plugin_fusinvinventory_criterias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8_unicode_ci,
@@ -9,9 +9,9 @@ CREATE TABLE `glpi_plugin_fusinvinventory_criteria` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_blacklist`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_blacklists`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklist` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plugin_fusioninventory_criterium_id` int(11) NOT NULL DEFAULT '0',
   `value` varchar(255) DEFAULT NULL,
@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_liblink`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_liblinks`;
 
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_liblink` (
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_liblinks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL default '0',
   `filename` varchar(255) DEFAULT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_liblink` (
 
 
 
-INSERT INTO `glpi_plugin_fusinvinventory_criteria` (`id`, `name`, `comment`) VALUES
+INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`id`, `name`, `comment`) VALUES
 (1, 'Serial number', 'ssn'),
 (2, 'uuid', 'uuid'),
 (3, 'Mac address', 'macAddress'),
@@ -56,7 +56,7 @@ INSERT INTO `glpi_plugin_fusinvinventory_criteria` (`id`, `name`, `comment`) VAL
 (9, 'Computer name', 'name');
 
 
-INSERT INTO `glpi_plugin_fusinvinventory_blacklist` (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
+INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
 (1, 3, '50:50:54:50:30:30'),
 (2, 1, 'N/A'),
 (3, 1, '(null string)'),
