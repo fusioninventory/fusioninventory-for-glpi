@@ -45,8 +45,10 @@ class PluginFusioninventorySetup {
 
       CronTask::Unregister('fusioninventory');
 
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+
       if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
-         deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
+         $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
 
       $query = "SHOW TABLES;";
@@ -64,6 +66,27 @@ class PluginFusioninventorySetup {
 
       return true;
    }
+
+   function rrmdir($dir) {
+      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+
+      if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+          if ($object != "." && $object != "..") {
+            if (filetype($dir."/".$object) == "dir") {
+               $PluginFusioninventorySetup->rrmdir($dir."/".$object);
+            } else {
+               unlink($dir."/".$object);
+            }
+          }
+        }
+        reset($objects);
+        rmdir($dir);
+      }
+   }
+
+
 
 }
 
