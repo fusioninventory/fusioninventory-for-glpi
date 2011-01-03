@@ -141,6 +141,7 @@ class PluginFusinvsnmpCommunicationSNMP {
 
          case 'Computer':
          case 'Printer':
+         case 'PluginFusioninventoryUnknownDevice':
             $condition = "WHERE 1 ";
             $select = "`".getTableForItemType($itemtype)."`.`id`";
             $leftjoin = '';
@@ -219,8 +220,7 @@ class PluginFusinvsnmpCommunicationSNMP {
             $result = $DB->query($query);
             return array($result, $input);
             break;
-
-         
+        
       }
 
       

@@ -168,7 +168,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'PluginFusioninventoryUnknownDevice');
                $result = $a_return[0];
                $input = $a_return[1];
-               if (isset($result) AND ($DB->numrows($result))) {
+               if (isset($result) AND ($DB->numrows($result) > 0)) {
                   $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
                } else {
                   $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
@@ -190,7 +190,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'PluginFusioninventoryUnknownDevice');
                $result = $a_return[0];
                $input = $a_return[1];
-               if ($DB->numrows($result)) {
+               if (isset($result) AND ($DB->numrows($result) > 0)) {
                   $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
                } else {
                   $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
