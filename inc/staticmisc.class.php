@@ -37,25 +37,42 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryStaticmisc {
+   
    static function task_methods() {
       global $LANG;
 
       $a_tasks = array();
       $a_tasks[] = array('module'               => 'fusioninventory',
-                         'method'               => 'wakeonlan',
-                         'selection_type'       => 'devices',
-                         'selection_type_name'  => $LANG['common'][1]);
-      $a_tasks[] = array('module'         => 'fusioninventory',
-                         'method'         => 'wakeonlan',
-                         'selection_type' => 'rules');
-      $a_tasks[] = array('module'         => 'fusioninventory',
-                         'method'         => 'wakeonlan',
-                         'selection_type' => 'devicegroups');
-      $a_tasks[] = array('module'         => 'fusioninventory',
-                         'method'         => 'wakeonlan',
-                         'selection_type' => 'fromothertasks');
+                         'method'               => 'wakeonlan');
+
       return $a_tasks;
    }
+
+
+   static function task_definitiontype_wakeonlan($a_itemtype) {
+      global $LANG;
+
+      $a_itemtype['Computer'] = Computer::getTypeName();
+
+      return $a_itemtype;
+   }
+
+
+   static function task_definitionselection_Computer_wakeonlan($title) {
+      global $LANG;
+
+      $options = array();
+      $options['entity'] = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name'] = 'definitionselectiontoadd';
+      $rand = Dropdown::show("Computer", $options);
+      return $rand;
+   }
+
+
+
+
+   //===============
 
    static function getmethods() {
       $a_methods = call_user_func(array('PluginFusioninventoryStaticmisc', 'task_methods'));
