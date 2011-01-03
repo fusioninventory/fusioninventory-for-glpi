@@ -120,7 +120,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $this->getEmpty();
       }
 
-$this->cronTaskscheduler();
+//$this->cronTaskscheduler();
 
       $this->showFormHeader($options);
       
@@ -493,10 +493,8 @@ $this->cronTaskscheduler();
 
    
 
-   function cronTaskscheduler() {
+   static function cronTaskscheduler() {
       global $DB;
-
-      $dateNow = date("Y-m-d H:i:s");
 
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog;
@@ -504,51 +502,46 @@ $this->cronTaskscheduler();
       $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
 
       // Search for task with periodicity and must be ok (so reinit state of job to 0)
-      $query = "SELECT * FROM `".$PluginFusioninventoryTask->getTable()."`
+      $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp FROM `".$PluginFusioninventoryTask->getTable()."`
          WHERE `is_active`='1'
             AND `periodicity_count` != '0'";
       
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
+         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
+         
          // Calculate next execution from last
          $queryJob = "SELECT * FROM `".$PluginFusioninventoryTaskjob->getTable()."`
             WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'
             ORDER BY `id` DESC
             LIMIT 1";
-         $startDateGeneral = date('U');
+
          $finished = 2;
          $resultJob = $DB->query($queryJob);
          while ($dataJob=$DB->fetch_array($resultJob)) {
             $a_taskjobstatus = $PluginFusioninventoryTaskjobstatus->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", "id DESC", 1);
-            $a_taskjobstatusfinished = 0;
-            $startDate = date("U");
+            $taskjobstatusfinished = 0;
             foreach ($a_taskjobstatus as $statusdata) {
                $a_joblog = $PluginFusioninventoryTaskjoblog->find("`plugin_fusioninventory_taskjobstatus_id`='".$statusdata['id']."'");
                foreach($a_joblog as $joblogdata) {
                   switch ($joblogdata['state']) {
-
-                     case '7':
-                        // Prepared
-                        if (strtotime($joblogdata['date']) < $startDate) {
-                           $startDate = strtotime($joblogdata['date']);
-                        }
-                        break;
 
                      case '2':
                      case '3':
                      case '4':
                      case '5':
                         // finished
-                        $a_taskjobstatusfinished++;
+                        $taskjobstatusfinished++;
                         break;
 
                   }
                }
             }
-            if ($startDate < $startDateGeneral) {
-               $startDateGeneral = $startDate;
-            }
-            if ((count($a_taskjobstatus) == $a_taskjobstatusfinished) AND ($finished != "0")) {
+
+            if ((count($a_taskjobstatus) == $taskjobstatusfinished)
+                    AND ($finished != "0")
+                    AND (($data['date_scheduled_timestamp'] + $period) < date('U')) ) {
+
                $finished = 1;
             } else {
                $finished = 0;
@@ -556,54 +549,72 @@ $this->cronTaskscheduler();
          }
          // if all jobs are finished, we calculate if we reinitialize all jobs
          if ($finished == "1") {
-            $period = 0;
-            switch($data['periodicity_type']) {
-
-               case 'minutes':
-                  $period = $data['periodicity_count'] * 60;
-                  break;
-
-               case 'hours':
-                  $period = $data['periodicity_count'] * 60 * 60;
-                  break;
-
-               case 'days':
-                  $period = $data['periodicity_count'] * 60 * 60 * 24;
-                  break;
-
-               case 'months':
-                  $period = $data['periodicity_count'] * 60 * 60 * 24 * 30; //month
-                  break;
-
-            }
-            if (($startDateGeneral + $period) <= date('U')) {
-               $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
-                  SET `status`='0'
-                  WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
-               $DB->query($queryUpdate);
-            }
-            $PluginFusioninventoryTask->fields['date_scheduled'] = date("Y-m-d H:i:s", $startDateGeneral + $period);
-            $PluginFusioninventoryTask->update($PluginFusioninventoryTask->fields);
+            $data['execution_id']++;
+            $queryUpdate = "UPDATE `".$PluginFusioninventoryTaskjob->getTable()."`
+               SET `status`='0', `execution_id`='".$data['execution_id']."'
+               WHERE `plugin_fusioninventory_tasks_id`='".$data['id']."'";
+            $DB->query($queryUpdate);
+            
+            $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+            $PluginFusioninventoryTask->update($data);
          }
       }
 
-      // Search task ready
+      // *** Search task ready
 
       $remoteStartAgents = array();
-
-      $query = "SELECT `".$this->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`  FROM ".$this->getTable()."
+      $dateNow = date("Y-m-d H:i:s");
+      $query = "SELECT `".$PluginFusioninventoryTaskjob->getTable()."`.*,`glpi_plugin_fusioninventory_tasks`.`communication`, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
+         FROM ".$PluginFusioninventoryTaskjob->getTable()."
          LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
          WHERE `is_active`='1'
             AND `status` = '0'
-            AND date_scheduled < '".$dateNow."' ";
+            AND `date_scheduled` <= '".$dateNow."' ";
       $result = $DB->query($query);
+      $return = 0;
       while ($data=$DB->fetch_array($result)) {
-         // Get module name
-         $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
-         $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
-         $class = new $className;
-         $class->prepareRun($data['id']);
+         $period = $PluginFusioninventoryTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
+         if (($data['date_scheduled_timestamp'] + $period) <= date('U')) {
+            // Get module name
+            $pluginName = PluginFusioninventoryModule::getModuleName($data['plugins_id']);
+            $className = "Plugin".ucfirst($pluginName).ucfirst($data['method']);
+            $class = new $className;
+            $class->prepareRun($data['id']);
+            $return = 1;
+         }
       }
+      if ($return == '1') {
+         return 1;
+      }
+      return 0;
+   }
+
+
+
+   function periodicityToTimestamp($periodicity_type, $periodicity_count) {
+      $period = 0;
+      switch($periodicity_type) {
+
+         case 'minutes':
+            $period = $periodicity_count * 60;
+            break;
+
+         case 'hours':
+            $period = $periodicity_count * 60 * 60;
+            break;
+
+         case 'days':
+            $period = $periodicity_count * 60 * 60 * 24;
+            break;
+
+         case 'months':
+            $period = $periodicity_count * 60 * 60 * 24 * 30; //month
+            break;
+
+         default:
+            $period = 0;
+      }
+      return $period;
    }
 
 

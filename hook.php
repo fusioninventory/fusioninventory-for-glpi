@@ -75,8 +75,6 @@ function cron_plugin_fusioninventory() {
 //   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
 //   $pfisnmph->cronCleanHistory();
 
-
-
    return 1;
 }
 

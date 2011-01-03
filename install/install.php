@@ -94,7 +94,7 @@ function pluginFusioninventoryInstall($version) {
    $input['exceptions'] = exportArrayToDB(array());
    $PluginFusioninventoryAgentmodule->add($input);
 
-   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '300', array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
 }
 
 ?>
