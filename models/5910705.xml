@@ -1,0 +1,475 @@
+<model>
+	<name><![CDATA[5910705]]></name>
+	<type>NetworkEquipment</type>
+	<key>Networking0088</key>
+	<comments><![CDATA[Cisco Internetwork Operating System Software ^M  
+IOS (tm) C2970 Software (C2970-I6L2-M), Version 12.1(19)EA1c, RELEASE SOFTWARE (fc2)^M  
+Copyright (c) 1986-2004 by cisco Systems, Inc.^M  
+Compiled Tue 03-Feb-04 02:14 by yenanh
+
+Cisco Internetwork Operating System Software ^M  
+IOS (tm) C3750 Software (C3750-I9-M), Version 12.2(20)SE4, RELEASE SOFTWARE (fc1)^M  
+Copyright (c) 1986-2005 by cisco Systems, Inc.^M  
+Compiled Sun 09-Jan-05 00:09 by antonino
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)FX, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Wed 12-Oct-05 22:05 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Fri 28-Jul-06 04:33 by yenanh
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE3, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Mon 29-Sep-08 00:59 by nachen
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 18:10 by gereddy
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 06-Apr-09 08:36 by amvarma
+
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Fri 25-Sep-09 08:49 by sasyamal
+
+Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(53)SE1, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2010 by Cisco Systems, Inc.^M
+Compiled Fri 12-Mar-10 17:54 by prod_rel_team
+
+Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 14:11 by gereddy
+
+Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(44)SE6, RELE
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 09-Mar-09 18:27 by gereddy
+
+Cisco IOS Software, C3560 Software (C3560-ADVIPSERVICESK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
+Compiled Thu 21-Aug-08 15:26 by nachen
+
+Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
+Compiled Mon 22-May-06 01:45 by yenanh
+
+Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-2007 by Cisco Systems, Inc.
+Compiled Thu 19-Jul-07 18:15 by nachen
+
+Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Mon 06-Apr-09 02:25 by amvarma
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Sun 13-Dec-09 15:45 by prod_rel_team
+
+Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2010 by Cisco Systems, Inc.^M
+Compiled Wed 21-Apr-10 05:33 by prod_rel_team
+
+Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(37)SE, RELEASE SOFTWARE (fc2) Copyright (c) 1986-2007 by Cisco Systems, Inc. Compiled Thu 10-May-07 16:19 by antonino
+
+Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
+Compiled Mon 16-Jul-07 03:24 by myl
+
+Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)^M
+Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
+Compiled Tue 30-Aug-05 15:47 by yenanh
+
+Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(50)SE3, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Wed 22-Jul-09 06:19 by prod_rel_team
+
+Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2010 by Cisco Systems, Inc.^M
+Compiled Wed 21-Apr-10 04:49 by prod_rel_team
+
+Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(50)SE3, RELEASE SOFTWARE (fc1)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Wed 22-Jul-09 09:10 by prod_rel_tea
+
+Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Fri 25-Sep-09 04:40 by sasyamal
+
+Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)^M
+Technical Support: http://www.cisco.com/techsupport^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Sun 13-Dec-09 17:24 by prod_rel_team
+
+]]></comments>
+	<oidlist>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.1.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[comments]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.3.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[uptime]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.5.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[name]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[location]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.1.0]]></oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name><![CDATA[]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifIndex]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifdescr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.3]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifType]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.4]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifmtu]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.5]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifspeed]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.6]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifPhysAddress]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.7]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifinternalstatus]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.8]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifstatus]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.9]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[iflastchange]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.10]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifinoctets]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.14]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifinerrors]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.16]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifoutoctets]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.20]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifouterrors]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ipAdEntAddr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.17.1.1.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[macaddr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.31.1.1.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ifName]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.3.6.6.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ram]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.9.23.1.2.1.1.4]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[cdpCacheAddress]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.9.23.1.2.1.1.7]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[cdpCacheDevicePort]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.9.46.1.3.1.1.4.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[vtpVlanName]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.17.1.4.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[dot1dBasePortIfIndex]]></mapping_name>
+			<vlan>1</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.9.68.1.2.2.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[vmvlan]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.47.1.1.1.1.9.1001]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[firmware]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.47.1.1.1.1.11.1001]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[serial]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.47.1.1.1.1.13.1001]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[entPhysicalModelName]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.2.1.8.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[memory]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.22.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[ipNetToMediaPhysAddress]]></mapping_name>
+			<vlan>1</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[cpu]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.4.1.9.9.46.1.6.1.1.14]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[vlanTrunkPortDynamicStatus]]></mapping_name>
+			<vlan>1</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.17.4.3.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[dot1dTpFdbPort]]></mapping_name>
+			<vlan>1</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.17.4.3.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[dot1dTpFdbAddress]]></mapping_name>
+			<vlan>1</vlan>
+			<activation>1</activation>
+		</oidobject>
+	</oidlist>
+</model>

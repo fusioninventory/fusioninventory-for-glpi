@@ -1,0 +1,208 @@
+<model>
+	<name><![CDATA[1942119]]></name>
+	<type>Printer</type>
+	<key>Printer0128</key>
+	<comments><![CDATA[Dell Color Laser 3110cn; Net 8.29, Controller 200604102121, Engine 05.03.00
+
+Dell Color Laser 3110cn; Net 8.41, Controller 200612221216, Engine 05.09.00
+
+Dell Color Laser 3110cn; Net 8.43, Controller 200707111148, Engine 05.09.00
+
+Dell Color Laser 3110cn; Net 8.43, Controller 200804091041, Engine 05.09.00
+
+Dell Color Laser 5110cn; Net 8.43, Controller 200707111650, Engine 01.03.00
+
+Dell Laser Printer 5100cn; Net 6.38, Controller 200610231537, Engine 01.00.05
+
+Dell MFP Laser 3115cn; Net 9.15, Controller 200611280947, Engine 05.06.00
+
+Samsung CLP-610 Series; OS 1.29.01.22 11-23-2007;Engine 1.00.83;NIC V4.01.01(CLP-610) 10-01-2007;S/N 4D21B1BPC00621X
+
+Xerox Phaser 6350DT;PS 3.11.0,Net 24.22.04.20.2005,Eng 3.1.0,OS 5.74
+
+Xerox Phaser 6360DT; OS 8.26, PS 4.12.0, Eng 12.11.0, Net 37.58.03.03.2008, Adobe PostScript 3016.101 (10), PCL 5c Version 5.0
+
+]]></comments>
+	<oidlist>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.1.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[comments]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.5.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[name]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[location]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.1.0]]></oid>
+			<portcounter>1</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>0</mapping_type>
+ 			<mapping_name><![CDATA[]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifIndex]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifName]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.3]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifType]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.6]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifPhysAddress]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>1</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[ifaddr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.25.2.3.1.5.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[memory]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.25.3.2.1.3.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[model]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.5.1.1.17.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[serial]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.8.2.1.14.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[enterprise]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.10.2.1.4.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[pagecountertotalpages]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.1]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[tonercyan]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[tonermagenta]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.3]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[toneryellow]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.4]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>3</mapping_type>
+ 			<mapping_name><![CDATA[tonerblack]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+	</oidlist>
+</model>

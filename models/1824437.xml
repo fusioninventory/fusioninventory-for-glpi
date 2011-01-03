@@ -1,8 +1,10 @@
 <model>
-	<name><![CDATA[1035120]]></name>
-	<type>Printer</type>
-	<key>Printer0135</key>
-	<comments><![CDATA[KONICA MINOLTA bizhub 500
+	<name><![CDATA[1824437]]></name>
+	<type>NetworkEquipment</type>
+	<key>Networking0005</key>
+	<comments><![CDATA[BladeCenter Advanced Management Module
+
+ProSafe 802.11b/g Wireless Access Point -WG102 V5.0.0
 
 ]]></comments>
 	<oidlist>
@@ -11,43 +13,38 @@
 			<oid><![CDATA[.1.3.6.1.2.1.1.1.0]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
-			<mappings_id>47</mappings_id>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[comments]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.4.20.1.2]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mappings_id>84</mappings_id>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.1]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mappings_id>86</mappings_id>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.6]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>1</dynamicport>
-			<mappings_id>82</mappings_id>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.43.11.1.1.6.1.1]]></oid>
+			<oid><![CDATA[.1.3.6.1.2.1.1.3.0]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>0</dynamicport>
- 			<mapping_id>52</mapping_id>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[uptime]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.5.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[name]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.1.6.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[location]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>
