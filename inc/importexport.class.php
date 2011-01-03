@@ -341,7 +341,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 //               $ptud->fields['type'] = $discovery->TYPE;
 //            $ptud->fields['plugin_fusinvsnmp_models_id'] = $plugin_fusinvsnmp_models_id;
 //
-//               $ptud->fields['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
+//               $ptud->fields['plugin_fusinvsnmp_configsecurities_id'] = $discovery->AUTHSNMP;
 //               if ($discovery->AUTHSNMP != "") {
 //                  $ptud->fields['snmp'] = 1;
 //               }
@@ -359,8 +359,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 //            if ($ptud->fields['plugin_fusinvsnmp_models_id'] == '') {
 //               $ptud->fields['plugin_fusinvsnmp_models_id'] = 0;
 //               }
-//               if ($ptud->fields['plugin_fusioninventory_snmpauths_id'] == '') {
-//                  $ptud->fields['plugin_fusioninventory_snmpauths_id'] = 0;
+//               if ($ptud->fields['plugin_fusinvsnmp_configsecurities_id'] == '') {
+//                  $ptud->fields['plugin_fusinvsnmp_configsecurities_id'] = 0;
 //               }
 //               if ($ptud->fields['accepted'] == '') {
 //                  $ptud->fields['accepted'] = 0;
@@ -392,7 +392,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 //               $a_lockable = PluginFusioninventoryLock::getLockFields($a_device[1], $a_device[0]);
 //               $data = array();
 //               $data['id'] = $ci->getField('id');
-//               $data['plugin_fusioninventory_snmpauths_id'] = 0;
+//               $data['plugin_fusinvsnmp_configsecurities_id'] = 0;
 //
 //               if ($a_device[1] == 'PluginFusioninventoryUnknownDevice') {
 //                  if ($ci->getField('name') && !in_array('name', $a_lockable)) {
@@ -435,8 +435,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 //                  $data['comment'] = $discovery->DESCRIPTION;
 //               if ($ci->getField('plugin_fusinvsnmp_models_id') && !in_array('plugin_fusinvsnmp_models_id', $a_lockable));
 //                  $data['plugin_fusinvsnmp_models_id'] = $FK_model;
-//               if ($ci->getField('plugin_fusioninventory_snmpauths_id') && !in_array('plugin_fusioninventory_snmpauths_id', $a_lockable));
-//                  $data['plugin_fusioninventory_snmpauths_id'] = $discovery->AUTHSNMP;
+//               if ($ci->getField('plugin_fusinvsnmp_configsecurities_id') && !in_array('plugin_fusinvsnmp_configsecurities_id', $a_lockable));
+//                  $data['plugin_fusinvsnmp_configsecurities_id'] = $discovery->AUTHSNMP;
 //               if ($ci->getField('snmp') && !in_array('snmp', $a_lockable)) {
 //                  $data['snmp'] = 0;
 //                  if ($discovery->AUTHSNMP != "") {

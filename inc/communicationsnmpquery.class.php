@@ -259,7 +259,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $type='NETWORKING';
             $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                              `glpi_networkequipments`.`ip` AS `gnifaddr`,
-                             `plugin_fusioninventory_snmpauths_id`, `plugin_fusinvsnmp_models_id`
+                             `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusinvsnmp_models_id`
                       FROM `glpi_networkequipments`
                       LEFT JOIN `glpi_plugin_fusinvsnmp_networkequipments`
                            ON `networkequipments_id`=`glpi_networkequipments`.`id`
@@ -267,7 +267,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                            ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
                       WHERE `glpi_networkequipments`.`is_deleted`='0'
                            AND `plugin_fusinvsnmp_models_id`!='0'
-                           AND `plugin_fusioninventory_snmpauths_id`!='0'";
+                           AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
              if ($p_entity != '-1') {
                $query .= "AND `glpi_networkequipments`.`entities_id`='".$p_entity."' ";
              }
@@ -285,7 +285,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $type='PRINTER';
             $query = "SELECT `glpi_printers`.`id` AS `gID`,
                              `glpi_networkports`.`ip` AS `gnifaddr`,
-                             `plugin_fusioninventory_snmpauths_id`, `plugin_fusinvsnmp_models_id`
+                             `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusinvsnmp_models_id`
                       FROM `glpi_printers`
                       LEFT JOIN `glpi_plugin_fusinvsnmp_printers`
                               ON `printers_id`=`glpi_printers`.`id`
@@ -296,7 +296,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                            ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
                       WHERE `glpi_printers`.`is_deleted`=0
                             AND `plugin_fusinvsnmp_models_id`!='0'
-                            AND `plugin_fusioninventory_snmpauths_id`!='0'";
+                            AND `plugin_fusinvsnmp_configsecurities_id`!='0'";
              if ($p_entity != '-1') {
                $query .= "AND `glpi_printers`.`entities_id`='".$p_entity."' ";
              }
@@ -320,7 +320,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $this->addInfo($p_sxml_node,
                            $data['gID'],
                            $data['gnifaddr'],
-                           $data['plugin_fusioninventory_snmpauths_id'],
+                           $data['plugin_fusinvsnmp_configsecurities_id'],
                            $data['plugin_fusinvsnmp_models_id'],
                            $type);
          }

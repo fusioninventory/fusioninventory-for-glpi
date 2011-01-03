@@ -103,7 +103,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_network_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusioninventory_snmpauths_id) {
+	function update_network_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusinvsnmp_configsecurities_id) {
 		global $DB;
 		
 		$query = "SELECT *
@@ -116,12 +116,12 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
 			$DB->query($queryInsert);
 		}		
-		if (empty($plugin_fusioninventory_snmpauths_id)) {
-			$plugin_fusioninventory_snmpauths_id = 0;
+		if (empty($plugin_fusinvsnmp_configsecurities_id)) {
+			$plugin_fusinvsnmp_configsecurities_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusinvsnmp_networkequipments`
                 SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."',
-                    `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
+                    `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."'
                 WHERE `networkequipments_id`='".$id."';";
 	
 		$DB->query($query);
@@ -138,7 +138,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	 * @return
 	 *
 	**/
-	function update_printer_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusioninventory_snmpauths_id) {
+	function update_printer_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusinvsnmp_configsecurities_id) {
 		global $DB;
 
 		$query = "SELECT *
@@ -151,12 +151,12 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
 			$DB->query($queryInsert);
 		}
-		if (empty($plugin_fusioninventory_snmpauths_id)) {
-			$plugin_fusioninventory_snmpauths_id = 0;
+		if (empty($plugin_fusinvsnmp_configsecurities_id)) {
+			$plugin_fusinvsnmp_configsecurities_id = 0;
       }
 		$query = "UPDATE `glpi_plugin_fusinvsnmp_printers`
                 SET `plugin_fusinvsnmp_models_id`='".$plugin_fusinvsnmp_models_id."',
-                    `plugin_fusioninventory_snmpauths_id`='".$plugin_fusioninventory_snmpauths_id."'
+                    `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."'
                 WHERE `printers_id`='".$id."';";
 	
 		$DB->query($query);
@@ -342,7 +342,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          echo $plugin_fusioninventory_snmp_auth->selectbox($selected);
       } else  if ($config->getValue($_SESSION["plugin_fusinvsnmp_moduleid"], "storagesnmpauth") == "DB") {
          Dropdown::show("PluginFusinvsnmpConfigSecurity",
-                        array('name' => "plugin_fusioninventory_snmpauths_id",
+                        array('name' => "plugin_fusinvsnmp_configsecurities_id",
                               'value' => $selected,
                               'comment' => false));
       }

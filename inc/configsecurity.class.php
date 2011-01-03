@@ -421,7 +421,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 	function selectbox($selected=0) {
 		$xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
 		$i = -1;
-		$selectbox = "<select name='plugin_fusioninventory_snmpauths_id' size='1'>\n
+		$selectbox = "<select name='plugin_fusinvsnmp_configsecurities_id' size='1'>\n
                        <option value='0'>-----</option>\n";
 		foreach($xml->auth[0] as $num) {
 			$i++;
@@ -482,7 +482,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 			}		
 			$result=$DB->query($query);
 			if ($DB->numrows($result) > 0) {
-				$ID_auth = $DB->result($result,0,"plugin_fusioninventory_snmpauths_id");
+				$ID_auth = $DB->result($result,0,"plugin_fusinvsnmp_configsecurities_id");
          } else {
 				return;
          }
@@ -683,13 +683,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
 		switch ($type) {
 			case NETWORKING_TYPE :
-				$query = "SELECT plugin_fusioninventory_snmpauths_id
+				$query = "SELECT plugin_fusinvsnmp_configsecurities_id
 				FROM glpi_plugin_fusinvsnmp_networkequipments 
 				WHERE networkequipments_id='".$ID_Device."' ";
 				break;
 
 			case PRINTER_TYPE :
-				$query = "SELECT `plugin_fusioninventory_snmpauths_id`
+				$query = "SELECT `plugin_fusinvsnmp_configsecurities_id`
                       FROM `glpi_plugin_fusinvsnmp_printers`
                       WHERE `printers_id`='".$ID_Device."';";
 				break;
@@ -697,7 +697,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 		
 		if ((isset($query)) && ($result = $DB->query($query))) {
 			if ($DB->numrows($result) != 0) {
-				return $DB->result($result, 0, "plugin_fusioninventory_snmpauths_id");
+				return $DB->result($result, 0, "plugin_fusinvsnmp_configsecurities_id");
          }
 		}	
 	}
