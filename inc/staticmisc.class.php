@@ -83,7 +83,7 @@ class PluginFusinvsnmpStaticmisc {
 
       $a_itemtype['PluginFusinvsnmpIPRange'] = $LANG['plugin_fusinvsnmp']['iprange'][2];
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
-      $a_itemtype['Printer'] = printer::getTypeName();
+      $a_itemtype['Printer'] = Printer::getTypeName();
 
       return $a_itemtype;
    }
