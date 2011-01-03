@@ -39,7 +39,21 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpModel extends CommonDBTM {
-   
+
+   function canCreate() {
+      return true;
+   }
+
+   function canView() {
+      return true;
+   }
+
+   function canDelete() {
+      return false;
+   }
+
+
+
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
 
@@ -245,9 +259,6 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
    }
 
-   function canView() {
-      return true;
-   }
 }
 
 ?>

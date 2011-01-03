@@ -161,7 +161,21 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'NetworkEquipment');
             $result = $a_return[0];
             $input = $a_return[1];
-
+            if ($DB->numrows($result)) {
+               $this->importDevice('NetworkEquipment', $DB->result($result,0,'id'));
+            } else {
+               // unknowndevice
+               $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'PluginFusioninventoryUnknownDevice');
+               $result = $a_return[0];
+               $input = $a_return[1];
+               if (isset($result) AND ($DB->numrows($result))) {
+                  $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
+               } else {
+                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $id = $PluginFusioninventoryUnknownDevice->add($input);
+                  $this->importDevice('PluginFusioninventoryUnknownDevice', $id);
+               }
+            }
             break;
 
          case '3':

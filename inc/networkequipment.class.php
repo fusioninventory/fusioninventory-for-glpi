@@ -373,7 +373,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		echo "<td align='center'>";
 		$query_models = "SELECT *
                        FROM `glpi_plugin_fusinvsnmp_models`
-                       WHERE `itemtype`=='NetworkEquipment'";
+                       WHERE `itemtype`='NetworkEquipment'";
 		$result_models=$DB->query($query_models);
 		$exclude_models = array();
 		while ($data_models=$DB->fetch_array($result_models)) {

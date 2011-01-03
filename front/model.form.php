@@ -84,10 +84,10 @@ if(!empty($_POST["item_coche"])) {
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-//if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
-//   $importexport->showForm($_SERVER["PHP_SELF"]);
-//   $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
-//}
+if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
+   $importexport->showForm($_SERVER["PHP_SELF"]);
+   $importexport->showFormMassImport($_SERVER["PHP_SELF"]);
+}
 
 if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
    $id = "";
@@ -96,8 +96,7 @@ if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
    }
    $plugin_fusioninventory_model_infos->showForm($id);
    $plugin_fusioninventory_mib->showFormList($id, array('create'=>true));
-//   $plugin_fusioninventory_mib->showFormList($id);
-//   $plugin_fusioninventory_mib->showForm($id);
+
 }
 commonFooter();
 

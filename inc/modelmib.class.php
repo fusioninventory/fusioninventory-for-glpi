@@ -147,8 +147,12 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
                echo "<td align='center'>";
                $mapping = new PluginFusioninventoryMapping;
                $mapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
-               echo $LANG['plugin_fusioninventory']['mapping'][$mapping->fields['locale']]." (".$mapping->fields['name'].")";
-               $mappings_used[$mapping->fields['id']] = 1;
+               if (isset($mapping->fields['locale'])) {
+                  echo $LANG['plugin_fusioninventory']['mapping'][$mapping->fields['locale']]." (".$mapping->fields['name'].")";
+               }
+               if (isset($mapping->fields['id'])) {
+                  $mappings_used[$mapping->fields['id']] = 1;
+               }
                echo "</td>";
 
                if ($data['itemtype'] == NETWORKING_TYPE) {
