@@ -102,18 +102,20 @@ function pluginFusinvinventoryUninstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvinventory();
 
+   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      deleteDir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
    }
    // Delete files of lib
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter')) {
-      deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter');
+      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/DataFilter');
    }
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias')) {
-      deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias');
+      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/criterias');
    }
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines')) {
-      deleteDir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines');
+      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/machines');
    }
 
    // Delete config
