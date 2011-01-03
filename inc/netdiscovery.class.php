@@ -114,9 +114,22 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
       // *** Add jobstatus
       if (count($a_agentlist) == '0') {
-         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobs_id,
+         $a_input = array();
+         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['state'] = 1;
+         $a_input['plugin_fusioninventory_agents_id'] = 0;
+         $a_input['itemtype'] = 'PluginFusinvsnmpIPRange';
+         $a_input['items_id'] = 0;
+         $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+            //Add log of taskjob
+            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+            $a_input['state'] = 7;
+            $a_input['date'] = date("Y-m-d H:i:s");
+            $PluginFusioninventoryTaskjoblog->add($a_input);
+
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($Taskjobstatus_id,
                                                                  0,
-                                                                 '',
+                                                                 'PluginFusinvsnmpIPRange',
                                                                  1,
                                                                  "Unable to find agent to run this job");
          $PluginFusioninventoryTaskjob->fields['status'] = 1;
