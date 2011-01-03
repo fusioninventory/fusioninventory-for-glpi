@@ -96,8 +96,10 @@ function pluginFusinvdeployUninstall() {
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
 
+   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+
    if (file_exists(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      deleteDir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+      $PluginFusioninventorySetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
    }
 
    PluginFusioninventoryProfile::cleanProfile($a_plugin['shortname']);
