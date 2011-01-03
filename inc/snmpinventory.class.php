@@ -198,6 +198,18 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
 
       // *** Add jobstatus
       if (count($a_agentlist) == '0') {
+         $a_input = array();
+         $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+         $a_input['state'] = 1;
+         $a_input['plugin_fusioninventory_agents_id'] = 0;
+         $a_input['itemtype'] = '';
+         $a_input['items_id'] = 0;
+         $Taskjobstatus_id = $PluginFusioninventoryTaskjobstatus->add($a_input);
+            //Add log of taskjob
+            $a_input['plugin_fusioninventory_taskjobstatus_id'] = $Taskjobstatus_id;
+            $a_input['state'] = 7;
+            $a_input['date'] = date("Y-m-d H:i:s");
+            $PluginFusioninventoryTaskjoblog->add($a_input);
          $PluginFusioninventoryTaskjobstatus->changeStatusFinish($taskjobs_id,
                                                                  0,
                                                                  '',
