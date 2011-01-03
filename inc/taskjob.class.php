@@ -379,7 +379,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function dropdownDefinition($myname,$definitiontype,$method,$deftypeid,$value=0,$entity_restrict='', $title = 0) {
-      global $DB,$CFG_GLPI;
+      global $DB,$CFG_GLPI, $LANG;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
@@ -394,7 +394,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $rand = call_user_func(array("Plugin".$module."Staticmisc", "task_definitionselection_".$definitiontype."_".$method), $title);
       }
 
-      echo "&nbsp;<input type='button' name='addObject' id='addObject' value='Ajouter' class='submit'/>";
+      echo "&nbsp;<input type='button' name='addObject' id='addObject' value='".$LANG['buttons'][8]."' class='submit'/>";
 
             $params=array('selection'=>'__VALUE__',
                      'entity_restrict'=>$entity_restrict,
@@ -443,7 +443,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='', $title = 0) {
-      global $DB,$CFG_GLPI;
+      global $DB,$CFG_GLPI, $LANG;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
@@ -462,7 +462,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $rand = Dropdown::showFromArray('actionselectiontoadd', $a_data);
 
-      echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='Ajouter' class='submit'/>";
+      echo "&nbsp;<input type='button' name='addAObject' id='addAObject' value='".$LANG['buttons'][8]."' class='submit'/>";
 
             $params=array('selection'=>'__VALUE__',
                      'entity_restrict'=>$entity_restrict,
