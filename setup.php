@@ -125,11 +125,18 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = $LANG['plugin_fusioninventory']['task'][1];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['taskjob']['title'] = $LANG['plugin_fusioninventory']['menu'][7];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['taskjob']['page']  = '/plugins/fusioninventory/front/taskjob.php';
+
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = $LANG['plugin_fusioninventory']['menu'][1];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = $LANG['plugin_fusioninventory']['functionalities'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/configuration.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = $LANG['plugin_fusioninventory']['menu'][4];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
+
       }
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');

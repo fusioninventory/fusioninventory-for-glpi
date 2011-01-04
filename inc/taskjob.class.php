@@ -60,11 +60,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $tab[2]['linkfield']       = 'entities_id';
       $tab[2]['name']            = $LANG['entity'][0];
 
-      $tab[3]['table']          = $this->getTable();
-      $tab[3]['field']          = 'date_scheduled';
-      $tab[3]['linkfield']      = '';
-      $tab[3]['name']           = $LANG['common'][27];
-      $tab[3]['datatype']       = 'datetime';
+//      $tab[3]['table']          = $this->getTable();
+//      $tab[3]['field']          = 'date_scheduled';
+//      $tab[3]['linkfield']      = '';
+//      $tab[3]['name']           = $LANG['common'][27];
+//      $tab[3]['datatype']       = 'datetime';
 
       $tab[4]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $tab[4]['field']          = 'name';
@@ -77,6 +77,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $tab[5]['field']          = 'status';
       $tab[5]['linkfield']      = '';
       $tab[5]['name']           = 'status';
+
+      $tab[6]['table']          = $this->getTable();
+      $tab[6]['field']          = 'id';
+      $tab[6]['linkfield']      = '';
+      $tab[6]['name']           = 'id';
 
       return $tab;
    }
