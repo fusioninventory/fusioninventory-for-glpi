@@ -513,7 +513,18 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusinvsnmpNetworkPortLog', '6', '5', '0'),
 
           (NULL,'PluginFusinvsnmpNetworkPort', '2', '1', '0'),
-          (NULL,'PluginFusinvsnmpNetworkPort', '3', '2', '0');
+          (NULL,'PluginFusinvsnmpNetworkPort', '3', '2', '0'),
+
+          (NULL,'PluginFusinvsnmpStateDiscovery', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '4', '2', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '5', '3', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '6', '4', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '7', '5', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '8', '6', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '9', '7', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '10', '8', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '11', '9', '0'),
+          (NULL,'PluginFusinvsnmpStateDiscovery', '12', '10', '0');
 
 
 ## glpi_plugin_fusioninventory_mappings
