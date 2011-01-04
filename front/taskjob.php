@@ -44,7 +44,7 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (!isset($_GET['sort'])) {
-   $_GET['sort'] = 2;
+   $_GET['sort'] = 6;
    $_GET['order'] = 'DESC';
 }
 $_GET['target']="task.php";
