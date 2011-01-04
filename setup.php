@@ -191,7 +191,29 @@ function plugin_init_fusinvsnmp() {
 //            }
 			}
 //         $PLUGIN_HOOKS['submenu_entry']['fusinvsnmp']["<img  src='".GLPI_ROOT."/plugins/fusinvsnmp/pics/books.png' title='".$LANG['plugin_fusinvsnmp']['setup'][16]."' alt='".$LANG['plugin_fusinvsnmp']['setup'][16]."'>"] = 'front/documentation.php';
+
+         // Fil ariane
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['page']  = '/plugins/fusinvsnmp/front/model.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['title'] = $LANG['plugin_fusinvsnmp']['model_info'][3];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['page']  = '/plugins/fusinvsnmp/front/configsecurity.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = $LANG['plugin_fusinvsnmp']['menu'][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  = '/plugins/fusinvsnmp/front/iprange.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulenetdiscovery']['title'] = $LANG['plugin_fusinvsnmp']['menu'][7];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulenetdiscovery']['page']  = '/plugins/fusinvsnmp/front/rulenetdiscovery.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulesnmpinventory']['title'] = $LANG['plugin_fusinvsnmp']['menu'][8];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulesnmpinventory']['page']  = '/plugins/fusinvsnmp/front/ruleinventory.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = $LANG['plugin_fusinvsnmp']['menu'][9];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusinvsnmp/front/statediscovery.php';
+
+
 		}
+
 	}
 }
 

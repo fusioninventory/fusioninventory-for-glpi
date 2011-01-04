@@ -213,44 +213,122 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $class->getFromDB($items_id);
 
       $a_lockable = PluginFusioninventoryLock::getLockFields($itemtype, $items_id);
-      if ($class->fields['name'] && !in_array('name', $a_lockable)) {
-         if (!empty($xml->NETBIOSNAME)) {
-            $class->fields['name'] = $xml->NETBIOSNAME;
-         } else if (!empty($xml->SNMPHOSTNAME)) {
-            $class->fields['name'] = $xml->SNMPHOSTNAME;
-         } else if (!empty($xml->DNSHOSTNAME)) {
-            $class->fields['name'] = $xml->DNSHOSTNAME;
-         }
-      }
-      if (isset($class->fields['dnsname'])) {
-         if ($class->fields['dnsname'] && !in_array('dnsname', $a_lockable)) {
-            $class->fields['dnsname'] = $xml->DNSHOSTNAME;
-         }
-      }
-      if ($class->fields['serial'] && !in_array('serial', $a_lockable))
-         $class->fields['serial'] = trim($xml->SERIAL);
-      if ($class->fields['contact'] && !in_array('contact', $a_lockable))
-         $class->fields['contact'] = $xml->USERSESSION;
-      if (isset($class->fields['domain'])) {
-         if ($class->fields['domain'] && !in_array('domain', $a_lockable)) {
-            if (!empty($xml->WORKGROUP)) {
-            $class->fields['domain'] = Dropdown::importExternal("Domain",
-                                    $xml->WORKGROUP,$xml->ENTITY);
+
+      switch ($itemtype) {
+         
+         case 'Computer':
+         case 'Printer':
+
+
+            break;
+
+         case 'PluginFusioninventoryUnknownDevice':
+            if ($class->fields['name'] && !in_array('name', $a_lockable)) {
+               if (!empty($xml->NETBIOSNAME)) {
+                  $class->fields['name'] = $xml->NETBIOSNAME;
+               } else if (!empty($xml->SNMPHOSTNAME)) {
+                  $class->fields['name'] = $xml->SNMPHOSTNAME;
+               } else if (!empty($xml->DNSHOSTNAME)) {
+                  $class->fields['name'] = $xml->DNSHOSTNAME;
+               }
             }
-         }
-      }
-      if (isset($class->fields['ip'])) {
-         if ($class->fields['ip'] && !in_array('ip', $a_lockable)) {
-            $class->fields['ip'] = $xml->IP;
-         }
-      }
-      if (isset($class->fields['mac'])) {
-         if ($class->fields['mac'] && !in_array('mac', $a_lockable)) {
-            $class->fields['mac'] = $xml->MAC;
-         }
+            if ($class->fields['serial'] && !in_array('serial', $a_lockable))
+               $class->fields['serial'] = trim($xml->SERIAL);
+            if ($class->fields['contact'] && !in_array('contact', $a_lockable))
+               $class->fields['contact'] = $xml->USERSESSION;
+            if (isset($class->fields['domain'])) {
+               if ($class->fields['domain'] && !in_array('domain', $a_lockable)) {
+                  if (!empty($xml->WORKGROUP)) {
+                  $class->fields['domain'] = Dropdown::importExternal("Domain",
+                                          $xml->WORKGROUP,$xml->ENTITY);
+                  }
+               }
+            }
+            if (!empty($xml->TYPE)) {
+               switch ($xml->TYPE) {
+
+                  case '1':
+                     $class->fields['type'] = 'Computer';
+                     break;
+
+                  case '2':
+                     $class->fields['type'] = 'NetworkEquipment';
+                     break;
+
+                  case '3':
+                     $class->fields['type'] = 'Printer';
+                     break;
+                  
+               }
+
+            }
+//
+//            $class->update($class->fields);
+//            if (isset($class->fields['ip'])) {
+//               if ($class->fields['ip'] && !in_array('ip', $a_lockable)) {
+//                  $class->fields['ip'] = $xml->IP;
+//               }
+//            }
+//            if (isset($class->fields['mac'])) {
+//               if ($class->fields['mac'] && !in_array('mac', $a_lockable)) {
+//                  $class->fields['mac'] = $xml->MAC;
+//               }
+//            }
+
+            
+            break;
+         
+         case 'NetworkEquipment':
+            
+            break;
       }
 
-      $class->update($class->fields);
+
+
+
+//      if ($class->fields['name'] && !in_array('name', $a_lockable)) {
+//         if (!empty($xml->NETBIOSNAME)) {
+//            $class->fields['name'] = $xml->NETBIOSNAME;
+//         } else if (!empty($xml->SNMPHOSTNAME)) {
+//            $class->fields['name'] = $xml->SNMPHOSTNAME;
+//         } else if (!empty($xml->DNSHOSTNAME)) {
+//            $class->fields['name'] = $xml->DNSHOSTNAME;
+//         }
+//      }
+//      if (isset($class->fields['dnsname'])) {
+//         if ($class->fields['dnsname'] && !in_array('dnsname', $a_lockable)) {
+//            $class->fields['dnsname'] = $xml->DNSHOSTNAME;
+//         }
+//      }
+//      if ($class->fields['serial'] && !in_array('serial', $a_lockable))
+//         $class->fields['serial'] = trim($xml->SERIAL);
+//      if ($class->fields['contact'] && !in_array('contact', $a_lockable))
+//         $class->fields['contact'] = $xml->USERSESSION;
+//      if (isset($class->fields['domain'])) {
+//         if ($class->fields['domain'] && !in_array('domain', $a_lockable)) {
+//            if (!empty($xml->WORKGROUP)) {
+//            $class->fields['domain'] = Dropdown::importExternal("Domain",
+//                                    $xml->WORKGROUP,$xml->ENTITY);
+//            }
+//         }
+//      }
+//      if (isset($class->fields['ip'])) {
+//         if ($class->fields['ip'] && !in_array('ip', $a_lockable)) {
+//            $class->fields['ip'] = $xml->IP;
+//         }
+//      }
+//      if (isset($class->fields['mac'])) {
+//         if ($class->fields['mac'] && !in_array('mac', $a_lockable)) {
+//            $class->fields['mac'] = $xml->MAC;
+//         }
+//      }
+//
+//      if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
+//         if ($class->fields['comment'] && !in_array('comment', $a_lockable))
+//            $class->fields['comment'] = trim($xml->DESCRIPTION);
+//      }
+
+//      $class->update($class->fields);
       
    }
 
