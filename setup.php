@@ -107,8 +107,13 @@ function plugin_init_fusinvinventory() {
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleinventory']
                   = '../fusinvinventory/front/ruleinventory.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-ruleinventory']
+                  = '../fusinvinventory/front/ruleinventory.php';
+
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']
                   = '../fusinvinventory/front/ruleentity.form.php';
+   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-ruleentity']
+                  = '../fusinvinventory/front/ruleentity.php';
 
    // Tabs for each type
    $PLUGIN_HOOKS['headings']['fusinvinventory'] = 'plugin_get_headings_fusinvinventory';
