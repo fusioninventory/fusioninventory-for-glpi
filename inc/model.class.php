@@ -53,6 +53,51 @@ class PluginFusinvsnmpModel extends CommonDBTM {
    }
 
 
+   function getSearchOptions() {
+      global $LANG;
+
+      $tab = array();
+
+      $tab['common'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
+
+		$tab[1]['table'] = $this->getTable();
+		$tab[1]['field'] = 'name';
+		$tab[1]['linkfield'] = 'name';
+		$tab[1]['name'] = $LANG['common'][16];
+		$tab[1]['datatype'] = 'itemlink';
+
+		$tab[2]['table'] = $this->getTable();
+		$tab[2]['field'] = 'itemtype';
+		$tab[2]['linkfield'] = 'itemtype';
+		$tab[2]['name'] = 'itemtype';
+
+		$tab[3]['table'] = 'glpi_entities';
+		$tab[3]['field'] = 'completename';
+		$tab[3]['linkfield'] = 'entities_id';
+		$tab[3]['name'] = $LANG['entity'][0];
+
+		$tab[4]['table'] = $this->getTable();
+		$tab[4]['field'] = 'is_active';
+		$tab[4]['linkfield'] = 'is_active';
+		$tab[4]['name'] = 'is_active';
+
+		$tab[5]['table'] = $this->getTable();
+		$tab[5]['field'] = 'discovery_key';
+		$tab[5]['linkfield'] = 'discovery_key';
+		$tab[5]['name'] = $LANG['plugin_fusinvsnmp']['model_info'][12];
+
+		$tab[6]['table'] = $this->getTable();
+		$tab[6]['field'] = 'comment';
+		$tab[6]['linkfield'] = 'comment';
+		$tab[6]['name'] = 'comment';
+
+
+
+
+      return $tab;
+   }
+
+
 
 	function showForm($id, $options=array()) {
 		global $DB,$CFG_GLPI,$LANG;
