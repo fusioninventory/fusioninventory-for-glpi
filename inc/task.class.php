@@ -48,16 +48,16 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[1]['datatype']       = 'itemlink';
 
       $sopt[2]['table']          = $this->getTable();
-      $sopt[2]['field']          = 'date_creation';
+      $sopt[2]['field']          = 'date_scheduled';
       $sopt[2]['linkfield']      = '';
-      $sopt[2]['name']           = $LANG['common'][27];
+      $sopt[2]['name']           = $LANG['plugin_fusioninventory']['task'][14];
       $sopt[2]['datatype']       = 'datetime';
 
-      $sopt[3]['table']          = $this->getTable();
-      $sopt[3]['field']          = 'entities_id';
-      $sopt[3]['linkfield']      = '';
+      $sopt[3]['table']          = 'glpi_entities';
+      $sopt[3]['field']          = 'completename';
+      $sopt[3]['linkfield']      = 'entities_id';
       $sopt[3]['name']           = $LANG['entity'][0];
-
+  
       $sopt[4]['table']          = $this->getTable();
       $sopt[4]['field']          = 'comment';
       $sopt[4]['linkfield']      = '';
