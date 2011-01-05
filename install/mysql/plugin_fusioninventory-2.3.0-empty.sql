@@ -258,13 +258,13 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
 ## INSERT
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
-   VALUES (NULL,'PluginFusioninventoryAgent', '8', '1', '0'),
-          (NULL,'PluginFusioninventoryAgent', '9', '2', '0'),
-          (NULL,'PluginFusioninventoryAgent', '10', '3', '0'),
-          (NULL,'PluginFusioninventoryAgent', '11', '4', '0'),
-          (NULL,'PluginFusioninventoryAgent', '12', '5', '0'),
-          (NULL,'PluginFusioninventoryAgent', '13', '6', '0'),
-          (NULL,'PluginFusioninventoryAgent', '14', '7', '0'),
+   VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryAgent', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryAgent', '4', '3', '0'),
+          (NULL,'PluginFusioninventoryAgent', '5', '4', '0'),
+          (NULL,'PluginFusioninventoryAgent', '6', '5', '0'),
+          (NULL,'PluginFusioninventoryAgent', '7', '6', '0'),
+          (NULL,'PluginFusioninventoryAgent', '0', '7', '0'),
 
           (NULL, 'PluginFusioninventoryUnknownDevice', '2', '1', '0'),
           (NULL, 'PluginFusioninventoryUnknownDevice', '4', '2', '0'),
@@ -276,14 +276,17 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL, 'PluginFusioninventoryUnknownDevice', '18', '8', '0'),
           (NULL, 'PluginFusioninventoryUnknownDevice', '14', '9', '0'),
           (NULL, 'PluginFusioninventoryUnknownDevice', '15', '10', '0'),
-          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0');
+          (NULL, 'PluginFusioninventoryUnknownDevice', '9', '11', '0'),
 
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-   VALUES (NULL,'PluginFusioninventoryTaskjob', '1', '1', '0'),
+          (NULL,'PluginFusioninventoryTaskjob', '1', '1', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '2', '2', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '3', '3', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '4', '4', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '5', '5', '0');
+
+
+
+
 
 
 ## glpi_plugin_fusioninventory_mappings
