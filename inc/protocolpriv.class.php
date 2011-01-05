@@ -39,7 +39,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpProtocolPriv extends CommonDropdown {
    // From CommonDBTM
-   public $table = 'glpi_plugin_fusioninventory_snmpprotocolprivs';
 
    static function getTypeName() {
       global $LANG;

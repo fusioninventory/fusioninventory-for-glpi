@@ -39,6 +39,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","rulesnmpinventory");
 
+PluginFusioninventoryMenu::displayMenu("mini");
+
 $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
 
 include (GLPI_ROOT . "/plugins/fusioninventory/front/rule.common.php");

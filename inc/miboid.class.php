@@ -39,7 +39,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpMibOid extends CommonDropdown {
    // From CommonDBTM
-   public $table = 'glpi_plugin_fusinvsnmp_miboids';
 
    static function getTypeName() {
       global $LANG;

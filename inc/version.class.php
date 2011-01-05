@@ -39,7 +39,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpVersion extends CommonDropdown {
    // From CommonDBTM
-   public $table = 'glpi_plugin_fusioninventory_snmpversions';
 
    static function getTypeName() {
       global $LANG;

@@ -39,7 +39,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpMibLabel extends CommonDropdown {
    // From CommonDBTM
-   public $table = 'glpi_plugin_fusinvsnmp_miblabels';
 
    static function getTypeName() {
       global $LANG;

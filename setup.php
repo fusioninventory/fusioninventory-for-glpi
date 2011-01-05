@@ -172,10 +172,15 @@ function plugin_init_fusinvsnmp() {
 //                                                      = '/plugins/fusinvsnmp/front/configsecurity.form.php';
             }
 
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulenetdiscovery'] = '../fusinvsnmp/front/rulenetdiscovery.form.php';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulenetdiscovery']
+               = '../fusinvsnmp/front/rulenetdiscovery.form.php';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rulenetdiscovery']
+               = '../fusinvsnmp/front/rulenetdiscovery.php';
 
-   $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulesnmpinventory']
-      = '../fusinvsnmp/front/ruleinventory.form.php';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['rulesnmpinventory']
+               = '../fusinvsnmp/front/ruleinventory.form.php';
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['rulesnmpinventory']
+               = '../fusinvsnmp/front/ruleinventory.php';
 
 
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "iprange","w")) {
