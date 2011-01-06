@@ -250,7 +250,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
    
 
-   
+
+   /**
+   * Get all IP of an agent or a computer
+   *
+   * @param $items_id integer ID of the agent
+   * @param $type 'Agent' by default to get IP of agent or of a computer if set other text
+   *
+   *@return Array with all IP of this agent or computer
+   *
+   **/
    function getIPs($items_id, $type = 'Agent') {
       $ip = array();
       if ($type == 'Agent') {
@@ -274,7 +283,15 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-   
+
+   /**
+   * Get agent id of a computer
+   *
+   * @param $items_id integer ID of the computer
+   *
+   *@return agent id or False
+   *
+   **/
    function getAgentWithComputerid($items_id) {
 
       $agent = $this->find("`items_id`='".$items_id."'");
@@ -288,6 +305,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
+
+   /**
+   * Make link between agent and computer
+   *
+   * @param $items_id integer ID of the computer
+   * @param $device_id value of device_id from XML to identify agent
+   *
+   *@return Nothing
+   *
+   **/
    function setAgentWithComputerid($items_id, $device_id) {
       global $DB;
 
@@ -304,7 +331,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-
+   
+   /**
+   * Display if agent is online
+   *
+   *@return Nothing (display)
+   *
+   **/
    function forceRemoteAgent() {
       global $LANG;
 
