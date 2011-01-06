@@ -69,7 +69,7 @@ switch($_POST['glpi_tab']) {
 		break;
 
    case 4 :
-      showHistory('PluginFusioninventoryUnknownDevice',$_POST["id"]);
+      Log::showForItem($PluginFusioninventoryUnknownDevice);
       break;
 
    default :

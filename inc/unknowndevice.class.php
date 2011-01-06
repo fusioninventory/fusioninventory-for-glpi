@@ -33,9 +33,7 @@
 
 class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
-	function __construct() {
-		$this->dohistory=true;
-	}
+   public $dohistory = true;
 
 
    function canCreate() {
