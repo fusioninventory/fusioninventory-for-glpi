@@ -121,8 +121,8 @@ class PluginFusioninventoryMenu {
       $width = 0;
       $height = 0;
       if ($type == "big") {
-         $width="140";
-         $height="120";
+         $width="120";
+         $height="100";
       } else if ($type == "mini") {
          $width="50";
          $height="40";
