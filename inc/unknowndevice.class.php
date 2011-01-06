@@ -713,6 +713,215 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
    }
 
+
+
+   /**
+    * Function to import discovered device
+    *
+    * @param $items_id id of the device to import
+    *
+    * @return nothing
+    *
+   **/
+   function import($items_id,$Import=0, $NoImport=0) {
+      global $DB,$CFG_GLPI,$LANG;
+
+      $NetworkPort = new NetworkPort();
+
+      $a_NetworkPorts = $NetworkPort->find("`items_id` = '".$items_id."'
+                      AND `itemtype` = 'PluginFusioninventoryUnknownDevice'");
+
+      $this->getFromDB($items_id);
+      switch ($this->fields['itemtype']) {
+         case 'Printer':
+            $Printer = new Printer();
+
+            $data["entities_id"] = $this->fields["entities_id"];
+            if (!empty($this->fields["name"])) {
+               $data["name"] = $this->fields["name"];
+            }
+            $data["location"] = $this->fields["location"];
+            $data["serial"] = $this->fields["serial"];
+            $data["otherserial"] = $this->fields["otherserial"];
+            $data["contact"] = $this->fields["contact"];
+            $data["domain"] = $this->fields["domain"];
+            $data["comment"] = $this->fields["comment"];
+            $printer_id = $Printer->add($data);
+
+            foreach ($a_NetworkPorts as $data_Port) {
+               $data_Port['items_id'] = $printer_id;
+               $data_Port['itemtype'] = $Printer->getType();
+               $NetworkPort->update($data_Port);
+            }
+
+// TODO : HOOK for other fusinv plugins
+
+            $this->deleteFromDB($items_id,1);
+            $Import++;
+            break;
+
+         case 'NetworkEquipment':
+            $NetworkEquipment = new NetworkEquipment();
+
+            $data["entities_id"] = $this->fields["entities_id"];
+            if (!empty($this->fields["name"])) {
+               $data["name"] = $this->fields["name"];
+            }
+            $data["location"] = $this->fields["location"];
+            $data["serial"] = $this->fields["serial"];
+            $data["otherserial"] = $this->fields["otherserial"];
+            $data["contact"] = $this->fields["contact"];
+            $data["domain"] = $this->fields["domain"];
+            $data["comment"] = $this->fields["comment"];
+            $data_Port = current($a_NetworkPorts);
+            $data["ip"] = $data_Port["ip"];
+            $data["mac"] = $data_Port["mac"];
+            $NetworkEquipment_id = $NetworkEquipment->add($data);
+
+            foreach ($a_NetworkPorts as $data_Port) {
+               $NetworkPort->delete($data_Port);
+            }
+
+// TODO : HOOK for other fusinv plugins
+
+            $this->deleteFromDB($items_id,1);
+            $Import++;
+            break;
+
+         case 'Peripheral':
+            $Peripheral = new Peripheral();
+
+            $data["entities_id"] = $this->fields["entities_id"];
+            if (!empty($this->fields["name"])) {
+               $data["name"] = $this->fields["name"];
+            }
+            $data["location"] = $this->fields["location"];
+            $data["serial"] = $this->fields["serial"];
+            $data["otherserial"] = $this->fields["otherserial"];
+            $data["contact"] = $this->fields["contact"];
+            $data["comment"] = $this->fields["comment"];
+            $Peripheral_id = $Peripheral->add($data);
+
+            foreach ($a_NetworkPorts as $data_Port) {
+               $data_Port['items_id'] = $Peripheral_id;
+               $data_Port['itemtype'] = $Peripheral->getType();
+               $NetworkPort->update($data_Port);
+            }
+
+// TODO : HOOK for other fusinv plugins
+
+            $this->deleteFromDB($items_id,1);
+            $Import++;
+            break;
+
+         case 'Computer':
+            $Computer = new Computer();
+
+            $data["entities_id"] = $this->fields["entities_id"];
+            if (!empty($this->fields["name"])) {
+               $data["name"] = $this->fields["name"];
+            }
+            $data["location"] = $this->fields["location"];
+            $data["serial"] = $this->fields["serial"];
+            $data["otherserial"] = $this->fields["otherserial"];
+            $data["contact"] = $this->fields["contact"];
+            $data["domain"] = $this->fields["domain"];
+            $data["comment"] = $this->fields["comment"];
+            $Computer_id = $Computer->add($data);
+
+            foreach ($a_NetworkPorts as $data_Port) {
+               $data_Port['items_id'] = $Computer_id;
+               $data_Port['itemtype'] = $Computer->getType();
+               $NetworkPort->update($data_Port);
+            }
+
+// TODO : HOOK for other fusinv plugins
+
+            $this->deleteFromDB($items_id,1);
+            $Import++;
+            break;
+
+         case 'Phone':
+            $Phone = new Phone();
+
+            $data["entities_id"] = $this->fields["entities_id"];
+            $data["name"] = $this->fields["name"];
+            $data["location"] = $this->fields["location"];
+            $data["serial"] = $this->fields["serial"];
+            $data["otherserial"] = $this->fields["otherserial"];
+            $data["contact"] = $this->fields["contact"];
+            $data["comment"] = $this->fields["comment"];
+            $phone_id = $Phone->add($data);
+
+            foreach ($a_NetworkPorts as $data_Port) {
+               $data_Port['items_id'] = $phone_id;
+               $data_Port['itemtype'] = $Phone->getType();
+               $NetworkPort->update($data_Port);
+            }
+
+// TODO : HOOK for other fusinv plugins
+
+            $this->deleteFromDB($items_id,1);
+            $Import++;
+            break;
+
+//         default:
+//            // GENERIC OBJECT : Search types in generic object
+//            $typeimported = 0;
+//            $plugin = new Plugin;
+//            if ($plugin->isActivated('genericobject')) {
+//               if (TableExists("glpi_plugin_genericobject_types")) {
+//                  $query = "SELECT * FROM `glpi_plugin_genericobject_types`
+//                     WHERE `status`='1' ";
+//                  if ($result=$DB->query($query)) {
+//                     while ($data=$DB->fetch_array($result)) {
+//                        if ($this->fields['type'] == $data['itemtype']) {
+//                           $Netdevice = new Netdevice;
+//                           $pgo = new PluginGenericObject;
+//                           $pgo->setType($data['itemtype']);
+//
+//                           $data["entities_id"] = $this->fields["entities_id"];
+//                           if (!empty($this->fields["name"])) {
+//                              $data["name"] = $this->fields["name"];
+//                           } else {
+//                              $data["name"] = $this->fields["dnsname"];
+//                           }
+//                           $data["location"] = $this->fields["location"];
+//                           $data["serial"] = $this->fields["serial"];
+//                           $data["otherserial"] = $this->fields["otherserial"];
+//                           $data["contact"] = $this->fields["contact"];
+//                           $data["domain"] = $this->fields["domain"];
+//                           $data["comment"] = $this->fields["comment"];
+//                           $ID_Device = $pgo->add($data);
+//
+//                           if ($pgo->canUseNetworkPorts()) {
+//                              $data_Port = $NetworkPort->fields;
+//                              $data_Port['items_id'] = $ID_Device;
+//                              $data_Port['itemtype'] = $this->fields['itemtype'];
+//                              $NetworkPort->update($data_Port);
+//                           } else {
+//                              $NetworkPort->deleteFromDB($NetworkPort->fields['id']);
+//                           }
+//
+//                           $this->deleteFromDB($items_id,1);
+//                           $Import++;
+//                           $typeimported++;
+//                        }
+//                     }
+//                  }
+//               }
+//            }
+//            // END GENERIC OBJECT
+
+//            if ($typeimported == "0") {
+//               $NoImport++;
+//            }
+      }
+      return array($Import, $NoImport);
+   }
+
+
+
 }
 
 ?>

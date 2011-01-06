@@ -37,8 +37,8 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
 
-$ptud = new PluginFusioninventoryUnknownDevice;
-$ptt  = new PluginFusioninventoryTask;
+$ptud = new PluginFusioninventoryUnknownDevice();
+$ptt  = new PluginFusioninventoryTask();
 
 commonHeader($LANG['plugin_fusioninventory']['title'][0], $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
 
@@ -73,7 +73,7 @@ if (isset($_POST["delete"])) {
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = PluginFusinvsnmpDiscovery::import($_POST['id'],$Import,$NoImport);
+   list($Import, $NoImport) = $ptud->import($_POST['id'],$Import,$NoImport);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][5]." : ".$Import);
    addMessageAfterRedirect($LANG['plugin_fusioninventory']['discovery'][9]." : ".$NoImport);
    if ($Import == "0") {
