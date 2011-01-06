@@ -261,7 +261,13 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                      break;
                   
                }
+               if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
+                  $class->fields['entities_id'] = $xml->ENTITY;
+               }
                $class->update($class->fields);
+
+               // TODO : Manage IP and Mac address
+
 
                $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
                $a_devices = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
