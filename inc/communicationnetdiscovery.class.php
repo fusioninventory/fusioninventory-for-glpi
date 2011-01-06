@@ -55,6 +55,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     *@return "" (import ok) / error string (import ko)
     **/
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
+
       global $LANG;
       $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -100,7 +101,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
 
    function sendCriteria($p_xml) {
-
+      
       $_SESSION['SOURCE_XMLDEVICE'] = $p_xml->asXML();
 
       $input = array();
@@ -136,7 +137,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
    function checkCriteria($a_criteria) {
       global $DB;
-
+      
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
       
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
@@ -248,19 +249,19 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                switch ($xml->TYPE) {
 
                   case '1':
-                     $class->fields['type'] = 'Computer';
+                     $class->fields['itemtype'] = 'Computer';
                      break;
 
                   case '2':
-                     $class->fields['type'] = 'NetworkEquipment';
+                     $class->fields['itemtype'] = 'NetworkEquipment';
                      break;
 
                   case '3':
-                     $class->fields['type'] = 'Printer';
+                     $class->fields['itemtype'] = 'Printer';
                      break;
                   
                }
-
+               $class->update($class->fields);
             }
 //
 //            $class->update($class->fields);

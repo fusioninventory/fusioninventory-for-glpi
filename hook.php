@@ -1059,6 +1059,12 @@ function plugin_get_headings_fusinvsnmp($item,$withtemplate) {
           return $array;
           break;
 
+       case 'PluginFusioninventoryUnknownDevice':
+          $array = array ();
+          $array[1] = $LANG['plugin_fusinvsnmp']['title'][1];
+          return $array;
+          break;
+
 	}
 	return false;	
 }
@@ -1089,6 +1095,12 @@ function plugin_headings_actions_fusinvsnmp($item) {
          $array[1] = "plugin_headings_fusinvsnmp_agents";
          // $array[1] = "plugin_headings_fusinvsnmp_agents";  => $array[1] = array('taclasse', 'taméthode');
          $array[2] = "plugin_headings_fusinvsnmp_xml";
+         return $array;
+         break;
+
+      case 'PluginFusioninventoryUnknownDevice':
+         $array = array ();
+         $array[1] = "plugin_headings_fusinvsnmp_unknowndevices";
          return $array;
          break;
 
@@ -1130,6 +1142,12 @@ function plugin_headings_fusinvsnmp_networkingInfo($type, $id) {
 function plugin_headings_fusinvsnmp_agents($type,$id) {
    $PluginFusinvsnmpAgentconfig = new PluginFusinvsnmpAgentconfig;
    $PluginFusinvsnmpAgentconfig->showForm($_POST['id']);
+}
+
+
+function plugin_headings_fusinvsnmp_unknowndevices($type,$id) {
+   $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+   $PluginFusinvsnmpUnknownDevice->showForm($_POST['id']);
 }
 
 
