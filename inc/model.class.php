@@ -304,6 +304,31 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       }
    }
 
+
+
+   function getModelByKey($key) {
+      $a_models = $this->find("`discovery_key`='".$key."'");
+      if (count($a_models) > 0) {
+         $a_model = current($a_models);
+         return $a_model['id'];
+      } else {
+         return 0;
+      }
+   }
+
+
+   function getModelBySysdescr($sysdescr) {
+      $key = $this->getrightmodel('0', '', $sysdescr);
+      if (isset($key) AND !empty($key)) {
+         $model_id = $this->getModelByKey($key);
+         if (isset($model_id) AND !empty($model_id)) {
+            return $model_id;
+         }
+      }
+      return 0;
+   }
+
+
 }
 
 ?>

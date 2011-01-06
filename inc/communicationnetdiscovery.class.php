@@ -262,6 +262,37 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   
                }
                $class->update($class->fields);
+
+               $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+               $a_devices = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
+               if (count($a_devices) > 0) {
+                  foreach ($a_devices as $data) {
+                     $PluginFusinvsnmpUnknownDevice->getFromDB($data['id']);
+                  }
+               } else {
+                  $input = array();
+                  $input['plugin_fusioninventory_unknowndevices_id'] = $items_id;
+                  $device_id = $PluginFusinvsnmpUnknownDevice->add($input);
+                  $PluginFusinvsnmpUnknownDevice->getFromDB($device_id);
+               }
+               if (isset($xml->DESCRIPTION) AND !empty($xml->DESCRIPTION)) {
+                  $PluginFusinvsnmpUnknownDevice->fields['sysdescr'] = $xml->DESCRIPTION;
+               }
+               // <MODELSNMP>Printer0093</MODELSNMP>
+               if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
+                  $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
+                  $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
+                  if (($model_id == '0') AND (isset($xml->DESCRIPTION)) AND (!empty($xml->DESCRIPTION))) {
+                     $model_id = $PluginFusinvsnmpModel->getModelBySysdescr($xml->DESCRIPTION);
+                  }
+                  $PluginFusinvsnmpUnknownDevice->fields['plugin_fusinvsnmp_models_id'] = $model_id;
+               }
+
+               if (isset($xml->AUTHSNMP) AND !empty($xml->AUTHSNMP)) {
+                  $PluginFusinvsnmpUnknownDevice->fields['plugin_fusinvsnmp_configsecurities_id'] = $xml->AUTHSNMP;
+               }
+               $PluginFusinvsnmpUnknownDevice->update($PluginFusinvsnmpUnknownDevice->fields);
+
             }
 //
 //            $class->update($class->fields);

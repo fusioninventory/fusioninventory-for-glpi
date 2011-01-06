@@ -40,7 +40,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
-
    function canCreate() {
       return true;
    }
@@ -66,10 +65,10 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
             $this->getFromDB($data['id']);
          }
       } else {
-         $this->getEmpty();
-         unset($this->fields['id']);
-         $this->fields['plugin_fusioninventory_unknowndevices_id'] = $id;
-         $this->add($this->fields);
+         $input = array();
+         $input['plugin_fusioninventory_unknowndevices_id'] = $id;
+         $device_id = $this->add($input);
+         $this->getFromDB($device_id);
       }
 
       $this->showFormHeader($options);
