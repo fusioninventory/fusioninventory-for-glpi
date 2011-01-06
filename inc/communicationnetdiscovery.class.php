@@ -266,9 +266,44 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                }
                $class->update($class->fields);
 
-               // TODO : Manage IP and Mac address
+               //Manage IP and Mac address
+               $NetworkPort = new NetworkPort();
+               $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+                     AND `items_id`='".$class->fields['id']."'");
+               $update = 0;
+               foreach ($a_unknownPorts as $a_unknownPort) {
+                  if (isset($xml->MAC) AND !empty($xml->MAC)) {
+                     $xml->MAC = strtolower($xml->MAC);
+                     if ($a_unknownPort['mac'] == $xml->MAC) {
+                        $a_unknownPort['mac'] = $xml->MAC;
+                        if (isset($xml->IP)) {
+                           $a_unknownPort['ip'] = $xml->IP;
+                        }
+                        $NetworkPort->update($a_unknownPort);
+                        unset($a_unknownPorts[$a_unknownPort['id']]);
+                        $update = 1;
+                        break;
+                     }
+                  }
+               }
+               foreach ($a_unknownPorts as $a_unknownPort) {
+                  $NetworkPort->delete($a_unknownPort, 1);
+               }
+               if ($update == '0') {
+                  $input = array();
+                  if (isset($xml->MAC) AND !empty($xml->MAC)) {
+                     $input['mac'] = $xml->MAC;
+                  }
+                  if (isset($xml->IP)) {
+                     $input['ip'] = $xml->IP;
+                  }
+                  $input['items_id'] = $class->fields['id'];
+                  $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+                  $input['entities_id'] = $class->fields['entities_id'];
+                  $NetworkPort->add($input);
+               }
 
-
+               // Add informations for SNMP
                $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
                $a_devices = $PluginFusinvsnmpUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$items_id."'");
                if (count($a_devices) > 0) {
