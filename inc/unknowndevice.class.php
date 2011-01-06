@@ -198,7 +198,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 //            }
 //         }
 //         // END GENERIC OBJECT
-      Dropdown::dropdownTypes('type',$this->fields["type"],$type_list);
+      Dropdown::dropdownTypes('itemtype',$this->fields["itemtype"],$type_list);
 		echo "</td>";
 
       echo "<td align='center'>" . $LANG['setup'][89] . "&nbsp;:</td>";
@@ -292,7 +292,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 		echo "<tr class='tab_bg_1'>";
 		echo "<td align='center'>";
       $this->getFromDB($id);
-      if ($this->fields["type"] != '0') {
+      if ($this->fields["itemtype"] != '0') {
          echo "<input type='hidden' name='id' value=$id>";
          echo "<input type='submit' name='import' value=\"".$LANG['buttons'][37]."\" class='submit'>";
       }
