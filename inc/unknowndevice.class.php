@@ -53,41 +53,69 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab['common'] = $LANG['plugin_fusioninventory']['agents'][28];
 
-		$tab[1]['table'] = $this->getTable();
-		$tab[1]['field'] = 'name';
-		$tab[1]['linkfield'] = 'name';
-		$tab[1]['name'] = $LANG['common'][16];
-		$tab[1]['datatype'] = 'itemlink';
+      $tab[1]['table']         = $this->getTable();
+      $tab[1]['field']         =  'name';
+      $tab[1]['linkfield']     ='name';
+      $tab[1]['name']          = $LANG['common'][16];
+      $tab[1]['datatype']      = 'itemlink';
+      $tab[1]['itemlink_type'] = $this->getType();
 
-		$tab[2]['table'] = $this->getTable();
-		$tab[2]['field'] = 'location';
-		$tab[2]['linkfield'] = 'location';
-		$tab[2]['name'] = 'location';
-		$tab[2]['datatype'] = 'text';
+      $tab[2]['table']     = $this->getTable();
+      $tab[2]['field']     = 'id';
+      $tab[2]['linkfield'] = '';
+      $tab[2]['name']      = $LANG['common'][2];
 
-		$tab[3]['table'] = $this->getTable();
-		$tab[3]['field'] = 'serial';
-		$tab[3]['linkfield'] = 'serial';
-		$tab[3]['name'] = 'serial';
-		$tab[3]['datatype'] = 'text';
+		$tab[3]['table']     = $this->getTable();
+		$tab[3]['field']     = 'location';
+		$tab[3]['linkfield'] = 'location';
+		$tab[3]['name']      = 'location';
+		$tab[3]['datatype']  = 'text';
 
-		$tab[4]['table'] = $this->getTable();
-		$tab[4]['field'] = 'otherserial';
-		$tab[4]['linkfield'] = 'otherserial';
-		$tab[4]['name'] = 'otherserial';
-		$tab[4]['datatype'] = 'text';
+		$tab[4]['table']     = $this->getTable();
+		$tab[4]['field']     = 'serial';
+		$tab[4]['linkfield'] = 'serial';
+		$tab[4]['name']      = 'serial';
+		$tab[4]['datatype']  = 'text';
 
-		$tab[5]['table'] = $this->getTable();
-		$tab[5]['field'] = 'contact';
-		$tab[5]['linkfield'] = 'contact';
-		$tab[5]['name'] = 'contact';
-		$tab[5]['datatype'] = 'itemlink';
+		$tab[5]['table']     = $this->getTable();
+		$tab[5]['field']     = 'otherserial';
+		$tab[5]['linkfield'] = 'otherserial';
+		$tab[5]['name']      = 'otherserial';
+		$tab[5]['datatype']  = 'text';
 
-		$tab[6]['table'] = $this->getTable();
-		$tab[6]['field'] = 'hub';
-		$tab[6]['linkfield'] = 'hub';
-		$tab[6]['name'] ='hub';
-		$tab[6]['datatype'] = 'bool';
+		$tab[6]['table']     = $this->getTable();
+		$tab[6]['field']     = 'contact';
+		$tab[6]['linkfield'] = 'contact';
+		$tab[6]['name']      = 'contact';
+		$tab[6]['datatype']  = 'itemlink';
+
+		$tab[7]['table']     = $this->getTable();
+		$tab[7]['field']     = 'hub';
+		$tab[7]['linkfield'] = 'hub';
+		$tab[7]['name']      ='hub';
+		$tab[7]['datatype']  = 'bool';
+
+      $tab[8]['table']     = 'glpi_entities';
+      $tab[8]['field']     = 'completename';
+      $tab[8]['linkfield'] = 'entities_id';
+      $tab[8]['name']      = $LANG['entity'][0];
+
+      $tab[9]['table']     = 'glpi_domains';
+      $tab[9]['field']     = 'name';
+      $tab[9]['linkfield'] = 'domain';
+      $tab[9]['name']      = $LANG['setup'][89];
+
+      $tab[10]['table']     = $this->getTable();
+      $tab[10]['field']     = 'comment';
+      $tab[10]['linkfield'] = 'comment';
+      $tab[10]['name']      = $LANG['common'][25];
+      $tab[10]['datatype']  = 'text';
+
+
+      
+
+//date_mod 	itemtype 	accepted 	plugin_fusioninventory_agents_id 	ip 	mac 	
+
 
       return $tab;
    }
