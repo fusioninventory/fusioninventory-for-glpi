@@ -226,7 +226,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             break;
 
          case 'PluginFusioninventoryUnknownDevice':
-            if ($class->fields['name'] && !in_array('name', $a_lockable)) {
+            if (!in_array('name', $a_lockable)) {
                if (!empty($xml->NETBIOSNAME)) {
                   $class->fields['name'] = $xml->NETBIOSNAME;
                } else if (!empty($xml->SNMPHOSTNAME)) {
@@ -235,16 +235,14 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   $class->fields['name'] = $xml->DNSHOSTNAME;
                }
             }
-            if ($class->fields['serial'] && !in_array('serial', $a_lockable))
+            if (!in_array('serial', $a_lockable))
                $class->fields['serial'] = trim($xml->SERIAL);
-            if ($class->fields['contact'] && !in_array('contact', $a_lockable))
+            if (!in_array('contact', $a_lockable))
                $class->fields['contact'] = $xml->USERSESSION;
-            if (isset($class->fields['domain'])) {
-               if ($class->fields['domain'] && !in_array('domain', $a_lockable)) {
-                  if (!empty($xml->WORKGROUP)) {
-                  $class->fields['domain'] = Dropdown::importExternal("Domain",
-                                          $xml->WORKGROUP,$xml->ENTITY);
-                  }
+            if (!in_array('domain', $a_lockable)) {
+               if (!empty($xml->WORKGROUP)) {
+               $class->fields['domain'] = Dropdown::importExternal("Domain",
+                                       $xml->WORKGROUP,$xml->ENTITY);
                }
             }
             if (!empty($xml->TYPE)) {
