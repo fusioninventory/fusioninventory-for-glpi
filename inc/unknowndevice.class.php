@@ -780,7 +780,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-// TODO : HOOK for other fusinv plugins
+            // Import SNMP if enable
+            if (PluginFusioninventoryModule::getModuleId("fusinvsnmp")) {
+               $PluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+               $PluginFusinvsnmpUnknownDevice->import($items_id, $printer_id, 'Printer');
+            }
 
             $this->deleteFromDB($items_id,1);
             $Import++;
