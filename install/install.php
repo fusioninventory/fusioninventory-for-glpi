@@ -97,6 +97,15 @@ function pluginFusinvsnmpInstall() {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
+
+//      // Create rules by default
+      $PluginFusinvsnmpRuleInventoryCollection = new PluginFusinvsnmpRuleInventoryCollection();
+      $PluginFusinvsnmpRuleInventoryCollection->initRules();
+
+      $PluginFusinvsnmpRuleNetdiscoveryCollection = new PluginFusinvsnmpRuleNetdiscoveryCollection();
+      $PluginFusinvsnmpRuleNetdiscoveryCollection->initRules();
+
+
    }
 }
 

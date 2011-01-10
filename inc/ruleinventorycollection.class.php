@@ -53,6 +53,127 @@ class PluginFusinvsnmpRuleInventoryCollection extends PluginFusioninventoryRuleC
    }
 
 
+   function initRules() {
+      // *** Create first rule
+      $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='serial number';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusinvsnmpRuleInventory';
+      $input['ranking'] = 1;
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['criteria'] = "globalcriteria";
+      $input['pattern']= 1;
+      $input['condition']=0;
+      $rulecriteria->add($input);
+ 
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['action_type'] = 'assign';
+      $input['field'] = '_import';
+      $input['value'] = '1';
+      $ruleaction->add($input);
+
+      // *** Create second rule
+      $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='mac address';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusinvsnmpRuleInventory';
+      $input['ranking'] = 2;
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['criteria'] = "globalcriteria";
+      $input['pattern']= 2;
+      $input['condition']=0;
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['action_type'] = 'assign';
+      $input['field'] = '_import';
+      $input['value'] = '1';
+      $ruleaction->add($input);
+
+      // *** Create third rule
+      $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Name';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusinvsnmpRuleInventory';
+      $input['ranking'] = 3;
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['criteria'] = "globalcriteria";
+      $input['pattern']= 4;
+      $input['condition']=0;
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['action_type'] = 'assign';
+      $input['field'] = '_import';
+      $input['value'] = '1';
+      $ruleaction->add($input);
+
+      // *** Add rule for import in unknown devices
+      $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='unknown device';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusinvsnmpRuleInventory';
+      $input['ranking'] = 4;
+      $rule_id = $rulecollection->add($input);
+
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['criteria'] = "mac";
+      $input['pattern']= "*";
+      $input['condition']=0;
+      $rulecriteria->add($input);
+
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['action_type'] = 'assign';
+      $input['field'] = '_import_unknowndevice';
+      $input['value'] = '1';
+      $ruleaction->add($input);
+   }
+
+
+
    function prepareInputDataForProcess($input,$params) {
 
       return $input;
