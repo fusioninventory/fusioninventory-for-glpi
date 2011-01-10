@@ -299,6 +299,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $agent['last_contact'] = date("Y-m-d H:i:s");
          $pta->update($agent);
       }
+      $_SESSION['glpi_plugin_fusioninventory_agentid'] = $agent['id'];
 
 		$count_discovery_devices = 0;
    	foreach($p_xml->DEVICE as $discovery) {

@@ -158,7 +158,7 @@ class PluginFusinvsnmpCommunicationSNMP {
 
                   case 'mac':
                      $condition .= "AND `glpi_networkports`.`mac`='".$datacriteria['mac']."'
-                        AND `itemtype` = '".$itemtype."'";
+                        AND `glpi_networkports`.`itemtype` = '".$itemtype."'";
                      $select .= ", `glpi_networkports`.`mac`";
                      $leftjoin = 'LEFT JOIN `glpi_networkports` on `'.getTableForItemType($itemtype).'`.`id`=`items_id`';
                      break;

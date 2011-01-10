@@ -173,6 +173,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
                } else {
                   $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $input['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
                   $id = $PluginFusioninventoryUnknownDevice->add($input);
                   $this->importDevice('PluginFusioninventoryUnknownDevice', $id);
                }
@@ -184,7 +185,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'Printer');
             $result = $a_return[0];
             $input = $a_return[1];
-            if ($DB->numrows($result)) {
+            if (isset($result) AND ($DB->numrows($result) > 0)) {
                $this->importDevice('Printer', $DB->result($result,0,'id'));
             } else {
                // unknowndevice
@@ -195,6 +196,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                   $this->importDevice('PluginFusioninventoryUnknownDevice', $DB->result($result,0,'id'));
                } else {
                   $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $input['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
                   $id = $PluginFusioninventoryUnknownDevice->add($input);
                   $this->importDevice('PluginFusioninventoryUnknownDevice', $id);
                }
@@ -264,6 +266,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
                   $class->fields['entities_id'] = $xml->ENTITY;
                }
+               $class->fields['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
                $class->update($class->fields);
 
                //Manage IP and Mac address
