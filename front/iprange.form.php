@@ -63,13 +63,7 @@ if (isset ($_POST["add"])) {
       $PluginFusioninventoryTask->fields["periodicity_count"] = $_POST['periodicity_count'];
       $PluginFusioninventoryTask->fields["periodicity_type"] = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
-         $a_action = explode(',', $_POST['action']);
-         foreach ($a_action as $num=>$data) {
-            $dataDB = explode('-', $data);
-            if (isset($dataDB[1]) AND $dataDB > 0) {
-               $a_actionDB[][$dataDB[0]] = $dataDB[1];
-            }
-         }
+         $a_actionDB[]['PluginFusioninventoryAgent'] = $_POST['action'];
          $PluginFusioninventoryTaskjob->fields["action"] = exportArrayToDB($a_actionDB);
       } else {
          $PluginFusioninventoryTaskjob->fields["action"] = '';

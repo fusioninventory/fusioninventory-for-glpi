@@ -322,6 +322,9 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $input['is_active'] = 0;
          $input['permanent'] = $permanent;
          $input["entities_id"]  = $_SESSION["glpiactive_entity"];
+         $input['date_scheduled'] = date("Y-m-d H:i:s");
+         $input['periodicity_count'] = "1";
+         $input['periodicity_type'] = "hours";
 
          $task_id = $PluginFusioninventoryTask->add($input);
 
@@ -329,10 +332,9 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $input['plugin_fusioninventory_tasks_id'] = $task_id;
          $input['plugins_id'] = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
          $input['method'] = 'netdiscovery';
-         $input['argument'] = $_POST['id'];
-         $input['selection_type'] = 'agents';
+         $input['action'] = '[{"PluginFusioninventoryAgent":".1"}]';
+         $input['definition'] = '[{"PluginFusinvsnmpIPRange":"'.$_POST['id'].'"}]';
          $input["entities_id"]  = $_SESSION["glpiactive_entity"];
-         $input['date_scheduled'] = date("Y-m-d H:i:s");
 
          $taskjob_id = $PluginFusioninventoryTaskjob->add($input);
       }
@@ -369,18 +371,15 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
       echo "</td>";
       echo "<td>";
 
-      $a_list = array();
-      if (is_callable(array("PluginFusinvsnmpStaticmisc", 'task_netdiscovery_agents'))) {
-         $a_list = call_user_func(array("PluginFusinvsnmpStaticmisc", 'task_netdiscovery_agents'));
-      }
       $defaultValue = '';
-      $a_list[''] = "------";
+
       if (!empty($PluginFusioninventoryTaskjob->fields['action'])) {
          $array = importArrayFromDB($PluginFusioninventoryTaskjob->fields['action']);
          $defaultValue = key(current($array))."-".current(current($array));
       }
-      Dropdown::showFromArray('action', $a_list, array('value' => $defaultValue));
-      
+      $a_data = $PluginFusioninventoryTaskjob->get_agents($module_name);
+      Dropdown::showFromArray('action', $a_data, array('value' => $defaultValue));
+
       echo "</td>";
       echo "<td>";
       echo $LANG['plugin_fusinvsnmp']['task'][17]."&nbsp:";
