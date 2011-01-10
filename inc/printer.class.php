@@ -318,7 +318,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    private function getCartridgesDB() {
       global $DB;
 
-      $ptc = new PluginFusinvsnmpPrinterCartridge();
+      $ptc = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
       $query = "SELECT `id`
                 FROM `glpi_plugin_fusinvsnmp_printercartridges`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
