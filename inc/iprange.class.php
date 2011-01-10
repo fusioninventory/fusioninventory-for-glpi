@@ -352,21 +352,14 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
 
       echo "<td>".$LANG['plugin_fusioninventory']['task'][17]."&nbsp;:</td>";
       echo "<td align='center'>";
-      $a_periodicity = array();
-      if (strstr($PluginFusioninventoryTask->fields['periodicity'], "-")) {
-         $a_periodicity = explode("-", $PluginFusioninventoryTask->fields['periodicity']);
-      } else {
-         $a_periodicity[] = 0;
-         $a_periodicity[] = '';
-      }
-      Dropdown::showInteger("periodicity-1", $a_periodicity[0], 0, 300);
+      Dropdown::showInteger("periodicity_count", $PluginFusioninventoryTask->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
-      $a_time[] = "minutes";
-      $a_time[] = "heures";
-      $a_time[] = "jours";
-      $a_time[] = "mois";
-      Dropdown::showFromArray("periodicity-2", $a_time, array('value'=>$a_periodicity[1]));
+      $a_time['minutes'] = "minutes";
+      $a_time['hours'] = "heures";
+      $a_time['days'] = "jours";
+      $a_time['months'] = "mois";
+      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$PluginFusioninventoryTask->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
 

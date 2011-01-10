@@ -60,7 +60,8 @@ if (isset ($_POST["add"])) {
       $PluginFusioninventoryTask->getFromDB($_POST['task_id']);
       $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjob_id']);
       $PluginFusioninventoryTask->fields["is_active"] = $_POST['is_active'];
-      $PluginFusioninventoryTask->fields["periodicity"] = $_POST['periodicity-1']."-".$_POST['periodicity-2'];;
+      $PluginFusioninventoryTask->fields["periodicity_count"] = $_POST['periodicity_count'];
+      $PluginFusioninventoryTask->fields["periodicity_type"] = $_POST['periodicity_type'];
       if (!empty($_POST['action'])) {
          $a_action = explode(',', $_POST['action']);
          foreach ($a_action as $num=>$data) {
