@@ -157,6 +157,9 @@ class PluginFusioninventoryCommunication {
       if ($xmltag == "PROLOG") {
          return false;
       }
+      if (!isset($agent['id'])) {
+         return true;
+      }
       if (!$PluginFusioninventoryAgentmodule->getAgentsCanDo($xmltag, $agent['id'])) {
          return true;
       }
