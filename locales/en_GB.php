@@ -648,5 +648,6 @@ $LANG['plugin_fusioninventory']["constructdevice"][6]="Already exists";
 $LANG['plugin_fusioninventory']["update"][0]="your history table has more than 300,000 entries; you must run this command to finish update: ";
 
 $LANG['plugin_fusioninventory']["report"][0]="Number of days since last inventory";
+$LANG['plugin_fusioninventory']["report"][1]="Printed page counter";
 
 ?>
