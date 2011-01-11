@@ -673,9 +673,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       );
       $data = @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/status", 0, $ctx);
       if (isset($data) && !empty($data)) {
-         $handle = fopen("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, "r");
+         @file_get_contents("http://".$ip.":".$PluginFusioninventoryConfig->getValue($plugins_id, 'agent_port')."/now/".$token, 0, $ctx);
          $input = 'Agent run Now';
-         fclose($handle);
          $this->reenableusemode();
          return true;
       } else {
