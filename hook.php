@@ -1161,8 +1161,8 @@ function plugin_headings_fusinvsnmp_xml($item) {
    if (empty($folder)) {
       $folder = '0';
    }
-   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type.$folder."/".$id)) {
-      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type.$folder."/".$id);
+   if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type."/".$folder."/".$id)) {
+      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/".$type."/".$folder."/".$id);
       $xml = str_replace("<", "&lt;", $xml);
       $xml = str_replace(">", "&gt;", $xml);
       $xml = str_replace("\n", "<br/>", $xml);
