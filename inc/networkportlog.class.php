@@ -647,7 +647,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                   }
                }
                $text .= "<td align='center' colspan='4'></td>";
-               $text .= "<td align='center'>".convDateTime($data["date"])."</td>";
+               $text .= "<td align='center'>".convDateTime($data["date_mod"])."</td>";
 
             } else {
                // Changes values
