@@ -64,7 +64,7 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
 if ((isset($_POST['update_cartridges'])) && (isset($_POST['id']))) {
 	PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
 
-	$plugin_fusioninventory_printer_cartridge = new PluginFusinvsnmpPrinterCartridge;
+	$plugin_fusioninventory_printer_cartridge = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
 
 	$query = "SELECT * 
              FROM `glpi_plugin_fusinvsnmp_printercartridges`

@@ -204,17 +204,18 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
     *@return nothing
     **/
    function PortUnknownConnection($p_mac, $p_ip) {
-      $ptud = new PluginFusioninventoryUnknownDevice;
+      $ptud = new PluginFusioninventoryUnknownDevice();
       $unknown_infos["name"] = '';
       $newID=$ptud->add($unknown_infos);
       // Add networking_port
-      $np=new NetworkPort;
+      $np=new NetworkPort();
+      $port_add = array();
       $port_add["items_id"] = $newID;
       $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
       $port_add["ip"] = $p_ip;
       $port_add['mac'] = $p_mac;
       $dport = $np->add($port_add);
-      $ptsnmp=new PluginFusinvsnmpSNMP;
+      $ptsnmp=new PluginFusinvsnmpSNMP();
       $this->connectDB($dport);
    }
 
@@ -262,13 +263,11 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
 	function connectDB($destination_port='') {
 		global $DB;
 
-      //$ptap = new PluginFusioninventoryAgentProcess;
-
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
                      WHERE `networkports_id_1` IN ('".$this->getValue('id')."', '".$destination_port."')
                            AND `networkports_id_2` IN ('".$this->getValue('id')."', '".$destination_port."');";
-
+      
       if ($resultVerif=$DB->query($queryVerif)) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
             $this->disconnectDB($this->getValue('id')); // disconnect this port
@@ -294,9 +293,11 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       if ($p_port=='') $p_port=$this->getValue('id');
       $nn = new NetworkPort_NetworkPort();
 
-      PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
+      if ($nn->getOppositeContact($p_port)) {
+         PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$nn->getOppositeContact($p_port));
+      }
       PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$p_port);
-       if ($nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
+      if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
          if ($nn->delete($nn->fields)) {
             plugin_item_purge_fusioninventory($nn);
 //            $ptap = new PluginFusioninventoryAgentProcess;

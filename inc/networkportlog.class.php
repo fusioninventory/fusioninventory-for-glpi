@@ -514,7 +514,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       global $DB,$CFG_GLPI;
 
       $PluginFusinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog;
-      $nw=new NetworkPort_NetworkPort;
+      $nw=new NetworkPort_NetworkPort();
 
       $input = array();
 
@@ -527,7 +527,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       // Récupérer le type de matériel
       $input["networkports_id_source"] = $port;
       $opposite_port = $nw->getOppositeContact($port);
-      if ($opposite_port == "0") {
+      if (!$opposite_port) {
          return;
       }
       $input['networkports_id_destination'] = $opposite_port;

@@ -974,7 +974,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             case 'DRUMCYAN' :
             case 'DRUMMAGENTA' :
             case 'DRUMYELLOW' :
-               $ptc = new PluginFusinvsnmpPrinterCartridge();
+               $ptc = new PluginFusinvsnmpPrinterCartridge('glpi_plugin_fusinvsnmp_printercartridges');
                $cartridgeIndex = $this->ptd->getCartridgeIndex($name);
                if (is_int($cartridgeIndex)) {
                   $oldCartridge = $this->ptd->getCartridge($cartridgeIndex); //TODO ???
