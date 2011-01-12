@@ -328,11 +328,7 @@ class PluginFusinvsnmpNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 		$nw=new NetworkPort_NetworkPort();
 		$plugin_fusioninventory_snmp = new PluginFusinvsnmpSNMP();
 
-		echo "<script type='text/javascript' src='".GLPI_ROOT.
-               "/lib/extjs/adapter/prototype/prototype.js'></script>";
-		echo "<script type='text/javascript' src='".GLPI_ROOT.
-               "/lib/extjs/adapter/prototype/effects.js'></script>";
-
+		
       if (!$data = $this->oFusionInventory_networkequipment->find("`networkequipments_id`='".$id."'", '', 1)) {
          // Add in database if not exist
          $input = array();
@@ -495,6 +491,10 @@ function appear_array(id){
 }
 
 		</script>";
+
+		echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvsnmp/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".GLPI_ROOT."/plugins/fusinvsnmp/effects.js'></script>";
+
 
 		echo "<table class='tab_cadre' cellpadding='5' width='1100'>";
 
