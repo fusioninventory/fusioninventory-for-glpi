@@ -177,14 +177,13 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 	function getPortIDfromDeviceIP($IP, $ifDescr) {
 		global $DB;
 
-      $pfiud = new PluginFusioninventoryUnknownDevice;
-      $np = new NetworkPort;
+      $pfiud = new PluginFusioninventoryUnknownDevice();
+      $np = new NetworkPort();
 
       $PortID = "";
 		$query = "SELECT *
                 FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
                 WHERE `ip`='".$IP."';";
-		
 		$result = $DB->query($query);
       if ($DB->numrows($result) == "1") {
          $data = $DB->fetch_assoc($result);
@@ -197,7 +196,7 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                        WHERE (`ifdescr`='".$ifDescr."'
                                 OR `glpi_networkports`.`name`='".$ifDescr."')
                              AND `glpi_networkports`.`items_id`='".$data["networkequipments_id"]."'
-                             AND `glpi_networkports`.`itemtype`='2';";
+                             AND `glpi_networkports`.`itemtype`='NetworkEquipment'";
          $resultPort = $DB->query($queryPort);
          $dataPort = $DB->fetch_assoc($resultPort);
          if ($DB->numrows($resultPort) == "0") {
@@ -206,14 +205,17 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
                           FROM `glpi_networkports`
                           WHERE `ip`='".$IP."'
                           ORDER BY `itemtype`
-                          LIMIT 0,1;";
+                          LIMIT 0,1";
             $resultPort = $DB->query($queryPort);
             $dataPort = $DB->fetch_assoc($resultPort);
-            $PortID = $dataPort["id"];
+            if (isset($dataPort['id'])) {
+               $PortID = $dataPort["id"];
+            }
          } else {
-            $PortID = $dataPort["networkports_id"];
+            $PortID = $dataPort['networkports_id'];
          }
-      } else {
+      } 
+      if ($PortID == "") {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
             WHERE `ip`='".$IP."'
             LIMIT 1";

@@ -291,7 +291,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                               ON `printers_id`=`glpi_printers`.`id`
                       LEFT JOIN `glpi_networkports`
                               ON `items_id`=`glpi_printers`.`id`
-                                 AND `itemtype`='".PRINTER_TYPE."'
+                                 AND `itemtype`='Printer'
                       INNER join `glpi_plugin_fusinvsnmp_models`
                            ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
                       WHERE `glpi_printers`.`is_deleted`=0
@@ -722,19 +722,19 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       foreach ($p_ips->children() as $name=>$child) {
          switch ($child->getName()) {
             case 'IP' :
-               if ($child != "127.0.0.1") {
-                  $ifaddrIndex = $this->ptd->getIfaddrIndex($child);
+               if ((string)$child != "127.0.0.1") {
+                  $ifaddrIndex = $this->ptd->getIfaddrIndex((string)$child);
                   if (is_int($ifaddrIndex)) {
                      $oldIfaddr = $this->ptd->getIfaddr($ifaddrIndex);
                      $pti->load($oldIfaddr->getValue('id'));
                   } else {
                      $pti->load();
                   }
-                  $pti->setValue('ip', $child);
+                  $pti->setValue('ip', (string)$child);
                   $this->ptd->addIfaddr(clone $pti, $ifaddrIndex);
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
-                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".$child."'");
+                  $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip`='".(string)$child."'");
                   if (count($a_unknown) > 0) {
                      foreach ($a_unknown as $datas) {
                      }
@@ -797,7 +797,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $portloaded = 0;
          if (!empty($this->unknownDeviceCDP)) {
             $NetworkPort = new NetworkPort();
-            
             $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
                      AND `items_id`='".$this->unknownDeviceCDP."'");
             foreach($a_unknownPorts as $dataport) {
@@ -1124,11 +1123,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          foreach ($p_connection->children() as $name=>$child) {
             switch ($child->getName()) {
                case 'IP' :
-                  $ip=$child;
+                  $ip=(string)$child;
                   $p_oPort->addIp($ip);
                   break;
                case 'IFDESCR' :
-                  $ifdescr=$child;
+                  $ifdescr=(string)$child;
                   break;
                default :
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' CONNECTION (CDP='.$p_cdp.') : '
