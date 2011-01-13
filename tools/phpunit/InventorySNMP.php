@@ -571,6 +571,12 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
                if (isset($child->IFSTATUS)) {
                   $this->assertEquals($dataExt['ifstatus'], (string)$child->IFSTATUS , 'Status of port not good ("'.$dataExt['ifstatus'].'" instead of "'.(string)$child->IFSTATUS.'")['.$xmlFile.']');
                }
+               if (isset($child->TRUNK)) {
+                  $this->assertEquals($dataExt['trunk'], (string)$child->TRUNK , 'trunk port not good ("'.$dataExt['trunk'].'" instead of "'.(string)$child->TRUNK.'")['.$xmlFile.']');
+               } else {
+                  $this->assertEquals($dataExt['trunk'], 0 , 'trunk port not good ("'.$dataExt['trunk'].'" instead of "0")['.$xmlFile.']');
+               
+               }
             }
          }
       }
