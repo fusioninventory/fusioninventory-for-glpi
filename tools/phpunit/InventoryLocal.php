@@ -1,7 +1,7 @@
 <?php
 
 define('PHPUnit_MAIN_METHOD', 'Plugins_Fusioninventory_InventoryLocal::main');
-    
+
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../../..');
 
