@@ -523,7 +523,7 @@ function appear_array(id){
                      title="'.$LANG['setup'][252].'"
                      src="'.GLPI_ROOT.'/pics/options_search.png" class="pointer"
                      onclick="var w = window.open(\''.GLPI_ROOT.
-                        '/front/popup.php?popup=search_config&type=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
+                        '/front/popup.php?popup=search_config&itemtype=PluginFusinvsnmpNetworkEquipment\' ,\'glpipopup\',
                         \'height=400, width=1000, top=100, left=100, scrollbars=yes\' ); w.focus();"></th>';
 		echo "<th>".$LANG["common"][16]."</th>";
 
