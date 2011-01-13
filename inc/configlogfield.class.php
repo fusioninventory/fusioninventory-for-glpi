@@ -65,7 +65,7 @@ class PluginFusinvsnmpConfigLogField extends CommonDBTM {
       $logs['NetworkEquipment']['ifstatus'] = $NOLOG;
       $logs['NetworkEquipment']['macaddr'] = $NOLOG;
       $logs['NetworkEquipment']['portDuplex'] = $NOLOG;
-      $logs['NetworkEquipment']['vlanTrunkPortDynamicStatus'] = $NOLOG;
+      $logs['NetworkEquipment']['trunk'] = $NOLOG;
 
       $logs['Printer']['ifIndex'] = $NOLOG;
       $logs['Printer']['ifName'] = $NOLOG;

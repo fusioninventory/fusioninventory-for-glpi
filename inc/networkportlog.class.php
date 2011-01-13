@@ -481,7 +481,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             break;
 
          case 'trunk':
-            $field = 'vlanTrunkPortDynamicStatus';
+            $field = 'trunk';
             break;
 
          case 'iftype':

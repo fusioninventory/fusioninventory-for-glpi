@@ -857,9 +857,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                case 'IFTYPE' : // already managed
                   break;
                case 'TRUNK' :
-                  if (!$ptp->getNoTrunk()) {
+                  if ((string)$child == '1') {
                      //PluginFusioninventoryNetworkPortLog::networkport_addLog($ptp->getValue('id'), $child, strtolower($name));
-                     $ptp->setValue('vlanTrunkPortDynamicStatus', $p_port->$name);
+                     $ptp->setValue('trunk', 1);
                   }
                   break;
 

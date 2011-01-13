@@ -599,7 +599,7 @@ class PluginFusinvsnmpNetworkPort extends PluginFusinvsnmpCommonDBTM {
       $this->unknownDevicesToConnect=array(); // no connection
 
       $this->noTrunk = true;
-      $this->setValue('vlanTrunkPortDynamicStatus', -1);
+      $this->setValue('trunk', 0);
    }
 
    /**
