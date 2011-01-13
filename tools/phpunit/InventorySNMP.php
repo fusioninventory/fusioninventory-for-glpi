@@ -131,6 +131,9 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
                      $this->testPortsConnections($child, "xml/inventory_snmp/".$Entry."/".$xmlFilename,$items_id,$itemtype);
 
+                     // Verify glpi_networkports_networkports have glpi_networkports existant
+                     $this->testNetworkportsIntegrity($child, "xml/inventory_snmp/".$Entry."/".$xmlFilename,$items_id,$itemtype);
+
                   }
                }
             }
@@ -672,6 +675,40 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
             }
          }
       }
+   }
+
+
+   // Test if network port connected on each port exist (verify integrity of datas
+   function testNetworkportsIntegrity($xml='', $xmlFile='',$items_id=0,$itemtype='') {
+
+      if (empty($xmlFile)) {
+         echo "testNetworkportsIntegrity with no arguments...\n";
+         return;
+      }
+
+      $NetworkPort = new NetworkPort();
+      $NetworkPort_NetworkPort = new NetworkPort_NetworkPort();
+
+      foreach ($xml->PORTS->children() as $name=>$child) {
+         if ((string)$child->IFTYPE == '6') {
+            
+            $a_ports = $NetworkPort->find("`itemtype`='".$itemtype."' AND `items_id`='".$items_id."'
+                                          AND `name` IN ('".(string)$child->IFNAME."', '".(string)$child->IFDESCR."')");
+            $this->assertEquals(count($a_ports), 1 , 'Found more than 1 port in DB ('.count($a_ports).' ports instead 1 for port '.(string)$child->IFDESCR.')['.$xmlFile.']');
+           
+            $data = array();
+            $data = current($a_ports);
+
+            if ($NetworkPort_NetworkPort->getOppositeContact($data['id'])) {
+               $this->assertTrue($NetworkPort->getFromDB($NetworkPort_NetworkPort->getOppositeContact($data['id'])),
+                  'Port integrity problem (id_source=>'.$data['id'].' - id_dest=>'.$NetworkPort_NetworkPort->getOppositeContact($data['id']).') ['.$xmlFile.']');
+
+               
+               
+            }
+         }
+      }
+      
    }
 
    
