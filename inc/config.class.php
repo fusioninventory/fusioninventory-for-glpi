@@ -154,7 +154,7 @@ class PluginFusionInventoryConfig extends CommonDBTM {
 		echo $LANG['plugin_fusioninventory']["discovery"][6]."&nbsp;:";
 		echo "</th>";
 		echo "<th colspan='2'>";
-		echo $LANG['plugin_fusioninventory']["discovery"][6]." 2&nbsp;:";
+		echo $LANG['plugin_fusioninventory']["discovery"][7]."&nbsp;:";
 		echo "</th>";
 		echo "</tr>";
 
