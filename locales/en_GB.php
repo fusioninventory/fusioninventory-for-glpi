@@ -198,6 +198,14 @@ $LANG['plugin_fusioninventory']['type'][2]="Switch";
 $LANG['plugin_fusioninventory']['type'][3]="Printer";
 
 $LANG['plugin_fusioninventory']['rules'][1]="Rules";
+$LANG['plugin_fusioninventory']['rules'][2]="Equipment import and link rules";
+
+$LANG['plugin_fusioninventory']['rulesengine'][152] = "Equipment to import";
+
+$LANG['plugin_fusioninventory']['choice'][0] = "No";
+$LANG['plugin_fusioninventory']['choice'][1] = "Yes";
+$LANG['plugin_fusioninventory']['choice'][2] = "or";
+$LANG['plugin_fusioninventory']['choice'][3] = "and";
 
 $LANG['plugin_fusioninventory']['massiveaction'][1]="Assign SNMP model";
 $LANG['plugin_fusioninventory']['massiveaction'][2]="Assign SNMP authentication";
@@ -474,7 +482,7 @@ $LANG['plugin_fusioninventory']['agents'][2]="Number of threads used by core for
 $LANG['plugin_fusioninventory']['agents'][3]="Number of threads used by core for network discovery";
 $LANG['plugin_fusioninventory']['agents'][4]="Last contact";
 $LANG['plugin_fusioninventory']['agents'][5]="Agent version";
-$LANG['plugin_fusioninventory']['agents'][6]="Lock";
+$LANG['plugin_fusioninventory']['agents'][6]="disable";
 $LANG['plugin_fusioninventory']['agents'][7]="Export agent configuration";
 $LANG['plugin_fusioninventory']['agents'][9]="Advanced options";
 $LANG['plugin_fusioninventory']['agents'][12]="Discovery Agent";

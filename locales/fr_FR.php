@@ -198,6 +198,14 @@ $LANG['plugin_fusioninventory']['type'][2]="Commutateur";
 $LANG['plugin_fusioninventory']['type'][3]="Imprimante";
 
 $LANG['plugin_fusioninventory']['rules'][1]="Règles";
+$LANG['plugin_fusioninventory']['rules'][2]="Règles d'import et de liaison des matériels";
+
+$LANG['plugin_fusioninventory']['rulesengine'][152] = "Matériel à importer";
+
+$LANG['plugin_fusioninventory']['choice'][0] = "Non";
+$LANG['plugin_fusioninventory']['choice'][1] = "Oui";
+$LANG['plugin_fusioninventory']['choice'][2] = "ou";
+$LANG['plugin_fusioninventory']['choice'][3] = "et";
 
 $LANG['plugin_fusioninventory']['massiveaction'][1]="Assigner un modèle SNMP";
 $LANG['plugin_fusioninventory']['massiveaction'][2]="Assigner une authentification SNMP";
@@ -474,7 +482,7 @@ $LANG['plugin_fusioninventory']['agents'][2]="Threads interrogation (par coeur)"
 $LANG['plugin_fusioninventory']['agents'][3]="Threads découverte (par coeur)";
 $LANG['plugin_fusioninventory']['agents'][4]="Dernier contact de l'agent";
 $LANG['plugin_fusioninventory']['agents'][5]="Version de l'agent";
-$LANG['plugin_fusioninventory']['agents'][6]="Verrouillage";
+$LANG['plugin_fusioninventory']['agents'][6]="Désactivé";
 $LANG['plugin_fusioninventory']['agents'][7]="Export config agent";
 $LANG['plugin_fusioninventory']['agents'][9]="Options avancées";
 $LANG['plugin_fusioninventory']['agents'][12]="Agent découverte";
