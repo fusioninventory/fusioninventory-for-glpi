@@ -83,14 +83,9 @@ function pluginFusinvinventoryInstall() {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
-      // Create rules by default
-      $PluginFusinvinventoryRuleInventoryCollection = new PluginFusinvinventoryRuleInventoryCollection();
-      $PluginFusinvinventoryRuleInventoryCollection->initRules();
-
-      // Creta configuration
+      // Create configuration
       $PluginFusinvinventoryConfig = new PluginFusinvinventoryConfig();
       $PluginFusinvinventoryConfig->initConfigModule();
-
 
    }
 }
@@ -132,10 +127,6 @@ function pluginFusinvinventoryUninstall() {
 
    // Delete rules
    $Rule = new Rule();
-   $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleInventory'");
-   foreach ($a_rules as $id => $data) {
-      $Rule->delete($data);
-   }
    $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleEntity'");
    foreach ($a_rules as $id => $data) {
       $Rule->delete($data);

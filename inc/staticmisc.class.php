@@ -59,16 +59,16 @@ class PluginFusinvinventoryStaticmisc {
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/importxml.php";
       }
 
-      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "existantrule", "r")) {
-         $a_menu[1]['name'] = $LANG['plugin_fusinvinventory']['menu'][1];
-         $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_rules.png";
-         $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleinventory.php";
-      }
+//      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "existantrule", "r")) {
+//         $a_menu[1]['name'] = $LANG['plugin_fusinvinventory']['menu'][1];
+//         $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rules.png";
+//         $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/ruleinventory.php";
+//      }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "existantrule", "r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']['menu'][3];
-         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvinventory/pics/menu_rules.png";
-         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleentity.php";
+         $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/ruleentity.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r")) {
