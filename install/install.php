@@ -113,6 +113,13 @@ function pluginFusinvdeployUninstall() {
       }
    }
 
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
+
+   $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+   $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
+
+
+
    $config = new PluginFusioninventoryConfig();
    $config->cleanConfig(
            PluginFusioninventoryModule::getModuleId($a_plugin['shortname']));
