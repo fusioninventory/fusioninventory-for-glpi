@@ -48,34 +48,6 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
    public function testSetModuleInventoryOff() {
       global $DB;
 
-      // Create rule
-      $rulecollection = new PluginFusinvsnmpRuleInventoryCollection();
-      $input = array();
-      $input['is_active']=1;
-      $input['name']='serial';
-      $input['match']='AND';
-      $input['sub_type'] = 'PluginFusinvsnmpRuleInventory';
-      $rule_id = $rulecollection->add($input);
-
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "globalcriteria";
-         $input['pattern']= 1;
-         $input['condition']=0;
-         $rulecriteria->add($input);
-
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_import';
-         $input['value'] = '1';
-         $ruleaction->add($input);
-
      // set in config module inventory = yes by default
      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
         SET `is_active`='0'
@@ -328,37 +300,12 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
             }
             if (isset($child2->LOCATION)) {
                $Location = new Location();
-               $this->assertEquals($class->fields['locations_id'], $Location->import(array('name' => (string)$child2->LOCATION, 'entities_id' => '0')) , 'Difference of Hardware location, have '.$class->fields['locations_id'].' instead '.$Location->import(array('name' => $child2->LOCATION)).' ['.$xmlFile.']');
+               $this->assertEquals($class->fields['locations_id'], $Location->import(array('name' => (string)$child2->LOCATION, 'entities_id' => '0')) , 'Difference of Hardware location, have '.$class->fields['locations_id'].' instead '.$Location->import(array('name' => (string)$child2->LOCATION, 'entities_id' => '0')).' ['.$xmlFile.']');
             }
             /*
  *         <COMMENTS>Xerox WorkCentre M20i ; OS 1.22   Engine 4.1.08 NIC V2.22(M20i) DADF 1.04</COMMENTS>
  */
          }
-
-
-//      foreach ($xml->CONTENT->DEVICE[0]->INFO as $child) {
-//         $this->assertEquals($data['name'], $child->NAME , 'Difference of Hardware name, have '.$data['name'].' instead '.$child->NAME.' []');
-//         $this->assertEquals($data['ip'], '192.168.0.80' , 'Problem on update ip of switch');
-//         $this->assertEquals($data['mac'], $child->MAC , 'Problem on update mac of switch');
-//         $this->assertEquals($data['ram'], $child->RAM , 'Problem on update ram of switch');
-//         $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentmodels',
-//                              $data['networkequipmentmodels_id']), $child->MODEL , 'Problem on update model of switch');
-//         $this->assertEquals(Dropdown::getDropdownName('glpi_networkequipmentfirmwares',
-//                              $data['networkequipmentfirmwares_id']), $child->FIRMWARE , 'Problem on update firmware of switch');
-//         $this->assertEquals(Dropdown::getDropdownName('glpi_locations',
-//                              $data['locations_id']), $child->LOCATION , 'Problem on update location of switch');
-//
-//         $this->assertEquals($data['comment'], '' , 'Comment must be empty');
-//
-//
-//         $fusinvsnmp_networkequipments = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_networkequipments");
-//         $a_snmpswitch = $fusinvsnmp_networkequipments->find("`networkequipments_id`='".$data['id']."' ");
-//         $this->assertEquals(count($a_snmpswitch), 1 , 'Extension of switch informations are missing');
-//         foreach($a_snmpswitch as $idsnmp=>$datasnmp){
-//            $this->assertEquals($datasnmp['sysdescr'], $child->COMMENTS);
-//            $this->assertEquals($datasnmp['memory'], $child->MEMORY , 'Problem on update memory of switch');
-//            $this->assertEquals($datasnmp['uptime'], $child->UPTIME , 'Problem on update uptime of switch');
-//         }
       }
 
 
