@@ -247,6 +247,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     *@param $p_ipstart Start ip of range
     *@param $p_ipend End ip of range
     *@param $p_entity Entity of device
+    * 
     *@return true (device added) / false (unknown type of device)
     **/
    function addDevice($p_sxml_node, $p_type, $p_ipstart, $p_ipend, $p_entity, $modelslistused, $addingdevice=1, $devide_id=0) {
@@ -1278,79 +1279,62 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       // Global criterias
 
          if ((isset($p_CONTENT->INFO->SERIAL)) AND (!empty($p_CONTENT->INFO->SERIAL))) {
-            $input['globalcriteria'][] = 1;
-            $input['serialnumber'] = strval($p_CONTENT->INFO->SERIAL);
+            $input['serial'] = (string)$p_CONTENT->INFO->SERIAL;
          }
          if ($p_CONTENT->INFO->TYPE=='NETWORKING') {
+            $input['itemtype'] = "NetworkEquipment";
             if ((isset($p_CONTENT->INFO->MAC)) AND (!empty($p_CONTENT->INFO->MAC))) {
-               $input['globalcriteria'][] = 2;
-               $input['mac'] = strval($p_CONTENT->INFO->MAC);
+               $input['mac'][] = (string)$p_CONTENT->INFO->MAC;
             }
          } else if ($p_CONTENT->INFO->TYPE=='PRINTER') {
+            $input['itemtype'] = "Printer";
             if (isset($p_CONTENT->CONTENT->PORTS)) {
                foreach($p_CONTENT->CONTENT->PORTS as $port) {
                   if ((isset($port->MAC)) AND (!empty($port->MAC))) {
-                     $input['globalcriteria'][] = 2;
-                     $input['mac'][] = strval($port->MAC);
+                     $input['mac'][] = (string)$port->MAC;
+                  }
+                  if ((isset($port->MAC)) AND (!empty($port->IP))) {
+                     $input['ip'][] = (string)$port->IP;
                   }
                }
             }
          }
          if ((isset($p_CONTENT->INFO->MODEL)) AND (!empty($p_CONTENT->INFO->MODEL))) {
-            $input['globalcriteria'][] = 3;
-            $input['model'] = strval($p_CONTENT->INFO->MODEL);
+            $input['model'] = (string)$p_CONTENT->INFO->MODEL;
          }
          if ((isset($p_CONTENT->INFO->NAME)) AND (!empty($p_CONTENT->INFO->NAME))) {
-            $input['globalcriteria'][] = 4;
-            $input['name'] = strval($p_CONTENT->INFO->NAME);
+            $input['name'] = (string)$p_CONTENT->INFO->NAME;
          }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
-      $rule = new PluginFusinvsnmpRuleInventoryCollection();
-      $data = array ();
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
+      $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $data = array();
       $data = $rule->processAllRules($input, array());
-
    }
 
 
-   // a_criteria : criteria to check
-   function checkCriteria($a_criteria) {
+
+   function rulepassed($items_id, $itemtype) {
       global $DB;
 
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->checkCriteria().');
+              'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
 
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
       $datacriteria = unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']);
 
-      if ($xml->INFO->TYPE == 'PRINTER') {
-         $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'Printer');
-         $result = $a_return[0];
-         $input = $a_return[1];
-         if ($DB->numrows($result)) {
-            $this->importDevice('Printer', $DB->result($result,0,'id'));
-         } else {
-            // Creation of printer
-            $Printer = new Printer();
-            $id = $Printer->add($input);
-            $this->importDevice('Printer', $id);
-         }
-      } else if ($xml->INFO->TYPE == 'NETWORKING') {
-         $a_return = $PluginFusinvsnmpCommunicationSNMP->searchDevice($a_criteria, 'NetworkEquipment');
-         $result = $a_return[0];
-         $input = $a_return[1];
-         if ($DB->numrows($result)) {
-            $this->importDevice('NetworkEquipment', $DB->result($result,0,'id'));
-         } else {
-            // Creation of printer
-            $NetworkEquipment = new NetworkEquipment();
-            $id = $NetworkEquipment->add($input);
-            $this->importDevice('NetworkEquipment', $id);
-         }
+      if ($items_id == "0") {
+         $class = new $itemtype();
+         $input = array();
+         $input['date_mod'] = date("Y-m-d H:i:s");
+         $items_id = $class->add($input);
       }
+      logInFile('koin', $itemtype.", ".$items_id);
+      $this->importDevice($itemtype, $items_id);
    }
 }
 

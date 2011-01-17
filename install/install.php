@@ -55,9 +55,11 @@ function pluginFusinvsnmpInstall() {
       $DBf_handle = fopen($DB_file, "rt");
       $sql_query = fread($DBf_handle, filesize($DB_file));
       fclose($DBf_handle);
-      foreach ( explode(";\n", "$sql_query") as $sql_line) {
-         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
-         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+      foreach ( explode(";\n", $sql_query) as $sql_line) {
+         if (get_magic_quotes_runtime())
+            $sql_line=stripslashes_deep($sql_line);
+         if (!empty($sql_line))
+            $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
       // Create folder in GLPI_PLUGIN_DOC_DIR
@@ -96,15 +98,6 @@ function pluginFusinvsnmpInstall() {
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
-
-
-//      // Create rules by default
-      $PluginFusinvsnmpRuleInventoryCollection = new PluginFusinvsnmpRuleInventoryCollection();
-      $PluginFusinvsnmpRuleInventoryCollection->initRules();
-
-      $PluginFusinvsnmpRuleNetdiscoveryCollection = new PluginFusinvsnmpRuleNetdiscoveryCollection();
-      $PluginFusinvsnmpRuleNetdiscoveryCollection->initRules();
-
 
    }
 }
@@ -145,6 +138,7 @@ function pluginFusinvsnmpUninstall() {
 
    $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
    $PluginFusioninventoryAgentmodule->deleteModule($plugins_id);
+
 
    $config = new PluginFusioninventoryConfig;
    $config->cleanConfig($plugins_id);
