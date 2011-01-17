@@ -254,6 +254,12 @@ class PluginFusioninventoryCommunication {
       echo $this->getSend();
    }
 
+
+   function emptyAnswer() {
+      $this->setXML($this->getXML());
+      echo $this->getSend();
+   }
+
    /**
     * Add logs
     *

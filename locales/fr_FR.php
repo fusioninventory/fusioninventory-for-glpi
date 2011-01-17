@@ -199,6 +199,20 @@ $LANG['plugin_fusioninventory']['type'][3]="Imprimante";
 
 $LANG['plugin_fusioninventory']['rules'][1]="Règles";
 $LANG['plugin_fusioninventory']['rules'][2]="Règles d'import et de liaison des matériels";
+$LANG['plugin_fusioninventory']['rules'][3]="Chercher les matériels GLPI ayant le statut";
+$LANG['plugin_fusioninventory']['rules'][4]="Entité de destination de la machine";
+$LANG['plugin_fusioninventory']['rules'][5]="Liaison FusionInventory";
+$LANG['plugin_fusioninventory']['rules'][6] = "Liaison si possible, sinon pas d'import";
+$LANG['plugin_fusioninventory']['rules'][7] = "Liaison si possible, sinon import";
+$LANG['plugin_fusioninventory']['rules'][8] = "Envoyer";
+$LANG['plugin_fusioninventory']['rules'][9]  = "existe";
+$LANG['plugin_fusioninventory']['rules'][10]  = "n'existe pas";
+$LANG['plugin_fusioninventory']['rules'][11] = "est déjà présent dans GLPI";
+$LANG['plugin_fusioninventory']['rules'][12] = "est vide";
+$LANG['plugin_fusioninventory']['rules'][13] = "Numéro de série du disque dur";
+$LANG['plugin_fusioninventory']['rules'][14] = "Numéro de série de partition disque";
+$LANG['plugin_fusioninventory']['rules'][15] = "uuid";
+$LANG['plugin_fusioninventory']['rules'][16] = "Tag FusionInventory";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Matériel à importer";
 

@@ -199,6 +199,20 @@ $LANG['plugin_fusioninventory']['type'][3]="Printer";
 
 $LANG['plugin_fusioninventory']['rules'][1]="Rules";
 $LANG['plugin_fusioninventory']['rules'][2]="Equipment import and link rules";
+$LANG['plugin_fusioninventory']['rules'][3]="Search GLPI equipment with the status";
+$LANG['plugin_fusioninventory']['rules'][4]="Destination of equipment entity";
+$LANG['plugin_fusioninventory']['rules'][5]="FusionInventory link";
+$LANG['plugin_fusioninventory']['rules'][6] = "Link if possible, else not import";
+$LANG['plugin_fusioninventory']['rules'][7] = "Link if possible, else import";
+$LANG['plugin_fusioninventory']['rules'][8] = "Send";
+$LANG['plugin_fusioninventory']['rules'][9]  = "exist";
+$LANG['plugin_fusioninventory']['rules'][10]  = "not exist";
+$LANG['plugin_fusioninventory']['rules'][11] = "in present in GLPI";
+$LANG['plugin_fusioninventory']['rules'][12] = "is empty";
+$LANG['plugin_fusioninventory']['rules'][13] = "Hard disk serial number";
+$LANG['plugin_fusioninventory']['rules'][14] = "Partition serial number";
+$LANG['plugin_fusioninventory']['rules'][15] = "uuid";
+$LANG['plugin_fusioninventory']['rules'][16] = "FusionInventory tag";
 
 $LANG['plugin_fusioninventory']['rulesengine'][152] = "Equipment to import";
 

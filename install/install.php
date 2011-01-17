@@ -47,6 +47,27 @@ function pluginFusioninventoryInstall($version) {
    if (!class_exists('PluginFusioninventoryStaticmisc')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
    }
+   if (!class_exists('PluginFusioninventorySetup')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleImportEquipmentCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipmentcollection.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleImportEquipment')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleimportequipment.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleCollection')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rulecollection.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRule')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rule.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleCriteria')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/rulecriteria.class.php");
+   }
+   if (!class_exists('PluginFusioninventoryRuleAction')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusioninventory/inc/ruleaction.class.php");
+   }
    // Get informations of plugin
 
    $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
@@ -95,6 +116,9 @@ function pluginFusioninventoryInstall($version) {
    $PluginFusioninventoryAgentmodule->add($input);
 
    CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+
+   $PluginFusioninventorySetup = new PluginFusioninventorySetup();
+   $PluginFusioninventorySetup->initRules();
 }
 
 ?>

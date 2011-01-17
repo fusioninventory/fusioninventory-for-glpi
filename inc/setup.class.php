@@ -64,6 +64,13 @@ class PluginFusioninventorySetup {
               WHERE `itemtype` LIKE 'PluginFusioninventory%';";
       $DB->query($query) or die($DB->error());
 
+      // Delete rules
+      $Rule = new Rule();
+      $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryRuleImportEquipment'");
+      foreach ($a_rules as $id => $data) {
+         $Rule->delete($data);
+      }
+
       return true;
    }
 
@@ -87,6 +94,469 @@ class PluginFusioninventorySetup {
    }
 
 
+   function initRules() {
+
+      $ranking = 0;
+      
+     // Create rule for : Computer + serial + uuid
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer serial + uuid';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "uuid";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "uuid";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+
+     $ranking++;
+     // Create rule for : Computer + mac
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer mac';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+     $ranking++;
+     // Create rule for : Computer + serial
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer serial';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Computer import
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+
+
+     $ranking++;
+     // Create rule for : Printer + serial
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Printer serial';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Printer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Printer + mac
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Printer mac';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Printer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Printer + name
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Printer name';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Printer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : NetworkEquipment + serial
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='NetworkEquipment serial';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'NetworkEquipment';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : NetworkEquipment + mac
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='NetworkEquipment mac';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'NetworkEquipment';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : NetworkEquipment import
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='NetworkEquipment import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'NetworkEquipment';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for import into unknown devices
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='unknown device import';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= '*';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+         
+   }
 
 }
 

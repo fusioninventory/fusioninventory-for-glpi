@@ -35,6 +35,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
    public $dohistory = true;
 
+   static function getTypeName() {
+      global $LANG;
+
+      return $LANG['plugin_fusioninventory']['menu'][4];
+   }
+
 
    function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w");
@@ -111,7 +117,17 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[10]['name']      = $LANG['common'][25];
       $tab[10]['datatype']  = 'text';
 
+      $tab[11]['table']     = $this->getTable();
+      $tab[11]['field']     = 'ip';
+      $tab[11]['linkfield'] = 'mac';
+      $tab[11]['name']      = $LANG['networking'][14];
+      $tab[11]['datatype']  = 'text';
 
+      $tab[12]['table']     = $this->getTable();
+      $tab[12]['field']     = 'mac';
+      $tab[12]['linkfield'] = 'mac';
+      $tab[12]['name']      = $LANG['networking'][15];
+      $tab[12]['datatype']  = 'text';
       
 
 //date_mod 	itemtype 	accepted 	plugin_fusioninventory_agents_id 	ip 	mac 	
