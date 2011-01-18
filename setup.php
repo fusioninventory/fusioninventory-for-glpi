@@ -85,7 +85,18 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' =>'plugin_pre_item_update_fusioninventory');
    //      $PLUGIN_HOOKS['pre_item_delete']['fusioninventory'] = 'plugin_pre_item_delete_fusioninventory';
          $PLUGIN_HOOKS['item_purge']['fusioninventory'] = array('NetworkPort_NetworkPort' =>'plugin_item_purge_fusioninventory');
-//      $PLUGIN_HOOKS['item_update']['fusioninventory'] = 'plugin_item_update_fusioninventory';
+
+         
+         $PLUGIN_HOOKS['item_update']['fusioninventory'] = array('Computer' =>'plugin_item_update_fusioninventory',
+                                                                  'NetworkEquipment' =>'plugin_item_update_fusioninventory',
+                                                                  'Printer' =>'plugin_item_update_fusioninventory',
+                                                                  'Monitor' =>'plugin_item_update_fusioninventory',
+                                                                  'Peripheral' =>'plugin_item_update_fusioninventory',
+                                                                  'Phone' =>'plugin_item_update_fusioninventory',
+                                                                  'NetworkPort' =>'plugin_item_update_fusioninventory');
+
+
+         
    //      $PLUGIN_HOOKS['item_add']['fusioninventory'] = 'plugin_item_add_fusioninventory';
 
          $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
@@ -144,6 +155,9 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = $LANG['plugin_fusioninventory']['menu'][4];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['title'] = $LANG['plugin_fusioninventory']['rules'][2];
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['ruleimportequipment']['page']  = '/plugins/fusioninventory/front/ruleimportequipment.php';
+
       }
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');
@@ -161,6 +175,10 @@ function plugin_init_fusioninventory() {
          exit;
       }
    }
+
+   // Add unknown devices in list of devices with networport
+   $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
+
 }
 
 // Name and Version of the plugin

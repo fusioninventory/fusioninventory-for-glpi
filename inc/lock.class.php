@@ -57,14 +57,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $tableName = getTableForItemType($p_itemtype);
       echo "<div width='50%'>";
-      $lockable_fields = PluginFusioninventoryLockable::getLockableFields('', $tableName);
+      //$lockable_fields = PluginFusioninventoryLockable::getLockableFields('', $tableName);
       $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
+
       if (count($locked)){
-         foreach ($locked as $key => $val){
-            if (!in_array($val, $lockable_fields)) {
-               unset($locked[$key]);
-            }
-         }
+
       } else {
          $locked = array();
       }
@@ -79,25 +76,26 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<tr><th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][73]."&nbsp;</th>";
       echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][74]."&nbsp;</th>";
       echo "<th>&nbsp;".$LANG['plugin_fusioninventory']['functionalities'][75]."&nbsp;</th></tr>";
-      if (empty($lockable_fields)) {
-         echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
-                  ".$LANG['plugin_fusioninventory']['functionalities'][76]."</td></tr>";
-      } else {
-         $checked = '';
-         foreach ($lockable_fields as $val) {
-            if (in_array($val, $locked)) {
+
+      $checked = '';
+      $a_exclude = $this->excludeFields();
+      foreach ($item->fields as $key=>$val) {
+         if (!in_array($key, $a_exclude)) {
+            if (in_array($key, $locked)) {
                $checked = 'checked';
             } else {
                $checked = '';
             }
-   //         echo "<tr class='tab_bg_1'><td>" . $FUSIONINVENTORY_MAPPING_FIELDS[$val] . "</td>
-            echo "<tr class='tab_bg_1'><td>" . $val . "</td>
-                     <td>".$item->getField($val)."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $val . "]' $checked></td></tr>";
+            $array = search::getOptions($p_itemtype);
+            $num = search::getOptionNumber($p_itemtype, $key);
+         echo "<tr class='tab_bg_1'><td>" . $array[$num]['name'] . " (".$key.")</td>
+                  <td>".$val."</td><td align='center'><input type='checkbox' name='lockfield_fusioninventory[" . $key . "]' $checked></td></tr>";
          }
-         echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
-                  <input class='submit' type='submit' name='unlock_field_fusioninventory'
-                         value='" . $LANG['buttons'][7] . "'></td></tr>";
       }
+      echo "<tr class='tab_bg_2'><td align='center' colspan='3'>
+               <input class='submit' type='submit' name='unlock_field_fusioninventory'
+                      value='" . $LANG['buttons'][7] . "'></td></tr>";
+
       echo "</table>";
       echo "</form>";
       echo "</div>";
@@ -213,26 +211,29 @@ class PluginFusioninventoryLock extends CommonDBTM{
       global $DB;
 
       $tableName = getTableForItemType($p_itemtype);
-      if (TableExists('glpi_plugin_fusioninventory_lockables')) {
-         $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
-         if ($DB->numrows($result)){
-            $row = mysql_fetch_assoc($result);
-            $lockedFields = importArrayFromDB($row['tablefields']);
-            if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
-               $p_fieldsToLock = array_merge($p_fieldsToLock, $lockedFields);
-               $update = "UPDATE `glpi_plugin_fusioninventory_locks`
-                          SET `tablefields`='" . exportArrayToDB($p_fieldsToLock) . "'
-                          WHERE `tablename`='".$tableName."'
-                                AND `items_id`='".$p_items_id."';";
-               $DB->query($update);
-            }
-         } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
-            $insert = "INSERT INTO `glpi_plugin_fusioninventory_locks`
-                          (`tablename`, `items_id`, `tablefields`)
-                       VALUES ('".$tableName."', '".$p_items_id."' ,
-                               '".exportArrayToDB($p_fieldsToLock) . "');";
-            $DB->query($insert);
+
+      $PluginFusioninventoryLock = new PluginFusioninventoryLock();
+      $a_exclude = $PluginFusioninventoryLock->excludeFields();
+      $p_fieldsToLock = array_diff($p_fieldsToLock, $a_exclude);
+
+      $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
+      if ($DB->numrows($result)){
+         $row = mysql_fetch_assoc($result);
+         $lockedFields = importArrayFromDB($row['tablefields']);
+         if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
+            $p_fieldsToLock = array_merge($p_fieldsToLock, $lockedFields);
+            $update = "UPDATE `glpi_plugin_fusioninventory_locks`
+                       SET `tablefields`='" . exportArrayToDB($p_fieldsToLock) . "'
+                       WHERE `tablename`='".$tableName."'
+                             AND `items_id`='".$p_items_id."';";
+            $DB->query($update);
          }
+      } elseif (count($p_fieldsToLock)) {    // no locks --> new locks
+         $insert = "INSERT INTO `glpi_plugin_fusioninventory_locks`
+                       (`tablename`, `items_id`, `tablefields`)
+                    VALUES ('".$tableName."', '".$p_items_id."' ,
+                            '".exportArrayToDB($p_fieldsToLock) . "');";
+         $DB->query($insert);
       }
    }
 
@@ -288,6 +289,19 @@ class PluginFusioninventoryLock extends CommonDBTM{
          array_push($array, $key);
       }
       return $array;
+   }
+
+
+   function excludeFields() {
+      $exclude = array();
+      $exclude[] = "id";
+      $exclude[] = "entities_id";
+      $exclude[] = "is_recursive";
+      $exclude[] = "date_mod";
+      $exclude[] = "is_deleted";
+      $exclude[] = "is_template";
+      $exclude[] = "template_name";
+      return $exclude;      
    }
 
 }

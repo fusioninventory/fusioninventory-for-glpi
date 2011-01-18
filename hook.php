@@ -509,11 +509,11 @@ function plugin_item_update_fusioninventory($parm) {
       $plugin = new Plugin;
       if ($plugin->isActivated('fusioninventory')) {
          // lock fields which have been updated
-         $type=$parm['type'];
-         $id=$parm['id'];
-         $fieldsToLock=$parm['updates'];
-         $lockables = PluginFusioninventoryLockable::getLockableFields('', $type);
-         $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
+         $type=get_class($parm);
+         $id=$parm->getField('id');
+         $fieldsToLock=$parm->updates;
+//         $lockables = PluginFusioninventoryLockable::getLockableFields('', $type);
+//         $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
          PluginFusioninventoryLock::addLocks($type, $id, $fieldsToLock);
       }
    }
