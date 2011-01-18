@@ -128,10 +128,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[12]['linkfield'] = 'mac';
       $tab[12]['name']      = $LANG['networking'][15];
       $tab[12]['datatype']  = 'text';
-      
-
-//date_mod 	itemtype 	accepted 	plugin_fusioninventory_agents_id 	ip 	mac 	
-
 
       return $tab;
    }
