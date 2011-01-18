@@ -207,15 +207,8 @@ function plugin_init_fusinvsnmp() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] = $LANG['plugin_fusinvsnmp']['menu'][2];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  = '/plugins/fusinvsnmp/front/iprange.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulenetdiscovery']['title'] = $LANG['plugin_fusinvsnmp']['menu'][7];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulenetdiscovery']['page']  = '/plugins/fusinvsnmp/front/rulenetdiscovery.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulesnmpinventory']['title'] = $LANG['plugin_fusinvsnmp']['menu'][8];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['rulesnmpinventory']['page']  = '/plugins/fusinvsnmp/front/ruleinventory.php';
-
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = $LANG['plugin_fusinvsnmp']['menu'][9];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusinvsnmp/front/statediscovery.php';
-
 
 		}
 
