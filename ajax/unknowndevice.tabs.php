@@ -48,6 +48,7 @@ if(!isset($_POST["withtemplate"])) $_POST["withtemplate"] = "";
 $pfia = new PluginFusioninventoryAgent;
 $pfit = new PluginFusioninventoryTask;
 $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice;
+$PluginFusioninventoryUnknownDevice->getFromDB($_POST['id']);
 
 switch($_POST['glpi_tab']) {
 	case -1 :
