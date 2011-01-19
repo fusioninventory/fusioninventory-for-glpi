@@ -71,7 +71,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
 
     public function testSendinventories() {
-       
+
       $MyDirectory = opendir("xml/inventory_snmp");
       while(false !== ($Entry = readdir($MyDirectory))) {
          if(is_dir('xml/inventory_snmp/'.$Entry)&& $Entry != '.' && $Entry != '..') {
@@ -114,6 +114,63 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
     }
 
 
+   function testAddNetworkEquipmentHaveCDPConnection() {
+      global $DB;
+      // Add a networkquipment with a CDP in a connection yet created in unkniwn device.
+      // Goal is to not have 2 times with device
+
+      $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $NetworkPort = new NetworkPort();
+      $a_networkport = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
+         AND `name` like 'GigabitEthernet%'", 'id', '1');
+      $datas = current($a_networkport);
+      $PluginFusioninventoryUnknownDevice->getFromDB($datas['items_id']);
+      
+      $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
+      $xml->addChild('DEVICEID', 'AnotherSwitch.toto.local');
+      $xml->addChild('QUERY', 'SNMPQUERY');
+      $xml_content = $xml->addChild('CONTENT');
+      $xml_device = $xml_content->addChild('DEVICE');
+      $xml_info = $xml_device->addChild('INFO');
+      $xml_info->addChild('NAME', 'AnotherSwitch');
+      $xml_info->addChild('SERIAL', 'NBGTVYU5893FGHJ');
+      $xml_info->addChild('TYPE', 'NETWORKING');
+      $xml_ips = $xml_info->addChild('IPS');
+      $xml_ips->addChild('IP', '10.56.53.23');
+
+      $xml_ports = $xml_device->addChild('PORTS');
+      $xml_port = $xml_ports->addChild('PORT');
+         $xml_connections = $xml_port->addChild('CONNECTIONS');
+         $xml_connections->addChild('CDP', '1');
+
+         $xml_connection = $xml_connections->addChild('CONNECTION');
+         $xml_connection->addChild('IFDESCR', 'GigabitEthernet0/10');
+         $xml_connection->addChild('IP', '192.168.200.124');
+
+      $xml_port->addChild('IFDESCR', 'GigabitEthernet24/1');
+      $xml_port->addChild('IFTYPE', '6');
+      $xml_port->addChild('IFNAME', 'GigabitEthernet24/1');
+      $xml_port->addChild('IFSTATUS', '1');
+      $xml_port->addChild('IFNUMBER', '9');
+      $xml_port->addChild('IFINTERNALSTATUS', '1');
+      
+      $this->testSendinventory('test', $xml);
+
+      $array = $this->testGetGLPIDevice("networkequipment-anotherswitchcdp.xml", $xml_device);
+      $items_id = $array[0];
+      $itemtype = $array[1];
+      $unknown  = $array[2];
+      
+      $a_unknown = $PluginFusioninventoryUnknownDevice->find("`ip` = '172.25.22.10'");
+
+      $this->assertEquals(count($a_unknown), 1, 'Unknwon CDP has been added in GLPI not 1 times ('.count($a_unknown).')');
+
+      $this->testNetworkportsIntegrity($xml_device, "networkequipment-anotherswitchcdp.xml",$items_id,$itemtype);
+
+   }
+
+
+
    function testAddNetworkEquipmentCDP() {
       // Add a networkequipment which are already created but in unknwon device
       global $DB;
@@ -122,9 +179,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       $NetworkPort = new NetworkPort();
       $a_networkport = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
          AND `name` like 'GigabitEthernet%'", 'id', '1');
-      foreach($a_networkport as $datas) {
-         
-      }
+      $datas = current($a_networkport);
       $PluginFusioninventoryUnknownDevice->getFromDB($datas['items_id']);
       $xml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REQUEST></REQUEST>");
       $xml->addChild('DEVICEID', 'testCDP.toto.local');
@@ -136,7 +191,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
       $xml_info->addChild('SERIAL', 'GTFD6IYJHGTFTY7');
       $xml_info->addChild('TYPE', 'NETWORKING');
       $xml_ips = $xml_info->addChild('IPS');
-      $xml_ips->addChild('IP', $datas['ip']);
+      $xml_ips->addChild('IP', $PluginFusioninventoryUnknownDevice->fields['ip']);
 
       $xml_ports = $xml_device->addChild('PORTS');
 
@@ -174,7 +229,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
 
       $a_unknown = $PluginFusioninventoryUnknownDevice->find("`id` = '".$datas['items_id']."'");
 
-      $this->assertEquals(count($a_unknown), 0, 'Switch has been added in GLPI but unknown device with CDP yet added is not fusionned with switch');
+      $this->assertEquals(count($a_unknown), 0, 'Switch has been added in GLPI but unknown device with CDP yet added is not fusionned with switch (unknown id : '.$datas['items_id'].')');
 
       // Test if port is moved from unknown device to switch
       $NetworkPort->getFromDB($datas['id']);
@@ -344,14 +399,18 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
                // Create switch in asset
                $NetworkEquipment = new NetworkEquipment();
                $input = array();
-               $input['serial']=$child2->SERIAL;
+               if (isset($child2->SERIAL)) {
+                  $input['serial']=$child2->SERIAL;
+               } else {
+                  $input['name']=$child2->NAME;
+               }
                $NetworkEquipment->add($input);
             }
          }
       }
       $input_xml = $xml->asXML();
       $emulatorAgent->sendProlog($input_xml);
-
+      
    }
 
 
@@ -631,7 +690,7 @@ class Plugins_Fusioninventory_InventorySNMP extends PHPUnit_Framework_TestCase {
    }
 
 
-   // Test if network port connected on each port exist (verify integrity of datas
+   // Test if network port connected on each port exist (verify integrity of datas)
    function testNetworkportsIntegrity($xml='', $xmlFile='',$items_id=0,$itemtype='') {
 
       if (empty($xmlFile)) {
