@@ -101,7 +101,7 @@ class PluginFusioninventorySetup {
      // Create rule for : Computer + serial + uuid
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
-      $input['is_active']=1;
+      $input['is_active']=0;
       $input['name']='Computer serial + uuid';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
@@ -160,7 +160,7 @@ class PluginFusioninventorySetup {
      // Create rule for : Computer + mac
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
-      $input['is_active']=1;
+      $input['is_active']=0;
       $input['name']='Computer mac';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
