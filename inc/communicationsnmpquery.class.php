@@ -1305,7 +1305,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ((isset($p_CONTENT->INFO->NAME)) AND (!empty($p_CONTENT->INFO->NAME))) {
             $input['name'] = (string)$p_CONTENT->INFO->NAME;
          }
-
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
@@ -1317,7 +1316,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
    function rulepassed($items_id, $itemtype) {
       global $DB;
-
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
 
       PluginFusioninventoryCommunication::addLog(
@@ -1327,14 +1325,34 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       $datacriteria = unserialize($_SESSION['plugin_fusinvsnmp_datacriteria']);
 
+      $class = new $itemtype();
       if ($items_id == "0") {
-         $class = new $itemtype();
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
          $items_id = $class->add($input);
       }
-      logInFile('koin', $itemtype.", ".$items_id);
-      $this->importDevice($itemtype, $items_id);
+      if ($itemtype == "PluginFusioninventoryUnknownDevice") {
+         $class->getFromDB($items_id);
+         if ((isset($xml->INFO->NAME)) AND (!empty($xml->INFO->NAME))) {
+            $class->fields['name'] = (string)$xml->INFO->NAME;
+         }
+         if ((isset($xml->INFO->SERIAL)) AND (!empty($xml->INFO->SERIAL))) {
+            $class->fields['serial'] = (string)$xml->INFO->SERIAL;
+         }
+         if ((isset($xml->INFO->OTHERSERIAL)) AND (!empty($xml->INFO->OTHERSERIAL))) {
+            $class->fields['otherserial'] = (string)$xml->INFO->OTHERSERIAL;
+         }
+         if ($xml->INFO->TYPE=='NETWORKING') {
+            $class->fields['itemtype'] = "NetworkEquipment";
+         } else if ($xml->INFO->TYPE=='PRINTER') {
+            $class->fields['itemtype'] = "Printer";
+         }
+         // TODO : add import ports 
+
+         $class->update($class->fields);
+      } else {
+         $this->importDevice($itemtype, $items_id);
+      }
    }
 }
 
