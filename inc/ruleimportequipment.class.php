@@ -268,9 +268,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          if (!empty($crit)) {
             if (!isset($input[$criterion]) || $input[$criterion] == '') {
                $continue = false;
-            } else if ($crit->fields["condition"] != '10') { // 10 = PATTERN_FIND
-               // No global if PATTERN_FIND (in GLPI) not set
-            } else {
+            } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_FIND) {
                $complex_criterias[] = $crit;
             }
          }
