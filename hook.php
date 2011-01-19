@@ -532,13 +532,21 @@ function plugin_item_purge_fusioninventory($parm) {
       case 'NetworkPort_NetworkPort':
          // If remove connection of a hub port (unknown device), we must delete this port too
          $NetworkPort = new NetworkPort();
+         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+
          $NetworkPort->getFromDB($parm->getField('networkports_id_1'));
-         if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $NetworkPort->delete($NetworkPort->fields);
+        if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+               $NetworkPort->delete($NetworkPort->fields);
+            }
          }
          $NetworkPort->getFromDB($parm->getField('networkports_id_2'));
          if ($NetworkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            $NetworkPort->delete($NetworkPort->fields);
+            $PluginFusioninventoryUnknownDevice->getFromDB($NetworkPort->fields['items_id']);
+            if ($PluginFusioninventoryUnknownDevice->fields['hub'] == '1') {
+               $NetworkPort->delete($NetworkPort->fields);
+            }
          }
 
          break;
