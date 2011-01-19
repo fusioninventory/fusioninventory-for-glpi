@@ -527,6 +527,44 @@ class PluginFusioninventorySetup {
          $ruleaction->add($input);
 
       $ranking++;
+      // Create rule for search serial in all DB
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Find serial in all GLPI';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "serial";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+
+      $ranking++;
       // Create rule for import into unknown devices
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();

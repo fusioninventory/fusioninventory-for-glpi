@@ -268,6 +268,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          if (!empty($crit)) {
             if (!isset($input[$criterion]) || $input[$criterion] == '') {
                $continue = false;
+            } else if ($crit->fields["condition"] != '10') { // 10 = PATTERN_FIND
+               // No global if PATTERN_FIND (in GLPI) not set
             } else {
                $complex_criterias[] = $crit;
             }
@@ -298,10 +300,17 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       }
 
       // Get all equipment type
+      $itemtype_global = 0;
+      foreach ($complex_criterias as $criteria) {
+         if ($criteria->fields['criteria'] == "itemtype") {
+            $itemtype_global++;
+         }
+      }
+
       $itemtypeselected = array();
-      if (isset($input['itemtype']) AND (is_array($input['itemtype']))) {
+      if (isset($input['itemtype']) AND (is_array($input['itemtype'])) AND ($itemtype_global != "0")) {
          $itemtypeselected = $input['itemtype'];      
-      } else if (isset($input['itemtype']) AND (!empty($input['itemtype']))) {
+      } else if (isset($input['itemtype']) AND (!empty($input['itemtype'])) AND ($itemtype_global != "0")) {
          $itemtypeselected[] = $input['itemtype'];
       } else {
          foreach($CFG_GLPI["state_types"] as $itemtype) {
@@ -422,6 +431,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                       FROM $sql_from_temp
                       WHERE $sql_where_temp
                       ORDER BY `[typetable]`.`is_deleted` ASC";
+         if ($itemtype == "PluginFusioninventoryUnknownDevice") {
+            $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
+         }
          $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
          $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
          $result_glpi = $DB->query($sql_glpi);
@@ -452,7 +464,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
    function executeActions($output, $params) {
       $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
       $class = new $classname();
-
+      
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {

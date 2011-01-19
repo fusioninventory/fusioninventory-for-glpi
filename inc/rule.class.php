@@ -763,7 +763,6 @@ class PluginFusioninventoryRule extends CommonDBTM {
          $this->regex_results     = array();
          $this->criterias_results = array();
          $input = $this->prepareInputDataForProcess($input, $params);
-
          if ($this->checkCriterias($input)) {
             $output = $this->executeActions($output, $params);
 
