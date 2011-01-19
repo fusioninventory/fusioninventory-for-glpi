@@ -32,11 +32,6 @@
 // Original Author of file: MAZZONI Vincent
 // Purpose of file: management of communication with agents
 // ----------------------------------------------------------------------
-/**
- * The datas are XML encoded and compressed with Zlib.
- * XML rules :
- * - XML tags in uppercase
- **/
 
 if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
@@ -80,77 +75,100 @@ class PluginFusinvinventoryInventory {
       // Global criterias
 
          if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-            $input['globalcriteria'][] = 1;
-            $input['serialnumber'] = $xml->CONTENT->BIOS->SSN;
+            $input['serial'] = (string)$xml->CONTENT->BIOS->SSN;
          }
          if ((isset($xml->CONTENT->HARDWARE->UUID)) AND (!empty($xml->CONTENT->HARDWARE->UUID))) {
-            $input['globalcriteria'][] = 2;
-            $input['uuid'] = $xml->CONTENT->HARDWARE->UUID;
+            $input['uuid'] = (string)$xml->CONTENT->HARDWARE->UUID;
          }
          if (isset($xml->CONTENT->NETWORKS)) {
             foreach($xml->CONTENT->NETWORKS as $network) {
                if (((isset($network->VIRTUALDEV)) AND ($network->VIRTUALDEV != '1'))
                        OR (!isset($network->VIRTUALDEV))){
                   if ((isset($network->MACADDR)) AND (!empty($network->MACADDR))) {
-                     $input['globalcriteria'][] = 3;
-                     $input['mac'][] = $network->MACADDR;
+                     $input['mac'][] = (string)$network->MACADDR;
                   }
                }
             }
          }
          if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY)) AND (!empty($xml->CONTENT->HARDWARE->WINPRODKEY))) {
-            $input['globalcriteria'][] = 4;
-            $input['windowskey'] = $xml->CONTENT->HARDWARE->WINPRODKEY;
+            $input['mskey'] = (string)$xml->CONTENT->HARDWARE->WINPRODKEY;
          }
          if ((isset($xml->CONTENT->BIOS->SMODEL)) AND (!empty($xml->CONTENT->BIOS->SMODEL))) {
-            $input['globalcriteria'][] = 5;
-            $input['model'] = $xml->CONTENT->BIOS->SMODEL;
+            $input['model'] = (string)$xml->CONTENT->BIOS->SMODEL;
          }
          if (isset($xml->CONTENT->STORAGES)) {
             foreach($xml->CONTENT->STORAGES as $storage) {
                if ((isset($storage->SERIALNUMBER)) AND (!empty($storage->SERIALNUMBER))) {
-                  $input['globalcriteria'][] = 6;
-                  $input['storageserial'][] = $storage->SERIALNUMBER;
+                  $input['partitionserial'][] = (string)$storage->SERIALNUMBER;
                }
             }
          }
          if (isset($xml->CONTENT->DRIVES)) {
             foreach($xml->CONTENT->DRIVES as $drive) {
                if ((isset($drive->SERIAL)) AND (!empty($drive->SERIAL))) {
-                  $input['globalcriteria'][] = 7;
-                  $input['drivesserial'][] = $drive->SERIAL;
+                  $input['hdserial'][] = (string)$drive->SERIAL;
                }
             }
          }
          if ((isset($xml->CONTENT->BIOS->ASSETTAG)) AND (!empty($xml->CONTENT->BIOS->ASSETTAG))) {
-            $input['globalcriteria'][] = 8;
-            $input['assettag'] = $xml->CONTENT->BIOS->ASSETTAG;
+            $input['tag'] = (string)$xml->CONTENT->BIOS->ASSETTAG;
          }
          if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
-            $input['globalcriteria'][] = 9;
-            $input['name'] = $xml->CONTENT->HARDWARE->NAME;
+            $input['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
          }
-      $rule = new PluginFusinvinventoryRuleInventoryCollection();
-      $data = array ();
+         $input['itemtype'] = "Computer";
+
+      $_SESSION['plugin_fusinvinventory_datacriteria'] = serialize($input);
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
+      $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $data = array();
       $data = $rule->processAllRules($input, array());
-      
    }
    
 
 
-   function sendLib($criterias) {
-      logInFile('criteria', print_r($criterias, true));
+   function rulepassed($items_id, $itemtype) {
+
+      $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
+
+      if ($itemtype == 'Computer') {
+         $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+         $Computer = new Computer();
+         
+         if ($items_id == '0') {
+            $input = array();
+            $input['date_mod'] = date("Y-m-d H:i:s");
+            $items_id = $Computer->add($input);
+            $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
+         } else {
+            $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
+         }
+
+         
+
+         
+      }
+
+
+
+
+
+
+
+      return;
+      // =================================================================== //
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/FusionLibServer.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/MyException.class.php";
       require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Logger.class.php";
 
       $config = array();
 
-      $config['storageEngine'] = "Directory";
+      $config['storageEngine'] = "MySQL";
       $config['storageLocation'] = "/../../../../../../../files/_plugins/fusinvinventory";
-
+$datascriterias = unserialize($_SESSION['plugin_fusinvinventory_datacriteria']);
       // get criteria from rules
-      $config['criterias'] = $criterias;
+      //$config['criterias'] = $criterias;
+$config['criterias'][] = "ssn";
 
       $config['maxFalse'] = 0;
 
@@ -174,6 +192,13 @@ class PluginFusinvinventoryInventory {
       $config['sections'][] = "VIDEOS";
       $config['sections'][] = "USBDEVICES";
 
+      $config['hostMySQL']['server'] = "127.0.0.1";
+      $config['hostMySQL']['port'] = "3306";
+      $config['hostMySQL']['user'] = "root";
+      $config['hostMySQL']['password'] = "DestroyBSD";
+      $config['hostMySQL']['db'] = "glpi078";
+
+
       define("LIBSERVERFUSIONINVENTORY_LOG_FILE",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/logs');
       define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       define("LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME","PluginFusinvinventoryLibhook");
@@ -186,7 +211,21 @@ class PluginFusinvinventoryInventory {
       //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
       $action->checkConfig("", $config);
       ob_start();
-      $action->startAction(simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA));
+      //$action->startAction(simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA));
+
+      $simpleXMLObj = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $libData = StorageInventoryFactory::createStorage($action->_applicationName, $action->_config, $simpleXMLObj);
+
+      //if ($items_id != "0") {
+         // get $internalId
+
+         //Sections update
+            $xmlSections = $action->_getXMLSections($simpleXMLObj);
+            $libData->updateLibMachine($xmlSections, $internalId);
+
+
+      //}
+
       $output = ob_flush();
       if (!empty($output)) {
          logInFile("fusinvinventory", $output);

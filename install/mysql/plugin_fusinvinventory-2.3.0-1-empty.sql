@@ -9,6 +9,20 @@ CREATE TABLE `glpi_plugin_fusinvinventory_criterias` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_libserialization`;
+
+CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
+  `internal_id` varchar(255) NOT NULL,
+  `external_id` int(50) DEFAULT NULL,
+  `serialized_sections` longtext,
+  `hash` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`internal_id`),
+  UNIQUE KEY `hash` (`hash`),
+  UNIQUE KEY `serialized_sections` (`serialized_sections`(255))
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_blacklists`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
