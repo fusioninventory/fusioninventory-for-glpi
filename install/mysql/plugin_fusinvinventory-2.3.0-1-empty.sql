@@ -14,11 +14,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_libserialization`;
 CREATE TABLE `glpi_plugin_fusinvinventory_libserialization` (
   `internal_id` varchar(255) NOT NULL,
   `external_id` int(50) DEFAULT NULL,
-  `serialized_sections` longtext,
+  `serialized_sections1` longtext,
+  `serialized_sections2` longtext,
+  `serialized_sections3` longtext,
   `hash` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`internal_id`),
-  UNIQUE KEY `hash` (`hash`),
-  UNIQUE KEY `serialized_sections` (`serialized_sections`(255))
+  KEY `external_id` (`external_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

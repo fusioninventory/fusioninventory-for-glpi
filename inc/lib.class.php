@@ -58,7 +58,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             WHERE `external_id`='".$items_id."'
                LIMIT 1";
          if ($result = $DB->query($query)) {
-            if ($DB->numrows($result) == 1) {
+            if ($DB->numrows($result) == '1') {
                $a_serialized = $DB->fetch_assoc($result);
             }
          }
@@ -67,7 +67,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          } else {
             // Importer les donnes de GLPI dans le xml
          }
-
          //Sections update
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
          $this->updateLibMachine($xmlSections, $internalId);
@@ -149,14 +148,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    */
    public function addLibMachine($internalId, $externalId) {
 
-      $data = <<<INFOCONTENT
-      $externalId
-INFOCONTENT;
 
       $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization`
-		( `internal_id` , `external_id` , `serialized_sections` , `hash` )
+		( `internal_id` , `external_id`)
 		VALUES
-		( '" . $internalId . "' , '$data', NULL , NULL )";
+		( '" . $internalId . "' , '".$externalId."')";
       $resultInsert = mysql_query($queryInsert);
 
   }
@@ -171,6 +167,7 @@ INFOCONTENT;
    * @param int $internalId
    */
    public function updateLibMachine($xmlSections, $internalId) {
+      global $DB;
 
       $a_sections[] = "DRIVES";
       $a_sections[] = "SOFTWARES";
@@ -188,12 +185,11 @@ INFOCONTENT;
       $a_sections[] = "USERS";
       $a_sections[] = "VIDEOS";
       $a_sections[] = "USBDEVICES";
-
       // Retrieve all sections stored in info file
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
       $serializedSectionsFromXML = array();
-
+      
       foreach($xmlSections as $xmlSection) {
          array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
       }
@@ -211,7 +207,7 @@ INFOCONTENT;
          $existUpdate = 0;
          foreach($sectionsToRemove as $sectionId => $serializedSectionToRemove) {
             $sectionName=substr($infoSections["sections"][$sectionId], strpos($infoSections["sections"][$sectionId], '}')+1);
-            if(in_array($sectionName, $a_sections)) {
+            if (in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
                   if($xmlSections[$arrayId]['sectionName'] == $sectionName) {
@@ -219,7 +215,7 @@ INFOCONTENT;
                      $boolUpdate = false;
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
                      $arrSectionToRemove = unserialize($serializedSectionToRemove);
-
+                     
                      //TODO: Traiter les notices sur les indices de tableau qui n'existent pas.
                      switch($sectionName) {
 
@@ -266,7 +262,9 @@ INFOCONTENT;
                            break;
 
                         case "MEMORIES":
-                           if(isset($arrSectionToAdd["SERIALNUMBER"]) AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"]) {
+                           if (isset($arrSectionToAdd["SERIALNUMBER"])
+                                 AND isset($arrSectionToRemove["SERIALNUMBER"])
+                                 AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"]) {
                   				$boolUpdate = true;
                            }
                            break;
@@ -425,21 +423,38 @@ INFOCONTENT;
 
       $serializedSections = "";
       foreach($infoSections["sections"] as $key => $serializedSection) {
-         $serializedSections .= "\t".$key."<<=>>".$serializedSection."
+         $serializedSections .= $key."<<=>>".$serializedSection."
 ";
       }
       $externalId=$infoSections["externalId"];
+//      $data = <<<INFOCONTENT
+//      $externalId
+//      $serializedSections
+//INFOCONTENT;
 
-      $data = <<<INFOCONTENT
-      $externalId
-      $serializedSections
-INFOCONTENT;
+      $serializedSections = str_replace("\\", "\\\\", $serializedSections);
+      $a_serializedSections = str_split(htmlspecialchars($serializedSections, ENT_QUOTES), 800000);
 
       $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
-		SET `serialized_sections` = \"" . htmlspecialchars($serializedSections) ."\", `hash` = '" . MD5($data) . "'
-		WHERE `internal_id` = '" . $internalId . "'";
+		SET `serialized_sections1` = '" . $a_serializedSections[0] ."' 
+      WHERE `internal_id` = '" . $internalId . "'";
+      
+      $resultUpdate = $DB->query($queryUpdate);
 
-      $resultUpdate = mysql_query($queryUpdate);
+      if (isset($a_serializedSections[1])) {
+         $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+         SET `serialized_sections2` = '" . $a_serializedSections[1] ."'
+         WHERE `internal_id` = '" . $internalId . "'";
+      }
+      $resultUpdate = $DB->query($queryUpdate);
+
+      if (isset($a_serializedSections[2])) {
+        $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
+         SET `serialized_sections3` = '" . $a_serializedSections[2] ."'
+         WHERE `internal_id` = '" . $internalId . "'";
+      }
+      $resultUpdate = $DB->query($queryUpdate);
+
    }
 
 
@@ -450,6 +465,8 @@ INFOCONTENT;
    * @return array $infoSections (serialized datas and sectionId)
    */
    private function _getInfoSections($internalId) {
+      global $DB;
+
       $infoSections = array();
       $infoSections["externalId"] = '';
       $infoSections["sections"] = array();
@@ -460,15 +477,13 @@ INFOCONTENT;
       $arraySerializedSections = array();
       $arraySerializedSectionsTemp = array();
 
-      $querySelect = "SELECT `external_id`, `serialized_sections` FROM `glpi_plugin_fusinvinventory_libserialization` 
+      $querySelect = "SELECT `external_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3` FROM `glpi_plugin_fusinvinventory_libserialization`
          WHERE `internal_id` = '$internalId'";
-      $resultSelect = mysql_query($querySelect);
+      $resultSelect = $DB->query($querySelect);
       $rowSelect = mysql_fetch_row($resultSelect);
       $infoSections["externalId"] = $rowSelect[0];
-      $serializedSections = str_replace("\t", "", $rowSelect[1]); // To remove the indentation at beginning of line
-	
-
-      $serializedSections = htmlspecialchars_decode($serializedSections); // Recover double quotes
+      $serializedSections = htmlspecialchars_decode($rowSelect[1].$rowSelect[2].$rowSelect[3]); // Recover double quotes
+//      $serializedSections = str_replace("\t", "", $serializedSections); // To remove the indentation at beginning of line
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       foreach ($arraySerializedSections as $cle=>$valeur) {
          $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
@@ -476,7 +491,6 @@ INFOCONTENT;
             $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
          }
       }
-
       return $infoSections;
    }
 

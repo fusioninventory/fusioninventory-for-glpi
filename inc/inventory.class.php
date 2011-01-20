@@ -165,7 +165,7 @@ class PluginFusinvinventoryInventory {
 
       $config['storageEngine'] = "MySQL";
       $config['storageLocation'] = "/../../../../../../../files/_plugins/fusinvinventory";
-$datascriterias = unserialize($_SESSION['plugin_fusinvinventory_datacriteria']);
+      
       // get criteria from rules
       //$config['criterias'] = $criterias;
 $config['criterias'][] = "ssn";
