@@ -324,6 +324,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       $sql_where = " `[typetable]`.`is_template` = '0' ";
       $sql_where_networkequipment = $sql_where;
       $sql_from = "`[typetable]`";
+      $sql_from .= " LEFT JOIN `glpi_networkports`
+                  ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
+                      AND `glpi_networkports`.`itemtype` = '[typename]') ";
       $sql_from_networkequipment = $sql_from;
 
 
@@ -355,9 +358,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                break;
             
             case 'ip' :
-               $sql_from .= " LEFT JOIN `glpi_networkports`
-                                 ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
-                                     AND `glpi_networkports`.`itemtype` = '[typename]') ";
                $sql_where .= " AND `glpi_networkports`.`ip` IN ";
                $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ";
                for ($i=0 ; $i<count($input["ip"]) ; $i++) {
