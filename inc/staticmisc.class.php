@@ -68,7 +68,7 @@ class PluginFusinvinventoryStaticmisc {
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "existantrule", "r")) {
          $a_menu[2]['name'] = $LANG['plugin_fusinvinventory']['menu'][3];
          $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_rules.png";
-         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/ruleentity.php";
+         $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvinventory/front/ruleentity.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "r")) {

@@ -111,8 +111,8 @@ class PluginFusinvinventoryRuleEntity extends PluginFusioninventoryRule {
       $criterias['name']['field']     = 'name';
       $criterias['name']['name']      = $LANG['rulesengine'][25];
       
-      $criterias['serialnumber']['field']     = 'name';
-      $criterias['serialnumber']['name']      = $LANG['common'][19];
+      $criterias['serial']['field']     = 'name';
+      $criterias['serial']['name']      = $LANG['common'][19];
 
       return $criterias;
    }

@@ -61,7 +61,7 @@ class PluginFusinvinventoryLibhook {
     * @access public
     * @return int $externalId Id to match application data with the library
     */
-    public static function createMachine($libFilename) {
+    public static function createMachine($items_id) {
 
        // If import computer from GLPI DB
        if (isset($_SESSION['pluginFusinvinventoryImportMachine'])) {
@@ -72,7 +72,8 @@ class PluginFusinvinventoryLibhook {
        $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
        // Else create computer
       $Computer = new Computer;
-      $input = array();
+      $Computer->getFromDB($items_id);
+      $input = $Computer->fields;
       $input['is_deleted'] = 0;
       $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem', 'FusionInventory');
 
@@ -112,9 +113,12 @@ class PluginFusinvinventoryLibhook {
          if (isset($dataEntity['entities_id'])) {
             $input['entities_id'] = $dataEntity['entities_id'];
             $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+         } else {
+            $input['entities_id'] = "0";
+            $_SESSION["plugin_fusinvinventory_entity"] = "0";
          }
          
-      $computer_id = $Computer->add($input);
+      $computer_id = $Computer->update($input);
 
       if (isset($_SESSION['SOURCEXML'])) {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
@@ -140,7 +144,7 @@ class PluginFusinvinventoryLibhook {
        $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
        $PluginFusioninventoryAgent->setAgentWithComputerid($computer_id, $xml->DEVICEID);
 
-       PluginFusinvinventoryLiblink::addComputerInDB($computer_id, $libFilename);
+       //PluginFusinvinventoryLiblink::addComputerInDB($computer_id, $libFilename);
 
        return $computer_id;
     }
@@ -156,7 +160,7 @@ class PluginFusinvinventoryLibhook {
     public static function addSections($data, $idmachine) {
        global $DB;
 
-      //logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
+      logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
 
       $Computer = new Computer;
       $sectionsId = array();

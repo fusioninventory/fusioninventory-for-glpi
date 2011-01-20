@@ -49,6 +49,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
    function startAction($simpleXMLObj, $items_id, $new=0) {
       global $DB;
+
       
       if ($new == "0") {
       //if ($internalId = $this->isMachineExist()) {
@@ -61,8 +62,8 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                $a_serialized = $DB->fetch_assoc($result);
             }
          }
-         if (isset($a_serialized['external_id'])) {
-            $internalId = $a_serialized['external_id'];
+         if (isset($a_serialized['internal_id'])) {
+            $internalId = $a_serialized['internal_id'];
          } else {
             // Importer les donnes de GLPI dans le xml
          }
@@ -79,7 +80,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
          try {
             $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
-            $externalId = $PluginFusinvinventoryLibhook->createMachine("");
+            $PluginFusinvinventoryLibhook->createMachine($items_id);
 
             $this->addLibMachine($internalId, $items_id);
 
@@ -148,8 +149,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    */
    public function addLibMachine($internalId, $externalId) {
 
-      $this->lastId = $internalId;
-
       $data = <<<INFOCONTENT
       $externalId
 INFOCONTENT;
@@ -157,7 +156,7 @@ INFOCONTENT;
       $queryInsert = "INSERT INTO `glpi_plugin_fusinvinventory_libserialization`
 		( `internal_id` , `external_id` , `serialized_sections` , `hash` )
 		VALUES
-		( '" . $this->lastId . "' , '$data', NULL , NULL )";
+		( '" . $internalId . "' , '$data', NULL , NULL )";
       $resultInsert = mysql_query($queryInsert);
 
   }
@@ -172,6 +171,24 @@ INFOCONTENT;
    * @param int $internalId
    */
    public function updateLibMachine($xmlSections, $internalId) {
+
+      $a_sections[] = "DRIVES";
+      $a_sections[] = "SOFTWARES";
+      $a_sections[] = "CONTROLLERS";
+      $a_sections[] = "ENVS";
+      $a_sections[] = "INPUTS";
+      $a_sections[] = "MEMORIES";
+      $a_sections[] = "MONITORS";
+      $a_sections[] = "NETWORKS";
+      $a_sections[] = "PORTS";
+      $a_sections[] = "PRINTERS";
+      $a_sections[] = "PROCESSES";
+      $a_sections[] = "SOUNDS";
+      $a_sections[] = "STORAGES";
+      $a_sections[] = "USERS";
+      $a_sections[] = "VIDEOS";
+      $a_sections[] = "USBDEVICES";
+
       // Retrieve all sections stored in info file
       $infoSections = $this->_getInfoSections($internalId);
       // Retrieve all sections from xml file
@@ -194,7 +211,7 @@ INFOCONTENT;
          $existUpdate = 0;
          foreach($sectionsToRemove as $sectionId => $serializedSectionToRemove) {
             $sectionName=substr($infoSections["sections"][$sectionId], strpos($infoSections["sections"][$sectionId], '}')+1);
-            if(in_array($sectionName, $this->_configs["sections"])) {
+            if(in_array($sectionName, $a_sections)) {
                foreach($sectionsToAdd as $arrayId => $serializedSectionToAdd) {
                   //check if we have the same section Name for an sectionToRemove and an sectionToAdd
                   if($xmlSections[$arrayId]['sectionName'] == $sectionName) {
@@ -207,20 +224,26 @@ INFOCONTENT;
                      switch($sectionName) {
 
                         case "DRIVES":
-                           if ((((isset($arrSectionToAdd["SERIAL"]))
+                           if (((isset($arrSectionToAdd["SERIAL"]))
+                                 AND (isset($arrSectionToRemove["SERIAL"]))
                                  AND ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]))
-                              OR ((isset($arrSectionToAdd['name']))
-                                 AND ($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]))
-                              OR ((isset($arrSectionToAdd['VOLUMN'])))
-                              AND ($arrSectionToAdd["VOLUMN"] == $arrSectionToRemove["VOLUMN"]))) {
+                              OR (((isset($arrSectionToAdd['name']))
+                                 AND (isset($arrSectionToRemove["NAME"]))
+                                 AND ($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])))
+                              OR ((isset($arrSectionToAdd['VOLUMN'])
+                                 AND (isset($arrSectionToRemove["VOLUMN"]))
+                                 AND ($arrSectionToAdd["VOLUMN"] == $arrSectionToRemove["VOLUMN"])))) {
 
                               $boolUpdate = true;
                            }
                            break;
                            
                         case "SOFTWARES":
-                           if($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"] OR $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
-                  				$boolUpdate = true;
+                           if (((isset($arrSectionToAdd["GUID"]) AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"]))
+                              OR $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
+                              AND ($arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])) {
+
+                              $boolUpdate = true;
                            }
                            break;
 
@@ -231,7 +254,7 @@ INFOCONTENT;
                            break;
                            
                         case "ENVS":
-                           if($arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
+                           if(isset($arrSectionToAdd["NAME"]) AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
                               $boolUpdate = true;
                            }
                            break;
@@ -243,7 +266,7 @@ INFOCONTENT;
                            break;
 
                         case "MEMORIES":
-                           if($arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"]) {
+                           if(isset($arrSectionToAdd["SERIALNUMBER"]) AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"]) {
                   				$boolUpdate = true;
                            }
                            break;
@@ -414,7 +437,7 @@ INFOCONTENT;
 
       $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
 		SET `serialized_sections` = \"" . htmlspecialchars($serializedSections) ."\", `hash` = '" . MD5($data) . "'
-		WHERE `internal_id` = '" . $this->lastId . "'";
+		WHERE `internal_id` = '" . $internalId . "'";
 
       $resultUpdate = mysql_query($queryUpdate);
    }
