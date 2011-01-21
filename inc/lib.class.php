@@ -506,6 +506,16 @@ if (!unserialize($serializedSectionToRemove)) {
 
        return unserialize($__ret);
    }
+
+
+   function removeExternalid($external_id) {
+      global $DB;
+
+      $query_delete = "DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
+         WHERE `external_id`='".$external_id."' ";
+      $DB->query($query_delete);
+
+   }
 }
 
 ?>

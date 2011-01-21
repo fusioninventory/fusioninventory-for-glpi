@@ -284,7 +284,8 @@ function plugin_pre_item_purge_fusinvinventory($item) {
    switch (get_class($item)) {
 
       case 'Computer' :
-
+         $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
+         $PluginFusinvinventoryLib->removeExternalid($item->getField('id'));
          break;
 
    }
