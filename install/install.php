@@ -60,6 +60,27 @@ function pluginFusinvinventoryInstall() {
          if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
       }
 
+      //Add tables for pciids
+      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/pciid.sql";
+      $DBf_handle = fopen($DB_file, "rt");
+      $sql_query = fread($DBf_handle, filesize($DB_file));
+      fclose($DBf_handle);
+      foreach ( explode(";\n", "$sql_query") as $sql_line) {
+         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+      }
+
+      //Add tables for usbids
+      $DB_file = GLPI_ROOT ."/plugins/fusinvinventory/install/mysql/usbid.sql";
+      $DBf_handle = fopen($DB_file, "rt");
+      $sql_query = fread($DBf_handle, filesize($DB_file));
+      fclose($DBf_handle);
+      foreach ( explode(";\n", "$sql_query") as $sql_line) {
+         if (get_magic_quotes_runtime()) $sql_line=stripslashes_deep($sql_line);
+         if (!empty($sql_line)) $DB->query($sql_line)/* or die($DB->error())*/;
+      }
+
+
       // Create folder in GLPI_PLUGIN_DOC_DIR
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);

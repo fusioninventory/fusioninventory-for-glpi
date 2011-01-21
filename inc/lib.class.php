@@ -100,6 +100,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
    private function _getXMLSections($simpleXMLObj) {
 
       $xmlSections = array();
+      $PluginFusinvinventoryLibfilter = new PluginFusinvinventoryLibfilter();
 
       $sectionsToFilter = array();
       array_push ($sectionsToFilter,
@@ -107,20 +108,18 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       'CONTROLLERS',
       'NETWORKS');
 
-//      DataFilter::init();
-
       foreach($simpleXMLObj->CONTENT->children() as $section) {
 
          if(in_array($section->getName(), $sectionsToFilter)) {
-//            $nofilter = DataFilter::filter($section);
-//            //if the folder for the filter doesn't exist, delete this element from array.
-//            if($nofilter){
-//               foreach($sectionsToFilter as $fKey => $fValue) {
-//                  if ($fValue == $nofilter) {
-//                     unset($sectionsToFilter[$fKey]);
-//                  }
-//               }
-//            }
+            $nofilter = $PluginFusinvinventoryLibfilter->filter($section);
+            //if the folder for the filter doesn't exist, delete this element from array.
+            if($nofilter){
+               foreach($sectionsToFilter as $fKey => $fValue) {
+                  if ($fValue == $nofilter) {
+                     unset($sectionsToFilter[$fKey]);
+                  }
+               }
+            }
          }
 
          $sectionData = array();
