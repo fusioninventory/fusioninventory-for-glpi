@@ -284,8 +284,7 @@ function plugin_pre_item_purge_fusinvinventory($item) {
    switch (get_class($item)) {
 
       case 'Computer' :
-         $PluginFusinvinventoryLiblink = new PluginFusinvinventoryLiblink();
-         $PluginFusinvinventoryLiblink->deleteComputerInLib($item->getField('id'));
+
          break;
 
    }

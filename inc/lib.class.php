@@ -214,6 +214,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
+if (!unserialize($serializedSectionToRemove)) {
+   logInFile('serialise', $serializedSectionToRemove);
+}
                      $arrSectionToRemove = unserialize($serializedSectionToRemove);
                      
                      //TODO: Traiter les notices sur les indices de tableau qui n'existent pas.
@@ -324,11 +327,15 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            break;
                            
                         case "USBDEVICES":
-                           if ($arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"]
-                                 OR ($arrSectionToAdd["CLASS"] == $arrSectionToRemove["CLASS"]
-                                    AND $arrSectionToAdd["PRODUCTID"] == $arrSectionToRemove["PRODUCTID"]
-                                    AND $arrSectionToAdd["SUBCLASS"] == $arrSectionToRemove["SUBCLASS"]
-                                    AND $arrSectionToAdd["VENDORID"] == $arrSectionToRemove["VENDORID"])) {
+                           if ((isset($arrSectionToAdd["SERIAL"])
+                                   AND isset($arrSectionToRemove["SERIAL"])
+                                   AND $arrSectionToAdd["SERIAL"] == $arrSectionToRemove["SERIAL"])
+                                OR (isset($arrSectionToAdd["CLASS"])
+                                   AND isset($arrSectionToRemove["CLASS"])
+                                   AND $arrSectionToAdd["CLASS"] == $arrSectionToRemove["CLASS"]
+                                   AND $arrSectionToAdd["PRODUCTID"] == $arrSectionToRemove["PRODUCTID"]
+                                   AND $arrSectionToAdd["SUBCLASS"] == $arrSectionToRemove["SUBCLASS"]
+                                   AND $arrSectionToAdd["VENDORID"] == $arrSectionToRemove["VENDORID"])) {
 
                               $boolUpdate = true;
                            }
@@ -482,7 +489,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $resultSelect = $DB->query($querySelect);
       $rowSelect = mysql_fetch_row($resultSelect);
       $infoSections["externalId"] = $rowSelect[0];
-      $serializedSections = htmlspecialchars_decode($rowSelect[1].$rowSelect[2].$rowSelect[3]); // Recover double quotes
+      $serializedSections = htmlspecialchars_decode($rowSelect[1].$rowSelect[2].$rowSelect[3], ENT_QUOTES); // Recover double quotes
 //      $serializedSections = str_replace("\t", "", $serializedSections); // To remove the indentation at beginning of line
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       foreach ($arraySerializedSections as $cle=>$valeur) {
@@ -494,7 +501,12 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       return $infoSections;
    }
 
+   function __unserialize($sObject) {
 
+       $__ret =preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $sObject );
+
+       return unserialize($__ret);
+   }
 }
 
 ?>

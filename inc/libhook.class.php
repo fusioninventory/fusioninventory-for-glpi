@@ -118,18 +118,18 @@ class PluginFusinvinventoryLibhook {
             $_SESSION["plugin_fusinvinventory_entity"] = "0";
          }
          
-      $computer_id = $Computer->update($input);
+      $Computer->update($input, 0);
 
       if (isset($_SESSION['SOURCEXML'])) {
          // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
-         $folder = substr($computer_id,0,-1);
+         $folder = substr($items_id,0,-1);
          if (empty($folder)) {
             $folder = '0';
          }
          if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder)) {
             mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
          }
-         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$computer_id, 'w');
+         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
          fwrite($fileopen, $_SESSION['SOURCEXML']);
          fclose($fileopen);
        }
@@ -138,15 +138,12 @@ class PluginFusinvinventoryLibhook {
        $changes[0]='0';
        $changes[1]="";
        $changes[2]='Create computer by FusionInventory';
-       Log::history($computer_id,'Computer',$changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
+       Log::history($items_id,'Computer',$changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
 
        // Link computer to agent FusionInventory
        $PluginFusioninventoryAgent = new PluginFusioninventoryAgent;
-       $PluginFusioninventoryAgent->setAgentWithComputerid($computer_id, $xml->DEVICEID);
+       $PluginFusioninventoryAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
 
-       //PluginFusinvinventoryLiblink::addComputerInDB($computer_id, $libFilename);
-
-       return $computer_id;
     }
 
     /**
