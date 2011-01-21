@@ -261,6 +261,7 @@ class PluginFusinvinventoryLibhook {
             case 'PRINTERS':
                if (isset($dataSection['SERIAL'])) {
                   $ignore_USB[$dataSection['SERIAL']] = 1;
+                  $ignore_USB[preg_replace("/\/$/", "", $dataSection['SERIAL'])] = 1; // Problem on Windows
                }
                break;
 
