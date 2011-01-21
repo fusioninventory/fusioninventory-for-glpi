@@ -66,6 +66,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
             $internalId = $a_serialized['internal_id'];
          } else {
             // Importer les donnes de GLPI dans le xml
+            $internalId = uniqid();
+            $PluginFusinvinventoryInventory = new PluginFusinvinventoryInventory();
+            $PluginFusinvinventoryInventory->createMachineInLib($items_id, $internalId);
          }
          //Sections update
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
@@ -433,18 +436,23 @@ if (!unserialize($serializedSectionToRemove)) {
 ";
       }
       $externalId=$infoSections["externalId"];
-//      $data = <<<INFOCONTENT
-//      $externalId
-//      $serializedSections
-//INFOCONTENT;
+
+      $this->_serializeIntoDB($internalId, $serializedSections);
+
+   }
+
+
+   private function _serializeIntoDB($internalId, $serializedSections) {
+      global $DB;
+
 
       $serializedSections = str_replace("\\", "\\\\", $serializedSections);
       $a_serializedSections = str_split(htmlspecialchars($serializedSections, ENT_QUOTES), 800000);
 
       $queryUpdate = "UPDATE `glpi_plugin_fusinvinventory_libserialization`
-		SET `serialized_sections1` = '" . $a_serializedSections[0] ."' 
+		SET `serialized_sections1` = '" . $a_serializedSections[0] ."'
       WHERE `internal_id` = '" . $internalId . "'";
-      
+
       $resultUpdate = $DB->query($queryUpdate);
 
       if (isset($a_serializedSections[1])) {
@@ -460,7 +468,7 @@ if (!unserialize($serializedSectionToRemove)) {
          WHERE `internal_id` = '" . $internalId . "'";
       }
       $resultUpdate = $DB->query($queryUpdate);
-
+      
    }
 
 
@@ -500,6 +508,8 @@ if (!unserialize($serializedSectionToRemove)) {
       return $infoSections;
    }
 
+
+   
    function __unserialize($sObject) {
 
        $__ret =preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $sObject );
@@ -514,6 +524,28 @@ if (!unserialize($serializedSectionToRemove)) {
       $query_delete = "DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
          WHERE `external_id`='".$external_id."' ";
       $DB->query($query_delete);
+
+   }
+
+
+   function addLibMachineFromGLPI($items_id, $internal_id, $simpleXMLObj, $a_sectionsinfos) {
+      $this->addLibMachine($internal_id, $items_id);
+
+      $xmlSections = $this->_getXMLSections($simpleXMLObj);
+
+      $serializedSectionsFromXML = array();
+
+      foreach($xmlSections as $xmlSection) {
+         array_push($serializedSectionsFromXML, $xmlSection["sectionDatawName"]);
+      }
+
+      $serializedSections = "";
+      foreach($serializedSectionsFromXML as $key => $serializedSection) {
+         $serializedSections .= array_shift($a_sectionsinfos)."<<=>>".$serializedSection."
+";
+      }
+
+      $this->_serializeIntoDB($internal_id, $serializedSections);
 
    }
 }
