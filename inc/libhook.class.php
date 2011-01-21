@@ -116,19 +116,7 @@ class PluginFusinvinventoryLibhook {
          
       $Computer->update($input, 0);
 
-      if (isset($_SESSION['SOURCEXML'])) {
-         // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
-         $folder = substr($items_id,0,-1);
-         if (empty($folder)) {
-            $folder = '0';
-         }
-         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder)) {
-            mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
-         }
-         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
-         fwrite($fileopen, $_SESSION['SOURCEXML']);
-         fclose($fileopen);
-       }
+      $this->writeXMLFusion($items_id);
        
        $changes = array();
        $changes[0]='0';
@@ -698,6 +686,23 @@ class PluginFusinvinventoryLibhook {
       }
 
        logInFile("updatesection", "[".$idmachine."] ".print_r($data, true));
+    }
+
+
+    function writeXMLFusion($items_id) {
+      if (isset($_SESSION['SOURCEXML'])) {
+         // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
+         $folder = substr($items_id,0,-1);
+         if (empty($folder)) {
+            $folder = '0';
+         }
+         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder)) {
+            mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
+         }
+         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
+         fwrite($fileopen, $_SESSION['SOURCEXML']);
+         fclose($fileopen);
+       }
     }
 }
 

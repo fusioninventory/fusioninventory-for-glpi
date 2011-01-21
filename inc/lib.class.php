@@ -73,6 +73,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          //Sections update
          $xmlSections = $this->_getXMLSections($simpleXMLObj);
          $this->updateLibMachine($xmlSections, $internalId);
+         
+         $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
+         $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
       } else {
          // New Computer
 

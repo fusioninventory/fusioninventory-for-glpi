@@ -143,95 +143,10 @@ class PluginFusinvinventoryInventory {
          } else {
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');
          }
-
-         
-
-         
-      }
-
-
-
-
-
-
-
-      return;
-      // =================================================================== //
-      require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/FusionLibServer.class.php";
-      require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/MyException.class.php";
-      require_once GLPI_ROOT ."/plugins/fusioninventory/lib/libfusioninventory-server-php/Classes/Logger.class.php";
-
-      $config = array();
-
-      $config['storageEngine'] = "MySQL";
-      $config['storageLocation'] = "/../../../../../../../files/_plugins/fusinvinventory";
-      
-      // get criteria from rules
-      //$config['criterias'] = $criterias;
-$config['criterias'][] = "ssn";
-
-      $config['maxFalse'] = 0;
-
-      $config['filter'] = 1;
-      $config['printError'] = 0;
-
-      $config['sections'][] = "DRIVES";
-      $config['sections'][] = "SOFTWARES";
-      $config['sections'][] = "CONTROLLERS";
-      $config['sections'][] = "ENVS";
-      $config['sections'][] = "INPUTS";
-      $config['sections'][] = "MEMORIES";
-      $config['sections'][] = "MONITORS";
-      $config['sections'][] = "NETWORKS";
-      $config['sections'][] = "PORTS";
-      $config['sections'][] = "PRINTERS";
-      $config['sections'][] = "PROCESSES";
-      $config['sections'][] = "SOUNDS";
-      $config['sections'][] = "STORAGES";
-      $config['sections'][] = "USERS";
-      $config['sections'][] = "VIDEOS";
-      $config['sections'][] = "USBDEVICES";
-
-      $config['hostMySQL']['server'] = "127.0.0.1";
-      $config['hostMySQL']['port'] = "3306";
-      $config['hostMySQL']['user'] = "root";
-      $config['hostMySQL']['password'] = "DestroyBSD";
-      $config['hostMySQL']['db'] = "glpi078";
-
-
-      define("LIBSERVERFUSIONINVENTORY_LOG_FILE",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/logs');
-      define("LIBSERVERFUSIONINVENTORY_STORAGELOCATION",GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
-      define("LIBSERVERFUSIONINVENTORY_HOOKS_CLASSNAME","PluginFusinvinventoryLibhook");
-      define("LIBSERVERFUSIONINVENTORY_LOG_DIR",GLPI_PLUGIN_DOC_DIR.'/fusioninventory/');
-      define("LIBSERVERFUSIONINVENTORY_PRINTERROR",$config['printError']);
-      $log = new Logger('../../../../../../files/_plugins/fusioninventory/logs');
-
-      $action = ActionFactory::createAction("inventory");
-      
-      //$action->checkConfig("../../../../../fusinvinventory/inc", $config);
-      $action->checkConfig("", $config);
-      ob_start();
-      //$action->startAction(simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA));
-
-      $simpleXMLObj = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      $libData = StorageInventoryFactory::createStorage($action->_applicationName, $action->_config, $simpleXMLObj);
-
-      //if ($items_id != "0") {
-         // get $internalId
-
-         //Sections update
-            $xmlSections = $action->_getXMLSections($simpleXMLObj);
-            $libData->updateLibMachine($xmlSections, $internalId);
-
-
-      //}
-
-      $output = ob_flush();
-      if (!empty($output)) {
-         logInFile("fusinvinventory", $output);
       }
    }
 
+   
 
    function sendUnknownDevice() {
 
@@ -324,34 +239,6 @@ $config['criterias'][] = "ssn";
       $PluginFusioninventoryUnknownDevice->writeXML($unknown_id, $_SESSION['SOURCEXML']);
    }
 
-
-   // Only for computer yet in GLPI DB or added manually
-   function createMachinesInLib() {
-
-      $Computer = new Computer();
-
-      $computerInLib = array();
-      $a_machines = scandir(GLPI_DOC_DIR."/_plugins/fusioninventory/machines");
-      foreach ($a_machines as $machine) {
-         if (($machine != ".") AND ($machine != "..")) {
-
-            $fileinfo = fopen(GLPI_DOC_DIR."/_plugins/fusioninventory/machines/".$machine."/infos.file","r" );
-            $i = 0;
-            while ($i < 1) {
-               $computerInLib[trim(fgets($fileinfo))] = 1;
-               $i++;
-            }
-            fclose($fileinfo);
-         }
-      }
-
-      $a_computersDB = $Computer->find();
-      foreach ($a_computersDB as $datas) {
-         if (!isset($computerInLib[$datas['id']])) {
-            $this->createMachineInLib($datas['id']);
-         }
-      }
-   }
 
 
    function createMachineInLib($items_id, $internal_id) {
@@ -592,7 +479,6 @@ $config['criterias'][] = "ssn";
 
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
-
    }
 }
 
