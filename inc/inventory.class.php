@@ -372,7 +372,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_networkport as $networkport_id => $networkport_data) {
          $a_sectionsinfos[] = "NETWORKS/".$networkport_id;
          $xml_networks = $xml_content->addChild("NETWORKS");
-         $_SESSION['pluginFusinvinventoryImportMachine']['NETWORKS'][] = $networkport_id;
          $xml_networks->addChild("MACADDR", $networkport_data['mac']);
          $xml_networks->addChild("IPADDRESS", $networkport_data['ip']);
          $xml_networks->addChild("IPMASK", $networkport_data['netmask']);
@@ -388,7 +387,6 @@ $config['criterias'][] = "ssn";
       // ** BIOS
       $xml_bios = $xml_content->addChild("BIOS");
       $a_sectionsinfos[] = "BIOS/".$items_id;
-      $_SESSION['pluginFusinvinventoryImportMachine']['BIOS'] = $items_id;
       $xml_bios->addChild("SSN", $datas['serial']);
       $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $datas['manufacturers_id']);
       if ($manufacturer != "&nbsp;") {
@@ -406,7 +404,6 @@ $config['criterias'][] = "ssn";
       // ** HARDWARE
       $xml_hardware = $xml_content->addChild("HARDWARE");
       $a_sectionsinfos[] = "HARDWARE/".$items_id;
-      $_SESSION['pluginFusinvinventoryImportMachine']['HARDWARE'] = $items_id;
       $xml_hardware->addChild("NAME", $datas['name']);
       $osname = Dropdown::getDropdownName(getTableForItemType('OperatingSystem'), $datas['operatingsystems_id']);
       if ($osname != "&nbsp;") {
@@ -430,7 +427,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_deviceControl as $deviceControl_id => $deviceControl_data) {
          $a_sectionsinfos[] = "CONTROLLERS/".$deviceControl_id;
          $xml_controller = $xml_content->addChild("CONTROLLERS");
-         $_SESSION['pluginFusinvinventoryImportMachine']['CONTROLLERS'][] = $deviceControl_id;
          $DeviceControl->getFromDB($deviceControl_data['devicecontrols_id']);
          $xml_controller->addChild("NAME", $DeviceControl->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceControl->fields['manufacturers_id']);
@@ -447,9 +443,8 @@ $config['criterias'][] = "ssn";
       foreach ($a_deviceProcessor as $deviceProcessor_id => $deviceProcessor_data) {
          $a_sectionsinfos[] = "CPUS/".$deviceProcessor_id;
          $xml_cpu = $xml_content->addChild("CPUS");
-         $_SESSION['pluginFusinvinventoryImportMachine']['CPUS'][] = $deviceProcessor_id;
          $DeviceProcessor->getFromDB($deviceProcessor_data['deviceprocessors_id']);
-         $xml_cpu->addChild("NAME", $DeviceProcessor->fields['name']);
+         $xml_cpu->addChild("NAME", $DeviceProcessor->fields['designation']);
          $xml_cpu->addChild("SPEED", $deviceProcessor_data['specificity']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceProcessor->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
@@ -463,7 +458,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_disk as $disk_id => $disk_data) {
          $a_sectionsinfos[] = "DRIVES/".$disk_id;
          $xml_drive = $xml_content->addChild("DRIVES");
-         $_SESSION['pluginFusinvinventoryImportMachine']['DRIVES'][] = $disk_id;
          $xml_drive->addChild("LABEL", $disk_data['name']);
          $xml_drive->addChild("VOLUMN", $disk_data['device']);
          $xml_drive->addChild("MOUNTPOINT", $disk_data['mountpoint']);
@@ -483,7 +477,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_deviceMemory as $deviceMemory_id => $deviceMemory_data) {
          $a_sectionsinfos[] = "MEMORIES/".$deviceMemory_id;
          $xml_memory = $xml_content->addChild("MEMORIES");
-         $_SESSION['pluginFusinvinventoryImportMachine']['MEMORIES'][] = $deviceMemory_id;
          $DeviceMemory->getFromDB($deviceMemory_data['devicememories_id']);
          $xml_memory->addChild("DESCRIPTION", $DeviceMemory->fields['designation']);
          $xml_memory->addChild("CAPACITY", $deviceMemory_data['specificity']);
@@ -502,7 +495,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_ComputerMonitor as $ComputerMonitor_id => $ComputerMonitor_data) {
          $a_sectionsinfos[] = "MONITORS/".$ComputerMonitor_id;
          $xml_monitor = $xml_content->addChild("MONITORS");
-         $_SESSION['pluginFusinvinventoryImportMachine']['MONITORS'][] = $ComputerMonitor_id;
          $Monitor->getFromDB($ComputerMonitor_data['items_id']);
          $xml_monitor->addChild("CAPTION", $Monitor->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Monitor->fields['manufacturers_id']);
@@ -521,7 +513,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_ComputerPrinter as $ComputerPrinter_id => $ComputerPrinter_data) {
          $a_sectionsinfos[] = "PRINTERS/".$ComputerPrinter_id;
          $xml_printer = $xml_content->addChild("PRINTERS");
-         $_SESSION['pluginFusinvinventoryImportMachine']['PRINTERS'][] = $ComputerPrinter_id;
          $Printer->getFromDB($ComputerPrinter_data['items_id']);
          $xml_printer->addChild("NAME", $Printer->fields['name']);
          $xml_printer->addChild("SERIAL", $Printer->fields['serial']);
@@ -541,7 +532,6 @@ $config['criterias'][] = "ssn";
          $Software->getFromDB($SoftwareVersion->fields['softwares_id']);
          $a_sectionsinfos[] = "SOFTWARES/".$softwareversion_id;
          $xml_software = $xml_content->addChild("SOFTWARES");
-         $_SESSION['pluginFusinvinventoryImportMachine']['SOFTWARES'][] = $softwareversion_id;
          $xml_software->addChild("VERSION", $SoftwareVersion->fields['name']);
          $xml_software->addChild("NAME", $Software->fields['name']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $Software->fields['manufacturers_id']);
@@ -558,7 +548,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_deviceSoundCard as $deviceSoundCard_id => $deviceSoundCard_data) {
          $a_sectionsinfos[] = "SOUNDS/".$deviceSoundCard_id;
          $xml_sound = $xml_content->addChild("SOUNDS");
-         $_SESSION['pluginFusinvinventoryImportMachine']['SOUNDS'][] = $deviceSoundCard_id;
          $DeviceSoundCard->getFromDB($deviceSoundCard_data['devicesoundcards_id']);
          $xml_sound->addChild("NAME", $DeviceSoundCard->fields['designation']);
          $xml_sound->addChild("DESCRIPTION", $DeviceSoundCard->fields['comment']);
@@ -576,7 +565,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_deviceDrive as $deviceDrive_id => $deviceDrive_data) {
          $a_sectionsinfos[] = "STORAGES/".$deviceDrive_id;
          $xml_storage = $xml_content->addChild("STORAGES");
-         $_SESSION['pluginFusinvinventoryImportMachine']['STORAGES'][] = $deviceDrive_id;
          $DeviceDrive->getFromDB($deviceDrive_data['devicedrives_id']);
          $xml_storage->addChild("NAME", $DeviceDrive->fields['designation']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceDrive->fields['manufacturers_id']);
@@ -590,9 +578,6 @@ $config['criterias'][] = "ssn";
       }
       
 
-
-
-
       // ** VIDEOS
       $CompDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
       $DeviceGraphicCard = new DeviceGraphicCard();
@@ -600,7 +585,6 @@ $config['criterias'][] = "ssn";
       foreach ($a_deviceGraphicCard as $deviceGraphicCard_id => $deviceGraphicCard_data) {
          $a_sectionsinfos[] = "VIDEOS/".$deviceGraphicCard_id;
          $xml_video = $xml_content->addChild("VIDEOS");
-         $_SESSION['pluginFusinvinventoryImportMachine']['VIDEOS'][] = $deviceGraphicCard_id;
          $DeviceGraphicCard->getFromDB($deviceGraphicCard_data['devicegraphiccards_id']);
          $xml_video->addChild("NAME", $DeviceSoundCard->fields['designation']);
          $xml_video->addChild("MEMORY", $deviceGraphicCard_data['specificity']);
@@ -608,38 +592,6 @@ $config['criterias'][] = "ssn";
 
       $PluginFusinvinventoryLib = new PluginFusinvinventoryLib();
       $PluginFusinvinventoryLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
-
-
-//      // Convert XML
-//      $xmlXml = str_replace("><", ">\n<", $xml->asXML());
-//      $token      = strtok($xmlXml, "\n");
-//      $result     = '';
-//      $pad        = 0;
-//      $matches    = array();
-//      $indent     = 0;
-//
-//      while ($token !== false) {
-//         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
-//            $indent=0;
-//         elseif (preg_match('/^<\/\w/', $token, $matches)) :
-//            $pad = $pad-3;
-//         elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
-//            $indent=3;
-//         else :
-//            $indent = 0;
-//         endif;
-//         $line    = str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
-//         $result .= $line . "\n";
-//         $token   = strtok("\n");
-//         $pad    += $indent;
-//      }
-//      $xml = simplexml_load_string($result,'SimpleXMLElement', LIBXML_NOCDATA);
-//print_r($xml->asXML());
-//      // ** Send to rules => lib fusioninventory
-//      $this->sendCriteria("", "", $xml->asXML());
-//      unset($_SESSION['pluginFusinvinventoryImportMachine']);
-
-
 
    }
 }

@@ -63,10 +63,6 @@ class PluginFusinvinventoryLibhook {
     */
     public static function createMachine($items_id) {
 
-       // If import computer from GLPI DB
-       if (isset($_SESSION['pluginFusinvinventoryImportMachine'])) {
-          return $_SESSION['pluginFusinvinventoryImportMachine']['HARDWARE'];
-       }
 
        $_SESSION["plugin_fusinvinventory_history_add"] = false;
        $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
@@ -354,21 +350,17 @@ class PluginFusinvinventoryLibhook {
 
                 // If import computer from GLPI DB
                 $Computer_SoftwareVersion_id = 0;
-                if (isset($_SESSION['pluginFusinvinventoryImportMachine'])) {
-                   $Computer_SoftwareVersion_id = array_shift($_SESSION['pluginFusinvinventoryImportMachine']['SOFTWARES']);
-                } else {
               
-                  // Add software name
-                  // Add version of software
-                  // link version with computer : glpi_computers_softwareversions
-                  $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software;
-                  if (isset($dataSection['VERSION'])) {
-                     $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                                 'version'=>$dataSection['VERSION']));
-                  } else {
-                     $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
-                                                                                 'version'=>'0'));
-                  }
+               // Add software name
+               // Add version of software
+               // link version with computer : glpi_computers_softwareversions
+               $PluginFusinvinventoryImport_Software = new PluginFusinvinventoryImport_Software;
+               if (isset($dataSection['VERSION'])) {
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                                                                              'version'=>$dataSection['VERSION']));
+               } else {
+                  $Computer_SoftwareVersion_id = $PluginFusinvinventoryImport_Software->addSoftware($idmachine, array('name'=>$dataSection['NAME'],
+                                                                              'version'=>'0'));
                }
                if (empty($Computer_SoftwareVersion_id)) {
                   $Computer_SoftwareVersion_id = $j;
