@@ -63,9 +63,10 @@ class PluginFusinvinventoryLibhook {
     */
     public static function createMachine($items_id) {
 
+      $PluginFusinvinventoryLibhook = new PluginFusinvinventoryLibhook();
 
-       $_SESSION["plugin_fusinvinventory_history_add"] = false;
-       $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
+      $_SESSION["plugin_fusinvinventory_history_add"] = false;
+      $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
        // Else create computer
       $Computer = new Computer;
       $Computer->getFromDB($items_id);
@@ -116,7 +117,7 @@ class PluginFusinvinventoryLibhook {
          
       $Computer->update($input, 0);
 
-      $this->writeXMLFusion($items_id);
+      $PluginFusinvinventoryLibhook->writeXMLFusion($items_id);
        
        $changes = array();
        $changes[0]='0';

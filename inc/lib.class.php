@@ -49,7 +49,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
 
    function startAction($simpleXMLObj, $items_id, $new=0) {
       global $DB;
-
       
       if ($new == "0") {
       //if ($internalId = $this->isMachineExist()) {
