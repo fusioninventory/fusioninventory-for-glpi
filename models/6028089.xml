@@ -60,6 +60,26 @@ HP ProCurve Access Point 420: v2.2.3 v3.0.6
 		</oidobject>
 		<oidobject>
 			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.17.1.1.0]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[macaddr]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
+			<oid><![CDATA[.1.3.6.1.2.1.17.1.4.1.2]]></oid>
+			<portcounter>0</portcounter>
+			<dynamicport>0</dynamicport>
+			<mapping_type>2</mapping_type>
+ 			<mapping_name><![CDATA[dot1dBasePortIfIndex]]></mapping_name>
+			<vlan>0</vlan>
+			<activation>1</activation>
+		</oidobject>
+		<oidobject>
+			<object><![CDATA[&nbsp;]]></object>
 			<oid><![CDATA[.1.3.6.1.2.1.2.2.1.1]]></oid>
 			<portcounter>0</portcounter>
 			<dynamicport>1</dynamicport>
@@ -205,26 +225,6 @@ HP ProCurve Access Point 420: v2.2.3 v3.0.6
 			<dynamicport>1</dynamicport>
 			<mapping_type>2</mapping_type>
  			<mapping_name><![CDATA[ipNetToMediaPhysAddress]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.17.1.1.0]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name><![CDATA[macaddr]]></mapping_name>
-			<vlan>0</vlan>
-			<activation>1</activation>
-		</oidobject>
-		<oidobject>
-			<object><![CDATA[&nbsp;]]></object>
-			<oid><![CDATA[.1.3.6.1.2.1.17.1.4.1.2]]></oid>
-			<portcounter>0</portcounter>
-			<dynamicport>0</dynamicport>
-			<mapping_type>2</mapping_type>
- 			<mapping_name><![CDATA[dot1dBasePortIfIndex]]></mapping_name>
 			<vlan>0</vlan>
 			<activation>1</activation>
 		</oidobject>

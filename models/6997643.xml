@@ -8,6 +8,8 @@ HP J4850A ProCurve Switch 5304XL, revision E.10.61, ROM E.05.04 (/sw/code/build/
 
 HP J4865A ProCurve Switch 4108GL, revision G.07.107, ROM G.05.02 (/sw/code/build/gamo(m03))
 
+ProCurve J4850A Switch 5304XL, revision E.11.21, ROM E.05.05 (/sw/code/build/alpmo(alp11))
+
 ProCurve J4899B Switch 2650, revision H.10.35, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
 ProCurve J4899B Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))
@@ -21,6 +23,10 @@ ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish
 ProCurve J4903A Switch 2824, revision I.08.105, ROM I.08.07 (/sw/code/build/mako(ts_08_5))
 
 ProCurve J4903A Switch 2824, revision I.08.87, ROM I.08.07 (/sw/code/build/mako(ts_08_5))
+
+ProCurve J4903A Switch 2824, revision I.10.70, ROM I.08.07 (/sw/code/build/mako(mkfs))
+
+ProCurve J4904A Switch 2848, revision I.10.73, ROM I.08.07 (/sw/code/build/mako(mkfs))
 
 ProCurve J8693A Switch 3500yl-48G, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
 
@@ -51,6 +57,8 @@ ProCurve J9050A Switch 2900-48G, revision T.13.68, ROM K.12.12 (/sw/code/build/m
 ProCurve J9050A Switch 2900-48G, revision T.13.71, ROM K.12.12 (/sw/code/build/mbm(t3a))
 
 ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9091A Switch 8212zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
 
 ProCurve J9279A Switch 2510G-24, revision Y.11.08, ROM N.10.02 (/sw/code/build/cod(cod11))
 
