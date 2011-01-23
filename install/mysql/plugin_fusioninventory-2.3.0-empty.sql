@@ -14,12 +14,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_discovery`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_errors`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
 
 ## renamed tables
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
 #DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
@@ -68,22 +68,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_locks` (
    PRIMARY KEY ( `id` ),
    KEY `tablename` ( `tablename` ),
    KEY `items_id` (`items_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockables`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_lockables` (
-   `id` INT( 11 ) NOT NULL AUTO_INCREMENT,
-   `tablename` VARCHAR( 64 ) COLLATE utf8_unicode_ci NOT NULL,
-   `tablefields` TEXT,
-   `entities_id` int(11) NOT NULL DEFAULT '-1',
-   `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0',
-   PRIMARY KEY ( `id` ),
-   KEY `tablename` ( `tablename` ),
-   KEY `entities_id` ( `entities_id` ),
-   KEY `is_recursive` ( `is_recursive` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
