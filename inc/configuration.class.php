@@ -46,7 +46,7 @@ class PluginFusioninventoryConfiguration extends CommonGLPI {
       $tabs = array();
       $moduleTabs = array();
       $tabs[0]=$LANG['plugin_fusioninventory']['functionalities'][2];
-      $tabs[2]=$LANG['plugin_fusioninventory']['agents'][27];
+      $tabs[1]=$LANG['plugin_fusioninventory']['agents'][27];
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $tabs;
          $moduleTabForms = $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];

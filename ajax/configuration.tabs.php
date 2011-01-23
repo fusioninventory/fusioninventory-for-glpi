@@ -69,11 +69,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
          $config->showForm(array('target'=>$_POST['target']));
          break;
 
-      case 1 :
-
-         break;
-
-      case 2:
+      case 1:
          $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
          $PluginFusioninventoryAgentmodule->showForm();
          break;
