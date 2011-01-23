@@ -78,10 +78,6 @@ if (isset($_POST['update'])) {
    $pfisnmph = new PluginFusinvsnmpNetworkPortLog;
    $pfisnmph->cronCleanHistory();
    glpi_header($_SERVER['HTTP_REFERER']);
-} else if ((isset($_POST['plugin_fusioninventory_lockable_add']))
-           OR (isset($_POST['plugin_fusioninventory_lockable_delete']))) {
-   PluginFusioninventoryLockable::setLockableForm($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 $config = new PluginFusioninventoryConfig;

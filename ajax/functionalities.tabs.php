@@ -57,8 +57,6 @@ if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","r")) 
          $config->showForm('1', array('target'=>$_POST['target']));
          $history = new PluginFusinvsnmpNetworkPortLog;
          $history->showForm('1', array('target'=>$_POST['target']));
-         $ptLockable = new PluginFusioninventoryLockable;
-         $ptLockable->showForm(array('target'=>$_POST['target']));
          break;
 
       case 2 :
