@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2843925]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0348</key>
 	<comments><![CDATA[HP J4902A ProCurve Switch 6108, revision H.07.90, ROM H.07.40 (/sw/code/build/fish(ff03))
 

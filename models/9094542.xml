@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[9094542]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0367</key>
 	<comments><![CDATA[Ethernet Routing Switch 5510-48T      HW:31       FW:4.2.0.12  SW:v4.2.0.002
 

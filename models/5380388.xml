@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[5380388]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0359</key>
 	<comments><![CDATA[ProCurve J8770A Switch 4204vl, revision L.10.23, ROM L.10.03 (/sw/code/build/rmm(nabs))
 

@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[3130836]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0307</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5)WC3b, RELEASE SOFTWARE (fc1)^M

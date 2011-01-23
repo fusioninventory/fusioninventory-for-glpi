@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2267138]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0326</key>
 	<comments><![CDATA[Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-IPBASEK9-M), Version 12.2(50)SG1, RELEASE SOFTWARE (fc2)^M
 Technical Support: http://www.cisco.com/techsupport^M

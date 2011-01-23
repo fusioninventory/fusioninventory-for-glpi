@@ -1,10 +1,14 @@
 <model>
 	<name><![CDATA[5919480]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0302</key>
 	<comments><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(40)SE, RELEASE SOFTWARE (fc3)^M
 Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
 Compiled Fri 24-Aug-07 02:04 by myl
+
+Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(44)SE5, RELEASE SOFTWARE (fc2)^M
+Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
+Compiled Thu 22-Jan-09 05:47 by gereddy
 
 Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)^M
 Copyright (c) 1986-2006 by Cisco Systems, Inc.^M

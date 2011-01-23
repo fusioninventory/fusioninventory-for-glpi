@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[8503512]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0344</key>
 	<comments><![CDATA[ProCurve J8773A Switch 4208vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))
 

@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[600638]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0261</key>
 	<comments><![CDATA[Cisco Internetwork Operating System Software ^M
 IOS (tm) 3600 Software (C3620-I-M), Version 12.0(9), RELEASE SOFTWARE (fc1)^M

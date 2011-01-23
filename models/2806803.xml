@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2806803]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0349</key>
 	<comments><![CDATA[ProCurve j9020a Switch 2510-48, revision U.11.08, ROM R.10.06 (/sw/code/build/dosx(ndx))
 

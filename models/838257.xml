@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[838257]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0358</key>
 	<comments><![CDATA[ProCurve J9021A Switch 2810-24G, revision N.11.06, ROM N.10.01 (/sw/code/build/bass(bh2))
 

@@ -1,8 +1,10 @@
 <model>
 	<name><![CDATA[1087055]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0212</key>
-	<comments><![CDATA[IBM Gigabit Ethernet Switch Module
+	<comments><![CDATA[Avaya P130 workgroup switch, SW version 2.14.0
+
+IBM Gigabit Ethernet Switch Module
 
 ]]></comments>
 	<oidlist>

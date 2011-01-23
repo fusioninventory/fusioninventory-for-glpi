@@ -1,8 +1,10 @@
 <model>
 	<name><![CDATA[67063]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0033</key>
 	<comments><![CDATA[ADSL Wireless IAD Router
+
+Avaya Cajun Switch Agent v5.4.2
 
 DES-1228                                 1.10.12
 
@@ -23,6 +25,10 @@ IP Controller
 Symbol WS2000 HW=D SW=2.2.1.0-018R MIB=08d27
 
 WS5100 Wireless Switch, Revision WS.02.3.0.4.0-004R
+
+ZyWALL 35
+
+ZyWALL 5
 
 ]]></comments>
 	<oidlist>

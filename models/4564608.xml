@@ -1,8 +1,10 @@
 <model>
 	<name><![CDATA[4564608]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0281</key>
 	<comments><![CDATA[PROCURVE J9029A - PA.03.04
+
+PROCURVE J9080A - VB.02.01
 
 ]]></comments>
 	<oidlist>

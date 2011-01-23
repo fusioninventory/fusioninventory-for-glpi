@@ -1,6 +1,6 @@
 <model>
 	<name><![CDATA[2624432]]></name>
-	<type>NetworkEquipment</type>
+	<type>2</type>
 	<key>Networking0356</key>
 	<comments><![CDATA[ProCurve J9087A Switch 2610-24-PWR, revision R.11.22, ROM R.10.06 (/sw/code/build/nemo(ndx))
 

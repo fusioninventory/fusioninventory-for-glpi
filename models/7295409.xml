@@ -1,8 +1,10 @@
 <model>
 	<name><![CDATA[7295409]]></name>
-	<type>Printer</type>
+	<type>3</type>
 	<key>Printer0115</key>
 	<comments><![CDATA[HP LaserJet 3052
+
+HP LaserJet 5200
 
 ]]></comments>
 	<oidlist>
