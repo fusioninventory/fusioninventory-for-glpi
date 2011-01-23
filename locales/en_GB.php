@@ -82,7 +82,6 @@ $LANG['plugin_fusioninventory']['functionalities'][3]="SNMP";
 $LANG['plugin_fusioninventory']['functionalities'][4]="Connection";
 $LANG['plugin_fusioninventory']['functionalities'][5]="Server script";
 $LANG['plugin_fusioninventory']['functionalities'][6]="Legend";
-$LANG['plugin_fusioninventory']['functionalities'][7]="Lockable fields";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Agent port";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Retention in days";
 $LANG['plugin_fusioninventory']['functionalities'][10]="History activation";

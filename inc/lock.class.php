@@ -57,7 +57,6 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $tableName = getTableForItemType($p_itemtype);
       echo "<div width='50%'>";
-      //$lockable_fields = PluginFusioninventoryLockable::getLockableFields('', $tableName);
       $locked = PluginFusioninventoryLock::getLockFields($tableName, $p_items_id);
 
       if (count($locked)){

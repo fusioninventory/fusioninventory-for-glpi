@@ -43,9 +43,6 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
          $config = new PluginFusioninventoryConfig;
          $config->showForm(array('target'=>$_POST['target']));
 
-         $ptLockable = new PluginFusioninventoryLockable;
-         $ptLockable->showForm(array('target'=>$_POST['target']));
-
          $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
          $PluginFusioninventoryAgentmodule->showForm();
 
@@ -73,8 +70,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
          break;
 
       case 1 :
-         $ptLockable = new PluginFusioninventoryLockable;
-         $ptLockable->showForm(array('target'=>$_POST['target']));
+
          break;
 
       case 2:

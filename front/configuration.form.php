@@ -50,11 +50,6 @@ if (isset($_POST['plugin_fusioninventory_config_set'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-if ((isset($_POST['plugin_fusioninventory_lockable_add']))
-           OR (isset($_POST['plugin_fusioninventory_lockable_delete']))) {
-   PluginFusioninventoryLockable::setLockableForm($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
-}
 
 // modules
 if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {

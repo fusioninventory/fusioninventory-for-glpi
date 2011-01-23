@@ -82,7 +82,6 @@ $LANG['plugin_fusioninventory']['functionalities'][3]="SNMP";
 $LANG['plugin_fusioninventory']['functionalities'][4]="Связь";
 $LANG['plugin_fusioninventory']['functionalities'][5]="Скрипты сервера";
 $LANG['plugin_fusioninventory']['functionalities'][6]="Легенда";
-$LANG['plugin_fusioninventory']['functionalities'][7]="Блокируемые поля";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Порт Агента";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Время хранения в днях";
 $LANG['plugin_fusioninventory']['functionalities'][10]="Активация истории изменений";

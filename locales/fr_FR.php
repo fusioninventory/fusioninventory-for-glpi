@@ -82,7 +82,6 @@ $LANG['plugin_fusioninventory']['functionalities'][3]="SNMP";
 $LANG['plugin_fusioninventory']['functionalities'][4]="Connexion";
 $LANG['plugin_fusioninventory']['functionalities'][5]="Script serveur";
 $LANG['plugin_fusioninventory']['functionalities'][6]="Légende";
-$LANG['plugin_fusioninventory']['functionalities'][7]="Champs verrouillables";
 $LANG['plugin_fusioninventory']['functionalities'][8]="Port de l'agent";
 $LANG['plugin_fusioninventory']['functionalities'][9]="Rétention en jours";
 $LANG['plugin_fusioninventory']['functionalities'][10]="Activation de l'historique";

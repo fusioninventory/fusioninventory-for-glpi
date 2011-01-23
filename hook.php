@@ -512,8 +512,6 @@ function plugin_item_update_fusioninventory($parm) {
          $type=get_class($parm);
          $id=$parm->getField('id');
          $fieldsToLock=$parm->updates;
-//         $lockables = PluginFusioninventoryLockable::getLockableFields('', $type);
-//         $fieldsToLock = array_intersect($fieldsToLock, $lockables); // do not lock unlockable fields
          PluginFusioninventoryLock::addLocks($type, $id, $fieldsToLock);
       }
    }
