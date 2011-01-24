@@ -134,10 +134,10 @@ class PluginFusioninventoryTaskjobstatus extends CommonDBTM {
       }
       $a_taskjobs = array();
       if (isset($search)) {
-         $query = "SELECT * FROM ".$this->getTable()."
+         $query = "SELECT * FROM `".$this->getTable()."`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `glpi_plugin_fusioninventory_taskjobs`.`id` = `plugin_fusioninventory_taskjobs_id`
             WHERE `items_id`='".$items_id."' AND `itemtype`='".$itemtype."'".$search."
-            ORDER BY `id` DESC";
+            ORDER BY `".$this->getTable()."`.`id` DESC";
          $a_taskjobs = array();
          if ($result = $DB->query($query)) {
             while ($data=$DB->fetch_array($result)) {
