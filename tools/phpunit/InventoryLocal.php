@@ -127,7 +127,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
                   $this->testProlog($inputProlog, $xml->DEVICEID);
 
-                  $array = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename);
+                  $array = $this->testSendinventory("xml/inventory_local/".$Entry."/".$xmlFilename, $xml);
                   $items_id = $array[0];
                   $unknown  = $array[1];
 
@@ -147,7 +147,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
                   $this->testMemory("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
-                  $this->testNetwork("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
+                  $this->testNetwork($xml, $items_id, $unknown, "xml/inventory_local/".$Entry."/".$xmlFilename);
 
                   $this->testSoftware("xml/inventory_local/".$Entry."/".$xmlFilename, $items_id, $unknown);
 
@@ -187,7 +187,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $this->assertEquals(preg_match("/<RESPONSE>SEND<\/RESPONSE>/",$prologXML), 1, 'Prolog not send to agent!');
    }
 
-   function testSendinventory($xmlFile='') {
+   function testSendinventory($xmlFile='', $xml='') {
       
       if (empty($xmlFile)) {
          echo "testSendinventory with no arguments...\n";
@@ -196,11 +196,11 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/glpi078/plugins/fusioninventory/front/communication.php";
-      $input_xml = file_get_contents($xmlFile);
+      $input_xml = $xml->asXML();
       $emulatorAgent->sendProlog($input_xml);
 
       $Computer = new Computer();
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+//      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       if (isset($xml->CONTENT->BIOS->SSN)) {
          if ($xml->CONTENT->BIOS->SSN == '30003000000000000000000000300000000000000000000000000000000000000000000000000000000000') {
             unset($xml->CONTENT->BIOS->SSN);
@@ -605,16 +605,15 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
 
 
-  function testNetwork($xmlFile='', $items_id=0, $unknown=0) {
+  function testNetwork($xml='', $items_id=0, $unknown=0, $xmlFile='') {
       global $DB;
 
-      if (empty($xmlFile)) {
+      if (empty($xml)) {
          echo "testNetwork with no arguments...\n";
          return;
       }
 
-      $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
-
+     
       if (!isset($xml->CONTENT->NETWORKS)) {
          return;
       }
@@ -629,16 +628,32 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       }
 
       $Computer = new Computer();
+      $itemtype = "Computer";
       $query = "SELECT * FROM `glpi_networkports`
          WHERE `items_id`='".$items_id."'
             AND `itemtype`='Computer'";
       if ($unknown == '1') {
+         $itemtype = "PluginFusioninventoryUnknownDevice";
          $query = "SELECT * FROM `glpi_networkports`
             WHERE `items_id`='".$items_id."'
-               AND `itemtype`='PluginFusioninventoryUnknownDevice'";      }
+               AND `itemtype`='PluginFusioninventoryUnknownDevice'";
+      }
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_networkXML) , 'Difference of Networks, created '.$DB->numrows($result).' times instead '.count($a_networkXML).' ['.$xmlFile.']');
+
+      foreach ($xml->CONTENT->NETWORKS as $child) {
+         if ((isset($child->MAC)) AND (!empty($child->MAC))) {
+            $query = "SELECT * FROM `glpi_networkports`
+            WHERE `items_id`='".$items_id."'
+               AND `itemtype`='".$itemtype."'
+               AND `mac`='".$child->MAC."'";
+            $result=$DB->query($query);
+            $data = $DB->fetch_array($result);
+            $this->assertEquals($data['ip'], (string)$child->IPADDRESS , 'Network port IP not right inserted, have '.$data['ip'].' instead '.(string)$child->IPADDRESS.' ['.$xmlFile.']');
+         }
+      }
+
    }
 
 
@@ -748,7 +763,8 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
          if (isset($child->OSNAME)) {
             $OperatingSystem = new OperatingSystem;
-            if (!strstr((string)$child->OSNAME, "Debian GNU/Linux squeeze/sid ")) {
+            if (!strstr((string)$child->OSNAME, "Debian GNU/Linux squeeze/sid ")
+                    AND !strstr((string)$child->OSNAME, "Debian GNU/Linux 5.0 ")) {
                $this->assertEquals($Computer->fields['operatingsystems_id'], $OperatingSystem->import(array('name'=>(string)$child->OSNAME)) , 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.$OperatingSystem->import(array('name'=>(string)$child->OSNAME)).' ['.$xmlFile.']');
             }
          }
@@ -790,13 +806,26 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
 
       $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
 
-      $xml->CONTENT->HARDWARE->NAME = rand();
-      $xml->CONTENT->HARDWARE->OSNAME = "Microsoft blablabla".rand();
-      $xml->CONTENT->HARDWARE->OSVERSION = rand();
-      $xml->CONTENT->HARDWARE->WINPRODID = rand();
-      $xml->CONTENT->HARDWARE->WINPRODKEY = rand();
-      $xml->CONTENT->HARDWARE->WORKGROUP = "work".rand();
-      $xml->CONTENT->HARDWARE->USERDOMAIN = rand();
+//      $xml->CONTENT->HARDWARE->NAME = rand();
+//      $xml->CONTENT->HARDWARE->OSNAME = "Microsoft blablabla".rand();
+//      $xml->CONTENT->HARDWARE->OSVERSION = rand();
+//      $xml->CONTENT->HARDWARE->WINPRODID = rand();
+//      $xml->CONTENT->HARDWARE->WINPRODKEY = rand();
+//      $xml->CONTENT->HARDWARE->WORKGROUP = "work".rand();
+//      $xml->CONTENT->HARDWARE->USERDOMAIN = rand();
+
+      // Modification of networks ports
+      foreach ($xml->CONTENT->NETWORKS as $child) {
+         $ip = rand(0,254).".".rand(0,254).".".rand(0,254).".";
+         $child->IPADDRESS = $ip.rand(0,254);
+         $child->IPSUBNET = $ip."0";
+      }
+      $array = $this->testSendinventory("tmp.xml", $xml);
+      $items_id = $array[0];
+      $unknown  = $array[1];
+
+      $this->testNetwork($xml, $items_id, $unknown);
+
 
    }
 
