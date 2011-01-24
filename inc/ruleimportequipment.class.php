@@ -108,9 +108,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
       $criterias['serial']['name']          = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['common'][19];
 
-      $criterias['hdserial']['name']        = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][13];
-
-      $criterias['partitionserial']['name'] = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][14];
+//      $criterias['hdserial']['name']        = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][13];
+//
+//      $criterias['partitionserial']['name'] = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][14];
 
       $criterias['uuid']['name']            = $LANG['plugin_fusioninventory']['rulesengine'][152].' : '.$LANG['plugin_fusioninventory']['rules'][15];
 
@@ -332,7 +332,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                       AND `glpi_networkports`.`itemtype` = '[typename]') ";
       $sql_from_networkequipment = $sql_from;
 
-      $critNb = 0;
       foreach ($complex_criterias as $criteria) {
          switch ($criteria->fields['criteria']) {
 
@@ -346,7 +345,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                $sql_where  .= $sql_where_temp;
                $sql_from_networkequipment .= $sql_from_temp;
                $sql_where_networkequipment .= $sql_where_temp;
-               $critNb++;
                break;
 
             case 'mac' :
@@ -359,7 +357,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
                $sql_where  .= $sql_where_temp;
                $sql_where_networkequipment .= $sql_where_networkequipment_temp;
-               $critNb++;
                break;
             
             case 'ip' :
@@ -371,7 +368,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                }
                $sql_where .= ")";
                $sql_where_networkequipment .= ")";
-               $critNb++;
                break;
 
             case 'serial' :
@@ -379,7 +375,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
                $sql_where .= $sql_where_temp;
                $sql_where_networkequipment .= $sql_where_temp;
-               $critNb++;
                break;
 
             case 'name' :
@@ -389,7 +384,6 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                } else {
                   $sql_where .= " AND (`[typetable]`.`name`='".$input['name']."') ";
                }
-               $critNb++;
                break;
 
             case 'hdserial':
@@ -401,7 +395,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                break;
 
             case 'mskey':
-
+               $sql_where_computer  .= " AND `os_license_number`='".$input['mskey']."'";
                break;
 
             case 'states_id':
@@ -415,10 +409,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                break;
 
             case 'uuid':
-               $sql_from_computer   = ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
+               $sql_from_computer .= ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
                                  ON `glpi_plugin_fusinvinventory_computers`.`items_id` = `[typetable]`.`id`';
-               $sql_where_computer  = ' AND `uuid`="'.$input['uuid'].'"';
-               $critNb++;
+               $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
                break;
 
          }
