@@ -117,7 +117,6 @@ class PluginFusinvinventoryInventory {
             $input['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
          }
          $input['itemtype'] = "Computer";
-
       $_SESSION['plugin_fusinvinventory_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvinventoryInventory";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
@@ -139,6 +138,10 @@ class PluginFusinvinventoryInventory {
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $items_id = $Computer->add($input);
+            $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+            $input = array();
+            $input['items_id'] = $items_id;
+            $PluginFusinvinventoryComputer->add($input);
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '1');
          } else {
             $PluginFusinvinventoryLib->startAction($xml, $items_id, '0');

@@ -145,8 +145,16 @@ class PluginFusinvinventoryLibhook {
       logInFile("addsection", "[".$idmachine."] ".print_r($data, true));
 
       $Computer = new Computer;
+      $PluginFusinvinventoryComputer = new PluginFusinvinventoryComputer();
+
       $sectionsId = array();
       $Computer->getFromDB($idmachine);
+
+      $a_ids = $PluginFusinvinventoryComputer->find("`items_id`='".$idmachine."'");
+      $a_id = current($a_ids);
+      $PluginFusinvinventoryComputer->getFromDB($a_id['id']);
+
+
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
 
       if (!isset($_SESSION["plugin_fusinvinventory_history_add"])) {
@@ -216,6 +224,9 @@ class PluginFusinvinventoryLibhook {
                      $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
                   }
                }
+               if (isset($dataSection['UUID'])) {
+                  $PluginFusinvinventoryComputer->fields['uuid'] = $dataSection['UUID'];
+               }
                break;
 
             case 'USERS':
@@ -253,6 +264,7 @@ class PluginFusinvinventoryLibhook {
          }
       }
       $Computer->update($Computer->fields, $_SESSION["plugin_fusinvinventory_history_add"]);
+      $PluginFusinvinventoryComputer->update($PluginFusinvinventoryComputer->fields);
       $j = -1;
 
       foreach($data as $section) {

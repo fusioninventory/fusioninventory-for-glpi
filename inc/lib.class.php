@@ -251,7 +251,10 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
 
                         case "CONTROLLERS":
-                           if($arrSectionToAdd["PCIID"] == $arrSectionToRemove["PCIID"] AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"]) {
+                           if (isset($arrSectionToAdd["PCIID"]) AND isset($arrSectionToRemove["PCIID"])
+                                 AND $arrSectionToAdd["PCIID"] == $arrSectionToRemove["PCIID"]
+                                 AND isset($arrSectionToAdd["PCISLOT"]) AND isset($arrSectionToRemove["PCISLOT"])
+                                 AND $arrSectionToAdd["PCISLOT"] == $arrSectionToRemove["PCISLOT"]) {
                               $boolUpdate = true;
                            }
                            break;
@@ -283,7 +286,8 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "NETWORKS":
-                           if($arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]) {
+                           if(isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
+                                 AND $arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]) {
                   				$boolUpdate = true;
                            }
                            break;
