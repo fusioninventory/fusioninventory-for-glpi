@@ -252,6 +252,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       $sql_from          = '';
       $sql_where_networkequipment  = '';
       $sql_from_networkequipment   = '';
+      $sql_where_computer  = '';
+      $sql_from_computer   = '';
       $continue          = true;
       $global_criteria   = array('model',
                                  'mac',
@@ -261,7 +263,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                                  'partitionserial',
                                  'uuid',
                                  'mskey',
-                                 'name');
+                                 'name',
+                                 'uuid');
 
       foreach ($global_criteria as $criterion) {
          $crit = $this->getCriteriaByID($criterion);
@@ -329,7 +332,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                       AND `glpi_networkports`.`itemtype` = '[typename]') ";
       $sql_from_networkequipment = $sql_from;
 
-
+      $critNb = 0;
       foreach ($complex_criterias as $criteria) {
          switch ($criteria->fields['criteria']) {
 
@@ -343,6 +346,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                $sql_where  .= $sql_where_temp;
                $sql_from_networkequipment .= $sql_from_temp;
                $sql_where_networkequipment .= $sql_where_temp;
+               $critNb++;
                break;
 
             case 'mac' :
@@ -355,6 +359,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
                $sql_where  .= $sql_where_temp;
                $sql_where_networkequipment .= $sql_where_networkequipment_temp;
+               $critNb++;
                break;
             
             case 'ip' :
@@ -366,6 +371,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                }
                $sql_where .= ")";
                $sql_where_networkequipment .= ")";
+               $critNb++;
                break;
 
             case 'serial' :
@@ -373,6 +379,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
                $sql_where .= $sql_where_temp;
                $sql_where_networkequipment .= $sql_where_temp;
+               $critNb++;
                break;
 
             case 'name' :
@@ -382,6 +389,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                } else {
                   $sql_where .= " AND (`[typetable]`.`name`='".$input['name']."') ";
                }
+               $critNb++;
                break;
 
             case 'hdserial':
@@ -392,15 +400,11 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
                break;
 
-            case 'uuid':
-
-               break;
-
             case 'mskey':
 
                break;
 
-            case 'states_id' :
+            case 'states_id':
                if ($criteria->fields['condition'] == PluginFusioninventoryRule::PATTERN_IS) {
                   $condition = " IN ";
                } else {
@@ -408,6 +412,13 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                }
                $sql_where .= " AND `[typetable]`.`states_id`
                                  $condition ('".$criteria->fields['pattern']."')";
+               break;
+
+            case 'uuid':
+               $sql_from_computer   = ' LEFT JOIN `glpi_plugin_fusinvinventory_computers`
+                                 ON `glpi_plugin_fusinvinventory_computers`.`items_id` = `[typetable]`.`id`';
+               $sql_where_computer  = ' AND `uuid`="'.$input['uuid'].'"';
+               $critNb++;
                break;
 
          }
@@ -422,6 +433,10 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          } else {
             $sql_from_temp = $sql_from;
             $sql_where_temp = $sql_where;
+            if ($itemtype == "Computer") {
+               $sql_from_temp .= $sql_from_computer;
+               $sql_where_temp .= $sql_where_computer;
+            }
          }
 
          $item = new $itemtype();
@@ -432,14 +447,17 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          if ($itemtype == "PluginFusioninventoryUnknownDevice") {
             $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
          }
-         $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
-         $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
-         $result_glpi = $DB->query($sql_glpi);
 
-         if ($DB->numrows($result_glpi) > 0) {
-            while ($data=$DB->fetch_array($result_glpi)) {
-               $found = 1;
-               $this->criterias_results['found_equipment'][$itemtype][] = $data['id'];
+         if (strstr($sql_glpi, "`[typetable]`.`is_template` = '0'  AND")) {
+            $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
+            $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
+            $result_glpi = $DB->query($sql_glpi);
+
+            if ($DB->numrows($result_glpi) > 0) {
+               while ($data=$DB->fetch_array($result_glpi)) {
+                  $found = 1;
+                  $this->criterias_results['found_equipment'][$itemtype][] = $data['id'];
+               }
             }
          }
       }

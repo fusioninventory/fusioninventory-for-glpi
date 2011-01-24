@@ -124,7 +124,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             }
 
          }
-
+         echo "<tr class='tab_bg_1'>";
+         echo "<td colspan='5' align='center'>";
+         echo $LANG['plugin_fusioninventory']['task'][32];
+         echo "</td>";
+         echo "</tr>";
 
          echo "<tr class='tab_bg_4'>";
          echo "<td colspan='5' height='4'>";

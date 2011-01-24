@@ -558,6 +558,7 @@ $LANG['plugin_fusioninventory']['task'][28]="Action";
 $LANG['plugin_fusioninventory']['task'][29]="Type";
 $LANG['plugin_fusioninventory']['task'][30]="Selection";
 $LANG['plugin_fusioninventory']['task'][31]="Time between task start and start this action";
+$LANG['plugin_fusioninventory']['task'][32]="Force the end";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Started";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

@@ -101,7 +101,7 @@ class PluginFusioninventorySetup {
      // Create rule for : Computer + serial + uuid
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
-      $input['is_active']=0;
+      $input['is_active']=1;
       $input['name']='Computer serial + uuid';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
@@ -224,6 +224,51 @@ class PluginFusioninventorySetup {
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+      $ranking++;
+      // Create rule for : Computer + uuid
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer uuid';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "uuid";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "uuid";
          $input['pattern']= 1;
          $input['condition']=8;
          $rulecriteria->add($input);
