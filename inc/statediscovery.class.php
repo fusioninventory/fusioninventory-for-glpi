@@ -73,12 +73,12 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
 //		$tab[3]['datatype'] = 'itemlink';
 //		$tab[3]['itemlink_type']  = 'PluginFusioninventoryTaskjob';
 //
-		$tab[4]['table'] = 'glpi_plugin_fusioninventory_taskjobs';
-		$tab[4]['field'] = 'status';
+		$tab[4]['table'] = 'glpi_plugin_fusioninventory_taskjobstatus';
+		$tab[4]['field'] = 'state';
 		$tab[4]['linkfield'] = 'plugin_fusioninventory_taskjob_id';
 		$tab[4]['name'] = 'state';
 		$tab[4]['datatype'] = 'number';
-      $tab[4]['itemlink_type']  = 'PluginFusioninventoryTaskjob';
+      $tab[4]['itemlink_type']  = 'glpi_plugin_fusioninventory_taskjobstatus';
 
 		$tab[5]['table'] = $this->getTable();
 		$tab[5]['field'] = 'start_time';
