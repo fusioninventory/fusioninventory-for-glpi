@@ -217,6 +217,9 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                   if($xmlSections[$arrayId]['sectionName'] == $sectionName) {
                      //Finally, we have to determine if it's an update or not
                      $boolUpdate = false;
+if (!unserialize($serializedSectionToAdd)) {
+   logInFile('serialise', $serializedSectionToAdd);
+}
                      $arrSectionToAdd = unserialize($serializedSectionToAdd);
 if (!unserialize($serializedSectionToRemove)) {
    logInFile('serialise', $serializedSectionToRemove);
@@ -317,7 +320,10 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "STORAGES":
-                           if($arrSectionToAdd["MODEL"] == $arrSectionToRemove["MODEL"] OR $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"]) {
+                           if((isset($arrSectionToAdd["MODEL"]) AND isset($arrSectionToRemove["MODEL"])
+                                 AND $arrSectionToAdd["MODEL"] == $arrSectionToRemove["MODEL"])
+                              OR (isset($arrSectionToAdd["SERIALNUMBER"]) AND isset($arrSectionToRemove["SERIALNUMBER"])
+                                 AND $arrSectionToAdd["SERIALNUMBER"] == $arrSectionToRemove["SERIALNUMBER"])) {
                               $boolUpdate = true;
                            }
                            break;
