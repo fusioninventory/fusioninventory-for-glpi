@@ -263,8 +263,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                                  'partitionserial',
                                  'uuid',
                                  'mskey',
-                                 'name',
-                                 'uuid');
+                                 'name');
 
       foreach ($global_criteria as $criterion) {
          $crit = $this->getCriteriaByID($criterion);
