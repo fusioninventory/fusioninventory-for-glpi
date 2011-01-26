@@ -245,9 +245,12 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "SOFTWARES":
-                           if (((isset($arrSectionToAdd["GUID"]) AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"]))
-                              OR $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"])
-                              AND ($arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])) {
+                           if (((isset($arrSectionToAdd["GUID"]) AND isset($arrSectionToRemove["GUID"])
+                                 AND ($arrSectionToAdd["GUID"] == $arrSectionToRemove["GUID"]))
+                              OR (isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]))
+                              AND (isset($arrSectionToAdd["VERSION"]) AND isset($arrSectionToRemove["VERSION"])
+                                 AND $arrSectionToAdd["VERSION"] == $arrSectionToRemove["VERSION"])) {
 
                               $boolUpdate = true;
                            }
@@ -263,7 +266,8 @@ if (!unserialize($serializedSectionToRemove)) {
                            break;
                            
                         case "ENVS":
-                           if(isset($arrSectionToAdd["NAME"]) AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
+                           if(isset($arrSectionToAdd["NAME"]) AND isset($arrSectionToRemove["NAME"])
+                                 AND $arrSectionToAdd["NAME"] == $arrSectionToRemove["NAME"]) {
                               $boolUpdate = true;
                            }
                            break;

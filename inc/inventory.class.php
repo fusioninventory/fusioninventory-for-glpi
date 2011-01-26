@@ -127,7 +127,6 @@ class PluginFusinvinventoryInventory {
 
 
    function rulepassed($items_id, $itemtype) {
-
       $xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
 
       if ($itemtype == 'Computer') {
@@ -318,7 +317,7 @@ class PluginFusinvinventoryInventory {
          $a_sectionsinfos[] = "CONTROLLERS/".$deviceControl_id;
          $xml_controller = $xml_content->addChild("CONTROLLERS");
          $DeviceControl->getFromDB($deviceControl_data['devicecontrols_id']);
-         $xml_controller->addChild("NAME", $DeviceControl->fields['name']);
+         $xml_controller->addChild("NAME", $DeviceControl->fields['designation']);
          $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'), $DeviceControl->fields['manufacturers_id']);
          if ($manufacturer != "&nbsp;") {
             $xml_controller->addChild("MANUFACTURER", $manufacturer);

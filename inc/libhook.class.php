@@ -151,8 +151,15 @@ class PluginFusinvinventoryLibhook {
       $Computer->getFromDB($idmachine);
 
       $a_ids = $PluginFusinvinventoryComputer->find("`items_id`='".$idmachine."'");
-      $a_id = current($a_ids);
-      $PluginFusinvinventoryComputer->getFromDB($a_id['id']);
+      if (count($a_ids) > 0) {
+         $a_id = current($a_ids);
+         $PluginFusinvinventoryComputer->getFromDB($a_id['id']);
+      } else {
+         $input = array();
+         $input['items_id'] = $idmachine;
+         $PluginFusinvinventoryComputer->getFromDB($PluginFusinvinventoryComputer->add($input));
+
+      }
 
 
       $_SESSION["plugin_fusinvinventory_entity"] = $Computer->fields['entities_id'];
@@ -263,6 +270,7 @@ class PluginFusinvinventoryLibhook {
 
          }
       }
+
       $Computer->update($Computer->fields, $_SESSION["plugin_fusinvinventory_history_add"]);
       $PluginFusinvinventoryComputer->update($PluginFusinvinventoryComputer->fields);
       $j = -1;
