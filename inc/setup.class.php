@@ -610,12 +610,88 @@ class PluginFusioninventorySetup {
          $ruleaction->add($input);
 
 
+     $ranking++;
+     // Create rule for search mac in all DB
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Find mac in all GLPI';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "mac";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+
+     $ranking++;
+     // Create rule for search name in all DB
+      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Find name in all GLPI';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['ranking'] = $ranking;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+
       $ranking++;
       // Create rule for import into unknown devices
       $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
       $input = array();
       $input['is_active']=1;
-      $input['name']='unknown device import';
+      $input['name']='Unknown device import';
       $input['match']='AND';
       $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
       $input['ranking'] = $ranking;

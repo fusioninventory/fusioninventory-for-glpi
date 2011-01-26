@@ -263,7 +263,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                                  'partitionserial',
                                  'uuid',
                                  'mskey',
-                                 'name');
+                                 'name',
+                                 'itemtype');
 
       foreach ($global_criteria as $criterion) {
          $crit = $this->getCriteriaByID($criterion);
@@ -271,6 +272,8 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
             if (!isset($input[$criterion]) || $input[$criterion] == '') {
                $continue = false;
             } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_FIND) {
+               $complex_criterias[] = $crit;
+            } else if($crit->fields["criteria"] == 'itemtype') {
                $complex_criterias[] = $crit;
             }
          }
@@ -308,9 +311,15 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       }
 
       $itemtypeselected = array();
-      if (isset($input['itemtype']) AND (is_array($input['itemtype'])) AND ($itemtype_global != "0")) {
+      if (isset($input['itemtype'])
+              AND (is_array($input['itemtype']))
+              AND ($itemtype_global != "0")) {
+
          $itemtypeselected = $input['itemtype'];      
-      } else if (isset($input['itemtype']) AND (!empty($input['itemtype'])) AND ($itemtype_global != "0")) {
+      } else if (isset($input['itemtype'])
+              AND (!empty($input['itemtype']))
+              AND ($itemtype_global != "0")) {
+
          $itemtypeselected[] = $input['itemtype'];
       } else {
          foreach($CFG_GLPI["state_types"] as $itemtype) {
@@ -435,7 +444,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          $sql_glpi = "SELECT `[typetable]`.`id`
                       FROM $sql_from_temp
                       WHERE $sql_where_temp
-                      ORDER BY `[typetable]`.`is_deleted` ASC";
+                      GROUP BY `[typetable]`.`id`
+                      ORDER BY `[typetable]`.`is_deleted` ASC
+                      ";
          if ($itemtype == "PluginFusioninventoryUnknownDevice") {
             $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
          }
@@ -453,9 +464,17 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
             }
          }
       }
-
       if ($found == "1") {
          return true;
+      }
+      if (count($this->actions)) {
+         foreach ($this->actions as $action) {
+            if ($action->fields['field'] == '_fusion') {
+               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
+                  return true;
+               }
+            }
+         }
       }
       return false;
    }
@@ -472,7 +491,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
    function executeActions($output, $params) {
       $classname = $_SESSION['plugin_fusioninventory_classrulepassed'];
       $class = new $classname();
-      
+
       if (count($this->actions)) {
          foreach ($this->actions as $action) {
             if ($action->fields['field'] == '_fusion') {
