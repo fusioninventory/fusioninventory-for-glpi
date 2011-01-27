@@ -1360,8 +1360,7 @@ class PluginFusioninventoryRule extends CommonDBTM {
       $display = false;
       $tested  = false;
 
-      if ($test
-          || $condition == PluginFusioninventoryRule::PATTERN_EXISTS
+      if ($condition == Rule::PATTERN_EXISTS
           || $condition == PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS) {
          Dropdown::showYesNo($name, 0, 0);
          $display = true;
@@ -1420,7 +1419,7 @@ class PluginFusioninventoryRule extends CommonDBTM {
       }
       //Not a standard condition
       if (!$tested) {
-        $display = $this->displayAdditionalRuleCondition($condition, $crit, $name, $value);
+        $display = $this->displayAdditionalRuleCondition($condition, $crit, $name, $value,$test);
       }
 
       if (!$display) {
@@ -1861,7 +1860,7 @@ class PluginFusioninventoryRule extends CommonDBTM {
    /**
     *
    **/
-   function displayAdditionalRuleCondition($condition, $criteria, $name, $value) {
+   function displayAdditionalRuleCondition($condition, $criteria, $name, $value,$test=false) {
       return false;
    }
 

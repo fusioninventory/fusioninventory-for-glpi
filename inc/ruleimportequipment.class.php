@@ -75,12 +75,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       return 1;
    }
 
-
-   function preProcessPreviewResults($output) {
-      return $output;
-   }
-
-
+   
    function getCriterias() {
       global $LANG;
 
@@ -205,7 +200,10 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
    }
 
 
-   function displayAdditionalRuleCondition($condition, $criteria, $name, $value) {
+   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
+      if ($test) {
+         return false;
+      }
 
       switch ($condition) {
          case PluginFusioninventoryRule::PATTERN_FIND :
@@ -623,6 +621,35 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
       return $types;
    }
 
+
+   /**
+   * Function used to display type specific criterias during rule's preview
+   *
+   * @param $fields fields values
+   **/
+   function showSpecificCriteriasForPreview($fields) {
+
+      $entity_as_criteria = false;
+      foreach ($this->criterias as $criteria) {
+         if ($criteria->fields['criteria'] == 'entities_id') {
+            $entity_as_criteria = true;
+            break;
+         }
+      }
+      if (!$entity_as_criteria) {
+         echo "<input type='hidden' name='entities_id' value='".$_SESSION["glpiactive_entity"]."'>";
+      }
+   }
+
+//   function preProcessPreviewResults($output) {
+//      global $LANG;
+//
+//      if (isset($output["action"])) {
+//
+//
+//      }
+//      return $output;
+//   }
 
 }
 
