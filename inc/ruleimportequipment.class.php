@@ -232,19 +232,19 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
 
    function getCriteriaByID($ID) {
-
+      $criteria = array();
       foreach ($this->criterias as $criterion) {
          if ($ID == $criterion->fields['criteria']) {
-            return $criterion;
+            $criteria[] = $criterion;
          }
       }
-      return array();
+      return $criteria;
    }
 
 
    function findWithGlobalCriteria($input) {
       global $DB, $CFG_GLPI;
-
+logInFile("xxx", print_r($input, true));
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
@@ -265,23 +265,25 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
                                  'itemtype');
 
       foreach ($global_criteria as $criterion) {
-         $crit = $this->getCriteriaByID($criterion);
-         if (!empty($crit)) {
-            if (!isset($input[$criterion]) || $input[$criterion] == '') {
-               $continue = false;
-            } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_FIND) {
-               $complex_criterias[] = $crit;
-            } else if($crit->fields["criteria"] == 'itemtype') {
-               $complex_criterias[] = $crit;
+         $criteria = $this->getCriteriaByID($criterion);
+         if (!empty($criteria)) {
+            foreach ($criteria as $crit) {
+               if (!isset($input[$criterion]) || $input[$criterion] == '') {
+                  $continue = false;
+               } else if ($crit->fields["condition"] == PluginFusioninventoryRule::PATTERN_FIND) {
+                  $complex_criterias[] = $crit;
+               } else if($crit->fields["criteria"] == 'itemtype') {
+                  $complex_criterias[] = $crit;
+               }
             }
          }
       }
 
-      if (isset($this->criterias['states_id'])) {
-         $complex_criterias[] = $this->getCriteriaByID('states_id');
+      foreach ($this->getCriteriaByID('states_id') as $crit) {
+         $complex_criterias[] = $crit;
       }
 
-      //If no complex criteria or a value is missing, then there's a problem !
+      //If a value is missing, then there's a problem !
       if (!$continue) {
          return false;
       }
@@ -425,6 +427,7 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
 
       // Suivant le / les types, on cherche dans un ou plusieurs / tous les types
       $found = 0;
+      logInFile("xxx", "===============\n");
       foreach ($itemtypeselected as $itemtype) {
          if ($itemtype == "NetworkEquipment") {
             $sql_from_temp = $sql_from_networkequipment;
@@ -448,8 +451,9 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
          if ($itemtype == "PluginFusioninventoryUnknownDevice") {
             $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
          }
-
+            logInFile("xxx", $sql_glpi."\n");
          if (strstr($sql_glpi, "`[typetable]`.`is_template` = '0'  AND")) {
+
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
             $result_glpi = $DB->query($sql_glpi);
@@ -462,19 +466,19 @@ class PluginFusioninventoryRuleImportEquipment extends PluginFusioninventoryRule
             }
          }
       }
-      if ($found == "1") {
+//      if ($found == "1") {
          return true;
-      }
-      if (count($this->actions)) {
-         foreach ($this->actions as $action) {
-            if ($action->fields['field'] == '_fusion') {
-               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
-                  return true;
-               }
-            }
-         }
-      }
-      return false;
+//      }
+//      if (count($this->actions)) {
+//         foreach ($this->actions as $action) {
+//            if ($action->fields['field'] == '_fusion') {
+//               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
+//                  return true;
+//               }
+//            }
+//         }
+//      }
+//      return false;
    }
 
 
