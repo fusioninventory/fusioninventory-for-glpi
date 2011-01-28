@@ -88,6 +88,7 @@ class PluginFusinvinventoryImport_Graphiccard extends CommonDBTM {
          $array = array();
          $array['_itemtype'] = 'DeviceGraphicCard';
          $array['devicegraphiccards_id'] = $graphiccard_id;
+         $array['specificity'] = $graphiccard['specif_default'];
          if ($type == "update") {
             $array['computers_id'] = $computer_graphiccard['computers_id'];
             $array['id'] = $items_id;

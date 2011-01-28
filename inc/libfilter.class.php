@@ -84,7 +84,9 @@ class PluginFusinvinventoryLibfilter extends CommonDBTM {
                    
                     $dataArray = self::_getDataFromUSBID($section->VENDORID, $section->PRODUCTID);
 
+                    $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
                     $section->addChild('MANUFACTURER', $dataArray[0]);
+                    $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
                     $section->addChild('PRODUCTNAME', $dataArray[1]);
 
                 }

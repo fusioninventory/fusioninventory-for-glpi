@@ -517,8 +517,10 @@ if (!unserialize($serializedSectionToRemove)) {
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       foreach ($arraySerializedSections as $cle=>$valeur) {
          $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
-         if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
-            $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
+         if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
+            if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
+               $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
+            }
          }
       }
       return $infoSections;
