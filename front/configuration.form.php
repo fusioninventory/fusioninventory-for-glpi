@@ -47,6 +47,7 @@ if (isset($_POST['plugin_fusioninventory_config_set'])) {
    $config->updateConfigType($plugins_id, 'ssl_only', $_POST['ssl_only']);
    $config->updateConfigType($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
    $config->updateConfigType($plugins_id, 'delete_task', $_POST['delete_task']);
+   $config->updateConfigType($plugins_id, 'agent_port', $_POST['agent_port']);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
