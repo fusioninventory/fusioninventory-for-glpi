@@ -47,6 +47,8 @@ if (!defined('GLPI_ROOT')) {
  **/
 class PluginFusinvinventoryLib extends CommonDBTM {
 
+   var $table = "glpi_plugin_fusinvinventory_libserialization";
+
    function startAction($simpleXMLObj, $items_id, $new=0) {
       global $DB;
       
@@ -494,7 +496,7 @@ if (!unserialize($serializedSectionToRemove)) {
    * @param int $internalId
    * @return array $infoSections (serialized datas and sectionId)
    */
-   private function _getInfoSections($internalId) {
+   function _getInfoSections($internalId) {
       global $DB;
 
       $infoSections = array();

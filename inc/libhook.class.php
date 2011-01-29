@@ -725,6 +725,91 @@ class PluginFusinvinventoryLibhook {
          fclose($fileopen);
        }
     }
+
+
+    static function getMapping() {
+       $opt = array();
+
+       $i = 0;
+
+       // ** HARDWARE
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'NAME';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'name';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'OSNAME';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'operatingsystems_id';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'OSVERSION';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'operatingsystemversions_id';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'WINPRODID';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'os_licenseid';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'WINPRODKEY';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'os_license_number';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'WORKGROUP';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'domains_id';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'OSCOMMENTS';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'operatingsystemservicepacks_id';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'UUID';
+       $opt[$i]['glpiItemtype']     = 'glpi_plugin_fusinvinventory_computers';
+       $opt[$i]['glpiField']        = 'uuid';
+
+       
+       // ** USERS
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'LOGIN';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'users_id';
+
+
+       // ** BIOS
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'SMANUFACTURER';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'manufacturers_id';
+   
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'SMODEL';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'computermodels_id';
+
+       $i++;
+       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSectionChild']  = 'SSN';
+       $opt[$i]['glpiItemtype']     = 'Computer';
+       $opt[$i]['glpiField']        = 'serial';
+
+       return $opt;
+    }
 }
 
 ?>

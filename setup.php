@@ -101,7 +101,8 @@ function plugin_init_fusinvinventory() {
 
       $PLUGIN_HOOKS['use_massive_action']['fusinvinventory']=1;
       $PLUGIN_HOOKS['pre_item_purge']['fusinvinventory']
-         = array('Computer' =>'plugin_pre_item_purge_fusinvinventory');
+         = array('Computer' =>'plugin_pre_item_purge_fusinvinventory',
+                 'PluginFusioninventoryLock' => array('PluginFusinvinventoryLock', 'deleteLock'));
 
    }
 
