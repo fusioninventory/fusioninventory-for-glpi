@@ -1213,12 +1213,12 @@ function plugin_fusinvsnmp_MassiveActions($type) {
 	return array ();
 }
 
-function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
+function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 
 	global $LANG, $CFG_GLPI, $DB;
-	switch ($type) {
+	switch ($options['itemtype']) {
 		case NETWORKING_TYPE :
-			switch ($action) {
+			switch ($options['action']) {
 
             case "plugin_fusinvsnmp_get_model" :
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
@@ -1258,7 +1258,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 			break;
 
 		case PRINTER_TYPE :
-			switch ($action) {
+			switch ($options['action']) {
 
             case "plugin_fusinvsnmp_get_model" :
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
@@ -1298,7 +1298,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($type, $action) {
 			break;
 
 		case 'PluginFusioninventoryUnknownDevice';
-			switch ($action) {
+			switch ($options['action']) {
 				case "plugin_fusinvsnmp_discovery_import" :
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "unknowndevices","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . $LANG["buttons"][2] . "\" >";
