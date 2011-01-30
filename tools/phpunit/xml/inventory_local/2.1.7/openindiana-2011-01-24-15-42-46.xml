@@ -1,0 +1,3656 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2011-01-25 15:36:41</LOGDATE>
+      <USERID>N/A</USERID>
+    </ACCESSLOG>
+    <BIOS>
+      <BDATE>12/01/2006</BDATE>
+      <BVERSION>VirtualBox</BVERSION>
+      <SMANUFACTURER>innotek GmbH</SMANUFACTURER>
+      <SMODEL>VirtualBox</SMODEL>
+      <SSN>0</SSN>
+    </BIOS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mod:</MANUFACTURER>
+      <NAME>sata0/0::dsk/c1t0d0</NAME>
+      <TYPE>disk</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mod:</MANUFACTURER>
+      <NAME>sata0/1::dsk/c1t1d0</NAME>
+      <TYPE>cd/dvd</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/1</NAME>
+      <TYPE>usb-input</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/2</NAME>
+      <TYPE>unknown</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/3</NAME>
+      <TYPE>unknown</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/4</NAME>
+      <TYPE>unknown</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/5</NAME>
+      <TYPE>unknown</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/6</NAME>
+      <TYPE>unknown</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/7</NAME>
+      <TYPE>unknown</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <MANUFACTURER>Mfg:</MANUFACTURER>
+      <NAME>usb8/8</NAME>
+      <TYPE>unknown</TYPE>
+    </CONTROLLERS>
+    <CPUS>
+      <MANUFACTURER>SPARC</MANUFACTURER>
+      <NAME>i386</NAME>
+      <SPEED>2400</SPEED>
+    </CPUS>
+    <DRIVES>
+      <FILESYSTEM>zfs</FILESYSTEM>
+      <FREE>12977</FREE>
+      <SERIAL>3be68c3e-e3af-c268-fefe-cb5628674453</SERIAL>
+      <TOTAL>16002</TOTAL>
+      <TYPE>/</TYPE>
+      <VOLUMN>rpool/ROOT/solaris</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>0</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>0</TOTAL>
+      <TYPE>/dev</TYPE>
+      <VOLUMN>/dev</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>0</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>0</TOTAL>
+      <TYPE>/system/contract</TYPE>
+      <VOLUMN>ctfs</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>0</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>0</TOTAL>
+      <TYPE>/proc</TYPE>
+      <VOLUMN>proc</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>0</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>0</TOTAL>
+      <TYPE>/etc/mnttab</TYPE>
+      <VOLUMN>mnttab</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>836</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>836</TOTAL>
+      <TYPE>/etc/svc/volatile</TYPE>
+      <VOLUMN>swap</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>0</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>0</TOTAL>
+      <TYPE>/system/object</TYPE>
+      <VOLUMN>objfs</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>0</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>0</TOTAL>
+      <TYPE>/etc/dfs/sharetab</TYPE>
+      <VOLUMN>sharefs</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>0</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>0</TOTAL>
+      <TYPE>/dev/fd</TYPE>
+      <VOLUMN>fd</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>836</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>836</TOTAL>
+      <TYPE>/tmp</TYPE>
+      <VOLUMN>swap</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>836</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>836</TOTAL>
+      <TYPE>/var/run</TYPE>
+      <VOLUMN>swap</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>12977</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>16002</TOTAL>
+      <TYPE>/export</TYPE>
+      <VOLUMN>rpool/export</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>12977</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>16002</TOTAL>
+      <TYPE>/export/home</TYPE>
+      <VOLUMN>rpool/export/home</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>12977</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>16002</TOTAL>
+      <TYPE>/export/home/wawa</TYPE>
+      <VOLUMN>rpool/export/home/wawa</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>12977</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>16002</TOTAL>
+      <TYPE>/rpool</TYPE>
+      <VOLUMN>rpool</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM></FILESYSTEM>
+      <FREE>12977</FREE>
+      <SERIAL></SERIAL>
+      <TOTAL>13035</TOTAL>
+      <TYPE>/home/wawa</TYPE>
+      <VOLUMN>/export/home/wawa</VOLUMN>
+    </DRIVES>
+    <ENVS>
+      <KEY>HOME</KEY>
+      <VAL>/home/wawa</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_GID</KEY>
+      <VAL>10</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PS1</KEY>
+      <VAL>${LOGNAME}@$(/usr/bin/hostname):$(    [[ &quot;${LOGNAME}&quot; == &quot;root&quot; ]] &amp;&amp; printf &quot;%s&quot; &quot;${PWD/${HOME}/~}# &quot; ||    printf &quot;%s&quot; &quot;${PWD/${HOME}/~}\$ &quot;)</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_ALL</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>A__z</KEY>
+      <VAL>&quot;*SHLVL</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>REALLIB</KEY>
+      <VAL>/home/wawa/fusioninventory-agent_solaris-10u8-x86_2.1.7-2/perl/lib/5.12.1:/home/wawa/fusioninventory-agent_solaris-10u8-x86_2.1.7-2/perl/lib/site_perl/5.12.1:/home/wawa/fusioninventory-agent_solaris-10u8-x86_2.1.7-2/perl/lib/5.12.1/i86pc-solaris-thread-multi:/home/wawa/fusioninventory-agent_solaris-10u8-x86_2.1.7-2/perl/lib/site_perl/5.12.1/i86pc-solaris-thread-multi</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>MAIL</KEY>
+      <VAL>/var/mail/wawa</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TZ</KEY>
+      <VAL>Europe/Brussels</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PWD</KEY>
+      <VAL>/home/wawa/fusioninventory-agent_solaris-10u8-x86_2.1.7-2</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USER</KEY>
+      <VAL>root</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LANG</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LOGNAME</KEY>
+      <VAL>root</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERNAME</KEY>
+      <VAL>root</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SHLVL</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>_</KEY>
+      <VAL>*952*/home/wawa/fusioninventory-agent_solaris-10u8-x86_2.1.7-2/perl/bin/perl</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATH</KEY>
+      <VAL>/home/wawa/fusioninventory-agent_solaris-10u8-x86_2.1.7-2/perl/bin:/usr/sbin:/usr/bin</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>_AST_FEATURES</KEY>
+      <VAL>UNIVERSE - att</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_USER</KEY>
+      <VAL>wawa</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SHELL</KEY>
+      <VAL>/bin/bash</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TERM</KEY>
+      <VAL>sun-color</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_COMMAND</KEY>
+      <VAL>/usr/bin/su</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_UID</KEY>
+      <VAL>101</VAL>
+    </ENVS>
+    <HARDWARE>
+      <ARCHNAME>i86pc-solaris-thread-multi</ARCHNAME>
+      <CHECKSUM>262143</CHECKSUM>
+      <DESCRIPTION>i86pc(i86pc)/i386 HostID=00c90ee7</DESCRIPTION>
+      <ETIME>9</ETIME>
+      <IPADDR></IPADDR>
+      <MEMORY>768</MEMORY>
+      <NAME>openindiana</NAME>
+      <OSCOMMENTS>oi_148</OSCOMMENTS>
+      <OSNAME>SunOS 5.11</OSNAME>
+      <OSVERSION>OpenIndiana Development oi_148 X86</OSVERSION>
+      <PROCESSORN>1</PROCESSORN>
+      <PROCESSORS>2400</PROCESSORS>
+      <PROCESSORT>i386</PROCESSORT>
+      <SWAP>1048568</SWAP>
+      <USERDOMAIN></USERDOMAIN>
+      <USERID>wawa</USERID>
+      <UUID>016826f0-3df6-4967-9a77-881be007ad1e</UUID>
+      <VMSYSTEM>VirtualBox</VMSYSTEM>
+      <WORKGROUP> </WORKGROUP>
+    </HARDWARE>
+    <NETWORKS>
+      <DESCRIPTION>e1000g0</DESCRIPTION>
+      <IPADDRESS>10.0.1.120</IPADDRESS>
+      <IPGATEWAY>10.0.1.1</IPGATEWAY>
+      <IPMASK>255.255.255.0</IPMASK>
+      <IPSUBNET>10.0.1.0</IPSUBNET>
+      <MACADDR>08:00:27:af:fe:d8</MACADDR>
+      <SPEED>1 Gb/s FDX AUTOSPEED ON</SPEED>
+      <STATUS>Up</STATUS>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>e1000g0</DESCRIPTION>
+      <IPGATEWAY>10.0.1.1</IPGATEWAY>
+      <IPMASK>0.0.0.0</IPMASK>
+      <IPSUBNET>0.0.0.0</IPSUBNET>
+      <MACADDR>08:00:27:af:fe:d8</MACADDR>
+      <SPEED>1 Gb/s FDX AUTOSPEED ON</SPEED>
+      <STATUS>Up</STATUS>
+    </NETWORKS>
+    <SOFTWARES>
+      <COMMENTS>Broadcom NetXtreme II Gigabit Ethernet PCI-X/PCIE Adapter Driver</COMMENTS>
+      <NAME>BRCMbnx</NAME>
+      <PUBLISHER>Broadcom Corporation, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Broadcom NetXtreme II 10 Gigabit Ethernet PCI-X/PCIE Adapter Driver</COMMENTS>
+      <NAME>BRCMbnxe</NAME>
+      <PUBLISHER>Broadcom Corporation, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>HP Smart Array HBA Driver 2.2.0.1</COMMENTS>
+      <NAME>CPQary3</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>X and OpenGL Drivers for NVIDIA Quadro graphics</COMMENTS>
+      <NAME>NVDAgraphics</NAME>
+      <PUBLISHER>NVIDIA Corporation</PUBLISHER>
+      <VERSION>256.44,REV=2010.08.03.22.25</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kernel Drivers for NVIDIA Quadro graphics</COMMENTS>
+      <NAME>NVDAgraphicsr</NAME>
+      <PUBLISHER>NVIDIA Corporation</PUBLISHER>
+      <VERSION>256.44,REV=2010.08.03.22.06</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IEEE1394 Framework and OpenHCI Driver</COMMENTS>
+      <NAME>SUNW1394</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>DTraceToolkit (0.99)</COMMENTS>
+      <NAME>SUNWDTraceToolkit</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2010.08.20</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Python interpreter, libraries and utilities</COMMENTS>
+      <NAME>SUNWPython26</NAME>
+      <PUBLISHER>Python.org</PUBLISHER>
+      <VERSION>2.6.4,REV=110.0.4.2010.10.31.08.37</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Python interpreter, libraries and utilities - development files</COMMENTS>
+      <NAME>SUNWPython26-devel</NAME>
+      <PUBLISHER>Python.org</PUBLISHER>
+      <VERSION>2.6.4,REV=110.0.4.2010.10.31.08.37</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Supplemental Python libraries and utilities</COMMENTS>
+      <NAME>SUNWPython26-extra</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.6.1,REV=110.0.4.2010.10.31.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tcl - Tool Command Language (8.4.18)</COMMENTS>
+      <NAME>SUNWTcl</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libtiff - library for reading and writing TIFF</COMMENTS>
+      <NAME>SUNWTiff</NAME>
+      <PUBLISHER>Silicon Graphics</PUBLISHER>
+      <VERSION>20.2.30.0,REV=110.0.4.2010.10.31.08.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libtiff - library for reading and writing TIFF - development files</COMMENTS>
+      <NAME>SUNWTiff-devel</NAME>
+      <PUBLISHER>Silicon Graphics</PUBLISHER>
+      <VERSION>20.2.30.0,REV=110.0.4.2010.10.31.08.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tk - TCL GUI Toolkit (8.4.18)</COMMENTS>
+      <NAME>SUNWTk</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>a2ps - GNU Any to PostScript filter (root) 4.13b</COMMENTS>
+      <NAME>SUNWa2psr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>a2ps - GNU Any to PostScript filter (user) 4.13b</COMMENTS>
+      <NAME>SUNWa2psu</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Adaptec AdvanceRaid Controller SCSI HBA Driver</COMMENTS>
+      <NAME>SUNWaac</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>AAlib - Ascii art graphics library (1.4 rc5)</COMMENTS>
+      <NAME>SUNWaalib</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities for accounting and reporting of system activity</COMMENTS>
+      <NAME>SUNWaccr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities for accounting and reporting of system activity</COMMENTS>
+      <NAME>SUNWaccu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>acpidump - utilities used to display ACPI tables (20071116)</COMMENTS>
+      <NAME>SUNWacpidump</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Software used to perform system administration tasks</COMMENTS>
+      <NAME>SUNWadmap</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2009.12.09.09.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>software libraries used by system identication tools</COMMENTS>
+      <NAME>SUNWadmlib-sysid</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2009.12.09.09.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Root programs and scripts for initializing system installation.</COMMENTS>
+      <NAME>SUNWadmr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2009.12.09.09.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Adaptec 7902 SCSI Driver</COMMENTS>
+      <NAME>SUNWadpu320</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ADMtek/Infineon Fast Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWafe</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>AGP GART driver for x86 workstations</COMMENTS>
+      <NAME>SUNWagp</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Advanced Host Controller Interface (AHCI) SATA HBA Driver</COMMENTS>
+      <NAME>SUNWahci</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>AMD8111 FAST Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWamd8111s</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LSI MegaRAID SCSI HBA Driver</COMMENTS>
+      <NAME>SUNWamr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris support for Intel Active Management Technology</COMMENTS>
+      <NAME>SUNWamt</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris support for Intel Active Management Technology - LMS daemon</COMMENTS>
+      <NAME>SUNWamt-lms</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Apache HTTP server Version 2.2 (root components)</COMMENTS>
+      <NAME>SUNWapch22r</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Apache HTTP Server Version 2.2 (usr components)</COMMENTS>
+      <NAME>SUNWapch22u</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Apache Portable Runtime (APR) 1.3 development header files and libraries</COMMENTS>
+      <NAME>SUNWapr13dev</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The shared libraries for any component using Apache Portable Runtime (APR) Version 1.3</COMMENTS>
+      <NAME>SUNWapr13lib</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Apache Portable Runtime Utility (APR-util) 1.3 LDAP's stub</COMMENTS>
+      <NAME>SUNWapu13-ldap</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Apache Portable Runtime Utility (APR-util) 1.3 development header files and libraries</COMMENTS>
+      <NAME>SUNWapu13dev</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The shared libraries for any component using Apache Portable Runtime Utility (APR-util) Version 1.3</COMMENTS>
+      <NAME>SUNWapu13lib</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SAS/SATA RAID driver</COMMENTS>
+      <NAME>SUNWarcmsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>configuration and start-up files for the AutoFS filesystem</COMMENTS>
+      <NAME>SUNWatfsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities and a daemon (automountd) for the AutoFS filesystem</COMMENTS>
+      <NAME>SUNWatfsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Atheros/Attansic L1E Gigabit Ethernet</COMMENTS>
+      <NAME>SUNWatge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Drivers for ATI framebuffer hardware</COMMENTS>
+      <NAME>SUNWatigfx</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SunOS audio device drivers</COMMENTS>
+      <NAME>SUNWaudd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Basic Audit Reporting Tool (BART)</COMMENTS>
+      <NAME>SUNWbart</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU Bourne-Again shell (bash) version 4.0</COMMENTS>
+      <NAME>SUNWbash</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU Bourne-Again shell (bash) version 4.0  (root package)</COMMENTS>
+      <NAME>SUNWbashr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>BroadCom ht1000 sata driver</COMMENTS>
+      <NAME>SUNWbcmsata</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Broadcom BCM4401 Fast Ethernet Driver</COMMENTS>
+      <NAME>SUNWbfe</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Broadcom 57xx Gigabit Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWbge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>BIND DNS Name server (9.6.1-P3)</COMMENTS>
+      <NAME>SUNWbind</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>BIND DNS tools (9.6.1-P3)</COMMENTS>
+      <NAME>SUNWbindc</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>BIND Name server manifest</COMMENTS>
+      <NAME>SUNWbindr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Basic IP commands (/usr/sbin/ping, /bin/ftp)</COMMENTS>
+      <NAME>SUNWbip</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Basic IP commands (Root)</COMMENTS>
+      <NAME>SUNWbipr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Datalink layer bridging support</COMMENTS>
+      <NAME>SUNWbridger</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Datalink layer bridging support</COMMENTS>
+      <NAME>SUNWbridgeu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>software development utilities, including ar, dis, dump, elfdump, elfedit, lex, lorder, mcs, nm, prof, ranlib, rpcgen, size, strip, tsort, and yacc</COMMENTS>
+      <NAME>SUNWbtool</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The bzip compression utility</COMMENTS>
+      <NAME>SUNWbzip</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Vector graphics library</COMMENTS>
+      <NAME>SUNWcairo</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.8.10,REV=110.0.4.2010.10.31.08.49</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Vector graphics library - development files</COMMENTS>
+      <NAME>SUNWcairo-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.8.10,REV=110.0.4.2010.10.31.08.49</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core kernel software for a specific hardware platform group</COMMENTS>
+      <NAME>SUNWcakr.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core kernel software for the i86xpv virtual hardware platform</COMMENTS>
+      <NAME>SUNWcakrx.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for a specific hardware platform group</COMMENTS>
+      <NAME>SUNWcar.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for the i86xpv virtual hardware platform</COMMENTS>
+      <NAME>SUNWcarx.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun GigaSwift Ethernet Adapter Driver adb Macros</COMMENTS>
+      <NAME>SUNWcea</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.28.11.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun GigaSwift Ethernet Adapter Driver</COMMENTS>
+      <NAME>SUNWced</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.28.11.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun GigaSwift Ethernet Adapter Headers</COMMENTS>
+      <NAME>SUNWcedu</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.28.11.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Fibre Channel HBA API Library based on the T11 FC-MI specification</COMMENTS>
+      <NAME>SUNWcfcl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Fibre Channel HBA API Library based on the T11 FC-MI specification</COMMENTS>
+      <NAME>SUNWcfclr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Provides the fp plug-in library of libcfgadm.</COMMENTS>
+      <NAME>SUNWcfpl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Provides support for fp plug-in library of libcfgadm.</COMMENTS>
+      <NAME>SUNWcfplr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Chelsio N110 10 Gigabit Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWchxge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core kernel software for a specific instruction-set architecture</COMMENTS>
+      <NAME>SUNWckr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for network infrastructure configuration</COMMENTS>
+      <NAME>SUNWcnetr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kernel support for CPU Performance Counters</COMMENTS>
+      <NAME>SUNWcpc.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>CPU Performance Counter libraries and utilities</COMMENTS>
+      <NAME>SUNWcpcu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris cpp</COMMENTS>
+      <NAME>SUNWcpp</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>5.11,REV=2009.02.13</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Suspend, Resume package</COMMENTS>
+      <NAME>SUNWcpr.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core entries for /dev and /devices needed for the initial boot of Solaris</COMMENTS>
+      <NAME>SUNWcsd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core shared libraries for a specific instruction-set architecture</COMMENTS>
+      <NAME>SUNWcsl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for a specific instruction-set architecture</COMMENTS>
+      <NAME>SUNWcslr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for a specific instruction-set architecture</COMMENTS>
+      <NAME>SUNWcsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for a specific instruction-set architecture</COMMENTS>
+      <NAME>SUNWcsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Unix Print System v1.4 (root)</COMMENTS>
+      <NAME>SUNWcupsr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Unix Print System v1.4 (usr)</COMMENTS>
+      <NAME>SUNWcupsu</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>CURL - The C-URL Wrappers Library (7.20.1)</COMMENTS>
+      <NAME>SUNWcurl</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simple IPC library based on messages</COMMENTS>
+      <NAME>SUNWdbus</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.2.24,REV=110.0.4.2010.10.31.09.25</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simple IPC library based on messages - development files</COMMENTS>
+      <NAME>SUNWdbus-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.2.24,REV=110.0.4.2010.10.31.09.25</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>D-Bus GLib bindings</COMMENTS>
+      <NAME>SUNWdbus-glib</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>0.86,REV=110.0.4.2010.10.31.09.26</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>D-Bus GLib bindings - development files</COMMENTS>
+      <NAME>SUNWdbus-glib-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>0.86,REV=110.0.4.2010.10.31.09.26</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simple IPC library based on messages - client libraries</COMMENTS>
+      <NAME>SUNWdbus-libs</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.2.24,REV=110.0.4.2010.10.31.09.25</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simple IPC library based on messages - / filesystem</COMMENTS>
+      <NAME>SUNWdbus-root</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.2.24,REV=110.0.4.2010.10.31.09.25</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun dcopy DMA drivers</COMMENTS>
+      <NAME>SUNWdcopy</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Device Driver Utility Database</COMMENTS>
+      <NAME>SUNWddu-DB</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.3.1,REV=2010.10.30</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Device Driver Utility Common Library</COMMENTS>
+      <NAME>SUNWddu-LIB</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.3.1,REV=2010.10.30</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Device Driver Utility Text</COMMENTS>
+      <NAME>SUNWddu-Text</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.3.1,REV=2010.10.30</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Graphical management interface for the DHCP server</COMMENTS>
+      <NAME>SUNWdhcm</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Root filesystem portion of the SunOS BOOTP/DHCP service, which uses the BOOT Protocol and/or Dynamic Host Configuration Protocol to provide network configuration parameters to BOOTP/DHCP clients. Administration utilities for the service are included.</COMMENTS>
+      <NAME>SUNWdhcsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Usr filesystem portion of the SunOS BOOTP/DHCP service, which uses the BOOT Protocol and/or Dynamic Host Configuration Protocol to provide network configuration parameters to BOOTP/DHCP clients. Administration utilities for the service are included.</COMMENTS>
+      <NAME>SUNWdhcsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenIndiana licensing</COMMENTS>
+      <NAME>SUNWdistro-license</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11,REV=2010.05.28.11.37</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Davicom 9102 Fast Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWdmfe</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities and fonts for development, display, and production of documentation such as manual pages (nroff/troff)</COMMENTS>
+      <NAME>SUNWdoc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Direct Rendering Manager kernel drivers and modules</COMMENTS>
+      <NAME>SUNWdrmr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Root components for Multicast DNS daemon and service discovery support</COMMENTS>
+      <NAME>SUNWdsdr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Multicast DNS daemon and service discovery modules</COMMENTS>
+      <NAME>SUNWdsdu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Dynamic Tracing (DTrace) Clients</COMMENTS>
+      <NAME>SUNWdtrc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Dynamic Tracing (DTrace) Providers</COMMENTS>
+      <NAME>SUNWdtrp</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>3Com Etherlink XL Ethernet Driver</COMMENTS>
+      <NAME>SUNWelxl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Device driver kit for Emulex-Sun FC, FCoE, and NIC adapters</COMMENTS>
+      <NAME>SUNWemlxs</NAME>
+      <PUBLISHER>Emulex Corporation</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Support software for Emulex-Sun LightPulse Fibre Channel adapters</COMMENTS>
+      <NAME>SUNWemlxu</NAME>
+      <PUBLISHER>Emulex Corporation</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>additional UNIX system utilities, including awk, bc, cal, compress, diff, dos2unix, last, rup, sort, spell, uniq, and uuencode</COMMENTS>
+      <NAME>SUNWesu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>expect - Programmed dialogue with other interactive programs</COMMENTS>
+      <NAME>SUNWexpect</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SNIA HBA library for Sun Fibre Channel adapters</COMMENTS>
+      <NAME>SUNWfchba</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>T11 FC-HBA library for Sun Fibre Channel adapters (root)</COMMENTS>
+      <NAME>SUNWfchbar</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun FCIP IP/ARP over FibreChannel Device Driver</COMMENTS>
+      <NAME>SUNWfcip</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fibre Channel adb macros and mdb modules</COMMENTS>
+      <NAME>SUNWfcmdb</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun FCoE (Fibre Channel over Ethernet) Port Management Library</COMMENTS>
+      <NAME>SUNWfcoeu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun FCP SCSI Fibre Channel Device Driver</COMMENTS>
+      <NAME>SUNWfcp</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utility for Fibre Channel Host Bus Adapters</COMMENTS>
+      <NAME>SUNWfcprt</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>NPIV Utility for Fibre Channel Host Bus Adapters (root)</COMMENTS>
+      <NAME>SUNWfcprtr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Provides the FCSM driver</COMMENTS>
+      <NAME>SUNWfcsm</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>fctl module and fp device driver</COMMENTS>
+      <NAME>SUNWfctl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>foomatic-filters - Foomatic Print Filters (root) 3.0.2</COMMENTS>
+      <NAME>SUNWffiltersr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>foomatic-filters - Foomatic Print Filters (user) 3.0.2</COMMENTS>
+      <NAME>SUNWffiltersu</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Intel 5000/7300 memory power management driver</COMMENTS>
+      <NAME>SUNWfipe</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fault Management Daemon and Utilities</COMMENTS>
+      <NAME>SUNWfmd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fault Management Daemon and Utilities (Root)</COMMENTS>
+      <NAME>SUNWfmdr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fontconfig library</COMMENTS>
+      <NAME>SUNWfontconfig</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fontconfig library documentation</COMMENTS>
+      <NAME>SUNWfontconfig-docs</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fontconfig library configuration files (/etc/fonts)</COMMENTS>
+      <NAME>SUNWfontconfig-root</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>foomatic_ppds - Foomatic Print PPDs 3.0</COMMENTS>
+      <NAME>SUNWfppd</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>FreeType2 font handling library and rendering engine</COMMENTS>
+      <NAME>SUNWfreetype2</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>FRU ID prtfru command and libfru library</COMMENTS>
+      <NAME>SUNWfruid</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>FRU ID platform data module and access library</COMMENTS>
+      <NAME>SUNWfruip.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for the fair share scheduler</COMMENTS>
+      <NAME>SUNWfss</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>FTP Server Configuration Files</COMMENTS>
+      <NAME>SUNWftpr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>FTP Server and Utilities</COMMENTS>
+      <NAME>SUNWftpu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun Firmware Flash Update Tool (fwflash)</COMMENTS>
+      <NAME>SUNWfwflash</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>gawk - GNU awk 3.1.5</COMMENTS>
+      <NAME>SUNWgawk</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GCC Runtime - Shared libraries used by gcc and other gnu components</COMMENTS>
+      <NAME>SUNWgccruntime</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common GNU package</COMMENTS>
+      <NAME>SUNWgcmn</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ggrep - GNU grep utilities 2.5.4</COMMENTS>
+      <NAME>SUNWggrp</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME core libraries</COMMENTS>
+      <NAME>SUNWglib2</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.25.1,REV=110.0.4.2010.10.31.08.42</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME core libraries - development files</COMMENTS>
+      <NAME>SUNWglib2-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.25.1,REV=110.0.4.2010.10.31.08.42</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU make - A utility used to build software (gmake) 3.81</COMMENTS>
+      <NAME>SUNWgmake</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME audio support framework</COMMENTS>
+      <NAME>SUNWgnome-audio</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.30.0,REV=110.0.4.2010.10.31.09.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME audio support framework - development files</COMMENTS>
+      <NAME>SUNWgnome-audio-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.30.0,REV=110.0.4.2010.10.31.09.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME audio support framework - / filesystem</COMMENTS>
+      <NAME>SUNWgnome-audio-root</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.30.0,REV=110.0.4.2010.10.31.09.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU core utilities (8.5)</COMMENTS>
+      <NAME>SUNWgnu-coreutils</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU diffutils - Finds differences between and among files (2.8.7)</COMMENTS>
+      <NAME>SUNWgnu-diffutils</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU utilities find and xargs</COMMENTS>
+      <NAME>SUNWgnu-findutils</NAME>
+      <PUBLISHER>www.gnu.org/software/findutils</PUBLISHER>
+      <VERSION>4.2.31,REV=110.0.4.2010.10.31.08.51</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IDN - The Internationalized Domains Library (0.6.8)</COMMENTS>
+      <NAME>SUNWgnu-idn</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU Multiple Precision (Bignum) Library (4.3.1)</COMMENTS>
+      <NAME>SUNWgnu-mp</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU nano text editor (2.0.9)</COMMENTS>
+      <NAME>SUNWgnu-nano</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU readline library (5.2)</COMMENTS>
+      <NAME>SUNWgnu-readline</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU which utility (2.16)</COMMENTS>
+      <NAME>SUNWgnu-which</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU transport layer security library</COMMENTS>
+      <NAME>SUNWgnutls</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.8.6,REV=110.0.4.2010.10.31.10.06</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU transport layer security library - development files</COMMENTS>
+      <NAME>SUNWgnutls-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.8.6,REV=110.0.4.2010.10.31.10.06</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU Patch utility</COMMENTS>
+      <NAME>SUNWgpch</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU roff Text Formatting</COMMENTS>
+      <NAME>SUNWgroff</NAME>
+      <PUBLISHER>www.gnu.org/software/groff</PUBLISHER>
+      <VERSION>1.19.2,REV=110.0.4.2010.10.31.16.09</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Multiboot Boot Loader</COMMENTS>
+      <NAME>SUNWgrub</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GRUB libraries</COMMENTS>
+      <NAME>SUNWgrubr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>gsed - GNU sed 4.2.1</COMMENTS>
+      <NAME>SUNWgsed</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Generic Security Service Application Program Interface, Version 2 - user</COMMENTS>
+      <NAME>SUNWgss</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Generic Security Service Application Program Interface, Version 2 - config</COMMENTS>
+      <NAME>SUNWgssc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GSS-API mechanism libraries for NIS+ extended Diffie-Hellman</COMMENTS>
+      <NAME>SUNWgssdh</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU tar - A utility used to store, backup, and transport files (gtar) 1.23</COMMENTS>
+      <NAME>SUNWgtar</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GTK+ - GIMP toolkit libraries</COMMENTS>
+      <NAME>SUNWgtk2</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.20.0,REV=110.0.4.2010.10.31.08.57</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GTK+ - GIMP toolkit libraries - development files</COMMENTS>
+      <NAME>SUNWgtk2-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.20.0,REV=110.0.4.2010.10.31.08.57</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GTK+ - GIMP toolkit libraries - / filesystem</COMMENTS>
+      <NAME>SUNWgtk2-root</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.20.0,REV=110.0.4.2010.10.31.08.57</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU Zip (gzip) compression utility 1.3.5</COMMENTS>
+      <NAME>SUNWgzip</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hardware Abstraction Layer, HAL (freedesktop.org)</COMMENTS>
+      <NAME>SUNWhal</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hardware Abstraction Layer, HAL (freedesktop.org) (Root)</COMMENTS>
+      <NAME>SUNWhalr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hermon HCA driver</COMMENTS>
+      <NAME>SUNWhermon</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SunSwift Adapter Drivers</COMMENTS>
+      <NAME>SUNWhmd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ASCII databases describing various PCI, USB and other hardware</COMMENTS>
+      <NAME>SUNWhwdata</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SUN 10Gb hxge Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWhxge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun InfiniBand Framework</COMMENTS>
+      <NAME>SUNWib</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun InfiniBand layered Sockets Direct Protocol</COMMENTS>
+      <NAME>SUNWibsdp</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun InfiniBand Sockets Direct Protocol</COMMENTS>
+      <NAME>SUNWibsdpib</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Internationalized Domain Name Support Library Files</COMMENTS>
+      <NAME>SUNWidnl</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.10.0,REV=2004.11.22.18.47</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Intel 82575 1Gb PCI Express NIC Driver</COMMENTS>
+      <NAME>SUNWigb</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SNIA iSCSI Managment API plugin library for iSCSI adapters</COMMENTS>
+      <NAME>SUNWima</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SNIA iSCSI Managment API common library for iSCSI adapters</COMMENTS>
+      <NAME>SUNWimac</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SNIA iSCSI Managment API common library for iSCSI adapters (Root)</COMMENTS>
+      <NAME>SUNWimacr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SNIA iSCSI Managment API plugin library for iSCSI adapters (Root)</COMMENTS>
+      <NAME>SUNWimar</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Localization for core software libraries and commands used for system installation</COMMENTS>
+      <NAME>SUNWinstall-l10n</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2010.02.10.21.07</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Intel(R) PRO/1000 Server Adapter Driver</COMMENTS>
+      <NAME>SUNWintgige</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities to monitor or remove messages, semaphores, or shared memory for interprocess communication</COMMENTS>
+      <NAME>SUNWipc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IP Filter Utilities</COMMENTS>
+      <NAME>SUNWipfr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IP Filter Utilities</COMMENTS>
+      <NAME>SUNWipfu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Image Packaging System (IPS), or pkg(5), is the software delivery system used on OpenSolaris systems.  This package contains the core command-line components and depot server.</COMMENTS>
+      <NAME>SUNWipkg</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>0.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A branded zone whose software is managed using the Image Packaging System</COMMENTS>
+      <NAME>SUNWipkg-brand</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>0.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IPMI management tool 1.8.10</COMMENTS>
+      <NAME>SUNWipmi</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IPMI management tool 1.8.10 (root)</COMMENTS>
+      <NAME>SUNWipmir</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun IP over InfiniBand</COMMENTS>
+      <NAME>SUNWipoib</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Internet Print Protocol (IPP) encoding/decoding/operation support</COMMENTS>
+      <NAME>SUNWippcore</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>13.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Internet Printing Protocol(IPP) Apache configuration for service module</COMMENTS>
+      <NAME>SUNWipplr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>13.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Internet Printing Protocol(IPP) Apache module for listening service</COMMENTS>
+      <NAME>SUNWipplu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>13.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun iSCSI Data Mover (Root)</COMMENTS>
+      <NAME>SUNWiscsidmr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun iSCSI Data Mover (Usr)</COMMENTS>
+      <NAME>SUNWiscsidmu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun iSCSI Device Driver</COMMENTS>
+      <NAME>SUNWiscsir</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun iSCSI Management Utilities</COMMENTS>
+      <NAME>SUNWiscsiu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ISO code lists and translations</COMMENTS>
+      <NAME>SUNWiso-codes</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.16,REV=110.0.4.2010.10.31.09.47</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ISO code lists and translations - development files</COMMENTS>
+      <NAME>SUNWiso-codes-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.16,REV=110.0.4.2010.10.31.09.47</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Intel(R) PRO/10G Server Adapter Driver</COMMENTS>
+      <NAME>SUNWixgb</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Intel 10GbE PCIE NIC Driver</COMMENTS>
+      <NAME>SUNWixgbe</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Java Platform virtual machine and core class libraries</COMMENTS>
+      <NAME>SUNWj6rt</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.6.0,REV=2006.11.29.05.03</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Japanese Documentation Tools</COMMENTS>
+      <NAME>SUNWjdoc</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.1,REV=2008.04.05.03.16</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>jpeg - The Independent JPEG Groups JPEG software</COMMENTS>
+      <NAME>SUNWjpg</NAME>
+      <PUBLISHER>Other</PUBLISHER>
+      <VERSION>20.2.30.0,REV=110.0.4.2010.10.31.08.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>jpeg - The Independent JPEG Groups JPEG software - development files</COMMENTS>
+      <NAME>SUNWjpg-devel</NAME>
+      <PUBLISHER>Other</PUBLISHER>
+      <VERSION>20.2.30.0,REV=110.0.4.2010.10.31.08.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Configuration tables that specify keyboard attributes such as localized meanings for individual keys</COMMENTS>
+      <NAME>SUNWkey</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kerberos version 5 support (Root)</COMMENTS>
+      <NAME>SUNWkrbr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kerberos version 5 support (Usr)</COMMENTS>
+      <NAME>SUNWkrbu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for a specific hardware platform group</COMMENTS>
+      <NAME>SUNWkvm.i</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Afrikaans language support</COMMENTS>
+      <NAME>SUNWlang-af</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.35</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Arabic (Egypt) language support</COMMENTS>
+      <NAME>SUNWlang-arEG</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.11.08.08.29</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Assamese language support</COMMENTS>
+      <NAME>SUNWlang-as</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Azerbaijani language support</COMMENTS>
+      <NAME>SUNWlang-az</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Belarus language support</COMMENTS>
+      <NAME>SUNWlang-be</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Bulgarian language support</COMMENTS>
+      <NAME>SUNWlang-bg</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Bengali language support</COMMENTS>
+      <NAME>SUNWlang-bn</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Catalan language support</COMMENTS>
+      <NAME>SUNWlang-ca</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>language support common components</COMMENTS>
+      <NAME>SUNWlang-common</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.0,REV=2009.09.29.04.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Czech language support</COMMENTS>
+      <NAME>SUNWlang-cs</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Danish language support</COMMENTS>
+      <NAME>SUNWlang-da</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>German language support</COMMENTS>
+      <NAME>SUNWlang-deDE</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2010.01.20.09.17</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Greek (Greece) language support</COMMENTS>
+      <NAME>SUNWlang-elGR</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.11.08.08.29</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>English language support</COMMENTS>
+      <NAME>SUNWlang-enUS</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2010.01.20.09.18</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Spanish language support</COMMENTS>
+      <NAME>SUNWlang-esES</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.38</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Estonian language support</COMMENTS>
+      <NAME>SUNWlang-et</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.59</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Finnish language support</COMMENTS>
+      <NAME>SUNWlang-fi</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.59</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>French language support</COMMENTS>
+      <NAME>SUNWlang-frFR</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.38</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Gujarati language support</COMMENTS>
+      <NAME>SUNWlang-gu</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.38</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hebrew language support</COMMENTS>
+      <NAME>SUNWlang-he</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.04.59</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Indic language support</COMMENTS>
+      <NAME>SUNWlang-hi</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>110.0,REV=2009.12.07.13.30</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Croatian language support</COMMENTS>
+      <NAME>SUNWlang-hr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.00</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hungarian language support</COMMENTS>
+      <NAME>SUNWlang-hu</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.00</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Armenian language support</COMMENTS>
+      <NAME>SUNWlang-hy</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.00</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Indonesia language support</COMMENTS>
+      <NAME>SUNWlang-id</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.00</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Icelandic language support</COMMENTS>
+      <NAME>SUNWlang-is</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.00</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Italian (Italy) language support</COMMENTS>
+      <NAME>SUNWlang-itIT</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.11.08.08.32</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Japanese language support</COMMENTS>
+      <NAME>SUNWlang-ja</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.0,REV=2009.02.19.03.07</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Georgian language support</COMMENTS>
+      <NAME>SUNWlang-ka</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.00</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kazakh language support</COMMENTS>
+      <NAME>SUNWlang-kk</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2010.01.21.09.24</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kannada language support</COMMENTS>
+      <NAME>SUNWlang-kn</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.39</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Korean language support</COMMENTS>
+      <NAME>SUNWlang-ko</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>110.0,REV=2009.01.21.02.55</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kashmiri language support</COMMENTS>
+      <NAME>SUNWlang-ks</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kurdish language support</COMMENTS>
+      <NAME>SUNWlang-ku</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kirghiz language support</COMMENTS>
+      <NAME>SUNWlang-ky</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.39</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Lithuanian language support</COMMENTS>
+      <NAME>SUNWlang-lt</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Latvian language support</COMMENTS>
+      <NAME>SUNWlang-lv</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Macedonian language support</COMMENTS>
+      <NAME>SUNWlang-mk</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Malayalam language support</COMMENTS>
+      <NAME>SUNWlang-ml</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.40</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Marathi language support</COMMENTS>
+      <NAME>SUNWlang-mr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.40</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Malaysia language support</COMMENTS>
+      <NAME>SUNWlang-ms</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Maltese language support</COMMENTS>
+      <NAME>SUNWlang-mt</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Norwegian Bokmal language support</COMMENTS>
+      <NAME>SUNWlang-nb</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Dutch (Netherlands) language support</COMMENTS>
+      <NAME>SUNWlang-nlNL</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.11.08.08.33</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Norwegian Nynorsk language support</COMMENTS>
+      <NAME>SUNWlang-nn</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Oriya language support</COMMENTS>
+      <NAME>SUNWlang-or</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.40</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Panjabi language support</COMMENTS>
+      <NAME>SUNWlang-pa</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.40</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Polish language support</COMMENTS>
+      <NAME>SUNWlang-pl</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Portugese language support</COMMENTS>
+      <NAME>SUNWlang-pt</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Brasilian Portugese language support</COMMENTS>
+      <NAME>SUNWlang-ptBR</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Romanian language support</COMMENTS>
+      <NAME>SUNWlang-ro</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Russian (Russia) language support</COMMENTS>
+      <NAME>SUNWlang-ruRU</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.11.08.08.33</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sanskrit language support</COMMENTS>
+      <NAME>SUNWlang-sa</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Slovak language support</COMMENTS>
+      <NAME>SUNWlang-sk</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Slovenian language support</COMMENTS>
+      <NAME>SUNWlang-sl</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Albanian language support</COMMENTS>
+      <NAME>SUNWlang-sq</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.02</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Serbian (Serbia) language support</COMMENTS>
+      <NAME>SUNWlang-srRS</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.11.08.08.34</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Swedish language support</COMMENTS>
+      <NAME>SUNWlang-sv</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.10.12.16.41</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Thai language support</COMMENTS>
+      <NAME>SUNWlang-th</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>110.0,REV=2009.01.21.02.55</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Turkish language support</COMMENTS>
+      <NAME>SUNWlang-tr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.03</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Ukrainian language support</COMMENTS>
+      <NAME>SUNWlang-uk</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.03</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Vietnam language support</COMMENTS>
+      <NAME>SUNWlang-vi</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2009.09.29.05.03</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simplified Chinese language support</COMMENTS>
+      <NAME>SUNWlang-zhCN</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>110.0,REV=2009.01.21.02.55</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Traditional Chinese language support</COMMENTS>
+      <NAME>SUNWlang-zhTW</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>110.0,REV=2009.01.21.02.56</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LatencyTOP tool</COMMENTS>
+      <NAME>SUNWlatencytop</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU pager (less) 436</COMMENTS>
+      <NAME>SUNWless</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libexpat - XML parser library 2.0.1</COMMENTS>
+      <NAME>SUNWlexpt</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun Workshop Compilers Bundled libC</COMMENTS>
+      <NAME>SUNWlibC</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>5.11,REV=2009.12.07</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME accesibility toolkit libraries</COMMENTS>
+      <NAME>SUNWlibatk</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.30.0,REV=110.0.4.2010.10.31.08.55</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME accesibility toolkit libraries - development files</COMMENTS>
+      <NAME>SUNWlibatk-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.30.0,REV=110.0.4.2010.10.31.08.55</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Lightweight C library for UNIX daemons</COMMENTS>
+      <NAME>SUNWlibdaemon</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>0.14,REV=110.0.4.2010.10.31.11.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Lightweight C library for UNIX daemons - development files</COMMENTS>
+      <NAME>SUNWlibdaemon-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>0.14,REV=110.0.4.2010.10.31.11.36</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Foreign Function Interface Library</COMMENTS>
+      <NAME>SUNWlibffi</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.0.9,REV=110.0.4.2010.10.31.08.22</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Foreign Function Interface Library - development files</COMMENTS>
+      <NAME>SUNWlibffi-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.0.9,REV=110.0.4.2010.10.31.08.22</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libgcrypt - cryptographic library</COMMENTS>
+      <NAME>SUNWlibgcrypt</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.4.5,REV=110.0.4.2010.10.31.09.38</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libgcrypt - cryptographic library - development files</COMMENTS>
+      <NAME>SUNWlibgcrypt-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.4.5,REV=110.0.4.2010.10.31.09.38</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common error codes for GnuPG, libgcrypt</COMMENTS>
+      <NAME>SUNWlibgpg-error</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.8,REV=110.0.4.2010.10.31.09.38</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common error codes for GnuPG, libgcrypt - development files</COMMENTS>
+      <NAME>SUNWlibgpg-error-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.8,REV=110.0.4.2010.10.31.09.38</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Math &amp; Microtasking Libraries (Usr)</COMMENTS>
+      <NAME>SUNWlibms</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>5.11,REV=2009.08.04</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Math &amp; Microtasking Libraries (Root)</COMMENTS>
+      <NAME>SUNWlibmsr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>5.11,REV=2009.08.04</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libpcap - a packet capture library (1.0.0)</COMMENTS>
+      <NAME>SUNWlibpcap</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Command line parsing library</COMMENTS>
+      <NAME>SUNWlibpopt</NAME>
+      <PUBLISHER>Red Hat</PUBLISHER>
+      <VERSION>1.7,REV=110.0.4.2010.10.31.08.26</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Command line parsing library - development files</COMMENTS>
+      <NAME>SUNWlibpopt-devel</NAME>
+      <PUBLISHER>Red Hat</PUBLISHER>
+      <VERSION>1.7,REV=110.0.4.2010.10.31.08.26</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simple Authentication and Security Layer (SASL) v2 shared library and plugins</COMMENTS>
+      <NAME>SUNWlibsasl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libsdl - Simple DirectMedia Layer</COMMENTS>
+      <NAME>SUNWlibsdl</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.2.13,REV=110.0.4.2010.10.31.11.59</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libsdl - Simple DirectMedia Layer - development files</COMMENTS>
+      <NAME>SUNWlibsdl-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.2.13,REV=110.0.4.2010.10.31.11.59</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tiny ASN.1 library</COMMENTS>
+      <NAME>SUNWlibtasn1</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.7,REV=110.0.4.2010.10.31.09.39</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tiny ASN.1 library - development files</COMMENTS>
+      <NAME>SUNWlibtasn1-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.7,REV=110.0.4.2010.10.31.09.39</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun wrapper library for libusb (0.1.8)</COMMENTS>
+      <NAME>SUNWlibusb</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libusb - User level usb ugen library (0.1.8)</COMMENTS>
+      <NAME>SUNWlibusbugen</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Ldap libraries in for software development of dynamically linked executables</COMMENTS>
+      <NAME>SUNWlldap</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>localization utilities and C locale (POSIX default) definitions</COMMENTS>
+      <NAME>SUNWloc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LSI Hardware RAID HBA Driver</COMMENTS>
+      <NAME>SUNWlsimega</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU libtool dlopen wrapper - libltdl (1.5.22)</COMMENTS>
+      <NAME>SUNWltdl</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun Enterprise Network Array firmware and utilities</COMMENTS>
+      <NAME>SUNWluxop</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The XML library</COMMENTS>
+      <NAME>SUNWlxml</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The XML library - developer files</COMMENTS>
+      <NAME>SUNWlxml-devel</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The XML library (Root)</COMMENTS>
+      <NAME>SUNWlxmlr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The XSLT library</COMMENTS>
+      <NAME>SUNWlxsl</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The XSLT library - developer files</COMMENTS>
+      <NAME>SUNWlxsl-devel</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>System Reference Manual Pages</COMMENTS>
+      <NAME>SUNWman</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>44.0,REV=2010.03.03.07.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Catalan localization for System Reference Manual Pages</COMMENTS>
+      <NAME>SUNWman-l10n-ca</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.0,REV=2010.02.08.11.37</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Japanese localization for System Reference Manual Pages</COMMENTS>
+      <NAME>SUNWman-l10n-ja</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>44.0,REV=2009.02.18.03.17</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Modular Debugger (MDB)</COMMENTS>
+      <NAME>SUNWmdb</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Modular Debugger (MDB) (Root)</COMMENTS>
+      <NAME>SUNWmdbr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris Volume Manager driver</COMMENTS>
+      <NAME>SUNWmdr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris Volume Manager commands</COMMENTS>
+      <NAME>SUNWmdu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LSI MegaSAS RAID Controller HBA Driver</COMMENTS>
+      <NAME>SUNWmegasas</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>CD creation utilities 3.00</COMMENTS>
+      <NAME>SUNWmkcd</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>CD creation utilities (Root) 2.01.01</COMMENTS>
+      <NAME>SUNWmkcdr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mozilla Directory Server (LDAP) 6 C-API (Private interface for Samba)</COMMENTS>
+      <NAME>SUNWmozldapC-SDK</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Library based on SNIA MP API specification</COMMENTS>
+      <NAME>SUNWmpapi</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Library based on SNIA MP API specification (Root)</COMMENTS>
+      <NAME>SUNWmpapir</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Path Administration Utility for a Solaris Multipathing device</COMMENTS>
+      <NAME>SUNWmpathadm</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SNIA MP API plugin library for the scsi_vhci driver (Root)</COMMENTS>
+      <NAME>SUNWmpsvplr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LSI MPT SAS 2.0 Controller HBA Driver</COMMENTS>
+      <NAME>SUNWmptsas</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LSI MegaRAID SAS2.0 Controller HBA Driver</COMMENTS>
+      <NAME>SUNWmrsas</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Marvell 88sx sata driver</COMMENTS>
+      <NAME>SUNWmv88sx</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Macronix Fast Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWmxfe</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Myricom 10 Gigabit Ethernet Adapter Driver</COMMENTS>
+      <NAME>SUNWmyri10ge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A CRT screen handling and optimization package.</COMMENTS>
+      <NAME>SUNWncurses</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>5.7,REV=110.0.4.2010.10.31.08.23</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A CRT screen handling and optimization package. - development files</COMMENTS>
+      <NAME>SUNWncurses-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>5.7,REV=110.0.4.2010.10.31.08.23</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Net-SNMP Agent files and libraries (5.4.1)</COMMENTS>
+      <NAME>SUNWnet-snmp-core</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Net-SNMP Agent manpages and html documentation files (5.4.1)</COMMENTS>
+      <NAME>SUNWnet-snmp-doc</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Net-SNMP Agent Configuration files and Startup scripts (5.4.1)</COMMENTS>
+      <NAME>SUNWnet-snmp-mgr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Net-SNMP Agent applications and utilities (5.4.1)</COMMENTS>
+      <NAME>SUNWnet-snmp-utils</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network File System (NFS) client kernel support (Root)</COMMENTS>
+      <NAME>SUNWnfsckr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network File System (NFS) client support (Root)</COMMENTS>
+      <NAME>SUNWnfscr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network File System (NFS) client support (Usr)</COMMENTS>
+      <NAME>SUNWnfscu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network File System (NFS) server kernel support (Root)</COMMENTS>
+      <NAME>SUNWnfsskr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network File System (NFS) server support (Root)</COMMENTS>
+      <NAME>SUNWnfssr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network File System (NFS) server support (Usr)</COMMENTS>
+      <NAME>SUNWnfssu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Nvidia CK8-04 GE driver</COMMENTS>
+      <NAME>SUNWnge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>configuration files and directories for the Network Information System (NIS)</COMMENTS>
+      <NAME>SUNWnisr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities for the Network Information System (NIS)</COMMENTS>
+      <NAME>SUNWnisu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network Time Protocol v4, NTP Daemon and Utilities (4.2.5) (root)</COMMENTS>
+      <NAME>SUNWntpr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network Time Protocol v4, NTP Daemon and Utilities (4.2.5) (usr)</COMMENTS>
+      <NAME>SUNWntpu</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>NetXen 1Gb/10Gb Ethernet Adapter Driver</COMMENTS>
+      <NAME>SUNWntxn</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Nvidia ck804 pro / mcp55 pro combo SATA driver</COMMENTS>
+      <NAME>SUNWnvsata</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun NIU 10Gb/1Gb leaf driver</COMMENTS>
+      <NAME>SUNWnxge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSL is a full-featured toolkit implementing the Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) protocols as well as a full-strength general purpose cryptography library.</COMMENTS>
+      <NAME>SUNWopenssl-commands</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSL C/C++ header files for development of OpenSSL applications (0.9.8o)</COMMENTS>
+      <NAME>SUNWopenssl-include</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSL Libraries (0.9.8o) (Usr)</COMMENTS>
+      <NAME>SUNWopenssl-libraries</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSL Manual Pages (0.9.8o)</COMMENTS>
+      <NAME>SUNWopenssl-man</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSL Libraries (0.9.8o) (Root)</COMMENTS>
+      <NAME>SUNWopensslr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Platform Support, OS Functionality (Root)</COMMENTS>
+      <NAME>SUNWos86r</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The p7zip compression and archiving utility</COMMENTS>
+      <NAME>SUNWp7zip</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>C header files for BPF/PF_PACKET</COMMENTS>
+      <NAME>SUNWpacketh</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>BPF/PF_PACKET kernel packet modules</COMMENTS>
+      <NAME>SUNWpacketu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME core text and font handling libraries</COMMENTS>
+      <NAME>SUNWpango</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.28.0,REV=110.0.4.2010.10.31.08.51</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME core text and font handling libraries - development files</COMMENTS>
+      <NAME>SUNWpango-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.28.0,REV=110.0.4.2010.10.31.08.51</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME core text and font handling libraries - / filesystem</COMMENTS>
+      <NAME>SUNWpango-root</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.28.0,REV=110.0.4.2010.10.31.08.51</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Free Standards Group Open Printing API, Draft v0.9</COMMENTS>
+      <NAME>SUNWpapi</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11.0,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library and tools for accessing PCI bus information</COMMENTS>
+      <NAME>SUNWpciaccess</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>kernel modules and start-up files for PCMCIA card services</COMMENTS>
+      <NAME>SUNWpcmci</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PCRE - Perl-Compatible Regular Expressions (7.8)</COMMENTS>
+      <NAME>SUNWpcre</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PCMCIA serial card driver</COMMENTS>
+      <NAME>SUNWpcser</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>client configuration files and utilities for the print service</COMMENTS>
+      <NAME>SUNWpcu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>13.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Drivers for the PCI bus</COMMENTS>
+      <NAME>SUNWpd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Authen-PAM PERL module</COMMENTS>
+      <NAME>SUNWperl-authen-pam</NAME>
+      <PUBLISHER>Perl</PUBLISHER>
+      <VERSION>5.8.4,REV=110.0.4.2010.10.31.15.54</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>XML::Parser and XML::Simple PERL modules - development files</COMMENTS>
+      <NAME>SUNWperl-xml-parser</NAME>
+      <PUBLISHER>Other</PUBLISHER>
+      <VERSION>5.8.4,REV=110.0.4.2010.10.31.08.26</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Perl 5.8.4 programming language (core)</COMMENTS>
+      <NAME>SUNWperl584core</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Perl 5.8.4 Reference Manual Pages</COMMENTS>
+      <NAME>SUNWperl584man</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>10.0,REV=1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Perl 5.8.4 programming language (non-core)</COMMENTS>
+      <NAME>SUNWperl584usr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PICL Framework init scripts</COMMENTS>
+      <NAME>SUNWpiclr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PICL Daemon, Libraries, prtpicl client and plug-in modules</COMMENTS>
+      <NAME>SUNWpiclu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>pipeline monitoring tool (1.1.4)</COMMENTS>
+      <NAME>SUNWpipe-viewer</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Pixman library</COMMENTS>
+      <NAME>SUNWpixman</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris System V release 4 Package Commands (root)</COMMENTS>
+      <NAME>SUNWpkgcmdsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris System V Release 4 Packaging Commands (usr)</COMMENTS>
+      <NAME>SUNWpkgcmdsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PMC-Sierra SAS-2 HBA Driver (root)</COMMENTS>
+      <NAME>SUNWpmcsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PMC-Sierra SAS-2 HBA driver (usr)</COMMENTS>
+      <NAME>SUNWpmcsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Power Management config file and rc script</COMMENTS>
+      <NAME>SUNWpmr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Power Management binaries</COMMENTS>
+      <NAME>SUNWpmu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Portable Network Graphics library</COMMENTS>
+      <NAME>SUNWpng</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>20.2.30.0,REV=110.0.4.2010.10.31.08.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Portable Network Graphics library - development files</COMMENTS>
+      <NAME>SUNWpng-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>20.2.30.0,REV=110.0.4.2010.10.31.08.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Toolkit for controlling privileges (freedesktop.org)</COMMENTS>
+      <NAME>SUNWpolkit</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for resource pools</COMMENTS>
+      <NAME>SUNWpool</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for dynamic resource pools</COMMENTS>
+      <NAME>SUNWpoold</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>core software for resource pools (Root)</COMMENTS>
+      <NAME>SUNWpoolr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PowerTOP tool</COMMENTS>
+      <NAME>SUNWpowertop</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Device drivers implementing point-to-point protocol (PPP)</COMMENTS>
+      <NAME>SUNWpppd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Configuration files for Solaris Point-to-Point Protocol (PPP)</COMMENTS>
+      <NAME>SUNWpppdr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Extensions implementing PPP tunneling protocols</COMMENTS>
+      <NAME>SUNWpppdt</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Daemon and utilities for Point-to-Point Protocol (PPP)</COMMENTS>
+      <NAME>SUNWpppdu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Optional GNU utilities for use with PPP</COMMENTS>
+      <NAME>SUNWpppg</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Netscape Portable Runtime Interface</COMMENTS>
+      <NAME>SUNWpr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>4.8.6,REV=2010.09.25.17.24</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris Product Registry runtime support (root)</COMMENTS>
+      <NAME>SUNWproduct-registry-root</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2009.12.09.09.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Platform Support, Bus-independent Device Drivers, (Root)</COMMENTS>
+      <NAME>SUNWpsdcr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Platform Support, ISA Bus Device Drivers, (Root)</COMMENTS>
+      <NAME>SUNWpsdir</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PCMCIA ATA card driver</COMMENTS>
+      <NAME>SUNWpsdpr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>client configuration files and utilities for the print service</COMMENTS>
+      <NAME>SUNWpsf</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>13.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Client side support for communicating with IPP based print servers</COMMENTS>
+      <NAME>SUNWpsm-ipp</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11.0,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Client side support for communicating with RFC-1179 based print servers</COMMENTS>
+      <NAME>SUNWpsm-lpd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11.0,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>configuration and start-up files for the print service</COMMENTS>
+      <NAME>SUNWpsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>13.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>client configuration files and utilities for the print service</COMMENTS>
+      <NAME>SUNWpsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>13.1,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>CherryPy is a Pythonic, object-oriented HTTP framework</COMMENTS>
+      <NAME>SUNWpython-cherrypy</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>3.1.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mako is an embedded Python (i.e., Python Server Page) templating language.</COMMENTS>
+      <NAME>SUNWpython-mako</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>0.2.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PLY is an implementation of lex and yacc parsing tools for Python</COMMENTS>
+      <NAME>SUNWpython-ply</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>3.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PycURL provides a thin layer of Python bindings on top of libcurl.</COMMENTS>
+      <NAME>SUNWpython-pycurl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>7.19.0.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Pythonic 2.6 binding for the libxml2 and libxslt libraries</COMMENTS>
+      <NAME>SUNWpython26-lxml</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.1.2,REV=2009.11.04</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>pyOpenSSL - Python interface to the OpenSSL library (0.8)</COMMENTS>
+      <NAME>SUNWpython26-pyopenssl</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>JSON (Java Script Object Notation) encoder/decoder for Python 2.6</COMMENTS>
+      <NAME>SUNWpython26-simplejson</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.1.1,REV=110.0.4.2010.10.31.12.23</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Qlogic ISP Fibre Channel Device Driver and GLDv3 NIC driver</COMMENTS>
+      <NAME>SUNWqlc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilties associated with the Qlogic Fibre Channel Adapter</COMMENTS>
+      <NAME>SUNWqlcu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Remote Network Client Commands (rsh, rlogin, rcp, rsh, ...)</COMMENTS>
+      <NAME>SUNWrcmdc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Remote Network Server Commands (Root)</COMMENTS>
+      <NAME>SUNWrcmdr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Remote Network Server Commands (includes finger, talk, rwho commands)</COMMENTS>
+      <NAME>SUNWrcmds</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Realtek Gigabit Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWrge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Realmode Modules, (Root)</COMMENTS>
+      <NAME>SUNWrmodr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Realmode Modules, (Usr)</COMMENTS>
+      <NAME>SUNWrmodu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Non-graphical removable volume manager</COMMENTS>
+      <NAME>SUNWrmvolmgr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Non-graphical removable volume manager (Root)</COMMENTS>
+      <NAME>SUNWrmvolmgrr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network Routing daemons/commands (Usr)</COMMENTS>
+      <NAME>SUNWroute</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network Routing daemons/commands (Root)</COMMENTS>
+      <NAME>SUNWroutr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>InfiniBand plugin implementation of RPC over RDMA</COMMENTS>
+      <NAME>SUNWrpcib</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilities for processing RPM archives</COMMENTS>
+      <NAME>SUNWrpm</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>kernel GSS-API services for ONC RPC</COMMENTS>
+      <NAME>SUNWrsgk</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>rsync - A utility that provides fast incremental file transfer and copy.</COMMENTS>
+      <NAME>SUNWrsync</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>RTL Fast NIC</COMMENTS>
+      <NAME>SUNWrtls</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solstice Enterprise Agents 1.0.3 files for root file system</COMMENTS>
+      <NAME>SUNWsacom</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solstice Enterprise Agents 1.0.3 Simple Network Management Protocol</COMMENTS>
+      <NAME>SUNWsasnm</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Serial Bus Protocol 2 module</COMMENTS>
+      <NAME>SUNWsbp2</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU Screen terminal multiplexer</COMMENTS>
+      <NAME>SUNWscreen</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU screen terminal multiplexer (root components)</COMMENTS>
+      <NAME>SUNWscreenrc</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IEEE 1394 mass storage driver</COMMENTS>
+      <NAME>SUNWscsa1394</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Vendor specific SCSI and SES plugins</COMMENTS>
+      <NAME>SUNWscsip</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SD/MMC Drivers</COMMENTS>
+      <NAME>SUNWsdcard</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Service Tags Agent</COMMENTS>
+      <NAME>SUNWservicetagr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.1.5,REV=2009.09.23.10.40</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Service Tags Agent</COMMENTS>
+      <NAME>SUNWservicetagu</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.1.5,REV=2009.09.23.10.40</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SCSI Enclosure Services (ses) Device Driver</COMMENTS>
+      <NAME>SUNWses</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SiS900 series Fast Ethernet Network Adapter Driver</COMMENTS>
+      <NAME>SUNWsfe</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SiliconImage 3124 sata driver</COMMENTS>
+      <NAME>SUNWsi3124</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libsigc++ - a library that implements typesafe callback system for standard C++</COMMENTS>
+      <NAME>SUNWsigcpp</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.2.6,REV=110.0.4.2010.10.31.11.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libsigc++ - a library that implements typesafe callback system for standard C++ - development files</COMMENTS>
+      <NAME>SUNWsigcpp-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>2.2.6,REV=110.0.4.2010.10.31.11.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>S-Lang Library (2.2.2)</COMMENTS>
+      <NAME>SUNWslang</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>S-Lang Library (2.2.2) (root)</COMMENTS>
+      <NAME>SUNWslangr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Finds files on a system via a central database</COMMENTS>
+      <NAME>SUNWslocate</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.1,REV=110.0.4.2010.10.31.16.25</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Finds files on a system via a central database - / filesystem</COMMENTS>
+      <NAME>SUNWslocate-root</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.1,REV=110.0.4.2010.10.31.16.25</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Root filesystem portion of the Service Location Protocol (SLP) framework. Includes the SLP configuration file and start scripts for the SLP daemon.</COMMENTS>
+      <NAME>SUNWslpr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Usr filesystem portion of the Service Location Protocol (SLP) framework. Included are C and Java developer libraries and a daemon which can act as a directory agent (DA).</COMMENTS>
+      <NAME>SUNWslpu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Software libraries for storage management</COMMENTS>
+      <NAME>SUNWsmapi</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>samba - A Windows SMB/CIFS fileserver for UNIX (Usr)</COMMENTS>
+      <NAME>SUNWsmbadocu</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>samba - A Windows SMB/CIFS fileserver for UNIX (Usr)</COMMENTS>
+      <NAME>SUNWsmbau</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SMB/CIFS File System client support (Kernel)</COMMENTS>
+      <NAME>SUNWsmbfskr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SMB/CIFS File System client support (Root)</COMMENTS>
+      <NAME>SUNWsmbfsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SMB/CIFS File System client support (Usr)</COMMENTS>
+      <NAME>SUNWsmbfsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SMB Server kernel root components</COMMENTS>
+      <NAME>SUNWsmbskr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SMB Server root components</COMMENTS>
+      <NAME>SUNWsmbsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SMB Server libraries and commands</COMMENTS>
+      <NAME>SUNWsmbsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Storage media management library</COMMENTS>
+      <NAME>SUNWsmedia</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Storage media management library (Root)</COMMENTS>
+      <NAME>SUNWsmediar</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Target Driver for Serial SCSI Management Protocol (SMP) Compliant Devices</COMMENTS>
+      <NAME>SUNWsmpd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sendmail Configuration Files</COMMENTS>
+      <NAME>SUNWsndmr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sendmail Utilities</COMMENTS>
+      <NAME>SUNWsndmu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Enable OpenIndiana name in /etc/release file</COMMENTS>
+      <NAME>SUNWsolnm</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11,REV=2010.05.28.10.44</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SPNEGO GSS-API Mechanism</COMMENTS>
+      <NAME>SUNWspnego</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris Bundled tools</COMMENTS>
+      <NAME>SUNWsprot</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>5.11,REV=2009.08.03</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SQL database engine library</COMMENTS>
+      <NAME>SUNWsqlite3</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.6.23,REV=110.0.4.2010.10.31.08.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SQL database engine library - development files</COMMENTS>
+      <NAME>SUNWsqlite3-devel</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.6.23,REV=110.0.4.2010.10.31.08.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Shell protocol common Utilities</COMMENTS>
+      <NAME>SUNWsshcu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Shell protocol Server</COMMENTS>
+      <NAME>SUNWsshdr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Shell protocol Server</COMMENTS>
+      <NAME>SUNWsshdu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Shell protocol Client and associated Utilities</COMMENTS>
+      <NAME>SUNWsshr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Shell protocol Client and associated Utilities</COMMENTS>
+      <NAME>SUNWsshu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun Common Multiprotocol SCSI Target device drivers</COMMENTS>
+      <NAME>SUNWstmf</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun Common Multiprotocol SCSI Target Libraries and Tools</COMMENTS>
+      <NAME>SUNWstmfu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Service Tags Solaris OS Registration</COMMENTS>
+      <NAME>SUNWstosreg</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>1.1.5,REV=2009.09.23.10.40</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>sudo (Root)</COMMENTS>
+      <NAME>SUNWsudor</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>sudo (usr)</COMMENTS>
+      <NAME>SUNWsudou</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tavor HCA driver</COMMENTS>
+      <NAME>SUNWtavor</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>tcpd - access control facility for internet services</COMMENTS>
+      <NAME>SUNWtcpd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tenex C-shell (tcsh) 6.17.00</COMMENTS>
+      <NAME>SUNWtcsh</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tecla command-line editing library</COMMENTS>
+      <NAME>SUNWtecla</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>extensive terminfo database entries describing capabilities of terminals and pseudoterminals</COMMENTS>
+      <NAME>SUNWter</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU texinfo (texinfo) 4.7</COMMENTS>
+      <NAME>SUNWtexi</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Trivial File Transfer Server</COMMENTS>
+      <NAME>SUNWtftp</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Trivial File Transfer Server (Root)</COMMENTS>
+      <NAME>SUNWtftpr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network Security Services</COMMENTS>
+      <NAME>SUNWtls</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>3.12.7.0,REV=2010.09.25.17.24</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Telnet Command (client)</COMMENTS>
+      <NAME>SUNWtnetc</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Telnet Server Daemon (Usr)</COMMENTS>
+      <NAME>SUNWtnetd</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Telnet Server Daemon (Root)</COMMENTS>
+      <NAME>SUNWtnetr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities for software development, including ld, ldd, od, and truss</COMMENTS>
+      <NAME>SUNWtoo</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>top - 3.8beta1</COMMENTS>
+      <NAME>SUNWtop</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Trusted Platform Module driver</COMMENTS>
+      <NAME>SUNWtpm</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11.0,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Trousers - TCG software stack (0.3.4)</COMMENTS>
+      <NAME>SUNWtss</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Trousers config and manifest</COMMENTS>
+      <NAME>SUNWtss-root</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>CDC ACM USB-to-serial driver</COMMENTS>
+      <NAME>SUNWuacm</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>DAT static registry file</COMMENTS>
+      <NAME>SUNWudaplr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun uDAPL provider for Tavor driver and registration script</COMMENTS>
+      <NAME>SUNWudapltr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun uDAPL provider for Tavor</COMMENTS>
+      <NAME>SUNWudapltu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Sun DAT registry library and datadm</COMMENTS>
+      <NAME>SUNWudaplu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Universal Disk Format 1.50 File System, (Usr)</COMMENTS>
+      <NAME>SUNWudf</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Universal Disk Format 1.50 File System</COMMENTS>
+      <NAME>SUNWudfr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>USB Digi Edgeport serial driver</COMMENTS>
+      <NAME>SUNWuedg</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>FTDI FT232R USB serial driver</COMMENTS>
+      <NAME>SUNWuftdi</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>UGEN (USB Generic Driver)</COMMENTS>
+      <NAME>SUNWugen</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Iconv modules for UTF-8 Locale</COMMENTS>
+      <NAME>SUNWuiu8</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.0,REV=2008.05.14.03.45</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ICONV Manual pages for UTF-8 Locale</COMMENTS>
+      <NAME>SUNWuium</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.0,REV=2008.04.18.13.01</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>USB Keyspan serial driver</COMMENTS>
+      <NAME>SUNWuksp</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>USA49WLC firmware for USB Keyspan serial driver</COMMENTS>
+      <NAME>SUNWukspfw</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>UnixODBC - The UnixODBC Subsystem and SDK (2.2.14)</COMMENTS>
+      <NAME>SUNWunixodbc</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>UnixODBC - The UnixODBC Subsystem and SDK (2.2.14) (root package)</COMMENTS>
+      <NAME>SUNWunixodbcr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Info-Zip (unzip) compression utility</COMMENTS>
+      <NAME>SUNWunzip</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Prolific PL2303 USB-to-serial driver</COMMENTS>
+      <NAME>SUNWuprl</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>USBA (USB framework) and USB Device Drivers</COMMENTS>
+      <NAME>SUNWusb</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>USB generic serial module</COMMENTS>
+      <NAME>SUNWusbs</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common framework for UWB device drivers</COMMENTS>
+      <NAME>SUNWuwb</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Vi IMproved version 7.2</COMMENTS>
+      <NAME>SUNWvim</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>VIA Rhine Fast Ethernet driver</COMMENTS>
+      <NAME>SUNWvr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris WAN boot support</COMMENTS>
+      <NAME>SUNWwbsup</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU wget - a utility to retrieve files from the World Wide Web (root components) 1.12</COMMENTS>
+      <NAME>SUNWwgetr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU wget - a utility to retrieve files from the World Wide Web (Usr) 1.12</COMMENTS>
+      <NAME>SUNWwgetu</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris Product Registry &amp; Web Start runtime support</COMMENTS>
+      <NAME>SUNWwsr2</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>4.0.0,REV=2009.12.09.09.48</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>utilities providing conformance with XCU4 specifications</COMMENTS>
+      <NAME>SUNWxcu4</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Neterion Xframe (I/II) 10 Gigabit Ethernet Adapter Driver</COMMENTS>
+      <NAME>SUNWxge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Symbolic links for X Window System software compatibility with other releases</COMMENTS>
+      <NAME>SUNWxorg-compatlinks</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hypervisor domain tools</COMMENTS>
+      <NAME>SUNWxvmdomr</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2010.10.31.23.08</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hypervisor domain tools</COMMENTS>
+      <NAME>SUNWxvmdomu</NAME>
+      <PUBLISHER>Sun Microsystems, Inc.</PUBLISHER>
+      <VERSION>11.11,REV=2010.10.31.23.08</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>xVM PV IP address agent</COMMENTS>
+      <NAME>SUNWxvmipar</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>xVM PV IP address agent</COMMENTS>
+      <NAME>SUNWxvmipau</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>xVM Paravirtualized Drivers</COMMENTS>
+      <NAME>SUNWxvmpv</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library and utilities to support the X Window System Inter-Client Exchange (ICE) protocol</COMMENTS>
+      <NAME>SUNWxwice</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Xft (X Freetype) Library</COMMENTS>
+      <NAME>SUNWxwxft</NAME>
+      <PUBLISHER>OpenIndiana</PUBLISHER>
+      <VERSION>6.9.0.5.11.14300,REV=0.2010.06.21</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Marvell Yukon 2 Gigabit Ethernet Controller Driver</COMMENTS>
+      <NAME>SUNWyge</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ZFS kernel root components</COMMENTS>
+      <NAME>SUNWzfskr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ZFS root components</COMMENTS>
+      <NAME>SUNWzfsr</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ZFS libraries and commands</COMMENTS>
+      <NAME>SUNWzfsu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Info-Zip (zip) compression utility</COMMENTS>
+      <NAME>SUNWzip</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Zip compression library</COMMENTS>
+      <NAME>SUNWzlib</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Zip compression library (Root)</COMMENTS>
+      <NAME>SUNWzlibr</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris Zones Configuration Files</COMMENTS>
+      <NAME>SUNWzoner</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Solaris Zones Configuration and Administration</COMMENTS>
+      <NAME>SUNWzoneu</NAME>
+      <PUBLISHER>Project OpenIndiana</PUBLISHER>
+      <VERSION>11.11,REV=2009.11.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Z shell (zsh)</COMMENTS>
+      <NAME>SUNWzsh</NAME>
+      <PUBLISHER>Oracle Corporation</PUBLISHER>
+      <VERSION>11.11.0,REV=2010.10.11.04.52</VERSION>
+    </SOFTWARES>
+    <STORAGES>
+      <DESCRIPTION>FW:1.0 FW:1.0 FW:1.0 FW:1.0</DESCRIPTION>
+      <DISKSIZE>17179</DISKSIZE>
+      <FIRMWARE>1.0</FIRMWARE>
+      <MANUFACTURER>ATA</MANUFACTURER>
+      <MODEL>VBOX</MODEL>
+      <NAME>c1t0d0</NAME>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>FW:1.0 FW:1.0 FW:1.0 FW:1.0</DESCRIPTION>
+      <DISKSIZE>0</DISKSIZE>
+      <FIRMWARE>1.0</FIRMWARE>
+      <MANUFACTURER>VBOX</MANUFACTURER>
+      <MODEL>CD-ROM</MODEL>
+      <NAME>c1t1d0</NAME>
+      <TYPE></TYPE>
+    </STORAGES>
+    <USERS>
+      <LOGIN>wawa</LOGIN>
+    </USERS>
+    <VERSIONCLIENT>FusionInventory-Agent_v2.1.7-2</VERSIONCLIENT>
+  </CONTENT>
+  <DEVICEID>openindiana-2011-01-24-15-42-46</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>

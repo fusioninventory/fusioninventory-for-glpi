@@ -1,0 +1,4751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2011-01-30 12:36:32</LOGDATE>
+      <USERID>N/A</USERID>
+    </ACCESSLOG>
+    <BATTERIES></BATTERIES>
+    <BIOS>
+      <BDATE>12/01/2006</BDATE>
+      <BMANUFACTURER>innotek GmbH</BMANUFACTURER>
+      <BVERSION>VirtualBox</BVERSION>
+      <SKUNUMBER>Not Specified</SKUNUMBER>
+      <SMANUFACTURER>innotek GmbH</SMANUFACTURER>
+      <SMODEL>VirtualBox</SMODEL>
+      <SSN>0</SSN>
+    </BIOS>
+    <CPUS>
+      <CORE>1</CORE>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) Core(TM)2 Duo CPU     T7700  @ 2.40GHz</NAME>
+      <SPEED>2400</SPEED>
+    </CPUS>
+    <DRIVES>
+      <FILESYSTEM>ext3</FILESYSTEM>
+      <FREE>3655</FREE>
+      <SERIAL>08c806f6-f560-11df-9884-a60c90c2ea63</SERIAL>
+      <TOTAL>4655</TOTAL>
+      <TYPE>/</TYPE>
+      <VOLUMN>/dev/ide/host0/bus0/target0/lun0/part1</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM>ext3</FILESYSTEM>
+      <FREE>2740</FREE>
+      <SERIAL>0a19c274-f560-11df-9316-998025958009</SERIAL>
+      <TOTAL>2918</TOTAL>
+      <TYPE>/home</TYPE>
+      <VOLUMN>/dev/ide/host0/bus0/target0/lun0/part6</VOLUMN>
+    </DRIVES>
+    <ENVS>
+      <KEY>SECURE_LEVEL</KEY>
+      <VAL>2</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>KONSOLE_DCOP_SESSION</KEY>
+      <VAL>DCOPRef(konsole-2129,session-1)</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>XAUTHORITY</KEY>
+      <VAL>/root/.xauthxG1hsF</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LESS</KEY>
+      <VAL>-MM</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_COLLATE</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_ALL</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_ADDRESS</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_NAME</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>BROWSER</KEY>
+      <VAL>kfmclient openProfile webbrowsing</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_NUMERIC</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LESSOPEN</KEY>
+      <VAL>|/usr/bin/lesspipe.sh %s</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PWD</KEY>
+      <VAL>/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_TIME</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_MEASUREMENT</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LANG</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>HELP_BROWSER</KEY>
+      <VAL>kfmclient openProfile webbrowsing</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USER</KEY>
+      <VAL>wawa</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_IDENTIFICATION</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_MESSAGES</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>G_BROKEN_FILENAMES</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LOGNAME</KEY>
+      <VAL>wawa</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SHLVL</KEY>
+      <VAL>4</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>INPUTRC</KEY>
+      <VAL>/etc/inputrc</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>DESKTOP</KEY>
+      <VAL>kde</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>ENV</KEY>
+      <VAL>/root/.bashrc</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATH</KEY>
+      <VAL>/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>KONSOLE_DCOP</KEY>
+      <VAL>DCOPRef(konsole-2129,konsole)</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COLORTERM</KEY>
+      <VAL></VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>HISTSIZE</KEY>
+      <VAL>1000</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TERM</KEY>
+      <VAL>xterm</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>XMODIFIERS</KEY>
+      <VAL>@im=none</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>HOME</KEY>
+      <VAL>/root</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LESSKEY</KEY>
+      <VAL>/etc/.less</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LANGUAGE</KEY>
+      <VAL>fr_FR:fr</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>DISPLAY</KEY>
+      <VAL>:0.0</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>GTK_RC_FILES</KEY>
+      <VAL>/usr/share/themes/Galaxy/gtk/gtkrc:/etc/gtk/gtkrc:/home/wawa/.gtkrc</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>XDM_MANAGED</KEY>
+      <VAL>/var/run/xdmctl/xdmctl-:0,maysd,mayfn,sched</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>REALLIB</KEY>
+      <VAL>/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/5.12.1:/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/site_perl/5.12.1:/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/5.12.1/i686-linux-thread-multi:/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/site_perl/5.12.1/i686-linux-thread-multi</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>MAIL</KEY>
+      <VAL>/var/spool/mail/wawa</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>GTK2_RC_FILES</KEY>
+      <VAL>/usr/share/themes/Galaxy/gtk-2.0/gtkrc:/etc/gtk-2.0/gtkrc:/home/wawa/.gtkrc-2.0</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>QTDIR</KEY>
+      <VAL>/usr/lib/qt3/</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_CTYPE</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_TELEPHONE</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>GS_LIB</KEY>
+      <VAL>/home/wawa/.kde/share/fonts</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERNAME</KEY>
+      <VAL>root</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>HOSTNAME</KEY>
+      <VAL>localhost</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_MONETARY</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>_</KEY>
+      <VAL>/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/bin/perl</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_PAPER</KEY>
+      <VAL>fr_FR</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LS_COLORS</KEY>
+      <VAL>no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SHELL</KEY>
+      <VAL>/bin/bash</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMPDIR</KEY>
+      <VAL>/root/tmp</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SESSION_MANAGER</KEY>
+      <VAL>local/localhost:/tmp/.ICE-unix/2112</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>KDE_MULTIHEAD</KEY>
+      <VAL>false</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMP</KEY>
+      <VAL>/root/tmp</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>HISTCONTROL</KEY>
+      <VAL>ignoredups</VAL>
+    </ENVS>
+    <HARDWARE>
+      <ARCHNAME>i686-linux-thread-multi</ARCHNAME>
+      <CHECKSUM>262143</CHECKSUM>
+      <DATELASTLOGGEDUSER>Sun Jan 30 12:32</DATELASTLOGGEDUSER>
+      <DEFAULTGATEWAY>10.0.1.1</DEFAULTGATEWAY>
+      <DESCRIPTION>i686/00-00-00 00:05:03</DESCRIPTION>
+      <DNS>127.0.0.1/10.0.1.1</DNS>
+      <ETIME>4</ETIME>
+      <IPADDR>10.0.1.118</IPADDR>
+      <LASTLOGGEDUSER>wawa</LASTLOGGEDUSER>
+      <MEMORY>503</MEMORY>
+      <NAME>localhost</NAME>
+      <OSCOMMENTS>#1 Thu Sep 18 12:30:58 CEST 2003</OSCOMMENTS>
+      <OSNAME>Mandrake Linux</OSNAME>
+      <OSVERSION>2.4.22-10mdk</OSVERSION>
+      <PROCESSORN>1</PROCESSORN>
+      <PROCESSORS>2400</PROCESSORS>
+      <PROCESSORT>Intel(R) Core(TM)2 Duo CPU     T7700  @ 2.40GHz</PROCESSORT>
+      <SWAP>494</SWAP>
+      <USERDOMAIN></USERDOMAIN>
+      <USERID>wawa</USERID>
+      <UUID>77059174-4A9D-4082-B0A6-C49880FD88A0</UUID>
+      <VMSYSTEM>VirtualBox</VMSYSTEM>
+      <WORKGROUP>lan</WORKGROUP>
+    </HARDWARE>
+    <NETWORKS>
+      <DESCRIPTION>eth0</DESCRIPTION>
+      <IPADDRESS>10.0.1.118</IPADDRESS>
+      <IPGATEWAY>10.0.1.1</IPGATEWAY>
+      <IPMASK>255.255.255.0</IPMASK>
+      <IPSUBNET>10.0.1.0</IPSUBNET>
+      <MACADDR>08:00:27:D5:89:4F</MACADDR>
+      <SLAVES></SLAVES>
+      <STATUS>Up</STATUS>
+      <TYPE>Ethernet</TYPE>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>lo</DESCRIPTION>
+      <IPADDRESS>127.0.0.1</IPADDRESS>
+      <IPGATEWAY>10.0.1.1</IPGATEWAY>
+      <IPMASK>255.0.0.0</IPMASK>
+      <IPSUBNET>127.0.0.0</IPSUBNET>
+      <SLAVES></SLAVES>
+      <STATUS>Up</STATUS>
+      <TYPE>Local</TYPE>
+    </NETWORKS>
+    <PROCESSES>
+      <CMD>init [5]</CMD>
+      <CPUUSAGE>2.4</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>1</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1468</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[keventd]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[kapmd]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>3</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[ksoftirqd_CPU0]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>4</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[kswapd]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>5</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[bdflush]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>6</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[kupdated]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>7</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[kinoded]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>8</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[mdrecoveryd]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>9</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[kjournald]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>13</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>devfsd /dev</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>98</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2052</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[khubd]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>222</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>[kjournald]</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>380</PID>
+      <STARTED>2011-0-30 12:31</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>0</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/ifplugd -w -b -i eth0</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>830</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1468</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>portmap</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>857</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>rpc</USER>
+      <VIRTUALMEMORY>1600</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>syslogd -m 0</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>882</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1516</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>klogd -2</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>890</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2304</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>xfs -port -1 -daemon -droppriv -user xfs</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.6</MEM>
+      <PID>1105</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>xfs</USER>
+      <VIRTUALMEMORY>4712</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/apmd -p 10 -w 5 -W -P /usr/sbin/pmsuspend2</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>1165</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1472</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/bin/kdm -nodaemon</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>1209</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2576</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/etc/X11/X -deferglyphs 16 -auth /var/run/xauth/A:0-91JGi8</CMD>
+      <CPUUSAGE>0.9</CPUUSAGE>
+      <MEM>2.4</MEM>
+      <PID>1231</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>28116</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/atd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>1237</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>daemon</USER>
+      <VIRTUALMEMORY>1496</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>-:0</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1251</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>3336</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>saslauthd -a pam</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1266</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>4088</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>saslauthd -a pam</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1267</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>4088</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>saslauthd -a pam</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1268</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>4088</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>saslauthd -a pam</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1269</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>4088</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>saslauthd -a pam</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1270</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>4088</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/dhclient -1 -q -lf /var/lib/dhcp/dhclient-eth0.leases -pf /var/run/dhclient-eth0.pid -cf /etc/dhclient-eth0.conf eth0</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>1326</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2008</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/sshd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1334</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>3024</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>tmdns</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>1387</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>daemon</USER>
+      <VIRTUALMEMORY>1620</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>xinetd -stayalive -reuse -pidfile /var/run/xinetd.pid</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>1436</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2068</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/bin/sh /usr/bin/startkde</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1505</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>2472</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>cupsd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.3</MEM>
+      <PID>1585</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>4824</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: Running...</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.6</MEM>
+      <PID>1848</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>21284</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/lib/postfix/master</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1854</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>4204</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>pickup -l -t fifo -u -c</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1867</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>postfix</USER>
+      <VIRTUALMEMORY>4320</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>nqmgr -l -n qmgr -t fifo -u -c</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1868</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>postfix</USER>
+      <VIRTUALMEMORY>4356</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: dcopserver --nosid</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.6</MEM>
+      <PID>1892</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>21176</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>crond</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>1926</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1504</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: klauncher</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.8</MEM>
+      <PID>1927</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>22212</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kded</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>2.1</MEM>
+      <PID>1929</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>22652</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>fam</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>1956</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>2844</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/mingetty tty1</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2054</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>vc/1</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/mingetty tty2</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2055</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>vc/2</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/mingetty tty3</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2056</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>vc/3</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/mingetty tty4</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2057</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>vc/4</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/mingetty tty5</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2058</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>vc/5</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/mingetty tty6</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2059</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>vc/6</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>1448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/bin/artsd -F 10 -S 4096 -s 1 -m artsmessage -l 3 -f</CMD>
+      <CPUUSAGE>0.3</CPUUSAGE>
+      <MEM>1.0</MEM>
+      <PID>2107</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>10732</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: knotify</CMD>
+      <CPUUSAGE>0.1</CPUUSAGE>
+      <MEM>2.6</MEM>
+      <PID>2109</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>28144</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kwrapper ksmserver</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>2110</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>1456</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: ksmserver</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>2.0</MEM>
+      <PID>2112</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>22356</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kwin</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>2.4</MEM>
+      <PID>2113</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>23256</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kdesktop</CMD>
+      <CPUUSAGE>0.6</CPUUSAGE>
+      <MEM>4.0</MEM>
+      <PID>2115</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>32564</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kicker</CMD>
+      <CPUUSAGE>0.1</CPUUSAGE>
+      <MEM>2.8</MEM>
+      <PID>2118</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>25336</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kio_file file /tmp/ksocket-wawa/klauncherag68pb.slave-socket /tmp/ksocket-wawa/kdesktopyyMMpa.slave-socket</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.7</MEM>
+      <PID>2119</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>21448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kio_file file /tmp/ksocket-wawa/klauncherag68pb.slave-socket /tmp/ksocket-wawa/kdesktopysmONb.slave-socket</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.7</MEM>
+      <PID>2120</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>21520</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: klipper</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>2.3</MEM>
+      <PID>2124</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>22928</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kio_uiserver</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>2.5</MEM>
+      <PID>2126</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>22940</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kio_file file /tmp/ksocket-wawa/klauncherag68pb.slave-socket /tmp/ksocket-wawa/kdesktopULjL6a.slave-socket</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.7</MEM>
+      <PID>2127</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>21476</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: kio_file file /tmp/ksocket-wawa/klauncherag68pb.slave-socket /tmp/ksocket-wawa/kdesktop49X4Ma.slave-socket</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.7</MEM>
+      <PID>2128</PID>
+      <STARTED>2011-0-30 12:32</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>21480</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>kdeinit: konsole</CMD>
+      <CPUUSAGE>0.2</CPUUSAGE>
+      <MEM>2.7</MEM>
+      <PID>2129</PID>
+      <STARTED>2011-0-30 12:33</STARTED>
+      <TTY>?</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>24944</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/bin/bash</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>2131</PID>
+      <STARTED>2011-0-30 12:33</STARTED>
+      <TTY>pts/0</TTY>
+      <USER>wawa</USER>
+      <VIRTUALMEMORY>2640</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>su</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>2164</PID>
+      <STARTED>2011-0-30 12:33</STARTED>
+      <TTY>pts/0</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2356</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>bash</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.3</MEM>
+      <PID>2167</PID>
+      <STARTED>2011-0-30 12:33</STARTED>
+      <TTY>pts/0</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2664</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/bin/perl /home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/bin/fusioninventory-agent --conf-file=./agent.cfg --debug</CMD>
+      <CPUUSAGE>4.4</CPUUSAGE>
+      <MEM>1.7</MEM>
+      <PID>2212</PID>
+      <STARTED>2011-0-30 12:36</STARTED>
+      <TTY>pts/0</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>11080</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/bin/perl -e @INC=qw(/home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/5.12.1 /home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/site_perl/5.12.1 /home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/5.12.1/i686-linux-thread-multi /home/wawa/Desktop/fusioninventory-agent_mandrake-9.2-i686_2.1.7-2/perl/lib/site_perl/5.12.1/i686-linux-thread-multi ); eval 'use FusionInventory::Agent::Task::Inventory;'; FusionInventory::Agent::Task::Inventory::main(); -- /var/lib/fusioninventory-agent/__LOCAL__</CMD>
+      <CPUUSAGE>20.0</CPUUSAGE>
+      <MEM>2.3</MEM>
+      <PID>2217</PID>
+      <STARTED>2011-0-30 12:36</STARTED>
+      <TTY>pts/0</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>13828</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>ps aux</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>2338</PID>
+      <STARTED>2011-0-30 12:36</STARTED>
+      <TTY>pts/0</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>2688</VIRTUALMEMORY>
+    </PROCESSES>
+    <SOFTWARES>
+      <COMMENTS>The GNU Bourne Again shell (bash).</COMMENTS>
+      <FILESIZE>940809</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>bash.i586</NAME>
+      <VERSION>2.05b-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU libc libraries</COMMENTS>
+      <FILESIZE>8176929</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>glibc.i586</NAME>
+      <VERSION>2.3.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The basic directory layout for a Linux system.</COMMENTS>
+      <FILESIZE>0</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>filesystem.noarch</NAME>
+      <VERSION>2.1.3-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for developing apps which will use bzip2.</COMMENTS>
+      <FILESIZE>63784</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>libbzip2_1.i586</NAME>
+      <VERSION>1.0.2-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A C library for parsing command line parameters</COMMENTS>
+      <FILESIZE>54599</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:43 2010</INSTALLDATE>
+      <NAME>popt.i586</NAME>
+      <VERSION>1.8-18mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Perl programming language (base).</COMMENTS>
+      <FILESIZE>2341207</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>perl-base.i586</NAME>
+      <VERSION>5.8.1-0.RC4.3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU libraries and utilities for producing multi-lingual messages.</COMMENTS>
+      <FILESIZE>1249057</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>gettext-base.i586</NAME>
+      <VERSION>0.11.5-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A small utility for safely making /tmp files.</COMMENTS>
+      <FILESIZE>6272</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>mktemp.i586</NAME>
+      <VERSION>1.5-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A system tool for maintaining the /etc/rc*.d hierarchy.</COMMENTS>
+      <FILESIZE>232303</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>chkconfig.i586</NAME>
+      <VERSION>1.3.8-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The password database library config</COMMENTS>
+      <FILESIZE>81002</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>pwdb-conf.i586</NAME>
+      <VERSION>0.61.2-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilities for managing shadow password files and user/group accounts</COMMENTS>
+      <FILESIZE>1111820</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>shadow-utils.i586</NAME>
+      <VERSION>4.0.3-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The standard CrackLib dictionaries.</COMMENTS>
+      <FILESIZE>231625</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>cracklib-dicts.i586</NAME>
+      <VERSION>2.7-17mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU tool which simplifies the build process for users</COMMENTS>
+      <FILESIZE>831993</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>make.i586</NAME>
+      <VERSION>3.80-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GIMP Toolkit and GIMP Drawing Kit support library</COMMENTS>
+      <FILESIZE>1377654</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>libglib2.0_0.i586</NAME>
+      <VERSION>2.2.3-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU privacy guard - a free PGP replacement.</COMMENTS>
+      <FILESIZE>4107645</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>gnupg.i586</NAME>
+      <VERSION>1.2.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hardware list for the light detection library</COMMENTS>
+      <FILESIZE>917083</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>ldetect-lst.i586</NAME>
+      <VERSION>0.1.8-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Python base files</COMMENTS>
+      <FILESIZE>877750</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>python-base.i586</NAME>
+      <VERSION>2.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU core utilities: a set of tools commonly used in shell scripts</COMMENTS>
+      <FILESIZE>5921095</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>coreutils.i586</NAME>
+      <VERSION>5.0-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The kernel daemon (kerneld) and kernel module utilities.</COMMENTS>
+      <FILESIZE>4215495</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:49 2010</INSTALLDATE>
+      <NAME>modutils.i586</NAME>
+      <VERSION>2.4.25-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Programs which control basic system processes.</COMMENTS>
+      <FILESIZE>185822</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>SysVinit.i586</NAME>
+      <VERSION>2.85-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilities for monitoring your system and processes on your system</COMMENTS>
+      <FILESIZE>305073</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>procps.i586</NAME>
+      <VERSION>3.1.11-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The drakxtools (XFdrake, diskdrake, keyboarddrake, mousedrake...)</COMMENTS>
+      <FILESIZE>14406227</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:52 2010</INSTALLDATE>
+      <NAME>drakxtools-newt.i586</NAME>
+      <VERSION>9.2-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU versions of find utilities (find, xargs, and locate).</COMMENTS>
+      <FILESIZE>236109</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:52 2010</INSTALLDATE>
+      <NAME>findutils.i586</NAME>
+      <VERSION>4.1.20-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU data compression program</COMMENTS>
+      <FILESIZE>103082</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:53 2010</INSTALLDATE>
+      <NAME>gzip.i586</NAME>
+      <VERSION>1.2.4a-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The basic tools for setting up networking.</COMMENTS>
+      <FILESIZE>703229</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:56 2010</INSTALLDATE>
+      <NAME>net-tools.i586</NAME>
+      <VERSION>1.60-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for console tools</COMMENTS>
+      <FILESIZE>92156</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:57 2010</INSTALLDATE>
+      <NAME>libconsole0.i586</NAME>
+      <VERSION>0.2.3-46mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilities to create and check MS-DOS FAT filesystems.</COMMENTS>
+      <FILESIZE>102104</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:58 2010</INSTALLDATE>
+      <NAME>dosfstools.i586</NAME>
+      <VERSION>2.9-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mandrake Linux release file</COMMENTS>
+      <FILESIZE>1693</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:59 2010</INSTALLDATE>
+      <NAME>mandrake-release.i586</NAME>
+      <VERSION>9.2-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Vixie cron daemon for executing specified programs at set times.</COMMENTS>
+      <FILESIZE>104386</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:00 2010</INSTALLDATE>
+      <NAME>vixie-cron.i586</NAME>
+      <VERSION>3.0.1-56mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The basic required files for the root user's directory</COMMENTS>
+      <FILESIZE>11083</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>rootfiles.noarch</NAME>
+      <VERSION>9.1-0.1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The boot loader for Linux and other operating systems.</COMMENTS>
+      <FILESIZE>468496</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>lilo.i586</NAME>
+      <VERSION>22.5.7.2-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for expat</COMMENTS>
+      <FILESIZE>130184</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>libexpat0.i586</NAME>
+      <VERSION>1.95.6-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A library of functions for manipulating TIFF format image files</COMMENTS>
+      <FILESIZE>277136</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:02 2010</INSTALLDATE>
+      <NAME>libtiff3.i586</NAME>
+      <VERSION>3.5.7-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library providing XML and HTML support</COMMENTS>
+      <FILESIZE>3797970</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:03 2010</INSTALLDATE>
+      <NAME>libxml2.i586</NAME>
+      <VERSION>2.5.11-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared libraries needed by the X Window System version 11 release 6.</COMMENTS>
+      <FILESIZE>5446988</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:04 2010</INSTALLDATE>
+      <NAME>libxfree86.i586</NAME>
+      <VERSION>4.3-23mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fam, the File Alteration Monitor</COMMENTS>
+      <FILESIZE>154458</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:05 2010</INSTALLDATE>
+      <NAME>fam.i586</NAME>
+      <VERSION>2.6.10-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libart is a library for high-performance 2D graphics.</COMMENTS>
+      <FILESIZE>94156</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:05 2010</INSTALLDATE>
+      <NAME>libart_lgpl2.i586</NAME>
+      <VERSION>2.3.16-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Config files for Advanced Linux Sound Architecture (ALSA)</COMMENTS>
+      <FILESIZE>71637</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:06 2010</INSTALLDATE>
+      <NAME>libalsa-data.i586</NAME>
+      <VERSION>0.9.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Encoder specialized library for libvorbis</COMMENTS>
+      <FILESIZE>935152</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:07 2010</INSTALLDATE>
+      <NAME>libvorbisenc2.i586</NAME>
+      <VERSION>1.0-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Qt3 - Shared libraries</COMMENTS>
+      <FILESIZE>14057680</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:08 2010</INSTALLDATE>
+      <NAME>libqt3.i586</NAME>
+      <VERSION>3.1.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The libraries for arts</COMMENTS>
+      <FILESIZE>4122129</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:09 2010</INSTALLDATE>
+      <NAME>libarts1.i586</NAME>
+      <VERSION>1.1.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IDL parsing library</COMMENTS>
+      <FILESIZE>205826</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:18 2010</INSTALLDATE>
+      <NAME>libIDL2_0.i586</NAME>
+      <VERSION>0.8.2-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Header and object files for development using standard C libraries</COMMENTS>
+      <FILESIZE>8618625</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:19 2010</INSTALLDATE>
+      <NAME>glibc-devel.i586</NAME>
+      <VERSION>2.3.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simple interface for editing the font path for the X font server.</COMMENTS>
+      <FILESIZE>12373</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:20 2010</INSTALLDATE>
+      <NAME>chkfontpath.i586</NAME>
+      <VERSION>1.9.10-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Free versions of the 35 standard PostScript fonts</COMMENTS>
+      <FILESIZE>4962282</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:21 2010</INSTALLDATE>
+      <NAME>urw-fonts.noarch</NAME>
+      <VERSION>2.0-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for cdparanoia</COMMENTS>
+      <FILESIZE>123922</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:22 2010</INSTALLDATE>
+      <NAME>libcdda0.i586</NAME>
+      <VERSION>IIIa9.8-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for compound documents in GNOME</COMMENTS>
+      <FILESIZE>431816</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>libbonobo2_0.i586</NAME>
+      <VERSION>2.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GIMP ToolKit (GTK+), a library for creating GUIs</COMMENTS>
+      <FILESIZE>193023</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>libgtk+2.0_0.i586</NAME>
+      <VERSION>2.2.4-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tools for manipulating graphics files in netpbm supported formats</COMMENTS>
+      <FILESIZE>3823290</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:25 2010</INSTALLDATE>
+      <NAME>netpbm.i586</NAME>
+      <VERSION>9.24-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared library for high-quality image printing</COMMENTS>
+      <FILESIZE>5231106</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:26 2010</INSTALLDATE>
+      <NAME>libgimpprint1.i586</NAME>
+      <VERSION>4.2.5-30mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME virtual file-system libraries</COMMENTS>
+      <FILESIZE>242736</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:26 2010</INSTALLDATE>
+      <NAME>libgnome-vfs2_0.i586</NAME>
+      <VERSION>2.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Foomatic filters needed to run print queues with Foomatic PPDs</COMMENTS>
+      <FILESIZE>360300</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:31 2010</INSTALLDATE>
+      <NAME>foomatic-filters.i586</NAME>
+      <VERSION>3.0-1.20030908.3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for kdebase</COMMENTS>
+      <FILESIZE>18123158</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:32 2010</INSTALLDATE>
+      <NAME>libkdebase4.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for imlib</COMMENTS>
+      <FILESIZE>394012</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:34 2010</INSTALLDATE>
+      <NAME>libimlib1.i586</NAME>
+      <VERSION>1.9.14-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>High-performance CORBA Object Request Broker.</COMMENTS>
+      <FILESIZE>481260</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>ORBit.i586</NAME>
+      <VERSION>0.5.17-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development environment for the expat XML parser</COMMENTS>
+      <FILESIZE>277376</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>libexpat0-devel.i586</NAME>
+      <VERSION>1.95.6-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tools to manipulate TTF fonts</COMMENTS>
+      <FILESIZE>70392</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:36 2010</INSTALLDATE>
+      <NAME>freetype-tools.i586</NAME>
+      <VERSION>1.3.1-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries and headers for GNOME application development</COMMENTS>
+      <FILESIZE>1260832</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:36 2010</INSTALLDATE>
+      <NAME>libgnome32.i586</NAME>
+      <VERSION>1.4.2-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mandrake MIME database</COMMENTS>
+      <FILESIZE>15317</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:37 2010</INSTALLDATE>
+      <NAME>mandrake-mime.noarch</NAME>
+      <VERSION>0.4-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Ready-to-use gtk+ dialog boxes</COMMENTS>
+      <FILESIZE>27972</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>gtkdialogs.i586</NAME>
+      <VERSION>2.0-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library to access to digital cameras</COMMENTS>
+      <FILESIZE>2599551</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>libgphoto2.i586</NAME>
+      <VERSION>2.1.2-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for binutils</COMMENTS>
+      <FILESIZE>727207</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:41 2010</INSTALLDATE>
+      <NAME>libbinutils2.i586</NAME>
+      <VERSION>2.14.90.0.5-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A graphical interface for administering users and groups</COMMENTS>
+      <FILESIZE>661354</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:43 2010</INSTALLDATE>
+      <NAME>userdrake.i586</NAME>
+      <VERSION>0.92-24mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>libieee1284 is a cross-platform library for parallel port access</COMMENTS>
+      <FILESIZE>41030</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:46 2010</INSTALLDATE>
+      <NAME>libieee1284_3.i586</NAME>
+      <VERSION>0.2.6-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME Structured File library</COMMENTS>
+      <FILESIZE>165335</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:47 2010</INSTALLDATE>
+      <NAME>libgsf-1_1.i586</NAME>
+      <VERSION>1.8.2-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A Free and Open Source interactive spelling checker program.</COMMENTS>
+      <FILESIZE>1721304</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:57 2010</INSTALLDATE>
+      <NAME>aspell.i586</NAME>
+      <VERSION>0.50.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for compound documents in GNOME</COMMENTS>
+      <FILESIZE>423371</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:57 2010</INSTALLDATE>
+      <NAME>libbonoboui2_0.i586</NAME>
+      <VERSION>2.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An implementation of the Scheme programming language</COMMENTS>
+      <FILESIZE>2096914</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:58 2010</INSTALLDATE>
+      <NAME>umb-scheme.i586</NAME>
+      <VERSION>3.2-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilities to manipulate XML files</COMMENTS>
+      <FILESIZE>715771</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:59 2010</INSTALLDATE>
+      <NAME>libxml2-utils.i586</NAME>
+      <VERSION>2.5.11-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GConf is a configuration database system.</COMMENTS>
+      <FILESIZE>269244</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:00 2010</INSTALLDATE>
+      <NAME>libGConf1.i586</NAME>
+      <VERSION>1.0.9-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME part of the libglade</COMMENTS>
+      <FILESIZE>59632</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libglade-gnome0.i586</NAME>
+      <VERSION>0.17-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development tools for programs which will use the libjpeg library</COMMENTS>
+      <FILESIZE>374721</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libjpeg62-devel.i586</NAME>
+      <VERSION>6b-32mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SASL is the Simple Authentication and Security Layer.</COMMENTS>
+      <FILESIZE>1094722</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:02 2010</INSTALLDATE>
+      <NAME>cyrus-sasl.i586</NAME>
+      <VERSION>2.1.15-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME Data Analysis and Visualization</COMMENTS>
+      <FILESIZE>892270</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:03 2010</INSTALLDATE>
+      <NAME>Guppi.i586</NAME>
+      <VERSION>0.40.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME http client library.</COMMENTS>
+      <FILESIZE>56478</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>libghttp1.i586</NAME>
+      <VERSION>1.0.9-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>This module contains data tables useful in dealing with HTML.</COMMENTS>
+      <FILESIZE>19248</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>perl-HTML-Tagset.noarch</NAME>
+      <VERSION>3.03-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Runtime library for the OpenJade group's SP suite</COMMENTS>
+      <FILESIZE>1974624</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:05 2010</INSTALLDATE>
+      <NAME>libOpenSP3.i586</NAME>
+      <VERSION>1.5-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Konsole</COMMENTS>
+      <FILESIZE>402925</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>kdebase-konsole.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>URI module for perl (World_Wide_Web_HTML_HTTP_CGI/URI)</COMMENTS>
+      <FILESIZE>239386</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>perl-URI.noarch</NAME>
+      <VERSION>1.25-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development files for GLU libs</COMMENTS>
+      <FILESIZE>88138</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>libMesaGLU1-devel.i586</NAME>
+      <VERSION>5.0.1-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development headers and libraries for writing programs using NAS</COMMENTS>
+      <FILESIZE>387900</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:07 2010</INSTALLDATE>
+      <NAME>libnas2-devel.i586</NAME>
+      <VERSION>1.6-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mpeg library</COMMENTS>
+      <FILESIZE>118061</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:08 2010</INSTALLDATE>
+      <NAME>libbmpeg1.i586</NAME>
+      <VERSION>1.3.1-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GnuCash is an application to keep track of your finances.</COMMENTS>
+      <FILESIZE>18987009</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:08 2010</INSTALLDATE>
+      <NAME>gnucash.i586</NAME>
+      <VERSION>1.8.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development files for Advanced Linux Sound Architecture (ALSA)</COMMENTS>
+      <FILESIZE>361340</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:10 2010</INSTALLDATE>
+      <NAME>libalsa2-devel.i586</NAME>
+      <VERSION>0.9.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libwww-perl module for perl</COMMENTS>
+      <FILESIZE>744043</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:14 2010</INSTALLDATE>
+      <NAME>perl-libwww-perl.noarch</NAME>
+      <VERSION>5.69-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A tcl extension for simplifying program-script interaction.</COMMENTS>
+      <FILESIZE>1006149</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:14 2010</INSTALLDATE>
+      <NAME>expect.i586</NAME>
+      <VERSION>8.4.2-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU line editor.</COMMENTS>
+      <FILESIZE>63074</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:15 2010</INSTALLDATE>
+      <NAME>ed.i586</NAME>
+      <VERSION>0.2-30mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Qt3 - Documentation and files needed to build Qt3 based applications</COMMENTS>
+      <FILESIZE>31242170</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:17 2010</INSTALLDATE>
+      <NAME>libqt3-devel.i586</NAME>
+      <VERSION>3.1.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Librairies for Kcalc programm</COMMENTS>
+      <FILESIZE>191968</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libkdeutils1-kcalc.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LibOFX library provides support for OFX command responses</COMMENTS>
+      <FILESIZE>1908562</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libofx.i586</NAME>
+      <VERSION>0.6.5-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Database sources for 'locale'</COMMENTS>
+      <FILESIZE>6374758</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:22 2010</INSTALLDATE>
+      <NAME>glibc-i18ndata.i586</NAME>
+      <VERSION>2.3.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSH Secure Shell protocol clients</COMMENTS>
+      <FILESIZE>432246</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:22 2010</INSTALLDATE>
+      <NAME>openssh-clients.i586</NAME>
+      <VERSION>3.6.1p2-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Wrapper for the gtk+1.2 and gtk+2.0  implementations of pygtk</COMMENTS>
+      <FILESIZE>6529</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:23 2010</INSTALLDATE>
+      <NAME>pygtk2.0-wrapper.i586</NAME>
+      <VERSION>2.0.0-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Advanced Power Management (APM) BIOS utilities for laptops.</COMMENTS>
+      <FILESIZE>68882</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:24 2010</INSTALLDATE>
+      <NAME>apmd.i586</NAME>
+      <VERSION>3.1.0-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Librairies files for kdegraphics</COMMENTS>
+      <FILESIZE>56570</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>libkdegraphics0-common.i586</NAME>
+      <VERSION>3.1.3-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libart is a library for high-performance 2D graphics.</COMMENTS>
+      <FILESIZE>205771</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>libart_lgpl2-devel.i586</NAME>
+      <VERSION>2.3.16-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kdeutils common files</COMMENTS>
+      <FILESIZE>141220</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-common.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kdessh programm</COMMENTS>
+      <FILESIZE>35344</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-kdessh.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Khexedit programm</COMMENTS>
+      <FILESIZE>657547</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:27 2010</INSTALLDATE>
+      <NAME>kdeutils-khexedit.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Header files and documentation for compiling KDE applications.</COMMENTS>
+      <FILESIZE>3874309</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>libkdecore4-devel.i586</NAME>
+      <VERSION>3.1.3-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Simple Common Gateway Interface class for Perl.</COMMENTS>
+      <FILESIZE>631904</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>perl-CGI.noarch</NAME>
+      <VERSION>3.00-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A color VT102 terminal emulator for the X Window System</COMMENTS>
+      <FILESIZE>697868</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:30 2010</INSTALLDATE>
+      <NAME>rxvt.i586</NAME>
+      <VERSION>2.7.10-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for GNOME print support</COMMENTS>
+      <FILESIZE>611354</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:31 2010</INSTALLDATE>
+      <NAME>libgnomeprintui2-2_0.i586</NAME>
+      <VERSION>2.3.1-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries unixODBC</COMMENTS>
+      <FILESIZE>1414136</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:38 2010</INSTALLDATE>
+      <NAME>libunixODBC2.i586</NAME>
+      <VERSION>2.2.6-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Coreutils documentation in info format</COMMENTS>
+      <FILESIZE>627107</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:38 2010</INSTALLDATE>
+      <NAME>coreutils-doc.i586</NAME>
+      <VERSION>5.0-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Programs for backing up and restoring filesystems</COMMENTS>
+      <FILESIZE>215498</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:39 2010</INSTALLDATE>
+      <NAME>dump.i586</NAME>
+      <VERSION>0.4b32-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Enables HBCI importing in GnuCash</COMMENTS>
+      <FILESIZE>223245</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:40 2010</INSTALLDATE>
+      <NAME>gnucash-hbci.i586</NAME>
+      <VERSION>1.8.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A utility for displaying and/or setting hard disk parameters.</COMMENTS>
+      <FILESIZE>66796</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:41 2010</INSTALLDATE>
+      <NAME>hdparm.i586</NAME>
+      <VERSION>5.4-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kfax package</COMMENTS>
+      <FILESIZE>597140</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:41 2010</INSTALLDATE>
+      <NAME>kdegraphics-kfax.i586</NAME>
+      <VERSION>3.1.3-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Default Mandrake Linux screensaver for KDE</COMMENTS>
+      <FILESIZE>55603</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:42 2010</INSTALLDATE>
+      <NAME>krozat.i586</NAME>
+      <VERSION>9.1-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>MandrakeGalaxy</COMMENTS>
+      <FILESIZE>438406</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:42 2010</INSTALLDATE>
+      <NAME>mandrake-galaxy.i586</NAME>
+      <VERSION>9.2-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>MySpell spelling dictionaries for French (France)</COMMENTS>
+      <FILESIZE>1218009</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>myspell-fr_FR.noarch</NAME>
+      <VERSION>1.0.2-0.20020608.1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A file compression and packaging utility compatible with PKZIP</COMMENTS>
+      <FILESIZE>279817</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>zip.i586</NAME>
+      <VERSION>2.3-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A utility for removing files based on when they were last accessed.</COMMENTS>
+      <FILESIZE>13777</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:44 2010</INSTALLDATE>
+      <NAME>tmpwatch.i586</NAME>
+      <VERSION>2.9.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The ISC DHCP (Dynamic Host Configuration Protocol) client</COMMENTS>
+      <FILESIZE>386376</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:16:35 2010</INSTALLDATE>
+      <NAME>dhcp-client.i586</NAME>
+      <VERSION>3.0-1.rc12.2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSH Secure Shell protocol server (sshd)</COMMENTS>
+      <FILESIZE>437680</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 18:01:05 2010</INSTALLDATE>
+      <NAME>openssh-server.i586</NAME>
+      <VERSION>3.6.1p2-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Creates a shared library cache and maintains symlinks for ld.so</COMMENTS>
+      <FILESIZE>461569</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>ldconfig.i586</NAME>
+      <VERSION>2.3.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development tools for programs which will access the termcap database</COMMENTS>
+      <FILESIZE>19266</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>libtermcap2.i586</NAME>
+      <VERSION>2.0.8-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PCRE is a Perl-compatible regular expression library</COMMENTS>
+      <FILESIZE>156094</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>libpcre0.i586</NAME>
+      <VERSION>4.3-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A statically linked shell, including some built-in basic commands</COMMENTS>
+      <FILESIZE>541904</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>sash.i586</NAME>
+      <VERSION>3.5-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A set of system configuration and setup files.</COMMENTS>
+      <FILESIZE>74742</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>setup.i586</NAME>
+      <VERSION>2.4-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared libraries for readline</COMMENTS>
+      <FILESIZE>205004</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>libreadline4.i586</NAME>
+      <VERSION>4.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fichiers de base pour la localisation (français)</COMMENTS>
+      <FILESIZE>844476</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>locales-fr.i586</NAME>
+      <VERSION>2.3.2-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for gdbm</COMMENTS>
+      <FILESIZE>51956</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>libgdbm2.i586</NAME>
+      <VERSION>1.8.0-24mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Extremely powerful file compression utility</COMMENTS>
+      <FILESIZE>76259</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:43 2010</INSTALLDATE>
+      <NAME>bzip2.i586</NAME>
+      <VERSION>1.0.2-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The dynamic libintl library for the gettext package.</COMMENTS>
+      <FILESIZE>221574</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:43 2010</INSTALLDATE>
+      <NAME>libintl2.i586</NAME>
+      <VERSION>0.11.5-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for glib</COMMENTS>
+      <FILESIZE>193028</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:43 2010</INSTALLDATE>
+      <NAME>libglib1.2.i586</NAME>
+      <VERSION>1.2.10-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Perl programming language.</COMMENTS>
+      <FILESIZE>18228731</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:43 2010</INSTALLDATE>
+      <NAME>perl.i586</NAME>
+      <VERSION>5.8.1-0.RC4.3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The development files for applications which use ncurses</COMMENTS>
+      <FILESIZE>342556</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>libncurses5.i586</NAME>
+      <VERSION>5.3-1.20030215.3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Network monitoring tools including ping.</COMMENTS>
+      <FILESIZE>184211</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>iputils.i586</NAME>
+      <VERSION>20020927-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU version of the awk text processing utility.</COMMENTS>
+      <FILESIZE>1160728</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>gawk.i586</NAME>
+      <VERSION>3.1.2-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilities for managing processes on your system.</COMMENTS>
+      <FILESIZE>74099</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>psmisc.i586</NAME>
+      <VERSION>21.3-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A password-checking library.</COMMENTS>
+      <FILESIZE>44301</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>libcrack2.i586</NAME>
+      <VERSION>2.7-17mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Detect and perform actions when an ethernet cable is (un)plugged.</COMMENTS>
+      <FILESIZE>83461</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>ifplugd.i586</NAME>
+      <VERSION>0.15-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The librairies for Ext2fs</COMMENTS>
+      <FILESIZE>198932</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>libext2fs2.i586</NAME>
+      <VERSION>1.34-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Provides certain programs with access to remote tape devices.</COMMENTS>
+      <FILESIZE>14463</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>rmt.i586</NAME>
+      <VERSION>0.4b32-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Programs for mounting and unmounting filesystems.</COMMENTS>
+      <FILESIZE>154103</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>mount.i586</NAME>
+      <VERSION>2.11z-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU stream text editor.</COMMENTS>
+      <FILESIZE>312303</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>sed.i586</NAME>
+      <VERSION>4.0.7-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Berkeley DB database library for C.</COMMENTS>
+      <FILESIZE>849230</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>libdb4.1.i586</NAME>
+      <VERSION>4.1.25-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU archiving program.</COMMENTS>
+      <FILESIZE>67918</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>cpio.i586</NAME>
+      <VERSION>2.5-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU collection of diff utilities</COMMENTS>
+      <FILESIZE>600905</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>diffutils.i586</NAME>
+      <VERSION>2.8.4-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Advanced IP routing and network device configuration tools.</COMMENTS>
+      <FILESIZE>1279101</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>iproute2.i586</NAME>
+      <VERSION>2.4.7-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Sockets Layer communications libs</COMMENTS>
+      <FILESIZE>1244120</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>libopenssl0.9.7.i586</NAME>
+      <VERSION>0.9.7b-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenLDAP libraries.</COMMENTS>
+      <FILESIZE>475892</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>libldap2.i586</NAME>
+      <VERSION>2.1.22-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU C library</COMMENTS>
+      <FILESIZE>30796</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>libgcc1.i586</NAME>
+      <VERSION>3.3.1-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The actual libraries for libuser.</COMMENTS>
+      <FILESIZE>176404</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>libuser1.i586</NAME>
+      <VERSION>0.51.7-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A library of functions for file transfer</COMMENTS>
+      <FILESIZE>272130</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>libcurl2.i586</NAME>
+      <VERSION>7.10.7-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Internationalization for Perl.</COMMENTS>
+      <FILESIZE>25212</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>perl-Locale-gettext.i586</NAME>
+      <VERSION>1.01-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A program that ejects removable media using software control.</COMMENTS>
+      <FILESIZE>85612</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>eject.i586</NAME>
+      <VERSION>2.0.13-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared libraries for Python 2.3</COMMENTS>
+      <FILESIZE>975312</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>libpython2.3.i586</NAME>
+      <VERSION>2.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Displays where a particular program in your path is located.</COMMENTS>
+      <FILESIZE>55837</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>which.i586</NAME>
+      <VERSION>2.14-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A compact getty program for virtual consoles only.</COMMENTS>
+      <FILESIZE>28846</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>mingetty.i586</NAME>
+      <VERSION>1.00-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Helper scripts for rpm scriptlets</COMMENTS>
+      <FILESIZE>14354</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>rpm-helper.noarch</NAME>
+      <VERSION>0.9.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The RPM package management system</COMMENTS>
+      <FILESIZE>4917562</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:49 2010</INSTALLDATE>
+      <NAME>rpm.i586</NAME>
+      <VERSION>4.2-18mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>URPM module for perl</COMMENTS>
+      <FILESIZE>241266</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>perl-URPM.i586</NAME>
+      <VERSION>0.94-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>User mode rpm install</COMMENTS>
+      <FILESIZE>2141739</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>urpmi.noarch</NAME>
+      <VERSION>4.4-37mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A collection of basic system utilities</COMMENTS>
+      <FILESIZE>3553086</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>util-linux.i586</NAME>
+      <VERSION>2.11z-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Security Level &amp; Program for the Mandrake Linux distribution</COMMENTS>
+      <FILESIZE>362612</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>msec.i586</NAME>
+      <VERSION>0.40-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The inittab file and the /etc/init.d scripts.</COMMENTS>
+      <FILESIZE>3992289</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:51 2010</INSTALLDATE>
+      <NAME>initscripts.i586</NAME>
+      <VERSION>7.06-32mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Manage network profiles</COMMENTS>
+      <FILESIZE>9228</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:51 2010</INSTALLDATE>
+      <NAME>netprofile.noarch</NAME>
+      <VERSION>0.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common data for all Mandrake Linux specific documentation</COMMENTS>
+      <FILESIZE>50098</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:52 2010</INSTALLDATE>
+      <NAME>mandrake_doc-common.noarch</NAME>
+      <VERSION>9.2-0.9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU file archiving program.</COMMENTS>
+      <FILESIZE>803184</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:52 2010</INSTALLDATE>
+      <NAME>tar.i586</NAME>
+      <VERSION>1.13.25-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared library for handling magic files.</COMMENTS>
+      <FILESIZE>48028</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:53 2010</INSTALLDATE>
+      <NAME>libmagic1.i586</NAME>
+      <VERSION>4.03-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A text file browser similar to more, but better.</COMMENTS>
+      <FILESIZE>171638</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:53 2010</INSTALLDATE>
+      <NAME>less.i586</NAME>
+      <VERSION>381-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Creates an initial ramdisk image for preloading modules.</COMMENTS>
+      <FILESIZE>96121</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:53 2010</INSTALLDATE>
+      <NAME>mkinitrd.i586</NAME>
+      <VERSION>3.4.43-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Linux kernel (the core of the Linux operating system).</COMMENTS>
+      <FILESIZE>20993121</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:54 2010</INSTALLDATE>
+      <NAME>kernel-2.4.22.10mdk.i586</NAME>
+      <VERSION>1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Contains the various common licenses uses by the distribution</COMMENTS>
+      <FILESIZE>97173</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:56 2010</INSTALLDATE>
+      <NAME>common-licenses.noarch</NAME>
+      <VERSION>1.0-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Rotates, compresses, and mails system logs</COMMENTS>
+      <FILESIZE>44332</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:57 2010</INSTALLDATE>
+      <NAME>logrotate.i586</NAME>
+      <VERSION>3.6.6-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The common files needed by any version of the VIM editor.</COMMENTS>
+      <FILESIZE>10566505</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:57 2010</INSTALLDATE>
+      <NAME>vim-common.i586</NAME>
+      <VERSION>6.2-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A user and group account administration library.</COMMENTS>
+      <FILESIZE>520173</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:58 2010</INSTALLDATE>
+      <NAME>libuser.i586</NAME>
+      <VERSION>0.51.7-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A version of the VIM editor which includes recent enhancements.</COMMENTS>
+      <FILESIZE>1178431</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:58 2010</INSTALLDATE>
+      <NAME>vim-enhanced.i586</NAME>
+      <VERSION>6.2-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A program used for creating the device files in /dev.</COMMENTS>
+      <FILESIZE>278068</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:58 2010</INSTALLDATE>
+      <NAME>makedev.noarch</NAME>
+      <VERSION>4.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>System logging and kernel message trapping daemons.</COMMENTS>
+      <FILESIZE>89047</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:00 2010</INSTALLDATE>
+      <NAME>sysklogd.i586</NAME>
+      <VERSION>1.4.1-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The process which starts the flushing of dirty buffers back to disk.</COMMENTS>
+      <FILESIZE>9609</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:00 2010</INSTALLDATE>
+      <NAME>bdflush.i586</NAME>
+      <VERSION>1.5-24mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A minimal version of the VIM editor.</COMMENTS>
+      <FILESIZE>435231</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:00 2010</INSTALLDATE>
+      <NAME>vim-minimal.i586</NAME>
+      <VERSION>6.2-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU utility for monitoring a program's use of system resources.</COMMENTS>
+      <FILESIZE>17007</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>time.i586</NAME>
+      <VERSION>1.7-25mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The passwd utility for setting/changing passwords using PAM</COMMENTS>
+      <FILESIZE>19252</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>passwd.i586</NAME>
+      <VERSION>0.68-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Programs for setting up and configuring loopback devices.</COMMENTS>
+      <FILESIZE>18753</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>losetup.i586</NAME>
+      <VERSION>2.11z-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mandrake Linux default files for new users' home directories</COMMENTS>
+      <FILESIZE>4259</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>etcskel.noarch</NAME>
+      <VERSION>1.63-15mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The skeleton package which defines a simple Mandrake Linux system.</COMMENTS>
+      <FILESIZE>0</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>basesystem.i586</NAME>
+      <VERSION>9.2-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared libraries for a free and portable TrueType font rendering engine</COMMENTS>
+      <FILESIZE>340132</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:02 2010</INSTALLDATE>
+      <NAME>libfreetype6.i586</NAME>
+      <VERSION>2.1.4-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A pixmap library for the X Window System</COMMENTS>
+      <FILESIZE>126136</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:02 2010</INSTALLDATE>
+      <NAME>libxpm4.i586</NAME>
+      <VERSION>3.4k-26mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A program which manages RPC connections</COMMENTS>
+      <FILESIZE>51080</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:02 2010</INSTALLDATE>
+      <NAME>portmap.i586</NAME>
+      <VERSION>4.0-21mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Sockets Layer communications libs &amp; utils</COMMENTS>
+      <FILESIZE>863401</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:03 2010</INSTALLDATE>
+      <NAME>openssl.i586</NAME>
+      <VERSION>0.9.7b-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A library of functions for manipulating PNG image format files.</COMMENTS>
+      <FILESIZE>542609</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:03 2010</INSTALLDATE>
+      <NAME>libpng3.i586</NAME>
+      <VERSION>1.2.5-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Font configuration library</COMMENTS>
+      <FILESIZE>87935</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:04 2010</INSTALLDATE>
+      <NAME>fontconfig.i586</NAME>
+      <VERSION>2.2.1-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Files for Mesa (GLU libs)</COMMENTS>
+      <FILESIZE>635138</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:04 2010</INSTALLDATE>
+      <NAME>libMesaGLU1.i586</NAME>
+      <VERSION>5.0.1-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Xinetd is a powerful replacement for inetd.</COMMENTS>
+      <FILESIZE>264876</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:05 2010</INSTALLDATE>
+      <NAME>xinetd.i586</NAME>
+      <VERSION>2.3.11-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for FAM</COMMENTS>
+      <FILESIZE>32148</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:05 2010</INSTALLDATE>
+      <NAME>libfam0.i586</NAME>
+      <VERSION>2.6.10-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries needed for nasd</COMMENTS>
+      <FILESIZE>92967</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:05 2010</INSTALLDATE>
+      <NAME>libnas2.i586</NAME>
+      <VERSION>1.6-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A library for handling MNG files</COMMENTS>
+      <FILESIZE>385880</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:06 2010</INSTALLDATE>
+      <NAME>libmng1.i586</NAME>
+      <VERSION>1.0.5-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Advanced Linux Sound Architecture (ALSA) library</COMMENTS>
+      <FILESIZE>686106</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:06 2010</INSTALLDATE>
+      <NAME>libalsa2.i586</NAME>
+      <VERSION>0.9.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Menu system</COMMENTS>
+      <FILESIZE>1253452</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:06 2010</INSTALLDATE>
+      <NAME>menu.i586</NAME>
+      <VERSION>2.1.5-123mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libmad is a high-quality MPEG Audio Decoder</COMMENTS>
+      <FILESIZE>106112</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:07 2010</INSTALLDATE>
+      <NAME>libmad0.i586</NAME>
+      <VERSION>0.15.0b-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>File operations specialized library for libvorbis</COMMENTS>
+      <FILESIZE>23020</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:08 2010</INSTALLDATE>
+      <NAME>libvorbisfile3.i586</NAME>
+      <VERSION>1.0-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Image loading and manipulation library for GTK+</COMMENTS>
+      <FILESIZE>320232</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:08 2010</INSTALLDATE>
+      <NAME>libgdk_pixbuf2.0_0.i586</NAME>
+      <VERSION>2.2.4-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>System for layout and rendering of internationalized text</COMMENTS>
+      <FILESIZE>549164</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:09 2010</INSTALLDATE>
+      <NAME>libpango1.0_0.i586</NAME>
+      <VERSION>1.2.5-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>config, language file for Qt</COMMENTS>
+      <FILESIZE>403105</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:09 2010</INSTALLDATE>
+      <NAME>qt3-common.i586</NAME>
+      <VERSION>3.1.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Arts - Libraries</COMMENTS>
+      <FILESIZE>491389</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:09 2010</INSTALLDATE>
+      <NAME>arts.i586</NAME>
+      <VERSION>1.1.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Core libraries for KDE</COMMENTS>
+      <FILESIZE>19664258</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:12 2010</INSTALLDATE>
+      <NAME>libkdecore4.i586</NAME>
+      <VERSION>3.1.3-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Accessibility features for Gtk+.</COMMENTS>
+      <FILESIZE>305280</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:18 2010</INSTALLDATE>
+      <NAME>libatk1.0_0.i586</NAME>
+      <VERSION>1.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for dynamically loading GLADE interface files</COMMENTS>
+      <FILESIZE>88294</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:18 2010</INSTALLDATE>
+      <NAME>libglade2.0_0.i586</NAME>
+      <VERSION>2.0.1-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The C Preprocessor</COMMENTS>
+      <FILESIZE>95374</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:20 2010</INSTALLDATE>
+      <NAME>gcc-cpp.i586</NAME>
+      <VERSION>3.3.1-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Free TrueType font rasterizer library.</COMMENTS>
+      <FILESIZE>784719</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:20 2010</INSTALLDATE>
+      <NAME>freetype.i586</NAME>
+      <VERSION>1.3.1-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Font server for XFree86</COMMENTS>
+      <FILESIZE>555050</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:20 2010</INSTALLDATE>
+      <NAME>XFree86-xfs.i586</NAME>
+      <VERSION>4.3-23mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>High-performance CORBA Object Request Broker.</COMMENTS>
+      <FILESIZE>274774</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:21 2010</INSTALLDATE>
+      <NAME>ORBit2.i586</NAME>
+      <VERSION>2.8.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Boot Splash Images and scripts</COMMENTS>
+      <FILESIZE>1751087</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:22 2010</INSTALLDATE>
+      <NAME>bootsplash.i586</NAME>
+      <VERSION>2.0.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library to access EXIF files (extended JPEG files)</COMMENTS>
+      <FILESIZE>231110</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:22 2010</INSTALLDATE>
+      <NAME>libexif9.i586</NAME>
+      <VERSION>0.5.12-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Fonts for the GhostScript PostScript(TM) interpreter</COMMENTS>
+      <FILESIZE>1501946</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>ghostscript-fonts.noarch</NAME>
+      <VERSION>6.0-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A configuration database system for GNOME 2</COMMENTS>
+      <FILESIZE>216602</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>libGConf2_4.i586</NAME>
+      <VERSION>2.4.0.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for compound documents in GNOME</COMMENTS>
+      <FILESIZE>997025</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>libbonobo.i586</NAME>
+      <VERSION>2.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for EsounD.</COMMENTS>
+      <FILESIZE>38712</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>libesound0.i586</NAME>
+      <VERSION>0.2.32-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GIMP ToolKit (GTK+), a library for creating GUIs</COMMENTS>
+      <FILESIZE>4598160</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:24 2010</INSTALLDATE>
+      <NAME>gtk+2.0.i586</NAME>
+      <VERSION>2.2.4-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNOME virtual file-system libraries</COMMENTS>
+      <FILESIZE>2597822</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:25 2010</INSTALLDATE>
+      <NAME>gnome-mime-data.i586</NAME>
+      <VERSION>2.4.0-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A utility for retrieving files using the HTTP or FTP protocols.</COMMENTS>
+      <FILESIZE>1087821</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:25 2010</INSTALLDATE>
+      <NAME>wget.i586</NAME>
+      <VERSION>1.8.2-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for high-performance CORBA Object Request Broker</COMMENTS>
+      <FILESIZE>506460</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:25 2010</INSTALLDATE>
+      <NAME>libORBit0.i586</NAME>
+      <VERSION>0.5.17-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Desktop configuration files for Mandrake Linux</COMMENTS>
+      <FILESIZE>2795547</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:26 2010</INSTALLDATE>
+      <NAME>mandrake_desk.noarch</NAME>
+      <VERSION>9.2-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The default startup script for the X Window System</COMMENTS>
+      <FILESIZE>27223</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:26 2010</INSTALLDATE>
+      <NAME>xinitrc.noarch</NAME>
+      <VERSION>2.4.4-76mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Part of the XFree86 implementation of the X Window System.</COMMENTS>
+      <FILESIZE>29638452</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:28 2010</INSTALLDATE>
+      <NAME>XFree86.i586</NAME>
+      <VERSION>4.3-23mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A tool for printing multiple pages of text on each printed page.</COMMENTS>
+      <FILESIZE>116065</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:31 2010</INSTALLDATE>
+      <NAME>mpage.i586</NAME>
+      <VERSION>2.5.3-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Linux USB utilities</COMMENTS>
+      <FILESIZE>161961</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:31 2010</INSTALLDATE>
+      <NAME>usbutils.i586</NAME>
+      <VERSION>0.11-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared library files for aspell</COMMENTS>
+      <FILESIZE>646752</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:31 2010</INSTALLDATE>
+      <NAME>libaspell15.i586</NAME>
+      <VERSION>0.50.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Graphical tools for certain user account management tasks</COMMENTS>
+      <FILESIZE>204924</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:32 2010</INSTALLDATE>
+      <NAME>usermode.i586</NAME>
+      <VERSION>1.63-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PostScript interpreter and renderer, most printer drivers</COMMENTS>
+      <FILESIZE>28668275</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:33 2010</INSTALLDATE>
+      <NAME>ghostscript.i586</NAME>
+      <VERSION>7.07-0.12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Header files and libraries for developing apps which will use zlib</COMMENTS>
+      <FILESIZE>161535</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:34 2010</INSTALLDATE>
+      <NAME>zlib1-devel.i586</NAME>
+      <VERSION>1.1.4-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An image loading and rendering library for Gdk.</COMMENTS>
+      <FILESIZE>231595</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>libgdk-pixbuf2.i586</NAME>
+      <VERSION>0.22.0-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GnomeCanvas widget</COMMENTS>
+      <FILESIZE>594909</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>libgnomecanvas2_0.i586</NAME>
+      <VERSION>2.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Header files and static library for development with FreeType2</COMMENTS>
+      <FILESIZE>2552394</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>libfreetype6-devel.i586</NAME>
+      <VERSION>2.1.4-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Programs for manipulating PostScript Type 1 fonts</COMMENTS>
+      <FILESIZE>172992</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>t1utils.i586</NAME>
+      <VERSION>1.27-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A helper application for loading modules for USB devices</COMMENTS>
+      <FILESIZE>108848</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>hotplug.i586</NAME>
+      <VERSION>2002_04_01-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Foomatic database access, printer admin, and printing utils</COMMENTS>
+      <FILESIZE>808354</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:36 2010</INSTALLDATE>
+      <NAME>foomatic-db-engine.i586</NAME>
+      <VERSION>3.0-1.20030908.3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main GNOME libraries</COMMENTS>
+      <FILESIZE>1350556</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:36 2010</INSTALLDATE>
+      <NAME>gnome-libs.i586</NAME>
+      <VERSION>1.4.2-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tools for developing apps which will use the XPM pixmap library</COMMENTS>
+      <FILESIZE>302056</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:37 2010</INSTALLDATE>
+      <NAME>libxpm4-devel.i586</NAME>
+      <VERSION>3.4k-26mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Perl module for the gtk+-2.x library</COMMENTS>
+      <FILESIZE>2405203</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:37 2010</INSTALLDATE>
+      <NAME>perl-Gtk2.i586</NAME>
+      <VERSION>0.95-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Warning box displayed when you are using KDE with system administrator permissions.</COMMENTS>
+      <FILESIZE>121184</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:37 2010</INSTALLDATE>
+      <NAME>krootwarning.i586</NAME>
+      <VERSION>9.1-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mandrake html welcome page</COMMENTS>
+      <FILESIZE>460517</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>indexhtml.noarch</NAME>
+      <VERSION>9.1-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PostScript interpreter and renderer (additional support for X)</COMMENTS>
+      <FILESIZE>73308</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>ghostscript-module-X.i586</NAME>
+      <VERSION>7.07-0.12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Some utilities for use by drakfont</COMMENTS>
+      <FILESIZE>293387</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>font-tools.i586</NAME>
+      <VERSION>0.1-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Hotplug support from libgphoto</COMMENTS>
+      <FILESIZE>7705</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>libgphoto-hotplug.i586</NAME>
+      <VERSION>2.1.2-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The shared libraries used by Kerberos 5.</COMMENTS>
+      <FILESIZE>1251775</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:41 2010</INSTALLDATE>
+      <NAME>libkrb51.i586</NAME>
+      <VERSION>1.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>kdm config file for kdebase and mdkkdm</COMMENTS>
+      <FILESIZE>7324</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:41 2010</INSTALLDATE>
+      <NAME>kdebase-kdm-config-file.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME libraries</COMMENTS>
+      <FILESIZE>2088196</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:41 2010</INSTALLDATE>
+      <NAME>libgnome2.i586</NAME>
+      <VERSION>2.4.0-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>kdm for kdebase</COMMENTS>
+      <FILESIZE>391468</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:43 2010</INSTALLDATE>
+      <NAME>kdebase-kdm.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>khelpcenter launcher for mandrake tools</COMMENTS>
+      <FILESIZE>40418</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:43 2010</INSTALLDATE>
+      <NAME>mdklaunchhelp.i586</NAME>
+      <VERSION>9.2-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>User mode rpm GUI install</COMMENTS>
+      <FILESIZE>2241</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:43 2010</INSTALLDATE>
+      <NAME>gurpmi.noarch</NAME>
+      <VERSION>4.4-37mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Service Menu for kdebase.</COMMENTS>
+      <FILESIZE>1438</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:43 2010</INSTALLDATE>
+      <NAME>kdebase-servicemenu.noarch</NAME>
+      <VERSION>1.0-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for Guile 1.6.4</COMMENTS>
+      <FILESIZE>3001739</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:46 2010</INSTALLDATE>
+      <NAME>libguile12.i586</NAME>
+      <VERSION>1.6.4-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU Binary Utility Development Utilities</COMMENTS>
+      <FILESIZE>2597900</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:46 2010</INSTALLDATE>
+      <NAME>binutils.i586</NAME>
+      <VERSION>2.14.90.0.5-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An interpreted, interactive object-oriented programming language</COMMENTS>
+      <FILESIZE>15478650</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:47 2010</INSTALLDATE>
+      <NAME>python.i586</NAME>
+      <VERSION>2.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>French files for aspell</COMMENTS>
+      <FILESIZE>23349636</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:48 2010</INSTALLDATE>
+      <NAME>aspell-fr.i586</NAME>
+      <VERSION>0.50.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME Object Activation Framework</COMMENTS>
+      <FILESIZE>103200</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:57 2010</INSTALLDATE>
+      <NAME>liboaf0.i586</NAME>
+      <VERSION>0.6.10-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for compound documents in GNOME</COMMENTS>
+      <FILESIZE>530802</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:57 2010</INSTALLDATE>
+      <NAME>libbonoboui.i586</NAME>
+      <VERSION>2.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for compound documents in GNOME</COMMENTS>
+      <FILESIZE>1534262</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:58 2010</INSTALLDATE>
+      <NAME>libgal23.i586</NAME>
+      <VERSION>0.24-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for Bonobo</COMMENTS>
+      <FILESIZE>838716</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:58 2010</INSTALLDATE>
+      <NAME>libbonobo2.i586</NAME>
+      <VERSION>1.0.22-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSSH free Secure Shell (SSH) implementation</COMMENTS>
+      <FILESIZE>460429</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:58 2010</INSTALLDATE>
+      <NAME>openssh.i586</NAME>
+      <VERSION>3.6.1p2-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Gettextize replacement</COMMENTS>
+      <FILESIZE>24010</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:59 2010</INSTALLDATE>
+      <NAME>glib-gettextize.i586</NAME>
+      <VERSION>2.2.3-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>SANE - local and remote scanner access. This package contains the sane library.</COMMENTS>
+      <FILESIZE>4753714</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:59 2010</INSTALLDATE>
+      <NAME>libsane1.i586</NAME>
+      <VERSION>1.0.12-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kghostview package</COMMENTS>
+      <FILESIZE>454940</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:00 2010</INSTALLDATE>
+      <NAME>kdegraphics-kghostview.i586</NAME>
+      <VERSION>3.1.3-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GConf is a configuration database system.</COMMENTS>
+      <FILESIZE>1251347</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:00 2010</INSTALLDATE>
+      <NAME>GConf.i586</NAME>
+      <VERSION>1.0.9-11mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An image loading and rendering library for Gdk.</COMMENTS>
+      <FILESIZE>12988</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libgdk-pixbuf-gnomecanvas1.i586</NAME>
+      <VERSION>0.22.0-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libglade allows dynamic load of user interface from am XML description.</COMMENTS>
+      <FILESIZE>102288</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libglade0.i586</NAME>
+      <VERSION>0.17-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for Gnome-Print</COMMENTS>
+      <FILESIZE>541328</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libgnomeprint15.i586</NAME>
+      <VERSION>0.37-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Librairies for Konsole</COMMENTS>
+      <FILESIZE>546019</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libkdebase4-konsole.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Header files and libraries for C++ development</COMMENTS>
+      <FILESIZE>4788698</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libstdc++5-devel.i586</NAME>
+      <VERSION>3.3.1-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A program for faxing using a Class 1, 2 or 2.0 fax modem.</COMMENTS>
+      <FILESIZE>197070</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:02 2010</INSTALLDATE>
+      <NAME>efax.i586</NAME>
+      <VERSION>0.9a-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Unix Printing System - Common stuff</COMMENTS>
+      <FILESIZE>542326</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:03 2010</INSTALLDATE>
+      <NAME>cups-common.i586</NAME>
+      <VERSION>1.1.19-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Shared library files for libtool</COMMENTS>
+      <FILESIZE>24230</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:03 2010</INSTALLDATE>
+      <NAME>libltdl3.i586</NAME>
+      <VERSION>1.4.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for GtkHTML</COMMENTS>
+      <FILESIZE>626866</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>libgtkhtml1.1_3.i586</NAME>
+      <VERSION>1.1.10-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An embeddable scripting language.</COMMENTS>
+      <FILESIZE>3355195</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>tcl.i586</NAME>
+      <VERSION>8.4.2-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The procmail mail processing program.</COMMENTS>
+      <FILESIZE>243164</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>procmail.i586</NAME>
+      <VERSION>3.22-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU implementation of Scheme for application extensibility</COMMENTS>
+      <FILESIZE>786207</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>guile.i586</NAME>
+      <VERSION>1.6.4-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main GNOME libraries</COMMENTS>
+      <FILESIZE>1647263</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:05 2010</INSTALLDATE>
+      <NAME>libgnomeui2.i586</NAME>
+      <VERSION>2.4.0.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A tool for creating Scheme interfaces to C libraries.</COMMENTS>
+      <FILESIZE>188352</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:05 2010</INSTALLDATE>
+      <NAME>g-wrap.i586</NAME>
+      <VERSION>1.3.4-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kdeprintfax</COMMENTS>
+      <FILESIZE>142383</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>kdebase-kdeprintfax.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Lists files open by processes</COMMENTS>
+      <FILESIZE>125465</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>lsof.i586</NAME>
+      <VERSION>4.68-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>HTML-Parser module for perl (World_Wide_Web_HTML_HTTP_CGI/HTML)</COMMENTS>
+      <FILESIZE>175138</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>perl-HTML-Parser.i586</NAME>
+      <VERSION>3.31-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Test pages to check the output quality of printers</COMMENTS>
+      <FILESIZE>3423903</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>printer-testpages.i586</NAME>
+      <VERSION>1.0-116mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tk GUI toolkit for Tcl, with shared libraries</COMMENTS>
+      <FILESIZE>2796481</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>tk.i586</NAME>
+      <VERSION>8.4.2-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU libtool, which simplifies the use of shared libraries</COMMENTS>
+      <FILESIZE>928725</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:07 2010</INSTALLDATE>
+      <NAME>libtool.i586</NAME>
+      <VERSION>1.4.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Headers for developing programs that will use libogg</COMMENTS>
+      <FILESIZE>193199</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:07 2010</INSTALLDATE>
+      <NAME>libogg0-devel.i586</NAME>
+      <VERSION>1.0-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Header files for libmng</COMMENTS>
+      <FILESIZE>321507</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:07 2010</INSTALLDATE>
+      <NAME>libmng1-devel.i586</NAME>
+      <VERSION>1.0.5-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GIMP libraries</COMMENTS>
+      <FILESIZE>58437</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:08 2010</INSTALLDATE>
+      <NAME>libgimp1.2.i586</NAME>
+      <VERSION>1.2.5-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Includes and other files to develop audiofile applications</COMMENTS>
+      <FILESIZE>316294</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:08 2010</INSTALLDATE>
+      <NAME>libaudiofile0-devel.i586</NAME>
+      <VERSION>0.2.3-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A version of the MIT Athena widget set for X</COMMENTS>
+      <FILESIZE>289776</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:08 2010</INSTALLDATE>
+      <NAME>libXaw3d7.i586</NAME>
+      <VERSION>1.5-13mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for gnucash</COMMENTS>
+      <FILESIZE>414384</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:09 2010</INSTALLDATE>
+      <NAME>libgnucash0.i586</NAME>
+      <VERSION>1.8.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for libao</COMMENTS>
+      <FILESIZE>57420</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:10 2010</INSTALLDATE>
+      <NAME>libao2.i586</NAME>
+      <VERSION>0.8.3-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An enhanced version of csh, the C shell</COMMENTS>
+      <FILESIZE>547727</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:10 2010</INSTALLDATE>
+      <NAME>tcsh.i586</NAME>
+      <VERSION>6.12-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Postfix Mail Transport Agent</COMMENTS>
+      <FILESIZE>5976338</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:10 2010</INSTALLDATE>
+      <NAME>postfix.i586</NAME>
+      <VERSION>2.0.13-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>IO-Tty perl module: interface to pseudo tty's</COMMENTS>
+      <FILESIZE>84226</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:14 2010</INSTALLDATE>
+      <NAME>perl-IO-Tty.i586</NAME>
+      <VERSION>1.02-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Programs for accessing MS-DOS disks without mounting the disks</COMMENTS>
+      <FILESIZE>585872</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:14 2010</INSTALLDATE>
+      <NAME>mtools.i586</NAME>
+      <VERSION>3.9.9-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Unix Printing System - Server package</COMMENTS>
+      <FILESIZE>5460294</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:15 2010</INSTALLDATE>
+      <NAME>cups.i586</NAME>
+      <VERSION>1.1.19-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME print library</COMMENTS>
+      <FILESIZE>470053</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:15 2010</INSTALLDATE>
+      <NAME>libgnomeprint.i586</NAME>
+      <VERSION>2.3.1-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>XML document type definition for DocBook 4.1.2.</COMMENTS>
+      <FILESIZE>311484</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:15 2010</INSTALLDATE>
+      <NAME>docbook-dtd412-xml.noarch</NAME>
+      <VERSION>1.0-15mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for scrollkeeper.</COMMENTS>
+      <FILESIZE>30400</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:16 2010</INSTALLDATE>
+      <NAME>libscrollkeeper0.i586</NAME>
+      <VERSION>0.3.12-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development tools for programs which will use the mad library.</COMMENTS>
+      <FILESIZE>168412</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libmad0-devel.i586</NAME>
+      <VERSION>0.15.0b-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Librairies for kedit programm</COMMENTS>
+      <FILESIZE>145282</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libkdeutils1-kedit.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Librarie files for kdeutils</COMMENTS>
+      <FILESIZE>877353</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libkdeutils1-common.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for libofx</COMMENTS>
+      <FILESIZE>131304</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libofx0.i586</NAME>
+      <VERSION>0.6.5-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for SDL12</COMMENTS>
+      <FILESIZE>432842</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:21 2010</INSTALLDATE>
+      <NAME>libSDL1.2.i586</NAME>
+      <VERSION>1.2.5-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU Image Manipulation Program</COMMENTS>
+      <FILESIZE>20512392</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:21 2010</INSTALLDATE>
+      <NAME>gimp.i586</NAME>
+      <VERSION>1.2.5-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A document formatting system</COMMENTS>
+      <FILESIZE>4376647</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:22 2010</INSTALLDATE>
+      <NAME>groff.i586</NAME>
+      <VERSION>1.19-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The /bin/mail program, which is used to send mail via shell scripts.</COMMENTS>
+      <FILESIZE>91738</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:22 2010</INSTALLDATE>
+      <NAME>mailx.i586</NAME>
+      <VERSION>8.1.1-23mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>POSIX File System Archiver</COMMENTS>
+      <FILESIZE>98517</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:22 2010</INSTALLDATE>
+      <NAME>pax.i586</NAME>
+      <VERSION>3.0-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Expect perl module</COMMENTS>
+      <FILESIZE>159576</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:23 2010</INSTALLDATE>
+      <NAME>perl-Expect.noarch</NAME>
+      <VERSION>1.15-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Python numerical facilities</COMMENTS>
+      <FILESIZE>1781430</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:23 2010</INSTALLDATE>
+      <NAME>python-numeric.i586</NAME>
+      <VERSION>22.0-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main Hardware Configuration/Information Tool</COMMENTS>
+      <FILESIZE>46466</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:24 2010</INSTALLDATE>
+      <NAME>harddrake-ui.i586</NAME>
+      <VERSION>9.2-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Headers and static lib for pcre development</COMMENTS>
+      <FILESIZE>140214</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:24 2010</INSTALLDATE>
+      <NAME>libpcre0-devel.i586</NAME>
+      <VERSION>4.3-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Librairies kmix, kmixctrl</COMMENTS>
+      <FILESIZE>303397</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>libkdemultimedia1-kmix.i586</NAME>
+      <VERSION>3.1.3-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries and header files for developing mouse driven programs.</COMMENTS>
+      <FILESIZE>35423</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>libgpm1-devel.i586</NAME>
+      <VERSION>1.20.1-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development files for arts</COMMENTS>
+      <FILESIZE>714830</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>libarts1-devel.i586</NAME>
+      <VERSION>1.1.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The skeleton package defining packages needed for LSB compliance.</COMMENTS>
+      <FILESIZE>1311</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>lsb.noarch</NAME>
+      <VERSION>1.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A free Motif clone</COMMENTS>
+      <FILESIZE>3617136</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>lesstif.i586</NAME>
+      <VERSION>0.93.49-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kcalc programm</COMMENTS>
+      <FILESIZE>49038</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-kcalc.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kdepasswd programm</COMMENTS>
+      <FILESIZE>35485</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-kdepasswd.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kdf programm</COMMENTS>
+      <FILESIZE>622217</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-kdf.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kfloppy programm</COMMENTS>
+      <FILESIZE>99638</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-kfloppy.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kjots programm</COMMENTS>
+      <FILESIZE>157338</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:27 2010</INSTALLDATE>
+      <NAME>kdeutils-kjots.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Ktimer programm</COMMENTS>
+      <FILESIZE>62252</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:27 2010</INSTALLDATE>
+      <NAME>kdeutils-ktimer.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU macro processor.</COMMENTS>
+      <FILESIZE>213729</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>m4.i586</NAME>
+      <VERSION>1.4ppre2-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Perl interface to the PAM library</COMMENTS>
+      <FILESIZE>68466</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>perl-Authen-PAM.i586</NAME>
+      <VERSION>0.14-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Net::SSLeay (module for perl)</COMMENTS>
+      <FILESIZE>532676</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>perl-Net_SSLeay.i586</NAME>
+      <VERSION>1.25-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A program for synchronizing files over a network.</COMMENTS>
+      <FILESIZE>303985</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>rsync.i586</NAME>
+      <VERSION>2.5.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>ScrollKeeper is a cataloging system for documentation on open systems</COMMENTS>
+      <FILESIZE>1273479</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:30 2010</INSTALLDATE>
+      <NAME>scrollkeeper.i586</NAME>
+      <VERSION>0.3.12-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Berkeley DB database library for C++.</COMMENTS>
+      <FILESIZE>913664</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:31 2010</INSTALLDATE>
+      <NAME>libdbcxx4.1.i586</NAME>
+      <VERSION>4.1.25-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A ftp-client with kerberos support</COMMENTS>
+      <FILESIZE>93304</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:32 2010</INSTALLDATE>
+      <NAME>ftp-client-krb5.i586</NAME>
+      <VERSION>1.3-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Secure Sockets Layer communications static libs &amp; headers &amp; utils</COMMENTS>
+      <FILESIZE>2952775</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:37 2010</INSTALLDATE>
+      <NAME>libopenssl0.9.7-devel.i586</NAME>
+      <VERSION>0.9.7b-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Job spooling tools.</COMMENTS>
+      <FILESIZE>61899</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:38 2010</INSTALLDATE>
+      <NAME>at.i586</NAME>
+      <VERSION>3.1.8-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU tool for automatically creating Makefiles.</COMMENTS>
+      <FILESIZE>944310</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:38 2010</INSTALLDATE>
+      <NAME>automake.noarch</NAME>
+      <VERSION>1.4-23.p6.mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A version control system</COMMENTS>
+      <FILESIZE>1724549</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:38 2010</INSTALLDATE>
+      <NAME>cvs.i586</NAME>
+      <VERSION>1.11.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Mandrake First Time Wizard</COMMENTS>
+      <FILESIZE>3118862</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:39 2010</INSTALLDATE>
+      <NAME>drakfirsttime.noarch</NAME>
+      <VERSION>0.92-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Bitstream Vera Fonts</COMMENTS>
+      <FILESIZE>596273</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:40 2010</INSTALLDATE>
+      <NAME>fonts-ttf-vera.noarch</NAME>
+      <VERSION>1.10-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mandrake Linux theme for KDE - Widget design</COMMENTS>
+      <FILESIZE>107279</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:40 2010</INSTALLDATE>
+      <NAME>galaxy-kde.i586</NAME>
+      <VERSION>0.9.4-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Enables OFX importing in GnuCash</COMMENTS>
+      <FILESIZE>35646</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:40 2010</INSTALLDATE>
+      <NAME>gnucash-ofx.i586</NAME>
+      <VERSION>1.8.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main Hardware Configuration/Information Tool</COMMENTS>
+      <FILESIZE>5380</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:40 2010</INSTALLDATE>
+      <NAME>harddrake.i586</NAME>
+      <VERSION>9.2-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>View and edit files in hexadecimal or in ASCII</COMMENTS>
+      <FILESIZE>51467</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:41 2010</INSTALLDATE>
+      <NAME>hexedit.i586</NAME>
+      <VERSION>1.2.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A stand-alone TTY-based reader for GNU texinfo documentation.</COMMENTS>
+      <FILESIZE>170957</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:41 2010</INSTALLDATE>
+      <NAME>info.i586</NAME>
+      <VERSION>4.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>kmix, kmixctrl programm</COMMENTS>
+      <FILESIZE>299998</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:41 2010</INSTALLDATE>
+      <NAME>kdemultimedia-kmix.i586</NAME>
+      <VERSION>3.1.3-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mandrake Linux graphical front end for choosing packages for installion/removal</COMMENTS>
+      <FILESIZE>1920263</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:42 2010</INSTALLDATE>
+      <NAME>rpmdrake.i586</NAME>
+      <VERSION>2.1-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Light hardware detection library</COMMENTS>
+      <FILESIZE>16293</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:42 2010</INSTALLDATE>
+      <NAME>ldetect.i586</NAME>
+      <VERSION>0.4.9-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A set of documentation tools:  man, apropos and whatis.</COMMENTS>
+      <FILESIZE>203447</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:42 2010</INSTALLDATE>
+      <NAME>man.i586</NAME>
+      <VERSION>1.5k-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A program for handling multimedia mail using the mailcap file.</COMMENTS>
+      <FILESIZE>396196</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>metamail.i586</NAME>
+      <VERSION>2.7-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>MySpell spelling dictionaries for French (Belgium)</COMMENTS>
+      <FILESIZE>1235003</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>myspell-fr_BE.noarch</NAME>
+      <VERSION>1.0.2-0.20030619.1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>MySpell hyphenation dictionaries for French</COMMENTS>
+      <FILESIZE>8355</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>myspell-hyph-fr.noarch</NAME>
+      <VERSION>1.0.2-0.20020727.1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A tool which will start a program on a virtual console.</COMMENTS>
+      <FILESIZE>12363</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>open.i586</NAME>
+      <VERSION>1.4-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Finds files on a system via a central database.</COMMENTS>
+      <FILESIZE>58624</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>slocate.i586</NAME>
+      <VERSION>2.7-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Allows command execution as root for specified users.</COMMENTS>
+      <FILESIZE>301337</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:44 2010</INSTALLDATE>
+      <NAME>sudo.i586</NAME>
+      <VERSION>1.6.7-0.p5.1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A dictionary of English words for the /usr/dict directory</COMMENTS>
+      <FILESIZE>420545</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:44 2010</INSTALLDATE>
+      <NAME>words.noarch</NAME>
+      <VERSION>2-19mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The ISC DHCP (Dynamic Host Configuration Protocol) server</COMMENTS>
+      <FILESIZE>1169789</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:16:35 2010</INSTALLDATE>
+      <NAME>dhcp-common.i586</NAME>
+      <VERSION>3.0-1.rc12.2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A Multicast DNS Responder for Linux</COMMENTS>
+      <FILESIZE>126894</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:16:37 2010</INSTALLDATE>
+      <NAME>tmdns.i586</NAME>
+      <VERSION>0.1-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The X server and associated modules</COMMENTS>
+      <FILESIZE>25297302</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:17:37 2010</INSTALLDATE>
+      <NAME>XFree86-server.i586</NAME>
+      <VERSION>4.3-23mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The terminal feature database used by certain applications.</COMMENTS>
+      <FILESIZE>703515</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>termcap.i586</NAME>
+      <VERSION>11.0.1-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU versions of grep pattern matching utilities.</COMMENTS>
+      <FILESIZE>421338</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:41 2010</INSTALLDATE>
+      <NAME>grep.i586</NAME>
+      <VERSION>2.5.1-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Base files for localization</COMMENTS>
+      <FILESIZE>3960100</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>locales.i586</NAME>
+      <VERSION>2.3.2-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries and header files for developing mouse driven programs.</COMMENTS>
+      <FILESIZE>19024</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:42 2010</INSTALLDATE>
+      <NAME>libgpm1.i586</NAME>
+      <VERSION>1.20.1-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Program to update the GNU texinfo documentation main page.</COMMENTS>
+      <FILESIZE>23432</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:43 2010</INSTALLDATE>
+      <NAME>info-install.i586</NAME>
+      <VERSION>4.6-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The zlib compression and decompression library</COMMENTS>
+      <FILESIZE>62325</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:43 2010</INSTALLDATE>
+      <NAME>zlib1.i586</NAME>
+      <VERSION>1.1.4-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A CRT screen handling and optimization package</COMMENTS>
+      <FILESIZE>430662</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>ncurses.i586</NAME>
+      <VERSION>5.3-1.20030215.3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries to read and write ELF files.</COMMENTS>
+      <FILESIZE>137668</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:44 2010</INSTALLDATE>
+      <NAME>libelfutils1.i586</NAME>
+      <VERSION>0.84-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The shared library for the S-Lang extension language.</COMMENTS>
+      <FILESIZE>386640</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>libslang1.i586</NAME>
+      <VERSION>1.4.9-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Utilities used for the second extended (ext2) filesystem.</COMMENTS>
+      <FILESIZE>814143</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>e2fsprogs.i586</NAME>
+      <VERSION>1.34-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Various simple functions</COMMENTS>
+      <FILESIZE>74495</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:45 2010</INSTALLDATE>
+      <NAME>perl-MDK-Common.i586</NAME>
+      <VERSION>1.1.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The password database library</COMMENTS>
+      <FILESIZE>126328</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>libpwdb0.i586</NAME>
+      <VERSION>0.61.2-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A collection of utilities and DSOs to handle compiled objects.</COMMENTS>
+      <FILESIZE>216374</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:46 2010</INSTALLDATE>
+      <NAME>elfutils.i586</NAME>
+      <VERSION>0.84-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for SASL a the Simple Authentication and Security Layer.</COMMENTS>
+      <FILESIZE>77820</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>libsasl2.i586</NAME>
+      <VERSION>2.1.15-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU C++ library</COMMENTS>
+      <FILESIZE>733624</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:47 2010</INSTALLDATE>
+      <NAME>libstdc++5.i586</NAME>
+      <VERSION>3.3.1-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Gets a file from a FTP, GOPHER or HTTP server.</COMMENTS>
+      <FILESIZE>394834</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>curl.i586</NAME>
+      <VERSION>7.10.7-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Newt windowing toolkit development files library.</COMMENTS>
+      <FILESIZE>66027</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>libnewt0.51.i586</NAME>
+      <VERSION>0.51.4-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Unpacks ZIP files such as those made by pkzip under DOS</COMMENTS>
+      <FILESIZE>547775</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:48 2010</INSTALLDATE>
+      <NAME>unzip.i586</NAME>
+      <VERSION>5.50-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A security tool which provides authentication for applications.</COMMENTS>
+      <FILESIZE>764150</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:49 2010</INSTALLDATE>
+      <NAME>pam.i586</NAME>
+      <VERSION>0.77-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Contains various rpm command-line tools</COMMENTS>
+      <FILESIZE>59052</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>rpmtools.i586</NAME>
+      <VERSION>4.5-13mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Non graphical part of usermode</COMMENTS>
+      <FILESIZE>500049</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:50 2010</INSTALLDATE>
+      <NAME>usermode-consoleonly.i586</NAME>
+      <VERSION>1.63-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Small utils needed for the kernel</COMMENTS>
+      <FILESIZE>40004</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:51 2010</INSTALLDATE>
+      <NAME>bootloader-utils.i586</NAME>
+      <VERSION>1.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Handle dynamic creation of desktop entry for hotplug hardware</COMMENTS>
+      <FILESIZE>21527</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:52 2010</INSTALLDATE>
+      <NAME>dynamic.noarch</NAME>
+      <VERSION>0.10-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A utility for determining file types.</COMMENTS>
+      <FILESIZE>1107533</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:53 2010</INSTALLDATE>
+      <NAME>file.i586</NAME>
+      <VERSION>4.03-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Daemon for providing old entries in /dev with devfs</COMMENTS>
+      <FILESIZE>55318</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:53 2010</INSTALLDATE>
+      <NAME>devfsd.i586</NAME>
+      <VERSION>1.3.25-32mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library used by utempter</COMMENTS>
+      <FILESIZE>29789</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:56 2010</INSTALLDATE>
+      <NAME>libutempter0.i586</NAME>
+      <VERSION>0.5.2-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Priviledged helper for utmp/wtmp updates</COMMENTS>
+      <FILESIZE>31265</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:57 2010</INSTALLDATE>
+      <NAME>utempter.i586</NAME>
+      <VERSION>0.5.2-12mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Linux console tools</COMMENTS>
+      <FILESIZE>2585861</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:11:58 2010</INSTALLDATE>
+      <NAME>console-tools.i586</NAME>
+      <VERSION>0.2.3-46mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A bootloader for linux using floppies, CD or PXE.</COMMENTS>
+      <FILESIZE>264725</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:00 2010</INSTALLDATE>
+      <NAME>syslinux.i586</NAME>
+      <VERSION>1.76-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Time zone descriptions</COMMENTS>
+      <FILESIZE>226261</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>timezone.i586</NAME>
+      <VERSION>2.3.2-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Creates an initial ramdisk image for preloading modules.</COMMENTS>
+      <FILESIZE>6625</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>mkbootdisk.i586</NAME>
+      <VERSION>1.4.5-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Root crontab files used to schedule the execution of programs.</COMMENTS>
+      <FILESIZE>299</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:01 2010</INSTALLDATE>
+      <NAME>crontabs.noarch</NAME>
+      <VERSION>1.10-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A library for manipulating JPEG image format files.</COMMENTS>
+      <FILESIZE>150917</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:02 2010</INSTALLDATE>
+      <NAME>libjpeg62.i586</NAME>
+      <VERSION>6b-32mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for audiofile</COMMENTS>
+      <FILESIZE>164822</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:03 2010</INSTALLDATE>
+      <NAME>libaudiofile0.i586</NAME>
+      <VERSION>0.2.3-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Font configuration and customization library</COMMENTS>
+      <FILESIZE>159088</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:03 2010</INSTALLDATE>
+      <NAME>libfontconfig1.i586</NAME>
+      <VERSION>2.2.1-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for libogg</COMMENTS>
+      <FILESIZE>19900</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:05 2010</INSTALLDATE>
+      <NAME>libogg0.i586</NAME>
+      <VERSION>1.0-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for libvorbis</COMMENTS>
+      <FILESIZE>138363</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:05 2010</INSTALLDATE>
+      <NAME>libvorbis0.i586</NAME>
+      <VERSION>1.0-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Common Unix Printing System - CUPS library</COMMENTS>
+      <FILESIZE>200000</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:06 2010</INSTALLDATE>
+      <NAME>libcups2.i586</NAME>
+      <VERSION>1.1.19-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Localization files for Menu system</COMMENTS>
+      <FILESIZE>7792550</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:07 2010</INSTALLDATE>
+      <NAME>mdk-menu-messages.i586</NAME>
+      <VERSION>9.2-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library providing XSLT support</COMMENTS>
+      <FILESIZE>1077653</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:08 2010</INSTALLDATE>
+      <NAME>libxslt1.i586</NAME>
+      <VERSION>1.0.33-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>System for layout and rendering of internationalized text</COMMENTS>
+      <FILESIZE>416903</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:09 2010</INSTALLDATE>
+      <NAME>pango.i586</NAME>
+      <VERSION>1.2.5-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Config file and icons file for kdelibs.</COMMENTS>
+      <FILESIZE>10089751</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:11 2010</INSTALLDATE>
+      <NAME>kdelibs-common.i586</NAME>
+      <VERSION>3.1.3-35mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>X11 backend of The GIMP ToolKit (GTK+)</COMMENTS>
+      <FILESIZE>2951004</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:18 2010</INSTALLDATE>
+      <NAME>libgtk+-x11-2.0_0.i586</NAME>
+      <VERSION>2.2.4-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for gtk+</COMMENTS>
+      <FILESIZE>1821225</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:20 2010</INSTALLDATE>
+      <NAME>libgtk+1.2.i586</NAME>
+      <VERSION>1.2.10-37mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>High-performance CORBA Object Request Broker.</COMMENTS>
+      <FILESIZE>413084</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:21 2010</INSTALLDATE>
+      <NAME>libORBit2_0.i586</NAME>
+      <VERSION>2.8.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The default mandrake theme for bootsplash and desktop background</COMMENTS>
+      <FILESIZE>1894749</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:22 2010</INSTALLDATE>
+      <NAME>mandrake_theme.noarch</NAME>
+      <VERSION>0.1.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A configuration database system for GNOME 2</COMMENTS>
+      <FILESIZE>2512136</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>GConf2.i586</NAME>
+      <VERSION>2.4.0.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Enlightened Sound Daemon</COMMENTS>
+      <FILESIZE>224127</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:23 2010</INSTALLDATE>
+      <NAME>esound.i586</NAME>
+      <VERSION>0.2.32-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A library for handling different graphics file formats</COMMENTS>
+      <FILESIZE>215902</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:24 2010</INSTALLDATE>
+      <NAME>libnetpbm9.i586</NAME>
+      <VERSION>9.24-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An image loading and rendering library for X11R6.</COMMENTS>
+      <FILESIZE>22795</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:25 2010</INSTALLDATE>
+      <NAME>imlib.i586</NAME>
+      <VERSION>1.9.14-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A library for manipulating GIF format image files.</COMMENTS>
+      <FILESIZE>75728</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:26 2010</INSTALLDATE>
+      <NAME>libungif4.i586</NAME>
+      <VERSION>4.1.0-23mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME virtual file-system libraries</COMMENTS>
+      <FILESIZE>1521280</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:30 2010</INSTALLDATE>
+      <NAME>gnome-vfs2.i586</NAME>
+      <VERSION>2.4.0-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The BSD database library for C (version 1).</COMMENTS>
+      <FILESIZE>64823</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:31 2010</INSTALLDATE>
+      <NAME>db1.i586</NAME>
+      <VERSION>1.85-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The libXML library.</COMMENTS>
+      <FILESIZE>599901</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:32 2010</INSTALLDATE>
+      <NAME>libxml1.i586</NAME>
+      <VERSION>1.8.17-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>An image loading and rendering library for Gdk.</COMMENTS>
+      <FILESIZE>93400</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:34 2010</INSTALLDATE>
+      <NAME>gdk-pixbuf-loaders.i586</NAME>
+      <VERSION>0.22.0-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU arbitrary precision library</COMMENTS>
+      <FILESIZE>233199</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>libgmp3.i586</NAME>
+      <VERSION>4.1.2-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Perl module for the glib-2.x library</COMMENTS>
+      <FILESIZE>229476</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:35 2010</INSTALLDATE>
+      <NAME>perl-Glib.i586</NAME>
+      <VERSION>0.95-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libusb is a library which allows userspace access to USB devices</COMMENTS>
+      <FILESIZE>29015</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:36 2010</INSTALLDATE>
+      <NAME>libusb0.1_4.i586</NAME>
+      <VERSION>0.1.7-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Font configuration and customization library</COMMENTS>
+      <FILESIZE>754524</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:37 2010</INSTALLDATE>
+      <NAME>libfontconfig1-devel.i586</NAME>
+      <VERSION>2.2.1-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Config file and icons file for kdebase.</COMMENTS>
+      <FILESIZE>14441084</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>kdebase-common.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mandrake Linux theme for KDE - Window Decorations</COMMENTS>
+      <FILESIZE>161650</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:38 2010</INSTALLDATE>
+      <NAME>galaxy-kde-kwin.i586</NAME>
+      <VERSION>0.9.4-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Headers and programming man pages.</COMMENTS>
+      <FILESIZE>5739314</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:40 2010</INSTALLDATE>
+      <NAME>libxfree86-devel.i586</NAME>
+      <VERSION>4.3-23mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Dynamic libraries for GNOME applications.</COMMENTS>
+      <FILESIZE>81392</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:41 2010</INSTALLDATE>
+      <NAME>libgnome2_0.i586</NAME>
+      <VERSION>2.4.0-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The drakxtools (XFdrake, diskdrake, keyboarddrake, mousedrake...)</COMMENTS>
+      <FILESIZE>1205199</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:43 2010</INSTALLDATE>
+      <NAME>drakxtools.i586</NAME>
+      <VERSION>9.2-16mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>K Desktop Environment - Core files</COMMENTS>
+      <FILESIZE>1925897</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:43 2010</INSTALLDATE>
+      <NAME>kdebase-progs.i586</NAME>
+      <VERSION>3.1.3-79mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Text based browser for the world wide web</COMMENTS>
+      <FILESIZE>3461270</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:46 2010</INSTALLDATE>
+      <NAME>lynx.i586</NAME>
+      <VERSION>2.8.5-0.14mdk.dev.12</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Pkgconfig helps make building packages easier.</COMMENTS>
+      <FILESIZE>141535</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:48 2010</INSTALLDATE>
+      <NAME>pkgconfig.i586</NAME>
+      <VERSION>0.15.0-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME Object Activation Framework</COMMENTS>
+      <FILESIZE>372510</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:57 2010</INSTALLDATE>
+      <NAME>oaf.i586</NAME>
+      <VERSION>0.6.10-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A tool for creating Scheme interfaces to C libraries.</COMMENTS>
+      <FILESIZE>32216</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:58 2010</INSTALLDATE>
+      <NAME>libg-wrap1.i586</NAME>
+      <VERSION>1.3.4-9mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Printing libraries for GNOME.</COMMENTS>
+      <FILESIZE>999094</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:58 2010</INSTALLDATE>
+      <NAME>gnome-print.i586</NAME>
+      <VERSION>0.37-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GIMP libraries</COMMENTS>
+      <FILESIZE>367929</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:12:59 2010</INSTALLDATE>
+      <NAME>libgimp1.2_1.i586</NAME>
+      <VERSION>1.2.5-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME default icons</COMMENTS>
+      <FILESIZE>2010558</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>gnome-icon-theme.noarch</NAME>
+      <VERSION>1.0.8-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Static libraries and header files of glib2.0</COMMENTS>
+      <FILESIZE>4442991</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libglib2.0_0-devel.i586</NAME>
+      <VERSION>2.2.3-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>OpenSLP implementation of Service Location Protocol V2</COMMENTS>
+      <FILESIZE>50527</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:01 2010</INSTALLDATE>
+      <NAME>libopenslp1.i586</NAME>
+      <VERSION>1.0.11-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU Compiler Collection</COMMENTS>
+      <FILESIZE>13031289</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:02 2010</INSTALLDATE>
+      <NAME>gcc.i586</NAME>
+      <VERSION>3.3.1-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for Guppi</COMMENTS>
+      <FILESIZE>927652</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>libguppi16.i586</NAME>
+      <VERSION>0.40.3-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Base ISO character entities and utilities for SGML</COMMENTS>
+      <FILESIZE>449475</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:04 2010</INSTALLDATE>
+      <NAME>sgml-common.noarch</NAME>
+      <VERSION>0.6.3-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNOME libraries</COMMENTS>
+      <FILESIZE>590000</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:05 2010</INSTALLDATE>
+      <NAME>libgnomeui2_0.i586</NAME>
+      <VERSION>2.4.0.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Parts of the groff formatting system that is required for viewing manpages</COMMENTS>
+      <FILESIZE>1441815</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:05 2010</INSTALLDATE>
+      <NAME>groff-for-man.i586</NAME>
+      <VERSION>1.19-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PCRE is a Perl-compatible regular expression library</COMMENTS>
+      <FILESIZE>41778</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>pcre.i586</NAME>
+      <VERSION>4.3-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>PostScript utilities</COMMENTS>
+      <FILESIZE>198166</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:06 2010</INSTALLDATE>
+      <NAME>psutils.i586</NAME>
+      <VERSION>p17-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Development tools for programs to manipulate PNG image format files</COMMENTS>
+      <FILESIZE>457124</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:07 2010</INSTALLDATE>
+      <NAME>libpng3-devel.i586</NAME>
+      <VERSION>1.2.5-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for gtkxmHTML</COMMENTS>
+      <FILESIZE>389040</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:07 2010</INSTALLDATE>
+      <NAME>libgtkxmhtml1.i586</NAME>
+      <VERSION>1.4.2-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>AA (Ascii Art) library</COMMENTS>
+      <FILESIZE>105536</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:08 2010</INSTALLDATE>
+      <NAME>libaa1.i586</NAME>
+      <VERSION>1.4.0-0.rc5.8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Main library for libapm</COMMENTS>
+      <FILESIZE>10818</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:10 2010</INSTALLDATE>
+      <NAME>libapm1.i586</NAME>
+      <VERSION>3.1.0-6mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Scripts launched by system on suspend and resume</COMMENTS>
+      <FILESIZE>88567</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:10 2010</INSTALLDATE>
+      <NAME>suspend-scripts.noarch</NAME>
+      <VERSION>1.6-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>File-Slurp - Read and write files with a single command</COMMENTS>
+      <FILESIZE>6288</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:14 2010</INSTALLDATE>
+      <NAME>perl-File-Slurp.noarch</NAME>
+      <VERSION>2002.1031-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Library for GNOME print support</COMMENTS>
+      <FILESIZE>388432</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:15 2010</INSTALLDATE>
+      <NAME>libgnomeprint2-2_0.i586</NAME>
+      <VERSION>2.3.1-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Headers for developing programs that will use libvorbis</COMMENTS>
+      <FILESIZE>1767934</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:16 2010</INSTALLDATE>
+      <NAME>libvorbis0-devel.i586</NAME>
+      <VERSION>1.0-10mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Librarie files for kdeutils</COMMENTS>
+      <FILESIZE>494474</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libkdeutils1-ksim.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for Ark programm</COMMENTS>
+      <FILESIZE>423562</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:20 2010</INSTALLDATE>
+      <NAME>libkdeutils1-ark.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GNU libraries and utilities for producing multi-lingual messages.</COMMENTS>
+      <FILESIZE>1874159</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:21 2010</INSTALLDATE>
+      <NAME>gettext.i586</NAME>
+      <VERSION>0.11.5-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Linux Standard Base tools</COMMENTS>
+      <FILESIZE>16902</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:22 2010</INSTALLDATE>
+      <NAME>lsb-release.i586</NAME>
+      <VERSION>1.4-5mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Perl Database Interface by Tim Bunce</COMMENTS>
+      <FILESIZE>1189328</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:23 2010</INSTALLDATE>
+      <NAME>perl-DBI.i586</NAME>
+      <VERSION>1.38-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Ark programm</COMMENTS>
+      <FILESIZE>70672</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:23 2010</INSTALLDATE>
+      <NAME>kdeutils-ark.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries for openhbci</COMMENTS>
+      <FILESIZE>2201821</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:24 2010</INSTALLDATE>
+      <NAME>libopenhbci12.i586</NAME>
+      <VERSION>0.9.13-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Libraries and headers for FAM</COMMENTS>
+      <FILESIZE>55877</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>libfam0-devel.i586</NAME>
+      <VERSION>2.6.10-7mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>LSB dynamic loader links.</COMMENTS>
+      <FILESIZE>0</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:25 2010</INSTALLDATE>
+      <NAME>glibc_lsb.i586</NAME>
+      <VERSION>2.3.1-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kcharselect programm</COMMENTS>
+      <FILESIZE>56261</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-kcharselect.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Kedit programm</COMMENTS>
+      <FILESIZE>64579</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:26 2010</INSTALLDATE>
+      <NAME>kdeutils-kedit.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Ksim programm</COMMENTS>
+      <FILESIZE>435467</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:27 2010</INSTALLDATE>
+      <NAME>kdeutils-ksim.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Menudrake is a little application for editing menu.</COMMENTS>
+      <FILESIZE>908730</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>menudrake.i586</NAME>
+      <VERSION>0.7.4-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Gdk/imlib image viewer</COMMENTS>
+      <FILESIZE>88198</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:28 2010</INSTALLDATE>
+      <NAME>qiv.i586</NAME>
+      <VERSION>1.8-2mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The GNU shar utilities for packaging and unpackaging shell archives.</COMMENTS>
+      <FILESIZE>213524</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:31 2010</INSTALLDATE>
+      <NAME>sharutils.i586</NAME>
+      <VERSION>4.2.1-14mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The development files for applications which use ncurses</COMMENTS>
+      <FILESIZE>4890146</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:32 2010</INSTALLDATE>
+      <NAME>libncurses5-devel.i586</NAME>
+      <VERSION>5.3-1.20030215.3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A GNU tool for automatically configuring source code.</COMMENTS>
+      <FILESIZE>583408</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:38 2010</INSTALLDATE>
+      <NAME>autoconf.noarch</NAME>
+      <VERSION>2.13-19mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>The Mandrake Control Center</COMMENTS>
+      <FILESIZE>2145758</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:39 2010</INSTALLDATE>
+      <NAME>drakconf.i586</NAME>
+      <VERSION>9.2-4mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>K Desktop Environment - Utilities</COMMENTS>
+      <FILESIZE>0</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:40 2010</INSTALLDATE>
+      <NAME>kdeutils.i586</NAME>
+      <VERSION>3.1.3-20mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>GRand Unified Bootloader</COMMENTS>
+      <FILESIZE>443828</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:40 2010</INSTALLDATE>
+      <NAME>grub.i586</NAME>
+      <VERSION>0.93-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A light version of Icewm</COMMENTS>
+      <FILESIZE>1195877</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:41 2010</INSTALLDATE>
+      <NAME>icewm-light.i586</NAME>
+      <VERSION>1.2.13-0.3.1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Knotes programm</COMMENTS>
+      <FILESIZE>208998</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:41 2010</INSTALLDATE>
+      <NAME>kdepim-knotes.i586</NAME>
+      <VERSION>3.1.3-22mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Track runtime library calls from dynamically linked executables</COMMENTS>
+      <FILESIZE>143642</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:42 2010</INSTALLDATE>
+      <NAME>ltrace.i586</NAME>
+      <VERSION>0.3.31-3mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>A utility for managing .Xauthority files.</COMMENTS>
+      <FILESIZE>12640</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>mkxauth.noarch</NAME>
+      <VERSION>1.7-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Numlock key locker</COMMENTS>
+      <FILESIZE>8717</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>numlock.i586</NAME>
+      <VERSION>2.0-8mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Tracks and displays system calls associated with a running process.</COMMENTS>
+      <FILESIZE>267628</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:13:43 2010</INSTALLDATE>
+      <NAME>strace.i586</NAME>
+      <VERSION>4.4.98-1mdk</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>gpg(Mandrake Linux &lt;mandrake@mandrakesoft.com&gt;)</COMMENTS>
+      <FILESIZE>0</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:15:28 2010</INSTALLDATE>
+      <NAME>gpg-pubkey.(none)</NAME>
+      <VERSION>70771ff3-3c8f768f</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Ad-hoc link-local IP autoconfiguration</COMMENTS>
+      <FILESIZE>669929</FILESIZE>
+      <FROM>rpm</FROM>
+      <INSTALLDATE>Sun Nov 21 12:16:38 2010</INSTALLDATE>
+      <NAME>zcip.i586</NAME>
+      <VERSION>4-3mdk</VERSION>
+    </SOFTWARES>
+    <USBDEVICES>
+      <CLASS>9</CLASS>
+      <PRODUCTID>0000</PRODUCTID>
+      <SERIAL>e0a4c000</SERIAL>
+      <SUBCLASS>0</SUBCLASS>
+      <VENDORID>0000</VENDORID>
+    </USBDEVICES>
+    <USERS>
+      <LOGIN>wawa</LOGIN>
+    </USERS>
+    <VERSIONCLIENT>FusionInventory-Agent_v2.1.7-2</VERSIONCLIENT>
+    <VIDEOS></VIDEOS>
+  </CONTENT>
+  <DEVICEID>localhost-2011-01-30-12-36-30</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>

@@ -1,0 +1,1450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2011-01-29 20:16:31</LOGDATE>
+      <USERID>N/A</USERID>
+    </ACCESSLOG>
+    <BIOS>
+      <BVERSION></BVERSION>
+      <SMANUFACTURER>innotek GmbH</SMANUFACTURER>
+      <SMODEL></SMODEL>
+      <SSN>30003000000000000000000000300000000000000000000000000000000000000000000000000000000000</SSN>
+    </BIOS>
+    <DRIVES>
+      <FILESYSTEM>EFI</FILESYSTEM>
+      <TOTAL>200</TOTAL>
+      <VOLUMN>/dev/disk0s1</VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <FILESYSTEM>Journaled HFS+</FILESYSTEM>
+      <FREE>9687</FREE>
+      <LABEL>osx</LABEL>
+      <SERIAL>8C3569DE-75EC-34E2-AF2A-771AC4AE42C4</SERIAL>
+      <TOTAL>19700</TOTAL>
+      <TYPE>/</TYPE>
+      <VOLUMN>/dev/disk0s2</VOLUMN>
+    </DRIVES>
+    <ENVS>
+      <KEY>HOME</KEY>
+      <VAL>/Users/fusioninventory</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_GID</KEY>
+      <VAL>20</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>DISPLAY</KEY>
+      <VAL>/tmp/launch-N0HBIw/:0</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_ALL</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>REALLIB</KEY>
+      <VAL>/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/5.12.1:/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/site_perl/5.12.1:/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/5.12.1/darwin-thread-multi-2level:/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/site_perl/5.12.1/darwin-thread-multi-2level</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SSH_AUTH_SOCK</KEY>
+      <VAL>/tmp/launch-9Z4Au5/Listeners</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PWD</KEY>
+      <VAL>/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LANG</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USER</KEY>
+      <VAL>root</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LOGNAME</KEY>
+      <VAL>root</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>__CF_USER_TEXT_ENCODING</KEY>
+      <VAL>0x1F6:0:91</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SHLVL</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>_</KEY>
+      <VAL>/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/bin/perl</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATH</KEY>
+      <VAL>/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/local/git/bin</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_USER</KEY>
+      <VAL>fusioninventory</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SHELL</KEY>
+      <VAL>/bin/bash</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TERM</KEY>
+      <VAL>xterm-color</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_COMMAND</KEY>
+      <VAL>./fusioninventory-agent --debug</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SUDO_UID</KEY>
+      <VAL>502</VAL>
+    </ENVS>
+    <HARDWARE>
+      <ARCHNAME>darwin-thread-multi-2level</ARCHNAME>
+      <CHECKSUM>262143</CHECKSUM>
+      <DESCRIPTION>i386/00-00-00 00:42:44</DESCRIPTION>
+      <DNS>10.0.1.1</DNS>
+      <ETIME>18</ETIME>
+      <IPADDR>10.0.2.15</IPADDR>
+      <NAME>Client-Leopard2</NAME>
+      <OSCOMMENTS>Darwin Kernel Version 9.0.0: Thu Oct 11 19:23:39 PDT 2007; root:xnu-1228~3/RELEASE_I386</OSCOMMENTS>
+      <OSNAME>Mac OS X</OSNAME>
+      <OSVERSION>10.5 (9A3129)</OSVERSION>
+      <USERDOMAIN></USERDOMAIN>
+      <USERID>fusioninventory</USERID>
+      <UUID>00000000-0000-1000-8000-080027E0BD29</UUID>
+      <VMSYSTEM>Physical</VMSYSTEM>
+      <WORKGROUP>local</WORKGROUP>
+    </HARDWARE>
+    <MEMORIES>
+      <CAPACITY>1000</CAPACITY>
+      <CAPTION>Status: OK</CAPTION>
+      <NUMSLOTS>0</NUMSLOTS>
+      <SPEED>1600</SPEED>
+      <TYPE>DRAM</TYPE>
+    </MEMORIES>
+    <NETWORKS>
+      <DESCRIPTION>lo0</DESCRIPTION>
+      <IPADDRESS>127.0.0.1</IPADDRESS>
+      <IPADDRESS6>::1</IPADDRESS6>
+      <IPGATEWAY>10.0.2.2</IPGATEWAY>
+      <IPMASK>255.0.0.0</IPMASK>
+      <IPSUBNET>127.0.0.0</IPSUBNET>
+      <STATUS>Down</STATUS>
+      <VIRTUALDEV>1</VIRTUALDEV>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>gif0</DESCRIPTION>
+      <IPGATEWAY>10.0.2.2</IPGATEWAY>
+      <IPSUBNET>127.0.0.0</IPSUBNET>
+      <STATUS>Down</STATUS>
+      <VIRTUALDEV>1</VIRTUALDEV>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>stf0</DESCRIPTION>
+      <IPGATEWAY>10.0.2.2</IPGATEWAY>
+      <IPSUBNET>127.0.0.0</IPSUBNET>
+      <STATUS>Down</STATUS>
+      <VIRTUALDEV>1</VIRTUALDEV>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>en0</DESCRIPTION>
+      <IPADDRESS>10.0.2.15</IPADDRESS>
+      <IPADDRESS6>fe80::a00:27ff:fee0:bd29</IPADDRESS6>
+      <IPGATEWAY>10.0.2.2</IPGATEWAY>
+      <IPMASK>255.255.255.0</IPMASK>
+      <IPSUBNET>10.0.2.0</IPSUBNET>
+      <MACADDR>08:00:27:e0:bd:29</MACADDR>
+      <STATUS>Up</STATUS>
+      <TYPE>autoselect</TYPE>
+    </NETWORKS>
+    <PROCESSES>
+      <CMD>/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/bin/perl -e @INC=qw(/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/5.12.1 /Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/site_perl/5.12.1 /Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/5.12.1/darwin-thread-multi-2level /Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/lib/site_perl/5.12.1/darwin-thread-multi-2level ); eval 'use FusionInventory::Agent::Task::Inventory;'; FusionInventory::Agent::Task::Inventory::main(); -- /var/lib/fusioninventory-agent/__LOCAL__</CMD>
+      <CPUUSAGE>21.3</CPUUSAGE>
+      <MEM>1.1</MEM>
+      <PID>296</PID>
+      <TTY>s000</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>84620</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Support/mds</CMD>
+      <CPUUSAGE>19.2</CPUUSAGE>
+      <MEM>2.7</MEM>
+      <PID>44</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>201804</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework/Resources/WindowServer -daemon</CMD>
+      <CPUUSAGE>15.9</CPUUSAGE>
+      <MEM>1.7</MEM>
+      <PID>68</PID>
+      <TTY>??</TTY>
+      <USER>_windowserver</USER>
+      <VIRTUALMEMORY>141796</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/Support/mdworker MDSImporterWorker com.apple.Spotlight.ImporterWorker.502</CMD>
+      <CPUUSAGE>7.8</CPUUSAGE>
+      <MEM>0.6</MEM>
+      <PID>247</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>97260</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal -psn_0_90134</CMD>
+      <CPUUSAGE>4.2</CPUUSAGE>
+      <MEM>0.8</MEM>
+      <PID>274</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>164844</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/Frameworks/PubSub.framework/Versions/A/Resources/PubSubAgent.app/Contents/MacOS/PubSubAgent</CMD>
+      <CPUUSAGE>0.8</CPUUSAGE>
+      <MEM>0.3</MEM>
+      <PID>263</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>77128</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/CarbonCore.framework/Versions/A/Support/fseventsd</CMD>
+      <CPUUSAGE>0.4</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>49</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>81088</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/DirectoryService</CMD>
+      <CPUUSAGE>0.3</CPUUSAGE>
+      <MEM>0.3</MEM>
+      <PID>12</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>88624</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/launchd</CMD>
+      <CPUUSAGE>0.3</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>238</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>75500</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder -psn_0_65552</CMD>
+      <CPUUSAGE>0.2</CPUUSAGE>
+      <MEM>1.3</MEM>
+      <PID>256</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>173620</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/notifyd</CMD>
+      <CPUUSAGE>0.2</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>11</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75956</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/launchd</CMD>
+      <CPUUSAGE>0.1</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>1</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>76524</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/Spotlight.app/Contents/MacOS/Spotlight</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.4</MEM>
+      <PID>245</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>109636</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/MacOS/ARDAgent</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.3</MEM>
+      <PID>243</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>103396</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/opt/fusioninventory-agent/perl/bin/perl /opt/fusioninventory-agent/perl/bin/fusioninventory-agent --conf-file=./agent.cfg</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>1.6</MEM>
+      <PID>101</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>86744</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/RemoteManagement/AppleVNCServer.bundle/Contents/Support/VNCPrivilegeProxy</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>97</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>76408</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/coreaudiod</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>92</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>76240</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/coreservicesd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.5</MEM>
+      <PID>66</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>81336</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/libexec/ApplicationFirewall/socketfilterfw</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>58</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>85588</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>autofsd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>57</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75388</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/diskarbitrationd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>53</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75456</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/sbin/dynamic_pager -F /private/var/vm/swapfile</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>50</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75380</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/libexec/hidd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>48</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75356</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/KernelEventAgent</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>46</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75448</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/loginwindow.app/Contents/MacOS/loginwindow console</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.6</MEM>
+      <PID>45</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>167792</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/RemoteManagement/AppleVNCServer.bundle/Contents/Support/RFBRegisterMDNS</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>43</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>85356</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/update</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>39</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75332</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/ntpd -n -g -p /var/run/ntpd.pid -f /var/db/ntp.drift</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>37</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75900</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/securityd -i</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>20</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>87124</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/mDNSResponder -launchd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>16</PID>
+      <TTY>??</TTY>
+      <USER>_mdnsresponder</USER>
+      <VIRTUALMEMORY>87292</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/distnoted</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>15</PID>
+      <TTY>??</TTY>
+      <USER>daemon</USER>
+      <VIRTUALMEMORY>75356</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>ps aux</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>371</PID>
+      <TTY>s000</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75380</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/syslogd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.0</MEM>
+      <PID>13</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>77000</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/libexec/kextd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>10</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>75968</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/configd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>14</PID>
+      <TTY>??</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>86980</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/bin/perl /Users/fusioninventory/Downloads/fusioninventory-agent_macosx-intel_2.1.7+dev-2.1.x-20110129-1855/perl/bin/fusioninventory-agent --conf-file=./agent.cfg --debug</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.9</MEM>
+      <PID>289</PID>
+      <TTY>s000</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>82688</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>-bash</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>276</PID>
+      <TTY>s000</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>75964</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>login -pf fusioninventory</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>275</PID>
+      <TTY>s000</TTY>
+      <USER>root</USER>
+      <VIRTUALMEMORY>76596</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/Frameworks/QuickLook.framework/Resources/quicklookd.app/Contents/MacOS/quicklookd</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>266</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>105636</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/Applications/Safari.app/Contents/MacOS/Safari -psn_0_77843</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>2.9</MEM>
+      <PID>262</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>188608</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/SystemUIServer.app/Contents/MacOS/SystemUIServer -psn_0_61455</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.5</MEM>
+      <PID>254</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>152148</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/RemoteManagement/AppleVNCServer.bundle/Contents/MacOS/AppleVNCServer</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>252</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>99664</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATS.framework/Support/ATSServer</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.3</MEM>
+      <PID>251</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>110252</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/pboard</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.1</MEM>
+      <PID>250</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>76408</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/System/Library/CoreServices/Dock.app/Contents/MacOS/Dock -psn_0_45067</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.7</MEM>
+      <PID>249</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>159416</VIRTUALMEMORY>
+    </PROCESSES>
+    <PROCESSES>
+      <CMD>/usr/sbin/UserEventAgent -l Aqua</CMD>
+      <CPUUSAGE>0.0</CPUUSAGE>
+      <MEM>0.2</MEM>
+      <PID>246</PID>
+      <TTY>??</TTY>
+      <USER>fusioninventory</USER>
+      <VIRTUALMEMORY>94540</VIRTUALMEMORY>
+    </PROCESSES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Automator Runner</NAME>
+      <PUBLISHER>Automator Runner version 1.0, Copyright 2006 Apple Computer, Inc.</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AddPrinter</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>5.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>RAID Utility</NAME>
+      <PUBLISHER>RAID Utility 1.0 (31), Copyright © 2007 Apple Inc.</PUBLISHER>
+      <VERSION>1.0.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>MallocDebug</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.7</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Setup Assistant</NAME>
+      <PUBLISHER>10.5.0, Copyright © Apple Inc. 2005-2007.  All rights reserved.</PUBLISHER>
+      <VERSION>10.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Migration Assistant</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>SystemUIServer</NAME>
+      <PUBLISHER>SystemUIServer version 1.5.2, Copyright 2000-2006 Apple Computer, Inc.</PUBLISHER>
+      <VERSION>1.5.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Disk Utility</NAME>
+      <PUBLISHER>Disk Utility Version 11.0, Copyright © 1999-2007 Apple Inc. All rights reserved.</PUBLISHER>
+      <VERSION>11.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AU Lab</NAME>
+      <PUBLISHER>2.0.0 ©2006, Apple, Inc</PUBLISHER>
+      <VERSION>2.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Pixie</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>System Preferences</NAME>
+      <PUBLISHER>5.0, Copyright © 2000-2007 Apple Inc.</PUBLISHER>
+      <VERSION>5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AppleScript Runner</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>VoiceOver Utility</NAME>
+      <PUBLISHER>2.0, Copyright © 2004-2007 Apple Computer Inc., All Rights Reserved</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AppleScript Utility</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>ODBC Administrator</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Problem Reporter</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>10.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Script Editor</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Spotlight</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>10.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Applet Launcher</NAME>
+      <PUBLISHER>Java Applet Launcher 12.0.0 Copyright 1996-2007 Apple Inc.</PUBLISHER>
+      <VERSION>12.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Java Web Start</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>12.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>TextEdit</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Spin Control</NAME>
+      <PUBLISHER>Spin Control</PUBLISHER>
+      <VERSION>0.8</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>System Profiler</NAME>
+      <PUBLISHER>10.5.0, Copyright 1997-2007 Apple, Inc.</PUBLISHER>
+      <VERSION>10.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Preview</NAME>
+      <PUBLISHER>4.0, Copyright 2002-2007 Apple Inc.</PUBLISHER>
+      <VERSION>4.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Chess</NAME>
+      <PUBLISHER>2.3, Copyright 2003-2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.3</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Thread Viewer</NAME>
+      <PUBLISHER>Thread Viewer</PUBLISHER>
+      <VERSION>1.4</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>CCacheServer</NAME>
+      <PUBLISHER>6.0 Copyright © 2007 Massachusetts Institute of Technology</PUBLISHER>
+      <VERSION>6.0.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Fixer</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>10.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>LockScreen</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Front Row</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>rcd</NAME>
+      <PUBLISHER>1.6</PUBLISHER>
+      <VERSION>1.6</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Automator Launcher</NAME>
+      <PUBLISHER>Automator Launcher version 1.0, Copyright 2004 Apple Computer, Inc.</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Accessibility Verifier</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>PreferenceSyncClient</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AirPort Base Station Agent</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.2.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>BluetoothAudioAgent</NAME>
+      <PUBLISHER>2.0, © Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>VNCDragHelper</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>PMC Index</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>OpenGL Driver Monitor</NAME>
+      <PUBLISHER>1.4, Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>1.4</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Core Image Fun House</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Stickies</NAME>
+      <PUBLISHER>6.0, Copyright Apple Computer, Inc. 1999-2005</PUBLISHER>
+      <VERSION>6.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>BigTop</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>OBEXAgent</NAME>
+      <PUBLISHER>2.0, © Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Spaces</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Photo Booth</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>DiskImageMounter</NAME>
+      <PUBLISHER>10.5, Copyright 2003-2007 Apple Inc.</PUBLISHER>
+      <VERSION>10.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>iSync</NAME>
+      <PUBLISHER>3.0, Copyright © 2003-2007 Apple Inc.</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Printer Setup Utility</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>5.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>KerberosAgent</NAME>
+      <PUBLISHER>6.0 Copyright © 2007 Massachusetts Institute of Technology</PUBLISHER>
+      <VERSION>6.0.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Quartz Composer Visualizer</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Grapher</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>iSight Updater</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Dashcode</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Activity Monitor</NAME>
+      <PUBLISHER>10.5, © 2002-2007 Apple Computer Inc. All Rights Reserved.</PUBLISHER>
+      <VERSION>10.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>BluetoothUIServer</NAME>
+      <PUBLISHER>2.0, © Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Database Events</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>OpenGL Profiler</NAME>
+      <PUBLISHER>4.0, Copyright 2003-2006 Apple Computer, Inc.</PUBLISHER>
+      <VERSION>4.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Image Events</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>DVD Player</NAME>
+      <PUBLISHER>DVD Player 5.0, Copyright © 2001-2007 by Apple Inc.  All Rights Reserved.</PUBLISHER>
+      <VERSION>5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Expose</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>CoreServicesUIAgent</NAME>
+      <PUBLISHER>Copyright © 2007 Apple Inc.</PUBLISHER>
+      <VERSION>12</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>UserNotificationCenter</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>3.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>SecurityAgent</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>ZoneMonitor</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>SpindownHD</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>DigitalColor Meter</NAME>
+      <PUBLISHER>3.6.1, � Copyright 2001-2007 Apple Computer Inc. All Rights Reserved.</PUBLISHER>
+      <VERSION>3.6.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Language Chooser</NAME>
+      <PUBLISHER>System Language Initializer</PUBLISHER>
+      <VERSION>1.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>NetAuthAgent</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>iCal</NAME>
+      <PUBLISHER>3.0, Copyright 2002-2007 Apple Inc.</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>iTunes</NAME>
+      <PUBLISHER>iTunes 7.4.2, © 2000-2007 Apple Inc. All Rights Reserved.</PUBLISHER>
+      <VERSION>7.4.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Bluetooth Setup Assistant</NAME>
+      <PUBLISHER>2.0, © Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Instruments</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>SecureDownloadAgent</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Finder</NAME>
+      <PUBLISHER>Mac OS X Finder 10.5</PUBLISHER>
+      <VERSION>10.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Jar Launcher</NAME>
+      <PUBLISHER>Application that launches runnable JAR files.</PUBLISHER>
+      <VERSION>12.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AppleFileServer</NAME>
+      <PUBLISHER>4.0</PUBLISHER>
+      <VERSION>4.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Dashboard</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Intel]</COMMENTS>
+      <NAME>Expansion Slot Utility</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>System Events</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.3.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Network Utility</NAME>
+      <PUBLISHER>Network Utility Version 1.4.5, Copyright © 2000-2007 Apple Inc. All rights reserved.</PUBLISHER>
+      <VERSION>1.4.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>ColorSync Utility</NAME>
+      <PUBLISHER>4.5, © Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>4.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Keychain Access</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Boot Camp Assistant</NAME>
+      <PUBLISHER>Boot Camp Assistant 2.0, Copyright © 2007 Apple Inc. All rights reserved</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Network Diagnostics</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Console</NAME>
+      <PUBLISHER>10.5, Copyright © 1998-2007 Apple Inc.</PUBLISHER>
+      <VERSION>10.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Xcode</NAME>
+      <PUBLISHER>Xcode version 3.0</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Screen Sharing</NAME>
+      <PUBLISHER>1.0, Copyright © 2007 Apple Inc., All Rights Reserved.</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Image Capture</NAME>
+      <PUBLISHER>4.0, © Copyright 2000-2007 Apple Inc., all rights reserved.</PUBLISHER>
+      <VERSION>4.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>File Sync</NAME>
+      <PUBLISHER>© Copyright 2006 Apple Computer Inc., all rights reserved.</PUBLISHER>
+      <VERSION>4.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Help Viewer</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>ManagedClient</NAME>
+      <PUBLISHER>ManagedClient 1.1 Copyright (c) 2004-2007 Apple Inc. All Rights Reserved.</PUBLISHER>
+      <VERSION>1.1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Address Book</NAME>
+      <PUBLISHER>4.1, Copyright Apple Inc. 2002-2007</PUBLISHER>
+      <VERSION>4.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Calculator</NAME>
+      <PUBLISHER>4.2, Copyright © 2000-2007 Apple Inc.</PUBLISHER>
+      <VERSION>4.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Directory</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Dictionary</NAME>
+      <PUBLISHER>2.0, Copyright © 2005-2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>FileSyncAgent</NAME>
+      <PUBLISHER>¬© Copyright 2006 Apple Computer Inc., all rights reserved.</PUBLISHER>
+      <VERSION>4.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Network Setup Assistant</NAME>
+      <PUBLISHER>1.5, Copyright Apple Computer, Inc. 2003</PUBLISHER>
+      <VERSION>1.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Safari</NAME>
+      <PUBLISHER>3.0.4, Copyright © 2003-2007 Apple Inc.</PUBLISHER>
+      <VERSION>3.0.4</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Directory Utility</NAME>
+      <PUBLISHER>2.0, Copyright © 2001–2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Kerberos</NAME>
+      <PUBLISHER>6.0 Copyright © 2007 Massachusetts Institute of Technology</PUBLISHER>
+      <VERSION>6.0.11</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>KeyboardSetupAssistant</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>10.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Interface Builder</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Folder Actions Dispatcher</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Mail</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Reggie SE</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AirPort Utility</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>5.2.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Quartz Debug</NAME>
+      <PUBLISHER>3.0</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Apple80211Agent</NAME>
+      <PUBLISHER>5.0, Copyright © 2000–2007 Apple Inc. All Rights Reserved.</PUBLISHER>
+      <VERSION>5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Terminal</NAME>
+      <PUBLISHER>2.0, © 1995-2007 Apple Computer Inc. All Rights Reserved.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Software Update</NAME>
+      <PUBLISHER>Software Update version 3.0, Copyright 2000-2007, Apple Inc.</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Classic]</COMMENTS>
+      <NAME>DesktopDB</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>unknown</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Audio MIDI Setup</NAME>
+      <PUBLISHER>2.2.2, Copyright 2002-2007 Apple, Inc.</PUBLISHER>
+      <VERSION>2.2.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Folder Actions Setup</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.1.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Dock</NAME>
+      <PUBLISHER>Dock 1.6</PUBLISHER>
+      <VERSION>1.6</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Automator</NAME>
+      <PUBLISHER>Automator version 2.0, Copyright 2004-2006 Apple Computer, Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>AVRCPAgent</NAME>
+      <PUBLISHER>2.0, © Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Input Method Hotkey</NAME>
+      <PUBLISHER>12.0.0, Copyright 2001-2007, Apple Computer</PUBLISHER>
+      <VERSION>12.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>iChat</NAME>
+      <PUBLISHER>4.0, Copyright © 2002-2007 Apple Inc. All rights reserved. The Running Man logo is a trademark of America Online, Inc.</PUBLISHER>
+      <VERSION>4.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Saturn</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Grab</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.4</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Font Book</NAME>
+      <PUBLISHER>2.1, Copyright © 2003-2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Shark</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>QuickTime Player</NAME>
+      <PUBLISHER>7.2.1, Copyright © 1989-2007 Apple Inc. All Rights Reserved</PUBLISHER>
+      <VERSION>7.2.1</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Certificate Assistant</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Java Preferences</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>12.0.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Quartz Composer</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>ARDAgent</NAME>
+      <PUBLISHER>3.2</PUBLISHER>
+      <VERSION>3.2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Podcast Capture</NAME>
+      <PUBLISHER>1.0, Copyright © 2007 Apple Inc.</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Time Machine</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>VNC Guest</NAME>
+      <PUBLISHER>VNC Guest v1.3</PUBLISHER>
+      <VERSION>1.4</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Bluetooth File Exchange</NAME>
+      <PUBLISHER>2.0, © Copyright 2007 Apple Inc.</PUBLISHER>
+      <VERSION>2.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>loginwindow</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>HALLab</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>1.4</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Installer</NAME>
+      <PUBLISHER>3.0, Copyright © 2000-2006 Apple Computer Inc., All Rights Reserved</PUBLISHER>
+      <VERSION>3.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>CHUD Remover</NAME>
+      <PUBLISHER>unknown</PUBLISHER>
+      <VERSION>4.5.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Archive Utility</NAME>
+      <PUBLISHER>10.5, Copyright 2003-2007 Apple Inc.</PUBLISHER>
+      <VERSION>10.5</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>OpenGL Shader Builder</NAME>
+      <PUBLISHER>OpenGL Shader Builder v1.3 Copyright 2007 Apple Computer, Inc.</PUBLISHER>
+      <VERSION>1.3</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>[Universal]</COMMENTS>
+      <NAME>Accessibility Inspector</NAME>
+      <PUBLISHER>Accessibility Inspector 1.1, Copyright 2002-2007 Apple Inc.</PUBLISHER>
+      <VERSION>1.1</VERSION>
+    </SOFTWARES>
+    <STORAGES>
+      <DISKSIZE>20480</DISKSIZE>
+      <FIRMWARE>1.0</FIRMWARE>
+      <MANUFACTURER></MANUFACTURER>
+      <MODEL>VBOX HARDDISK</MODEL>
+      <NAME>VBOX HARDDISK</NAME>
+      <SERIAL>VB41c23536-65e9fe9b</SERIAL>
+      <SERIALNUMBER>VB41c23536-65e9fe9b</SERIALNUMBER>
+      <TYPE>ATA</TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>CD-ROM Drive</DESCRIPTION>
+      <FIRMWARE>1.0</FIRMWARE>
+      <MANUFACTURER></MANUFACTURER>
+      <MODEL>VBOX CD-ROM</MODEL>
+      <NAME>VBOX CD-ROM</NAME>
+      <SERIAL>VB2-01700376</SERIAL>
+      <SERIALNUMBER>VB2-01700376</SERIALNUMBER>
+      <TYPE>ATA</TYPE>
+    </STORAGES>
+    <USBDEVICES>
+      <CLASS>0</CLASS>
+      <NAME>USB Keyboard</NAME>
+      <PRODUCTID>10</PRODUCTID>
+      <SUBCLASS>0</SUBCLASS>
+      <VENDORID>80ee</VENDORID>
+    </USBDEVICES>
+    <USBDEVICES>
+      <CLASS>0</CLASS>
+      <NAME>USB Tablet</NAME>
+      <PRODUCTID>21</PRODUCTID>
+      <SUBCLASS>0</SUBCLASS>
+      <VENDORID>80ee</VENDORID>
+    </USBDEVICES>
+    <USERS>
+      <LOGIN>fusioninventory</LOGIN>
+    </USERS>
+    <VERSIONCLIENT>FusionInventory-Agent_v2.1.7+dev-2.1.x-20110129-1855</VERSIONCLIENT>
+    <VIDEOS>
+      <MEMORY>16</MEMORY>
+      <NAME>Display</NAME>
+    </VIDEOS>
+  </CONTENT>
+  <DEVICEID>Client-Leopard2.local-2011-01-03-22-28-46</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>
