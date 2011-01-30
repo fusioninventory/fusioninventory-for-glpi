@@ -295,6 +295,12 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
    function permanentTask($items_id, $module_name) {
       global $LANG;
 
+      if ($module_name == "NETDISCOVERY") {
+         $method = "netdiscovery";
+      } else if ($module_name == "SNMPQUERY") {
+         $method = "snmpinventory";
+      }
+
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
       $PluginFusioninventoryTask = new PluginFusioninventoryTask();
@@ -331,8 +337,8 @@ class PluginFusinvsnmpIPRange extends CommonDBTM {
          $input = array();
          $input['plugin_fusioninventory_tasks_id'] = $task_id;
          $input['plugins_id'] = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-         $input['method'] = 'netdiscovery';
-         $input['action'] = '[{"PluginFusioninventoryAgent":".1"}]';
+         $input['method'] = $method;
+         $input['action'] = '[{"PluginFusioninventoryAgent":".2"}]';
          $input['definition'] = '[{"PluginFusinvsnmpIPRange":"'.$_POST['id'].'"}]';
          $input["entities_id"]  = $_SESSION["glpiactive_entity"];
 
