@@ -56,6 +56,7 @@ $LANG['plugin_fusinvinventory']['menu'][3]="Entity rules";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Import Agent XML file";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Computer injected into GLPI";
+$LANG['plugin_fusinvinventory']['importxml'][2]="No file to import !";
 
 $LANG['plugin_fusinvinventory']['rule'][0]="Computer existent criteria rules";
 $LANG['plugin_fusinvinventory']['rule'][1]="Existant criterium";

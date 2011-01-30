@@ -56,6 +56,7 @@ $LANG['plugin_fusinvinventory']['menu'][3]="Règles d'entités";
 
 $LANG['plugin_fusinvinventory']['importxml'][0]="Import de fichier XML provenant de l'agent";
 $LANG['plugin_fusinvinventory']['importxml'][1]="Ordinateur importé dans GLPI";
+$LANG['plugin_fusinvinventory']['importxml'][2]="Fichier manquant !";
 
 $LANG['plugin_fusinvinventory']['rule'][0]="Règles de critères d'existence d'ordinateur";
 $LANG['plugin_fusinvinventory']['rule'][1]="Critère d'existence";
