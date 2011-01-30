@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2010-10-10 11:58:13</LOGDATE>
+      <USERID>N/A</USERID>
+    </ACCESSLOG>
+    <BATTERIES>
+      <CHEMISTRY>Lithium </CHEMISTRY>
+      <DATE>10/12/2020</DATE>
+      <MANUFACTURER>-Virtual Battery 0-</MANUFACTURER>
+      <NAME>Li-lon Battery</NAME>
+      <SERIAL>Battery 0</SERIAL>
+    </BATTERIES>
+    <BIOS>
+      <BDATE>11/30/2009</BDATE>
+      <BMANUFACTURER>eMachines</BMANUFACTURER>
+      <BVERSION>V3.03</BVERSION>
+      <SMANUFACTURER>eMachines</SMANUFACTURER>
+      <SMODEL>eMachines G525</SMODEL>
+      <SSN>LXN8302045951081611601</SSN>
+      <TYPE>Notebook</TYPE>
+    </BIOS>
+    <CONTROLLERS>
+      <CAPTION>Standard AHCI 1.0 Serial ATA Controller</CAPTION>
+      <MANUFACTURER>Standard AHCI 1.0 Serial ATA Controller</MANUFACTURER>
+      <NAME>Standard AHCI 1.0 Serial ATA Controller</NAME>
+      <PCIID>8086:2929</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Standard AHCI 1.0 Serial ATA Controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>ATA Channel 0</CAPTION>
+      <MANUFACTURER>(Standard IDE ATA/ATAPI controllers)</MANUFACTURER>
+      <NAME>ATA Channel 0</NAME>
+      <TYPE>ATA Channel 0</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>ATA Channel 1</CAPTION>
+      <MANUFACTURER>(Standard IDE ATA/ATAPI controllers)</MANUFACTURER>
+      <NAME>ATA Channel 1</NAME>
+      <TYPE>ATA Channel 1</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>ATA Channel 4</CAPTION>
+      <MANUFACTURER>(Standard IDE ATA/ATAPI controllers)</MANUFACTURER>
+      <NAME>ATA Channel 4</NAME>
+      <TYPE>ATA Channel 4</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</CAPTION>
+      <NAME>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</NAME>
+      <TYPE>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</CAPTION>
+      <NAME>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</NAME>
+      <TYPE>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family USB2 Enhanced Host Controller - 293A</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family USB2 Enhanced Host Controller - 293A</NAME>
+      <PCIID>8086:293a</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family USB2 Enhanced Host Controller - 293A</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family USB2 Enhanced Host Controller - 293C</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family USB2 Enhanced Host Controller - 293C</NAME>
+      <PCIID>8086:293c</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family USB2 Enhanced Host Controller - 293C</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family USB Universal Host Controller - 2934</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family USB Universal Host Controller - 2934</NAME>
+      <PCIID>8086:2934</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family USB Universal Host Controller - 2934</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family USB Universal Host Controller - 2935</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family USB Universal Host Controller - 2935</NAME>
+      <PCIID>8086:2935</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family USB Universal Host Controller - 2935</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family USB Universal Host Controller - 2936</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family USB Universal Host Controller - 2936</NAME>
+      <PCIID>8086:2936</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family USB Universal Host Controller - 2936</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family USB Universal Host Controller - 2937</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family USB Universal Host Controller - 2937</NAME>
+      <PCIID>8086:2937</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family USB Universal Host Controller - 2937</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family USB Universal Host Controller - 2939</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family USB Universal Host Controller - 2939</NAME>
+      <PCIID>8086:2939</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family USB Universal Host Controller - 2939</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9M LPC Interface Controller - 2919</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9M LPC Interface Controller - 2919</NAME>
+      <PCIID>8086:2919</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9M LPC Interface Controller - 2919</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</NAME>
+      <PCIID>8086:2a43</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family SMBus Controller - 2930</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family SMBus Controller - 2930</NAME>
+      <PCIID>8086:2930</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family SMBus Controller - 2930</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>High Definition Audio Controller</CAPTION>
+      <MANUFACTURER>Microsoft</MANUFACTURER>
+      <NAME>High Definition Audio Controller</NAME>
+      <PCIID>8086:293e</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>High Definition Audio Controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family PCI Express Root Port 1 - 2940</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family PCI Express Root Port 1 - 2940</NAME>
+      <PCIID>8086:2940</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family PCI Express Root Port 1 - 2940</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family PCI Express Root Port 2 - 2942</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family PCI Express Root Port 2 - 2942</NAME>
+      <PCIID>8086:2942</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family PCI Express Root Port 2 - 2942</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Broadcom 802.11g Network Adapter</CAPTION>
+      <MANUFACTURER>Broadcom</MANUFACTURER>
+      <NAME>Broadcom 802.11g Network Adapter</NAME>
+      <PCIID>14e4:4315</PCIID>
+      <PCISUBSYSTEMID>105b:e01b</PCISUBSYSTEMID>
+      <TYPE>Broadcom 802.11g Network Adapter</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) ICH9 Family PCI Express Root Port 3 - 2944</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) ICH9 Family PCI Express Root Port 3 - 2944</NAME>
+      <PCIID>8086:2944</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) ICH9 Family PCI Express Root Port 3 - 2944</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Atheros AR8132 PCI-E Fast Ethernet Controller (NDIS 6.20)</CAPTION>
+      <MANUFACTURER>Atheros</MANUFACTURER>
+      <NAME>Atheros AR8132 PCI-E Fast Ethernet Controller (NDIS 6.20)</NAME>
+      <PCIID>1969:1062</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Atheros AR8132 PCI-E Fast Ethernet Controller (NDIS 6.20)</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) 82801 PCI Bridge - 2448</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) 82801 PCI Bridge - 2448</NAME>
+      <PCIID>8086:2448</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Intel(R) 82801 PCI Bridge - 2448</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Mobile Intel(R) 4 Series Chipset Processor to DRAM Controller - 2A40</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Mobile Intel(R) 4 Series Chipset Processor to DRAM Controller - 2A40</NAME>
+      <PCIID>8086:2a40</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Mobile Intel(R) 4 Series Chipset Processor to DRAM Controller - 2A40</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</CAPTION>
+      <MANUFACTURER>Intel Corporation</MANUFACTURER>
+      <NAME>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</NAME>
+      <PCIID>8086:2a42</PCIID>
+      <PCISUBSYSTEMID>1025:0210</PCISUBSYSTEMID>
+      <TYPE>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</TYPE>
+    </CONTROLLERS>
+    <CPUS>
+      <CORE>1</CORE>
+      <DESCRIPTION>Intel64 Family 6 Model 23 Stepping 10</DESCRIPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) Celeron(R) CPU          900  @ 2.20GHz</NAME>
+      <SERIAL>7A060100FFFBEBAF</SERIAL>
+      <SPEED>2200</SPEED>
+    </CPUS>
+    <DRIVES>
+      <DESCRIPTION>Local Fixed Disk</DESCRIPTION>
+      <FILESYSTEM>NTFS</FILESYSTEM>
+      <FREE>42669</FREE>
+      <LABEL></LABEL>
+      <LETTER>C:</LETTER>
+      <SERIAL>3E755EB8</SERIAL>
+      <SYSTEMDRIVE>1</SYSTEMDRIVE>
+      <TOTAL>57342</TOTAL>
+      <TYPE>Local Disk</TYPE>
+      <VOLUMN></VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <DESCRIPTION>CD-ROM Disc</DESCRIPTION>
+      <LETTER>D:</LETTER>
+      <SYSTEMDRIVE></SYSTEMDRIVE>
+      <TYPE>Compact Disc</TYPE>
+    </DRIVES>
+    <DRIVES>
+      <DESCRIPTION>Removable Disk</DESCRIPTION>
+      <LETTER>E:</LETTER>
+      <SYSTEMDRIVE></SYSTEMDRIVE>
+      <TYPE>Removable Disk</TYPE>
+    </DRIVES>
+    <ENVS>
+      <KEY>USERPROFILE</KEY>
+      <VAL>C:\Windows\system32\config\systemprofile</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMMONPROGRAMFILES</KEY>
+      <VAL>C:\Program Files (x86)\Common Files</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_ALL</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>APPDATA</KEY>
+      <VAL>C:\Windows\system32\config\systemprofile\AppData\Roaming</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROGRAMFILES</KEY>
+      <VAL>C:\Program Files (x86)</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>OS</KEY>
+      <VAL>Windows_NT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PWD</KEY>
+      <VAL>C:/Windows/system32</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LOCALAPPDATA</KEY>
+      <VAL>C:\Windows\system32\config\systemprofile\AppData\Local</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROGRAMW6432</KEY>
+      <VAL>C:\Program Files</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATHEXT</KEY>
+      <VAL>.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LANG</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>NUMBER_OF_PROCESSORS</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>FP_NO_HOST_CHECK</KEY>
+      <VAL>NO</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMMONPROGRAMFILES(X86)</KEY>
+      <VAL>C:\Program Files (x86)\Common Files</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATH</KEY>
+      <VAL>C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\FusionInventory-Agent\perl\bin;C:\Program Files (x86)\FusionInventory-Agent\c\bin;;C:\Program Files (x86)\FusionInventory-Agent\perl\bin\</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_ARCHITEW6432</KEY>
+      <VAL>AMD64</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERDOMAIN</KEY>
+      <VAL>WORKGROUP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROGRAMDATA</KEY>
+      <VAL>C:\ProgramData</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_ARCHITECTURE</KEY>
+      <VAL>x86</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PSMODULEPATH</KEY>
+      <VAL>C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TEMP</KEY>
+      <VAL>C:\Windows\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_REVISION</KEY>
+      <VAL>170a</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SYSTEMDRIVE</KEY>
+      <VAL>C:</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SYSTEMROOT</KEY>
+      <VAL>C:\Windows</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMMONPROGRAMW6432</KEY>
+      <VAL>C:\Program Files\Common Files</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMSPEC</KEY>
+      <VAL>C:\Windows\system32\cmd.exe</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>WINDIR</KEY>
+      <VAL>C:\Windows</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_LEVEL</KEY>
+      <VAL>6</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PUBLIC</KEY>
+      <VAL>C:\Users\Public</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERNAME</KEY>
+      <VAL>DAVID-PC$</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_IDENTIFIER</KEY>
+      <VAL>Intel64 Family 6 Model 23 Stepping 10, GenuineIntel</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROGRAMFILES(X86)</KEY>
+      <VAL>C:\Program Files (x86)</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>ALLUSERSPROFILE</KEY>
+      <VAL>C:\ProgramData</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMPUTERNAME</KEY>
+      <VAL>DAVID-PC</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMP</KEY>
+      <VAL>C:\Windows\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>ComSpec</KEY>
+      <VAL>%SystemRoot%\system32\cmd.exe</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>FP_NO_HOST_CHECK</KEY>
+      <VAL>NO</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>OS</KEY>
+      <VAL>Windows_NT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>Path</KEY>
+      <VAL>%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\FusionInventory-Agent\perl\bin;C:\Program Files (x86)\FusionInventory-Agent\c\bin</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATHEXT</KEY>
+      <VAL>.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_ARCHITECTURE</KEY>
+      <VAL>AMD64</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TEMP</KEY>
+      <VAL>%SystemRoot%\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMP</KEY>
+      <VAL>%SystemRoot%\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERNAME</KEY>
+      <VAL>SYSTEM</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>windir</KEY>
+      <VAL>%SystemRoot%</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PSModulePath</KEY>
+      <VAL>%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules\</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>NUMBER_OF_PROCESSORS</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_LEVEL</KEY>
+      <VAL>6</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_IDENTIFIER</KEY>
+      <VAL>Intel64 Family 6 Model 23 Stepping 10, GenuineIntel</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_REVISION</KEY>
+      <VAL>170a</VAL>
+    </ENVS>
+    <HARDWARE>
+      <ARCHNAME>MSWin32-x86-multi-thread</ARCHNAME>
+      <CHECKSUM>262143</CHECKSUM>
+      <DEFAULTGATEWAY></DEFAULTGATEWAY>
+      <DNS></DNS>
+      <ETIME>14</ETIME>
+      <IPADDR></IPADDR>
+      <MEMORY>3001</MEMORY>
+      <NAME>DAVID-PC</NAME>
+      <OSCOMMENTS></OSCOMMENTS>
+      <OSNAME>Microsoft Windows 7 Enterprise </OSNAME>
+      <OSVERSION>6.1.7600</OSVERSION>
+      <PROCESSORN>1</PROCESSORN>
+      <PROCESSORS>2200</PROCESSORS>
+      <PROCESSORT>Intel(R) Celeron(R) CPU          900  @ 2.20GHz</PROCESSORT>
+      <SWAP>0</SWAP>
+      <USERDOMAIN>David-PC</USERDOMAIN>
+      <USERID>David</USERID>
+      <UUID>31643565-3830-3931-3036-0026228CD1A2</UUID>
+      <VMSYSTEM>Physical</VMSYSTEM>
+      <WINCOMPANY></WINCOMPANY>
+      <WINLANG>1033</WINLANG>
+      <WINOWNER>David</WINOWNER>
+      <WINPRODID>00392-972-8000024-85452</WINPRODID>
+      <WINPRODKEY>74M4B-BTT8P-MMM3M-64RRJ-JCDDG</WINPRODKEY>
+      <WORKGROUP>WORKGROUP</WORKGROUP>
+    </HARDWARE>
+    <INPUTS>
+      <CAPTION>Enhanced (101- or 102-key)</CAPTION>
+      <DESCRIPTION>Standard PS/2 Keyboard</DESCRIPTION>
+      <LAYOUT>0000040C</LAYOUT>
+    </INPUTS>
+    <INPUTS>
+      <CAPTION>PS/2 Compatible Mouse</CAPTION>
+      <DESCRIPTION>PS/2 Compatible Mouse</DESCRIPTION>
+      <INTERFACE>PS/2</INTERFACE>
+    </INPUTS>
+    <MEMORIES>
+      <CAPACITY>2048</CAPACITY>
+      <CAPTION>DIMM0</CAPTION>
+      <DESCRIPTION>SODIMM</DESCRIPTION>
+      <NUMSLOTS>1</NUMSLOTS>
+      <SERIALNUMBER>00000000</SERIALNUMBER>
+      <SPEED>800</SPEED>
+      <TYPE>Unknown</TYPE>
+    </MEMORIES>
+    <MEMORIES>
+      <CAPACITY>1024</CAPACITY>
+      <CAPTION>DIMM2</CAPTION>
+      <DESCRIPTION>SODIMM</DESCRIPTION>
+      <NUMSLOTS>2</NUMSLOTS>
+      <SERIALNUMBER>00000000</SERIALNUMBER>
+      <SPEED>800</SPEED>
+      <TYPE>Unknown</TYPE>
+    </MEMORIES>
+    <MONITORS>
+      <BASE64>AP///////wAw5MoBAAAAAAASAQOAJhV4CqjAnVhQmiYcUFQAAAABAQEBAQEBAQEBAQEBAQEBLyZAuGCEDDAwMCMAftcQAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAA/gAAAABMR0Rpc3BsYXkKAAAA/gBMUDE3M1dEMS1UTEExAHg=</BASE64>
+      <CAPTION>Generic PnP Monitor</CAPTION>
+      <DESCRIPTION>0/2008</DESCRIPTION>
+      <MANUFACTURER>LG Display</MANUFACTURER>
+    </MONITORS>
+    <NETWORKS>
+      <DESCRIPTION>Broadcom 802.11g Network Adapter</DESCRIPTION>
+      <IPADDRESS></IPADDRESS>
+      <IPADDRESS6></IPADDRESS6>
+      <IPMASK></IPMASK>
+      <IPSUBNET></IPSUBNET>
+      <MACADDR>90:4C:E5:A9:8E:0F</MACADDR>
+      <STATUS>Down</STATUS>
+      <VIRTUALDEV>0</VIRTUALDEV>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>Atheros AR8132 PCI-E Fast Ethernet Controller (NDIS 6.20)</DESCRIPTION>
+      <IPADDRESS></IPADDRESS>
+      <IPADDRESS6></IPADDRESS6>
+      <IPMASK></IPMASK>
+      <IPSUBNET></IPSUBNET>
+      <MACADDR>00:26:22:8C:D1:A2</MACADDR>
+      <STATUS>Down</STATUS>
+      <VIRTUALDEV>0</VIRTUALDEV>
+    </NETWORKS>
+    <PRINTERS>
+      <DRIVER>HP Photosmart C4400 series</DRIVER>
+      <NAME>HP Photosmart C4400 series</NAME>
+      <NETWORK>0</NETWORK>
+      <PORT>USB001</PORT>
+      <PRINTPROCESSOR>hpzppw71</PRINTPROCESSOR>
+      <RESOLUTION>600x600</RESOLUTION>
+      <SERIAL>TH96JH41WN05BN/</SERIAL>
+      <SHARED>0</SHARED>
+      <STATUS>Idle</STATUS>
+    </PRINTERS>
+    <PRINTERS>
+      <DRIVER>Microsoft XPS Document Writer</DRIVER>
+      <NAME>Microsoft XPS Document Writer</NAME>
+      <NETWORK>0</NETWORK>
+      <PORT>XPSPort:</PORT>
+      <PRINTPROCESSOR>winprint</PRINTPROCESSOR>
+      <RESOLUTION>600x600</RESOLUTION>
+      <SHARED>0</SHARED>
+      <STATUS>Idle</STATUS>
+    </PRINTERS>
+    <PRINTERS>
+      <DRIVER>Microsoft Shared Fax Driver</DRIVER>
+      <NAME>Fax</NAME>
+      <NETWORK>0</NETWORK>
+      <PORT>SHRFAX:</PORT>
+      <PRINTPROCESSOR>winprint</PRINTPROCESSOR>
+      <RESOLUTION>200x200</RESOLUTION>
+      <SHARED>0</SHARED>
+      <STATUS>Idle</STATUS>
+    </PRINTERS>
+    <SLOTS>
+      <DESCRIPTION>x16 PCI Express</DESCRIPTION>
+      <DESIGNATION>0</DESIGNATION>
+      <NAME>J6B2</NAME>
+      <STATUS>Available</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>x1 PCI Express</DESCRIPTION>
+      <DESIGNATION>0</DESIGNATION>
+      <NAME>J6B1</NAME>
+      <STATUS>Available</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>x1 PCI Express</DESCRIPTION>
+      <DESIGNATION>1</DESIGNATION>
+      <NAME>J6C2</NAME>
+      <STATUS>Available</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>x1 PCI Express</DESCRIPTION>
+      <DESIGNATION>2</DESIGNATION>
+      <NAME>J7B1</NAME>
+      <STATUS>Available</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>x1 PCI Express</DESCRIPTION>
+      <DESIGNATION>3</DESIGNATION>
+      <NAME>J8B3</NAME>
+      <STATUS>Available</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>x1 PCI Express</DESCRIPTION>
+      <DESIGNATION>4</DESIGNATION>
+      <NAME>J8D1</NAME>
+      <STATUS>Available</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>System Slot</DESCRIPTION>
+      <DESIGNATION>J6B2</DESIGNATION>
+      <NAME>System Slot</NAME>
+      <STATUS>OK</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>System Slot</DESCRIPTION>
+      <DESIGNATION>J6B1</DESIGNATION>
+      <NAME>System Slot</NAME>
+      <STATUS>OK</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>System Slot</DESCRIPTION>
+      <DESIGNATION>J6C2</DESIGNATION>
+      <NAME>System Slot</NAME>
+      <STATUS>OK</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>System Slot</DESCRIPTION>
+      <DESIGNATION>J7B1</DESIGNATION>
+      <NAME>System Slot</NAME>
+      <STATUS>OK</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>System Slot</DESCRIPTION>
+      <DESIGNATION>J8B3</DESIGNATION>
+      <NAME>System Slot</NAME>
+      <STATUS>OK</STATUS>
+    </SLOTS>
+    <SLOTS>
+      <DESCRIPTION>System Slot</DESCRIPTION>
+      <DESIGNATION>J8D1</DESIGNATION>
+      <NAME>System Slot</NAME>
+      <STATUS>OK</STATUS>
+    </SLOTS>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>FusionInventory Agent</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>FusionInventory Agent</NAME>
+      <PUBLISHER>FusionInventory Team</PUBLISHER>
+      <UNINSTALL_STRING>C:\Program Files (x86)\FusionInventory-Agent\uninstFI.exe</UNINSTALL_STRING>
+      <URL_INFO_ABOUT>http://www.FusionInventory.org</URL_INFO_ABOUT>
+      <VERSION>2.1.6-2</VERSION>
+    </SOFTWARES>
+    <SOUNDS>
+      <DESCRIPTION>High Definition Audio Device</DESCRIPTION>
+      <MANUFACTURER>Microsoft</MANUFACTURER>
+      <NAME>High Definition Audio Device</NAME>
+    </SOUNDS>
+    <STORAGES>
+      <DISKSIZE>640135</DISKSIZE>
+      <FIRMWARE>01.01A01</FIRMWARE>
+      <INTERFACE>IDE</INTERFACE>
+      <MANUFACTURER>(Standard disk drives)</MANUFACTURER>
+      <MODEL>WDC WD6400BEVT-60A0RT0</MODEL>
+      <NAME>\\.\PHYSICALDRIVE0</NAME>
+      <SCSI_COID>0</SCSI_COID>
+      <SCSI_LUN>0</SCSI_LUN>
+      <SCSI_UNID>0</SCSI_UNID>
+      <SERIAL>WD-WX31A40M9093</SERIAL>
+      <SERIALNUMBER>WD-WX31A40M9093</SERIALNUMBER>
+      <TYPE>Fixed hard disk media</TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DISKSIZE>0</DISKSIZE>
+      <FIRMWARE>1.00</FIRMWARE>
+      <INTERFACE>USB</INTERFACE>
+      <MANUFACTURER>(Standard disk drives)</MANUFACTURER>
+      <MODEL>HP Photosmart C4400 USB Device</MODEL>
+      <NAME>\\.\PHYSICALDRIVE1</NAME>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>CD-ROM Drive</DESCRIPTION>
+      <MANUFACTURER>(Standard CD-ROM drives)</MANUFACTURER>
+      <MODEL>MATSHITA DVD-RAM UJ890AS ATA Device</MODEL>
+      <NAME>MATSHITA DVD-RAM UJ890AS ATA Device</NAME>
+      <SCSI_COID>1</SCSI_COID>
+      <SCSI_LUN>0</SCSI_LUN>
+      <SCSI_UNID>0</SCSI_UNID>
+      <TYPE>DVD Writer</TYPE>
+    </STORAGES>
+    <USBDEVICES>
+      <NAME>USB Composite Device</NAME>
+      <PRODUCTID>A103</PRODUCTID>
+      <SERIAL>CN0314-SN30-OV035-VA-R05.00.00</SERIAL>
+      <VENDORID>064E</VENDORID>
+    </USBDEVICES>
+    <USBDEVICES>
+      <NAME>USB Composite Device</NAME>
+      <PRODUCTID>6C11</PRODUCTID>
+      <SERIAL>TH96JH41WN05BN</SERIAL>
+      <VENDORID>03F0</VENDORID>
+    </USBDEVICES>
+    <USERS>
+      <DOMAIN>David-PC</DOMAIN>
+      <LOGIN>David</LOGIN>
+    </USERS>
+    <VERSIONCLIENT>FusionInventory-Agent_v2.1.6-2</VERSIONCLIENT>
+    <VIDEOS>
+      <NAME>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</NAME>
+      <RESOLUTION>1600x900</RESOLUTION>
+    </VIDEOS>
+    <VIDEOS>
+      <CHIPSET>Mobile Intel(R) 4 Series Express Chipset Family</CHIPSET>
+      <NAME>Mobile Intel(R) 45 Express Chipset Family (Microsoft Corporation - WDDM 1.1)</NAME>
+    </VIDEOS>
+  </CONTENT>
+  <DEVICEID>David-PC-2010-08-09-20-52-54</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>
