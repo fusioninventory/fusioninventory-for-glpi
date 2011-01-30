@@ -326,8 +326,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $DB->query($query);
 
       $agent = $this->InfosByKey($device_id);
-      $agent['items_id'] = $items_id;
-      $this->update($agent);
+      if (isset($agent['id'])) {
+         $agent['items_id'] = $items_id;
+         $this->update($agent);
+      }
    }
 
 
