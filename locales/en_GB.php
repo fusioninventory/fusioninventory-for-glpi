@@ -519,6 +519,7 @@ $LANG['plugin_fusioninventory']['agents'][29]="Module activation";
 $LANG['plugin_fusioninventory']['agents'][30]="Impossible to communicate with agent!";
 $LANG['plugin_fusioninventory']['agents'][31]="Force inventory";
 $LANG['plugin_fusioninventory']['agents'][32]="Auto managenement dynamic of agents";
+$LANG['plugin_fusioninventory']['agents'][33]="Auto managenement dynamic of agents (same subnet)";
 
 $LANG['plugin_fusioninventory']['unknown'][0]="DNS Name";
 $LANG['plugin_fusioninventory']['unknown'][1]="Network port name";
