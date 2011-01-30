@@ -150,7 +150,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = $LANG['plugin_fusioninventory']['functionalities'][2];
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/configuration.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/configuration.form.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = $LANG['plugin_fusioninventory']['menu'][4];
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
