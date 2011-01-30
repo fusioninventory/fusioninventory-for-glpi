@@ -624,6 +624,9 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
          if (isset($child->DESCRIPTION)) {
             $a_networkXML["'".$i."-".$child->DESCRIPTION."'"] = 1;
             $i++;
+         } else if (isset($child->IPADDRESS)) {
+            $a_networkXML["'".$i."-".$child->IPADDRESS."'"] = 1;
+            $i++;
          }
       }
 
@@ -824,7 +827,7 @@ class Plugins_Fusioninventory_InventoryLocal extends PHPUnit_Framework_TestCase 
       $items_id = $array[0];
       $unknown  = $array[1];
 
-      $this->testNetwork($xml, $items_id, $unknown);
+      $this->testNetwork($xml, $items_id, $unknown, $xmlFile);
 
 
    }
