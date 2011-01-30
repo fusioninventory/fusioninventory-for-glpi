@@ -205,30 +205,47 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'HARDWARE':
-               if (isset($dataSection['NAME']))
-                  $Computer->fields['name'] = $dataSection['NAME'];
+               $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
+
+               if (isset($dataSection['NAME'])) {
+                  if (!in_array('name', $a_lockable)) {
+                     $Computer->fields['name'] = $dataSection['NAME'];
+                  }
+               }
                if (isset($dataSection['OSNAME'])) {
-                  $OperatingSystem = new OperatingSystem;
-                  $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
+                  if (!in_array('operatingsystems_id', $a_lockable)) {
+                     $OperatingSystem = new OperatingSystem;
+                     $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
+                  }
                }
                if (isset($dataSection['OSVERSION'])) {
-                  $OperatingSystemVersion = new OperatingSystemVersion;
-                  $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                  if (!in_array('operatingsystemversions_id', $a_lockable)) {
+                     $OperatingSystemVersion = new OperatingSystemVersion;
+                     $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                  }
                }
                if (isset($dataSection['WINPRODID'])) {
-                  $Computer->fields['os_licenseid'] = $dataSection['WINPRODID'];
+                  if (!in_array('os_licenseid', $a_lockable)) {
+                     $Computer->fields['os_licenseid'] = $dataSection['WINPRODID'];
+                  }
                }
                if (isset($dataSection['WINPRODKEY'])) {
-                  $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+                  if (!in_array('os_license_number', $a_lockable)) {
+                     $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+                  }
                }
                if (isset($dataSection['WORKGROUP'])) {
-                  $Domain = new Domain;
-                  $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
+                  if (!in_array('domains_id', $a_lockable)) {
+                     $Domain = new Domain;
+                     $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
+                  }
                }
                if (isset($dataSection['OSCOMMENTS'])) {
-                  if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
-                     $OperatingSystemServicePack = new OperatingSystemServicePack;
-                     $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                  if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
+                     if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
+                        $OperatingSystemServicePack = new OperatingSystemServicePack;
+                        $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                     }
                   }
                }
                if (isset($dataSection['UUID'])) {
@@ -237,14 +254,18 @@ class PluginFusinvinventoryLibhook {
                break;
 
             case 'USERS':
+               $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
+
                if (isset($dataSection['LOGIN'])) {
-                  $Computer->fields['contact'] = $dataSection['LOGIN'];
-                  $query = "SELECT `id`
-                            FROM `glpi_users`
-                            WHERE `name` = '" . $dataSection['LOGIN'] . "';";
-                  $result = $DB->query($query);
-                  if ($DB->numrows($result) == 1) {
-                     $Computer->fields["users_id"] = $DB->result($result, 0, 0);
+                  if (!in_array('users_id', $a_lockable)) {
+                     $Computer->fields['contact'] = $dataSection['LOGIN'];
+                     $query = "SELECT `id`
+                               FROM `glpi_users`
+                               WHERE `name` = '" . $dataSection['LOGIN'] . "';";
+                     $result = $DB->query($query);
+                     if ($DB->numrows($result) == 1) {
+                        $Computer->fields["users_id"] = $DB->result($result, 0, 0);
+                     }
                   }
                }
                break;
@@ -637,30 +658,46 @@ class PluginFusinvinventoryLibhook {
 
 
                case 'HARDWARE':
+                  $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
+
                   if (isset($dataSection['NAME']))
-                     $Computer->fields['name'] = $dataSection['NAME'];
+                     if (!in_array('name', $a_lockable)) {
+                        $Computer->fields['name'] = $dataSection['NAME'];
+                     }
                   if (isset($dataSection['OSNAME'])) {
-                     $OperatingSystem = new OperatingSystem;
-                     $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
+                     if (!in_array('operatingsystems_id', $a_lockable)) {
+                        $OperatingSystem = new OperatingSystem;
+                        $Computer->fields['operatingsystems_id'] = $OperatingSystem->import(array('name'=>$dataSection['OSNAME']));
+                     }
                   }
                   if (isset($dataSection['OSVERSION'])) {
-                     $OperatingSystemVersion = new OperatingSystemVersion;
-                     $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                     if (!in_array('operatingsystemversions_id', $a_lockable)) {
+                        $OperatingSystemVersion = new OperatingSystemVersion;
+                        $Computer->fields['operatingsystemversions_id'] = $OperatingSystemVersion->import(array('name'=>$dataSection['OSVERSION']));
+                     }
                   }
                   if (isset($dataSection['WINPRODID'])) {
-                     $Computer->fields['os_licenseid'] = $dataSection['WINPRODID'];
+                     if (!in_array('os_licenseid', $a_lockable)) {
+                        $Computer->fields['os_licenseid'] = $dataSection['WINPRODID'];
+                     }
                   }
                   if (isset($dataSection['WINPRODKEY'])) {
-                     $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+                     if (!in_array('os_license_number', $a_lockable)) {
+                        $Computer->fields['os_license_number'] = $dataSection['WINPRODKEY'];
+                     }
                   }
                   if (isset($dataSection['WORKGROUP'])) {
-                     $Domain = new Domain;
-                     $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
+                     if (!in_array('domains_id', $a_lockable)) {
+                        $Domain = new Domain;
+                        $Computer->fields['domains_id'] = $Domain->import(array('name'=>$dataSection['WORKGROUP']));
+                     }
                   }
                   if (isset($dataSection['OSCOMMENTS'])) {
-                     if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
-                        $OperatingSystemServicePack = new OperatingSystemServicePack;
-                        $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                     if (!in_array('operatingsystemservicepacks_id', $a_lockable)) {
+                        if (strstr($dataSection['OSCOMMENTS'], 'Service Pack')) {
+                           $OperatingSystemServicePack = new OperatingSystemServicePack;
+                           $Computer->fields['operatingsystemservicepacks_id'] = $OperatingSystemServicePack->import(array('name'=>$dataSection['OSCOMMENTS']));
+                        }
                      }
                   }
                   $Computer->update($Computer->fields);
@@ -689,14 +726,18 @@ class PluginFusinvinventoryLibhook {
                   break;
 
                case 'USERS':
+                  $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $idmachine);
+
                   if (isset($dataSection['LOGIN'])) {
-                     $Computer->fields['contact'] = $dataSection['LOGIN'];
-                     $query = "SELECT `id`
-                               FROM `glpi_users`
-                               WHERE `name` = '" . $dataSection['LOGIN'] . "';";
-                     $result = $DB->query($query);
-                     if ($DB->numrows($result) == 1) {
-                        $Computer->fields["users_id"] = $DB->result($result, 0, 0);
+                     if (!in_array('users_id', $a_lockable)) {
+                        $Computer->fields['contact'] = $dataSection['LOGIN'];
+                        $query = "SELECT `id`
+                                  FROM `glpi_users`
+                                  WHERE `name` = '" . $dataSection['LOGIN'] . "';";
+                        $result = $DB->query($query);
+                        if ($DB->numrows($result) == 1) {
+                           $Computer->fields["users_id"] = $DB->result($result, 0, 0);
+                        }
                      }
                   }
                   $Computer->update($Computer->fields);
