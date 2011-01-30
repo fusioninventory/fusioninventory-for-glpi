@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2010-10-14 11:55:56</LOGDATE>
+      <USERID>N/A</USERID>
+    </ACCESSLOG>
+    <BATTERIES></BATTERIES>
+    <BIOS>
+      <BDATE>12/01/2006</BDATE>
+      <BMANUFACTURER>innotek GmbH</BMANUFACTURER>
+      <BVERSION>VirtualBox</BVERSION>
+      <SMANUFACTURER>innotek GmbH</SMANUFACTURER>
+      <SMODEL>VirtualBox</SMODEL>
+      <SSN>0</SSN>
+    </BIOS>
+    <CONTROLLERS>
+      <CAPTION>Contrôleur IDE PCI Bus Master Intel(r) 82371AB/EB</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Contrôleur IDE PCI Bus Master Intel(r) 82371AB/EB</NAME>
+      <PCIID>8086:7111</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Contrôleur IDE PCI Bus Master Intel(r) 82371AB/EB</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Canal IDE principal</CAPTION>
+      <MANUFACTURER>(Contrôleurs ATA/ATAPI IDE standard)</MANUFACTURER>
+      <NAME>Canal IDE principal</NAME>
+      <TYPE>Canal IDE principal</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Canal IDE secondaire</CAPTION>
+      <MANUFACTURER>(Contrôleurs ATA/ATAPI IDE standard)</MANUFACTURER>
+      <NAME>Canal IDE secondaire</NAME>
+      <TYPE>Canal IDE secondaire</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>VirtualBox Graphics Adapter</CAPTION>
+      <NAME>VirtualBox Graphics Adapter</NAME>
+      <TYPE>VirtualBox Graphics Adapter</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Contrôleur hôte USB OpenHCD standard</CAPTION>
+      <MANUFACTURER>(Contrôleur hôte USB standard)</MANUFACTURER>
+      <NAME>Contrôleur hôte USB OpenHCD standard</NAME>
+      <PCIID>106b:003f</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Contrôleur hôte USB OpenHCD standard</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Pont Intel 82441FX Processeur Pentium(r) Pro vers PCI</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Pont Intel 82441FX Processeur Pentium(r) Pro vers PCI</NAME>
+      <PCIID>8086:1237</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Pont Intel 82441FX Processeur Pentium(r) Pro vers PCI</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Pont Intel 82371SB PCI vers ISA</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Pont Intel 82371SB PCI vers ISA</NAME>
+      <PCIID>8086:7000</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Pont Intel 82371SB PCI vers ISA</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Pilote AC'97 pour contrôleur Intel(r) 82801AA</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Pilote AC'97 pour contrôleur Intel(r) 82801AA</NAME>
+      <PCIID>8086:2415</PCIID>
+      <PCISUBSYSTEMID>8086:0000</PCISUBSYSTEMID>
+      <TYPE>Pilote AC'97 pour contrôleur Intel(r) 82801AA</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>VirtualBox Graphics Adapter</CAPTION>
+      <MANUFACTURER>Sun Microsystems, Inc.</MANUFACTURER>
+      <NAME>VirtualBox Graphics Adapter</NAME>
+      <PCIID>80ee:beef</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>VirtualBox Graphics Adapter</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Carte AMD PCNET Family Ethernet PCI</CAPTION>
+      <MANUFACTURER>Advanced Micro Devices (AMD)</MANUFACTURER>
+      <NAME>Carte AMD PCNET Family Ethernet PCI</NAME>
+      <PCIID>1022:2000</PCIID>
+      <PCISUBSYSTEMID>1022:2000</PCISUBSYSTEMID>
+      <TYPE>Carte AMD PCNET Family Ethernet PCI</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>VirtualBox Device</CAPTION>
+      <MANUFACTURER>Sun Microsystems, Inc.</MANUFACTURER>
+      <NAME>VirtualBox Device</NAME>
+      <PCIID>80ee:cafe</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>VirtualBox Device</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Contrôleur de bus USB</CAPTION>
+      <NAME>Contrôleur de bus USB</NAME>
+      <PCIID>8086:265c</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Contrôleur de bus USB</TYPE>
+    </CONTROLLERS>
+    <CPUS>
+      <SPEED>2400</SPEED>
+    </CPUS>
+    <DRIVES>
+      <DESCRIPTION>Disque fixe local</DESCRIPTION>
+      <FILESYSTEM>FAT32</FILESYSTEM>
+      <FREE>2288</FREE>
+      <LABEL></LABEL>
+      <LETTER>C:</LETTER>
+      <SERIAL>20EADCDD</SERIAL>
+      <SYSTEMDRIVE></SYSTEMDRIVE>
+      <TOTAL>4078</TOTAL>
+      <TYPE>Local Disk</TYPE>
+      <VOLUMN></VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <DESCRIPTION>Disque CD-ROM</DESCRIPTION>
+      <FILESYSTEM>CDFS</FILESYSTEM>
+      <LABEL>VBOXADDITIONS_3.</LABEL>
+      <LETTER>D:</LETTER>
+      <SERIAL>27988168</SERIAL>
+      <SYSTEMDRIVE></SYSTEMDRIVE>
+      <TOTAL>32</TOTAL>
+      <TYPE>Compact Disc</TYPE>
+      <VOLUMN>VBOXADDITIONS_3.</VOLUMN>
+    </DRIVES>
+    <ENVS>
+      <KEY>USERPROFILE</KEY>
+      <VAL>C:\Documents and Settings\Default User.WINNT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TEMP</KEY>
+      <VAL>C:\WINNT\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SYSTEMDRIVE</KEY>
+      <VAL>C:</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_REVISION</KEY>
+      <VAL>0f0b</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>OS2LIBPATH</KEY>
+      <VAL>C:\WINNT\system32\os2\dll;</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SYSTEMROOT</KEY>
+      <VAL>C:\WINNT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMMONPROGRAMFILES</KEY>
+      <VAL>C:\Program Files\Fichiers communs</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_ALL</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMSPEC</KEY>
+      <VAL>C:\WINNT\system32\cmd.exe</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>WINDIR</KEY>
+      <VAL>C:\WINNT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROGRAMFILES</KEY>
+      <VAL>C:\Program Files</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>OS</KEY>
+      <VAL>Windows_NT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PWD</KEY>
+      <VAL>C:/WINNT/system32</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_LEVEL</KEY>
+      <VAL>6</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATHEXT</KEY>
+      <VAL>.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LANG</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>NUMBER_OF_PROCESSORS</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATH</KEY>
+      <VAL>C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;C:\Program Files\FusionInventory-Agent\perl\bin;C:\Program Files\FusionInventory-Agent\c\bin;C:\Program Files\FusionInventory-Agent\perl\bin\</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_IDENTIFIER</KEY>
+      <VAL>x86 Family 6 Model 15 Stepping 11, GenuineIntel</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMPUTERNAME</KEY>
+      <VAL>WIN2K</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>ALLUSERSPROFILE</KEY>
+      <VAL>C:\Documents and Settings\All Users.WINNT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_ARCHITECTURE</KEY>
+      <VAL>x86</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMP</KEY>
+      <VAL>C:\WINNT\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>ComSpec</KEY>
+      <VAL>%SystemRoot%\system32\cmd.exe</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>Os2LibPath</KEY>
+      <VAL>%SystemRoot%\system32\os2\dll;</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>Path</KEY>
+      <VAL>%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Program Files\FusionInventory-Agent\perl\bin;C:\Program Files\FusionInventory-Agent\c\bin</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>windir</KEY>
+      <VAL>%SystemRoot%</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>OS</KEY>
+      <VAL>Windows_NT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_ARCHITECTURE</KEY>
+      <VAL>x86</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_LEVEL</KEY>
+      <VAL>6</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_IDENTIFIER</KEY>
+      <VAL>x86 Family 6 Model 15 Stepping 11, GenuineIntel</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_REVISION</KEY>
+      <VAL>0f0b</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>NUMBER_OF_PROCESSORS</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATHEXT</KEY>
+      <VAL>.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TEMP</KEY>
+      <VAL>%SystemRoot%\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMP</KEY>
+      <VAL>%SystemRoot%\TEMP</VAL>
+    </ENVS>
+    <HARDWARE>
+      <ARCHNAME>MSWin32-x86-multi-thread</ARCHNAME>
+      <CHECKSUM>262143</CHECKSUM>
+      <DEFAULTGATEWAY>10.0.2.2</DEFAULTGATEWAY>
+      <DNS>10.0.1.1</DNS>
+      <ETIME>15</ETIME>
+      <IPADDR>10.0.2.15</IPADDR>
+      <LASTLOGGEDUSER>Administrateur</LASTLOGGEDUSER>
+      <MEMORY>255</MEMORY>
+      <NAME>WIN2K</NAME>
+      <OSCOMMENTS>Service Pack 4</OSCOMMENTS>
+      <OSNAME>Microsoft Windows 2000 Professionnel</OSNAME>
+      <OSVERSION>5.0.2195</OSVERSION>
+      <PROCESSORN>1</PROCESSORN>
+      <PROCESSORS>2400</PROCESSORS>
+      <PROCESSORT></PROCESSORT>
+      <SWAP>0</SWAP>
+      <USERDOMAIN></USERDOMAIN>
+      <UUID>2A76A8DB-1EED-8449-BA06-DAD9ED981A5A</UUID>
+      <VMSYSTEM>VirtualBox</VMSYSTEM>
+      <WINCOMPANY>a</WINCOMPANY>
+      <WINLANG>1036</WINLANG>
+      <WINOWNER>a</WINOWNER>
+      <WINPRODID>52338-000-0000007-09440</WINPRODID>
+      <WINPRODKEY>VXKC4-2B3YF-W9MFK-QB3DB-9Y7MB</WINPRODKEY>
+      <WORKGROUP>WORKGROUP</WORKGROUP>
+    </HARDWARE>
+    <INPUTS>
+      <CAPTION>Étendu (101 ou 102 touches)</CAPTION>
+      <DESCRIPTION>Clavier standard 101/102 touches ou clavier Microsoft Natural Keyboard PS/2</DESCRIPTION>
+      <LAYOUT>0000040C</LAYOUT>
+    </INPUTS>
+    <INPUTS>
+      <CAPTION>Souris Microsoft PS/2</CAPTION>
+      <DESCRIPTION>Souris Microsoft PS/2</DESCRIPTION>
+      <INTERFACE>PS/2</INTERFACE>
+    </INPUTS>
+    <MONITORS>
+      <CAPTION>Écran par défaut</CAPTION>
+      <MANUFACTURER>(Types d'écrans standard)</MANUFACTURER>
+    </MONITORS>
+    <NETWORKS>
+      <DESCRIPTION>AMD PCNET Family Ethernet Adapter</DESCRIPTION>
+      <IPADDRESS>10.0.2.15</IPADDRESS>
+      <IPADDRESS6></IPADDRESS6>
+      <IPDHCP>10.0.2.2</IPDHCP>
+      <IPGATEWAY>10.0.2.2</IPGATEWAY>
+      <IPMASK>255.255.255.0</IPMASK>
+      <IPSUBNET>10.0.2.0</IPSUBNET>
+      <MACADDR>08:00:27:AC:B1:28</MACADDR>
+      <STATUS>Up</STATUS>
+      <VIRTUALDEV>1</VIRTUALDEV>
+    </NETWORKS>
+    <NETWORKS>
+      <DESCRIPTION>Miniport réseau étendu (PPTP)</DESCRIPTION>
+      <IPADDRESS></IPADDRESS>
+      <IPADDRESS6></IPADDRESS6>
+      <IPMASK></IPMASK>
+      <IPSUBNET></IPSUBNET>
+      <MACADDR>50:50:54:50:30:30</MACADDR>
+      <STATUS>Down</STATUS>
+      <VIRTUALDEV>1</VIRTUALDEV>
+    </NETWORKS>
+    <PORTS>
+      <CAPTION>LPT1</CAPTION>
+      <DESCRIPTION>LPT1</DESCRIPTION>
+      <NAME>LPT1</NAME>
+      <TYPE>Parallel</TYPE>
+    </PORTS>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>7-Zip</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>7-Zip 4.65</NAME>
+      <UNINSTALL_STRING>&quot;C:\Program Files\7-Zip\Uninstall.exe&quot;</UNINSTALL_STRING>
+    </SOFTWARES>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>FusionInventory Agent</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>FusionInventory Agent</NAME>
+      <PUBLISHER>FusionInventory Team</PUBLISHER>
+      <UNINSTALL_STRING>C:\Program Files\FusionInventory-Agent\uninstFI.exe</UNINSTALL_STRING>
+      <URL_INFO_ABOUT>http://www.FusionInventory.org</URL_INFO_ABOUT>
+      <VERSION>2.1.6-2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <COMMENTS>Mozilla Firefox</COMMENTS>
+      <FROM>registry</FROM>
+      <GUID>Mozilla Firefox (3.6.3)</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>Mozilla Firefox (3.6.3)</NAME>
+      <PUBLISHER>Mozilla</PUBLISHER>
+      <UNINSTALL_STRING>C:\Program Files\Mozilla Firefox\uninstall\helper.exe</UNINSTALL_STRING>
+      <URL_INFO_ABOUT>http://www.mozilla.com/fr/</URL_INFO_ABOUT>
+      <VERSION>3.6.3 (fr)</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>Oracle VM VirtualBox Guest Additions</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>Oracle VM VirtualBox Guest Additions 3.2.8</NAME>
+      <PUBLISHER> Oracle Corporation</PUBLISHER>
+      <UNINSTALL_STRING>C:\Program Files\Oracle\VirtualBox Guest Additions\uninst.exe</UNINSTALL_STRING>
+      <URL_INFO_ABOUT>http://www.virtualbox.org</URL_INFO_ABOUT>
+      <VERSION>3.2.8.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>{6F716DA0-398F-11D3-85E1-005004838609}</GUID>
+      <HELPLINK>http://www.microsoft.com/windows</HELPLINK>
+      <INSTALLDATE>23/04/2010</INSTALLDATE>
+      <IS64BIT>0</IS64BIT>
+      <NAME>WebFldrs</NAME>
+      <PUBLISHER>Microsoft Corporation</PUBLISHER>
+      <VERSION>9.00.3501</VERSION>
+      <VERSION_MAJOR>9</VERSION_MAJOR>
+      <VERSION_MINOR>0</VERSION_MINOR>
+    </SOFTWARES>
+    <SOUNDS>
+      <DESCRIPTION>Pilote AC'97 pour contrôleur Intel(r) 82801AA</DESCRIPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Pilote AC'97 pour contrôleur Intel(r) 82801AA</NAME>
+    </SOUNDS>
+    <STORAGES>
+      <DISKSIZE>4294</DISKSIZE>
+      <FIRMWARE>1.0</FIRMWARE>
+      <INTERFACE>IDE</INTERFACE>
+      <MANUFACTURER>(Lecteurs de disque standard)</MANUFACTURER>
+      <MODEL>VBOX HARDDISK</MODEL>
+      <NAME>\\.\PHYSICALDRIVE0</NAME>
+      <SCSI_COID>0</SCSI_COID>
+      <SCSI_LUN>0</SCSI_LUN>
+      <SCSI_UNID>0</SCSI_UNID>
+      <SERIAL>VB3bc9d3db-8afe8222</SERIAL>
+      <SERIALNUMBER>VB3bc9d3db-8afe8222</SERIALNUMBER>
+      <TYPE>Fixed hard disk media</TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>Lecteur de CD-ROM</DESCRIPTION>
+      <DISKSIZE>32</DISKSIZE>
+      <MANUFACTURER>(Lecteurs de CD-ROM standard)</MANUFACTURER>
+      <MODEL>VBOX CD-ROM</MODEL>
+      <NAME>VBOX CD-ROM</NAME>
+      <SCSI_COID>1</SCSI_COID>
+      <SCSI_LUN>0</SCSI_LUN>
+      <SCSI_UNID>0</SCSI_UNID>
+      <TYPE>CD-ROM</TYPE>
+    </STORAGES>
+    <VERSIONCLIENT>FusionInventory-Agent_v2.1.6-2</VERSIONCLIENT>
+    <VIDEOS>
+      <CHIPSET>VBOX</CHIPSET>
+      <NAME>VirtualBox Graphics Adapter</NAME>
+      <RESOLUTION>1024x768</RESOLUTION>
+    </VIDEOS>
+  </CONTENT>
+  <DEVICEID>win2k-2010-10-06-10-07-25</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>

@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQUEST>
+  <CONTENT>
+    <ACCESSLOG>
+      <LOGDATE>2011-01-30 01:56:10</LOGDATE>
+      <USERID>N/A</USERID>
+    </ACCESSLOG>
+    <BATTERIES></BATTERIES>
+    <BIOS>
+      <BDATE>12/01/2006</BDATE>
+      <BMANUFACTURER>innotek GmbH</BMANUFACTURER>
+      <BVERSION>VirtualBox</BVERSION>
+      <SKUNUMBER>Not Specified</SKUNUMBER>
+      <SMANUFACTURER>innotek GmbH</SMANUFACTURER>
+      <SMODEL>VirtualBox</SMODEL>
+      <SSN>0</SSN>
+    </BIOS>
+    <CONTROLLERS>
+      <CAPTION>Intel(R) 82371AB/EB PCI Bus Master IDE-контроллер</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) 82371AB/EB PCI Bus Master IDE-контроллер</NAME>
+      <PCIID>8086:7111</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Intel(R) 82371AB/EB PCI Bus Master IDE-контроллер</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>ATA Channel 0</CAPTION>
+      <MANUFACTURER>(Стандартные IDE ATA/ATAPI контроллеры)</MANUFACTURER>
+      <NAME>ATA Channel 0</NAME>
+      <TYPE>ATA Channel 0</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>ATA Channel 0</CAPTION>
+      <MANUFACTURER>(Стандартные IDE ATA/ATAPI контроллеры)</MANUFACTURER>
+      <NAME>ATA Channel 0</NAME>
+      <TYPE>ATA Channel 0</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>ATA Channel 1</CAPTION>
+      <MANUFACTURER>(Стандартные IDE ATA/ATAPI контроллеры)</MANUFACTURER>
+      <NAME>ATA Channel 1</NAME>
+      <TYPE>ATA Channel 1</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Стандартный контроллер AHCI 1.0 Serial ATA</CAPTION>
+      <MANUFACTURER>Стандартный контроллер AHCI 1.0 Serial ATA</MANUFACTURER>
+      <NAME>Стандартный контроллер AHCI 1.0 Serial ATA</NAME>
+      <PCIID>8086:2829</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Стандартный контроллер AHCI 1.0 Serial ATA</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>VirtualBox Graphics Adapter</CAPTION>
+      <NAME>VirtualBox Graphics Adapter</NAME>
+      <TYPE>VirtualBox Graphics Adapter</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>VirtualBox Graphics Adapter</CAPTION>
+      <MANUFACTURER>Oracle Corporation</MANUFACTURER>
+      <NAME>VirtualBox Graphics Adapter</NAME>
+      <PCIID>80ee:beef</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>VirtualBox Graphics Adapter</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>VirtualBox Device</CAPTION>
+      <MANUFACTURER>Oracle Corporation</MANUFACTURER>
+      <NAME>VirtualBox Device</NAME>
+      <PCIID>80ee:cafe</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>VirtualBox Device</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Адаптер рабочего стола Intel(R) PRO/1000 MT</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Адаптер рабочего стола Intel(R) PRO/1000 MT</NAME>
+      <PCIID>8086:100e</PCIID>
+      <PCISUBSYSTEMID>8086:001e</PCISUBSYSTEMID>
+      <TYPE>Адаптер рабочего стола Intel(R) PRO/1000 MT</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel 82441FX Pentium(R) Pro CPU - PCI мост</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel 82441FX Pentium(R) Pro CPU - PCI мост</NAME>
+      <PCIID>8086:1237</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Intel 82441FX Pentium(R) Pro CPU - PCI мост</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Multimedia Audio Controller</CAPTION>
+      <NAME>Multimedia Audio Controller</NAME>
+      <PCIID>8086:2415</PCIID>
+      <PCISUBSYSTEMID>8086:0000</PCISUBSYSTEMID>
+      <TYPE>Multimedia Audio Controller</TYPE>
+    </CONTROLLERS>
+    <CONTROLLERS>
+      <CAPTION>Intel 82371SB PCI - ISA мост</CAPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel 82371SB PCI - ISA мост</NAME>
+      <PCIID>8086:7000</PCIID>
+      <PCISUBSYSTEMID>0000:0000</PCISUBSYSTEMID>
+      <TYPE>Intel 82371SB PCI - ISA мост</TYPE>
+    </CONTROLLERS>
+    <CPUS>
+      <CORE>1</CORE>
+      <DESCRIPTION>x86 Family 6 Model 37 Stepping 5</DESCRIPTION>
+      <MANUFACTURER>Intel</MANUFACTURER>
+      <NAME>Intel(R) Core(TM) i3 CPU       M 370  @ 2.40GHz</NAME>
+      <SPEED>2400</SPEED>
+    </CPUS>
+    <DRIVES>
+      <DESCRIPTION>Local Fixed Disk</DESCRIPTION>
+      <FILESYSTEM>NTFS</FILESYSTEM>
+      <FREE>26022</FREE>
+      <LABEL></LABEL>
+      <LETTER>C:</LETTER>
+      <SERIAL>9C0133AF</SERIAL>
+      <SYSTEMDRIVE>1</SYSTEMDRIVE>
+      <TOTAL>33601</TOTAL>
+      <TYPE>Local Disk</TYPE>
+      <VOLUMN></VOLUMN>
+    </DRIVES>
+    <DRIVES>
+      <DESCRIPTION>CD-ROM Disc</DESCRIPTION>
+      <FILESYSTEM>CDFS</FILESYSTEM>
+      <LABEL>VBOXADDITIONS_3.</LABEL>
+      <LETTER>D:</LETTER>
+      <SERIAL>507C7088</SERIAL>
+      <SYSTEMDRIVE></SYSTEMDRIVE>
+      <TOTAL>31</TOTAL>
+      <TYPE>Compact Disc</TYPE>
+      <VOLUMN>VBOXADDITIONS_3.</VOLUMN>
+    </DRIVES>
+    <ENVS>
+      <KEY>USERPROFILE</KEY>
+      <VAL>C:\Windows\system32\config\systemprofile</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PSMODULEPATH</KEY>
+      <VAL>C:\Windows\system32\WindowsPowerShell\v1.0\Modules\</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TEMP</KEY>
+      <VAL>C:\Windows\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SYSTEMDRIVE</KEY>
+      <VAL>C:</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_REVISION</KEY>
+      <VAL>2505</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>SYSTEMROOT</KEY>
+      <VAL>C:\Windows</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMMONPROGRAMFILES</KEY>
+      <VAL>C:\Program Files\Common Files</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LC_ALL</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMSPEC</KEY>
+      <VAL>C:\Windows\system32\cmd.exe</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>APPDATA</KEY>
+      <VAL>C:\Windows\system32\config\systemprofile\AppData\Roaming</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>WINDIR</KEY>
+      <VAL>C:\Windows</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROGRAMFILES</KEY>
+      <VAL>C:\Program Files</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>OS</KEY>
+      <VAL>Windows_NT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PWD</KEY>
+      <VAL>C:/Windows/system32</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LOCALAPPDATA</KEY>
+      <VAL>C:\Windows\system32\config\systemprofile\AppData\Local</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_LEVEL</KEY>
+      <VAL>6</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATHEXT</KEY>
+      <VAL>.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>LANG</KEY>
+      <VAL>C</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PUBLIC</KEY>
+      <VAL>C:\Users\Public</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERNAME</KEY>
+      <VAL>-$</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>NUMBER_OF_PROCESSORS</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>FP_NO_HOST_CHECK</KEY>
+      <VAL>NO</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATH</KEY>
+      <VAL>C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\FusionInventory-Agent\perl\bin;C:\Program Files\FusionInventory-Agent\c\bin;;C:\Program Files\FusionInventory-Agent\perl\bin\</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_IDENTIFIER</KEY>
+      <VAL>x86 Family 6 Model 37 Stepping 5, GenuineIntel</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERDOMAIN</KEY>
+      <VAL>WORKGROUP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROGRAMDATA</KEY>
+      <VAL>C:\ProgramData</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>COMPUTERNAME</KEY>
+      <VAL>-</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>ALLUSERSPROFILE</KEY>
+      <VAL>C:\ProgramData</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_ARCHITECTURE</KEY>
+      <VAL>x86</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMP</KEY>
+      <VAL>C:\Windows\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>ComSpec</KEY>
+      <VAL>%SystemRoot%\system32\cmd.exe</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>FP_NO_HOST_CHECK</KEY>
+      <VAL>NO</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>OS</KEY>
+      <VAL>Windows_NT</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>Path</KEY>
+      <VAL>%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;C:\Program Files\FusionInventory-Agent\perl\bin;C:\Program Files\FusionInventory-Agent\c\bin</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PATHEXT</KEY>
+      <VAL>.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_ARCHITECTURE</KEY>
+      <VAL>x86</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TEMP</KEY>
+      <VAL>%SystemRoot%\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>TMP</KEY>
+      <VAL>%SystemRoot%\TEMP</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>USERNAME</KEY>
+      <VAL>SYSTEM</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>windir</KEY>
+      <VAL>%SystemRoot%</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PSModulePath</KEY>
+      <VAL>%SystemRoot%\system32\WindowsPowerShell\v1.0\Modules\</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>NUMBER_OF_PROCESSORS</KEY>
+      <VAL>1</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_LEVEL</KEY>
+      <VAL>6</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_IDENTIFIER</KEY>
+      <VAL>x86 Family 6 Model 37 Stepping 5, GenuineIntel</VAL>
+    </ENVS>
+    <ENVS>
+      <KEY>PROCESSOR_REVISION</KEY>
+      <VAL>2505</VAL>
+    </ENVS>
+    <HARDWARE>
+      <ARCHNAME>MSWin32-x86-multi-thread</ARCHNAME>
+      <CHECKSUM>262143</CHECKSUM>
+      <DEFAULTGATEWAY>192.168.30.1</DEFAULTGATEWAY>
+      <DNS>8.8.8.8</DNS>
+      <ETIME>22</ETIME>
+      <IPADDR>192.168.30.189</IPADDR>
+      <LASTLOGGEDUSER>Вймшв</LASTLOGGEDUSER>
+      <MEMORY>511</MEMORY>
+      <NAME>ВЙМШВ-ПК</NAME>
+      <OSCOMMENTS></OSCOMMENTS>
+      <OSNAME>Microsoft Windows 7 Black Edition  </OSNAME>
+      <OSVERSION>6.1.7600</OSVERSION>
+      <PROCESSORN>1</PROCESSORN>
+      <PROCESSORS>2400</PROCESSORS>
+      <PROCESSORT>Intel(R) Core(TM) i3 CPU       M 370  @ 2.40GHz</PROCESSORT>
+      <SWAP>0</SWAP>
+      <USERDOMAIN>Вймшв-ПК</USERDOMAIN>
+      <USERID>Вймшв</USERID>
+      <UUID>F7FF04C4-BF67-9C4B-95CC-19C6B27BCD5F</UUID>
+      <VMSYSTEM>VirtualBox</VMSYSTEM>
+      <WINCOMPANY></WINCOMPANY>
+      <WINLANG>1049</WINLANG>
+      <WINOWNER>Вймшв</WINOWNER>
+      <WINPRODID>00426-292-0000007-85408</WINPRODID>
+      <WINPRODKEY>D4F6K-QK3RD-TMVMJ-BBMRX-3MBMV</WINPRODKEY>
+      <WORKGROUP>WORKGROUP</WORKGROUP>
+    </HARDWARE>
+    <INPUTS>
+      <CAPTION>Enhanced (101- or 102-key)</CAPTION>
+      <DESCRIPTION>Стандартная клавиатура PS/2</DESCRIPTION>
+      <LAYOUT>00000419</LAYOUT>
+    </INPUTS>
+    <INPUTS>
+      <CAPTION>Microsoft PS/2 мышь</CAPTION>
+      <DESCRIPTION>Microsoft PS/2 мышь</DESCRIPTION>
+      <INTERFACE>PS/2</INTERFACE>
+    </INPUTS>
+    <MONITORS>
+      <CAPTION>Универсальный монитор не PnP</CAPTION>
+      <MANUFACTURER>(Стандартные мониторы)</MANUFACTURER>
+    </MONITORS>
+    <NETWORKS>
+      <DESCRIPTION>Адаптер рабочего стола Intel(R) PRO/1000 MT</DESCRIPTION>
+      <IPADDRESS>192.168.30.189</IPADDRESS>
+      <IPADDRESS6>fe80::fd9e:a43f:2b16:7dcf</IPADDRESS6>
+      <IPDHCP>192.168.30.1</IPDHCP>
+      <IPGATEWAY>192.168.30.1</IPGATEWAY>
+      <IPMASK>255.255.255.0</IPMASK>
+      <IPSUBNET>192.168.30.0</IPSUBNET>
+      <MACADDR>08:00:27:FD:BC:2F</MACADDR>
+      <STATUS>Up</STATUS>
+      <VIRTUALDEV>0</VIRTUALDEV>
+    </NETWORKS>
+    <PORTS>
+      <CAPTION>LPT1</CAPTION>
+      <DESCRIPTION>LPT1</DESCRIPTION>
+      <NAME>LPT1</NAME>
+      <TYPE>Parallel</TYPE>
+    </PORTS>
+    <PRINTERS>
+      <DRIVER>Microsoft XPS Document Writer</DRIVER>
+      <NAME>Microsoft XPS Document Writer</NAME>
+      <NETWORK>0</NETWORK>
+      <PORT>XPSPort:</PORT>
+      <PRINTPROCESSOR>winprint</PRINTPROCESSOR>
+      <RESOLUTION>600x600</RESOLUTION>
+      <SHARED>0</SHARED>
+      <STATUS>Idle</STATUS>
+    </PRINTERS>
+    <PRINTERS>
+      <DRIVER>Microsoft Shared Fax Driver</DRIVER>
+      <NAME>Fax</NAME>
+      <NETWORK>0</NETWORK>
+      <PORT>SHRFAX:</PORT>
+      <PRINTPROCESSOR>winprint</PRINTPROCESSOR>
+      <RESOLUTION>200x200</RESOLUTION>
+      <SHARED>0</SHARED>
+      <STATUS>Idle</STATUS>
+    </PRINTERS>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>FusionInventory Agent</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>FusionInventory Agent</NAME>
+      <PUBLISHER>FusionInventory Team</PUBLISHER>
+      <UNINSTALL_STRING>C:\Program Files\FusionInventory-Agent\uninstFI.exe</UNINSTALL_STRING>
+      <URL_INFO_ABOUT>http://www.FusionInventory.org</URL_INFO_ABOUT>
+      <VERSION>2.1.7-2</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>Oracle VM VirtualBox Guest Additions</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>Oracle VM VirtualBox Guest Additions 3.2.12</NAME>
+      <PUBLISHER> Oracle Corporation</PUBLISHER>
+      <UNINSTALL_STRING>C:\Program Files\Oracle\VirtualBox Guest Additions\uninst.exe</UNINSTALL_STRING>
+      <URL_INFO_ABOUT>http://www.virtualbox.org</URL_INFO_ABOUT>
+      <VERSION>3.2.12.0</VERSION>
+    </SOFTWARES>
+    <SOFTWARES>
+      <FROM>registry</FROM>
+      <GUID>WinRAR archiver</GUID>
+      <IS64BIT>0</IS64BIT>
+      <NAME>Архиватор WinRAR</NAME>
+      <UNINSTALL_STRING>C:\Program Files\WinRAR\uninstall.exe</UNINSTALL_STRING>
+    </SOFTWARES>
+    <STORAGES>
+      <DISKSIZE>35341</DISKSIZE>
+      <FIRMWARE>1.0</FIRMWARE>
+      <INTERFACE>IDE</INTERFACE>
+      <MANUFACTURER>(Стандартные дисковые накопители)</MANUFACTURER>
+      <MODEL>VBOX HARDDISK</MODEL>
+      <NAME>\\.\PHYSICALDRIVE0</NAME>
+      <SCSI_COID>2</SCSI_COID>
+      <SCSI_LUN>0</SCSI_LUN>
+      <SCSI_UNID>0</SCSI_UNID>
+      <SERIAL>VB7c53566d-b180970e</SERIAL>
+      <SERIALNUMBER>VB7c53566d-b180970e</SERIALNUMBER>
+      <TYPE>Fixed hard disk media</TYPE>
+    </STORAGES>
+    <STORAGES>
+      <DESCRIPTION>CD-ROM дисковод</DESCRIPTION>
+      <DISKSIZE>31</DISKSIZE>
+      <MANUFACTURER>(Стандартные устройства чтения компакт-дисков)</MANUFACTURER>
+      <MODEL>VBOX CD-ROM ATA Device</MODEL>
+      <NAME>VBOX CD-ROM ATA Device</NAME>
+      <SCSI_COID>1</SCSI_COID>
+      <SCSI_LUN>0</SCSI_LUN>
+      <SCSI_UNID>0</SCSI_UNID>
+      <TYPE>UNKNOWN</TYPE>
+    </STORAGES>
+    <USERS>
+      <DOMAIN>Вймшв-ПК</DOMAIN>
+      <LOGIN>Вймшв</LOGIN>
+    </USERS>
+    <VERSIONCLIENT>FusionInventory-Agent_v2.1.7-2</VERSIONCLIENT>
+    <VIDEOS>
+      <NAME>VirtualBox Graphics Adapter</NAME>
+    </VIDEOS>
+  </CONTENT>
+  <DEVICEID>Вймшв-ПК-2010-09-13-11-17-16</DEVICEID>
+  <QUERY>INVENTORY</QUERY>
+</REQUEST>
