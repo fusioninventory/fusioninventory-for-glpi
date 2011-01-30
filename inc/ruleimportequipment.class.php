@@ -451,11 +451,12 @@ logInFile("xxx", print_r($input, true));
          if ($itemtype == "PluginFusioninventoryUnknownDevice") {
             $sql_glpi = str_replace("`[typetable]`.`is_template` = '0'  AND", "", $sql_glpi);
          }
-            logInFile("xxx", $sql_glpi."\n");
+            
          if (strstr($sql_glpi, "`[typetable]`.`is_template` = '0'  AND")) {
 
             $sql_glpi = str_replace("[typetable]", $item->getTable(), $sql_glpi);
             $sql_glpi = str_replace("[typename]", $itemtype, $sql_glpi);
+            logInFile("xxx", $sql_glpi."\n");
             $result_glpi = $DB->query($sql_glpi);
 
             if ($DB->numrows($result_glpi) > 0) {
@@ -466,19 +467,19 @@ logInFile("xxx", print_r($input, true));
             }
          }
       }
-//      if ($found == "1") {
+      if ($found == "1") {
          return true;
-//      }
-//      if (count($this->actions)) {
-//         foreach ($this->actions as $action) {
-//            if ($action->fields['field'] == '_fusion') {
-//               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
-//                  return true;
-//               }
-//            }
-//         }
-//      }
-//      return false;
+      }
+      if (count($this->actions)) {
+         foreach ($this->actions as $action) {
+            if ($action->fields['field'] == '_fusion') {
+               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_IMPORT) {
+                  return true;
+               }
+            }
+         }
+      }
+      return false;
    }
 
 
