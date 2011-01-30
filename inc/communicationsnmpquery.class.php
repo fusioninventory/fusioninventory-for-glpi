@@ -346,6 +346,9 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
               'Function PluginFusinvsnmpCommunicationSNMPQuery->import().');
 
       $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+
       $this->agent = $PluginFusioninventoryAgent->InfosByKey($p_DEVICEID);
 
       $this->sxml = simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
@@ -353,6 +356,19 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
+         $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
+         $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+         if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
+            $nb_devices = 0;
+            foreach($p_CONTENT->DEVICE as $child) {
+               $nb_devices++;
+            }
+            $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
+                                                   $this->agent['id'],
+                                                   'PluginFusioninventoryAgent',
+                                                   '6',
+                                                   $nb_devices.' devices found');
+         }
       }
       $errors.=$this->importContent($p_CONTENT);
       $result=true;
@@ -368,6 +384,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             $result=false;
          }
       }
+      if (isset($p_CONTENT->AGENT->END)) {
+         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                                                   $this->agent['id'],
+                                                   'PluginFusioninventoryAgent');
+      }
+
       return $result;
    }
 
