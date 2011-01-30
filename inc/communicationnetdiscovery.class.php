@@ -155,6 +155,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
    function rulepassed($items_id, $itemtype) {
       global $DB;
+
       $PluginFusinvsnmpCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
 
       PluginFusioninventoryCommunication::addLog(
@@ -403,6 +404,16 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
 
             $class->update($class->fields);
+
+            // Update SNMP informations
+            $ptd = new PluginFusinvsnmpNetworkEquipment();
+            $ptd->load($items_id);
+            $ptd->setValue('sysdescr', $xml->DESCRIPTION);
+            $PluginFusinvsnmpModel = new PluginFusinvsnmpModel();
+            $model_id = $PluginFusinvsnmpModel->getModelByKey($xml->MODELSNMP);
+            $ptd->setValue('plugin_fusinvsnmp_models_id', $model_id);
+            $ptd->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
+            $ptd->updateDB();
             break;
       }
 
