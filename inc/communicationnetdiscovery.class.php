@@ -64,37 +64,38 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationNetDiscovery->import().');
-      //$this->setXML($p_CONTENT);
+
       $errors = '';
 
       $a_agent = $pta->InfosByKey($p_DEVICEID);
       if (isset($p_CONTENT->PROCESSNUMBER)) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
          $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
-         $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
-         if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
-            $nb_devices = 0;
-            foreach($p_CONTENT->DEVICE as $child) {
-               $nb_devices++;
+         if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
+            $PluginFusioninventoryTaskjobstatus->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
+            if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
+               $nb_devices = 0;
+               foreach($p_CONTENT->DEVICE as $child) {
+                  $nb_devices++;
+               }
+               $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
+                                                      $a_agent['id'],
+                                                      'PluginFusioninventoryAgent',
+                                                      '6',
+                                                      $nb_devices.' devices found');
             }
-            $PluginFusioninventoryTaskjoblog->addTaskjoblog($p_CONTENT->PROCESSNUMBER,
-                                                   $a_agent['id'],
-                                                   'PluginFusioninventoryAgent',
-                                                   '6',
-                                                   $nb_devices.' devices found');
          }
       }
 
-      $moduleversion = "1.0";
-      if (isset($p_CONTENT->MODULEVERSION)) {
-         $moduleversion = $p_CONTENT->PROCESSNUMBER;
-      }
-      $pti = new PluginFusinvsnmpImportExport;
-      $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID, $moduleversion);
-      if (isset($p_CONTENT->AGENT->END)) {
-         $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                   $a_agent['id'],
-                                                   'PluginFusioninventoryAgent');
+      $PluginFusioninventoryTaskjobstatus->getFromDB($p_CONTENT->PROCESSNUMBER);
+      if ($PluginFusioninventoryTaskjobstatus->fields['state'] != "3") {
+         $pti = new PluginFusinvsnmpImportExport;
+         $errors.=$pti->import_netdiscovery($p_CONTENT, $p_DEVICEID);
+         if (isset($p_CONTENT->AGENT->END)) {
+            $PluginFusioninventoryTaskjobstatus->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+                                                                    $a_agent['id'],
+                                                                    'PluginFusioninventoryAgent');
+         }
       }
       return $errors;
    }

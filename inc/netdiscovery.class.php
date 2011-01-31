@@ -77,6 +77,8 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
          $agent_id = current($agent);
          if ($agent_id == '.1') {
             $dynagent = 1;
+         } else if ($agent_id == '.2') {
+            $dynagent = 2;
          } else {
             $a_ip = $PluginFusioninventoryAgent->getIPs($agent_id);
             $PluginFusioninventoryAgent->getFromDB($agent_id);
@@ -92,7 +94,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
             }
          }
       }
-      if ($dynagent == '1') {
+      if ($dynagent > 0) {
          $a_agents = $PluginFusioninventoryAgentmodule->getAgentsCanDo('NETDISCOVERY');
          foreach($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
@@ -250,6 +252,11 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
       $PluginFusinvsnmpAgentconfig->loadAgentconfig($PluginFusioninventoryAgent->fields['id']);
       $sxml_option = $this->sxml->addChild('OPTION');
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
+      $sxml_option->addChild('DICOHASH', md5_file(GLPI_ROOT."/plugins/fusinvsnmp/tool/discovery.xml"));
+
+//$sxml_option->addChild('DICO', file_get_contents(GLPI_ROOT."/plugins/fusinvsnmp/tool/discovery.xml"));
+
+
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_DISCOVERY', "1");
          $sxml_param->addAttribute('THREADS_DISCOVERY', $PluginFusinvsnmpAgentconfig->fields["threads_netdiscovery"]);

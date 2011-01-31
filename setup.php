@@ -131,7 +131,7 @@ function plugin_init_fusinvsnmp() {
 
 			$PLUGIN_HOOKS['use_massive_action']['fusinvsnmp']=1;
 //         $PLUGIN_HOOKS['pre_item_delete']['fusinvsnmp'] = 'plugin_pre_item_delete_fusinvsnmp';
-//			$PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = 'plugin_pre_item_purge_fusinvsnmp';
+//			$PLUGIN_HOOKS['pre_item_purge']['fusinvsnmp'] = '';
 //			$PLUGIN_HOOKS['item_update']['fusinvsnmp'] = 'plugin_item_update_fusinvsnmp';
 //         $PLUGIN_HOOKS['item_add']['fusinvsnmp'] = 'plugin_item_add_fusinvsnmp';
 
