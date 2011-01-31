@@ -832,19 +832,19 @@ class PluginFusinvinventoryLibhook {
 
        // ** BIOS
        $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSection']       = 'BIOS';
        $opt[$i]['xmlSectionChild']  = 'SMANUFACTURER';
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'manufacturers_id';
    
        $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSection']       = 'BIOS';
        $opt[$i]['xmlSectionChild']  = 'SMODEL';
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'computermodels_id';
 
        $i++;
-       $opt[$i]['xmlSection']       = 'HARDWARE';
+       $opt[$i]['xmlSection']       = 'BIOS';
        $opt[$i]['xmlSectionChild']  = 'SSN';
        $opt[$i]['glpiItemtype']     = 'Computer';
        $opt[$i]['glpiField']        = 'serial';

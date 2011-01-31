@@ -48,8 +48,19 @@ class PluginFusinvinventoryLock {
 
       // Get mapping
       $a_mapping = PluginFusinvinventoryLibhook::getMapping();
-      $a_fieldList = importArrayFromDB($item->fields['tablefields']);
-
+      if ($item->fields['tablefields'] == $item->input['tablefields']) {
+         $a_fieldList = importArrayFromDB($item->fields['tablefields']);
+      } else {
+         $a_fieldListTemp = importArrayFromDB($item->fields['tablefields']);
+         $a_inputList = importArrayFromDB($item->input['tablefields']);
+         $a_diff = array_diff($a_fieldListTemp, $a_inputList);
+         $a_fieldList = array();
+         foreach ($a_diff as $value) {
+            if (in_array($value, $a_fieldListTemp)) {
+               $a_fieldList[] = $value;
+            }
+         }
+      }
       for ($i=0; $i < count($a_fieldList); $i++) {
          foreach ($a_mapping as $datas) {
             if (($item->fields['tablename'] == getTableForItemType($datas['glpiItemtype']))
@@ -65,13 +76,21 @@ class PluginFusinvinventoryLock {
                      $infoSections = $PluginFusinvinventoryLib->_getInfoSections($a_serialized['internal_id']);
 
                      // Modify fields
+                     $table = getTableNameForForeignKeyField($datas['glpiField']);
+                     if ($table != "") {
+                        $itemtypeLink = getItemTypeForTable($table);
+                     }
                      $itemtype = $datas['glpiItemtype'];
                      $class = new $itemtype();
                      $class->getFromDB($item->fields['items_id']);
                      $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
-                     $class->fields[$datas['glpiField']] = $libunserialized[$datas['xmlSectionChild']];
+                     if ($table != "") {
+                        $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                        $class->fields[$datas['glpiField']] = $vallib;
+                     } else {
+                        $class->fields[$datas['glpiField']] = $libunserialized[$datas['xmlSectionChild']];
+                     }
                      $class->update($class->fields);
-
                   }
                }               
             }
