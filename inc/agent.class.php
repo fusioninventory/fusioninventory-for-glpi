@@ -183,7 +183,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "<td>".$LANG['plugin_fusioninventory']['agents'][25]." :</td>";
       echo "<td align='center'>";
-      echo $this->fields["version"];
+      $a_versions = importArrayFromDB($this->fields["version"]);
+      foreach ($a_versions as $module => $version) {
+         echo "<strong>".$module. "</strong>: ".$version."<br/>";
+      }
       echo "</td>";
       echo "</tr>";
 
@@ -394,6 +397,19 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<br/>";
    }
 
+
+   function setAgentVersions($agent_id, $module, $version) {
+      $this->getFromDB($agent_id);
+      $a_version = importArrayFromDB($this->fields['version']);
+      if (!is_array($a_version)) {
+         $versionTmp = $a_version;
+         $a_version = array();
+         $a_version["INVENTORY"] = $versionTmp;
+      }
+      $a_version[$module] = $version;
+      $this->fields['version'] = exportArrayToDB($a_version);
+      $this->update($this->fields);
+   }
 
 }
 
