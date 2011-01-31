@@ -1163,7 +1163,12 @@ class PluginFusioninventoryRule extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          $criteria->getFromDB($criteria_result["id"]);
          $this->showMinimalCriteria($criteria->fields);
-         echo "<td class='b'>".Dropdown::getYesNo($criteria_result["result"])."</td></tr>\n";
+         if ($criteria->fields['condition'] != PluginFusioninventoryRule::PATTERN_FIND) {
+            echo "<td class='b'>".Dropdown::getYesNo($criteria_result["result"])."</td></tr>\n";
+         } else {
+            echo "<td class='b'>".DROPDOWN_EMPTY_VALUE."</td></tr>\n";
+         }
+
       }
       echo "</table></div>";
 
@@ -1360,13 +1365,7 @@ class PluginFusioninventoryRule extends CommonDBTM {
       $display = false;
       $tested  = false;
 
-      if ($condition == PluginFusioninventoryRule::PATTERN_EXISTS
-          || $condition == PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS) {
-         Dropdown::showYesNo($name, 0, 0);
-         $display = true;
-         $tested  = true;
-
-      } else if (isset($crit['type'])
+      if (isset($crit['type'])
                  && ($test
                      ||$condition == PluginFusioninventoryRule::PATTERN_IS
                      || $condition == PluginFusioninventoryRule::PATTERN_IS_NOT)) {
