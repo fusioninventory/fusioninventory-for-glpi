@@ -1360,7 +1360,7 @@ class PluginFusioninventoryRule extends CommonDBTM {
       $display = false;
       $tested  = false;
 
-      if ($condition == Rule::PATTERN_EXISTS
+      if ($condition == PluginFusioninventoryRule::PATTERN_EXISTS
           || $condition == PluginFusioninventoryRule::PATTERN_DOES_NOT_EXISTS) {
          Dropdown::showYesNo($name, 0, 0);
          $display = true;
