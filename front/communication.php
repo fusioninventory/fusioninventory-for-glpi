@@ -88,12 +88,10 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
       $PluginFusioninventoryCommunication->noSSL();
       exit();
    }
-   $ocsinventory = '0';
+   
    file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/dial.log".rand(), gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
-   $state = $pta->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
-   if ($state == '2') { // agent created
-      $ocsinventory = '1';
-   }
+   $pta->importToken(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]));
+
    $top0 = gettimeofday();
    if (!$PluginFusioninventoryCommunication->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
       //if ($ac->connectionOK($errors)) {
