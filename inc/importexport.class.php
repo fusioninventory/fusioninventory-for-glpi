@@ -295,7 +295,6 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $ptap->updateState($p_xml->PROCESSNUMBER, array('nb_ip' => $p_xml->AGENT->NBIP), $agent['id']);
       }
       if (isset($p_xml->AGENT->AGENTVERSION)) {
-         $agent['version'] = $p_xml->AGENT->AGENTVERSION;
          $agent['last_contact'] = date("Y-m-d H:i:s");
          $pta->update($agent);
       }
