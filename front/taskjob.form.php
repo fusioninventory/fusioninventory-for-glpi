@@ -140,6 +140,19 @@ if (isset ($_POST["add"])) {
    // force running this job (?)
 
    glpi_header($_SERVER['HTTP_REFERER']);
+} else if (isset($_POST['forceend'])) {
+   $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+   $PluginFusioninventoryTaskjobstatus->changeStatusFinish($_POST['taskjobstatus_id'],
+                                                                 0,
+                                                                 '',
+                                                                 1,
+                                                                 "Action cancelled by user");
+   $PluginFusioninventoryTaskjob->getFromDB($_POST['taskjobs_id']);
+   $PluginFusioninventoryTaskjob->fields['status'] = 1;
+   $PluginFusioninventoryTaskjob->update($PluginFusioninventoryTaskjob->fields);
+
+   
+   glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 $PluginFusioninventoryTaskjob->redirectTask($_GET['id']);

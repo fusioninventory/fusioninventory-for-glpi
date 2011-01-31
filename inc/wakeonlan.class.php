@@ -41,13 +41,21 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstatus each task for each device for each agent
-   function prepareRun($itemtype, $items_id, $communication, $taskjobs_id) {
+   function prepareRun($taskjobs_id) {
       global $DB;
-      // Get ids of operating systems which can make real wakeonlan
-      $OperatingSystem = new OperatingSystem;
-      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob;
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
 
+      $PluginFusioninventoryTask = new PluginFusioninventoryTask();
+      $PluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $PluginFusioninventoryTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $OperatingSystem = new OperatingSystem;
+      $PluginFusioninventoryAgent = new PluginFusioninventoryAgent();
+
+      $PluginFusioninventoryTaskjob->getFromDB($taskjobs_id);
+      $PluginFusioninventoryTask->getFromDB($PluginFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+
+      // Get ids of operating systems which can make real wakeonlan
       $a_os = $OperatingSystem->find(" `name` LIKE '%Linux%' ");
       $osfind = '(';
       $i = 0;

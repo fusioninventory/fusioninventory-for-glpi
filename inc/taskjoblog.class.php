@@ -70,6 +70,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       foreach ($a_jobstatus as $data) {
 
+         $displayforceend = 0;
          $a_history = $this->find('`plugin_fusioninventory_taskjobstatus_id` = "'.$data['id'].'"', 'id');
 
          echo "<tr>";
@@ -93,7 +94,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          $PluginFusioninventoryAgent->getFromDB($data['plugin_fusioninventory_agents_id']);
          echo $PluginFusioninventoryAgent->getLink(1);
          echo "</th>";
-         $this->displayHistoryDetail(array_shift($a_history));
+         $count = $this->displayHistoryDetail(array_shift($a_history));
+         $displayforceend += $count;
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
@@ -107,26 +109,36 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "&nbsp;";
          echo "(".$device->getTypeName().")";
          echo "</th>";
-         $this->displayHistoryDetail(array_shift($a_history));
+         $count = $this->displayHistoryDetail(array_shift($a_history));
+         $displayforceend += $count;
          echo "</tr>";
 
          if (count($a_history) > 0) {
             echo "<tr class='tab_bg_1'>";
             echo "<td colspan='2' rowspan='".count($a_history)."'>";
             echo "</td>";
-            $this->displayHistoryDetail(array_shift($a_history));
+            $count = $this->displayHistoryDetail(array_shift($a_history));
+            $displayforceend += $count;
             echo "</tr>";
 
             foreach ($a_history as $datas) {
                echo "<tr class='tab_bg_1'>";
-               $this->displayHistoryDetail(array_shift($a_history));
+               $count = $this->displayHistoryDetail(array_shift($a_history));
+               $displayforceend += $count;
                echo "</tr>";
             }
 
          }
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='5' align='center'>";
-         echo $LANG['plugin_fusioninventory']['task'][32];
+         if ($displayforceend == "0") {
+            echo "<form name='form' method='post' action='".GLPI_ROOT."/plugins/fusioninventory/front/taskjob.form.php'>";
+            echo "<input type='hidden' name='taskjobstatus_id' value='".$data['id']."' />";
+            echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
+            echo "<input name='forceend' value='".$LANG['plugin_fusioninventory']['task'][32]."'
+                class='submit' type='submit'>";
+            echo "</form>";
+         }
          echo "</td>";
          echo "</tr>";
 
@@ -149,6 +161,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       echo "<td align='center'>";
       echo convDateTime($datas['date']);
       echo "</td>";
+      $finish = 0;
 
       switch ($datas['state']) {
 
@@ -165,21 +178,25 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          case 2 :
             echo "<td style='background-color: rgb(0, 255, 0);' align='center'>";
             echo $LANG['plugin_fusioninventory']['taskjoblog'][2];
+            $finish++;
             break;
 
          case 3 :
             echo "<td style='background-color: rgb(255, 120, 0);' align='center'>";
             echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][3]."</strong>";
+            $finish++;
             break;
 
          case 4 :
             echo "<td style='background-color: rgb(255, 0, 0);' align='center'>";
             echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][4]."</strong>";
+            $finish++;
             break;
 
          case 5 :
             echo "<td style='background-color: rgb(255, 200, 0);' align='center'>";
             echo "<strong>".$LANG['plugin_fusioninventory']['taskjoblog'][5]."</strong>";
+            $finish++;
             break;
 
          case 6 :
@@ -196,6 +213,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       echo "<td align='center'>";
       echo $datas['comment'];
       echo "</td>";
+      return $finish;
    }
 
 

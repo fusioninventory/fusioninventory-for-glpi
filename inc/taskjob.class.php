@@ -248,6 +248,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $class->getFromDB(current($data));
          if (current($data) == '.1') {
             $name = $LANG['plugin_fusioninventory']['agents'][32];
+         } else if (current($data) == '.2') {
+            $name = $LANG['plugin_fusioninventory']['agents'][33];
          } else {
             $class->getFromDB(current($data));
             $name = $class->fields['name'];
@@ -488,6 +490,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       $array = array();
       $array[".1"] = $LANG['plugin_fusioninventory']['agents'][32];
+      $array[".2"] = $LANG['plugin_fusioninventory']['agents'][33];
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $PluginFusioninventoryAgentmodule->getAgentsCanDo(strtoupper($module));
       foreach ($array1 as $id => $data) {
