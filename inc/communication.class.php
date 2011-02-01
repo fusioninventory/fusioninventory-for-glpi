@@ -1,42 +1,36 @@
 <?php
+
 /*
- * @version $Id$
- -------------------------------------------------------------------------
- FusionInventory
- Coded by the FusionInventory Development Team.
+   ----------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2011 by the FusionInventory Development Team.
 
- http://www.fusioninventory.org/   http://forge.fusioninventory.org/
- -------------------------------------------------------------------------
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ----------------------------------------------------------------------
 
- LICENSE
+   LICENSE
 
- This file is part of FusionInventory plugins.
+   This file is part of FusionInventory.
 
- FusionInventory is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   any later version.
 
- FusionInventory is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with FusionInventory; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- --------------------------------------------------------------------------
+   You should have received a copy of the GNU General Public License
+   along with FusionInventory.  If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+   Original Author of file: Vincent MAZZONI
+   Co-authors of file: David DURIEUX
+   Purpose of file:
+   ----------------------------------------------------------------------
  */
-
-// ----------------------------------------------------------------------
-// Original Author of file: MAZZONI Vincent
-// Purpose of file: management of communication with ocsinventoryng agents
-// ----------------------------------------------------------------------
-/**
- * The datas are XML encoded and compressed with Zlib.
- * XML rules :
- * - XML tags in uppercase
- **/
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -49,22 +43,14 @@ class PluginFusioninventoryCommunication {
    private $deviceId, $ptd, $type='';
    protected $sxml;
 
+   
    function __construct() {
       $this->sxml = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
-//         $sxml_option = $this->sxml->addChild('OPTION');
-//            $sxml_option->addChild('NAME', 'DOWNLOAD');
-//            $sxml_param = $sxml_option->addChild('PARAM');
-//               $sxml_param->addAttribute('FRAG_LATENCY', '10');
-//               $sxml_param->addAttribute('PERIOD_LATENCY', '10');
-//               $sxml_param->addAttribute('TIMEOUT', '30');
-//               $sxml_param->addAttribute('ON', '1');
-//               $sxml_param->addAttribute('TYPE', 'CONF');
-//               $sxml_param->addAttribute('CYCLE_LATENCY', '60');
-//               $sxml_param->addAttribute('PERIOD_LENGTH', '10');
-         $this->sxml->addChild('PROLOG_FREQ', '24'); // a recup dans base config --> pas trouvé
          PluginFusioninventoryCommunication::addLog('New PluginFusioninventoryCommunication object.');
    }
 
+
+   
    /**
     * Get readable XML code (add carriage returns)
     *
@@ -74,6 +60,8 @@ class PluginFusioninventoryCommunication {
       return $this->formatXmlString();
    }
 
+
+   
    /**
     * Set XML code
     *
@@ -84,6 +72,8 @@ class PluginFusioninventoryCommunication {
       $this->sxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA); // @ to avoid xml warnings
    }
 
+
+   
    /**
     * Get XML code
     *
@@ -97,6 +87,8 @@ class PluginFusioninventoryCommunication {
       }
    }
 
+
+   
    /**
     * Get data ready to be send (gzcompressed)
     * 
@@ -106,38 +98,14 @@ class PluginFusioninventoryCommunication {
       return gzcompress($this->sxml->asXML());
    }
 
-   /**
-    * Check connection string
-    *
-    *@param &$errors errors string to be alimented if connection ko
-    *@return true (connection ok) / false (connection ko)
-    **/
-   function connectionOK(&$errors='') {
-      // TODO : gérer l'encodage, la version
-      // pas gérer le REQUEST (tjs pareil)
-      $get=$this->get();
-      $errors='';
-      $sxml_prolog = @simplexml_load_string($get,'SimpleXMLElement', LIBXML_NOCDATA); // @ to avoid xml warnings
 
-
-      if ($sxml_prolog->DEVICEID=='') {
-         $errors.="DEVICEID invalide\n";
-      }
-      if ($sxml_prolog->QUERY!='PROLOG') {
-         $errors.="QUERY invalide\n";
-      }
-      $result=false;
-      if ($errors=='') {
-         $result=true;
-      }
-      return $result;
-   }
-
+  
    /**
     * Import data
     *
     *@param $p_xml XML code to import
     *@param &$p_errors errors string to be alimented if import ko
+    * 
     *@return true (import ok) / false (import ko)
     **/
    function import($p_xml, &$p_errors='') {
@@ -174,7 +142,7 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
 
-         $moduleCommunication = new $moduleClass;
+         $moduleCommunication = new $moduleClass();
          $errors.=$moduleCommunication->import($this->sxml->DEVICEID, $this->sxml->CONTENT, $p_xml);
       } else {
          $errors.=$LANG['plugin_fusioninventory']['errors'][22].' QUERY : *'.$xmltag."*\n";
@@ -183,9 +151,6 @@ class PluginFusioninventoryCommunication {
       if ($errors != '') {
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
             $result=true;
-//            $ptap = new PluginFusioninventoryAgentProcess;
-//            $ptap->updateProcess($_SESSION['glpi_plugin_fusioninventory_processnumber'],
-//                                 array('comment' => $errors));
          } else {
             // It's PROLOG
             $result=false;
@@ -194,6 +159,8 @@ class PluginFusioninventoryCommunication {
       return $result;
    }
 
+
+   
    /**
     * Add indent in XML to have nice XML format
     *
@@ -230,31 +197,12 @@ class PluginFusioninventoryCommunication {
       return $this->sxml->asXML();
    }
 
-   function addWakeonlan($pxml) {
-      $pta = new PluginFusioninventoryAgent;
-      $ptt = new PluginFusioninventoryTask;
-      $np  = new NetworkPort;
 
-      $agent = $pta->InfosByKey($pxml->DEVICEID);
 
-      $sxml_option = $this->sxml->addChild('OPTION');
-         $sxml_option->addChild('NAME', 'WAKEONLAN');
-
-      $tasks = $ptt->ListTask($agent["id"], "WAKEONLAN");
-      foreach ($tasks as $taskInfos) {
-         if ($taskInfos['itemtype'] == COMPUTER_TYPE) {
-            $a_portsList = $np->find('items_id='.$taskInfos['items_id'].' AND itemtype="'.COMPUTER_TYPE.'"');
-            foreach ($a_portsList as $data) {
-               if ($data['ip'] != "127.0.0.1") {
-                  $sxml_param = $sxml_option->addChild('PARAM');
-                  $sxml_param->addAttribute('MAC', $data['mac']);
-                  $sxml_param->addAttribute('IP', $data['ip']);
-               }
-            }
-         }
-      }
-   }
-
+   /**
+    * Return error to agent because SSL is required
+    *
+   **/
    function noSSL() {
       $this->sxml->addAttribute('RESPONSE', "ERROR : SSL REQUIRED BY SERVER");
       $this->setXML($this->getXML());
@@ -262,15 +210,23 @@ class PluginFusioninventoryCommunication {
    }
 
 
+   
+   /**
+    * Return an empty answer to agent if nothing to import
+    *
+   **/
    function emptyAnswer() {
       $this->setXML($this->getXML());
       echo $this->getSend();
    }
 
+
+   
    /**
     * Add logs
     *
     *@param $p_logs logs to write
+    * 
     *@return nothing (write text in log file)
     **/
    static function addLog($p_logs) {
@@ -282,10 +238,17 @@ class PluginFusioninventoryCommunication {
       }
    }
 
+   
 
+   /**
+    * Get all tasks prepared for this agent
+    *
+    *@param $agent_id interger id of agent
+    *
+    **/
    function getTaskAgent($agent_id) {
 
-      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+      $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus();
       $moduleRun = $PluginFusioninventoryTaskjobstatus->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $itemtype => $array) {
          $array_tmp = current($array);
@@ -295,23 +258,32 @@ class PluginFusioninventoryCommunication {
       }
    }
 
+   
 
+   /**
+    * Set prolog for agent
+    *
+    **/
    function addProlog() {
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
+      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
       $this->sxml->addChild('PROLOG_FREQ', $PluginFusioninventoryConfig->getValue($plugins_id, "inventory_frequence"));
    }
 
 
 
-   // Put in INVENTORY plugin
+   /**
+    * order to agent to do inventory if module inventory is activated for this agent
+    *
+    *@param $items_id interger Id of this agent
+    *
+    **/
    function addInventory($items_id) {
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
+      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       if ($PluginFusioninventoryAgentmodule->getAgentsCanDo('INVENTORY', $items_id)) {
          $this->sxml->addChild('RESPONSE', "SEND");
       }
    }
-
 }
 
 ?>
