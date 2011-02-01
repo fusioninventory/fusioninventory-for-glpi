@@ -54,19 +54,9 @@ error_reporting(E_ALL | E_STRICT);
 set_error_handler('userErrorHandlerDebug');
 $_SESSION['glpi_use_mode'] = 2;
 
-//// Load all plugin files
-//   call_user_func("plugin_init_fusinvinventory");
-//   $a_modules = PluginFusioninventoryModule::getAll();
-//   foreach ($a_modules as $id => $datas) {
-//      call_user_func("plugin_init_".$datas['directory']);
-//   }
+$PluginFusioninventoryCommunication  = new PluginFusioninventoryCommunication();
+$pta  = new PluginFusioninventoryAgent();
 
-   
-
-$PluginFusioninventoryCommunication  = new PluginFusioninventoryCommunication;
-$pta  = new PluginFusioninventoryAgent;
-
-$res='';
 $errors='';
 
 // ***** For debug only ***** //
@@ -76,8 +66,11 @@ $errors='';
 if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    // Get conf tu know if SSL is only
 
-   $fusioninventory_config = new PluginFusioninventoryConfig;
-   $ssl = $fusioninventory_config->getValue(19, 'ssl_only');
+   $fusioninventory_config = new PluginFusioninventoryConfig();
+   $PluginFusioninventoryModule = new PluginFusioninventoryModule();
+   $fusioninventoryModule_id = $PluginFusioninventoryModule->getModuleId("fusioninventory");
+
+   $ssl = $fusioninventory_config->getValue($fusioninventoryModule_id, 'ssl_only');
    if (((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on") AND ($ssl == "1"))
        OR ($ssl == "0")) {
       // echo "On continue";
@@ -94,39 +87,32 @@ if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
 
    $top0 = gettimeofday();
    if (!$PluginFusioninventoryCommunication->import(gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
-      //if ($ac->connectionOK($errors)) {
-      if (1) {
-         $res .= "1'".$errors."'";
+      $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
+      $pxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
 
-         $p_xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
-         $pxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA);
+      if (isset($pxml->DEVICEID)) {
 
-         if (isset($pxml->DEVICEID)) {
-
-            $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
+         $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
 
 
-            $PluginFusionInventoryConfig        = new PluginFusioninventoryConfig;
-            $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
+         $PluginFusionInventoryConfig        = new PluginFusioninventoryConfig;
+         $PluginFusioninventoryTaskjobstatus = new PluginFusioninventoryTaskjobstatus;
 
-            $a_agent = $pta->InfosByKey($pxml->DEVICEID);
+         $a_agent = $pta->InfosByKey($pxml->DEVICEID);
 
-            $single = 0;
+         $single = 0;
 
-            // Get taskjob in waiting
-            $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
-            // ******** Send XML
-            
-            $PluginFusioninventoryCommunication->addInventory($a_agent['id']);
-            $PluginFusioninventoryCommunication->addProlog();
-            $PluginFusioninventoryCommunication->setXML($PluginFusioninventoryCommunication->getXML());
+         // Get taskjob in waiting
+         $PluginFusioninventoryCommunication->getTaskAgent($a_agent['id']);
+         // ******** Send XML
 
-            echo $PluginFusioninventoryCommunication->getSend();
-         }
-      } else {
-         $res .= "0'".$errors."'";
+         $PluginFusioninventoryCommunication->addInventory($a_agent['id']);
+         $PluginFusioninventoryCommunication->addProlog();
+         $PluginFusioninventoryCommunication->setXML($PluginFusioninventoryCommunication->getXML());
+
+         echo $PluginFusioninventoryCommunication->getSend();
       }
    } else {
       $PluginFusioninventoryCommunication->setXML("<?xml version='1.0' encoding='ISO-8859-1'?>
