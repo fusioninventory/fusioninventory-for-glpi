@@ -73,7 +73,28 @@ function pluginFusinvsnmpInstall() {
 
       // Import models
       $importexport = new PluginFusinvsnmpImportExport;
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $importexport->import($file,0,1);
+      
+      $nb = 0;
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+         $nb++;
+      }
+      $i = 0;
+      echo "<table class='tab_cadre'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th align='center'>";
+      echo "Import SNMP models";
+      echo "</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      createProgressBar("Import SNMP models");
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+         $importexport->import($file,0,1);
+         $i++;
+         changeProgressBarPosition($i,$nb,"$i / $nb");
+      }
+      echo "</td>";
+      echo "</table>";
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
