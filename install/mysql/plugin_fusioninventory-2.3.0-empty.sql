@@ -213,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
    `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `hub` int(1) NOT NULL DEFAULT '0',
+   `states_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`),
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
